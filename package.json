@@ -1,0 +1,13 @@
+{
+  "name": "hon-viet-mong-gioi-visual-qa",
+  "private": true,
+  "version": "3.26.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "node scripts/build-static.mjs",
+    "preview": "npx serve dist",
+    "test": "node --test tests/*.test.mjs",
+    "check": "npm test"
+  }
+}

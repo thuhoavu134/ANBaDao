@@ -1,0 +1,33 @@
+{
+  "project": "Hon Viet: Mong Gioi",
+  "version": "3.25.5-dinh-loi-starter-squad-preview",
+  "scope": "extend",
+  "verticalSlice": "reference-equivalent UI/UX and interaction logic with Mong Gioi identity",
+  "status": "in_progress",
+  "designContract": "docs/ui-ux-reference-parity.md",
+  "acceptance": [
+    "Every screen is reviewed against the reference for hierarchy, viewport ratios, density and interaction flow",
+    "Every functional icon has a unique correct silhouette asset with no circular enclosure or semantic fallback; only the five reference-style bottom dock buttons use raised circular containers",
+    "Every reviewed screen scores at least 12/14 and no audit axis scores zero",
+    "Every reviewed screen has runtime visual evidence plus primary and secondary interaction evidence",
+    "Campaign shows only the current mission: Chinh Chiến → auto 6v6 → result → Continue opens the next mission, with no chapter or stage selector",
+    "Campaign encounters use a single 15-round match with HP-first tie-break and no in-match reinforcements",
+    "Vietnamese Mong Gioi identity remains original even when UX structure matches the reference",
+    "Hub không hiển thị glyph khóa/placeholder đen; tài nguyên, nhiệm vụ và dock không bị bọc bởi các hộp lớn không có trong reference",
+    "Hub dùng một quần thể kiến trúc Việt Nam nổi, đặt đúng trục giữa với bầu trời/mây làm khoảng thở; chức năng hai bên là nhãn nổi, dock dưới là năm nút tròn nổi",
+    "Hub có tách lớp 2.5D: hậu cảnh sáng, khối kiến trúc chính và tiền cảnh cổng/bậc thang ở đúng trục giữa; tiền cảnh có bóng tiếp xúc và parallax nhẹ",
+    "Dấu cộng vàng/ngọc/thể lực dẫn tới hoạt động kiếm tài nguyên tương ứng và không tạo popup sảnh khi vào game",
+    "Đình Lôi Basic advances to a readable target-side standoff, Skill/Ultimate cast from an on-screen team combat line, and damage/impact still resolve after authored VFX."
+  ],
+  "verification": {
+    "syntax": "required",
+    "combatRules": "required",
+    "browserRender": "required-per-screen",
+    "aestheticApproval": "user-final",
+    "latest": {
+      "tests": "26/26 passed after Đình Lôi reference spacing patch",
+      "productionBuild": "blocked locally: npm install/vite unavailable in current container; Vercel build/deploy still required for hosted preview",
+      "browserRuntime": "blocked locally by Chromium ERR_BLOCKED_BY_ADMINISTRATOR on localhost/file URLs; hosted preview must be verified after deploy"
+    }
+  }
+}

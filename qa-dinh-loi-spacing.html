@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Đình Lôi Reference Spacing QA</title>
+  <style>
+    html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#10151f;font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#f6e8b8;}
+    #battleFrame{position:fixed;inset:0;width:100%;height:100%;border:0;background:#0e1823;}
+    #qaPanel{position:fixed;left:12px;top:12px;z-index:10;max-width:420px;padding:12px 14px;border:1px solid rgba(255,224,142,.55);border-radius:16px;background:rgba(12,20,31,.84);box-shadow:0 12px 34px rgba(0,0,0,.35);backdrop-filter:blur(6px);font-size:13px;line-height:1.4;}
+    #qaPanel b{color:#ffe28f;} #qaPanel .ok{color:#9dffbd;} #qaPanel .bad{color:#ff9e8e;} #qaPanel pre{margin:8px 0 0;white-space:pre-wrap;font:12px/1.35 ui-monospace,SFMono-Regular,Menlo,monospace;color:#d8f3ff;}
+  </style>
+</head>
+<body>
+  <iframe id="battleFrame" title="Đình Lôi battle QA"></iframe>
+  <section id="qaPanel">
+    <b>Đình Lôi Reference Spacing QA</b>
+    <div id="qaStatus">Đang khởi tạo trận 6v6...</div>
+    <pre id="qaReport">pending</pre>
+  </section>
+  <script>
+    const frame=document.getElementById('battleFrame');
+    const statusEl=document.getElementById('qaStatus');
+    const reportEl=document.getElementById('qaReport');
+    const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+    function hero(id,team,slot,name,archetype='striker',extra={}){
+      const baseStats={guardian:[1500,92,112,82],support:[1180,86,78,92],healer:[1120,74,70,88],ranger:[1050,104,62,106],striker:[1200,116,72,98],mystic:[1080,108,66,100]};
+      const [hp,atk,def,speed]=baseStats[archetype]||baseStats.striker;
+      return {id,sourceId:id,team,slot,name,title:'QA Runtime',initial:name.slice(0,2),archetype,weapon:archetype==='guardian'?'shield':archetype==='ranger'?'bow':archetype==='mystic'?'staff':'sword',hp,atk,def,speed,energy:100,stars:3,rarity:4,skillName:'QA Skill',skillDetail:'QA',skillKind:'break',skillMultiplier:1.1,ultimateName:'QA Ultimate',ultimateDetail:'QA',ultimateKind:'aoe',ultimateMultiplier:1.05,...extra};
+    }
+    const heroes=[
+      hero('qa-dinh-loi','player',0,'Đình Lôi','guardian',{sourceId:'dinh_loi',title:'Vệ Binh Trống Đồng',initial:'ĐL',weapon:'shield',skillName:'Hồi Văn Hộ Trận',skillDetail:'Khiên đồng minh yếu nhất • 25 khí',skillKind:'guard',skillMultiplier:.92,ultimateName:'Đông Sơn Lôi Trận',ultimateDetail:'Khiên toàn đội • 60 khí',ultimateKind:'guardAll',ultimateMultiplier:1}),
+      hero('qa-ally-1','player',1,'Bạn Đồng', 'support'),
+      hero('qa-ally-2','player',2,'Bạn Tre', 'ranger'),
+      hero('qa-ally-3','player',3,'Bạn Mộc', 'healer'),
+      hero('qa-ally-4','player',4,'Bạn Hỏa', 'striker'),
+      hero('qa-ally-5','player',5,'Bạn Lam', 'mystic'),
+      hero('qa-enemy-0','enemy',0,'Mục Tiêu 1','guardian'),
+      hero('qa-enemy-1','enemy',1,'Mục Tiêu 2','striker'),
+      hero('qa-enemy-2','enemy',2,'Mục Tiêu 3','ranger'),
+      hero('qa-enemy-3','enemy',3,'Mục Tiêu 4','mystic'),
+      hero('qa-enemy-4','enemy',4,'Mục Tiêu 5','support'),
+      hero('qa-enemy-5','enemy',5,'Mục Tiêu 6','healer')
+    ];
+    const cfg={embedded:true,autoStart:true,qaMode:true,referenceSimple:true,timingScale:1,sessionId:'dinh-loi-spacing-qa',battleId:'dinh-loi-spacing-qa',heroes,objective:{type:'challenge',maxRounds:15},rewards:{items:[]}};
+    frame.name='dinh-loi-spacing-qa';
+    frame.dataset.config=JSON.stringify(cfg);
+    sessionStorage.setItem('honVietBattleConfig:dinh-loi-spacing-qa',JSON.stringify(cfg));
+    frame.src='battle.html?embedded=1&session=dinh-loi-spacing-qa&qa=dinh-loi-spacing&v=3255';
+    function api(){return frame.contentWindow && frame.contentWindow.__HON_VIET__;}
+    function unitSnapshot(){
+      const a=api(); if(!a)return null;
+      const units=a.getUnits();
+      const actor=units.find(u=>u.sourceId==='dinh_loi');
+      const enemy=units.find(u=>u.team==='enemy'&&u.slot===0);
+      return {actor,enemy,units};
+    }
+    async function waitReady(){
+      for(let i=0;i<160;i++){
+        const a=api();
+        if(a && a.getState && a.getState().mode==='battle' && unitSnapshot()?.actor){return a;}
+        await sleep(100);
+      }
+      throw new Error('battle runtime not ready');
+    }
+    async function runQa(){
+      try{
+        const a=await waitReady();
+        await sleep(600);
+        const before=unitSnapshot();
+        statusEl.textContent='Đang ép Đình Lôi đánh thường để đo khoảng cách release...';
+        const action=a.qaForceDinhLoiAction('basic');
+        await sleep(720);
+        const release=unitSnapshot();
+        await action;
+        await sleep(250);
+        const after=unitSnapshot();
+        const gap=Math.round(Math.abs((release.enemy?.x??0)-(release.actor?.x??0)));
+        const returned=Math.abs((after.actor?.x??0)-(before.actor?.baseX??0))<2 && Math.abs((after.actor?.y??0)-(before.actor?.baseY??0))<2;
+        const onScreen=(release.actor?.x??-1)>0 && (release.actor?.x??99999)<1600;
+        const readable=gap>=70 && gap<=128;
+        const ok=onScreen && readable && returned;
+        statusEl.innerHTML=ok?'<span class="ok">OK: Basic đứng đúng khoảng cách, đánh xong về slot.</span>':'<span class="bad">Cần xem lại spacing.</span>';
+        reportEl.textContent=JSON.stringify({ok,gapPx:gap,readable,onScreen,returned,before:{actor:{x:before.actor.x,y:before.actor.y,baseX:before.actor.baseX,baseY:before.actor.baseY},enemy:{x:before.enemy.x,y:before.enemy.y}},release:{actor:{x:Math.round(release.actor.x),y:Math.round(release.actor.y),state:release.actor.state},enemy:{x:release.enemy.x,y:release.enemy.y}},after:{actor:{x:Math.round(after.actor.x),y:Math.round(after.actor.y),state:after.actor.state}}},null,2);
+      }catch(err){
+        statusEl.innerHTML='<span class="bad">QA lỗi runtime.</span>';
+        reportEl.textContent=String(err && err.stack || err);
+      }
+    }
+    runQa();
+  </script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+{
+  "version": "3.21.9-clean-runtime",
+  "source_zip_bytes": 436100117,
+  "clean_zip_bytes": 63924305,
+  "zip_reduction_bytes": 372175812,
+  "zip_reduction_percent": 85.3,
+  "source_work_bytes": 479812416,
+  "clean_runtime_bytes": 72583873,
+  "runtime_asset_refs_total": 92,
+  "runtime_asset_refs_present_source": 79,
+  "runtime_asset_refs_present_clean": 79,
+  "missing_refs_source": [
+    "assets/battle-runtime/embedded-00.jpg",
+    "assets/battle-runtime/embedded-01.jpg",
+    "assets/battle-runtime/embedded-02.jpg",
+    "assets/battle-runtime/embedded-17.jpg",
+    "assets/meta/economy/forge-bg.jpg",
+    "assets/meta/economy/shop-bg.jpg",
+    "assets/meta/economy/summon-bg.jpg",
+    "assets/ui/v2731/bach-bao-temple-bg.jpg",
+    "assets/ui/v293/formation-bg.jpg",
+    "assets/ui/v293/hero-hall-bg.jpg",
+    "assets/ui/v294/arena-bg.jpg",
+    "assets/ui/v294/campaign-bg.jpg",
+    "assets/ui/v294/expedition-bg.jpg"
+  ],
+  "missing_refs_clean": [
+    "assets/battle-runtime/embedded-00.jpg",
+    "assets/battle-runtime/embedded-01.jpg",
+    "assets/battle-runtime/embedded-02.jpg",
+    "assets/battle-runtime/embedded-17.jpg",
+    "assets/meta/economy/forge-bg.jpg",
+    "assets/meta/economy/shop-bg.jpg",
+    "assets/meta/economy/summon-bg.jpg",
+    "assets/ui/v2731/bach-bao-temple-bg.jpg",
+    "assets/ui/v293/formation-bg.jpg",
+    "assets/ui/v293/hero-hall-bg.jpg",
+    "assets/ui/v294/arena-bg.jpg",
+    "assets/ui/v294/campaign-bg.jpg",
+    "assets/ui/v294/expedition-bg.jpg"
+  ],
+  "new_missing_refs_introduced": [],
+  "excluded": [
+    "artifacts/",
+    "tmp/",
+    "qa/",
+    "regression/",
+    "tools/",
+    "backup HTML",
+    "design/QA markdown",
+    "unreferenced old animation atlases/source assets"
+  ],
+  "verification": {
+    "index_html_present": true,
+    "battle_html_present": true,
+    "all_existing_runtime_refs_copied": true,
+    "no_new_missing_refs": true,
+    "browser_smoke": "BLOCKED_IN_ENVIRONMENT_HEADLESS_CHROMIUM_HANG; not claimed PASS"
+  }
+}

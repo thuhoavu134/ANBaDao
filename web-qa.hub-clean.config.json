@@ -1,0 +1,67 @@
+{
+  "target": "http://127.0.0.1:8770/index.html",
+  "wait_ms": 1200,
+  "viewports": [
+    {"name":"mobile","width":390,"height":844},
+    {"name":"tablet","width":768,"height":1024},
+    {"name":"desktop","width":1280,"height":800}
+  ],
+  "interactions": [
+    {
+      "name": "gold-plus-opens-campaign",
+      "selector": "[data-resource-go='campaign']",
+      "expect": {
+        "selector": "#campaignScreen",
+        "text_includes": "Tiếp tục nhiệm vụ hiện tại"
+      }
+    },
+    {
+      "name": "campaign-back-to-hub",
+      "selector": "#campaignScreen .back[data-nav='hub']",
+      "expect": {
+        "selector": "#hubScreen",
+        "text_includes": "Ông Phở"
+      }
+    },
+    {
+      "name": "gem-plus-opens-daily",
+      "selector": "[data-resource-go='daily']",
+      "expect": {
+        "selector": "#dailyScreen",
+        "text_includes": "Nhật Ký Mơ"
+      }
+    },
+    {
+      "name": "daily-back-to-hub",
+      "selector": "#dailyScreen [data-nav='hub']",
+      "expect": {
+        "selector": "#hubScreen",
+        "text_includes": "Ông Phở"
+      }
+    },
+    {
+      "name": "side-label-opens-daily",
+      "selector": ".art-side.left button[data-art-go='daily']",
+      "expect": {
+        "selector": "#dailyScreen",
+        "text_includes": "Nhật Ký Mơ"
+      }
+    },
+    {
+      "name": "daily-back-to-hub-after-label",
+      "selector": "#dailyScreen [data-nav='hub']",
+      "expect": {
+        "selector": "#hubScreen",
+        "text_includes": "Ông Phở"
+      }
+    },
+    {
+      "name": "bottom-dock-opens-campaign",
+      "selector": ".art-dock button[data-art-go='campaign']",
+      "expect": {
+        "selector": "#campaignScreen",
+        "text_includes": "Tiếp tục nhiệm vụ hiện tại"
+      }
+    }
+  ]
+}

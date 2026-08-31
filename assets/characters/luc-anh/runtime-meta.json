@@ -1,0 +1,90 @@
+{
+  "skill1": {
+    "src": "assets/characters/luc-anh/skill1-atlas.webp",
+    "frames": 59,
+    "cols": 8,
+    "cellW": 240,
+    "cellH": 240,
+    "rows": 8
+  },
+  "skill1_vfx": {
+    "src": "assets/characters/luc-anh/skill1_vfx-atlas.webp",
+    "frames": 64,
+    "cols": 8,
+    "cellW": 320,
+    "cellH": 220,
+    "rows": 8
+  },
+  "ultimate": {
+    "src": "assets/characters/luc-anh/ultimate-atlas.webp",
+    "frames": 64,
+    "cols": 8,
+    "cellW": 240,
+    "cellH": 240,
+    "rows": 8
+  },
+  "ultimate_vfx": {
+    "src": "assets/characters/luc-anh/ultimate_vfx-atlas.webp",
+    "frames": 64,
+    "cols": 8,
+    "cellW": 320,
+    "cellH": 220,
+    "rows": 8
+  },
+  "idle": {
+    "src": "assets/characters/luc-anh/idle-atlas.webp",
+    "frames": 64,
+    "cols": 8,
+    "cellW": 240,
+    "cellH": 240,
+    "rows": 8
+  },
+  "hit": {
+    "src": "assets/characters/luc-anh/hit-atlas.webp",
+    "frames": 54,
+    "cols": 8,
+    "cellW": 240,
+    "cellH": 240,
+    "rows": 7
+  },
+  "fall": {
+    "src": "assets/characters/luc-anh/fall-atlas.webp",
+    "frames": 64,
+    "cols": 8,
+    "cellW": 240,
+    "cellH": 240,
+    "rows": 8
+  },
+  "run": {
+    "src": "assets/characters/luc-anh/run-atlas.webp",
+    "frames": 61,
+    "cols": 8,
+    "cellW": 240,
+    "cellH": 240,
+    "rows": 8
+  },
+  "basic": {
+    "src": "assets/characters/luc-anh/basic-atlas.webp",
+    "frames": 64,
+    "cols": 8,
+    "cellW": 240,
+    "cellH": 240,
+    "rows": 8
+  },
+  "basic_projectile": {
+    "src": "assets/characters/luc-anh/basic_projectile-atlas.webp",
+    "frames": 64,
+    "cols": 8,
+    "cellW": 320,
+    "cellH": 220,
+    "rows": 8
+  },
+  "basic_impact": {
+    "src": "assets/characters/luc-anh/basic_impact-atlas.webp",
+    "frames": 62,
+    "cols": 8,
+    "cellW": 320,
+    "cellH": 220,
+    "rows": 8
+  }
+}

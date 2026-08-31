@@ -1,0 +1,38 @@
+import { cpSync, mkdirSync, rmSync, existsSync, copyFileSync, statSync } from 'node:fs';
+import { join } from 'node:path';
+
+const root = process.cwd();
+const out = join(root, 'dist');
+rmSync(out, { recursive: true, force: true });
+mkdirSync(out, { recursive: true });
+
+const entries = [
+  'index.html',
+  'battle.html',
+  'qa-dinh-loi-spacing.html',
+  'assets',
+  'artifacts',
+  'docs',
+  'RUNTIME-FILES.txt',
+  'RUNTIME-PACKAGE.txt',
+  'BUILD-UTC.txt',
+  'SHA256SUMS.txt',
+  'SIZE-REPORT.txt',
+  'clean-runtime-report.json',
+  'vibelab.json'
+];
+
+for (const entry of entries) {
+  const src = join(root, entry);
+  if (!existsSync(src)) continue;
+  const dest = join(out, entry);
+  const stats = statSync(src);
+  if (stats.isDirectory()) {
+    cpSync(src, dest, { recursive: true });
+  } else {
+    mkdirSync(join(dest, '..'), { recursive: true });
+    copyFileSync(src, dest);
+  }
+}
+
+console.log(`Static preview written to ${out}`);

@@ -1,0 +1,16 @@
+Hồn Việt: Mộng Giới v3.26.0 — Lục Ảnh Golden Complete
+
+Baseline:
+- v3.25.5 Đình Lôi Starter Squad Preview source
+
+Integrated:
+- Lục Ảnh full authored visual runtime and hero-detail presentation
+- Lục Ảnh two-voice contract (hero detail + Ultimate)
+- Skill 1 six-slot effigy VFX
+- Ultimate exact 3x toxic-cloud VFX + 6% max-HP Poison x3 turns
+- Three supplied BGM routes: hub/features, combat, traversal/tower
+
+Verified:
+- 29/29 automated tests PASS
+- npm run build PASS
+- Visual browser acceptance remains pending actual-play review
