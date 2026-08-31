@@ -36,4 +36,5 @@ for (const entry of entries) {
 }
 
 await import('./luc-anh-runtime-patch.mjs');
+await import('./runtime-safety-hotfix.mjs');
 console.log(`Static preview written to ${out}`);
