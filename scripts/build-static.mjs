@@ -42,5 +42,4 @@ await import('./runtime-qa-polish-v5.mjs');
 await import('./hero-card-dedupe-v1.mjs');
 await import('./hero-roster-phase-a-v3.mjs');
 await import('./hero-roster-single-tap-v1.mjs');
-await import('./hero-roster-clean-legacy-v2.mjs');
 console.log(`Static preview written to ${out}`);
