@@ -40,4 +40,5 @@ await import('./runtime-qa-polish-v2.mjs');
 await import('./runtime-qa-polish-v4.mjs');
 await import('./runtime-qa-polish-v5.mjs');
 await import('./hero-card-dedupe-v1.mjs');
+await import('./hero-roster-phase-a-v3.mjs');
 console.log(`Static preview written to ${out}`);
