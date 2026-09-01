@@ -38,4 +38,5 @@ await import('./ios-audio-unlock-patch.mjs');
 await import('./luc-anh-retina-sharpness-patch.mjs');
 await import('./runtime-qa-polish-v2.mjs');
 await import('./runtime-qa-polish-v4.mjs');
+await import('./runtime-qa-polish-v5.mjs');
 console.log(`Static preview written to ${out}`);
