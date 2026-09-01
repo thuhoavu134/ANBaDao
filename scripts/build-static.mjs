@@ -27,12 +27,8 @@ for (const entry of entries) {
   if (!existsSync(src)) continue;
   const dest = join(out, entry);
   const stats = statSync(src);
-  if (stats.isDirectory()) {
-    cpSync(src, dest, { recursive: true });
-  } else {
-    mkdirSync(join(dest, '..'), { recursive: true });
-    copyFileSync(src, dest);
-  }
+  if (stats.isDirectory()) cpSync(src, dest, { recursive: true });
+  else { mkdirSync(join(dest, '..'), { recursive: true }); copyFileSync(src, dest); }
 }
 
 await import('./luc-anh-runtime-patch.mjs');
@@ -41,4 +37,5 @@ await import('./bgm-runtime-patch.mjs');
 await import('./ios-audio-unlock-patch.mjs');
 await import('./luc-anh-retina-sharpness-patch.mjs');
 await import('./runtime-qa-polish-v2.mjs');
+await import('./runtime-qa-polish-v4.mjs');
 console.log(`Static preview written to ${out}`);
