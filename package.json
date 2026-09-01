@@ -9,5 +9,8 @@
     "preview": "npx serve dist",
     "test": "node --test tests/*.test.mjs",
     "check": "npm test"
+  },
+  "dependencies": {
+    "sharp": "0.34.3"
   }
 }
