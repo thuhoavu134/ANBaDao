@@ -1,6 +1,6 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { spawnSync } from 'node:child_process';
+import sharp from 'sharp';
 
 const root = process.cwd();
 const assetDir = join(root, 'assets', 'characters', 'luc-anh');
@@ -14,25 +14,29 @@ const atlases = [
 
 mkdirSync(outDir, { recursive: true });
 
-function upscaleOne(name) {
+async function upscaleOne(name) {
   const src = join(assetDir, name);
   const dest = join(outDir, name);
   if (!existsSync(src)) throw new Error(`Missing Lục Ảnh atlas: ${name}`);
 
-  // Build-time/offline only. Never allocate giant atlas canvases in Safari runtime.
-  const candidates = [
-    ['/opt/imagemagick/bin/magick', [src, '-filter', 'Lanczos', '-resize', '200%', '-unsharp', '0x0.8+0.7+0.03', '-define', 'webp:lossless=true', '-quality', '100', dest]],
-    ['magick', [src, '-filter', 'Lanczos', '-resize', '200%', '-unsharp', '0x0.8+0.7+0.03', '-define', 'webp:lossless=true', '-quality', '100', dest]],
-  ];
+  const info = await sharp(src).metadata();
+  if (!info.width || !info.height) throw new Error(`Invalid Lục Ảnh atlas dimensions: ${name}`);
 
-  for (const [cmd,args] of candidates) {
-    const r = spawnSync(cmd, args, { stdio: 'inherit' });
-    if (!r.error && r.status === 0) return;
-  }
-  throw new Error('ImageMagick is required for Lục Ảnh offline upscale. Install ImageMagick or generate the 2x atlases locally before build.');
+  // Offline/build-time only. Every source frame is preserved; only atlas resolution changes.
+  await sharp(src, { animated: false, limitInputPixels: false })
+    .resize(info.width * 2, info.height * 2, {
+      kernel: sharp.kernel.lanczos3,
+      fit: 'fill'
+    })
+    .sharpen({ sigma: 0.8, m1: 0.7, m2: 1.0, x1: 2.0, y2: 10.0, y3: 20.0 })
+    .webp({ lossless: true, quality: 100, effort: 4, alphaQuality: 100 })
+    .toFile(dest);
+
+  console.log(`Lục Ảnh 2x: ${name} ${info.width}x${info.height} -> ${info.width * 2}x${info.height * 2}`);
 }
 
-for (const name of atlases) upscaleOne(name);
+// Sequential processing deliberately caps peak memory usage on Vercel builders.
+for (const name of atlases) await upscaleOne(name);
 
 const metaPath = join(assetDir, 'runtime-meta.json');
 if (existsSync(metaPath)) {
@@ -44,4 +48,4 @@ if (existsSync(metaPath)) {
   writeFileSync(join(outDir, 'runtime-meta.json'), JSON.stringify(meta, null, 2));
 }
 
-console.log(`Lục Ảnh offline 2x atlases generated at ${outDir}`);
+console.log(`Lục Ảnh offline 2x atlases generated safely at ${outDir}`);
