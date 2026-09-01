@@ -40,4 +40,6 @@ await import('./runtime-safety-hotfix.mjs');
 await import('./bgm-runtime-patch.mjs');
 await import('./ios-audio-unlock-patch.mjs');
 await import('./luc-anh-retina-sharpness-patch.mjs');
+await import('./luc-anh-offline-upscale.mjs');
+await import('./luc-anh-offline-atlas-patch.mjs');
 console.log(`Static preview written to ${out}`);
