@@ -33,7 +33,11 @@ const manager = String.raw`<script id="honviet-ios-audio-unlock">
     loads.set(url,p);return p;
   }
   async function unlock(){
-    if(unlocked)return true;
+    if(unlocked){
+      const c=getCtx();
+      if(c&&c.state==='suspended')try{await c.resume();}catch(_e){}
+      return true;
+    }
     if(unlockPromise)return unlockPromise;
     unlockPromise=(async()=>{
       const c=getCtx();
@@ -44,10 +48,11 @@ const manager = String.raw`<script id="honviet-ios-audio-unlock">
           s.buffer=b;s.connect(c.destination);s.start(0);
         }catch(_e){}
       }
-      // Unlock HTMLMediaElement playback on iOS using the same user gesture.
+      // Prime existing HTML media during the user's first real game interaction.
       document.querySelectorAll('audio,video').forEach(el=>{
         try{
-          const wasMuted=el.muted; el.muted=true;
+          const wasMuted=el.muted;
+          el.muted=true;
           const p=el.play();
           if(p&&p.then)p.then(()=>{el.pause();el.currentTime=0;el.muted=wasMuted;}).catch(()=>{el.muted=wasMuted;});
           else {el.pause();el.currentTime=0;el.muted=wasMuted;}
@@ -75,23 +80,21 @@ const manager = String.raw`<script id="honviet-ios-audio-unlock">
     }
   }
   window.HonVietAudio={unlock,playVoice,preload:(u)=>decode(u),isUnlocked:()=>unlocked,context:()=>getCtx()};
+
+  // No blocking splash. The first normal tap/click on ANY actual game control unlocks audio.
+  // Capture phase makes this run before the button's own handler (hero card, campaign, battle, etc.).
   const firstGesture=()=>unlock().catch(()=>{});
-  ['pointerdown','touchend','click','keydown'].forEach(t=>document.addEventListener(t,firstGesture,{capture:true,passive:true,once:true}));
-  // A single explicit first tap makes Safari/iOS policy deterministic.
-  if(!sessionStorage.getItem('honviet-audio-unlocked')){
-    const show=()=>{
-      if(document.getElementById('honvietAudioGate'))return;
-      const gate=document.createElement('button');gate.id='honvietAudioGate';gate.type='button';
-      gate.setAttribute('aria-label','Chạm để bắt đầu');
-      gate.textContent='CHẠM ĐỂ BẮT ĐẦU';
-      gate.style.cssText='position:fixed;inset:0;z-index:2147483646;border:0;background:rgba(2,9,8,.72);color:#ffe7a0;font:800 16px system-ui;letter-spacing:.12em;backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);';
-      gate.addEventListener('click',async()=>{await unlock().catch(()=>{});sessionStorage.setItem('honviet-audio-unlocked','1');gate.remove();},{once:true});
-      document.body.appendChild(gate);
-    };
-    if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',show,{once:true});else show();
-  }else{
-    document.addEventListener('pointerdown',()=>unlock().catch(()=>{}),{capture:true,once:true});
-  }
+  ['pointerdown','touchstart','touchend','click','keydown'].forEach(t=>
+    document.addEventListener(t,firstGesture,{capture:true,passive:true,once:true})
+  );
+
+  // Resume again after iOS returns from background / tab switch.
+  document.addEventListener('visibilitychange',()=>{
+    if(document.visibilityState==='visible'&&unlocked){
+      const c=getCtx();
+      if(c&&c.state==='suspended')c.resume().catch(()=>{});
+    }
+  });
 })();
 </script>`;
 
@@ -111,7 +114,7 @@ index=index.replace(/function playLucAnhVoice\(src,vol=[^)]*\)\{[\s\S]*?\}\s*(?=
 writeFileSync(indexPath,index);
 
 let battle = readFileSync(battlePath,'utf8');
-// Ultimate voice is played by the parent page AudioContext which was unlocked by the first tap.
+// Ultimate voice is played by the parent page AudioContext which was unlocked by the first real UI interaction.
 battle=battle.replace(/function playLucAnhUltimateVoice\(\)\{[\s\S]*?\}\s*(?=function|async function|const |let |var )/,
 `function playLucAnhUltimateVoice(){
   try{
@@ -122,4 +125,4 @@ battle=battle.replace(/function playLucAnhUltimateVoice\(\)\{[\s\S]*?\}\s*(?=fun
 }
 `);
 writeFileSync(battlePath,battle);
-console.log('iOS global audio unlock + shared voice bus applied');
+console.log('iOS audio unlock on first real interaction applied; no blocking gate');
