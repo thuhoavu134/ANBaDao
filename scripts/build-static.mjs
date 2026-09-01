@@ -35,4 +35,7 @@ for (const entry of entries) {
   }
 }
 
+await import('./luc-anh-runtime-patch.mjs');
+await import('./runtime-safety-hotfix.mjs');
+await import('./bgm-runtime-patch.mjs');
 console.log(`Static preview written to ${out}`);
