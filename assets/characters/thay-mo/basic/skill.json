@@ -1,0 +1,11 @@
+{
+  "schema": "hon-viet-skill/v1",
+  "id": "thay-mo.basic",
+  "name": "Đánh Thường",
+  "movement": { "type": 0, "name": "STAY" },
+  "targeting": { "type": "single-enemy" },
+  "parts": { "cast": "cast/frames.json", "projectile": "projectile/frames.json", "impact": "impact/frames.json" },
+  "anchors": { "castAnchor": { "x": 58, "y": -83 }, "hitAnchor": { "x": -10, "y": -72 } },
+  "timing": { "idleInMs": 600, "castDurationMs": 1728, "castDelayMs": 950, "projectileTravelMs": 800, "impactDurationMs": 1000, "recoverMs": 900 },
+  "runtime": { "preserveExistingCombatLogic": true, "targetAwareTrajectory": true }
+}
