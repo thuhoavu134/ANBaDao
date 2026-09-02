@@ -1,0 +1,9 @@
+{
+  "schema": "hon-viet-vfx-atlas/v1",
+  "id": "dinh-loi.skill1.shield",
+  "atlas": "../../skill1-shield-atlas.png",
+  "layout": { "type": "grid", "columns": 8, "rows": 8, "frameCount": 64, "cellWidth": 240, "cellHeight": 135 },
+  "timeline": { "frameDurationMs": 62.5, "loop": true, "persistent": true },
+  "spawn": { "type": "statusOwner", "status": "guard", "anchor": "footAnchor" },
+  "display": { "width": 330, "height": 186, "baseline": 93, "scale": 1, "layer": "front", "blendMode": "screen", "alpha": 0.82 }
+}
