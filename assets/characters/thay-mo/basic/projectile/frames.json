@@ -1,0 +1,10 @@
+{
+  "schema": "hon-viet-vfx-atlas/v1",
+  "id": "thay-mo.basic.projectile",
+  "atlas": "../../projectile-v3201-atlas.png",
+  "layout": { "type": "grid", "columns": 6, "rows": 4, "frameCount": 24, "cellWidth": 480, "cellHeight": 90, "pad": 4, "strideWidth": 488, "strideHeight": 98 },
+  "timeline": { "durationMs": 800, "loop": false, "playAllFrames": true },
+  "anchor": { "type": "castAnchor", "offsetX": 58, "offsetY": -83 },
+  "targetAnchor": { "type": "hitAnchor", "offsetX": -10, "offsetY": -72 },
+  "display": { "layer": "projectile", "blendMode": "normal", "stretchToTravelDistance": true }
+}
