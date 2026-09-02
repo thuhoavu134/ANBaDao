@@ -1,0 +1,14 @@
+{
+  "schema": "hon-viet-skill/v1",
+  "id": "dinh-loi.basic",
+  "heroId": "dinh-loi",
+  "kind": "basic",
+  "name": "Khiên Đồng Trấn Kích",
+  "movement": { "moveType": 2, "stationary": false, "returnHome": true },
+  "targeting": { "type": "singleEnemy" },
+  "anchors": { "castAnchor": { "x": 0, "y": -82 }, "hitAnchor": { "x": 0, "y": -82 } },
+  "timing": { "castDelayMs": 1550, "projectileTravelMs": 650, "impactDurationMs": 800, "returnHoldMs": 920, "returnMs": 520 },
+  "parts": { "cast": "cast/frames.json", "projectile": "projectile/frames.json", "impact": "impact/frames.json" },
+  "audio": { "cast": null, "impact": null },
+  "runtime": { "speedModes": [1, 2, 3], "preserveAllFrames": true }
+}
