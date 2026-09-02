@@ -1,0 +1,9 @@
+{
+  "schema": "hon-viet-vfx-atlas/v1",
+  "id": "thay-mo.skill1.impact",
+  "atlas": "../../skill1-impact-v3206-atlas.png",
+  "layout": { "type": "grid", "columns": 5, "frameCount": 25, "cellWidth": 348, "cellHeight": 290, "pad": 4, "strideWidth": 356, "strideHeight": 298 },
+  "timeline": { "startFrame": 2, "frameDurationMs": 20, "playFrameCount": 23, "durationMs": 460, "mainImpactFrame": 4, "loop": false },
+  "anchor": { "type": "hitAnchor", "offsetX": -16, "offsetY": -72 },
+  "display": { "primaryWidth": 235, "secondaryScale": 0.88, "layer": "impact", "blendMode": "screen" }
+}
