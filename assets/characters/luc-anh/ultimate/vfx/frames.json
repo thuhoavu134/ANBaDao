@@ -1,0 +1,9 @@
+{
+  "schema": "hon-viet-vfx-atlas/v1",
+  "id": "luc-anh.ultimate.vfx",
+  "atlas": "../../ultimate_vfx-atlas.webp",
+  "layout": { "type": "grid", "columns": 8, "rows": 8, "frameCount": 64, "cellWidth": 320, "cellHeight": 220 },
+  "timeline": { "durationMs": 3200, "loop": false, "playAllFrames": true },
+  "spawn": { "type": "enemyGroup", "coverage": "allEnemies", "maxTargets": 6 },
+  "display": { "scale": 1, "layer": "front", "blendMode": "screen", "alpha": 1, "layoutMode": "threeRowCoverage" }
+}
