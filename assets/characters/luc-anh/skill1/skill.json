@@ -1,0 +1,14 @@
+{
+  "schema": "hon-viet-skill/v1",
+  "id": "luc-anh.skill1",
+  "heroId": "luc-anh",
+  "kind": "talent",
+  "name": "Đèn Kéo Quân",
+  "movement": { "moveType": 0, "stationary": true },
+  "targeting": { "type": "allEnemies", "spawnVfxPerTarget": true, "maxTargets": 6 },
+  "anchors": { "hitAnchor": { "x": 0, "y": -80 } },
+  "timing": { "castDelayMs": 900, "settleDelayMs": 700, "vfxDurationMs": 1650 },
+  "parts": { "cast": "cast/frames.json", "vfx": "vfx/frames.json" },
+  "audio": { "cast": null, "impact": null },
+  "runtime": { "automaticTalent": true, "speedModes": [1, 2, 3], "preserveAllFrames": true }
+}
