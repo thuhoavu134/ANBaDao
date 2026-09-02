@@ -1,0 +1,9 @@
+{
+  "schema": "hon-viet-vfx-atlas/v1",
+  "id": "dinh-loi.basic.impact",
+  "atlas": "../../basic-impact-atlas.png",
+  "layout": { "type": "grid", "columns": 8, "rows": 8, "frameCount": 64, "cellWidth": 240, "cellHeight": 135 },
+  "timeline": { "durationMs": 800, "loop": false, "playAllFrames": true },
+  "spawn": { "type": "target", "anchor": "hitAnchor" },
+  "display": { "width": 370, "height": 208, "baseline": 104, "scale": 1, "layer": "front", "blendMode": "screen" }
+}
