@@ -1,0 +1,14 @@
+{
+  "schema": "hon-viet-skill/v1",
+  "id": "luc-anh.ultimate",
+  "heroId": "luc-anh",
+  "kind": "ultimate",
+  "name": "Độc Vân Phủ Thế",
+  "movement": { "moveType": 0, "stationary": true },
+  "targeting": { "type": "allEnemies", "maxTargets": 6 },
+  "effect": { "poison": { "turns": 3, "maxHpPercentPerTick": 6 } },
+  "timing": { "voiceLeadMs": 260, "vfxDelayMs": 760, "impactHoldMs": 1850, "vfxDurationMs": 3200 },
+  "parts": { "cast": "cast/frames.json", "vfx": "vfx/frames.json" },
+  "audio": { "voice": "../../../audio/voice-luc-anh-ultimate.mp3", "cast": null, "impact": null },
+  "runtime": { "speedModes": [1, 2, 3], "preserveAllFrames": true, "lockCharacterScale": true }
+}
