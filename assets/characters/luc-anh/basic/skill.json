@@ -1,0 +1,19 @@
+{
+  "schema": "hon-viet-skill/v1",
+  "id": "luc-anh.basic",
+  "heroId": "luc-anh",
+  "kind": "basic",
+  "movement": { "moveType": 0, "stationary": true },
+  "anchors": {
+    "castAnchor": { "x": 72, "y": -104 },
+    "hitAnchor": { "x": 0, "y": -80 }
+  },
+  "timing": { "castDelayMs": 900, "projectileTravelMs": 760, "impactDurationMs": 720 },
+  "parts": {
+    "cast": "cast/frames.json",
+    "projectile": "projectile/frames.json",
+    "impact": "impact/frames.json"
+  },
+  "audio": { "cast": null, "impact": null },
+  "runtime": { "speedModes": [1, 2, 3], "preserveAllFrames": true }
+}
