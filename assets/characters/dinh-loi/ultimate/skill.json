@@ -1,0 +1,14 @@
+{
+  "schema": "hon-viet-skill/v1",
+  "id": "dinh-loi.ultimate",
+  "heroId": "dinh-loi",
+  "kind": "ultimate",
+  "name": "Đông Sơn Lôi Trận",
+  "movement": { "moveType": 2, "stationary": false, "returnHome": true },
+  "targeting": { "type": "allEnemiesAndAllies" },
+  "effect": { "teamShieldMaxHpPercent": 28, "shieldTurns": 2, "counterReadyAllies": true, "enemyShockDamage": true },
+  "timing": { "castDelayMs": 1250, "vfxDurationMs": 1900, "impactDurationMs": 850, "returnHoldMs": 760, "returnMs": 520 },
+  "parts": { "cast": "cast/frames.json", "vfx": "vfx/frames.json", "impact": "impact/frames.json" },
+  "audio": { "cast": null, "impact": null },
+  "runtime": { "speedModes": [1, 2, 3], "preserveAllFrames": true }
+}
