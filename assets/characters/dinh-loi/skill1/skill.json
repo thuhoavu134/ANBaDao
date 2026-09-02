@@ -1,0 +1,14 @@
+{
+  "schema": "hon-viet-skill/v1",
+  "id": "dinh-loi.skill1",
+  "heroId": "dinh-loi",
+  "kind": "talent",
+  "name": "Hồi Văn Hộ Trận",
+  "movement": { "moveType": 2, "stationary": false, "returnHome": true },
+  "targeting": { "type": "lowestHealthAlly", "includeCaster": true },
+  "effect": { "shieldMaxHpPercent": 20, "shieldTurns": 2, "counterReady": true },
+  "timing": { "castDelayMs": 1500, "waveTravelMs": 700, "impactDurationMs": 900, "returnHoldMs": 920, "returnMs": 520 },
+  "parts": { "cast": "cast/frames.json", "wave": "wave/frames.json", "impact": "impact/frames.json", "shield": "shield/frames.json" },
+  "audio": { "cast": null, "impact": null },
+  "runtime": { "automaticTalent": true, "speedModes": [1, 2, 3], "preserveAllFrames": true }
+}
