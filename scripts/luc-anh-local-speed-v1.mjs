@@ -27,16 +27,22 @@ optional(
   'VFX duration'
 );
 
-// Isolate exactly the Lục Ảnh authored branch. Never rewrite same-number waits elsewhere.
 const start=s.indexOf('    if(usesLucAnh){');
 if(start<0) throw new Error('Luc Anh local speed missing usesLucAnh action block');
-const endMarker='\n    if(usesDinhLoi';
-let end=s.indexOf(endMarker,start);
-if(end<0){
-  const fallback='\n    if(usesThayMoBasicQa';
-  end=s.indexOf(fallback,start);
+
+// Stable boundary in the current runtime: after the entire authored Lục Ảnh branch,
+// normal shared impact resolution resumes at this exact statement.
+const endMarkers=[
+  '\n    dom.phaseLabel.textContent = "Va chạm";',
+  '\n    dom.phaseLabel.textContent="Va chạm";',
+  '\n    actor.slotComboReady='
+];
+let end=-1;
+for(const marker of endMarkers){
+  const i=s.indexOf(marker,start);
+  if(i>=0&&(end<0||i<end)) end=i;
 }
-if(end<0) throw new Error('Luc Anh local speed missing action block end hook');
+if(end<0) throw new Error('Luc Anh local speed missing stable action block boundary');
 let block=s.slice(start,end);
 
 for(const key of ['attack','skill1','ultimate']){
@@ -44,8 +50,6 @@ for(const key of ['attack','skill1','ultimate']){
   block=block.replace(re,`setUnitState(actor,"${key}",lucAnhDelayMs(LUC_ANH_META.${key}.frames*LUC_ANH_META.${key}.ms))`);
 }
 
-// Normalize currently deployed values to metadata. Both the original runtime sequence and QA-v2
-// Ultimate variant are accepted; only whichever is present inside usesLucAnh is replaced.
 const replacements=[
   [/sleepVisualMilliseconds\((?:lucAnhDelayMs\()?900\)?,battleId\)/g,'sleepVisualMilliseconds(lucAnhDelayMs(LUC_ANH_SPATIAL.timing.basic.castDelay),battleId)'],
   [/startLucAnhFx\("basicProjectile",actor,target,(?:lucAnhDelayMs\()?760\)?\)/g,'startLucAnhFx("basicProjectile",actor,target,LUC_ANH_SPATIAL.timing.basic.projectileTravel)'],
@@ -59,7 +63,6 @@ const replacements=[
 ];
 for(const [re,to] of replacements) block=block.replace(re,to);
 
-// Legacy Ultimate path may still be present if QA-v2 did not replace it.
 block=block.replace(/sleepVisualMilliseconds\((?:lucAnhDelayMs\()?980\)?,battleId\)/g,'sleepVisualMilliseconds(lucAnhDelayMs(980),battleId)');
 block=block.replace(/sleepVisualMilliseconds\((?:lucAnhDelayMs\()?1050\)?,battleId\)/g,'sleepVisualMilliseconds(lucAnhDelayMs(1050),battleId)');
 
@@ -68,4 +71,4 @@ s=s.slice(0,start)+block+s.slice(end);
 if(!s.includes('function lucAnhPlaybackRate(){')) throw new Error('Luc Anh local speed verification failed');
 if(!block.includes('LUC_ANH_SPATIAL.timing')) throw new Error('Luc Anh local speed timing metadata was not wired');
 writeFileSync(p,s);
-console.log('Luc Anh local x1/x2/x3 + authored timing metadata applied; core turn clock untouched');
+console.log('Luc Anh local x1/x2/x3 + authored timing metadata applied with stable block boundary');
