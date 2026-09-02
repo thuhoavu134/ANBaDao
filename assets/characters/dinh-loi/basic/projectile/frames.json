@@ -1,0 +1,9 @@
+{
+  "schema": "hon-viet-vfx-atlas/v1",
+  "id": "dinh-loi.basic.projectile",
+  "atlas": "../../basic-projectile-atlas.png",
+  "layout": { "type": "grid", "columns": 8, "rows": 8, "frameCount": 64, "cellWidth": 240, "cellHeight": 135 },
+  "timeline": { "durationMs": 650, "loop": false, "playAllFrames": true },
+  "motion": { "type": "linear", "startAnchor": "castAnchor", "targetAnchor": "hitAnchor" },
+  "display": { "width": 300, "height": 169, "baseline": 84, "scale": 1, "layer": "front", "blendMode": "normal" }
+}
