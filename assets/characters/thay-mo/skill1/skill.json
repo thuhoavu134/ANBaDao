@@ -1,0 +1,12 @@
+{
+  "schema": "hon-viet-skill/v1",
+  "id": "thay-mo.skill1",
+  "name": "Chuông Chấn Phách",
+  "movement": { "type": 0, "name": "STAY" },
+  "targeting": { "type": "enemy-row", "primaryTarget": true },
+  "parts": { "cast": "cast/frames.json", "wave": "wave/frames.json", "impact": "impact/frames.json" },
+  "anchors": { "castAnchor": { "x": 64, "y": -86 }, "hitAnchor": { "x": -16, "y": -72 } },
+  "timing": { "idleInMs": 500, "castDurationMs": 952, "releaseFrame": 30, "releaseAtMs": 1010, "waveDurationMs": 430, "impactDurationMs": 460, "recoverMs": 620 },
+  "effect": { "damageMultiplier": 1.05, "sealSlowPower": 0.12, "slowTurns": 2, "threeSealActionPushback": 0.15 },
+  "runtime": { "preserveExistingCombatLogic": true, "rowTargeted": true }
+}
