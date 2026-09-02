@@ -1,8 +1,10 @@
 {
   "schema": "hon-viet-skill/v1",
   "id": "thay-mo.ultimate",
+  "heroId": "thay-mo",
+  "kind": "ultimate",
   "name": "Trận Ảnh Phong Môn",
-  "movement": { "type": 0, "name": "STAY" },
+  "movement": { "moveType": 0, "name": "STAY", "stationary": true },
   "targeting": { "type": "all-enemies", "coverage": "enemy-formation" },
   "parts": { "cast": "cast/frames.json", "vfx": "vfx/frames.json" },
   "anchors": { "vfxAnchor": { "type": "enemyGroupCenter", "x": 0, "y": -58 } },
