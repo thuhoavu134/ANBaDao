@@ -1,0 +1,9 @@
+{
+  "schema": "hon-viet-vfx-atlas/v1",
+  "id": "luc-anh.basic.cast",
+  "atlas": "../../basic-atlas.webp",
+  "layout": { "type": "grid", "columns": 8, "rows": 8, "frameCount": 64, "cellWidth": 240, "cellHeight": 240 },
+  "timeline": { "frameDurationMs": 23, "loop": false },
+  "anchor": { "type": "footAnchor", "offsetX": 0, "offsetY": 0 },
+  "display": { "width": 372, "height": 372, "baseline": 54, "scale": 1, "layer": "character", "blendMode": "normal" }
+}
