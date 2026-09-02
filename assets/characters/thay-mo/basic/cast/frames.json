@@ -1,0 +1,9 @@
+{
+  "schema": "hon-viet-vfx-atlas/v1",
+  "id": "thay-mo.basic.cast",
+  "atlas": "../../basic-cast-v3198-atlas.png",
+  "layout": { "type": "grid", "columns": 12, "rows": 8, "frameCount": 96, "cellWidth": 307, "cellHeight": 270, "pad": 3, "strideWidth": 313, "strideHeight": 276 },
+  "timeline": { "durationMs": 6000, "loop": false, "playAllFrames": true, "frameDurationsMs": [60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60] },
+  "anchor": { "type": "footAnchor", "offsetX": 0, "offsetY": 0 },
+  "display": { "layer": "character", "blendMode": "normal" }
+}
