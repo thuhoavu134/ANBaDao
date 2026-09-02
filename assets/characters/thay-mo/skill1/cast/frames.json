@@ -1,0 +1,9 @@
+{
+  "schema": "hon-viet-vfx-atlas/v1",
+  "id": "thay-mo.skill1.cast",
+  "atlas": "../../skill1-cast-v3204-atlas.png",
+  "layout": { "type": "grid", "columns": 11, "frameCount": 56, "cellWidth": 340, "cellHeight": 270, "pad": 4, "strideWidth": 348, "strideHeight": 278 },
+  "timeline": { "frameDurationMs": 17, "durationMs": 952, "loop": false, "playAllFrames": true, "releaseFrame": 30 },
+  "anchor": { "type": "footAnchor", "offsetX": 0, "offsetY": 0 },
+  "display": { "layer": "character", "blendMode": "normal" }
+}
