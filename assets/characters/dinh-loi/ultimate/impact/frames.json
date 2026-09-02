@@ -1,0 +1,9 @@
+{
+  "schema": "hon-viet-vfx-atlas/v1",
+  "id": "dinh-loi.ultimate.impact",
+  "atlas": "../../ultimate-impact-atlas.png",
+  "layout": { "type": "grid", "columns": 8, "rows": 8, "frameCount": 64, "cellWidth": 135, "cellHeight": 240 },
+  "timeline": { "durationMs": 850, "loop": false, "playAllFrames": true },
+  "spawn": { "type": "battlefield", "coverage": "fullBattlefield" },
+  "display": { "insetX": 120, "insetY": 10, "rightInset": 120, "bottomInset": 10, "scale": 1, "layer": "front", "blendMode": "screen", "alpha": 0.96 }
+}
