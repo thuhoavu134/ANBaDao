@@ -1,0 +1,16 @@
+{
+  "schema": "hon-viet-character-atlas-registry/v1",
+  "heroId": "thay-mo",
+  "displayName": "Thầy Mo",
+  "skills": {
+    "basic": "basic/skill.json",
+    "skill1": "skill1/skill.json",
+    "ultimate": "ultimate/skill.json"
+  },
+  "runtime": {
+    "movementPolicy": "metadata",
+    "anchorPolicy": "foot-anchor",
+    "layerPolicy": "character-vfx-independent",
+    "preserveExistingCombatLogic": true
+  }
+}
