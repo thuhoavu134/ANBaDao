@@ -1,0 +1,9 @@
+{
+  "schema": "hon-viet-vfx-atlas/v1",
+  "id": "dinh-loi.basic.cast",
+  "atlas": "../../basic-cast-atlas.png",
+  "layout": { "type": "grid", "columns": 8, "rows": 8, "frameCount": 64, "cellWidth": 240, "cellHeight": 135 },
+  "timeline": { "frameDurationMs": 62.5, "durationMs": 4000, "loop": false, "playAllFrames": true },
+  "anchor": { "type": "footAnchor", "offsetX": 0, "offsetY": 0 },
+  "display": { "width": 620, "height": 348, "baseline": 42, "scale": 1, "layer": "character", "blendMode": "normal" }
+}
