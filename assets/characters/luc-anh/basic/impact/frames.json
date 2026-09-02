@@ -1,0 +1,9 @@
+{
+  "schema": "hon-viet-vfx-atlas/v1",
+  "id": "luc-anh.basic.impact",
+  "atlas": "../../basic_impact-atlas.webp",
+  "layout": { "type": "grid", "columns": 8, "rows": 8, "frameCount": 62, "cellWidth": 320, "cellHeight": 220 },
+  "timeline": { "durationMs": 720, "loop": false, "playAllFrames": true },
+  "anchor": { "type": "hitAnchor", "offsetX": 0, "offsetY": 0 },
+  "display": { "width": 350, "height": 241, "baseline": 120, "scale": 1, "layer": "front", "blendMode": "screen", "alpha": 0.96 }
+}
