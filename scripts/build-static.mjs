@@ -35,6 +35,7 @@ await import('./luc-anh-runtime-patch.mjs');
 await import('./runtime-safety-hotfix.mjs');
 await import('./bgm-runtime-patch.mjs');
 await import('./ios-audio-unlock-patch.mjs');
+await import('./result-audio-runtime-v1.mjs');
 await import('./luc-anh-retina-sharpness-patch.mjs');
 await import('./runtime-qa-polish-v2.mjs');
 await import('./runtime-qa-polish-v4.mjs');
