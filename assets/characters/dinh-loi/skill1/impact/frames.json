@@ -1,0 +1,9 @@
+{
+  "schema": "hon-viet-vfx-atlas/v1",
+  "id": "dinh-loi.skill1.impact",
+  "atlas": "../../skill1-impact-atlas.png",
+  "layout": { "type": "grid", "columns": 8, "rows": 8, "frameCount": 64, "cellWidth": 240, "cellHeight": 135 },
+  "timeline": { "durationMs": 900, "loop": false, "playAllFrames": true },
+  "spawn": { "type": "target", "team": "ally", "anchor": "allyHitAnchor" },
+  "display": { "width": 400, "height": 225, "baseline": 112, "scale": 1, "layer": "front", "blendMode": "screen" }
+}
