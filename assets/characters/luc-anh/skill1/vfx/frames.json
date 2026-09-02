@@ -1,0 +1,9 @@
+{
+  "schema": "hon-viet-vfx-atlas/v1",
+  "id": "luc-anh.skill1.vfx",
+  "atlas": "../../skill1_vfx-atlas.webp",
+  "layout": { "type": "grid", "columns": 8, "rows": 8, "frameCount": 64, "cellWidth": 320, "cellHeight": 220 },
+  "timeline": { "durationMs": 1650, "loop": false, "playAllFrames": true },
+  "spawn": { "type": "perTarget", "team": "enemy", "anchor": "hitAnchor" },
+  "display": { "width": 250, "height": 172, "baseline": 86, "scale": 1, "layer": "front", "blendMode": "screen", "alpha": 0.92 }
+}
