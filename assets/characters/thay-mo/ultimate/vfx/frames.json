@@ -1,0 +1,9 @@
+{
+  "schema": "hon-viet-vfx-atlas/v1",
+  "id": "thay-mo.ultimate.vfx",
+  "atlas": "../../ultimate-vfx-v3212-atlas.png",
+  "layout": { "type": "grid", "columns": 8, "rows": 8, "frameCount": 64, "cellWidth": 480, "cellHeight": 270, "pad": 4, "strideWidth": 488, "strideHeight": 278 },
+  "timeline": { "frameDurationMs": 24, "durationMs": 1536, "mainImpactFrame": 40, "loop": false, "playAllFrames": true },
+  "anchor": { "type": "enemyGroupCenter", "offsetX": 0, "offsetY": -58 },
+  "display": { "minWidth": 710, "maxWidth": 790, "formationPadX": 270, "formationPadY": 250, "layer": "ultimate-vfx", "blendMode": "normal" }
+}
