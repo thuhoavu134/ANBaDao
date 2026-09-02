@@ -1,0 +1,9 @@
+{
+  "schema": "hon-viet-vfx-atlas/v1",
+  "id": "thay-mo.basic.impact",
+  "atlas": "../../impact-v3200-atlas.png",
+  "layout": { "type": "grid", "columns": 4, "rows": 4, "frameCount": 16, "cellWidth": 260, "cellHeight": 214, "pad": 4, "strideWidth": 268, "strideHeight": 222 },
+  "timeline": { "durationMs": 1000, "loop": false, "playAllFrames": true, "frameDurationsMs": [60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60] },
+  "anchor": { "type": "hitAnchor", "offsetX": -10, "offsetY": -72 },
+  "display": { "width": 280, "layer": "impact", "blendMode": "normal" }
+}
