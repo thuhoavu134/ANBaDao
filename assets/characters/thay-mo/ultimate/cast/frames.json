@@ -1,0 +1,9 @@
+{
+  "schema": "hon-viet-vfx-atlas/v1",
+  "id": "thay-mo.ultimate.cast",
+  "atlas": "../../ultimate-cast-v3210-atlas.png",
+  "layout": { "type": "grid", "columns": 8, "rows": 8, "frameCount": 64, "cellWidth": 370, "cellHeight": 270, "pad": 4, "strideWidth": 378, "strideHeight": 278 },
+  "timeline": { "frameDurationMs": 22, "durationMs": 1408, "loop": false, "playAllFrames": true, "releaseFrame": 44 },
+  "anchor": { "type": "footAnchor", "offsetX": 0, "offsetY": 0 },
+  "display": { "layer": "character", "blendMode": "normal" }
+}
