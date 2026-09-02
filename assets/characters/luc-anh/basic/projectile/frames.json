@@ -1,0 +1,9 @@
+{
+  "schema": "hon-viet-vfx-atlas/v1",
+  "id": "luc-anh.basic.projectile",
+  "atlas": "../../basic_projectile-atlas.webp",
+  "layout": { "type": "grid", "columns": 8, "rows": 8, "frameCount": 64, "cellWidth": 320, "cellHeight": 220 },
+  "timeline": { "durationMs": 760, "loop": false, "playAllFrames": true },
+  "motion": { "type": "projectile", "startAnchor": "castAnchor", "targetAnchor": "hitAnchor", "interpolation": "linear" },
+  "display": { "width": 300, "height": 206, "baseline": 103, "scale": 1, "layer": "front", "blendMode": "normal" }
+}
