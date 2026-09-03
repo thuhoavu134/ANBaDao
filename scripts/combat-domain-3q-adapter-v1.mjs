@@ -25,6 +25,25 @@ function assertCombatModuleContract() {
   if (results[0]?.type !== COMBAT_RESULT_TYPES.DAMAGE || results.some((entry) => entry.targetId !== 'build-target')) {
     throw new Error('3Q combat result contract drift');
   }
+  const browserWindow = {};
+  new Function('window', buildBrowserCombatModulesSource())(browserWindow);
+  const browserModules = browserWindow.__HV_COMBAT_MODULES_V1;
+  if (!browserModules || typeof browserModules.session?.ensure !== 'function' || typeof browserModules.result?.recordCombatAction !== 'function') {
+    throw new Error('3Q combat browser bundle contract drift');
+  }
+  const browserSession = browserModules.session.create({ battleId: 'browser-contract', seed: 'browser-contract' });
+  const browserAction = browserModules.result.recordCombatAction(browserSession, {
+    roundIndex: 1,
+    actorId: 'build-actor',
+    action: 'basic',
+    kind: 'damage',
+    targetId: 'build-target',
+    before,
+    after
+  });
+  if (browserAction.results[0]?.type !== COMBAT_RESULT_TYPES.DAMAGE) {
+    throw new Error('3Q combat browser result contract drift');
+  }
 }
 
 assertCombatModuleContract();
