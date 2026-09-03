@@ -5,6 +5,7 @@ import { createBattleSessionStore } from '../src/domain/combat/battle-session.mj
 import { createRoundManager } from '../src/domain/combat/round-manager.mjs';
 import { COMBAT_RESULT_TYPES, deriveCombatResults } from '../src/domain/combat/combat-result.mjs';
 
+const root = process.cwd();
 
 function assertCombatModuleContract() {
   const store = createBattleSessionStore();
@@ -48,7 +49,6 @@ function assertCombatModuleContract() {
 
 assertCombatModuleContract();
 
-const root = process.cwd();
 const battlePath = join(root, 'dist', 'battle.html');
 
 function readCombatModuleSource(fileName) {
