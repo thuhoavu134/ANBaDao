@@ -48,4 +48,5 @@ await import('./battle-visual-polish-v1.mjs');
 await import('./hero-card-dedupe-v1.mjs');
 await import('./hero-roster-phase-a-v4.mjs');
 await import('./hero-roster-v4-runtime-fix-v1.mjs');
+await import('./combat-domain-3q-adapter-v1.mjs');
 console.log(`Static preview written to ${out}`);
