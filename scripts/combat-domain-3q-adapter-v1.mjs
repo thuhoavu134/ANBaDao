@@ -1,6 +1,33 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { createCombatDomain } from './combat-domain-3q-core.mjs';
+import { createBattleSessionStore } from '../src/domain/combat/battle-session.mjs';
+import { createRoundManager } from '../src/domain/combat/round-manager.mjs';
+import { COMBAT_RESULT_TYPES, deriveCombatResults } from '../src/domain/combat/combat-result.mjs';
+
+
+function assertCombatModuleContract() {
+  const store = createBattleSessionStore();
+  const session = store.create({ battleId: 'build-contract', seed: 'build-contract', roundMax: 15 });
+  const manager = createRoundManager();
+  const move = manager.beginMove(session, { roundIndex: 1, actorId: 'build-actor', skillId: 'basic' });
+  const before = [
+    { id: 'build-actor', team: 1, slot: 0, hp: 100, maxHp: 100, statuses: [] },
+    { id: 'build-target', team: 2, slot: 0, hp: 100, maxHp: 100, statuses: [] }
+  ];
+  const after = [
+    { id: 'build-actor', team: 1, slot: 0, hp: 100, maxHp: 100, statuses: [] },
+    { id: 'build-target', team: 2, slot: 0, hp: 0, maxHp: 100, dead: true, statuses: [] }
+  ];
+  const results = deriveCombatResults(before, after, { targetId: 'build-target' });
+  if (session.schema !== 'hon-viet-combat/v1') throw new Error('3Q combat module schema drift');
+  if (move.id !== 'build-contract:r1:m1') throw new Error('3Q combat round/move contract drift');
+  if (results[0]?.type !== COMBAT_RESULT_TYPES.DAMAGE || results.some((entry) => entry.targetId !== 'build-target')) {
+    throw new Error('3Q combat result contract drift');
+  }
+}
+
+assertCombatModuleContract();
 
 const root = process.cwd();
 const battlePath = join(root, 'dist', 'battle.html');
