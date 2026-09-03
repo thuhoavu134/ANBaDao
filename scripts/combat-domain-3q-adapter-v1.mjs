@@ -4,6 +4,9 @@ import { createCombatDomain } from './combat-domain-3q-core.mjs';
 import { createBattleSessionStore } from '../src/domain/combat/battle-session.mjs';
 import { createRoundManager } from '../src/domain/combat/round-manager.mjs';
 import { COMBAT_RESULT_TYPES, deriveCombatResults } from '../src/domain/combat/combat-result.mjs';
+import { canAct, normalizeFighter, resetFighter } from '../src/domain/combat/fighter.mjs';
+import { selectTargets } from '../src/domain/combat/target-selector.mjs';
+import { available, createCooldownState, handleSkillUsed, offsetCooldown } from '../src/domain/combat/cooldown.mjs';
 
 const root = process.cwd();
 
@@ -45,6 +48,17 @@ function assertCombatModuleContract() {
   if (browserAction.results[0]?.type !== COMBAT_RESULT_TYPES.DAMAGE) {
     throw new Error('3Q combat browser result contract drift');
   }
+  const fighter = normalizeFighter({ id: 'build-fighter', hp: 100, statuses: [{ type: 'stun', turns: 1 }] });
+  if (canAct(fighter) || !canAct(resetFighter(fighter))) throw new Error('3Q fighter module contract drift');
+  const targetRoster = [
+    { id: 'build-front', team: 2, slot: 0, hp: 100, maxHp: 100 },
+    { id: 'build-back', team: 2, slot: 1, hp: 100, maxHp: 100 }
+  ];
+  if (selectTargets(targetRoster, { mode: 'front', count: 1 })[0]?.id !== 'build-front') throw new Error('3Q target module contract drift');
+  const cooldown = createCooldownState({ rewriteCfg: { basic: 1 } });
+  handleSkillUsed(cooldown, { id: 'basic', cd: 3, unlockRound: 0 }, 1);
+  if (available(cooldown, 'basic', 2) || !available(cooldown, 'basic', 3)) throw new Error('3Q cooldown module contract drift');
+  offsetCooldown(cooldown, 1);
 }
 
 assertCombatModuleContract();
@@ -61,6 +75,9 @@ function buildBrowserCombatModulesSource() {
   const round = readCombatModuleSource('round-manager.mjs');
   const result = readCombatModuleSource('combat-result.mjs');
   const session = readCombatModuleSource('battle-session.mjs');
+  const fighter = readCombatModuleSource('fighter.mjs');
+  const target = readCombatModuleSource('target-selector.mjs');
+  const cooldown = readCombatModuleSource('cooldown.mjs');
   return [
     '(()=>{',
     'const __hvRoundManager = (()=>{',
@@ -79,7 +96,19 @@ function buildBrowserCombatModulesSource() {
     'return { BATTLE_SESSION_SCHEMA, createBattleSession, finishBattleSession, createBattleSessionStore };',
     '})();',
     'const __hvBattleSession = { ...__hvBattleSessionModule, ...__hvBattleSessionModule.createBattleSessionStore() };',
-    'window.__HV_COMBAT_MODULES_V1 = window.__HV_COMBAT_MODULES_V1 || { round: __hvRoundManager, result: __hvCombatResult, session: __hvBattleSession };',
+    'const __hvFighter = (()=>{',
+    fighter,
+    'return { normalizeFighter, resetFighter, canAct };',
+    '})();',
+    'const __hvTarget = (()=>{',
+    target,
+    'return { selectTargets };',
+    '})();',
+    'const __hvCooldown = (()=>{',
+    cooldown,
+    'return { createCooldownState, setCooldown, getCooldown, handleSkillUsed, available, offsetCooldown };',
+    '})();',
+    'window.__HV_COMBAT_MODULES_V1 = window.__HV_COMBAT_MODULES_V1 || { round: __hvRoundManager, result: __hvCombatResult, session: __hvBattleSession, fighter: __hvFighter, target: __hvTarget, cooldown: __hvCooldown };',
     '})();'
   ].join('\n');
 }
