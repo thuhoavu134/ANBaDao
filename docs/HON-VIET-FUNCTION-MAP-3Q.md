@@ -7,7 +7,7 @@ Trạng thái: tài liệu kiến trúc; commit này không thay đổi math, UI
 ## Checkpoint triển khai 2026-09-03
 
 - Đã thêm src/domain/combat/battle-session.mjs, round-manager.mjs, combat-result.mjs và barrel index.mjs.
-- Đã thêm contract tests cho module; test 3Q core cũ + module mới đạt 10/10 PASS.
+- Đã thêm contract tests và parity tests module ↔ 3Q core; bộ focused test hiện đạt 14/14 PASS.
 - Build adapter có safety gate kiểm tra schema, round/move ID và typed result trước khi nhúng iframe.
 - battle.html đã gửi replay versioned qua BattleResultPayload; nếu replay không parse được thì payload nhận null thay vì làm hỏng trận.
 - Smoke patch chạy hai lần liên tiếp không nhân đôi wrapper; compile in-memory của battle.html sau patch không có lỗi.
