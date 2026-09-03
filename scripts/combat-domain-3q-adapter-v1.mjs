@@ -53,12 +53,13 @@ function buildBrowserCombatModulesSource() {
     result,
     'return { COMBAT_RESULT_TYPES, createCombatResult, snapshotCombatUnits, deriveCombatResults, recordCombatResult, recordCombatAction };',
     '})();',
-    'const __hvBattleSession = (()=>{',
+    'const __hvBattleSessionModule = (()=>{',
     'const finishMove = __hvRoundManager.finishMove;',
     'const finishRound = __hvRoundManager.finishRound;',
     session,
     'return { BATTLE_SESSION_SCHEMA, createBattleSession, finishBattleSession, createBattleSessionStore };',
     '})();',
+    'const __hvBattleSession = { ...__hvBattleSessionModule, ...__hvBattleSessionModule.createBattleSessionStore() };',
     'window.__HV_COMBAT_MODULES_V1 = window.__HV_COMBAT_MODULES_V1 || { round: __hvRoundManager, result: __hvCombatResult, session: __hvBattleSession };',
     '})();'
   ].join('\n');
