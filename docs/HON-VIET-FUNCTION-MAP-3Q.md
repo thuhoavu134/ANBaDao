@@ -10,6 +10,8 @@ Trạng thái: tài liệu kiến trúc; commit này không thay đổi math, UI
 - Đã thêm contract tests và parity tests module ↔ 3Q core; bộ focused test hiện đạt 14/14 PASS.
 - Build adapter có safety gate kiểm tra schema, round/move ID, typed result và thực thi thử modular browser bundle trước khi nhúng iframe.
 - Runtime telemetry của adapter hiện ưu tiên modular browser bundle (session store + round/move + result); factory cũ chỉ còn làm fallback và serialize replay.
+- Đã thêm Fighter, TargetSelector và CooldownSystem vào bundle/browser contract; các hàm battle-specific trong battle.html vẫn chưa bị thay thế, tránh đổi target/cooldown gameplay khi chưa có parity với engine thực tế.
+- Bộ focused test sau lát cắt này đạt 20/20 PASS; smoke bundle xác nhận sáu nhóm runtime module được expose đúng.
 - battle.html đã gửi replay versioned qua BattleResultPayload; nếu replay không parse được thì payload nhận null thay vì làm hỏng trận.
 - Smoke patch chạy hai lần liên tiếp không nhân đôi wrapper; compile in-memory của battle.html sau patch không có lỗi.
 - Các module thuần chưa thay thế factory browser-embedded trong combat-domain-3q-core.mjs; giữ nguyên như vậy để không làm vỡ đường chạy direct/browser. Đây là ranh giới migration có chủ ý, không coi là đã hoàn tất wiring.
@@ -210,6 +212,6 @@ Chỉ xóa hoặc đóng băng các function battle trong index.html sau khi:
 
 ## 10. Quyết định triển khai kế tiếp
 
-Foundation P0/P1 đầu tiên đã hoàn thành: BattleSession + RoundManager + CombatResult đã có module thuần, parity test với 3Q core, modular browser bundle, build safety gate và replay versioned ở boundary. Bước code kế tiếp là tách các phần còn lại của factory (fighter/target/cooldown) theo cùng cách, mỗi lát cắt có parity test trước khi thay thế. Chưa nên đụng economy, social hoặc xóa legacy engine trong cùng một commit. Cách này tiếp tục kiểm chứng logic 3Q từng lát cắt, giữ nguyên visual đang có và có đường rollback rõ ràng.
+Foundation P0/P1 hiện đã có BattleSession + RoundManager + CombatResult + Fighter + TargetSelector + CooldownSystem ở dạng module thuần, parity test với 3Q core, modular browser bundle, build safety gate và replay versioned ở boundary. Bước code kế tiếp là đối chiếu các module này với các function battle-specific trong battle.html (Skill/Status/Action reducer), rồi thay từng điểm có parity; không tự động thay target/cooldown chỉ vì module đã tồn tại. Chưa nên đụng economy, social hoặc xóa legacy engine trong cùng một commit. Cách này tiếp tục kiểm chứng logic 3Q từng lát cắt, giữ nguyên visual đang có và có đường rollback rõ ràng.
 
 Commit tài liệu này là mốc kiến trúc; các commit code sau phải tham chiếu function map này và ghi rõ module nào sở hữu state nào.
