@@ -4,6 +4,15 @@ Ngày audit: 2026-09-03
 Phạm vi: source mới nhất trên nhánh main của bktimmy247/luc-than và archive 3Q.rar đã giải nén/audit.  
 Trạng thái: tài liệu kiến trúc; commit này không thay đổi math, UI, asset hay flow battle hiện tại.
 
+## Checkpoint triển khai 2026-09-03
+
+- Đã thêm src/domain/combat/battle-session.mjs, round-manager.mjs, combat-result.mjs và barrel index.mjs.
+- Đã thêm contract tests cho module; test 3Q core cũ + module mới đạt 10/10 PASS.
+- Build adapter có safety gate kiểm tra schema, round/move ID và typed result trước khi nhúng iframe.
+- battle.html đã gửi replay versioned qua BattleResultPayload; nếu replay không parse được thì payload nhận null thay vì làm hỏng trận.
+- Smoke patch chạy hai lần liên tiếp không nhân đôi wrapper; compile in-memory của battle.html sau patch không có lỗi.
+- Các module thuần chưa thay thế factory browser-embedded trong combat-domain-3q-core.mjs; giữ nguyên như vậy để không làm vỡ đường chạy direct/browser. Đây là ranh giới migration có chủ ý, không coi là đã hoàn tất wiring.
+
 ## 1. Quyết định kiến trúc
 
 1. Giữ nguyên build đang chạy và tiến hóa từng lát cắt. Không rewrite toàn bộ index.html hoặc battle.html.
@@ -200,6 +209,6 @@ Chỉ xóa hoặc đóng băng các function battle trong index.html sau khi:
 
 ## 10. Quyết định triển khai kế tiếp
 
-Bước code kế tiếp nên là P0/P1: tách BattleSession + RoundManager + CombatResult quanh engine battle.html hiện tại, rồi cho adapter 3Q ghi cùng contract. Chưa nên đụng economy, social hoặc xóa legacy engine trong cùng một commit. Cách này cho phép kiểm chứng logic 3Q từng lát cắt, giữ nguyên visual đang có và có đường rollback rõ ràng.
+Foundation P0/P1 đầu tiên đã hoàn thành: BattleSession + RoundManager + CombatResult đã có module thuần, test contract, build safety gate và replay versioned ở boundary. Bước code kế tiếp là chạy parity test module ↔ factory browser, sau đó thay từng phần factory bằng bundle được sinh an toàn. Chưa nên đụng economy, social hoặc xóa legacy engine trong cùng một commit. Cách này tiếp tục kiểm chứng logic 3Q từng lát cắt, giữ nguyên visual đang có và có đường rollback rõ ràng.
 
 Commit tài liệu này là mốc kiến trúc; các commit code sau phải tham chiếu function map này và ghi rõ module nào sở hữu state nào.
