@@ -6760,6 +6760,11 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
       round: state.round,
       actionCount: state.actionCount,
       actionBreakdown: { ...state.actionBreakdown },
+      replay: (() => {
+        const raw = window.__HV_COMBAT_LAST_REPLAY;
+        if (!raw) return null;
+        try { return JSON.parse(raw); } catch { return null; }
+      })(),
       playerSignatureActions: state.playerSignatureActions,
       objective: state.objective ? {...state.objective} : null,
       battleOrders: {points:state.battleOrders.points,used:[...state.battleOrders.used]},
