@@ -24,15 +24,18 @@ test('bootstrap follows an existing campaign cursor instead of restarting', () =
     chapters: [{ idx: 0 }, { idx: 1 }, { idx: 2 }],
     unlockedChapters: [0, 1],
     clearedChapters: [0],
-    campaignStages: { 1: 2 }
+    campaignStages: { 1: 2 },
+    campaignCycle: 2
   });
-  assert.deepEqual([state.chapterIndex, state.stageIndex, state.allComplete], [1, 2, false]);
+  assert.deepEqual([state.chapterIndex, state.stageIndex, state.allComplete, state.campaignCycle], [1, 2, false, 2]);
   const finished = bootstrapMainQuestState({
     chapters: [{ idx: 0 }, { idx: 1 }],
     unlockedChapters: [0, 1],
-    clearedChapters: [0, 1]
+    clearedChapters: [0, 1],
+    campaignCycle: 2
   });
   assert.equal(finished.allComplete, true);
+  assert.equal(finished.campaignCycle, 2);
 });
 
 test('matching victory completes the current quest exactly once', () => {
