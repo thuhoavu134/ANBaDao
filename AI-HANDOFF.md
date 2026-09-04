@@ -110,6 +110,6 @@ Never hide missing assets or failed runtime checks.
 ## Lục Ảnh IDLE 1080 Repack
 
 - `assets/characters/luc-anh/idle-1080-atlas.webp` is the approved 96-frame IDLE repack from the user-supplied `IDLE.rar` (1510×1004 RGB PNG frames).
-- The frames use one fixed crop and edge-connected black-background removal, then pack into an 8×12, 3840×5760 atlas with 480×480 cells, alpha, and WebP quality 100. This keeps the 1080/Retina render sharp without enlarging the old 240 px cells.
+- The frames use one fixed crop and edge-connected black-background removal plus enclosed dark-hole cleanup and transparent-edge color bleed, then pack into an 8×12, 3840×5760 atlas with 480×480 cells, alpha, and WebP quality 100. This keeps the 1080/Retina render sharp without enlarging the old 240 px cells.
 - `src/domain/character/luc-anh-idle.mjs` is the single metadata contract. `scripts/luc-anh-idle-1080-v1.mjs` patches both the hero-detail IDLE canvas in `index.html` and the combat renderer in `battle.html`; it is imported by `scripts/build-static.mjs` after the spatial Lục Ảnh patch.
 - The old `idle-atlas.webp` remains in the repository as a rollback asset, but no longer serves the Lục Ảnh IDLE runtime path.

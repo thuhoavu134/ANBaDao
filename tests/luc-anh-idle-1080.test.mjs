@@ -15,7 +15,14 @@ test('Lục Ảnh IDLE 1080 contract matches the authored 96-frame atlas', () =>
     cellW: 480,
     cellH: 480,
     ms: 42,
-    loop: true
+    loop: true,
+    cleanup: {
+      background: 'edge-connected-black',
+      edgeThreshold: 8,
+      enclosedDarkMinArea: 2000,
+      enclosedDarkMinX: 700,
+      transparentEdgeColorBleed: true
+    }
   });
   assert.deepEqual(LUC_ANH_IDLE_1080_ATLAS, { width: 3840, height: 5760 });
 });
@@ -28,4 +35,5 @@ test('Lục Ảnh IDLE 1080 asset and post-build hook are present', () => {
   const patch = fs.readFileSync(new URL('../scripts/luc-anh-idle-1080-v1.mjs', import.meta.url), 'utf8');
   assert.match(patch, /idle-atlas\\\.webp/);
   assert.match(patch, /LUC_ANH_IDLE_1080/);
+  assert.match(patch, /legacy master ghost layer/);
 });

@@ -39,6 +39,13 @@ function patchHeroDetail() {
   source = prefix + patchedBlock + suffix;
   const manifestExpression = /idle:'assets\/characters\/luc-anh\/idle-atlas\.webp'/g;
   source = replaceOnce(source, manifestExpression, `idle:'${IDLE.src}'`, 'character manifest idle asset');
+  const masterGhostExpression = /\.hstage\.luc-anh-stage \.hsava\.hero-master\{opacity:\.18;filter:blur\(\.2px\);transform:scale\(1\.08\)\}/g;
+  source = replaceOnce(
+    source,
+    masterGhostExpression,
+    '.hstage.luc-anh-stage .hsava.hero-master{opacity:0;filter:none;transform:none}',
+    'legacy master ghost layer'
+  );
   if (!source.includes(`src:'${IDLE.src}'`)) throw new Error('Lục Ảnh IDLE 1080 hero-detail asset was not wired');
   writeFileSync(path, source);
 }
