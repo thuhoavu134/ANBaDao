@@ -34,11 +34,16 @@ const jsBody = `
   if(window.__HV_HERO_ROSTER_V4)return;
   window.__HV_HERO_ROSTER_V4=true;
   var HERO_NAMES=['Ông Phở','Thầy Mo','Đình Lôi','Hồng Liên Đao Nương','Thần Nỏ Sơn Nữ','Lạc Yên','Nữ Cung Thủ Tre','Cô Đào Gánh Hội','Phong Tử','Thủy Nương Rối Nước','Thạch Quyền','Lục Ảnh'];
-  var parked=null,parkedStyle=null,openingDetail=false;
+  var parked=null,parkedStyle=null,openingDetail=false,lastOpenAt=0;
 
   function clean(s){return String(s||'').split('\\n').join(' ').trim();}
   function esc(s){return String(s).split('&').join('&amp;').split('<').join('&lt;').split('>').join('&gt;').split('"').join('&quot;');}
   function lines(el){var a=((el&&el.innerText)||'').split('\\n'),o=[];for(var i=0;i<a.length;i++){var x=a[i].trim();if(x)o.push(x);}return o;}
+  function heroIdFor(name){
+    if(name==='Lục Ảnh')return 'luc_anh';
+    try{if(typeof DATA!=='undefined'&&DATA.heroes){for(var key in DATA.heroes)if(DATA.heroes[key]&&DATA.heroes[key].name===name)return key;}}catch(_e){}
+    return '';
+  }
 
   function cardLike(el){
     if(!el||!el.closest||el.closest('#hvHeroRosterV4'))return false;
@@ -57,7 +62,7 @@ const jsBody = `
     var imgs=el.querySelectorAll('img'),src='';for(var k=0;k<imgs.length;k++){var r=imgs[k].getBoundingClientRect();if(r.width>70&&r.height>70){src=imgs[k].currentSrc||imgs[k].src||'';if(src)break;}}
     if(name.indexOf('Lục Ảnh')>=0)src='/assets/characters/luc-anh/card.webp';
     if(name.indexOf('Ông Phở')>=0)src='/assets/characters/ong-pho/card.png';
-    return {name:name,level:level,element:element,power:power,src:src,source:el,raw:joined.toLowerCase()};
+    return {name:name,id:heroIdFor(name),level:level,element:element,power:power,src:src,source:el,raw:joined.toLowerCase()};
   }
 
   function collectCards(){
@@ -96,7 +101,24 @@ const jsBody = `
     var total=0;for(var i=0;i<data.length;i++)total+=data[i].power;
     root.innerHTML='<div class="v4-top"><div class="v4-profile"><div class="v4-avatar">HV</div><div><div class="v4-name">Hồn Việt</div><div class="v4-sub">Đồ Giám Tướng · '+data.length+' tướng</div><div class="v4-total">⚔ '+total.toLocaleString('vi-VN')+'</div></div><div class="v4-res"><span>🪙 6.682</span><span>🔴 581K</span></div></div><div class="v4-tabs"><div class="v4-tab">Công lực</div><div class="v4-tab">Thời Trang</div><div class="v4-tab">Trợ chiến</div><div class="v4-tab active">Tướng</div><div class="v4-tab">Đồ Giám</div></div></div><div class="v4-grid"></div><div class="v4-filter"><button class="active" data-f="all">▦</button><button data-f="kim">⚙️</button><button data-f="moc">🌿</button><button data-f="thuy">💧</button><button data-f="hoa">🔥</button><button data-f="tho">⛰️</button><button data-f="phong">🌀</button><button data-f="mong">🌙</button></div>';
     var grid=root.querySelector('.v4-grid');
-    for(var d=0;d<data.length;d++)(function(item){var b=document.createElement('button');b.className='v4-card';b.dataset.raw=item.raw;var art=item.src?'<img src="'+esc(item.src)+'" alt="">':'';b.innerHTML='<div class="v4-art">'+art+'</div><div class="v4-grade">SSR</div><div class="v4-level">'+esc(item.level)+'</div><div class="v4-element">'+item.element+'</div><div class="v4-power">⚔ '+item.power.toLocaleString('vi-VN')+'</div><div class="v4-stars">★★★★★</div><div class="v4-cardname">'+esc(item.name)+'</div>';b.addEventListener('pointerdown',function(ev){ev.preventDefault();ev.stopPropagation();if(openingDetail)return;openingDetail=true;unparkLegacy();try{item.source.click();}catch(_e){}setTimeout(function(){root.hidden=true;openingDetail=false;},80);},{capture:true});grid.appendChild(b);})(data[d]);
+    for(var d=0;d<data.length;d++)(function(item){
+      var b=document.createElement('button');
+      b.className='v4-card';b.dataset.raw=item.raw;b.dataset.heroId=item.id||'';
+      var art=item.src?'<img src="'+esc(item.src)+'" alt="">':'';
+      b.innerHTML='<div class="v4-art">'+art+'</div><div class="v4-grade">SSR</div><div class="v4-level">'+esc(item.level)+'</div><div class="v4-element">'+item.element+'</div><div class="v4-power">⚔ '+item.power.toLocaleString('vi-VN')+'</div><div class="v4-stars">★★★★★</div><div class="v4-cardname">'+esc(item.name)+'</div>';
+      function openItem(ev){
+        var now=Date.now();
+        if(openingDetail||now-lastOpenAt<500){ev.preventDefault();ev.stopPropagation();if(ev.stopImmediatePropagation)ev.stopImmediatePropagation();return;}
+        openingDetail=true;lastOpenAt=now;ev.preventDefault();ev.stopPropagation();if(ev.stopImmediatePropagation)ev.stopImmediatePropagation();unparkLegacy();
+        var opened=false;
+        try{if(item.id&&typeof renderHeroDetail==='function'&&typeof showScreen==='function'){renderHeroDetail(item.id);showScreen('heroDetail');opened=true;}}catch(_e){}
+        if(!opened)try{if(item.source&&typeof item.source.click==='function)item.source.click();}catch(_e){}
+        setTimeout(function(){root.hidden=true;openingDetail=false;},220);
+      }
+      b.addEventListener('pointerup',openItem,{capture:true});
+      b.addEventListener('click',openItem,{capture:true});
+      grid.appendChild(b);
+    })(data[d]);
     var filter=root.querySelector('.v4-filter');filter.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;var bs=filter.querySelectorAll('button');for(var q=0;q<bs.length;q++)bs[q].classList.toggle('active',bs[q]===b);var f=b.dataset.f,list=grid.querySelectorAll('.v4-card');for(var z=0;z<list.length;z++){if(f==='all'){list[z].hidden=false;continue;}var term=f;if(f==='moc')term='mộc';else if(f==='thuy')term='thủy';else if(f==='hoa')term='hỏa';else if(f==='tho')term='thổ';list[z].hidden=(list[z].dataset.raw||'').indexOf(term)<0;}});
     root.hidden=false;parkLegacy();
   }
