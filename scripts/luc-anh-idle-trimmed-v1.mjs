@@ -5,6 +5,7 @@ import { LUC_ANH_IDLE_TRIMMED as TRIMMED } from '../src/domain/character/luc-anh
 const root = process.cwd();
 const trimmedFrames = JSON.stringify(TRIMMED.frameData);
 const trimmedSrc = TRIMMED.src;
+const trimmedFile = trimmedSrc.split('/').pop();
 
 function replaceOnce(source, expression, replacement, label) {
   const matches = source.match(expression) || [];
@@ -24,7 +25,7 @@ function patchBattle() {
   source = replaceOnce(
     source,
     /idle:\{file:"idle(?:-1080)?-atlas\.webp",frames:\d+,w:\d+,h:\d+,ms:\d+,loop:true\}/g,
-    `idle:{file:"idle-trimmed-atlas.webp",frames:${TRIMMED.frames},w:${TRIMMED.sourceW},h:${TRIMMED.sourceH},ms:${TRIMMED.ms},loop:true,trimmed:true}`,
+    `idle:{file:"${trimmedFile}",frames:${TRIMMED.frames},w:${TRIMMED.sourceW},h:${TRIMMED.sourceH},ms:${TRIMMED.ms},loop:true,trimmed:true}`,
     'battle idle metadata'
   );
 
