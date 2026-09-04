@@ -51,8 +51,36 @@ const jsBody = `
   document.addEventListener('pointerup',openV4Detail,true);
   document.addEventListener('click',openV4Detail,true);
   document.addEventListener('touchstart',openV4Detail,{capture:true,passive:false});
-  new MutationObserver(apply).observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['hidden']});
-  setTimeout(apply,250);setTimeout(apply,700);
+  function heroesListVisible(){
+    var screen=document.getElementById('heroesScreen');
+    var detail=document.getElementById('heroDetailScreen');
+    if(!screen||screen.hidden)return false;
+    var ss=getComputedStyle(screen),ds=detail?getComputedStyle(detail):null;
+    return ss.display!=='none'&&ss.visibility!=='hidden'&&(!detail||detail.hidden||!ds||ds.display==='none'||ds.visibility==='hidden');
+  }
+  function syncRosterVisibility(){
+    var root=document.getElementById('hvHeroRosterV4');
+    if(!root||!heroesListVisible())return;
+    if(root.hidden)root.hidden=false;
+    recoverTwelfth(root);
+  }
+  function restoreRosterAfterBack(){
+    setTimeout(syncRosterVisibility,0);
+    setTimeout(syncRosterVisibility,80);
+    setTimeout(syncRosterVisibility,260);
+  }
+  function isHeroListBack(ev){
+    var el=ev.target&&ev.target.closest?ev.target.closest('#heroDetailScreen [data-nav="heroes"],#heroDetailScreen .back'):null;
+    return !!el;
+  }
+  document.addEventListener('pointerup',function(ev){if(isHeroListBack(ev))restoreRosterAfterBack();},true);
+  document.addEventListener('click',function(ev){if(isHeroListBack(ev))restoreRosterAfterBack();},true);
+  new MutationObserver(function(){
+    apply();
+    syncRosterVisibility();
+  }).observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['hidden','style','class']});
+  setTimeout(function(){apply();syncRosterVisibility();},250);
+  setTimeout(function(){apply();syncRosterVisibility();},700);
 })();
 `;
 new Function(jsBody);
