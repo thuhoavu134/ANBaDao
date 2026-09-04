@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {
   MAIN_QUEST_SCHEMA,
   claimMainQuest,
+  bootstrapMainQuestState,
   createMainQuestState,
   getCurrentMainQuest,
   normalizeMainQuestState,
@@ -16,6 +17,22 @@ test('main quest state follows chapter and stage bounds', () => {
   });
   assert.equal(state.schema, MAIN_QUEST_SCHEMA);
   assert.deepEqual([state.chapterIndex, state.stageIndex, state.progress], [1, 2, 0]);
+});
+
+test('bootstrap follows an existing campaign cursor instead of restarting', () => {
+  const state = bootstrapMainQuestState({
+    chapters: [{ idx: 0 }, { idx: 1 }, { idx: 2 }],
+    unlockedChapters: [0, 1],
+    clearedChapters: [0],
+    campaignStages: { 1: 2 }
+  });
+  assert.deepEqual([state.chapterIndex, state.stageIndex, state.allComplete], [1, 2, false]);
+  const finished = bootstrapMainQuestState({
+    chapters: [{ idx: 0 }, { idx: 1 }],
+    unlockedChapters: [0, 1],
+    clearedChapters: [0, 1]
+  });
+  assert.equal(finished.allComplete, true);
 });
 
 test('matching victory completes the current quest exactly once', () => {
