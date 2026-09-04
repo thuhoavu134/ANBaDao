@@ -77,7 +77,11 @@ const voiceBridge = String.raw`<script id="luc-anh-ultimate-voice-guaranteed">
  audio.autoplay=false;
  audio.loop=false;
  audio.volume=1;
+ audio.playsInline=true;
  audio.setAttribute('playsinline','');
+ audio.setAttribute('aria-hidden','true');
+ audio.style.display='none';
+ try{document.body?.appendChild(audio);}catch(_e){}
  let unlocked=false,unlocking=null;
  const unlock=()=>{
    if(unlocked)return Promise.resolve(true);
