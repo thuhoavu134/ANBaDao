@@ -98,7 +98,7 @@ Never hide missing assets or failed runtime checks.
 
 - `src/domain/quest/main-quest.mjs` is the pure quest state module (`hon-viet-main-quest/v1`).
 - `scripts/quest-system-3q-v1.mjs` injects the module into the static build; it must remain imported by `scripts/build-static.mjs`.
-- The main loop is one active quest per account: Hub/Daily mission card → `ĐẾN NGAY` → one 6v6 auto encounter → result → compact reward → next ải/chapter. The quest state follows `chapterBattleSequence()` and must not create a second battle loop.
+- The main loop is one active quest per account: Hub/Daily mission card → compact `ĐẾN NGAY` CTA → one 6v6 auto encounter → result → compact reward → next ải/chapter. The Hub card stays above the dock and pointer-safe so it does not cover function buttons.
 - The module is intentionally Hồn Việt-only: it borrows the readable 3Q-style quest cadence and CTA hierarchy, not 3Q names, branding, or commercial assets.
 - The 3Q source archive (`3Q.rar`, 2.36 GB) is over the connected Drive download limit; do not claim direct source-code reuse unless a smaller extract is supplied.
 ## Battle Background Set (20 authored arenas)
@@ -106,4 +106,4 @@ Never hide missing assets or failed runtime checks.
 - `assets/battle/backgrounds-v1/` contains the 20 `*_battle_stage.png` images from the Library pack `HON-VIET-MONG-GIOI-20-THEME-BACKGROUND-PAIRS.zip`; source artwork is 941×1672 and is kept lossless.
 - `src/domain/battle/background-registry.mjs` is the pure deterministic selector. Known campaign IDs are mapped in sequence; `luyen_tap` and `default` reserve themes 19–20, and unknown IDs use a stable hash.
 - `scripts/battle-backgrounds-20-v1.mjs` replaces the image source block after `battle-visual-polish-v1.mjs` and loads the selected stage without editing the large `battle.html` file. `scripts/build-static.mjs` imports it immediately after the visual polish patch.
-- The battle canvas remains the existing 1600×870 world; portrait stages are fit centrally with a softened side extension so the authored gate/floor/rear wall remain visible while unit coordinates and HUD layout remain unchanged.
+- The battle canvas remains the existing 1600×870 world; portrait stages are fit centrally with a softened side extension so the authored gate/floor/rear wall remain visible while unit coordinates and HUD layout remain unchanged; the legacy painted scenery is not used as a fallback.
