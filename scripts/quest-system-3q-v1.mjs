@@ -69,9 +69,11 @@ ${moduleSource}
     }
   };
   const ensure = () => {
-    const hasState = !!((P.hvMainQuest && typeof P.hvMainQuest === 'object') || (P.mainQuest && typeof P.mainQuest === 'object'));
-    let existing = (P.hvMainQuest && typeof P.hvMainQuest === 'object') ? P.hvMainQuest
+    const cycle = Math.max(1, Number(P.world?.cycle || 1));
+    const stored = (P.hvMainQuest && typeof P.hvMainQuest === 'object') ? P.hvMainQuest
       : ((P.mainQuest && typeof P.mainQuest === 'object') ? P.mainQuest : null);
+    const hasState = !!stored && Math.max(1, Number(stored.campaignCycle || 1)) === cycle;
+    let existing = stored;
     /* Do not reset a returning player to ải 1: bootstrap from the campaign
        cursor already stored in the save. */
     if (!hasState) {
@@ -79,7 +81,8 @@ ${moduleSource}
         chapters: DATA?.chapters,
         unlockedChapters: P.unlockedChapters,
         clearedChapters: P.clearedChapters,
-        campaignStages: P.campaignStages
+        campaignStages: P.campaignStages,
+        campaignCycle: cycle
       });
     }
     const normalized = __hvMainQuestModule.normalizeMainQuestState(existing, {
