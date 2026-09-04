@@ -12,6 +12,39 @@ function replaceOptional(s, from, to, label){
 
 let battle = readFileSync(battlePath,'utf8');
 
+const resultHeroStart = battle.indexOf(' function heroFor(m){');
+const resultHeroEnd = resultHeroStart < 0 ? -1 : battle.indexOf('\n function nav(target)', resultHeroStart);
+if (resultHeroStart >= 0 && resultHeroEnd > resultHeroStart) {
+  const resultHeroSafe = [
+    " function heroFor(m){return {id:String(m?.sourceId||m?.id||''),name:m?.name||'Chiến tướng',archetype:'balanced',accent:'#d7aa57'}}",
+    " function drawLucAnhIdle(canvas){",
+    "  if(!canvas)return;",
+    "  const ctx=canvas.getContext('2d');if(!ctx)return;",
+    "  const image=new Image();image.decoding='async';image.src='assets/characters/luc-anh/idle-1080-atlas.webp';",
+    "  const start=performance.now(),frames=96,cols=8,cell=480,ms=42;",
+    "  const tick=()=>{",
+    "   if(!canvas.isConnected)return;",
+    "   ctx.clearRect(0,0,canvas.width,canvas.height);",
+    "   if(image.complete&&image.naturalWidth>1){",
+    "    const f=Math.floor((performance.now()-start)/ms)%frames,sx=(f%cols)*cell,sy=Math.floor(f/cols)*cell;",
+    "    const size=220;ctx.drawImage(image,sx,sy,cell,cell,(canvas.width-size)/2,canvas.height-size-4,size,size);",
+    "   }",
+    "   requestAnimationFrame(tick);",
+    "  };",
+    "  tick();",
+    " }",
+    " function paintHero(canvas,m){",
+    "  if(!canvas)return;",
+    "  const ctx=canvas.getContext('2d');if(!ctx)return;",
+    "  const bg=ctx.createLinearGradient(0,0,0,canvas.height);bg.addColorStop(0,'#1d4b43');bg.addColorStop(1,'#110d0a');ctx.fillStyle=bg;ctx.fillRect(0,0,canvas.width,canvas.height);",
+    "  const id=String(m?.sourceId||m?.id||'');",
+    "  if(id==='luc_anh'){drawLucAnhIdle(canvas);return;}",
+    "  ctx.fillStyle='#f5df9a';ctx.font='900 28px system-ui,sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(String(m?.name||'Chiến tướng').slice(0,2),canvas.width/2,canvas.height/2);",
+    " }"
+  ].join('\n');
+  battle = battle.slice(0, resultHeroStart) + resultHeroSafe + battle.slice(resultHeroEnd);
+}
+
 // 1) Normalize apparent Lục Ảnh size across idle/basic/skill1/ultimate.
 // Source clips have different internal padding, so identical canvas sizes do NOT look identical.
 // Idle stays at the approved 330 benchmark; action clips get a small compensation only.
@@ -137,11 +170,13 @@ if(!battle.includes('luc-anh-ultimate-voice-guaranteed')) battle=battle.replace(
 
 // 5) Victory: actual Lục Ảnh run/idle frames instead of a static portrait sliding across the screen.
 const paintOld = "root.querySelectorAll('canvas.irv-hero').forEach(c=>paintHero(c,m));";
-const paintNew = `if(victory&&String(m?.sourceId||m?.id)==='luc_anh'){
- const runC=root.querySelector('canvas.irv-hero.run'),idleC=root.querySelector('canvas.irv-hero.idle');
- const anim=(c,key,loop)=>{if(!c)return;const g=c.getContext('2d'),meta=LUC_ANH_META[key],start=performance.now();const tick=()=>{if(!c.isConnected)return;g.clearRect(0,0,c.width,c.height);const elapsed=performance.now()-start,f=lucAnhFrame(key,elapsed,loop);drawLucAnhAtlas(g,key,f,c.width/2,c.height-4,250,250,{baseline:44});if(loop||f<meta.frames-1)requestAnimationFrame(tick);};tick();};
- anim(runC,'run',true);anim(idleC,'idle',true);
-}else root.querySelectorAll('canvas.irv-hero').forEach(c=>paintHero(c,m));`;
+const paintNew = [
+  "if(victory&&String(m?.sourceId||m?.id)==='luc_anh'){",
+  " const runC=root.querySelector('canvas.irv-hero.run'),idleC=root.querySelector('canvas.irv-hero.idle');",
+  " if(runC)drawLucAnhIdle(runC);",
+  " if(idleC)drawLucAnhIdle(idleC);",
+  "}else root.querySelectorAll('canvas.irv-hero').forEach(c=>paintHero(c,m));"
+].join('\n');
 battle = replaceOptional(battle,paintOld,paintNew,'Victory Luc Anh actual run/idle');
 
 const resultStyle = `<style id="qa-result-polish-v2">\n#integratedResultV6 .irv-hero-wrap{z-index:8!important;overflow:visible!important}#integratedResultV6 .irv-hero.run{opacity:1!important;visibility:visible!important;display:block!important}#integratedResultV6 .irv-actions{z-index:30!important;pointer-events:auto!important}#integratedResultV6 .irv-btn{pointer-events:auto!important;touch-action:manipulation!important;cursor:pointer!important}\n</style>`;
