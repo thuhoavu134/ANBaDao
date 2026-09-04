@@ -94,3 +94,10 @@ When the user sends a new character asset pack:
 9. report exactly what passed and what was not tested.
 
 Never hide missing assets or failed runtime checks.
+## Main Quest System (3Q-style reference loop)
+
+- `src/domain/quest/main-quest.mjs` is the pure quest state module (`hon-viet-main-quest/v1`).
+- `scripts/quest-system-3q-v1.mjs` injects the module into the static build; it must remain imported by `scripts/build-static.mjs`.
+- The main loop is one active quest per account: Hub/Daily mission card → `ĐẾN NGAY` → one 6v6 auto encounter → result → compact reward → next ải/chapter. The quest state follows `chapterBattleSequence()` and must not create a second battle loop.
+- The module is intentionally Hồn Việt-only: it borrows the readable 3Q-style quest cadence and CTA hierarchy, not 3Q names, branding, or commercial assets.
+- The 3Q source archive (`3Q.rar`, 2.36 GB) is over the connected Drive download limit; do not claim direct source-code reuse unless a smaller extract is supplied.
