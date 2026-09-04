@@ -32,12 +32,12 @@
     "rows": 8
   },
   "idle": {
-    "src": "assets/characters/luc-anh/idle-atlas.webp",
-    "frames": 64,
+    "src": "assets/characters/luc-anh/idle-1080-atlas.webp",
+    "frames": 96,
     "cols": 8,
-    "cellW": 240,
-    "cellH": 240,
-    "rows": 8
+    "cellW": 480,
+    "cellH": 480,
+    "rows": 12
   },
   "hit": {
     "src": "assets/characters/luc-anh/hit-atlas.webp",

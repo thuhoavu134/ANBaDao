@@ -41,6 +41,7 @@ await import('./runtime-qa-polish-v2.mjs');
 await import('./runtime-qa-polish-v4.mjs');
 await import('./runtime-qa-polish-v5.mjs');
 await import('./luc-anh-spatial-pipeline-v1.mjs');
+await import('./luc-anh-idle-1080-v1.mjs');
 await import('./skill-atlas-runtime-v1.mjs');
 await import('./skill-atlas-registry-v1.mjs');
 await import('./luc-anh-local-speed-v1.mjs');
