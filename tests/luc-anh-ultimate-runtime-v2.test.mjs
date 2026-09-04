@@ -10,8 +10,9 @@ test('Lục Ảnh Ultimate VFX keeps authored aspect and source-cell scale',()=>
   assert.ok(match,'v5 final Ultimate renderer contract is present');
   const line=match[1];
   assert.match(line,/drawLucAnhAtlas\(context,key,frame,cx,cy\+255,960,660/);
-  assert.match(line,/globalCompositeOperation='screen'/);
-  assert.match(line,/screen:true,alpha:1/);
+  assert.match(line,/globalCompositeOperation='source-over'/);
+  assert.match(line,/black-smoke source-cell/);
+  assert.match(line,/screen:false,alpha:1/);
   assert.doesNotMatch(line,/fxW|fxH|createRadialGradient/);
 });
 
