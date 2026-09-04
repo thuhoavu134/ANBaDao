@@ -160,4 +160,4 @@ index = replaceOptional(index,
 );
 writeFileSync(indexPath,index);
 
-console.log('Runtime QA polish v3 applied: state-matched Luc Anh scale, 3-row enemy-half ultimate, guaranteed ultimate voice');
+console.log('Runtime QA polish v3 applied: manifest-timed Luc Anh Ultimate and local iOS-safe voice bridge');
