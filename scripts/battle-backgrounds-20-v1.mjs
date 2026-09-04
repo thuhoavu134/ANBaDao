@@ -59,6 +59,27 @@ if (!html.includes('const fitScale = WORLD.height / sh;')) {
   html = html.replace(portraitAnchor, portraitReplacement);
 }
 
+// Do not allow the legacy hand-painted scenery to flash behind the authored
+// stage or remain as a fallback. The image set is now the only battle backdrop;
+// while a stage is decoding, keep a quiet solid canvas so no old background leaks
+// through the runtime.
+const legacyFallbackStart = html.indexOf('    drawSky(context, time);');
+const legacyFallbackEnd = legacyFallbackStart < 0
+  ? -1
+  : html.indexOf('\n  }\n\n  function drawWeapon', legacyFallbackStart);
+if (legacyFallbackStart >= 0 && legacyFallbackEnd >= 0) {
+  const plainFallback = `    context.fillStyle = '#081416';
+    context.fillRect(0, 0, WORLD.width, WORLD.height);
+    const loadingShade = context.createLinearGradient(0, 0, 0, WORLD.height);
+    loadingShade.addColorStop(0, 'rgba(13,43,40,.32)');
+    loadingShade.addColorStop(1, 'rgba(3,10,12,.72)');
+    context.fillStyle = loadingShade;
+    context.fillRect(0, 0, WORLD.width, WORLD.height);`;
+  html = html.slice(0, legacyFallbackStart) + plainFallback + html.slice(legacyFallbackEnd);
+} else if (!html.includes("context.fillStyle = '#081416';")) {
+  throw new Error('battle-backgrounds-20-v1 missing legacy background fallback block');
+}
+
 if (!html.includes('id="hv-image-map-override-v1"')) {
   throw new Error('battle-backgrounds-20-v1 expected image map override marker');
 }
