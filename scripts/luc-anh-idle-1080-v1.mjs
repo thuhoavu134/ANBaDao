@@ -37,6 +37,8 @@ function patchHeroDetail() {
   const replacement = `idle:{src:'${IDLE.src}',frames:${IDLE.frames},cols:${IDLE.cols},w:${IDLE.cellW},h:${IDLE.cellH},ms:${IDLE.ms},loop:true}`;
   const patchedBlock = replaceOnce(block, idleExpression, replacement, 'hero-detail idle metadata');
   source = prefix + patchedBlock + suffix;
+  const manifestExpression = /idle:'assets\/characters\/luc-anh\/idle-atlas\.webp'/g;
+  source = replaceOnce(source, manifestExpression, `idle:'${IDLE.src}'`, 'character manifest idle asset');
   if (!source.includes(`src:'${IDLE.src}'`)) throw new Error('Lục Ảnh IDLE 1080 hero-detail asset was not wired');
   writeFileSync(path, source);
 }
