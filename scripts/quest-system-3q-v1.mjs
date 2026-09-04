@@ -259,9 +259,15 @@ ${moduleSource}
     renderDailyPanel,
     renderQuestSurfaces
   });
-  ensure();
-  persistQuest();
-  renderQuestSurfaces();
+  setTimeout(() => {
+    try {
+      ensure();
+      persistQuest();
+      renderQuestSurfaces();
+    } catch (error) {
+      console.error("Không thể khởi tạo tuyến nhiệm vụ.", error);
+    }
+  }, 0);
 })();`;
 }
 
