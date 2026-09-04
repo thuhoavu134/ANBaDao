@@ -9,7 +9,7 @@ The Ultimate voice was routed through the parent audio bus. On iOS/iPadOS, a tap
 ## Fix
 
 - runtime-qa-polish-v5.mjs now leaves the authored Ultimate VFX at one aspect-correct 3× source-cell draw: 320×220 → 960×660.
-- The draw keeps the manifest’s SCREEN blend and full alpha, removes the procedural gradient/pulse, and lets all 64 frames play.
+- The final draw uses SOURCE-OVER with full alpha so the authored black smoke stays dark, removes the procedural gradient/pulse, and lets all 64 frames play.
 - runtime-qa-polish-v2.mjs now preloads a local Ultimate voice element, performs a muted unlock on the first real battle gesture, and falls back to the shared bus only when local playback is rejected.
 - Existing action timing remains the manifest contract: 260 ms voice lead, 760 ms VFX delay, 3,200 ms full VFX duration, and 1,850 ms impact hold.
 
