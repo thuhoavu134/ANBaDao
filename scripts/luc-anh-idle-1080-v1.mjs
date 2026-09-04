@@ -16,7 +16,7 @@ function replaceOnce(source, expression, replacement, label) {
 function patchBattle() {
   const path = join(out, 'battle.html');
   let source = readFileSync(path, 'utf8');
-  const idleExpression = /idle:\{file:"idle-atlas\.webp",frames:\d+,w:\d+,h:\d+,ms:\d+,loop:true\}/g;
+  const idleExpression = /idle:\{file:"idle(?:-1080)?-atlas\.webp",frames:\d+,w:\d+,h:\d+,ms:\d+,loop:true\}/g;
   const replacement = `idle:{file:"${file}",frames:${IDLE.frames},w:${IDLE.cellW},h:${IDLE.cellH},ms:${IDLE.ms},loop:true}`;
   source = replaceOnce(source, idleExpression, replacement, 'battle idle metadata');
   if (!source.includes(`file:"${file}"`)) throw new Error('Lục Ảnh IDLE 1080 battle asset was not wired');
@@ -33,11 +33,11 @@ function patchHeroDetail() {
   const prefix = source.slice(0, objectStart);
   const block = source.slice(objectStart, objectEnd);
   const suffix = source.slice(objectEnd);
-  const idleExpression = /idle:\{src:'assets\/characters\/luc-anh\/idle-atlas\.webp',frames:\d+,cols:\d+,w:\d+,h:\d+,ms:\d+,loop:true\}/g;
+  const idleExpression = /idle:\{src:'assets\/characters\/luc-anh\/idle(?:-1080)?-atlas\.webp',frames:\d+,cols:\d+,w:\d+,h:\d+,ms:\d+,loop:true\}/g;
   const replacement = `idle:{src:'${IDLE.src}',frames:${IDLE.frames},cols:${IDLE.cols},w:${IDLE.cellW},h:${IDLE.cellH},ms:${IDLE.ms},loop:true}`;
   const patchedBlock = replaceOnce(block, idleExpression, replacement, 'hero-detail idle metadata');
   source = prefix + patchedBlock + suffix;
-  const manifestExpression = /idle:'assets\/characters\/luc-anh\/idle-atlas\.webp'/g;
+  const manifestExpression = /idle:'assets\/characters\/luc-anh\/idle(?:-1080)?-atlas\.webp'/g;
   source = replaceOnce(source, manifestExpression, `idle:'${IDLE.src}'`, 'character manifest idle asset');
   const masterGhostExpression = /\.hstage\.luc-anh-stage \.hsava\.hero-master\{opacity:\.18;filter:blur\(\.2px\);transform:scale\(1\.08\)\}/g;
   source = replaceOnce(
