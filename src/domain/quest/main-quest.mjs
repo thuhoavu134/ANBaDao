@@ -46,6 +46,36 @@ export function normalizeMainQuestState(input = {}, options = {}) {
   return state;
 }
 
+/**
+ * Bootstrap a quest cursor for a save created before the main-quest module.
+ * The campaign cursor is authoritative, so returning players never restart
+ * at ải 1 merely because this module is new.
+ */
+export function bootstrapMainQuestState(options = {}) {
+  const chapters = Array.isArray(options.chapters) ? options.chapters : [];
+  const unlocked = new Set((Array.isArray(options.unlockedChapters) ? options.unlockedChapters : []).map((value) => integer(value)));
+  const cleared = new Set((Array.isArray(options.clearedChapters) ? options.clearedChapters : []).map((value) => integer(value)));
+  const campaignStages = options.campaignStages && typeof options.campaignStages === 'object' ? options.campaignStages : {};
+  const open = chapters.find((chapter) => {
+    const index = integer(chapter?.idx, -1);
+    return index >= 0 && unlocked.has(index) && !cleared.has(index);
+  });
+  if (open) {
+    const chapterIndex = integer(open.idx, 0);
+    return createMainQuestState({
+      chapterIndex,
+      stageIndex: Math.max(0, integer(campaignStages[chapterIndex], 0))
+    });
+  }
+  if (chapters.length) {
+    return createMainQuestState({
+      chapterIndex: Math.max(0, integer(chapters[chapters.length - 1]?.idx, chapters.length - 1)),
+      allComplete: true
+    });
+  }
+  return createMainQuestState();
+}
+
 export function getCurrentMainQuest(state, options = {}) {
   const normalized = normalizeMainQuestState(state, options);
   const chapterIndex = normalized.chapterIndex;
