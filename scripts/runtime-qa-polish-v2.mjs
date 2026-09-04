@@ -103,24 +103,24 @@ const voiceBridge = String.raw`<script id="luc-anh-ultimate-voice-guaranteed">
      if(bus&&typeof bus.playVoice==='function'){
        const p=bus.playVoice(URL,5);
        if(p&&typeof p.catch==='function')p.catch(()=>{});
-       return p||Promise.resolve(true);
+       return p&&typeof p.catch==='function'?p.catch(()=>false):Promise.resolve(true);
      }
    }catch(_e){}
    try{
      const a=new Audio(URL);a.preload='auto';a.volume=1;
-     const p=a.play();return p||Promise.resolve(true);
+     const p=a.play();return p&&typeof p.catch==='function'?p.catch(()=>false):Promise.resolve(true);
    }catch(_e){return Promise.resolve(false);}
  };
  const play=()=>{
    try{
      audio.pause();audio.currentTime=0;audio.muted=false;audio.volume=1;
      const p=audio.play();
-     if(p&&typeof p.catch==='function')return p.catch(()=>fallback());
+     if(p&&typeof p.catch==='function')return p.catch(()=>Promise.resolve(fallback()).catch(()=>false));
      return Promise.resolve(true);
    }catch(_e){return fallback();}
  };
  window.__HV_LUC_ANH_ULTIMATE_AUDIO_V2={audio,unlock,play,isUnlocked:()=>unlocked,url:URL};
- window.__playLucAnhUltimateVoiceGuaranteed=()=>window.__HV_LUC_ANH_ULTIMATE_AUDIO_V2.play();
+ window.__playLucAnhUltimateVoiceGuaranteed=()=>{try{const p=window.__HV_LUC_ANH_ULTIMATE_AUDIO_V2.play();if(p&&typeof p.catch==='function')p.catch(()=>{});return p;}catch(_e){return false;}};
  const onGesture=()=>{
    unlock().catch(()=>{});
    try{const bus=getBus(),p=bus?.unlock?.();if(p&&typeof p.catch==='function')p.catch(()=>{});}catch(_e){}
