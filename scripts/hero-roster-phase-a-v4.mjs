@@ -112,7 +112,7 @@ const jsBody = `
         openingDetail=true;lastOpenAt=now;ev.preventDefault();ev.stopPropagation();if(ev.stopImmediatePropagation)ev.stopImmediatePropagation();unparkLegacy();
         var opened=false;
         try{if(item.id&&typeof renderHeroDetail==='function'&&typeof showScreen==='function'){renderHeroDetail(item.id);showScreen('heroDetail');opened=true;}}catch(_e){}
-        if(!opened)try{if(item.source&&typeof item.source.click==='function)item.source.click();}catch(_e){}
+        if(!opened)try{if(item.source&&typeof item.source.click==='function')item.source.click();}catch(_e){}
         setTimeout(function(){root.hidden=true;openingDetail=false;},220);
       }
       b.addEventListener('pointerup',openItem,{capture:true});
