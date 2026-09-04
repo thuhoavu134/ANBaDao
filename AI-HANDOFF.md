@@ -106,4 +106,4 @@ Never hide missing assets or failed runtime checks.
 - `assets/battle/backgrounds-v1/` contains the 20 `*_battle_stage.png` images from the Library pack `HON-VIET-MONG-GIOI-20-THEME-BACKGROUND-PAIRS.zip`; source artwork is 941×1672 and is kept lossless.
 - `src/domain/battle/background-registry.mjs` is the pure deterministic selector. Known campaign IDs are mapped in sequence; `luyen_tap` and `default` reserve themes 19–20, and unknown IDs use a stable hash.
 - `scripts/battle-backgrounds-20-v1.mjs` replaces the image source block after `battle-visual-polish-v1.mjs` and loads the selected stage without editing the large `battle.html` file. `scripts/build-static.mjs` imports it immediately after the visual polish patch.
-- The battle canvas remains the existing 1600×870 world; the authored portrait art is drawn through the existing safe crop/cover path so unit coordinates and HUD layout remain unchanged.
+- The battle canvas remains the existing 1600×870 world; portrait stages are fit centrally with a softened side extension so the authored gate/floor/rear wall remain visible while unit coordinates and HUD layout remain unchanged.
