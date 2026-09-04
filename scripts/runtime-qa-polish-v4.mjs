@@ -69,6 +69,23 @@ if (index.includes(resultMessageLine)) index = index.replace(resultMessageLine, 
 // than stretching the 240px cell to 280+ CSS pixels.
 index = index.replace(/function startLucAnhDetailIdle\(\)\{[\s\S]*?\}\s*(?=function|const |let |var )/, `function startLucAnhDetailIdle(){\n  cancelAnimationFrame(_lucDetailRaf);\n  const cv=document.getElementById('lucAnhDetailIdle');if(!cv)return;\n  const css=260,dpr=Math.min(3,window.devicePixelRatio||1);\n  cv.style.width=css+'px';cv.style.height=css+'px';\n  cv.style.filter='contrast(1.14) saturate(1.06)';\n  cv.width=Math.round(css*dpr);cv.height=Math.round(css*dpr);\n  const c=cv.getContext('2d'),a=LUC_ANH_ANIMS.idle,im=LUC_ANH_IMAGES.idle,start=performance.now();\n  function tick(){\n    if(!cv.isConnected)return;\n    c.setTransform(dpr,0,0,dpr,0,0);c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high';\n    c.clearRect(0,0,css,css);\n    if(im.complete&&im.naturalWidth>1){const f=lucFrame(a,start,true),sx=Math.round((f%a.cols)*a.w),sy=Math.round(Math.floor(f/a.cols)*a.h);c.drawImage(im,sx,sy,a.w,a.h,0,0,css,css);}\n    _lucDetailRaf=requestAnimationFrame(tick);\n  }\n  tick();\n}\n`);
 
+// Avoid running the main-quest bootstrap before the shared player state (P) is declared.
+const eagerQuestInit = `  ensure();
+  persistQuest();
+  renderQuestSurfaces();
+})();`;
+const deferredQuestInit = `  setTimeout(() => {
+    try {
+      ensure();
+      persistQuest();
+      renderQuestSurfaces();
+    } catch (error) {
+      console.error("Không thể khởi tạo tuyến nhiệm vụ.", error);
+    }
+  }, 0);
+})();`;
+if (index.includes(eagerQuestInit)) index = index.replace(eagerQuestInit, deferredQuestInit);
+
 writeFileSync(battlePath, battle);
 writeFileSync(indexPath, index);
 console.log('Runtime QA polish v4 applied: center-reaching triple ultimate, reliable victory taps, production QA disabled, sharper Luc Anh detail idle');
