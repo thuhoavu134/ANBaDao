@@ -32,8 +32,32 @@ if(index.includes(qaOld)) index = index.replace(qaOld, qaNew);
 
 // Accept the battle frame's result messages on Safari while retaining a frame/window guard.
 const sourceGuard = '    if (!activeBattle || event.source !== frame.contentWindow) return;\n    const message = event.data;';
-const sourceGuardReplacement = '    if (!activeBattle) return;\n    const message = event.data;\n    if (event.source && event.source !== frame.contentWindow && event.source !== window) return;';
+const sourceGuardReplacement = [
+  '    const message = event.data;',
+  '    if (event.source && event.source !== frame.contentWindow && event.source !== window) return;',
+  '    if (!activeBattle) {',
+  '      if (message.type === "battle-nav") {',
+  '        const target = ["hub","heroes","team","daily","campaign","summon","forge"].includes(message.payload?.target) ? message.payload.target : "hub";',
+  '        try { closeOverlay(); } catch (_e) {}',
+  '        try { if (typeof navTo === "function") navTo(target); } catch (_e) {}',
+  '      }',
+  '      return;',
+  '    }'
+].join('\n');
 if (index.includes(sourceGuard)) index = index.replace(sourceGuard, sourceGuardReplacement);
+
+const resultMessageLine = 'if (message.type === "battle-result") finishIntegratedBattle(message.payload || {});';
+const resultMessageReplacement = [
+  'if (message.type === "battle-result") {',
+  '  try { finishIntegratedBattle(message.payload || {}); }',
+  '  catch (error) {',
+  '    console.error("Không thể đóng kết quả trận Hồn Việt.", error);',
+  '    try { closeOverlay(); } catch (_e) {}',
+  '    try { if (typeof navTo === "function") navTo("campaign"); } catch (_e) {}',
+  '  }',
+  '}'
+].join('\n');
+if (index.includes(resultMessageLine)) index = index.replace(resultMessageLine, resultMessageReplacement);
 
 // 4) Hero-detail idle: the source cell is only 240px, so avoid enlarging it more than necessary.
 // Use a 260 CSS-px display, DPR3 backing store, integer source/destination coords and a mild
