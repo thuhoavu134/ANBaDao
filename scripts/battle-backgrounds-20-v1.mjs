@@ -13,7 +13,7 @@ const blockEnd = 'window.__HV_BATTLE_MAPS=Object.freeze({registry:BATTLE_MAP_REG
 const start = html.indexOf(blockStart);
 const endAt = start < 0 ? -1 : html.indexOf(blockEnd, start);
 if (start < 0 || endAt < 0) {
-  throw new Error('battle-backgrounds-20-v1 missing battle map block');
+  throw new Error('battle-backgrounds-20-v2 missing battle map block');
 }
 const end = endAt + blockEnd.length;
 
@@ -22,67 +22,80 @@ const byBattleIdSource = JSON.stringify(Object.fromEntries(
   Object.entries(BATTLE_BACKGROUND_BY_BATTLE_ID).map(([battleId, entry]) => [battleId, entry.index])
 ));
 
-const replacement = `const BATTLE_MAP_ENTRIES=Object.freeze(${entriesSource});
-  const BATTLE_MAP_BY_BATTLE_ID=Object.freeze(${byBattleIdSource});
-  const BATTLE_MAP_REGISTRY=Object.freeze(Object.assign(
-    {default:BATTLE_MAP_ENTRIES[BATTLE_MAP_ENTRIES.length-1].source},
-    Object.fromEntries(BATTLE_MAP_ENTRIES.map((entry,index)=>[index+1,entry.source])),
-    {entries:BATTLE_MAP_ENTRIES,byBattleId:BATTLE_MAP_BY_BATTLE_ID}
-  ));
-  function battleChapterNumber(){
-    const raw=String(EMBED_CONFIG.chapterId||EMBED_CONFIG.chapter||EMBED_CONFIG.chapterTitle||'1');
-    const m=raw.match(/\\d+/); return m?Math.max(1,Number(m[0])||1):1;
-  }
-  function battleBackgroundEntry(){
-    const battleId=String(EMBED_CONFIG.battleId||EMBED_CONFIG.encounterId||'').trim();
-    const exactIndex=BATTLE_MAP_REGISTRY.byBattleId[battleId];
-    if(Number.isInteger(exactIndex)&&BATTLE_MAP_REGISTRY.entries[exactIndex-1]) return BATTLE_MAP_REGISTRY.entries[exactIndex-1];
-    if(!battleId) return BATTLE_MAP_REGISTRY.entries[BATTLE_MAP_REGISTRY.entries.length-1];
-    let hash=17;
-    for(const character of battleId) hash=((hash*31)+character.codePointAt(0))>>>0;
-    return BATTLE_MAP_REGISTRY.entries[hash%BATTLE_MAP_REGISTRY.entries.length];
-  }
-  const VIETNAM_HORIZON = new Image();
-  VIETNAM_HORIZON.decoding = "async";
-  VIETNAM_HORIZON.src=battleBackgroundEntry().source;
-  window.__HV_BATTLE_MAPS=Object.freeze({registry:BATTLE_MAP_REGISTRY,chapter:()=>battleChapterNumber(),battleId:()=>String(EMBED_CONFIG.battleId||EMBED_CONFIG.encounterId||''),entry:battleBackgroundEntry,source:()=>VIETNAM_HORIZON.src});`;
+const replacement = [
+  'const BATTLE_MAP_ENTRIES=Object.freeze(' + entriesSource + ');',
+  '  const BATTLE_MAP_BY_BATTLE_ID=Object.freeze(' + byBattleIdSource + ');',
+  '  const BATTLE_MAP_REGISTRY=Object.freeze(Object.assign(',
+  '    {default:BATTLE_MAP_ENTRIES[BATTLE_MAP_ENTRIES.length-1].source},',
+  '    Object.fromEntries(BATTLE_MAP_ENTRIES.map((entry,index)=>[index+1,entry.source])),',
+  '    {entries:BATTLE_MAP_ENTRIES,byBattleId:BATTLE_MAP_BY_BATTLE_ID}',
+  '  ));',
+  '  function battleChapterNumber(){',
+  '    const raw=String(EMBED_CONFIG.chapterId||EMBED_CONFIG.chapter||EMBED_CONFIG.chapterTitle||\'1\');',
+  '    const m=raw.match(/\\d+/); return m?Math.max(1,Number(m[0])||1):1;',
+  '  }',
+  '  function battleBackgroundEntry(){',
+  '    const battleId=String(EMBED_CONFIG.battleId||EMBED_CONFIG.encounterId||\'\').trim();',
+  '    const exactIndex=BATTLE_MAP_REGISTRY.byBattleId[battleId];',
+  '    if(Number.isInteger(exactIndex)&&BATTLE_MAP_REGISTRY.entries[exactIndex-1]) return BATTLE_MAP_REGISTRY.entries[exactIndex-1];',
+  '    if(!battleId) return BATTLE_MAP_REGISTRY.entries[BATTLE_MAP_REGISTRY.entries.length-1];',
+  '    let hash=17;',
+  '    for(const character of battleId) hash=((hash*31)+character.codePointAt(0))>>>0;',
+  '    return BATTLE_MAP_REGISTRY.entries[hash%BATTLE_MAP_REGISTRY.entries.length];',
+  '  }',
+  '  const VIETNAM_HORIZON = new Image();',
+  '  VIETNAM_HORIZON.decoding = "async";',
+  '  VIETNAM_HORIZON.src=battleBackgroundEntry().source;',
+  '  window.__HV_BATTLE_MAPS=Object.freeze({registry:BATTLE_MAP_REGISTRY,chapter:()=>battleChapterNumber(),battleId:()=>String(EMBED_CONFIG.battleId||EMBED_CONFIG.encounterId||\'\'),entry:battleBackgroundEntry,source:()=>VIETNAM_HORIZON.src});'
+].join('\n');
 
 html = html.slice(0, start) + replacement + html.slice(end);
 
-// The supplied stages are portrait artwork. Preserve the whole authored gate,
-// floor and rear wall in the 16:8.7 canvas by fitting it centrally and extending
-// the sides with a softened cover pass instead of cropping the composition away.
-const portraitAnchor = `      const sh = VIETNAM_HORIZON.naturalHeight;\n      const targetRatio = WORLD.width / WORLD.height;`;
-const portraitReplacement = `      const sh = VIETNAM_HORIZON.naturalHeight;\n      if (sh > sw * 1.15) {\n        const fitScale = WORLD.height / sh;\n        const fitWidth = sw * fitScale;\n        const coverScale = Math.max(WORLD.width / sw, WORLD.height / sh);\n        const coverWidth = sw * coverScale;\n        const coverHeight = sh * coverScale;\n        context.save();\n        context.globalAlpha = 0.62;\n        context.filter = 'blur(28px) saturate(.82) brightness(.66)';\n        context.drawImage(VIETNAM_HORIZON, 0, 0, sw, sh, (WORLD.width - coverWidth) / 2, (WORLD.height - coverHeight) / 2, coverWidth, coverHeight);\n        context.filter = 'none';\n        context.globalAlpha = 1;\n        context.drawImage(VIETNAM_HORIZON, 0, 0, sw, sh, (WORLD.width - fitWidth) / 2, 0, fitWidth, WORLD.height);\n        context.restore();\n        const portraitShade = context.createLinearGradient(0, 0, 0, WORLD.height);\n        portraitShade.addColorStop(0, 'rgba(0,0,0,.05)');\n        portraitShade.addColorStop(.58, 'rgba(0,0,0,.04)');\n        portraitShade.addColorStop(1, 'rgba(0,0,0,.2)');\n        context.fillStyle = portraitShade;\n        context.fillRect(0, 0, WORLD.width, WORLD.height);\n        return;\n      }\n      const targetRatio = WORLD.width / WORLD.height;`;
-if (!html.includes('const fitScale = WORLD.height / sh;')) {
-  if (!html.includes(portraitAnchor)) throw new Error('battle-backgrounds-20-v1 missing portrait draw anchor');
-  html = html.replace(portraitAnchor, portraitReplacement);
+// One authored image owns the entire battlefield. Do not fit a portrait panel
+// in the middle and do not draw the legacy painted arena behind it.
+const backgroundStart = html.indexOf('  function drawBackground(context, time) {');
+const backgroundEnd = backgroundStart < 0 ? -1 : html.indexOf('\n  function drawWeapon', backgroundStart);
+if (backgroundStart < 0 || backgroundEnd < 0) {
+  throw new Error('battle-backgrounds-20-v2 missing drawBackground block');
 }
+const backgroundFn = [
+  '  function drawBackground(context,time) {',
+  '    const source=VIETNAM_HORIZON;',
+  '    if(source.complete&&source.naturalWidth>1){',
+  '      const sw=source.naturalWidth,sh=source.naturalHeight;',
+  '      const scale=Math.max(WORLD.width/sw,WORLD.height/sh);',
+  '      const dw=sw*scale,dh=sh*scale;',
+  '      context.save();',
+  "      context.globalCompositeOperation='source-over';",
+  '      context.globalAlpha=1;',
+  "      context.filter='none';",
+  '      context.imageSmoothingEnabled=true;',
+  "      context.imageSmoothingQuality='high';",
+  '      context.drawImage(source,0,0,sw,sh,(WORLD.width-dw)/2,(WORLD.height-dh)/2,dw,dh);',
+  '      context.restore();',
+  '      const shade=context.createLinearGradient(0,0,0,WORLD.height);',
+  "      shade.addColorStop(0,'rgba(0,0,0,.02)');",
+  "      shade.addColorStop(.7,'rgba(0,0,0,.04)');",
+  "      shade.addColorStop(1,'rgba(0,0,0,.14)');",
+  '      context.fillStyle=shade;',
+  '      context.fillRect(0,0,WORLD.width,WORLD.height);',
+  '      return;',
+  '    }',
+  "    context.fillStyle='#081416';",
+  '    context.fillRect(0,0,WORLD.width,WORLD.height);',
+  '    const loadingShade=context.createLinearGradient(0,0,0,WORLD.height);',
+  "    loadingShade.addColorStop(0,'rgba(13,43,40,.32)');",
+  "    loadingShade.addColorStop(1,'rgba(3,10,12,.72)');",
+  '    context.fillStyle=loadingShade;',
+  '    context.fillRect(0,0,WORLD.width,WORLD.height);',
+  '  }',
+  ''
+].join('\n');
+html = html.slice(0, backgroundStart) + backgroundFn + html.slice(backgroundEnd);
 
-// Do not allow the legacy hand-painted scenery to flash behind the authored
-// stage or remain as a fallback. The image set is now the only battle backdrop;
-// while a stage is decoding, keep a quiet solid canvas so no old background leaks
-// through the runtime.
-const legacyFallbackStart = html.indexOf('    drawSky(context, time);');
-const legacyFallbackEnd = legacyFallbackStart < 0
-  ? -1
-  : html.indexOf('\n  }\n\n  function drawWeapon', legacyFallbackStart);
-if (legacyFallbackStart >= 0 && legacyFallbackEnd >= 0) {
-  const plainFallback = `    context.fillStyle = '#081416';
-    context.fillRect(0, 0, WORLD.width, WORLD.height);
-    const loadingShade = context.createLinearGradient(0, 0, 0, WORLD.height);
-    loadingShade.addColorStop(0, 'rgba(13,43,40,.32)');
-    loadingShade.addColorStop(1, 'rgba(3,10,12,.72)');
-    context.fillStyle = loadingShade;
-    context.fillRect(0, 0, WORLD.width, WORLD.height);`;
-  html = html.slice(0, legacyFallbackStart) + plainFallback + html.slice(legacyFallbackEnd);
-} else if (!html.includes("context.fillStyle = '#081416';")) {
-  throw new Error('battle-backgrounds-20-v1 missing legacy background fallback block');
+const cssMarker = '<style id="hv-image-map-override-v2">#gameCanvas,.game-viewport{background:#081416!important}.embedded-battle.reference-simple #gameCanvas{background:transparent!important}</style>';
+if (!html.includes('hv-image-map-override-v2')) {
+  html = html.replace('</head>', cssMarker + '\n</head>');
 }
-
-if (!html.includes('id="hv-image-map-override-v1"')) {
-  throw new Error('battle-backgrounds-20-v1 expected image map override marker');
-}
-
 writeFileSync(outputPath, html);
-console.log(`Battle backgrounds v1 applied: ${BATTLE_BACKGROUND_ENTRIES.length} authored stages`);
+console.log('Battle backgrounds v2 applied: ' + BATTLE_BACKGROUND_ENTRIES.length + ' authored stages · single full-bleed layer');
