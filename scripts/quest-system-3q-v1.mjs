@@ -259,7 +259,7 @@ ${moduleSource}
     renderDailyPanel,
     renderQuestSurfaces
   });
-  setTimeout(() => {
+  const initQuestRuntime = () => {
     try {
       ensure();
       persistQuest();
@@ -267,7 +267,12 @@ ${moduleSource}
     } catch (error) {
       console.error("Không thể khởi tạo tuyến nhiệm vụ.", error);
     }
-  }, 0);
+  };
+  if (document.readyState === 'loading') {
+    window.addEventListener('DOMContentLoaded', initQuestRuntime, { once: true });
+  } else {
+    initQuestRuntime();
+  }
 })();`;
 }
 
