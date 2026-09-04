@@ -45,6 +45,7 @@ await import('./skill-atlas-runtime-v1.mjs');
 await import('./skill-atlas-registry-v1.mjs');
 await import('./luc-anh-local-speed-v1.mjs');
 await import('./battle-visual-polish-v1.mjs');
+await import('./battle-backgrounds-20-v1.mjs');
 await import('./hero-card-dedupe-v1.mjs');
 await import('./hero-roster-phase-a-v4.mjs');
 await import('./hero-roster-v4-runtime-fix-v1.mjs');
