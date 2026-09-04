@@ -24,6 +24,7 @@ export function createMainQuestState(options = {}) {
     stageIndex: Math.max(0, integer(options.stageIndex, 0)),
     progress: clamp(integer(options.progress, 0), 0, 1),
     allComplete: options.allComplete === true,
+    campaignCycle: Math.max(1, integer(options.campaignCycle, 1)),
     claimed: uniqueStrings(options.claimed),
     history: Array.isArray(options.history) ? options.history.slice(-20) : []
   };
@@ -64,13 +65,15 @@ export function bootstrapMainQuestState(options = {}) {
     const chapterIndex = integer(open.idx, 0);
     return createMainQuestState({
       chapterIndex,
-      stageIndex: Math.max(0, integer(campaignStages[chapterIndex], 0))
+      stageIndex: Math.max(0, integer(campaignStages[chapterIndex], 0)),
+      campaignCycle: Math.max(1, integer(options.campaignCycle, 1))
     });
   }
   if (chapters.length) {
     return createMainQuestState({
       chapterIndex: Math.max(0, integer(chapters[chapters.length - 1]?.idx, chapters.length - 1)),
-      allComplete: true
+      allComplete: true,
+      campaignCycle: Math.max(1, integer(options.campaignCycle, 1))
     });
   }
   return createMainQuestState();
