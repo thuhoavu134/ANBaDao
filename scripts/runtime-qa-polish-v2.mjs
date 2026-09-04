@@ -67,7 +67,67 @@ else battle = replaceOptional(battle,oldVfxA,tripleVfx,'Luc Anh triple enemy-hal
 // 4) Guaranteed Ultimate voice bridge. This is intentionally independent of the older function
 // patch: the action calls this global function directly, so iOS iframe/global-binding quirks cannot
 // silently bypass the voice. The parent audio bus was unlocked by the user's first real game tap.
-const voiceBridge = `<script id="luc-anh-ultimate-voice-guaranteed">\n(()=>{\n const URL='/assets/audio/voice-luc-anh-ultimate.mp3';\n const getBus=()=>{try{return (parent&&parent!==window&&parent.HonVietAudio)?parent.HonVietAudio:window.HonVietAudio;}catch(_e){return window.HonVietAudio;}};\n const prime=()=>{try{const b=getBus();b?.unlock?.().catch?.(()=>{});b?.preload?.(URL).catch?.(()=>{});}catch(_e){}};\n window.__playLucAnhUltimateVoiceGuaranteed=()=>{try{const b=getBus();if(b&&typeof b.playVoice==='function'){b.playVoice(URL,5).catch(()=>{try{const a=new Audio(URL);a.preload='auto';a.volume=1;a.play().catch(()=>{});}catch(_e){}});return;}const a=new Audio(URL);a.preload='auto';a.volume=1;a.play().catch(()=>{});}catch(_e){}};\n ['pointerdown','touchstart','touchend','click','keydown'].forEach(t=>document.addEventListener(t,prime,{capture:true,passive:true,once:true}));\n prime();\n})();\n</script>`;
+const voiceBridge = String.raw`<script id="luc-anh-ultimate-voice-guaranteed">
+(()=> {
+ const URL='/assets/audio/voice-luc-anh-ultimate.mp3';
+ const getBus=()=>{try{return (window.parent&&window.parent!==window&&window.parent.HonVietAudio)?window.parent.HonVietAudio:window.HonVietAudio;}catch(_e){return window.HonVietAudio;}};
+ const audio=new Audio(URL);
+ audio.preload='auto';
+ audio.autoplay=false;
+ audio.loop=false;
+ audio.volume=1;
+ audio.setAttribute('playsinline','');
+ let unlocked=false,unlocking=null;
+ const unlock=()=>{
+   if(unlocked)return Promise.resolve(true);
+   if(unlocking)return unlocking;
+   const oldMuted=audio.muted,oldVolume=audio.volume;
+   audio.muted=true;audio.volume=0;
+   try{
+     const p=audio.play();
+     unlocking=Promise.resolve(p).then(()=>{
+       audio.pause();audio.currentTime=0;unlocked=true;return true;
+     },()=>false).finally(()=>{
+       audio.muted=oldMuted;audio.volume=oldVolume;unlocking=null;
+     });
+   }catch(_e){
+     audio.muted=oldMuted;audio.volume=oldVolume;unlocking=Promise.resolve(false);
+   }
+   return unlocking;
+ };
+ try{audio.load();}catch(_e){}
+ audio.addEventListener('ended',()=>{try{audio.currentTime=0;}catch(_e){}});
+ const fallback=()=>{
+   try{
+     const bus=getBus();
+     if(bus&&typeof bus.playVoice==='function'){
+       const p=bus.playVoice(URL,5);
+       if(p&&typeof p.catch==='function')p.catch(()=>{});
+       return p||Promise.resolve(true);
+     }
+   }catch(_e){}
+   try{
+     const a=new Audio(URL);a.preload='auto';a.volume=1;
+     const p=a.play();return p||Promise.resolve(true);
+   }catch(_e){return Promise.resolve(false);}
+ };
+ const play=()=>{
+   try{
+     audio.pause();audio.currentTime=0;audio.muted=false;audio.volume=1;
+     const p=audio.play();
+     if(p&&typeof p.catch==='function')return p.catch(()=>fallback());
+     return Promise.resolve(true);
+   }catch(_e){return fallback();}
+ };
+ window.__HV_LUC_ANH_ULTIMATE_AUDIO_V2={audio,unlock,play,isUnlocked:()=>unlocked,url:URL};
+ window.__playLucAnhUltimateVoiceGuaranteed=()=>window.__HV_LUC_ANH_ULTIMATE_AUDIO_V2.play();
+ const onGesture=()=>{
+   unlock().catch(()=>{});
+   try{const bus=getBus(),p=bus?.unlock?.();if(p&&typeof p.catch==='function')p.catch(()=>{});}catch(_e){}
+ };
+ ['pointerdown','touchstart','click','keydown'].forEach(t=>document.addEventListener(t,onGesture,{capture:true,passive:true}));
+})();
+</script>`;
 if(!battle.includes('luc-anh-ultimate-voice-guaranteed')) battle=battle.replace('</body>',voiceBridge+'\n</body>');
 
 // 5) Victory: actual Lục Ảnh run/idle frames instead of a static portrait sliding across the screen.
