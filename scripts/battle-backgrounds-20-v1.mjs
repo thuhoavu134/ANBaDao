@@ -49,6 +49,16 @@ const replacement = `const BATTLE_MAP_ENTRIES=Object.freeze(${entriesSource});
 
 html = html.slice(0, start) + replacement + html.slice(end);
 
+// The supplied stages are portrait artwork. Preserve the whole authored gate,
+// floor and rear wall in the 16:8.7 canvas by fitting it centrally and extending
+// the sides with a softened cover pass instead of cropping the composition away.
+const portraitAnchor = `      const sh = VIETNAM_HORIZON.naturalHeight;\n      const targetRatio = WORLD.width / WORLD.height;`;
+const portraitReplacement = `      const sh = VIETNAM_HORIZON.naturalHeight;\n      if (sh > sw * 1.15) {\n        const fitScale = WORLD.height / sh;\n        const fitWidth = sw * fitScale;\n        const coverScale = Math.max(WORLD.width / sw, WORLD.height / sh);\n        const coverWidth = sw * coverScale;\n        const coverHeight = sh * coverScale;\n        context.save();\n        context.globalAlpha = 0.62;\n        context.filter = 'blur(28px) saturate(.82) brightness(.66)';\n        context.drawImage(VIETNAM_HORIZON, 0, 0, sw, sh, (WORLD.width - coverWidth) / 2, (WORLD.height - coverHeight) / 2, coverWidth, coverHeight);\n        context.filter = 'none';\n        context.globalAlpha = 1;\n        context.drawImage(VIETNAM_HORIZON, 0, 0, sw, sh, (WORLD.width - fitWidth) / 2, 0, fitWidth, WORLD.height);\n        context.restore();\n        const portraitShade = context.createLinearGradient(0, 0, 0, WORLD.height);\n        portraitShade.addColorStop(0, 'rgba(0,0,0,.05)');\n        portraitShade.addColorStop(.58, 'rgba(0,0,0,.04)');\n        portraitShade.addColorStop(1, 'rgba(0,0,0,.2)');\n        context.fillStyle = portraitShade;\n        context.fillRect(0, 0, WORLD.width, WORLD.height);\n        return;\n      }\n      const targetRatio = WORLD.width / WORLD.height;`;
+if (!html.includes('const fitScale = WORLD.height / sh;')) {
+  if (!html.includes(portraitAnchor)) throw new Error('battle-backgrounds-20-v1 missing portrait draw anchor');
+  html = html.replace(portraitAnchor, portraitReplacement);
+}
+
 if (!html.includes('id="hv-image-map-override-v1"')) {
   throw new Error('battle-backgrounds-20-v1 expected image map override marker');
 }
