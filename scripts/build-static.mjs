@@ -1,4 +1,4 @@
-import { cpSync, mkdirSync, rmSync, existsSync, copyFileSync, statSync } from 'node:fs';
+import { cpSync, mkdirSync, rmSync, existsSync, copyFileSync, statSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 const root = process.cwd();
@@ -54,4 +54,17 @@ await import('./combat-domain-3q-adapter-v1.mjs');
 await import('./quest-system-3q-v1.mjs');
 await import('./luc-anh-idle-trimmed-v1.mjs');
 await import('./runtime-result-actions-v5.mjs');
+await import('./m0-p0-runtime-repair-v1.mjs');
+
+// The integrated battle is loaded from this embedded payload in production.
+// Keep it byte-identical to the patched battle.html; otherwise the visible
+// preview and the iframe can silently run different engines.
+const embeddedBattle = readFileSync(join(out, 'battle.html'));
+let embeddedIndex = readFileSync(join(out, 'index.html'), 'utf8');
+const encodedBattle = Buffer.from(embeddedBattle, 'utf8').toString('base64');
+const embeddedExpression = /const BATTLE_HTML_BASE64 = "[A-Za-z0-9+/=]+";/;
+if (!embeddedExpression.test(embeddedIndex)) throw new Error('Embedded battle payload marker not found');
+embeddedIndex = embeddedIndex.replace(embeddedExpression, `const BATTLE_HTML_BASE64 = "${encodedBattle}";`);
+writeFileSync(join(out, 'index.html'), embeddedIndex);
+console.log(`Embedded battle payload synced: ${embeddedBattle.length} bytes`);
 console.log(`Static preview written to ${out}`);
