@@ -47,14 +47,13 @@ await import('./skill-atlas-registry-v1.mjs');
 await import('./luc-anh-local-speed-v1.mjs');
 await import('./battle-visual-polish-v1.mjs');
 await import('./battle-backgrounds-20-v1.mjs');
-await import('./hero-card-dedupe-v1.mjs');
-await import('./hero-roster-phase-a-v4.mjs');
-await import('./hero-roster-v4-runtime-fix-v1.mjs');
 await import('./combat-domain-3q-adapter-v1.mjs');
 await import('./quest-system-3q-v1.mjs');
 await import('./luc-anh-idle-trimmed-v1.mjs');
 await import('./runtime-result-actions-v5.mjs');
 await import('./m0-p0-runtime-repair-v1.mjs');
+await import('./summon-pool-guard-v1.mjs');
+await import('./hero-roster-phase-a-v4.mjs');
 
 // The integrated battle is loaded from this embedded payload in production.
 // Keep it byte-identical to the patched battle.html; otherwise the visible

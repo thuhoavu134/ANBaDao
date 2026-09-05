@@ -192,23 +192,6 @@ function patchBackgroundOwnership(source) {
   return source.slice(0, bodyEnd) + css + source.slice(bodyEnd);
 }
 
-function patchRosterBack(source) {
-  const script = `<script id="m0-p0-roster-back-owner-v1">
-(()=>{
-  if(window.__HV_ROSTER_BACK_OWNER_V1)return;window.__HV_ROSTER_BACK_OWNER_V1=true;let last=0;
-  const isBack=(ev)=>ev.target?.closest?.('#heroDetailScreen [data-nav="heroes"],#heroDetailScreen .back');
-  const act=(ev)=>{if(!isBack(ev))return;const now=Date.now();if(now-last<300)return;last=now;ev.preventDefault();ev.stopPropagation();ev.stopImmediatePropagation?.();
-    try{if(typeof navTo==='function')navTo('heroes');else if(typeof showScreen==='function')showScreen('heroes');}catch(error){console.error('Không thể mở lại Đồ Giám Tướng.',error);return;}
-    const roster=document.getElementById('hvHeroRosterV4');if(roster){roster.hidden=false;roster.scrollTop=0;}
-  };
-  document.addEventListener('pointerup',act,true);document.addEventListener('click',act,true);document.addEventListener('touchend',act,{capture:true,passive:false});
-})();
-</script>
-`;
-  const bodyEnd = source.lastIndexOf('</body>');
-  if (bodyEnd < 0) throw new Error('M0/P0 roster body end not found');
-  return source.slice(0, bodyEnd) + script + source.slice(bodyEnd);
-}
 
 function patchKnownAssetFallbacks(source) {
   // The authored result art is PNG in this package. Keep the reward model
@@ -221,7 +204,6 @@ function patchKnownAssetFallbacks(source) {
 
 function patchIndex(source) {
   source = patchIndexIdle(source);
-  source = patchRosterBack(source);
   return patchKnownAssetFallbacks(source);
 }
 
@@ -238,4 +220,4 @@ let index = readFileSync(indexPath, 'utf8');
 index = patchIndex(index);
 writeFileSync(indexPath, index);
 
-console.log(`M0/P0 runtime repair applied: idle=${idle.src} (${idle.frames} frames, full-cell) · single background owner · result CTA owner · roster back owner`);
+console.log(`M0/P0 runtime repair applied: idle=${idle.src} (${idle.frames} frames, full-cell) · single background owner · result CTA owner`);
