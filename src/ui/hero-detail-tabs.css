@@ -8,9 +8,11 @@
 #heroDetailScreen .hv-detail-tablist{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:3px;padding:6px;margin-bottom:12px;background:#edf6ef;border:1px solid #cddfd6;border-radius:12px}
 #heroDetailScreen .hv-detail-tablist button{min-width:0;min-height:44px;padding:5px 2px;font-size:11px;line-height:1.3;white-space:normal}
 #heroDetailScreen .hv-detail-tablist button:focus-visible{outline:3px solid #257c91;outline-offset:2px}
-#heroDetailScreen .hv-detail-panel{display:grid;gap:12px}
+#heroDetailScreen .hv-detail-panel{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
 #heroDetailScreen .hv-detail-panel[hidden]{display:none!important}
-#heroDetailScreen .hv-detail-panel>*{min-width:0;margin:0!important}
+#heroDetailScreen .hv-detail-panel>*{grid-column:1;grid-row:auto;min-width:0;margin:0!important}
+#heroDetailScreen .hv-detail-panel .medalrow{grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;padding:8px}
+#heroDetailScreen .hv-detail-panel .medalrow :is(.mstat,.medal){min-width:0;padding:10px 4px}
 #heroDetailScreen .hv-detail-panel .upgrades{position:static!important;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:10px!important}
 #heroDetailScreen .hv-detail-panel .upgrades button{min-height:44px;white-space:normal;line-height:1.35}
 #heroDetailScreen .hv-detail-panel .section :is(div,span,b,small){color:inherit!important}
