@@ -28,8 +28,10 @@ Các mốc là thứ tự phụ thuộc, không phải tuyên bố toàn bộ đ
 - Cấp/sao/lực chiến, vàng/ngọc và lực chiến 6 tướng trong đội lấy từ dữ liệu hiện tại. Không còn vàng `6.682`, tài nguyên `581K`, sao `★★★★★` cố định.
 - Bộ lọc hệ, sắp xếp, Tướng/Đồ Giám, quay lại và dock có hành động thực. Thẻ dùng đúng ID, không suy từ tên rút gọn.
 - Giữ canvas idle khi hồ sơ cùng tướng được cập nhật; dừng RAF khi rời hồ sơ. Không đổi atlas, cắt frame, màu hay tỷ lệ nhân vật trong lần này.
+- Hồ sơ chia thành 5 tab thực: Thuộc tính (chỉ số và nâng tướng), Kỹ năng, Trang bị (4 ô đọc từ kho/đồ đang mặc và đường sang Rèn), Duyên phận, Tinh thông (kèm Thức Tỉnh). Chuyển các panel hiện có vào tab, giữ nguyên handler và điều kiện giao dịch; hỗ trợ phím mũi tên/Home/End, giữ tab khi chỉ số được cập nhật.
+- Canvas Lục Ảnh tham gia bố cục bình thường với tỷ lệ 1:1, không còn đặt tuyệt đối đè lên tên/sao. Không sửa dữ liệu pixel hoặc timing của idle.
 - Chặn banner có pool rỗng trước khi trừ ngọc, pity, Hồi Ức hoặc đánh dấu lượt miễn phí. Giữ đổi Hồi Ức đã có; không tự quyết xác suất banner mới.
-- Chưa chuyển toàn bộ economy sang giao dịch nguyên tử, chưa làm lại mọi tab hồ sơ, chưa thực hiện toàn bộ roadmap.
+- Chưa chuyển toàn bộ economy sang giao dịch nguyên tử; trang bị vẫn mặc/cường hóa ở hệ Rèn hiện có; chưa thực hiện toàn bộ roadmap.
 
 ## Kiểm thử / phát hành
 
@@ -37,5 +39,8 @@ Các mốc là thứ tự phụ thuộc, không phải tuyên bố toàn bộ đ
 - Regression tests kiểm read model, pool rỗng, số lượt không hợp lệ và một chủ xử lý thao tác. Build phải đồng bộ embedded battle với battle.html.
 - PR #1 đã qua 69 test và build, được merge qua GitHub theo yêu cầu phát hành của anh. Preview có bảo vệ đăng nhập và tài khoản Vercel kết nối thuộc nhóm khác; vì vậy kiểm tra runtime thực hiện trên link production sau deploy, không đổi bảo vệ hoặc tạo project khác.
 - Kiểm tra live sau merge: Lục Ảnh cấp 2 → 3, lực chiến 1.068 → 1.132, vàng 440 → 320; quay lại danh sách giữ lọc Mộng, cập nhật đúng thẻ và tài nguyên. Chưa coi kết quả này là xác nhận lưu sau tải lại hoặc chất lượng idle trên Safari.
-- Kiểm tra hình tìm được CSS chung của shell ghi đè vị trí roster, làm hiện cả header/tài nguyên cũ. Bản sửa tiếp theo đặt chính `heroesScreen` ở viewport, chỉ ẩn chrome chung khi route tướng đang mở; vòng cuộn vẫn do roster quản lý. Cần kiểm lại hình sau deploy.
+- Kiểm tra hình tìm được CSS chung của shell ghi đè vị trí roster, làm hiện cả header/tài nguyên cũ. Commit `6fe98f7` đã deploy Vercel thành công: `heroesScreen` và roster khớp viewport cao 936 px, header/tài nguyên chung được ẩn trong route tướng; khi sang hồ sơ hoặc hub màn roster ẩn hoàn toàn.
+- Trình duyệt production đã xác nhận tải lại giữ Lục Ảnh cấp 3/vàng 320/ngọc 800; lọc Mộng còn 2 thẻ; sắp xếp cấp đưa Lục Ảnh lên đầu; mở hồ sơ rồi quay lại giữ lọc/sắp xếp/focus và scrollTop 111 px. Roster có đúng 12 thẻ.
+- Với save kiểm thử chưa vượt chương 1, Gọi Mộng bị khóa bởi điều kiện mở tính năng hiện hành; chưa mở được màn banner trong QA live. Kiểm tra bảo toàn ngọc/pity/lượt miễn phí của guard được thực hiện bằng unit test.
+- Tab hồ sơ mới đã qua build/kiểm tra cú pháp; cần kiểm tra tương tác trên production sau phát hành. Bộ regression hiện tại 69/69 pass, không thay thế kiểm tra hình/tương tác.
 - Tình trạng phát hành và ca chạy thực tế được ghi ở PR/commit tương ứng, không đánh dấu các tính năng chưa thử là PASS.

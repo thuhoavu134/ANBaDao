@@ -54,6 +54,7 @@ await import('./runtime-result-actions-v5.mjs');
 await import('./m0-p0-runtime-repair-v1.mjs');
 await import('./summon-pool-guard-v1.mjs');
 await import('./hero-roster-phase-a-v4.mjs');
+await import('./hero-detail-tabs.mjs');
 
 // The integrated battle is loaded from this embedded payload in production.
 // Keep it byte-identical to the patched battle.html; otherwise the visible
