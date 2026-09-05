@@ -238,3 +238,17 @@ Tài liệu không cấp quyền mới để deploy, gửi tin, đổi cấu hì
 - Có file SFX nhưng chỉ gọi oscillator beep; manifest audio vẫn null.
 - Giữ flash cả màn hình cho từng cú đánh rồi nhầm thành “nâng chất lượng hiệu ứng”.
 - Chỉ build hoặc sửa bản xem thử rồi báo production đã xong.
+
+## 12. Kết quả kiểm chứng production của bản sửa này
+
+Commit code: `641658e544511d40ad15ad5e5472e826079f194c`. GitHub báo Vercel **success**; trang `qa-runtime.html` mới đã trả HTTP 200. Những mục dưới đây là quan sát thực tế sau deploy, không phải checklist dự định:
+
+- Chrome, iframe 390×844: đủ 12 thẻ tướng, có Lục Ảnh; nhìn thấy cả bộ lọc và dock. Mở chi tiết Lục Ảnh thấy nhân vật đầy đủ và đúng tỷ lệ.
+- Lọc Hệ Mộng → mở Lục Ảnh → Quay lại: trở về đúng hai thẻ Thầy Mo/Lục Ảnh và giữ bộ lọc. Đổi khung 430×932 → Thành Chính → Tướng: mở lại được.
+- Lưu đội có Lục Ảnh bằng UI, chạy Chinh chiến ở khung PC 1280×900. 24 mẫu DOM trong khoảng quan sát: canvas giữ 1280×828 khi giao đấu, flash luôn `0.000`, có trạng thái attack/hurt/ultimate. Khi chuyển sang Victory, canvas đổi một lần sang cao 900 theo layout kết quả; đây không phải dao động chiều cao trong trận.
+- Đã thấy nhánh Ultimate của Lục Ảnh chạy trong mẫu live. **Chưa có ảnh chụp riêng đúng thời điểm Basic trên browser**; kết luận sửa tỷ lệ Basic dựa trên test pixel atlas thật và metadata renderer đã build, không giả nhận là đã đối chiếu screenshot Basic trên iPhone.
+- Cả 9 URL SFX trả HTTP 200, đúng MIME, đúng hash nguồn. Chrome giải mã 9/9; AudioContext `running`, bộ đếm ghi 46 lần source start và event cuối `victory`, không có `data-sfx-error`. Không dùng các bộ đếm này để khẳng định loa trên iPhone đã phát âm.
+- Nút `Ải sau` chuyển sang thông báo hoàn thành nhiệm vụ 1/2 và mở nhiệm vụ kế tiếp. Không ghi nhận việc nút bị chặn trong lần kiểm tra đó.
+- Safari/iPhone thật: **chưa kiểm tra**. Cần người dùng xác nhận trên thiết bị từng gặp lỗi.
+
+Phát hiện ngoài bốn lỗi đang sửa: phần ảnh MVP Ông Phở trên màn Victory có lúc hiện ô placeholder thay cho ảnh nhân vật; một ảnh chụp trận PC còn thấy frame của Đình Lôi bị cắt phần đầu. Hai renderer này không được chỉnh tỷ lệ trong bản vá lần này. Ghi làm việc tiếp theo, kiểm tra grid/source của chính nhân vật trước khi sửa; đừng ghi “toàn bộ màn Victory/nhân vật đã đạt” dựa trên việc nút Ải sau bấm được. SFX riêng từng tướng cũng chưa được duyệt mapping; hiện là bộ event dùng chung như bảng ở mục 8.
