@@ -2,13 +2,12 @@
  * Authored Lục Ảnh idle runtime contract.
  *
  * The source pack contains 96 full-body frames. They are normalized into one
- * 8×12 WebP quality-100 atlas with 480 px cells so the same high-resolution
- * source can be used by the hero-detail canvas and the battle renderer. The
- * black chroma is cleaned at the edge and in enclosed background holes before
- * the atlas is encoded.
+ * 8×12 lossless WebP atlas with 480 px cells. The re-uploaded IDLE(2).rar
+ * contains authored RGBA; the older RGB upload must never be keyed again or
+ * substituted. A fixed square crop preserves scale and baseline across frames.
  */
 export const LUC_ANH_IDLE_1080 = Object.freeze({
-  src: 'assets/characters/luc-anh/idle-1080-atlas.webp',
+  src: 'assets/characters/luc-anh/idle-rgba-v1-atlas.webp',
   frames: 96,
   cols: 8,
   rows: 12,
@@ -16,12 +15,14 @@ export const LUC_ANH_IDLE_1080 = Object.freeze({
   cellH: 480,
   ms: 42,
   loop: true,
-  cleanup: Object.freeze({
-    background: 'edge-connected-black',
-    edgeThreshold: 8,
-    enclosedDarkMinArea: 2000,
-    enclosedDarkMinX: 700,
-    transparentEdgeColorBleed: true
+  encoding: 'webp-lossless',
+  source: Object.freeze({
+    archive: 'IDLE(2).rar',
+    archiveSha256: 'b6eec16bfb8b01fcf57c16af7ab1d4a869265deec6651323793e90ee79ff64d0',
+    width: 1510,
+    height: 1004,
+    alpha: 'preserve-authored-rgba',
+    crop: Object.freeze({ left: 230, top: 7, width: 976, height: 976 })
   })
 });
 

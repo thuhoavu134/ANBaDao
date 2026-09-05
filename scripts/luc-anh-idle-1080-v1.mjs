@@ -5,6 +5,9 @@ import { LUC_ANH_IDLE_1080 as IDLE } from '../src/domain/character/luc-anh-idle.
 const out = join(process.cwd(), 'dist');
 const file = IDLE.src.split('/').pop();
 
+// Replace the legacy metadata in the checked-in HTML with the single authored
+// RGBA contract. The final runtime patch requires that asset; no RGB fallback.
+
 function replaceOnce(source, expression, replacement, label) {
   const matches = source.match(expression) || [];
   if (matches.length !== 1) {

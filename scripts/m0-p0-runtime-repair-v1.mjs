@@ -1,14 +1,11 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { LUC_ANH_IDLE_1080 as IDLE } from '../src/domain/character/luc-anh-idle.mjs';
 
 const root = process.cwd();
 const out = join(root, 'dist');
-const idle1080 = 'assets/characters/luc-anh/idle-1080-atlas.webp';
-const idleLegacy = 'assets/characters/luc-anh/idle-atlas.webp';
-const hasIdle1080 = existsSync(join(root, idle1080));
-const idle = hasIdle1080
-  ? Object.freeze({ src: idle1080, file: 'idle-1080-atlas.webp', frames: 96, cols: 8, rows: 12, w: 480, h: 480, ms: 42 })
-  : Object.freeze({ src: idleLegacy, file: 'idle-atlas.webp', frames: 64, cols: 8, rows: 8, w: 240, h: 240, ms: 58 });
+const idle = Object.freeze({ src: IDLE.src, file: IDLE.src.split('/').pop(), frames: IDLE.frames,
+  cols: IDLE.cols, rows: IDLE.rows, w: IDLE.cellW, h: IDLE.cellH, ms: IDLE.ms });
 
 if (!existsSync(join(root, idle.src))) {
   throw new Error(`Lục Ảnh idle asset is missing: ${idle.src}`);
@@ -84,7 +81,7 @@ function patchIndexIdle(source) {
   const detailEnd = source.indexOf('function renderHeroDetail(', detailStart);
   if (detailStart < 0 || detailEnd < 0) throw new Error('M0/P0 missing hero-detail idle loop boundary');
   const detail = `function startLucAnhDetailIdle(){
-  cancelAnimationFrame(_lucDetailRaf);const cv=document.getElementById('lucAnhDetailIdle');if(!cv)return;const css=260,dpr=Math.min(3,window.devicePixelRatio||1);cv.style.width=css+'px';cv.style.height=css+'px';cv.style.filter='contrast(1.14) saturate(1.06)';cv.width=Math.round(css*dpr);cv.height=Math.round(css*dpr);const c=cv.getContext('2d'),a=LUC_ANH_ANIMS.idle,preferred=LUC_ANH_IMAGES.idle,start=performance.now();
+  cancelAnimationFrame(_lucDetailRaf);const cv=document.getElementById('lucAnhDetailIdle');if(!cv)return;const css=260,dpr=Math.min(3,window.devicePixelRatio||1);cv.style.width=css+'px';cv.style.height=css+'px';cv.style.filter='none';cv.width=Math.round(css*dpr);cv.height=Math.round(css*dpr);const c=cv.getContext('2d'),a=LUC_ANH_ANIMS.idle,preferred=LUC_ANH_IMAGES.idle,start=performance.now();
   function tick(){if(!cv.isConnected)return;c.setTransform(dpr,0,0,dpr,0,0);c.imageSmoothingEnabled=true;c.imageSmoothingQuality='high';c.clearRect(0,0,css,css);if(preferred?.complete&&preferred.naturalWidth>1){const f=lucFrame(a,start,true),sx=(f%a.cols)*a.w,sy=Math.floor(f/a.cols)*a.h;c.drawImage(preferred,sx,sy,a.w,a.h,0,0,css,css);}_lucDetailRaf=requestAnimationFrame(tick);}
   tick();
 }

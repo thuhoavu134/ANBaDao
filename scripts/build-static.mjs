@@ -1,7 +1,9 @@
 import { cpSync, mkdirSync, rmSync, existsSync, copyFileSync, statSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { assembleLucAnhIdle } from './luc-anh-idle-asset.mjs';
 
 const root = process.cwd();
+await assembleLucAnhIdle(root);
 const out = join(root, 'dist');
 rmSync(out, { recursive: true, force: true });
 mkdirSync(out, { recursive: true });
@@ -49,7 +51,6 @@ await import('./battle-visual-polish-v1.mjs');
 await import('./battle-backgrounds-20-v1.mjs');
 await import('./combat-domain-3q-adapter-v1.mjs');
 await import('./quest-system-3q-v1.mjs');
-await import('./luc-anh-idle-trimmed-v1.mjs');
 await import('./runtime-result-actions-v5.mjs');
 await import('./m0-p0-runtime-repair-v1.mjs');
 await import('./summon-pool-guard-v1.mjs');
