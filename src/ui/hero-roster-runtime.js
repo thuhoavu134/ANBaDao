@@ -5,7 +5,13 @@
   const root = document.createElement('section');
   root.id = 'hvHeroRosterV4';
   root.setAttribute('aria-label', 'Danh sách tướng');
-  screen.replaceChildren(root);
+  // A viewport portal avoids legacy screen pseudo-elements and WebKit's nested
+  // fixed/overflow compositing. The existing router still owns visibility.
+  screen.replaceChildren();
+  root.hidden = ST.screen !== 'heroes';
+  document.body.append(root);
+  const scrollSurface = () => root.querySelector('.v4-grid');
+  const rememberScroll = () => { state.scrollTop = scrollSurface()?.scrollTop || 0; };
   const esc = value => String(value ?? '').replace(/[&<>"']/g, ch =>
     ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch]);
   const number = value => Number(value || 0).toLocaleString('vi-VN');
@@ -37,10 +43,10 @@
         <div class="v4-element">${HE[card.element]?.ic || ''}</div>${card.inSquad ? '<span class="v4-deployed">Ra trận</span>' : ''}
         <div class="v4-power">${card.owned ? '⚔ ' + number(card.power) : 'Chưa sở hữu'}</div>
         <div class="v4-stars">${'★'.repeat(card.stars)}</div><div class="v4-cardname" title="${esc(card.name)}">${esc(card.shortName)}</div></button>`).join('')}
-      </div>${view.cards.length ? '' : '<p class="v4-empty" role="status">Chưa có tướng phù hợp với bộ lọc này.</p>'}
+      ${view.cards.length ? '' : '<p class="v4-empty" role="status">Chưa có tướng phù hợp với bộ lọc này.</p>'}</div>
       <nav class="v4-dock" aria-label="Điều hướng game">${nav.map(([target, icon, label]) =>
         `<button data-roster-nav="${target}" ${target === 'heroes' ? 'aria-current="page"' : ''}><img src="assets/ui/menu-v3233/icons/${icon}.png" alt="">${label}</button>`).join('')}</nav>`;
-    root.scrollTop = state.scrollTop;
+    scrollSurface().scrollTop = state.scrollTop;
   };
 
   // Native click supports touch, mouse and keyboard without three command owners.
@@ -56,27 +62,28 @@
     const id = button.dataset.heroId;
     if (!OFFICIAL_ROSTER_12_IDS.includes(id)) return;
     if (!P.heroes[id]?.owned) { toast('Chưa sở hữu tướng này.'); return; }
-    state.selectedId = id; state.scrollTop = root.scrollTop;
+    state.selectedId = id; rememberScroll();
     renderHeroDetail(id); showScreen('heroDetail');
   });
   root.addEventListener('change', event => {
     if (!event.target.matches('[data-roster-sort]')) return;
     state.sort = event.target.value; state.scrollTop = 0; renderHeroes();
   });
-  root.addEventListener('scroll', () => { if (ST.screen === 'heroes') state.scrollTop = root.scrollTop; }, { passive: true });
+  root.addEventListener('scroll', () => { if (ST.screen === 'heroes') rememberScroll(); }, { capture: true, passive: true });
 
-  // Keep one existing route owner. Nested roster cannot float over other screens.
+  // Keep one route owner; the portal is hidden whenever another screen opens.
   const baseShowScreen = showScreen;
   showScreen = function showScreenWithRosterState(name) {
     const fromDetail = ST.screen === 'heroDetail';
-    if (ST.screen === 'heroes') state.scrollTop = root.scrollTop;
+    if (ST.screen === 'heroes') rememberScroll();
     if (name !== 'heroDetail' && typeof _lucDetailRaf !== 'undefined') {
       cancelAnimationFrame(_lucDetailRaf); _lucDetailRaf = 0;
     }
     baseShowScreen(name);
+    root.hidden = ST.screen !== 'heroes';
     document.body.classList.toggle('hero-roster-active', ST.screen === 'heroes');
     if (name === 'heroes') {
-      root.scrollTop = state.scrollTop;
+      if (scrollSurface()) scrollSurface().scrollTop = state.scrollTop;
       if (fromDetail && state.selectedId) {
         root.querySelector(`[data-hero-id="${state.selectedId}"]`)?.focus({ preventScroll: true });
       }

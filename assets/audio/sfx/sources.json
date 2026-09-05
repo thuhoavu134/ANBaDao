@@ -1,0 +1,79 @@
+{
+  "schema": "hon-viet-supplied-sfx/v1",
+  "processing": "Original bytes, no re-encoding or synthesis. MP3-in-WAV-name files receive .mp3 extensions for correct MIME types.",
+  "mappingNote": "Shared combat event defaults, not a verified Samkok character-to-Luc-Anh mapping. Replace event assignments when art direction supplies a per-hero sound sheet.",
+  "files": [
+    {
+      "file": "se_button_click.mp3",
+      "codec": "mp3",
+      "archive": "SFX-UI-ALL-2026-09-01.zip",
+      "entry": "SFX/UI/se_button_click.wav",
+      "bytes": 10403,
+      "sha256": "df0298cf47c2fe497621a877c4ba3d1aa3bc1ccdf8f2c45d3a000d35b8383d56"
+    },
+    {
+      "file": "se_icon_click.wav",
+      "codec": "pcm-wav",
+      "archive": "SFX-UI-ALL-2026-09-01.zip",
+      "entry": "SFX/UI/se_icon_click.wav",
+      "bytes": 62100,
+      "sha256": "4eed9aa861267e95e9e0a7474a5424637b274eae053b2ef2c42dbffba775a852"
+    },
+    {
+      "file": "se_battlewin.mp3",
+      "codec": "mp3",
+      "archive": "SFX-UI-ALL-2026-09-01.zip",
+      "entry": "SFX/UI/se_battlewin.wav",
+      "bytes": 82020,
+      "sha256": "a72069a93ba8a69b6778e0e1e6509b32a540a448b024f24e97ce9a703ca19a74"
+    },
+    {
+      "file": "se_battlelose.mp3",
+      "codec": "mp3",
+      "archive": "SFX-UI-ALL-2026-09-01.zip",
+      "entry": "SFX/UI/se_battlelose.wav",
+      "bytes": 106962,
+      "sha256": "a25ef27c86f5bdd29642d0b086044fe4d802a02fdfbe547b81f1d3cc7ea92061"
+    },
+    {
+      "file": "se_gift.mp3",
+      "codec": "mp3",
+      "archive": "SFX-UI-ALL-2026-09-01.zip",
+      "entry": "SFX/UI/se_gift.wav",
+      "bytes": 35025,
+      "sha256": "120d9f4a714a66a7ef62dbe0478f6fb8bd52154e8b69714b4b1feaac313f4f8f"
+    },
+    {
+      "file": "201800_se_atk.wav",
+      "codec": "pcm-wav",
+      "archive": "SFX-COMBAT-ALL-2026-09-01.zip",
+      "entry": "SFX/Combat/201800_se_atk.wav",
+      "bytes": 104198,
+      "sha256": "b3d0d327f832bb97e326f162dfaa14ed3087dc4ee521e54dd5676506ae4c88bd"
+    },
+    {
+      "file": "201800_se_s1.wav",
+      "codec": "pcm-wav",
+      "archive": "SFX-COMBAT-ALL-2026-09-01.zip",
+      "entry": "SFX/Combat/201800_se_s1.wav",
+      "bytes": 128638,
+      "sha256": "ed3eb1f73e3f2100935b045b1b625fdcb3d039f6b1fe7f39c7cdd03cf7c9c26f"
+    },
+    {
+      "file": "201800_se_s2.wav",
+      "codec": "pcm-wav",
+      "archive": "SFX-COMBAT-ALL-2026-09-01.zip",
+      "entry": "SFX/Combat/201800_se_s2.wav",
+      "bytes": 265994,
+      "sha256": "8a766c2b62f7e9907d50eafd7279073206a2ce8c3ed1270577569e610d6d556b"
+    },
+    {
+      "file": "400500_se_s1_beaten.wav",
+      "codec": "pcm-wav",
+      "archive": "SFX-COMBAT-ALL-2026-09-01.zip",
+      "entry": "SFX/Combat/400500_se_s1_beaten.wav",
+      "bytes": 183298,
+      "sha256": "e50b2ee1ee9828840130b460652c8ed4013ea7db6570f2d9fdae86c16c5afcdc"
+    }
+  ]
+}

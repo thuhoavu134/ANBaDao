@@ -12,6 +12,7 @@ const entries = [
   'index.html',
   'battle.html',
   'qa-dinh-loi-spacing.html',
+  'qa-runtime.html',
   'assets',
   'artifacts',
   'docs',
@@ -56,6 +57,7 @@ await import('./m0-p0-runtime-repair-v1.mjs');
 await import('./summon-pool-guard-v1.mjs');
 await import('./hero-roster-phase-a-v4.mjs');
 await import('./hero-detail-tabs.mjs');
+await import('./runtime-mobile-render-sfx-v1.mjs');
 
 // The integrated battle is loaded from this embedded payload in production.
 // Keep it byte-identical to the patched battle.html; otherwise the visible

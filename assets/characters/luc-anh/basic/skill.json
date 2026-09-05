@@ -14,6 +14,6 @@
     "projectile": "projectile/frames.json",
     "impact": "impact/frames.json"
   },
-  "audio": { "cast": null, "impact": null },
+  "audio": { "cast": "assets/audio/sfx/201800_se_atk.wav", "impact": "assets/audio/sfx/400500_se_s1_beaten.wav", "profile": "shared-combat-default-v1" },
   "runtime": { "speedModes": [1, 2, 3], "preserveAllFrames": true }
 }

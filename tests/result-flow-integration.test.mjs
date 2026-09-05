@@ -51,7 +51,11 @@ test('result actions and all result assets are present', () => {
 });
 
 test('the embedded battle engine is byte-identical to battle.html', () => {
-  const match = index.match(/const BATTLE_HTML_BASE64 = "([A-Za-z0-9+/=]+)";/);
+  // Production patches intentionally transform the source templates. Assert the
+  // built files that Vercel actually serves, including the final embedded payload.
+  const builtIndex = fs.readFileSync(new URL('../dist/index.html', import.meta.url), 'utf8');
+  const builtBattle = fs.readFileSync(new URL('../dist/battle.html', import.meta.url));
+  const match = builtIndex.match(/const BATTLE_HTML_BASE64 = "([A-Za-z0-9+/=]+)";/);
   assert.ok(match, 'embedded battle payload');
-  assert.equal(Buffer.from(match[1], 'base64').toString('utf8'), battle);
+  assert.ok(Buffer.from(match[1], 'base64').equals(builtBattle), 'built iframe and standalone battle have identical bytes');
 });
