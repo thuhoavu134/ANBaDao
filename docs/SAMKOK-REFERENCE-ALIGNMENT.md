@@ -35,5 +35,7 @@ Các mốc là thứ tự phụ thuộc, không phải tuyên bố toàn bộ đ
 
 - Tái hiện trên bản live trước sửa: Lục Ảnh lên cấp 2, vàng 500 → 440, nhưng overlay danh sách vẫn cấp 1/lực chiến 1.007/vàng 6.682/5 sao.
 - Regression tests kiểm read model, pool rỗng, số lượt không hợp lệ và một chủ xử lý thao tác. Build phải đồng bộ embedded battle với battle.html.
-- Kiểm thử trình duyệt trên preview Vercel trước khi cập nhật main; không coi build thành công là xác nhận trải nghiệm mobile/animation.
+- PR #1 đã qua 69 test và build, được merge qua GitHub theo yêu cầu phát hành của anh. Preview có bảo vệ đăng nhập và tài khoản Vercel kết nối thuộc nhóm khác; vì vậy kiểm tra runtime thực hiện trên link production sau deploy, không đổi bảo vệ hoặc tạo project khác.
+- Kiểm tra live sau merge: Lục Ảnh cấp 2 → 3, lực chiến 1.068 → 1.132, vàng 440 → 320; quay lại danh sách giữ lọc Mộng, cập nhật đúng thẻ và tài nguyên. Chưa coi kết quả này là xác nhận lưu sau tải lại hoặc chất lượng idle trên Safari.
+- Kiểm tra hình tìm được CSS chung của shell ghi đè vị trí roster, làm hiện cả header/tài nguyên cũ. Bản sửa tiếp theo đặt chính `heroesScreen` ở viewport, chỉ ẩn chrome chung khi route tướng đang mở; vòng cuộn vẫn do roster quản lý. Cần kiểm lại hình sau deploy.
 - Tình trạng phát hành và ca chạy thực tế được ghi ở PR/commit tương ứng, không đánh dấu các tính năng chưa thử là PASS.

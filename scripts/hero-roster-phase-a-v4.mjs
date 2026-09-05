@@ -34,6 +34,11 @@ const runtimeSource = readFileSync(join(process.cwd(), 'src/ui/hero-roster-runti
 const jsBody = '(()=>{\n' + moduleSource + '\n' + runtimeSource + '\n})();';
 new Function(jsBody);
 const cssState = `<style id="hero-roster-state-v1-css">
+/* The legacy shell gives every screen child position:relative with four ID
+   selectors. Own the viewport at the screen boundary, above shared chrome. */
+body.hero-roster-active{overflow:hidden}
+body.hero-roster-active .hv-brandbar,body.hero-roster-active #resbar{display:none!important}
+#heroesScreen{position:fixed!important;inset:0;z-index:80;width:min(100%,680px);margin:0 auto;min-height:0!important;height:100dvh;padding:0!important;border:0!important;border-radius:0!important;overflow:hidden!important}
 #hvHeroRosterV4{inset:0;max-width:680px;margin:auto;z-index:80;height:100dvh;overflow-x:hidden;overscroll-behavior:contain;padding:env(safe-area-inset-top) 0 calc(78px + env(safe-area-inset-bottom));box-sizing:border-box}
 #hvHeroRosterV4 .v4-tabs{grid-template-columns:1fr 1fr 1.4fr}
 #hvHeroRosterV4 .v4-sort{font-size:11px;align-self:center;text-align:right}

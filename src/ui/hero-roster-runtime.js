@@ -74,6 +74,7 @@
       cancelAnimationFrame(_lucDetailRaf); _lucDetailRaf = 0;
     }
     baseShowScreen(name);
+    document.body.classList.toggle('hero-roster-active', ST.screen === 'heroes');
     if (name === 'heroes') {
       root.scrollTop = state.scrollTop;
       if (fromDetail && state.selectedId) {
@@ -116,5 +117,6 @@
     back.dataset.nav = 'heroes'; back.setAttribute('aria-label', 'Quay lại danh sách tướng');
     back.addEventListener('click', () => navTo('heroes')); oldBack.replaceWith(back);
   }
+  document.body.classList.toggle('hero-roster-active', ST.screen === 'heroes');
   if (ST.screen === 'heroes') renderHeroes();
 })();
