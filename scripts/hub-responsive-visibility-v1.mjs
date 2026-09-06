@@ -7,6 +7,10 @@ let html = readFileSync(indexPath, 'utf8');
 const style = String.raw`<style id="hv-hub-responsive-visibility-v1">
 /* Keep all five side actions inside short phone viewports. The dock remains the only bottom tray. */
 #hubScreen .art-side{z-index:18!important}
+/* The campaign shortcut is the dock's Chinh chiến entry; keep one daily shortcut. */
+#hubScreen .art-side.left [data-art-go="daily"]{display:none!important}
+#hubScreen .art-side.left [data-art-go="friends"]{position:relative!important;z-index:22!important;visibility:visible!important;display:flex!important;opacity:1!important;pointer-events:auto!important}
+#hubScreen .art-side.left [data-art-go="friends"] .art-label-icon,#hubScreen .art-side.left [data-art-go="friends"] .art-label-icon img{pointer-events:none!important}
 #hubScreen .art-side .art-label-action{visibility:visible!important;display:flex!important;opacity:1!important;pointer-events:auto!important}
 @media(max-width:430px){
   #hubScreen .art-side{top:17%!important;bottom:23%!important;gap:0!important;justify-content:space-between!important}
@@ -35,7 +39,7 @@ const style = String.raw`<style id="hv-hub-responsive-visibility-v1">
 
 if (!html.includes('id="hv-hub-responsive-visibility-v1"')) {
   if (!html.includes('</head>')) throw new Error('Hub responsive patch: head anchor missing');
-  html = html.replace('</head>', style + '\\n</head>');
+  html = html.replace('</head>', style + '\n</head>');
 }
 
 const questRemoval = String.raw`<script id="hv-hub-main-quest-removal-v1">
@@ -43,10 +47,20 @@ const questRemoval = String.raw`<script id="hv-hub-main-quest-removal-v1">
   const removeHubQuest = () => {
     document.querySelectorAll('#hv-main-quest-hub').forEach((node) => node.remove());
   };
+  const stabilizeHubActions = () => {
+    document.querySelectorAll('#hubScreen .art-side.left [data-art-go="daily"]').forEach((node) => node.remove());
+    const friend = document.querySelector('#hubScreen .art-side.left [data-art-go="friends"]');
+    if (!friend) return;
+    friend.style.visibility = 'visible';
+    friend.style.display = 'flex';
+    friend.style.opacity = '1';
+    friend.style.pointerEvents = 'auto';
+    friend.style.zIndex = '22';
+  };
   const observe = () => {
     if (!document.body) return;
-    removeHubQuest();
-    new MutationObserver(removeHubQuest).observe(document.body, { childList: true, subtree: true });
+    stabilizeHubActions();
+    new MutationObserver(stabilizeHubActions).observe(document.body, { childList: true, subtree: true });
   };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', observe, { once: true });
   else observe();
@@ -55,7 +69,7 @@ const questRemoval = String.raw`<script id="hv-hub-main-quest-removal-v1">
 
 if (!html.includes('id="hv-hub-main-quest-removal-v1"')) {
   if (!html.includes('</body>')) throw new Error('Hub quest removal patch: body anchor missing');
-  html = html.replace('</body>', questRemoval + '\\n</body>');
+  html = html.replace('</body>', questRemoval + '\n</body>');
 }
 
 if (!html.includes('id="hv-hub-responsive-visibility-v1"') || !html.includes('id="hv-hub-main-quest-removal-v1"')) {
