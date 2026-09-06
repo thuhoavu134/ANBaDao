@@ -44,7 +44,11 @@ test('returning after a level change recomputes all card data, not cached DOM la
 test('roster build excludes DOM scraping, duplicate pointer commands and offscreen parking', () => {
   const ui = readFileSync(new URL('../src/ui/hero-roster-runtime.js', import.meta.url), 'utf8');
   assert.doesNotMatch(ui, /MutationObserver|getBoundingClientRect|innerText|pointerup|touchend|300vw/);
-  new Function(readFileSync(new URL('../src/domain/hero/roster-view.mjs', import.meta.url), 'utf8').replace(/^export\s+/gm, '') + ui);
+  const plan = readFileSync(new URL('../src/domain/hero/roster-plan.mjs', import.meta.url), 'utf8').replace(/^export\s+/gm, '');
+  const view = readFileSync(new URL('../src/domain/hero/roster-view.mjs', import.meta.url), 'utf8')
+    .replace("import { summarizeRosterCapacity } from './roster-plan.mjs';", '')
+    .replace(/^export\s+/gm, '');
+  new Function(plan + '\n' + view + '\n' + ui);
   const build = readFileSync(new URL('../scripts/build-static.mjs', import.meta.url), 'utf8');
   assert.doesNotMatch(build, /import\('\.\/hero-roster-v4-runtime-fix-v1|import\('\.\/hero-card-dedupe-v1/);
 });
