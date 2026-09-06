@@ -1,0 +1,11 @@
+{
+  "v": 1,
+  "gold": 500,
+  "gems": 800,
+  "heroes": {
+    "ong_hang_pho": { "owned": true, "level": 1, "stars": 1 }
+  },
+  "squad": [
+    { "id": "ong_hang_pho", "row": "front" }
+  ]
+}
