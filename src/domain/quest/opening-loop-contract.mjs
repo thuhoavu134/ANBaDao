@@ -328,7 +328,7 @@ export function buildOpeningEventKey({ eventId, periodKey = 'permanent', sourceI
     ? '-'
     : String(sourceId).trim();
   if (!normalizedEventId || !normalizedPeriodKey ||
-      !HV_OPENING_SOURCE.test(normalizedSourceId)) return null;
+      (normalizedSourceId !== '-' && !HV_OPENING_SOURCE.test(normalizedSourceId))) return null;
   return [normalizedEventId, normalizedPeriodKey, normalizedSourceId].join('|');
 }
 
