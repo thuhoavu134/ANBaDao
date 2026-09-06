@@ -47,10 +47,10 @@ index = index.replace(
   "if(!tx.duplicate){ window.HonVietOpeningLoop?.record?.('hero.upgrade',{sourceId:id,periodKey:'permanent',route:{screen:'heroes'}}); questProgress('level',1); }"
 );
 
-const equipMarker = "P.equip[heroId][it.slot]=uid; persist(); toast('Đã mặc '+itemName(it)+' cho '+DATA.heroes[heroId].name+'.'); return true;";
-if (!index.includes(equipMarker)) throw new Error('Equipment save marker not found');
+const equipPattern = /P\.equip\[heroId\]\[it\.slot\]=uid;\s*persist\(\);\s*toast\('Đã mặc '\+itemName\(it\)\+' cho '\+DATA\.heroes\[heroId\]\.name\+'\.'\);\s*return true;/;
+if (!equipPattern.test(index)) throw new Error('Equipment save marker not found');
 index = index.replace(
-  equipMarker,
+  equipPattern,
   "P.equip[heroId][it.slot]=uid; const openingEquipmentSaved=typeof persist==='function'?persist():false; if(openingEquipmentSaved) window.HonVietOpeningLoop?.record?.('hero.equip',{sourceId:String(heroId)+':'+String(uid),periodKey:'permanent',route:{screen:'forge'}}); toast('Đã mặc '+itemName(it)+' cho '+DATA.heroes[heroId].name+'.'); return true;"
 );
 
