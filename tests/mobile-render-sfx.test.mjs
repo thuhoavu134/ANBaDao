@@ -114,6 +114,14 @@ test('result MVP portrait cache resolves authored Ông Phở art without a text 
   assert.match(builtBattle, /resultPortraitRecord\('ong_hang_pho',\(\)=>\{\}\)/);
   assert.doesNotMatch(builtBattle, /const img=new Image\(\); img\.onload=.*ong-pho\/card\.png/);
 });
+test('integrated victory result paints authored Ông Phở MVP art', () => {
+  const builtBattle = read('dist/battle.html');
+  assert.match(builtBattle, /hv-patch:integrated-mvp-portrait-v1/);
+  assert.match(builtBattle, /MVP_PORTRAIT_CACHE/);
+  assert.match(builtBattle, /mvpPortraitRecord\('ong_hang_pho',\(\)=>\{\}\)/);
+  assert.match(builtBattle, /paintAuthoredMvpPortrait/);
+});
+
 test('roster portal has one grid scroll owner and explicit visibility on route changes', () => {
   const ui = read('src/ui/hero-roster-runtime.js'), css = read('scripts/hero-roster-phase-a-v4.mjs');
   assert.match(ui, /document\.body\.append\(root\)/);

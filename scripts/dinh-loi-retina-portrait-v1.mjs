@@ -69,6 +69,58 @@ if (!battle.includes(marker)) {
   resultPortraitRecord('ong_hang_pho',()=>{});
 `;
   battle = battle.slice(0, portraitStart) + portrait + battle.slice(portraitEnd);
+  const integratedMarker='/* hv-patch:integrated-mvp-portrait-v1 */';
+  const integratedStart=battle.indexOf(' function paintHero(canvas,m){');
+  const integratedEnd=battle.indexOf(' function nav(target){',integratedStart);
+  if (integratedStart<0||integratedEnd<0) throw new Error('Integrated result MVP painter boundary not found');
+  if (battle.includes(integratedMarker)) throw new Error('Integrated result MVP portrait patch already present');
+  const integratedPainter = ` // v3.26.1 — ${integratedMarker} — render authored MVP portrait art in the integrated result canvas.
+ const MVP_PORTRAIT_SOURCES=Object.freeze({ong_hang_pho:'assets/characters/ong-pho/card.png','ong-pho-gif-test':'assets/characters/ong-pho/card.png'});
+ const MVP_PORTRAIT_CACHE=new Map();
+ function mvpPortraitKey(m){
+  const explicit=String(m?.sourceId||m?.id||'');
+  return MVP_PORTRAIT_SOURCES[explicit] ? explicit : (String(m?.name||'')==='Ông Phở' ? 'ong_hang_pho' : '');
+ }
+ function mvpPortraitRecord(key,redraw){
+  const source=MVP_PORTRAIT_SOURCES[key];if(!source)return null;
+  let record=MVP_PORTRAIT_CACHE.get(key);
+  if(!record){
+   const image=new Image();image.decoding='async';
+   record={image,ready:false,error:false,waiters:new Set()};MVP_PORTRAIT_CACHE.set(key,record);
+   image.onload=()=>{record.ready=true;const waiters=[...record.waiters];record.waiters.clear();waiters.forEach(fn=>{try{fn()}catch(_e){}});};
+   image.onerror=()=>{record.error=true;record.waiters.clear();};image.src=source;
+   if(image.complete&&image.naturalWidth>1)record.ready=true;
+  }
+  if(record.ready)return record;
+  if(!record.error&&redraw)record.waiters.add(redraw);
+  return record;
+ }
+ function paintAuthoredMvpPortrait(canvas,m){
+  const key=mvpPortraitKey(m);if(!key)return false;
+  const ctx=canvas.getContext('2d');if(!ctx)return true;
+  const width=canvas.width,height=canvas.height;ctx.clearRect(0,0,width,height);
+  const bg=ctx.createLinearGradient(0,0,0,height);bg.addColorStop(0,'#1d4b43');bg.addColorStop(1,'#110d0a');ctx.fillStyle=bg;ctx.fillRect(0,0,width,height);
+  const record=mvpPortraitRecord(key,()=>paintHero(canvas,m));
+  if(record?.ready&&record.image.complete&&record.image.naturalWidth>1){
+   const pad=4,innerW=Math.max(1,width-pad*2),innerH=Math.max(1,height-pad*2),scale=Math.min(innerW/record.image.naturalWidth,innerH/record.image.naturalHeight),drawW=record.image.naturalWidth*scale,drawH=record.image.naturalHeight*scale;
+   ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';ctx.drawImage(record.image,0,0,record.image.naturalWidth,record.image.naturalHeight,(width-drawW)/2,(height-drawH)/2,drawW,drawH);
+  }else if(record?.error){
+   ctx.fillStyle='#f5df9a';ctx.font='900 28px system-ui,sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(String(m?.name||'Chiến tướng').slice(0,2),width/2,height/2);
+  }
+  return true;
+ }
+ mvpPortraitRecord('ong_hang_pho',()=>{});
+ function paintHero(canvas,m){
+  if(!canvas)return;
+  const id=String(m?.sourceId||m?.id||'');
+  if(id==='luc_anh'){drawLucAnhIdle(canvas);return;}
+  if(paintAuthoredMvpPortrait(canvas,m))return;
+  const ctx=canvas.getContext('2d');if(!ctx)return;
+  const bg=ctx.createLinearGradient(0,0,0,canvas.height);bg.addColorStop(0,'#1d4b43');bg.addColorStop(1,'#110d0a');ctx.fillStyle=bg;ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle='#f5df9a';ctx.font='900 28px system-ui,sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(String(m?.name||'Chiến tướng').slice(0,2),canvas.width/2,canvas.height/2);
+ }
+`;
+  battle=battle.slice(0,integratedStart)+integratedPainter+battle.slice(integratedEnd);
   writeFileSync(battlePath, battle);
   console.log('Dinh Lôi retina source cells and result portrait cache patched');
 }
