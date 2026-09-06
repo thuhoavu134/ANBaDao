@@ -62,6 +62,7 @@ await import('./dinh-loi-retina-portrait-v1.mjs');
 await import('./save-contract-v1.mjs');
 await import('./transaction-contract-v1.mjs');
 await import('./settlement-navigation-v1.mjs');
+await import('./opening-loop-v1.mjs');
 
 // The integrated battle is loaded from this embedded payload in production.
 // Keep it byte-identical to the patched battle.html; otherwise the visible
