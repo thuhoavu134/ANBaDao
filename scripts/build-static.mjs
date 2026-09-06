@@ -59,8 +59,10 @@ await import('./hero-roster-phase-a-v4.mjs');
 await import('./hero-detail-tabs.mjs');
 await import('./runtime-mobile-render-sfx-v1.mjs');
 await import('./dinh-loi-retina-portrait-v1.mjs');
+await import('./skill-kit-runtime-v1.mjs');
 await import('./save-contract-v1.mjs');
 await import('./transaction-contract-v1.mjs');
+await import('./forge-item-assets-v1.mjs');
 await import('./settlement-navigation-v1.mjs');
 await import('./opening-loop-v1.mjs');
 

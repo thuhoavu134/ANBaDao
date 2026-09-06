@@ -17,14 +17,24 @@
       const item = uid == null ? null : (P.inventory || []).find(candidate => candidate.uid === uid);
       const cell = document.createElement('div'); cell.className = 'hv-equipment-slot';
       const label = document.createElement('b'); label.textContent = DATA.items.slotName[slot];
+      if (item) {
+        const art = document.createElement('img');
+        art.className = 'hv-equipment-slot-art';
+        art.src = globalThis.honVietEquipmentAssetFor?.(item) || 'assets/ui/menu-v3233/icons/forge.png';
+        art.alt = itemName(item);
+        art.loading = 'lazy';
+        cell.append(art);
+      }
+      const copy = document.createElement('div'); copy.className = 'hv-equipment-copy';
       const name = document.createElement('span');
       name.textContent = item ? itemName(item) + ' +' + item.lvl : 'Chưa trang bị';
-      cell.append(label, name);
+      copy.append(label, name);
       if (item) {
         const stat = document.createElement('small');
         stat.textContent = item.rar.toUpperCase() + ' · +' + itemStat(item) + ' ' + DATA.items.statName[slot];
-        cell.append(stat);
+        copy.append(stat);
       }
+      cell.append(copy);
       slots.append(cell);
     }
     panel.append(slots);

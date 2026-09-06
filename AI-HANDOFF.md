@@ -16,7 +16,9 @@ The user's roster capacity instruction remains **32 SSR + 16 SR + 16 A + 8 B = 7
 
 R11 remains a tracked transition: map each hero's legacy skill IDs, investment and assets to a versioned kit before changing combat. Lục's six effigies remain legacy Skill 1 assets; poison cloud remains the legacy Ultimate. Do not silently swap or discard them. Existing automatic talent/Skill 1 behavior is not evidence that the new two-animation contract has been completed.
 
-Current completed slices are documented in `docs/SAMKOK-LOADOUT-TRANSACTIONS-2026-09-06.md` and `docs/SAMKOK-FORGE-TRANSACTIONS-2026-09-06.md`. The forge slice belongs to E11-04/05 and extends the existing R07 transaction owner. Next design work: R05/E02-06 mapping for one pilot hero, then R11 with save/UI/combat/audio and balance evidence before expanding to other heroes. Banner/seed decisions and real-device QA retain their separate gates.
+The first R05/R11 pilot is now implemented for Ông Phở with `samkok-v2.1`: Basic, Ultimate and one bounded passive are versioned in `src/domain/hero/skill-kit.mjs`; legacy Skill 1 investment maps into Basic while the original levels and IDs remain available. The hero detail screen ships a depthful Imagen background at `assets/ui/hero-detail/ong-pho-showcase-bg.png`, and the build exposes the same kit mapping to the battle payload. The authored forge/impact animation and VFX remain connected; the short metallic impact SFX still has an explicit creation brief in the kit registry for the next audio asset pass. Every future hero kit must pass the same asset, motion, VFX, SFX and UI quality gate before roster expansion.
+
+Current completed slices are documented in `docs/SAMKOK-LOADOUT-TRANSACTIONS-2026-09-06.md` and `docs/SAMKOK-FORGE-TRANSACTIONS-2026-09-06.md`. The forge slice belongs to E11-04/05 and extends the existing R07 transaction owner. The next expansion step is to repeat the R05/E02-06 and R11 evidence loop for the remaining authored heroes before adding new identities. Banner/seed decisions and real-device QA retain their separate gates.
 
 ---
 
