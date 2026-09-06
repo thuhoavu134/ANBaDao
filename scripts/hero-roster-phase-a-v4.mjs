@@ -29,7 +29,10 @@ const css = `<style id="hero-roster-phase-a-v4-css">
 #hvHeroRosterV4 .v4-filter button{width:31px;height:31px;border-radius:50%;border:1px solid #cda45f;background:#fff6df;font-size:13px}.v4-filter button.active{outline:2px solid #df9f27;background:#f7d477}
 </style>`;
 
-const moduleSource = readFileSync(join(process.cwd(), 'src/domain/hero/roster-view.mjs'), 'utf8').replace(/^export\s+/gm, '');
+const planSource = readFileSync(join(process.cwd(), 'src/domain/hero/roster-plan.mjs'), 'utf8').replace(/^export\s+/gm, '');
+const moduleSource = planSource + '\n' + readFileSync(join(process.cwd(), 'src/domain/hero/roster-view.mjs'), 'utf8')
+  .replace("import { summarizeRosterCapacity } from './roster-plan.mjs';", '')
+  .replace(/^export\s+/gm, '');
 const runtimeSource = readFileSync(join(process.cwd(), 'src/ui/hero-roster-runtime.js'), 'utf8');
 const jsBody = '(()=>{\n' + moduleSource + '\n' + runtimeSource + '\n})();';
 new Function(jsBody);
