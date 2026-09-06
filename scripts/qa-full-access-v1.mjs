@@ -27,6 +27,7 @@ const runtime = String.raw`<style id="hv-qa-full-access-v1-style">
 <script id="hv-qa-full-access-v1">
 (()=>{
   "use strict";
+  const QA_EQUIPMENT_CATALOG=[{"slot":"weapon","rar":"b"},{"slot":"weapon","rar":"a"},{"slot":"weapon","rar":"s"},{"slot":"weapon","rar":"ss"},{"slot":"weapon","rar":"ssr"},{"slot":"armor","rar":"b"},{"slot":"armor","rar":"a"},{"slot":"armor","rar":"s"},{"slot":"armor","rar":"ss"},{"slot":"armor","rar":"ssr"},{"slot":"charm","rar":"b"},{"slot":"charm","rar":"a"},{"slot":"charm","rar":"s"},{"slot":"charm","rar":"ss"},{"slot":"charm","rar":"ssr"},{"slot":"boots","rar":"b"},{"slot":"boots","rar":"a"},{"slot":"boots","rar":"s"},{"slot":"boots","rar":"ss"},{"slot":"boots","rar":"ssr"}];
   const params=new URLSearchParams(window.location.search);
   const token=String(params.get("qa")||params.get("debug")||"").trim().toLowerCase();
   const active=["unlock-all","full-access","all"].includes(token);
