@@ -69,6 +69,7 @@ await import('./opening-loop-v1.mjs');
 await import('./qa-full-access-v1.mjs');
 await import('./hub-dock-tray-v1.mjs');
 await import('./hub-responsive-visibility-v1.mjs');
+await import('./hub-icon-alpha-hotfix-v1.mjs');
 await import('./battle-responsive-luc-anh-audio-v1.mjs');
 
 // The integrated battle is loaded from this embedded payload in production.
