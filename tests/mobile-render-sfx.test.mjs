@@ -95,6 +95,25 @@ test('actual first-frame pixels preserve Idle-to-Basic body height and foot base
   assert.equal(manifest.display.width, manifest.display.height, 'uniform XY scale');
   assert.equal(manifest.display.width, BASIC.displaySize); assert.equal(manifest.display.baseline, BASIC.baseline);
 });
+test('Đình Lôi retina atlases use the committed 2x source cells', async () => {
+  const builtBattle = read('dist/battle.html');
+  assert.match(builtBattle, /DINH_LOI_CELL_W=480, DINH_LOI_CELL_H=270/);
+  assert.equal((builtBattle.match(/image\.naturalWidth\/8/g)||[]).length, 2, 'vertical VFX use full retina cells');
+  for (const file of ['idle-atlas.png','run-atlas.png','hit-atlas.png','fall-atlas.png','basic-cast-atlas.png','skill1-cast-atlas.png','ultimate-cast-atlas.png','basic-projectile-atlas.png','basic-impact-atlas.png','skill1-wave-atlas.png','skill1-impact-atlas.png','skill1-shield-atlas.png']) {
+    const meta = await sharp(new URL('../assets/characters/dinh-loi/' + file, import.meta.url).pathname).metadata();
+    assert.deepEqual([meta.width, meta.height], [3840, 2160], file + ' keeps 2x landscape atlas dimensions');
+  }
+  for (const file of ['ultimate-vfx-atlas.png','ultimate-impact-atlas.png']) {
+    const meta = await sharp(new URL('../assets/characters/dinh-loi/' + file, import.meta.url).pathname).metadata();
+    assert.deepEqual([meta.width, meta.height], [2160, 3840], file + ' keeps 2x portrait atlas dimensions');
+  }
+});
+test('result MVP portrait cache resolves authored Ông Phở art without a text placeholder', () => {
+  const builtBattle = read('dist/battle.html');
+  assert.match(builtBattle, /RESULT_PORTRAIT_CACHE/);
+  assert.match(builtBattle, /resultPortraitRecord\('ong_hang_pho',\(\)=>\{\}\)/);
+  assert.doesNotMatch(builtBattle, /const img=new Image\(\); img\.onload=.*ong-pho\/card\.png/);
+});
 test('roster portal has one grid scroll owner and explicit visibility on route changes', () => {
   const ui = read('src/ui/hero-roster-runtime.js'), css = read('scripts/hero-roster-phase-a-v4.mjs');
   assert.match(ui, /document\.body\.append\(root\)/);
