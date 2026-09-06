@@ -30,7 +30,7 @@ const battleMarker = 'if (!transaction.duplicate && typeof questProgress === "fu
 if (!index.includes(battleMarker)) throw new Error('R08 settlement hook marker not found');
 index = index.replace(
   battleMarker,
-  'if (!transaction.duplicate) window.HonVietOpeningLoop?.record?.("campaign.win",{sourceId:safeText(payload.battleId,"battle"),periodKey:"permanent",route:{screen:"campaign"}});\n    ' + battleMarker
+  'if (!transaction.duplicate) {\n      window.__HV_MAIN_QUEST_RUNTIME_V1?.onBattleResult?.(payload);\n      window.HonVietOpeningLoop?.record?.("campaign.win",{sourceId:safeText(payload.battleId,"battle"),periodKey:"permanent",route:{screen:"campaign"}});\n    }\n    ' + battleMarker
 );
 
 const formationMarker = "P.squad=normalized.map(p=>({...p})); persist(); toast('Đã lưu đội hình không trùng tướng.'); navTo('hub');";
