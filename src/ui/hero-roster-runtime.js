@@ -46,6 +46,9 @@
       ${view.cards.length ? '' : '<p class="v4-empty" role="status">Chưa có tướng phù hợp với bộ lọc này.</p>'}</div>
       <nav class="v4-dock" aria-label="Điều hướng game">${nav.map(([target, icon, label]) =>
         `<button data-roster-nav="${target}" ${target === 'heroes' ? 'aria-current="page"' : ''}><img src="assets/ui/menu-v3233/icons/${icon}.png" alt="">${label}</button>`).join('')}</nav>`;
+    root.dataset.rosterTargetTotal = String(view.catalog.targetTotal);
+    root.dataset.rosterActiveTotal = String(view.catalog.activeTotal);
+    root.dataset.rosterTargetCounts = JSON.stringify(view.catalog.targetCounts);
     scrollSurface().scrollTop = state.scrollTop;
   };
 
