@@ -6,7 +6,7 @@
 - Rương tích lũy thưởng theo thời gian online/offline, tối đa 15 giờ; đầy ngừng cộng. Phải nhận thưởng, không chỉ đăng nhập, mới có chỗ tích lũy tiếp; không cộng bù thời gian vượt trần.
 - Claim phải atomic/idempotent, lỗi lưu giữ nguyên rương; animation không sinh reward hoặc tăng tiến độ ải.
 - Master plan đã thay toàn bộ diễn giải encounter cũ và cập nhật E13-03, AFK-01…05, asset/UI và QA.
-- Trạng thái: **chốt yêu cầu, chưa triển khai runtime**. Nhận sớm trước đầy là đề xuất; rate/loot/unlock cần chốt cấu hình.
+- Trạng thái: **đã triển khai AFK runtime v1 và đã QA production**. Contract/test đã khóa cap 15 giờ, partial/full claim và clock edge cases; reward rate v1 còn là cấu hình cân bằng tạm thời.
 - Đọc [master plan](HON-VIET-MASTER-PLAN-SAMKOK-v2-2026-09-06.md), mục Chốt cơ chế AFK từ video.
 - Các mốc source/QA ở phần bên dưới là lịch sử trước bổ sung này, không phải QA AFK.
 
@@ -15,6 +15,8 @@
 Game đang ở nhánh triển khai Samkok v2 trên build production mới nhất. Mục tiêu trước mắt là hoàn thiện một vòng chơi 6v6 thật mượt trên mobile, sau đó mở rộng roster và các hệ thống.
 
 ## Đã hoàn thành
+
+- AFK v1 đã có contract rương 15 giờ, tích lũy online/offline, dừng ở cap, claim qua transaction atomic và nút Khiêu chiến 6v6 tách riêng; diễn hoạt không gọi battle/không tự sinh reward.
 
 - Rèn Mộng có catalog 20 item và material art; transaction forge/loadout được giữ atomic, không làm mất item khi salvage.
 - QA có chế độ mở khóa toàn bộ chức năng theo cách save-safe để kiểm tra trước khi tài khoản mở tiến độ thật.
@@ -27,9 +29,9 @@ Game đang ở nhánh triển khai Samkok v2 trên build production mới nhất
 
 ## Bằng chứng source và runtime
 
-- Commit mới nhất: [fix: keep campaign mission card readable on mobile](https://github.com/bktimmy247/luc-than/commit/153c116a8c732eb05287addae1e2a8c935388bcb).
+- Commit mới nhất: [fix: guard AFK runtime debug export on frozen window](https://github.com/bktimmy247/luc-than/commit/e1792491b46315438ac2d17f5ac8df159ddb9b62).
 - Production: [luc-than.vercel.app](https://luc-than.vercel.app/).
-- Deployment commit trên Vercel: 153c116a8c732eb05287addae1e2a8c935388bcb, trạng thái READY.
+- Deployment commit trên Vercel: e1792491b46315438ac2d17f5ac8df159ddb9b62, trạng thái READY; [deployment](https://vercel.com/cuong-duc-ai-s-projects/luc-than/8VGgvt6K8QjNQUwVpW2JpSHQKwfs).
 - QA viewport 390×844 và 430×932: title “Rừng Deadline” không còn rơi từng chữ; card width, progress bar và nút “Tiếp tục chinh chiến” đều có kích thước hợp lệ.
 - GitHub/Vercel CI: success; runtime errors trong 1 giờ kiểm tra: không có.
 
@@ -39,9 +41,12 @@ Game đang ở nhánh triển khai Samkok v2 trên build production mới nhất
 2. Damage popup cần nhỏ hơn và xếp nhiều dòng dọc sát mục tiêu theo ảnh mẫu.
 3. Cần test thật trên iPhone/iPad Safari cho audio unlock, icon Bạn bè, 6 nhân vật mỗi team, Lục Ảnh ultimate và victory/defeat music.
 4. Cần tiếp tục hoàn thiện UI/UX có chiều sâu cho hero detail và các màn chức năng còn thiếu.
-5. Cần tiếp tục migrate roster authored sang hợp đồng Basic + Ultimate + passive, mỗi tướng phải có asset/motion/VFX/SFX/UI QA đủ gate.
+5. AFK cần QA soak đủ 15 giờ và kiểm tra reload/offline trên iPhone/iPad thật; reward rate/loot table/unlock cần chốt cân bằng trước khi coi là phát hành.
+6. Cần tiếp tục migrate roster authored sang hợp đồng Basic + Ultimate + passive, mỗi tướng phải có asset/motion/VFX/SFX/UI QA đủ gate.
 
 ## Việc tiếp theo
+
+- Chốt reward rate/loot table AFK sau khi anh duyệt cảm giác phần thưởng; chạy soak/cap/claim trên thiết bị thật.
 
 - Tích hợp background battle sạch theo từng chương.
 - Sửa damage popup và QA multi-hit.
