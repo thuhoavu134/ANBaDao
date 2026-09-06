@@ -1,0 +1,23 @@
+{
+  "v": 1,
+  "schemaVersion": 2,
+  "revision": 4,
+  "gold": 100,
+  "gems": 2,
+  "heroes": {
+    "ong_hang_pho": {
+      "owned": true,
+      "level": 1,
+      "stars": 1
+    }
+  },
+  "mail": [
+    {
+      "id": "mail-1",
+      "claimed": false,
+      "reward": {
+        "gold": 50
+      }
+    }
+  ]
+}
