@@ -33,25 +33,11 @@ index = index.replace(
   'if (!transaction.duplicate) {\n      window.__HV_MAIN_QUEST_RUNTIME_V1?.onBattleResult?.(payload);\n      window.HonVietOpeningLoop?.record?.("campaign.win",{sourceId:safeText(payload.battleId,"battle"),periodKey:"permanent",route:{screen:"campaign"}});\n    }\n    ' + battleMarker
 );
 
-const formationMarker = "P.squad=normalized.map(p=>({...p})); persist(); toast('Đã lưu đội hình không trùng tướng.'); navTo('hub');";
-if (!index.includes(formationMarker)) throw new Error('Formation save marker not found');
-index = index.replace(
-  formationMarker,
-  "P.squad=normalized.map(p=>({...p})); const openingFormationSaved=typeof persist==='function'?persist():false; if(openingFormationSaved) window.HonVietOpeningLoop?.record?.('formation.save',{sourceId:'starter-formation',periodKey:'permanent',route:{screen:'team'}}); toast('Đã lưu đội hình không trùng tướng.'); navTo('hub');"
-);
-
 const upgradeMarker = "if(!tx.duplicate) questProgress('level',1);";
 if (!index.includes(upgradeMarker)) throw new Error('R07 upgrade success marker not found');
 index = index.replace(
   upgradeMarker,
   "if(!tx.duplicate){ window.HonVietOpeningLoop?.record?.('hero.upgrade',{sourceId:id,periodKey:'permanent',route:{screen:'heroes'}}); questProgress('level',1); }"
-);
-
-const equipPattern = /P\.equip\[heroId\]\[it\.slot\]=uid;\s*persist\(\);\s*toast\('Đã mặc '\+itemName\(it\)\+' cho '\+DATA\.heroes\[heroId\]\.name\+'\.'\);\s*return true;/;
-if (!equipPattern.test(index)) throw new Error('Equipment save marker not found');
-index = index.replace(
-  equipPattern,
-  "P.equip[heroId][it.slot]=uid; const openingEquipmentSaved=typeof persist==='function'?persist():false; if(openingEquipmentSaved) window.HonVietOpeningLoop?.record?.('hero.equip',{sourceId:String(heroId)+':'+String(uid),periodKey:'permanent',route:{screen:'forge'}}); toast('Đã mặc '+itemName(it)+' cho '+DATA.heroes[heroId].name+'.'); return true;"
 );
 
 const journeyStart = index.indexOf("b.querySelectorAll('.jmclaim')");
@@ -83,16 +69,23 @@ const runtime = [
 '  const GRAPH=core.validateOpeningGraph({entryId:"opening.campaign.stage-1",steps:DEFINITIONS});',
 '  if(!GRAPH.ok){window.__hvOpeningLoopError=GRAPH.code;return;}',
 '  const safeScreens=new Set(["campaign","team","heroes","forge","hub","summon"]);',
-'  const ensureState=()=>{',
-'    if(!P)return null;',
-'    if(!P.openingLoop){',
+'  const ensureState=(profile=P)=>{',
+'    if(!profile)return null;',
+'    if(!profile.openingLoop){',
 '      const created=core.createOpeningLoopState({entryId:GRAPH.entryId,steps:DEFINITIONS});',
 '      if(!created.ok){window.__hvOpeningLoopError=created.code;return null;}',
-'      P.openingLoop=created.state;',
+'      profile.openingLoop=created.state;',
 '    }',
-'    const check=core.validateOpeningResume(P.openingLoop,{entryId:GRAPH.entryId,steps:DEFINITIONS});',
+'    const check=core.validateOpeningResume(profile.openingLoop,{entryId:GRAPH.entryId,steps:DEFINITIONS});',
 '    if(!check.ok){window.__hvOpeningLoopError=check.code;return null;}',
-'    return P.openingLoop;',
+'    return profile.openingLoop;',
+'  };',
+'  const applyToState=(profile,eventId,detail={})=>{',
+'    const state=ensureState(profile);',
+'    if(!state)return {ok:false,code:window.__hvOpeningLoopError||"OPENING_STATE_UNAVAILABLE"};',
+'    const result=core.advanceOpeningLoop(state,{entryId:GRAPH.entryId,steps:DEFINITIONS},{...detail,eventId});',
+'    if(result.ok&&!result.duplicate)profile.openingLoop=result.state;',
+'    return result;',
 '  };',
 '  const saveState=(state,previous)=>{',
 '    P.openingLoop=state;',
@@ -130,11 +123,11 @@ const runtime = [
 '    const step=current.current;',
 '    const status=current.status==="terminal"?"Đã hoàn tất":step?(step.label+" · "+current.currentProgress+"/"+step.target):"Đã dừng";',
 '    const button=step&&current.canResume?("<button class=\\"btn sm\\" data-hv-opening-go=\\""+step.id+"\\">Đến ngay</button>"):"";',
-'    root.insertAdjacentHTML("beforeend","<div class=\\"section\\" data-hv-opening-loop><h3>🌙 Vòng mở đầu Hồn Việt</h3><div style=\\"font-size:13px;line-height:1.6;color:#c5cee9\\"><b>"+status+"</b><br><span style=\\"color:#8b95bd\\">Route được nối theo ID; event chỉ ghi sau khi giao dịch/lưu thành công.</span></div><div style=\\"margin-top:10px\\">"+button+"</div></div>");',
+'    root.insertAdjacentHTML("beforeend","<div class=\\"section\\" data-hv-opening-loop><h3>🌙 Vòng mở đầu Hồn Việt</h3><div style=\\"font-size:13px;line-height:1.6;color:#c5cee9\\"><b>"+status+"</b><br><span style=\\"color:#8b95bd\\">Hoàn thành từng bước để sẵn sàng cho những trận tiếp theo.</span></div><div style=\\"margin-top:10px\\">"+button+"</div></div>");',
 '    const goButton=root.querySelector("[data-hv-opening-go]");',
 '    if(goButton)goButton.addEventListener("click",()=>go(goButton.dataset.hvOpeningGo));',
 '  };',
-'  window.HonVietOpeningLoop=Object.freeze({definitions:DEFINITIONS,view,record,go,renderJourney});',
+'  window.HonVietOpeningLoop=Object.freeze({definitions:DEFINITIONS,view,record,applyToState,go,renderJourney});',
 '})();',
 '</script>'
 ].join('\n');
@@ -142,3 +135,4 @@ index=index.replace('</body>',runtime+'\n</body>');
 
 writeFileSync(indexPath,index);
 console.log('R10 opening loop installed: event/route/prerequisite contract and safe journey CTA');
+

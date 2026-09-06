@@ -10,11 +10,15 @@ const moduleSource = readFileSync(
 
 new Function(moduleSource);
 
+const loadoutSource = readFileSync(join(process.cwd(), 'src/domain/hero/loadout.mjs'), 'utf8').replace(/^export\s+/gm, '');
+const partyRuntime = readFileSync(join(process.cwd(), 'src/ui/party-command-runtime.js'), 'utf8');
+new Function(loadoutSource + '\n' + partyRuntime);
+
 const heroMarker = 'function levelUpHero(';
 if (!html.includes(heroMarker)) throw new Error('Hero upgrade marker not found');
 html = html.replace(
   heroMarker,
-  moduleSource + '\n/* Hồn Việt R07: local transaction receipts */\n' + heroMarker
+  moduleSource + '\n' + loadoutSource + '\n/* Hồn Việt R07: local transaction receipts */\n' + heroMarker
 );
 
 const helper = `function hvReceiptForCommand(commandId){
@@ -113,5 +117,41 @@ const newMail = `function claimMail(id,commandId){
 function claimAllMail`;
 html = html.replace(mailPattern, newMail);
 
+const equipStart = html.indexOf('function equipItem(');
+const equipEnd = html.indexOf('function salvageItem(', equipStart);
+if (equipStart < 0 || equipEnd < 0) throw new Error('Equipment command boundary not found');
+html = html.slice(0, equipStart) + partyRuntime + '\n' + html.slice(equipEnd);
+
+const teamStart = html.indexOf("document.getElementById('teamSave').addEventListener(");
+const teamEnd = html.indexOf('/* ---------- HEROES + DETAIL', teamStart);
+if (teamStart < 0 || teamEnd < 0) throw new Error('Formation handler boundary not found');
+html = html.slice(0, teamStart) + `document.getElementById('teamSave').addEventListener('click',()=>{
+  const button=document.getElementById('teamSave');
+  if(button.disabled) return;
+  button.disabled=true;
+  const commandId=button.dataset.hvCommandId || ('formation.save:'+(P.revision||0));
+  button.dataset.hvCommandId=commandId;
+  const result=saveFormationCommand(teamPicks,commandId);
+  if(!result.ok){ button.disabled=false; toast(result.message||'Chưa lưu được đội hình. Hãy thử lại.'); return; }
+  teamPicks=P.squad.map(pick=>({...pick}));
+  toast('Đã lưu đội hình không trùng tướng.');
+  navTo('hub');
+});
+` + html.slice(teamEnd);
+const renderTeamMarker = 'function renderTeam(){';
+if (!html.includes(renderTeamMarker)) throw new Error('Formation render marker not found');
+html = html.replace(renderTeamMarker, renderTeamMarker + `
+  const saveButton=document.getElementById('teamSave');
+  if(saveButton){saveButton.disabled=false;delete saveButton.dataset.hvCommandId;}
+`);
+
+const equipButton = '<button class="btn ghost sm eqp" data-u="${it.uid}">Trang bị</button>';
+if (!html.includes(equipButton)) throw new Error('Forge equipment button marker not found');
+html = html.replace(equipButton, equipButton + '${eb?`<button class="btn ghost sm uneqp" data-u="${it.uid}" data-h="${eb}">Tháo</button>`:""}');
+const forgeListener = "b.querySelectorAll('.eqp').forEach";
+if (!html.includes(forgeListener)) throw new Error('Forge equipment listener marker not found');
+html = html.replace(forgeListener, "b.querySelectorAll('.uneqp').forEach(x=>x.addEventListener('click',()=>{if(unequipItem(+x.dataset.u,x.dataset.h))renderForge();})); " + forgeListener);
+
 writeFileSync(p, html);
 console.log('Transaction contract installed: receipts, idempotent upgrade/mail commits and local ledger');
+

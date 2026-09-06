@@ -38,8 +38,7 @@ test('battle bridge protocol annotates every parent message and remains syntacti
   let scriptMatch;
   while ((scriptMatch = scriptPattern.exec(patched))) scriptBodies.push(scriptMatch[1]);
   for (const body of scriptBodies) new Function(body);
-
-
+});
 
 test('settlement hook keeps existing reward values but commits before progress/navigation', () => {
   const patch = read('../scripts/settlement-navigation-v1.mjs');
