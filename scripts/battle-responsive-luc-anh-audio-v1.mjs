@@ -19,8 +19,8 @@ replaceOnce(
 /* Lục Ảnh's final VFX is drawn with a baseline-centered cell; its previous +150 anchor
    moved the whole effect below the enemy formation. */
 replaceOnce(
-  'context.save();drawLucAnhAtlas(context,key,frame,cx,cy+150,700,482,{baseline:241,alpha:1});context.restore();',
-  'context.save();drawLucAnhAtlas(context,key,frame,cx,cy,700,482,{baseline:241,alpha:1});context.restore();',
+  'drawLucAnhAtlas(context,key,frame,anchorX,anchorY+255,960,660,{baseline:330,screen:false,alpha:1});',
+  'drawLucAnhAtlas(context,key,frame,anchorX,anchorY,960,660,{baseline:330,screen:false,alpha:1});',
   'Lục Ảnh ultimate formation anchor'
 );
 
@@ -48,7 +48,7 @@ replaceOnce(
 );
 
 if (!html.includes('battleCompactViewport') ||
-    !html.includes('cx,cy,700,482') ||
+    !html.includes('anchorY,960,660') ||
     !html.includes('stableLucAnhUltimate') ||
     !html.includes('playActionSound(actor,"ultimate")') ||
     !html.includes('REFERENCE_SIMPLE || !state.sound')) {
