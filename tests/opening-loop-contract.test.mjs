@@ -128,6 +128,7 @@ test('event key and transaction guard prevent double counting', () => {
     periodKey: 'permanent',
     sourceId: 'battle-1'
   }), 'campaign.win|permanent|battle-1');
+  assert.equal(buildOpeningEventKey({ eventId: 'campaign.win' }), 'campaign.win|permanent|-');
   const state = fresh();
   const blocked = advanceOpeningLoop(state, definition, {
     eventId: 'campaign.win',
