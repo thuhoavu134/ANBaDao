@@ -163,7 +163,7 @@ const script = String.raw`<script id="hv-afk-chest-runtime-v1">
     window.setInterval(function(){installRenderHook();const screen=document.getElementById('campaignScreen');if(screen && screen.style.display!=='none')render();},1000);
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
-  window.__HV_AFK_CHEST_RUNTIME_V1={module:afk,render:render,claim:grantClaim,challenge:challenge};
+  try{window.__HV_AFK_CHEST_RUNTIME_V1={module:afk,render:render,claim:grantClaim,challenge:challenge};}catch(error){}
 })();
 </script>`;
 
@@ -177,4 +177,3 @@ if (!html.includes('</body>')) throw new Error('AFK script insertion point not f
 html = html.replace('</body>', renderedScript + '</body>');
 writeFileSync(indexPath, html);
 console.log('AFK chest runtime installed: 15-hour capped accumulation, atomic claim and separate 6v6 challenge CTA');
-
