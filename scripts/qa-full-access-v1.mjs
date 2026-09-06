@@ -129,6 +129,17 @@ const runtime = String.raw`<style id="hv-qa-full-access-v1-style">
       window.location.assign(clean.pathname+clean.search+clean.hash);
     }
   });
+
+  // The initial Hub render happens before this opt-in patch runs. Repaint
+  // the active screen so QA users do not see stale locked affordances.
+  const rerenderActiveScreen=()=>{
+    try{
+      if(typeof ST==='object'&&ST&&ST.screen==='hub'&&typeof renderHub==='function')renderHub();
+      else if(typeof ST==='object'&&ST&&ST.screen==='campaign'&&typeof renderCampaign==='function')renderCampaign();
+      else if(typeof ST==='object'&&ST&&ST.screen==='journey'&&typeof renderJourney==='function')renderJourney();
+    }catch(_){}
+  };
+  rerenderActiveScreen();
 })();
 </script>`;
 
