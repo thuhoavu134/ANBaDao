@@ -65,6 +65,7 @@ await import('./transaction-contract-v1.mjs');
 await import('./forge-item-assets-v1.mjs');
 await import('./settlement-navigation-v1.mjs');
 await import('./opening-loop-v1.mjs');
+await import('./qa-full-access-v1.mjs');
 
 // The integrated battle is loaded from this embedded payload in production.
 // Keep it byte-identical to the patched battle.html; otherwise the visible
