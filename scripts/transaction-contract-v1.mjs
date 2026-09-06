@@ -13,12 +13,15 @@ new Function(moduleSource);
 const loadoutSource = readFileSync(join(process.cwd(), 'src/domain/hero/loadout.mjs'), 'utf8').replace(/^export\s+/gm, '');
 const partyRuntime = readFileSync(join(process.cwd(), 'src/ui/party-command-runtime.js'), 'utf8');
 new Function(loadoutSource + '\n' + partyRuntime);
+const forgeSource = readFileSync(join(process.cwd(), 'src/domain/equipment/forge-commands.mjs'), 'utf8').replace(/^export\s+/gm, '');
+const forgeRuntime = readFileSync(join(process.cwd(), 'src/ui/forge-command-runtime.js'), 'utf8');
+new Function(forgeSource + '\n' + forgeRuntime);
 
 const heroMarker = 'function levelUpHero(';
 if (!html.includes(heroMarker)) throw new Error('Hero upgrade marker not found');
 html = html.replace(
   heroMarker,
-  moduleSource + '\n' + loadoutSource + '\n/* Hồn Việt R07: local transaction receipts */\n' + heroMarker
+  moduleSource + '\n' + loadoutSource + '\n' + forgeSource + '\n/* Hồn Việt R07: local transaction receipts */\n' + heroMarker
 );
 
 const helper = `function hvReceiptForCommand(commandId){
@@ -148,10 +151,44 @@ html = html.replace(renderTeamMarker, renderTeamMarker + `
 const equipButton = '<button class="btn ghost sm eqp" data-u="${it.uid}">Trang bị</button>';
 if (!html.includes(equipButton)) throw new Error('Forge equipment button marker not found');
 html = html.replace(equipButton, equipButton + '${eb?`<button class="btn ghost sm uneqp" data-u="${it.uid}" data-h="${eb}">Tháo</button>`:""}');
-const forgeListener = "b.querySelectorAll('.eqp').forEach";
-if (!html.includes(forgeListener)) throw new Error('Forge equipment listener marker not found');
-html = html.replace(forgeListener, "b.querySelectorAll('.uneqp').forEach(x=>x.addEventListener('click',()=>{if(unequipItem(+x.dataset.u,x.dataset.h))renderForge();})); " + forgeListener);
+
+function replaceOnce(before, after) {
+  if (html.split(before).length !== 2) throw new Error('Forge patch expected one marker: ' + before.slice(0, 80));
+  html = html.replace(before, () => after);
+}
+function replaceSection(startMarker, endMarker, content) {
+  const start = html.indexOf(startMarker), end = html.indexOf(endMarker, start);
+  if (start < 0 || end < start || html.indexOf(startMarker, start + 1) !== -1) throw new Error('Forge boundary not found: ' + startMarker);
+  html = html.slice(0, start) + content + html.slice(end);
+}
+
+// Existing progress functions can now participate in an outer transaction.
+// Their other callers keep the previous default of saving immediately.
+replaceOnce('function weeklyProgress(type,amt=1){', 'function weeklyProgress(type,amt=1,save=true){');
+const weeklyStart = html.indexOf('function weeklyProgress('), weeklyEnd = html.indexOf('function claimWeeklyQuest(', weeklyStart);
+replaceOnce(html.slice(weeklyStart, weeklyEnd), html.slice(weeklyStart, weeklyEnd).replace('if(ch)persist();', 'if(ch&&save)persist();'));
+replaceOnce('function questProgress(type,amt){', 'function questProgress(type,amt,save=true){');
+replaceOnce('weeklyProgress(type,amt); if(ch)persist();', 'weeklyProgress(type,amt,save); if(ch&&save)persist();');
+
+replaceSection('function setForgeMold(', 'function forgeMoldBonus(', '');
+replaceSection('function startDualForge(', 'const RFAC=', '');
+replaceSection('function craftItem(', 'function enhCost(', '');
+replaceOnce('function enhCost(it){ return {gold:Math.round(80*(it.lvl+1)*RFAC[it.rar]), hoat:4*(it.lvl+1)}; }',
+  'function enhCost(it){ return forgeEnhanceCost(it,RFAC); }');
+replaceSection('function enhanceItem(', '/* Samkok E10/E11:', '');
+replaceSection('function salvageItem(', 'function renderForge(', forgeRuntime + '\n');
+replaceSection("  b.querySelectorAll('.moldbtn').forEach", '/* ===================== BỘ BẢO VẬT', '  bindForgeCommands(b);\n}\n');
+
+const salvageButton = '<button class="btn ghost sm salv" data-u="${it.uid}" ${eb?\'disabled\':\'\'}>Phân giải</button>';
+replaceOnce(salvageButton,
+  '<button class="btn ghost sm itemlock" data-u="${it.uid}" data-locked="${isForgeItemLocked(it)}">${isForgeItemLocked(it)?"Mở khóa":"Khóa đồ"}</button>'
+  + '<button class="btn ghost sm salv" data-u="${it.uid}" ${eb||isForgeItemLocked(it)?\'disabled\':\'\'}>Phân giải</button>');
+replaceOnce('</head>', `<style id="samkok-forge-confirm-style">
+.forge-salvage-dialog{box-sizing:border-box;width:min(92vw,420px);max-height:86dvh;overflow:auto;padding:24px;border:1px solid #b4975b;border-radius:18px;background:#171b2c;color:#f6edd7;font:16px/1.5 system-ui,sans-serif;box-shadow:0 18px 60px #0009}
+.forge-salvage-dialog::backdrop{background:#060912bc}
+.forge-salvage-dialog h3{margin:0 0 16px}.forge-salvage-dialog p{margin:12px 0}.forge-salvage-gain{font-weight:700;color:#ffd978}.forge-salvage-error{color:#ffb4a8}.forge-salvage-error:empty{display:none}
+.forge-salvage-dialog .econ-actions{gap:10px;margin-top:20px}.forge-salvage-dialog button{min-height:44px;white-space:normal}
+</style></head>`);
 
 writeFileSync(p, html);
-console.log('Transaction contract installed: receipts, idempotent upgrade/mail commits and local ledger');
-
+console.log('Transaction contract installed: receipts, loadout and forge commits with local ledger');
