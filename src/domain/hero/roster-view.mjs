@@ -1,3 +1,5 @@
+import { summarizeRosterCapacity } from './roster-plan.mjs';
+
 // A read model, not a second save. Every visible number comes from the player.
 export function buildRosterView({ ids, heroes, player, powerFor, portraitFor,
   element = 'all', scope = 'owned', sort = 'default' }) {
@@ -18,8 +20,9 @@ export function buildRosterView({ ids, heroes, player, powerFor, portraitFor,
   if (sort === 'power') visible.sort((a, b) => b.power - a.power);
   if (sort === 'level') visible.sort((a, b) => (b.level || 0) - (a.level || 0));
   if (sort === 'name') visible.sort((a, b) => a.name.localeCompare(b.name, 'vi'));
+  const catalog = summarizeRosterCapacity({ ids, heroes });
   return { cards: visible, total: cards.length,
     owned: cards.filter(card => card.owned).length,
     squadPower: cards.filter(card => card.inSquad).reduce((sum, card) => sum + card.power, 0),
-    gold: player.gold, gems: player.gems };
+    gold: player.gold, gems: player.gems, catalog };
 }
