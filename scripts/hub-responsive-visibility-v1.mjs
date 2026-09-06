@@ -214,6 +214,55 @@ const style = String.raw`<style id="hv-hub-responsive-visibility-v3">
     flex-basis:21px!important
   }
 }
+
+/* Mobile campaign card repair: keep the continuous mission header full-width instead of inheriting the legacy two-column chapter grid. */
+#campaignScreen .chrow.continuous-mission-card{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  align-items:initial!important
+}
+#campaignScreen .chrow.continuous-mission-card > .continuous-mission-head{
+  display:flex!important;
+  width:100%!important;
+  min-width:0!important;
+  align-items:center!important
+}
+#campaignScreen .chrow.continuous-mission-card > .continuous-mission-head .continuous-mission-copy{
+  min-width:0!important;
+  flex:1 1 auto!important
+}
+#campaignScreen .chrow.continuous-mission-card .continuous-mission-copy b{
+  white-space:normal!important;
+  word-break:normal!important;
+  overflow-wrap:normal!important
+}
+#campaignScreen .chrow.continuous-mission-card > .continuous-progress,
+#campaignScreen .chrow.continuous-mission-card > .worldmeta,
+#campaignScreen .chrow.continuous-mission-card > .continuous-mission-actions{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important
+}
+#campaignScreen .chrow.continuous-mission-card > .continuous-mission-actions{
+  display:grid!important;
+  grid-template-columns:1fr 1fr!important
+}
+@media(max-width:520px){
+  #campaignScreen .chrow.continuous-mission-card{
+    padding:14px!important
+  }
+  #campaignScreen .chrow.continuous-mission-card > .continuous-mission-head{
+    gap:10px!important
+  }
+  #campaignScreen .chrow.continuous-mission-card > .continuous-mission-head .continuous-mission-number{
+    width:50px!important;
+    flex:0 0 50px!important
+  }
+  #campaignScreen .chrow.continuous-mission-card > .continuous-mission-actions{
+    grid-template-columns:1fr!important
+  }
+}
 </style>`;
 
 if (!html.includes('id="hv-hub-responsive-visibility-v3"')) {
