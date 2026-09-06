@@ -48,6 +48,7 @@ const questRemoval = String.raw`<script id="hv-hub-main-quest-removal-v1">
     document.querySelectorAll('#hv-main-quest-hub').forEach((node) => node.remove());
   };
   const stabilizeHubActions = () => {
+    removeHubQuest();
     document.querySelectorAll('#hubScreen .art-side.left [data-art-go="daily"]').forEach((node) => node.remove());
     const friend = document.querySelector('#hubScreen .art-side.left [data-art-go="friends"]');
     if (!friend) return;
