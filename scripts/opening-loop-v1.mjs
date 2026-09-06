@@ -54,12 +54,17 @@ index = index.replace(
   "P.equip[heroId][it.slot]=uid; const openingEquipmentSaved=typeof persist==='function'?persist():false; if(openingEquipmentSaved) window.HonVietOpeningLoop?.record?.('hero.equip',{sourceId:String(heroId)+':'+String(uid),periodKey:'permanent',route:{screen:'forge'}}); toast('Đã mặc '+itemName(it)+' cho '+DATA.heroes[heroId].name+'.'); return true;"
 );
 
-const journeyMarker = "b.querySelectorAll('.jmclaim').forEach(x=>x.addEventListener('click',()=>claimJourneyMilestone(x.dataset.id))); } function journeyTutorial";
-if (!index.includes(journeyMarker)) throw new Error('Journey render marker not found');
-index = index.replace(
-  journeyMarker,
-  "b.querySelectorAll('.jmclaim').forEach(x=>x.addEventListener('click',()=>claimJourneyMilestone(x.dataset.id))); window.HonVietOpeningLoop?.renderJourney?.(b); } function journeyTutorial"
-);
+const journeyStart = index.indexOf("b.querySelectorAll('.jmclaim')");
+const journeyEnd = index.indexOf('function journeyTutorial', journeyStart);
+const journeySlice = journeyStart >= 0 && journeyEnd > journeyStart
+  ? index.slice(journeyStart, journeyEnd)
+  : '';
+if (!journeySlice.includes('claimJourneyMilestone')) throw new Error('Journey render marker not found');
+const journeyClose = index.lastIndexOf('}', journeyEnd);
+if (journeyClose < journeyStart) throw new Error('Journey render close marker not found');
+index = index.slice(0, journeyClose) +
+  ' window.HonVietOpeningLoop?.renderJourney?.(b);' +
+  index.slice(journeyClose);
 
 if (index.includes('id="samkok-r10-opening-loop"')) throw new Error('Opening loop runtime already installed');
 const runtime = [
