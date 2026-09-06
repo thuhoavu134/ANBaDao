@@ -17,6 +17,7 @@ Game đang ở nhánh triển khai Samkok v2 trên build production mới nhất
 ## Đã hoàn thành
 
 - AFK v1 đã có contract rương 15 giờ, tích lũy online/offline, dừng ở cap, claim qua transaction atomic và nút Khiêu chiến 6v6 tách riêng; diễn hoạt không gọi battle/không tự sinh reward.
+- Hub icon alpha hotfix đã gỡ đĩa nền, border, box-shadow và stacked filter cũ; computed production là transparent/none, giữ nguyên PNG RGBA và không đổi asset.
 
 - Rèn Mộng có catalog 20 item và material art; transaction forge/loadout được giữ atomic, không làm mất item khi salvage.
 - QA có chế độ mở khóa toàn bộ chức năng theo cách save-safe để kiểm tra trước khi tài khoản mở tiến độ thật.
@@ -29,9 +30,9 @@ Game đang ở nhánh triển khai Samkok v2 trên build production mới nhất
 
 ## Bằng chứng source và runtime
 
-- Commit mới nhất: [fix: guard AFK runtime debug export on frozen window](https://github.com/bktimmy247/luc-than/commit/e1792491b46315438ac2d17f5ac8df159ddb9b62).
+- Commit mới nhất: [fix: remove dark backgrounds from hub icons](https://github.com/bktimmy247/luc-than/commit/ec13d7a8eb0310147038e5dbdeecb69d9b4e5895).
 - Production: [luc-than.vercel.app](https://luc-than.vercel.app/).
-- Deployment commit trên Vercel: e1792491b46315438ac2d17f5ac8df159ddb9b62, trạng thái READY; [deployment](https://vercel.com/cuong-duc-ai-s-projects/luc-than/8VGgvt6K8QjNQUwVpW2JpSHQKwfs).
+- Deployment commit trên Vercel: ec13d7a8eb0310147038e5dbdeecb69d9b4e5895, trạng thái READY; [deployment](https://vercel.com/cuong-duc-ai-s-projects/luc-than/4j5fYwmZpqEPqWbif8xEBsBJuNZU).
 - QA viewport 390×844 và 430×932: title “Rừng Deadline” không còn rơi từng chữ; card width, progress bar và nút “Tiếp tục chinh chiến” đều có kích thước hợp lệ.
 - GitHub/Vercel CI: success; runtime errors trong 1 giờ kiểm tra: không có.
 
