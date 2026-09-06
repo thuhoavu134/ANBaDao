@@ -1,0 +1,14 @@
+{
+  "v": 1,
+  "schemaVersion": 2,
+  "revision": 7,
+  "savedAt": 1720000000000,
+  "gold": 440,
+  "gems": 800,
+  "heroes": {
+    "ong_hang_pho": { "owned": true, "level": 30, "stars": 6 }
+  },
+  "squad": [
+    { "id": "ong_hang_pho", "row": "front" }
+  ]
+}
