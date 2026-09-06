@@ -4,56 +4,61 @@
 
 Ngày cập nhật: 06/09/2026. Chủ sản phẩm: Anh. Người tiếp nhận triển khai: Codex/Luna/dev được phân công.
 
-## Bổ sung từ video Chinh chiến — 07/09/2026 (giờ Việt Nam)
+## Chốt cơ chế AFK từ video — 07/09/2026 (giờ Việt Nam)
 
-Nguồn: video người dùng gửi `ScreenRecording_09-07-2026 01-00-59_1.mp4`, dài 31,57 giây, 512×1106, 30 fps. Phân tích các khung theo thời gian, đặc biệt đoạn 12–19 giây. Đây là phân tích tham chiếu và đề xuất triển khai, KHÔNG phải tính năng đã làm hay bằng chứng QA Hồn Việt.
+Nguồn: `ScreenRecording_09-07-2026 01-00-59_1.mp4` và đính chính trực tiếp của anh. Phần này THAY THẾ diễn giải trước về encounter hành quân. Đây là yêu cầu thiết kế đã chốt, CHƯA triển khai hoặc nghiệm thu runtime.
 
-### Quan sát và giới hạn bằng chứng
+### Bản chất màn hình
 
-| Mốc gần đúng | Thấy trong video | Ý nghĩa thiết kế |
-| --- | --- | --- |
-| 00–03s | Tướng đánh quái ngay trong cảnh; số damage gần đối tượng; HUD và dock vẫn hiện | Có một lớp diễn hoạt chiến đấu ngay tại màn Chinh chiến |
-| 04–13s | Nhóm tướng di chuyển qua hành lang/cầu thang, cảnh cuộn theo; HUD đứng yên | Thế giới và HUD tách nhau; hành quân tạo cảm giác có tiến trình |
-| 14–23s | Gặp nhóm địch, dừng đánh; có projectile/impact và HP bar | Chu kỳ chạy → gặp địch → đánh → tiếp tục, không chỉ idle trang trí |
-| 24–27s | Nhóm tướng tiếp tục di chuyển; nút Khiêu chiến và rương/timer vẫn hiện | Hành quân nền có thể cùng tồn tại với CTA vượt ải |
-| 28–31,57s | Trung tâm điều khiển iOS che game | Không dùng đoạn này để đánh giá game |
+- Đội chạy, đánh quái và vật phẩm bay vào rương chỉ là diễn hoạt AFK, cho thấy thưởng đang tích lũy theo thời gian. Không phải trận chiến thật, không chạy battle session/settlement, không tiêu hao thể lực, không tăng tiến độ ải.
+- Nút Khiêu chiến riêng mới vào trận 6v6 hiện hữu. Giữ luật 15 hiệp và flow kết quả đã chốt; không biến AFK thành wave hoặc encounter thật.
+- Animation và hiệu ứng vật phẩm là presentation của trạng thái thưởng; không được dùng số quái chết, frame, FPS hay callback VFX để sinh vật phẩm.
+- Clip cho thấy HUD cố định khi cảnh di chuyển và CTA riêng. Mốc 15 giờ do anh xác nhận, không suy ra từ video. Audio clip im lặng nên không có kết luận về SFX/BGM mẫu.
 
-Không có thao tác bấm Khiêu chiến hay màn kết quả trong clip. Không suy ra engine turn-based/realtime, số lượng đội hình chính thức, auto-advance, cách tính thưởng hoặc cơ chế server chỉ từ cảnh diễn hoạt. Audio stream đo được ở mức -91 dB (im lặng); không đánh giá chất lượng SFX/BGM từ video này. Khung bản đồ nhỏ góc phải hiển thị 7-1, chưa chứng minh là minimap tương tác.
+### Rương AFK — luật đã chốt
 
-### Hướng đề xuất: Chinh chiến là một cảnh hành quân có thể chơi
+1. Thưởng tự tích lũy cả khi online lẫn offline theo thời gian hợp lệ.
+2. Rương chứa tối đa **15 giờ tích lũy = 54.000 giây**; đây là dung lượng theo thời gian, không phải 15 giờ được phép offline hay số slot túi.
+3. Đủ 15 giờ thì dừng tích lũy. Thời gian vượt trần bị bỏ, không giữ lại để cộng bù sau khi nhận.
+4. Người chơi phải đăng nhập **và nhận thưởng** để giải phóng rương. Chỉ đăng nhập, mở rương hoặc xem preview không reset mốc.
+5. Sau nhận thành công, thưởng chuyển vào túi và chu kỳ mới bắt đầu tại thời điểm nhận. Khi lưu/credit thất bại, rương và mốc cũ phải giữ nguyên.
+6. Nút nhận khi chưa đủ 15 giờ được đề xuất cho bản đầu (không bắt người chơi chờ đầy); rate, danh mục vật phẩm, điều kiện mở AFK và quy tắc nâng rate còn cần cấu hình/chốt, không tự thêm giá trị kinh tế hoặc quảng cáo tăng thưởng.
 
-Ưu tiên một vertical slice trong E07 (campaign), phối hợp E04 (vòng đời UI), E06 (presentation), E13-03 (thưởng treo máy). Đây là mở rộng presentation của vòng chơi, không viết lại combat engine.
+### Contract dữ liệu và giao dịch (E13-03 + E03)
 
-1. **Lớp hành quân:** đội hình tài khoản đi theo tuyến định sẵn trên cảnh rộng, chạm nhóm quái và diễn hoạt ngắn rồi đi tiếp. Camera theo nhóm có easing và giới hạn biên; HUD không cuộn. Đây là đề xuất cho Hồn Việt, chưa xác nhận logic nội bộ game mẫu.
-2. **Lớp vượt ải chính thức:** CTA Khiêu chiến/Tiếp tục dẫn vào battle session 6v6 hiện có, giới hạn 15 hiệp, victory/defeat và settlement hiện hữu. Trận sau vẫn là encounter mới theo flow hiện tại, không gộp thành nhiều wave. Hành quân không tự đánh dấu hoàn thành ải.
-3. **Phần thưởng:** nếu nối rương treo máy, dùng rate/cap/claim cursor E13-03 và transaction E03; không cộng tiền theo số quái/animation đã phát. Tốc độ FPS, tab nền và reload không được tăng thưởng. Khi chưa có contract thưởng đã kiểm tra, chỉ dùng cảnh presentation và ghi rõ trạng thái nội bộ.
-4. **UI:** giữ avatar/tài nguyên trên cùng, chapter chip/map preview gọn ở góc, rương/timer ở mép dưới và một CTA chính rõ. Dock 5 nút giữ ngôn ngữ hiện có. Không đặt các card mô tả lớn ở giữa cảnh; thông tin dài mở trong panel. Thành Chính giữ bố cục U đã chốt; không biến cả sảnh thành màn hành quân.
-5. **Điều hướng:** quay lại từ battle giữ chapter/path checkpoint hợp lý. Pause renderer/audio hành quân khi vào battle, modal hoặc tab nền; chỉ một owner cho mỗi audio bus/RAF. Không để hai cảnh chạy chồng.
+- Clock dùng một nguồn tập trung; alpha local phải công khai giới hạn chống đổi giờ máy, không gọi là server-authoritative. Online dùng thời gian tin cậy từ backend đã được duyệt.
+- Lưu cursor/mốc tích lũy, elapsed đã ghi nhận, phiên bản reward config, nội dung rương và receipt/commandId theo save schema. Migration bảo toàn quyền lợi cũ; không reset save im lặng.
+- Khoảng thời gian mới được cộng chỉ tối đa phần còn trống của 54.000 giây. Khi rương đã đầy và người chơi nhận muộn, cursor chu kỳ mới là lúc nhận, không phải lúc rương vừa đầy.
+- Tính/credit reward + xóa số dư rương + cập nhật cursor cùng một giao dịch atomic; retry cùng commandId trả receipt cũ, không cấp lại. Hai tab dùng revision guard.
+- Reward preview và claim dùng cùng công thức/làm tròn; giữ phần dư đúng contract để mở/đóng nhiều lần không thay kết quả. Nếu có loot ngẫu nhiên phải lưu kết quả/seed ổn định, không reroll khi mở UI.
+- Nếu đổi rate theo chương, phải chốt cách tính từng khoảng thời gian trước triển khai; không áp rate mới hồi tố cho toàn bộ thời gian cũ.
+- Pause renderer khi tab nền/đổi màn nhưng không làm dừng clock thưởng. Không chạy hàng nghìn trận bù offline: chỉ tính khoảng thời gian hợp lệ có trần.
 
-### Asset cần có trước khi làm
+Ví dụ nghiệm thu: nhận lúc 00:00 → 10:00 có tối đa 10 giờ; không nhận, tới 20:00 chỉ có 15 giờ. Nhận lúc 20:00 → 21:00 có 1 giờ mới, không phải 6 giờ.
 
-- Kiểm kê bộ 20 cặp background đã có: ảnh toàn cảnh cho hành quân, ảnh sân đấu cho battle cùng chủ đề. Không mặc định phải gen lại, không lấy ảnh hub thay battle.
-- Toàn cảnh cần đường đi liên tục và mặt đất hợp góc nhìn; dùng waypoint/ground anchor, kiểm tướng không chạy xuyên tường/mái nhà. Nếu ảnh hiện có không phù hợp, chủ động gen riêng phần còn thiếu bằng Imagen và QC độ sâu/đường đi; ảnh đẹp chưa đủ để làm map di chuyển.
-- Chỉ dùng tướng đã có run/walk hợp lệ. Thiếu run: ghi brief cần sản xuất, không kéo idle trượt trên đất và tuyên bố hoàn thiện; không ép 12/72 tướng vào pilot trước khi đủ asset.
-- Giữ baseline/scale ổn định khi run → idle → attack. Tái sử dụng Basic/projectile/impact đã duyệt; không cần phát ulti toàn màn liên tục trong cảnh nền.
-- Cần rương và trạng thái có thể nhận, icon chapter/CTA bằng art phù hợp nếu thiếu; tên, timer, số dư vẫn là dữ liệu live, không bake vào ảnh.
-- Footstep/impact/reward SFX phải có giới hạn số âm đồng thời, ducking và cleanup; đây là brief sản xuất, không phải nhận xét âm thanh video.
+### UI/UX và asset
 
-### Ticket và nghiệm thu
+- Cảnh AFK là nội dung chính của màn Chinh chiến thay cho các card văn bản lớn; Thành Chính giữ bố cục U đã chốt.
+- Giữ đội tướng, đường đi và vùng đánh diễn hoạt rõ; HUD account/tài nguyên cố định, chapter chip gọn, dock và CTA Khiêu chiến không che đội.
+- Rương có trạng thái đang tích lũy / có thể nhận / đầy / đang nhận / lỗi lưu; hiển thị thời gian đã chứa trên 15 giờ, vật phẩm đang chứa và CTA nhận.
+- Khi đầy: “Rương đầy — nhận để tiếp tục tích lũy”. Dừng hiệu ứng vật phẩm bay vào rương để không báo sai; có thể giữ idle/diễn hoạt nhẹ.
+- Hiệu ứng nhận thưởng chỉ phát sau commit thành công. Khi trở lại từ offline cập nhật số dư trực tiếp, không phát lại mọi loot effect đã bỏ lỡ.
+- Tái sử dụng ảnh toàn cảnh trong bộ 20 cặp background nếu phù hợp; ảnh sân đấu dùng cho battle. Kiểm tra đường đi, phối cảnh, anchor; không tự yêu cầu gen lại asset đã có.
+- Kiểm kê run/idle/basic của đội dùng làm mẫu. Không kéo idle trượt trên đất rồi coi là run hoàn thiện. Thiếu asset phải ghi brief/queue.
+- Agent chủ động tạo bằng Imagen ảnh rương/icon/visual còn thiếu khi triển khai tính năng; timer, tên và số dư là dữ liệu live. Animation/VFX/SFX thiếu phải có brief riêng; không dùng concept sheet giả làm VFX.
+- SFX diễn hoạt cần tiết chế, giới hạn phát đồng thời và không chồng lên nhạc/trận thật. Một owner cho audio/RAF; dọn khi rời màn.
 
-- CC-P01: kiểm kê một cặp map + một đội đủ run/idle/basic, chốt waypoint/camera/HUD bằng preview.
-- CC-P02: prototype một tuyến có chu kỳ chạy → encounter → đánh → chạy; không mutate campaign/reward.
-- CC-P03: nối CTA vào session hiện hữu, return checkpoint, pause/resume và audio ownership; test bấm nhanh/re-entry.
-- CC-P04: nối rương E13 sau khi claim contract đạt test; xác minh reload, hai tab, thời gian âm và claim lặp.
-- CC-P05: QA 390/430px, iPad dọc/ngang, desktop; Safari thật và thanh địa chỉ thay đổi. Bấm CTA ngay lần đầu; không mất tướng ra ngoài màn; 6 slot mỗi phe trong battle chính thức đều nhìn thấy.
-- Đo frame time/memory trên thiết bị mục tiêu, không claim 60fps chỉ từ video 30fps; mở/đóng 20 lần không rò renderer/audio. Giới hạn thời gian animation và texture đang resident, lazy-load battle, giảm chuyển động không thiết yếu.
-- Quay video runtime Hồn Việt gồm một chu kỳ hành quân, bấm Khiêu chiến, kết quả và quay lại. Anh duyệt cảm giác cuối cùng.
+### Ticket triển khai và gate
 
-### Điều chỉnh thứ tự công việc
+- AFK-01 / E13-03: khóa schema, clock, cap 15 giờ, công thức preview/claim và migration.
+- AFK-02 / E03: giao dịch claim atomic/idempotent; test retry, hai tab, lỗi lưu và không đủ điều kiện.
+- AFK-03 / E04/E06: một cảnh diễn hoạt mẫu run → đánh giả lập → đi tiếp; không gọi combat/reward mutation từ animation.
+- AFK-04 / E07: ghép rương và CTA Khiêu chiến độc lập, pause/resume, quay về màn AFK đúng trạng thái.
+- AFK-05: QA mốc 0, 1, 14:59:59, 15:00:00, 15:00:01, 24/48 giờ; đăng nhập không nhận; nhận khi đầy; nhận sớm nếu áp dụng; clock âm; reload; background/foreground; đổi rate; đầy rương không phát loot giả.
+- QA 390/430px, iPad dọc/ngang và Safari thật; chạm một lần, HUD không che cảnh, không rò renderer/audio sau 20 lần ra/vào. Battle 6v6 vẫn kiểm tra độc lập.
+- Quay runtime gồm AFK tích lũy → rương đầy → nhận → tích lũy lại và bấm Khiêu chiến. Không claim PASS chỉ vì test clock hoặc ảnh tĩnh đẹp.
 
-Giữ ưu tiên sửa lỗi battle/audio đang tồn tại trước; tiếp theo làm CC-P01/02 làm mẫu Chinh chiến sống động thay cho việc chỉ tô đẹp thêm card văn bản. Sau duyệt preview mới nối battle/claim. Không bỏ qua giao dịch và save để làm cảnh đẹp.
-
-Lưu ý chỉnh độ tin cậy của snapshot cũ: dòng “Chapter 1 cần background sạch” là checklist lịch sử cần đối chiếu source/runtime, không phải kết luận video này chứng minh Hồn Việt vẫn dùng sai background. Bộ 20 arena đã được ghi nhận; không bắt anh gửi lại hay gen lại nếu asset hiện có đáp ứng.
+Thứ tự: xử lý lỗi battle/audio chặn chơi; sau đó AFK-01/02 và mẫu AFK-03, rồi ghép UI/QA. Không thay engine trận hoặc sinh thêm hệ thống encounter.
 
 ---
 
@@ -478,7 +483,7 @@ P1 · M4 · L · Gameplay/frontend. Phụ thuộc: E03/E07/E11; online time E18.
 
 - E13-01: Clock/periodKey/reset policy tập trung; timezone là config. Đổi giờ máy không nhận thêm thưởng online.
 - E13-02: Điểm danh, daily/weekly, điểm hoạt động/rương; claim từng/claim-all cùng engine, không reset nhầm thành tựu.
-- E13-03: Treo máy có rate/cap/claim cursor; thời gian âm/quá xa và đóng/mở liên tục xử lý đúng, không nhân thời gian.
+- E13-03: AFK tích lũy online/offline, rương tối đa 15 giờ (54.000 giây), đầy dừng cộng; phải nhận mới giải phóng, không bù thời gian vượt trần. Claim atomic/idempotent, diễn hoạt không sinh thưởng. Xem mục Chốt cơ chế AFK đầu tài liệu.
 - E13-04: Giao việc có yêu cầu tướng, slot, thời lượng, hủy/hoàn và reward; resume đúng sau reload.
 - E13-05: Thư có expiry, read, attachment, claim-all/delete; cảnh báo quà chưa nhận và chặn nhận trùng/hết hạn.
 - E13-06: Hub badge chỉ báo hành động làm được ngay; không chấm đỏ mãi cho tính năng khóa hoặc rương đã nhận.
