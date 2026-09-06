@@ -37,6 +37,7 @@ function hvRunCommittedTransaction({commandId,cost={},balances={},source,reason,
   }
   return tx;
 }
+window.HonVietTransaction=Object.freeze({commit:hvRunCommittedTransaction,execute:executeLocalTransaction,settleReward:settleRewardTransaction,read:getTransactionReceipt});
 `;
 const helperMarker = 'function hvReceiptForCommand(';
 if (html.includes(helperMarker)) throw new Error('Transaction helper already installed');
