@@ -255,6 +255,7 @@ test('R10 build wires runtime instrumentation without touching seed or economy v
   assert.match(patch, /samkok-r10-opening-loop/);
   assert.match(patch, /HonVietOpeningLoopCore/);
   assert.match(patch, /advanceOpeningLoop/);
+  assert.match(patch, /__HV_MAIN_QUEST_RUNTIME_V1\?\.onBattleResult/);
   assert.match(patch, /opening\.formation/);
   assert.match(patch, /data-hv-opening-go/);
   assert.ok(!patch.includes('P.gold+='));
