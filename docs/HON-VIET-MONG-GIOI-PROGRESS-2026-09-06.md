@@ -1,0 +1,49 @@
+# Hồn Việt: Mộng Giới — Progress Snapshot — 06/09/2026
+
+## Mốc hiện tại
+
+Game đang ở nhánh triển khai Samkok v2 trên build production mới nhất. Mục tiêu trước mắt là hoàn thiện một vòng chơi 6v6 thật mượt trên mobile, sau đó mở rộng roster và các hệ thống.
+
+## Đã hoàn thành
+
+- Rèn Mộng có catalog 20 item và material art; transaction forge/loadout được giữ atomic, không làm mất item khi salvage.
+- QA có chế độ mở khóa toàn bộ chức năng theo cách save-safe để kiểm tra trước khi tài khoản mở tiến độ thật.
+- Sảnh đã có icon Nhiệm vụ và Bạn bè riêng biệt; Bạn bè được giữ visible ổn định; shortcut được xếp trong vùng U phía trên theo bố cục Samkok.
+- Avatar tài khoản và icon tài nguyên đã chuyển sang art Imagen; tên account và các con số vẫn là text/CSS động.
+- Card NHIỆM VỤ CHÍNH TUYẾN lớn trên sảnh đã bỏ theo yêu cầu; shortcut Nhiệm vụ vẫn giữ lại.
+- Chinh chiến liên tục vẫn dùng flow thắng tự sang nhiệm vụ kế tiếp, thua thì dừng.
+- Đã sửa lỗi responsive làm thẻ nhiệm vụ trên điện thoại biến thành một cột chữ. Card hiện full-width; header, progress và CTA không còn bị ép vào grid legacy.
+- Battle/result đã có nền tảng route victory/defeat và asset nhạc thắng/thua; Lục Ảnh, Đình Lôi, Thầy Mo đã có các manifest/registry skill đáng kể.
+
+## Bằng chứng source và runtime
+
+- Commit mới nhất: [fix: keep campaign mission card readable on mobile](https://github.com/bktimmy247/luc-than/commit/153c116a8c732eb05287addae1e2a8c935388bcb).
+- Production: [luc-than.vercel.app](https://luc-than.vercel.app/).
+- Deployment commit trên Vercel: 153c116a8c732eb05287addae1e2a8c935388bcb, trạng thái READY.
+- QA viewport 390×844 và 430×932: title “Rừng Deadline” không còn rơi từng chữ; card width, progress bar và nút “Tiếp tục chinh chiến” đều có kích thước hợp lệ.
+- GitHub/Vercel CI: success; runtime errors trong 1 giờ kiểm tra: không có.
+
+## Chưa PASS cuối
+
+1. Chapter 1 battle background phải dùng ảnh battle sạch, không dùng hub background; cần visual approval sau khi map/crop đúng.
+2. Damage popup cần nhỏ hơn và xếp nhiều dòng dọc sát mục tiêu theo ảnh mẫu.
+3. Cần test thật trên iPhone/iPad Safari cho audio unlock, icon Bạn bè, 6 nhân vật mỗi team, Lục Ảnh ultimate và victory/defeat music.
+4. Cần tiếp tục hoàn thiện UI/UX có chiều sâu cho hero detail và các màn chức năng còn thiếu.
+5. Cần tiếp tục migrate roster authored sang hợp đồng Basic + Ultimate + passive, mỗi tướng phải có asset/motion/VFX/SFX/UI QA đủ gate.
+
+## Việc tiếp theo
+
+- Tích hợp background battle sạch theo từng chương.
+- Sửa damage popup và QA multi-hit.
+- Rà audio bus/SFX/VFX Lục Ảnh, sau đó QA result audio.
+- Hoàn thiện hero detail/roster UI bằng art Imagen khi thiếu visual asset.
+- Mở rộng roster sau khi các gate hiện tại đạt PASS.
+
+## Luật không được phá
+
+- Không bật lại global combat clock.
+- Không dùng ảnh hub làm background battle.
+- Không claim PASS nếu chưa có evidence runtime thật.
+- Không cắt frame authored để tối ưu.
+- Tính trước asset Imagen, animation, VFX và SFX khi bắt đầu từng tính năng.
+- Tiếp tục từ commit/build mới nhất; không làm lại pipeline cũ.

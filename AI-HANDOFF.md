@@ -10,7 +10,7 @@ Source of truth: this GitHub repository
 
 ## Samkok v2 direction — 06/09/2026 update
 
-Read the Library master plan `HON-VIET-MASTER-PLAN-SAMKOK-v2-2026-09-06.md` updated at 09:26 UTC (923 lines), especially 3.1, 7.4, 7.7 and R05/R11. The approved target kit is **Basic + Ultimate + passives**: two principal animated actions including Basic. New concepts do not require a third Skill 1 animation. Plan VFX production and QC from the concept stage; characters may draw on other cultures and fantasy creatures while keeping the common visual style.
+Read `docs/HON-VIET-MASTER-PLAN-SAMKOK-v2-2026-09-06.md` and `docs/HON-VIET-MONG-GIOI-PROGRESS-2026-09-06.md`; these are the GitHub source-of-truth plan and current progress snapshot. Preserve the approved Samkok v2 direction in sections 3.1, 7.4, 7.7 and R05/R11. The approved target kit is **Basic + Ultimate + passives**: two principal animated actions including Basic. New concepts do not require a third Skill 1 animation. Plan VFX production and QC from the concept stage; characters may draw on other cultures and fantasy creatures while keeping the common visual style.
 
 The user's roster capacity instruction remains **32 SSR + 16 SR + 16 A + 8 B = 72**. Keep the 12 existing authored heroes and their assets/save ownership. Capacity is not permission to invent 60 placeholder identities, downgrade existing SSRs or change banner odds. At target capacity, plan 144 principal action contracts plus passive/behavior assets; this is not a count of finished assets.
 
@@ -20,12 +20,23 @@ The first R05/R11 pilot is now implemented for Ông Phở with `samkok-v2.1`: Ba
 
 Current completed slices are documented in `docs/SAMKOK-LOADOUT-TRANSACTIONS-2026-09-06.md` and `docs/SAMKOK-FORGE-TRANSACTIONS-2026-09-06.md`. The forge slice belongs to E11-04/05 and extends the existing R07 transaction owner. The next expansion step is to repeat the R05/E02-06 and R11 evidence loop for the remaining authored heroes before adding new identities. Banner/seed decisions and real-device QA retain their separate gates.
 
+## Current Implementation Status — 06/09/2026
+
+- Latest main commit: 153c116a8c732eb05287addae1e2a8c935388bcb.
+- Production deployment is READY at https://luc-than.vercel.app/.
+- Mobile campaign mission card was repaired and QA-checked at 390×844 and 430×932.
+- Hub side actions are restored: Nhiệm vụ and Bạn bè are distinct and visible; the large main-quest hub card is intentionally removed, but the Nhiệm vụ shortcut remains.
+- The next priority is clean chapter battle backgrounds, compact stacked damage popups, real iPhone/iPad QA for audio/layout, then authored-roster expansion.
+- Do not mark the battle visual or device QA gates PASS until the remaining checks are evidenced.
+
 ---
 
 ## Required Reading Order
 
 1. `AI-HANDOFF.md` — this entrypoint.
-2. `docs/HON-VIET-ASSET-PRODUCTION-STANDARD.md` — locked asset size, sharpness, and AI-frame pipeline standard.
+2. `docs/HON-VIET-MASTER-PLAN-SAMKOK-v2-2026-09-06.md` — master plan and implementation status.
+3. `docs/HON-VIET-MONG-GIOI-PROGRESS-2026-09-06.md` — concise progress snapshot.
+4. `docs/HON-VIET-ASSET-PRODUCTION-STANDARD.md` — locked asset size, sharpness, and AI-frame pipeline standard.
 3. Existing project design / resume / runtime docs in `docs/`.
 4. Current runtime patch scripts under `scripts/` before editing `index.html` or `battle.html`.
 
