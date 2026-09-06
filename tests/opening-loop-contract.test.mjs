@@ -253,7 +253,7 @@ test('R10 build wires runtime instrumentation without touching seed or economy v
     build.indexOf("await import('./settlement-navigation-v1.mjs');"));
   assert.match(patch, /samkok-r10-opening-loop/);
   assert.match(patch, /HonVietOpeningLoopCore/);
-  assert.match(patch, /TRANSACTION_NOT_COMMITTED/);
+  assert.match(patch, /advanceOpeningLoop/);
   assert.match(patch, /opening\.formation/);
   assert.match(patch, /data-hv-opening-go/);
   assert.ok(!patch.includes('P.gold+='));
