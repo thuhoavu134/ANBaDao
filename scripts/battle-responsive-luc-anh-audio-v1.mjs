@@ -32,13 +32,14 @@ replaceOnce(
   'Lục Ảnh stable impact presentation'
 );
 
-/* Lục Ảnh's dedicated voice path did not dispatch the shared ultimate SFX. */
-replaceOnce(
-  'dom.phaseLabel.textContent="Tuyệt kỹ • Đèn xoay cực đại";playLucAnhUltimateVoice();',
-  'dom.phaseLabel.textContent="Tuyệt kỹ • Đèn xoay cực đại";playLucAnhUltimateVoice();playActionSound(actor,"ultimate");',
-  'Lục Ảnh ultimate SFX dispatch'
-);
-
+/* Lục Ảnh's dedicated voice path should also dispatch the shared ultimate SFX. */
+if (!html.includes('playActionSound(actor,"ultimate");')) {
+  replaceOnce(
+    'dom.phaseLabel.textContent="Tuyệt kỹ • Đèn xoay cực đại";playLucAnhUltimateVoice();',
+    'dom.phaseLabel.textContent="Tuyệt kỹ • Đèn xoay cực đại";playLucAnhUltimateVoice();playActionSound(actor,"ultimate");',
+    'Lục Ảnh ultimate SFX dispatch'
+  );
+}
 /* The supplied buffer SFX own campaign audio. Silence any legacy oscillator beep in
    the simple embedded battle so one event cannot produce a crackling double-hit. */
 replaceOnce(
