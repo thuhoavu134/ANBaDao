@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import {
   OPENING_LOOP_CONTRACT_SCHEMA,
   OPENING_LOOP_STATUSES,
@@ -241,4 +242,23 @@ test('skip and route validators are explicit and recoverable', () => {
   assert.equal(skipped.ok, true);
   assert.equal(skipped.state.status, OPENING_LOOP_STATUSES.SKIPPED);
   assert.equal(getOpeningLoopView(skipped.state, definition).canResume, false);
+});
+
+test('R10 build wires runtime instrumentation without touching seed or economy values', () => {
+  const patch = readFileSync(new URL('../scripts/opening-loop-v1.mjs', import.meta.url), 'utf8');
+  const build = readFileSync(new URL('../scripts/build-static.mjs', import.meta.url), 'utf8');
+  assert.match(build, /await import\('\.\/settlement-navigation-v1\.mjs'\);/);
+  assert.match(build, /await import\('\.\/opening-loop-v1\.mjs'\);/);
+  assert.ok(build.indexOf("await import('./opening-loop-v1.mjs');") >
+    build.indexOf("await import('./settlement-navigation-v1.mjs');"));
+  assert.match(patch, /samkok-r10-opening-loop/);
+  assert.match(patch, /HonVietOpeningLoopCore/);
+  assert.match(patch, /TRANSACTION_NOT_COMMITTED/);
+  assert.match(patch, /opening\.formation/);
+  assert.match(patch, /data-hv-opening-go/);
+  assert.ok(!patch.includes('P.gold+='));
+  assert.ok(!patch.includes('P.gold +='));
+  assert.ok(!patch.includes('P.gems-='));
+  assert.ok(!patch.includes('P.gems -='));
+  new Function(patch.replace(/^import[^\n]*\n/gm, ''));
 });
