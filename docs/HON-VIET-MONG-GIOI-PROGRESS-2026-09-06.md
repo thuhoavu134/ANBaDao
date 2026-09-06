@@ -1,5 +1,15 @@
 # Hồn Việt: Mộng Giới — Progress Snapshot — 06/09/2026
 
+## Thiết kế mới đã chốt — AFK / 07-09-2026
+
+- Đính chính video: chạy/đánh quái là diễn hoạt AFK, chưa vào battle thật. Nút Khiêu chiến riêng mở trận 6v6.
+- Rương tích lũy thưởng theo thời gian online/offline, tối đa 15 giờ; đầy ngừng cộng. Phải nhận thưởng, không chỉ đăng nhập, mới có chỗ tích lũy tiếp; không cộng bù thời gian vượt trần.
+- Claim phải atomic/idempotent, lỗi lưu giữ nguyên rương; animation không sinh reward hoặc tăng tiến độ ải.
+- Master plan đã thay toàn bộ diễn giải encounter cũ và cập nhật E13-03, AFK-01…05, asset/UI và QA.
+- Trạng thái: **chốt yêu cầu, chưa triển khai runtime**. Nhận sớm trước đầy là đề xuất; rate/loot/unlock cần chốt cấu hình.
+- Đọc [master plan](HON-VIET-MASTER-PLAN-SAMKOK-v2-2026-09-06.md), mục Chốt cơ chế AFK từ video.
+- Các mốc source/QA ở phần bên dưới là lịch sử trước bổ sung này, không phải QA AFK.
+
 ## Mốc hiện tại
 
 Game đang ở nhánh triển khai Samkok v2 trên build production mới nhất. Mục tiêu trước mắt là hoàn thiện một vòng chơi 6v6 thật mượt trên mobile, sau đó mở rộng roster và các hệ thống.
