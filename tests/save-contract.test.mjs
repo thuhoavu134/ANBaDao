@@ -48,7 +48,9 @@ test('versioned fixture increments revision and stamps save time', () => {
 });
 
 test('parser rejects corrupt JSON and future schemas without falling back silently', () => {
-  const corrupt = parseSavePayload('{"v":1');
+  const corrupt = parseSavePayload(readFileSync(
+    new URL('./fixtures/save/corrupt-json.txt', import.meta.url), 'utf8'
+  ));
   assert.equal(corrupt.ok, false);
   assert.equal(corrupt.code, 'CORRUPT_JSON');
 
