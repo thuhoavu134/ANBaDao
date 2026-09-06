@@ -122,6 +122,39 @@ test('integrated victory result paints authored Ông Phở MVP art', () => {
   assert.match(builtBattle, /paintAuthoredMvpPortrait/);
 });
 
+test('other MVP heroes reuse the loaded battle portrait renderer', () => {
+  const battle = read('dist/battle.html');
+  const start = battle.indexOf(' function paintHero(canvas,m){');
+  const end = battle.indexOf(' function nav(target){', start);
+  assert.ok(start >= 0 && end > start);
+  const canvas = {}, mvp = { id: 'archer', name: 'Nữ Cung Thủ Tre', slot: 2, damage: 1552, alive: true };
+  let rendered;
+  const window = {};
+  const engine = vm.createContext({
+    window, HEROES: [{ id: 'archer', sourceId: 'cung_thu_tre', archetype: 'ranged', accent: '#d7aa57' }],
+    drawReportPortrait: (target, entry) => { rendered = { target, entry }; },
+    TEAM_PLAYER: 'player'
+  });
+  const bridgeStart = battle.indexOf('  window.__HV_DRAW_MVP_PORTRAIT=');
+  const bridgeEnd = battle.indexOf("  resultPortraitRecord('ong_hang_pho',()=>{});", bridgeStart);
+  assert.ok(bridgeStart >= 0 && bridgeEnd > bridgeStart);
+  vm.runInContext(battle.slice(bridgeStart, bridgeEnd), engine);
+  // The result UI must not depend on engine lexical globals.
+  const context = vm.createContext({ window, canvas, mvp, paintAuthoredMvpPortrait: () => false });
+  vm.runInContext(battle.slice(start, end) + '\npaintHero(canvas,mvp);', context);
+  assert.equal(rendered.target, canvas);
+  assert.equal(rendered.entry.unit.archetype, 'ranged');
+  assert.equal(rendered.entry.unit.sourceId, 'cung_thu_tre');
+  assert.equal(rendered.entry.unit.slot, 2);
+  assert.equal(rendered.entry.unit.name, mvp.name);
+  assert.equal(rendered.entry.rec.damage, 1552);
+  const sourcesStart = battle.indexOf('  const RESULT_PORTRAIT_SOURCES=');
+  const sourcesEnd = battle.indexOf('  const RESULT_PORTRAIT_CACHE=', sourcesStart);
+  const sources = vm.runInNewContext(battle.slice(sourcesStart, sourcesEnd) + '\nRESULT_PORTRAIT_SOURCES');
+  assert.equal(sources.cung_thu_tre, 'assets/heroes-concept/crops/ranger-00.png');
+  for (const source of Object.values(sources)) assert.ok(readFileSync(new URL('../' + source, import.meta.url)).length > 0);
+});
+
 test('roster portal has one grid scroll owner and explicit visibility on route changes', () => {
   const ui = read('src/ui/hero-roster-runtime.js'), css = read('scripts/hero-roster-phase-a-v4.mjs');
   assert.match(ui, /document\.body\.append\(root\)/);

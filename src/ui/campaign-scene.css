@@ -1,0 +1,118 @@
+body.hv-campaign-active{overflow:hidden!important;background:#182b2c!important;filter:none!important;height:100dvh!important}
+body.hv-campaign-active>.wrap{visibility:hidden!important}
+body.hv-campaign-active #toast{z-index:100001}
+#hvCampaignScene{--cs-ink:#263e38;--cs-muted:#69766b;--cs-gold:#c18a39;box-sizing:border-box;position:fixed;inset:0;z-index:100000;margin:auto;width:min(100vw,620px);height:100dvh;color:var(--cs-ink);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:#f4eddb;box-shadow:0 0 100px #081714aa;isolation:isolate}
+#hvCampaignScene *,#hvCampaignScene *:before,#hvCampaignScene *:after{box-sizing:border-box}
+#hvCampaignScene [hidden],#hvCampaignScene[hidden]{display:none!important}
+#hvCampaignScene button{font:inherit;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+#hvCampaignScene button:focus-visible{outline:3px solid #1b766d;outline-offset:3px}
+#hvCampaignScene button:disabled{opacity:.48;cursor:default;filter:saturate(.3)}
+#hvCampaignScene img{object-fit:contain}
+#hvCampaignScene h1,#hvCampaignScene h2,#hvCampaignScene h3,#hvCampaignScene p{margin:0}
+#hvCampaignScene .cs-home{height:100%;display:grid;grid-template-rows:auto minmax(0,1fr) auto}
+#hvCampaignScene .cs-header{display:grid;grid-template-columns:48px minmax(0,1fr) auto;align-items:center;gap:9px;padding:10px 14px;padding-top:max(10px,env(safe-area-inset-top));background:linear-gradient(110deg,#f4e9cc,#e3ece1);border-bottom:1px solid #b9c5ad;position:relative;z-index:2}
+#hvCampaignScene .cs-avatar{width:48px;height:54px;border:1px solid #b58b48;border-radius:12px;background:#dfc48c}
+#hvCampaignScene .cs-eyebrow{display:block;color:#8a6736;font-size:9px;letter-spacing:.13em;font-weight:800;line-height:1.5}
+#hvCampaignScene .cs-leader{display:block;font-size:15px;margin:3px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#hvCampaignScene .cs-header small{font-size:10px;color:#65715e}
+#hvCampaignScene .cs-header strong{color:#986426;font-size:12px}
+#hvCampaignScene .cs-wallet{display:grid;gap:3px;min-width:71px}
+#hvCampaignScene .cs-wallet span{display:flex;align-items:center;gap:5px;font-size:10px;background:#64766112;padding:1px 6px;border-radius:5px}
+#hvCampaignScene .cs-wallet img{width:17px;height:17px}
+#hvCampaignScene .cs-scroll{overflow:auto;min-height:0;overscroll-behavior:contain;scrollbar-width:thin}
+#hvCampaignScene .cs-landscape{position:relative;height:clamp(255px,36dvh,370px);background:linear-gradient(0deg,#eee5cc 0%,transparent 12%,transparent 80%,#e4ece266 100%),url('assets/ui/campaign-v1/mong-lo-background-v1.webp') center 58%/cover;overflow:hidden}
+#hvCampaignScene .cs-route{position:relative;z-index:1;text-align:center;padding:16px 15px 0;text-shadow:0 1px 6px #fff7dc}
+#hvCampaignScene .cs-route h1{font:700 clamp(19px,4.5vw,25px)/1.2 Georgia,"Times New Roman",serif;margin:4px 0 13px;color:#284e40}
+#hvCampaignScene .cs-milestones{display:flex;justify-content:center;gap:0;margin:0 auto;padding:0;list-style:none;max-width:360px}
+#hvCampaignScene .cs-milestones li{flex:1;position:relative;display:grid;justify-items:center;gap:4px;color:#526753;font-size:10px}
+#hvCampaignScene .cs-milestones li:before{content:"";position:absolute;left:-50%;right:50%;top:13px;height:1px;background:#76866477}
+#hvCampaignScene .cs-milestones li:first-child:before{display:none}
+#hvCampaignScene .cs-milestones span{display:grid;place-items:center;width:27px;height:27px;border-radius:50%;background:#e7e9d8;border:1px solid #91a487;position:relative;z-index:1;font-size:11px;font-weight:800}
+#hvCampaignScene .cs-milestones small{font-size:9px;font-weight:600}
+#hvCampaignScene .cs-milestones [aria-current] span{background:#e9c572;border-color:#a2722c;color:#613f1c;box-shadow:0 0 0 3px #f5e1a385}
+#hvCampaignScene .cs-milestones .is-complete span{background:#416f58;color:#fff8df;border-color:#416f58}
+#hvCampaignScene .cs-canvas{position:absolute;inset:40px 0 18px;width:100%;height:calc(100% - 58px);pointer-events:none}
+#hvCampaignScene .cs-field-caption{position:absolute;bottom:12px;left:17px;right:17px;display:flex;align-items:center;gap:5px;font-size:10px;font-weight:600;color:#334f3d;text-shadow:0 1px 3px #fff9df,0 0 7px #fff9df}
+#hvCampaignScene .cs-live-dot{width:6px;height:6px;display:block;border-radius:50%;background:#4c8761;box-shadow:0 0 0 3px #5f8a5220}
+#hvCampaignScene .cs-field-caption button{margin-left:auto;padding:7px 10px;border-radius:6px;border:1px solid #9fa681;background:#f8f1dcdd;color:#435c46;font-size:10px}
+#hvCampaignScene .cs-content{padding:0 15px 8px;background:linear-gradient(#eee5cc,#f5efdf)}
+#hvCampaignScene .cs-chest{padding:14px;border:1px solid #c3b28a;border-radius:13px;background:linear-gradient(135deg,#fff9e9,#eee4ca);box-shadow:0 5px 16px #5e5a3520;position:relative}
+#hvCampaignScene .cs-chest-heading{display:grid;grid-template-columns:47px minmax(0,1fr) auto;gap:10px;align-items:center}
+#hvCampaignScene .cs-chest-heading>img{width:47px;height:48px}
+#hvCampaignScene .cs-chest h2{font:700 18px Georgia,"Times New Roman",serif;margin:2px 0 4px}
+#hvCampaignScene .cs-chest-heading p{font-size:10px;color:var(--cs-muted)}
+#hvCampaignScene .cs-cap{display:grid;gap:2px;justify-items:center;padding:7px 9px;color:#825e28;border-left:1px solid #ccb78e;font-size:13px;font-weight:700;white-space:nowrap}
+#hvCampaignScene .cs-cap small{font-size:9px;font-weight:400}
+#hvCampaignScene .cs-time{display:flex;justify-content:space-between;align-items:baseline;margin-top:12px;font-size:10px;color:#8b866e}
+#hvCampaignScene .cs-time time{font-variant-numeric:tabular-nums;font-size:15px;font-weight:700;letter-spacing:.08em;color:#50684d}
+#hvCampaignScene progress{display:block;width:100%;height:6px;border:0;border-radius:9px;overflow:hidden;margin:5px 0 13px;background:#dcd9bf;accent-color:#62865c}
+#hvCampaignScene progress::-webkit-progress-bar{background:#dcd9bf;border-radius:9px}
+#hvCampaignScene progress::-webkit-progress-value{background:linear-gradient(90deg,#6c9469,#c6a55a);border-radius:9px}
+#hvCampaignScene .cs-rewards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+#hvCampaignScene .cs-rewards>div{display:grid;grid-template-columns:26px 1fr;gap:1px 5px;align-items:center;padding:7px 8px;border-radius:8px;border:1px solid #cabf984d;background:#fff9e980}
+#hvCampaignScene .cs-rewards img{width:26px;height:30px;grid-row:1/3}
+#hvCampaignScene .cs-rewards b{font-size:13px;font-variant-numeric:tabular-nums;color:#8c642e}
+#hvCampaignScene .cs-rewards small{font-size:9px;color:#797d66;white-space:nowrap}
+#hvCampaignScene .cs-primary,#hvCampaignScene .cs-secondary{min-height:44px;border-radius:9px;font-size:13px;font-weight:800;padding:10px 16px;transition:filter .15s,transform .15s}
+#hvCampaignScene .cs-primary{border:1px solid #92652b;background:linear-gradient(#eccc7e,#c69b4b);color:#3e321c;box-shadow:inset 0 1px #fff0b9,0 4px 9px #5d4b2229}
+#hvCampaignScene .cs-primary:active,#hvCampaignScene .cs-secondary:active{transform:translateY(1px)}
+#hvCampaignScene .cs-secondary{border:1px solid #819275;background:linear-gradient(#f4f4df,#dce4cd);color:#436340}
+#hvCampaignScene .cs-claim{display:block;width:100%;margin-top:12px}
+#hvCampaignScene[data-chest-state="full"] .cs-claim{background:#e6c875;border-color:#ab833d;color:#624519}
+#hvCampaignScene .cs-next{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:15px}
+#hvCampaignScene .cs-next b{display:block;font-size:11px;line-height:1.5;margin-top:3px;max-width:185px}
+#hvCampaignScene .cs-next button{flex:none;min-width:137px}
+#hvCampaignScene .cs-next button span{padding-left:9px}
+#hvCampaignScene .cs-footnote{font-size:9px;color:#7f806c;line-height:1.5;margin-top:13px!important;text-align:center}
+#hvCampaignScene .cs-dock{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1px;padding:5px 4px max(6px,env(safe-area-inset-bottom));background:linear-gradient(#f6edd6,#dfd7be);border-top:1px solid #b7ac8f;box-shadow:0 -4px 14px #4d543316}
+#hvCampaignScene .cs-dock button{display:flex;flex-direction:column;gap:2px;align-items:center;justify-content:center;min-height:59px;border:0;background:transparent;font-size:10px;font-weight:700;color:#6d725d;border-radius:8px;white-space:nowrap}
+#hvCampaignScene .cs-dock img{width:37px;height:36px}
+#hvCampaignScene .cs-dock [aria-current]{color:#835726;background:linear-gradient(#e7cc8480,#d1bd8166);box-shadow:inset 0 2px #b38a43}
+#hvCampaignScene .cs-prepare{height:100%;display:grid;grid-template-rows:auto minmax(0,1fr) auto;background:linear-gradient(#e6ecd9,#f6efdc)}
+#hvCampaignScene .cs-prep-header{display:flex;align-items:center;gap:12px;padding:14px;padding-top:max(14px,env(safe-area-inset-top));border-bottom:1px solid #bdc7ac;background:#f3ecda}
+#hvCampaignScene .cs-prep-header h2{font:700 21px Georgia,"Times New Roman",serif;margin-top:3px}
+#hvCampaignScene .cs-back{width:44px;height:44px;border:1px solid #b1b799;border-radius:10px;background:#fff8e8;color:#496345;font-size:32px;line-height:1}
+#hvCampaignScene .cs-team-count{margin-left:auto;white-space:nowrap;font-size:12px;font-weight:700;color:#688060}
+#hvCampaignScene .cs-prep-scroll{min-height:0;overflow:auto;overscroll-behavior:contain;padding:14px}
+#hvCampaignScene .cs-opponent{padding:16px;border-radius:12px;background:linear-gradient(90deg,#eef0deef,#e4e5cdcc),url('assets/ui/campaign-v1/mong-lo-background-v1.webp') center/cover;border:1px solid #b5bea1}
+#hvCampaignScene .cs-opponent h3{font:700 20px Georgia,"Times New Roman",serif;margin:3px 0 8px}
+#hvCampaignScene .cs-opponent p{font-size:11px;line-height:1.5;color:#52604d;margin-bottom:10px}
+#hvCampaignScene .cs-opponent small{font-size:10px;color:#7c7c61;line-height:1.4}
+#hvCampaignScene .cs-section-title{display:flex;justify-content:space-between;align-items:baseline;gap:6px;margin:18px 0 8px}
+#hvCampaignScene .cs-section-title h3{font-size:13px}
+#hvCampaignScene .cs-section-title span{font-size:10px;color:#79826c}
+#hvCampaignScene .cs-section-title b{font-size:13px;color:#9a6c29}
+#hvCampaignScene .cs-instruction{font-size:10px;line-height:1.5;color:#7a826b;margin-bottom:10px}
+#hvCampaignScene .cs-slots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+#hvCampaignScene .cs-slot{border:1px solid #b5c3a7;border-radius:10px;overflow:hidden;background:#f7f5e2;min-width:0}
+#hvCampaignScene .cs-slot.is-selected{border-color:#a6782e;box-shadow:0 0 0 2px #c6a35c}
+#hvCampaignScene .cs-slot-pick{position:relative;display:flex;flex-direction:column;align-items:center;width:100%;padding:4px 3px 6px;border:0;color:#41543c;background:linear-gradient(#e2e9cf,#fbf4df)}
+#hvCampaignScene .cs-slot-pick img{width:100%;height:90px}
+#hvCampaignScene .cs-slot-number{position:absolute;top:5px;left:6px;display:grid;place-items:center;border:1px solid #b8ae7a;border-radius:50%;width:19px;height:19px;font-size:10px;color:#7c6a3d;background:#fff5d5}
+#hvCampaignScene .cs-slot-pick b{font-size:10px;line-height:1.3;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#hvCampaignScene .cs-slot-pick small{font-size:9px;margin-top:3px;color:#838568}
+#hvCampaignScene .cs-row{display:block;width:100%;min-height:32px;font-size:10px;font-weight:600;border:0;border-top:1px solid #c3c5a3;color:#587048;background:#e3e9d0}
+#hvCampaignScene .cs-bench{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+#hvCampaignScene .cs-bench-hero{min-width:0;padding:4px;border:1px solid #bcc3a5;border-radius:8px;background:#fcf7e6;color:#58614b}
+#hvCampaignScene .cs-bench-hero.is-deployed{background:#e5ebd7}
+#hvCampaignScene .cs-bench-hero img{width:100%;height:75px;display:block}
+#hvCampaignScene .cs-bench-hero b{display:block;font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#hvCampaignScene .cs-bench-hero small{font-size:8px;color:#859070;line-height:1.6}
+#hvCampaignScene .cs-prep-footer{padding:12px 15px max(12px,env(safe-area-inset-bottom));border-top:1px solid #c0c7a9;background:#f7efdd;text-align:center;box-shadow:0 -4px 12px #66704b12}
+#hvCampaignScene .cs-prep-footer p{font-size:11px;color:#6b7b55;margin-bottom:9px}
+#hvCampaignScene .cs-prep-footer .cs-primary{width:100%;font-size:14px}
+#hvCampaignScene .cs-prep-footer small{display:block;font-size:9px;color:#8f8e76;margin-top:8px}
+#hvCampaignScene .cs-receipt{width:min(350px,calc(100% - 32px));padding:24px 16px 16px;border:1px solid #ba9b5e;border-radius:17px;color:#3c563f;background:linear-gradient(150deg,#fff8e2,#e8ecd6);box-shadow:0 20px 70px #0e231c66;text-align:center}
+#hvCampaignScene .cs-receipt::backdrop{background:#162a24aa;backdrop-filter:blur(3px)}
+#hvCampaignScene .cs-receipt h2{font:700 26px Georgia,"Times New Roman",serif;margin:8px 0 12px}
+#hvCampaignScene .cs-receipt p{font-size:12px;line-height:1.6;color:#78846a;margin-bottom:18px}
+#hvCampaignScene .cs-receipt .cs-primary{width:100%;margin-top:20px}
+@media(max-width:360px){#hvCampaignScene .cs-header{padding-inline:10px;gap:6px}#hvCampaignScene .cs-header .cs-eyebrow{font-size:8px}#hvCampaignScene .cs-content{padding-inline:10px}#hvCampaignScene .cs-chest{padding:11px}#hvCampaignScene .cs-chest-heading{gap:6px;grid-template-columns:38px minmax(0,1fr) auto}#hvCampaignScene .cs-chest-heading>img{width:38px}#hvCampaignScene .cs-rewards>div{padding:6px 4px;gap:2px}#hvCampaignScene .cs-next button{min-width:128px}#hvCampaignScene .cs-next b{font-size:10px}#hvCampaignScene .cs-dock button{font-size:9px}}
+@media(min-width:520px){#hvCampaignScene .cs-landscape{height:clamp(290px,39dvh,385px)}#hvCampaignScene .cs-content{padding-inline:25px}#hvCampaignScene .cs-chest{padding:18px}#hvCampaignScene .cs-chest h2{font-size:21px}#hvCampaignScene .cs-slot-pick img{height:118px}#hvCampaignScene .cs-bench{grid-template-columns:repeat(6,minmax(0,1fr))}}
+@media(prefers-reduced-motion:reduce){#hvCampaignScene button{transition:none}}
+
+/* Authored bitmap surfaces: generated specifically for Hồn Việt, live text stays semantic. */
+#hvCampaignScene .cs-chest{background:transparent url('assets/ui/campaign-v1/jade-paper-panel-v1.webp') center/100% 100% no-repeat;border:0;border-radius:0;padding:21px 20px 20px;box-shadow:none}
+#hvCampaignScene .cs-primary{border:0;border-radius:0;box-shadow:none;background:transparent url('assets/ui/campaign-v1/bronze-button-v1.webp') center/100% 180% no-repeat;color:#5c3b13;text-shadow:0 1px #ffeb99;min-height:48px}
+#hvCampaignScene .cs-opponent{background:transparent url('assets/ui/campaign-v1/jade-paper-panel-v1.webp') center/100% 100% no-repeat;border:0;border-radius:0;padding:20px}
+#hvCampaignScene .cs-receipt{background:transparent url('assets/ui/campaign-v1/jade-paper-panel-v1.webp') center/100% 100% no-repeat;border:0;border-radius:0;padding:28px 23px 24px}

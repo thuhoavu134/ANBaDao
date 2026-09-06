@@ -29,7 +29,15 @@ if (!battle.includes(marker)) {
   const portraitEnd = battle.indexOf('  function reportTeamSnapshotFromResult', portraitStart);
   if (portraitStart < 0 || portraitEnd < 0) throw new Error('Result portrait function boundary not found');
   const portrait = `// v3.26.1 — ${marker} — cache authored portrait art before result reveal.
-  const RESULT_PORTRAIT_SOURCES=Object.freeze({ong_hang_pho:'assets/characters/ong-pho/card.png','ong-pho-gif-test':'assets/characters/ong-pho/card.png'});
+  const RESULT_PORTRAIT_SOURCES=Object.freeze({
+    ong_hang_pho:'assets/characters/ong-pho/card.png','ong-pho-gif-test':'assets/characters/ong-pho/card.png',
+    luc_anh:'assets/characters/luc-anh/card.webp',thay_mo:'assets/characters/thay-mo/master-reference-v1.png',
+    lac_yen:'assets/heroes-concept/crops/ranger-00.png',cung_thu_tre:'assets/heroes-concept/crops/ranger-00.png',
+    co_dao_ganh_hoi:'assets/heroes-concept/crops/duelist-00.png',phong_tu:'assets/heroes-concept/crops/duelist-00.png',
+    thuy_nuong_roi_nuoc:'assets/heroes-concept/crops/mystic-00.png',hong_lien_dao_nuong:'assets/heroes-concept/crops/striker-00.png',
+    thach_quyen:'assets/heroes-concept/crops/striker-00.png',dinh_loi:'assets/heroes-concept/crops/guardian-00.png',
+    to_diep:'assets/heroes-concept/crops/duelist-00.png'
+  });
   const RESULT_PORTRAIT_CACHE=new Map();
   function resultPortraitKey(entry){
     const unit=entry?.unit||{}; const hero=entry?.hero||{};
@@ -66,6 +74,14 @@ if (!battle.includes(marker)) {
       context.fillStyle=unit.accent||'#d7aa57';context.font='700 42px Georgia';context.textAlign='center';context.textBaseline='middle';context.fillText(String(unit.name||'?').charAt(0),width/2,height/2);
     }; paint();
   }
+  // Keep engine-scoped heroes, atlases and team constants behind one drawing bridge.
+  window.__HV_DRAW_MVP_PORTRAIT=(canvas,m)=>{
+    const hero=HEROES.find(h=>String(h.id)===String(m?.id)||String(h.sourceId||h.id)===String(m?.sourceId||m?.id))||{};
+    drawReportPortrait(canvas,{
+      unit:{id:m?.id,sourceId:hero.sourceId||m?.sourceId||m?.id,name:m?.name||hero.name,slot:Number(m?.slot)||0,team:TEAM_PLAYER,hp:Number(m?.hp)||1,maxHp:Number(m?.maxHp)||1,archetype:hero.archetype||'balanced',accent:hero.accent||'#d7aa57'},
+      hero,rec:{damage:Number(m?.damage)||0,kills:Number(m?.kills)||0},alive:Boolean(m?.alive)
+    });
+  };
   resultPortraitRecord('ong_hang_pho',()=>{});
 `;
   battle = battle.slice(0, portraitStart) + portrait + battle.slice(portraitEnd);
@@ -115,9 +131,7 @@ if (!battle.includes(marker)) {
   const id=String(m?.sourceId||m?.id||'');
   if(id==='luc_anh'){drawLucAnhIdle(canvas);return;}
   if(paintAuthoredMvpPortrait(canvas,m))return;
-  const ctx=canvas.getContext('2d');if(!ctx)return;
-  const bg=ctx.createLinearGradient(0,0,0,canvas.height);bg.addColorStop(0,'#1d4b43');bg.addColorStop(1,'#110d0a');ctx.fillStyle=bg;ctx.fillRect(0,0,canvas.width,canvas.height);
-  ctx.fillStyle='#f5df9a';ctx.font='900 28px system-ui,sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(String(m?.name||'Chiến tướng').slice(0,2),canvas.width/2,canvas.height/2);
+  window.__HV_DRAW_MVP_PORTRAIT(canvas,m);
  }
 `;
   battle=battle.slice(0,integratedStart)+integratedPainter+battle.slice(integratedEnd);

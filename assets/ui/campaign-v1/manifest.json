@@ -1,0 +1,30 @@
+{
+  "bronze-button-v1.webp": {
+    "width": 768,
+    "height": 256,
+    "mode": "RGBA",
+    "sha256": "1c15165bb569f71d2bb06a2899ec74c74cd69b383a693780c11706bc952e93a8",
+    "bytes": 28320
+  },
+  "afk-chest-v1.webp": {
+    "width": 256,
+    "height": 256,
+    "mode": "RGBA",
+    "sha256": "40fd3035f341a213b930872a7e39e500f1c0ed8dfff717e50c3adbb1d9a0ece8",
+    "bytes": 35036
+  },
+  "jade-paper-panel-v1.webp": {
+    "width": 1024,
+    "height": 768,
+    "mode": "RGBA",
+    "sha256": "4f84cf31d360f6f6dda80b1258360c866e39f1050c1ad07183e4e96cafc3a2b6",
+    "bytes": 155804
+  },
+  "mong-lo-background-v1.webp": {
+    "width": 1536,
+    "height": 1024,
+    "mode": "RGB",
+    "sha256": "89e449a836dcaeb5220485c866b331f8d624b56cf94cf2b8a86b636023517fc4",
+    "bytes": 562446
+  }
+}
