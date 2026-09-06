@@ -1,8 +1,11 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { EQUIPMENT_ASSET_REGISTRY } from '../src/domain/equipment/item-assets.mjs';
 
 const indexPath = join(process.cwd(), 'dist', 'index.html');
 let index = readFileSync(indexPath, 'utf8');
+const QA_EQUIPMENT_CATALOG = Object.values(EQUIPMENT_ASSET_REGISTRY).flatMap(slot => Object.values(slot).map(item => ({ slot: item.slot, rar: item.rarity })));
+if (QA_EQUIPMENT_CATALOG.length !== 20) throw new Error('QA equipment catalog expected 20 entries');
 
 if (index.includes('id="hv-qa-full-access-v1"')) {
   throw new Error('QA full access runtime already installed');
@@ -43,7 +46,20 @@ const runtime = String.raw`<style id="hv-qa-full-access-v1-style">
   };
 
   const savedProgress=snapshot(P);
+  const savedState=clone(P);
+  const restoreState=(profile,state)=>{
+    const nextState=clone(state)||{};
+    Object.keys(profile).forEach(key=>{
+      if(!Object.prototype.hasOwnProperty.call(nextState,key))delete profile[key];
+    });
+    Object.assign(profile,nextState);
+  };
   const allChapters=Array.isArray(DATA.chapters)?DATA.chapters.map((_,index)=>index):[];
+  const qaMolds=['strike','ward','tempo'];
+  const qaInventory=QA_EQUIPMENT_CATALOG.map((entry,index)=>({uid:index+1,slot:entry.slot,rar:entry.rar,lvl:0,mold:qaMolds[index%qaMolds.length],locked:false}));
+  P.inventory=qaInventory.map(item=>({...item}));
+  P.itemSeq=qaInventory.length;
+  P.equip={};
   P.unlockedChapters=allChapters;
   document.documentElement.dataset.hvQaFullAccess="1";
 
@@ -51,20 +67,21 @@ const runtime = String.raw`<style id="hv-qa-full-access-v1-style">
     featLocked=()=>false;
   }
 
-  // QA actions may spend test-session resources and update the in-memory UI,
-  // but chapter/quest progress is restored before every actual save write.
+  // QA actions are fully sandboxed: chapter/quest, roster/equipment, forge
+  // inventory, currencies and every other player field return to the saved
+  // state for the real write, then the test-session state is restored.
   if(typeof persist==='function'){
     const basePersist=persist;
     let writing=false;
     persist=function qaSafePersist(){
       if(writing)return basePersist();
-      const runtimeProgress=snapshot(P);
+      const runtimeState=clone(P);
       writing=true;
       try{
-        restore(P,savedProgress);
+        restoreState(P,savedState);
         return basePersist();
       }finally{
-        restore(P,runtimeProgress);
+        restoreState(P,runtimeState);
         writing=false;
       }
     };
@@ -73,7 +90,7 @@ const runtime = String.raw`<style id="hv-qa-full-access-v1-style">
   const qaBanner=document.createElement('aside');
   qaBanner.id='hvQaFullAccess';
   qaBanner.setAttribute('role','status');
-  qaBanner.innerHTML='<span>🧪 QA</span><small>Đã mở toàn bộ chức năng · không lưu tiến độ chương</small><button type="button" aria-label="Thoát chế độ QA">Thoát</button>';
+  qaBanner.innerHTML='<span>🧪 QA</span><small>Đã mở chức năng + 20 item · sandbox không lưu</small><button type="button" aria-label="Thoát chế độ QA">Thoát</button>';
   qaBanner.querySelector('button').addEventListener('click',()=>{
     const clean=new URL(window.location.href);
     clean.searchParams.delete('qa');
@@ -102,7 +119,7 @@ const runtime = String.raw`<style id="hv-qa-full-access-v1-style">
       return '<button class="btn ghost sm" type="button" data-qa-start-chapter="'+index+'"><b>⚔ Chương '+(index+1)+'</b><small>'+String(chapter.name||'Mộng Giới')+' · '+sequence.length+' ải</small></button>';
     }).join('');
     const modeButtons=featureLinks.map(([id,label])=>'<button class="btn ghost sm" type="button" data-qa-nav="'+id+'">'+label+'</button>').join('');
-    panel.innerHTML='<h3>🧪 Bảng kiểm QA · mở toàn quyền</h3><div class="qa-full-access-note">Chế độ này chỉ có khi URL chứa <b>?qa=unlock-all</b>. Có thể vào thẳng từng chương và màn chức năng; tiến độ chương/nhiệm vụ sẽ không ghi vào bản lưu thật.</div><div class="qa-full-access-grid">'+chapterButtons+modeButtons+'</div>';
+    panel.innerHTML='<h3>🧪 Bảng kiểm QA · mở toàn quyền</h3><div class="qa-full-access-note">Chế độ này chỉ có khi URL chứa <b>?qa=unlock-all</b>. Kho QA đã seed đủ 20 item (4 loại × 5 phẩm chất); tiến độ, vật phẩm và tài nguyên test không ghi vào bản lưu thật.</div><div class="qa-full-access-grid">'+chapterButtons+modeButtons+'</div>';
     list.appendChild(panel);
     panel.querySelectorAll('[data-qa-start-chapter]').forEach(button=>button.addEventListener('click',()=>{
       const index=Number(button.dataset.qaStartChapter);
@@ -122,6 +139,7 @@ const runtime = String.raw`<style id="hv-qa-full-access-v1-style">
     fullAccess:true,
     chapters:allChapters.slice(),
     savedProgress:clone(savedProgress),
+    equipmentCatalog:qaInventory.map(item=>({...item})),
     exit:()=>{
       const clean=new URL(window.location.href);
       clean.searchParams.delete('qa');
