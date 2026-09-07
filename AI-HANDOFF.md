@@ -24,7 +24,7 @@ Current completed slices are documented in `docs/SAMKOK-LOADOUT-TRANSACTIONS-202
 
 - Code baseline: `c8fefca0e31b6ddb926921454413d38860171665`; 171/171 tests passed. Vercel production alias was verified READY at that SHA. Post-hotfix browser interaction and real Safari/audio checks remain pending; deployment is not a device test.
 - PR #16 campaign/AFK/preparation and MVP portraits was merged at `92b503c`. The subsequent audio hotfix cancels shared parent SFX, ultimate voice, result audio and stale child callbacks before iframe teardown.
-- The new Hermes handoff source audit is complete at the stated static-inspection scope: 7 archive parts, valid CRC, 1,748 modules, 169 decoded configs, Cocos client bundles and protocol schemas. No complete editable Cocos project or backend implementation was found. Do not import the reference runtime/assets into the game build.
+- The new Hermes handoff source audit is complete at the stated static-inspection scope: 7 archive parts, valid CRC, 1,748 modules, 169 decoded configs, Cocos client bundles and protocol schemas. No complete editable Cocos project or backend implementation was found. The user now authorizes selective code reuse. Follow `docs/HERMES-CODE-REUSE-GUIDE.md`; it maps 27 source methods and their dependencies to the user-supplied archive. The repo contains the authored guidance, not the original method bodies. Port suitable functions and adapt controllers to existing Lục Thần owners, with behavior tests and explicit differences. Keep the current engine, identity, save ownership and approved art; do not load the complete Cocos bundle. All mapped methods remain NOT_PORTED; the attempted upload of verbatim source was blocked by automatic approval review, so the final update publishes authored documentation only.
 - The current execution queue is L01–L20 in `docs/LUNA-EXECUTION-PLAN-2026-09-07.md`, mapped back to E/R/M. **Next code slice: L02a, catalog inventory/validator without changing rewards or seed.** L01 is device verification of existing fixes. L03a transaction/event audit and L04a/L05a route/combat fixtures can proceed independently of banner policy.
 - Ông Phở and Lục Ảnh are the two registered v2 kits. Keep 12 existing heroes and all old save ownership; capacity 72 is a future content target.
 - Current gaps include legacy chapter rewards outside the official playable roster, seed/migration granting all 12, incomplete full-flow quest/transaction evidence and unseeded gameplay RNG. Client network hooks are not a deployed authoritative backend.
@@ -35,7 +35,7 @@ Current completed slices are documented in `docs/SAMKOK-LOADOUT-TRANSACTIONS-202
 1. `AGENTS.md`, then the current section of `docs/LUNA-HANDOFF.md`.
 2. `docs/HON-VIET-MONG-GIOI-PROGRESS-2026-09-06.md` — current snapshot; filename kept for link compatibility.
 3. `docs/LUNA-EXECUTION-PLAN-2026-09-07.md` — select one ticket/subtask and its file owners.
-4. `docs/HERMES-SOURCE-AUDIT-2026-09-07.md` — source evidence and adaptation boundaries; the E/R/M master plan for the relevant product decisions.
+4. `docs/HERMES-CODE-REUSE-GUIDE.md` — authorized selective reuse, source-method map, archive access, pitfalls and port workflow; then `docs/HERMES-SOURCE-AUDIT-2026-09-07.md` for evidence and the relevant E/R/M product decisions.
 5. Relevant domain, build patches and tests; asset production standard and active manifests when editing art/motion.
 
 ---
@@ -123,7 +123,7 @@ Never hide missing assets or failed runtime checks.
 - `scripts/quest-system-3q-v1.mjs` injects the module into the static build; it must remain imported by `scripts/build-static.mjs`.
 - The main loop is one active quest per account: Hub/Daily mission card → compact `ĐẾN NGAY` CTA → one 6v6 auto encounter → result → compact reward → next ải/chapter. The Hub card stays above the dock and pointer-safe so it does not cover function buttons.
 - The module is intentionally Hồn Việt-only: it borrows the readable 3Q-style quest cadence and CTA hierarchy, not 3Q names, branding, or commercial assets.
-- The 3Q source archive (`3Q.rar`, 2.36 GB) is over the connected Drive download limit; do not claim direct source-code reuse unless a smaller extract is supplied.
+- Historical limitation: the separate `3Q.rar` archive (2.36 GB) exceeded the connected Drive download limit in that earlier task. It does not apply to the seven-part Hermes archive already received and inspected on 07/09; the new reuse guide identifies its relevant methods, while the original source remains in the user-supplied archive. Do not assume GitHub alone contains that source. Claim a completed port only with the destination code, tests and commit.
 ## Battle Background Set (20 authored arenas)
 
 - `assets/battle/backgrounds-v1/` contains the 20 `*_battle_stage.png` images from the Library pack `HON-VIET-MONG-GIOI-20-THEME-BACKGROUND-PAIRS.zip`; source artwork is 941×1672 and is kept lossless.

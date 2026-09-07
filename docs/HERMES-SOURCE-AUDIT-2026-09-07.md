@@ -1,6 +1,6 @@
 # Phân tích bộ source Hermes bàn giao và hướng áp dụng vào Lục Thần
 
-Cập nhật: **07/09/2026, giờ Việt Nam**. Lục Thần được đối chiếu ở commit `c8fefca0e31b6ddb926921454413d38860171665`. Đây là phân tích source và kế hoạch; không phải một đợt thay gameplay hoặc nghiệm thu toàn game.
+Cập nhật: **07/09/2026, giờ Việt Nam**. Lục Thần được đối chiếu ở commit `c8fefca0e31b6ddb926921454413d38860171665`. Đây là phân tích source và kế hoạch; không phải một đợt thay gameplay hoặc nghiệm thu toàn game. **Bổ sung theo yêu cầu tiếp theo của anh:** được tái sử dụng code mẫu có chọn lọc; đọc [guide port](HERMES-CODE-REUSE-GUIDE.md) và bản đồ 27 phương thức trong guide. Thân mã gốc nằm trong archive người dùng bàn giao, chưa đưa lên GitHub. Policy mới thay giới hạn cũ chỉ học kiến trúc/cấm source.
 
 Đọc tiếp: [kế hoạch thực thi cho Luna](LUNA-EXECUTION-PLAN-2026-09-07.md), [tiến độ hiện tại](HON-VIET-MONG-GIOI-PROGRESS-2026-09-06.md), [master plan E01–E26](HON-VIET-MASTER-PLAN-SAMKOK-v2-2026-09-06.md).
 
@@ -227,8 +227,8 @@ Giữ HTML shell + Canvas battle + build pipeline. Migrate từng boundary theo 
 6. Hoàn thiện 12 kit và UI tương ứng, daily/weekly, AFK tiến độ, tháp/boss/viễn chinh.
 7. Backend độc lập sau phạm vi/hạ tầng được chốt; từ đó mới có PvP, xã hội và mùa thật.
 
-[Execution plan](LUNA-EXECUTION-PLAN-2026-09-07.md) chia từng bước thành ticket nhỏ, chỉ rõ owner, file, input/output, ca lỗi, asset và điều kiện đóng. Không nhập source/asset Tam Quốc vào build Lục Thần. Điều cần giữ từ mẫu là nhịp vòng chơi và sự nhất quán giữa các hệ thống.
+[Execution plan](LUNA-EXECUTION-PLAN-2026-09-07.md) chia từng bước thành ticket nhỏ, chỉ rõ owner, file, input/output, ca lỗi, asset và điều kiện đóng. Được trích/port thuật toán phù hợp và chuyển đổi controller/view theo [guide tái sử dụng](HERMES-CODE-REUSE-GUIDE.md), nối vào owner Lục Thần cùng test hành vi. Không nạp nguyên Cocos bundle/ZIP đè game. Giữ nhịp vòng chơi, sự nhất quán giữa các hệ thống và bản sắc Lục Thần; dùng code không tự đổi asset/balance.
 
 ## 8. Kết quả của đợt phân tích này
 
-Hoàn tất kiểm integrity và bản đồ source; xác nhận các luồng lõi bằng code/protocol; đối chiếu source Lục Thần; bổ sung backlog thực thi và chỉnh trạng thái cũ. Chưa chạy lại game mẫu, chưa dựng backend, chưa mở rộng roster hoặc thay balance. Không dùng số lượng màn/module để tính phần trăm hoàn thành sản phẩm.
+Hoàn tất kiểm integrity và bản đồ source; xác nhận các luồng lõi bằng code/protocol; đối chiếu source Lục Thần; bổ sung backlog thực thi và chỉnh trạng thái cũ. Sau yêu cầu dùng lại code, đã thêm guide và bản đồ 27 phương thức/dependency/khác biệt cần sửa; trạng thái NOT_PORTED, chưa có runtime port được nghiệm thu. Auto-review đã chặn upload thân mã gốc vì quyền phân phối lại chưa rõ; bản cập nhật GitHub cuối cùng chỉ chứa tài liệu do agent viết. Chưa chạy lại game mẫu, chưa dựng backend, chưa mở rộng roster hoặc thay balance. Không dùng số lượng màn/module để tính phần trăm hoàn thành sản phẩm.

@@ -4,6 +4,7 @@
 
 Bàn giao mới nhất 07/09/2026: đọc `docs/HON-VIET-MONG-GIOI-PROGRESS-2026-09-06.md` và `docs/LUNA-EXECUTION-PLAN-2026-09-07.md` để nhận đúng ticket. Phân tích source mẫu Hermes nằm ở `docs/HERMES-SOURCE-AUDIT-2026-09-07.md`. L02a là lát cắt code tiếp theo; các phần lịch sử không phải danh sách lỗi hiện tại.
 
+- **Được tái sử dụng code mẫu theo yêu cầu của anh.** Đọc `docs/HERMES-CODE-REUSE-GUIDE.md`: bản đồ 27 phương thức, dependency, lỗi cần sửa và quy trình port từ archive người dùng đã gửi. Quy tắc này thay chỉ dẫn cũ cấm toàn bộ source mẫu. Nối vào owner Lục Thần, ghi khác biệt và test; giữ identity/save/art/luật đã chốt. Repo chứa hướng dẫn; mã gốc chưa được đưa lên GitHub và chưa tích hợp runtime.
 - Runtime production được tạo bởi `scripts/build-static.mjs`. Sửa nguồn hoặc patch sinh ra runtime; không dùng chỉnh sửa riêng trong `dist/` làm kết quả bàn giao.
 - Giữ nguồn RGBA, tỷ lệ đồng nhất và offset/pivot của animation. Không key màu đen hoặc căn lại từng frame để che lỗi renderer.
 - Router, combat scheduler và audio event mỗi loại cần một chủ quản. Không thêm nhiều listener để “chữa” một nút mà chưa tìm handler hiện tại.

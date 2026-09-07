@@ -2,6 +2,8 @@
 
 Ngày: **07/09/2026, giờ Việt Nam**. Baseline code: `c8fefca0e31b6ddb926921454413d38860171665`. Phân tích đầu vào: [source Hermes](HERMES-SOURCE-AUDIT-2026-09-07.md). Tiến độ: [snapshot hiện tại](HON-VIET-MONG-GIOI-PROGRESS-2026-09-06.md).
 
+**Cập nhật theo yêu cầu của anh:** Luna được tái sử dụng/port code mẫu. Đọc [guide thực hiện](HERMES-CODE-REUSE-GUIDE.md) để lấy bản đồ 27 phương thức/dependency và cách đọc từ archive đã nhận; các chỉ dẫn cũ cấm toàn bộ source đã được thay. Các phương thức hiện NOT_PORTED, không làm tăng trạng thái hoàn thành L01–L20. Mã gốc chưa được đưa lên GitHub vì auto-review chặn phân phối lại; repo chứa guide và plan.
+
 Tài liệu này cụ thể hóa E01–E26/R01–R11 của [master plan](HON-VIET-MASTER-PLAN-SAMKOK-v2-2026-09-06.md), không mở một roadmap cạnh tranh. Các ID **L01–L20** là lát cắt tiếp theo; nhiều E/R đã có một phần code. “Có test” và “đã đóng cả mốc” là hai trạng thái khác nhau.
 
 ## 0. Luna bắt đầu ở đâu
@@ -66,6 +68,12 @@ Tài liệu này cụ thể hóa E01–E26/R01–R11 của [master plan](HON-VIE
 
 Mọi đường dẫn ở bảng trên là file hiện có. Đường dẫn ghi **mới đề xuất** trong ticket chưa tồn tại và chỉ tạo khi cần. Đọc nguồn tạo runtime trước khi sửa `dist`; sản phẩm bàn giao phải nằm ở source.
 
+### 2.1. Cách nhận code mẫu vào từng owner
+
+Theo [guide tái sử dụng](HERMES-CODE-REUSE-GUIDE.md): hàm thuần được port sau khi khóa input/output; code có Cocos/network/global phải thay dependency qua adapter/command hiện có. Ghi excerpt ID/hash, file đích, khác biệt có chủ đích, caller/test và trạng thái port trong evidence ticket. Nếu owner hiện có đã đủ, ghi KEEP_EXISTING thay vì dựng hệ song song. Giữ các quyết định sản phẩm và quy tắc imagegen.
+
+Thân code gốc còn trong archive người dùng bàn giao; guide chỉ rõ 27 method cần đọc cùng dependency. Không nạp bundle tham chiếu vào runtime; module đã port mới nối vào source/build. Các method này không tạo thành backend/engine hoàn chỉnh. Bảng nhóm trong guide map trực tiếp tới L02/L03/L04/L05/L06/L08/L11/L12/L13/L16.
+
 ## 3. Các ticket nền: chỉ dẫn chi tiết
 
 ### L01 — Nghiệm thu hồi quy vòng đời màn/trận
@@ -87,7 +95,7 @@ Mọi đường dẫn ở bảng trên là file hiện có. Đường dẫn ghi 
 
 **Mục đích:** thưởng người chơi nhận phải dùng/hiểu được; các màn không tự đưa tướng cũ vào roster.
 
-**Đọc:** `index.html` vùng DATA.chapters/scene/battles/OFFICIAL_ROSTER/defaultPlayer; `src/domain/hero/roster-plan.mjs`, `roster-view.mjs`; `src/domain/battle/background-registry.mjs`; `tests/official-roster-12.test.mjs`, `tests/main-quest.test.mjs`, `tests/battle-backgrounds-20-v1.test.mjs`. Mẫu: `main_guard_cfg[3]`, `mainlinemdl.getNextGuardInfo`, config liên kết theo ID.
+**Đọc:** `index.html` vùng DATA.chapters/scene/battles/OFFICIAL_ROSTER/defaultPlayer; `src/domain/hero/roster-plan.mjs`, `roster-view.mjs`; `src/domain/battle/background-registry.mjs`; `tests/official-roster-12.test.mjs`, `tests/main-quest.test.mjs`, `tests/battle-backgrounds-20-v1.test.mjs`. Mẫu: `main_guard_cfg[3]`, `mainlinemdl.getNextGuardInfo`, config liên kết theo ID. Nhóm Catalog trong guide chỉ rõ các method `basemdl.getConfig/getCompCfg` và `mainlinemdl.getNextGuardInfo/getCurCityCfg`; được port cách tra dữ liệu, thay ID mặc định và xử lý missing edge. Validator cycle/legacy là phần viết thêm.
 
 **L02a — READY, làm trước:**
 
@@ -106,7 +114,7 @@ Mọi đường dẫn ở bảng trên là file hiện có. Đường dẫn ghi 
 
 **Mục đích:** nâng tướng/nhận thưởng không bị lệch tiền, nhiệm vụ hoặc trạng thái sau reload.
 
-**Đọc:** transaction/save owner, `scripts/opening-loop-v1.mjs`, `src/domain/quest/opening-loop-contract.mjs`; `tests/transaction-contract.test.mjs`, `tests/forge-transactions.test.mjs`, `tests/opening-loop-contract.test.mjs`. Mẫu chỉ cung cấp pattern request/response; tự xây tính nguyên tử local của Lục Thần.
+**Đọc:** transaction/save owner, `scripts/opening-loop-v1.mjs`, `src/domain/quest/opening-loop-contract.mjs`; `tests/transaction-contract.test.mjs`, `tests/forge-transactions.test.mjs`, `tests/opening-loop-contract.test.mjs`. Được dùng phần kiểm cost của `heromdl.jsfChkCost` sau khi gộp vật liệu trùng/validate số và inject inventory; `mainlinectrl.n16401` cung cấp nhánh xử lý reply/reward. Tính nguyên tử local vẫn dùng transaction owner Lục Thần, không sao chép callback server để giả đã atomic.
 
 **L03a — READY:** lập bảng mọi command có mutate tiền/item/progress: entrypoint, cost, credit, persist, event và receipt. Bắt đầu đúng `levelUpHero` → quest/opening event, dùng code đang có làm fixture. `questProgress` sau commit cần thử lỗi ở lần ghi sau; không kết luận đây là giao dịch tổng đã atomic.
 
@@ -124,7 +132,7 @@ Mọi đường dẫn ở bảng trên là file hiện có. Đường dẫn ghi 
 
 **Mục đích:** thua → tăng tướng/mặc đồ → quay lại đúng mode/đội/ải, không mất lựa chọn hay rò công việc.
 
-**Đọc:** `navTo`, `showScreen`, `closeOverlay`, `HonVietMetaBridge` trong index; settlement patch; campaign scene; roster runtime và hero tabs. Mẫu: `viewmgr` load queue/layer/back, `baseview.release` và lazy tab cache.
+**Đọc:** `navTo`, `showScreen`, `closeOverlay`, `HonVietMetaBridge` trong index; settlement patch; campaign scene; roster runtime và hero tabs. Mẫu: `viewmgr` load queue/layer/back, `baseview.release` và lazy tab cache. Guide chỉ rõ method baseview/basemdl/herodownv/jumpmgr và chỉ rõ lỗi index 0, callback đơn, stale load cần sửa khi port; thay Cocos handle bằng scope owner đang có.
 
 **L04a — READY:** vẽ bảng route/owner/enter/leave/callback hiện có. Chọn luồng defeat → heroDetail → back; thêm return context vào owner hiện có, có `mode`, `encounterId`, params/hero/tab, filter/scroll và revision draft. Source route phải còn hợp lệ lúc quay lại.
 
@@ -136,7 +144,7 @@ Mọi đường dẫn ở bảng trên là file hiện có. Đường dẫn ghi 
 
 ### L05 — Combat có event đầy đủ và RNG luật kiểm được
 
-**Mục đích:** kết quả đáng tin; tăng tốc/replay không đổi damage hay thưởng. Tham khảo `bcwar.exeRound/exeAction/checkActQueue`, không nhập engine Cocos.
+**Mục đích:** kết quả đáng tin; tăng tốc/replay không đổi damage hay thưởng. Được tận dụng đoạn `bcwar.exeRound/exeAction/checkActQueue` và cleanup trong archive tham chiếu để port thứ tự presentation/sub-action; giữ scheduler, luật và settlement Lục Thần. Đọc dependency/khác biệt ở guide, không coi các đoạn này là combat simulator đầy đủ.
 
 **Đọc:** `battle.html` resolveAction/applyDamage/applyHeal/runOngPhoUltimateAftermath/run action caller, combat adapter/core, `src/domain/combat/*`, các test combat hiện có. Không giả một domain recorder là simulator đã tách hoàn toàn.
 
@@ -154,7 +162,7 @@ Mọi đường dẫn ở bảng trên là file hiện có. Đường dẫn ghi 
 
 **Mục đích:** mặc đồ/nâng tướng thấy số thay đổi đúng và vào trận nhận đúng số đó.
 
-**Đọc:** heroStats/squadSnapshot/teamPower trong index; `roster-view.mjs`, `skill-kit.mjs`, `loadout.mjs`, campaign view, battle snapshot converter/bridge; test roster/loadout/skill kit. Mẫu: Hero model và Dmbl nhận trạng thái đã resolve.
+**Đọc:** heroStats/squadSnapshot/teamPower trong index; `roster-view.mjs`, `skill-kit.mjs`, `loadout.mjs`, campaign view, battle snapshot converter/bridge; test roster/loadout/skill kit. Mẫu: Hero model và Dmbl nhận trạng thái đã resolve. Được port `heromdl.sortByClk` (thực chất là filter) và cách giữ selected ID trong `herobagv.refSortList` vào read model/roster owner; sort tie-break, trường hợp không còn hero và input immutability cần test riêng.
 
 **Thực hiện:**
 
@@ -171,7 +179,7 @@ Mọi đường dẫn ở bảng trên là file hiện có. Đường dẫn ghi 
 
 **Mục đích:** tài khoản mới có mục tiêu thu thập/nuôi đội, không bị nhiệm vụ yêu cầu một hệ chưa mở. **D01/D02 chưa chốt**, không thu hồi 12 tướng đã sở hữu trong save hiện hành.
 
-**Đọc:** defaultPlayer/migrateSave, save contract, roster-plan, banner-validation, summon guard; `DEFINITIONS` trong opening patch; L02 report. Mẫu: pub_cfg cost/pool, guide prerequisite, task reward — chỉ học schema.
+**Đọc:** defaultPlayer/migrateSave, save contract, roster-plan, banner-validation, summon guard; `DEFINITIONS` trong opening patch; L02 report. Mẫu: pub_cfg cost/pool, guide prerequisite, task reward — được tận dụng schema và port logic đọc/kiểm phù hợp; không tự dùng nguyên giá, pool hoặc xác suất của mẫu làm policy Lục Thần.
 
 **Việc làm được ngay:** lập bảng 30–60 phút chơi dự kiến bằng dữ liệu hiện có: đội/sở hữu, nguồn vàng/đồ/mảnh, cost nâng/rèn, unlock. Tách `legacy` / `qa` / `player-vNext` bằng đề xuất migration có fixture, chưa đổi production default.
 
@@ -221,7 +229,7 @@ Mọi đường dẫn ở bảng trên là file hiện có. Đường dẫn ghi 
 
 ### L12 — Daily/weekly/thư/điểm danh và điểm đỏ
 
-**Đọc/sửa:** daily/weekly/mail/sign functions trong index, transaction patch; domain **mới đề xuất** `src/domain/time/period-key.mjs`, `src/domain/quest/activity-progress.mjs`, badge read model trong UI. Mẫu: Task*, Mail*, `jumpmgr`, `redpointmgr`.
+**Đọc/sửa:** daily/weekly/mail/sign functions trong index, transaction patch; domain **mới đề xuất** `src/domain/time/period-key.mjs`, `src/domain/quest/activity-progress.mjs`, badge read model trong UI. Mẫu: Task*, Mail*, `jumpmgr`, `redpointmgr`. Guide xác định `checkCond` và hai method redpoint để port condition/aggregate/unsubscribe; sửa callback trì hoãn/stale node, không dựng badge manager thứ hai.
 
 **Lát cắt:** định nghĩa clock/period policy hiện hành → migration → claim đơn → claim nhiều → badge. Daily/weekly reset chỉ field đúng kỳ, không reset campaign/AFK đã tích lũy. Chọn mốc ngày/tuần theo chính sách ghi lại, không tự đổi múi giờ vì mẫu có `next_eight`. Online sau này dùng server time qua adapter.
 
@@ -233,7 +241,7 @@ Mọi đường dẫn ở bảng trên là file hiện có. Đường dẫn ghi 
 
 ### L13 — Campaign/AFK và nội dung chơi dài hơn
 
-**Đọc/sửa:** campaign/afk domain + scene, DATA chapters/scenes/battles, background registry; outcome L02. Mẫu: MainLine state machine và config theo guard.
+**Đọc/sửa:** campaign/afk domain + scene, DATA chapters/scenes/battles, background registry; outcome L02. Mẫu: MainLine state machine và config theo guard. Được adapt `getFixedHangIncome`, `receHangUpData`, `n16401` theo guide; thay ID tiền/đơn vị/server callback bằng AFK/receipt owner hiện hành, giữ cap 15 giờ.
 
 **Lát cắt:** một chương có stage/enemy/reward/story/background/unlock rõ → result/end-of-content → rate AFK theo stage nếu được chốt. Giữ six-slot challenge và diễn hoạt AFK không gây damage/reward/progress. Rate cũ đang khóa vào rương: khi rate đổi, chốt accrued theo rate cũ tại checkpoint rồi áp rate mới cho khoảng thời gian sau; không tính lại toàn bộ quá khứ. Nếu chưa có policy mới, giữ rate v1 và ghi tạm.
 
@@ -342,6 +350,7 @@ Baseline đã đọc: <SHA main>
 Mục tiêu người chơi và invariant:
 File owner đã tìm; file nguồn sẽ sửa:
 Input/output và dữ liệu/chính sách đã chốt:
+Code mẫu: excerpt ID/hash; PORT/ADAPT/KEEP_EXISTING; dependency/khác biệt; file đích/trạng thái:
 Art/animation/VFX/SFX dùng lại, phần thiếu và nơi tích hợp:
 Thay đổi đã làm; caller cũ đã ngừng dùng:
 Test chạy thật + kết quả:
@@ -354,7 +363,7 @@ Cuối phiên cập nhật progress và trạng thái ticket tương ứng. Hand
 
 ## 8. Những cách không được lặp lại
 
-- Copy archive Hermes đè source Lục Thần, hoặc đổi sang Cocos/React/engine mới để né hiểu code.
+- Chép toàn archive Hermes đè source Lục Thần hoặc nạp nguyên bundle Cocos. Tái sử dụng từng phần theo guide được phép và phải nối owner/test; không đổi engine chỉ để né hiểu code.
 - Coi mỗi module/config/ảnh là một tính năng đã xong; đếm 72 capacity thành 72 tướng sản xuất xong.
 - Render thêm placeholder/tab/nút không có command, save và return path.
 - Thêm listener/router/audio manager thứ hai mà không tháo owner cũ.

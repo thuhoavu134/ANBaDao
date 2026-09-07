@@ -8,13 +8,14 @@ Cập nhật: **07/09/2026**. Đây là điểm vào cho Luna. Các mục pixel/
 - Code baseline của đợt phân tích: `c8fefca0e31b6ddb926921454413d38860171665`. Hotfix âm thanh thoát trận đã deploy Vercel READY; 171/171 test đạt. Chưa có kiểm tương tác production/nghe loa Safari sau hotfix; lần kiểm HTTP sau deploy bị treo rồi hủy.
 - [Progress](HON-VIET-MONG-GIOI-PROGRESS-2026-09-06.md) ghi trạng thái từng hệ; [execution plan](LUNA-EXECUTION-PLAN-2026-09-07.md) chia L01–L20. **Code tiếp từ L02a: audit/validator catalog**, chưa thay balance/seed. L01 là device verification, không viết lại bus audio.
 - [Phân tích source Hermes](HERMES-SOURCE-AUDIT-2026-09-07.md) là tài liệu học tổ chức game mẫu; [manifest](reference/hermes-source-manifest-2026-09-07.json) kiểm kê/hash. Archive là Cocos client đã tách mã + config/protocol; chưa có backend/project editor đầy đủ để deploy lại.
+- **Anh đã yêu cầu dùng lại code mẫu.** [Hướng dẫn tái sử dụng](HERMES-CODE-REUSE-GUIDE.md) thay quy tắc cũ chỉ học kiến trúc/cấm toàn bộ source. Guide xác định 27 phương thức trong archive đã nhận, dependency và lỗi cần sửa khi port. Mã gốc chưa được đưa lên GitHub do xét duyệt tự động chặn việc phân phối lại; repo chứa phần phân tích/hướng dẫn do agent viết. Luna được tự trích/port phần phù hợp vào owner hiện có; chưa có đoạn nào được tích hợp trong đợt tài liệu này.
 - Giữ bản sắc Hồn Việt, 12 ID chính thức, 6 slot (3 trước/3 sau), 15 hiệp, không multi-wave. Capacity được chốt trong plan là 72 (32 SSR/16 SR/16 A/8 B), hiện chưa có đủ nội dung; không tạo placeholder để đủ số.
 - Ông Phở/Lục Ảnh có kit v2 Basic + Ultimate + passive; 10 tướng còn lại chưa chuyển đủ. Không hỏi lại định hướng hai đòn và không tráo legacy Skill 1/Ultimate hoặc bỏ đầu tư.
 - PR #16 campaign/AFK/preparation/MVP đã merge tại `92b503c`. Cap AFK 15 giờ, cảnh diễn hoạt không tự tiến ải/nhận thưởng. Bốn ảnh campaign đã có.
 - Điểm vướng đã thấy từ code: seed/migration mở cả 12; thưởng chương còn ID legacy ngoài roster; event combat cần đủ sub-action và seeded RNG; transaction/event chưa phủ mọi luồng. Không dùng API hooks để khẳng định backend/rank/chat thật đã có.
 - Khi sửa runtime chạy npm test và bấm UI thật. Báo riêng build/unit/integration, Chrome responsive, Chrome interaction, Safari thiết bị thật và production deployment.
 
-Thứ tự đọc tối thiểu mỗi phiên: AGENTS → mục này → progress → đúng ticket Lxx. Master plan giữ mã E/R/M và quyết định D; chỉ đọc phần liên quan. Không dump dòng BATTLE_HTML_BASE64 khổng lồ khi tìm kiếm; dùng rg với giới hạn cột hoặc đọc theo function boundary.
+Thứ tự đọc tối thiểu mỗi phiên: AGENTS → mục này → progress → đúng ticket Lxx → guide tái sử dụng và đoạn source liên quan khi port. Master plan giữ mã E/R/M và quyết định D; chỉ đọc phần liên quan. Không dump dòng BATTLE_HTML_BASE64 khổng lồ khi tìm kiếm; dùng rg với giới hạn cột hoặc đọc theo function boundary.
 
 ## 2. Bản đồ code: sửa đúng nguồn tạo ra sản phẩm
 
@@ -53,7 +54,7 @@ Thứ tự đọc tối thiểu mỗi phiên: AGENTS → mục này → progress
 3. Đọc nguồn liên quan trong bảng trên. Tìm bằng `rg`, hạn chế đọc tràn toàn bộ hai HTML lớn.
 4. Nêu một giả thuyết cụ thể và cách kiểm tra: ví dụ chiều cao cơ thể khác nhau hay cả atlas bị scale khác nhau.
 5. Đo/kiểm tra trước khi sửa. Tách **quan sát được**, **suy luận**, **chưa xác minh**.
-6. Làm một bản sửa nhỏ; giữ renderer, router, scheduler đang hoạt động. Build phải báo lỗi nếu không tìm thấy vị trí patch mong đợi.
+6. Làm một bản sửa nhỏ; được port code mẫu theo guide, ghi nguồn/dependency/khác biệt và nối vào owner hiện có. Giữ renderer, router, scheduler đang hoạt động. Build phải báo lỗi nếu không tìm thấy vị trí patch mong đợi.
 7. Chạy `npm test`, đọc kết quả thực sự. Test đã bao gồm build. Không chỉ đọc dòng “build successful”.
 8. Kiểm tra bằng UI thật: vào màn, thao tác, quay lại, lặp lần hai. Không gọi trực tiếp hàm nội bộ để thay cho thử thao tác người dùng.
 9. Commit/push đúng repository và nhánh đã được người dùng cho phép; kiểm tra Vercel và chính URL production.

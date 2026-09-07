@@ -8,7 +8,9 @@ Cập nhật **07/09/2026, giờ Việt Nam**. Giữ tên file cũ để các li
 - Baseline code phân tích: [`c8fefca0e31b6ddb926921454413d38860171665`](https://github.com/bktimmy247/luc-than/commit/c8fefca0e31b6ddb926921454413d38860171665), bản sửa âm thanh tiếp diễn sau khi thoát trận.
 - Vercel đã xác minh `READY`, alias production trỏ cùng SHA, deployment `dpl_F4jT4fcbv2G1jo9UaxgPVHqPUdKF`. Việc đọc trực tiếp HTML qua HTTP sau deploy bị treo và đã hủy; chưa có kiểm tương tác hoặc nghe loa trên production sau hotfix. Không ghi nhận nó như một lần browser smoke thành công.
 - Bộ kiểm thử gần nhất cho code này: **171/171 đạt**, 30 file test, gồm 9 test hồi quy vòng đời âm thanh. Build kiểm inline script và embedded battle khớp standalone. Đây là test/build, không phải Safari thật.
-- Công việc ngày 07/09: ghép 7 part source Hermes, CRC đạt, kiểm kê 1.748 module/169 config, đọc luồng lõi và protocol, đối chiếu Lục Thần; cập nhật analysis/plan/handoff. Đợt tài liệu này không đổi gameplay, balance, asset hoặc hạ tầng.
+- Công việc ngày 07/09: ghép 7 part source Hermes, CRC đạt, kiểm kê 1.748 module/169 config, đọc luồng lõi và protocol, đối chiếu Lục Thần; cập nhật analysis/plan/handoff. Bản audit/plan ban đầu đã lên GitHub ở `799efe62475e2c3ff8145be7b6d2b323b46bdcb2`.
+- Yêu cầu tiếp theo của anh đã được đưa vào tài liệu: cho Luna tái sử dụng code mẫu. Đã viết [guide port](HERMES-CODE-REUSE-GUIDE.md), đồng bộ master/entrypoints và lập bản đồ **27 phương thức từ 10 file** trong archive, kèm dependency/khác biệt cần xử lý. **Tất cả đang NOT_PORTED**; chưa ghi nhận ticket gameplay mới hoàn thành. Đợt cập nhật này không đổi runtime, balance, asset hoặc hạ tầng.
+- Việc đưa thân mã gốc lên GitHub bị xét duyệt tự động chặn vì chưa rõ quyền phân phối lại source. Đã hoàn tất phần không bị chặn bằng tài liệu do agent viết; mã gốc vẫn ở archive người dùng bàn giao, không có gói source trích chọn trong repo.
 
 Đọc [phân tích source](HERMES-SOURCE-AUDIT-2026-09-07.md), [execution plan L01–L20](LUNA-EXECUTION-PLAN-2026-09-07.md), [master plan E01–E26](HON-VIET-MASTER-PLAN-SAMKOK-v2-2026-09-06.md), [manifest kiểm kê](reference/hermes-source-manifest-2026-09-07.json).
 
@@ -16,6 +18,7 @@ Cập nhật **07/09/2026, giờ Việt Nam**. Giữ tên file cũ để các li
 
 | Hệ thống | Trạng thái đúng ở baseline | Bằng chứng / giới hạn |
 |---|---|---|
+| Hướng dẫn dùng code mẫu | Có policy, bản đồ 27 method, cách lấy từ archive và tiêu chí port | Mã gốc chưa đưa lên GitHub do auto-review chặn phân phối; code port/caller/test chưa triển khai |
 | Build/runtime | Có pipeline 38 dynamic patch import; embedded sync cuối build | `scripts/build-static.mjs`, test parity; không sửa riêng dist |
 | Roster/detail | 12 playable IDs, filter/sort/back, 5 tab, read state thật | QA lịch sử trong Samkok alignment và Luna handoff; Safari chưa nghiệm thu |
 | Save | Có schema/revision/migration/backup | `save-contract.mjs`, fixtures/test; chưa gọi là cloud authority |
@@ -46,7 +49,7 @@ Cập nhật **07/09/2026, giờ Việt Nam**. Giữ tên file cũ để các li
 
 | Thứ tự | Ticket | Bước kế tiếp cụ thể |
 |---|---|---|
-| 1 | **L02a — READY** | Report/validator catalog thuần, phân biệt playable/NPC/legacy reward, lỗi reference/cycle; chưa thay reward hoặc seed |
+| 1 | **L02a — READY** | Đọc nhóm Catalog trong guide và đoạn basemdl/mainlinemdl; làm report/validator thuần, phân biệt playable/NPC/legacy reward, reference/cycle. Ghi phần port/giữ owner; chưa thay reward hoặc seed |
 | Song song | L01 — VERIFY | Production/device smoke audio/route, ghi rõ thiết bị thật; không viết lại hotfix đã có |
 | 2 | L03a — READY | Inventory entrypoints trừ/cộng và thứ tự persist/event; lấy level-up → quest làm lát cắt đầu |
 | 3 | L04a / L05a — READY | Map return/lifetime và fixture các sub-action combat; chọn một việc mỗi phiên |
@@ -65,6 +68,6 @@ Spec từng ticket, file owner, contract, asset, test và điều kiện đóng 
 
 ## 6. Luật bảo toàn
 
-Giữ 12 ID, sáu slot, ba trước–ba sau, 15 hiệp, không multi-wave cho Lục Thần. Giữ ownership/đầu tư save cũ và các kit đã chuyển; không bật global combat clock. Build/runtime nguồn là một chuỗi, không hai engine. Router/scheduler/audio mỗi loại một owner. Ảnh thiếu phải imagegen và tích hợp; CSS bố trí/tương tác, chữ/số sống; không key đen/cắt frame/làm méo để che lỗi. Học cấu trúc source mẫu, không nhập APK/asset/runtime Tam Quốc vào sản phẩm.
+Giữ 12 ID, sáu slot, ba trước–ba sau, 15 hiệp, không multi-wave cho Lục Thần. Giữ ownership/đầu tư save cũ và các kit đã chuyển; không bật global combat clock. Build/runtime nguồn là một chuỗi, không hai engine. Router/scheduler/audio mỗi loại một owner. Ảnh thiếu phải imagegen và tích hợp; CSS bố trí/tương tác, chữ/số sống; không key đen/cắt frame/làm méo để che lỗi. Được trích/port code mẫu phù hợp theo guide và test tại boundary. Không nạp toàn APK/Cocos bundle hoặc chép archive đè repo; việc dùng code không tự thay art/identity/balance. Các câu cũ cấm toàn bộ source không còn là quy tắc hiện hành.
 
-Mỗi lần đóng ticket: ghi code commit, test, UI/device evidence, deployment nếu có, phần còn mở và bước tiếp. Mốc code baseline và mốc commit cập nhật tài liệu có thể khác nhau; không lấy một commit docs làm bằng chứng gameplay mới.
+Mỗi lần đóng ticket: ghi code commit, test, UI/device evidence, deployment nếu có, phần còn mở và bước tiếp. Nếu dùng mẫu, ghi excerpt ID/hash, file đích, dependency đã thay, khác biệt hành vi và trạng thái port theo guide. Mốc code baseline và mốc commit cập nhật tài liệu có thể khác nhau; không lấy một commit docs làm bằng chứng gameplay mới.

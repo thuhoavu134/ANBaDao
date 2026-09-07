@@ -4,7 +4,7 @@
 
 Anh bàn giao lại 7 phần `fable5-tam-quoc-source.zip.001`…`.007` để học code game mẫu và tiếp tục Lục Thần. Đã ghép/kiểm CRC và đọc các luồng lõi; [audit source mới](HERMES-SOURCE-AUDIT-2026-09-07.md) ghi rõ bằng chứng, [manifest](reference/hermes-source-manifest-2026-09-07.json) ghi hash và scope.
 
-Đầu vào này có metadata Tam Quốc Khởi Động 1.1.136, Cocos client bundle, 1.748 module, 169 config và protocol; không coi nó là backend hay một project editor đầy đủ để deploy lại. Bài học chính là View–Controller–Model/config, replay presentation theo action/suborder, lifecycle tải/audio và vòng campaign–AFK–đội–thưởng–nuôi đội.
+Đầu vào này có metadata Tam Quốc Khởi Động 1.1.136, Cocos client bundle, 1.748 module, 169 config và protocol; không coi nó là backend hay một project editor đầy đủ để deploy lại. Bài học chính là View–Controller–Model/config, replay presentation theo action/suborder, lifecycle tải/audio và vòng campaign–AFK–đội–thưởng–nuôi đội. Anh đã yêu cầu **dùng lại code phù hợp**: [guide port](HERMES-CODE-REUSE-GUIDE.md) quy định cách trích/đổi dependency/nối owner/test; bản đồ 27 phương thức cho Luna biết cần lấy phần nào từ archive đã nhận. Repo chứa phần phân tích/hướng dẫn; thân mã gốc chưa được đưa lên GitHub do auto-review chặn việc phân phối lại. Chưa có bản port runtime trong cập nhật này.
 
 [Execution plan L01–L20](LUNA-EXECUTION-PLAN-2026-09-07.md) cụ thể hóa cách áp dụng; [progress hiện tại](HON-VIET-MONG-GIOI-PROGRESS-2026-09-06.md) thay trạng thái cũ. Bắt đầu L02a catalog validator; giữ engine/asset/identity Lục Thần. **Không xem lại video trong đợt source audit này**; phần dưới giữ evidence video/source của các lần trước và không được hiểu là QA mới.
 
@@ -14,7 +14,7 @@ Anh bàn giao lại 7 phần `fable5-tam-quoc-source.zip.001`…`.007` để h�
 - Video đã mở: `samkok-new-force-240p.mp4`, 426×240, 30 FPS, 1.851,373 giây (30:51). Anh xác nhận đây là đúng game sau khi trước đó gọi là video hơn 11 phút.
 - Đã kiểm tra các khung lấy mẫu cách nhau 30 giây trên toàn video để nhận diện màn/luồng. Độ phân giải 240p không đủ để khẳng định công thức, chi phí hay mọi nhãn chữ nhỏ. Không dùng các giá trị đoán từ hình làm cấu hình Hồn Việt.
 - Gói Fable tham khảo: `fable5-tkt0016-handoff-v1.zip`. Có `decrypted-main-index.js` với 1.748 đăng ký module; gồm `herobagv`, `herodetailv`, `heroctrl`, `heromdl`, `maincityview`, `taskctrl`, `taskmdl`, `recruitctrl`, `warjssuccv`, `warjsfailv`.
-- Chỉ đọc offline để hiểu tổ chức hệ thống. Không cần chạy backend mẫu hay chờ giải mã hết để triển khai. Không đưa source/asset Tam Quốc vào bản phát hành Hồn Việt.
+- Có thể đọc và port từng phần offline theo guide tái sử dụng hiện hành; không cần chạy backend mẫu hay chờ giải mã hết để triển khai. Giữ engine/identity/art Lục Thần, thay dependency và dữ liệu bằng owner của game. Quy tắc cũ cấm toàn bộ source đã được thay theo yêu cầu mới của anh.
 - 3Q là nguồn tham khảo kỹ thuật bổ sung, **không còn là mẫu mặc định quyết định toàn bộ sản phẩm**.
 
 ## Những gì quan sát được và thứ tự triển khai

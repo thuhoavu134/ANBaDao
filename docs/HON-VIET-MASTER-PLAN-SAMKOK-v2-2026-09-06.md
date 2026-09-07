@@ -8,7 +8,7 @@ Khởi tạo v2: 06/09/2026; cập nhật source/tiến độ: 07/09/2026. Chủ
 
 **Trạng thái và thứ tự tiếp theo ở mục này thay cho các status block lịch sử bên dưới.** Mục tiêu sản phẩm E01–E26/M0–M9 được giữ. Bổ sung bằng chứng source và các lát cắt L01–L20, không tạo một game/repo/engine khác.
 
-- [Phân tích bộ 7 part Hermes](HERMES-SOURCE-AUDIT-2026-09-07.md): archive CRC đạt, 1.748 module, 169 config; Cocos client bundle + protocol, chưa thấy backend/project editor nguyên bản. Chỉ học kiến trúc/flow; không nhập source/asset Tam Quốc vào build.
+- [Phân tích bộ 7 part Hermes](HERMES-SOURCE-AUDIT-2026-09-07.md): archive CRC đạt, 1.748 module, 169 config; Cocos client bundle + protocol, chưa thấy backend/project editor nguyên bản. Theo yêu cầu tiếp theo của anh, **được tái sử dụng/port từng phần code mẫu** qua [guide](HERMES-CODE-REUSE-GUIDE.md); guide chỉ rõ 27 phương thức từ 10 file trong archive, dependency và lỗi cần sửa. Repo chứa hướng dẫn, chưa chứa thân code gốc (upload bị xét duyệt tự động chặn). Thay dependency và nối vào owner Lục Thần, ghi khác biệt/test. Giữ engine/identity/save/art đã chốt; chưa có đoạn trích nào được tích hợp runtime trong đợt này.
 - [Execution plan dành cho Luna](LUNA-EXECUTION-PLAN-2026-09-07.md): từng ticket có dependency, owner/file, bước làm, contract, UI/art, test và tiêu chí đóng. **Bắt đầu L02a** (validator/report catalog), làm L01 device QA song song nếu có thiết bị; tiếp L03 transaction/event, L04 route lifetime và L05 combat fixtures.
 - [Progress mới nhất](HON-VIET-MONG-GIOI-PROGRESS-2026-09-06.md): code baseline `c8fefca0e31b6ddb926921454413d38860171665`; 171/171 test; Vercel READY đúng SHA. Chưa có browser/device smoke sau hotfix audio, không coi deployment là bằng chứng nghe loa.
 - PR #16 AFK/chuẩn bị sáu slot/MVP **đã merge** ở `92b503c`; không còn trạng thái nhánh chưa merge. SFX thoát trận đã được sửa/deploy ở `c8fefca`, còn nghiệm thu thiết bị.
@@ -16,7 +16,7 @@ Khởi tạo v2: 06/09/2026; cập nhật source/tiến độ: 07/09/2026. Chủ
 - Khoảng thiếu được xác nhận: defaultPlayer/migrateSave cấp cả 12; reward chương còn ID legacy ngoài roster; recorder trước/sau resolveAction cần kiểm sub-action và RNG luật chưa seed; các side effect progression sau transaction cần audit. Sáu chương DATA không đồng nghĩa 20 nền = 20 chương.
 - R06/R07/R08/R10 và AFK đã có các lát cắt/test, chưa được đóng cả M1/M2. Banner/seed mới, full 12 kits, mọi mode/period/return path và online authority còn trong backlog.
 
-### Bài học source đưa vào kiến trúc
+### Dùng source mẫu trong kiến trúc hiện có
 
 View hiển thị; command/controller xử lý; model/catalog quyết định dữ liệu; transaction chốt rồi mới render/reveal. Mẫu trình diễn `rdinfos → acts → suborder` từ payload, vì vậy Lục Thần cần event/seed/snapshot riêng nếu muốn replay/online. Scene exit phải thu hồi timer/load/audio kể cả callback đang chờ. Unlock/badge/source links dùng chung contract, không suy từ chữ trên nút.
 
@@ -207,7 +207,7 @@ Theo docs/SAMKOK-REFERENCE-ALIGNMENT.md: bản video được nhận diện là 
 | Kết quả có thống kê/thưởng/đường mạnh lên | MVP động; thắng tiếp ải; thua đi nâng rồi trở lại | Không thay luật 15 hiệp/auto-chain của Hồn Việt |
 | Hub và các nhánh nuôi đội/hoạt động | Mở hệ thống theo tiến trình, có thông báo việc làm được ngay | Có icon không chứng minh mọi mode/luật đã được quan sát |
 
-3Q và Fable: tham khảo cách chia controller/model/view, vòng session–action–result, quest/unlock/economy. Không chờ giải mã hết Fable để làm game. Không đưa code, tên, art, vận hành hoặc tài nguyên thương mại của mẫu vào bản phát hành nếu chưa có quyền phù hợp.
+3Q và Fable bổ sung cách chia controller/model/view, vòng session–action–result, quest/unlock/economy. Với bộ Hermes nhận ngày 07/09, anh đã yêu cầu tái sử dụng code phù hợp: làm theo guide port, thay dependency và nối owner hiện có. Không chờ giải mã hết archive để làm game. Giữ thông tin nguồn/notice của thành phần được lấy; tên, art, balance và bản sắc sản phẩm tiếp tục theo Lục Thần.
 
 ### 2.2. Hồ sơ parity phải bổ sung
 
@@ -984,7 +984,7 @@ Các gói R dưới đây là hàng đợi gốc và mã truy vết, không tư�
 
 | Thứ tự | Gói việc | Mã liên quan | Đầu ra để anh thử/kiểm |
 |---|---|---|---|
-| R01 | Khóa main mới nhất, build/test baseline, save fixture | E01-01/04/05 | Manifest và bảng đúng/sai/chưa thử; không copy source cũ |
+| R01 | Khóa main mới nhất, build/test baseline, save fixture | E01-01/04/05 | Manifest và bảng đúng/sai/chưa thử; không chép toàn bộ source cũ đè main; port chọn lọc theo guide |
 | R02 | Roster mobile/back/lifecycle regression | E01-02, E04, E09-01/02 | Clip iPhone và PC: lọc → Lục → nâng → back → mở lại |
 | R03 | Lục Basic, Đình Lôi retina, MVP, PC flicker | E23-01, E24-05, E06-06 | Clip các action và result; ghi riêng fix mới nào chưa đạt |
 | R04 | SFX trên máy thật và bảng mapping hiện tại | E24-04 | Nghe/đối chiếu 9 event, mute/resume; danh sách âm riêng chưa map |
@@ -1014,7 +1014,7 @@ Chuẩn concept hai đòn và bảng asset mới áp dụng ngay trong công vi�
 
 1. AGENTS.md và phần cập nhật mới nhất trong docs/LUNA-HANDOFF.md.
 2. docs/HON-VIET-MONG-GIOI-PROGRESS-2026-09-06.md và docs/LUNA-EXECUTION-PLAN-2026-09-07.md: ticket hiện tại, file và gate.
-3. docs/HERMES-SOURCE-AUDIT-2026-09-07.md cho bằng chứng source; docs/SAMKOK-REFERENCE-ALIGNMENT.md cho video/lịch sử hướng sản phẩm.
+3. docs/HERMES-CODE-REUSE-GUIDE.md cho cách port, bản đồ hàm và nguồn archive; docs/HERMES-SOURCE-AUDIT-2026-09-07.md cho bằng chứng source; docs/SAMKOK-REFERENCE-ALIGNMENT.md cho video/lịch sử hướng sản phẩm.
 4. Master Plan này cho E/R/M và quyết định sản phẩm; mở đúng domain/script đang tạo runtime.
 5. Nếu sửa asset, đọc chuẩn sản xuất và hợp đồng riêng đang active. Tài liệu cũ nói key nền đen bị thay thế bởi hợp đồng RGBA mới.
 
