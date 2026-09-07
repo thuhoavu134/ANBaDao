@@ -1,0 +1,239 @@
+{
+  "schema": "hon-viet-catalog-validator/v1",
+  "source": {
+    "runtimePath": "index.html",
+    "binding": "DATA + OFFICIAL_ROSTER_12_IDS + CHARACTER_MANIFEST + ROLE_ART_CROPS",
+    "assetPolicy": "character manifest, then authored role fallback for playable heroes",
+    "sha256": "e4f79d41e3bf7bb225ff878729d71e72be9ad94bac962f5e41cffc98148680b9",
+    "chars": 1890471
+  },
+  "summary": {
+    "playableHeroIds": [
+      "ong_hang_pho",
+      "thay_mo",
+      "lac_yen",
+      "cung_thu_tre",
+      "co_dao_ganh_hoi",
+      "phong_tu",
+      "thuy_nuong_roi_nuoc",
+      "hong_lien_dao_nuong",
+      "thach_quyen",
+      "dinh_loi",
+      "luc_anh",
+      "to_diep"
+    ],
+    "playableHeroCount": 12,
+    "nonPlayableHeroIds": [
+      "ong_chu_wifi",
+      "ca_tre_biet_buon",
+      "thang_be_dieu_set",
+      "nang_tien_ca_can",
+      "robot_trong_rau",
+      "meo_9_deadline",
+      "ong_dia_lac_duong",
+      "chi_ve_chai_thien_ha",
+      "hon_cay_bang",
+      "ky_lan_ca_phe",
+      "ong_ke_that_nghiep"
+    ],
+    "nonPlayableHeroCount": 11,
+    "npcIds": [
+      "narrator",
+      "mob_sale",
+      "boss_chungcu"
+    ],
+    "npcCount": 3,
+    "enemyIds": [
+      "km_a",
+      "km_b",
+      "km_c",
+      "km_d",
+      "cua1",
+      "chungcu",
+      "cua2",
+      "t1",
+      "t2",
+      "t3",
+      "t4"
+    ],
+    "enemyCount": 11,
+    "legacyIds": [
+      "ong_chu_wifi",
+      "ca_tre_biet_buon",
+      "thang_be_dieu_set",
+      "nang_tien_ca_can",
+      "robot_trong_rau",
+      "meo_9_deadline",
+      "ong_dia_lac_duong",
+      "chi_ve_chai_thien_ha",
+      "hon_cay_bang",
+      "ky_lan_ca_phe",
+      "ong_ke_that_nghiep"
+    ],
+    "legacyRewardHeroIds": [
+      "ong_chu_wifi",
+      "ky_lan_ca_phe",
+      "nang_tien_ca_can",
+      "ca_tre_biet_buon",
+      "chi_ve_chai_thien_ha",
+      "hon_cay_bang",
+      "thang_be_dieu_set"
+    ],
+    "chapterCount": 6,
+    "sceneCount": 21,
+    "reachableSceneIds": [
+      "ch01_intro_01",
+      "ch01_intro_02",
+      "ch01_intro_03",
+      "ch01_intro_04",
+      "ch01_intro_05",
+      "ch01_intro_06",
+      "ch01_intro_07",
+      "ch01_intro_08",
+      "ch01_battle_01",
+      "ch01_mid_01",
+      "ch01_mid_02",
+      "ch01_mid_03",
+      "ch01_event_cho_dem",
+      "ch01_preboss_01",
+      "ch01_preboss_02",
+      "ch01_preboss_03",
+      "ch01_boss_battle",
+      "ch01_epi_01",
+      "ch01_epi_02",
+      "ch01_epi_03",
+      "ch01_epi_04"
+    ],
+    "unreachableSceneIds": [],
+    "encounterCount": 3,
+    "referencedEncounterIds": [
+      "ch01_fight_street_mobs",
+      "ch01_boss_chungcu"
+    ],
+    "unreachableEncounterIds": [],
+    "rewardRefCount": 11,
+    "assetRefCount": 32,
+    "missingAssetIds": [],
+    "invalidPriceIds": [],
+    "negativePriceIds": [],
+    "issueCount": 16,
+    "issueCountByCode": {
+      "MISSING_SCENE_REF": 5,
+      "LEGACY_REWARD_HERO": 11
+    }
+  },
+  "issues": [
+    {
+      "code": "MISSING_SCENE_REF",
+      "path": "chapters[1].first",
+      "message": "Chapter trỏ tới scene không tồn tại: ch02_intro_01",
+      "from": "ch2",
+      "to": "ch02_intro_01"
+    },
+    {
+      "code": "MISSING_SCENE_REF",
+      "path": "chapters[2].first",
+      "message": "Chapter trỏ tới scene không tồn tại: ch03_intro_01",
+      "from": "ch3",
+      "to": "ch03_intro_01"
+    },
+    {
+      "code": "MISSING_SCENE_REF",
+      "path": "chapters[3].first",
+      "message": "Chapter trỏ tới scene không tồn tại: ch04_intro_01",
+      "from": "ch4",
+      "to": "ch04_intro_01"
+    },
+    {
+      "code": "MISSING_SCENE_REF",
+      "path": "chapters[4].first",
+      "message": "Chapter trỏ tới scene không tồn tại: ch05_intro_01",
+      "from": "ch5",
+      "to": "ch05_intro_01"
+    },
+    {
+      "code": "MISSING_SCENE_REF",
+      "path": "chapters[5].first",
+      "message": "Chapter trỏ tới scene không tồn tại: ch06_intro_01",
+      "from": "ch6",
+      "to": "ch06_intro_01"
+    },
+    {
+      "code": "LEGACY_REWARD_HERO",
+      "path": "chapters[0].reward.shardHero",
+      "message": "Phần thưởng hero tồn tại nhưng không playable: ong_chu_wifi",
+      "id": "ong_chu_wifi",
+      "classification": "existing-non-playable"
+    },
+    {
+      "code": "LEGACY_REWARD_HERO",
+      "path": "chapters[0].unlockHero",
+      "message": "Phần thưởng hero tồn tại nhưng không playable: ong_chu_wifi",
+      "id": "ong_chu_wifi",
+      "classification": "existing-non-playable"
+    },
+    {
+      "code": "LEGACY_REWARD_HERO",
+      "path": "chapters[1].reward.shardHero",
+      "message": "Phần thưởng hero tồn tại nhưng không playable: ky_lan_ca_phe",
+      "id": "ky_lan_ca_phe",
+      "classification": "existing-non-playable"
+    },
+    {
+      "code": "LEGACY_REWARD_HERO",
+      "path": "chapters[1].unlockHero",
+      "message": "Phần thưởng hero tồn tại nhưng không playable: ky_lan_ca_phe",
+      "id": "ky_lan_ca_phe",
+      "classification": "existing-non-playable"
+    },
+    {
+      "code": "LEGACY_REWARD_HERO",
+      "path": "chapters[2].reward.shardHero",
+      "message": "Phần thưởng hero tồn tại nhưng không playable: nang_tien_ca_can",
+      "id": "nang_tien_ca_can",
+      "classification": "existing-non-playable"
+    },
+    {
+      "code": "LEGACY_REWARD_HERO",
+      "path": "chapters[2].unlockHero",
+      "message": "Phần thưởng hero tồn tại nhưng không playable: ca_tre_biet_buon",
+      "id": "ca_tre_biet_buon",
+      "classification": "existing-non-playable"
+    },
+    {
+      "code": "LEGACY_REWARD_HERO",
+      "path": "chapters[3].reward.shardHero",
+      "message": "Phần thưởng hero tồn tại nhưng không playable: chi_ve_chai_thien_ha",
+      "id": "chi_ve_chai_thien_ha",
+      "classification": "existing-non-playable"
+    },
+    {
+      "code": "LEGACY_REWARD_HERO",
+      "path": "chapters[3].unlockHero",
+      "message": "Phần thưởng hero tồn tại nhưng không playable: chi_ve_chai_thien_ha",
+      "id": "chi_ve_chai_thien_ha",
+      "classification": "existing-non-playable"
+    },
+    {
+      "code": "LEGACY_REWARD_HERO",
+      "path": "chapters[4].reward.shardHero",
+      "message": "Phần thưởng hero tồn tại nhưng không playable: hon_cay_bang",
+      "id": "hon_cay_bang",
+      "classification": "existing-non-playable"
+    },
+    {
+      "code": "LEGACY_REWARD_HERO",
+      "path": "chapters[4].unlockHero",
+      "message": "Phần thưởng hero tồn tại nhưng không playable: hon_cay_bang",
+      "id": "hon_cay_bang",
+      "classification": "existing-non-playable"
+    },
+    {
+      "code": "LEGACY_REWARD_HERO",
+      "path": "chapters[5].reward.shardHero",
+      "message": "Phần thưởng hero tồn tại nhưng không playable: thang_be_dieu_set",
+      "id": "thang_be_dieu_set",
+      "classification": "existing-non-playable"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+<script>
+const CHARACTER_MANIFEST={
+  hero_a:{assets:{card:'assets/hero-a/card.png'}},
+};
+const ROLE_ART_SHEETS=Object.freeze({striker:'assets/heroes-concept/poses/striker.webp'});
+const ROLE_ART_CROPS=Object.freeze(Object.fromEntries(
+  Object.entries(ROLE_ART_SHEETS).map(([role])=>[role,['assets/heroes-concept/crops/' + role + '-00.png']])
+));
+const ROLE_ART_ALIAS=Object.freeze({support:'striker'});
+const DATA={
+  heroes:{
+    hero_a:{name:'Hero A',archetype:'striker'},
+    hero_b:{name:'Hero B',archetype:'support'},
+    legacy_npc:{name:'Legacy NPC',archetype:'mystic'},
+  },
+  scenes:{
+    scene_start:{sp:'hero_a',next:'scene_end',battleId:'encounter_a'},
+    scene_end:{sp:'narrator'},
+  },
+  encounters:{
+    encounter_a:[{id:'enemy_a',name:'Enemy A'}],
+  },
+  chapters:[{idx:0,id:'ch1',first:'scene_start',reward:{shardHero:'legacy_npc'}}],
+  daily:{costCampaign:6,costBoss:10,costTrain:4},
+};
+const OFFICIAL_ROSTER_12_IDS=Object.freeze(['hero_a','hero_b']);
+</script>
