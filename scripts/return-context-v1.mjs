@@ -4,12 +4,14 @@ import { join } from 'node:path';
 const indexPath = join(process.cwd(), 'dist', 'index.html');
 let index = readFileSync(indexPath, 'utf8');
 
+const countLiteral = value => index.split(value).length - 1;
+
 if (index.includes('id="samkok-r04-return-context"')) {
   throw new Error('Return context already installed');
 }
 
 const navMarker = 'function navTo(name){';
-if ((index.match(new RegExp(navMarker, 'g')) || []).length !== 1) {
+if (countLiteral(navMarker) !== 1) {
   throw new Error('navTo marker not found exactly once');
 }
 index = index.replace(navMarker, `${navMarker}
@@ -17,20 +19,20 @@ index = index.replace(navMarker, `${navMarker}
   if(_hvReturnNavigation?.target) name=_hvReturnNavigation.target;`);
 
 const showMarker = 'function showScreen(name){';
-if ((index.match(new RegExp(showMarker, 'g')) || []).length !== 1) {
+if (countLiteral(showMarker) !== 1) {
   throw new Error('showScreen marker not found exactly once');
 }
 index = index.replace(showMarker, `${showMarker}
   window.HonVietReturnContext?.beforeScreenChange?.({name,from:ST.screen,heroId:ST._heroDetailId});`);
 
 const showEnd = 'ST.screen=name; playBgm(desiredBgm(name)); }';
-if ((index.match(new RegExp(showEnd.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g')) || []).length !== 1) {
+if (countLiteral(showEnd) !== 1) {
   throw new Error('showScreen tail marker not found exactly once');
 }
 index = index.replace(showEnd, 'ST.screen=name; playBgm(desiredBgm(name)); window.HonVietReturnContext?.afterScreenChange?.({name}); }');
 
 const detailMarker = "function renderHeroDetail(id){ const _enteringHeroDetail=(ST.screen!=='heroDetail'||ST._heroDetailId!==id); ST._heroDetailId=id;";
-if ((index.match(new RegExp(detailMarker.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g')) || []).length !== 1) {
+if (countLiteral(detailMarker) !== 1) {
   throw new Error('renderHeroDetail marker not found exactly once');
 }
 index = index.replace(detailMarker, "function renderHeroDetail(id){ const _enteringHeroDetail=(ST.screen!=='heroDetail'||ST._heroDetailId!==id); window.HonVietReturnContext?.enterHeroDetail?.({entering:_enteringHeroDetail,from:ST.screen,mode:ST.mode||null,encounterId:ST.battleId||ST.chapterIdx||null,heroId:id,filter:typeof heFilter==='string'?heFilter:'all'}); ST._heroDetailId=id;");
