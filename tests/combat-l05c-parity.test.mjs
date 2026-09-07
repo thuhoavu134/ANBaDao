@@ -35,6 +35,8 @@ function buildObservation(sessionId, finalAmount = 15, speed = 1) {
       kind: 'damage',
       before,
       after,
+      finalSnapshot: after,
+      finalSnapshotBoundary: 'resolveAction.complete',
       results: [{ type: 'damage', targetId: 'target', amount: round === 15 ? finalAmount : 1 }],
       rngCalls: [{ index: round - 1, site: 'applyDamage.hit', domain: 'rule', cursor: round - 1, value: 0.25 }]
     });
@@ -66,6 +68,7 @@ test('L05c round-cap report records terminal round 15 without allowing round 16'
   assert.equal(report.maxObservedRound, 15);
   assert.equal(report.roundCapReached, true);
   assert.equal(report.roundsBeyondCap, 0);
+  assert.deepEqual(report.finalSnapshotCoverage, { captured: 15, expected: 15, complete: true });
   assert.deepEqual(report.completion, {
     winner: 'player',
     reason: 'round-limit-tie',
@@ -86,6 +89,13 @@ test('L05c full replay parity ignores session identity but catches deterministic
 
   const changed = buildObservation('speed-2', 16);
   assert.equal(compareCombatObservations(first, changed).equal, false);
+});
+
+test('L05c parity includes explicit final-action snapshot drift', () => {
+  const baseline = buildObservation('snapshot-baseline');
+  const changed = buildObservation('snapshot-drift');
+  changed.actions[0].finalSnapshot[1].hp -= 1;
+  assert.equal(compareCombatObservations(baseline, changed).equal, false);
 });
 
 test('L05c build owner exposes round-cap fixture and terminal replay metadata', () => {

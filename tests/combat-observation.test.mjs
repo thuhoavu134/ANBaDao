@@ -124,6 +124,8 @@ test('L05a build owner exposes opt-in fixture capture at resolveAction boundary 
   assert.match(adapter, /rngSitesForAction/);
   assert.match(adapter, /before/);
   assert.match(adapter, /after/);
+  assert.match(adapter, /finalSnapshot: after/);
+  assert.match(adapter, /finalSnapshotBoundary: 'resolveAction\.complete'/);
   assert.match(adapter, /__HV_COMBAT_FIXTURE_V1\?\.isEnabled\?\.\(\)/);
   assert.match(adapter, /__HV_COMBAT_FIXTURE_V1\.stop\(\{ finishedAt:/);
   assert.match(adapter, /beginAction/);

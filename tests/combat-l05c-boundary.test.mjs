@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import {
+  COMBAT_OBSERVATION_GAPS,
   combatObservationReport,
   createCombatObservation,
   recordCombatImpact,
@@ -14,7 +15,7 @@ function unit(id, team, hp, extra = {}) {
   return { id, team, slot: 0, hp, maxHp: 100, energy: 20, shield: 0, statuses: [], ...extra };
 }
 
-test('L05c report exposes direct boundary coverage and multi-hit evidence without closing existing gaps', () => {
+test('L05c report closes the final-action snapshot gap while keeping per-impact gap explicit', () => {
   const observation = createCombatObservation({
     fixtureId: 'l05c-boundary-contract',
     sessionId: 'l05c-boundary-contract',
@@ -31,6 +32,8 @@ test('L05c report exposes direct boundary coverage and multi-hit evidence withou
     kind: 'multi',
     before,
     after,
+    finalSnapshot: after,
+    finalSnapshotBoundary: 'resolveAction.complete',
     results: [{ type: 'damage', targetId: 'target', amount: 20 }]
   });
   assert.equal(recorded.ok, true);
@@ -55,7 +58,28 @@ test('L05c report exposes direct boundary coverage and multi-hit evidence withou
   assert.equal(report.directBoundaryCount, 4);
   assert.equal(report.multiImpactActionCount, 1);
   assert.equal(report.multiHitActionCount, 1);
-  assert.ok(report.gaps.some(entry => entry.code === 'per-impact-boundary-missing'));
+  assert.deepEqual(report.finalSnapshotCoverage, { captured: 1, expected: 1, complete: true });
+  assert.deepEqual(report.finalSnapshotBoundaryTypes, ['resolveAction.complete']);
+  assert.equal(report.gaps.some(entry => entry.code === COMBAT_OBSERVATION_GAPS.FINAL_ACTION_SNAPSHOT), false);
+  assert.equal(report.gaps.some(entry => entry.code === COMBAT_OBSERVATION_GAPS.PER_IMPACT_BOUNDARY), true);
+});
+
+test('L05c report keeps final-action snapshot gap open when any action omits the explicit capture', () => {
+  const observation = createCombatObservation({ fixtureId: 'l05c-final-gap', sessionId: 'l05c-final-gap' });
+  const before = [unit('actor', 1, 100), unit('target', 2, 100)];
+  const after = [unit('actor', 1, 100), unit('target', 2, 80)];
+  recordCombatObservation(observation, {
+    round: 1,
+    actorId: 'actor',
+    targetId: 'target',
+    action: 'basic',
+    kind: 'damage',
+    before,
+    after
+  });
+  const report = combatObservationReport(observation);
+  assert.deepEqual(report.finalSnapshotCoverage, { captured: 0, expected: 1, complete: false });
+  assert.equal(report.gaps.some(entry => entry.code === COMBAT_OBSERVATION_GAPS.FINAL_ACTION_SNAPSHOT), true);
 });
 
 test('L05c build owner injects action-cost and tick-status boundaries at source runtime', () => {
@@ -70,4 +94,6 @@ test('L05c build owner injects action-cost and tick-status boundaries at source 
   assert.match(adapter, /actor\.energy = Math\.max\(0, actor\.energy - cost\);/);
   assert.match(adapter, /const statusEvents = __hvTickStatuses3qAdapter\(actor\);/);
   assert.match(adapter, /metadata: \{ sourceBoundary: 'applyHeal', effectPhase: 'action' \}/);
+  assert.match(adapter, /finalSnapshot: after/);
+  assert.match(adapter, /finalSnapshotBoundary: 'resolveAction\.complete'/);
 });

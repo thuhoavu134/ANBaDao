@@ -124,6 +124,8 @@ function parityAction(action) {
     snapshotBoundary: action.snapshotBoundary,
     before: clone(action.before),
     after: clone(action.after),
+    finalSnapshot: clone(action.finalSnapshot),
+    finalSnapshotBoundary: action.finalSnapshotBoundary,
     results: (action.results || []).map(parityResult),
     rngCalls: parityRngCalls(action.rngCalls),
     impacts: (action.impacts || []).map(parityImpact)
@@ -255,6 +257,10 @@ export function recordCombatObservation(observation, input = {}) {
     snapshotBoundary: text(input.snapshotBoundary, 'resolveAction.finally'),
     before,
     after,
+    finalSnapshot: Array.isArray(input.finalSnapshot) ? snapshotCombatUnits(input.finalSnapshot) : null,
+    finalSnapshotBoundary: Array.isArray(input.finalSnapshot)
+      ? text(input.finalSnapshotBoundary, 'resolveAction.complete')
+      : null,
     results,
     rngCalls: normalizeRngCalls(input.rngCalls ?? rngSitesForAction(input.kind)),
     rngCursor: input.rngCursor == null ? null : clone(input.rngCursor),
@@ -339,7 +345,17 @@ export function combatObservationReport(observation) {
   });
   const rngSites = [...new Set(allRngCalls.map((call) => call.site))].sort();
   const resultTypes = [...new Set(observation.actions.flatMap((action) => action.results.map((result) => result.type)))].sort();
-  const gaps = observation.gaps.filter((entry) => entry.code !== COMBAT_OBSERVATION_GAPS.RNG_VALUE || rngGapOpen);
+  const finalSnapshotActionCount = observation.actions.filter((action) => Array.isArray(action.finalSnapshot)).length;
+  const finalSnapshotGapOpen = observation.actions.length === 0 || finalSnapshotActionCount !== observation.actions.length;
+  const finalSnapshotBoundaryTypes = [...new Set(
+    observation.actions
+      .filter((action) => Array.isArray(action.finalSnapshot) && action.finalSnapshotBoundary)
+      .map((action) => action.finalSnapshotBoundary)
+  )].sort();
+  const gaps = observation.gaps.filter((entry) => (
+    (entry.code !== COMBAT_OBSERVATION_GAPS.FINAL_ACTION_SNAPSHOT || finalSnapshotGapOpen) &&
+    (entry.code !== COMBAT_OBSERVATION_GAPS.RNG_VALUE || rngGapOpen)
+  ));
   const completion = observation.completion ? normalizeCompletion(observation.completion) : null;
   const replayDigest = combatObservationParityDigest(observation);
   const roundCapReached = Boolean(
@@ -364,6 +380,12 @@ export function combatObservationReport(observation) {
     impactBoundaryCoverage,
     multiImpactActionCount,
     multiHitActionCount,
+    finalSnapshotCoverage: {
+      captured: finalSnapshotActionCount,
+      expected: observation.actions.length,
+      complete: !finalSnapshotGapOpen
+    },
+    finalSnapshotBoundaryTypes,
     roundMax: observation.roundMax,
     maxObservedRound,
     roundsBeyondCap,
