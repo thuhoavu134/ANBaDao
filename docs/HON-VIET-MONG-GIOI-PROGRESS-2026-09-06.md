@@ -81,7 +81,7 @@ Spec từng ticket, file owner, contract, asset, test và điều kiện đóng 
 - Commit 324a33e100170643a5223c87dd945e4bc5969879 thêm module thuần và QA note; không sửa DATA.chapters, defaultPlayer, migrateSave, build hoặc runtime.
 - preview phân biệt clearedChapters/receipt claimed với chương unclaimed; backfill chỉ tạo receipt audit cho chương đã clear, không grant/revoke reward.
 - explicit claim candidate yêu cầu commandId ổn định, giữ nguyên legacy ownership/shard, cộng reward proposal vào bản sao và ghi receipt; save đầu vào không bị mutate.
-- Chính sách an toàn: cleared hoặc receipt claimed không được regrant; không có receipt nhưng đã clear thì backfill בלבד; chương chưa clear không tự cấp trong migration.
+- Chính sách an toàn: cleared hoặc receipt claimed không được regrant; không có receipt nhưng đã clear thì chỉ backfill receipt; chương chưa clear không tự cấp trong migration.
 - Test combined L02a + L02b + L02c: 11/11 pass. Full npm test, build, browser, Safari thật và production deployment chưa chạy trong phiên connector-only này.
 - Bước tiếp theo: duyệt 6 mapping, nối candidate vào transaction/save owner hiện có, rồi chạy fixture migration trước khi thay reward runtime.
 
