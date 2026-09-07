@@ -93,6 +93,7 @@ test('L05c build owner exposes round-cap fixture and terminal replay metadata', 
   assert.match(adapter, /l05c-round-cap/);
   assert.match(adapter, /isScenario/);
   assert.match(adapter, /__hvCheckBattleEnd3qAdapter/);
+  assert.match(adapter, /revive\.hp = Math\.max/);
   assert.match(adapter, /round-limit-(?:hp|tie)/);
   assert.match(adapter, /roundMax: state\.objective\?\.maxRounds/);
   assert.match(adapter, /speed: state\.speed/);
