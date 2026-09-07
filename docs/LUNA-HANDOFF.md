@@ -6,7 +6,7 @@ Cập nhật: **07/09/2026**. Đây là điểm vào cho Luna. Các mục pixel/
 
 - Repo `bktimmy247/luc-than`; [production](https://luc-than.vercel.app/). Game HTML/JavaScript + Canvas 2D, shell index và iframe battle, build bằng `scripts/build-static.mjs`.
 - Code baseline của đợt phân tích: `c8fefca0e31b6ddb926921454413d38860171665`. Hotfix âm thanh thoát trận đã deploy Vercel READY; 171/171 test đạt. Chưa có kiểm tương tác production/nghe loa Safari sau hotfix; lần kiểm HTTP sau deploy bị treo rồi hủy.
-- [Progress](HON-VIET-MONG-GIOI-PROGRESS-2026-09-06.md) ghi trạng thái từng hệ; [execution plan](LUNA-EXECUTION-PLAN-2026-09-07.md) chia L01–L20. **L02a đã hoàn thành: audit/validator catalog ở commit 7272ede748eed62af4814e13776e468ebe7e9d15; L02b đã hoàn thành proposal reward ở commit 25140d3fd8c0b151d89f9bbecdc85834fe7195ea; code tiếp theo là L02c migration sau khi proposal được duyệt.** Chưa thay balance/seed. L01 là device verification, không viết lại bus audio.
+- [Progress](HON-VIET-MONG-GIOI-PROGRESS-2026-09-06.md) ghi trạng thái từng hệ; [execution plan](LUNA-EXECUTION-PLAN-2026-09-07.md) chia L01–L20. **L02a đã hoàn thành: audit/validator catalog ở commit 7272ede748eed62af4814e13776e468ebe7e9d15; L02b đã hoàn thành proposal reward ở commit 25140d3fd8c0b151d89f9bbecdc85834fe7195ea; L02c contract prep đã có ở commit 324a33e100170643a5223c87dd945e4bc5969879; tiếp theo là duyệt mapping rồi mới nối migration runtime.** Chưa thay balance/seed. L01 là device verification, không viết lại bus audio.
 - [Phân tích source Hermes](HERMES-SOURCE-AUDIT-2026-09-07.md) là tài liệu học tổ chức game mẫu; [manifest](reference/hermes-source-manifest-2026-09-07.json) kiểm kê/hash. Archive là Cocos client đã tách mã + config/protocol; chưa có backend/project editor đầy đủ để deploy lại.
 - **Anh đã yêu cầu dùng lại code mẫu.** [Hướng dẫn tái sử dụng](HERMES-CODE-REUSE-GUIDE.md) thay quy tắc cũ chỉ học kiến trúc/cấm toàn bộ source. Guide xác định 27 phương thức trong archive đã nhận, dependency và lỗi cần sửa khi port. Mã gốc chưa được đưa lên GitHub do xét duyệt tự động chặn việc phân phối lại; repo chứa phần phân tích/hướng dẫn do agent viết. Luna được tự trích/port phần phù hợp vào owner hiện có; chưa có đoạn nào được tích hợp trong đợt tài liệu này.
 - Giữ bản sắc Hồn Việt, 12 ID chính thức, 6 slot (3 trước/3 sau), 15 hiệp, không multi-wave. Capacity được chốt trong plan là 72 (32 SSR/16 SR/16 A/8 B), hiện chưa có đủ nội dung; không tạo placeholder để đủ số.
@@ -23,6 +23,14 @@ Thứ tự đọc tối thiểu mỗi phiên: AGENTS → mục này → progress
 - Đích đề xuất lần lượt là co_dao_ganh_hoi, phong_tu, thuy_nuong_roi_nuoc, luc_anh, to_diep và dinh_loi; tất cả đều nằm trong 12 playable ID.
 - Module proposal và behavior test không được import vào runtime, nên không đổi reward, seed, balance, ownership hay save migration. Test combined L02a + L02b đạt 6/6.
 - Chưa đánh dấu full L02 DONE: cần duyệt mapping, xử lý receipt/claim trong L02c và xử lý riêng scene reference/unlock legacy.
+## 1.2 L02c — contract migration reward đã chuẩn bị
+
+- Module src/domain/save/chapter-reward-migration.mjs là pure contract, không DOM/storage/network và không mutate input save.
+- Có ba boundary: preview chapter state, backfill receipt cho clearedChapters và explicit claim candidate có mappingVersion/commandId.
+- Không có runtime import/build patch ở commit này. Vì vậy reward DATA và save người chơi hiện chưa đổi.
+- Test chapter-reward-migration cùng L02a/L02b đạt 11/11; full npm test/build/UI/device/deploy chưa chạy lại.
+- Chỉ tiếp tục tích hợp sau khi duyệt 6 mapping trong L02b; không regrant chapter đã clear, không thu hồi legacy ownership/shard.
+
 ## 2. Bản đồ code: sửa đúng nguồn tạo ra sản phẩm
 
 | Thành phần | Nguồn cần đọc/sửa | Vai trò |

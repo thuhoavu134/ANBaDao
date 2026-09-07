@@ -27,7 +27,7 @@ Tài liệu này cụ thể hóa E01–E26/R01–R11 của [master plan](HON-VIE
 | ID | Ưu tiên / trạng thái lúc bàn giao | Gắn E/R | Phụ thuộc | Đầu ra |
 |---|---|---|---|---|
 | L01 | P0 / VERIFY | E01, E04, E24; R02–04 | Hotfix đã deploy | Bằng chứng thoát/vào trận, route, audio trên thiết bị |
-| L02 | P0 / IN_PROGRESS (L02a + L02b proposal DONE) | E02, E08; R05 | Baseline | L02a report/validator và L02b reward proposal đã có; L02c còn mở |
+| L02 | P0 / IN_PROGRESS (L02a + L02b DONE; L02c PREPARED) | E02, E08; R05 | Baseline | L02a report, L02b proposal và L02c migration contract đã có; runtime integration còn mở |
 | L03 | P0 / READY phần a | E03, E07; R07/R10 | Chủ transaction hiện có | Command + quest/event cùng một commit cho lát cắt nuôi đội |
 | L04 | P1 / READY phần a | E04, E06 | Router/bridge hiện có | Return context và vòng đời màn dùng một owner |
 | L05 | P1 / READY phần a | E05/E06; R08/R11 | Combat hiện có | Event đủ sub-action, RNG luật có seed, parity |
@@ -106,7 +106,7 @@ Thân code gốc còn trong archive người dùng bàn giao; guide chỉ rõ 27
 
 **L02b — DONE (proposal only):** bảng reward cũ/mới/lý do/tác động save đã có ở docs/qa/L02b/reward-mapping-proposal.md và module/test proposal ở commit 25140d3fd8c0b151d89f9bbecdc85834fe7195ea. Sáu đích đều là playable ID chính thức, giữ nguyên giá trị vàng/ngọc/mảnh và không đưa `ong_chu_wifi` vào roster. Chưa áp dụng DATA hoặc migration; L02c còn mở.
 
-**L02c:** sau khi chốt, migrate đúng reward chưa claim và giữ receipt/ownership đã nhận. Không thu hồi hero/item save cũ. Chuyển catalog sang một nguồn duy nhất theo lát cắt, test rằng adapter và UI nhận cùng version.
+**L02c — PREPARED (chưa nối runtime):** contract preview/backfill/explicit claim đã có ở commit 324a33e100170643a5223c87dd945e4bc5969879 và docs/qa/L02c. Contract không mutate save gốc, không regrant cleared chapter, giữ legacy ownership/shard và yêu cầu commandId ổn định. Chỉ tích hợp sau khi duyệt mapping.
 
 **Test/đóng:** report tái tạo được; fixtures valid/unknown/non-playable/cycle; save đã/ chưa qua chương; UI receipt không hứa tướng không thể xuất hiện trong roster. Không đổi balance trong L02a. Asset: dùng portrait/icon đang có; chỉ gen art mới sau khi item/hero đích rõ.
 
@@ -118,6 +118,12 @@ Thân code gốc còn trong archive người dùng bàn giao; guide chỉ rõ 27
 - Đề xuất giữ nguyên gold/gems/shards, chuyển shardHero sang 6 playable ID chính thức và bỏ unlockHero khỏi reward chương. Đây là phương án review, không phải thay đổi balance.
 - Save policy đề xuất: clearedChapters/receipt đã nhận thì giữ nguyên; chưa claim mới dùng mapping sau khi L02c được duyệt. Không thu hồi legacy ownership/shard.
 - Test: 6/6 focused tests pass. Scene first reference thiếu và scene unlockHero legacy không nằm trong ticket này.
+### L02c — contract migration reward đã chuẩn bị
+
+- Scope đã đóng ở mức contract/test: preview trạng thái, backfill receipt đã clear và candidate explicit claim cho chương chưa claim.
+- Không có runtime caller hoặc build patch trong commit này; không thể coi reward migration/gameplay đã chạy.
+- Evidence: 11/11 focused tests pass cho L02a + L02b + L02c; full test/build/browser/device/deploy vẫn chưa chạy trong phiên này.
+- Gate tiếp theo: duyệt proposal 6 đích, sau đó nối vào transaction/save owner và kiểm tra reload/double-claim/legacy preserve.
 ### L03 — Giao dịch và event tiến độ cùng thành công hoặc cùng thất bại
 
 **Mục đích:** nâng tướng/nhận thưởng không bị lệch tiền, nhiệm vụ hoặc trạng thái sau reload.

@@ -51,9 +51,10 @@ Cập nhật **07/09/2026, giờ Việt Nam**. Giữ tên file cũ để các li
 |---|---|---|
 | 1 | **L02a — DONE** | Validator/extractor/report đã có ở commit 7272ede748eed62af4814e13776e468ebe7e9d15; 4/4 focused tests pass. Findings và phần chưa làm ghi trong docs/qa/L02a; chưa thay reward hoặc seed |
 | 2 | **L02b — DONE (proposal only)** | Bảng đề xuất reward theo 6 chương ở docs/qa/L02b/reward-mapping-proposal.md; commit code 25140d3; 6/6 focused tests pass; chưa áp dụng DATA hoặc migration |
+| 3 | **L02c — PREPARED** | Contract migration receipt/preview/explicit claim ở commit 324a33e; 11/11 focused tests pass; chưa nối runtime hoặc persist |
 | Song song | L01 — VERIFY | Production/device smoke audio/route, ghi rõ thiết bị thật; không viết lại hotfix đã có |
-| 3 | L03a — READY | Inventory entrypoints trừ/cộng và thứ tự persist/event; lấy level-up → quest làm lát cắt đầu |
-| 4 | L04a / L05a — READY | Map return/lifetime và fixture các sub-action combat; chọn một việc mỗi phiên |
+| 4 | L03a — READY | Inventory entrypoints trừ/cộng và thứ tự persist/event; lấy level-up → quest làm lát cắt đầu |
+| 5 | L04a / L05a — READY | Map return/lifetime và fixture các sub-action combat; chọn một việc mỗi phiên |
 | Kế tiếp | L06 / L09 | Đồng bộ stat/snapshot rồi khép vòng nuôi đội và mở đầu |
 | Chuẩn bị được | L07 / L17 | Bảng seed/banner và spec online để bàn; không chặn việc độc lập |
 
@@ -74,7 +75,16 @@ Spec từng ticket, file owner, contract, asset, test và điều kiện đóng 
 - Vàng, ngọc và số lượng mảnh được giữ nguyên trong proposal; trường unlockHero của reward chương được bỏ ở phương án vì 12 playable đã được defaultPlayer/migrateSave mở sẵn. Legacy hero vẫn giữ cho lore/NPC.
 - Save đã nhận không bị cấp lại/thu hồi; save chưa nhận chỉ xử lý một lần ở L02c sau khi có receipt/claim boundary. Các scene unlockHero legacy và 5 first scene thiếu vẫn mở.
 - Test behavior L02a + L02b: 6/6 pass. Full npm test, build, browser, Safari thật và production deployment chưa chạy trong phiên connector-only này.
-- Bước tiếp theo: duyệt 6 đích reward, rồi làm L02c migration đúng ownership/receipt; full L02 vẫn IN_PROGRESS.
+- Bước tiếp theo: duyệt 6 đích reward, rồi nối contract vào transaction/save owner; full L02 vẫn IN_PROGRESS.
+## 4.3 L02c — contract migration reward đã chuẩn bị
+
+- Commit 324a33e100170643a5223c87dd945e4bc5969879 thêm module thuần và QA note; không sửa DATA.chapters, defaultPlayer, migrateSave, build hoặc runtime.
+- preview phân biệt clearedChapters/receipt claimed với chương unclaimed; backfill chỉ tạo receipt audit cho chương đã clear, không grant/revoke reward.
+- explicit claim candidate yêu cầu commandId ổn định, giữ nguyên legacy ownership/shard, cộng reward proposal vào bản sao và ghi receipt; save đầu vào không bị mutate.
+- Chính sách an toàn: cleared hoặc receipt claimed không được regrant; không có receipt nhưng đã clear thì backfill בלבד; chương chưa clear không tự cấp trong migration.
+- Test combined L02a + L02b + L02c: 11/11 pass. Full npm test, build, browser, Safari thật và production deployment chưa chạy trong phiên connector-only này.
+- Bước tiếp theo: duyệt 6 mapping, nối candidate vào transaction/save owner hiện có, rồi chạy fixture migration trước khi thay reward runtime.
+
 ## 5. Gate còn mở
 
 - iPhone/iPad Safari thật: unlock/mute/thoát trận, Lục ultimate, result music, roster/back/safe area. Chưa có chứng cứ mới sau audio hotfix.
