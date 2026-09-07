@@ -28,7 +28,7 @@ Tài liệu này cụ thể hóa E01–E26/R01–R11 của [master plan](HON-VIE
 |---|---|---|---|---|
 | L01 | P0 / VERIFY | E01, E04, E24; R02–04 | Hotfix đã deploy | Bằng chứng thoát/vào trận, route, audio trên thiết bị |
 | L02 | P0 / IN_PROGRESS (L02a + L02b DONE; L02c PREPARED) | E02, E08; R05 | Baseline | L02a report, L02b proposal và L02c migration contract đã có; runtime integration còn mở |
-| L03 | P0 / READY phần a | E03, E07; R07/R10 | Chủ transaction hiện có | Command + quest/event cùng một commit cho lát cắt nuôi đội |
+| L03 | P0 / IN_PROGRESS (L03a DONE; L03b open) | E03, E07; R07/R10 | Chủ transaction hiện có | Audit command đã có; L03b còn phải nối command + quest/event cùng một commit |
 | L04 | P1 / READY phần a | E04, E06 | Router/bridge hiện có | Return context và vòng đời màn dùng một owner |
 | L05 | P1 / READY phần a | E05/E06; R08/R11 | Combat hiện có | Event đủ sub-action, RNG luật có seed, parity |
 | L06 | P1 / PLANNED | E02/E09/E10; R05/R11 | L02, L03 | Stat/kit snapshot thống nhất hồ sơ–đội–trận |
@@ -130,7 +130,7 @@ Thân code gốc còn trong archive người dùng bàn giao; guide chỉ rõ 27
 
 **Đọc:** transaction/save owner, `scripts/opening-loop-v1.mjs`, `src/domain/quest/opening-loop-contract.mjs`; `tests/transaction-contract.test.mjs`, `tests/forge-transactions.test.mjs`, `tests/opening-loop-contract.test.mjs`. Được dùng phần kiểm cost của `heromdl.jsfChkCost` sau khi gộp vật liệu trùng/validate số và inject inventory; `mainlinectrl.n16401` cung cấp nhánh xử lý reply/reward. Tính nguyên tử local vẫn dùng transaction owner Lục Thần, không sao chép callback server để giả đã atomic.
 
-**L03a — READY:** lập bảng mọi command có mutate tiền/item/progress: entrypoint, cost, credit, persist, event và receipt. Bắt đầu đúng `levelUpHero` → quest/opening event, dùng code đang có làm fixture. `questProgress` sau commit cần thử lỗi ở lần ghi sau; không kết luận đây là giao dịch tổng đã atomic.
+**L03a — DONE (audit source):** inventory 23 boundary command/helper đã ghi entrypoint, cost, credit, persist, event, receipt, transaction và atomicity; bắt đầu đúng `levelUpHero` → `questProgress` → `weeklyProgress` trên source active. Commit 3e69e5c3b7ef3996946c77310d6e5cdb372e270e; report ở `docs/qa/L03a/transaction-command-inventory.json`.
 
 **L03b:** gói stat/chi phí/event đã xử lý/quest progress/receipt vào cùng state candidate và một lần persist. Sau commit chỉ notification/render/audio; event không được mutate lại qua listener thứ hai. Nếu cần event outbox, lưu cùng transaction và consumer idempotent; chọn một cách cho một command, không dùng cả hai cùng sinh thưởng.
 
@@ -140,7 +140,7 @@ Thân code gốc còn trong archive người dùng bàn giao; guide chỉ rõ 27
 
 **Test:** nhấn đôi, retry cùng ID, stale revision, thiếu tiền, lỗi persist, listener chạy lại, reload giữa success và render. Expected: state/quest/receipt cùng cũ hoặc cùng mới, đúng một debit/credit/event. UI giữ lỗi và cho retry, không phát reveal success trước persist.
 
-**Đóng:** một command chạy xuyên UI/save/quest, có trước–sau và reload; bảng audit ghi rõ các command chưa migrate. Audio/art dùng lại, chưa cần gen ảnh cho logic này.
+**Đóng L03:** L03a chỉ đóng inventory và source evidence. L03b mới đóng một command chạy xuyên UI/save/quest với receipt, failure/retry/reload và state cũ hoặc mới nhất quán. Audio/art dùng lại, chưa cần gen ảnh cho logic này.
 
 ### L04 — Return context, modal và scene lifetime
 

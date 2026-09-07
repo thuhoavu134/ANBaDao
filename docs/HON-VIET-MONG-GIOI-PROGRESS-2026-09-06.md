@@ -39,7 +39,7 @@ Cập nhật **07/09/2026, giờ Việt Nam**. Giữ tên file cũ để các li
 
 1. **Catalog/seed:** defaultPlayer và migrateSave mở cả 12 tướng. QA full-access opt-in không tự giải quyết việc này. DATA.chapters có 6 chương và còn reward/unlockHero dùng ID legacy ngoài roster. Cần L02 và D01/D02; không xóa lore hay thu hồi save.
 2. **Combat:** recorder quanh resolveAction chưa chứng minh bao phủ nhịp hai/đuổi đánh. RNG hit/variance/crit vẫn dùng Math.random. Có seed field và test module chưa đồng nghĩa replay deterministic toàn engine. Làm L05 bằng fixture thực.
-3. **Transaction/events:** một số event quest/opening chạy sau transaction; chưa nghiệm thu một commit cho mọi side effect và mọi command. L03 audit rồi chuyển từng nhóm.
+3. **Transaction/events:** một số event quest/opening chạy sau transaction; L03a đã audit boundary hiện hành nhưng chưa nghiệm thu một commit cho mọi side effect và mọi command. L03b sẽ chuyển từng nhóm.
 4. **Vòng mở đầu:** graph hiện hữu không tự cung cấp seed/banner/item để đảm bảo player-vNext có thể đi hết; cần L07–L09, không lấy tài khoản QA đủ tướng làm bằng chứng new-user flow.
 5. **Nuôi đội:** shared stat snapshot và 10 kit v2 còn lại, liên thông túi/đồ/đội/report, asset riêng/SFX mapping mỗi tướng chưa đủ.
 6. **Ngày/tuần và mode phụ:** nhiều hệ có code legacy/local; cần period/claim/mode progression/return context nhất quán, không ghi là hoàn toàn chưa có cũng không ghi DONE cả hệ.
@@ -53,7 +53,7 @@ Cập nhật **07/09/2026, giờ Việt Nam**. Giữ tên file cũ để các li
 | 2 | **L02b — DONE (proposal only)** | Bảng đề xuất reward theo 6 chương ở docs/qa/L02b/reward-mapping-proposal.md; commit code 25140d3; 6/6 focused tests pass; chưa áp dụng DATA hoặc migration |
 | 3 | **L02c — PREPARED** | Contract migration receipt/preview/explicit claim ở commit 324a33e; 11/11 focused tests pass; chưa nối runtime hoặc persist |
 | Song song | L01 — VERIFY | Production/device smoke audio/route, ghi rõ thiết bị thật; không viết lại hotfix đã có |
-| 4 | L03a — READY | Inventory entrypoints trừ/cộng và thứ tự persist/event; lấy level-up → quest làm lát cắt đầu |
+| 4 | **L03a — DONE (audit source)** | Inventory 23 boundary và thứ tự persist/event đã đối chiếu; opening level-up → quest ghi nhận not-atomic |
 | 5 | L04a / L05a — READY | Map return/lifetime và fixture các sub-action combat; chọn một việc mỗi phiên |
 | Kế tiếp | L06 / L09 | Đồng bộ stat/snapshot rồi khép vòng nuôi đội và mở đầu |
 | Chuẩn bị được | L07 / L17 | Bảng seed/banner và spec online để bàn; không chặn việc độc lập |
@@ -84,6 +84,16 @@ Spec từng ticket, file owner, contract, asset, test và điều kiện đóng 
 - Chính sách an toàn: cleared hoặc receipt claimed không được regrant; không có receipt nhưng đã clear thì chỉ backfill receipt; chương chưa clear không tự cấp trong migration.
 - Test combined L02a + L02b + L02c: 11/11 pass. Full npm test, build, browser, Safari thật và production deployment chưa chạy trong phiên connector-only này.
 - Bước tiếp theo: duyệt 6 mapping, nối candidate vào transaction/save owner hiện có, rồi chạy fixture migration trước khi thay reward runtime.
+
+## 4.4 L03a — audit transaction command đã triển khai
+
+- L03a đã hoàn thành trong phạm vi audit source/report ở commit 3e69e5c3b7ef3996946c77310d6e5cdb372e270e; L03 tổng thể vẫn IN_PROGRESS.
+- Inventory có 23 boundary command/helper được đối chiếu đủ entrypoint, cost, credit, persist, event, receipt, transaction và atomicity. Report tái tạo được ở docs/qa/L03a/transaction-command-inventory.json.
+- Audit source active index.html hash e4f79d41e3bf7bb225ff878729d71e72be9ad94bac962f5e41cffc98148680b9: 23/23 marker verified; static scan ghi nhận 509 function declaration và 163 mutation/persist candidate để truy vết tiếp.
+- Lát cắt levelUpHero → questProgress → weeklyProgress xác nhận quest/weekly có persist nội bộ sau mutate hero và trước persist ngoài; runtime chưa wired receipt/transaction, nên atomicity được ghi là not-atomic.
+- Focused tests L02a + L02b + L02c + L03a: 14/14 pass. Failure harness được mô tả nhưng chưa tiêm vào runtime thật; full npm test/build/browser/Safari/production chưa chạy.
+- Không đổi index.html, seed, reward, balance, save migration, asset, battle, audio hoặc hotfix thoát trận. Hermes archive vẫn SOURCE_NOT_AVAILABLE.
+- Bước tiếp theo là L03b: chọn một command hẹp để nối state candidate, một persist và receipt; L02c vẫn chờ duyệt sáu reward mapping.
 
 ## 5. Gate còn mở
 
