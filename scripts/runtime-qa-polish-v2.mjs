@@ -136,6 +136,7 @@ const voiceBridge = String.raw`<script id="luc-anh-ultimate-voice-guaranteed">
  try{audio.load();}catch(_e){}
  audio.addEventListener('ended',()=>{try{audio.currentTime=0;}catch(_e){}});
  const fallback=()=>{
+   if(window.HonVietSfx?.isBattleActive?.()===false)return Promise.resolve(false);
    try{
      const bus=getBus();
      if(bus&&typeof bus.playVoice==='function'){
@@ -150,6 +151,7 @@ const voiceBridge = String.raw`<script id="luc-anh-ultimate-voice-guaranteed">
    }catch(_e){return Promise.resolve(false);}
  };
  const play=()=>{
+   if(window.HonVietSfx?.isBattleActive?.()===false)return Promise.resolve(false);
    try{
      audio.pause();audio.currentTime=0;audio.muted=false;audio.volume=1;
      const p=audio.play();

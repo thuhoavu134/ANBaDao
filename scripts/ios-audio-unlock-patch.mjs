@@ -12,6 +12,14 @@ const manager = String.raw`<script id="honviet-ios-audio-unlock">
   let ctx=null, unlocked=false, unlockPromise=null;
   const buffers=new Map();
   const loads=new Map();
+  const activeVoices=new Set();
+  let combatEpoch=0,combatEnabled=true;
+  function beginCombat(){combatEnabled=true;}
+  function stopCombat(){
+    combatEnabled=false;combatEpoch++;
+    for(const voice of activeVoices)if(voice.combat){voice.stop();voice.cleanup();}
+    document.documentElement.dataset.voiceCombatActive=String([...activeVoices].filter(v=>v.combat).length);
+  }
   const voiceUrls=[
     'assets/audio/voice-luc-anh-hero.mp3',
     'assets/audio/voice-luc-anh-ultimate.mp3'
@@ -66,20 +74,36 @@ const manager = String.raw`<script id="honviet-ios-audio-unlock">
     return unlockPromise;
   }
   async function playVoice(url,gainValue=1){
+    const combat=String(url).includes('voice-luc-anh-ultimate.mp3'),ticket=combatEpoch;
+    const current=()=>!combat||(combatEnabled&&ticket===combatEpoch);
+    if(!current())return false;
     await unlock();
+    if(!current())return false;
     const c=getCtx();
     if(!c)return false;
     try{
       const buf=await decode(url);
+      if(!current())return false;
       if(c.state==='suspended')await c.resume();
+      if(!current())return false;
       const src=c.createBufferSource(),gain=c.createGain();
       src.buffer=buf;gain.gain.value=Math.max(0,Number(gainValue)||1);
-      src.connect(gain);gain.connect(c.destination);src.start(0);return true;
+      src.connect(gain);gain.connect(c.destination);
+      const voice={combat,stop(){try{src.stop();}catch(_e){}},cleanup(){if(!activeVoices.delete(voice))return;src.disconnect();gain.disconnect();document.documentElement.dataset.voiceCombatActive=String([...activeVoices].filter(v=>v.combat).length);}};
+      src.onended=voice.cleanup;activeVoices.add(voice);src.start(0);
+      document.documentElement.dataset.voiceCombatActive=String([...activeVoices].filter(v=>v.combat).length);
+      return true;
     }catch(_e){
-      try{const a=new Audio(url);a.preload='auto';a.volume=1;await a.play();return true;}catch(_e2){return false;}
+      if(!current())return false;
+      try{
+        const a=new Audio(url);a.preload='auto';a.volume=1;
+        const voice={combat,stop(){a.pause();a.currentTime=0;},cleanup(){activeVoices.delete(voice);}};
+        a.onended=voice.cleanup;activeVoices.add(voice);
+        try{await a.play();return current();}catch(_e2){voice.cleanup();return false;}
+      }catch(_e2){return false;}
     }
   }
-  window.HonVietAudio={unlock,playVoice,preload:(u)=>decode(u),isUnlocked:()=>unlocked,context:()=>getCtx()};
+  window.HonVietAudio={unlock,playVoice,beginCombat,stopCombat,preload:(u)=>decode(u),isUnlocked:()=>unlocked,context:()=>getCtx()};
 
   // No blocking splash. The first normal tap/click on ANY actual game control unlocks audio.
   // Capture phase makes this run before the button's own handler (hero card, campaign, battle, etc.).

@@ -71,6 +71,7 @@ await import('./hub-dock-tray-v1.mjs');
 await import('./hub-responsive-visibility-v1.mjs');
 await import('./hub-icon-alpha-hotfix-v1.mjs');
 await import('./battle-responsive-luc-anh-audio-v1.mjs');
+await import('./battle-audio-lifecycle-v1.mjs');
 
 // The integrated battle is loaded from this embedded payload in production.
 // Keep it byte-identical to the patched battle.html; otherwise the visible

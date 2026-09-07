@@ -9,9 +9,15 @@
   };
   const assetBase = new URL('assets/audio/sfx/', document.baseURI).href;
   let parentBus = null;
-  try { if (window.parent !== window) parentBus = window.parent.HonVietSfx; } catch (_) {}
+  try {
+    if (window.parent !== window) {
+      const shared = window.parent.HonVietSfx;
+      parentBus = shared?.createBattleChannel ? shared.createBattleChannel() : shared;
+    }
+  } catch (_) {}
   const active = new Set(), buffers = new Map(), loads = new Map(), last = new Map();
   let ownContext = null, combatEnabled = true, combatEpoch = 0, played = 0;
+  let battleSession = 0, disposed = false;
   const stamp = (key, value) => { document.documentElement.dataset[key] = String(value); };
   function context() {
     const shared = window.HonVietAudio?.context();
@@ -38,6 +44,7 @@
     console.warn('[HonViet SFX]', error);
   }
   function unlock() {
+    if (disposed) return Promise.resolve(false);
     if (parentBus) return parentBus.unlock();
     const c = context();
     if (!c) { stamp('sfxState', 'unsupported'); return Promise.resolve(false); }
@@ -53,21 +60,60 @@
   function stopCombat() {
     if (parentBus) return parentBus.stopCombat();
     combatEpoch += 1;
+    window.HonVietAudio?.stopCombat?.();
     for (const voice of active) if (voice.group === 'combat') {
       try { voice.source.stop(); } catch (_) {}
       voice.cleanup();
     }
   }
   function setCombatEnabled(enabled) {
+    if (disposed) return;
     if (parentBus) return parentBus.setCombatEnabled(enabled);
     combatEnabled = Boolean(enabled);
     if (!combatEnabled) stopCombat();
+    else window.HonVietAudio?.beginCombat?.();
     stamp('sfxCombatEnabled', combatEnabled);
   }
+  function endBattle() {
+    if (parentBus) return parentBus.dispose ? parentBus.dispose() : parentBus.stopCombat?.();
+    battleSession += 1;
+    setCombatEnabled(false);
+    stamp('sfxBattleActive', false);
+  }
+  function createBattleChannel() {
+    stopCombat();
+    const session = ++battleSession;
+    setCombatEnabled(true);
+    stamp('sfxBattleActive', true);
+    const ownsSession = () => !disposed && session === battleSession;
+    return {
+      play: (event, options = {}) => ownsSession()
+        ? play(event, { ...options, group: ['ui', 'select'].includes(event) ? 'ui' : 'combat', battleSession: session })
+        : Promise.resolve(false),
+      unlock: () => ownsSession() ? unlock() : Promise.resolve(false),
+      stopCombat: () => { if (ownsSession()) stopCombat(); },
+      setCombatEnabled: enabled => { if (ownsSession()) setCombatEnabled(enabled); },
+      isBattleActive: ownsSession,
+      dispose: () => { if (ownsSession()) endBattle(); }
+    };
+  }
+  function isBattleActive() { return !disposed && (parentBus?.isBattleActive?.() ?? true); }
+  function dispose() {
+    if (disposed) return;
+    // End the owned channel before closing this document. Old pagehide events
+    // must never silence the next battle's channel in the shared parent.
+    endBattle();
+    disposed = true;
+    for (const media of document.querySelectorAll?.('audio,video') || []) {
+      try { media.pause(); media.currentTime = 0; } catch (_) {}
+    }
+  }
   async function play(event, options = {}) {
+    if (!isBattleActive()) return false;
     if (parentBus) return parentBus.play(event, options);
     if (!files[event]) return false;
-    const group = options.group || (['ui', 'select', 'victory', 'defeat'].includes(event) ? 'ui' : 'combat');
+    const group = options.group || (['ui', 'select'].includes(event) ? 'ui' : 'combat');
+    if (options.battleSession !== undefined && options.battleSession !== battleSession) return false;
     if (group === 'combat' && !combatEnabled) return false;
     const c = context();
     stamp('sfxState', c?.state || 'unsupported');
@@ -79,6 +125,7 @@
     const ticket = combatEpoch;
     try {
       const buffer = await load(event);
+      if (disposed || (options.battleSession !== undefined && options.battleSession !== battleSession)) return false;
       if (c.state !== 'running' || performance.now() - now > 1200) return false;
       if (group === 'combat' && (!combatEnabled || ticket !== combatEpoch)) return false;
       while (active.size >= 6) {
@@ -91,7 +138,8 @@
       gain.gain.value = event === 'impact' ? 0.22 : group === 'ui' ? 0.3 : 0.38;
       source.connect(gain); gain.connect(c.destination);
       const voice = { source, group, cleanup() {
-        active.delete(voice); source.disconnect(); gain.disconnect(); stamp('sfxActive', active.size);
+        if (!active.delete(voice)) return;
+        source.disconnect(); gain.disconnect(); stamp('sfxActive', active.size);
       } };
       source.onended = voice.cleanup;
       active.add(voice); source.start(0);
@@ -99,7 +147,7 @@
       return true;
     } catch (error) { report(error); return false; }
   }
-  window.HonVietSfx = { play, unlock, stopCombat, setCombatEnabled };
+  window.HonVietSfx = { play, unlock, stopCombat, setCombatEnabled, createBattleChannel, endBattle, dispose, isBattleActive };
   for (const event of ['pointerdown', 'touchend', 'keydown']) {
     document.addEventListener(event, () => { void unlock(); }, { capture: true, passive: true });
   }
@@ -108,6 +156,6 @@
     if (!control || control.disabled || control.getAttribute('aria-disabled') === 'true' || control.id === 'soundButton') return;
     void unlock().then(ready => { if (ready) void play(control.matches('select') ? 'select' : 'ui', { group: 'ui' }); });
   }, { capture: true });
-  window.addEventListener('pagehide', stopCombat);
-  stamp('sfxVersion', 'supplied-wav-v1');
+  window.addEventListener('pagehide', parentBus ? dispose : endBattle);
+  stamp('sfxVersion', 'battle-lifecycle-v2');
 })();

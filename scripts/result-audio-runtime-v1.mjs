@@ -12,21 +12,25 @@ const parentScript=String.raw`<script id="honviet-result-audio-v1">
   window.__HV_RESULT_AUDIO_V1=true;
   const tracks={victory:'assets/audio/bgm-victory.mp3',defeat:'assets/audio/bgm-defeat.mp3'};
   const player=new Audio();player.preload='auto';player.loop=false;player.volume=.9;
-  let active='';
-  function stop(){try{player.pause();player.currentTime=0;}catch(_e){} active='';}
+  let active='',epoch=0;
+  function stop(){epoch++;try{player.pause();player.currentTime=0;}catch(_e){} active='';}
   async function play(kind){
     const src=tracks[kind];if(!src)return false;
     try{
       stop();
+      const ticket=epoch;
       if(typeof bgmPlayer!=='undefined'){try{bgmPlayer.pause();}catch(_e){}}
       active=kind;player.src=src;player.currentTime=0;
       if(window.HonVietAudio)try{await window.HonVietAudio.unlock();}catch(_e){}
+      if(ticket!==epoch)return false;
       await player.play();return true;
     }catch(_e){return false;}
   }
   window.__HV_RESULT_AUDIO={player,play,stop,current:()=>active};
   window.addEventListener('message',event=>{
     const m=event.data;if(!m||m.source!=='hon-viet-battle'||m.type!=='battle-result-audio')return;
+    const frame=document.getElementById('hvBattleFrame'),session=window.HonVietMetaBridge?.active?.();
+    if(!frame||event.source!==frame.contentWindow||event.origin!==location.origin||!session||m.payload?.sessionId!==session.sessionId)return;
     play(m.payload?.victory?'victory':'defeat');
   });
   try{
