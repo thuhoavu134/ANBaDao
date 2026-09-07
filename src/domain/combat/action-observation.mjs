@@ -445,6 +445,7 @@ export function combatObservationReport(observation) {
     replayParity: {
       schema: COMBAT_REPLAY_PARITY_SCHEMA,
       scope: 'full-replay-rule-outcome',
+      seed: observation.seed == null ? null : text(observation.seed),
       fingerprint: replayDigest == null ? null : parityFingerprint(replayDigest),
       actionCount: observation.actions.length,
       roundCount: [...new Set(observation.actions.map((action) => action.round))].length,
