@@ -1,0 +1,74 @@
+{
+  "schema": "hon-viet-qa-evidence/v1",
+  "ticket": "L04a-hero-detail-route-back",
+  "status": "REVIEW",
+  "baselineMain": "0706198b82a69535ebcf1d503e55e2a6802913f9",
+  "codeCommit": "935a472c111b3d4096307cc5a95c434ee7bc9b1f",
+  "source": {
+    "owner": "scripts/hero-roster-phase-a-v4.mjs",
+    "test": "tests/hero-roster-route.test.mjs",
+    "behavior": [
+      "roster portal reserves the browser viewport",
+      "visible roster card opens hero detail exactly once",
+      "detail back restores one visible roster root with selected-card context"
+    ],
+    "nonGoals": [
+      "seed",
+      "reward",
+      "balance",
+      "save migration",
+      "roster",
+      "art",
+      "audio",
+      "gameplay rule",
+      "dist-only edits"
+    ]
+  },
+  "tdd": {
+    "red": {
+      "command": "node --test tests/hero-roster-route.test.mjs",
+      "result": "1 failure: explicit viewport-height contract absent"
+    },
+    "green": {
+      "command": "node --test tests/hero-roster-route.test.mjs",
+      "result": "1/1 PASS"
+    },
+    "refactor": {
+      "focusedTests": "23/23 PASS",
+      "syntax": "scripts/hero-roster-phase-a-v4.mjs and src/ui/hero-roster-runtime.js PASS",
+      "diffCheck": "PASS"
+    }
+  },
+  "production": {
+    "alias": "https://luc-than.vercel.app/",
+    "deployment": "dpl_AspyJaphzeGFtuqNeFw7KwH5Rana",
+    "deploymentState": "READY",
+    "sourceSha": "935a472c111b3d4096307cc5a95c434ee7bc9b1f",
+    "build": {
+      "command": "npm run build -> node scripts/build-static.mjs",
+      "embeddedBattleBytes": 952325,
+      "runtimeErrorsSelectedWindow": 0
+    },
+    "chrome": {
+      "viewport": [1363, 936],
+      "route": "heroes -> Ông Phở -> heroDetail -> back",
+      "rosterRootCount": 1,
+      "rosterRootVisibleAfterBack": true,
+      "rosterRootRect": { "width": 680, "height": 936 },
+      "gridRect": { "width": 680, "height": 716 },
+      "cardCount": 12,
+      "detailName": "Ông Phở",
+      "selectedCardRetained": true,
+      "appOriginConsoleErrors": 0
+    }
+  },
+  "blockers": [
+    "DEVICE_BACKEND_NOT_AVAILABLE",
+    "TICKET_BOARD_NOT_AVAILABLE",
+    "SOURCE_NOT_AVAILABLE",
+    "GAME_DEV_CLI_NOT_FOUND",
+    "LOCAL_BINARY_ASSETS_NOT_AVAILABLE",
+    "DOCTOR_SMOKE_SCRIPTS_NOT_AVAILABLE"
+  ],
+  "next": "Run responsive Chrome and Safari/iPhone/iPad QA, then claim/lock the Ticket Board when the backends become available."
+}

@@ -49,3 +49,20 @@ player journey, combat rules, save ownership and production evidence stable.
 - Next: retest hero-detail route/back, then run the device matrix and Ticket
   Board claim/lock/evidence when available. Keep the ticket at `REVIEW`;
   do not mark it `DONE` or `MERGED`.
+
+## Latest route checkpoint — 2026-09-07
+
+- Contract baseline: `0706198b82a69535ebcf1d503e55e2a6802913f9`.
+- Current source/build commit: `935a472c111b3d4096307cc5a95c434ee7bc9b1f`.
+- Source owner `scripts/hero-roster-phase-a-v4.mjs` now gives
+  `#hvHeroRosterV4` explicit `100vh`/`100dvh` height. The route owns one grid
+  scroll surface; no extra document-level click/pointer listener was added.
+- RED: viewport-height route assertion failed on baseline. GREEN: `1/1` focused
+  route test. REFACTOR: focused route/roster/return-context/roster-plan `23/23`
+  pass, syntax and diff clean.
+- Production `dpl_AspyJaphzeGFtuqNeFw7KwH5Rana` is READY; build embedded
+  `952325` bytes and runtime errors are `0`. Chrome evidence is root `680×936`,
+  grid `680×716`, 12 cards, Ông Phở detail/back with selected card retained,
+  and 0 app-origin errors.
+- Ticket state remains `REVIEW / IN_PROGRESS`. Device capabilities `[]`, Ticket
+  Board, archive, game-dev, local binary assets and doctor/smoke remain blocked.

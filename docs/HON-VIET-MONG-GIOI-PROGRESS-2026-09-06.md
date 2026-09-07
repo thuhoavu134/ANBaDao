@@ -280,3 +280,27 @@ Status: `REVIEW` / `IN_PROGRESS`.
 Next exact action: retest/fix hero-detail route/back, then rerun responsive and
 Safari/iPhone/iPad QA plus Ticket Board claim/lock/evidence when available.
 Do not mark this or the parent L04 ticket `DONE`/`MERGED`.
+
+## 4.20 L04-A2 — hero-detail route/back viewport surface (2026-09-07)
+
+Status: `REVIEW` / `IN_PROGRESS`.
+
+- Source/build owner commit `935a472c111b3d4096307cc5a95c434ee7bc9b1f` adds
+  explicit `100vh`/`100dvh` height to the state-backed roster portal. This fixes
+  the production hit-test failure without changing player data, gameplay or
+  roster contracts.
+- RED: new route contract failed because the source-owned portal had no explicit
+  viewport height. GREEN: focused route test `1/1 PASS`. REFACTOR: focused
+  route/roster/return-context/roster-plan tests `23/23 PASS`; syntax and diff
+  checks pass.
+- Production `dpl_AspyJaphzeGFtuqNeFw7KwH5Rana` is `READY` from the same SHA;
+  Vercel build completed with embedded battle `952325` bytes and runtime errors
+  `0` in the selected 1-hour window.
+- Chrome production evidence: viewport `1363×936`; roster root `680×936`,
+  grid `680×716`, 12 cards; Ông Phở card opens `heroDetail`, and back returns
+  to one visible roster root with the selected card active; app-origin errors `0`.
+- Machine evidence: `docs/qa/L04a/l04a-hero-detail-route-back.json`.
+
+Open: responsive/device matrix, full local/CI asset harness, Ticket Board,
+archive and Game Development Studio CLI. Keep L04/L04a `IN_PROGRESS`; do not
+mark `DONE` or `MERGED`.

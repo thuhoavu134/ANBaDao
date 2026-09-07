@@ -6,6 +6,20 @@
 - This slice changes only return-context lifecycle behavior. No seed, reward, balance, save migration, roster, art, audio, gameplay rule or dist-only change.
 - Code commit `6e1bb9c28538ee65355f59f8bf6601b9934807d2`; Vercel
   `dpl_BkWWPdV3GGfwurfk3fSeY2hfMmYb` is READY and runtime errors are `0`.
+
+## 2026-09-07 — L04-A2 hero-detail route/back viewport surface
+
+- Added explicit `100vh`/`100dvh` sizing to the source-owned state roster portal;
+  the fix keeps the single grid scroll owner and avoids new document-level route
+  listeners.
+- TDD evidence: RED was a real missing-height contract; GREEN route test `1/1`;
+  REFACTOR focused route/roster/return-context/roster-plan `23/23 PASS` plus
+  syntax and diff checks.
+- Production Chrome now passes Ông Phở card → detail → back with one visible
+  roster root, 12 cards and the selected card retained; app-origin errors `0`.
+- Code commit `935a472c111b3d4096307cc5a95c434ee7bc9b1f`; Vercel
+  `dpl_AspyJaphzeGFtuqNeFw7KwH5Rana` is READY. Device/Ticket Board/full local
+  asset harness blockers remain; keep `REVIEW / IN_PROGRESS`.
 - Chrome alias smoke: campaign and roster roots each `1` and visible, 12 roster
   cards, app-origin errors `0`; hero-card → detail was unstable and is not a
   PASS claim. Device capabilities are `[]`.

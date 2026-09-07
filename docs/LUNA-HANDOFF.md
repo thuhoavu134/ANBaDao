@@ -593,3 +593,31 @@ source/test nhỏ cho lifecycle scope, không phải đóng toàn bộ L04.
 **Bàn giao chính xác:** retest/fix hero-detail → back route trong lát cắt L04a
 kế tiếp, sau đó chạy device matrix và claim/lock Ticket Board khi backend khả
 dụng. Giữ `REVIEW / IN_PROGRESS`.
+
+## L04-A2 — hero-detail route/back viewport fix (2026-09-07)
+
+**Trạng thái:** `REVIEW / IN_PROGRESS`; không đánh dấu `DONE` hoặc `MERGED`.
+
+- Contract baseline: `0706198b82a69535ebcf1d503e55e2a6802913f9`.
+- Source/build owner commit: `935a472c111b3d4096307cc5a95c434ee7bc9b1f`.
+- Root cause: production `#hvHeroRosterV4` computed `height=100px` dù `inset=0`,
+  nên card DOM tràn ngoài route surface và click rơi về screen cũ. Source fix
+  thêm `height:100vh!important;height:100dvh!important`, giữ một grid scroll
+  owner và không thêm document-level route listener.
+- RED: `tests/hero-roster-route.test.mjs` fail thật trước patch vì thiếu
+  viewport-height contract. GREEN: `1/1 PASS`. REFACTOR: focused
+  route/roster/return-context/roster-plan `23/23 PASS`; syntax và diff check
+  pass.
+- Production Vercel `dpl_AspyJaphzeGFtuqNeFw7KwH5Rana` is `READY` from the same
+  SHA; complete-source build ran successfully, embedded battle `952325 bytes`,
+  selected 1-hour runtime errors `0`.
+- Chrome real UI: root `680×936`, grid `680×716`, 12 cards; Ông Phở →
+  `heroDetail` → accessible `Quay lại danh sách tướng` returns to one visible
+  roster root with Ông Phở still active; app-origin console errors `0`.
+- Machine evidence: `docs/qa/L04a/l04a-hero-detail-route-back.json`.
+
+Blockers unchanged: device backend capabilities `[]`, Ticket Board unavailable,
+archive `SOURCE_NOT_AVAILABLE`, `game-dev` CLI missing, local connector checkout
+missing binary assets, and no `doctor`/`smoke` scripts. Next handoff is device
+matrix + Ticket Board claim/lock/evidence when those backends become available;
+retain `REVIEW / IN_PROGRESS`.

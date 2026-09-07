@@ -32,3 +32,16 @@ query is empty. Chrome smoke reached campaign and roster with one visible root
 each and 12 cards, with zero app-origin errors; hero-card → detail was unstable
 and remains an explicit blocker. Device capabilities are `[]`; keep REVIEW /
 IN_PROGRESS.
+
+## 2026-09-07 — L04-A2 hero-detail route/back surface
+
+The state-backed hero roster now reserves the full viewport in its source-owned
+CSS, so visible cards stay inside the route hit surface. Production Chrome
+proves Ông Phở → hero detail → accessible back → the same 12-card roster with
+the card still active. The slice is `REVIEW / IN_PROGRESS`; no player-data,
+combat/economy, roster, asset or dist-only contract changed.
+
+Code commit `935a472c111b3d4096307cc5a95c434ee7bc9b1f`; Vercel deployment
+`dpl_AspyJaphzeGFtuqNeFw7KwH5Rana` is READY and runtime errors are `0`. Device
+capabilities are still `[]`, so responsive/Safari/iPhone/iPad evidence remains
+open.

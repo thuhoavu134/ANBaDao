@@ -1,23 +1,21 @@
 # Test Results
-Loop: L04a-stale-draft-revision
+Loop: L04a-hero-detail-route-back
 Status: PASS_WITH_BLOCKER
 Date: 2026-09-07
-Revision: 6e1bb9c28538ee65355f59f8bf6601b9934807d2
+Revision: 935a472c111b3d4096307cc5a95c434ee7bc9b1f
 
-[PASS] red-evidence — new build-owner assertion failed because live draft revision propagation was absent
-[PASS] green-focused — return-context + scene-lifetime + campaign tests 19/19 PASS
-[PASS] refactor-syntax — return-context/domain syntax and git diff checks pass
-[PASS] vercel-build — dpl_BkWWPdV3GGfwurfk3fSeY2hfMmYb READY; source 6e1bb9c; embedded battle 952325 bytes
-[PASS_WITH_BLOCKER] production-browser — campaign root 1/visible and roster root 1/visible with 12 cards; app-origin errors 0; hero-card → detail route was not stable and is not claimed PASS
+[PASS] red-evidence — route contract failed on baseline because the source-owned roster portal had no explicit viewport height
+[PASS] green-focused — tests/hero-roster-route.test.mjs 1/1 PASS
+[PASS] refactor-focused — route/roster/return-context/roster-plan focused suite 23/23 PASS; changed source syntax and git diff checks pass
+[PASS] vercel-build — dpl_AspyJaphzeGFtuqNeFw7KwH5Rana READY; source 935a472; embedded battle 952325 bytes
+[PASS] production-browser — viewport 1363×936; roster root 680×936; grid 680×716; Ông Phở card → heroDetail → back; one visible root, 12 cards, selected card retained; app-origin errors 0
 [PASS] runtime-errors — Vercel selected 1h window reports no runtime errors
 [BLOCKED] local-full-suite — connector checkout all-test run has missing dist/full assets; failures preserved
 [BLOCKED] local-build — missing assets/characters/luc-anh/idle-rgba-v1-atlas.webp.json in connector checkout
 [BLOCKED] doctor-smoke — scripts/doctor.mjs and scripts/smoke.mjs are absent
-[BLOCKED] device-matrix — Safari/iPhone/iPad and responsive device backend unavailable
+[BLOCKED] device-matrix — capabilities []; Safari/iPhone/iPad and responsive device backend unavailable
 [BLOCKED] ticket-board — scripts/ticketctl.mjs and Ticket Board connector unavailable
 [BLOCKED] archive — SOURCE_NOT_AVAILABLE
-[BLOCKED] game-dev — CLI not installed in environment
-- `game-dev` CLI của Game Development Studio không tồn tại trong môi trường (`command not found`), không tự cài/thay credential.
-- Ticket Board: `TICKET_BOARD_NOT_AVAILABLE`; archive mẫu: `SOURCE_NOT_AVAILABLE`.
-- Browser device backend: `[]`; chưa có Chrome responsive hoặc Safari/iPhone/iPad backend.
-- Hero detail browser path cần được retest/fix trong lát cắt L04a tiếp theo; không dùng route failure này để claim stale-revision UI acceptance.
+[BLOCKED] game-dev — CLI not installed in environment; no install or credential change attempted
+
+Ticket state remains REVIEW / IN_PROGRESS; do not mark DONE or MERGED.

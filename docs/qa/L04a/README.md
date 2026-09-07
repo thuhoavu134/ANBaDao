@@ -109,3 +109,39 @@ Production follow-up:
   browser-route blocker, not a PASS claim for detail/back restoration.
 - Device capabilities returned `[]`; responsive Chrome and Safari/iPhone/iPad
   are **not tested**. Status remains **REVIEW / IN_PROGRESS**.
+
+## L04-A2 — hero detail route/back viewport surface (2026-09-07)
+
+Trạng thái: **REVIEW / IN_PROGRESS**. Lát cắt này xử lý đúng blocker route
+production còn mở; không đóng toàn bộ L04a và không đánh dấu DONE/MERGED.
+
+- Baseline contract: `0706198b82a69535ebcf1d503e55e2a6802913f9`.
+- Source/build owner: `scripts/hero-roster-phase-a-v4.mjs`; test owner:
+  `tests/hero-roster-route.test.mjs`.
+- Fix: portal `#hvHeroRosterV4` khai báo explicit `100vh`/`100dvh`, giữ lưới
+  là scroll owner duy nhất và không thêm document-level click/pointer owner.
+  Không đổi seed, reward, balance, save migration, roster, art, audio hay
+  gameplay rule.
+- RED: route contract fail thật vì source chưa reserve viewport height.
+- GREEN: focused route contract `1/1 PASS`.
+- REFACTOR: focused route/roster/return-context/roster-plan suite `23/23 PASS`;
+  changed scripts `node --check` pass; `git diff --check` pass.
+
+Machine evidence: `docs/qa/L04a/l04a-hero-detail-route-back.json`.
+
+Production follow-up:
+
+- Code commit `935a472c111b3d4096307cc5a95c434ee7bc9b1f`; Vercel deployment
+  `dpl_AspyJaphzeGFtuqNeFw7KwH5Rana` is **READY**, source SHA matches, build
+  ran `npm run build` → `node scripts/build-static.mjs`, embedded battle is
+  `952325` bytes, and the selected 1-hour runtime-error query is empty.
+- Chrome alias `https://luc-than.vercel.app/`: viewport `1363×936`, roster root
+  `680×936`, grid `680×716`, 12 visible cards. Clicking visible Ông Phở opens
+  `heroDetail` with `#hdName=Ông Phở`; the accessible back button returns to one
+  visible roster root, retains 12 cards and keeps Ông Phở active.
+- App-origin browser console errors: `0`; extension diagnostics are excluded.
+
+Remaining blockers: `DEVICE_BACKEND_NOT_AVAILABLE` (capabilities `[]`, so no
+responsive Chrome or Safari/iPhone/iPad), `TICKET_BOARD_NOT_AVAILABLE`,
+`SOURCE_NOT_AVAILABLE` archive, missing `game-dev` CLI, missing local binary
+asset checkout, and absent `doctor`/`smoke` scripts. Keep **REVIEW / IN_PROGRESS**.

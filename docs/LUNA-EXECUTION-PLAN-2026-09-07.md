@@ -481,3 +481,23 @@ The build-owner slice is implemented and remains `REVIEW`, not `DONE`.
    local complete asset checkout and doctor/smoke remain blocked. Next exact
    action is retest/fix hero-detail route/back, then device matrix. Keep
    `REVIEW / IN_PROGRESS`.
+
+## Checkpoint addendum — L04-A2 hero-detail route/back surface (2026-09-07)
+
+This source slice is implemented through production Chrome evidence and remains
+`REVIEW`, not `DONE`.
+
+1. Contract baseline is `0706198b`; code commit is
+   `935a472c111b3d4096307cc5a95c434ee7bc9b1f`.
+2. RED was a real missing viewport-height assertion. GREEN is `1/1`; REFACTOR
+   is `23/23` focused route/roster/return-context/roster-plan tests plus syntax
+   and diff checks.
+3. Vercel `dpl_AspyJaphzeGFtuqNeFw7KwH5Rana` is READY from the code SHA; the
+   complete-source build embedded `952325` bytes and the selected runtime-error
+   query is empty.
+4. Chrome production route now proves `1363×936` viewport, `680×936` roster
+   root, `680×716` grid, 12 cards, Ông Phở → `heroDetail` → back to one visible
+   roster root with selected-card context, and 0 app-origin errors.
+5. Remaining exact gates are device matrix, Ticket Board claim/lock/evidence,
+   complete local asset checkout, archive source, doctor/smoke scripts and
+   `game-dev`; retain `REVIEW / IN_PROGRESS`.
