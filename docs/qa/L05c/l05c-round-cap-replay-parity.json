@@ -1,0 +1,103 @@
+{
+  "schema": "hon-viet-qa-evidence/v1",
+  "ticket": "L05c-round-cap-replay-parity",
+  "status": "REVIEW",
+  "reviewState": "IN_PROGRESS",
+  "date": "2026-09-07",
+  "baselineMain": "5ca7c3caee449a5705a6ffd0df9b693f5ace1cb6",
+  "codeCommit": "1a74d11bda0ce5add50d498f2b9d659f7a0f91ee",
+  "sourceOwner": {
+    "observation": "src/domain/combat/action-observation.mjs",
+    "focusedTest": "tests/combat-l05c-parity.test.mjs",
+    "change": "publish replayParity.seed beside the existing full-replay-rule-outcome fingerprint"
+  },
+  "tdd": {
+    "red": {
+      "status": "PASS",
+      "finding": "replayParity.seed was undefined before the source patch"
+    },
+    "green": {
+      "status": "PASS",
+      "command": "node --test tests/combat-l05c-parity.test.mjs",
+      "result": "4/4 PASS"
+    },
+    "refactor": {
+      "status": "PASS",
+      "combatSuite": "39/39 PASS",
+      "syntax": "PASS",
+      "diffCheck": "PASS"
+    }
+  },
+  "production": {
+    "alias": "https://luc-than.vercel.app/",
+    "deployment": "dpl_32eET1QCRjaw17tDTzQh9xXsxdDU",
+    "deploymentState": "READY",
+    "sourceSha": "1a74d11bda0ce5add50d498f2b9d659f7a0f91ee",
+    "build": {
+      "embeddedBattleBytes": 952395,
+      "selectedRuntimeErrors": 0
+    },
+    "fixture": {
+      "reportSchema": "hon-viet-combat-replay-parity/v1",
+      "speed1": {
+        "url": "https://luc-than.vercel.app/battle.html?embedded=1&session=l05c-round-cap-seed1&v=3177&qaCombatFixture=l05c-round-cap",
+        "speed": 1,
+        "seed": "l05a-production-seed",
+        "fingerprint": "86267582",
+        "actionCount": 93,
+        "impactCount": 644,
+        "roundMax": 15,
+        "maxObservedRound": 15,
+        "roundsBeyondCap": 0,
+        "roundCapReached": true,
+        "gaps": [],
+        "completion": {
+          "reason": "round-limit-hp",
+          "round": 15,
+          "roundMax": 15,
+          "speed": 1,
+          "winner": "player"
+        },
+        "visibleResult": "Khải hoàn"
+      },
+      "speed2": {
+        "url": "https://luc-than.vercel.app/battle.html?embedded=1&session=l05c-round-cap-seed2&v=3177&qaCombatFixture=l05c-round-cap",
+        "speed": 2,
+        "seed": "l05a-production-seed",
+        "fingerprint": "86267582",
+        "actionCount": 93,
+        "impactCount": 644,
+        "roundMax": 15,
+        "maxObservedRound": 15,
+        "roundsBeyondCap": 0,
+        "roundCapReached": true,
+        "gaps": [],
+        "completion": {
+          "reason": "round-limit-hp",
+          "round": 15,
+          "roundMax": 15,
+          "speed": 2,
+          "winner": "player"
+        },
+        "visibleResult": "Khải hoàn"
+      }
+    },
+    "parity": {
+      "sameSeed": true,
+      "sameFingerprint": true,
+      "sameActionCount": true,
+      "sameImpactCount": true,
+      "fingerprint": "86267582",
+      "appOriginConsoleErrorsFinalSpeed2": 0
+    }
+  },
+  "blockers": [
+    "DEVICE_BACKEND_NOT_AVAILABLE: capabilities=[]; responsive Chrome and Safari/iPhone/iPad unavailable",
+    "TICKET_BOARD_NOT_AVAILABLE: scripts/ticketctl.mjs and connector unavailable",
+    "SOURCE_NOT_AVAILABLE: archive unavailable",
+    "GAME_DEV_CLI_NOT_FOUND: do not install or change credentials",
+    "local connector checkout lacks complete binary assets",
+    "doctor/smoke scripts absent"
+  ],
+  "next": "Run device matrix and Ticket Board claim/lock/evidence when backends become available; retain REVIEW / IN_PROGRESS."
+}

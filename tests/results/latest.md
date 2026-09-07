@@ -1,21 +1,36 @@
 # Test Results
-Loop: L04a-hero-detail-route-back
-Status: PASS_WITH_BLOCKER
+
+Loop: L05c-round-cap-replay-parity
+Status: PASS_WITH_BLOCKER / REVIEW
 Date: 2026-09-07
-Revision: 935a472c111b3d4096307cc5a95c434ee7bc9b1f
+Baseline: `5ca7c3caee449a5705a6ffd0df9b693f5ace1cb6`
+Code revision: `1a74d11bda0ce5add50d498f2b9d659f7a0f91ee`
 
-[PASS] red-evidence — route contract failed on baseline because the source-owned roster portal had no explicit viewport height
-[PASS] green-focused — tests/hero-roster-route.test.mjs 1/1 PASS
-[PASS] refactor-focused — route/roster/return-context/roster-plan focused suite 23/23 PASS; changed source syntax and git diff checks pass
-[PASS] vercel-build — dpl_AspyJaphzeGFtuqNeFw7KwH5Rana READY; source 935a472; embedded battle 952325 bytes
-[PASS] production-browser — viewport 1363×936; roster root 680×936; grid 680×716; Ông Phở card → heroDetail → back; one visible root, 12 cards, selected card retained; app-origin errors 0
-[PASS] runtime-errors — Vercel selected 1h window reports no runtime errors
-[BLOCKED] local-full-suite — connector checkout all-test run has missing dist/full assets; failures preserved
-[BLOCKED] local-build — missing assets/characters/luc-anh/idle-rgba-v1-atlas.webp.json in connector checkout
-[BLOCKED] doctor-smoke — scripts/doctor.mjs and scripts/smoke.mjs are absent
-[BLOCKED] device-matrix — capabilities []; Safari/iPhone/iPad and responsive device backend unavailable
-[BLOCKED] ticket-board — scripts/ticketctl.mjs and Ticket Board connector unavailable
-[BLOCKED] archive — SOURCE_NOT_AVAILABLE
-[BLOCKED] game-dev — CLI not installed in environment; no install or credential change attempted
+[PASS] red-evidence — focused parity contract failed because
+`report.replayParity.seed` was undefined on the baseline
+[PASS] green-focused — `tests/combat-l05c-parity.test.mjs` `4/4 PASS`
+[PASS] refactor-combat — `node --test --test-concurrency=1 tests/combat-*.test.mjs`
+`39/39 PASS`
+[PASS] syntax-diff — changed source/adapter syntax checks and `git diff --check`
+[PASS] vercel-build — `dpl_32eET1QCRjaw17tDTzQh9xXsxdDU` READY from the code
+SHA; complete-source embedded battle payload `952395` bytes
+[PASS] production-browser-1x — round `15/15`, no round `16`, seed
+`l05a-production-seed`, fingerprint `86267582`, `93` actions, `644` impacts,
+`roundsBeyondCap=0`, `gaps=[]`, visible `Khải hoàn`
+[PASS] production-browser-2x — same seed/fingerprint/counts and cap report,
+completion speed `2`, visible `Khải hoàn`; final app-origin errors `0`
+[PASS] replay-parity — same seed, fingerprint, action count and impact count at
+1× and 2×; only completion speed differs as intended
+[PASS] runtime-errors — selected Vercel 1-hour query reports no runtime errors
+[BLOCKED] local-build — connector checkout lacks complete binary assets; local
+build is not representative of the complete source
+[BLOCKED] doctor-smoke — `scripts/doctor.mjs` and `scripts/smoke.mjs` absent
+[BLOCKED] device-matrix — capabilities `[]`; responsive Chrome and
+Safari/iPhone/iPad backend unavailable
+[BLOCKED] ticket-board — `scripts/ticketctl.mjs` and Ticket Board connector
+unavailable
+[BLOCKED] archive — `SOURCE_NOT_AVAILABLE`
+[BLOCKED] game-dev — CLI not installed; no install or credential change attempted
 
-Ticket state remains REVIEW / IN_PROGRESS; do not mark DONE or MERGED.
+Machine evidence: `docs/qa/L05c/l05c-round-cap-replay-parity.json`.
+Ticket state remains `REVIEW / IN_PROGRESS`; do not mark `DONE` or `MERGED`.

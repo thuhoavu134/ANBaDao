@@ -45,3 +45,23 @@ Code commit `935a472c111b3d4096307cc5a95c434ee7bc9b1f`; Vercel deployment
 `dpl_AspyJaphzeGFtuqNeFw7KwH5Rana` is READY and runtime errors are `0`. Device
 capabilities are still `[]`, so responsive/Safari/iPhone/iPad evidence remains
 open.
+
+## 2026-09-07 — L05c round-cap and full replay parity
+
+The combat observation projection now publishes the fixture seed beside its
+full-replay-rule-outcome fingerprint. RED exposed the missing seed field;
+GREEN is the focused parity contract at `4/4 PASS`, and REFACTOR is the full
+combat suite at `39/39 PASS` with syntax and diff checks clean. This is an
+evidence-surface change only: no seed config, reward, balance, save migration,
+roster, art, audio or gameplay rule changed.
+
+Code commit `1a74d11bda0ce5add50d498f2b9d659f7a0f91ee`; Vercel deployment
+`dpl_32eET1QCRjaw17tDTzQh9xXsxdDU` is READY, with a `952395`-byte embedded
+battle payload and no selected runtime errors. Production Chrome at 1× and 2×
+reached `HIỆP 15/15` and produced identical seed
+`l05a-production-seed`, fingerprint `86267582`, `93` actions and `644`
+impacts; both had no round beyond cap and empty gaps. Final 2× app-origin
+errors were `0`.
+
+The project remains `REVIEW / IN_PROGRESS`; device capabilities are still `[]`,
+so responsive Chrome and Safari/iPhone/iPad evidence is open.

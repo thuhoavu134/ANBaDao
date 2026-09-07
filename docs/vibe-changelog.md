@@ -211,3 +211,18 @@
 - Defeat recovery icons are actionable routes: daily, heroes, summon, forge.
 - Campaign result publishing remains the existing v3.24.4 source-of-truth.
 - `npm test`: 4/4 PASS. `npm run build`: UNVERIFIED/BLOCKED because node_modules/vite is not installed in this source package/environment.
+
+## v3.24.6 — L05c round-cap and full replay parity evidence (REVIEW)
+
+- Exposed the authored combat fixture seed in `replayParity`, next to the
+  existing full-replay-rule-outcome fingerprint, so speed parity is machine
+  auditable without changing gameplay.
+- RED: missing seed assertion; GREEN: L05c focused test `4/4 PASS`;
+  REFACTOR: full combat suite `39/39 PASS`, syntax and diff checks pass.
+- Production 1×/2× Chrome evidence: same seed `l05a-production-seed`, same
+  fingerprint `86267582`, `93` actions, `644` impacts, round cap `15`, no
+  round beyond cap, empty gaps, and visible `Khải hoàn` at `HIỆP 15/15`.
+- Code commit `1a74d11bda0ce5add50d498f2b9d659f7a0f91ee`; Vercel deployment
+  `dpl_32eET1QCRjaw17tDTzQh9xXsxdDU` READY; runtime-error query empty.
+- Remains WIP/REVIEW pending device backend, Ticket Board, complete local
+  asset harness and other previously recorded environment gates.

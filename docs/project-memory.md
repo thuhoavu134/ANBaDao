@@ -66,3 +66,24 @@ player journey, combat rules, save ownership and production evidence stable.
   and 0 app-origin errors.
 - Ticket state remains `REVIEW / IN_PROGRESS`. Device capabilities `[]`, Ticket
   Board, archive, game-dev, local binary assets and doctor/smoke remain blocked.
+
+## Latest L05c checkpoint — 2026-09-07
+
+- Contract baseline: `5ca7c3caee449a5705a6ffd0df9b693f5ace1cb6`.
+- Current source/build commit: `1a74d11bda0ce5add50d498f2b9d659f7a0f91ee`.
+- `src/domain/combat/action-observation.mjs` now exposes
+  `replayParity.seed` in the `hon-viet-combat-replay-parity/v1` projection.
+  This is evidence-only and preserves seed setup, reward/balance, save
+  migration, roster, art, audio and gameplay rules.
+- RED was the missing seed assertion. GREEN focused L05c is `4/4 PASS`;
+  REFACTOR full combat is `39/39 PASS`, with syntax and diff checks clean.
+- Production deployment `dpl_32eET1QCRjaw17tDTzQh9xXsxdDU` is READY from the
+  code SHA; embedded battle is `952395` bytes and selected runtime errors are
+  `0`.
+- Chrome production 1× and 2× both report seed `l05a-production-seed`,
+  fingerprint `86267582`, `93` actions, `644` impacts, authored round `15`,
+  `maxObservedRound=15`, `roundsBeyondCap=0`, `roundCapReached=true`, and
+  `gaps=[]`. Final 2× app-origin errors are `0`; visible result is `Khải hoàn`.
+- Ticket remains `REVIEW / IN_PROGRESS`. Device capabilities `[]`, Ticket
+  Board, archive, game-dev, local binary assets and doctor/smoke remain blocked.
+- Machine evidence: `docs/qa/L05c/l05c-round-cap-replay-parity.json`.

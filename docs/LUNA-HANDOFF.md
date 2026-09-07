@@ -621,3 +621,35 @@ archive `SOURCE_NOT_AVAILABLE`, `game-dev` CLI missing, local connector checkout
 missing binary assets, and no `doctor`/`smoke` scripts. Next handoff is device
 matrix + Ticket Board claim/lock/evidence when those backends become available;
 retain `REVIEW / IN_PROGRESS`.
+
+## L05c — round-cap and full replay parity evidence (2026-09-07)
+
+**Trạng thái:** `REVIEW / IN_PROGRESS`; không đánh dấu `DONE` hoặc `MERGED`.
+
+- Contract baseline: `5ca7c3caee449a5705a6ffd0df9b693f5ace1cb6`.
+- Source/build owner commit: `1a74d11bda0ce5add50d498f2b9d659f7a0f91ee`.
+- Scope is evidence-only: `src/domain/combat/action-observation.mjs` now exposes
+  `replayParity.seed` next to the existing full-replay-rule-outcome fingerprint.
+  No seed config, reward, balance, save migration, roster, art, audio or combat
+  rule changed.
+- RED: the new focused parity assertion failed because `report.replayParity.seed`
+  was undefined. GREEN: `tests/combat-l05c-parity.test.mjs` is `4/4 PASS`.
+  REFACTOR: full combat suite is `39/39 PASS`; changed-source syntax checks and
+  `git diff --check` pass.
+- Production deployment `dpl_32eET1QCRjaw17tDTzQh9xXsxdDU` is `READY` from the
+  code SHA; complete-source Vercel build embedded battle payload `952395` bytes.
+  Selected runtime-error query is empty (`0`).
+- Chrome production fixture at 1× and 2× reports the same seed
+  `l05a-production-seed`, action count `93`, impact count `644`, fingerprint
+  `86267582`, round cap `15`, max observed round `15`, `roundsBeyondCap=0`,
+  `roundCapReached=true` and `gaps=[]`. Completion speed is `1` and `2`
+  respectively; both visible result states are `Khải hoàn` at `HIỆP 15/15`.
+  Final 2× app-origin console errors: `0`.
+- Machine evidence: `docs/qa/L05c/l05c-round-cap-replay-parity.json`.
+
+Blockers unchanged: device backend capabilities `[]` (no responsive Chrome or
+Safari/iPhone/iPad), Ticket Board `TICKET_BOARD_NOT_AVAILABLE`, archive
+`SOURCE_NOT_AVAILABLE`, missing `game-dev` CLI, incomplete local binary-asset
+checkout and absent `doctor`/`smoke` scripts. Next handoff is device matrix and
+Ticket Board claim/lock/evidence when those backends become available; retain
+`REVIEW / IN_PROGRESS`.

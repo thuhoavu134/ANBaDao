@@ -304,3 +304,31 @@ Status: `REVIEW` / `IN_PROGRESS`.
 Open: responsive/device matrix, full local/CI asset harness, Ticket Board,
 archive and Game Development Studio CLI. Keep L04/L04a `IN_PROGRESS`; do not
 mark `DONE` or `MERGED`.
+
+## 4.21 L05c — round-cap and full replay parity (2026-09-07)
+
+Status: `REVIEW` / `IN_PROGRESS`.
+
+- Baseline main `5ca7c3caee449a5705a6ffd0df9b693f5ace1cb6`; source/build commit
+  `1a74d11bda0ce5add50d498f2b9d659f7a0f91ee`.
+- The action-observation source now publishes the fixture seed in the
+  `hon-viet-combat-replay-parity/v1` projection. This makes the existing
+  full-replay fingerprint auditable without changing any gameplay or player-data
+  rule.
+- RED was a real missing `replayParity.seed` assertion. GREEN is the focused
+  L05c test at `4/4 PASS`; REFACTOR is the full combat suite at `39/39 PASS`,
+  plus syntax and diff checks.
+- Vercel `dpl_32eET1QCRjaw17tDTzQh9xXsxdDU` is `READY` from the code SHA;
+  complete-source build embedded `952395` bytes and the selected runtime-error
+  query is empty.
+- Production Chrome 1× and 2× runs both ended at authored round `15/15` with
+  no round `16`, `93` actions, `644` impacts, seed
+  `l05a-production-seed`, fingerprint `86267582`, `roundsBeyondCap=0`, and
+  `gaps=[]`. The report completion speed is `1` vs `2` respectively; final 2×
+  app-origin console errors are `0`.
+- Machine evidence: `docs/qa/L05c/l05c-round-cap-replay-parity.json`.
+
+Remaining gates are unchanged: device capabilities `[]`, Ticket Board and
+archive unavailable, Game Development Studio CLI absent, local binary-asset
+checkout incomplete, and doctor/smoke scripts absent. Keep the parent work at
+`REVIEW / IN_PROGRESS`; do not mark `DONE` or `MERGED`.

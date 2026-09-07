@@ -501,3 +501,25 @@ This source slice is implemented through production Chrome evidence and remains
 5. Remaining exact gates are device matrix, Ticket Board claim/lock/evidence,
    complete local asset checkout, archive source, doctor/smoke scripts and
    `game-dev`; retain `REVIEW / IN_PROGRESS`.
+
+## Checkpoint addendum — L05c round-cap and replay parity (2026-09-07)
+
+This source/build-owner slice is implemented and remains `REVIEW`, not `DONE`.
+
+1. Contract baseline is `5ca7c3caee449a5705a6ffd0df9b693f5ace1cb6`; code
+   commit is `1a74d11bda0ce5add50d498f2b9d659f7a0f91ee`.
+2. `action-observation.mjs` exposes the authored fixture seed in the existing
+   replay-parity projection. This is an evidence contract only; seed setup,
+   reward/balance, save migration, roster, assets and gameplay rules are out of
+   scope.
+3. RED is the missing-seed assertion; GREEN is `4/4` focused parity tests;
+   REFACTOR is `39/39` full combat tests plus syntax and diff checks.
+4. Vercel `dpl_32eET1QCRjaw17tDTzQh9xXsxdDU` is READY from the code SHA;
+   build embedded `952395` bytes and selected runtime errors are `0`.
+5. Chrome production 1× and 2× fixtures both prove seed
+   `l05a-production-seed`, fingerprint `86267582`, `93` actions, `644`
+   impacts, round `15/15`, `roundsBeyondCap=0`, and `gaps=[]`; final 2×
+   app-origin errors are `0`.
+6. Device capabilities remain `[]`; Ticket Board, archive, game-dev, full
+   local asset checkout and doctor/smoke remain blocked. Keep
+   `REVIEW / IN_PROGRESS` and hand off device/Ticket Board evidence next.
