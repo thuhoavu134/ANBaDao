@@ -2,6 +2,9 @@
 
 Start with AGENTS.md and the current block in docs/LUNA-HANDOFF.md; this file is a compatibility entrypoint for older handoffs.
 
+> Quy tắc workflow hiện hành: đọc docs/VIBE-WORKFLOW-RULES.md và dùng vibe-builder + vibe-lab cho các thay đổi runtime; Builder dừng ở REVIEW và bàn giao evidence.
+
+
 Project: Hồn Việt: Mộng Giới
 Genre: mobile-first 2.5D turn-based 6v6 Vietnamese fantasy RPG
 Source of truth: this GitHub repository

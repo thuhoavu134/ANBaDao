@@ -2,6 +2,16 @@
 
 Cập nhật: **07/09/2026**. Đây là điểm vào cho Luna. Các mục pixel/render và evidence 05/09 phía dưới là lịch sử kỹ thuật; trạng thái hiện tại nằm ở mục 1 và progress.
 
+## 0. Quy tắc skill bắt buộc
+
+Trước khi nhận hoặc thực hiện bất kỳ lát cắt nào, đọc quy tắc Vibe Builder + VibeLab trong VIBE-WORKFLOW-RULES.md.
+
+- Dùng **vibe-builder** để quyết định và triển khai sản phẩm; mặc định main agent code trực tiếp.
+- Dùng **vibe-lab** làm gate trước/sau mọi thay đổi runtime: contract, ticket/claim/lock, RED → GREEN → REFACTOR, evidence và REVIEW/handoff.
+- ticket-board là nguồn sự thật cho trạng thái ticket. Không tự đánh dấu MERGED/DONE.
+- Nếu gate hoặc evidence không chạy được, ghi blocker cụ thể; không bỏ qua để báo hoàn tất.
+
+
 ## 1. Đọc nhanh: hiện có gì và làm tiếp ở đâu
 
 - Repo `bktimmy247/luc-than`; [production](https://luc-than.vercel.app/). Game HTML/JavaScript + Canvas 2D, shell index và iframe battle, build bằng `scripts/build-static.mjs`.
