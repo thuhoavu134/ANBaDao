@@ -55,7 +55,7 @@ Cập nhật **07/09/2026, giờ Việt Nam**. Giữ tên file cũ để các li
 | Song song | L01 — VERIFY | Production/device smoke audio/route, ghi rõ thiết bị thật; không viết lại hotfix đã có |
 | 4 | **L03a — DONE (audit source)** | Inventory 23 boundary và thứ tự persist/event đã đối chiếu; opening level-up → quest ghi nhận not-atomic |
 | 5 | **L03b/L03c — IN_PROGRESS** | Source/build patch level-up và quest claim atomic; Vercel build READY, 21/21 focused pass; Chrome UI claim/reload smoke đã pass, save-fail/device còn mở |
-| 6 | **L04a — IN_PROGRESS** / L05a — READY | Return context source/build đã nối, 24/24 focused pass, Chrome route/back smoke; stress/lifecycle/device còn mở |
+| 6 | **L04a/L04b — IN_PROGRESS** / L05a — READY | Return context + campaign scene scope đã nối, 28/28 focused pass, Chrome route/back và re-entry 20 vòng; profiler/fault/device còn mở |
 | Kế tiếp | L06 / L09 | Đồng bộ stat/snapshot rồi khép vòng nuôi đội và mở đầu |
 | Chuẩn bị được | L07 / L17 | Bảng seed/banner và spec online để bàn; không chặn việc độc lập |
 
@@ -122,7 +122,15 @@ Spec từng ticket, file owner, contract, asset, test và điều kiện đóng 
 - Test syntax và combined focused suite đạt **24/24 pass, 0 fail**. Hai build marker/compatibility failure đã được sửa; deployment `dpl_RSZG5giySADfczg5VL7m4wafo9Ct` từ `67bcc39` đạt **READY** và log xác nhận R04.
 - Chrome production smoke đã đi qua `Tướng` → `Ông Phở` → hồ sơ → back; roster hiện lại, `Sở hữu 12/12 tướng`, vàng/ngọc giữ nguyên. Đây mới là route/back happy path.
 - L04a chưa DONE vì chưa có stress mở/đóng 20 lần, đo renderer/listener, fault/lifecycle harness, stale source/draft trên browser và Safari/device thật. Không đổi seed, reward, balance hoặc save migration.
-- Bước kế tiếp: lifecycle/return cases để đóng L04a hoặc L04b dispose scope nhỏ; L05a combat fixture độc lập.
+- Bước tiếp theo: đo renderer/listener và fault/lifecycle/device để đóng L04a/L04b; L05a combat fixture độc lập.
+
+## 4.8 L04b — scope vòng đời cho Chinh chiến
+
+- `src/ui/scene-lifetime.js` là contract thuần cho resource scope: dispose một lần theo thứ tự ngược, guard callback sau dispose, unregister listener và cancel timer/RAF/observer/load owner.
+- `src/ui/campaign-scene.js` tạo scope mới khi vào route và dispose khi rời route; root DOM không bị tạo lại. `scripts/afk-chest-runtime-v1.mjs` là build owner nhúng helper trước campaign source.
+- Test thực tế: syntax source/build pass và toàn bộ `tests/*.mjs` trong checkout đạt **28/28**. Unit có nhánh reverse disposal, idempotency, stale callback, listener unregister, late registration và disposal error.
+- Vercel deployment `dpl_kogrZQR2p2hkbfkHbep4PJjxndtq` từ `f675cdb` đạt **READY**, CI `success`. Chrome đã re-entry Chinh chiến 20 vòng; root campaign/roster vẫn mỗi loại 1 và scene hiển thị đúng.
+- L04b chưa DONE: chưa đo renderer/listener bằng profiler, chưa fault-inject browser, chưa Safari/iPhone/iPad; không thay seed, reward, balance hoặc save migration.
 
 ## 5. Gate còn mở
 
