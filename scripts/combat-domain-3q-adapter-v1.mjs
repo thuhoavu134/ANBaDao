@@ -265,6 +265,7 @@ function patchDist() {
       "      else if (core) core.finishBattle(session, { winner, reason: objectiveReason });",
       "      if (core) window.__HV_COMBAT_LAST_REPLAY = core.serializeReplay(session);",
       "    }",
+      "    if (window.__HV_COMBAT_FIXTURE_V1?.isEnabled?.()) window.__HV_COMBAT_FIXTURE_V1.stop({ finishedAt: Date.now() });",
       "    // __hvFinishBattle3qAdapter",
       ""
     ].join("\n");
