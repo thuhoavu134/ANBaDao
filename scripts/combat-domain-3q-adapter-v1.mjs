@@ -85,6 +85,7 @@ function assertCombatModuleContract() {
 assertCombatModuleContract();
 
 const battlePath = join(root, 'dist', 'battle.html');
+const indexPath = join(root, 'dist', 'index.html');
 
 function readCombatModuleSource(fileName) {
   return readFileSync(join(root, 'src', 'domain', 'combat', fileName), 'utf8')
@@ -187,13 +188,8 @@ function patchDist() {
       "    report(){return state.observation?observer.combatObservationReport(state.observation):null;}",
       "  };",
       "  window.__HV_COMBAT_FIXTURE_V1=Object.freeze(fixture);",
-      "  window.addEventListener('message',(event)=>{",
-      "    const message=event?.data;",
-      "    if(!message||message.channel!=='hon-viet-combat-fixture-v1'||event.source!==window.parent||event.origin!==window.location.origin)return;",
-      "    if(message.type==='start') fixture.start(message.options||{});",
-      "    else if(message.type==='stop') fixture.stop(message.options||{});",
-      "    else if(message.type==='clear') fixture.clear();",
-      "  });",
+      "  const fixtureParam=new URLSearchParams(location.search).get('qaCombatFixture');",
+      "  if(fixtureParam==='l05a') fixture.start({fixtureId:'l05a-production-ui',sessionId:'l05a-production-ui',seed:'l05a-production-seed',mode:'campaign',roundMax:15});",
       "})();"
     ].join('\n');
     const moduleScript = '<script id="hon-viet-combat-modules-v1">\n' + moduleSource + '\n' + fixtureCaptureSource + '\n</script>';
@@ -291,6 +287,20 @@ function patchDist() {
     throw new Error('3Q combat adapter result wrapper failed');
   }
   writeFileSync(battlePath, html);
+  let indexHtml = readFileSync(indexPath, 'utf8');
+  const shellMarker = '    frame.src = `battle.html?embedded=1&session=${encodeURIComponent(sessionId)}&v=3173${qaSuffix}`;';
+  if (!indexHtml.includes('qaCombatFixture=l05a')) {
+    if (!indexHtml.includes(shellMarker)) throw new Error('L05a combat fixture shell anchor missing');
+    const shellPatch = [
+      '    const fixtureSuffix = pageParams.get("qaCombatFixture") === "l05a" ? "&qaCombatFixture=l05a" : "";',
+      '    frame.src = `battle.html?embedded=1&session=${encodeURIComponent(sessionId)}&v=3173${qaSuffix}${fixtureSuffix}`;'
+    ].join('\n');
+    indexHtml = indexHtml.replace(shellMarker, shellPatch);
+    writeFileSync(indexPath, indexHtml);
+  }
+  if (!indexHtml.includes('qaCombatFixture=l05a')) {
+    throw new Error('L05a combat fixture shell injection failed');
+  }
   console.log('3Q combat domain adapter v1 wired: round → move → action → typed result replay');
 }
 

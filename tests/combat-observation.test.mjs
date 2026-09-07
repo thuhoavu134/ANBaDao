@@ -108,16 +108,20 @@ test('L05a can attach an explicit sub-impact without mutating the captured snaps
 test('L05a build owner exposes opt-in fixture capture at resolveAction boundary and records the known gap', () => {
   const adapter = read('../scripts/combat-domain-3q-adapter-v1.mjs');
   const index = read('../src/domain/combat/index.mjs');
+  const shell = read('../index.html');
   assert.match(index, /action-observation\.mjs/);
   assert.match(adapter, /action-observation\.mjs/);
   assert.match(adapter, /__HV_COMBAT_FIXTURE_V1/);
-  assert.match(adapter, /hon-viet-combat-fixture-v1/);
-  assert.match(adapter, /event\.origin!==window\.location\.origin/);
-  assert.doesNotMatch(adapter, /event\.origin\|\|'\*'/);
+  assert.match(adapter, /qaCombatFixture/);
+  assert.match(adapter, /fixture\.start/);
   assert.match(adapter, /hvCombatFixtureReport/);
   assert.match(adapter, /data-report/);
   assert.match(adapter, /snapshotBoundary/);
   assert.match(adapter, /rngSitesForAction/);
   assert.match(adapter, /before/);
   assert.match(adapter, /after/);
+  assert.match(adapter, /shellMarker/);
+  assert.match(adapter, /fixtureSuffix/);
+  assert.match(adapter, /qaCombatFixture=l05a/);
+  assert.doesNotMatch(shell, /qaCombatFixture/);
 });
