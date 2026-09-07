@@ -28,19 +28,11 @@
   "source": {
     "owner": "scripts/return-context-v1.mjs",
     "test": "tests/return-context.test.mjs",
-  "behavior": [
+    "behavior": [
       "capture uses readRevision() from P.revision",
       "beforeNavigate resolves with currentRevision",
-    "afterScreenChange resolves with currentRevision before scroll restore"
-  ],
-  "productionChrome": {
-    "alias": "https://luc-than.vercel.app/",
-    "campaignRoot": { "count": 1, "visible": true },
-    "rosterRoot": { "count": 1, "visible": true },
-    "heroCards": 12,
-    "appOriginConsoleErrors": 0,
-    "heroDetailRoute": "BLOCKED_UNSTABLE"
-  },
+      "afterScreenChange resolves with currentRevision before scroll restore"
+    ],
     "nonGoals": [
       "seed",
       "reward",
@@ -52,6 +44,14 @@
       "gameplay rules",
       "dist-only edits"
     ]
+  },
+  "productionChrome": {
+    "alias": "https://luc-than.vercel.app/",
+    "campaignRoot": { "count": 1, "visible": true },
+    "rosterRoot": { "count": 1, "visible": true },
+    "heroCards": 12,
+    "appOriginConsoleErrors": 0,
+    "heroDetailRoute": "BLOCKED_UNSTABLE"
   },
   "blockers": [
     "TICKET_BOARD_NOT_AVAILABLE",
