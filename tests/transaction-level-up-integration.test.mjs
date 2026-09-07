@@ -96,7 +96,7 @@ test('L03b build owner keeps quest progress inside the level-up transaction', ()
 
   assert.match(
     levelBlock,
-    /mutate:\(\)=>\{ hero\.level\+\+; questProgress\('level',1,false\);/
+    /mutate:\(\)=>\{\s*hero\.level\+\+;\s*questProgress\('level',1,false\);/
   );
   assert.equal(
     (levelBlock.match(/questProgress\('level',1/g) || []).length,

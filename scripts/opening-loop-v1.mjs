@@ -34,11 +34,17 @@ index = index.replace(
 );
 
 const upgradeMarker = "if(!tx.duplicate) questProgress('level',1);";
-if (!index.includes(upgradeMarker)) throw new Error('R07 upgrade success marker not found');
-index = index.replace(
-  upgradeMarker,
-  "if(!tx.duplicate){ window.HonVietOpeningLoop?.record?.('hero.upgrade',{sourceId:id,periodKey:'permanent',route:{screen:'heroes'}}); questProgress('level',1); }"
-);
+const atomicUpgradeMarker = "const opening=window.HonVietOpeningLoop?.applyToState?.(P,'hero.upgrade'";
+if (index.includes(upgradeMarker)) {
+  index = index.replace(
+    upgradeMarker,
+    "if(!tx.duplicate){ window.HonVietOpeningLoop?.record?.('hero.upgrade',{sourceId:id,periodKey:'permanent',route:{screen:'heroes'}}); questProgress('level',1); }"
+  );
+} else if (index.includes(atomicUpgradeMarker)) {
+  console.log('R10 opening loop retained atomic hero upgrade hook');
+} else {
+  throw new Error('R07 upgrade success marker not found');
+}
 
 const journeyStart = index.indexOf("b.querySelectorAll('.jmclaim')");
 const journeyEnd = index.indexOf('function journeyTutorial', journeyStart);

@@ -87,7 +87,12 @@ const newLevel = `function levelUpHero(id,commandId){
   const tx=hvRunCommittedTransaction({
     commandId:commandKey,cost:{gold:c},balances:{gold:P.gold},
     source:'hero.level-up',reason:'upgrade',
-    mutate:()=>{ hero.level++; questProgress('level',1,false); return {ok:true,heroId:id,level:hero.level,questProgressed:true}; }
+    mutate:()=>{
+      hero.level++;
+      questProgress('level',1,false);
+      const opening=window.HonVietOpeningLoop?.applyToState?.(P,'hero.upgrade',{sourceId:id,periodKey:'permanent',route:{screen:'heroes'}});
+      return {ok:true,heroId:id,level:hero.level,questProgressed:true,openingRecorded:Boolean(opening?.ok&&!opening?.duplicate)};
+    }
   });
   if(!tx.ok) return {ok:false,msg:tx.message||'Nâng tướng chưa hoàn tất.',code:tx.code,receipt:tx.receipt};
   return {ok:true,duplicate:Boolean(tx.duplicate),receipt:tx.receipt};
