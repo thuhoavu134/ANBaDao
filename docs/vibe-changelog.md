@@ -1,4 +1,17 @@
 
+## 2026-09-07 — L04-A2 stale draft revision runtime wiring
+
+- `scripts/return-context-v1.mjs` now reads the live `P.revision` when capturing a hero-detail return context and supplies it to both navigation and post-render resolution.
+- RED was a real build-owner assertion failure; GREEN/REFACTOR focused L04 suite is `19/19 PASS` with syntax and diff checks passing.
+- This slice changes only return-context lifecycle behavior. No seed, reward, balance, save migration, roster, art, audio, gameplay rule or dist-only change.
+- Code commit `6e1bb9c28538ee65355f59f8bf6601b9934807d2`; Vercel
+  `dpl_BkWWPdV3GGfwurfk3fSeY2hfMmYb` is READY and runtime errors are `0`.
+- Chrome alias smoke: campaign and roster roots each `1` and visible, 12 roster
+  cards, app-origin errors `0`; hero-card → detail was unstable and is not a
+  PASS claim. Device capabilities are `[]`.
+- Ticket remains `REVIEW / IN_PROGRESS`; Ticket Board, complete local asset
+  checkout, doctor/smoke, archive and hero-detail route gates remain open.
+
 ## 2026-09-07 — L04b completed scene timer cleanup
 
 - Source-owned `trackTimeout` now removes its one-shot disposer after the callback, preventing completed timer registrations from accumulating between campaign activations.

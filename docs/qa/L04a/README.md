@@ -76,3 +76,36 @@ Kết quả: **24/24 pass, 0 fail**.
 Commit code: `70790e0fb64833e2d1923d99a7d413c2916d491c`.
 Build marker fix: `ee756bd7f6ad9bffa4e3069b11238dcb757e741d`.
 Build callback compatibility: `67bcc39e936025f895ebea8551946de47c51412d`.
+
+## L04-A2 — stale draft revision runtime propagation (2026-09-07)
+
+Trạng thái: **REVIEW / IN_PROGRESS**. Lát cắt này nối acceptance stale draft
+revision vào build owner; chưa đóng các gate device, modal/deep-link và Ticket
+Board của L04a.
+
+- `scripts/return-context-v1.mjs` đọc `P.revision` qua `readRevision()`, ghi
+  revision hiện tại khi rời màn nguồn vào hồ sơ tướng, rồi truyền revision đó
+  vào cả `beforeNavigate` và `afterScreenChange` trước khi restore scroll.
+- Revision âm/không hợp lệ được quy về `0`, giữ cùng semantics với pure
+  `src/domain/navigation/return-context.mjs`; không ghi context vào save và
+  không đổi transaction/gameplay.
+- RED: build-owner assertion mới fail thật vì runtime chưa có `readRevision`.
+- GREEN/REFACTOR: return-context + scene-lifetime + campaign suite đạt
+  `19/19 PASS`; syntax checks và `git diff --check` pass.
+
+Machine evidence: `docs/qa/L04a/l04a-stale-draft-revision.json`.
+
+Production follow-up:
+
+- Code commit `6e1bb9c28538ee65355f59f8bf6601b9934807d2`; Vercel deployment
+  `dpl_BkWWPdV3GGfwurfk3fSeY2hfMmYb` is **READY**, build source is the same
+  commit, embedded battle payload is `952325` bytes, and the selected 1-hour
+  runtime-error query is empty.
+- Chrome alias smoke reached Chinh chiến and Tướng through visible UI:
+  `#hvCampaignScene` count/visible `1/true`, then `#hvHeroRosterV4`
+  count/visible `1/true` with `12` cards; app-origin console errors `0`.
+- A visible Ông Phở card click did not produce a stable hero-detail screen in
+  this run; it returned to the hub with no app console error. This remains a
+  browser-route blocker, not a PASS claim for detail/back restoration.
+- Device capabilities returned `[]`; responsive Chrome and Safari/iPhone/iPad
+  are **not tested**. Status remains **REVIEW / IN_PROGRESS**.

@@ -563,3 +563,33 @@ source/test nhỏ cho lifecycle scope, không phải đóng toàn bộ L04.
 - Bước kế tiếp: khi có backend thiết bị hoặc Ticket Board, chạy lại device
   matrix và claim/lock/evidence; giữ `REVIEW`, không tự đánh dấu `DONE` hoặc
   `MERGED`.
+
+## L04-A2 — runtime stale-draft revision propagation (2026-09-07)
+
+**Trạng thái:** `REVIEW / IN_PROGRESS`; không đánh dấu `DONE` hoặc `MERGED`.
+
+- Baseline contract: `0299d4b5e1c3c3010392652f964321645ec820c3`.
+- Source/build owner commit: `6e1bb9c28538ee65355f59f8bf6601b9934807d2`.
+- `scripts/return-context-v1.mjs` lấy `P.revision` hợp lệ qua `readRevision()`
+  khi capture hero-detail context; `beforeNavigate` và `afterScreenChange` đều
+  truyền `currentRevision` trước khi restore route/scroll. Không đổi seed,
+  reward, balance, save migration, roster, art, audio, gameplay rule hoặc
+  dist-only output.
+- TDD: RED là failure thật của assertion build-owner; GREEN/REFACTOR focused
+  suite `19/19 PASS`, `node --check` và `git diff --check` pass.
+- Production: Vercel `dpl_BkWWPdV3GGfwurfk3fSeY2hfMmYb` **READY**, source SHA
+  trùng code commit, build `npm run build` → `node scripts/build-static.mjs`,
+  embedded battle `952325` bytes, runtime error query 1 giờ `0`.
+- Chrome alias smoke đã bấm UI tới Chinh chiến rồi Tướng: `#hvCampaignScene`
+  `1/visible`, `#hvHeroRosterV4` `1/visible`, 12 card, app-origin console
+  errors `0`. Thao tác card Ông Phở chưa cho detail route ổn định (trở về hub,
+  không có app error), nên detail/back chưa ghi PASS.
+- Device capabilities `[]`: chưa có Chrome responsive hoặc Safari/iPhone/iPad.
+  Ticket Board `TICKET_BOARD_NOT_AVAILABLE`; archive `SOURCE_NOT_AVAILABLE`;
+  `game-dev` CLI `command not found`; local connector checkout thiếu asset/dist
+  nên full local build/all-test không đại diện complete source; doctor/smoke
+  scripts không có.
+
+**Bàn giao chính xác:** retest/fix hero-detail → back route trong lát cắt L04a
+kế tiếp, sau đó chạy device matrix và claim/lock Ticket Board khi backend khả
+dụng. Giữ `REVIEW / IN_PROGRESS`.

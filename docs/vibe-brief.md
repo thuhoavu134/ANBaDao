@@ -18,3 +18,17 @@ combat/economy rules and visual assets are unchanged. Focused L04 verification
 is `18/18 PASS`, production build is READY, and the production Chrome re-entry
 smoke passed 20 rounds. The project remains `REVIEW` / `IN_PROGRESS` until
 device, Ticket Board and complete local harness gates are available.
+
+## 2026-09-07 — L04-A2 stale draft revision
+
+The return-context build owner now carries the live player revision into
+hero-detail capture and checks it before route/scroll restoration. Focused L04
+verification is `19/19 PASS`; the slice remains `REVIEW` / `IN_PROGRESS` until
+production smoke, device and Ticket Board gates are available.
+
+Code commit `6e1bb9c28538ee65355f59f8bf6601b9934807d2`; Vercel deployment
+`dpl_BkWWPdV3GGfwurfk3fSeY2hfMmYb` is READY and the selected runtime-error
+query is empty. Chrome smoke reached campaign and roster with one visible root
+each and 12 cards, with zero app-origin errors; hero-card → detail was unstable
+and remains an explicit blocker. Device capabilities are `[]`; keep REVIEW /
+IN_PROGRESS.

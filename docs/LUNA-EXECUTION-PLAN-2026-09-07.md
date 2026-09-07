@@ -459,3 +459,25 @@ The source slice is implemented and remains `REVIEW`, not `DONE`.
 6. Remaining gates: Ticket Board, responsive/device matrix, local full asset
    checkout, doctor/smoke scripts and `game-dev`. Preserve `REVIEW` and do not
    mark L04/L04b DONE.
+
+## Checkpoint addendum — L04-A2 runtime stale-draft revision (2026-09-07)
+
+The build-owner slice is implemented and remains `REVIEW`, not `DONE`.
+
+1. Contract baseline is `0299d4b5`; source/build owner commit is
+   `6e1bb9c28538ee65355f59f8bf6601b9934807d2`.
+2. `scripts/return-context-v1.mjs` captures the live `P.revision` and passes
+   it to `resolve({ currentRevision })` in both pre-navigation and
+   post-screen-change restoration paths. No seed, reward, balance, save,
+   roster, art, audio, gameplay rule or dist-only behavior changed.
+3. RED reproduced the missing propagation assertion; GREEN/REFACTOR focused
+   suite is `19/19 PASS`, with syntax and diff checks clean.
+4. Vercel `dpl_BkWWPdV3GGfwurfk3fSeY2hfMmYb` is READY from the code SHA;
+   complete-source build embedded `952325` bytes and runtime error query is 0.
+5. Production Chrome smoke proved campaign/roster root uniqueness and
+   visibility (`1/1` each), 12 roster cards and 0 app-origin console errors.
+   Hero-card → detail was unstable, so route/back restoration is not claimed.
+6. Device capabilities are `[]`; Ticket Board, archive source, game-dev,
+   local complete asset checkout and doctor/smoke remain blocked. Next exact
+   action is retest/fix hero-detail route/back, then device matrix. Keep
+   `REVIEW / IN_PROGRESS`.

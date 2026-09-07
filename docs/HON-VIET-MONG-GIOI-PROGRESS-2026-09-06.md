@@ -254,3 +254,29 @@ Status: `REVIEW` / `IN_PROGRESS`.
 Open: Ticket Board, device matrix, local complete asset checkout, doctor/smoke
 scripts and Game Development Studio CLI. Keep L04/L04b `IN_PROGRESS`; next is
 real device QA and Ticket Board claim/lock when available.
+
+## 4.19 L04-A2 — runtime stale-draft revision propagation (2026-09-07)
+
+Status: `REVIEW` / `IN_PROGRESS`.
+
+- Source/build owner commit `6e1bb9c28538ee65355f59f8bf6601b9934807d2` wires the
+  live `P.revision` into return-context capture and both restore resolution
+  points. Pure domain stale-revision semantics are now enforced by the actual
+  generated runtime; no gameplay/player-data contract changed.
+- RED was one real build-owner assertion failure. GREEN/REFACTOR focused
+  return-context + scene-lifetime + campaign suite is `19/19 PASS`; syntax and
+  diff checks pass.
+- Vercel deployment `dpl_BkWWPdV3GGfwurfk3fSeY2hfMmYb` from the same SHA is
+  `READY`; build log runs `npm run build` / `node scripts/build-static.mjs`,
+  embedded battle is `952325` bytes, runtime error query 1 hour is empty.
+- Chrome production smoke: Chinh chiến root `1/visible`; Tướng root `1/visible`
+  with 12 cards; app-origin console errors `0`. Ông Phở card → hero detail was
+  unstable in this run and remains unclaimed; no app console error surfaced.
+- Responsive/device backend capabilities are `[]`; Safari/iPhone/iPad and
+  responsive Chrome are not tested. Ticket Board `TICKET_BOARD_NOT_AVAILABLE`,
+  archive `SOURCE_NOT_AVAILABLE`, `game-dev` CLI missing, local complete asset
+  checkout missing and doctor/smoke scripts absent remain blockers.
+
+Next exact action: retest/fix hero-detail route/back, then rerun responsive and
+Safari/iPhone/iPad QA plus Ticket Board claim/lock/evidence when available.
+Do not mark this or the parent L04 ticket `DONE`/`MERGED`.

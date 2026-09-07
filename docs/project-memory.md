@@ -7,13 +7,14 @@ player journey, combat rules, save ownership and production evidence stable.
 
 ## Active slice
 
-- Ticket label: `L04-lifecycle-next` (Ticket Board unavailable; keep the state
-  `REVIEW` / `IN_PROGRESS`).
-- Contract revision: `12e6279a39490d891114bdc7283d4bf7e99be4e4`.
-- Code commit on `main`: `e37c6df342e912a3c8ef15ac2ad5ed152547db21`.
-- Scope: `src/ui/scene-lifetime.js` and its focused test. A one-shot timeout now
-  removes its own disposer after firing, so completed callbacks do not remain
-  in the activation scope's pending resource set.
+- Ticket label: `L04-A2-runtime-stale-draft-revision` (Ticket Board unavailable;
+  keep the state `REVIEW` / `IN_PROGRESS`).
+- Contract baseline: `0299d4b5e1c3c3010392652f964321645ec820c3`.
+- Previous code baseline: `e37c6df342e912a3c8ef15ac2ad5ed152547db21`.
+- Current code commit: `6e1bb9c28538ee65355f59f8bf6601b9934807d2`.
+- Scope: `scripts/return-context-v1.mjs` now reads the live `P.revision` when
+  capturing hero-detail return context and checks the same revision before
+  navigation/scroll restoration.
 
 ## Decisions and non-goals
 
@@ -25,14 +26,14 @@ player journey, combat rules, save ownership and production evidence stable.
 
 ## Validation
 
-- RED: new timer lifecycle test failed with `pending 1 !== 0` on the baseline.
-- GREEN: focused return-context/lifecycle/campaign suite `18/18 PASS`.
-- REFACTOR: changed-owner syntax checks pass.
-- Vercel deployment `dpl_8ZUUaBWq4z4yd58Br8piF7UNN68N` is `READY`; build log
-  ran `npm run build` and wrote an embedded battle payload of `952325` bytes.
-- Production Chrome re-entry: 20 Tướng → Chinh chiến rounds; roster and
-  campaign roots remained unique (`count=1`) and visible; app-origin errors
-  after filtering browser-extension diagnostics: `0`.
+- RED: new runtime assertion failed because the build owner had no live
+  `readRevision` propagation.
+- GREEN/REFACTOR: focused return-context/lifecycle/campaign suite `19/19 PASS`;
+  syntax and diff checks pass.
+- Production Chrome smoke on `https://luc-than.vercel.app/`: Chinh chiến root
+  `count=1/visible`, then roster root `count=1/visible` with 12 cards; filtered
+  app-origin errors `0`. The Ông Phở card did not produce a stable detail route
+  in this run, so detail/back is not claimed PASS.
 
 ## Limitations and next action
 
@@ -43,6 +44,8 @@ player journey, combat rules, save ownership and production evidence stable.
 - Local connector checkout lacks the full binary asset package, so local
   `npm run build` and the all-test command cannot be treated as full-pass;
   Vercel built the complete repository successfully.
-- Next: when a device backend or Ticket Board becomes available, rerun the
-  same production matrix and update the handoff. Keep the ticket at `REVIEW`;
+- Vercel deployment `dpl_BkWWPdV3GGfwurfk3fSeY2hfMmYb` is READY and selected
+  runtime errors are `0`; browser device capabilities are `[]`.
+- Next: retest hero-detail route/back, then run the device matrix and Ticket
+  Board claim/lock/evidence when available. Keep the ticket at `REVIEW`;
   do not mark it `DONE` or `MERGED`.

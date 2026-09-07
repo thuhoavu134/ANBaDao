@@ -1,0 +1,65 @@
+{
+  "ticket": "L04-A2-runtime-stale-draft-revision",
+  "contractBaseline": "0299d4b5e1c3c3010392652f964321645ec820c3",
+  "status": "REVIEW",
+  "codeCommit": "6e1bb9c28538ee65355f59f8bf6601b9934807d2",
+  "deployment": {
+    "id": "dpl_BkWWPdV3GGfwurfk3fSeY2hfMmYb",
+    "state": "READY",
+    "sourceCommit": "6e1bb9c28538ee65355f59f8bf6601b9934807d2",
+    "embeddedBattleBytes": 952325,
+    "runtimeErrors": 0
+  },
+  "acceptance": {
+    "L04-A2": {
+      "description": "Return context carries the live player revision and rejects stale context before restoration.",
+      "red": {
+        "command": "node --test tests/return-context.test.mjs",
+        "exit_code": 1,
+        "observed": "AssertionError: return-context build owner had no readRevision propagation"
+      },
+      "green_refactor": {
+        "command": "node --test tests/return-context.test.mjs tests/scene-lifetime.test.mjs tests/campaign-scene.test.mjs",
+        "exit_code": 0,
+        "result": "19/19"
+      }
+    }
+  },
+  "source": {
+    "owner": "scripts/return-context-v1.mjs",
+    "test": "tests/return-context.test.mjs",
+  "behavior": [
+      "capture uses readRevision() from P.revision",
+      "beforeNavigate resolves with currentRevision",
+    "afterScreenChange resolves with currentRevision before scroll restore"
+  ],
+  "productionChrome": {
+    "alias": "https://luc-than.vercel.app/",
+    "campaignRoot": { "count": 1, "visible": true },
+    "rosterRoot": { "count": 1, "visible": true },
+    "heroCards": 12,
+    "appOriginConsoleErrors": 0,
+    "heroDetailRoute": "BLOCKED_UNSTABLE"
+  },
+    "nonGoals": [
+      "seed",
+      "reward",
+      "balance",
+      "save migration",
+      "roster",
+      "art",
+      "audio",
+      "gameplay rules",
+      "dist-only edits"
+    ]
+  },
+  "blockers": [
+    "TICKET_BOARD_NOT_AVAILABLE",
+    "DEVICE_BACKEND_NOT_AVAILABLE",
+    "LOCAL_ASSET_CHECKOUT_INCOMPLETE",
+    "DOCTOR_SMOKE_NOT_AVAILABLE",
+    "SOURCE_NOT_AVAILABLE",
+    "GAME_DEV_CLI_NOT_FOUND"
+  ],
+  "next": "Retest the hero-detail route/back path, then run responsive/Safari/iPhone/iPad and Ticket Board gates when available."
+}
