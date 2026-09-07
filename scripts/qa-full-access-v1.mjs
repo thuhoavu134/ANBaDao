@@ -14,6 +14,7 @@ if (index.includes('id="hv-qa-full-access-v1"')) {
 const runtime = String.raw`<style id="hv-qa-full-access-v1-style">
 #hvQaFullAccess{position:fixed;z-index:10000;top:max(8px,env(safe-area-inset-top));left:8px;display:flex;align-items:center;gap:7px;max-width:calc(100vw - 16px);padding:6px 9px;border:1px solid rgba(242,205,111,.72);border-radius:999px;background:rgba(21,25,35,.9);box-shadow:0 7px 20px rgba(0,0,0,.24);color:#ffe6a0;font:800 10px/1.2 system-ui,sans-serif;letter-spacing:.02em;backdrop-filter:blur(8px);pointer-events:auto}
 #hvQaFullAccess small{color:#d6dfdc;font-weight:600;white-space:nowrap}
+#hvQaFullAccess [data-qa-persist-fault]{color:#ffe6a0;font-weight:800;white-space:nowrap}
 #hvQaFullAccess button{border:0;border-radius:999px;padding:3px 7px;background:rgba(255,255,255,.12);color:#fff2c4;font:800 10px/1 system-ui,sans-serif;cursor:pointer}
 #hvQaFullAccess button:hover{background:rgba(255,255,255,.2)}
 #hvQaFullAccess button:focus-visible{outline:2px solid #fff0a8;outline-offset:2px}
@@ -32,6 +33,25 @@ const runtime = String.raw`<style id="hv-qa-full-access-v1-style">
   const token=String(params.get("qa")||params.get("debug")||"").trim().toLowerCase();
   const active=["unlock-all","full-access","all"].includes(token);
   if(!active||typeof P!=='object'||!P||typeof DATA!=='object'||!DATA)return;
+  const persistFailureToken=String(params.get("qaPersistFail")||"").trim().toLowerCase();
+  let persistFailureArmed=["once","1","true"].includes(persistFailureToken);
+  let persistFailureCount=0;
+  let persistFailureLast=persistFailureArmed?"ARMED_BY_QUERY":"IDLE";
+  let updateQaFaultStatus=()=>{};
+  const persistFailureSnapshot=()=>({armed:persistFailureArmed,count:persistFailureCount,last:persistFailureLast});
+  const armPersistFailure=()=>{
+    persistFailureArmed=true;
+    persistFailureLast="ARMED";
+    updateQaFaultStatus();
+  };
+  const failPersistOnce=()=>{
+    if(!persistFailureArmed)return false;
+    persistFailureArmed=false;
+    persistFailureCount++;
+    persistFailureLast="SAVE_WRITE_FAILED";
+    updateQaFaultStatus();
+    return true;
+  };
 
   const clone=value=>{
     if(value===undefined)return undefined;
@@ -76,6 +96,7 @@ const runtime = String.raw`<style id="hv-qa-full-access-v1-style">
     let writing=false;
     persist=function qaSafePersist(){
       if(writing)return basePersist();
+      if(failPersistOnce())return false;
       const runtimeState=clone(P);
       writing=true;
       try{
@@ -91,14 +112,27 @@ const runtime = String.raw`<style id="hv-qa-full-access-v1-style">
   const qaBanner=document.createElement('aside');
   qaBanner.id='hvQaFullAccess';
   qaBanner.setAttribute('role','status');
-  qaBanner.innerHTML='<span>🧪 QA</span><small>Đã mở chức năng + 20 item · sandbox không lưu</small><button type="button" aria-label="Thoát chế độ QA">Thoát</button>';
-  qaBanner.querySelector('button').addEventListener('click',()=>{
+  qaBanner.innerHTML='<span>🧪 QA</span><small>Đã mở chức năng + 20 item · sandbox không lưu</small><span data-qa-persist-fault aria-live="polite">Lưu bình thường</span><button type="button" data-qa-arm-persist-fail aria-label="Mô phỏng lỗi lưu">Arm lỗi lưu</button><button type="button" data-qa-exit aria-label="Thoát chế độ QA">Thoát</button>';
+  updateQaFaultStatus=()=>{
+    const status=qaBanner.querySelector('[data-qa-persist-fault]');
+    if(!status)return;
+    const state=persistFailureArmed?'armed':persistFailureLast==='SAVE_WRITE_FAILED'?'failed':'idle';
+    status.textContent=state==='armed'?'Lỗi lưu: sẵn sàng':state==='failed'?'Lỗi lưu: đã mô phỏng':'Lưu bình thường';
+    status.dataset.state=state;
+  };
+  qaBanner.querySelector('[data-qa-arm-persist-fail]').addEventListener('click',()=>{
+    armPersistFailure();
+    if(typeof toast==='function')toast('QA: lần lưu kế tiếp sẽ thất bại.');
+  });
+  qaBanner.querySelector('[data-qa-exit]').addEventListener('click',()=>{
     const clean=new URL(window.location.href);
     clean.searchParams.delete('qa');
     clean.searchParams.delete('debug');
+    clean.searchParams.delete('qaPersistFail');
     window.location.assign(clean.pathname+clean.search+clean.hash);
   });
   document.body.appendChild(qaBanner);
+  updateQaFaultStatus();
 
   const featureLinks=[
     ['heroes','Tướng'],['team','Trợ trận'],['daily','Lịch Luyện'],['summon','Gọi Mộng'],
@@ -141,10 +175,12 @@ const runtime = String.raw`<style id="hv-qa-full-access-v1-style">
     chapters:allChapters.slice(),
     savedProgress:clone(savedProgress),
     equipmentCatalog:qaInventory.map(item=>({...item})),
+    persistFailure:Object.freeze({arm:armPersistFailure,get:persistFailureSnapshot}),
     exit:()=>{
       const clean=new URL(window.location.href);
       clean.searchParams.delete('qa');
       clean.searchParams.delete('debug');
+      clean.searchParams.delete('qaPersistFail');
       window.location.assign(clean.pathname+clean.search+clean.hash);
     }
   });
