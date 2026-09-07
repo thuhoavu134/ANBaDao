@@ -30,7 +30,7 @@ Tài liệu này cụ thể hóa E01–E26/R01–R11 của [master plan](HON-VIE
 | L02 | P0 / IN_PROGRESS (L02a + L02b DONE; L02c PREPARED) | E02, E08; R05 | Baseline | L02a report, L02b proposal và L02c migration contract đã có; runtime integration còn mở |
 | L03 | P0 / IN_PROGRESS (L03a DONE; L03b/L03c source patch; production build pass; L03c Chrome UI smoke pass; save-fail/device open) | E03, E07; R07/R10 | Chủ transaction hiện có | Audit + level-up/quest-claim atomic patch đã có; save-fail/device evidence và các command khác còn mở |
 | L04 | P1 / IN_PROGRESS (L04a/L04b source/build + Chrome smoke; profiler/fault/device open) | E04, E06 | Router/bridge hiện có | Return context + campaign activation scope đã nối; profiler/lifecycle fault/device evidence còn mở |
-| L05 | P1 / READY phần a | E05/E06; R08/R11 | Combat hiện có | Event đủ sub-action, RNG luật có seed, parity |
+| L05 | P1 / IN_PROGRESS (L05a fixture + Chrome production coverage; engine case/device gates mở) | E05/E06; R08/R11 | Combat hiện có | Observer/report đã có; sub-action, seeded RNG, parity và round-cap evidence còn mở |
 | L06 | P1 / PLANNED | E02/E09/E10; R05/R11 | L02, L03 | Stat/kit snapshot thống nhất hồ sơ–đội–trận |
 | L07 | P1 / DECISION_PENDING | E02/E12; R05/R09, D01/D02 | L02 | Seed/player/banner đề xuất có đường kiếm đủ tài nguyên |
 | L08 | P1 / PLANNED | E12; R09 | L03, L07 được chốt | Chiêu mộ/shop giao dịch thực và reveal từ receipt |
@@ -162,7 +162,11 @@ Thân code gốc còn trong archive người dùng bàn giao; guide chỉ rõ 27
 
 **Đọc:** `battle.html` resolveAction/applyDamage/applyHeal/runOngPhoUltimateAftermath/run action caller, combat adapter/core, `src/domain/combat/*`, các test combat hiện có. Không giả một domain recorder là simulator đã tách hoàn toàn.
 
-**L05a — READY, chỉ quan sát/fixture:** thu fixture engine thật cho Basic đơn, Ông Phở hai nhịp/đuổi đánh, Lục AOE, heal/shield, DoT, stun và round cap. Ghi trước/sau từng impact và nơi RNG được gọi; chỉ ra gap của snapshot quanh resolveAction.
+**L05a — IN_PROGRESS, đã nối observer/fixture:** `src/domain/combat/action-observation.mjs` và `scripts/combat-domain-3q-adapter-v1.mjs` ghi action sequence, before/after snapshot, typed result, RNG site và known gap tại `resolveAction.finally`; fixture chỉ bật bằng `qaCombatFixture=l05a`, tự stop ở `endBattle`.
+- Test thật: `node --check` + `node --test tests/*.mjs` đạt **31/31 pass**. Chrome production URL `https://luc-than.vercel.app/?qaCombatFixture=l05a` đã chạy UI thật tới result: 8 hiệp, 51 action, 125 typed result, `impactCount=0`, status `finished`; encounter là Ải 1–2 / Mộng Phố.
+- Đã thấy action/result thực của engine: stun, damage, guardAll/barrier, aoeBurn, AOE/debuff, execute/death, miss và buffAdd. RNG site được biết nhưng giá trị chưa capture; target selector hiện hành là hash deterministic.
+- Chưa đủ để đóng: chưa có heal, DoT tick riêng, Ông Phở hai nhịp/đuổi đánh hoặc `subActionIndex`, per-impact boundary, round cap đủ 15 hiệp, speed/replay parity hay Safari/device evidence. L05a giữ **IN_PROGRESS**; report còn `resolve-action-final-snapshot`, `per-impact-boundary-missing`, `rng-value-not-captured`.
+- Archive/source mẫu không khả dụng trong phiên (`SOURCE_NOT_AVAILABLE`); không port archive method và không đổi seed, reward, balance, save migration, asset, audio hoặc hotfix thoát trận.
 
 **L05b:** instrument từng sub-action tại nơi luật áp dụng (damage/heal/status/death/resurrect/energy). Schema đề xuất mở rộng event: `{sessionId, sequence, round, actionId, subActionIndex, actorId, targetId, type, amount, flags, rngCursor}`. Không suy mọi miss từ “không thấy HP giảm”; shield/overkill/crit có thông tin riêng. Version mới, giữ reader cũ.
 
