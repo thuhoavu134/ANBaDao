@@ -55,7 +55,7 @@ Cập nhật **07/09/2026, giờ Việt Nam**. Giữ tên file cũ để các li
 | Song song | L01 — VERIFY | Production/device smoke audio/route, ghi rõ thiết bị thật; không viết lại hotfix đã có |
 | 4 | **L03a — DONE (audit source)** | Inventory 23 boundary và thứ tự persist/event đã đối chiếu; opening level-up → quest ghi nhận not-atomic |
 | 5 | **L03b/L03c — IN_PROGRESS** | Source/build patch level-up và quest claim atomic; Vercel build READY, 21/21 focused pass; Chrome UI claim/reload smoke đã pass, save-fail/device còn mở |
-| 6 | L04a / L05a — READY | Map return/lifetime và fixture các sub-action combat; chọn một việc mỗi phiên |
+| 6 | **L04a — IN_PROGRESS** / L05a — READY | Return context source/build đã nối, 24/24 focused pass, Chrome route/back smoke; stress/lifecycle/device còn mở |
 | Kế tiếp | L06 / L09 | Đồng bộ stat/snapshot rồi khép vòng nuôi đội và mở đầu |
 | Chuẩn bị được | L07 / L17 | Bảng seed/banner và spec online để bàn; không chặn việc độc lập |
 
@@ -114,6 +114,15 @@ Spec từng ticket, file owner, contract, asset, test và điều kiện đóng 
 - Vercel deployment dpl_5V1u4BTmZ991AseBnGhzAgj1KULv đạt READY; build-static chạy qua, embedded battle sync và HTTP production smoke trả 200. CLI `agent-browser` không có trong môi trường; Chrome control-browser cô lập đã kiểm happy path: Nhiệm vụ → Nhận ca trực → Thu nhận → claim `Nhận thưởng Ca Trực Đêm 1 lần`; reload giữ `1/1`, nút `✓` disabled và ngọc `800 → 820`. L03c vẫn chưa DONE vì chưa có save-fail fault injection và Safari/device evidence.
 - Không đổi seed, reward definition, balance, save migration, asset, battle, audio hoặc hotfix thoát trận; L02c vẫn PREPARED và không được gọi.
 - Bước tiếp theo chính xác: có checkout đầy đủ thì chạy npm test local; dùng browser tương tác claim quest, reload/cùng ngày/đổi ngày, lỗi save và level-up Gia Tộc trước khi mở rộng sao/skill hoặc daily milestone.
+
+## 4.7 L04a — return context cho hồ sơ và route
+
+- Pure contract `src/domain/navigation/return-context.mjs` giữ source route + params, mode/encounter, hero/tab/filter, scroll và draft revision; input được clone, không mutate save.
+- `scripts/return-context-v1.mjs` là build owner mới, chạy sau settlement/navigation và trước opening-loop; patch `navTo`, `showScreen`, `renderHeroDetail`. Context tạm nằm trong `sessionStorage`, không đi vào `P` hay receipt.
+- Test syntax và combined focused suite đạt **24/24 pass, 0 fail**. Hai build marker/compatibility failure đã được sửa; deployment `dpl_RSZG5giySADfczg5VL7m4wafo9Ct` từ `67bcc39` đạt **READY** và log xác nhận R04.
+- Chrome production smoke đã đi qua `Tướng` → `Ông Phở` → hồ sơ → back; roster hiện lại, `Sở hữu 12/12 tướng`, vàng/ngọc giữ nguyên. Đây mới là route/back happy path.
+- L04a chưa DONE vì chưa có stress mở/đóng 20 lần, đo renderer/listener, fault/lifecycle harness, stale source/draft trên browser và Safari/device thật. Không đổi seed, reward, balance hoặc save migration.
+- Bước kế tiếp: lifecycle/return cases để đóng L04a hoặc L04b dispose scope nhỏ; L05a combat fixture độc lập.
 
 ## 5. Gate còn mở
 

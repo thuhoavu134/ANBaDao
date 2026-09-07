@@ -29,7 +29,7 @@ Tài liệu này cụ thể hóa E01–E26/R01–R11 của [master plan](HON-VIE
 | L01 | P0 / VERIFY | E01, E04, E24; R02–04 | Hotfix đã deploy | Bằng chứng thoát/vào trận, route, audio trên thiết bị |
 | L02 | P0 / IN_PROGRESS (L02a + L02b DONE; L02c PREPARED) | E02, E08; R05 | Baseline | L02a report, L02b proposal và L02c migration contract đã có; runtime integration còn mở |
 | L03 | P0 / IN_PROGRESS (L03a DONE; L03b/L03c source patch; production build pass; L03c Chrome UI smoke pass; save-fail/device open) | E03, E07; R07/R10 | Chủ transaction hiện có | Audit + level-up/quest-claim atomic patch đã có; save-fail/device evidence và các command khác còn mở |
-| L04 | P1 / READY phần a | E04, E06 | Router/bridge hiện có | Return context và vòng đời màn dùng một owner |
+| L04 | P1 / IN_PROGRESS (L04a source/build + Chrome smoke; lifecycle/device open) | E04, E06 | Router/bridge hiện có | Return context đã nối; lifecycle scope và device evidence còn mở |
 | L05 | P1 / READY phần a | E05/E06; R08/R11 | Combat hiện có | Event đủ sub-action, RNG luật có seed, parity |
 | L06 | P1 / PLANNED | E02/E09/E10; R05/R11 | L02, L03 | Stat/kit snapshot thống nhất hồ sơ–đội–trận |
 | L07 | P1 / DECISION_PENDING | E02/E12; R05/R09, D01/D02 | L02 | Seed/player/banner đề xuất có đường kiếm đủ tài nguyên |
@@ -148,7 +148,7 @@ Thân code gốc còn trong archive người dùng bàn giao; guide chỉ rõ 27
 
 **Đọc:** `navTo`, `showScreen`, `closeOverlay`, `HonVietMetaBridge` trong index; settlement patch; campaign scene; roster runtime và hero tabs. Mẫu: `viewmgr` load queue/layer/back, `baseview.release` và lazy tab cache. Guide chỉ rõ method baseview/basemdl/herodownv/jumpmgr và chỉ rõ lỗi index 0, callback đơn, stale load cần sửa khi port; thay Cocos handle bằng scope owner đang có.
 
-**L04a — READY:** vẽ bảng route/owner/enter/leave/callback hiện có. Chọn luồng defeat → heroDetail → back; thêm return context vào owner hiện có, có `mode`, `encounterId`, params/hero/tab, filter/scroll và revision draft. Source route phải còn hợp lệ lúc quay lại.
+**L04a — IN_PROGRESS (source/build + Chrome smoke):** vẽ bảng route/owner/enter/leave/callback hiện có và nối luồng defeat → heroDetail → back qua `src/domain/navigation/return-context.mjs` + `scripts/return-context-v1.mjs`. Context có `mode`, `encounterId`, params/hero/tab, filter/scroll và draft revision; source route phải còn hợp lệ lúc quay lại. Build owner đã chạy sau settlement/navigation và trước opening-loop; syntax + combined focused suite đạt 24/24, Vercel READY và Chrome production route/back smoke pass. Chưa có stress 20 lần, lifecycle/fault harness và Safari/device evidence nên chưa đánh dấu DONE.
 
 **L04b:** thêm resource scope nhỏ **mới đề xuất** `src/ui/scene-lifetime.js` cho đúng scene cần migrate: dispose idempotent, unregister callbacks, cancel load/timer/RAF/audio do scene sở hữu. Scope cũ chỉ dispose resource của nó, không xóa công việc scene mới.
 
