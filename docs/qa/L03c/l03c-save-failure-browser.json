@@ -1,0 +1,110 @@
+{
+  "schema": "hon-viet-qa-evidence/v1",
+  "ticket": "L03c-save-fail-browser",
+  "status": "REVIEW",
+  "recordedAt": "2026-09-07",
+  "baselineMain": "39b91072edf1d50a3eabf35ff3dd61f18ceee7bd",
+  "codeCommit": "f99165d77d88be9f31c76569e7e9b01acdc943e0",
+  "scope": {
+    "sourceOwner": "scripts/qa-full-access-v1.mjs",
+    "transactionOwner": "scripts/transaction-contract-v1.mjs",
+    "test": "tests/qa-save-failure.test.mjs",
+    "qaOptIn": "qa=unlock-all",
+    "faultControls": [
+      "qaPersistFail=once|1|true",
+      "button[data-qa-arm-persist-fail]"
+    ],
+    "normalRouteUnaffected": true,
+    "nonGoals": [
+      "gameplay rules",
+      "seed",
+      "reward definitions",
+      "balance",
+      "save migration",
+      "roster",
+      "art",
+      "audio"
+    ]
+  },
+  "tdd": {
+    "red": {
+      "command": "node --test tests/qa-save-failure.test.mjs",
+      "baseline": "1 failed / 1 passed",
+      "exitCode": 1,
+      "failureReason": "qaPersistFail, persistFailureArmed and arm control were absent"
+    },
+    "green": {
+      "focused": "9/9 PASS",
+      "includes": [
+        "tests/qa-save-failure.test.mjs",
+        "tests/transaction-contract.test.mjs"
+      ]
+    },
+    "refactor": {
+      "syntax": "node --check scripts/qa-full-access-v1.mjs && node --check scripts/transaction-contract-v1.mjs: PASS",
+      "diffCheck": "PASS"
+    }
+  },
+  "production": {
+    "deployment": "dpl_9vxdxR6mwe5TXfhwF13epAZ489hP",
+    "state": "READY",
+    "alias": "https://luc-than.vercel.app/",
+    "sourceSha": "f99165d77d88be9f31c76569e7e9b01acdc943e0",
+    "embeddedBattleBytes": 952395,
+    "runtimeErrors": 0
+  },
+  "browser": {
+    "engine": "Chrome CDP",
+    "qaUrl": "https://luc-than.vercel.app/?qa=unlock-all&qaPersistFail=none&l03c=save-fail",
+    "normalUrl": "https://luc-than.vercel.app/",
+    "precondition": {
+      "path": "Nhiệm vụ → Nhận ca trực → Thu nhận",
+      "note": "Completed without the fault armed so the atomic quest claim was the measured action"
+    },
+    "beforeClaim": {
+      "gems": 820,
+      "quest": "1/1",
+      "claimButton": "Nhận enabled",
+      "faultStatus": "Lỗi lưu: sẵn sàng"
+    },
+    "failedClaim": {
+      "result": "SAVE_WRITE_FAILED",
+      "gems": 820,
+      "quest": "1/1",
+      "claimButton": "Nhận enabled",
+      "faultStatus": "Lỗi lưu: đã mô phỏng",
+      "successCeremonyShown": false
+    },
+    "retryClaim": {
+      "result": "committed",
+      "gems": 840,
+      "quest": "1/1",
+      "claimButton": "✓ disabled",
+      "ceremony": "HOÀN THÀNH VIỆC VẶT"
+    },
+    "qaReload": {
+      "gems": 820,
+      "quest": "0/1",
+      "faultStatus": "Lưu bình thường",
+      "meaning": "QA sandbox did not write the real save"
+    },
+    "normalRouteControls": {
+      "qaBannerCount": 0,
+      "armControlCount": 0
+    },
+    "appOriginConsoleErrors": 0,
+    "extensionDiagnosticErrorsFiltered": 21,
+    "deviceCapabilities": []
+  },
+  "localGates": {
+    "npmTest": "BLOCKED before test phase: assets/characters/luc-anh/idle-rgba-v1-atlas.webp.json missing",
+    "directAllTests": "183 pass / 37 fail; missing dist/assets/complete-source fixtures",
+    "doctor": "SOURCE_NOT_AVAILABLE: scripts/doctor.mjs absent",
+    "smoke": "SOURCE_NOT_AVAILABLE: scripts/smoke.mjs absent",
+    "agentBrowser": "SOURCE_NOT_AVAILABLE",
+    "gameDev": "SOURCE_NOT_AVAILABLE: CLI absent; no install or credential change attempted",
+    "ticketBoard": "TICKET_BOARD_NOT_AVAILABLE",
+    "archive": "SOURCE_NOT_AVAILABLE"
+  },
+  "handoff": "Keep REVIEW / IN_PROGRESS; run responsive Chrome and Safari/iPhone/iPad when device backend becomes available, then continue L04a/L05b or remaining transaction callers."
+}

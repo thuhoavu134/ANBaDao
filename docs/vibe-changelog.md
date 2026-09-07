@@ -244,3 +244,23 @@
   `docs/qa/L04b/l04b-preparation-timer-scope.json`.
 - Remains WIP/REVIEW pending responsive/Safari device backend, Ticket Board,
   complete local asset harness, archive, doctor/smoke and game-dev gates.
+
+## v3.24.8 — L03c save-failure fault injection (REVIEW)
+
+- Added a QA-only one-shot `persist()` fault to the existing full-access bridge;
+  it requires `qa=unlock-all` and is armed by `qaPersistFail=once|1|true` or
+  the visible `Arm lỗi lưu` control. The normal route has no injected control.
+- RED: `1 failure / 1 pass` on the baseline. GREEN: focused QA + transaction
+  checks `9/9 PASS`. REFACTOR: changed-source syntax and `git diff --check`
+  pass. No gameplay, seed, reward, balance, save migration, roster, art or
+  audio behavior changed.
+- Code commit `f99165d77d88be9f31c76569e7e9b01acdc943e0`; Vercel
+  `dpl_9vxdxR6mwe5TXfhwF13epAZ489hP` READY; embedded battle `952395` bytes;
+  selected runtime errors `0`.
+- Chrome production: armed first quest claim kept `1/1`, `Nhận` enabled and
+  gems `820` while showing `Lỗi lưu: đã mô phỏng`; retry committed to `840`,
+  showed `HOÀN THÀNH VIỆC VẶT` and disabled `✓`. QA reload restored `820` and
+  `0/1`; normal URL exposed no QA controls; app-origin errors `0`.
+- Remains WIP/REVIEW pending device backend, Ticket Board, complete local asset
+  harness, archive, doctor/smoke and game-dev gates. Evidence:
+  `docs/qa/L03c/l03c-save-failure-browser.json`.

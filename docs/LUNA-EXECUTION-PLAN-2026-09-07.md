@@ -28,7 +28,7 @@ Tài liệu này cụ thể hóa E01–E26/R01–R11 của [master plan](HON-VIE
 |---|---|---|---|---|
 | L01 | P0 / VERIFY | E01, E04, E24; R02–04 | Hotfix đã deploy | Bằng chứng thoát/vào trận, route, audio trên thiết bị |
 | L02 | P0 / IN_PROGRESS (L02a + L02b DONE; L02c PREPARED) | E02, E08; R05 | Baseline | L02a report, L02b proposal và L02c migration contract đã có; runtime integration còn mở |
-| L03 | P0 / IN_PROGRESS (L03a DONE; L03b/L03c source patch; production build pass; L03c Chrome UI smoke pass; save-fail/device open) | E03, E07; R07/R10 | Chủ transaction hiện có | Audit + level-up/quest-claim atomic patch đã có; save-fail/device evidence và các command khác còn mở |
+| L03 | P0 / IN_PROGRESS (L03a DONE; L03b/L03c source patch; production build pass; L03c Chrome UI + save-fail retry pass; device open) | E03, E07; R07/R10 | Chủ transaction hiện có | Audit + level-up/quest-claim atomic patch đã có; device, đổi ngày và các command khác còn mở |
 | L04 | P1 / IN_PROGRESS (L04a/L04b source/build + Chrome smoke; profiler/fault/device open) | E04, E06 | Router/bridge hiện có | Return context + campaign activation scope đã nối; profiler/lifecycle fault/device evidence còn mở |
 | L05 | P1 / IN_PROGRESS (L05a/L05b + L05c-a + L05c-b fixture; round/device gates mở) | E05/E06; R08/R11 | Combat hiện có | Observer/report + seeded RNG/cursor + direct status/DoT/energy/heal/multi-hit evidence đã có; round-cap 15, full replay/speed parity và device còn mở |
 | L06 | P1 / PLANNED | E02/E09/E10; R05/R11 | L02, L03 | Stat/kit snapshot thống nhất hồ sơ–đội–trận |
@@ -140,7 +140,7 @@ Thân code gốc còn trong archive người dùng bàn giao; guide chỉ rõ 27
 
 **Test:** nhấn đôi, retry cùng ID, stale revision, thiếu tiền, lỗi persist, listener chạy lại, reload giữa success và render. Expected: state/quest/receipt cùng cũ hoặc cùng mới, đúng một debit/credit/event. UI giữ lỗi và cho retry, không phát reveal success trước persist.
 
-**Đóng L03:** L03a chỉ đóng inventory và source evidence. L03b/L03c đã có source patch, 21/21 focused contract/static tests, Vercel production build READY, HTTP smoke 200 và L03c Chrome UI claim/reload smoke. Vẫn cần save-fail fault injection, đổi ngày và device evidence trước khi đánh dấu DONE. Audio/art dùng lại, chưa cần gen ảnh cho logic này.
+**Đóng L03:** L03a chỉ đóng inventory và source evidence. L03b/L03c đã có source patch, focused contract/static tests, Vercel production build READY, HTTP smoke 200 và L03c Chrome UI + save-fail retry evidence. Vẫn cần đổi ngày, device evidence và các command legacy khác trước khi đánh dấu DONE. Audio/art dùng lại, chưa cần gen ảnh cho logic này.
 
 ### L04 — Return context, modal và scene lifetime
 
@@ -547,3 +547,30 @@ This source/build-owner slice is implemented and remains `REVIEW`, not `DONE`.
    Ticket Board, archive, local complete assets, doctor/smoke and `game-dev`
    remain unavailable. Next is the device matrix and Ticket Board claim/lock
    evidence when those backends become available; keep `REVIEW / IN_PROGRESS`.
+
+## Checkpoint addendum — L03c save-failure fault injection (2026-09-07)
+
+This source/build-owner slice is implemented and remains `REVIEW`, not `DONE`.
+
+1. Baseline main is `39b91072edf1d50a3eabf35ff3dd61f18ceee7bd`; code commit is
+   `f99165d77d88be9f31c76569e7e9b01acdc943e0`.
+2. `scripts/qa-full-access-v1.mjs` now installs a one-shot `persist()` failure
+   control only after `qa=unlock-all`; it can be armed by
+   `qaPersistFail=once|1|true` or the visible QA button. The normal route has
+   no QA banner or fault control. `tests/qa-save-failure.test.mjs` covers the
+   bridge and the existing transaction rollback code returns `SAVE_WRITE_FAILED`.
+3. RED was `1 failure / 1 pass`; GREEN was `9/9 PASS` for QA + transaction
+   checks; REFACTOR syntax checks and `git diff --check` pass. No gameplay,
+   seed, reward, balance, save migration, roster, art or audio rule changed.
+4. Vercel `dpl_9vxdxR6mwe5TXfhwF13epAZ489hP` is READY from the code SHA;
+   complete-source build embedded `952395` bytes and selected runtime errors
+   are `0`.
+5. Chrome production first claim after arming kept quest `1/1`, button `Nhận`
+   enabled and gems `820`, with visible `Lỗi lưu: đã mô phỏng`. The same retry
+   committed the reward, showed `HOÀN THÀNH VIỆC VẶT`, raised gems to `840` and
+   changed the claim button to disabled `✓`. Reloading the QA sandbox returned
+   to gems `820` and quest `0/1`; app-origin browser errors were `0`.
+6. Device capabilities remain `[]`; Ticket Board, archive, doctor/smoke,
+   `agent-browser`, `game-dev` and the complete local asset checkout remain
+   unavailable. Next handoff is device matrix + Ticket Board evidence; retain
+   `REVIEW / IN_PROGRESS`.

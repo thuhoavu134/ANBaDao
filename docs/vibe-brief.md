@@ -66,6 +66,27 @@ errors were `0`.
 The project remains `REVIEW / IN_PROGRESS`; device capabilities are still `[]`,
 so responsive Chrome and Safari/iPhone/iPad evidence is open.
 
+## 2026-09-07 — L03c save-failure fault injection
+
+The source/build owner `scripts/qa-full-access-v1.mjs` now exposes a QA-only,
+one-shot `persist()` failure after `qa=unlock-all`. It is armed by the visible
+QA control or `qaPersistFail=once|1|true`; ordinary production URLs are
+unchanged. The transaction contract keeps the existing `SAVE_WRITE_FAILED`
+rollback path. RED was `1 failure / 1 pass`; GREEN was `9/9` focused QA and
+transaction checks; syntax and diff checks are clean.
+
+Code commit `f99165d77d88be9f31c76569e7e9b01acdc943e0`; Vercel deployment
+`dpl_9vxdxR6mwe5TXfhwF13epAZ489hP` is READY with a `952395`-byte complete-source
+build and zero selected runtime errors. Chrome production observed the first
+quest claim fail with progress `1/1`, button `Nhận` still enabled and gems
+`820`, then the retry succeed with the `HOÀN THÀNH VIỆC VẶT` ceremony, gems
+`840` and disabled `✓`. Reloading the QA sandbox restored `820` and `0/1`.
+Normal production had no QA controls and app-origin browser errors were `0`.
+
+The project remains `REVIEW / IN_PROGRESS`; device capabilities are `[]`, and
+Ticket Board, complete local assets, doctor/smoke, archive and `game-dev`
+remain unavailable.
+
 ## 2026-09-07 — L04b preparation timer scope
 
 The source-owned campaign scene now registers the existing preparation balance

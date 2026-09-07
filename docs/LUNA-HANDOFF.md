@@ -693,3 +693,50 @@ Ticket Board claim/lock/evidence when those backends become available; retain
 **Next handoff:** run responsive/Safari/iPhone/iPad QA and obtain Ticket Board
 claim/lock/evidence when those backends become available. Keep
 `REVIEW / IN_PROGRESS`.
+
+## 1.11 L03c — save-failure fault injection and retry evidence (2026-09-07)
+
+**Trạng thái:** `REVIEW / IN_PROGRESS`; không đánh dấu `DONE` hoặc `MERGED`.
+
+- Baseline main là `39b91072edf1d50a3eabf35ff3dd61f18ceee7bd`; code commit của lát
+  cắt là `f99165d77d88be9f31c76569e7e9b01acdc943e0`.
+- Source/build owner chỉ sửa `scripts/qa-full-access-v1.mjs`; test mới là
+  `tests/qa-save-failure.test.mjs`. QA bridge đọc `qaPersistFail=once|1|true`
+  sau khi đã có `qa=unlock-all`, hoặc dùng nút `Arm lỗi lưu`, rồi làm cho đúng
+  một lần `persist()` trả `false`. Đường URL bình thường không được cài banner
+  hay control lỗi; transaction owner hiện có vẫn trả `SAVE_WRITE_FAILED` và
+  khôi phục candidate state.
+- RED: test mới trên baseline có `1 failure thật / 1 pass`, vì thiếu marker
+  fault injection. GREEN: focused QA + transaction contract là `9/9 PASS`.
+  REFACTOR: `node --check` cho QA bridge/transaction và `git diff --check`
+  pass; không đổi gameplay, seed, reward, balance, save migration, roster,
+  art, audio hoặc default persist.
+- Vercel deployment `dpl_9vxdxR6mwe5TXfhwF13epAZ489hP` từ đúng code SHA đạt
+  `READY`; alias `https://luc-than.vercel.app/`; build chạy đầy đủ
+  `npm run build` → `node scripts/build-static.mjs`, embedded battle
+  `952395` bytes; selected runtime errors `0`.
+- Chrome production QA URL là
+  `https://luc-than.vercel.app/?qa=unlock-all&qaPersistFail=none&l03c=save-fail`.
+  Sau khi hoàn tất precondition Ca Trực Đêm, lần claim quest đầu sau khi arm
+  giữ `1/1`, nút `Nhận` còn bật, ngọc giữ `820`, banner hiện `Lỗi lưu: đã mô
+  phỏng`. Retry cùng command cho ceremony `HOÀN THÀNH VIỆC VẶT`, ngọc lên
+  `840`, quest vẫn `1/1` và nút thành `✓` disabled. Reload QA sandbox trả về
+  ngọc `820`, quest `0/1`, chứng minh test session không ghi save thật.
+- URL production bình thường được kiểm riêng: `#hvQaFullAccess=0` và
+  `[data-qa-arm-persist-fail]=0`. Browser app-origin errors sau khi loại
+  diagnostic `chrome-extension://` là `0`; device capabilities là `[]`.
+- Machine evidence: `docs/qa/L03c/l03c-save-failure-browser.json`.
+
+### Blocker và bàn giao tiếp
+
+- Local connector checkout vẫn thiếu `assets/` nhị phân và `dist/`: `npm run
+  build`/`npm test` bị chặn bởi
+  `assets/characters/luc-anh/idle-rgba-v1-atlas.webp.json`; full direct suite
+  đã chạy `183 pass / 37 fail` với các lỗi ENOENT của checkout không đầy đủ.
+- `scripts/doctor.mjs`, `scripts/smoke.mjs`, `agent-browser` và `game-dev`
+  không có; không tự cài hoặc thay credential. Device backend responsive
+  Chrome/Safari/iPhone/iPad chưa khả dụng. Ticket Board/claim/lock là
+  `TICKET_BOARD_NOT_AVAILABLE`; archive mẫu là `SOURCE_NOT_AVAILABLE`.
+- Bước tiếp theo: khi device backend có, chạy cùng luồng save-fail trên Chrome
+  responsive và Safari/iPhone/iPad; nếu chưa có thì chọn lát cắt source/test
+  tiếp theo từ L04a/L05b. Giữ `REVIEW / IN_PROGRESS`.

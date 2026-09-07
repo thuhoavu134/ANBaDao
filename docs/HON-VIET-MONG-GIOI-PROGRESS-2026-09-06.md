@@ -56,7 +56,7 @@ Cập nhật **07/09/2026, giờ Việt Nam**. Giữ tên file cũ để các li
 | 3 | **L02c — PREPARED** | Contract migration receipt/preview/explicit claim ở commit 324a33e; 11/11 focused tests pass; chưa nối runtime hoặc persist |
 | Song song | L01 — VERIFY | Production/device smoke audio/route, ghi rõ thiết bị thật; không viết lại hotfix đã có |
 | 4 | **L03a — DONE (audit source)** | Inventory 23 boundary và thứ tự persist/event đã đối chiếu; opening level-up → quest ghi nhận not-atomic |
-| 5 | **L03b/L03c — IN_PROGRESS** | Source/build patch level-up và quest claim atomic; Vercel build READY, 21/21 focused pass; Chrome UI claim/reload smoke đã pass, save-fail/device còn mở |
+| 5 | **L03b/L03c — IN_PROGRESS** | Source/build patch level-up và quest claim atomic; Vercel build READY; Chrome UI claim/reload và save-fail retry đã pass; device còn mở |
 | 6 | **L04a/L04b — IN_PROGRESS** / **L05a/L05b/L05c-a/L05c-b — IN_PROGRESS** | Return context + campaign scene scope đã nối, 28/28 focused pass, Chrome route/back và re-entry 20 vòng; combat focused L05c-b 34/34 pass, Vercel `005dc3a` READY và Chrome fixture đã capture 28 action/81 result/219 impact; profiler/fault/device, round cap và full parity còn mở |
 | Kế tiếp | L06 / L09 | Đồng bộ stat/snapshot rồi khép vòng nuôi đội và mở đầu |
 | Chuẩn bị được | L07 / L17 | Bảng seed/banner và spec online để bàn; không chặn việc độc lập |
@@ -356,3 +356,31 @@ Status: `REVIEW` / `IN_PROGRESS`.
 - Connector-only full tests/build, responsive/Safari device backend, Ticket
   Board, archive, doctor/smoke and `game-dev` remain blocked. Keep
   `REVIEW / IN_PROGRESS`; do not mark `DONE` or `MERGED`.
+
+## 4.23 L03c — save-failure fault injection and retry evidence (2026-09-07)
+
+Status: `REVIEW` / `IN_PROGRESS`.
+
+- Baseline main `39b91072edf1d50a3eabf35ff3dd61f18ceee7bd`; source/build-owner
+  commit `f99165d77d88be9f31c76569e7e9b01acdc943e0`. Scope is QA-only:
+  `scripts/qa-full-access-v1.mjs` adds an opt-in one-shot `persist()` failure
+  after the existing `qa=unlock-all` gate; normal URLs and normal save behavior
+  stay unchanged. `tests/qa-save-failure.test.mjs` records the bridge and the
+  existing transaction rollback contract.
+- RED was `1 failure / 1 pass` on the baseline because the fault-control marker
+  was absent. GREEN is `9/9 PASS` for the new test plus transaction contract
+  checks. REFACTOR syntax checks and `git diff --check` pass.
+- Vercel `dpl_9vxdxR6mwe5TXfhwF13epAZ489hP` is READY from the code SHA; the
+  complete-source build embedded `952395` bytes and selected runtime errors
+  are `0`.
+- Chrome production save-fail evidence: after the quest precondition, an armed
+  first claim kept `1/1`, kept the `Nhận` button enabled, kept gems at `820`,
+  and showed `Lỗi lưu: đã mô phỏng`; retry committed the reward to `840`,
+  showed the `HOÀN THÀNH VIỆC VẶT` ceremony and left `✓` disabled. Reloading
+  the QA sandbox returned to gems `820` and quest `0/1`, so the QA probe did
+  not write the real save. The normal production route had no QA banner or
+  fault control; app-origin errors were `0` after filtering extension noise.
+- Machine evidence: `docs/qa/L03c/l03c-save-failure-browser.json`.
+- Device capabilities remain `[]`; Ticket Board, archive, doctor/smoke,
+  `agent-browser`, `game-dev` and the complete local binary-asset checkout
+  remain unavailable. Do not mark L03 or L03c `DONE`/`MERGED`.
