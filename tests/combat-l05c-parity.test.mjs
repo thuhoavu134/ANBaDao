@@ -69,6 +69,13 @@ test('L05c round-cap report records terminal round 15 without allowing round 16'
   assert.equal(report.roundCapReached, true);
   assert.equal(report.roundsBeyondCap, 0);
   assert.deepEqual(report.finalSnapshotCoverage, { captured: 15, expected: 15, complete: true });
+  assert.deepEqual(report.impactSnapshotCoverage, {
+    captured: 15,
+    expected: 15,
+    actions: 15,
+    actionsWithBoundary: 15,
+    complete: true
+  });
   assert.deepEqual(report.completion, {
     winner: 'player',
     reason: 'round-limit-tie',

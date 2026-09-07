@@ -280,6 +280,16 @@ export function recordCombatImpact(observation, actionId, input = {}) {
   if (observation.status !== 'open') return { ok: false, code: 'COMBAT_OBSERVATION_CLOSED' };
   const action = observation.actions.find((entry) => entry.actionId === String(actionId));
   if (!action) return { ok: false, code: 'UNKNOWN_COMBAT_ACTION' };
+  const hasBeforeSnapshot = Array.isArray(input.before);
+  const hasAfterSnapshot = Array.isArray(input.after);
+  const metadata = normalizeMetadata(input.metadata);
+  const sourceBoundary = metadata?.sourceBoundary;
+  const boundaryCaptured = Boolean(
+    hasBeforeSnapshot &&
+    hasAfterSnapshot &&
+    sourceBoundary &&
+    (input.boundaryCaptured === undefined || input.boundaryCaptured)
+  );
   const impact = {
     index: observation.counters.impact + 1,
     type: text(input.type, 'unknown'),
@@ -291,8 +301,10 @@ export function recordCombatImpact(observation, actionId, input = {}) {
     rngCursor: input.rngCursor == null ? null : clone(input.rngCursor),
     before: snapshotCombatUnits(input.before),
     after: snapshotCombatUnits(input.after),
+    boundaryCaptured,
+    snapshotBoundary: boundaryCaptured ? text(input.snapshotBoundary, sourceBoundary) : null,
     rngCalls: normalizeRngCalls(input.rngCalls),
-    metadata: normalizeMetadata(input.metadata)
+    metadata
   };
   action.impacts.push(impact);
   observation.counters.impact += 1;
@@ -320,6 +332,19 @@ export function combatObservationReport(observation) {
     if (!sourceBoundary) continue;
     impactBoundaryCoverage[sourceBoundary] = (impactBoundaryCoverage[sourceBoundary] || 0) + 1;
   }
+  const impactSnapshotCapturedCount = allImpacts.filter((impact) => impact.boundaryCaptured === true).length;
+  const actionsWithBoundary = observation.actions.filter((action) => (
+    (action.impacts || []).length > 0 &&
+    (action.impacts || []).every((impact) => impact.boundaryCaptured === true)
+  )).length;
+  const impactBoundaryGapOpen = observation.actions.length === 0 ||
+    observation.actions.some((action) => (action.impacts || []).length === 0) ||
+    impactSnapshotCapturedCount !== allImpacts.length;
+  const impactSnapshotBoundaryTypes = [...new Set(
+    allImpacts
+      .filter((impact) => impact.boundaryCaptured === true && impact.snapshotBoundary)
+      .map((impact) => impact.snapshotBoundary)
+  )].sort();
   const multiImpactActionCount = observation.actions.filter((action) => (action.impacts || []).length > 1).length;
   const multiHitActionCount = observation.actions.filter((action) => (
     (action.impacts || []).filter((impact) => ['damage', 'miss'].includes(impact.type)).length >= 2
@@ -354,6 +379,7 @@ export function combatObservationReport(observation) {
   )].sort();
   const gaps = observation.gaps.filter((entry) => (
     (entry.code !== COMBAT_OBSERVATION_GAPS.FINAL_ACTION_SNAPSHOT || finalSnapshotGapOpen) &&
+    (entry.code !== COMBAT_OBSERVATION_GAPS.PER_IMPACT_BOUNDARY || impactBoundaryGapOpen) &&
     (entry.code !== COMBAT_OBSERVATION_GAPS.RNG_VALUE || rngGapOpen)
   ));
   const completion = observation.completion ? normalizeCompletion(observation.completion) : null;
@@ -378,6 +404,14 @@ export function combatObservationReport(observation) {
     directBoundaryCount: Object.values(impactBoundaryCoverage).reduce((total, count) => total + count, 0),
     directBoundaryTypes: Object.keys(impactBoundaryCoverage).sort(),
     impactBoundaryCoverage,
+    impactSnapshotCoverage: {
+      captured: impactSnapshotCapturedCount,
+      expected: allImpacts.length,
+      actions: observation.actions.length,
+      actionsWithBoundary,
+      complete: !impactBoundaryGapOpen
+    },
+    impactSnapshotBoundaryTypes,
     multiImpactActionCount,
     multiHitActionCount,
     finalSnapshotCoverage: {

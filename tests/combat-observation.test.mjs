@@ -99,11 +99,21 @@ test('L05a can attach an explicit sub-impact without mutating the captured snaps
     rngCalls: [{ site: 'applyDamage.hit', domain: 'rule', value: 0.1 }]
   });
   assert.equal(impact.ok, true);
+  assert.equal(impact.impact.boundaryCaptured, false);
   assert.equal(impact.impact.rngCalls[0].captured, true);
   assert.equal(impact.impact.amount, 20);
   assert.deepEqual(impact.impact.flags, { critical: true, shieldAbsorbed: 0 });
   assert.deepEqual(impact.impact.rngCursor, { rule: 3 });
-  assert.equal(combatObservationReport(observation).impactCount, 1);
+  const report = combatObservationReport(observation);
+  assert.equal(report.impactCount, 1);
+  assert.deepEqual(report.impactSnapshotCoverage, {
+    captured: 0,
+    expected: 1,
+    actions: 1,
+    actionsWithBoundary: 0,
+    complete: false
+  });
+  assert.ok(report.gaps.some(item => item.code === COMBAT_OBSERVATION_GAPS.PER_IMPACT_BOUNDARY));
   before[0].hp = 1;
   assert.equal(observation.actions[0].before[0].hp, 100);
   assert.equal(rngSitesForAction('heal').some(site => site.site === 'applyDamage.hit'), false);

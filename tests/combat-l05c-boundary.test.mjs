@@ -15,7 +15,7 @@ function unit(id, team, hp, extra = {}) {
   return { id, team, slot: 0, hp, maxHp: 100, energy: 20, shield: 0, statuses: [], ...extra };
 }
 
-test('L05c report closes the final-action snapshot gap while keeping per-impact gap explicit', () => {
+test('L05c report closes final-action and per-impact snapshot gaps', () => {
   const observation = createCombatObservation({
     fixtureId: 'l05c-boundary-contract',
     sessionId: 'l05c-boundary-contract',
@@ -60,8 +60,16 @@ test('L05c report closes the final-action snapshot gap while keeping per-impact 
   assert.equal(report.multiHitActionCount, 1);
   assert.deepEqual(report.finalSnapshotCoverage, { captured: 1, expected: 1, complete: true });
   assert.deepEqual(report.finalSnapshotBoundaryTypes, ['resolveAction.complete']);
+  assert.deepEqual(report.impactSnapshotCoverage, {
+    captured: 4,
+    expected: 4,
+    actions: 1,
+    actionsWithBoundary: 1,
+    complete: true
+  });
+  assert.deepEqual(report.impactSnapshotBoundaryTypes, ['applyDamage', 'applyHeal', 'tickStatuses']);
   assert.equal(report.gaps.some(entry => entry.code === COMBAT_OBSERVATION_GAPS.FINAL_ACTION_SNAPSHOT), false);
-  assert.equal(report.gaps.some(entry => entry.code === COMBAT_OBSERVATION_GAPS.PER_IMPACT_BOUNDARY), true);
+  assert.equal(report.gaps.some(entry => entry.code === COMBAT_OBSERVATION_GAPS.PER_IMPACT_BOUNDARY), false);
 });
 
 test('L05c report keeps final-action snapshot gap open when any action omits the explicit capture', () => {
