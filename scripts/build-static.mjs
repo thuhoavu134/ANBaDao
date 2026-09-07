@@ -65,6 +65,7 @@ await import('./transaction-contract-v1.mjs');
 await import('./afk-chest-runtime-v1.mjs');
 await import('./forge-item-assets-v1.mjs');
 await import('./settlement-navigation-v1.mjs');
+await import('./return-context-v1.mjs');
 await import('./opening-loop-v1.mjs');
 await import('./qa-full-access-v1.mjs');
 await import('./hub-dock-tray-v1.mjs');
