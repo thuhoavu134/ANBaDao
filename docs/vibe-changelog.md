@@ -226,3 +226,21 @@
   `dpl_32eET1QCRjaw17tDTzQh9xXsxdDU` READY; runtime-error query empty.
 - Remains WIP/REVIEW pending device backend, Ticket Board, complete local
   asset harness and other previously recorded environment gates.
+
+## v3.24.7 — L04b preparation timer scope (REVIEW)
+
+- Centralized the existing campaign balance-refresh interval in
+  `trackSceneTimer()` and registered it with the campaign activation lifetime
+  for home, preparation and visibility-resume paths.
+- RED: focused source contract failed `5 pass / 1 fail`; GREEN: `6/6 PASS`;
+  REFACTOR: focused scene/route checks `11/11 PASS`, syntax and diff checks
+  pass.
+- Code commit `5bea38657178c70b39ddce55f3d1866242940dbb`; Vercel
+  `dpl_A4rM7BwWDW6xzqzM6iHyjCvuf5VB` READY; embedded battle payload `952395`
+  bytes; selected runtime errors `0`.
+- Chrome production semantic smoke: 10 preparation open/cancel/re-entry
+  cycles, one campaign root at end, stamina unchanged at `120/120`, and zero
+  app-origin errors. Machine evidence:
+  `docs/qa/L04b/l04b-preparation-timer-scope.json`.
+- Remains WIP/REVIEW pending responsive/Safari device backend, Ticket Board,
+  complete local asset harness, archive, doctor/smoke and game-dev gates.

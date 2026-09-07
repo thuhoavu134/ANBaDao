@@ -653,3 +653,43 @@ Safari/iPhone/iPad), Ticket Board `TICKET_BOARD_NOT_AVAILABLE`, archive
 checkout and absent `doctor`/`smoke` scripts. Next handoff is device matrix and
 Ticket Board claim/lock/evidence when those backends become available; retain
 `REVIEW / IN_PROGRESS`.
+
+## L04b — preparation timer scope ownership (2026-09-07)
+
+**Trạng thái:** `REVIEW / IN_PROGRESS`; không đánh dấu `DONE` hoặc `MERGED`.
+
+- Baseline main: `f2ff2ef14df703a1ad6cc31bf884d95ce94764d8`.
+- Source/build-owner commit: `5bea38657178c70b39ddce55f3d1866242940dbb`.
+- Scope: `src/ui/campaign-scene.js` now centralizes the existing
+  `updateSceneNumbers` interval in `trackSceneTimer()`. Campaign clock,
+  preparation screen and visibility-resume paths all register cleanup on the
+  existing campaign activation lifetime. No gameplay, seed, reward, balance,
+  save migration, roster, art or audio behavior changed.
+- RED: focused scene-lifetime test was a real `5 pass / 1 fail` because the
+  `trackSceneTimer` contract was absent. GREEN: `6/6 PASS`. REFACTOR:
+  scene-lifetime + return-context + roster-route checks `11/11 PASS`, source
+  syntax and `git diff --check` pass.
+- Local full direct tests are `181 pass / 37 fail` only because this connector
+  checkout lacks `dist/`, binary assets and complete-source fixtures. Local
+  `npm run build` is blocked by missing
+  `assets/characters/luc-anh/idle-rgba-v1-atlas.webp.json`; Vercel is the
+  complete-source build authority for this checkout.
+- Production Vercel deployment `dpl_A4rM7BwWDW6xzqzM6iHyjCvuf5VB` is
+  **READY**, source SHA matches the code commit, embedded battle is `952395`
+  bytes, alias is `https://luc-than.vercel.app/`, and the selected 1-hour
+  runtime-error query is `0`.
+- Chrome production semantic smoke at
+  `https://luc-than.vercel.app/?qaL04b=preparation-timer` verified 10
+  independent open/cancel/re-entry cycles. End state has one
+  `#hvCampaignScene`, home visible, preparation hidden, stamina `120/120`,
+  and zero app-origin console errors. A larger batch hit a CDP input timeout
+  and is not counted as pass.
+- Device backend check is `browserCapabilities=[]`; responsive Chrome and
+  Safari/iPhone/iPad are unavailable. Ticket Board is
+  `TICKET_BOARD_NOT_AVAILABLE`, archive is `SOURCE_NOT_AVAILABLE`,
+  `game-dev`/doctor/smoke are unavailable. Machine evidence:
+  `docs/qa/L04b/l04b-preparation-timer-scope.json`.
+
+**Next handoff:** run responsive/Safari/iPhone/iPad QA and obtain Ticket Board
+claim/lock/evidence when those backends become available. Keep
+`REVIEW / IN_PROGRESS`.

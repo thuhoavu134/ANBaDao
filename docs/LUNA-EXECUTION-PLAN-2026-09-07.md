@@ -523,3 +523,27 @@ This source/build-owner slice is implemented and remains `REVIEW`, not `DONE`.
 6. Device capabilities remain `[]`; Ticket Board, archive, game-dev, full
    local asset checkout and doctor/smoke remain blocked. Keep
    `REVIEW / IN_PROGRESS` and hand off device/Ticket Board evidence next.
+
+## Checkpoint addendum — L04b preparation timer scope (2026-09-07)
+
+This source/build-owner slice is implemented and remains `REVIEW`, not `DONE`.
+
+1. Baseline main is `f2ff2ef14df703a1ad6cc31bf884d95ce94764d8`; code commit is
+   `5bea38657178c70b39ddce55f3d1866242940dbb`.
+2. `trackSceneTimer()` is the single source-owned timer registration for the
+   campaign home, preparation screen and visibility resume; it attaches the
+   existing interval cleanup to the campaign activation scope.
+3. RED was `5 pass / 1 fail`; GREEN was `6/6`; REFACTOR was `11/11` focused
+   scene/route checks, syntax checks and `git diff --check`.
+4. Vercel `dpl_A4rM7BwWDW6xzqzM6iHyjCvuf5VB` is READY, build payload is
+   `952395` bytes, alias is `https://luc-than.vercel.app/`, and selected
+   runtime errors are `0`.
+5. Chrome production semantic QA verified 10 independent preparation
+   open/cancel/re-entry cycles; one campaign root remained, final home state
+   was visible, preparation was hidden, stamina stayed `120/120`, and app
+   origin errors were `0`. A larger batch hit a CDP input timeout and is not
+   counted as pass.
+6. Device capabilities are `[]`; responsive/Safari/iPhone/iPad backend,
+   Ticket Board, archive, local complete assets, doctor/smoke and `game-dev`
+   remain unavailable. Next is the device matrix and Ticket Board claim/lock
+   evidence when those backends become available; keep `REVIEW / IN_PROGRESS`.

@@ -1,0 +1,82 @@
+{
+  "schema": "hon-viet-qa-evidence/v1",
+  "slice": "L04b-preparation-timer-scope",
+  "date": "2026-09-07",
+  "status": "REVIEW / IN_PROGRESS",
+  "baselineMain": "f2ff2ef14df703a1ad6cc31bf884d95ce94764d8",
+  "codeCommit": "5bea38657178c70b39ddce55f3d1866242940dbb",
+  "sourceOwner": "src/ui/campaign-scene.js",
+  "buildOwner": "scripts/afk-chest-runtime-v1.mjs",
+  "scope": "Register campaign preparation balance timer with the existing campaign activation lifetime; do not change gameplay, save, economy, roster, art or audio.",
+  "tdd": {
+    "red": {
+      "command": "node --test tests/scene-lifetime.test.mjs",
+      "exitCode": 1,
+      "result": "5 pass, 1 fail: trackSceneTimer contract was absent on baseline"
+    },
+    "green": {
+      "command": "node --test tests/scene-lifetime.test.mjs",
+      "exitCode": 0,
+      "result": "6/6 pass"
+    },
+    "refactor": {
+      "commands": [
+        "node --test --test-concurrency=1 tests/scene-lifetime.test.mjs tests/return-context.test.mjs tests/hero-roster-route.test.mjs",
+        "node --check src/ui/campaign-scene.js",
+        "node --check scripts/afk-chest-runtime-v1.mjs",
+        "git diff --check"
+      ],
+      "exitCode": 0,
+      "result": "11/11 focused checks pass"
+    }
+  },
+  "verification": {
+    "directAllTests": {
+      "command": "node --test --test-concurrency=1 tests/*.test.mjs",
+      "exitCode": 1,
+      "passed": 181,
+      "failed": 37,
+      "blocker": "Connector checkout lacks dist/ and binary assets; failures are ENOENT or missing asset fixtures and are not treated as a feature regression."
+    },
+    "localBuild": {
+      "command": "npm run build",
+      "exitCode": 1,
+      "blocker": "assets/characters/luc-anh/idle-rgba-v1-atlas.webp.json is unavailable in the connector checkout"
+    },
+    "doctorSmoke": "NOT_AVAILABLE: scripts/doctor.mjs and scripts/smoke.mjs are absent",
+    "gameDevelopmentStudio": "BLOCKED: game-dev CLI is not installed; no installation or credential change attempted"
+  },
+  "vercel": {
+    "deploymentId": "dpl_A4rM7BwWDW6xzqzM6iHyjCvuf5VB",
+    "status": "READY",
+    "target": "production",
+    "alias": "https://luc-than.vercel.app/",
+    "sourceCommit": "5bea38657178c70b39ddce55f3d1866242940dbb",
+    "embeddedBattleBytes": 952395,
+    "runtimeErrorsSince": "1h",
+    "runtimeErrors": 0
+  },
+  "browser": {
+    "url": "https://luc-than.vercel.app/?qaL04b=preparation-timer",
+    "backend": "Chrome CDP",
+    "verifiedCycles": 10,
+    "cycle": "Khiêu chiến -> Chuẩn bị đội hình visible -> Hủy chỉnh đội hình -> campaign home visible",
+    "sceneRoots": 1,
+    "homeVisible": true,
+    "preparationHiddenAtEnd": true,
+    "staminaAtEnd": "120/120",
+    "appOriginConsoleErrors": 0,
+    "extensionMetadataErrors": "present but filtered as chrome-extension:// noise",
+    "oversizedBatch": "CDP Input.dispatchMouseEvent timeout; not counted as pass"
+  },
+  "device": {
+    "browserCapabilities": [],
+    "responsiveChrome": "NOT_AVAILABLE",
+    "safariIphoneIpad": "NOT_AVAILABLE"
+  },
+  "gates": {
+    "ticketBoard": "TICKET_BOARD_NOT_AVAILABLE",
+    "archive": "SOURCE_NOT_AVAILABLE",
+    "next": "Run responsive/Safari device matrix and obtain Ticket Board claim/lock/evidence when backends become available; keep REVIEW / IN_PROGRESS."
+  }
+}

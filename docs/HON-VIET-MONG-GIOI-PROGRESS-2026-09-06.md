@@ -332,3 +332,27 @@ Remaining gates are unchanged: device capabilities `[]`, Ticket Board and
 archive unavailable, Game Development Studio CLI absent, local binary-asset
 checkout incomplete, and doctor/smoke scripts absent. Keep the parent work at
 `REVIEW / IN_PROGRESS`; do not mark `DONE` or `MERGED`.
+
+## 4.22 L04b — preparation timer scope ownership (2026-09-07)
+
+Status: `REVIEW` / `IN_PROGRESS`.
+
+- Source/build-owner commit `5bea38657178c70b39ddce55f3d1866242940dbb` adds
+  `trackSceneTimer()` in `src/ui/campaign-scene.js`; the existing campaign
+  activation lifetime now owns timers used by the campaign home, preparation
+  screen and visibility resume. This is lifecycle ownership only, with no
+  gameplay, economy, save, roster, art or audio changes.
+- RED was a real focused failure (`5 pass / 1 fail`) for the missing timer
+  scope contract. GREEN is `6/6`; REFACTOR is `11/11` focused scene/route
+  checks plus syntax and diff checks.
+- Vercel `dpl_A4rM7BwWDW6xzqzM6iHyjCvuf5VB` is READY from the code SHA; the
+  complete-source build embedded `952395` bytes and selected runtime errors
+  are `0`.
+- Production Chrome semantic QA verified `10/10` independent preparation
+  open/cancel/re-entry cycles at `https://luc-than.vercel.app/`; one campaign
+  root remained, the final screen returned home, stamina stayed `120/120`,
+  and app-origin console errors were `0`.
+- Machine evidence: `docs/qa/L04b/l04b-preparation-timer-scope.json`.
+- Connector-only full tests/build, responsive/Safari device backend, Ticket
+  Board, archive, doctor/smoke and `game-dev` remain blocked. Keep
+  `REVIEW / IN_PROGRESS`; do not mark `DONE` or `MERGED`.

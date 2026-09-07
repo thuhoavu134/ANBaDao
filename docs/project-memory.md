@@ -87,3 +87,29 @@ player journey, combat rules, save ownership and production evidence stable.
 - Ticket remains `REVIEW / IN_PROGRESS`. Device capabilities `[]`, Ticket
   Board, archive, game-dev, local binary assets and doctor/smoke remain blocked.
 - Machine evidence: `docs/qa/L05c/l05c-round-cap-replay-parity.json`.
+
+## Latest L04b checkpoint — preparation timer scope (2026-09-07)
+
+- Active slice: `L04b-preparation-timer-scope`; status remains `REVIEW /
+  IN_PROGRESS`.
+- Baseline main: `f2ff2ef14df703a1ad6cc31bf884d95ce94764d8`; current source/test
+  commit: `5bea38657178c70b39ddce55f3d1866242940dbb`.
+- `src/ui/campaign-scene.js` now has one `trackSceneTimer()` owner for the
+  already-existing `updateSceneNumbers` interval. It is attached to the
+  campaign activation lifetime from the home, preparation and visibility
+  resume paths. No player-data, gameplay, economy, save, roster, art or audio
+  rule changed.
+- RED: `5 pass / 1 fail` on missing timer-scope contract. GREEN: `6/6`.
+  REFACTOR: focused scene/return/roster route checks `11/11`, syntax and diff
+  clean.
+- Vercel `dpl_A4rM7BwWDW6xzqzM6iHyjCvuf5VB` READY, source SHA matches, embedded
+  battle `952395` bytes, selected runtime errors `0`; alias
+  `https://luc-than.vercel.app/`.
+- Chrome production `?qaL04b=preparation-timer`: 10 independent semantic
+  preparation open/cancel/re-entry cycles passed; one campaign root, final
+  home visible, preparation hidden, stamina `120/120`, app-origin errors 0.
+- Machine evidence: `docs/qa/L04b/l04b-preparation-timer-scope.json`.
+- Blockers unchanged: `TICKET_BOARD_NOT_AVAILABLE`, `SOURCE_NOT_AVAILABLE`,
+  `DEVICE_BACKEND_NOT_AVAILABLE`/browser capabilities `[]`, missing game-dev,
+  doctor/smoke, and incomplete local binary assets/dist. Next: device matrix
+  plus Ticket Board claim/lock/evidence; keep REVIEW and never mark DONE/MERGED.

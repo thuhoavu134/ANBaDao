@@ -65,3 +65,22 @@ errors were `0`.
 
 The project remains `REVIEW / IN_PROGRESS`; device capabilities are still `[]`,
 so responsive Chrome and Safari/iPhone/iPad evidence is open.
+
+## 2026-09-07 — L04b preparation timer scope
+
+The source-owned campaign scene now registers the existing preparation balance
+timer through the campaign activation lifetime. RED was a real `5 pass / 1
+fail` focused contract; GREEN is `6/6`; REFACTOR is `11/11` focused scene and
+route checks with syntax/diff clean. This preserves player data, gameplay,
+economy, save, roster, art and audio behavior.
+
+Code commit `5bea38657178c70b39ddce55f3d1866242940dbb`; Vercel deployment
+`dpl_A4rM7BwWDW6xzqzM6iHyjCvuf5VB` is READY with a `952395`-byte complete-source
+build and zero selected runtime errors. Chrome production verified 10 semantic
+open/cancel/re-entry cycles, one campaign root, stamina `120/120` and zero
+app-origin errors. Machine evidence is
+`docs/qa/L04b/l04b-preparation-timer-scope.json`.
+
+The project remains `REVIEW / IN_PROGRESS`; device capabilities are `[]`, so
+responsive/Safari/iPhone/iPad, Ticket Board and complete local asset harness
+gates remain open.
