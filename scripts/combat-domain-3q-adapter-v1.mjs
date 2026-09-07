@@ -593,9 +593,10 @@ function patchDist() {
       "    const objective = state.objective;",
       "    const maxRound = Math.max(1, Math.round(Number(objective?.maxRounds) || 15));",
       "    if (fixture?.isScenario?.('round-cap')) {",
-      "      if (Number(state.round) <= maxRound) return false;",
       "      const players = living(TEAM_PLAYER);",
       "      const enemies = living(TEAM_ENEMY);",
+      "      if (Number(state.round) <= maxRound && players.length > 0 && enemies.length > 0) return false;",
+      "      if (Number(state.round) <= maxRound) return __hvCheckBattleEnd3qAdapter();",
       "      const playerHp = players.reduce((sum, unit) => sum + Math.max(0, Number(unit.hp) || 0), 0);",
       "      const enemyHp = enemies.reduce((sum, unit) => sum + Math.max(0, Number(unit.hp) || 0), 0);",
       "      const winner = playerHp >= enemyHp ? TEAM_PLAYER : TEAM_ENEMY;",
@@ -749,8 +750,8 @@ function patchDist() {
     '__hvMarkDefeated3qAdapter',
     '__hvPerformAction3qAdapter',
     '__hvDebitActionEnergy3qAdapter',
-    '__hvTickStatuses3qAdapter'
-    ,'__hvCheckBattleEnd3qAdapter'
+    '__hvTickStatuses3qAdapter',
+    '__hvCheckBattleEnd3qAdapter'
   ]) {
     if (!html.includes(marker)) throw new Error(`L05b combat impact wrapper missing: ${marker}`);
   }
