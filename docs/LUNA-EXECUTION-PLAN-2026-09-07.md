@@ -1,6 +1,6 @@
 # Kế hoạch tiếp tục Lục Thần — gói thực thi cho Luna
 
-Ngày: **07/09/2026, giờ Việt Nam**. Baseline code: `c8fefca0e31b6ddb926921454413d38860171665`. Phân tích đầu vào: [source Hermes](HERMES-SOURCE-AUDIT-2026-09-07.md). Tiến độ: [snapshot hiện tại](HON-VIET-MONG-GIOI-PROGRESS-2026-09-06.md).
+Ngày: **07/09/2026, giờ Việt Nam**. Baseline code: `fbb6f8137c98fcb25a99d308547cc2768de23a06`. Phân tích đầu vào: [source Hermes](HERMES-SOURCE-AUDIT-2026-09-07.md). Tiến độ: [snapshot hiện tại](HON-VIET-MONG-GIOI-PROGRESS-2026-09-06.md).
 
 **Cập nhật theo yêu cầu của anh:** Luna được tái sử dụng/port code mẫu. Đọc [guide thực hiện](HERMES-CODE-REUSE-GUIDE.md) để lấy bản đồ 27 phương thức/dependency và cách đọc từ archive đã nhận; các chỉ dẫn cũ cấm toàn bộ source đã được thay. Các phương thức hiện NOT_PORTED, không làm tăng trạng thái hoàn thành L01–L20. Mã gốc chưa được đưa lên GitHub vì auto-review chặn phân phối lại; repo chứa guide và plan.
 
@@ -30,7 +30,7 @@ Tài liệu này cụ thể hóa E01–E26/R01–R11 của [master plan](HON-VIE
 | L02 | P0 / IN_PROGRESS (L02a + L02b DONE; L02c PREPARED) | E02, E08; R05 | Baseline | L02a report, L02b proposal và L02c migration contract đã có; runtime integration còn mở |
 | L03 | P0 / IN_PROGRESS (L03a DONE; L03b/L03c source patch; production build pass; L03c Chrome UI smoke pass; save-fail/device open) | E03, E07; R07/R10 | Chủ transaction hiện có | Audit + level-up/quest-claim atomic patch đã có; save-fail/device evidence và các command khác còn mở |
 | L04 | P1 / IN_PROGRESS (L04a/L04b source/build + Chrome smoke; profiler/fault/device open) | E04, E06 | Router/bridge hiện có | Return context + campaign activation scope đã nối; profiler/lifecycle fault/device evidence còn mở |
-| L05 | P1 / IN_PROGRESS (L05a fixture + Chrome production coverage; engine case/device gates mở) | E05/E06; R08/R11 | Combat hiện có | Observer/report đã có; sub-action, seeded RNG, parity và round-cap evidence còn mở |
+| L05 | P1 / IN_PROGRESS (L05a/L05b fixture + Chrome production coverage; engine case/device gates mở) | E05/E06; R08/R11 | Combat hiện có | Observer/report đã có; direct mutation hooks, seeded RNG, parity và round-cap evidence còn mở |
 | L06 | P1 / PLANNED | E02/E09/E10; R05/R11 | L02, L03 | Stat/kit snapshot thống nhất hồ sơ–đội–trận |
 | L07 | P1 / DECISION_PENDING | E02/E12; R05/R09, D01/D02 | L02 | Seed/player/banner đề xuất có đường kiếm đủ tài nguyên |
 | L08 | P1 / PLANNED | E12; R09 | L03, L07 được chốt | Chiêu mộ/shop giao dịch thực và reveal từ receipt |
@@ -169,6 +169,8 @@ Thân code gốc còn trong archive người dùng bàn giao; guide chỉ rõ 27
 - Archive/source mẫu không khả dụng trong phiên (`SOURCE_NOT_AVAILABLE`); không port archive method và không đổi seed, reward, balance, save migration, asset, audio hoặc hotfix thoát trận.
 
 **L05b:** instrument từng sub-action tại nơi luật áp dụng (damage/heal/status/death/resurrect/energy). Schema đề xuất mở rộng event: `{sessionId, sequence, round, actionId, subActionIndex, actorId, targetId, type, amount, flags, rngCursor}`. Không suy mọi miss từ “không thấy HP giảm”; shield/overkill/crit có thông tin riêng. Version mới, giữ reader cũ.
+
+**L05b — IN_PROGRESS, đã capture sub-action ở build owner:** [`fbb6f8137c98fcb25a99d308547cc2768de23a06`](https://github.com/bktimmy247/luc-than/commit/fbb6f8137c98fcb25a99d308547cc2768de23a06) mở rộng event impact với `amount`, `flags`, `rngCursor`; fixture giữ `actionId` qua `performAction`, buffer impact và tự đánh `subActionIndex`. Test syntax + toàn bộ `tests/*.mjs` đạt **31/31 pass**; static build-owner validation compile đủ 5 inline script body. Deployment `dpl_FkVnkvQ6QBRzUf5a6rrazvhuw1YN` READY/CI success. Chrome production UI thật ghi `finished`, hiệp 1–7, 51 action, 141 result và 281 impact; 51/51 action có impact, counter khớp, snapshot/action association đủ và sub-index liên tục; không console error/warn. L05b vẫn mở vì direct status removal/DoT tick, actor energy-cost assignment, heal/two-hit fixture, seeded RNG values, round cap 15, speed/replay parity và Safari/device chưa có evidence. Archive/source mẫu vẫn `SOURCE_NOT_AVAILABLE`; không đổi seed, reward, balance, save migration, asset, audio hoặc hotfix thoát trận.
 
 **L05c:** RNG có seed theo session cho hit/crit/variance/target/random passive. RNG hạt bụi/camera/animation tách riêng. Cùng snapshot/rules/seed tái hiện được, thêm unrelated VFX không làm lệch RNG luật. Không đổi hệ số damage khi migrate RNG.
 
