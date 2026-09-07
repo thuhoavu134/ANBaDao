@@ -6,13 +6,13 @@ Cập nhật **07/09/2026, giờ Việt Nam**. Giữ tên file cũ để các li
 
 - Repository: `bktimmy247/luc-than`; [game chính](https://luc-than.vercel.app/).
 - Baseline code phân tích: [`c8fefca0e31b6ddb926921454413d38860171665`](https://github.com/bktimmy247/luc-than/commit/c8fefca0e31b6ddb926921454413d38860171665), bản sửa âm thanh tiếp diễn sau khi thoát trận.
-- L05c-a deployment mới [`dpl_5ae3g2Ff6kD8gjFDDS6iB3cMQezH`](https://vercel.com/cuong-duc-ai-s-projects/luc-than/5ae3g2Ff6kD8gjFDDS6iB3cMQezH) từ commit `147badb07db22961f073e89b1145d22fef467c6d` đạt **READY**, Vercel commit status `success`, alias `https://luc-than.vercel.app/` trỏ đúng build; GitHub Actions không có workflow run. Chrome production đã có seeded RNG/replay-prefix evidence, chưa có Safari/device evidence.
+- L05c-b deployment [`dpl_8JxKw4my7swxv4Yn6Not7w6bmRod`](https://vercel.com/cuong-duc-ai-s-projects/luc-than/8JxKw4my7swxv4Yn6Not7w6bmRod) từ commit `005dc3a09661589ff7b96b6b7402212b1a26581e` đạt **READY**, Vercel commit status và build đều thành công, alias `https://luc-than.vercel.app/` trỏ đúng build; GitHub Actions không có workflow run. Chrome production đã có direct boundary/DoT/heal/multi-hit evidence, chưa có Safari/device evidence.
 - Bộ kiểm thử baseline trước L05a là **171/171 đạt**, gồm 9 test hồi quy vòng đời âm thanh; sau L05a, `node --test tests/*.mjs` trên checkout hiện có đạt **31/31 pass, 0 fail** và `node --check` build owner pass. Đây là test/build, không phải Safari thật.
 - Công việc ngày 07/09: ghép 7 part source Hermes, CRC đạt, kiểm kê 1.748 module/169 config, đọc luồng lõi và protocol, đối chiếu Lục Thần; cập nhật analysis/plan/handoff. Bản audit/plan ban đầu đã lên GitHub ở `799efe62475e2c3ff8145be7b6d2b323b46bdcb2`.
 - Yêu cầu tiếp theo của anh đã được đưa vào tài liệu: cho Luna tái sử dụng code mẫu. Đã viết [guide port](HERMES-CODE-REUSE-GUIDE.md), đồng bộ master/entrypoints và lập bản đồ **27 phương thức từ 10 file** trong archive, kèm dependency/khác biệt cần xử lý. **Tất cả đang NOT_PORTED**; chưa ghi nhận ticket gameplay mới hoàn thành. Đợt cập nhật này không đổi runtime, balance, asset hoặc hạ tầng.
 - Việc đưa thân mã gốc lên GitHub bị xét duyệt tự động chặn vì chưa rõ quyền phân phối lại source. Đã hoàn tất phần không bị chặn bằng tài liệu do agent viết; mã gốc vẫn ở archive người dùng bàn giao, không có gói source trích chọn trong repo.
 
-- L05a đã nối pure combat observation contract + build fixture opt-in; L05b đã thêm boundary action/sub-action. Chrome production capture của Ải 1–2 / Mộng Phố ghi hiệp 1–7, 51 action, 141 typed result, 281 impact, status `finished`. L05c-a đã thêm seeded rule/presentation RNG, call log/cursor và replay-prefix fixture; status ticket vẫn IN_PROGRESS vì coverage engine, full parity và device còn thiếu.
+- L05a đã nối pure combat observation contract + build fixture opt-in; L05b đã thêm boundary action/sub-action. Chrome production capture trước đó ghi hiệp 1–7, 51 action, 141 typed result, 281 impact, status `finished`. L05c-a đã thêm seeded rule/presentation RNG; L05c-b đã thêm direct status/DoT/energy/heal/multi-hit capture, nhưng status ticket vẫn IN_PROGRESS vì round cap, full replay/speed parity và device còn thiếu.
 Đọc [phân tích source](HERMES-SOURCE-AUDIT-2026-09-07.md), [execution plan L01–L20](LUNA-EXECUTION-PLAN-2026-09-07.md), [master plan E01–E26](HON-VIET-MASTER-PLAN-SAMKOK-v2-2026-09-06.md), [manifest kiểm kê](reference/hermes-source-manifest-2026-09-07.json).
 
 ## 2. Những lát cắt đã có, cùng mức bằng chứng
@@ -30,7 +30,7 @@ Cập nhật **07/09/2026, giờ Việt Nam**. Giữ tên file cũ để các li
 | Campaign/AFK | Scene AFK, cap 15 giờ, claim atomic, preparation sáu slot, chọn/đổi hàng/hủy/xuất chiến, MVP portrait | [PR #16](https://github.com/bktimmy247/luc-than/pull/16) **đã merge** tại `92b503c`; 162 test + Chrome evidence của nhánh trước merge |
 | Art campaign | 4 ảnh imagegen đã tích hợp | Background Mộng lộ, panel, nút và rương; prompt/manifest trong assets/ui/campaign-v1 |
 | Bridge/result | Kiểm session/source/sequence; settlement trước navigation, chống duplicate | `settlement-navigation-v1.mjs` và test; cần QA hết mode/lỗi/reload |
-| Combat/observation | L05a/L05b observer + L05c-a seeded RNG fixture tại `resolveAction.finally`, action/sub-action wrappers và `endBattle` | Focused L05c-a 32/32 pass; Vercel `147badb` READY; Chrome `finished` với 28 action/81 result/180 impact và 4.712 RNG call; direct DoT/status/energy-cost, heal/two-hit, round cap 15, full replay parity và Safari/device còn mở |
+| Combat/observation | L05a/L05b observer + L05c-a seeded RNG + L05c-b direct boundary fixture tại `resolveAction.finally`, action/sub-action wrappers và `endBattle` | Focused L05c-b 34/34 pass; Vercel `005dc3a` READY; Chrome `finished` với 28 action/81 result/219 impact, 7 direct boundary types và 5 multi-hit actions; round cap 15, full replay/speed parity và Safari/device còn mở |
 | Audio thoát trận | Đã sửa/deploy | `c8fefca`, stop active + pending + voice + result, old iframe không mute trận mới; còn L01 máy thật |
 | Opening loop | Có graph/resume/route/event contract và 5 bước | Hai trận chương 1 → đội → nâng → mặc đồ; chưa nghiệm thu player-vNext từ tài khoản trắng |
 | Hub | Icon alpha/visibility, dock, Nhiệm vụ và Bạn bè đã sửa; card main quest lớn đã bỏ | Giữ hướng hiện tại, không phục hồi card bị bỏ |
@@ -40,7 +40,7 @@ Cập nhật **07/09/2026, giờ Việt Nam**. Giữ tên file cũ để các li
 ## 3. Những khoảng thiếu đã xác định từ code
 
 1. **Catalog/seed:** defaultPlayer và migrateSave mở cả 12 tướng. QA full-access opt-in không tự giải quyết việc này. DATA.chapters có 6 chương và còn reward/unlockHero dùng ID legacy ngoài roster. Cần L02 và D01/D02; không xóa lore hay thu hồi save.
-2. **Combat:** L05a/L05b đã có recorder/build fixture và một trận production thật; L05b ghi được 281 impact với `subActionIndex`. L05c-a đã capture giá trị/cursor RNG bằng hai stream rule/presentation và parity prefix cùng seed, nhưng `resolveAction.finally` vẫn là action snapshot; direct status removal/DoT tick, actor energy-cost assignment, heal/two-hit, round cap 15 và deterministic replay toàn engine vẫn chưa chứng minh được.
+2. **Combat:** L05a/L05b đã có recorder/build fixture và một trận production thật; L05c-a đã capture giá trị/cursor RNG bằng hai stream rule/presentation và parity prefix cùng seed. L05c-b đã capture direct `performAction.action-cost`, `tickStatuses`, `applyDamage`, `applyHeal`, status, energy và death; production có DoT burn, regen heal và multi-hit evidence. Hai gap report cũ vẫn mở; round cap 15, full replay/speed parity và device chưa chứng minh.
 3. **Transaction/events:** một số event quest/opening chạy sau transaction; L03a đã audit boundary hiện hành nhưng chưa nghiệm thu một commit cho mọi side effect và mọi command. L03b sẽ chuyển từng nhóm.
 4. **Vòng mở đầu:** graph hiện hữu không tự cung cấp seed/banner/item để đảm bảo player-vNext có thể đi hết; cần L07–L09, không lấy tài khoản QA đủ tướng làm bằng chứng new-user flow.
 5. **Nuôi đội:** shared stat snapshot và 10 kit v2 còn lại, liên thông túi/đồ/đội/report, asset riêng/SFX mapping mỗi tướng chưa đủ.
@@ -57,7 +57,7 @@ Cập nhật **07/09/2026, giờ Việt Nam**. Giữ tên file cũ để các li
 | Song song | L01 — VERIFY | Production/device smoke audio/route, ghi rõ thiết bị thật; không viết lại hotfix đã có |
 | 4 | **L03a — DONE (audit source)** | Inventory 23 boundary và thứ tự persist/event đã đối chiếu; opening level-up → quest ghi nhận not-atomic |
 | 5 | **L03b/L03c — IN_PROGRESS** | Source/build patch level-up và quest claim atomic; Vercel build READY, 21/21 focused pass; Chrome UI claim/reload smoke đã pass, save-fail/device còn mở |
-| 6 | **L04a/L04b — IN_PROGRESS** / **L05a/L05b/L05c-a — IN_PROGRESS** | Return context + campaign scene scope đã nối, 28/28 focused pass, Chrome route/back và re-entry 20 vòng; combat focused L05c-a 32/32 pass, Vercel `147badb` READY và Chrome seeded-RNG fixture đã capture 28 action/81 result/180 impact; profiler/fault/device cùng direct combat coverage/full parity còn mở |
+| 6 | **L04a/L04b — IN_PROGRESS** / **L05a/L05b/L05c-a/L05c-b — IN_PROGRESS** | Return context + campaign scene scope đã nối, 28/28 focused pass, Chrome route/back và re-entry 20 vòng; combat focused L05c-b 34/34 pass, Vercel `005dc3a` READY và Chrome fixture đã capture 28 action/81 result/219 impact; profiler/fault/device, round cap và full parity còn mở |
 | Kế tiếp | L06 / L09 | Đồng bộ stat/snapshot rồi khép vòng nuôi đội và mở đầu |
 | Chuẩn bị được | L07 / L17 | Bảng seed/banner và spec online để bàn; không chặn việc độc lập |
 
@@ -158,6 +158,15 @@ Spec từng ticket, file owner, contract, asset, test và điều kiện đóng 
 - Vercel deployment [`dpl_5ae3g2Ff6kD8gjFDDS6iB3cMQezH`](https://vercel.com/cuong-duc-ai-s-projects/luc-than/5ae3g2Ff6kD8gjFDDS6iB3cMQezH) từ `147badb` **READY**, production alias giữ nguyên. Chrome shell giữ roster 12/12 và route Chinh chiến; fixture cô lập `battle.html?...qaCombatFixture=l05a` chạy trực tiếp và report `finished`: 28 action, 81 result, 180 impact, 4.712 RNG call, 122 rule call captured. Run cùng seed thứ hai có 12 action/28 result/90 impact/75 rule call; hai action đầu có rule trace/cursor/value trùng nhau.
 - L05c-a là **REVIEW**, không phải DONE. L05b/L05 tổng thể vẫn **IN_PROGRESS**. Report còn `resolve-action-final-snapshot` và `per-impact-boundary-missing`; coverage DoT/status removal/tick, energy-cost, heal/two-hit, round cap 15, full replay parity/speed và Safari/device còn thiếu. Archive/source mẫu `SOURCE_NOT_AVAILABLE`; ticket board `TICKET_BOARD_NOT_AVAILABLE`.
 - Bước kế tiếp: L05c-b instrument trực tiếp status/DoT/energy + heal/two-hit, rồi chạy round cap 15 và full replay parity trước khi mở device QA.
+
+## 4.12 L05c-b — direct combat boundary evidence
+
+- Commit source/build/test: [005dc3a](https://github.com/bktimmy247/luc-than/commit/005dc3a09661589ff7b96b6b7402212b1a26581e). Focused RED→GREEN suite đạt **34/34 pass, 0 fail**; `node --check`, adapter dry-run và 5 inline-script compile pass. Full `npm test`/CI chưa chạy trong checkout connector-only.
+- Production: deployment [dpl_8JxKw4my7swxv4Yn6Not7w6bmRod](https://vercel.com/cuong-duc-ai-s-projects/luc-than/8JxKw4my7swxv4Yn6Not7w6bmRod) **READY**, source `005dc3a`, build `npm run build`, embedded payload **940941 bytes**; Vercel runtime error scan 1 giờ sạch.
+- Chrome UI fixture: `finished`, **28 action / 81 result / 219 impact**, 4.712 RNG call, 122 captured rule call. Boundary coverage: `addStatus 20`, `applyDamage 43`, `applyHeal 6`, `gainEnergy 105`, `markDefeated 6`, `performAction.action-cost 28`, `tickStatuses 11`; DoT `burn`, regen heal, positive direct heal và 5 multi-hit actions đã quan sát.
+- Same-seed run thứ hai có prefix hai action đầu `prefixEqual=true`, nhưng còn `open`; đây là prefix parity, không phải full replay parity. Round cap 15, full replay/speed parity và Safari/iPhone/iPad/device chưa chạy.
+- Report vẫn giữ `resolve-action-final-snapshot` và `per-impact-boundary-missing`; không tự đánh dấu DONE. Archive/source mẫu `SOURCE_NOT_AVAILABLE`; ticket board `TICKET_BOARD_NOT_AVAILABLE`. L05b/L05 vẫn **IN_PROGRESS**; bước kế tiếp là round-15/full parity rồi device QA.
+
 ## 5. Gate còn mở
 
 - iPhone/iPad Safari thật: unlock/mute/thoát trận, Lục ultimate, result music, roster/back/safe area. Chưa có chứng cứ mới sau audio hotfix.

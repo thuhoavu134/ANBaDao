@@ -39,3 +39,26 @@ Ngày kiểm chứng: **07/09/2026**. Trạng thái lát cắt: **REVIEW**; L05b
 - L05b/L05 vẫn IN_PROGRESS: direct status removal/DoT tick/energy-cost, heal/two-hit, round cap 15, full replay/speed parity và Safari/iPhone/iPad/device QA còn thiếu.
 - Archive/source mẫu: `SOURCE_NOT_AVAILABLE`. Ticket board/scripts: `TICKET_BOARD_NOT_AVAILABLE`.
 - Bước kế tiếp: L05c-b instrument direct boundaries + fixture cases; sau đó chạy round-15/full replay parity và chỉ khi có evidence riêng mới mở device QA.
+
+## L05c-b — direct boundary evidence
+
+Ngày kiểm chứng: **07/09/2026**. Trạng thái lát cắt: **REVIEW**; L05b/L05 tổng thể: **IN_PROGRESS**.
+
+### Source / tests
+
+- Commit [005dc3a](https://github.com/bktimmy247/luc-than/commit/005dc3a09661589ff7b96b6b7402212b1a26581e): `src/domain/combat/action-observation.mjs`, `scripts/combat-domain-3q-adapter-v1.mjs`, `tests/combat-l05c-boundary.test.mjs`.
+- RED ban đầu fail 2/2; GREEN focused suite **34/34 pass, 0 fail**. `node --check`, adapter dry-run, 5 inline script compile pass; 2 fallback `Math.random` remain as intentional bridge fallback.
+- Report contract bổ sung direct boundary coverage và multi-hit counts; không xóa hai gap cũ. Không đổi seed config live, reward, balance, save migration, roster, art, audio hoặc hotfix thoát trận.
+
+### Deployment / Chrome production
+
+- Vercel deployment [dpl_8JxKw4my7swxv4Yn6Not7w6bmRod](https://vercel.com/cuong-duc-ai-s-projects/luc-than/8JxKw4my7swxv4Yn6Not7w6bmRod), source `005dc3a`, target production, **READY**; `npm run build` completed, embedded payload **940941 bytes**, runtime error scan 1 giờ sạch.
+- UI thật: bấm `Xuất chiến`, bật `Tự động chiến đấu`; fixture kết thúc `finished`: **28 action / 81 result / 219 impact**, 4.712 RNG call, 122 captured rule call.
+- `impactBoundaryCoverage`: `addStatus 20`, `applyDamage 43`, `applyHeal 6`, `gainEnergy 105`, `markDefeated 6`, `performAction.action-cost 28`, `tickStatuses 11`. Đã thấy DoT `burn`, regen heal, direct heal amount dương và 5 action có ít nhất hai hit.
+- Same-seed run thứ hai có hai action đầu `prefixEqual=true`, nhưng còn `open`; đây là prefix parity, chưa phải full replay parity. Round cap 15/full replay/speed parity/Safari device chưa chạy.
+
+### Gaps / next
+
+- Report còn `resolve-action-final-snapshot`, `per-impact-boundary-missing`; status **REVIEW**, không tự chuyển DONE.
+- Archive/source mẫu: `SOURCE_NOT_AVAILABLE`. Ticket Board: `TICKET_BOARD_NOT_AVAILABLE`.
+- Bước kế tiếp: round-15 fixture + full replay/speed parity, rồi mới device QA.

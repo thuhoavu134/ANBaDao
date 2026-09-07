@@ -1,3 +1,9 @@
+## L05c-b — Direct Combat Boundary Evidence (07/09/2026)
+
+- Nối capture before/after ở build-owner runtime cho action-cost, `tickStatuses` DoT/heal/control/expired và metadata effect phase; report có coverage boundary và multi-hit counts.
+- Commit [005dc3a](https://github.com/bktimmy247/luc-than/commit/005dc3a09661589ff7b96b6b7402212b1a26581e). Focused suite **34/34 pass**; Vercel production READY; Chrome fixture finished 28 action/81 result/219 impact, thấy burn DoT, regen/direct heal và 5 action multi-hit.
+- Trạng thái **REVIEW**; report còn hai gap cũ, round cap 15/full replay/speed parity/device còn mở. Giữ `SOURCE_NOT_AVAILABLE` và `TICKET_BOARD_NOT_AVAILABLE` trung thực.
+
 
 ## v3.26.0 — Lục Ảnh Golden Complete
 - Tích hợp Lục Ảnh thành Golden Character hoàn chỉnh: card/avatar/master, hero-detail Idle, Basic/Projectile/Impact, Skill 1, Ultimate, Hit, Run, Fall.

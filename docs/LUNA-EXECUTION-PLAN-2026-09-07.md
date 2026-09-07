@@ -1,6 +1,6 @@
 # Kế hoạch tiếp tục Lục Thần — gói thực thi cho Luna
 
-Ngày: **07/09/2026, giờ Việt Nam**. Current code checkpoint: [`147badb07db22961f073e89b1145d22fef467c6d`](https://github.com/bktimmy247/luc-than/commit/147badb07db22961f073e89b1145d22fef467c6d); L05b baseline: `fbb6f8137c98fcb25a99d308547cc2768de23a06`. Phân tích đầu vào: [source Hermes](HERMES-SOURCE-AUDIT-2026-09-07.md). Tiến độ: [snapshot hiện tại](HON-VIET-MONG-GIOI-PROGRESS-2026-09-06.md).
+Ngày: **07/09/2026, giờ Việt Nam**. Current code checkpoint: [`005dc3a09661589ff7b96b6b7402212b1a26581e`](https://github.com/bktimmy247/luc-than/commit/005dc3a09661589ff7b96b6b7402212b1a26581e); L05b baseline: `fbb6f8137c98fcb25a99d308547cc2768de23a06`. Phân tích đầu vào: [source Hermes](HERMES-SOURCE-AUDIT-2026-09-07.md). Tiến độ: [snapshot hiện tại](HON-VIET-MONG-GIOI-PROGRESS-2026-09-06.md).
 
 **Cập nhật theo yêu cầu của anh:** Luna được tái sử dụng/port code mẫu. Đọc [guide thực hiện](HERMES-CODE-REUSE-GUIDE.md) để lấy bản đồ 27 phương thức/dependency và cách đọc từ archive đã nhận; các chỉ dẫn cũ cấm toàn bộ source đã được thay. Các phương thức hiện NOT_PORTED, không làm tăng trạng thái hoàn thành L01–L20. Mã gốc chưa được đưa lên GitHub vì auto-review chặn phân phối lại; repo chứa guide và plan.
 
@@ -30,7 +30,7 @@ Tài liệu này cụ thể hóa E01–E26/R01–R11 của [master plan](HON-VIE
 | L02 | P0 / IN_PROGRESS (L02a + L02b DONE; L02c PREPARED) | E02, E08; R05 | Baseline | L02a report, L02b proposal và L02c migration contract đã có; runtime integration còn mở |
 | L03 | P0 / IN_PROGRESS (L03a DONE; L03b/L03c source patch; production build pass; L03c Chrome UI smoke pass; save-fail/device open) | E03, E07; R07/R10 | Chủ transaction hiện có | Audit + level-up/quest-claim atomic patch đã có; save-fail/device evidence và các command khác còn mở |
 | L04 | P1 / IN_PROGRESS (L04a/L04b source/build + Chrome smoke; profiler/fault/device open) | E04, E06 | Router/bridge hiện có | Return context + campaign activation scope đã nối; profiler/lifecycle fault/device evidence còn mở |
-| L05 | P1 / IN_PROGRESS (L05a/L05b + L05c-a fixture; engine case/device gates mở) | E05/E06; R08/R11 | Combat hiện có | Observer/report + seeded RNG/cursor đã có; direct mutation hooks, heal/two-hit, parity đầy đủ, round-cap và device evidence còn mở |
+| L05 | P1 / IN_PROGRESS (L05a/L05b + L05c-a + L05c-b fixture; round/device gates mở) | E05/E06; R08/R11 | Combat hiện có | Observer/report + seeded RNG/cursor + direct status/DoT/energy/heal/multi-hit evidence đã có; round-cap 15, full replay/speed parity và device còn mở |
 | L06 | P1 / PLANNED | E02/E09/E10; R05/R11 | L02, L03 | Stat/kit snapshot thống nhất hồ sơ–đội–trận |
 | L07 | P1 / DECISION_PENDING | E02/E12; R05/R09, D01/D02 | L02 | Seed/player/banner đề xuất có đường kiếm đủ tài nguyên |
 | L08 | P1 / PLANNED | E12; R09 | L03, L07 được chốt | Chiêu mộ/shop giao dịch thực và reveal từ receipt |
@@ -176,7 +176,9 @@ Thân code gốc còn trong archive người dùng bàn giao; guide chỉ rõ 27
 
 **L05c-a — REVIEW / đã triển khai một phần:** source `src/domain/combat/seeded-rng.mjs` và build owner adapter đã tách rule RNG khỏi presentation RNG, capture cursor/call/value và giữ evidence optional trong action/impact/replay; không thay hệ số damage, seed config live, reward, balance hoặc save. Focused suite 32/32 pass; Vercel `147badb` READY; Chrome production ghi 4.712 RNG call, 122 rule call và parity prefix hai action đầu cùng seed. Đây chưa đáp ứng toàn bộ L05c.
 
-**L05c-b kế tiếp:** hook direct status removal/DoT tick/energy-cost và fixture heal/two-hit; sau đó chạy round cap 15, full replay/speed parity và device QA. Giữ `resolve-action-final-snapshot`/`per-impact-boundary-missing` mở cho đến khi có evidence riêng.
+**L05c-b — REVIEW / đã triển khai:** commit `005dc3a` hook direct action-cost/tickStatuses/applyHeal/status/energy/death; focused 34/34 pass; Vercel READY; Chrome fixture finished 28 action/81 result/219 impact với DoT/heal/multi-hit evidence. Giữ `resolve-action-final-snapshot`/`per-impact-boundary-missing` mở; không claim full acceptance.
+
+**L05c-c kế tiếp:** fixture round cap 15 + full replay/speed parity; sau đó mới mở device QA.
 
 **L05d:** replay chỉ đọc event và outcome đã chốt; không gọi applyReward/startChapter. Skip/fast-forward nếu thêm phải qua settlement owner, không tự cắt timer khi trận chưa chốt. Kiểm các action authored, không cắt frame để tăng tốc giả.
 
