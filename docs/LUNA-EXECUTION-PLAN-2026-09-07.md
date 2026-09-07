@@ -28,7 +28,7 @@ Tài liệu này cụ thể hóa E01–E26/R01–R11 của [master plan](HON-VIE
 |---|---|---|---|---|
 | L01 | P0 / VERIFY | E01, E04, E24; R02–04 | Hotfix đã deploy | Bằng chứng thoát/vào trận, route, audio trên thiết bị |
 | L02 | P0 / IN_PROGRESS (L02a + L02b DONE; L02c PREPARED) | E02, E08; R05 | Baseline | L02a report, L02b proposal và L02c migration contract đã có; runtime integration còn mở |
-| L03 | P0 / IN_PROGRESS (L03a DONE; L03b/L03c source patch; build/UI open) | E03, E07; R07/R10 | Chủ transaction hiện có | Audit + level-up/quest-claim atomic patch đã có; full build/UI và các command khác còn mở |
+| L03 | P0 / IN_PROGRESS (L03a DONE; L03b/L03c source patch; production build pass; UI/browser/device open) | E03, E07; R07/R10 | Chủ transaction hiện có | Audit + level-up/quest-claim atomic patch đã có; interactive UI và các command khác còn mở |
 | L04 | P1 / READY phần a | E04, E06 | Router/bridge hiện có | Return context và vòng đời màn dùng một owner |
 | L05 | P1 / READY phần a | E05/E06; R08/R11 | Combat hiện có | Event đủ sub-action, RNG luật có seed, parity |
 | L06 | P1 / PLANNED | E02/E09/E10; R05/R11 | L02, L03 | Stat/kit snapshot thống nhất hồ sơ–đội–trận |
@@ -134,13 +134,15 @@ Thân code gốc còn trong archive người dùng bàn giao; guide chỉ rõ 27
 
 **L03b — IN_PROGRESS (source patch):** commit 83f7ed607deca63595fe1a2bc73c0eff7793c682 sửa `scripts/transaction-contract-v1.mjs`: `levelUpHero` đưa `questProgress('level',1,false)` vào cùng mutation, `questProgress/weeklyProgress` hỗ trợ outer transaction, command ID ổn định và UI click truyền ID. 3/3 test mới pass, combined focused suite 17/17 pass. Chưa chạy full build/UI/device/production, nên chưa đánh dấu DONE. Khi verify runtime, sau commit chỉ notification/render/audio; event không được mutate lại qua listener thứ hai.
 
-**L03c — IN_PROGRESS (source patch):** commit `ee9503f8e80b10e0cde57076a38cfa8f038c402d` nối `claimQuest` vào build owner: command ID `quest.claim:<questId>:<daily dayIndex>`, reward + claimed + activity points + +5 clan XP cùng candidate transaction; level-up notification chỉ chạy sau persist qua `afterCommit`. Test mới 3/3, combined focused 20/20. Chưa chạy full build/UI/device/production nên chưa DONE. Không đổi seed, reward, balance, save migration hoặc asset.\n\n**L03d / bước kế tiếp:** chạy full `npm test` và `scripts/build-static.mjs` trên checkout đầy đủ, kiểm `dist/` và UI quest claim/reload/đổi ngày/persist failure. Sau đó mở rộng theo nhóm sao/skill → daily milestone/weekly → batch thư/shop; không sửa đồng loạt toàn bộ economy. Giữ `executeLocalTransaction`, không phát minh `TransactionManager2`.
+**L03c — IN_PROGRESS (source/build patch):** commit `ee9503f8e80b10e0cde57076a38cfa8f038c402d` nối `claimQuest` vào build owner: command ID `quest.claim:<questId>:<daily dayIndex>`, reward + claimed + activity points + +5 clan XP cùng candidate transaction; level-up notification chỉ chạy sau persist qua `afterCommit`. Commit `8774812051e60ecca055d73e67b91c6183fb15fe` sửa marker tương thích với `opening-loop-v1.mjs` và giữ opening event trong candidate level-up. Test mới 3/3, thêm 1 regression build-owner test; combined focused 21/21. Vercel production build đạt READY và HTTP smoke 200; chưa có interactive UI/browser/device nên chưa DONE. Không đổi seed, reward, balance, save migration hoặc asset.
+
+**L03d / bước kế tiếp:** chạy `npm test` local khi có checkout đầy đủ; dùng browser kiểm UI quest claim/reload/đổi ngày/persist failure và level-up Gia Tộc. Sau đó mở rộng theo nhóm sao/skill → daily milestone/weekly → batch thư/shop; không sửa đồng loạt toàn bộ economy. Giữ `executeLocalTransaction`, không phát minh `TransactionManager2`.
 
 **Contract bổ sung đề xuất:** event `{id, commandId, type, sourceId, periodKey, rulesVersion, payload}`; receipt và event cùng `committedRevision`. Dùng ID hành động ổn định qua retry; một claim còn có khóa nguồn `sourceId + periodKey`. Không dùng revision mới để giả một lần nhận mới.
 
 **Test:** nhấn đôi, retry cùng ID, stale revision, thiếu tiền, lỗi persist, listener chạy lại, reload giữa success và render. Expected: state/quest/receipt cùng cũ hoặc cùng mới, đúng một debit/credit/event. UI giữ lỗi và cho retry, không phát reveal success trước persist.
 
-**Đóng L03:** L03a chỉ đóng inventory và source evidence. L03b/L03c hiện mới là source/build patches có focused contract/static evidence; cần full build, UI save/reload và device evidence trước khi đánh dấu DONE. Audio/art dùng lại, chưa cần gen ảnh cho logic này.
+**Đóng L03:** L03a chỉ đóng inventory và source evidence. L03b/L03c đã có source patch, 21/21 focused contract/static tests, Vercel production build READY và HTTP smoke 200; vẫn cần UI save/reload, Chrome interaction và device evidence trước khi đánh dấu DONE. Audio/art dùng lại, chưa cần gen ảnh cho logic này.
 
 ### L04 — Return context, modal và scene lifetime
 

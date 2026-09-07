@@ -1,8 +1,7 @@
 # L03c — atomic quest claim
 
-Trạng thái: **IN_PROGRESS** trong phạm vi source/build owner và focused test. Chưa
-đánh dấu DONE vì chưa chạy được full build, dist output hoặc UI runtime trên
-checkout đầy đủ.
+Trạng thái: **IN_PROGRESS** trong phạm vi source/build owner, focused test và
+production build. Chưa đánh dấu DONE vì chưa có UI click smoke/browser thật.
 
 ## Phạm vi đã làm
 
@@ -38,20 +37,38 @@ node --test tests/catalog-validator.test.mjs \
   tests/chapter-reward-migration.test.mjs \
   tests/transaction-command-audit.test.mjs \
   tests/transaction-level-up-integration.test.mjs \
-  tests/transaction-quest-claim-integration.test.mjs
+  tests/transaction-quest-claim-integration.test.mjs \
+  tests/build-owner-transaction-opening-compatibility.test.mjs
 ```
 
 Kết quả: **20/20 pass, 0 fail**. Ba test mới kiểm tra build-owner marker,
 rollback khi persist fail, reward/quest/activity/clan XP commit một lần và retry
 duplicate sau reload.
 
+Sau khi Vercel build lộ xung đột marker cũ của opening loop, đã sửa build owner
+`scripts/opening-loop-v1.mjs` để nhận atomic hero-upgrade hook, và thêm một test
+tương thích build owner. Suite cập nhật: **21/21 pass, 0 fail**.
+
+## Build và production smoke
+
+- Commit sửa tương thích build: `8774812051e60ecca055d73e67b91c6183fb15fe`.
+- Vercel deployment `dpl_5V1u4BTmZ991AseBnGhzAgj1KULv` ở `main` đạt **READY**;
+  `scripts/build-static.mjs` chạy qua và embedded battle được sync.
+- HTTP smoke production `https://luc-than.vercel.app/` trả **200**. HTML đã build
+  có `quest.claim`, `hvApplyClanXp` và opening atomic hook; không còn post-commit
+  marker `if(!tx.duplicate) questProgress('level',1);`.
+- Chưa có `agent-browser` CLI trong checkout/runtime, nên chưa thực hiện click UI,
+  Chrome interaction hoặc Safari thiết bị thật. HTTP/static smoke không được gọi
+  là UI pass.
+
 ## Chưa chạy / bước tiếp theo
 
-- Checkout connector hiện không có đầy đủ package/build dependency, nên chưa
-  chạy `npm test`, `scripts/build-static.mjs`, kiểm tra `dist/`, browser/UI smoke,
-  Safari thiết bị thật hoặc production.
-- Khi có checkout đầy đủ, chạy full build rồi kiểm UI: claim quest, reload, đổi
+- Checkout connector hiện không có đầy đủ package để chạy local `npm test`; build
+  production đã chạy thành công trên Vercel nhưng chưa có checkout `dist/` local để
+  kiểm trực tiếp.
+- Bước còn lại là kiểm UI: claim quest, reload, đổi
   ngày, retry sau lỗi save và thông báo lên cấp Gia Tộc. Sau đó mới mở rộng receipt
   pattern sang nhóm command sao/skill hoặc daily milestone/weekly.
 
 Commit source: `ee9503f8e80b10e0cde57076a38cfa8f038c402d`.
+Build compatibility follow-up: `8774812051e60ecca055d73e67b91c6183fb15fe`.

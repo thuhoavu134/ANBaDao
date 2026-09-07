@@ -54,7 +54,7 @@ Cập nhật **07/09/2026, giờ Việt Nam**. Giữ tên file cũ để các li
 | 3 | **L02c — PREPARED** | Contract migration receipt/preview/explicit claim ở commit 324a33e; 11/11 focused tests pass; chưa nối runtime hoặc persist |
 | Song song | L01 — VERIFY | Production/device smoke audio/route, ghi rõ thiết bị thật; không viết lại hotfix đã có |
 | 4 | **L03a — DONE (audit source)** | Inventory 23 boundary và thứ tự persist/event đã đối chiếu; opening level-up → quest ghi nhận not-atomic |
-| 5 | **L03b/L03c — IN_PROGRESS** | Source/build patch level-up và quest claim atomic; 20/20 focused pass; full build/UI còn mở |
+| 5 | **L03b/L03c — IN_PROGRESS** | Source/build patch level-up và quest claim atomic; Vercel build READY, 21/21 focused pass; interactive UI/device còn mở |
 | 6 | L04a / L05a — READY | Map return/lifetime và fixture các sub-action combat; chọn một việc mỗi phiên |
 | Kế tiếp | L06 / L09 | Đồng bộ stat/snapshot rồi khép vòng nuôi đội và mở đầu |
 | Chuẩn bị được | L07 / L17 | Bảng seed/banner và spec online để bàn; không chặn việc độc lập |
@@ -101,7 +101,7 @@ Spec từng ticket, file owner, contract, asset, test và điều kiện đóng 
 - L03b hiện IN_PROGRESS ở commit 83f7ed607deca63595fe1a2bc73c0eff7793c682: scripts/transaction-contract-v1.mjs đưa questProgress và weeklyProgress vào cùng transaction candidate của levelUpHero, giữ một persist sau receipt.
 - Command ID level-up dùng hero ID + level trước khi nâng; UI truyền ID và khóa nút trong click hiện tại, batch level-up truyền ID riêng cho từng level. Các caller khác chưa được migrate đồng loạt.
 - Focused test mới 3/3 pass; combined suite L02a + L02b + L02c + L03a + L03b đạt 17/17. Harness kiểm rollback persist failure và duplicate retry sau reload ở mức contract/static source.
-- Chưa chạy scripts/build-static.mjs trên checkout đầy đủ, chưa kiểm dist output, browser/UI, Safari thiết bị thật hoặc production. Vì vậy L03b chưa được đánh dấu DONE.
+- Vercel build sau khi L03c bổ sung opening atomic hook đã đạt READY ở commit 8774812051e60ecca055d73e67b91c6183fb15fe; interactive UI/browser/device vẫn chưa kiểm.
 - Không đổi seed, reward, balance, save migration, asset, battle, audio hoặc hotfix thoát trận; L02c vẫn PREPARED và không được gọi.
 - L03c đã mở rộng receipt pattern sang quest claim ở source/build owner.
 
@@ -109,10 +109,11 @@ Spec từng ticket, file owner, contract, asset, test và điều kiện đóng 
 
 - L03c được đưa lên main ở commit ee9503f8e80b10e0cde57076a38cfa8f038c402d: claimQuest dùng command ID ổn định theo quest ID + daily dayIndex, không dùng revision mới để tạo claim mới.
 - Reward, trạng thái claimed, activity points và +5 XP Gia Tộc cùng nằm trong hvRunCommittedTransaction. hvApplyClanXp chỉ mutate state và thu level-up notification; toast chạy qua afterCommit sau persist thành công.
-- Test mới 3/3 pass; combined focused suite L02a + L02b + L02c + L03a + L03b + L03c đạt 20/20. Harness kiểm rollback persist failure, duplicate retry sau reload và không phát notification khi persist thất bại.
-- Chưa chạy scripts/build-static.mjs trên checkout đầy đủ, chưa kiểm dist output, browser/UI, Safari thiết bị thật hoặc production. Vì vậy L03c chưa được đánh dấu DONE.
+- Commit 8774812051e60ecca055d73e67b91c6183fb15fe sửa xung đột marker với opening-loop-v1.mjs và đưa opening hero-upgrade event vào candidate transaction thay vì persist riêng.
+- Test mới 3/3 pass và thêm 1 regression test build-owner compatibility; combined focused suite L02a + L02b + L02c + L03a + L03b + L03c đạt 21/21. Harness kiểm rollback persist failure, duplicate retry sau reload và không phát notification khi persist thất bại.
+- Vercel deployment dpl_5V1u4BTmZ991AseBnGhzAgj1KULv đạt READY; build-static chạy qua, embedded battle sync và HTTP production smoke trả 200. Chưa có agent-browser CLI nên chưa click UI, chưa có Chrome interaction hoặc Safari thiết bị thật; L03c chưa DONE.
 - Không đổi seed, reward definition, balance, save migration, asset, battle, audio hoặc hotfix thoát trận; L02c vẫn PREPARED và không được gọi.
-- Bước tiếp theo chính xác: lấy checkout đầy đủ, chạy npm test và full build; kiểm claim quest bằng UI, reload/cùng ngày/đổi ngày, lỗi save và level-up Gia Tộc trước khi mở rộng sao/skill hoặc daily milestone.
+- Bước tiếp theo chính xác: có checkout đầy đủ thì chạy npm test local; dùng browser tương tác claim quest, reload/cùng ngày/đổi ngày, lỗi save và level-up Gia Tộc trước khi mở rộng sao/skill hoặc daily milestone.
 
 ## 5. Gate còn mở
 
