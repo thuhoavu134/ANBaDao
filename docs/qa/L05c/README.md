@@ -62,3 +62,31 @@ Ngày kiểm chứng: **07/09/2026**. Trạng thái lát cắt: **REVIEW**; L05b
 - Report còn `resolve-action-final-snapshot`, `per-impact-boundary-missing`; status **REVIEW**, không tự chuyển DONE.
 - Archive/source mẫu: `SOURCE_NOT_AVAILABLE`. Ticket Board: `TICKET_BOARD_NOT_AVAILABLE`.
 - Bước kế tiếp: round-15 fixture + full replay/speed parity, rồi mới device QA.
+
+
+## L05c-c production QA record (2026-09-07)
+
+Deployment: `dpl_CHELjrknWnR353JPiVLK9Zs8SPn8` (`READY`), commit `369f545`, alias `https://luc-than.vercel.app/`.
+
+### Round cap
+
+URL: `https://luc-than.vercel.app/battle.html?embedded=1&session=l05c-c-cap&v=3173&qaCombatFixture=l05c-round-cap`
+
+Run `Xuất chiến` → auto-battle → speed control `3×`.
+
+- Visible result: `KHẢI HOÀN`, `Lượt 15`.
+- Fixture report: `finished`, 93 actions, 228 results, 644 impacts, `roundMax=15`, `maxObservedRound=15`, `roundsBeyondCap=0`, `roundCapReached=true`.
+- Completion: `winner=player`, `reason=round-limit-hp`, `round=15`, `roundMax=15`, `speed=3`; fingerprint `a1458659`.
+
+### Full replay/speed parity
+
+- 1×: `https://luc-than.vercel.app/battle.html?embedded=1&session=l05c-c-speed1&v=3173&qaCombatFixture=l05a` → finished, 28 actions, 81 results, 219 impacts, fingerprint `0757b35e`.
+- 2×: `https://luc-than.vercel.app/battle.html?embedded=1&session=l05c-c-speed2b&v=3173&qaCombatFixture=l05a` → finished, 28 actions, 81 results, 219 impacts, fingerprint `0757b35e`.
+- Both used the same fixture seed and yielded the same full replay rule outcome. The valid 2× action was performed after battle start and verified with `Tốc độ trận đấu 2 lần`.
+
+### Local gates
+
+- Focused combat suite: `37/37 PASS`.
+- Source syntax, inline script compile and adapter markers: PASS.
+- Full `npm test`/CI, Safari/iPhone/iPad: open.
+- Existing observer gaps remain open; status stays `REVIEW`.

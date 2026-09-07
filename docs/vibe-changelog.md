@@ -1,3 +1,11 @@
+## 2026-09-07 — L05c-c round cap and replay/speed parity
+
+- Added parity schema/projection/digest over full rule outcomes while ignoring session identity and presentation speed.
+- Added source-owned opt-in `l05c-round-cap` browser fixture with terminal completion metadata and no action beyond round 15.
+- Fixed fixture terminal handling so native early win/loss still works, then added a query-only sentinel to keep the cap fixture alive through round 15 without changing live/default combat.
+- Verified `37/37` focused tests, source/build-owner syntax, inline payload compile, Vercel `READY`, production cap evidence and valid 1×/2× parity (`0757b35e`).
+- Status remains `REVIEW`; next gate is device QA. No gameplay data, save migration, reward, roster, art or audio changes.
+
 ## L05c-b — Direct Combat Boundary Evidence (07/09/2026)
 
 - Nối capture before/after ở build-owner runtime cho action-cost, `tickStatuses` DoT/heal/control/expired và metadata effect phase; report có coverage boundary và multi-hit counts.

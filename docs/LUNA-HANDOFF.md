@@ -386,3 +386,45 @@ Commit code: `641658e544511d40ad15ad5e5472e826079f194c`. GitHub báo Vercel **su
 
 Phát hiện ngoài bốn lỗi đang sửa: phần ảnh MVP Ông Phở trên màn Victory có lúc hiện ô placeholder thay cho ảnh nhân vật; một ảnh chụp trận PC còn thấy frame của Đình Lôi bị cắt phần đầu. Hai renderer này không được chỉnh tỷ lệ trong bản vá lần này. Ghi làm việc tiếp theo, kiểm tra grid/source của chính nhân vật trước khi sửa; đừng ghi “toàn bộ màn Victory/nhân vật đã đạt” dựa trên việc nút Ải sau bấm được. SFX riêng từng tướng cũng chưa được duyệt mapping; hiện là bộ event dùng chung như bảng ở mục 8.
 
+
+
+## L05c-c — round cap 15 và full replay/speed parity (2026-09-07)
+
+**Trạng thái:** `REVIEW`; L05/L05c vẫn `IN_PROGRESS`. Lát cắt này đã chạy đủ code → build → production browser evidence nhưng chưa đóng checklist.
+
+### Source/build owner
+
+- Code đi qua source owner `src/domain/combat/action-observation.mjs`, build-owner adapter `scripts/combat-domain-3q-adapter-v1.mjs` và regression `tests/combat-l05c-parity.test.mjs`; không sửa dist-only.
+- Commit feature `408864ac` thêm parity projection/digest, completion metadata và QA round-cap fixture.
+- Commit hotfix `c74d37a` giữ terminal win/loss bình thường trước cap; commit hiện hành `369f545` thêm sentinel QA-only để fixture sống đến hết hiệp 15. Nhánh live/default vẫn gọi battle-end logic nguyên bản.
+- Không đổi seed live/fixture (`l05a-production-seed`), reward, balance, roster, save migration, mỹ thuật hoặc audio.
+
+### Verification
+
+| Gate | Evidence | Kết quả |
+| --- | --- | --- |
+| Focused regression | 10 suite files, Node test runner | `37/37 PASS` |
+| Source/build-owner syntax | `node --check scripts/combat-domain-3q-adapter-v1.mjs` | PASS |
+| Inline build payload | 5 inline scripts compile, 2 expected `Math.random()` fallbacks, round-cap/parity/sentinel markers | PASS |
+| Vercel build | `dpl_CHELjrknWnR353JPiVLK9Zs8SPn8`, commit `369f545`, `npm run build` → `node scripts/build-static.mjs` | `READY`; embedded payload `948770` bytes |
+| Production runtime | Vercel runtime errors, last 1h | No runtime errors found |
+
+### Production browser evidence
+
+- Round-cap URL: `https://luc-than.vercel.app/battle.html?embedded=1&session=l05c-c-cap&v=3173&qaCombatFixture=l05c-round-cap`.
+- Real UI actions: mở trận bằng `Xuất chiến`, auto-battle bật, đổi speed bằng control thật lên `3×`; visible result là `KHẢI HOÀN`, `Lượt 15`.
+- Report: `finished`, `93 action`, `228 result`, `644 impact`, `roundMax=15`, `maxObservedRound=15`, `roundsBeyondCap=0`, `roundCapReached=true`, completion `player / round-limit-hp / round 15 / roundMax 15 / speed 3`, fingerprint `a1458659`.
+- Replay parity 1×: `https://luc-than.vercel.app/battle.html?embedded=1&session=l05c-c-speed1&v=3173&qaCombatFixture=l05a` → `finished`, `28/81/219`, round 4, `speed=1`, fingerprint `0757b35e`.
+- Replay parity 2×: `https://luc-than.vercel.app/battle.html?embedded=1&session=l05c-c-speed2b&v=3173&qaCombatFixture=l05a` → `finished`, `28/81/219`, round 4, `speed=2`, fingerprint `0757b35e`.
+- Final parity check: same seed, same full-replay-rule-outcome fingerprint, same action/result/impact counts; session ID and timing are excluded by schema `hon-viet-combat-replay-parity/v1`. Browser app error list was empty; only the browser extension metadata diagnostic appeared.
+
+### Remaining boundary/blockers
+
+- Existing observer gaps remain open: final `resolveAction` snapshot and per-impact before/after boundary.
+- `npm test`/full CI was not run in the connector-only local harness; Vercel build did run. No lint/typecheck script is declared.
+- Safari/iPhone/iPad device QA chưa chạy; đó là bước tiếp theo.
+- Archive mẫu: `SOURCE_NOT_AVAILABLE`. Ticket Board/connector: `TICKET_BOARD_NOT_AVAILABLE`.
+
+### Next handoff
+
+Run device QA on the deployed alias for the same cap/parity evidence, then reassess whether to close L05c or continue the two observer gaps. Keep status `REVIEW` until those gates have evidence.

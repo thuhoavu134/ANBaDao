@@ -180,3 +180,18 @@ Spec từng ticket, file owner, contract, asset, test và điều kiện đóng 
 Giữ 12 ID, sáu slot, ba trước–ba sau, 15 hiệp, không multi-wave cho Lục Thần. Giữ ownership/đầu tư save cũ và các kit đã chuyển; không bật global combat clock. Build/runtime nguồn là một chuỗi, không hai engine. Router/scheduler/audio mỗi loại một owner. Ảnh thiếu phải imagegen và tích hợp; CSS bố trí/tương tác, chữ/số sống; không key đen/cắt frame/làm méo để che lỗi. Được trích/port code mẫu phù hợp theo guide và test tại boundary. Không nạp toàn APK/Cocos bundle hoặc chép archive đè repo; việc dùng code không tự thay art/identity/balance. Các câu cũ cấm toàn bộ source không còn là quy tắc hiện hành.
 
 Mỗi lần đóng ticket: ghi code commit, test, UI/device evidence, deployment nếu có, phần còn mở và bước tiếp. Nếu dùng mẫu, ghi excerpt ID/hash, file đích, dependency đã thay, khác biệt hành vi và trạng thái port theo guide. Mốc code baseline và mốc commit cập nhật tài liệu có thể khác nhau; không lấy một commit docs làm bằng chứng gameplay mới.
+
+
+## 4.14 L05c-c — round cap 15 + full replay/speed parity (2026-09-07)
+
+Status: `REVIEW` / `IN_PROGRESS`.
+
+- Implemented on source/build owner: `action-observation.mjs`, `combat-domain-3q-adapter-v1.mjs`, `combat-l05c-parity.test.mjs`.
+- Acceptance evidence: E05 round cap reports terminal round 15 with zero actions beyond cap; E06 production Chrome UI passes cap and speed controls; R08 no settlement/reward path changed; R11 focused regression `37/37 PASS`, source syntax and inline compile pass.
+- Production deployment `dpl_CHELjrknWnR353JPiVLK9Zs8SPn8` is `READY` for commit `369f545`; runtime error query for the last hour returned none.
+- Cap fixture actual: `93 action / 228 result / 644 impact`, round `15/15`, `roundCapReached=true`, `roundsBeyondCap=0`, visible `KHẢI HOÀN`, parity fingerprint `a1458659`.
+- Valid speed parity actual: 1× and 2× both `28 action / 81 result / 219 impact`, same seed and fingerprint `0757b35e`; completion speed fields were `1` and `2` respectively.
+- An earlier pre-launch speed-control attempt was discarded because `beginBattle()` reset the selected speed; the final 2× run changed the top control after launch and verified `Tốc độ trận đấu 2 lần` before completion.
+- The round-cap sentinel is query-scoped only. Normal `l05a` and live/default battles retain native terminal handling; no seed/reward/balance/save/roster/art/audio changes.
+
+Open: device QA, full CI outside connector-only harness, source archive and ticket-board blockers, plus the two existing observer boundary gaps. Next: device QA on the production alias. Do not mark DONE.

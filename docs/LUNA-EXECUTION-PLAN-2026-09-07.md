@@ -398,3 +398,14 @@ Cuối phiên cập nhật progress và trạng thái ticket tương ứng. Hand
 - Đổi seed/migration làm mất save cũ; tự đổi banner odds hoặc thu hồi tướng.
 - Để ảnh giả/CSS trang trí thay artwork còn thiếu; key đen/làm méo motion để che lỗi.
 - Ghi Safari/online/production PASS khi chỉ có unit test hoặc mô phỏng local.
+
+
+## Checkpoint addendum — L05c-c completed to REVIEW (2026-09-07)
+
+The implementation slice is complete through production browser evidence and remains `REVIEW`, not `DONE`.
+
+1. `369f545` is the current main code/build-owner commit. `scripts/build-static.mjs` produced a `READY` Vercel deployment with the expected embedded payload.
+2. The cap fixture now proves a real terminal `round=15` with no action at round 16; its sentinel is isolated behind `qaCombatFixture=l05c-round-cap`.
+3. Full replay parity at the same fixed seed was exercised through real UI at 1× and 2×. The reports have identical `0757b35e` full-replay-rule-outcome fingerprints and identical action/result/impact counts.
+4. Preserve existing non-goals: no live seed, reward, balance, save migration, roster, art, or audio changes.
+5. Next execution order: production device QA (Safari/iPhone/iPad), then decide whether the final-action/per-impact observer gaps need another slice. Keep archive/ticket blockers explicit.
