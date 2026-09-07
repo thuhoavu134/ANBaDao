@@ -54,7 +54,8 @@ Cập nhật **07/09/2026, giờ Việt Nam**. Giữ tên file cũ để các li
 | 3 | **L02c — PREPARED** | Contract migration receipt/preview/explicit claim ở commit 324a33e; 11/11 focused tests pass; chưa nối runtime hoặc persist |
 | Song song | L01 — VERIFY | Production/device smoke audio/route, ghi rõ thiết bị thật; không viết lại hotfix đã có |
 | 4 | **L03a — DONE (audit source)** | Inventory 23 boundary và thứ tự persist/event đã đối chiếu; opening level-up → quest ghi nhận not-atomic |
-| 5 | L04a / L05a — READY | Map return/lifetime và fixture các sub-action combat; chọn một việc mỗi phiên |
+| 5 | **L03b — IN_PROGRESS** | Source/build patch level-up + quest atomic và focused test đã có; full build/UI còn mở |
+| 6 | L04a / L05a — READY | Map return/lifetime và fixture các sub-action combat; chọn một việc mỗi phiên |
 | Kế tiếp | L06 / L09 | Đồng bộ stat/snapshot rồi khép vòng nuôi đội và mở đầu |
 | Chuẩn bị được | L07 / L17 | Bảng seed/banner và spec online để bàn; không chặn việc độc lập |
 
@@ -94,6 +95,15 @@ Spec từng ticket, file owner, contract, asset, test và điều kiện đóng 
 - Focused tests L02a + L02b + L02c + L03a: 14/14 pass. Failure harness được mô tả nhưng chưa tiêm vào runtime thật; full npm test/build/browser/Safari/production chưa chạy.
 - Không đổi index.html, seed, reward, balance, save migration, asset, battle, audio hoặc hotfix thoát trận. Hermes archive vẫn SOURCE_NOT_AVAILABLE.
 - Bước tiếp theo là L03b: chọn một command hẹp để nối state candidate, một persist và receipt; L02c vẫn chờ duyệt sáu reward mapping.
+
+## 4.5 L03b — atomic level-up đã triển khai ở build owner
+
+- L03b hiện IN_PROGRESS ở commit 83f7ed607deca63595fe1a2bc73c0eff7793c682: scripts/transaction-contract-v1.mjs đưa questProgress và weeklyProgress vào cùng transaction candidate của levelUpHero, giữ một persist sau receipt.
+- Command ID level-up dùng hero ID + level trước khi nâng; UI truyền ID và khóa nút trong click hiện tại, batch level-up truyền ID riêng cho từng level. Các caller khác chưa được migrate đồng loạt.
+- Focused test mới 3/3 pass; combined suite L02a + L02b + L02c + L03a + L03b đạt 17/17. Harness kiểm rollback persist failure và duplicate retry sau reload ở mức contract/static source.
+- Chưa chạy scripts/build-static.mjs trên checkout đầy đủ, chưa kiểm dist output, browser/UI, Safari thiết bị thật hoặc production. Vì vậy L03b chưa được đánh dấu DONE.
+- Không đổi seed, reward, balance, save migration, asset, battle, audio hoặc hotfix thoát trận; L02c vẫn PREPARED và không được gọi.
+- Bước kế tiếp là chạy full build/UI smoke, rồi mới mở rộng receipt pattern sang command reward tiếp theo.
 
 ## 5. Gate còn mở
 

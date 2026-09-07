@@ -28,7 +28,7 @@ Tài liệu này cụ thể hóa E01–E26/R01–R11 của [master plan](HON-VIE
 |---|---|---|---|---|
 | L01 | P0 / VERIFY | E01, E04, E24; R02–04 | Hotfix đã deploy | Bằng chứng thoát/vào trận, route, audio trên thiết bị |
 | L02 | P0 / IN_PROGRESS (L02a + L02b DONE; L02c PREPARED) | E02, E08; R05 | Baseline | L02a report, L02b proposal và L02c migration contract đã có; runtime integration còn mở |
-| L03 | P0 / IN_PROGRESS (L03a DONE; L03b open) | E03, E07; R07/R10 | Chủ transaction hiện có | Audit command đã có; L03b còn phải nối command + quest/event cùng một commit |
+| L03 | P0 / IN_PROGRESS (L03a DONE; L03b source patch; build/UI open) | E03, E07; R07/R10 | Chủ transaction hiện có | Audit + level-up atomic patch đã có; full build/UI và các command khác còn mở |
 | L04 | P1 / READY phần a | E04, E06 | Router/bridge hiện có | Return context và vòng đời màn dùng một owner |
 | L05 | P1 / READY phần a | E05/E06; R08/R11 | Combat hiện có | Event đủ sub-action, RNG luật có seed, parity |
 | L06 | P1 / PLANNED | E02/E09/E10; R05/R11 | L02, L03 | Stat/kit snapshot thống nhất hồ sơ–đội–trận |
@@ -132,7 +132,7 @@ Thân code gốc còn trong archive người dùng bàn giao; guide chỉ rõ 27
 
 **L03a — DONE (audit source):** inventory 23 boundary command/helper đã ghi entrypoint, cost, credit, persist, event, receipt, transaction và atomicity; bắt đầu đúng `levelUpHero` → `questProgress` → `weeklyProgress` trên source active. Commit 3e69e5c3b7ef3996946c77310d6e5cdb372e270e; report ở `docs/qa/L03a/transaction-command-inventory.json`.
 
-**L03b:** gói stat/chi phí/event đã xử lý/quest progress/receipt vào cùng state candidate và một lần persist. Sau commit chỉ notification/render/audio; event không được mutate lại qua listener thứ hai. Nếu cần event outbox, lưu cùng transaction và consumer idempotent; chọn một cách cho một command, không dùng cả hai cùng sinh thưởng.
+**L03b — IN_PROGRESS (source patch):** commit 83f7ed607deca63595fe1a2bc73c0eff7793c682 sửa `scripts/transaction-contract-v1.mjs`: `levelUpHero` đưa `questProgress('level',1,false)` vào cùng mutation, `questProgress/weeklyProgress` hỗ trợ outer transaction, command ID ổn định và UI click truyền ID. 3/3 test mới pass, combined focused suite 17/17 pass. Chưa chạy full build/UI/device/production, nên chưa đánh dấu DONE. Khi verify runtime, sau commit chỉ notification/render/audio; event không được mutate lại qua listener thứ hai.
 
 **L03c:** mở rộng theo nhóm: sao/skill → daily milestone/weekly → batch thư/shop. Không sửa đồng loạt toàn bộ economy. Giữ `executeLocalTransaction`, không phát minh `TransactionManager2`.
 
