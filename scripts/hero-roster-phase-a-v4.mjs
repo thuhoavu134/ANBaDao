@@ -42,7 +42,7 @@ const cssState = `<style id="hero-roster-state-v1-css">
 body.hero-roster-active{overflow:hidden}
 body.hero-roster-active .hv-brandbar,body.hero-roster-active #resbar{display:none!important}
 body.hero-roster-active #heroesScreen{display:none!important}
-#hvHeroRosterV4{position:fixed;inset:0;width:100%;max-width:680px;margin:0 auto;z-index:99999;display:grid;grid-template-rows:auto minmax(0,1fr) auto;overflow:hidden;padding:env(safe-area-inset-top) 0 0;box-sizing:border-box;isolation:isolate;-webkit-overflow-scrolling:auto}
+#hvHeroRosterV4{position:fixed;inset:0;width:100%;height:100vh!important;height:100dvh!important;min-height:0!important;max-height:none!important;max-width:680px;margin:0 auto;z-index:99999;display:grid;grid-template-rows:auto minmax(0,1fr) auto;overflow:hidden;padding:env(safe-area-inset-top) 0 0;box-sizing:border-box;isolation:isolate;-webkit-overflow-scrolling:auto}
 #hvHeroRosterV4 .v4-top{position:relative;top:auto;min-width:0}
 #hvHeroRosterV4 .v4-tabs{grid-template-columns:1fr 1fr 1.4fr}
 #hvHeroRosterV4 .v4-sort{font-size:11px;align-self:center;text-align:right}
