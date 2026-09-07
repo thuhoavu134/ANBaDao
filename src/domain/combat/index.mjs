@@ -4,3 +4,5 @@ export * from './round-manager.mjs';
 export * from './fighter.mjs';
 export * from './target-selector.mjs';
 export * from './cooldown.mjs';
+export * from './action-observation.mjs';
+

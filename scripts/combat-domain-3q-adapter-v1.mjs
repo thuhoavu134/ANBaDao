@@ -7,6 +7,13 @@ import { COMBAT_RESULT_TYPES, deriveCombatResults } from '../src/domain/combat/c
 import { canAct, normalizeFighter, resetFighter } from '../src/domain/combat/fighter.mjs';
 import { selectTargets } from '../src/domain/combat/target-selector.mjs';
 import { available, createCooldownState, handleSkillUsed, offsetCooldown } from '../src/domain/combat/cooldown.mjs';
+import {
+  COMBAT_OBSERVATION_SCHEMA,
+  combatObservationReport,
+  createCombatObservation,
+  recordCombatObservation,
+  rngSitesForAction
+} from '../src/domain/combat/action-observation.mjs';
 
 const root = process.cwd();
 
@@ -48,6 +55,20 @@ function assertCombatModuleContract() {
   if (browserAction.results[0]?.type !== COMBAT_RESULT_TYPES.DAMAGE) {
     throw new Error('3Q combat browser result contract drift');
   }
+  const observation = createCombatObservation({ fixtureId: 'build-observation', sessionId: 'build-observation', seed: 'build-observation' });
+  const observed = recordCombatObservation(observation, {
+    round: 1,
+    actorId: 'build-actor',
+    action: 'basic',
+    kind: 'damage',
+    targetId: 'build-target',
+    before,
+    after
+  });
+  const observationReport = combatObservationReport(observation);
+  if (observation.schema !== COMBAT_OBSERVATION_SCHEMA || !observed.ok || !observationReport.gaps.some((entry) => entry.code === 'per-impact-boundary-missing')) {
+    throw new Error('L05a combat observation contract drift');
+  }
   const fighter = normalizeFighter({ id: 'build-fighter', hp: 100, statuses: [{ type: 'stun', turns: 1 }] });
   if (canAct(fighter) || !canAct(resetFighter(fighter))) throw new Error('3Q fighter module contract drift');
   const targetRoster = [
@@ -74,6 +95,7 @@ function readCombatModuleSource(fileName) {
 function buildBrowserCombatModulesSource() {
   const round = readCombatModuleSource('round-manager.mjs');
   const result = readCombatModuleSource('combat-result.mjs');
+  const observer = readCombatModuleSource('action-observation.mjs');
   const session = readCombatModuleSource('battle-session.mjs');
   const fighter = readCombatModuleSource('fighter.mjs');
   const target = readCombatModuleSource('target-selector.mjs');
@@ -88,6 +110,12 @@ function buildBrowserCombatModulesSource() {
     'const beginMove = __hvRoundManager.beginMove;',
     result,
     'return { COMBAT_RESULT_TYPES, createCombatResult, snapshotCombatUnits, deriveCombatResults, recordCombatResult, recordCombatAction };',
+    '})();',
+    'const __hvCombatObserver = (()=>{',
+    'const snapshotCombatUnits = __hvCombatResult.snapshotCombatUnits;',
+    'const deriveCombatResults = __hvCombatResult.deriveCombatResults;',
+    observer,
+    'return { COMBAT_OBSERVATION_SCHEMA, COMBAT_OBSERVATION_GAPS, COMBAT_RNG_SITE_CATALOG, rngSitesForAction, createCombatObservation, recordCombatObservation, recordCombatImpact, finishCombatObservation, combatObservationReport };',
     '})();',
     'const __hvBattleSessionModule = (()=>{',
     'const finishMove = __hvRoundManager.finishMove;',
@@ -108,7 +136,7 @@ function buildBrowserCombatModulesSource() {
     cooldown,
     'return { createCooldownState, setCooldown, getCooldown, handleSkillUsed, available, offsetCooldown };',
     '})();',
-    'window.__HV_COMBAT_MODULES_V1 = window.__HV_COMBAT_MODULES_V1 || { round: __hvRoundManager, result: __hvCombatResult, session: __hvBattleSession, fighter: __hvFighter, target: __hvTarget, cooldown: __hvCooldown };',
+    'window.__HV_COMBAT_MODULES_V1 = window.__HV_COMBAT_MODULES_V1 || { round: __hvRoundManager, result: __hvCombatResult, observer: __hvCombatObserver, session: __hvBattleSession, fighter: __hvFighter, target: __hvTarget, cooldown: __hvCooldown };',
     '})();'
   ].join('\n');
 }
@@ -126,7 +154,34 @@ function patchDist() {
   
   if (!html.includes('id="hon-viet-combat-modules-v1"')) {
     const moduleSource = buildBrowserCombatModulesSource();
-    const moduleScript = '<script id="hon-viet-combat-modules-v1">\n' + moduleSource + '\n</script>';
+    const fixtureCaptureSource = [
+      "(()=>{",
+      "  const observer=window.__HV_COMBAT_MODULES_V1?.observer;",
+      "  const state={enabled:false,observation:null};",
+      "  const clone=value=>value===undefined?undefined:JSON.parse(JSON.stringify(value));",
+      "  const fixture={",
+      "    schema:'hon-viet-combat-observation/v1',",
+      "    start(options={}){",
+      "      if(!observer)return {ok:false,code:'OBSERVER_UNAVAILABLE'};",
+      "      state.observation=observer.createCombatObservation(options);",
+      "      state.enabled=true;",
+      "      return observer.combatObservationReport(state.observation);",
+      "    },",
+      "    stop(options={}){",
+      "      if(state.observation) observer.finishCombatObservation(state.observation, options);",
+      "      state.enabled=false;",
+      "      return state.observation?observer.combatObservationReport(state.observation):null;",
+      "    },",
+      "    clear(){state.enabled=false;state.observation=null;return null;},",
+      "    isEnabled(){return state.enabled&&Boolean(state.observation);},",
+      "    record(input){if(!state.enabled||!state.observation)return null;return observer.recordCombatObservation(state.observation,input);},",
+      "    snapshot(){return state.observation?clone(state.observation):null;},",
+      "    report(){return state.observation?observer.combatObservationReport(state.observation):null;}",
+      "  };",
+      "  window.__HV_COMBAT_FIXTURE_V1=Object.freeze(fixture);",
+      "})();"
+    ].join('\n');
+    const moduleScript = '<script id="hon-viet-combat-modules-v1">\n' + moduleSource + '\n' + fixtureCaptureSource + '\n</script>';
     if (!html.includes('</body>')) throw new Error('3Q combat module bundle missing body anchor');
     html = html.replace('</body>', moduleScript + '\n</body>');
   }
@@ -148,6 +203,7 @@ function patchDist() {
       "    try {",
       "      output = __hvResolveAction3qAdapter(actor, action, target);",
       "    } finally {",
+      "      const after = modules?.result?.snapshotCombatUnits(units) || core?.snapshotUnits(units) || [];",
       "      if (session) {",
       "        const actionInput = {",
       "          roundIndex: state.round,",
@@ -156,11 +212,25 @@ function patchDist() {
       "          kind: actionKind(actor, action),",
       "          targetId: target?.id ?? null,",
       "          before,",
-      "          after: (modules?.result?.snapshotCombatUnits(units) || core?.snapshotUnits(units) || []),",
+      "          after,",
       "          metadata: { actorSourceId: actor?.sourceId || actor?.sourceHeroId || null }",
       "        };",
       "        if (modules?.result) modules.result.recordCombatAction(session, actionInput);",
       "        else if (core) core.recordAction(session, actionInput);",
+      "      }",
+      "      if (window.__HV_COMBAT_FIXTURE_V1?.isEnabled?.()) {",
+      "        window.__HV_COMBAT_FIXTURE_V1.record({",
+      "          round: state.round,",
+      "          actorId: actor?.id,",
+      "          action,",
+      "          kind: actionKind(actor, action),",
+      "          targetId: target?.id ?? null,",
+      "          before,",
+      "          after,",
+      "          snapshotBoundary: 'resolveAction.finally',",
+      "          rngCalls: modules?.observer?.rngSitesForAction?.(actionKind(actor, action)),",
+      "          metadata: { sourceBoundary: 'resolveAction.finally', actorSourceId: actor?.sourceId || actor?.sourceHeroId || null }",
+      "        });",
       "      }",
       "    }",
       "    return output;",
@@ -192,6 +262,9 @@ function patchDist() {
 
   if (!html.includes('id="hon-viet-combat-modules-v1"')) {
     throw new Error('3Q combat module bundle injection failed');
+  }
+  if (!html.includes('__HV_COMBAT_FIXTURE_V1')) {
+    throw new Error('L05a combat fixture capture injection failed');
   }
   if (!html.includes('window.__HV_COMBAT_DOMAIN_V1=window.__HV_COMBAT_DOMAIN_V1||createCombatDomain()')) {
     throw new Error('3Q combat adapter runtime injection failed');
