@@ -56,7 +56,7 @@ html = html.replace(
 const levelPattern = /function levelUpHero\(id\)\{[\s\S]*?\nfunction starUpHero/;
 if (!levelPattern.test(html)) throw new Error('Hero upgrade function shape not found');
 const newLevel = `function levelUpHero(id,commandId){
-  const commandKey=commandId || 'hero.level-up:'+id+':'+(P.revision||0);
+  const commandKey=commandId || 'hero.level-up:'+id+':'+heroLevel(id);
   const duplicate=hvReceiptForCommand(commandKey);
   if(duplicate) return duplicate;
   const hero=P.heroes[id];
@@ -67,14 +67,21 @@ const newLevel = `function levelUpHero(id,commandId){
   const tx=hvRunCommittedTransaction({
     commandId:commandKey,cost:{gold:c},balances:{gold:P.gold},
     source:'hero.level-up',reason:'upgrade',
-    mutate:()=>{ hero.level++; return {ok:true,heroId:id,level:hero.level}; }
+    mutate:()=>{ hero.level++; questProgress('level',1,false); return {ok:true,heroId:id,level:hero.level,questProgressed:true}; }
   });
   if(!tx.ok) return {ok:false,msg:tx.message||'Nâng tướng chưa hoàn tất.',code:tx.code,receipt:tx.receipt};
-  if(!tx.duplicate) questProgress('level',1);
   return {ok:true,duplicate:Boolean(tx.duplicate),receipt:tx.receipt};
 }
 function starUpHero`;
 html = html.replace(levelPattern, newLevel);
+const levelButtonMarker = "document.getElementById('lvBtn').addEventListener('click',()=>{ const r=levelUpHero(id); if(r.ok)showProgressBurst('LÊN CẤP','Chỉ số của '+DATA.heroes[id].name+' đã tăng.'); else toast(r.msg); refreshResbar(); renderHeroDetail(id); });";
+const levelButtonReplacement = "document.getElementById('lvBtn').addEventListener('click',()=>{ const button=document.getElementById('lvBtn'); if(button?.disabled)return; const commandId=button.dataset.hvCommandId || ('hero.level-up:'+id+':'+heroLevel(id)); button.dataset.hvCommandId=commandId; button.disabled=true; const r=levelUpHero(id,commandId); if(r.ok)showProgressBurst('LÊN CẤP','Chỉ số của '+DATA.heroes[id].name+' đã tăng.'); else toast(r.msg||'Nâng tướng chưa hoàn tất.'); refreshResbar(); renderHeroDetail(id); });";
+if (!html.includes(levelButtonMarker)) throw new Error('Level-up button marker not found');
+html = html.replace(levelButtonMarker, levelButtonReplacement);
+const levelBatchMarker = "const r=levelUpHero(id); if(!r.ok){ msg=r.msg; break; }";
+const levelBatchReplacement = "const r=levelUpHero(id,'hero.level-up:'+id+':'+heroLevel(id)); if(!r.ok){ msg=r.msg; break; }";
+if (!html.includes(levelBatchMarker)) throw new Error('Level-up batch marker not found');
+html = html.replace(levelBatchMarker, levelBatchReplacement);
 
 const questPattern = /function claimQuest\(id\)\{[\s\S]*?\nfunction claimActMilestone/;
 if (!questPattern.test(html)) throw new Error('Quest claim function shape not found');
