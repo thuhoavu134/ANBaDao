@@ -428,3 +428,41 @@ Phát hiện ngoài bốn lỗi đang sửa: phần ảnh MVP Ông Phở trên m
 ### Next handoff
 
 Run device QA on the deployed alias for the same cap/parity evidence, then reassess whether to close L05c or continue the two observer gaps. Keep status `REVIEW` until those gates have evidence.
+
+## L05c-d — explicit final action snapshot evidence (2026-09-07)
+
+**Trạng thái:** `REVIEW`; L05/L05c vẫn `IN_PROGRESS`. Lát cắt này đóng gap final-action snapshot ở observer contract, nhưng không đóng per-impact/device/ticket checklist.
+
+### Source/build owner
+
+- Commit checkpoint `ef521bdf` → feature `eab4a45f14f82cad4875eb26cde7dba6b2e5b2d1`; main được fast-forward, không force-push.
+- Sửa source owner `src/domain/combat/action-observation.mjs`: action có thêm `finalSnapshot` và `finalSnapshotBoundary`; parity projection đưa final snapshot vào digest; report chỉ bỏ gap `resolve-action-final-snapshot` khi mọi action đều capture.
+- Sửa build owner `scripts/combat-domain-3q-adapter-v1.mjs`: `resolveAction` truyền snapshot cuối action với boundary `resolveAction.complete` vào fixture. `after`/`resolveAction.finally` vẫn giữ nguyên để không phá consumer cũ.
+- Test thêm boundary complete/missing, coverage count và parity drift; không đổi seed, reward, balance, roster, save migration, asset, audio hoặc live/default combat.
+
+### TDD and verification
+
+- RED replay trên baseline chưa có contract: `node --test tests/combat-l05c-boundary.test.mjs` → `3 failed`, thiếu `finalSnapshotCoverage` và build-owner marker, exit code 1.
+- GREEN: cùng focused test → `3/3 PASS`, exit code 0.
+- REFACTOR regression: 10 combat suite files → `39/39 PASS`, exit code 0; `node --check` cho observer/adapter pass; inline observer compile và round-cap/parity markers pass.
+- Local `npm test`/`npm run build` không chạy được vì source harness không có `package.json`; đây là blocker môi trường, không phải kết quả pass giả.
+
+### Production deployment
+
+- Vercel deployment `dpl_DZtRfRZGyWeDUnhxtQcVjn2GZAnZ` từ commit `eab4a45` đạt `READY`; alias `https://luc-than.vercel.app/`.
+- Build log xác nhận clone đúng commit, chạy `npm run build` → `node scripts/build-static.mjs`, embedded battle `950131 bytes`, deploy completed.
+- Runtime error query 1 giờ: không có runtime errors.
+
+### Production Chrome evidence
+
+- URL 1×: `https://luc-than.vercel.app/battle.html?embedded=1&session=l05d-final-speed1&v=3174&qaCombatFixture=l05a` → real `Xuất chiến`, finished, `28 action / 81 result / 219 impact`, `finalSnapshotCoverage {captured:28, expected:28, complete:true}`, boundary `resolveAction.complete`, completion `player / enemy-wiped / round 4 / speed 1`, fingerprint `282374be`.
+- URL 2×: `https://luc-than.vercel.app/battle.html?embedded=1&session=l05d-final-speed2&v=3174&qaCombatFixture=l05a` → real `Xuất chiến`, đổi tốc độ sau khi bắt đầu lên `2×`, finished, cùng `28 / 81 / 219`, cùng `finalSnapshotCoverage 28/28`, completion `player / enemy-wiped / round 4 / speed 2`, fingerprint `282374be`.
+- Cả hai report chỉ còn `per-impact-boundary-missing`; final-action gap đã đóng thật trên production. App log lọc theo URL không có lỗi. Diagnostic của browser extension được loại khỏi app evidence.
+
+### Blockers and handoff
+
+- Per-impact before/after boundary vẫn mở; đây là gap tiếp theo.
+- Safari/iPhone/iPad/device backend chưa có; Chrome hiện chỉ là desktop browser, không ghi device PASS thay cho thiết bị thật.
+- `game-dev` CLI của Game Development Studio không tồn tại trong môi trường (`command not found`), không tự cài/thay credential.
+- Ticket Board: `TICKET_BOARD_NOT_AVAILABLE`; archive mẫu: `SOURCE_NOT_AVAILABLE`.
+- Bước tiếp theo: khi có device backend, chạy lại cap/parity trên Chrome responsive + Safari/iPhone/iPad; sau đó mới quyết định lát cắt per-impact. Giữ `REVIEW`, không đánh dấu DONE.

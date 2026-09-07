@@ -195,3 +195,15 @@ Status: `REVIEW` / `IN_PROGRESS`.
 - The round-cap sentinel is query-scoped only. Normal `l05a` and live/default battles retain native terminal handling; no seed/reward/balance/save/roster/art/audio changes.
 
 Open: device QA, full CI outside connector-only harness, source archive and ticket-board blockers, plus the two existing observer boundary gaps. Next: device QA on the production alias. Do not mark DONE.
+
+## 4.15 L05c-d — explicit final action snapshot evidence (2026-09-07)
+
+Status: `REVIEW` / `IN_PROGRESS`.
+
+- Source/build owner commit `eab4a45f14f82cad4875eb26cde7dba6b2e5b2d1` adds explicit `finalSnapshot` + `finalSnapshotBoundary=resolveAction.complete`; prior `after` field remains compatible.
+- RED was reproduced against the unimplemented baseline (`3 failed`, exit 1); GREEN focused boundary suite is `3/3 PASS`; REFACTOR combat regression is `39/39 PASS`, syntax and inline compile pass.
+- Production `dpl_DZtRfRZGyWeDUnhxtQcVjn2GZAnZ` is `READY`; build ran `npm run build` / `node scripts/build-static.mjs`; embedded battle is `950131 bytes`; runtime errors 1h: none.
+- Chrome production l05a capture at 1× and 2× both finished with `28 action / 81 result / 219 impact`, `finalSnapshotCoverage=28/28`, boundary `resolveAction.complete`, and identical full-replay fingerprint `282374be`; speed fields were 1 and 2.
+- Final-action observer gap is closed only for actions with explicit capture. Per-impact gap remains open. No seed/reward/balance/save/roster/art/audio changes.
+
+Open: per-impact boundary, real device QA, full npm test outside the connector-only source harness, `game-dev` CLI, Ticket Board, and archive source. Next: device matrix when available, then per-impact boundary.

@@ -1,0 +1,102 @@
+{
+  "slice": "L05c-d",
+  "status": "REVIEW",
+  "contractRevision": "vibelab.json@9f9cad09165e0e17becb90c70f5e66969d8621e1",
+  "checkpointCommit": "ef521bdfdff41b8a9f6bcfdd228d1c60883b187b",
+  "featureCommit": "eab4a45f14f82cad4875eb26cde7dba6b2e5b2d1",
+  "red": {
+    "command": "node --test tests/combat-l05c-boundary.test.mjs",
+    "passed": false,
+    "tests": 3,
+    "failures": 3,
+    "exit_code": 1,
+    "reason": "finalSnapshotCoverage and adapter marker absent on unimplemented baseline"
+  },
+  "green": {
+    "command": "node --test tests/combat-l05c-boundary.test.mjs",
+    "passed": true,
+    "tests": 3,
+    "failures": 0,
+    "exit_code": 0
+  },
+  "refactor": {
+    "command": "node --test tests/combat-observation.test.mjs tests/combat-domain-3q-adapter.test.mjs tests/combat-domain-advanced-modules.test.mjs tests/combat-domain-advanced-parity.test.mjs tests/combat-domain-module-parity.test.mjs tests/combat-domain-modules.test.mjs tests/combat-presentation-standard.test.mjs tests/combat-seeded-rng.test.mjs tests/combat-l05c-boundary.test.mjs tests/combat-l05c-parity.test.mjs",
+    "passed": true,
+    "tests": 39,
+    "failures": 0,
+    "exit_code": 0
+  },
+  "syntax": {
+    "commands": [
+      "node --check src/domain/combat/action-observation.mjs",
+      "node --check scripts/combat-domain-3q-adapter-v1.mjs"
+    ],
+    "passed": true,
+    "exit_code": 0
+  },
+  "deployment": {
+    "id": "dpl_DZtRfRZGyWeDUnhxtQcVjn2GZAnZ",
+    "state": "READY",
+    "commit": "eab4a45f14f82cad4875eb26cde7dba6b2e5b2d1",
+    "buildCommand": "npm run build -> node scripts/build-static.mjs",
+    "embeddedBattleBytes": 950131,
+    "runtimeErrorsSince": "1h",
+    "runtimeErrors": 0
+  },
+  "browser": [
+    {
+      "speed": 1,
+      "url": "https://luc-than.vercel.app/battle.html?embedded=1&session=l05d-final-speed1&v=3174&qaCombatFixture=l05a",
+      "status": "finished",
+      "actions": 28,
+      "results": 81,
+      "impacts": 219,
+      "finalSnapshots": {
+        "captured": 28,
+        "expected": 28,
+        "complete": true
+      },
+      "completion": {
+        "winner": "player",
+        "reason": "enemy-wiped",
+        "round": 4,
+        "roundMax": 15,
+        "speed": 1
+      },
+      "fingerprint": "282374be",
+      "appErrors": 0
+    },
+    {
+      "speed": 2,
+      "url": "https://luc-than.vercel.app/battle.html?embedded=1&session=l05d-final-speed2&v=3174&qaCombatFixture=l05a",
+      "status": "finished",
+      "actions": 28,
+      "results": 81,
+      "impacts": 219,
+      "finalSnapshots": {
+        "captured": 28,
+        "expected": 28,
+        "complete": true
+      },
+      "completion": {
+        "winner": "player",
+        "reason": "enemy-wiped",
+        "round": 4,
+        "roundMax": 15,
+        "speed": 2
+      },
+      "fingerprint": "282374be",
+      "appErrors": 0
+    }
+  ],
+  "remainingGaps": [
+    "per-impact-boundary-missing"
+  ],
+  "blockers": [
+    "TICKET_BOARD_NOT_AVAILABLE",
+    "SOURCE_NOT_AVAILABLE",
+    "game-dev CLI unavailable",
+    "Safari/iPhone/iPad/device backend unavailable",
+    "local npm test/build unavailable in connector-only source harness"
+  ]
+}

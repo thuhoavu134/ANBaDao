@@ -409,3 +409,13 @@ The implementation slice is complete through production browser evidence and rem
 3. Full replay parity at the same fixed seed was exercised through real UI at 1× and 2×. The reports have identical `0757b35e` full-replay-rule-outcome fingerprints and identical action/result/impact counts.
 4. Preserve existing non-goals: no live seed, reward, balance, save migration, roster, art, or audio changes.
 5. Next execution order: production device QA (Safari/iPhone/iPad), then decide whether the final-action/per-impact observer gaps need another slice. Keep archive/ticket blockers explicit.
+
+## Checkpoint addendum — L05c-d final-action snapshot (2026-09-07)
+
+The next source slice is implemented and remains `REVIEW`, not `DONE`.
+
+1. `eab4a45` adds explicit final-action snapshot capture at the build-owner `resolveAction` boundary and includes it in observer parity.
+2. The observer report now proves `captured/expected/complete` coverage and removes only the final-action gap when every recorded action has the explicit snapshot; missing captures keep the gap open.
+3. Production deployment `dpl_DZtRfRZGyWeDUnhxtQcVjn2GZAnZ` is `READY`; build payload is `950131 bytes` and runtime errors are absent.
+4. Updated production Chrome 1× and 2× fixtures both report `28/81/219`, complete `28/28` final snapshots and fingerprint `282374be`.
+5. Remaining order: real responsive/device QA, then per-impact before/after boundary. Preserve seed, reward, balance, save migration, roster, art and audio.

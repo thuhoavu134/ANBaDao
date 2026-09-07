@@ -90,3 +90,28 @@ Run `Xuất chiến` → auto-battle → speed control `3×`.
 - Source syntax, inline script compile and adapter markers: PASS.
 - Full `npm test`/CI, Safari/iPhone/iPad: open.
 - Existing observer gaps remain open; status stays `REVIEW`.
+
+## L05c-d production QA record — explicit final action snapshot (2026-09-07)
+
+Deployment: `dpl_DZtRfRZGyWeDUnhxtQcVjn2GZAnZ` (`READY`), commit `eab4a45`, alias `https://luc-than.vercel.app/`.
+
+### Observer contract
+
+- Source owner records `finalSnapshot` as a normalized immutable unit snapshot and labels it `resolveAction.complete`.
+- `finalSnapshotCoverage` reports captured and expected action counts; `complete=true` only when all actions have explicit captures.
+- The report no longer lists `resolve-action-final-snapshot` for complete fixture runs. `per-impact-boundary-missing` remains intentionally visible.
+
+### Production fixture
+
+- 1× URL: `https://luc-than.vercel.app/battle.html?embedded=1&session=l05d-final-speed1&v=3174&qaCombatFixture=l05a` → finished, 28 actions, 81 results, 219 impacts, final snapshots 28/28, `speed=1`, fingerprint `282374be`.
+- 2× URL: `https://luc-than.vercel.app/battle.html?embedded=1&session=l05d-final-speed2&v=3174&qaCombatFixture=l05a` → finished, 28 actions, 81 results, 219 impacts, final snapshots 28/28, `speed=2`, fingerprint `282374be`.
+- Both runs used the existing fixture seed and real UI actions. Same full-replay rule outcome is verified; no gameplay data was changed.
+
+### Gate result
+
+- RED: 3 failures against the unimplemented baseline; GREEN: 3/3; REFACTOR: 39/39 focused combat tests.
+- Vercel build: PASS; runtime errors: none.
+- Local npm test/build: BLOCKED because the connector-only source harness has no `package.json`; full CI remains open.
+- Chrome desktop: PASS for production interaction and observer evidence. Safari/iPhone/iPad and real responsive device matrix: NOT RUN.
+- Ticket Board: `TICKET_BOARD_NOT_AVAILABLE`; archive: `SOURCE_NOT_AVAILABLE`; `game-dev` CLI: unavailable.
+- Status: `REVIEW`; do not mark DONE. Next: device QA, then per-impact boundary.

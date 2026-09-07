@@ -1,3 +1,10 @@
+## 2026-09-07 — L05c-d explicit final action snapshot
+
+- Added source-owned `finalSnapshot` and `finalSnapshotBoundary=resolveAction.complete` to combat observation; report closes the final-action gap only with complete action coverage.
+- Added boundary-missing regression and parity drift coverage; focused combat regression is `39/39 PASS` after RED → GREEN → REFACTOR.
+- Production deployment `dpl_DZtRfRZGyWeDUnhxtQcVjn2GZAnZ` is READY. Chrome 1×/2× both finish `28/81/219`, final snapshots `28/28`, fingerprint `282374be`.
+- Per-impact/device/Ticket Board/archive/game-dev blockers remain explicit; status stays REVIEW. No seed, reward, balance, save, roster, art or audio changes.
+
 ## 2026-09-07 — L05c-c round cap and replay/speed parity
 
 - Added parity schema/projection/digest over full rule outcomes while ignoring session identity and presentation speed.
