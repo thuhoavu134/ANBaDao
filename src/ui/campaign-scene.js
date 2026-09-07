@@ -120,13 +120,16 @@ function scheduleSceneFrame() {
   sceneState.rafRelease = sceneState.scope.add(() => cancelAnimationFrame(handle));
   return handle;
 }
+function trackSceneTimer() {
+  const timer = setInterval(updateSceneNumbers, 1000);
+  sceneState.timer = timer;
+  sceneState.timerRelease = sceneState.scope?.add(() => clearInterval(timer)) || null;
+}
 function startSceneClock() {
   stopSceneClock();
   if (!sceneState.active || document.hidden) return;
   resizeScene(); updateSceneNumbers();
-  const timer = setInterval(updateSceneNumbers, 1000);
-  sceneState.timer = timer;
-  sceneState.timerRelease = sceneState.scope?.add(() => clearInterval(timer)) || null;
+  trackSceneTimer();
   if (!reducedMotion.matches) sceneState.raf = scheduleSceneFrame();
 }
 function ensureSceneChest() {
@@ -220,7 +223,7 @@ function openPreparation() {
   sceneState.root.querySelector('.cs-home').hidden = true;
   sceneState.root.querySelector('.cs-prepare').hidden = false;
   stopSceneClock(); // The covered scene has no animation loop; only update the launch balance.
-  sceneState.timer = setInterval(updateSceneNumbers, 1000);
+  trackSceneTimer();
   setSceneText('[data-prep-stage]', 'ẢI ' + (checkpoint.chapterIndex + 1) + '–' + (checkpoint.stageIndex + 1));
   setSceneText('[data-prep-title]', checkpoint.title);
   const encounter = DATA.encounters[checkpoint.battleId];
@@ -317,7 +320,7 @@ function bootCampaignScene() {
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) stopSceneClock();
     else if (sceneState.active && !sceneState.draft) startSceneClock();
-    else if (sceneState.active) { updateSceneNumbers(); clearInterval(sceneState.timer); sceneState.timer = setInterval(updateSceneNumbers, 1000); }
+    else if (sceneState.active) { stopSceneClock(); updateSceneNumbers(); trackSceneTimer(); }
   });
   reducedMotion.addEventListener('change', () => { if (sceneState.active && !sceneState.draft) startSceneClock(); });
   document.addEventListener('keydown', event => {

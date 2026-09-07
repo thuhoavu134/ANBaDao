@@ -105,3 +105,11 @@ test('L04b source/build owner keeps campaign activation scope separate from the 
   assert.match(afkBuild, /lifetimeSource/);
   new Function(lifetime.replace(/^export\s+/gm, ''));
 });
+
+test('L04b preparation timer is registered with the campaign activation scope', () => {
+  const campaign = read('../src/ui/campaign-scene.js');
+  assert.match(campaign, /function trackSceneTimer\(\)/);
+  assert.match(campaign, /function startSceneClock\(\)[\s\S]*trackSceneTimer\(\)/);
+  assert.match(campaign, /function openPreparation\(\)[\s\S]*trackSceneTimer\(\)/);
+  assert.doesNotMatch(campaign, /sceneState\.timer = setInterval\(updateSceneNumbers, 1000\);/);
+});
