@@ -25,11 +25,15 @@ if (countLiteral(showMarker) !== 1) {
 index = index.replace(showMarker, `${showMarker}
   window.HonVietReturnContext?.beforeScreenChange?.({name,from:ST.screen,heroId:ST._heroDetailId});`);
 
-const showEnd = 'ST.screen=name; playBgm(desiredBgm(name)); }';
-if (countLiteral(showEnd) !== 1) {
+const showEndMarkers = [
+  'ST.screen=name; playBgm(desiredBgm(name)); window.HonVietCampaignScene?.onRoute(name); }',
+  'ST.screen=name; playBgm(desiredBgm(name)); }'
+];
+const showEnd = showEndMarkers.find(marker => countLiteral(marker) === 1);
+if (!showEnd) {
   throw new Error('showScreen tail marker not found exactly once');
 }
-index = index.replace(showEnd, 'ST.screen=name; playBgm(desiredBgm(name)); window.HonVietReturnContext?.afterScreenChange?.({name}); }');
+index = index.replace(showEnd, `${showEnd.slice(0, -2)} window.HonVietReturnContext?.afterScreenChange?.({name}); }`);
 
 const detailMarker = "function renderHeroDetail(id){ const _enteringHeroDetail=(ST.screen!=='heroDetail'||ST._heroDetailId!==id); ST._heroDetailId=id;";
 if (countLiteral(detailMarker) !== 1) {
