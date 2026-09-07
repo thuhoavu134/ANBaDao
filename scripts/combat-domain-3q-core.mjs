@@ -275,6 +275,8 @@ export function createCombatDomain() {
       results: [],
       metadata: clone(options.metadata) || null
     };
+    if (Array.isArray(options.rngCalls)) action.rngCalls = clone(options.rngCalls);
+    if (options.rngCursor != null) action.rngCursor = clone(options.rngCursor);
     move.actions.push(action);
     const derived = Array.isArray(options.results)
       ? options.results
@@ -388,15 +390,20 @@ export function createCombatDomain() {
           actorId: move.actorId,
           skillId: move.skillId,
           kind: move.kind,
-          actions: (move.actions || []).map((action) => ({
-            id: action.id,
-            index: action.index,
-            actorId: action.actorId,
-            action: action.action,
-            kind: action.kind,
-            targetId: action.targetId,
-            results: (action.results || []).map((entry) => ({ ...entry }))
-          }))
+          actions: (move.actions || []).map((action) => {
+            const replayAction = {
+              id: action.id,
+              index: action.index,
+              actorId: action.actorId,
+              action: action.action,
+              kind: action.kind,
+              targetId: action.targetId,
+              results: (action.results || []).map((entry) => ({ ...entry }))
+            };
+            if (Array.isArray(action.rngCalls)) replayAction.rngCalls = clone(action.rngCalls);
+            if (action.rngCursor != null) replayAction.rngCursor = clone(action.rngCursor);
+            return replayAction;
+          })
         }))
       })),
       events: (session.events || []).map((entry) => ({ ...entry }))

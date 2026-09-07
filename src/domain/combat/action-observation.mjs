@@ -12,6 +12,9 @@ export const COMBAT_RNG_SITE_CATALOG = Object.freeze([
   Object.freeze({ site: 'applyDamage.hit', domain: 'rule' }),
   Object.freeze({ site: 'applyDamage.variance', domain: 'rule' }),
   Object.freeze({ site: 'applyDamage.crit', domain: 'rule' }),
+  Object.freeze({ site: 'status.fear', domain: 'rule' }),
+  Object.freeze({ site: 'status.stun', domain: 'rule' }),
+  Object.freeze({ site: 'status.comboStun', domain: 'rule' }),
   Object.freeze({ site: 'burst.angle', domain: 'presentation' }),
   Object.freeze({ site: 'burst.speed', domain: 'presentation' }),
   Object.freeze({ site: 'burst.life', domain: 'presentation' }),
@@ -44,13 +47,16 @@ function gap(code, boundary, message) {
 
 function normalizeRngCalls(calls) {
   return (Array.isArray(calls) ? calls : []).map((call, index) => {
-    if (typeof call === 'string') return { index, site: call, domain: 'unknown', captured: false, value: null };
+    if (typeof call === 'string') return { index, site: call, domain: 'unknown', cursor: null, captured: false, value: null };
+    const sourceIndex = Number(call?.index);
+    const normalizedIndex = Number.isFinite(sourceIndex) ? Math.max(0, Math.round(sourceIndex)) : index;
     const site = text(call?.site, 'unknown');
     const value = call?.value === undefined ? null : clone(call.value);
     return {
-      index,
+      index: normalizedIndex,
       site,
       domain: text(call?.domain, 'unknown'),
+      cursor: call?.cursor == null ? null : Math.max(0, Math.round(numeric(call.cursor, 0))),
       captured: Boolean(call?.captured ?? call?.value !== undefined),
       value
     };
@@ -67,6 +73,17 @@ export function rngSitesForAction(kind) {
   const sites = [];
   if (!['heal', 'healall', 'guardall', 'cleanseguard'].includes(action)) {
     sites.push(...COMBAT_RNG_SITE_CATALOG.filter((entry) => entry.site.startsWith('applyDamage.')));
+  }
+  const statusSite = action === 'fear'
+    ? 'status.fear'
+    : action === 'stun'
+      ? 'status.stun'
+      : ['contactcombo', 'combo'].includes(action)
+        ? 'status.comboStun'
+        : null;
+  if (statusSite) {
+    const entry = COMBAT_RNG_SITE_CATALOG.find((candidate) => candidate.site === statusSite);
+    if (entry) sites.push(entry);
   }
   sites.push(...COMBAT_RNG_SITE_CATALOG.filter((entry) => entry.domain === 'presentation'));
   return sites.map((entry) => ({ ...entry, captured: false, value: null }));
@@ -120,6 +137,7 @@ export function recordCombatObservation(observation, input = {}) {
     after,
     results,
     rngCalls: normalizeRngCalls(input.rngCalls ?? rngSitesForAction(input.kind)),
+    rngCursor: input.rngCursor == null ? null : clone(input.rngCursor),
     impacts: [],
     metadata: normalizeMetadata(input.metadata)
   };
@@ -165,8 +183,21 @@ export function finishCombatObservation(observation, options = {}) {
 
 export function combatObservationReport(observation) {
   if (!observation || observation.schema !== COMBAT_OBSERVATION_SCHEMA) return null;
-  const rngSites = [...new Set(observation.actions.flatMap((action) => action.rngCalls.map((call) => call.site)))].sort();
+  const allRngCalls = observation.actions.flatMap((action) => action.rngCalls);
+  const ruleActions = observation.actions.filter((action) => {
+    const kind = text(action.kind, 'basic').toLowerCase();
+    return !['heal', 'healall', 'guardall', 'cleanseguard'].includes(kind);
+  });
+  const rngGapOpen = ruleActions.some((action) => {
+    const expectedRuleSites = rngSitesForAction(action.kind)
+      .filter((entry) => entry.domain === 'rule')
+      .map((entry) => entry.site);
+    const ruleCalls = action.rngCalls.filter((call) => call.domain === 'rule');
+    return expectedRuleSites.some((site) => !ruleCalls.some((call) => call.site === site && call.captured && call.value !== null));
+  });
+  const rngSites = [...new Set(allRngCalls.map((call) => call.site))].sort();
   const resultTypes = [...new Set(observation.actions.flatMap((action) => action.results.map((result) => result.type)))].sort();
+  const gaps = observation.gaps.filter((entry) => entry.code !== COMBAT_OBSERVATION_GAPS.RNG_VALUE || rngGapOpen);
   return {
     schema: observation.schema,
     fixtureId: observation.fixtureId,
@@ -178,6 +209,9 @@ export function combatObservationReport(observation) {
     actionIds: observation.actions.map((action) => action.actionId),
     resultTypes,
     rngSites,
-    gaps: clone(observation.gaps)
+    rngCallCount: allRngCalls.length,
+    capturedRngCallCount: allRngCalls.filter((call) => call.captured).length,
+    capturedRuleRngCallCount: allRngCalls.filter((call) => call.domain === 'rule' && call.captured).length,
+    gaps: clone(gaps)
   };
 }

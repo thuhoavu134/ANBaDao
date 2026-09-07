@@ -158,6 +158,8 @@ export function recordCombatAction(session, options = {}) {
     results: [],
     metadata: clone(options.metadata) || null
   };
+  if (Array.isArray(options.rngCalls)) action.rngCalls = clone(options.rngCalls);
+  if (options.rngCursor != null) action.rngCursor = clone(options.rngCursor);
   move.actions.push(action);
   const derived = Array.isArray(options.results)
     ? options.results
