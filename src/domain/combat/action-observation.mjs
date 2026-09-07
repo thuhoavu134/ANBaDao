@@ -1,6 +1,7 @@
 import { deriveCombatResults, snapshotCombatUnits } from './combat-result.mjs';
 
 export const COMBAT_OBSERVATION_SCHEMA = 'hon-viet-combat-observation/v1';
+export const COMBAT_REPLAY_PARITY_SCHEMA = 'hon-viet-combat-replay-parity/v1';
 export const COMBAT_OBSERVATION_GAPS = Object.freeze({
   FINAL_ACTION_SNAPSHOT: 'resolve-action-final-snapshot',
   PER_IMPACT_BOUNDARY: 'per-impact-boundary-missing',
@@ -68,6 +69,124 @@ function normalizeMetadata(metadata) {
   return clone(metadata);
 }
 
+function normalizeCompletion(options = {}) {
+  const completion = {};
+  for (const key of ['winner', 'reason', 'round', 'roundMax', 'speed']) {
+    if (options[key] === undefined) continue;
+    completion[key] = key === 'round' || key === 'roundMax' || key === 'speed'
+      ? optionalNumeric(options[key])
+      : options[key] == null ? null : text(options[key]);
+  }
+  return Object.keys(completion).length ? completion : null;
+}
+
+function parityRngCalls(calls) {
+  return normalizeRngCalls(calls)
+    .filter((call) => call.domain === 'rule')
+    .map((call) => ({
+      site: call.site,
+      domain: call.domain,
+      cursor: call.cursor,
+      captured: call.captured,
+      value: clone(call.value)
+    }));
+}
+
+function parityResult(result) {
+  if (!result || typeof result !== 'object' || Array.isArray(result)) return clone(result);
+  const { id: ignored, ...rest } = result;
+  return clone(rest);
+}
+
+function parityImpact(impact) {
+  return {
+    type: impact.type,
+    subActionIndex: impact.subActionIndex,
+    actorId: impact.actorId,
+    targetId: impact.targetId,
+    amount: impact.amount,
+    flags: clone(impact.flags),
+    before: clone(impact.before),
+    after: clone(impact.after),
+    rngCalls: parityRngCalls(impact.rngCalls),
+    metadata: clone(impact.metadata)
+  };
+}
+
+function parityAction(action) {
+  return {
+    sequence: action.sequence,
+    round: action.round,
+    actorId: action.actorId,
+    targetId: action.targetId,
+    action: action.action,
+    kind: action.kind,
+    snapshotBoundary: action.snapshotBoundary,
+    before: clone(action.before),
+    after: clone(action.after),
+    results: (action.results || []).map(parityResult),
+    rngCalls: parityRngCalls(action.rngCalls),
+    impacts: (action.impacts || []).map(parityImpact)
+  };
+}
+
+function parityFingerprint(value) {
+  let hash = 2166136261;
+  for (const character of String(value)) {
+    hash ^= character.charCodeAt(0);
+    hash = Math.imul(hash, 16777619);
+  }
+  return (hash >>> 0).toString(16).padStart(8, '0');
+}
+
+export function combatObservationParityProjection(observation) {
+  if (!observation || observation.schema !== COMBAT_OBSERVATION_SCHEMA) return null;
+  const actions = Array.isArray(observation.actions) ? observation.actions.map(parityAction) : [];
+  const normalizedCompletion = observation.completion ? normalizeCompletion(observation.completion) : null;
+  const { speed: ignoredSpeed, ...completion } = normalizedCompletion || {};
+  return {
+    schema: COMBAT_REPLAY_PARITY_SCHEMA,
+    seed: observation.seed == null ? null : text(observation.seed),
+    roundMax: observation.roundMax,
+    status: observation.status,
+    completion: normalizedCompletion ? completion : null,
+    actions
+  };
+}
+
+export function combatObservationParityDigest(observation) {
+  const projection = combatObservationParityProjection(observation);
+  return projection ? JSON.stringify(projection) : null;
+}
+
+export function compareCombatObservations(left, right) {
+  const leftProjection = combatObservationParityProjection(left);
+  const rightProjection = combatObservationParityProjection(right);
+  const leftDigest = leftProjection ? JSON.stringify(leftProjection) : null;
+  const rightDigest = rightProjection ? JSON.stringify(rightProjection) : null;
+  const summary = (projection, digest) => ({
+    schema: projection?.schema ?? null,
+    seed: projection?.seed ?? null,
+    status: projection?.status ?? null,
+    actionCount: projection?.actions?.length ?? 0,
+    roundCount: [...new Set((projection?.actions || []).map((action) => action.round))].length,
+    fingerprint: digest == null ? null : parityFingerprint(digest),
+    roundCapReached: Boolean(
+      projection?.completion?.round != null &&
+      projection?.completion?.roundMax != null &&
+      projection.completion.round >= projection.completion.roundMax &&
+      String(projection.completion.reason || '').startsWith('round-limit')
+    )
+  });
+  return {
+    schema: COMBAT_REPLAY_PARITY_SCHEMA,
+    scope: 'full-replay-rule-outcome',
+    equal: leftDigest !== null && leftDigest === rightDigest,
+    left: summary(leftProjection, leftDigest),
+    right: summary(rightProjection, rightDigest)
+  };
+}
+
 export function rngSitesForAction(kind) {
   const action = text(kind, 'basic').toLowerCase();
   const sites = [];
@@ -103,6 +222,7 @@ export function createCombatObservation(options = {}) {
     finishedAt: null,
     counters: { action: 0, result: 0, impact: 0 },
     actions: [],
+    completion: null,
     gaps: [
       gap(COMBAT_OBSERVATION_GAPS.FINAL_ACTION_SNAPSHOT, 'resolveAction.finally', 'Engine hiện chỉ chụp before/after ở cuối resolveAction.'),
       gap(COMBAT_OBSERVATION_GAPS.PER_IMPACT_BOUNDARY, 'applyDamage/applyHeal/status/energy', 'Chưa có hook before/after riêng cho từng sub-action hoặc impact.'),
@@ -178,6 +298,7 @@ export function finishCombatObservation(observation, options = {}) {
   if (observation.status === 'finished') return clone(observation);
   observation.status = 'finished';
   observation.finishedAt = options.finishedAt ?? null;
+  observation.completion = normalizeCompletion(options);
   return clone(observation);
 }
 
@@ -185,6 +306,8 @@ export function combatObservationReport(observation) {
   if (!observation || observation.schema !== COMBAT_OBSERVATION_SCHEMA) return null;
   const allRngCalls = observation.actions.flatMap((action) => action.rngCalls);
   const allImpacts = observation.actions.flatMap((action) => action.impacts || []);
+  const maxObservedRound = observation.actions.reduce((max, action) => Math.max(max, numeric(action.round, 0)), 0);
+  const roundsBeyondCap = observation.actions.filter((action) => numeric(action.round, 0) > observation.roundMax).length;
   const impactBoundaryCoverage = {};
   for (const impact of allImpacts) {
     const sourceBoundary = impact.metadata?.sourceBoundary;
@@ -217,6 +340,15 @@ export function combatObservationReport(observation) {
   const rngSites = [...new Set(allRngCalls.map((call) => call.site))].sort();
   const resultTypes = [...new Set(observation.actions.flatMap((action) => action.results.map((result) => result.type)))].sort();
   const gaps = observation.gaps.filter((entry) => entry.code !== COMBAT_OBSERVATION_GAPS.RNG_VALUE || rngGapOpen);
+  const completion = observation.completion ? normalizeCompletion(observation.completion) : null;
+  const replayDigest = combatObservationParityDigest(observation);
+  const roundCapReached = Boolean(
+    completion?.round != null &&
+    completion?.roundMax != null &&
+    completion.round >= completion.roundMax &&
+    String(completion.reason || '').startsWith('round-limit') &&
+    roundsBeyondCap === 0
+  );
   return {
     schema: observation.schema,
     fixtureId: observation.fixtureId,
@@ -232,6 +364,19 @@ export function combatObservationReport(observation) {
     impactBoundaryCoverage,
     multiImpactActionCount,
     multiHitActionCount,
+    roundMax: observation.roundMax,
+    maxObservedRound,
+    roundsBeyondCap,
+    roundCapReached,
+    completion,
+    replayParity: {
+      schema: COMBAT_REPLAY_PARITY_SCHEMA,
+      scope: 'full-replay-rule-outcome',
+      fingerprint: replayDigest == null ? null : parityFingerprint(replayDigest),
+      actionCount: observation.actions.length,
+      roundCount: [...new Set(observation.actions.map((action) => action.round))].length,
+      roundCapReached
+    },
     rngSites,
     rngCallCount: allRngCalls.length,
     capturedRngCallCount: allRngCalls.filter((call) => call.captured).length,

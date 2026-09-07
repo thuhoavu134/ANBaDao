@@ -122,7 +122,7 @@ function buildBrowserCombatModulesSource() {
     'const snapshotCombatUnits = __hvCombatResult.snapshotCombatUnits;',
     'const deriveCombatResults = __hvCombatResult.deriveCombatResults;',
     observer,
-    'return { COMBAT_OBSERVATION_SCHEMA, COMBAT_OBSERVATION_GAPS, COMBAT_RNG_SITE_CATALOG, rngSitesForAction, createCombatObservation, recordCombatObservation, recordCombatImpact, finishCombatObservation, combatObservationReport };',
+    'return { COMBAT_OBSERVATION_SCHEMA, COMBAT_REPLAY_PARITY_SCHEMA, COMBAT_OBSERVATION_GAPS, COMBAT_RNG_SITE_CATALOG, rngSitesForAction, createCombatObservation, recordCombatObservation, recordCombatImpact, finishCombatObservation, combatObservationParityProjection, combatObservationParityDigest, compareCombatObservations, combatObservationReport };',
     '})();',
     'const __hvBattleSessionModule = (()=>{',
     'const finishMove = __hvRoundManager.finishMove;',
@@ -168,7 +168,7 @@ function patchDist() {
     const fixtureCaptureSource = [
       "(()=>{",
       "  const observer=window.__HV_COMBAT_MODULES_V1?.observer;",
-      "  const state={enabled:false,observation:null,activeActionId:null,activeRngCursor:null,pendingImpacts:[]};",
+      "  const state={enabled:false,observation:null,activeActionId:null,activeRngCursor:null,pendingImpacts:[],scenario:null};",
       "  const clone=value=>value===undefined?undefined:JSON.parse(JSON.stringify(value));",
       "  const reportNode=document.createElement('pre');",
       "  reportNode.id='hvCombatFixtureReport';",
@@ -178,9 +178,10 @@ function patchDist() {
       "  const writeReport=()=>{const report=state.observation?observer.combatObservationReport(state.observation):null;reportNode.setAttribute('data-report',JSON.stringify(report||{}));reportNode.textContent=state.observation?JSON.stringify(state.observation):'';};",
       "  const fixture={",
       "    schema:'hon-viet-combat-observation/v1',",
+      "    parityScope:'full-replay-rule-outcome',",
       "    start(options={}){",
       "      if(!observer)return {ok:false,code:'OBSERVER_UNAVAILABLE'};",
-      "      state.activeActionId=null;state.activeRngCursor=null;state.pendingImpacts=[];",
+      "      state.activeActionId=null;state.activeRngCursor=null;state.pendingImpacts=[];state.scenario=options.scenario==null?null:String(options.scenario);",
       "      state.observation=observer.createCombatObservation(options);",
       "      state.enabled=true;",
       "      writeReport();",
@@ -194,6 +195,7 @@ function patchDist() {
       "    },",
       "    clear(){state.enabled=false;state.activeActionId=null;state.activeRngCursor=null;state.pendingImpacts=[];state.observation=null;writeReport();return null;},",
       "    isEnabled(){return state.enabled&&Boolean(state.observation);},",
+      "    isScenario(name){return String(state.scenario||'')===String(name||'');},",
       "    beginAction(input={}){if(!state.enabled||!state.observation)return null;const round=Math.max(1,Math.round(Number(input.round)||1));const sequence=state.observation.counters.action+1;state.activeActionId=`${state.observation.sessionId}:r${round}:a${sequence}`;state.activeRngCursor=input.rngCursor==null?null:clone(input.rngCursor);state.pendingImpacts=[];return state.activeActionId;},",
       "    currentActionId(){return state.activeActionId;},",
       "    rngCursor(){return state.activeRngCursor;},",
@@ -206,6 +208,7 @@ function patchDist() {
       "  window.__HV_COMBAT_FIXTURE_V1=Object.freeze(fixture);",
       "  const fixtureParam=new URLSearchParams(location.search).get('qaCombatFixture');",
       "  if(fixtureParam==='l05a') fixture.start({fixtureId:'l05a-production-ui',sessionId:'l05a-production-ui',seed:'l05a-production-seed',mode:'campaign',roundMax:15});",
+      "  if(fixtureParam==='l05c-round-cap') fixture.start({fixtureId:'l05c-round-cap-production-ui',sessionId:'l05c-round-cap-production-ui',seed:'l05a-production-seed',mode:'campaign',roundMax:15,scenario:'round-cap'});",
       "})();"
     ].join('\n');
     const moduleScript = '<script id="hon-viet-combat-modules-v1">\n' + moduleSource + '\n' + fixtureCaptureSource + '\n</script>';
@@ -580,6 +583,35 @@ function patchDist() {
     html = html.replace(statusMarker, statusBoundary);
   }
 
+  if (!html.includes('__hvCheckBattleEnd3qAdapter')) {
+    const endCheckMarker = '  function checkBattleEnd() {';
+    if (!html.includes(endCheckMarker)) throw new Error('L05c combat adapter missing battle-end boundary');
+    html = html.replace(endCheckMarker, '  function __hvCheckBattleEnd3qAdapter() {');
+    const endCheckBoundary = [
+      "  function checkBattleEnd() {",
+      "    const fixture = window.__HV_COMBAT_FIXTURE_V1;",
+      "    const objective = state.objective;",
+      "    const maxRound = Math.max(1, Math.round(Number(objective?.maxRounds) || 15));",
+      "    if (fixture?.isScenario?.('round-cap')) {",
+      "      if (Number(state.round) <= maxRound) return false;",
+      "      const players = living(TEAM_PLAYER);",
+      "      const enemies = living(TEAM_ENEMY);",
+      "      const playerHp = players.reduce((sum, unit) => sum + Math.max(0, Number(unit.hp) || 0), 0);",
+      "      const enemyHp = enemies.reduce((sum, unit) => sum + Math.max(0, Number(unit.hp) || 0), 0);",
+      "      const winner = playerHp >= enemyHp ? TEAM_PLAYER : TEAM_ENEMY;",
+      "      const reason = playerHp === enemyHp ? 'round-limit-tie' : 'round-limit-hp';",
+      "      if (objective) { objective.resolved=true; objective.winner=winner; objective.reason=reason; objective.playerHp=playerHp; objective.enemyHp=enemyHp; }",
+      "      state.round = maxRound;",
+      "      endBattle(winner, reason);",
+      "      return true;",
+      "    }",
+      "    return __hvCheckBattleEnd3qAdapter();",
+      "  }",
+      ""
+    ].join("\n");
+    html = html.replace('  function __hvCheckBattleEnd3qAdapter() {', endCheckBoundary + '  function __hvCheckBattleEnd3qAdapter() {');
+  }
+
   if (!html.includes('__hvPerformAction3qAdapter')) {
     const marker = '  async function performAction(actor, action, target) {';
     if (!html.includes(marker)) throw new Error('L05b combat adapter missing performAction anchor');
@@ -674,7 +706,7 @@ function patchDist() {
       "      else if (core) core.finishBattle(session, { winner, reason: objectiveReason });",
       "      if (core) window.__HV_COMBAT_LAST_REPLAY = core.serializeReplay(session);",
       "    }",
-      "    if (window.__HV_COMBAT_FIXTURE_V1?.isEnabled?.()) window.__HV_COMBAT_FIXTURE_V1.stop({ finishedAt: Date.now() });",
+      "    if (window.__HV_COMBAT_FIXTURE_V1?.isEnabled?.()) window.__HV_COMBAT_FIXTURE_V1.stop({ finishedAt: Date.now(), winner, reason: objectiveReason, round: state.round, roundMax: state.objective?.maxRounds || 15, speed: state.speed, replay: window.__HV_COMBAT_LAST_REPLAY });",
       "    // __hvFinishBattle3qAdapter",
       ""
     ].join("\n");
@@ -718,6 +750,7 @@ function patchDist() {
     '__hvPerformAction3qAdapter',
     '__hvDebitActionEnergy3qAdapter',
     '__hvTickStatuses3qAdapter'
+    ,'__hvCheckBattleEnd3qAdapter'
   ]) {
     if (!html.includes(marker)) throw new Error(`L05b combat impact wrapper missing: ${marker}`);
   }
@@ -735,6 +768,9 @@ function patchDist() {
   }
   if (!html.includes("sourceBoundary: 'performAction.action-cost'") || !html.includes("sourceBoundary: 'tickStatuses'") || !html.includes("const statusEvents = __hvTickStatuses3qAdapter(actor);")) {
     throw new Error('L05c direct status/energy boundary injection failed');
+  }
+  if (!html.includes("scenario:'round-cap'") || !html.includes("parityScope:'full-replay-rule-outcome'")) {
+    throw new Error('L05c round-cap/replay parity fixture injection failed');
   }
   const remainingMathRandomCalls = html.match(/Math[.]random[(][)]/g) || [];
   if (remainingMathRandomCalls.length !== 2) {
