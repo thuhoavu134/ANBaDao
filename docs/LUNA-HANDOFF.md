@@ -1,16 +1,20 @@
 # Bàn giao Lục Thần / Hồn Việt cho Luna và các model tiếp theo
 
-Cập nhật: 05/09/2026. Đọc tài liệu này trước khi sửa animation, danh sách tướng, âm thanh hoặc build/deploy.
+Cập nhật: **07/09/2026**. Đây là điểm vào cho Luna. Các mục pixel/render và evidence 05/09 phía dưới là lịch sử kỹ thuật; trạng thái hiện tại nằm ở mục 1 và progress.
 
-## 1. Mục tiêu và trạng thái cần hiểu đúng
+## 1. Đọc nhanh: hiện có gì và làm tiếp ở đâu
 
-- Repository: `bktimmy247/luc-than`; production: https://luc-than.vercel.app/.
-- Game web dùng HTML/JavaScript và Canvas 2D. Không phải Unity, Unreal hay Godot.
-- Hướng tham khảo được chủ dự án xác nhận là Samkok. Giữ danh sách 12 tướng chính thức, đội hình 6 slot và giới hạn 15 hiệp.
-- Tác vụ hiện tại: danh sách tướng trống trên điện thoại, giao đấu nháy trên PC, Lục Ảnh nhỏ người khi đánh Basic, thiếu SFX.
-- Kiểm tra tự động tại bản sửa này: 79/79 đạt. Bao gồm đọc pixel của atlas thật, kiểm tra tỷ lệ/chân và kiểm tra audio bằng AudioContext giả lập.
-- **Các kiểm tra đó không chứng minh Safari trên iPhone đã hết lỗi.** Khung iframe 390 px trong Chrome chỉ kiểm tra CSS đáp ứng. Phải ghi rõ trình duyệt/thiết bị đã dùng khi báo kết quả.
-- Tình trạng deploy và QA thực tế phải xác minh từ commit/Vercel/trình duyệt ở thời điểm bàn giao. Không suy ra production đã cập nhật chỉ vì code đã được viết.
+- Repo `bktimmy247/luc-than`; [production](https://luc-than.vercel.app/). Game HTML/JavaScript + Canvas 2D, shell index và iframe battle, build bằng `scripts/build-static.mjs`.
+- Code baseline của đợt phân tích: `c8fefca0e31b6ddb926921454413d38860171665`. Hotfix âm thanh thoát trận đã deploy Vercel READY; 171/171 test đạt. Chưa có kiểm tương tác production/nghe loa Safari sau hotfix; lần kiểm HTTP sau deploy bị treo rồi hủy.
+- [Progress](HON-VIET-MONG-GIOI-PROGRESS-2026-09-06.md) ghi trạng thái từng hệ; [execution plan](LUNA-EXECUTION-PLAN-2026-09-07.md) chia L01–L20. **Code tiếp từ L02a: audit/validator catalog**, chưa thay balance/seed. L01 là device verification, không viết lại bus audio.
+- [Phân tích source Hermes](HERMES-SOURCE-AUDIT-2026-09-07.md) là tài liệu học tổ chức game mẫu; [manifest](reference/hermes-source-manifest-2026-09-07.json) kiểm kê/hash. Archive là Cocos client đã tách mã + config/protocol; chưa có backend/project editor đầy đủ để deploy lại.
+- Giữ bản sắc Hồn Việt, 12 ID chính thức, 6 slot (3 trước/3 sau), 15 hiệp, không multi-wave. Capacity được chốt trong plan là 72 (32 SSR/16 SR/16 A/8 B), hiện chưa có đủ nội dung; không tạo placeholder để đủ số.
+- Ông Phở/Lục Ảnh có kit v2 Basic + Ultimate + passive; 10 tướng còn lại chưa chuyển đủ. Không hỏi lại định hướng hai đòn và không tráo legacy Skill 1/Ultimate hoặc bỏ đầu tư.
+- PR #16 campaign/AFK/preparation/MVP đã merge tại `92b503c`. Cap AFK 15 giờ, cảnh diễn hoạt không tự tiến ải/nhận thưởng. Bốn ảnh campaign đã có.
+- Điểm vướng đã thấy từ code: seed/migration mở cả 12; thưởng chương còn ID legacy ngoài roster; event combat cần đủ sub-action và seeded RNG; transaction/event chưa phủ mọi luồng. Không dùng API hooks để khẳng định backend/rank/chat thật đã có.
+- Khi sửa runtime chạy npm test và bấm UI thật. Báo riêng build/unit/integration, Chrome responsive, Chrome interaction, Safari thiết bị thật và production deployment.
+
+Thứ tự đọc tối thiểu mỗi phiên: AGENTS → mục này → progress → đúng ticket Lxx. Master plan giữ mã E/R/M và quyết định D; chỉ đọc phần liên quan. Không dump dòng BATTLE_HTML_BASE64 khổng lồ khi tìm kiếm; dùng rg với giới hạn cột hoặc đọc theo function boundary.
 
 ## 2. Bản đồ code: sửa đúng nguồn tạo ra sản phẩm
 
@@ -32,6 +36,13 @@ Cập nhật: 05/09/2026. Đọc tài liệu này trước khi sửa animation, 
 | SFX nguồn | `assets/audio/sfx/sources.json` | Tên file gốc trong ZIP, codec và hash để đối chiếu |
 | Kiểm tra khung hẹp | `qa-runtime.html` | Iframe 390×844, 430×932 và 1280×900; không giả lập Safari |
 | Regression mới | `tests/mobile-render-sfx.test.mjs` | Pixel, audio, bố cục và mã sau build |
+| Campaign/chuẩn bị | `src/ui/campaign-scene.js`, `src/domain/campaign/campaign-view.mjs` | AFK scene, draft sáu slot, gọi transaction/startChapter hiện có |
+| AFK domain | `src/domain/afk/afk-chest.mjs` | Thời gian/rate/claim/cap 15 giờ |
+| Transaction | `scripts/transaction-contract-v1.mjs`, `src/domain/transaction/receipt-contract.mjs` | Owner commit/rollback/receipt và các caller được migrate |
+| Result/navigation | `scripts/settlement-navigation-v1.mjs` | Kiểm bridge/session, settle và navigate một lần |
+| Hotfix audio close | `scripts/battle-audio-lifecycle-v1.mjs` | Cancel parent SFX/voice/result và dispose child trước about:blank |
+| Audio hồi quy | `tests/battle-audio-lifecycle.test.mjs` | 9 ca active/pending/voice/HTML fallback/stale iframe/result/close ordering |
+
 
 **Không sửa trực tiếp `dist/` để làm bản sửa chính.** Vercel chạy build và sẽ ghi đè. Theo dấu từ file trong `dist` về script tạo nó. Chỉ thêm/chỉnh patch ở đúng giai đoạn; đừng sửa nhiều patch cũ cùng lúc bằng tìm-thay toàn cục.
 
@@ -164,6 +175,10 @@ Kiểm tra trong trận đang đánh, không chỉ màn Victory đứng yên: k�
 
 ## 8. SFX: file đã có nhưng runtime phải phát đúng lúc
 
+**Cập nhật 07/09 — đã sửa lỗi âm trận còn chạy khi thoát:** `src/ui/audio-sfx-runtime.js` cấp `createBattleChannel` theo session, `endBattle`/`dispose` vô hiệu callback cũ. Patch `battle-audio-lifecycle-v1.mjs` nối đúng `closeOverlay` để dừng âm cha và âm HTML trong child trước blank iframe. Voice WebAudio/HTML fallback được theo dõi trong `ios-audio-unlock-patch.mjs`; result music hủy pending unlock và kiểm live session/source/origin. Guaranteed ultimate fallback cũng kiểm session còn active. Không thay bằng `stopCombat` đơn lẻ rồi cho callback cũ bật lại combat.
+
+Pagehide của iframe cũ không được tắt trận mới; không suspend AudioContext chung làm mất tiếng UI/hồ sơ. Diagnostics bổ sung trên DOM: `data-sfx-active`, `data-sfx-combat-enabled`, `data-sfx-battle-active`, `data-voice-combat-active`; chúng là theo dõi nguồn phát, không chứng minh loa phát trên iPhone. Chạy L01 để khép gate thiết bị.
+
 Hai gói nguồn: `SFX-UI-ALL-2026-09-01.zip` và `SFX-COMBAT-ALL-2026-09-01.zip`. Dùng `scripts/import-supplied-sfx.py <thư-mục-chứa-hai-zip>` để khôi phục bộ đang dùng. Không tải lại hay chuyển đổi tất cả 332 âm để sửa một hook.
 
 | Event | File runtime | Nơi gọi |
@@ -239,7 +254,7 @@ Tài liệu không cấp quyền mới để deploy, gửi tin, đổi cấu hì
 - Giữ flash cả màn hình cho từng cú đánh rồi nhầm thành “nâng chất lượng hiệu ứng”.
 - Chỉ build hoặc sửa bản xem thử rồi báo production đã xong.
 
-## 12. Kết quả kiểm chứng production của bản sửa này
+## 12. Lịch sử kiểm chứng production — bản sửa 05/09
 
 Commit code: `641658e544511d40ad15ad5e5472e826079f194c`. GitHub báo Vercel **success**; trang `qa-runtime.html` mới đã trả HTTP 200. Những mục dưới đây là quan sát thực tế sau deploy, không phải checklist dự định:
 
@@ -251,4 +266,7 @@ Commit code: `641658e544511d40ad15ad5e5472e826079f194c`. GitHub báo Vercel **su
 - Nút `Ải sau` chuyển sang thông báo hoàn thành nhiệm vụ 1/2 và mở nhiệm vụ kế tiếp. Không ghi nhận việc nút bị chặn trong lần kiểm tra đó.
 - Safari/iPhone thật: **chưa kiểm tra**. Cần người dùng xác nhận trên thiết bị từng gặp lỗi.
 
+**Ghi chú cập nhật 07/09:** các phát hiện MVP/Đình Lôi trong đoạn lịch sử sau đã có các patch tiếp theo, gồm PR #16 và golden runtime. Chỉ dùng để truy lỗi; xem progress mới nhất trước khi nhận việc.
+
 Phát hiện ngoài bốn lỗi đang sửa: phần ảnh MVP Ông Phở trên màn Victory có lúc hiện ô placeholder thay cho ảnh nhân vật; một ảnh chụp trận PC còn thấy frame của Đình Lôi bị cắt phần đầu. Hai renderer này không được chỉnh tỷ lệ trong bản vá lần này. Ghi làm việc tiếp theo, kiểm tra grid/source của chính nhân vật trước khi sửa; đừng ghi “toàn bộ màn Victory/nhân vật đã đạt” dựa trên việc nút Ải sau bấm được. SFX riêng từng tướng cũng chưa được duyệt mapping; hiện là bộ event dùng chung như bảng ở mục 8.
+

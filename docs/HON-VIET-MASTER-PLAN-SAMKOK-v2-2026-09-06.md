@@ -2,7 +2,29 @@
 
 ## Hoàn thiện game theo Samkok, từ bản đang chạy đến bản phát hành
 
-Ngày cập nhật: 06/09/2026. Chủ sản phẩm: Anh. Người tiếp nhận triển khai: Codex/Luna/dev được phân công.
+Khởi tạo v2: 06/09/2026; cập nhật source/tiến độ: 07/09/2026. Chủ sản phẩm: Anh. Người tiếp nhận triển khai: Codex/Luna/dev được phân công.
+
+## Cập nhật sau khi đọc source Hermes — 07/09/2026
+
+**Trạng thái và thứ tự tiếp theo ở mục này thay cho các status block lịch sử bên dưới.** Mục tiêu sản phẩm E01–E26/M0–M9 được giữ. Bổ sung bằng chứng source và các lát cắt L01–L20, không tạo một game/repo/engine khác.
+
+- [Phân tích bộ 7 part Hermes](HERMES-SOURCE-AUDIT-2026-09-07.md): archive CRC đạt, 1.748 module, 169 config; Cocos client bundle + protocol, chưa thấy backend/project editor nguyên bản. Chỉ học kiến trúc/flow; không nhập source/asset Tam Quốc vào build.
+- [Execution plan dành cho Luna](LUNA-EXECUTION-PLAN-2026-09-07.md): từng ticket có dependency, owner/file, bước làm, contract, UI/art, test và tiêu chí đóng. **Bắt đầu L02a** (validator/report catalog), làm L01 device QA song song nếu có thiết bị; tiếp L03 transaction/event, L04 route lifetime và L05 combat fixtures.
+- [Progress mới nhất](HON-VIET-MONG-GIOI-PROGRESS-2026-09-06.md): code baseline `c8fefca0e31b6ddb926921454413d38860171665`; 171/171 test; Vercel READY đúng SHA. Chưa có browser/device smoke sau hotfix audio, không coi deployment là bằng chứng nghe loa.
+- PR #16 AFK/chuẩn bị sáu slot/MVP **đã merge** ở `92b503c`; không còn trạng thái nhánh chưa merge. SFX thoát trận đã được sửa/deploy ở `c8fefca`, còn nghiệm thu thiết bị.
+- Có 38 dynamic build patch import, 12 playable heroes, 2 kit v2 (Ông Phở/Lục Ảnh). Capacity 72 là đích phát triển, không phải nội dung đã sản xuất.
+- Khoảng thiếu được xác nhận: defaultPlayer/migrateSave cấp cả 12; reward chương còn ID legacy ngoài roster; recorder trước/sau resolveAction cần kiểm sub-action và RNG luật chưa seed; các side effect progression sau transaction cần audit. Sáu chương DATA không đồng nghĩa 20 nền = 20 chương.
+- R06/R07/R08/R10 và AFK đã có các lát cắt/test, chưa được đóng cả M1/M2. Banner/seed mới, full 12 kits, mọi mode/period/return path và online authority còn trong backlog.
+
+### Bài học source đưa vào kiến trúc
+
+View hiển thị; command/controller xử lý; model/catalog quyết định dữ liệu; transaction chốt rồi mới render/reveal. Mẫu trình diễn `rdinfos → acts → suborder` từ payload, vì vậy Lục Thần cần event/seed/snapshot riêng nếu muốn replay/online. Scene exit phải thu hồi timer/load/audio kể cả callback đang chờ. Unlock/badge/source links dùng chung contract, không suy từ chữ trên nút.
+
+D01–D06 ở mục 12 vẫn chỉ chặn phần quyết định liên quan. Không yêu cầu anh chốt lại Samkok, quy tắc hình ảnh, 12 tướng hiện tại, capacity 72, sáu slot hoặc Basic + Ultimate + nội tại. L02a/L03a/L04a/L05a/L16 đo hiện trạng đều có thể tiến hành với thông tin hiện có.
+
+**Phần từ “Chốt cơ chế AFK” đến các mốc source cũ phía dưới giữ để truy vết yêu cầu/lịch sử.** Quy tắc AFK 15 giờ vẫn có hiệu lực; số test/commit/việc tiếp theo cũ không ghi đè cập nhật này. Chi tiết nhiệm vụ E và tiêu chuẩn chất lượng vẫn dùng, đối chiếu trạng thái theo progress mới nhất.
+
+---
 
 ## Chốt cơ chế AFK từ video — 07/09/2026 (giờ Việt Nam)
 
@@ -320,7 +342,7 @@ P0 · M0, duy trì xuyên suốt · M · Dev/QA. Phụ thuộc: không.
 - E01-01: Ghi main/build/config/hash asset và save mẫu. Đạt khi dựng lại đúng mốc, không chép ZIP cũ đè source.
 - E01-02: Regression các lỗi anh báo: roster trống/back, Idle cắt/rung/méo, Basic co, PC nháy, SFX, result. Mỗi lỗi có bước bấm và bằng chứng theo thiết bị.
 - E01-03: Cập nhật sổ parity Samkok, giữ 3Q làm nguồn bổ sung; hành vi chưa xem phải có nhãn chưa xác minh.
-- E01-04: Kiểm danh sách 25 patch đang active, thứ tự và điểm chèn. Phân biệt build sạch lặp lại với reapply một patch; chỉ yêu cầu reapply nếu contract cho phép.
+- E01-04: Kiểm danh sách patch đang active từ build chain (38 dynamic import ở baseline 07/09), thứ tự và điểm chèn. Phân biệt build sạch lặp lại với reapply một patch; chỉ yêu cầu reapply nếu contract cho phép.
 - E01-05: Tách kết quả unit/source-contract/integration/browser/máy thật; kiểm script và embedded battle sau tất cả patch.
 - E01-06: Mỗi phần migration chỉ có một chủ xử lý, có cờ quay lại; không thêm timeout/listener thứ hai để che lỗi.
 - E01-07: Giữ chỉ mục nguồn mẫu/asset/handoff và loại ghi chú lỗi đã được fix khỏi danh sách “chưa làm”; vẫn giữ lịch sử.
@@ -958,7 +980,7 @@ Asset đầu vào gồm nhu cầu hình tĩnh và phản hồi animation/VFX/SFX
 
 ## 10. Đợt triển khai tiếp theo: thứ tự cụ thể
 
-Các gói dưới đây không tương ứng với số ngày hay số commit cố định. Đây là hàng đợi đầu tiên; mỗi hàng có thể tách tiếp. M0 nghiệm thu fix hiện tại, chỉ sửa khi có bằng chứng lỗi còn tồn tại.
+Các gói R dưới đây là hàng đợi gốc và mã truy vết, không tương ứng với số ngày hay số commit cố định. Hàng đợi tiếp tục hiện tại là L01–L20 trong execution plan 07/09, bắt đầu L02a; mỗi hàng có thể tách tiếp. M0 nghiệm thu fix hiện tại, chỉ sửa khi có bằng chứng lỗi còn tồn tại.
 
 | Thứ tự | Gói việc | Mã liên quan | Đầu ra để anh thử/kiểm |
 |---|---|---|---|
@@ -990,10 +1012,10 @@ Chuẩn concept hai đòn và bảng asset mới áp dụng ngay trong công vi�
 
 ### 11.1. Thứ tự đọc
 
-1. AGENTS.md và AI-HANDOFF.md của commit mới nhất.
-2. docs/LUNA-HANDOFF.md cho bản đồ lỗi/asset/build; chú ý ngày/commit của từng ghi chú.
-3. docs/SAMKOK-REFERENCE-ALIGNMENT.md cho hướng sản phẩm.
-4. Master Plan này cho mốc/ticket; mở đúng domain/script đang tạo runtime.
+1. AGENTS.md và phần cập nhật mới nhất trong docs/LUNA-HANDOFF.md.
+2. docs/HON-VIET-MONG-GIOI-PROGRESS-2026-09-06.md và docs/LUNA-EXECUTION-PLAN-2026-09-07.md: ticket hiện tại, file và gate.
+3. docs/HERMES-SOURCE-AUDIT-2026-09-07.md cho bằng chứng source; docs/SAMKOK-REFERENCE-ALIGNMENT.md cho video/lịch sử hướng sản phẩm.
+4. Master Plan này cho E/R/M và quyết định sản phẩm; mở đúng domain/script đang tạo runtime.
 5. Nếu sửa asset, đọc chuẩn sản xuất và hợp đồng riêng đang active. Tài liệu cũ nói key nền đen bị thay thế bởi hợp đồng RGBA mới.
 
 Khi tài liệu mâu thuẫn: yêu cầu mới nhất của anh → quyết định sản phẩm đã duyệt → nguồn/runtime tại commit đã kiểm → tài liệu lịch sử. Code hiện tại là bằng chứng trạng thái, không phải lý do giữ một bug hoặc bỏ yêu cầu đã duyệt.

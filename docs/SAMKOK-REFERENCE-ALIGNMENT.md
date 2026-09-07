@@ -1,5 +1,13 @@
 # Hồn Việt — triển khai theo Samkok
 
+## Bổ sung source Hermes — 07/09/2026
+
+Anh bàn giao lại 7 phần `fable5-tam-quoc-source.zip.001`…`.007` để học code game mẫu và tiếp tục Lục Thần. Đã ghép/kiểm CRC và đọc các luồng lõi; [audit source mới](HERMES-SOURCE-AUDIT-2026-09-07.md) ghi rõ bằng chứng, [manifest](reference/hermes-source-manifest-2026-09-07.json) ghi hash và scope.
+
+Đầu vào này có metadata Tam Quốc Khởi Động 1.1.136, Cocos client bundle, 1.748 module, 169 config và protocol; không coi nó là backend hay một project editor đầy đủ để deploy lại. Bài học chính là View–Controller–Model/config, replay presentation theo action/suborder, lifecycle tải/audio và vòng campaign–AFK–đội–thưởng–nuôi đội.
+
+[Execution plan L01–L20](LUNA-EXECUTION-PLAN-2026-09-07.md) cụ thể hóa cách áp dụng; [progress hiện tại](HON-VIET-MONG-GIOI-PROGRESS-2026-09-06.md) thay trạng thái cũ. Bắt đầu L02a catalog validator; giữ engine/asset/identity Lục Thần. **Không xem lại video trong đợt source audit này**; phần dưới giữ evidence video/source của các lần trước và không được hiểu là QA mới.
+
 ## Mẫu chính được anh xác nhận ngày 2026-09-05
 
 - Game tham chiếu: **Samkok: New Force / Tam Quốc Khởi Động**.
@@ -46,3 +54,4 @@ Các mốc là thứ tự phụ thuộc, không phải tuyên bố toàn bộ đ
 - Khi gom panel, CSS cũ `grid-column:2` của nhóm nâng cấp tạo thêm cột làm hẹp chỉ số; sửa panel về một cột và đặt lại vị trí các nhóm con. Các nút nâng tướng vẫn giữ nguyên handler hiện hành.
 - Bộ regression hiện tại 69/69 pass. Build mới phân tích cú pháp đủ 8 script inline và xác nhận embedded battle khớp byte với `battle.html`. Chưa kiểm trực tiếp Safari/iPhone và chưa nghiệm thu toàn bộ các trận/hoạt động còn lại.
 - Tình trạng phát hành và ca chạy thực tế được ghi ở PR/commit tương ứng, không đánh dấu các tính năng chưa thử là PASS.
+

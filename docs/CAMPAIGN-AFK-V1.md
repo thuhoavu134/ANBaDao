@@ -1,6 +1,6 @@
 # Chinh chiến — cảnh AFK và chuẩn bị đội
 
-Nhánh: `feat/campaign-afk-squad-v1` · [PR #16](https://github.com/bktimmy247/luc-than/pull/16).
+Nhánh triển khai: `feat/campaign-afk-squad-v1` · [PR #16](https://github.com/bktimmy247/luc-than/pull/16) **đã merge** vào main ở `92b503c9be9e8b85a84288501d18907423d5f9b2`. Cập nhật trạng thái 07/09/2026. Bằng chứng Chrome bên dưới thuộc commit preview được ghi rõ; hotfix audio thoát trận tiếp theo ở `c8fefca` có 171 test và deployment READY, chưa có device smoke sau hotfix. Xem [progress](HON-VIET-MONG-GIOI-PROGRESS-2026-09-06.md).
 
 Đây là một phần triển khai của hướng tham khảo trong `SAMKOK-REFERENCE-ALIGNMENT.md`: vào Chinh chiến, thấy đội đang thám hiểm và rương tích lũy, chuẩn bị đội rồi xuất chiến. Mỹ thuật giữ Hồn Việt; giá, tiến trình, bộ kỹ năng và luật trận dùng dữ liệu hiện hành.
 
@@ -51,4 +51,5 @@ Vòng vẽ AFK chỉ chạy khi màn hoạt động và tab hiển thị; dừng
 
 ## Phạm vi còn lại
 
-Chưa kiểm Safari thật, chưa chạy đủ mọi chương/hoạt động hoặc một trận thua tự nhiên trong đợt này. Nhánh này chưa merge vào `main`. Các nội dung chương cũ và phần thưởng tướng cũ vẫn thuộc cấu hình hiện có; màn chọn đội mới giới hạn đúng roster chính thức. Không coi bản này là hoàn tất toàn bộ roadmap theo video.
+Chưa kiểm Safari thật, chưa chạy đủ mọi chương/hoạt động hoặc một trận thua tự nhiên trong đợt này. PR #16 đã merge vào `main`; không nhận lại việc merge nhánh này. Các nội dung chương cũ và phần thưởng tướng cũ vẫn thuộc cấu hình hiện có; màn chọn đội mới giới hạn đúng roster chính thức. Không coi bản này là hoàn tất toàn bộ roadmap theo video.
+

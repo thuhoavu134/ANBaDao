@@ -1,6 +1,6 @@
 # AI Handoff — Hồn Việt: Mộng Giới
 
-This file is the first file future AI agents should read before modifying the project.
+Start with AGENTS.md and the current block in docs/LUNA-HANDOFF.md; this file is a compatibility entrypoint for older handoffs.
 
 Project: Hồn Việt: Mộng Giới
 Genre: mobile-first 2.5D turn-based 6v6 Vietnamese fantasy RPG
@@ -20,25 +20,23 @@ The first R05/R11 pilot is now implemented for Ông Phở with `samkok-v2.1`: Ba
 
 Current completed slices are documented in `docs/SAMKOK-LOADOUT-TRANSACTIONS-2026-09-06.md` and `docs/SAMKOK-FORGE-TRANSACTIONS-2026-09-06.md`. The forge slice belongs to E11-04/05 and extends the existing R07 transaction owner. The next expansion step is to repeat the R05/E02-06 and R11 evidence loop for the remaining authored heroes before adding new identities. Banner/seed decisions and real-device QA retain their separate gates.
 
-## Current Implementation Status — 06/09/2026
+## Current implementation and next work — 07/09/2026
 
-- Latest main commit: 153c116a8c732eb05287addae1e2a8c935388bcb.
-- Production deployment is READY at https://luc-than.vercel.app/.
-- Mobile campaign mission card was repaired and QA-checked at 390×844 and 430×932.
-- Hub side actions are restored: Nhiệm vụ and Bạn bè are distinct and visible; the large main-quest hub card is intentionally removed, but the Nhiệm vụ shortcut remains.
-- The next priority is clean chapter battle backgrounds, compact stacked damage popups, real iPhone/iPad QA for audio/layout, then authored-roster expansion.
-- Do not mark the battle visual or device QA gates PASS until the remaining checks are evidenced.
+- Code baseline: `c8fefca0e31b6ddb926921454413d38860171665`; 171/171 tests passed. Vercel production alias was verified READY at that SHA. Post-hotfix browser interaction and real Safari/audio checks remain pending; deployment is not a device test.
+- PR #16 campaign/AFK/preparation and MVP portraits was merged at `92b503c`. The subsequent audio hotfix cancels shared parent SFX, ultimate voice, result audio and stale child callbacks before iframe teardown.
+- The new Hermes handoff source audit is complete at the stated static-inspection scope: 7 archive parts, valid CRC, 1,748 modules, 169 decoded configs, Cocos client bundles and protocol schemas. No complete editable Cocos project or backend implementation was found. Do not import the reference runtime/assets into the game build.
+- The current execution queue is L01–L20 in `docs/LUNA-EXECUTION-PLAN-2026-09-07.md`, mapped back to E/R/M. **Next code slice: L02a, catalog inventory/validator without changing rewards or seed.** L01 is device verification of existing fixes. L03a transaction/event audit and L04a/L05a route/combat fixtures can proceed independently of banner policy.
+- Ông Phở and Lục Ảnh are the two registered v2 kits. Keep 12 existing heroes and all old save ownership; capacity 72 is a future content target.
+- Current gaps include legacy chapter rewards outside the official playable roster, seed/migration granting all 12, incomplete full-flow quest/transaction evidence and unseeded gameplay RNG. Client network hooks are not a deployed authoritative backend.
+- Status paragraphs before this block describe earlier slices. Use the current progress snapshot and L tickets for priorities; do not reopen a historical bug solely because an older note mentions it.
 
----
+## Required reading order
 
-## Required Reading Order
-
-1. `AI-HANDOFF.md` — this entrypoint.
-2. `docs/HON-VIET-MASTER-PLAN-SAMKOK-v2-2026-09-06.md` — master plan and implementation status.
-3. `docs/HON-VIET-MONG-GIOI-PROGRESS-2026-09-06.md` — concise progress snapshot.
-4. `docs/HON-VIET-ASSET-PRODUCTION-STANDARD.md` — locked asset size, sharpness, and AI-frame pipeline standard.
-3. Existing project design / resume / runtime docs in `docs/`.
-4. Current runtime patch scripts under `scripts/` before editing `index.html` or `battle.html`.
+1. `AGENTS.md`, then the current section of `docs/LUNA-HANDOFF.md`.
+2. `docs/HON-VIET-MONG-GIOI-PROGRESS-2026-09-06.md` — current snapshot; filename kept for link compatibility.
+3. `docs/LUNA-EXECUTION-PLAN-2026-09-07.md` — select one ticket/subtask and its file owners.
+4. `docs/HERMES-SOURCE-AUDIT-2026-09-07.md` — source evidence and adaptation boundaries; the E/R/M master plan for the relevant product decisions.
+5. Relevant domain, build patches and tests; asset production standard and active manifests when editing art/motion.
 
 ---
 
@@ -47,7 +45,7 @@ Current completed slices are documented in `docs/SAMKOK-LOADOUT-TRANSACTIONS-202
 - Do not replace huge `index.html` or `battle.html` directly when a small post-build patch script can do the job.
 - Prefer small, auditable scripts under `scripts/`, then import them from `scripts/build-static.mjs`.
 - Do not claim runtime PASS without actual evidence.
-- Do not claim iPhone/iPad PASS without testing on a real or representative mobile runtime.
+- Do not claim iPhone/iPad Safari PASS without testing on a real device; report Chrome responsive checks separately.
 - Do not hardcode Slot 1 combat behavior; attacks must be target-aware.
 - Do not require the user to learn Spine unless the user explicitly asks for a Spine workflow.
 
@@ -138,3 +136,4 @@ Never hide missing assets or failed runtime checks.
 - The frames use one fixed crop and edge-connected black-background removal plus enclosed dark-hole cleanup and transparent-edge color bleed, then pack into an 8×12, 3840×5760 atlas with 480×480 cells, alpha, and WebP quality 100. This keeps the 1080/Retina render sharp without enlarging the old 240 px cells.
 - `src/domain/character/luc-anh-idle.mjs` is the single metadata contract. `scripts/luc-anh-idle-1080-v1.mjs` patches both the hero-detail IDLE canvas in `index.html` and the combat renderer in `battle.html`; it is imported by `scripts/build-static.mjs` after the spatial Lục Ảnh patch.
 - The old `idle-atlas.webp` remains in the repository as a rollback asset, but no longer serves the Lục Ảnh IDLE runtime path.
+

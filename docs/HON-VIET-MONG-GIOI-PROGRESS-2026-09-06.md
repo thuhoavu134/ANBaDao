@@ -1,65 +1,70 @@
-# Hồn Việt: Mộng Giới — Progress Snapshot — 06/09/2026
+# Hồn Việt / Lục Thần — tiến độ hiện tại
 
-## Thiết kế mới đã chốt — AFK / 07-09-2026
+Cập nhật **07/09/2026, giờ Việt Nam**. Giữ tên file cũ để các link bàn giao tiếp tục hoạt động. Nội dung này thay snapshot 06/09; lịch sử còn trong Git. Không dùng phần trăm tổng khi chưa có nghiệm thu từng hệ thống.
 
-- Đính chính video: chạy/đánh quái là diễn hoạt AFK, chưa vào battle thật. Nút Khiêu chiến riêng mở trận 6v6.
-- Rương tích lũy thưởng theo thời gian online/offline, tối đa 15 giờ; đầy ngừng cộng. Phải nhận thưởng, không chỉ đăng nhập, mới có chỗ tích lũy tiếp; không cộng bù thời gian vượt trần.
-- Claim phải atomic/idempotent, lỗi lưu giữ nguyên rương; animation không sinh reward hoặc tăng tiến độ ải.
-- Master plan đã thay toàn bộ diễn giải encounter cũ và cập nhật E13-03, AFK-01…05, asset/UI và QA.
-- Trạng thái: **đã triển khai AFK runtime v1 và đã QA production**. Contract/test đã khóa cap 15 giờ, partial/full claim và clock edge cases; reward rate v1 còn là cấu hình cân bằng tạm thời.
-- Đọc [master plan](HON-VIET-MASTER-PLAN-SAMKOK-v2-2026-09-06.md), mục Chốt cơ chế AFK từ video.
-- Các mốc source/QA ở phần bên dưới là lịch sử trước bổ sung này, không phải QA AFK.
+## 1. Baseline và công việc mới nhất
 
-## Mốc hiện tại
+- Repository: `bktimmy247/luc-than`; [game chính](https://luc-than.vercel.app/).
+- Baseline code phân tích: [`c8fefca0e31b6ddb926921454413d38860171665`](https://github.com/bktimmy247/luc-than/commit/c8fefca0e31b6ddb926921454413d38860171665), bản sửa âm thanh tiếp diễn sau khi thoát trận.
+- Vercel đã xác minh `READY`, alias production trỏ cùng SHA, deployment `dpl_F4jT4fcbv2G1jo9UaxgPVHqPUdKF`. Việc đọc trực tiếp HTML qua HTTP sau deploy bị treo và đã hủy; chưa có kiểm tương tác hoặc nghe loa trên production sau hotfix. Không ghi nhận nó như một lần browser smoke thành công.
+- Bộ kiểm thử gần nhất cho code này: **171/171 đạt**, 30 file test, gồm 9 test hồi quy vòng đời âm thanh. Build kiểm inline script và embedded battle khớp standalone. Đây là test/build, không phải Safari thật.
+- Công việc ngày 07/09: ghép 7 part source Hermes, CRC đạt, kiểm kê 1.748 module/169 config, đọc luồng lõi và protocol, đối chiếu Lục Thần; cập nhật analysis/plan/handoff. Đợt tài liệu này không đổi gameplay, balance, asset hoặc hạ tầng.
 
-Game đang ở nhánh triển khai Samkok v2 trên build production mới nhất. Mục tiêu trước mắt là hoàn thiện một vòng chơi 6v6 thật mượt trên mobile, sau đó mở rộng roster và các hệ thống.
+Đọc [phân tích source](HERMES-SOURCE-AUDIT-2026-09-07.md), [execution plan L01–L20](LUNA-EXECUTION-PLAN-2026-09-07.md), [master plan E01–E26](HON-VIET-MASTER-PLAN-SAMKOK-v2-2026-09-06.md), [manifest kiểm kê](reference/hermes-source-manifest-2026-09-07.json).
 
-## Đã hoàn thành
+## 2. Những lát cắt đã có, cùng mức bằng chứng
 
-- AFK v1 đã có contract rương 15 giờ, tích lũy online/offline, dừng ở cap, claim qua transaction atomic và nút Khiêu chiến 6v6 tách riêng; diễn hoạt không gọi battle/không tự sinh reward.
-- Hub icon alpha hotfix đã gỡ đĩa nền, border, box-shadow và stacked filter cũ; computed production là transparent/none, giữ nguyên PNG RGBA và không đổi asset.
+| Hệ thống | Trạng thái đúng ở baseline | Bằng chứng / giới hạn |
+|---|---|---|
+| Build/runtime | Có pipeline 38 dynamic patch import; embedded sync cuối build | `scripts/build-static.mjs`, test parity; không sửa riêng dist |
+| Roster/detail | 12 playable IDs, filter/sort/back, 5 tab, read state thật | QA lịch sử trong Samkok alignment và Luna handoff; Safari chưa nghiệm thu |
+| Save | Có schema/revision/migration/backup | `save-contract.mjs`, fixtures/test; chưa gọi là cloud authority |
+| Transaction | Receipt, rollback, level-up, claimQuest, claimMail, loadout/forge đã có | Cần audit các side effect/event sau commit và command legacy còn lại |
+| Formation/forge | Save sáu slot không trùng; equip/move/unequip; forge/enhance/lock/salvage có command | Các test transaction; UI/art sâu còn trong L11 |
+| Art rèn | 20 icon trang bị + 3 icon vật liệu | Item-assets registry; không phải mọi animation/SFX rèn đã đủ |
+| Kit v2 | Ông Phở và Lục Ảnh đã đăng ký `samkok-v2.1` | Basic + Ultimate + passive và mapping đầu tư; 10 tướng còn lại chưa chuyển đủ |
+| Campaign/AFK | Scene AFK, cap 15 giờ, claim atomic, preparation sáu slot, chọn/đổi hàng/hủy/xuất chiến, MVP portrait | [PR #16](https://github.com/bktimmy247/luc-than/pull/16) **đã merge** tại `92b503c`; 162 test + Chrome evidence của nhánh trước merge |
+| Art campaign | 4 ảnh imagegen đã tích hợp | Background Mộng lộ, panel, nút và rương; prompt/manifest trong assets/ui/campaign-v1 |
+| Bridge/result | Kiểm session/source/sequence; settlement trước navigation, chống duplicate | `settlement-navigation-v1.mjs` và test; cần QA hết mode/lỗi/reload |
+| Audio thoát trận | Đã sửa/deploy | `c8fefca`, stop active + pending + voice + result, old iframe không mute trận mới; còn L01 máy thật |
+| Opening loop | Có graph/resume/route/event contract và 5 bước | Hai trận chương 1 → đội → nâng → mặc đồ; chưa nghiệm thu player-vNext từ tài khoản trắng |
+| Hub | Icon alpha/visibility, dock, Nhiệm vụ và Bạn bè đã sửa; card main quest lớn đã bỏ | Giữ hướng hiện tại, không phục hồi card bị bỏ |
+| Gọi Mộng | Có guard chặn pool rỗng trước debit | Banner/seed D01/D02 chưa chốt; không gọi là vòng thu thập hoàn chỉnh |
+| Online | Có client API hooks và các màn/state local | Tree baseline không chứa backend/API server; chưa có bằng chứng hai tài khoản thật |
 
-- Rèn Mộng có catalog 20 item và material art; transaction forge/loadout được giữ atomic, không làm mất item khi salvage.
-- QA có chế độ mở khóa toàn bộ chức năng theo cách save-safe để kiểm tra trước khi tài khoản mở tiến độ thật.
-- Sảnh đã có icon Nhiệm vụ và Bạn bè riêng biệt; Bạn bè được giữ visible ổn định; shortcut được xếp trong vùng U phía trên theo bố cục Samkok.
-- Avatar tài khoản và icon tài nguyên đã chuyển sang art Imagen; tên account và các con số vẫn là text/CSS động.
-- Card NHIỆM VỤ CHÍNH TUYẾN lớn trên sảnh đã bỏ theo yêu cầu; shortcut Nhiệm vụ vẫn giữ lại.
-- Chinh chiến liên tục vẫn dùng flow thắng tự sang nhiệm vụ kế tiếp, thua thì dừng.
-- Đã sửa lỗi responsive làm thẻ nhiệm vụ trên điện thoại biến thành một cột chữ. Card hiện full-width; header, progress và CTA không còn bị ép vào grid legacy.
-- Battle/result đã có nền tảng route victory/defeat và asset nhạc thắng/thua; Lục Ảnh, Đình Lôi, Thầy Mo đã có các manifest/registry skill đáng kể.
+## 3. Những khoảng thiếu đã xác định từ code
 
-## Bằng chứng source và runtime
+1. **Catalog/seed:** defaultPlayer và migrateSave mở cả 12 tướng. QA full-access opt-in không tự giải quyết việc này. DATA.chapters có 6 chương và còn reward/unlockHero dùng ID legacy ngoài roster. Cần L02 và D01/D02; không xóa lore hay thu hồi save.
+2. **Combat:** recorder quanh resolveAction chưa chứng minh bao phủ nhịp hai/đuổi đánh. RNG hit/variance/crit vẫn dùng Math.random. Có seed field và test module chưa đồng nghĩa replay deterministic toàn engine. Làm L05 bằng fixture thực.
+3. **Transaction/events:** một số event quest/opening chạy sau transaction; chưa nghiệm thu một commit cho mọi side effect và mọi command. L03 audit rồi chuyển từng nhóm.
+4. **Vòng mở đầu:** graph hiện hữu không tự cung cấp seed/banner/item để đảm bảo player-vNext có thể đi hết; cần L07–L09, không lấy tài khoản QA đủ tướng làm bằng chứng new-user flow.
+5. **Nuôi đội:** shared stat snapshot và 10 kit v2 còn lại, liên thông túi/đồ/đội/report, asset riêng/SFX mapping mỗi tướng chưa đủ.
+6. **Ngày/tuần và mode phụ:** nhiều hệ có code legacy/local; cần period/claim/mode progression/return context nhất quán, không ghi là hoàn toàn chưa có cũng không ghi DONE cả hệ.
+7. **Online:** netUploadSave gửi save local, netArenaResult gửi win client; server authority/migration guest vẫn là thiết kế và triển khai riêng, không dùng chúng như giao thức cuối.
 
-- Commit mới nhất: [fix: remove dark backgrounds from hub icons](https://github.com/bktimmy247/luc-than/commit/ec13d7a8eb0310147038e5dbdeecb69d9b4e5895).
-- Production: [luc-than.vercel.app](https://luc-than.vercel.app/).
-- Deployment commit trên Vercel: ec13d7a8eb0310147038e5dbdeecb69d9b4e5895, trạng thái READY; [deployment](https://vercel.com/cuong-duc-ai-s-projects/luc-than/4j5fYwmZpqEPqWbif8xEBsBJuNZU).
-- QA viewport 390×844 và 430×932: title “Rừng Deadline” không còn rơi từng chữ; card width, progress bar và nút “Tiếp tục chinh chiến” đều có kích thước hợp lệ.
-- GitHub/Vercel CI: success; runtime errors trong 1 giờ kiểm tra: không có.
+## 4. Việc Luna nhận tiếp
 
-## Chưa PASS cuối
+| Thứ tự | Ticket | Bước kế tiếp cụ thể |
+|---|---|---|
+| 1 | **L02a — READY** | Report/validator catalog thuần, phân biệt playable/NPC/legacy reward, lỗi reference/cycle; chưa thay reward hoặc seed |
+| Song song | L01 — VERIFY | Production/device smoke audio/route, ghi rõ thiết bị thật; không viết lại hotfix đã có |
+| 2 | L03a — READY | Inventory entrypoints trừ/cộng và thứ tự persist/event; lấy level-up → quest làm lát cắt đầu |
+| 3 | L04a / L05a — READY | Map return/lifetime và fixture các sub-action combat; chọn một việc mỗi phiên |
+| Kế tiếp | L06 / L09 | Đồng bộ stat/snapshot rồi khép vòng nuôi đội và mở đầu |
+| Chuẩn bị được | L07 / L17 | Bảng seed/banner và spec online để bàn; không chặn việc độc lập |
 
-1. Chapter 1 battle background phải dùng ảnh battle sạch, không dùng hub background; cần visual approval sau khi map/crop đúng.
-2. Damage popup cần nhỏ hơn và xếp nhiều dòng dọc sát mục tiêu theo ảnh mẫu.
-3. Cần test thật trên iPhone/iPad Safari cho audio unlock, icon Bạn bè, 6 nhân vật mỗi team, Lục Ảnh ultimate và victory/defeat music.
-4. Cần tiếp tục hoàn thiện UI/UX có chiều sâu cho hero detail và các màn chức năng còn thiếu.
-5. AFK cần QA soak đủ 15 giờ và kiểm tra reload/offline trên iPhone/iPad thật; reward rate/loot table/unlock cần chốt cân bằng trước khi coi là phát hành.
-6. Cần tiếp tục migrate roster authored sang hợp đồng Basic + Ultimate + passive, mỗi tướng phải có asset/motion/VFX/SFX/UI QA đủ gate.
+Spec từng ticket, file owner, contract, asset, test và điều kiện đóng ở [execution plan](LUNA-EXECUTION-PLAN-2026-09-07.md). Không coi việc lập danh sách L01–L20 là đã code các ticket đó.
 
-## Việc tiếp theo
+## 5. Gate còn mở
 
-- Chốt reward rate/loot table AFK sau khi anh duyệt cảm giác phần thưởng; chạy soak/cap/claim trên thiết bị thật.
+- iPhone/iPad Safari thật: unlock/mute/thoát trận, Lục ultimate, result music, roster/back/safe area. Chưa có chứng cứ mới sau audio hotfix.
+- AFK soak thật 15 giờ, reload/offline trên thiết bị; rate v1 `60 vàng + 1 Tinh + 1 Hoạt / giờ` vẫn là cấu hình tạm, không đổi âm thầm.
+- Visual acceptance nền từng chương, damage popup multi-hit và toàn roster/action; các patch nền/damage đã có, cần đối chiếu hiện trạng thay vì gọi là chưa tích hợp.
+- D01 seed mới, D02 banner/odds/pity/duplicate, D03 phạm vi/hạ tầng online, D04 guest migration, D05 thiết bị/budget, D06 mở rộng/trả phí: chỉ chặn phần liên quan. Định hướng Samkok, 12 tướng hiện hành, capacity 72, hai đòn + passive và quy tắc imagegen đã được chốt, không hỏi lại.
+- Các bài test khác nhau có phạm vi khác nhau; unit/build, Chrome responsive, Chrome interaction, Safari thật và production deployment phải báo riêng.
 
-- Tích hợp background battle sạch theo từng chương.
-- Sửa damage popup và QA multi-hit.
-- Rà audio bus/SFX/VFX Lục Ảnh, sau đó QA result audio.
-- Hoàn thiện hero detail/roster UI bằng art Imagen khi thiếu visual asset.
-- Mở rộng roster sau khi các gate hiện tại đạt PASS.
+## 6. Luật bảo toàn
 
-## Luật không được phá
+Giữ 12 ID, sáu slot, ba trước–ba sau, 15 hiệp, không multi-wave cho Lục Thần. Giữ ownership/đầu tư save cũ và các kit đã chuyển; không bật global combat clock. Build/runtime nguồn là một chuỗi, không hai engine. Router/scheduler/audio mỗi loại một owner. Ảnh thiếu phải imagegen và tích hợp; CSS bố trí/tương tác, chữ/số sống; không key đen/cắt frame/làm méo để che lỗi. Học cấu trúc source mẫu, không nhập APK/asset/runtime Tam Quốc vào sản phẩm.
 
-- Không bật lại global combat clock.
-- Không dùng ảnh hub làm background battle.
-- Không claim PASS nếu chưa có evidence runtime thật.
-- Không cắt frame authored để tối ưu.
-- Tính trước asset Imagen, animation, VFX và SFX khi bắt đầu từng tính năng.
-- Tiếp tục từ commit/build mới nhất; không làm lại pipeline cũ.
+Mỗi lần đóng ticket: ghi code commit, test, UI/device evidence, deployment nếu có, phần còn mở và bước tiếp. Mốc code baseline và mốc commit cập nhật tài liệu có thể khác nhau; không lấy một commit docs làm bằng chứng gameplay mới.

@@ -1,0 +1,365 @@
+# Kế hoạch tiếp tục Lục Thần — gói thực thi cho Luna
+
+Ngày: **07/09/2026, giờ Việt Nam**. Baseline code: `c8fefca0e31b6ddb926921454413d38860171665`. Phân tích đầu vào: [source Hermes](HERMES-SOURCE-AUDIT-2026-09-07.md). Tiến độ: [snapshot hiện tại](HON-VIET-MONG-GIOI-PROGRESS-2026-09-06.md).
+
+Tài liệu này cụ thể hóa E01–E26/R01–R11 của [master plan](HON-VIET-MASTER-PLAN-SAMKOK-v2-2026-09-06.md), không mở một roadmap cạnh tranh. Các ID **L01–L20** là lát cắt tiếp theo; nhiều E/R đã có một phần code. “Có test” và “đã đóng cả mốc” là hai trạng thái khác nhau.
+
+## 0. Luna bắt đầu ở đâu
+
+1. Đọc `AGENTS.md`, phần cập nhật đầu `docs/LUNA-HANDOFF.md`, progress và bảng ở mục 1 dưới đây. Lấy `main` hiện tại; commit trong tài liệu chỉ là baseline phân tích, không checkout ngược đè việc mới.
+2. Nếu chưa có người làm L02, nhận **L02a: kiểm kê/validator catalog**, phạm vi chỉ xuất báo cáo và test dữ liệu. Đây là việc code tiếp đầu tiên không cần đổi seed, rate hoặc game engine.
+3. Bảo toàn hotfix SFX `c8fefca`; L01 là nghiệm thu còn thiếu, không viết lại bus âm thanh. Nếu có thiết bị thật thì làm L01 song song; không có thì ghi `DEVICE_PENDING` rồi làm L02/L03.
+4. Mỗi phiên chỉ làm một lát cắt có invariant cụ thể. Nếu ticket dài, chia a/b/c như bên dưới; ghi phần đã làm và bước kế tiếp trước khi dừng.
+5. Chưa chốt seed/banner không ngăn làm validator, transaction, scene lifecycle, art đã rõ hoặc test lỗi đang tồn tại. Không tự thay xác suất, thu hồi tướng save cũ hay thêm backend trả phí.
+
+### Trạng thái dùng chung
+
+- `READY`: đã đủ đầu vào cho lát cắt đầu; chưa có nghĩa đã code.
+- `PLANNED`: có spec; cần đầu ra ticket trước.
+- `DECISION_PENDING`: phần chính sách chưa chốt; vẫn làm được công việc chuẩn bị được ghi rõ.
+- `VERIFY`: đã có code, cần thêm bằng chứng cụ thể.
+- `DONE`: đúng phạm vi ticket có source, test, UI evidence cần thiết và commit; chỉ thêm `DEPLOYED` khi deployment được xác minh.
+
+## 1. Thứ tự triển khai và phạm vi nghiệm thu
+
+| ID | Ưu tiên / trạng thái lúc bàn giao | Gắn E/R | Phụ thuộc | Đầu ra |
+|---|---|---|---|---|
+| L01 | P0 / VERIFY | E01, E04, E24; R02–04 | Hotfix đã deploy | Bằng chứng thoát/vào trận, route, audio trên thiết bị |
+| L02 | P0 / READY | E02, E08; R05 | Baseline | Catalog report, ID hợp lệ và chính sách legacy reward rõ |
+| L03 | P0 / READY phần a | E03, E07; R07/R10 | Chủ transaction hiện có | Command + quest/event cùng một commit cho lát cắt nuôi đội |
+| L04 | P1 / READY phần a | E04, E06 | Router/bridge hiện có | Return context và vòng đời màn dùng một owner |
+| L05 | P1 / READY phần a | E05/E06; R08/R11 | Combat hiện có | Event đủ sub-action, RNG luật có seed, parity |
+| L06 | P1 / PLANNED | E02/E09/E10; R05/R11 | L02, L03 | Stat/kit snapshot thống nhất hồ sơ–đội–trận |
+| L07 | P1 / DECISION_PENDING | E02/E12; R05/R09, D01/D02 | L02 | Seed/player/banner đề xuất có đường kiếm đủ tài nguyên |
+| L08 | P1 / PLANNED | E12; R09 | L03, L07 được chốt | Chiêu mộ/shop giao dịch thực và reveal từ receipt |
+| L09 | P1 / PLANNED | E07/E08; R10 | L03/L04/L06; L07 nếu đổi seed | Vòng mở đầu không cheat, không deadlock |
+| L10 | P1 / PLANNED, làm từng tướng | E09/E23/E24; R11 | L05/L06 | 12 kit có mapping, art, combat và UI đúng |
+| L11 | P1 / PLANNED | E10/E11 | L03/L04/L06 | Túi–mặc–rèn–phân giải–quay lại khép kín |
+| L12 | P1 / PLANNED | E13/E07/E04 | L03/L04 | Daily/weekly/mail/reset/badge dùng state thật |
+| L13 | P1 / PLANNED | E08/E13/E24 | L02/L09/L12 | Campaign/AFK có nội dung và thu nhập theo chính sách |
+| L14 | P1 / PLANNED | E14/E15 | L03/L04/L05 | Tháp và boss local có tiến độ/settlement riêng |
+| L15 | P2 / PLANNED | E16 | L14 | Viễn chinh có run/checkpoint/buff/resume |
+| L16 | P1 xuyên suốt / READY phần đo | E23/E24/E25/E26 | Đo scene hiện có | Art/motion/audio/performance budget và tải có vòng đời |
+| L17 | P2 / READY phần thiết kế | E18; D03/D04 | L02/L03/L05 | Spec online, migration guest và authority, chưa tạo dịch vụ |
+| L18 | P2 / DECISION_PENDING | E18 | L17, D03/D04 được chốt | Account/cloud/ledger/battle authority chạy thật |
+| L19 | P2 / PLANNED | E17/E19/E20 | L18 | Arena + xã hội + bang lõi bằng hai tài khoản thật |
+| L20 | P2/P3 / PLANNED | E21/E22/E25/E26 | Alpha ổn định; online nếu cần | Event/mùa, beta và release có rollback |
+
+Ưu tiên alpha: L02 → L03/L04 → L06 → L09, đồng thời L01/L05/L16 theo phạm vi. L07/L08 nối vào khi có chính sách. Không chờ làm hết online mới cho anh chơi vòng lõi; không gọi bản local là game online hoàn chỉnh.
+
+## 2. Ranh giới kiến trúc phải giữ
+
+| Dữ liệu/trách nhiệm | Owner hiện tại | Cách mở rộng |
+|---|---|---|
+| Catalog và seed legacy | `index.html`: DATA, defaultPlayer, migrateSave | Thêm module/validator có adapter; không sao chép cả DATA thành nguồn thứ hai |
+| Save | `src/domain/save/save-contract.mjs`, `scripts/save-contract-v1.mjs` | Version/revision, backup, lỗi ghi; giữ storage key và ownership |
+| Giao dịch | `src/domain/transaction/receipt-contract.mjs`, `scripts/transaction-contract-v1.mjs` | Dùng `HonVietTransaction.commit`/helper hiện có; giảm đường mutate ngoài transaction |
+| Đội/trang bị | `src/domain/hero/loadout.mjs`, `src/ui/party-command-runtime.js` | Một command save/equip, kiểm snapshot trước debit/start |
+| Rèn | `src/domain/equipment/forge-commands.mjs`, `src/ui/forge-command-runtime.js` | Cost/lock/salvage/batch cùng receipt |
+| Campaign/AFK | `src/domain/campaign/campaign-view.mjs`, `src/domain/afk/afk-chest.mjs`, `src/ui/campaign-scene.js` | Scene render state; `startChapter` tiếp tục sở hữu mở trận/cost |
+| Điều hướng và kết quả | `index.html`: navTo/showScreen/HonVietMetaBridge; `scripts/settlement-navigation-v1.mjs` | Mở rộng owner hiện có, không dựng controller song song |
+| Combat luật | `battle.html`, `src/domain/combat/*`, `scripts/combat-domain-3q-adapter-v1.mjs` | Tách từng invariant sau fixture; scheduler hiện hành tiếp tục điều khiển hành động |
+| Motion/VFX | Manifest, các patch nhân vật, renderer trong battle | Dùng pivot/offset/timing đã có; không đổi pixel để che lỗi |
+| SFX/voice/result | `src/ui/audio-sfx-runtime.js`, `scripts/ios-audio-unlock-patch.mjs`, `scripts/result-audio-runtime-v1.mjs`, `scripts/battle-audio-lifecycle-v1.mjs` | Đúng session, cancellation trước teardown, UI/nhạc không sở hữu kết quả |
+| Opening quest | `src/domain/quest/opening-loop-contract.mjs`, `scripts/opening-loop-v1.mjs` | Event có receipt/source, resume, route guard |
+| Build | `scripts/build-static.mjs` | 38 patch ở baseline; cuối cùng đồng bộ embedded battle. File mới phải được nối build, test marker |
+
+Mọi đường dẫn ở bảng trên là file hiện có. Đường dẫn ghi **mới đề xuất** trong ticket chưa tồn tại và chỉ tạo khi cần. Đọc nguồn tạo runtime trước khi sửa `dist`; sản phẩm bàn giao phải nằm ở source.
+
+## 3. Các ticket nền: chỉ dẫn chi tiết
+
+### L01 — Nghiệm thu hồi quy vòng đời màn/trận
+
+**Mục đích:** người chơi thoát trận là hết âm trận, vào trận tiếp vẫn hoạt động. Học `baseview.release`, `herodownv.release`, `bcwar.cleanRound` của mẫu; không copy semantics chỉ ẩn `warVis`.
+
+**Đọc:** các owner audio ở mục 2; `tests/battle-audio-lifecycle.test.mjs`, `tests/campaign-scene.test.mjs`, `tests/result-flow-integration.test.mjs`; phần audio cập nhật trong LUNA-HANDOFF.
+
+**Thực hiện:**
+
+1. Kiểm đúng commit đang chạy trên URL kiểm thử. Vào campaign → chuẩn bị → trận; thoát khi có Basic/Ultimate; đợi mà không bấm thêm.
+2. Kiểm DOM diagnostics của bus cha: combat tắt, active voice/combat về 0, bộ đếm phát không tự tăng. Mở trận mới, xác nhận có event mới. Đóng iframe cũ không được mute trận mới.
+3. Thử kết quả thắng/thua, back/Escape/quick nav; cold load và audio đang decode; lặp vào–ra 20 lần. Ghi UI/BGM riêng, không coi tiếng bấm nút là combat còn rò.
+4. Trên iPhone/iPad Safari thật: chạm unlock, mute/unmute, khóa/mở màn hình, đổi hướng, thoát lúc Lục đang thoại. Chỉ ghi PASS khi đã nghe/quan sát trên thiết bị đó.
+
+**Đóng:** evidence có URL/commit/browser/device/các bước/actual result. Code test 171 pass trước đó không thay bước máy thật. Không có thiết bị: `VERIFY / DEVICE_PENDING`; không chặn L02.
+
+### L02 — Catalog, roster và phần thưởng chương nhất quán
+
+**Mục đích:** thưởng người chơi nhận phải dùng/hiểu được; các màn không tự đưa tướng cũ vào roster.
+
+**Đọc:** `index.html` vùng DATA.chapters/scene/battles/OFFICIAL_ROSTER/defaultPlayer; `src/domain/hero/roster-plan.mjs`, `roster-view.mjs`; `src/domain/battle/background-registry.mjs`; `tests/official-roster-12.test.mjs`, `tests/main-quest.test.mjs`, `tests/battle-backgrounds-20-v1.test.mjs`. Mẫu: `main_guard_cfg[3]`, `mainlinemdl.getNextGuardInfo`, config liên kết theo ID.
+
+**L02a — READY, làm trước:**
+
+1. Tạo validator thuần **mới đề xuất** `src/domain/catalog/validate-catalog.mjs`; nhận dữ liệu vào, không import DOM hoặc chạy script toàn game.
+2. Viết adapter/extractor có boundary duy nhất đọc catalog nguồn/built đang active; tránh copy DATA và tránh `eval` cả HTML. Nếu phải dùng VM fixture, chỉ evaluate literal/catalog cần thiết với context không network/storage.
+3. Xuất report: 12 playable IDs, NPC/enemy/lore IDs, chương/scene/battle liên kết thật, hero/item/reward/asset reference lỗi. Phân biệt “ID không tồn tại” với “có trong DATA nhưng không playable”.
+4. Kiểm `next` vòng, ải không tới được, reward trỏ ngoài playable, giá âm, asset missing, ID trùng. Đừng suy 20 nền là 20 chương. Report lỗi legacy đã biết phải có classification/owner, không giấu bằng bỏ qua toàn bộ validation.
+
+**L02b:** đưa bảng đề xuất thay phần thưởng cũ theo từng chương (reward cũ, mới, lý do, tác động save) để chốt phần chưa được quyết định. Giữ lore/NPC riêng; không tự thêm `ong_chu_wifi` vào 12 ID. L02a không cần đợi bảng đó được duyệt.
+
+**L02c:** sau khi chốt, migrate đúng reward chưa claim và giữ receipt/ownership đã nhận. Không thu hồi hero/item save cũ. Chuyển catalog sang một nguồn duy nhất theo lát cắt, test rằng adapter và UI nhận cùng version.
+
+**Test/đóng:** report tái tạo được; fixtures valid/unknown/non-playable/cycle; save đã/ chưa qua chương; UI receipt không hứa tướng không thể xuất hiện trong roster. Không đổi balance trong L02a. Asset: dùng portrait/icon đang có; chỉ gen art mới sau khi item/hero đích rõ.
+
+### L03 — Giao dịch và event tiến độ cùng thành công hoặc cùng thất bại
+
+**Mục đích:** nâng tướng/nhận thưởng không bị lệch tiền, nhiệm vụ hoặc trạng thái sau reload.
+
+**Đọc:** transaction/save owner, `scripts/opening-loop-v1.mjs`, `src/domain/quest/opening-loop-contract.mjs`; `tests/transaction-contract.test.mjs`, `tests/forge-transactions.test.mjs`, `tests/opening-loop-contract.test.mjs`. Mẫu chỉ cung cấp pattern request/response; tự xây tính nguyên tử local của Lục Thần.
+
+**L03a — READY:** lập bảng mọi command có mutate tiền/item/progress: entrypoint, cost, credit, persist, event và receipt. Bắt đầu đúng `levelUpHero` → quest/opening event, dùng code đang có làm fixture. `questProgress` sau commit cần thử lỗi ở lần ghi sau; không kết luận đây là giao dịch tổng đã atomic.
+
+**L03b:** gói stat/chi phí/event đã xử lý/quest progress/receipt vào cùng state candidate và một lần persist. Sau commit chỉ notification/render/audio; event không được mutate lại qua listener thứ hai. Nếu cần event outbox, lưu cùng transaction và consumer idempotent; chọn một cách cho một command, không dùng cả hai cùng sinh thưởng.
+
+**L03c:** mở rộng theo nhóm: sao/skill → daily milestone/weekly → batch thư/shop. Không sửa đồng loạt toàn bộ economy. Giữ `executeLocalTransaction`, không phát minh `TransactionManager2`.
+
+**Contract bổ sung đề xuất:** event `{id, commandId, type, sourceId, periodKey, rulesVersion, payload}`; receipt và event cùng `committedRevision`. Dùng ID hành động ổn định qua retry; một claim còn có khóa nguồn `sourceId + periodKey`. Không dùng revision mới để giả một lần nhận mới.
+
+**Test:** nhấn đôi, retry cùng ID, stale revision, thiếu tiền, lỗi persist, listener chạy lại, reload giữa success và render. Expected: state/quest/receipt cùng cũ hoặc cùng mới, đúng một debit/credit/event. UI giữ lỗi và cho retry, không phát reveal success trước persist.
+
+**Đóng:** một command chạy xuyên UI/save/quest, có trước–sau và reload; bảng audit ghi rõ các command chưa migrate. Audio/art dùng lại, chưa cần gen ảnh cho logic này.
+
+### L04 — Return context, modal và scene lifetime
+
+**Mục đích:** thua → tăng tướng/mặc đồ → quay lại đúng mode/đội/ải, không mất lựa chọn hay rò công việc.
+
+**Đọc:** `navTo`, `showScreen`, `closeOverlay`, `HonVietMetaBridge` trong index; settlement patch; campaign scene; roster runtime và hero tabs. Mẫu: `viewmgr` load queue/layer/back, `baseview.release` và lazy tab cache.
+
+**L04a — READY:** vẽ bảng route/owner/enter/leave/callback hiện có. Chọn luồng defeat → heroDetail → back; thêm return context vào owner hiện có, có `mode`, `encounterId`, params/hero/tab, filter/scroll và revision draft. Source route phải còn hợp lệ lúc quay lại.
+
+**L04b:** thêm resource scope nhỏ **mới đề xuất** `src/ui/scene-lifetime.js` cho đúng scene cần migrate: dispose idempotent, unregister callbacks, cancel load/timer/RAF/audio do scene sở hữu. Scope cũ chỉ dispose resource của nó, không xóa công việc scene mới.
+
+**L04c:** modal focus/backdrop/safe area; enter/update/leave rõ, giữ Idle khi chỉ đổi tab/stat. Tắt hoặc bỏ handler cũ tại boundary đã chuyển, không thêm listener capture toàn trang để vá nút.
+
+**Test/đóng:** mở 20 lần không tăng renderer/listener; back từ source không còn hợp lệ có fallback hợp lý; confirm result/cancel draft/deep link khóa/hết thể lực; tốc độ chạm nhanh không mở hai iframe. Dùng portal/scroll owner đang có, kiểm 390×844, 430×932 và PC. Thiếu panel/nút/nền thì gen trong ticket giao diện, text sống và focus rõ.
+
+### L05 — Combat có event đầy đủ và RNG luật kiểm được
+
+**Mục đích:** kết quả đáng tin; tăng tốc/replay không đổi damage hay thưởng. Tham khảo `bcwar.exeRound/exeAction/checkActQueue`, không nhập engine Cocos.
+
+**Đọc:** `battle.html` resolveAction/applyDamage/applyHeal/runOngPhoUltimateAftermath/run action caller, combat adapter/core, `src/domain/combat/*`, các test combat hiện có. Không giả một domain recorder là simulator đã tách hoàn toàn.
+
+**L05a — READY, chỉ quan sát/fixture:** thu fixture engine thật cho Basic đơn, Ông Phở hai nhịp/đuổi đánh, Lục AOE, heal/shield, DoT, stun và round cap. Ghi trước/sau từng impact và nơi RNG được gọi; chỉ ra gap của snapshot quanh resolveAction.
+
+**L05b:** instrument từng sub-action tại nơi luật áp dụng (damage/heal/status/death/resurrect/energy). Schema đề xuất mở rộng event: `{sessionId, sequence, round, actionId, subActionIndex, actorId, targetId, type, amount, flags, rngCursor}`. Không suy mọi miss từ “không thấy HP giảm”; shield/overkill/crit có thông tin riêng. Version mới, giữ reader cũ.
+
+**L05c:** RNG có seed theo session cho hit/crit/variance/target/random passive. RNG hạt bụi/camera/animation tách riêng. Cùng snapshot/rules/seed tái hiện được, thêm unrelated VFX không làm lệch RNG luật. Không đổi hệ số damage khi migrate RNG.
+
+**L05d:** replay chỉ đọc event và outcome đã chốt; không gọi applyReward/startChapter. Skip/fast-forward nếu thêm phải qua settlement owner, không tự cắt timer khi trận chưa chốt. Kiểm các action authored, không cắt frame để tăng tốc giả.
+
+**Test/đóng:** cùng seed ×1/×2/×3 cho event luật/outcome giống nhau; actor chết/choáng giữa combo, target chết/mất, AOE nhiều hit, phản đòn dây chuyền có giới hạn, cuối hiệp 15 và kết thúc hai lần. Fixture không chỉ so hai wrapper cùng logic. UI report/MVP khớp event; toàn bộ runtime nguồn và embedded parse/pass.
+
+### L06 — Stat, đội và kit snapshot dùng cùng dữ liệu
+
+**Mục đích:** mặc đồ/nâng tướng thấy số thay đổi đúng và vào trận nhận đúng số đó.
+
+**Đọc:** heroStats/squadSnapshot/teamPower trong index; `roster-view.mjs`, `skill-kit.mjs`, `loadout.mjs`, campaign view, battle snapshot converter/bridge; test roster/loadout/skill kit. Mẫu: Hero model và Dmbl nhận trạng thái đã resolve.
+
+**Thực hiện:**
+
+1. Inventory công thức thật: base/level/star/gear/mastery/awaken/build/tactics/synergy; phân biệt combat stat và chỉ số “lực chiến” dùng trình bày.
+2. Tách calculator thuần **mới đề xuất** `src/domain/hero/stat-view.mjs` từ owner hiện hành, khóa fixture trước. Không xây công thức mới dựa trên power mục tiêu.
+3. Roster/detail/preparation dùng cùng read model; battle input giữ `rulesVersion`, `kitVersion`, stat và loadout snapshot tại start. Nâng trong menu không sửa một trận đang chạy.
+4. Kiểm buff theo trận không chảy ngược về stat dài hạn; chọn tướng chưa sở hữu bị chặn dù có ID hợp lệ.
+
+**Test/đóng:** lên level, mặc/tháo, đổi stance, đội khác synergy đều phản ánh đúng; reload giữ; hai phe có cùng hero nhưng instance riêng; kit legacy/migrated không lẫn. UI preview ghi delta và cost từ calculator/command thật, không hardcode. Các hồ sơ thiếu nền/icon được gen theo manifest từng tướng.
+
+## 4. Vòng chơi alpha và chiều sâu
+
+### L07 — Chốt seed, banner và đường kiếm đầu game
+
+**Mục đích:** tài khoản mới có mục tiêu thu thập/nuôi đội, không bị nhiệm vụ yêu cầu một hệ chưa mở. **D01/D02 chưa chốt**, không thu hồi 12 tướng đã sở hữu trong save hiện hành.
+
+**Đọc:** defaultPlayer/migrateSave, save contract, roster-plan, banner-validation, summon guard; `DEFINITIONS` trong opening patch; L02 report. Mẫu: pub_cfg cost/pool, guide prerequisite, task reward — chỉ học schema.
+
+**Việc làm được ngay:** lập bảng 30–60 phút chơi dự kiến bằng dữ liệu hiện có: đội/sở hữu, nguồn vàng/đồ/mảnh, cost nâng/rèn, unlock. Tách `legacy` / `qa` / `player-vNext` bằng đề xuất migration có fixture, chưa đổi production default.
+
+**Đề xuất để bàn:** giữ bản đang chơi đủ 12 cho legacy/QA; player-vNext có đội sáu vị trí đủ chơi và nhận phần còn lại theo tiến trình/banner; không đổi SSR hiện hành. Danh sách cụ thể, lượt tặng, odds/pity/duplicate/shard exchange và giới hạn phải nằm trong bảng chính sách có version. Đây chưa là quyết định áp dụng.
+
+**Đóng phần thiết kế:** bảng đã tính cost/resource, không deadlock và ghi rõ lựa chọn chưa chốt. **Đóng phần triển khai:** chính sách được chốt, migration bảo toàn dữ liệu, không tự re-grant sau mỗi reload. Đổi seed không đồng nghĩa đổi save mọi người.
+
+### L08 — Chiêu mộ và chợ có giao dịch đầy đủ
+
+**Đọc/sửa:** `src/domain/summon/banner-validation.mjs`, summon guard, doSummon/renderSummon và shop functions trong index; nối transaction owner. Domain **mới đề xuất**: `summon-command.mjs`, `shop-command.mjs` trong nhóm tương ứng, chỉ sau L07.
+
+**Lát cắt:** một banner → 1/10 lượt → receipt → reveal; skip/reload hiển thị lại chính receipt. RNG roll một lần trong giao dịch, dup chuyển mảnh theo chính sách, pity/counter/cost/free mark cùng persist. Sau đó một shop có stock, thời điểm reset và khóa nguồn mua.
+
+**UX/art:** ảnh nền điện Gọi Mộng, cổng/reveal, loại vé, thẻ kết quả, duplicate badge; ưu tiên art hiện có, gen phần thiếu cùng feature. Chữ giá/odds/lượt còn lại và rarity là live UI. Loading disable/failed retry/insufficient/empty pool rõ; không gọi lỗi pool là “quay không may”.
+
+**Test/đóng:** pool rỗng, ID không playable, odds sai tổng, thiếu tiền, double tap, save fail, retry sau reload, skip giữa reveal, hết stock/reset ngày. Kết quả đi vào roster, xếp đội, battle; banner không có policy hoàn chỉnh vẫn giữ guard.
+
+### L09 — Vòng mở đầu: chơi được bằng tài khoản mới
+
+**Đọc/sửa:** opening contract/patch, main-quest, startChapter, campaign scene; L02/L03/L04/L06 outputs. Graph hiện có: hai trận chương 1 → lưu đội → nâng tướng → mặc đồ; chưa có summon step và chưa chứng minh cung cấp item/cost đủ cho player-vNext.
+
+**Thực hiện:** thêm catalog quest có source event/target/prerequisite/count policy/route/terminal; mỗi bước có lối đạt thật. Tách reward đã hoàn thành và đã nhận. Không bắt người chơi nghỉ giữa auto-chain vốn đã được yêu cầu giữ; học nâng đội sau đoạn hợp lý hoặc từ màn thua. “Đến ngay” mở đúng hero/slot/mode, không chỉ route chung rồi bỏ người chơi tự tìm.
+
+**UX/art:** giữ shortcut Nhiệm vụ và dock; không phục hồi card main quest lớn trên hub đã bị anh bỏ. Tutorial ngắn, có skip/resume, anchor ID ổn định; gen panel/icon khi thiếu, không vẽ chữ hướng dẫn vào ảnh nền.
+
+**Test/đóng:** fresh approved profile đi từ hub đến trận sau khi nuôi đội mà không cheat; làm sớm bước sau, đang thiếu tiền, thua, reload tại mỗi bước, đóng tutorial, anchor mất, save cũ và full inventory. Đo số thao tác/điểm kẹt thực; không tự bịa retention hoặc thời gian người dùng chơi.
+
+### L10 — Hoàn thiện 12 kit và hồ sơ, một tướng mỗi đợt
+
+**Đọc/sửa:** skill-kit registry/patch, calculator L06, hero tabs, battle action và manifest của tướng đó. Ông Phở/Lục Ảnh là pilot đã có code; trước khi chọn tướng tiếp kiểm nguồn và ticket đang active. Thầy Mo/Đình Lôi có asset đáng kể nhưng không tự suy đã có kit v2.
+
+**Mỗi tướng:** (a) bảng Basic/Ultimate/passive/target/cost/cooldown/stack/counterplay; (b) map legacy ID và đầu tư; (c) fixture luật; (d) nối authored motion/VFX/impact/SFX; (e) UI 5 tab/stat/source materials; (f) save/battle/replay/performance QA. Không làm mười tướng một commit.
+
+**Art:** nền trưng bày sâu có mặt đứng/ánh sáng/perspective theo tướng; portrait/skill/status icon dùng lại hoặc imagegen; giữ identity chính thức. Idle/Basic/Ultimate và motion phụ theo yêu cầu thực của renderer; thiếu animation/audio ghi asset queue với file/timing/spec cụ thể. Không dùng ảnh đơn làm bằng chứng có animation.
+
+**Test/đóng:** đúng hai hành động chính + passive trong kit mới; skill1 cũ map/bảo toàn, không tự cast như đòn thứ ba; mô tả sát thực thi; nâng/đổi tab/back không restart Idle; alpha/pivot/scale/timing đúng; trạng thái thiếu SFX phải còn mở. Đủ 12 trước khi lấy capacity 72 làm lý do sinh placeholder.
+
+### L11 — Túi, đội và Rèn Mộng khép kín
+
+**Đọc/sửa:** loadout/party/forge commands + item-assets, renderBag/renderForge, detail Trang bị. Base 20 icon đồ và 3 icon vật liệu đã có, không ghi như việc chưa bắt đầu.
+
+**Lát cắt:** vào từ một hero/slot → xem đồ hợp lệ → so trước/sau → mặc/đổi → trở về đúng tab; tiếp theo cường hóa có preview cost; cuối cùng khóa/phân giải/batch có preview debit/credit và xử lý lỗi. Batch chọn atomic-all hoặc partial rõ bằng receipt từng item, không báo thành công toàn bộ khi có thất bại.
+
+**UX/art:** mỗi item có ảnh đúng slot/tier/model; filter/sort/owned/locked/equipped rõ, một vùng cuộn. Gen panel compare/nền lò/phần thiếu đúng theme; recycle ảnh hiện có. Hiệu ứng búa/reveal đọc receipt, SFX impact không sống qua thoát màn.
+
+**Test/đóng:** item ở hai tướng, move/unequip, slot sai, duplicate UID, equipped/locked salvage, batch thiếu tiền, persist fail, cold/warm load, back/reload. Power tại roster/preparation/battle đúng L06; không có đường mutate legacy thứ hai.
+
+### L12 — Daily/weekly/thư/điểm danh và điểm đỏ
+
+**Đọc/sửa:** daily/weekly/mail/sign functions trong index, transaction patch; domain **mới đề xuất** `src/domain/time/period-key.mjs`, `src/domain/quest/activity-progress.mjs`, badge read model trong UI. Mẫu: Task*, Mail*, `jumpmgr`, `redpointmgr`.
+
+**Lát cắt:** định nghĩa clock/period policy hiện hành → migration → claim đơn → claim nhiều → badge. Daily/weekly reset chỉ field đúng kỳ, không reset campaign/AFK đã tích lũy. Chọn mốc ngày/tuần theo chính sách ghi lại, không tự đổi múi giờ vì mẫu có `next_eight`. Online sau này dùng server time qua adapter.
+
+**Contract:** `{definitionId, periodKey, progress, claimedAt, receiptId}`; item/task/source links validate; expiry và read/claimed của thư tách biệt. Badge chỉ báo có hành động khả dụng, aggregate từ child theo state commit, tháo listener khi leave.
+
+**UX/art:** tab ngày/tuần/thành tựu, tiến độ và reward preview, nút Đến/Nhận, hết hạn/đã nhận; gen icon activity/rương từng mốc nếu thiếu. Không đặt chấm đỏ vĩnh viễn lên nút đang khóa hoặc hoạt động không thể làm.
+
+**Test/đóng:** trước/sau reset, offline nhiều ngày, clock lùi, retry claim, nhiệm vụ render nhiều lần, reward batch lỗi giữa chừng, đọc/xóa thư có attachment, period cũ không nhận lại. Dùng clock inject cho tests; thiết bị thật kiểm reload/date boundary, không cần chờ thật 7 ngày mới test.
+
+### L13 — Campaign/AFK và nội dung chơi dài hơn
+
+**Đọc/sửa:** campaign/afk domain + scene, DATA chapters/scenes/battles, background registry; outcome L02. Mẫu: MainLine state machine và config theo guard.
+
+**Lát cắt:** một chương có stage/enemy/reward/story/background/unlock rõ → result/end-of-content → rate AFK theo stage nếu được chốt. Giữ six-slot challenge và diễn hoạt AFK không gây damage/reward/progress. Rate cũ đang khóa vào rương: khi rate đổi, chốt accrued theo rate cũ tại checkpoint rồi áp rate mới cho khoảng thời gian sau; không tính lại toàn bộ quá khứ. Nếu chưa có policy mới, giữ rate v1 và ghi tạm.
+
+**UX/art:** thể hiện chương/ải/địch hiện tại, rương rỗng/đang tích/đầy, preview thu nhập và thiếu stamina. Battle dùng nền chiến đấu sạch; không dùng ảnh hub. Gen background/map/icon cho chương chưa có, chọn crop và vùng đứng an toàn, không chèn chữ/nút vào artwork.
+
+**Test/đóng:** đầu/cuối chương, hết content, mất mạng/asset lỗi trước start, thua/retry, rút trận không thưởng, 14:59:59/15:00:00/vượt cap, partial claim, lỗi ghi, clock lùi, đổi rate khi offline. Soak thật 15 giờ còn là gate riêng; test clock không giả là soak máy thật.
+
+### L14 — Tháp và Săn Mộng/Boss local
+
+**Đọc/sửa:** renderTower/startTower và hunt/boss functions hiện có, settlement/navigation, mode snapshot. Mẫu: Tower*, boss config/controller. Không reuse `campaign.win` làm event mọi mode.
+
+**Lát cắt:** tháp trước: floor/challenge/reward/next/retry; boss sau: lượt ngày/đội/tổng damage/phần thưởng mốc. Mỗi mode giữ tiến độ, entry cost, claim key và return context riêng. Không tăng campaign khi thắng boss/tháp; replay/report không tiêu thêm lượt.
+
+**UX/art:** nền tháp, boss stage, ảnh boss/mốc thưởng, nút thử lại/đổi đội; gen art thiếu và giữ telegraph/status/damage dễ đọc. Mode chưa mở hiển thị lý do và đường đạt.
+
+**Test/đóng:** last floor, repeat clear, ngày đổi trong trận, boss chết/hết 15 hiệp, lượt hết, retreat/retry, double settlement, reload result. Chưa có online rank thì UI nói đúng local; không tạo tên người thật giả lập.
+
+### L15 — Viễn chinh và giao việc có lưu tiến trình
+
+**Đọc/sửa:** rogue/routes/jobs trong index; domain **mới đề xuất** `src/domain/expedition/run.mjs`; settlement/receipt. Học maze/travel có state riêng, không sao nhánh progression muộn của mẫu.
+
+**Contract:** runId, mode/rules version, floor/node, team snapshot, current HP/energy, buff choices, seed/rng cursor, reward receipts, status. Chốt policy đổi đội/hồi phục giữa chặng trước áp dụng.
+
+**Lát cắt:** chọn đường → trận → chọn buff/thưởng → checkpoint → resume; bỏ run có thông báo phần mất/giữ. Giao việc thời gian và viễn chinh combat là hai luồng, không dùng chung timer/claim key.
+
+**UX/art/test:** gen bản đồ node/card buff/camp/event art còn thiếu; node quyết định có mô tả tác dụng thật. Thử save lúc chọn buff, node trùng, party chết, item cứu hộ thiếu, bỏ/khởi động run mới, click đôi và tab cũ. Reward/HP/buff không rò qua campaign hoặc run khác.
+
+## 5. Chất lượng, online và phát hành
+
+### L16 — Art, âm thanh và performance: áp dụng với mọi ticket
+
+**Phần đo READY:** inventory asset đang active theo màn/action, kích thước tải và decoded memory, cold/warm load, số RAF/timer/audio còn sống sau leave. Không tải native/APK mẫu để đưa vào build. Đọc chuẩn asset và metadata tướng hiện hành.
+
+**Mỗi feature ghi một bảng asset:** `assetId → màn/vị trí → file dùng lại hoặc prompt cần gen → kích thước/aspect/safe area → alpha/pivot/timing → license/source/hash → trạng thái tích hợp/QC`. Ảnh tĩnh thiếu: agent tự imagegen và tích hợp. Âm thanh/animation thiếu: tận dụng nguồn được cung cấp, nếu không có khả năng tạo thì ghi brief cụ thể vào queue; không giả file có sẵn.
+
+**UI/UX toàn game:** hierarchy rõ; một CTA chính mỗi quyết định; trạng thái loading/empty/error/locked/success; touch target mục tiêu 44 CSS px; safe area/dynamic viewport; giảm chuyển động; chữ đủ tương phản và không dính artwork. Những con số UX này là mục tiêu thiết kế Lục Thần, không phải đo từ mẫu.
+
+**Memory:** dùng poster cho danh sách, giữ lazy load theo nhóm scene/hero/action, cache có budget dựa trên phép đo. Asset reference đếm đúng, hủy request cũ và bỏ decoded data không còn dùng. File mới dùng versioned URL vì `/assets/` immutable một năm. Không cắt motion authored, key đen hoặc resize X/Y khác nhau để đạt budget.
+
+**Audio:** map theo semantic event và heroId/kitVersion; reuse bus có group/session; UI, ambience, combat, voice, result có phạm vi rõ. Dedupe AOE/impact, giới hạn polyphony, mute/dừng pending. Ghi rõ 9 âm dùng chung và âm riêng nào đã duyệt.
+
+**Đóng:** manifest/prompt/file/caller + bằng chứng hình đúng + runtime tải thật + phép đo trước/sau; FPS mục tiêu/budget cuối dựa D05. Chrome responsive, Chrome gameplay và Safari thật báo riêng. L16 không là cớ làm lại art đã được chốt.
+
+### L17 — Thiết kế online có thẩm quyền, chưa tạo hạ tầng
+
+**Mục đích:** không biến save local hoặc `win:true` thành nguồn tin cậy của kinh tế/rank. Mẫu có protocol và server responses; archive không chứa backend để deploy lại.
+
+**Đọc:** NET/api/netUploadSave/netArenaResult trong index; L02/L03/L05 outputs. Audit UI “mong-gioi-server.js” đang không có file tương ứng, chuẩn bị UI account phù hợp người chơi và trạng thái local rõ.
+
+**Đầu ra:** spec identity/session, catalog version, command endpoint, ledger/receipt idempotency, revision conflict, trusted time, battle snapshot/rules/outcome authority và guest migration. Đề xuất API nghiệp vụ mới thay đường gửi nguyên save/số dư/kết quả. Data tables tối thiểu: account, profile revision, ownership/inventory, ledger, receipts, battle sessions, quest claims. Unique constraints cho command và source claim; retry contract có test plan.
+
+**Quyết định cần chốt D03/D04:** nhà cung cấp, chi phí, phạm vi alpha online và chính sách dữ liệu guest. Viết spec/fake adapter/contract tests được; chưa tạo tài khoản dịch vụ, chưa đăng ký gói trả phí chỉ vì có plugin. Đóng thiết kế khi các trường và failure path đủ để L18 code, không ghi “backend done”.
+
+### L18 — Account, cloud, ledger và battle authority thực
+
+**Phụ thuộc:** L17 và quyết định hạ tầng/quyền đã có. Giữ web client deploy Vercel; chọn runtime/storage/server architecture theo dịch vụ được chốt, đọc tài liệu chính thức tại thời điểm triển khai.
+
+**Chia nhỏ:** a) identity + read profile; b) một command/receipt server; c) save revision/conflict + migrate guest; d) server-resolved/verified battle; e) mất mạng/reconnect/observability. Không làm auth, chat, guild, payment trong một PR.
+
+**UX:** account/đăng nhập/khôi phục/lưu đồng bộ là luồng sản phẩm; không bắt người chơi điền URL server thủ công. Mất mạng nói đang local hay đang chờ xác nhận; không cộng thưởng cạnh tranh khi server chưa chốt.
+
+**Test/đóng:** hai tài khoản cách ly, hai thiết bị một tài khoản, replay command, sửa cost/ownership/winner client bị từ chối, timeout sau commit retry lấy đúng receipt, logout/reload, catalog version cũ, rollback migration. Phải có deployment và bằng chứng API–database–browser; mock tests không thay server thực.
+
+### L19 — Arena, bạn bè/chat và bang lõi
+
+**Lát cắt:** a) roster đối thủ/defense snapshot/battle authority/rank receipt; b) friend request/accept/remove/block; c) chat pagination/kênh/quyền/rate limit/report; d) bang create/join/roles/donation ledger. Boss bang/chiến mùa sau khi bang lõi chạy; chính sách social do scope sản phẩm chốt.
+
+**Học mẫu:** Arena*/Friend*/Chat*/Army* chia model/controller/view, guard và reset theo mode. Không nhập toàn bộ live-op/vip/payment vào alpha.
+
+**UI/art:** biểu tượng rank/faction/bang/khung chat/tabs, state rỗng/lỗi/khóa đủ; sinh ảnh thiếu theo style chung, số liệu thật. Tên/điểm local simulation phải phân biệt khi chưa có dịch vụ.
+
+**Test/đóng:** hai tài khoản thật từ invite tới tương tác; thay quyền/xóa thành viên/kênh sai; rank chống double reward/stale defense; logout không để polling và âm tiếp diễn. Không gọi bot/local chat là online đã hoàn tất.
+
+### L20 — Event, balance, beta và release
+
+**Lát cắt:** một event có start/end/timezone/rules/reward/claim/expiry; đóng mùa và phát thưởng idempotent; sau đó playtest/balance và RC. Nhánh pet/lore/quan hệ giữ phong vị Lục Thần, chỉ mở thêm khi có lợi ích và contract riêng. D06 tiếp tục điều khiển phần trả phí/nhánh tùy chọn.
+
+**Balance:** workbook/catalog nguồn–sink, tốc độ kiếm–tiêu, gate progression và power curve; đề xuất delta có version, thử fresh/legacy profile. Không đổi cả công thức và roster/motion cùng PR. Lịch playtest dựa bằng chứng, không hứa ngày xong khi asset/device/backend chưa sẵn sàng.
+
+**Gate beta:** vòng alpha không cheat; 12 tướng đúng phạm vi cam kết; zero P0/P1 còn mở trong scope release; đo tải/memory trên thiết bị mục tiêu, test mất mạng/ghi lỗi/save cũ; không công bố “đã đạt” từ checklist chưa chạy.
+
+**Release:** commit code/config/asset manifest rõ; `npm test` thật; deployment đúng commit; browser smoke bằng UI; backup/migration/rollback đã diễn tập. Rollback code phải tương thích save version mới hoặc có forward recovery; không reset tài khoản để cứu build.
+
+## 6. Ma trận kiểm tra dùng chung và bằng chứng cần lưu
+
+| Rủi ro | Bằng chứng tối thiểu |
+|---|---|
+| Data/catalog | Report có path/ID lỗi; fixtures kiểm ref/cycle/legacy policy |
+| Tiền/đồ/claim | Success, reject, duplicate, stale revision, save failure, reload |
+| Nối các màn | Bấm UI từ điểm xuất phát → hành động → back → vào lần hai; giữ context |
+| Combat | Fixture engine/sub-action/outcome, speed parity, abort, round cap |
+| Asset | File/version/hash, alpha/offset/pivot/timing, render cold/warm |
+| Audio | Start/stop/pending/mute/new session bằng test; nghe máy thật riêng |
+| Build | Source patch marker đủ, inline syntax, embedded byte parity |
+| Deploy | SHA code, Vercel READY, URL/commit thực; không dùng screenshot cũ |
+
+Với thay đổi runtime, chạy `npm test` (đã gồm build). Thêm test vì invariant mới hoặc bug cụ thể, không chỉ regex khẳng định có tên function. Không viết/chạy thêm hàng loạt test cho một sửa markdown đơn giản. Sau khi bằng chứng đủ, dừng test tùy chọn và bàn giao.
+
+Evidence của mỗi ticket nên ở `docs/qa/<ticket-id>/README.md`: baseline/commit, profile fixture, browser/device/viewport, bước bấm, actual/expected, pass/fail/not-tested, link ảnh/clip/log thích hợp. Không lưu token, URL chia sẻ tạm có secret hoặc save thật của người dùng vào repo.
+
+## 7. Mẫu bàn giao một phiên cho Luna
+
+```text
+Ticket/subtask: Lxxa
+Baseline đã đọc: <SHA main>
+Mục tiêu người chơi và invariant:
+File owner đã tìm; file nguồn sẽ sửa:
+Input/output và dữ liệu/chính sách đã chốt:
+Art/animation/VFX/SFX dùng lại, phần thiếu và nơi tích hợp:
+Thay đổi đã làm; caller cũ đã ngừng dùng:
+Test chạy thật + kết quả:
+Browser/máy thật: đã thử / chưa thử:
+Commit/PR/deployment và SHA:
+Điểm còn mở; bước chính xác tiếp theo:
+```
+
+Cuối phiên cập nhật progress và trạng thái ticket tương ứng. Handoff không tự cấp thêm quyền ngoài yêu cầu người dùng trong phiên; cũng không buộc hỏi lại việc đã được người dùng cho phép. Nếu thiếu một quyết định thật sự, hoàn thiện phần review được trước, ghi rõ quyết định đó và tiếp tục việc độc lập có ích.
+
+## 8. Những cách không được lặp lại
+
+- Copy archive Hermes đè source Lục Thần, hoặc đổi sang Cocos/React/engine mới để né hiểu code.
+- Coi mỗi module/config/ảnh là một tính năng đã xong; đếm 72 capacity thành 72 tướng sản xuất xong.
+- Render thêm placeholder/tab/nút không có command, save và return path.
+- Thêm listener/router/audio manager thứ hai mà không tháo owner cũ.
+- Chỉ sửa dist, chỉ test standalone battle hoặc dùng seed field để khẳng định deterministic.
+- Nhận thắng/thưởng trong callback animation, chạy lại RNG khi reveal hoặc retry.
+- Đổi seed/migration làm mất save cũ; tự đổi banner odds hoặc thu hồi tướng.
+- Để ảnh giả/CSS trang trí thay artwork còn thiếu; key đen/làm méo motion để che lỗi.
+- Ghi Safari/online/production PASS khi chỉ có unit test hoặc mô phỏng local.
