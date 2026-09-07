@@ -73,3 +73,11 @@ test('R04 build owner wires return context after settlement and before opening-l
   assert.match(patch, /draftRevision/);
   new Function(patch.replace(/^import[^\n]*\n/gm, ''));
 });
+
+test('R04 runtime propagates the live draft revision and checks it before restoring', () => {
+  const patch = read('../scripts/return-context-v1.mjs');
+  assert.match(patch, /const readRevision=\(\)=>Number\.isSafeInteger\(P\?\.revision\)&&P\.revision>=0\?P\.revision:0;/);
+  assert.match(patch, /draftRevision:readRevision\(\)/);
+  assert.match(patch, /beforeNavigate[\s\S]*resolve\(\{currentRevision:readRevision\(\)\}\)/);
+  assert.match(patch, /afterScreenChange[\s\S]*resolve\(\{currentRevision:readRevision\(\)\}\)/);
+});

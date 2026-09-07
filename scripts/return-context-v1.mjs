@@ -51,6 +51,7 @@ const runtime = String.raw`<script id="samkok-r04-return-context">
   const TOKEN=/^[A-Za-z0-9][A-Za-z0-9._:-]{0,79}$/;
   const ID=/^[A-Za-z0-9][A-Za-z0-9._:-]{0,159}$/;
   const AVAILABLE=new Set(["hub","journey","campaign","expedition","team","heroes","heroDetail","daily","summon","tower","jobs","shop","arena","hunt","festival","forge","bag","mail","chat","guild","clan","friends","net","vault","story","battle","end"]);
+  const readRevision=()=>Number.isSafeInteger(P?.revision)&&P.revision>=0?P.revision:0;
   const clone=value=>JSON.parse(JSON.stringify(value));
   const isRecord=value=>Boolean(value)&&typeof value==="object"&&!Array.isArray(value);
   const token=(value,pattern=TOKEN)=>{
@@ -113,18 +114,18 @@ const runtime = String.raw`<script id="samkok-r04-return-context">
   const enterHeroDetail=({entering,from,mode,encounterId,heroId,filter}={})=>{
     if(!entering)return {ok:true,duplicate:true,context:context?clone(context):null};
     const sourceScreen=SCREEN.test(String(from||""))?String(from):"hub";
-    return capture({sourceRoute:{screen:sourceScreen,params:encounterId?{encounterId}:{}},mode,encounterId,heroId,tab:"overview",filter:filter||"all",scroll:readScroll(sourceScreen),draftRevision:0});
+    return capture({sourceRoute:{screen:sourceScreen,params:encounterId?{encounterId}:{}},mode,encounterId,heroId,tab:"overview",filter:filter||"all",scroll:readScroll(sourceScreen),draftRevision:readRevision()});
   };
   const beforeNavigate=({from,name}={})=>{
     if(from!=="heroDetail"||name!=="heroes"||!context)return null;
-    const result=resolve();
+    const result=resolve({currentRevision:readRevision()});
     if(!result.ok){clear();return {target:result.target,reason:result.code};}
     return {target:result.target,restored:result.context};
   };
   const beforeScreenChange=()=>null;
   const afterScreenChange=({name}={})=>{
     if(!context||name==="heroDetail")return null;
-    const result=resolve();
+    const result=resolve({currentRevision:readRevision()});
     if(!result.ok||name!==result.target){clear();return null;}
     const next=result.context;
     requestAnimationFrame(()=>restoreScroll(next));
