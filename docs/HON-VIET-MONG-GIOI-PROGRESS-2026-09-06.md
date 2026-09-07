@@ -54,7 +54,7 @@ Cập nhật **07/09/2026, giờ Việt Nam**. Giữ tên file cũ để các li
 | 3 | **L02c — PREPARED** | Contract migration receipt/preview/explicit claim ở commit 324a33e; 11/11 focused tests pass; chưa nối runtime hoặc persist |
 | Song song | L01 — VERIFY | Production/device smoke audio/route, ghi rõ thiết bị thật; không viết lại hotfix đã có |
 | 4 | **L03a — DONE (audit source)** | Inventory 23 boundary và thứ tự persist/event đã đối chiếu; opening level-up → quest ghi nhận not-atomic |
-| 5 | **L03b/L03c — IN_PROGRESS** | Source/build patch level-up và quest claim atomic; Vercel build READY, 21/21 focused pass; interactive UI/device còn mở |
+| 5 | **L03b/L03c — IN_PROGRESS** | Source/build patch level-up và quest claim atomic; Vercel build READY, 21/21 focused pass; Chrome UI claim/reload smoke đã pass, save-fail/device còn mở |
 | 6 | L04a / L05a — READY | Map return/lifetime và fixture các sub-action combat; chọn một việc mỗi phiên |
 | Kế tiếp | L06 / L09 | Đồng bộ stat/snapshot rồi khép vòng nuôi đội và mở đầu |
 | Chuẩn bị được | L07 / L17 | Bảng seed/banner và spec online để bàn; không chặn việc độc lập |
@@ -111,7 +111,7 @@ Spec từng ticket, file owner, contract, asset, test và điều kiện đóng 
 - Reward, trạng thái claimed, activity points và +5 XP Gia Tộc cùng nằm trong hvRunCommittedTransaction. hvApplyClanXp chỉ mutate state và thu level-up notification; toast chạy qua afterCommit sau persist thành công.
 - Commit 8774812051e60ecca055d73e67b91c6183fb15fe sửa xung đột marker với opening-loop-v1.mjs và đưa opening hero-upgrade event vào candidate transaction thay vì persist riêng.
 - Test mới 3/3 pass và thêm 1 regression test build-owner compatibility; combined focused suite L02a + L02b + L02c + L03a + L03b + L03c đạt 21/21. Harness kiểm rollback persist failure, duplicate retry sau reload và không phát notification khi persist thất bại.
-- Vercel deployment dpl_5V1u4BTmZ991AseBnGhzAgj1KULv đạt READY; build-static chạy qua, embedded battle sync và HTTP production smoke trả 200. Chưa có agent-browser CLI nên chưa click UI, chưa có Chrome interaction hoặc Safari thiết bị thật; L03c chưa DONE.
+- Vercel deployment dpl_5V1u4BTmZ991AseBnGhzAgj1KULv đạt READY; build-static chạy qua, embedded battle sync và HTTP production smoke trả 200. CLI `agent-browser` không có trong môi trường; Chrome control-browser cô lập đã kiểm happy path: Nhiệm vụ → Nhận ca trực → Thu nhận → claim `Nhận thưởng Ca Trực Đêm 1 lần`; reload giữ `1/1`, nút `✓` disabled và ngọc `800 → 820`. L03c vẫn chưa DONE vì chưa có save-fail fault injection và Safari/device evidence.
 - Không đổi seed, reward definition, balance, save migration, asset, battle, audio hoặc hotfix thoát trận; L02c vẫn PREPARED và không được gọi.
 - Bước tiếp theo chính xác: có checkout đầy đủ thì chạy npm test local; dùng browser tương tác claim quest, reload/cùng ngày/đổi ngày, lỗi save và level-up Gia Tộc trước khi mở rộng sao/skill hoặc daily milestone.
 
