@@ -298,7 +298,7 @@ function patchDist() {
       "        rngCalls: rngCalls,",
       "        rngCursor: { start: rngStart, end: rngEnd },",
       "        flags: { missed, forceHit: Boolean(options?.forceHit), forceMiss: Boolean(options?.forceMiss), forceCrit: Boolean(options?.forceCrit), execute: Boolean(options?.execute) },",
-      "        metadata: { sourceBoundary: 'applyDamage', shieldRemaining: Number(target?.shield) || 0 }",
+      "        metadata: { sourceBoundary: 'applyDamage', effectPhase: 'action', shieldRemaining: Number(target?.shield) || 0 }",
       "      });",
       "    }",
       "  }",
@@ -334,7 +334,7 @@ function patchDist() {
       "        rngCalls: rngCalls,",
       "        rngCursor: { start: rngStart, end: rngEnd },",
       "        flags: { grouped: Boolean(group) },",
-      "        metadata: { sourceBoundary: 'applyHeal' }",
+      "        metadata: { sourceBoundary: 'applyHeal', effectPhase: 'action' }",
       "      });",
       "    }",
       "  }",
@@ -371,7 +371,7 @@ function patchDist() {
       "        rngCalls: rngCalls,",
       "        rngCursor: { start: rngStart, end: rngEnd },",
       "        flags: { statusType },",
-      "        metadata: { sourceBoundary: 'addStatus', statusType }",
+      "        metadata: { sourceBoundary: 'addStatus', effectPhase: 'action', statusType }",
       "      });",
       "    }",
       "  }",
@@ -410,7 +410,7 @@ function patchDist() {
       "        rngCalls: rngCalls,",
       "        rngCursor: { start: rngStart, end: rngEnd },",
       "        flags: { requested: Number(amount) || 0 },",
-      "        metadata: { sourceBoundary: 'gainEnergy' }",
+      "        metadata: { sourceBoundary: 'gainEnergy', effectPhase: 'action' }",
       "      });",
       "    }",
       "  }",
@@ -447,7 +447,7 @@ function patchDist() {
       "        rngCalls: rngCalls,",
       "        rngCursor: { start: rngStart, end: rngEnd },",
       "        flags: { defeated: true },",
-      "        metadata: { sourceBoundary: 'markDefeated' }",
+      "        metadata: { sourceBoundary: 'markDefeated', effectPhase: 'action' }",
       "      });",
       "    }",
       "  }",
@@ -486,13 +486,98 @@ function patchDist() {
       "        rngCalls: rngCalls,",
       "        rngCursor: { start: rngStart, end: rngEnd },",
       "        flags: { kind },",
-      "        metadata: { sourceBoundary: 'applyHeroControllerDrain' }",
+      "        metadata: { sourceBoundary: 'applyHeroControllerDrain', effectPhase: 'action' }",
       "      });",
       "    }",
       "  }",
       ""
     ].join("\n");
     html = html.replace('  function __hvApplyHeroControllerDrain3qAdapter(actor,target,kind){', wrapper + '  function __hvApplyHeroControllerDrain3qAdapter(actor,target,kind){');
+  }
+
+  if (!html.includes('__hvDebitActionEnergy3qAdapter')) {
+    const costMarker = '    actor.energy = Math.max(0, actor.energy - cost);';
+    const costOccurrences = html.split(costMarker).length - 1;
+    if (costOccurrences !== 1) throw new Error('L05c combat adapter missing action-cost boundary (found ' + costOccurrences + ')');
+    const costBoundary = [
+      "    function __hvDebitActionEnergy3qAdapter(actor, cost, talentActivation = false) {",
+      "      const fixture = window.__HV_COMBAT_FIXTURE_V1;",
+      "      if (!fixture?.isEnabled?.()) {",
+      "        actor.energy = Math.max(0, actor.energy - cost);",
+      "        return actor.energy;",
+      "      }",
+      "      const rngStart = __hvCombatRngCursor3qAdapter();",
+      "      const before = window.__HV_COMBAT_MODULES_V1?.result?.snapshotCombatUnits(units) || [];",
+      "      actor.energy = Math.max(0, actor.energy - cost);",
+      "      const after = window.__HV_COMBAT_MODULES_V1?.result?.snapshotCombatUnits(units) || [];",
+      "      const rngEnd = __hvCombatRngCursor3qAdapter();",
+      "      const rngCalls = __hvCombatRngCallsSince3qAdapter(rngStart);",
+      "      const beforeUnit = before.find(candidate => candidate.id === actor?.id);",
+      "      const afterUnit = after.find(candidate => candidate.id === actor?.id);",
+      "      const delta = Number(afterUnit?.energy || 0) - Number(beforeUnit?.energy || 0);",
+      "      fixture.impact({",
+      "        type: 'energy',",
+      "        amount: delta,",
+      "        actorId: actor?.id ?? null,",
+      "        targetId: actor?.id ?? null,",
+      "        before,",
+      "        after,",
+      "        rngCalls,",
+      "        rngCursor: { start: rngStart, end: rngEnd },",
+      "        flags: { cost: Number(cost) || 0, talentActivation: Boolean(talentActivation) },",
+      "        metadata: { sourceBoundary: 'performAction.action-cost', effectPhase: 'action-cost' }",
+      "      });",
+      "      return actor.energy;",
+      "    }",
+      "    __hvDebitActionEnergy3qAdapter(actor, cost, talentActivation);"
+    ].join("\n");
+    html = html.replace(costMarker, costBoundary);
+  }
+
+  if (!html.includes('__hvTickStatuses3qAdapter')) {
+    const statusMarker = '    const statusEvents = Core.tickStatuses(actor);';
+    const statusOccurrences = html.split(statusMarker).length - 1;
+    if (statusOccurrences !== 1) throw new Error('L05c combat adapter missing tick-status boundary (found ' + statusOccurrences + ')');
+    const statusBoundary = [
+      "    const __hvTickStatuses3qAdapter = (unit) => {",
+      "      const fixture = window.__HV_COMBAT_FIXTURE_V1;",
+      "      if (!fixture?.isEnabled?.()) return Core.tickStatuses(unit);",
+      "      const before = window.__HV_COMBAT_MODULES_V1?.result?.snapshotCombatUnits(units) || [];",
+      "      const rngStart = __hvCombatRngCursor3qAdapter();",
+      "      let events = [];",
+      "      try {",
+      "        events = Core.tickStatuses(unit);",
+      "        return events;",
+      "      } finally {",
+      "        const after = window.__HV_COMBAT_MODULES_V1?.result?.snapshotCombatUnits(units) || [];",
+      "        const rngEnd = __hvCombatRngCursor3qAdapter();",
+      "        const rngCalls = __hvCombatRngCallsSince3qAdapter(rngStart);",
+      "        const beforeUnit = before.find(candidate => candidate.id === unit?.id);",
+      "        const afterUnit = after.find(candidate => candidate.id === unit?.id);",
+      "        (Array.isArray(events) ? events : []).forEach((event, eventIndex) => {",
+      "          const eventType = event?.type;",
+      "          const statusType = event?.status ?? null;",
+      "          const impactType = eventType === 'damage' ? 'dot' : eventType === 'heal' ? 'heal' : 'status';",
+      "          const statusBefore = beforeUnit?.statuses?.find(status => status.type === statusType) || null;",
+      "          const statusAfter = afterUnit?.statuses?.find(status => status.type === statusType) || null;",
+      "          fixture.impact({",
+      "            type: impactType,",
+      "            amount: eventType === 'damage' || eventType === 'heal' ? Number(event.amount) || 0 : null,",
+      "            actorId: statusBefore?.sourceId || statusAfter?.sourceId || null,",
+      "            targetId: unit?.id ?? null,",
+      "            before,",
+      "            after,",
+      "            rngCalls,",
+      "            rngCursor: { start: rngStart, end: rngEnd },",
+      "            flags: { statusType, eventType, dot: eventType === 'damage', control: eventType === 'control', expired: eventType === 'expired' },",
+      "            metadata: { sourceBoundary: 'tickStatuses', effectPhase: 'turn-start', statusType, eventIndex }",
+      "          });",
+      "        });",
+      "      }",
+      "    };",
+      "    const statusEvents = __hvTickStatuses3qAdapter(actor);"
+    ].join("\n");
+    html = html.replace(statusMarker, statusBoundary);
   }
 
   if (!html.includes('__hvPerformAction3qAdapter')) {
@@ -630,7 +715,9 @@ function patchDist() {
     '__hvAddStatus3qAdapter',
     '__hvGainEnergy3qAdapter',
     '__hvMarkDefeated3qAdapter',
-    '__hvPerformAction3qAdapter'
+    '__hvPerformAction3qAdapter',
+    '__hvDebitActionEnergy3qAdapter',
+    '__hvTickStatuses3qAdapter'
   ]) {
     if (!html.includes(marker)) throw new Error(`L05b combat impact wrapper missing: ${marker}`);
   }
@@ -645,6 +732,9 @@ function patchDist() {
   }
   if (!html.includes('__hvCombatSessionOptions3qAdapter') || !html.includes('__hvCombatRngCallsSince3qAdapter') || !html.includes('__hvRuleRandom3qAdapter') || !html.includes('__hvPresentationRandom3qAdapter')) {
     throw new Error('L05c seeded combat RNG bridge injection failed');
+  }
+  if (!html.includes("sourceBoundary: 'performAction.action-cost'") || !html.includes("sourceBoundary: 'tickStatuses'") || !html.includes("const statusEvents = __hvTickStatuses3qAdapter(actor);")) {
+    throw new Error('L05c direct status/energy boundary injection failed');
   }
   const remainingMathRandomCalls = html.match(/Math[.]random[(][)]/g) || [];
   if (remainingMathRandomCalls.length !== 2) {

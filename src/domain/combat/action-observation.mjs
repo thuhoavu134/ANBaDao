@@ -184,6 +184,17 @@ export function finishCombatObservation(observation, options = {}) {
 export function combatObservationReport(observation) {
   if (!observation || observation.schema !== COMBAT_OBSERVATION_SCHEMA) return null;
   const allRngCalls = observation.actions.flatMap((action) => action.rngCalls);
+  const allImpacts = observation.actions.flatMap((action) => action.impacts || []);
+  const impactBoundaryCoverage = {};
+  for (const impact of allImpacts) {
+    const sourceBoundary = impact.metadata?.sourceBoundary;
+    if (!sourceBoundary) continue;
+    impactBoundaryCoverage[sourceBoundary] = (impactBoundaryCoverage[sourceBoundary] || 0) + 1;
+  }
+  const multiImpactActionCount = observation.actions.filter((action) => (action.impacts || []).length > 1).length;
+  const multiHitActionCount = observation.actions.filter((action) => (
+    (action.impacts || []).filter((impact) => ['damage', 'miss'].includes(impact.type)).length >= 2
+  )).length;
   const ruleActions = observation.actions.filter((action) => {
     const kind = text(action.kind, 'basic').toLowerCase();
     return !['heal', 'healall', 'guardall', 'cleanseguard'].includes(kind);
@@ -216,6 +227,11 @@ export function combatObservationReport(observation) {
     impactCount: observation.counters.impact,
     actionIds: observation.actions.map((action) => action.actionId),
     resultTypes,
+    directBoundaryCount: Object.values(impactBoundaryCoverage).reduce((total, count) => total + count, 0),
+    directBoundaryTypes: Object.keys(impactBoundaryCoverage).sort(),
+    impactBoundaryCoverage,
+    multiImpactActionCount,
+    multiHitActionCount,
     rngSites,
     rngCallCount: allRngCalls.length,
     capturedRngCallCount: allRngCalls.filter((call) => call.captured).length,
