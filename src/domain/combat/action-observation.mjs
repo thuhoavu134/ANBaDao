@@ -33,6 +33,11 @@ function numeric(value, fallback = 0) {
   return Number.isFinite(n) ? n : fallback;
 }
 
+function optionalNumeric(value) {
+  const n = Number(value);
+  return Number.isFinite(n) ? n : null;
+}
+
 function gap(code, boundary, message) {
   return { code, boundary, message };
 }
@@ -137,6 +142,9 @@ export function recordCombatImpact(observation, actionId, input = {}) {
     subActionIndex: Math.max(0, Math.round(numeric(input.subActionIndex, action.impacts.length))),
     actorId: input.actorId == null ? action.actorId : text(input.actorId),
     targetId: input.targetId == null ? action.targetId : text(input.targetId),
+    amount: optionalNumeric(input.amount),
+    flags: input.flags && typeof input.flags === 'object' && !Array.isArray(input.flags) ? clone(input.flags) : null,
+    rngCursor: input.rngCursor == null ? null : clone(input.rngCursor),
     before: snapshotCombatUnits(input.before),
     after: snapshotCombatUnits(input.after),
     rngCalls: normalizeRngCalls(input.rngCalls),

@@ -95,10 +95,14 @@ test('L05a can attach an explicit sub-impact without mutating the captured snaps
   });
   const impact = recordCombatImpact(observation, action.action.actionId, {
     type: 'damage', subActionIndex: 0, actorId: 'actor', targetId: 'target', before, after,
+    amount: 20, flags: { critical: true, shieldAbsorbed: 0 }, rngCursor: { rule: 3 },
     rngCalls: [{ site: 'applyDamage.hit', domain: 'rule', value: 0.1 }]
   });
   assert.equal(impact.ok, true);
   assert.equal(impact.impact.rngCalls[0].captured, true);
+  assert.equal(impact.impact.amount, 20);
+  assert.deepEqual(impact.impact.flags, { critical: true, shieldAbsorbed: 0 });
+  assert.deepEqual(impact.impact.rngCursor, { rule: 3 });
   assert.equal(combatObservationReport(observation).impactCount, 1);
   before[0].hp = 1;
   assert.equal(observation.actions[0].before[0].hp, 100);
@@ -122,6 +126,16 @@ test('L05a build owner exposes opt-in fixture capture at resolveAction boundary 
   assert.match(adapter, /after/);
   assert.match(adapter, /__HV_COMBAT_FIXTURE_V1\?\.isEnabled\?\.\(\)/);
   assert.match(adapter, /__HV_COMBAT_FIXTURE_V1\.stop\(\{ finishedAt:/);
+  assert.match(adapter, /beginAction/);
+  assert.match(adapter, /currentActionId/);
+  assert.match(adapter, /recordCombatImpact/);
+  assert.match(adapter, /subActionIndex/);
+  assert.match(adapter, /__hvApplyDamage3qAdapter/);
+  assert.match(adapter, /__hvApplyHeal3qAdapter/);
+  assert.match(adapter, /__hvAddStatus3qAdapter/);
+  assert.match(adapter, /__hvGainEnergy3qAdapter/);
+  assert.match(adapter, /__hvMarkDefeated3qAdapter/);
+  assert.match(adapter, /__hvPerformAction3qAdapter/);
   assert.match(adapter, /shellMarker/);
   assert.match(adapter, /fixtureSuffix/);
   assert.match(adapter, /qaCombatFixture=l05a/);
