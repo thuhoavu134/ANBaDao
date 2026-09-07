@@ -28,7 +28,7 @@ const helper = `function hvReceiptForCommand(commandId){
   const receipt = getTransactionReceipt(P,commandId);
   return receipt ? {ok:receipt.status==='success',duplicate:true,receipt,result:receipt.result} : null;
 }
-function hvRunCommittedTransaction({commandId,cost={},balances={},source,reason,reward,applyRewardFn,mutate}){
+function hvRunCommittedTransaction({commandId,cost={},balances={},source,reason,reward,applyRewardFn,mutate,afterCommit}){
   let before;
   try { before=JSON.stringify(P); } catch(e) {
     return {ok:false,code:'STATE_NOT_SERIALIZABLE',message:'Không thể chuẩn bị giao dịch.'};
@@ -42,7 +42,27 @@ function hvRunCommittedTransaction({commandId,cost={},balances={},source,reason,
     try { P=JSON.parse(before); } catch(e) {}
     return {ok:false,code:'SAVE_WRITE_FAILED',message:'Không thể lưu giao dịch.'};
   }
+  try { if(typeof afterCommit==='function') afterCommit(tx); } catch(e) {}
   return tx;
+}
+function hvApplyClanXp(amount){
+  const added=Number(amount);
+  if(!P.clan||!Number.isFinite(added)||added===0) return {added:0,levelUps:[]};
+  if(typeof ensureClanDepth==='function') ensureClanDepth();
+  if(!P.clan) return {added:0,levelUps:[]};
+  P.clan.level=Math.max(1,Number(P.clan.level)||1);
+  P.clan.xp=(Number(P.clan.xp)||0)+added;
+  const levelUps=[];
+  while(P.clan.level<10&&P.clan.xp>=P.clan.level*100){
+    P.clan.xp-=P.clan.level*100;
+    P.clan.level++;
+    levelUps.push({level:P.clan.level,bonus:typeof clanPct==='function'?Math.round(clanPct()*100):0});
+  }
+  return {added,levelUps};
+}
+function hvNotifyClanLevelUps(levelUps){
+  if(!Array.isArray(levelUps)||typeof toast!=='function') return;
+  levelUps.forEach(x=>toast('🏠 Gia Tộc lên cấp '+x.level+' — cả nhà +'+x.bonus+'% MÁU!'));
 }
 window.HonVietTransaction=Object.freeze({commit:hvRunCommittedTransaction,execute:executeLocalTransaction,settleReward:settleRewardTransaction,read:getTransactionReceipt});
 `;
@@ -86,7 +106,7 @@ html = html.replace(levelBatchMarker, levelBatchReplacement);
 const questPattern = /function claimQuest\(id\)\{[\s\S]*?\nfunction claimActMilestone/;
 if (!questPattern.test(html)) throw new Error('Quest claim function shape not found');
 const newQuest = `function claimQuest(id,commandId){
-  const commandKey=commandId || 'quest.claim:'+id+':'+(P.revision||0);
+  const commandKey=commandId || 'quest.claim:'+id+':'+(P.daily?.dayIndex??today());
   const duplicate=hvReceiptForCommand(commandKey);
   if(duplicate) return duplicate.ok;
   const q=P.daily.quests.find(x=>x.id===id), def=DATA.daily.quests.find(x=>x.id===id);
@@ -97,11 +117,12 @@ const newQuest = `function claimQuest(id,commandId){
     mutate:()=>{
       q.claimed=true;
       P.daily.activityPoints=(P.daily.activityPoints||0)+def.pts;
-      return {ok:true,questId:id};
-    }
+      const clanXp=hvApplyClanXp(5);
+      return {ok:true,questId:id,clanXp:clanXp.added,clanLevelUps:clanXp.levelUps};
+    },
+    afterCommit:tx=>hvNotifyClanLevelUps(tx.result?.clanLevelUps)
   });
   if(!tx.ok) return false;
-  if(!tx.duplicate) clanAddXp(5);
   return true;
 }
 function claimActMilestone`;
