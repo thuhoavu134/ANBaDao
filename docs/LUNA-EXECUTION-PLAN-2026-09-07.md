@@ -27,7 +27,7 @@ Tài liệu này cụ thể hóa E01–E26/R01–R11 của [master plan](HON-VIE
 | ID | Ưu tiên / trạng thái lúc bàn giao | Gắn E/R | Phụ thuộc | Đầu ra |
 |---|---|---|---|---|
 | L01 | P0 / VERIFY | E01, E04, E24; R02–04 | Hotfix đã deploy | Bằng chứng thoát/vào trận, route, audio trên thiết bị |
-| L02 | P0 / IN_PROGRESS (L02a DONE) | E02, E08; R05 | Baseline | L02a report/validator đã có; L02b/L02c còn mở |
+| L02 | P0 / IN_PROGRESS (L02a + L02b proposal DONE) | E02, E08; R05 | Baseline | L02a report/validator và L02b reward proposal đã có; L02c còn mở |
 | L03 | P0 / READY phần a | E03, E07; R07/R10 | Chủ transaction hiện có | Command + quest/event cùng một commit cho lát cắt nuôi đội |
 | L04 | P1 / READY phần a | E04, E06 | Router/bridge hiện có | Return context và vòng đời màn dùng một owner |
 | L05 | P1 / READY phần a | E05/E06; R08/R11 | Combat hiện có | Event đủ sub-action, RNG luật có seed, parity |
@@ -104,7 +104,7 @@ Thân code gốc còn trong archive người dùng bàn giao; guide chỉ rõ 27
 3. Xuất report: 12 playable IDs, NPC/enemy/lore IDs, chương/scene/battle liên kết thật, hero/item/reward/asset reference lỗi. Phân biệt “ID không tồn tại” với “có trong DATA nhưng không playable”.
 4. Kiểm `next` vòng, ải không tới được, reward trỏ ngoài playable, giá âm, asset missing, ID trùng. Đừng suy 20 nền là 20 chương. Report lỗi legacy đã biết phải có classification/owner, không giấu bằng bỏ qua toàn bộ validation.
 
-**L02b:** đưa bảng đề xuất thay phần thưởng cũ theo từng chương (reward cũ, mới, lý do, tác động save) để chốt phần chưa được quyết định. Giữ lore/NPC riêng; không tự thêm `ong_chu_wifi` vào 12 ID. L02a không cần đợi bảng đó được duyệt.
+**L02b — DONE (proposal only):** bảng reward cũ/mới/lý do/tác động save đã có ở docs/qa/L02b/reward-mapping-proposal.md và module/test proposal ở commit 25140d3fd8c0b151d89f9bbecdc85834fe7195ea. Sáu đích đều là playable ID chính thức, giữ nguyên giá trị vàng/ngọc/mảnh và không đưa `ong_chu_wifi` vào roster. Chưa áp dụng DATA hoặc migration; L02c còn mở.
 
 **L02c:** sau khi chốt, migrate đúng reward chưa claim và giữ receipt/ownership đã nhận. Không thu hồi hero/item save cũ. Chuyển catalog sang một nguồn duy nhất theo lát cắt, test rằng adapter và UI nhận cùng version.
 
@@ -112,6 +112,12 @@ Thân code gốc còn trong archive người dùng bàn giao; guide chỉ rõ 27
 
 **L02a đã triển khai:** commit 7272ede748eed62af4814e13776e468ebe7e9d15 thêm validator thuần, extractor boundary, audit script, behavior tests và report từ catalog active. Kết quả thực tế là 4/4 focused tests pass; report không che 5 missing chapter scene starts và 11 legacy reward references. Hermes archive không có trong phiên này (SOURCE_NOT_AVAILABLE), nên không có method body nào được port. Full L02 vẫn giữ IN_PROGRESS; nhận L02b để lập bảng đề xuất trước khi sửa dữ liệu.
 
+### L02b — proposal reward đã triển khai
+
+- Phạm vi đã đóng: 6 chương, 11 legacy reward refs; bảng human-review và validator proposal cùng kiểm tra đủ coverage.
+- Đề xuất giữ nguyên gold/gems/shards, chuyển shardHero sang 6 playable ID chính thức và bỏ unlockHero khỏi reward chương. Đây là phương án review, không phải thay đổi balance.
+- Save policy đề xuất: clearedChapters/receipt đã nhận thì giữ nguyên; chưa claim mới dùng mapping sau khi L02c được duyệt. Không thu hồi legacy ownership/shard.
+- Test: 6/6 focused tests pass. Scene first reference thiếu và scene unlockHero legacy không nằm trong ticket này.
 ### L03 — Giao dịch và event tiến độ cùng thành công hoặc cùng thất bại
 
 **Mục đích:** nâng tướng/nhận thưởng không bị lệch tiền, nhiệm vụ hoặc trạng thái sau reload.

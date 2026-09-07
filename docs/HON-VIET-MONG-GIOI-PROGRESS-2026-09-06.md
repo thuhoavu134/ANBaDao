@@ -50,9 +50,10 @@ Cập nhật **07/09/2026, giờ Việt Nam**. Giữ tên file cũ để các li
 | Thứ tự | Ticket | Bước kế tiếp cụ thể |
 |---|---|---|
 | 1 | **L02a — DONE** | Validator/extractor/report đã có ở commit 7272ede748eed62af4814e13776e468ebe7e9d15; 4/4 focused tests pass. Findings và phần chưa làm ghi trong docs/qa/L02a; chưa thay reward hoặc seed |
+| 2 | **L02b — DONE (proposal only)** | Bảng đề xuất reward theo 6 chương ở docs/qa/L02b/reward-mapping-proposal.md; commit code 25140d3; 6/6 focused tests pass; chưa áp dụng DATA hoặc migration |
 | Song song | L01 — VERIFY | Production/device smoke audio/route, ghi rõ thiết bị thật; không viết lại hotfix đã có |
-| 2 | L03a — READY | Inventory entrypoints trừ/cộng và thứ tự persist/event; lấy level-up → quest làm lát cắt đầu |
-| 3 | L04a / L05a — READY | Map return/lifetime và fixture các sub-action combat; chọn một việc mỗi phiên |
+| 3 | L03a — READY | Inventory entrypoints trừ/cộng và thứ tự persist/event; lấy level-up → quest làm lát cắt đầu |
+| 4 | L04a / L05a — READY | Map return/lifetime và fixture các sub-action combat; chọn một việc mỗi phiên |
 | Kế tiếp | L06 / L09 | Đồng bộ stat/snapshot rồi khép vòng nuôi đội và mở đầu |
 | Chuẩn bị được | L07 / L17 | Bảng seed/banner và spec online để bàn; không chặn việc độc lập |
 
@@ -64,8 +65,16 @@ Spec từng ticket, file owner, contract, asset, test và điều kiện đóng 
 - Adapter đọc đúng catalog active từ index.html; report kiểm kê 12 playable hero, 11 hero tồn tại nhưng không playable, 3 NPC/lore speaker, 11 enemy ID, 6 chapter, 21 scene và 32 asset reference.
 - Findings thật: 5 MISSING_SCENE_REF (first scene của ch02–ch06 chưa có trong DATA.scenes) và 11 LEGACY_REWARD_HERO reference (reward/unlock trỏ ngoài 12 playable). Không có cycle, scene/encounter unreachable, encounter unknown, missing asset, giá âm hoặc giá không hợp lệ trong catalog hiện tại.
 - Test behavior: 4/4 focused tests pass. Audit không có allow-errors trả exit 1 vì findings đang tồn tại; report evidence được ghi với allow-errors. npm test, browser, Safari thật và production deployment chưa chạy trong phiên connector-only này.
-- Bảo toàn seed, reward, balance, save migration, source/build runtime và hotfix audio. Bước tiếp theo: L02b lập bảng reward/scene đề xuất để chốt trước mọi chỉnh DATA hoặc migration.
+- Bảo toàn seed, reward, balance, save migration, source/build runtime và hotfix audio. Bước tiếp theo sau L02b: L02c chỉ xử lý migration sau khi proposal reward được duyệt.
 
+## 4.2 L02b — bảng đề xuất reward đã triển khai
+
+- L02b hoàn thành phần proposal-only trong commit 25140d3fd8c0b151d89f9bbecdc85834fe7195ea; chưa sửa DATA.chapters, seed, balance, save migration hoặc runtime.
+- 11 legacy reward refs của 6 chương đã được lập bảng và kiểm tra đủ. Đích playable đề xuất: ch1 → co_dao_ganh_hoi; ch2 → phong_tu; ch3 → thuy_nuong_roi_nuoc; ch4 → luc_anh; ch5 → to_diep; ch6 → dinh_loi.
+- Vàng, ngọc và số lượng mảnh được giữ nguyên trong proposal; trường unlockHero của reward chương được bỏ ở phương án vì 12 playable đã được defaultPlayer/migrateSave mở sẵn. Legacy hero vẫn giữ cho lore/NPC.
+- Save đã nhận không bị cấp lại/thu hồi; save chưa nhận chỉ xử lý một lần ở L02c sau khi có receipt/claim boundary. Các scene unlockHero legacy và 5 first scene thiếu vẫn mở.
+- Test behavior L02a + L02b: 6/6 pass. Full npm test, build, browser, Safari thật và production deployment chưa chạy trong phiên connector-only này.
+- Bước tiếp theo: duyệt 6 đích reward, rồi làm L02c migration đúng ownership/receipt; full L02 vẫn IN_PROGRESS.
 ## 5. Gate còn mở
 
 - iPhone/iPad Safari thật: unlock/mute/thoát trận, Lục ultimate, result music, roster/back/safe area. Chưa có chứng cứ mới sau audio hotfix.
