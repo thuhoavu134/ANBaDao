@@ -1,0 +1,1985 @@
+{
+  "schema": "hon-viet-command-audit/v1",
+  "source": {
+    "runtimePath": "index.html",
+    "sha256": "e4f79d41e3bf7bb225ff878729d71e72be9ad94bac962f5e41cffc98148680b9",
+    "chars": 1890471,
+    "transactionRuntimeWired": false
+  },
+  "scope": {
+    "inventory": "direct source commands that mutate player state or persist",
+    "deepSlice": "levelUpHero -> questProgress -> weeklyProgress",
+    "receiptFailureHarness": "Inject failure after questProgress and before the outer persist; verify state/quest remain all-old or all-new."
+  },
+  "summary": {
+    "declaredFunctionCount": 509,
+    "auditedCommandCount": 23,
+    "verifiedCommandCount": 23,
+    "candidateMutationFunctionCount": 163,
+    "receiptAwareCandidateCount": 0,
+    "missingSourceMarkerCount": 0,
+    "missingEntrypointCount": 0
+  },
+  "opening": {
+    "chain": [
+      "levelUpHero",
+      "questProgress",
+      "weeklyProgress"
+    ],
+    "order": [
+      {
+        "step": "hero-mutation",
+        "marker": "P.heroes[id].level++",
+        "offset": 184
+      },
+      {
+        "step": "quest-progress",
+        "marker": "questProgress('level',1)",
+        "offset": 206
+      },
+      {
+        "step": "outer-persist",
+        "marker": "persist()",
+        "offset": 232
+      }
+    ],
+    "orderValid": true,
+    "questProgressPersistsInternally": true,
+    "weeklyProgressPersistsInternally": true,
+    "transactionBoundaryPresent": false,
+    "atomicity": "not-atomic",
+    "requiredFailureTest": "Inject failure after questProgress and before the outer persist; verify state/quest remain all-old or all-new."
+  },
+  "inventory": [
+    {
+      "id": "hero.level-up",
+      "family": "hero",
+      "functionName": "levelUpHero",
+      "entrypoint": "levelUpHero(id)",
+      "scope": "deep-slice",
+      "cost": "gold via levelCost(id)",
+      "credit": "P.heroes[id].level++",
+      "persist": [
+        "questProgress(level)",
+        "persist()"
+      ],
+      "event": [
+        "questProgress(level,1)",
+        "weeklyProgress via helper"
+      ],
+      "receipt": "none",
+      "transaction": "none",
+      "atomicity": "not-atomic",
+      "finding": "questProgress có thể persist trước persist cuối của levelUpHero; không có rollback/receipt.",
+      "sourceMarkers": [
+        "function levelUpHero(id)",
+        "P.gold-=c",
+        "P.heroes[id].level++",
+        "questProgress('level',1)",
+        "persist()"
+      ],
+      "sourceVerified": true,
+      "actualSignals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "id": "hero.star-up",
+      "family": "hero",
+      "functionName": "starUpHero",
+      "entrypoint": "starUpHero(id)",
+      "scope": "inventory",
+      "cost": "shards[id] via starCost(id)",
+      "credit": "P.heroes[id].stars++",
+      "persist": [
+        "persist()"
+      ],
+      "event": [],
+      "receipt": "none",
+      "transaction": "none",
+      "atomicity": "direct-mutate",
+      "finding": "Trừ shard và tăng sao trực tiếp, chưa có receipt.",
+      "sourceMarkers": [
+        "function starUpHero(id)",
+        "P.shards[id]=have-c",
+        "P.heroes[id].stars++",
+        "persist()"
+      ],
+      "sourceVerified": true,
+      "actualSignals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "id": "reward.apply",
+      "family": "reward",
+      "functionName": "applyReward",
+      "entrypoint": "applyReward(rw)",
+      "scope": "shared-helper",
+      "cost": "none",
+      "credit": "gold/gems/tinh/hoat/shards",
+      "persist": [],
+      "event": [],
+      "receipt": "none",
+      "transaction": "none",
+      "atomicity": "caller-owned",
+      "finding": "Helper mutate state nhưng không tự ghi receipt; caller quyết định persist.",
+      "sourceMarkers": [
+        "function applyReward(rw)",
+        "P.gold+=rw.gold",
+        "P.shards[rw.shardHero]"
+      ],
+      "sourceVerified": true,
+      "actualSignals": [
+        "direct-player-write",
+        "reward-credit-call"
+      ]
+    },
+    {
+      "id": "campaign.start",
+      "family": "campaign",
+      "functionName": "startChapter",
+      "entrypoint": "startChapter(idx,options)",
+      "scope": "inventory",
+      "cost": "stamina via spendStamina(costCampaign)",
+      "credit": "P.campaignStages[idx] / cleared chapter",
+      "persist": [
+        "spendStamina()",
+        "stage transition persist()",
+        "endChapter persist()"
+      ],
+      "event": [
+        "runBattle callback"
+      ],
+      "receipt": "none",
+      "transaction": "none",
+      "atomicity": "multi-persist",
+      "finding": "Một lượt campaign có nhiều boundary persist trước settlement cuối.",
+      "sourceMarkers": [
+        "function startChapter(idx,options={})",
+        "spendStamina(DATA.daily.costCampaign)",
+        "P.campaignStages[idx]=",
+        "endChapter({referenceLoop:true,autoContinue:true})"
+      ],
+      "sourceVerified": true,
+      "actualSignals": [
+        "direct-player-write",
+        "persist-call",
+        "stamina-debit-call"
+      ]
+    },
+    {
+      "id": "chapter.clear",
+      "family": "campaign",
+      "functionName": "endChapter",
+      "entrypoint": "endChapter(options)",
+      "scope": "inventory",
+      "cost": "none",
+      "credit": "chapter gold/gems/shards + unlockHero",
+      "persist": [
+        "weeklyProgress()",
+        "persist()"
+      ],
+      "event": [
+        "worldChronicle",
+        "journal",
+        "mail",
+        "chat",
+        "clan XP"
+      ],
+      "receipt": "none",
+      "transaction": "none",
+      "atomicity": "multi-side-effect",
+      "finding": "Reward, unlock, progress và side effect cùng mutate trực tiếp; chưa có chapter receipt.",
+      "sourceMarkers": [
+        "function endChapter(options={})",
+        "P.clearedChapters.push(idx)",
+        "applyReward(rr)",
+        "P.unlockedChapters.push(idx+1)",
+        "persist()"
+      ],
+      "sourceVerified": true,
+      "actualSignals": [
+        "direct-player-write",
+        "persist-call",
+        "reward-credit-call"
+      ]
+    },
+    {
+      "id": "quest.progress",
+      "family": "quest",
+      "functionName": "questProgress",
+      "entrypoint": "questProgress(type,amt)",
+      "scope": "deep-slice",
+      "cost": "none",
+      "credit": "P.daily.quests progress",
+      "persist": [
+        "weeklyProgress()",
+        "if(ch)persist()"
+      ],
+      "event": [
+        "weeklyProgress(type,amt)"
+      ],
+      "receipt": "none",
+      "transaction": "none",
+      "atomicity": "nested-persist",
+      "finding": "Opening level-up gọi helper này sau mutate hero; helper có persist riêng.",
+      "sourceMarkers": [
+        "function questProgress(type,amt)",
+        "weeklyProgress(type,amt)",
+        "if(ch)persist()"
+      ],
+      "sourceVerified": true,
+      "actualSignals": [
+        "persist-call"
+      ]
+    },
+    {
+      "id": "quest.claim",
+      "family": "quest",
+      "functionName": "claimQuest",
+      "entrypoint": "claimQuest(id)",
+      "scope": "inventory",
+      "cost": "none",
+      "credit": "daily reward via applyReward",
+      "persist": [
+        "persist()"
+      ],
+      "event": [
+        "clanAddXp(5)"
+      ],
+      "receipt": "none",
+      "transaction": "none",
+      "atomicity": "direct-mutate",
+      "finding": "Đánh dấu claimed, credit reward và activity point trong cùng hàm nhưng chưa có receipt.",
+      "sourceMarkers": [
+        "function claimQuest(id)",
+        "q.claimed=true",
+        "applyReward(def.reward)",
+        "persist()"
+      ],
+      "sourceVerified": true,
+      "actualSignals": [
+        "direct-player-write",
+        "persist-call",
+        "reward-credit-call"
+      ]
+    },
+    {
+      "id": "weekly.progress",
+      "family": "quest",
+      "functionName": "weeklyProgress",
+      "entrypoint": "weeklyProgress(type,amt)",
+      "scope": "inventory",
+      "cost": "none",
+      "credit": "P.weekly.quests progress",
+      "persist": [
+        "if(ch)persist()"
+      ],
+      "event": [],
+      "receipt": "none",
+      "transaction": "none",
+      "atomicity": "direct-mutate",
+      "finding": "Progress tuần tự persist, chưa gắn commandId.",
+      "sourceMarkers": [
+        "function weeklyProgress(type,amt=1)",
+        "P.weekly.quests.forEach",
+        "if(ch)persist()"
+      ],
+      "sourceVerified": true,
+      "actualSignals": [
+        "persist-call"
+      ]
+    },
+    {
+      "id": "weekly.claim",
+      "family": "quest",
+      "functionName": "claimWeeklyQuest",
+      "entrypoint": "claimWeeklyQuest(id)",
+      "scope": "inventory",
+      "cost": "none",
+      "credit": "weekly points + reward",
+      "persist": [
+        "persist()"
+      ],
+      "event": [],
+      "receipt": "none",
+      "transaction": "none",
+      "atomicity": "direct-mutate",
+      "finding": "Claim reward tuần chưa có receipt.",
+      "sourceMarkers": [
+        "function claimWeeklyQuest(id)",
+        "q.claimed=true",
+        "applyReward(d.reward)",
+        "persist()"
+      ],
+      "sourceVerified": true,
+      "actualSignals": [
+        "direct-player-write",
+        "persist-call",
+        "reward-credit-call"
+      ]
+    },
+    {
+      "id": "weekly.milestone",
+      "family": "quest",
+      "functionName": "claimWeeklyMilestone",
+      "entrypoint": "claimWeeklyMilestone(p)",
+      "scope": "inventory",
+      "cost": "none",
+      "credit": "weekly milestone reward",
+      "persist": [
+        "persist()"
+      ],
+      "event": [],
+      "receipt": "none",
+      "transaction": "none",
+      "atomicity": "direct-mutate",
+      "finding": "Claim milestone tuần chưa có receipt.",
+      "sourceMarkers": [
+        "function claimWeeklyMilestone(p)",
+        "P.weekly.claimed.includes(p)",
+        "applyReward(m.reward)",
+        "persist()"
+      ],
+      "sourceVerified": true,
+      "actualSignals": [
+        "persist-call",
+        "reward-credit-call"
+      ]
+    },
+    {
+      "id": "activity.milestone",
+      "family": "quest",
+      "functionName": "claimActMilestone",
+      "entrypoint": "claimActMilestone(p)",
+      "scope": "inventory",
+      "cost": "none",
+      "credit": "daily activity reward",
+      "persist": [
+        "persist()"
+      ],
+      "event": [],
+      "receipt": "none",
+      "transaction": "none",
+      "atomicity": "direct-mutate",
+      "finding": "Claim mốc hoạt động ngày chưa có receipt.",
+      "sourceMarkers": [
+        "function claimActMilestone(p)",
+        "P.daily.actClaimed.includes(p)",
+        "applyReward(m.reward)",
+        "persist()"
+      ],
+      "sourceVerified": true,
+      "actualSignals": [
+        "persist-call",
+        "reward-credit-call"
+      ]
+    },
+    {
+      "id": "idle.claim",
+      "family": "idle",
+      "functionName": "claimIdle",
+      "entrypoint": "claimIdle()",
+      "scope": "inventory",
+      "cost": "none",
+      "credit": "idle gold",
+      "persist": [
+        "questProgress()",
+        "clanDutyProgress()",
+        "persist()"
+      ],
+      "event": [
+        "journal"
+      ],
+      "receipt": "none",
+      "transaction": "none",
+      "atomicity": "nested-persist",
+      "finding": "Idle gold và activity side effects có nhiều helper mutate/persist.",
+      "sourceMarkers": [
+        "function claimIdle()",
+        "P.gold+=p.gold",
+        "questProgress('idle',1)",
+        "persist()"
+      ],
+      "sourceVerified": true,
+      "actualSignals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "id": "signin.claim",
+      "family": "daily",
+      "functionName": "claimSignIn",
+      "entrypoint": "claimSignIn()",
+      "scope": "inventory",
+      "cost": "none",
+      "credit": "sign-in gold/gems/stamina",
+      "persist": [
+        "persist()"
+      ],
+      "event": [
+        "journal",
+        "petBondActivity"
+      ],
+      "receipt": "none",
+      "transaction": "none",
+      "atomicity": "direct-mutate",
+      "finding": "Claim ngày và reward trực tiếp mutate, chưa có receipt.",
+      "sourceMarkers": [
+        "function claimSignIn()",
+        "applyReward(rw)",
+        "P.daily.signInClaimedDay=d",
+        "persist()"
+      ],
+      "sourceVerified": true,
+      "actualSignals": [
+        "direct-player-write",
+        "persist-call",
+        "reward-credit-call"
+      ]
+    },
+    {
+      "id": "mail.claim",
+      "family": "mail",
+      "functionName": "claimMail",
+      "entrypoint": "claimMail(id)",
+      "scope": "inventory",
+      "cost": "none",
+      "credit": "mail reward",
+      "persist": [
+        "persist()"
+      ],
+      "event": [],
+      "receipt": "none",
+      "transaction": "none",
+      "atomicity": "direct-mutate",
+      "finding": "Đánh dấu mail claimed và apply reward chưa có receipt.",
+      "sourceMarkers": [
+        "function claimMail(id)",
+        "applyReward(m.reward)",
+        "m.claimed=true",
+        "persist()"
+      ],
+      "sourceVerified": true,
+      "actualSignals": [
+        "persist-call",
+        "reward-credit-call"
+      ]
+    },
+    {
+      "id": "mail.claim-all",
+      "family": "mail",
+      "functionName": "claimAllMail",
+      "entrypoint": "claimAllMail()",
+      "scope": "inventory",
+      "cost": "none",
+      "credit": "nhiều mail reward",
+      "persist": [
+        "persist()"
+      ],
+      "event": [],
+      "receipt": "none",
+      "transaction": "none",
+      "atomicity": "batch-direct-mutate",
+      "finding": "Batch claim không có commandId/receipt cho từng mail hoặc batch.",
+      "sourceMarkers": [
+        "function claimAllMail()",
+        "P.mail.forEach",
+        "applyReward(m.reward)",
+        "persist()"
+      ],
+      "sourceVerified": true,
+      "actualSignals": [
+        "persist-call",
+        "reward-credit-call"
+      ]
+    },
+    {
+      "id": "gift-code.redeem",
+      "family": "reward",
+      "functionName": "redeemCode",
+      "entrypoint": "redeemCode(str)",
+      "scope": "inventory",
+      "cost": "none",
+      "credit": "gold/gems/stamina",
+      "persist": [
+        "persist()"
+      ],
+      "event": [],
+      "receipt": "codes array only",
+      "transaction": "none",
+      "atomicity": "direct-mutate",
+      "finding": "Codes array là guard nghiệp vụ, chưa phải transaction receipt.",
+      "sourceMarkers": [
+        "function redeemCode(str)",
+        "P.codes.push(k)",
+        "P.gold+=g.gold",
+        "persist()"
+      ],
+      "sourceVerified": true,
+      "actualSignals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "id": "forge.mold",
+      "family": "forge",
+      "functionName": "setForgeMold",
+      "entrypoint": "setForgeMold(id)",
+      "scope": "inventory",
+      "cost": "none",
+      "credit": "P.economy.forgeMold",
+      "persist": [
+        "persist()"
+      ],
+      "event": [],
+      "receipt": "none",
+      "transaction": "none",
+      "atomicity": "direct-mutate",
+      "finding": "Đổi khuôn mutate trực tiếp; không phải reward nhưng có state command.",
+      "sourceMarkers": [
+        "function setForgeMold(id)",
+        "econ().forgeMold=id",
+        "persist()"
+      ],
+      "sourceVerified": true,
+      "actualSignals": [
+        "persist-call"
+      ]
+    },
+    {
+      "id": "forge.dual-start",
+      "family": "forge",
+      "functionName": "startDualForge",
+      "entrypoint": "startDualForge(slot)",
+      "scope": "inventory",
+      "cost": "tinh + gold",
+      "credit": "forgePending/candidates",
+      "persist": [
+        "persist()"
+      ],
+      "event": [],
+      "receipt": "none",
+      "transaction": "none",
+      "atomicity": "direct-mutate",
+      "finding": "Trừ hai resource và tạo pending trực tiếp, chưa có receipt.",
+      "sourceMarkers": [
+        "function startDualForge(slot)",
+        "P.tinh-=DUAL_FORGE.tinh",
+        "P.gold-=DUAL_FORGE.gold",
+        "persist()"
+      ],
+      "sourceVerified": true,
+      "actualSignals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "id": "forge.dual-choose",
+      "family": "forge",
+      "functionName": "chooseDualForge",
+      "entrypoint": "chooseDualForge(i)",
+      "scope": "inventory",
+      "cost": "pending forge đã trả trước",
+      "credit": "P.inventory.push(item)",
+      "persist": [
+        "questProgress()",
+        "persist()"
+      ],
+      "event": [],
+      "receipt": "none",
+      "transaction": "none",
+      "atomicity": "nested-persist",
+      "finding": "Chọn phôi và quest progress cùng mutate, chưa có receipt.",
+      "sourceMarkers": [
+        "function chooseDualForge(i)",
+        "P.inventory.push(it)",
+        "questProgress('craft',1)",
+        "persist()"
+      ],
+      "sourceVerified": true,
+      "actualSignals": [
+        "persist-call"
+      ]
+    },
+    {
+      "id": "forge.craft",
+      "family": "forge",
+      "functionName": "craftItem",
+      "entrypoint": "craftItem(slot)",
+      "scope": "inventory",
+      "cost": "tinh + gold",
+      "credit": "P.inventory.push(item)",
+      "persist": [
+        "questProgress()",
+        "persist()"
+      ],
+      "event": [],
+      "receipt": "none",
+      "transaction": "none",
+      "atomicity": "nested-persist",
+      "finding": "Trừ cost, tạo item và quest progress chưa cùng receipt.",
+      "sourceMarkers": [
+        "function craftItem(slot)",
+        "P.tinh-=CRAFT.tinh",
+        "P.gold-=CRAFT.gold",
+        "P.inventory.push(it)",
+        "persist()"
+      ],
+      "sourceVerified": true,
+      "actualSignals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "id": "forge.enhance",
+      "family": "forge",
+      "functionName": "enhanceItem",
+      "entrypoint": "enhanceItem(uid)",
+      "scope": "inventory",
+      "cost": "gold + hoat",
+      "credit": "it.lvl++",
+      "persist": [
+        "persist()"
+      ],
+      "event": [],
+      "receipt": "none",
+      "transaction": "none",
+      "atomicity": "direct-mutate",
+      "finding": "Trừ cost và tăng level item trực tiếp, chưa có receipt.",
+      "sourceMarkers": [
+        "function enhanceItem(uid)",
+        "P.gold-=c.gold",
+        "P.hoat-=c.hoat",
+        "it.lvl++",
+        "persist()"
+      ],
+      "sourceVerified": true,
+      "actualSignals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "id": "forge.salvage",
+      "family": "forge",
+      "functionName": "salvageItem",
+      "entrypoint": "salvageItem(uid)",
+      "scope": "inventory",
+      "cost": "item removal",
+      "credit": "P.tinh += gain",
+      "persist": [
+        "persist()"
+      ],
+      "event": [],
+      "receipt": "none",
+      "transaction": "none",
+      "atomicity": "direct-mutate",
+      "finding": "Xóa item và cộng Tinh Lực trực tiếp, chưa có receipt.",
+      "sourceMarkers": [
+        "function salvageItem(uid)",
+        "P.tinh=(P.tinh||0)+gain",
+        "P.inventory=P.inventory.filter",
+        "persist()"
+      ],
+      "sourceVerified": true,
+      "actualSignals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "id": "hero.unlock",
+      "family": "hero",
+      "functionName": "unlockHero",
+      "entrypoint": "unlockHero(id)",
+      "scope": "shared-helper",
+      "cost": "none",
+      "credit": "P.heroes[id].owned=true",
+      "persist": [
+        "persist()"
+      ],
+      "event": [],
+      "receipt": "none",
+      "transaction": "none",
+      "atomicity": "caller-owned",
+      "finding": "Helper có thể mở cả legacy hero nếu caller đưa ID tồn tại trong DATA.",
+      "sourceMarkers": [
+        "function unlockHero(id)",
+        "P.heroes[id].owned=true",
+        "persist()"
+      ],
+      "sourceVerified": true,
+      "actualSignals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "functionName": "chooseOption",
+      "sourceOffset": 369648,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "grantPet",
+      "sourceOffset": 392015,
+      "signals": [
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "claimPetRoutine",
+      "sourceOffset": 395743,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "claimPetMilestone",
+      "sourceOffset": 396335,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "selectPetCompanion",
+      "sourceOffset": 397009,
+      "signals": [
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "resetHero",
+      "sourceOffset": 401142,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "sweepRun",
+      "sourceOffset": 401920,
+      "signals": [
+        "direct-player-write",
+        "persist-call",
+        "stamina-debit-call"
+      ]
+    },
+    {
+      "functionName": "jobsEnsure",
+      "sourceOffset": 403070,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "startJob",
+      "sourceOffset": 405183,
+      "signals": [
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "claimJob",
+      "sourceOffset": 406264,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "persist",
+      "sourceOffset": 424421,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "importSave",
+      "sourceOffset": 425328,
+      "signals": [
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "redeemCode",
+      "sourceOffset": 426374,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "wipeSave",
+      "sourceOffset": 426914,
+      "signals": [
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "ensureRelationships",
+      "sourceOffset": 431716,
+      "signals": [
+        "direct-player-write"
+      ]
+    },
+    {
+      "functionName": "relState",
+      "sourceOffset": 431852,
+      "signals": [
+        "direct-player-write"
+      ]
+    },
+    {
+      "functionName": "relationshipBattleProgress",
+      "sourceOffset": 432816,
+      "signals": [
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "relTalk",
+      "sourceOffset": 433160,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "relAdvanceStory",
+      "sourceOffset": 433617,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "masteryState",
+      "sourceOffset": 437763,
+      "signals": [
+        "direct-player-write"
+      ]
+    },
+    {
+      "functionName": "masteryChoosePath",
+      "sourceOffset": 439870,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "masteryClaimContract",
+      "sourceOffset": 440319,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "masteryBattleProgress",
+      "sourceOffset": 440730,
+      "signals": [
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "levelUpHero",
+      "sourceOffset": 444618,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "starUpHero",
+      "sourceOffset": 444881,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "unlockHero",
+      "sourceOffset": 445149,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "applyReward",
+      "sourceOffset": 445306,
+      "signals": [
+        "direct-player-write",
+        "reward-credit-call"
+      ]
+    },
+    {
+      "functionName": "econ",
+      "sourceOffset": 445808,
+      "signals": [
+        "direct-player-write"
+      ]
+    },
+    {
+      "functionName": "awakenHero",
+      "sourceOffset": 446118,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "recycleHeroShards",
+      "sourceOffset": 446603,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "sparkSelectHero",
+      "sourceOffset": 447070,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "ensureWeeklyReset",
+      "sourceOffset": 448481,
+      "signals": [
+        "direct-player-write"
+      ]
+    },
+    {
+      "functionName": "weeklyProgress",
+      "sourceOffset": 448655,
+      "signals": [
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "claimWeeklyQuest",
+      "sourceOffset": 448928,
+      "signals": [
+        "direct-player-write",
+        "persist-call",
+        "reward-credit-call"
+      ]
+    },
+    {
+      "functionName": "claimWeeklyMilestone",
+      "sourceOffset": 449203,
+      "signals": [
+        "persist-call",
+        "reward-credit-call"
+      ]
+    },
+    {
+      "functionName": "refreshStamina",
+      "sourceOffset": 449440,
+      "signals": [
+        "direct-player-write"
+      ]
+    },
+    {
+      "functionName": "spendStamina",
+      "sourceOffset": 449911,
+      "signals": [
+        "direct-player-write",
+        "persist-call",
+        "stamina-debit-call"
+      ]
+    },
+    {
+      "functionName": "nap",
+      "sourceOffset": 450109,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "claimIdle",
+      "sourceOffset": 450754,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "checkDailyReset",
+      "sourceOffset": 451149,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "claimSignIn",
+      "sourceOffset": 451779,
+      "signals": [
+        "direct-player-write",
+        "persist-call",
+        "reward-credit-call"
+      ]
+    },
+    {
+      "functionName": "questProgress",
+      "sourceOffset": 452293,
+      "signals": [
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "claimQuest",
+      "sourceOffset": 452586,
+      "signals": [
+        "direct-player-write",
+        "persist-call",
+        "reward-credit-call"
+      ]
+    },
+    {
+      "functionName": "claimActMilestone",
+      "sourceOffset": 452894,
+      "signals": [
+        "persist-call",
+        "reward-credit-call"
+      ]
+    },
+    {
+      "functionName": "syncRowsToSquad",
+      "sourceOffset": 463080,
+      "signals": [
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "runBattle",
+      "sourceOffset": 465842,
+      "signals": [
+        "direct-player-write"
+      ]
+    },
+    {
+      "functionName": "claimJourneyMilestone",
+      "sourceOffset": 522872,
+      "signals": [
+        "persist-call",
+        "reward-credit-call"
+      ]
+    },
+    {
+      "functionName": "journeyTutorial",
+      "sourceOffset": 525193,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "renderArtHub",
+      "sourceOffset": 525385,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "renderHub",
+      "sourceOffset": 535018,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "ensureWorld",
+      "sourceOffset": 547313,
+      "signals": [
+        "direct-player-write"
+      ]
+    },
+    {
+      "functionName": "ensureWorldIncident",
+      "sourceOffset": 550099,
+      "signals": [
+        "direct-player-write"
+      ]
+    },
+    {
+      "functionName": "chooseWorldIncidentPlan",
+      "sourceOffset": 550994,
+      "signals": [
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "resolveWorldIncident",
+      "sourceOffset": 552713,
+      "signals": [
+        "direct-player-write",
+        "reward-credit-call"
+      ]
+    },
+    {
+      "functionName": "worldShopBuy",
+      "sourceOffset": 554843,
+      "signals": [
+        "direct-player-write",
+        "persist-call",
+        "reward-credit-call"
+      ]
+    },
+    {
+      "functionName": "startNewChronicle",
+      "sourceOffset": 555482,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "worldChronicle",
+      "sourceOffset": 556488,
+      "signals": [
+        "direct-player-write"
+      ]
+    },
+    {
+      "functionName": "applyWorldOption",
+      "sourceOffset": 556614,
+      "signals": [
+        "direct-player-write",
+        "persist-call",
+        "reward-credit-call"
+      ]
+    },
+    {
+      "functionName": "renderCampaign",
+      "sourceOffset": 561458,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "startChapter",
+      "sourceOffset": 566192,
+      "signals": [
+        "direct-player-write",
+        "persist-call",
+        "stamina-debit-call"
+      ]
+    },
+    {
+      "functionName": "startTraining",
+      "sourceOffset": 567846,
+      "signals": [
+        "stamina-debit-call"
+      ]
+    },
+    {
+      "functionName": "renderTeam",
+      "sourceOffset": 568129,
+      "signals": [
+        "direct-player-write"
+      ]
+    },
+    {
+      "functionName": "claimBond",
+      "sourceOffset": 575859,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "renderDaily",
+      "sourceOffset": 596074,
+      "signals": [
+        "direct-player-write"
+      ]
+    },
+    {
+      "functionName": "endChapter",
+      "sourceOffset": 603750,
+      "signals": [
+        "direct-player-write",
+        "persist-call",
+        "reward-credit-call"
+      ]
+    },
+    {
+      "functionName": "rollTier",
+      "sourceOffset": 621063,
+      "signals": [
+        "direct-player-write"
+      ]
+    },
+    {
+      "functionName": "doSummon",
+      "sourceOffset": 621652,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "renderSummon",
+      "sourceOffset": 622537,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "towerEnsure",
+      "sourceOffset": 634287,
+      "signals": [
+        "direct-player-write"
+      ]
+    },
+    {
+      "functionName": "towerSelectTrial",
+      "sourceOffset": 634864,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "towerClaimSigilMilestone",
+      "sourceOffset": 635420,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "startTower",
+      "sourceOffset": 636625,
+      "signals": [
+        "stamina-debit-call"
+      ]
+    },
+    {
+      "functionName": "towerReward",
+      "sourceOffset": 637014,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "renderTower",
+      "sourceOffset": 638260,
+      "signals": [
+        "direct-player-write"
+      ]
+    },
+    {
+      "functionName": "ensureShop",
+      "sourceOffset": 640746,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "buyShop",
+      "sourceOffset": 641433,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "sweepChapter",
+      "sourceOffset": 644741,
+      "signals": [
+        "direct-player-write",
+        "persist-call",
+        "stamina-debit-call"
+      ]
+    },
+    {
+      "functionName": "ensureSeason",
+      "sourceOffset": 646468,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "saveSeasonDefense",
+      "sourceOffset": 648211,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "seasonDraftStart",
+      "sourceOffset": 649366,
+      "signals": [
+        "direct-player-write",
+        "stamina-debit-call"
+      ]
+    },
+    {
+      "functionName": "seasonSettle",
+      "sourceOffset": 650669,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "seasonClaimMilestone",
+      "sourceOffset": 652049,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "ensureArenaRivalry",
+      "sourceOffset": 653701,
+      "signals": [
+        "direct-player-write"
+      ]
+    },
+    {
+      "functionName": "arenaRivalryMilestones",
+      "sourceOffset": 654573,
+      "signals": [
+        "direct-player-write"
+      ]
+    },
+    {
+      "functionName": "genRivalsLocal",
+      "sourceOffset": 656895,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "startArena",
+      "sourceOffset": 658204,
+      "signals": [
+        "stamina-debit-call"
+      ]
+    },
+    {
+      "functionName": "arenaSettle",
+      "sourceOffset": 658569,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "arenaMilestones",
+      "sourceOffset": 659136,
+      "signals": [
+        "direct-player-write"
+      ]
+    },
+    {
+      "functionName": "ensureHunt",
+      "sourceOffset": 669058,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "selectHuntContract",
+      "sourceOffset": 669359,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "claimHuntMarkMilestones",
+      "sourceOffset": 669712,
+      "signals": [
+        "direct-player-write"
+      ]
+    },
+    {
+      "functionName": "startHunt",
+      "sourceOffset": 670296,
+      "signals": [
+        "direct-player-write",
+        "persist-call",
+        "stamina-debit-call"
+      ]
+    },
+    {
+      "functionName": "huntSettle",
+      "sourceOffset": 670819,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "renderHunt",
+      "sourceOffset": 672478,
+      "signals": [
+        "direct-player-write"
+      ]
+    },
+    {
+      "functionName": "startArenaPvE",
+      "sourceOffset": 683123,
+      "signals": [
+        "stamina-debit-call"
+      ]
+    },
+    {
+      "functionName": "pveSettle",
+      "sourceOffset": 683569,
+      "signals": [
+        "direct-player-write",
+        "persist-call",
+        "reward-credit-call"
+      ]
+    },
+    {
+      "functionName": "ensureHoadang",
+      "sourceOffset": 685268,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "setLanternTheme",
+      "sourceOffset": 685763,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "lanternGrant",
+      "sourceOffset": 685892,
+      "signals": [
+        "direct-player-write"
+      ]
+    },
+    {
+      "functionName": "claimFestivalMarkMilestones",
+      "sourceOffset": 686434,
+      "signals": [
+        "reward-credit-call"
+      ]
+    },
+    {
+      "functionName": "releaseLantern",
+      "sourceOffset": 686673,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "bachBaoState",
+      "sourceOffset": 688889,
+      "signals": [
+        "direct-player-write"
+      ]
+    },
+    {
+      "functionName": "giveHeroShards",
+      "sourceOffset": 689183,
+      "signals": [
+        "direct-player-write"
+      ]
+    },
+    {
+      "functionName": "grantBachBaoSlot",
+      "sourceOffset": 689419,
+      "signals": [
+        "direct-player-write"
+      ]
+    },
+    {
+      "functionName": "spinBachBaoCore",
+      "sourceOffset": 690198,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "openBachBaoChest",
+      "sourceOffset": 692528,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "renderFestival",
+      "sourceOffset": 693638,
+      "signals": [
+        "direct-player-write"
+      ]
+    },
+    {
+      "functionName": "setForgeMold",
+      "sourceOffset": 700313,
+      "signals": [
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "startDualForge",
+      "sourceOffset": 701610,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "chooseDualForge",
+      "sourceOffset": 702107,
+      "signals": [
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "craftItem",
+      "sourceOffset": 703409,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "enhanceItem",
+      "sourceOffset": 704159,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "equipItem",
+      "sourceOffset": 704677,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "salvageItem",
+      "sourceOffset": 705081,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "sendMail",
+      "sourceOffset": 711936,
+      "signals": [
+        "direct-player-write"
+      ]
+    },
+    {
+      "functionName": "claimMail",
+      "sourceOffset": 712257,
+      "signals": [
+        "persist-call",
+        "reward-credit-call"
+      ]
+    },
+    {
+      "functionName": "claimAllMail",
+      "sourceOffset": 712445,
+      "signals": [
+        "persist-call",
+        "reward-credit-call"
+      ]
+    },
+    {
+      "functionName": "socialEnsureDay",
+      "sourceOffset": 717169,
+      "signals": [
+        "direct-player-write"
+      ]
+    },
+    {
+      "functionName": "chatPush",
+      "sourceOffset": 717592,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "socialTrackPost",
+      "sourceOffset": 718411,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "socialClaimDaily",
+      "sourceOffset": 718521,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "setChatChannel",
+      "sourceOffset": 718860,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "renderChat",
+      "sourceOffset": 720311,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "ensureGuildDepth",
+      "sourceOffset": 726511,
+      "signals": [
+        "direct-player-write"
+      ]
+    },
+    {
+      "functionName": "guildEarn",
+      "sourceOffset": 727902,
+      "signals": [
+        "direct-player-write"
+      ]
+    },
+    {
+      "functionName": "guildTrack",
+      "sourceOffset": 728463,
+      "signals": [
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "joinGuild",
+      "sourceOffset": 728665,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "guildDonate",
+      "sourceOffset": 729119,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "guildUpgradeTech",
+      "sourceOffset": 729686,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "guildClaimMission",
+      "sourceOffset": 730082,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "guildBuy",
+      "sourceOffset": 730481,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "startGuildBoss",
+      "sourceOffset": 731549,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "guildCampaignClaim",
+      "sourceOffset": 732311,
+      "signals": [
+        "direct-player-write",
+        "persist-call",
+        "reward-credit-call"
+      ]
+    },
+    {
+      "functionName": "saveGuildDefense",
+      "sourceOffset": 732736,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "startGuildWar",
+      "sourceOffset": 733473,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "ensureFriends",
+      "sourceOffset": 739962,
+      "signals": [
+        "direct-player-write"
+      ]
+    },
+    {
+      "functionName": "friendSend",
+      "sourceOffset": 740401,
+      "signals": [
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "friendAddSuggested",
+      "sourceOffset": 740547,
+      "signals": [
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "friendClaimStamina",
+      "sourceOffset": 740679,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "ensureClanDepth",
+      "sourceOffset": 743481,
+      "signals": [
+        "direct-player-write"
+      ]
+    },
+    {
+      "functionName": "clanAddXp",
+      "sourceOffset": 744499,
+      "signals": [
+        "direct-player-write"
+      ]
+    },
+    {
+      "functionName": "setClanName",
+      "sourceOffset": 744791,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "clanDutyProgress",
+      "sourceOffset": 745005,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "claimClanDuty",
+      "sourceOffset": 745261,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "setClanRole",
+      "sourceOffset": 745531,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "clanReunion",
+      "sourceOffset": 745844,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "renderClan",
+      "sourceOffset": 746596,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "esc",
+      "sourceOffset": 752905,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "netPullSave",
+      "sourceOffset": 754325,
+      "signals": [
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "netFetchRivals",
+      "sourceOffset": 755181,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "netArenaResult",
+      "sourceOffset": 755825,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "rogueState",
+      "sourceOffset": 762680,
+      "signals": [
+        "direct-player-write"
+      ]
+    },
+    {
+      "functionName": "startRogueRun",
+      "sourceOffset": 763431,
+      "signals": [
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "abandonRogue",
+      "sourceOffset": 763637,
+      "signals": [
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "rogueChooseRoute",
+      "sourceOffset": 763819,
+      "signals": [
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "rogueChooseBlessing",
+      "sourceOffset": 765335,
+      "signals": [
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "rogueReroll",
+      "sourceOffset": 765551,
+      "signals": [
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "startRogueBattle",
+      "sourceOffset": 765718,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "challengeState",
+      "sourceOffset": 771961,
+      "signals": [
+        "direct-player-write"
+      ]
+    },
+    {
+      "functionName": "settleChallenge",
+      "sourceOffset": 774862,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "hubMarkNoticeSeen",
+      "sourceOffset": 778059,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "applyLegacyMetaWinHooks",
+      "sourceOffset": 1880225,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    },
+    {
+      "functionName": "finishIntegratedBattle",
+      "sourceOffset": 1881929,
+      "signals": [
+        "direct-player-write",
+        "persist-call"
+      ]
+    }
+  ],
+  "errors": []
+}
