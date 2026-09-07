@@ -231,3 +231,26 @@ Status: `REVIEW` / `IN_PROGRESS`.
 - Không đổi seed, reward, balance, save migration, roster, art, audio hoặc dist. L05b/L05 vẫn `IN_PROGRESS`.
 
 Open: device matrix, full npm/CI outside connector-only harness, `game-dev`, Ticket Board và archive. Next: real device QA, rồi cập nhật Ticket Board khi khả dụng.
+
+## 4.18 L04b — one-shot scene timer cleanup (2026-09-07)
+
+Status: `REVIEW` / `IN_PROGRESS`.
+
+- Source owner `src/ui/scene-lifetime.js` now releases a completed
+  `trackTimeout` registration immediately after its one-shot callback. This
+  prevents finished timer entries from accumulating between campaign
+  activations while preserving the stale callback guard and timer handle API.
+- RED was a real focused failure (`pending 1 !== 0`); GREEN/REFACTOR focused
+  L04 suite is `18/18 PASS`, with changed owner/build-owner syntax checks pass.
+- Code commit `e37c6df342e912a3c8ef15ac2ad5ed152547db21`; Vercel
+  `dpl_8ZUUaBWq4z4yd58Br8piF7UNN68N` READY; complete-source build embedded
+  battle `952325 bytes` and runtime error query returned none.
+- Chrome production re-entry ran 20 rounds; roster/campaign root counts stayed
+  at `1/1`, both visible, and app-origin browser errors were `0` after removing
+  extension diagnostics.
+- No seed, reward, balance, save migration, roster, art, audio, combat rule or
+  dist-only change.
+
+Open: Ticket Board, device matrix, local complete asset checkout, doctor/smoke
+scripts and Game Development Studio CLI. Keep L04/L04b `IN_PROGRESS`; next is
+real device QA and Ticket Board claim/lock when available.

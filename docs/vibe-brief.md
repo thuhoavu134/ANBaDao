@@ -9,3 +9,12 @@ Sảnh ưu tiên địa danh thuộc thế giới Hồn Việt thay cho danh sá
 ## Trạng thái kỹ thuật hiện tại — 2026-09-07
 
 Observer combat đã có evidence coverage cho từng impact và semantic case trong fixture production; parity projection vẫn giữ nguyên. Lát cắt hiện tại ở REVIEW/IN_PROGRESS cho tới khi có device QA, full local/CI harness và Ticket Board.
+
+## 2026-09-07 — L04 lifecycle slice
+
+Campaign scene lifetime now releases one-shot timer registrations after their
+callbacks complete. This is a source-owned lifecycle fix only; player data,
+combat/economy rules and visual assets are unchanged. Focused L04 verification
+is `18/18 PASS`, production build is READY, and the production Chrome re-entry
+smoke passed 20 rounds. The project remains `REVIEW` / `IN_PROGRESS` until
+device, Ticket Board and complete local harness gates are available.

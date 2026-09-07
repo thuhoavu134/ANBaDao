@@ -1,4 +1,12 @@
 
+## 2026-09-07 — L04b completed scene timer cleanup
+
+- Source-owned `trackTimeout` now removes its one-shot disposer after the callback, preventing completed timer registrations from accumulating between campaign activations.
+- RED was a real `pending=1` failure; GREEN/REFACTOR focused L04 suite is `18/18 PASS` with syntax checks passing.
+- Code commit `e37c6df342e912a3c8ef15ac2ad5ed152547db21`; Vercel deployment `dpl_8ZUUaBWq4z4yd58Br8piF7UNN68N` is READY and runtime errors are 0.
+- Production Chrome re-entry passed 20 Tướng → Chinh chiến rounds with one visible roster root and one visible campaign root. Device/Ticket Board/local complete-harness gates remain open; status stays REVIEW / IN_PROGRESS.
+- No seed, reward, balance, save migration, roster, art, audio, gameplay rule or dist-only change.
+
 ## 2026-09-07 — L05c-f semantic impact-case coverage
 
 - Added source-owned `impactTypeCoverage` counts and `impactCaseCoverage` flags for damage, heal, DoT, status and multi-hit impacts.

@@ -1,0 +1,57 @@
+{
+  "ticket": "L04-lifecycle-next",
+  "contractRevision": "12e6279a39490d891114bdc7283d4bf7e99be4e4",
+  "codeCommit": "e37c6df342e912a3c8ef15ac2ad5ed152547db21",
+  "status": "REVIEW",
+  "acceptance": {
+    "L04-B2": {
+      "description": "Completed one-shot scene timers do not remain pending after their callback.",
+      "red": {
+        "command": "node --test tests/scene-lifetime.test.mjs",
+        "exit_code": 1,
+        "observed": "AssertionError: 1 !== 0 for scope.snapshot().pending after the callback"
+      },
+      "green_refactor": {
+        "command": "node --test tests/scene-lifetime.test.mjs tests/return-context.test.mjs tests/campaign-scene.test.mjs",
+        "exit_code": 0,
+        "passed": true,
+        "result": "18/18"
+      }
+    },
+    "L04-B1": {
+      "description": "Campaign activation scope remains separate from reusable DOM root.",
+      "command": "node --test tests/campaign-scene.test.mjs tests/scene-lifetime.test.mjs",
+      "exit_code": 0,
+      "passed": true,
+      "result": "15/15 within selected files"
+    }
+  },
+  "production": {
+    "deployment": "dpl_8ZUUaBWq4z4yd58Br8piF7UNN68N",
+    "state": "READY",
+    "build": "npm run build -> node scripts/build-static.mjs",
+    "embeddedBattleBytes": 952325,
+    "runtimeErrors": 0,
+    "alias": "https://luc-than.vercel.app/"
+  },
+  "browser": {
+    "surface": "Chrome CDP production",
+    "reentryRounds": 20,
+    "flow": "Tướng -> Chinh chiến",
+    "rosterRootCount": 1,
+    "campaignRootCount": 1,
+    "rosterVisible": true,
+    "campaignVisible": true,
+    "appOriginErrors": 0,
+    "extensionDiagnosticsExcluded": 83
+  },
+  "blockers": [
+    "TICKET_BOARD_NOT_AVAILABLE",
+    "DEVICE_BACKEND_NOT_AVAILABLE",
+    "LOCAL_ASSET_CHECKOUT_INCOMPLETE",
+    "DOCTOR_SMOKE_NOT_AVAILABLE",
+    "SOURCE_NOT_AVAILABLE",
+    "GAME_DEV_CLI_NOT_FOUND"
+  ],
+  "next": "Run device matrix and Ticket Board claim/lock/evidence when backends become available; retain REVIEW."
+}

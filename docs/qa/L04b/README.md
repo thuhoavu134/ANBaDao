@@ -52,3 +52,36 @@ Kết quả: **28/28 pass, 0 fail** trong checkout hiện có.
   hotfix thoát trận.
 
 Commit code: `f675cdb0a8d5fe44b28c382652b42ba2790a90d3`.
+
+## 2026-09-07 — one-shot timer cleanup slice
+
+**Trạng thái:** `REVIEW` / `IN_PROGRESS`; this slice does not close the L04
+device, profiler, fault-injection or Ticket Board gates.
+
+- Source owner `src/ui/scene-lifetime.js` now registers a timeout disposer
+  through `add`, releases it immediately after the one-shot callback fires, and
+  preserves the existing handle return value and stale-callback guard.
+- Focused RED was real: the new timer assertion failed because a completed
+  callback left `scope.snapshot().pending === 1`.
+- GREEN and REFACTOR: `node --test tests/scene-lifetime.test.mjs
+  tests/return-context.test.mjs tests/campaign-scene.test.mjs` → `18/18 PASS`;
+  changed owner/build-owner syntax checks pass.
+- Code commit: `e37c6df342e912a3c8ef15ac2ad5ed152547db21`.
+- Vercel deployment `dpl_8ZUUaBWq4z4yd58Br8piF7UNN68N` is `READY`; production
+  build ran the source owner and embedded battle payload sync successfully.
+- Chrome production re-entry ran 20 Tướng → Chinh chiến rounds with one visible
+  roster root and one visible campaign root at the end. Browser-extension
+  diagnostics were excluded; app-origin errors were `0`.
+
+### Remaining blockers / handoff
+
+- `TICKET_BOARD_NOT_AVAILABLE`, `DEVICE_BACKEND_NOT_AVAILABLE`,
+  `SOURCE_NOT_AVAILABLE` for the Hermes archive and `game-dev: command not
+  found` remain explicit.
+- Local `doctor` and `smoke` scripts are not present in this repository; the
+  connector checkout is also missing the full binary asset package, so local
+  full build/all-test results remain blocked. Vercel build is the authoritative
+  complete-source build evidence for this commit.
+- Next exact action: rerun Chrome responsive plus Safari/iPhone/iPad and
+  Ticket Board claim/lock/evidence when those backends are available. Keep
+  `REVIEW`.

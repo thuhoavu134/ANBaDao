@@ -530,3 +530,36 @@ Run device QA on the deployed alias for the same cap/parity evidence, then reass
 - Chưa có Chrome responsive device emulation backend hoặc Safari/iPhone/iPad thật; không ghi device PASS thay cho desktop Chrome.
 - Local source harness không có `package.json`, `game-dev` CLI không tồn tại, Ticket Board không có, archive là `SOURCE_NOT_AVAILABLE`.
 - Bước kế tiếp: device matrix trên alias production khi backend có; sau đó cập nhật trạng thái Ticket Board. Giữ `REVIEW`, không đánh dấu `DONE`.
+
+## L04b — one-shot scene timer cleanup (2026-09-07)
+
+**Trạng thái:** `REVIEW`; L04/L04a/L04b vẫn `IN_PROGRESS`. Đây là một lát cắt
+source/test nhỏ cho lifecycle scope, không phải đóng toàn bộ L04.
+
+- `src/ui/scene-lifetime.js` giờ tự tháo disposer của `trackTimeout` ngay sau
+  khi callback một lần chạy xong; callback vẫn bị chặn nếu scope đã dispose và
+  `trackTimeout` vẫn trả về timer handle như trước.
+- RED: focused timer test fail thật với `pending=1` sau callback. GREEN:
+  focused L04 suite `18/18 PASS`. REFACTOR: node syntax checks cho scene,
+  build owner và return-context pass.
+- Code commit `e37c6df342e912a3c8ef15ac2ad5ed152547db21`; Vercel deployment
+  `dpl_8ZUUaBWq4z4yd58Br8piF7UNN68N` đạt `READY`, build log chạy `npm run build`
+  và embedded battle `952325 bytes`.
+- Chrome production alias đã reload sau commit và chạy 20 vòng `Tướng` →
+  `Chinh chiến`; `#hvHeroRosterV4` và `#hvCampaignScene` đều còn đúng một
+  root và hiển thị. App-origin browser errors sau khi loại diagnostic của
+  extension: `0`.
+- Không đổi seed, reward, balance, save migration, roster, art, audio,
+  gameplay rule hoặc dist-only output.
+
+### Blocker và bàn giao tiếp
+
+- Ticket Board: `TICKET_BOARD_NOT_AVAILABLE`; device: chỉ có Chrome CDP,
+  `DEVICE_BACKEND_NOT_AVAILABLE`; archive: `SOURCE_NOT_AVAILABLE`; `game-dev`
+  CLI: `command not found`.
+- Local connector checkout thiếu binary asset package nên local build/all-test
+  không đại diện đầy đủ; Vercel build complete-source đã pass. `doctor` và
+  `smoke` scripts không có trong repo.
+- Bước kế tiếp: khi có backend thiết bị hoặc Ticket Board, chạy lại device
+  matrix và claim/lock/evidence; giữ `REVIEW`, không tự đánh dấu `DONE` hoặc
+  `MERGED`.

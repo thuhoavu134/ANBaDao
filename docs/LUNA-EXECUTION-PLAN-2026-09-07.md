@@ -442,3 +442,20 @@ The observer evidence slice is implemented and remains `REVIEW`, not `DONE`.
 4. Real Chrome production fixture reports `28/81/219`, type counts `damage=38, death=6, dot=4, energy=133, heal=13, miss=5, status=20`; all semantic case flags are true, snapshots are complete, fingerprint `282374be`, `gaps=[]`.
 5. No gameplay or player-data contract changed. Remaining exact action: device matrix on the deployed alias; retain `REVIEW` until device/Ticket Board blockers clear.
 
+## Checkpoint addendum — L04b one-shot timer cleanup (2026-09-07)
+
+The source slice is implemented and remains `REVIEW`, not `DONE`.
+
+1. Contract revision: `12e6279a39490d891114bdc7283d4bf7e99be4e4`; code commit:
+   `e37c6df342e912a3c8ef15ac2ad5ed152547db21`.
+2. `trackTimeout` now removes its completed one-shot disposer immediately;
+   campaign activation scope still owns the reusable DOM root separately.
+3. RED observed `pending=1` after the callback on baseline. GREEN/REFACTOR
+   focused L04 suite is `18/18 PASS`; syntax checks pass.
+4. Vercel `dpl_8ZUUaBWq4z4yd58Br8piF7UNN68N` is READY, source build completed
+   with embedded battle `952325 bytes`, and runtime errors are absent.
+5. Production Chrome re-entry: 20 `Tướng` → `Chinh chiến` rounds, one roster
+   root and one campaign root, both visible; app-origin errors `0`.
+6. Remaining gates: Ticket Board, responsive/device matrix, local full asset
+   checkout, doctor/smoke scripts and `game-dev`. Preserve `REVIEW` and do not
+   mark L04/L04b DONE.
