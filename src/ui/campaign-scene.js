@@ -1,5 +1,6 @@
 /* Presentation owner for Chinh chiến. Rewards and battles keep their domain owners. */
-const sceneState = { root: null, canvas: null, active: false, raf: 0, timer: 0,
+const sceneState = { root: null, canvas: null, active: false, scope: null, resizeObserver: null,
+  raf: 0, rafRelease: null, timer: 0, timerRelease: null, booted: false,
   lastFrame: 0, width: 390, height: 300, draft: null, slot: 0, checkpoint: null, launching: false };
 const sceneImages = new Map();
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -33,8 +34,14 @@ function imageForScene(src) {
   let image = sceneImages.get(src);
   if (!image) {
     image = new Image(); image.decoding = 'async';
-    image.onload = () => { if (sceneState.active && reducedMotion.matches) drawScene(0); };
+    const onload = () => { if (sceneState.active && reducedMotion.matches) drawScene(0); };
+    image.onload = onload;
     image.src = src; sceneImages.set(src, image);
+    sceneState.scope?.add(() => {
+      if (image.onload === onload) image.onload = null;
+      if (!image.complete) image.src = '';
+      if (sceneImages.get(src) === image) sceneImages.delete(src);
+    });
   }
   return image;
 }
@@ -82,10 +89,11 @@ function drawScene(time) {
     });
 }
 function sceneTick(time) {
+  sceneState.rafRelease?.(); sceneState.rafRelease = null;
   sceneState.raf = 0;
   if (!sceneState.active || document.hidden) return;
   if (time - sceneState.lastFrame >= 32) { drawScene(time); sceneState.lastFrame = time; }
-  if (!reducedMotion.matches) sceneState.raf = requestAnimationFrame(sceneTick);
+  if (!reducedMotion.matches) sceneState.raf = scheduleSceneFrame();
 }
 function resizeScene() {
   if (!sceneState.canvas || !sceneState.active) return;
@@ -100,15 +108,26 @@ function resizeScene() {
   drawScene(performance.now());
 }
 function stopSceneClock() {
-  cancelAnimationFrame(sceneState.raf); clearInterval(sceneState.timer);
+  if (sceneState.raf) cancelAnimationFrame(sceneState.raf);
+  if (sceneState.timer) clearInterval(sceneState.timer);
+  sceneState.rafRelease?.(); sceneState.rafRelease = null;
+  sceneState.timerRelease?.(); sceneState.timerRelease = null;
   sceneState.raf = 0; sceneState.timer = 0;
+}
+function scheduleSceneFrame() {
+  if (!sceneState.scope?.isActive()) return 0;
+  const handle = requestAnimationFrame(sceneTick);
+  sceneState.rafRelease = sceneState.scope.add(() => cancelAnimationFrame(handle));
+  return handle;
 }
 function startSceneClock() {
   stopSceneClock();
   if (!sceneState.active || document.hidden) return;
   resizeScene(); updateSceneNumbers();
-  sceneState.timer = setInterval(updateSceneNumbers, 1000);
-  if (!reducedMotion.matches) sceneState.raf = requestAnimationFrame(sceneTick);
+  const timer = setInterval(updateSceneNumbers, 1000);
+  sceneState.timer = timer;
+  sceneState.timerRelease = sceneState.scope?.add(() => clearInterval(timer)) || null;
+  if (!reducedMotion.matches) sceneState.raf = scheduleSceneFrame();
 }
 function ensureSceneChest() {
   if (!P.hvAfkChest || P.hvAfkChest.schema !== AFK_CHEST_SCHEMA) {
@@ -136,7 +155,7 @@ function updateSceneNumbers() {
   if (sceneState.draft) updateLaunchState();
 }
 function mountScene() {
-  if (sceneState.root) return;
+  if (sceneState.root) { observeSceneCanvas(); return; }
   const root = document.createElement('section'); root.id = 'hvCampaignScene'; root.hidden = true;
   root.setAttribute('aria-label', 'Chinh chiến');
   root.innerHTML = `<div class="cs-home"><header class="cs-header"><img class="cs-avatar" data-scene-avatar src="assets/ui/menu-v3233/icons/profile-ong-pho-imagen.png" alt=""><div><span class="cs-eyebrow">HỒN VIỆT · MỘNG GIỚI</span><b class="cs-leader" data-scene-leader></b><small>Lực chiến <strong data-scene-power></strong></small></div><div class="cs-wallet"><span><img src="assets/ui/menu-v3233/icons/resource-gold-imagen.png" alt="Vàng"><b data-scene-gold></b></span><span><img src="assets/ui/menu-v3233/icons/resource-gem-imagen.png" alt="Ngọc"><b data-scene-gems></b></span><span><img src="assets/ui/menu-v3233/icons/resource-energy-imagen.png" alt="Thể lực"><b data-scene-stamina></b></span></div></header>
@@ -149,7 +168,18 @@ function mountScene() {
   document.body.appendChild(root); sceneState.root = root; sceneState.canvas = root.querySelector('canvas');
   root.addEventListener('click', sceneClick);
   root.querySelector('dialog').addEventListener('close', () => { if (sceneState.active) root.querySelector('[data-hv-afk-challenge]').focus(); });
-  new ResizeObserver(resizeScene).observe(sceneState.canvas);
+  observeSceneCanvas();
+}
+function observeSceneCanvas() {
+  sceneState.resizeObserver?.disconnect(); sceneState.resizeObserver = null;
+  if (!sceneState.scope?.isActive() || !sceneState.canvas || typeof ResizeObserver === 'undefined') return;
+  const observer = new ResizeObserver(resizeScene);
+  observer.observe(sceneState.canvas);
+  sceneState.resizeObserver = observer;
+  sceneState.scope.add(() => {
+    observer.disconnect();
+    if (sceneState.resizeObserver === observer) sceneState.resizeObserver = null;
+  });
 }
 function renderScene() {
   if (!P) return;
@@ -171,9 +201,11 @@ function onSceneRoute(name) {
   document.body.classList.toggle('hv-campaign-active', sceneState.active);
   if (!sceneState.active) {
     stopSceneClock(); sceneState.draft = null; sceneState.launching = false;
+    sceneState.scope?.dispose(); sceneState.scope = null;
     if (sceneState.root) { sceneState.root.querySelector('dialog').close(); sceneState.root.hidden = true; }
     return;
   }
+  if (!sceneState.scope?.isActive()) sceneState.scope = createSceneLifetime('campaign');
   sceneState.draft = null; sceneState.checkpoint = null; sceneState.launching = false;
   renderScene(); sceneState.root.hidden = false;
   sceneState.root.querySelector('.cs-home').hidden = false;
@@ -278,6 +310,8 @@ window.HonVietCampaignScene = Object.freeze({ render: renderScene, onRoute: onSc
 // Preserve the existing AFK debug contract for saves and QA tools.
 window.__HV_AFK_CHEST_RUNTIME_V1 = { module: { AFK_CHEST_SCHEMA, AFK_CAP_SECONDS, createAfkChestState, normalizeAfkChestState, accrueAfkChest, getAfkChestView, claimAfkChest }, render: renderScene, claim: grantSceneClaim, challenge: openPreparation };
 function bootCampaignScene() {
+  if (sceneState.booted) return;
+  sceneState.booted = true;
   window.renderCampaign = renderScene;
   onSceneRoute(ST.screen);
   document.addEventListener('visibilitychange', () => {
