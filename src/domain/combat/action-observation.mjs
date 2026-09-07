@@ -192,8 +192,16 @@ export function combatObservationReport(observation) {
     const expectedRuleSites = rngSitesForAction(action.kind)
       .filter((entry) => entry.domain === 'rule')
       .map((entry) => entry.site);
+    const deterministicSites = new Set();
+    for (const impact of action.impacts || []) {
+      if (impact.flags?.forceHit || impact.flags?.forceMiss) deterministicSites.add('applyDamage.hit');
+      if (impact.flags?.forceCrit) deterministicSites.add('applyDamage.crit');
+    }
     const ruleCalls = action.rngCalls.filter((call) => call.domain === 'rule');
-    return expectedRuleSites.some((site) => !ruleCalls.some((call) => call.site === site && call.captured && call.value !== null));
+    return expectedRuleSites.some((site) => (
+      !deterministicSites.has(site) &&
+      !ruleCalls.some((call) => call.site === site && call.captured && call.value !== null)
+    ));
   });
   const rngSites = [...new Set(allRngCalls.map((call) => call.site))].sort();
   const resultTypes = [...new Set(observation.actions.flatMap((action) => action.results.map((result) => result.type)))].sort();
