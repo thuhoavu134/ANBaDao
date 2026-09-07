@@ -50,6 +50,34 @@ test('scene lifetime unregisters listeners, tracks cancel handles and releases l
   assert.equal(scope.snapshot().pending, 0);
 });
 
+test('scene lifetime releases one-shot timers after they fire so completed callbacks cannot accumulate', () => {
+  const originalSetTimeout = globalThis.setTimeout;
+  const originalClearTimeout = globalThis.clearTimeout;
+  let scheduledCallback;
+  const cleared = [];
+  globalThis.setTimeout = callback => {
+    scheduledCallback = callback;
+    return 'timer-1';
+  };
+  globalThis.clearTimeout = handle => cleared.push(handle);
+
+  try {
+    const events = [];
+    const scope = createSceneLifetime('campaign-timeout');
+    scope.trackTimeout(() => events.push('fired'), 1000);
+
+    assert.equal(scope.snapshot().pending, 1);
+    scheduledCallback();
+    assert.deepEqual(events, ['fired']);
+    assert.equal(scope.snapshot().pending, 0);
+    assert.equal(scope.dispose().released, 0);
+    assert.deepEqual(cleared, ['timer-1']);
+  } finally {
+    globalThis.setTimeout = originalSetTimeout;
+    globalThis.clearTimeout = originalClearTimeout;
+  }
+});
+
 test('scene lifetime reports disposal errors without preventing other owners from cleaning up', () => {
   const released = [];
   const scope = createSceneLifetime('test');

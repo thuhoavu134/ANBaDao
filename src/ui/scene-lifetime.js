@@ -71,10 +71,13 @@ export function createSceneLifetime(owner = 'scene') {
   }
 
   function trackTimeout(callback, delay, ...args) {
+    let release = null;
     const handle = setTimeout(() => {
+      release?.();
       if (!disposed) callback(...args);
     }, delay);
-    return track(handle, clearTimeout);
+    release = add(() => clearTimeout(handle));
+    return handle;
   }
 
   function trackInterval(callback, delay, ...args) {
