@@ -27,7 +27,7 @@ Tài liệu này cụ thể hóa E01–E26/R01–R11 của [master plan](HON-VIE
 | ID | Ưu tiên / trạng thái lúc bàn giao | Gắn E/R | Phụ thuộc | Đầu ra |
 |---|---|---|---|---|
 | L01 | P0 / VERIFY | E01, E04, E24; R02–04 | Hotfix đã deploy | Bằng chứng thoát/vào trận, route, audio trên thiết bị |
-| L02 | P0 / READY | E02, E08; R05 | Baseline | Catalog report, ID hợp lệ và chính sách legacy reward rõ |
+| L02 | P0 / IN_PROGRESS (L02a DONE) | E02, E08; R05 | Baseline | L02a report/validator đã có; L02b/L02c còn mở |
 | L03 | P0 / READY phần a | E03, E07; R07/R10 | Chủ transaction hiện có | Command + quest/event cùng một commit cho lát cắt nuôi đội |
 | L04 | P1 / READY phần a | E04, E06 | Router/bridge hiện có | Return context và vòng đời màn dùng một owner |
 | L05 | P1 / READY phần a | E05/E06; R08/R11 | Combat hiện có | Event đủ sub-action, RNG luật có seed, parity |
@@ -109,6 +109,8 @@ Thân code gốc còn trong archive người dùng bàn giao; guide chỉ rõ 27
 **L02c:** sau khi chốt, migrate đúng reward chưa claim và giữ receipt/ownership đã nhận. Không thu hồi hero/item save cũ. Chuyển catalog sang một nguồn duy nhất theo lát cắt, test rằng adapter và UI nhận cùng version.
 
 **Test/đóng:** report tái tạo được; fixtures valid/unknown/non-playable/cycle; save đã/ chưa qua chương; UI receipt không hứa tướng không thể xuất hiện trong roster. Không đổi balance trong L02a. Asset: dùng portrait/icon đang có; chỉ gen art mới sau khi item/hero đích rõ.
+
+**L02a đã triển khai:** commit 7272ede748eed62af4814e13776e468ebe7e9d15 thêm validator thuần, extractor boundary, audit script, behavior tests và report từ catalog active. Kết quả thực tế là 4/4 focused tests pass; report không che 5 missing chapter scene starts và 11 legacy reward references. Hermes archive không có trong phiên này (SOURCE_NOT_AVAILABLE), nên không có method body nào được port. Full L02 vẫn giữ IN_PROGRESS; nhận L02b để lập bảng đề xuất trước khi sửa dữ liệu.
 
 ### L03 — Giao dịch và event tiến độ cùng thành công hoặc cùng thất bại
 

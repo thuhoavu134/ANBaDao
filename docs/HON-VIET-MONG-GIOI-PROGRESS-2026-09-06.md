@@ -49,7 +49,7 @@ Cập nhật **07/09/2026, giờ Việt Nam**. Giữ tên file cũ để các li
 
 | Thứ tự | Ticket | Bước kế tiếp cụ thể |
 |---|---|---|
-| 1 | **L02a — READY** | Đọc nhóm Catalog trong guide và đoạn basemdl/mainlinemdl; làm report/validator thuần, phân biệt playable/NPC/legacy reward, reference/cycle. Ghi phần port/giữ owner; chưa thay reward hoặc seed |
+| 1 | **L02a — DONE** | Validator/extractor/report đã có ở commit 7272ede748eed62af4814e13776e468ebe7e9d15; 4/4 focused tests pass. Findings và phần chưa làm ghi trong docs/qa/L02a; chưa thay reward hoặc seed |
 | Song song | L01 — VERIFY | Production/device smoke audio/route, ghi rõ thiết bị thật; không viết lại hotfix đã có |
 | 2 | L03a — READY | Inventory entrypoints trừ/cộng và thứ tự persist/event; lấy level-up → quest làm lát cắt đầu |
 | 3 | L04a / L05a — READY | Map return/lifetime và fixture các sub-action combat; chọn một việc mỗi phiên |
@@ -57,6 +57,14 @@ Cập nhật **07/09/2026, giờ Việt Nam**. Giữ tên file cũ để các li
 | Chuẩn bị được | L07 / L17 | Bảng seed/banner và spec online để bàn; không chặn việc độc lập |
 
 Spec từng ticket, file owner, contract, asset, test và điều kiện đóng ở [execution plan](LUNA-EXECUTION-PLAN-2026-09-07.md). Không coi việc lập danh sách L01–L20 là đã code các ticket đó.
+
+## 4.1 L02a — validator catalog đã triển khai
+
+- L02a đã hoàn thành trong phạm vi code/test ở commit 7272ede748eed62af4814e13776e468ebe7e9d15. Full L02 chưa DONE.
+- Adapter đọc đúng catalog active từ index.html; report kiểm kê 12 playable hero, 11 hero tồn tại nhưng không playable, 3 NPC/lore speaker, 11 enemy ID, 6 chapter, 21 scene và 32 asset reference.
+- Findings thật: 5 MISSING_SCENE_REF (first scene của ch02–ch06 chưa có trong DATA.scenes) và 11 LEGACY_REWARD_HERO reference (reward/unlock trỏ ngoài 12 playable). Không có cycle, scene/encounter unreachable, encounter unknown, missing asset, giá âm hoặc giá không hợp lệ trong catalog hiện tại.
+- Test behavior: 4/4 focused tests pass. Audit không có allow-errors trả exit 1 vì findings đang tồn tại; report evidence được ghi với allow-errors. npm test, browser, Safari thật và production deployment chưa chạy trong phiên connector-only này.
+- Bảo toàn seed, reward, balance, save migration, source/build runtime và hotfix audio. Bước tiếp theo: L02b lập bảng reward/scene đề xuất để chốt trước mọi chỉnh DATA hoặc migration.
 
 ## 5. Gate còn mở
 
