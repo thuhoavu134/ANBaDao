@@ -76,6 +76,14 @@ test('L05c round-cap report records terminal round 15 without allowing round 16'
     actionsWithBoundary: 15,
     complete: true
   });
+  assert.deepEqual(report.impactTypeCoverage, { damage: 15 });
+  assert.deepEqual(report.impactCaseCoverage, {
+    damage: true,
+    heal: false,
+    dot: false,
+    status: false,
+    multiHit: false
+  });
   assert.deepEqual(report.completion, {
     winner: 'player',
     reason: 'round-limit-tie',

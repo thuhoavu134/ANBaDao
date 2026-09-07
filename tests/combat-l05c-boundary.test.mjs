@@ -43,31 +43,41 @@ test('L05c report closes final-action and per-impact snapshot gaps', () => {
     { type: 'damage', amount: 12, metadata: { sourceBoundary: 'applyDamage', effectPhase: 'action' } },
     { type: 'damage', amount: 8, metadata: { sourceBoundary: 'applyDamage', effectPhase: 'action' } },
     { type: 'dot', amount: 4, metadata: { sourceBoundary: 'tickStatuses', effectPhase: 'turn-start', statusType: 'poison', eventIndex: 0 } },
-    { type: 'heal', amount: 8, metadata: { sourceBoundary: 'applyHeal', effectPhase: 'action' } }
+    { type: 'heal', amount: 8, metadata: { sourceBoundary: 'applyHeal', effectPhase: 'action' } },
+    { type: 'status', amount: null, metadata: { sourceBoundary: 'addStatus', effectPhase: 'action', statusType: 'poison' } }
   ]) {
     assert.equal(recordCombatImpact(observation, actionId, { ...impact, actorId: 'actor', targetId: 'target', before, after }).ok, true);
   }
 
   const report = combatObservationReport(observation);
   assert.deepEqual(report.impactBoundaryCoverage, {
+    addStatus: 1,
     applyDamage: 2,
     applyHeal: 1,
     tickStatuses: 1
   });
-  assert.deepEqual(report.directBoundaryTypes, ['applyDamage', 'applyHeal', 'tickStatuses']);
-  assert.equal(report.directBoundaryCount, 4);
+  assert.deepEqual(report.directBoundaryTypes, ['addStatus', 'applyDamage', 'applyHeal', 'tickStatuses']);
+  assert.equal(report.directBoundaryCount, 5);
   assert.equal(report.multiImpactActionCount, 1);
   assert.equal(report.multiHitActionCount, 1);
   assert.deepEqual(report.finalSnapshotCoverage, { captured: 1, expected: 1, complete: true });
   assert.deepEqual(report.finalSnapshotBoundaryTypes, ['resolveAction.complete']);
   assert.deepEqual(report.impactSnapshotCoverage, {
-    captured: 4,
-    expected: 4,
+    captured: 5,
+    expected: 5,
     actions: 1,
     actionsWithBoundary: 1,
     complete: true
   });
-  assert.deepEqual(report.impactSnapshotBoundaryTypes, ['applyDamage', 'applyHeal', 'tickStatuses']);
+  assert.deepEqual(report.impactSnapshotBoundaryTypes, ['addStatus', 'applyDamage', 'applyHeal', 'tickStatuses']);
+  assert.deepEqual(report.impactTypeCoverage, { damage: 2, dot: 1, heal: 1, status: 1 });
+  assert.deepEqual(report.impactCaseCoverage, {
+    damage: true,
+    heal: true,
+    dot: true,
+    status: true,
+    multiHit: true
+  });
   assert.equal(report.gaps.some(entry => entry.code === COMBAT_OBSERVATION_GAPS.FINAL_ACTION_SNAPSHOT), false);
   assert.equal(report.gaps.some(entry => entry.code === COMBAT_OBSERVATION_GAPS.PER_IMPACT_BOUNDARY), false);
 });

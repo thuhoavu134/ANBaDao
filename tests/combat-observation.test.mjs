@@ -106,6 +106,14 @@ test('L05a can attach an explicit sub-impact without mutating the captured snaps
   assert.deepEqual(impact.impact.rngCursor, { rule: 3 });
   const report = combatObservationReport(observation);
   assert.equal(report.impactCount, 1);
+  assert.deepEqual(report.impactTypeCoverage, { damage: 1 });
+  assert.deepEqual(report.impactCaseCoverage, {
+    damage: true,
+    heal: false,
+    dot: false,
+    status: false,
+    multiHit: false
+  });
   assert.deepEqual(report.impactSnapshotCoverage, {
     captured: 0,
     expected: 1,

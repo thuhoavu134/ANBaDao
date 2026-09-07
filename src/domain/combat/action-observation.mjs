@@ -349,6 +349,21 @@ export function combatObservationReport(observation) {
   const multiHitActionCount = observation.actions.filter((action) => (
     (action.impacts || []).filter((impact) => ['damage', 'miss'].includes(impact.type)).length >= 2
   )).length;
+  const impactTypeCounts = {};
+  for (const impact of allImpacts) {
+    const type = text(impact.type, 'unknown');
+    impactTypeCounts[type] = (impactTypeCounts[type] || 0) + 1;
+  }
+  const impactTypeCoverage = Object.fromEntries(
+    Object.entries(impactTypeCounts).sort(([left], [right]) => left.localeCompare(right))
+  );
+  const impactCaseCoverage = {
+    damage: Boolean(impactTypeCoverage.damage),
+    heal: Boolean(impactTypeCoverage.heal),
+    dot: Boolean(impactTypeCoverage.dot),
+    status: Boolean(impactTypeCoverage.status),
+    multiHit: multiHitActionCount > 0
+  };
   const ruleActions = observation.actions.filter((action) => {
     const kind = text(action.kind, 'basic').toLowerCase();
     return !['heal', 'healall', 'guardall', 'cleanseguard'].includes(kind);
@@ -412,6 +427,8 @@ export function combatObservationReport(observation) {
       complete: !impactBoundaryGapOpen
     },
     impactSnapshotBoundaryTypes,
+    impactTypeCoverage,
+    impactCaseCoverage,
     multiImpactActionCount,
     multiHitActionCount,
     finalSnapshotCoverage: {
