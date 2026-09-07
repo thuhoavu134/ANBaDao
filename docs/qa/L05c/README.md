@@ -115,3 +115,11 @@ Deployment: `dpl_DZtRfRZGyWeDUnhxtQcVjn2GZAnZ` (`READY`), commit `eab4a45`, alia
 - Chrome desktop: PASS for production interaction and observer evidence. Safari/iPhone/iPad and real responsive device matrix: NOT RUN.
 - Ticket Board: `TICKET_BOARD_NOT_AVAILABLE`; archive: `SOURCE_NOT_AVAILABLE`; `game-dev` CLI: unavailable.
 - Status: `REVIEW`; do not mark DONE. Next: device QA, then per-impact boundary.
+
+## L05c-e — per-impact boundary evidence (2026-09-07)
+
+- Feature commit: `efab46434a36c805e6f0c5fe284c0827132d7ea2`; checkpoint: `523ff30c341ba5663924e83812d5f8adedad2083`.
+- RED: 3 focused failures; GREEN: 10/10; full combat regression: 39/39; syntax: PASS.
+- Production: `dpl_5AaCe8jwx53Xh7caas3UJQ5xMHca` READY, embedded battle 951694 bytes, runtime errors none.
+- Production Chrome fixture: `finished`, 28 actions / 81 results / 219 impacts; impact snapshots 219/219, actions with boundary 28/28, final snapshots 28/28, fingerprint 282374be, `gaps=[]`.
+- This is evidence for the current fixture path only. Device QA, connector-only npm/CI, Ticket Board, archive and `game-dev` remain blocked. Status stays REVIEW / IN_PROGRESS.

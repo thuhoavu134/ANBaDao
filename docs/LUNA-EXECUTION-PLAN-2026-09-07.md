@@ -419,3 +419,15 @@ The next source slice is implemented and remains `REVIEW`, not `DONE`.
 3. Production deployment `dpl_DZtRfRZGyWeDUnhxtQcVjn2GZAnZ` is `READY`; build payload is `950131 bytes` and runtime errors are absent.
 4. Updated production Chrome 1× and 2× fixtures both report `28/81/219`, complete `28/28` final snapshots and fingerprint `282374be`.
 5. Remaining order: real responsive/device QA, then per-impact before/after boundary. Preserve seed, reward, balance, save migration, roster, art and audio.
+
+## Checkpoint addendum — L05c-e per-impact boundary evidence (2026-09-07)
+
+The source slice is implemented through production browser evidence and remains `REVIEW`, not `DONE`.
+
+1. Checkpoint `523ff30c` and feature commit `efab4643` are fast-forwarded on `main`; source owner records explicit per-impact capture evidence, while parity continues to ignore evidence-only fields.
+2. RED produced 3 real focused failures. GREEN is `10/10`; the full combat regression is `39/39 PASS`, and observer/adapter syntax checks pass.
+3. Vercel deployment `dpl_5AaCe8jwx53Xh7caas3UJQ5xMHca` is `READY` from `efab4643`; build ran `npm run build` / `node scripts/build-static.mjs`, embedded battle `951694 bytes`, runtime errors are absent.
+4. Production Chrome real UI evidence reports `28/81/219`, `impactSnapshotCoverage 219/219`, `actionsWithBoundary 28/28`, final snapshots `28/28`, fingerprint `282374be`, completion at round 4 with speed 2, and `gaps=[]`.
+5. Preserve all existing non-goals: no seed, reward, balance, save migration, roster, art, audio or dist-only change.
+6. Remaining gates: Chrome responsive plus Safari/iPhone/iPad device evidence, full npm/CI outside the connector-only harness, Ticket Board and archive availability. Next exact action is the device matrix on the same deployed alias; retain `REVIEW`.
+

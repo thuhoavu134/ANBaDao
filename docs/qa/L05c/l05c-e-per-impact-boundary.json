@@ -1,0 +1,118 @@
+{
+  "slice": "L05c-e",
+  "status": "REVIEW",
+  "date": "2026-09-07",
+  "contractRevision": "vibelab.json@9f9cad09165e0e17becb90c70f5e66969d8621e1",
+  "checkpointCommit": "523ff30c341ba5663924e83812d5f8adedad2083",
+  "featureCommit": "efab46434a36c805e6f0c5fe284c0827132d7ea2",
+  "baseCommit": "0ab6a89b3086e294f5f9b941ba0fb3adda2c4d8f",
+  "red": {
+    "command": "node --test tests/combat-l05c-boundary.test.mjs tests/combat-observation.test.mjs tests/combat-l05c-parity.test.mjs",
+    "passed": false,
+    "tests": 10,
+    "failures": 3,
+    "exit_code": 1,
+    "reason": "impactSnapshotCoverage and boundaryCaptured were absent on the unimplemented baseline"
+  },
+  "green": {
+    "command": "node --test tests/combat-l05c-boundary.test.mjs tests/combat-observation.test.mjs tests/combat-l05c-parity.test.mjs",
+    "passed": true,
+    "tests": 10,
+    "failures": 0,
+    "exit_code": 0
+  },
+  "refactor": {
+    "syntax": [
+      {
+        "command": "node --check src/domain/combat/action-observation.mjs",
+        "passed": true,
+        "exit_code": 0
+      },
+      {
+        "command": "node --check scripts/combat-domain-3q-adapter-v1.mjs",
+        "passed": true,
+        "exit_code": 0
+      }
+    ],
+    "fullCombat": {
+      "command": "node --test tests/*.test.mjs",
+      "passed": true,
+      "tests": 39,
+      "failures": 0,
+      "exit_code": 0
+    }
+  },
+  "implementation": {
+    "impactFields": [
+      "boundaryCaptured",
+      "snapshotBoundary"
+    ],
+    "captureRule": "both before and after arrays plus metadata.sourceBoundary",
+    "report": "impactSnapshotCoverage and per-impact gap close only when every action has at least one captured impact and every impact is captured",
+    "parity": "boundary evidence fields are excluded from full-replay-rule-outcome projection"
+  },
+  "deployment": {
+    "id": "dpl_5AaCe8jwx53Xh7caas3UJQ5xMHca",
+    "state": "READY",
+    "sourceCommit": "efab46434a36c805e6f0c5fe284c0827132d7ea2",
+    "alias": "https://luc-than.vercel.app/",
+    "build": "npm run build -> node scripts/build-static.mjs",
+    "embeddedBattleBytes": 951694,
+    "runtimeErrors": "none in selected 1h window"
+  },
+  "productionChrome": {
+    "url": "https://luc-than.vercel.app/battle.html?embedded=1&session=l05e-per-impact&v=3175&qaCombatFixture=l05a",
+    "interactions": [
+      "Xuất chiến",
+      "Đổi tốc độ qua UI lên 2×"
+    ],
+    "report": {
+      "status": "finished",
+      "actionCount": 28,
+      "resultCount": 81,
+      "impactCount": 219,
+      "impactSnapshotCoverage": {
+        "captured": 219,
+        "expected": 219,
+        "actions": 28,
+        "actionsWithBoundary": 28,
+        "complete": true
+      },
+      "finalSnapshotCoverage": {
+        "captured": 28,
+        "expected": 28,
+        "complete": true
+      },
+      "completion": {
+        "winner": "player",
+        "reason": "enemy-wiped",
+        "round": 4,
+        "roundMax": 15,
+        "speed": 2
+      },
+      "replayFingerprint": "282374be",
+      "gaps": []
+    },
+    "visibleResult": "Khải hoàn",
+    "appErrors": [],
+    "expectedFixtureWarning": "Không tìm thấy cấu hình trận tích hợp; dùng đội hình mặc định."
+  },
+  "preservation": [
+    "seed",
+    "reward",
+    "balance",
+    "save migration",
+    "roster",
+    "art",
+    "audio",
+    "dist"
+  ],
+  "blockers": [
+    "real responsive/Safari/iPhone/iPad device backend unavailable",
+    "local source harness lacks package.json",
+    "game-dev CLI missing",
+    "Ticket Board unavailable",
+    "archive SOURCE_NOT_AVAILABLE"
+  ],
+  "next": "Run the device matrix on the deployed alias, then update Ticket Board status when available; keep REVIEW/IN_PROGRESS."
+}

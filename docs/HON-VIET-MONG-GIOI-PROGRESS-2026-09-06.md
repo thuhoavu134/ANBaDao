@@ -207,3 +207,15 @@ Status: `REVIEW` / `IN_PROGRESS`.
 - Final-action observer gap is closed only for actions with explicit capture. Per-impact gap remains open. No seed/reward/balance/save/roster/art/audio changes.
 
 Open: per-impact boundary, real device QA, full npm test outside the connector-only source harness, `game-dev` CLI, Ticket Board, and archive source. Next: device matrix when available, then per-impact boundary.
+
+## 4.16 L05c-e — per-impact boundary evidence (2026-09-07)
+
+Status: `REVIEW` / `IN_PROGRESS`.
+
+- Source/build owner commit `efab46434a36c805e6f0c5fe284c0827132d7ea2` adds explicit per-impact evidence fields: `boundaryCaptured` and `snapshotBoundary`. The observer report now exposes `impactSnapshotCoverage` and closes `per-impact-boundary-missing` only for complete action/impact capture.
+- RED: focused new contract assertions produced 3 real failures, exit code 1. GREEN: focused suite `10/10 PASS`. REFACTOR: syntax and the full combat suite `39/39 PASS`.
+- Production Vercel deployment `dpl_5AaCe8jwx53Xh7caas3UJQ5xMHca` is `READY`; build used `npm run build` → `node scripts/build-static.mjs`, embedded battle `951694 bytes`; runtime error query 1h: none.
+- Real production Chrome run after `Xuất chiến` and UI speed change to 2×: `finished`, `28 action / 81 result / 219 impact`, impact snapshot coverage `219/219`, action boundary coverage `28/28`, final snapshot coverage `28/28`, completion `player / enemy-wiped / round 4`, fingerprint `282374be`, `gaps=[]`.
+- No changes to seed, reward, balance, save migration, roster, art, audio or dist. Direct fixture emits the known embedded-config fallback warning only; no app runtime error.
+
+Open: real responsive/device QA, full npm test outside the connector-only source harness, `game-dev`, Ticket Board and archive source. L05b/L05 remain `IN_PROGRESS`; do not mark DONE. Next: device matrix on the deployed alias, then reassess the remaining L05b acceptance evidence.

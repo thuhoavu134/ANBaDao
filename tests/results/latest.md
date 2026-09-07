@@ -3,12 +3,12 @@ Loop: 0
 Status: PASS_WITH_BLOCKER
 Date: 2026-09-07
 
-[PASS] red-evidence — 3 real failures on unimplemented baseline, preserved
-[PASS] green-focused — 3/3 boundary tests
-[PASS] refactor-combat — 39/39 focused combat tests
-[PASS] syntax-inline — observer/adapter syntax and inline compile
-[PASS] vercel-build — READY deployment from eab4a45, embedded battle 950131 bytes
-[PASS] production-chrome — 1×/2× real UI, 28/81/219, final snapshots 28/28, parity 282374be
+[PASS] red-evidence — 3 real focused failures on unimplemented per-impact coverage, preserved
+[PASS] green-focused — 10/10 focused observer/boundary/parity tests
+[PASS] refactor-combat — 39/39 combat tests
+[PASS] syntax — observer and adapter `node --check`
+[PASS] vercel-build — READY deployment from efab464, embedded battle 951694 bytes
+[PASS] production-chrome — real Xuất chiến + speed 2×, 28/81/219, impact snapshots 219/219, final snapshots 28/28, gaps=[]
 [PASS] runtime-errors — no Vercel runtime errors in selected 1h window
 [BLOCKED] local-npm — source harness has no package.json
 [BLOCKED] device-matrix — Safari/iPhone/iPad and responsive device backend unavailable

@@ -466,3 +466,39 @@ Run device QA on the deployed alias for the same cap/parity evidence, then reass
 - `game-dev` CLI của Game Development Studio không tồn tại trong môi trường (`command not found`), không tự cài/thay credential.
 - Ticket Board: `TICKET_BOARD_NOT_AVAILABLE`; archive mẫu: `SOURCE_NOT_AVAILABLE`.
 - Bước tiếp theo: khi có device backend, chạy lại cap/parity trên Chrome responsive + Safari/iPhone/iPad; sau đó mới quyết định lát cắt per-impact. Giữ `REVIEW`, không đánh dấu DONE.
+
+## L05c-e — per-impact boundary evidence (2026-09-07)
+
+**Trạng thái:** `REVIEW`; L05/L05b vẫn `IN_PROGRESS`. Lát cắt này đóng gap `per-impact-boundary-missing` cho các fixture có đủ evidence; không tự chuyển ticket sang `DONE`.
+
+### Source/build owner
+
+- Checkpoint `523ff30c341ba5663924e83812d5f8adedad2083` → feature `efab46434a36c805e6f0c5fe284c0827132d7ea2`; `main` được fast-forward, không force-push.
+- Sửa source owner `src/domain/combat/action-observation.mjs`: mỗi impact ghi `boundaryCaptured` và `snapshotBoundary` khi có đủ `before` + `after` snapshot và `metadata.sourceBoundary`. Report thêm `impactSnapshotCoverage` và chỉ bỏ gap khi mọi action có ít nhất một impact, mọi impact đều được capture.
+- Parity projection giữ đúng phạm vi `full-replay-rule-outcome`: field evidence boundary không làm thay đổi digest/luật replay. Build owner/identity, seed, reward, balance, save migration, roster, art, audio và dist không đổi.
+
+### TDD and verification
+
+- RED: focused boundary/observation/parity suite trên baseline → `3 failed`, exit code 1; thiếu report coverage và `boundaryCaptured`.
+- GREEN: cùng focused suite → `10/10 PASS`, exit code 0.
+- REFACTOR: `node --check` observer + adapter pass; `node --test tests/*.test.mjs` → `39/39 PASS`, exit code 0.
+- Local `npm test`/`npm run build` vẫn chưa chạy được vì source harness connector-only không có `package.json`; không dùng kết quả này để claim full local pipeline.
+
+### Production deployment
+
+- Vercel deployment `dpl_5AaCe8jwx53Xh7caas3UJQ5xMHca` từ feature `efab464` đạt `READY`; alias [`https://luc-than.vercel.app/`](https://luc-than.vercel.app/).
+- Build log: clone đúng commit, `npm run build` → `node scripts/build-static.mjs`, embedded battle `951694 bytes`, deploy completed.
+- Runtime error query 1 giờ: không có runtime errors.
+
+### Production Chrome evidence
+
+- URL: `https://luc-than.vercel.app/battle.html?embedded=1&session=l05e-per-impact&v=3175&qaCombatFixture=l05a`; đã bấm `Xuất chiến` thật và đổi tốc độ qua nút UI lên `2×`.
+- Run kết thúc: `finished`, `28 action / 81 result / 219 impact`; `impactSnapshotCoverage={captured:219, expected:219, actions:28, actionsWithBoundary:28, complete:true}`; boundary types gồm `addStatus`, `applyDamage`, `applyHeal`, `gainEnergy`, `markDefeated`, `performAction.action-cost`, `tickStatuses`.
+- `finalSnapshotCoverage={captured:28, expected:28, complete:true}`; completion `player / enemy-wiped / round 4 / speed 2`; full-replay fingerprint `282374be`; report `gaps=[]`.
+- Visible result là `Khải hoàn`; browser log theo URL chỉ có warning fixture fallback, không có app error. Extension diagnostic không tính vào app evidence.
+
+### Blockers and next handoff
+
+- Chrome desktop production đã có evidence; Safari/iPhone/iPad và responsive device matrix chưa chạy vì backend thiết bị không có.
+- Ticket Board: `TICKET_BOARD_NOT_AVAILABLE`; archive mẫu: `SOURCE_NOT_AVAILABLE`; `game-dev` CLI: `command not found`.
+- Bước tiếp theo: chạy cùng cap/parity/interaction evidence trên Chrome responsive và Safari/iPhone/iPad khi có device backend; sau đó cập nhật trạng thái Ticket Board. Giữ `REVIEW`, không đánh dấu `DONE`.
