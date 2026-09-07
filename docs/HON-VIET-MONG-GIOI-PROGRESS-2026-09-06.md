@@ -219,3 +219,15 @@ Status: `REVIEW` / `IN_PROGRESS`.
 - No changes to seed, reward, balance, save migration, roster, art, audio or dist. Direct fixture emits the known embedded-config fallback warning only; no app runtime error.
 
 Open: real responsive/device QA, full npm test outside the connector-only source harness, `game-dev`, Ticket Board and archive source. L05b/L05 remain `IN_PROGRESS`; do not mark DONE. Next: device matrix on the deployed alias, then reassess the remaining L05b acceptance evidence.
+
+## 4.17 L05c-f — semantic impact-case coverage (2026-09-07)
+
+Status: `REVIEW` / `IN_PROGRESS`.
+
+- Observer source commit `4df4ff500d10e559ffff16ba5b265491fd8f896a` thêm `impactTypeCoverage` và `impactCaseCoverage` để evidence phân biệt damage, heal, DoT, status và multi-hit.
+- RED có 3 failure thật; GREEN focused `10/10 PASS`; REFACTOR full combat `39/39 PASS` và syntax observer/adapter pass.
+- Production deployment `dpl_6Zu9TgEAKBcgwAxWcLz9KQRSxZXy` READY; embedded battle `952325 bytes`; runtime errors 0.
+- Production Chrome thực hiện `Xuất chiến` + đổi tốc độ 2×, kết thúc `28/81/219`; type counts `damage 38, death 6, dot 4, energy 133, heal 13, miss 5, status 20`; semantic cases đều `true`; boundary/final snapshot đều complete; fingerprint `282374be`; `gaps=[]`.
+- Không đổi seed, reward, balance, save migration, roster, art, audio hoặc dist. L05b/L05 vẫn `IN_PROGRESS`.
+
+Open: device matrix, full npm/CI outside connector-only harness, `game-dev`, Ticket Board và archive. Next: real device QA, rồi cập nhật Ticket Board khi khả dụng.

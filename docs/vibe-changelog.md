@@ -1,3 +1,11 @@
+
+## 2026-09-07 — L05c-f semantic impact-case coverage
+
+- Added source-owned `impactTypeCoverage` counts and `impactCaseCoverage` flags for damage, heal, DoT, status and multi-hit impacts.
+- RED recorded 3 focused failures; GREEN `10/10 PASS`; full combat regression `39/39 PASS`; syntax checks pass.
+- Production deployment `dpl_6Zu9TgEAKBcgwAxWcLz9KQRSxZXy` is READY. Chrome fixture finished `28/81/219`, all semantic cases true, impact snapshots `219/219`, final snapshots `28/28`, `gaps=[]`.
+- Evidence-only observer change; no seed, reward, balance, save migration, roster, art, audio or dist change. Status remains REVIEW / IN_PROGRESS.
+
 ## 2026-09-07 — L05c-d explicit final action snapshot
 
 - Added source-owned `finalSnapshot` and `finalSnapshotBoundary=resolveAction.complete` to combat observation; report closes the final-action gap only with complete action coverage.

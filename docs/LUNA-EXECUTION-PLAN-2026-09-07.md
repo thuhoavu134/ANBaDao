@@ -431,3 +431,14 @@ The source slice is implemented through production browser evidence and remains 
 5. Preserve all existing non-goals: no seed, reward, balance, save migration, roster, art, audio or dist-only change.
 6. Remaining gates: Chrome responsive plus Safari/iPhone/iPad device evidence, full npm/CI outside the connector-only harness, Ticket Board and archive availability. Next exact action is the device matrix on the same deployed alias; retain `REVIEW`.
 
+
+## Checkpoint addendum — L05c-f semantic impact-case coverage (2026-09-07)
+
+The observer evidence slice is implemented and remains `REVIEW`, not `DONE`.
+
+1. Feature commit `4df4ff50` adds deterministic type counts and semantic booleans for damage/heal/DoT/status/multi-hit; full replay projection is unchanged.
+2. RED recorded 3 real focused failures; GREEN is `10/10`; REFACTOR is `39/39 PASS` plus syntax.
+3. Vercel `dpl_6Zu9TgEAKBcgwAxWcLz9KQRSxZXy` is READY, build payload `952325 bytes`, runtime errors are absent.
+4. Real Chrome production fixture reports `28/81/219`, type counts `damage=38, death=6, dot=4, energy=133, heal=13, miss=5, status=20`; all semantic case flags are true, snapshots are complete, fingerprint `282374be`, `gaps=[]`.
+5. No gameplay or player-data contract changed. Remaining exact action: device matrix on the deployed alias; retain `REVIEW` until device/Ticket Board blockers clear.
+

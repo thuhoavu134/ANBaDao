@@ -502,3 +502,31 @@ Run device QA on the deployed alias for the same cap/parity evidence, then reass
 - Chrome desktop production đã có evidence; Safari/iPhone/iPad và responsive device matrix chưa chạy vì backend thiết bị không có.
 - Ticket Board: `TICKET_BOARD_NOT_AVAILABLE`; archive mẫu: `SOURCE_NOT_AVAILABLE`; `game-dev` CLI: `command not found`.
 - Bước tiếp theo: chạy cùng cap/parity/interaction evidence trên Chrome responsive và Safari/iPhone/iPad khi có device backend; sau đó cập nhật trạng thái Ticket Board. Giữ `REVIEW`, không đánh dấu `DONE`.
+
+## L05c-f — semantic impact-case coverage (2026-09-07)
+
+**Trạng thái:** `REVIEW`; L05/L05b vẫn `IN_PROGRESS`. Đây là lát cắt evidence của observer, không thay đổi luật trận.
+
+### Source/build owner
+
+- Checkpoint `4ff19225cff5c243651c22caacdf791a4d816bd4` → feature `4df4ff500d10e559ffff16ba5b265491fd8f896a`; `main` fast-forward, không force-push.
+- Sửa `src/domain/combat/action-observation.mjs`: report thêm `impactTypeCoverage` theo từng loại impact và `impactCaseCoverage` cho `damage/heal/dot/status/multiHit`. Các field chỉ đọc evidence; parity projection, resolver, seed, reward, balance, save, roster, art, audio và dist không đổi.
+
+### TDD and verification
+
+- RED: focused suite có 3 failure thật vì hai field semantic chưa tồn tại, exit code 1.
+- GREEN: focused observer/boundary/parity suite `10/10 PASS`.
+- REFACTOR: observer/adapter `node --check` pass; full combat suite `39/39 PASS`.
+
+### Production deployment and browser
+
+- Vercel deployment `dpl_6Zu9TgEAKBcgwAxWcLz9KQRSxZXy` từ `4df4ff50` đạt `READY`; build `npm run build` → `node scripts/build-static.mjs`, embedded battle `952325 bytes`; Vercel check success, runtime errors 0.
+- URL fixture: `https://luc-than.vercel.app/battle.html?embedded=1&session=l05f-semantic&v=3176&qaCombatFixture=l05a`; đã bấm `Xuất chiến` thật và đổi tốc độ qua UI lên `2×`.
+- Report kết thúc: `28 action / 81 result / 219 impact`; `impactTypeCoverage={damage:38, death:6, dot:4, energy:133, heal:13, miss:5, status:20}`; `impactCaseCoverage={damage:true, heal:true, dot:true, status:true, multiHit:true}`.
+- Boundary evidence vẫn đủ: `impactSnapshotCoverage=219/219`, `actionsWithBoundary=28/28`, `finalSnapshotCoverage=28/28`, completion `player / enemy-wiped / round 4 / speed 2`, fingerprint `282374be`, `gaps=[]`. DOM hiển thị `Khải hoàn`; app error/warning log theo session không có.
+
+### Blockers and next handoff
+
+- Chưa có Chrome responsive device emulation backend hoặc Safari/iPhone/iPad thật; không ghi device PASS thay cho desktop Chrome.
+- Local source harness không có `package.json`, `game-dev` CLI không tồn tại, Ticket Board không có, archive là `SOURCE_NOT_AVAILABLE`.
+- Bước kế tiếp: device matrix trên alias production khi backend có; sau đó cập nhật trạng thái Ticket Board. Giữ `REVIEW`, không đánh dấu `DONE`.

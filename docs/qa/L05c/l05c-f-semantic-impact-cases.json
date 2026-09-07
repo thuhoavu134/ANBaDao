@@ -1,0 +1,149 @@
+{
+  "slice": "L05c-f",
+  "status": "REVIEW",
+  "date": "2026-09-07",
+  "contractRevision": "vibelab.json@9f9cad09165e0e17becb90c70f5e66969d8621e1",
+  "checkpointCommit": "4ff19225cff5c243651c22caacdf791a4d816bd4",
+  "featureCommit": "4df4ff500d10e559ffff16ba5b265491fd8f896a",
+  "baseCommit": "bb2c0ba608d883d4fb5033e323e21c7127db4f91",
+  "red": {
+    "command": "node --test tests/combat-l05c-boundary.test.mjs tests/combat-observation.test.mjs tests/combat-l05c-parity.test.mjs",
+    "passed": false,
+    "tests": 10,
+    "failures": 3,
+    "exit_code": 1,
+    "reason": "impactTypeCoverage and impactCaseCoverage absent on baseline"
+  },
+  "green": {
+    "command": "node --test tests/combat-l05c-boundary.test.mjs tests/combat-observation.test.mjs tests/combat-l05c-parity.test.mjs",
+    "passed": true,
+    "tests": 10,
+    "failures": 0,
+    "exit_code": 0
+  },
+  "refactor": {
+    "syntax": [
+      {
+        "command": "node --check src/domain/combat/action-observation.mjs",
+        "passed": true,
+        "exit_code": 0
+      },
+      {
+        "command": "node --check scripts/combat-domain-3q-adapter-v1.mjs",
+        "passed": true,
+        "exit_code": 0
+      }
+    ],
+    "fullCombat": {
+      "command": "node --test tests/*.test.mjs",
+      "passed": true,
+      "tests": 39,
+      "failures": 0,
+      "exit_code": 0
+    }
+  },
+  "implementation": {
+    "fields": [
+      "impactTypeCoverage",
+      "impactCaseCoverage"
+    ],
+    "types": [
+      "damage",
+      "death",
+      "dot",
+      "energy",
+      "heal",
+      "miss",
+      "status"
+    ],
+    "cases": {
+      "damage": true,
+      "heal": true,
+      "dot": true,
+      "status": true,
+      "multiHit": true
+    },
+    "parity": "projection unchanged"
+  },
+  "deployment": {
+    "id": "dpl_6Zu9TgEAKBcgwAxWcLz9KQRSxZXy",
+    "state": "READY",
+    "sourceCommit": "4df4ff500d10e559ffff16ba5b265491fd8f896a",
+    "alias": "https://luc-than.vercel.app/",
+    "build": "npm run build -> node scripts/build-static.mjs",
+    "embeddedBattleBytes": 952325,
+    "runtimeErrors": "none in selected 1h window"
+  },
+  "productionChrome": {
+    "url": "https://luc-than.vercel.app/battle.html?embedded=1&session=l05f-semantic&v=3176&qaCombatFixture=l05a",
+    "interactions": [
+      "Xuất chiến",
+      "Đổi tốc độ qua UI lên 2×"
+    ],
+    "report": {
+      "status": "finished",
+      "actionCount": 28,
+      "resultCount": 81,
+      "impactCount": 219,
+      "impactTypeCoverage": {
+        "damage": 38,
+        "death": 6,
+        "dot": 4,
+        "energy": 133,
+        "heal": 13,
+        "miss": 5,
+        "status": 20
+      },
+      "impactCaseCoverage": {
+        "damage": true,
+        "heal": true,
+        "dot": true,
+        "status": true,
+        "multiHit": true
+      },
+      "impactSnapshotCoverage": {
+        "captured": 219,
+        "expected": 219,
+        "actions": 28,
+        "actionsWithBoundary": 28,
+        "complete": true
+      },
+      "finalSnapshotCoverage": {
+        "captured": 28,
+        "expected": 28,
+        "complete": true
+      },
+      "completion": {
+        "winner": "player",
+        "reason": "enemy-wiped",
+        "round": 4,
+        "roundMax": 15,
+        "speed": 2
+      },
+      "replayFingerprint": "282374be",
+      "gaps": []
+    },
+    "visibleResult": "Khải hoàn",
+    "appErrors": [],
+    "appWarnings": []
+  },
+  "preservation": [
+    "combat rules",
+    "seed configuration",
+    "reward",
+    "balance",
+    "save migration",
+    "roster",
+    "art",
+    "audio",
+    "dist"
+  ],
+  "blockers": [
+    "real responsive/Safari/iPhone/iPad backend unavailable",
+    "local source harness lacks package.json",
+    "game-dev CLI missing",
+    "Ticket Board unavailable",
+    "archive SOURCE_NOT_AVAILABLE"
+  ],
+  "next": "Run device matrix on deployed alias when available; then update Ticket Board and keep REVIEW/IN_PROGRESS."
+}

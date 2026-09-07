@@ -123,3 +123,11 @@ Deployment: `dpl_DZtRfRZGyWeDUnhxtQcVjn2GZAnZ` (`READY`), commit `eab4a45`, alia
 - Production: `dpl_5AaCe8jwx53Xh7caas3UJQ5xMHca` READY, embedded battle 951694 bytes, runtime errors none.
 - Production Chrome fixture: `finished`, 28 actions / 81 results / 219 impacts; impact snapshots 219/219, actions with boundary 28/28, final snapshots 28/28, fingerprint 282374be, `gaps=[]`.
 - This is evidence for the current fixture path only. Device QA, connector-only npm/CI, Ticket Board, archive and `game-dev` remain blocked. Status stays REVIEW / IN_PROGRESS.
+
+## L05c-f — semantic impact-case coverage (2026-09-07)
+
+- Source commit: `4df4ff500d10e559ffff16ba5b265491fd8f896a`; checkpoint: `4ff19225cff5c243651c22caacdf791a4d816bd4`.
+- RED: 3 focused failures; GREEN: 10/10; full combat regression: 39/39; syntax: PASS.
+- Production deployment: `dpl_6Zu9TgEAKBcgwAxWcLz9KQRSxZXy` READY, embedded battle 952325 bytes, runtime errors none.
+- Production fixture: 28 actions / 81 results / 219 impacts; type counts damage 38, death 6, dot 4, energy 133, heal 13, miss 5, status 20; semantic cases damage/heal/dot/status/multiHit all true; impact snapshots 219/219; final snapshots 28/28; gaps empty.
+- Device QA, local npm/CI, Ticket Board, archive and game-dev remain blocked. Keep REVIEW / IN_PROGRESS.
