@@ -1,0 +1,311 @@
+TAP version 13
+# Subtest: Nung ultimate armor is personal and burn uses caster HP
+not ok 1 - Nung ultimate armor is personal and burn uses caster HP
+  ---
+  duration_ms: 6.150354
+  type: 'test'
+  location: '/workspace/scratch/16b3cf2fd315/luc-than/tests/splus-fire-wood-v2.test.mjs:7:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + {
+    +   appliedRound: 1,
+    +   expiresRound: 3,
+    +   iconId: 'splus.nung.passive',
+    +   maxStacks: 1,
+    +   polarity: 'buff',
+    +   power: 0.4,
+    +   sourceHeroId: 'hero_splus_nung',
+    +   sourceId: '1:nung',
+    +   splus: true,
+    +   stacks: 1,
+    +   ticksLeft: 2,
+    +   turns: 2,
+    +   type: 'armorUp'
+    + }
+    - undefined
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  actual:
+    type: 'armorUp'
+    power: 0.4
+    turns: 2
+    splus: true
+    polarity: 'buff'
+    sourceId: '1:nung'
+    sourceHeroId: 'hero_splus_nung'
+    iconId: 'splus.nung.passive'
+    stacks: 1
+    maxStacks: 1
+    expiresRound: 3
+    appliedRound: 1
+    ticksLeft: 2
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/16b3cf2fd315/luc-than/tests/splus-fire-wood-v2.test.mjs:7:218)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.start (node:internal/test_runner/test:1242:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+  ...
+# Subtest: Hoa Tieu targets back carry and detonates remaining burn with 20 percent bonus
+not ok 2 - Hoa Tieu targets back carry and detonates remaining burn with 20 percent bonus
+  ---
+  duration_ms: 60.971402
+  type: 'test'
+  location: '/workspace/scratch/16b3cf2fd315/luc-than/tests/splus-fire-wood-v2.test.mjs:8:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'power')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/16b3cf2fd315/luc-than/tests/splus-fire-wood-v2.test.mjs:8:224)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: Hoa Khieu buffs two same-row allies and calls exactly two assists
+not ok 3 - Hoa Khieu buffs two same-row allies and calls exactly two assists
+  ---
+  duration_ms: 2.320388
+  type: 'test'
+  location: '/workspace/scratch/16b3cf2fd315/luc-than/tests/splus-fire-wood-v2.test.mjs:9:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'power')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/16b3cf2fd315/luc-than/tests/splus-fire-wood-v2.test.mjs:9:233)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: Hoa Bai no longer breaks armor and consumed ground zones cannot reappear
+not ok 4 - Hoa Bai no longer breaks armor and consumed ground zones cannot reappear
+  ---
+  duration_ms: 17.279843
+  type: 'test'
+  location: '/workspace/scratch/16b3cf2fd315/luc-than/tests/splus-fire-wood-v2.test.mjs:10:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + {
+    +   appliedRound: 1,
+    +   expiresRound: 3,
+    +   iconId: 'splus.hoa_bai.passive',
+    +   maxStacks: 1,
+    +   polarity: 'debuff',
+    +   power: 0.2,
+    +   sourceHeroId: 'hero_splus_hoa_bai',
+    +   sourceId: '1:hoa_bai',
+    +   splus: true,
+    +   stacks: 1,
+    +   ticksLeft: 2,
+    +   turns: 2,
+    +   type: 'armorDown'
+    + }
+    - undefined
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  actual:
+    type: 'armorDown'
+    power: 0.2
+    turns: 2
+    splus: true
+    polarity: 'debuff'
+    sourceId: '1:hoa_bai'
+    sourceHeroId: 'hero_splus_hoa_bai'
+    iconId: 'splus.hoa_bai.passive'
+    stacks: 1
+    maxStacks: 1
+    expiresRound: 3
+    appliedRound: 1
+    ticksLeft: 2
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/16b3cf2fd315/luc-than/tests/splus-fire-wood-v2.test.mjs:10:162)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: Hac Dao ultimate splash damages nearby enemies; Hoa Duc preserves source-based remaining burn
+not ok 5 - Hac Dao ultimate splash damages nearby enemies; Hoa Duc preserves source-based remaining burn
+  ---
+  duration_ms: 22.604977
+  type: 'test'
+  location: '/workspace/scratch/16b3cf2fd315/luc-than/tests/splus-fire-wood-v2.test.mjs:11:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(e.unit('2:other').hp<10000)
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/16b3cf2fd315/luc-than/tests/splus-fire-wood-v2.test.mjs:11:201)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: Mien Nuong heals two fronts, cleanses one each and delivers both authored regeneration ticks
+not ok 6 - Mien Nuong heals two fronts, cleanses one each and delivers both authored regeneration ticks
+  ---
+  duration_ms: 1.643755
+  type: 'test'
+  location: '/workspace/scratch/16b3cf2fd315/luc-than/tests/splus-fire-wood-v2.test.mjs:12:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    1500 !== 3000
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 3000
+  actual: 1500
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/16b3cf2fd315/luc-than/tests/splus-fire-wood-v2.test.mjs:12:349)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: Tram Tue sleep applies without damage; action slow persists two rounds
+not ok 7 - Tram Tue sleep applies without damage; action slow persists two rounds
+  ---
+  duration_ms: 0.641447
+  type: 'test'
+  location: '/workspace/scratch/16b3cf2fd315/luc-than/tests/splus-fire-wood-v2.test.mjs:13:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    8192 !== 10000
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 10000
+  actual: 8192
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/16b3cf2fd315/luc-than/tests/splus-fire-wood-v2.test.mjs:13:162)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: Hac Hoa uses disarm; Tam Nuong ultimate damages all enemies and only paralyzes front
+not ok 8 - Hac Hoa uses disarm; Tam Nuong ultimate damages all enemies and only paralyzes front
+  ---
+  duration_ms: 5.7466
+  type: 'test'
+  location: '/workspace/scratch/16b3cf2fd315/luc-than/tests/splus-fire-wood-v2.test.mjs:14:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(s(e,'2:enemy','disarm'))
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/16b3cf2fd315/luc-than/tests/splus-fire-wood-v2.test.mjs:14:174)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: Son Cuong detonates remaining bleed; Mang Xa miss debuff affects one attack
+not ok 9 - Son Cuong detonates remaining bleed; Mang Xa miss debuff affects one attack
+  ---
+  duration_ms: 1.465199
+  type: 'test'
+  location: '/workspace/scratch/16b3cf2fd315/luc-than/tests/splus-fire-wood-v2.test.mjs:15:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + {
+    +   appliedRound: 1,
+    +   expiresRound: 3,
+    +   iconId: 'splus.son_cuong.passive',
+    +   maxStacks: 1,
+    +   polarity: 'debuff',
+    +   rawPerTick: 100,
+    +   sourceHeroId: 'hero_splus_son_cuong',
+    +   sourceId: '1:son_cuong',
+    +   splus: true,
+    +   stacks: 1,
+    +   ticksLeft: 2,
+    +   turns: 2,
+    +   type: 'bleed'
+    + }
+    - undefined
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  actual:
+    type: 'bleed'
+    rawPerTick: 100
+    turns: 2
+    splus: true
+    polarity: 'debuff'
+    sourceId: '1:son_cuong'
+    sourceHeroId: 'hero_splus_son_cuong'
+    iconId: 'splus.son_cuong.passive'
+    stacks: 1
+    maxStacks: 1
+    expiresRound: 3
+    appliedRound: 1
+    ticksLeft: 2
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/16b3cf2fd315/luc-than/tests/splus-fire-wood-v2.test.mjs:15:274)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 0
+# fail 9
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 259.90691

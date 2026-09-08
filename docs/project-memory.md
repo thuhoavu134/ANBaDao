@@ -1,3 +1,8 @@
+
+## 2026-09-08 — L11 continuation · REVIEW / IN_PROGRESS
+
+Continued from b6a2ae2 on the handoff branch; V2 handlers, live popup lifetime and source bridge corrected. Full build + 411/411 tests pass. Browser/126 crops, fractional timing and device gates remain open; no production V2 promotion. Details and actual evidence: [L11-CONTINUATION-2026-09-08.md](L11-CONTINUATION-2026-09-08.md).
+
 # Project memory — Hồn Việt / Lục Thần
 
 ## 2026-09-08 — L10-SPLUS42 · REVIEW / IN_PROGRESS

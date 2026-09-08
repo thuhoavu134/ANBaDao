@@ -1,5 +1,5 @@
 import { SPLUS_PROFILE_BY_KEY, SPLUS_PROFILE_VERSION } from './splus-profile-data.mjs';
-export const SPLUS_SCHEMA = 'luc-than-splus42/v1';
+export const SPLUS_SCHEMA = 'luc-than-splus42/v2';
 export const SPLUS_ELEMENTS = Object.freeze({metal:'Kim Khí',soul:'Âm Hồn',water:'Thương Thủy',fire:'Viêm Hỏa',wood:'Mộc Tinh',dream:'Hư Mộng'});
 // Numeric omissions are review defaults, not owner-approved balance. Explicit
 // percentages in the authored descriptions are implemented by splus-mechanics.
@@ -563,3 +563,4 @@ export function validateSplusCatalog(heroes=SPLUS_HEROES) {
   for(const element of Object.keys(SPLUS_ELEMENTS))if(heroes.filter(h=>h.element===element).length!==7)errors.push(`EXPECTED_7:${element}`);
   return {ok:!errors.length,errors,count:heroes.length};
 }
+

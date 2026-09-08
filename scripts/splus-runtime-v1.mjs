@@ -42,8 +42,9 @@ export function patchSplusBattleHtml(input) {
   once('  const REFERENCE_SIMPLE = Boolean(EMBED_CONFIG.referenceSimple);','  const REFERENCE_SIMPLE = Boolean(EMBED_CONFIG.referenceSimple || EMBED_CONFIG.heroes?.some(h=>String(h.sourceId).startsWith("hero_splus_")));');
   once('? EMBED_CONFIG.heroes.map(normalizeConfiguredHero)','? EMBED_CONFIG.heroes.map(splusHeroConfig)');
   once('  let units = [];',`  let units = [];\n${bridge}`);
-  once('const hero=Core.applyProgression(synergized);','const hero=rawHero.kitVersion===\'splus42-v1\'?rawHero:Core.applyProgression(synergized);');
-  once('    units = createUnits();','    splusEngine=null;\n    units = createUnits();\n    splusStateView();');
+  once('const hero=Core.applyProgression(synergized);','const hero=rawHero.kitVersion===\'splus42-v2\'?rawHero:Core.applyProgression(synergized);');
+  once('    units = createUnits();','    splusReset();\n    units = createUnits();\n    splusStateView();');
+  once('  dom.exitBattleButton?.addEventListener("click", () => {','  dom.exitBattleButton?.addEventListener("click", () => {\n    splusReset();');
   once('  function legalTargetsFor(actor, action){','  function legalTargetsFor(actor, action){\n    if(splusCombat())return splusCombat().targets(actor,action);');
   once('  function preferredTargetFor(actor, action){','  function preferredTargetFor(actor, action){\n    if(splusCombat())return splusCombat().targets(actor,action)[0];');
   once('  function decideAi(actor){',`  function decideAi(actor){
@@ -59,7 +60,7 @@ export function patchSplusBattleHtml(input) {
         if(splusCombat()){if(state.round<=15)splusCombat().beginRound(state.round);else splusCombat().finishRound();splusStateView();}`);
   once('  function updateActorHud(actor) {',`  function updateActorHud(actor) {
     if(splusCombat()){const button=document.querySelector('[data-action="skill"]');button.hidden=false;button.removeAttribute('aria-hidden');document.querySelector('[data-action="ultimate"] .action-key').textContent='3';splusStateView();}`);
-  once('  function drawUnit(context, unit, time) {','  function drawUnit(context, unit, time) {\n    if(unit.kitVersion===\'splus42-v1\')return drawSplusToken(context,unit,time);');
+  once('  function drawUnit(context, unit, time) {','  function drawUnit(context, unit, time) {\n    if(unit.kitVersion===\'splus42-v2\')return drawSplusToken(context,unit,time);');
   once('  function gainEnergy(unit, amount){','  function gainEnergy(unit, amount){\n    if(splusCombat())return splusCombat().gainRage(unit,unit,amount);');
   once('    const visibleStatuses=[];','    const visibleStatuses=splusCombat()?splusCombat().hud(unit).slice(0,4):[];');
   once('      visibleStatuses.push(status);','      if(!splusCombat())visibleStatuses.push(status);');
@@ -82,3 +83,4 @@ export function buildSplusRuntime(root=process.cwd()) {
   console.log('SPLUS42: source factory, existing scheduler bridge, 42 HUD identities');
 }
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url))buildSplusRuntime();
+

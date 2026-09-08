@@ -12,7 +12,7 @@ globalThis.createSplusSkillUI=function createSplusSkillUI(data){
   const meter=el('p','splus-skill-meter'),target=el('p','splus-skill-target'),description=el('p','splus-skill-description'),effects=el('ul','splus-effects');
   const castButton=el('button','splus-cast','Thi triển'),footer=el('p','splus-skill-footer','Chạm tên tướng để trở về hồ sơ.');castButton.type='button';
   dialog.append(top,meter,target,description,effects,castButton,footer);document.body.append(dialog);
-  let selection=null,opener=null;
+  let selection=null,opener=null,destroyed=false;
   const iconNode=(id)=>{const icon=icons.get(id);if(!icon)return el('span','splus-art-fallback','◇');
     const ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox',icon.rect.join(' '));svg.setAttribute('aria-hidden','true');svg.setAttribute('focusable','false');svg.classList.add('splus-skill-art');
     const image=document.createElementNS(ns,'image');image.setAttribute('href',icon.atlas);image.setAttribute('width',String(icon.width));image.setAttribute('height',String(icon.height));svg.append(image);return svg;};
@@ -36,6 +36,7 @@ globalThis.createSplusSkillUI=function createSplusSkillUI(data){
     footer.textContent=state?'Nhấn Thi triển để chọn mục tiêu trong trận.':`${hero.name} · ${hero.elementName} · ${labels[skill.slot]}`;
   }
   function open(heroId,slot,from,options={}){
+    if(destroyed)return false;
     const hero=profiles.get(heroId),skill=hero?.skills[slot];if(!skill||!Object.hasOwn(labels,slot))return false;
     selection={hero,skill,options};opener=from||document.activeElement;
     kind.textContent=`${hero.name} · ${labels[slot]}`;title.textContent=skill.name;
@@ -44,10 +45,12 @@ globalThis.createSplusSkillUI=function createSplusSkillUI(data){
     dialog.dataset.heroId=heroId;dialog.dataset.skill=slot;
     if(!dialog.open)dialog.showModal();refresh();closeButton.focus();return true;
   }
-  function close(){if(dialog.open)dialog.close();}
+  function clearSelection(){const restore=opener;selection=null;opener=null;if(restore?.isConnected)restore.focus();}
+  function close(){if(dialog.open)dialog.close();clearSelection();}
+  dialog.addEventListener('cancel',event=>{event.preventDefault();close();});
   closeButton.addEventListener('click',close);
   dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)close();}});
-  dialog.addEventListener('close',()=>{selection=null;if(opener?.isConnected)opener.focus();opener=null;});
+  dialog.addEventListener('close',()=>{if(!dialog.open)clearSelection();});
   castButton.addEventListener('click',()=>{if(!selection||castButton.disabled)return;const {skill,options}=selection;close();options.cast(skill.slot);});
   function button(heroId,slot,options={}){
     const hero=profiles.get(heroId),skill=hero?.skills[slot];if(!skill)return null;
@@ -57,5 +60,6 @@ globalThis.createSplusSkillUI=function createSplusSkillUI(data){
     b.append(visual,el('span','splus-skill-kind',labels[slot]),el('span','splus-skill-name',skill.shortName));
     b.addEventListener('click',()=>open(heroId,slot,b,options));updateButton(b,skill,stateFor(options));return b;
   }
-  return {open,close,button,refresh,iconNode,destroy(){close();dialog.remove();}};
+  return {open,close,button,refresh,iconNode,destroy(){destroyed=true;close();dialog.remove();}};
 };
+

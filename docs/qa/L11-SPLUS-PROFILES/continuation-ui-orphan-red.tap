@@ -1,0 +1,42 @@
+TAP version 13
+# Subtest: battle skill options follow the replacement actor when a battle restarts with the same id
+ok 1 - battle skill options follow the replacement actor when a battle restarts with the same id
+  ---
+  duration_ms: 3.124567
+  type: 'test'
+  ...
+# Subtest: orphaned skill options cannot cast after their actor leaves the battle
+not ok 2 - orphaned skill options cannot cast after their actor leaves the battle
+  ---
+  duration_ms: 2.074279
+  type: 'test'
+  location: '/workspace/scratch/16b3cf2fd315/luc-than/tests/splus-ui-lifetime.test.mjs:32:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/16b3cf2fd315/luc-than/tests/splus-ui-lifetime.test.mjs:37:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 1
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 136.980261

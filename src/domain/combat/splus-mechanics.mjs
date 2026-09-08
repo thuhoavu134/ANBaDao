@@ -103,7 +103,7 @@ export function createSplusMechanics(options={}) {
     const u=unit(targetId);const m={attack:0,defense:0,magicDefense:0,speed:0,crit:0,critDamage:0,resist:0,lifesteal:0,mitigation:0};
     if(!u)return m;
     m.attack=power(u,'attackUp')-power(u,'attackDown');m.defense=power(u,'armorUp')-power(u,'armorDown');
-    m.speed=power(u,'speedUp')-power(u,'speedDown');m.crit=power(u,'critUp')-power(u,'critDown');m.resist=power(u,'resistUp')-power(u,'resistDown');
+    m.speed=power(u,'speedUp')-power(u,'speedDown')-power(u,'actionSlow');m.crit=power(u,'critUp')-power(u,'critDown');m.resist=power(u,'resistUp')-power(u,'resistDown');
     m.lifesteal=power(u,'lifesteal');m.mitigation=power(u,'mitigation');
     m.magicDefense=power(u,'magicArmorUp')-power(u,'magicArmorDown');m.speed-=power(u,'coldSteel');m.crit-=statuses(u).filter(s=>s.type==='coldSteel').reduce((v,s)=>v+s.stacks*.04,0);
     if(has(u,'resinPoison'))m.defense-=0.3;
@@ -201,7 +201,7 @@ export function createSplusMechanics(options={}) {
         critChance+=n(options.critBonus)+(has(target,'resinPoison')?0.2:0);
         critical=critical||rng('splus.crit')<clamp(critChance);
         if(has(target,'bubble'))critical=false;
-        const armor=type==='true'?0:Math.max(0,n(target.def)*(1+(type==='elemental'?tm.magicDefense:tm.defense)))*(1-clamp(Math.max(n(options.armorPierce),focusTarget?.25:0)));
+        const armor=type==='true'?0:Math.max(0,n(target.def)*(1+(type==='elemental'?tm.magicDefense:tm.defense)))*(1-clamp(Math.max(n(options.armorPierce),focusTarget ? rules(source).controlPierce : 0)));
         amount=Math.max(12,stat(source,'atk')*n(options.multiplier,1)*(100/(100+armor*0.82))*(0.94+clamp(rng('splus.variance'))*0.12)*1.22);
         if(critical)amount*=Math.max(1,n(source.critDamage,1.5)+critBonus);
       }
@@ -324,7 +324,7 @@ export function createSplusMechanics(options={}) {
     const u=unit(targetId);if(!alive(u)||!['basic','skill','ultimate'].includes(action))return false;
     if(statuses(u).some(s=>hardCC.has(s.type)))return false;
     if(action==='basic'&&(has(u,'disarm')||has(u,'entangle')))return false;
-    if(action!=='basic'&&melee(u)&&statuses(u).some(s=>s.type==='disarm'&&s.weaponSkills))return false;
+    if(action!=='basic'&&['guardian','striker','duelist','ranger'].includes(def(u)?.role)&&statuses(u).some(s=>s.type==='disarm'&&s.weaponSkills))return false;
     if(melee(u)&&statuses(u).some(s=>s.type==='root'&&s.blocksMelee))return false;
     if(action!=='basic'&&(has(u,'silence')||has(u,'hardSilence')))return false;
     const cost=action==='basic'?0:action==='skill'?defaults.skillCost:defaults.ultimateCost;
@@ -402,7 +402,7 @@ export function createSplusMechanics(options={}) {
   let lastFinished=0;
   function dotAmount(target,s,ticks=1){return Math.max(0,n(s.rawPerTick,target.maxHp*n(s.percentMaxHp,s.power))*n(s.stacks,1)*ticks);}
   function tickDot(target,s,ticks=1,bonus=1){const source=unit(s.sourceId)||target;const dealt=damage(source,target,{raw:dotAmount(target,s,ticks)*bonus,type:'true',dot:true,burning:isBurn(s),secondary:true,noTriggers:true});if(s.type==='parasite'&&alive(source))heal(source,source,dealt);return dealt;}
-  function detonate(target,filter,bonus=1){let dealt=0;for(const s of statuses(target).filter(filter)){const ticks=Math.max(0,n(s.ticksLeft));remove(target,x=>x===s,'detonate');dealt+=tickDot(target,s,ticks,bonus);}return dealt;}
+  function detonate(target,filter,bonus=1){let dealt=0;for(const s of statuses(target).filter(filter)){const ticks=Math.max(0,n(s.ticksLeft));if(s.zone)for(let i=zones.length-1;i>=0;i--)if(zones[i].sourceId===s.sourceId&&zones[i].team===target.team&&zones[i].slot===target.slot)zones.splice(i,1);remove(target,x=>x===s,'detonate');dealt+=tickDot(target,s,ticks,bonus);}return dealt;}
   function syncZones(){
     for(const target of units){remove(target,s=>s.type==='brimstone'&&s.zone&&!zones.some(z=>z.sourceId===s.sourceId&&z.team===target.team&&z.slot===target.slot&&z.expiresRound>round),'left-zone');
       if(!alive(target))continue;for(const z of zones.filter(z=>z.team===target.team&&z.slot===target.slot&&z.expiresRound>round))if(!statuses(target).some(s=>s.type==='brimstone'&&s.sourceId===z.sourceId)){
@@ -434,7 +434,7 @@ export function createSplusMechanics(options={}) {
     if(next===round)return;
     while(round<next){finishRound();round++;
       // Begin-round HoT receives both authored ticks before its expiry boundary.
-      for(const t of units.filter(alive))for(const s of statuses(t).filter(s=>s.type==='regen'&&s.beginRound&&s.ticksLeft>0)){heal(unit(s.sourceId),t,t.maxHp*s.power);s.ticksLeft--;}
+      for(const t of units.filter(alive))for(const s of t.statuses.filter(s=>s.splus&&s.type==='regen'&&s.beginRound&&s.ticksLeft>0&&s.expiresRound>=round)){heal(unit(s.sourceId),t,t.maxHp*s.power);s.ticksLeft--;}
       for(const u of units)remove(u,s=>s.expiresRound!=null&&s.expiresRound<=round,'expired');
       for(let i=zones.length-1;i>=0;i--)if(zones[i].expiresRound<=round)zones.splice(i,1);syncZones();
       for(const actor of units.filter(passive)){
@@ -482,92 +482,92 @@ export function createSplusMechanics(options={}) {
     const strongestEnemy=forced||strongest(all)[0],backCarry=forced||strongestBack(all),weakBack=forced||weakestBack(all),opp=forced||opposite(actor,all);
     const skill=action==='skill',base=skill?defaults.skillMultiplier:defaults.aoeUltimateMultiplier;
     const D=(targets,multiplier=base,extra={})=>(Array.isArray(targets)?targets:[targets]).filter(Boolean).reduce((sum,t)=>sum+damage(actor,t,{multiplier,action,...extra}),0);
-    const H=(targets,pct)=>(Array.isArray(targets)?targets:[targets]).filter(Boolean).reduce((sum,t)=>sum+heal(actor,t,t.maxHp*pct),0);
+    const H=(targets,pct)=>(Array.isArray(targets)?targets:[targets]).filter(Boolean).reduce((sum,t)=>sum+heal(actor,t,(rules(actor,action).hpBasis==='source'?actor.maxHp:t.maxHp)*pct),0);
     const B=(targets,type,powerValue=0,turns=defaults.duration,extra={})=>{for(const t of (Array.isArray(targets)?targets:[targets]).filter(Boolean))buff(actor,t,type,powerValue,turns,extra);};
-    const S=(targets,pct)=>{for(const t of targets)shield(actor,t,t.maxHp*pct);};
+    const S=(targets,pct)=>{for(const t of targets)shield(actor,t,actor.maxHp*pct);};
     const airborne=targets=>{for(const t of targets)emit('airborne',actor,t,{seconds:1,presentationOnly:true});};
     const strip=(targets,count=Infinity)=>{for(const t of targets)cleanse(t,count,s=>s.polarity==='buff');};
     const hits=(targets,count,total,extra={})=>{let totalDamage=0;for(let i=0;i<count&&alive(actor);i++)totalDamage+=D(targets,total/count,{...extra,hitIndex:i,hitCount:count});return totalDamage;};
     const k=key(actor);
     if(skill){
       switch(k){
-        case 'co_trong':S(of,0.2);return;
-        case 'cuong_dong':D(ff);B(ff,'stun',0,1);return;
-        case 'lac_an':D(opp,base,{armorPierce:0.3});return;
+        case 'co_trong':{const r=rules(actor,action),list=of.slice(0,r.count);S(list,r.shield);B(list,'resistUp',r.resist,r.turns);return;}
+        case 'cuong_dong':{const r=rules(actor,action);D(opp,0,{raw:actor.maxHp*r.sourceHpDamage,type:'physical'});B(opp,'stun',0,r.stun);B(opp,'armorDown',r.armorDown,2);return;}
+        case 'lac_an':{const r=rules(actor,action);D(weakBack,base,{armorPierce:r.armorPierce,type:'elemental'});B(weakBack,'stealthBan',0,r.turns);return;}
         case 'hac_pha':D(ff);B(ff,'armorDown',0.25);return;
-        case 'thiet_lanh':D(opp);B(opp,'disarm',0,1);return;
-        case 'minh_toa':breakShield(actor,target);D(target);B(target,'shieldBan');return;
-        case 'thiem_ngan':{const list=weakest(of).slice(0,2);H(list,0.22);B(list,'armorUp',0.2);return;}
-        case 'linh_dong':D(opp);B(opp,'root',0,1);return;
-        case 'tieu_hon':D(target);B(target,'silence',0,1);return;
+        case 'thiet_lanh':D(opp);B(opp,'disarm',0,1,{weaponSkills:true});return;
+        case 'minh_toa':breakShield(actor,opp);D(opp);B(opp,'shieldBan',0,rules(actor,action).turns);return;
+        case 'thiem_ngan':{const r=rules(actor,action),list=weakest(of).slice(0,r.count);H(list,r.heal);B(list,'armorUp',r.armor,r.turns);return;}
+        case 'linh_dong':D(opp);B(opp,'confusion',0,1,{chance:rules(actor,action).confusionChance});return;
+        case 'tieu_hon':{const t=forced||enragedBack(all);D(t);B(t,'rageBan',0,rules(actor,action).turns);return;}
         case 'thach_kinh':D(ff);B(ff,'attackDown',0.3);return;
-        case 'han_nuong':{const list=strongest(all).slice(0,2);D(list);strip(list);return;}
-        case 'vong_co':D(target);B(target,'silence',0,1);energy(actor,target,-20,'amnesia');return;
-        case 'co_nuong':D(ff);B(ff,'armorDown',0.4);return;
-        case 'muc_chieu':{const list=weakest(ours).slice(0,3);H(list,0.18);for(const t of list)cleanse(t,Infinity,s=>['healDown','wound','antiHeal','bloodDebt','parasite','cooldownDelay'].includes(s.type));return;}
-        case 'thuy_co':H(weakest(of)[0]||weakest(ours)[0],0.15);return;
-        case 'ha_lang':D(ff);for(const t of ff)displace(actor,t,'push');return;
+        case 'han_nuong':{const r=rules(actor,action),list=ff.slice(0,r.count);D(list);for(const t of list){const selected=random(statuses(t).filter(s=>s.polarity==='buff'))[0];if(selected)remove(t,s=>s===selected,'dispel');}B(list,'buffBan',0,r.turns);return;}
+        case 'vong_co':D(target);B(target,'silence',0,1);energy(actor,target,-rules(actor,action).rageDrain,'amnesia');return;
+        case 'co_nuong':{const r=rules(actor,action);for(const t of ff)D(t,0,{raw:t.hp*r.currentHpDamage,type:'elemental'});B(ff,'armorDown',r.armorDown,r.turns);return;}
+        case 'muc_chieu':{const list=weakest(ours).slice(0,3);H(list,rules(actor,action).heal);for(const t of list)cleanse(t,Infinity,s=>['healDown','wound','antiHeal','bloodDebt','parasite','cooldownDelay'].includes(s.type));return;}
+        case 'thuy_co':{const t=weakest(of)[0]||weakest(ours)[0];H(t,rules(actor,action).heal);if(t)cleanse(t,1,s=>['burn','poison'].includes(s.type));return;}
+        case 'ha_lang':D(opp);displace(actor,opp,'push');return;
         case 'giang_quan':D(opp);airborne([opp].filter(Boolean));return;
-        case 'thuy_ngoc':{const t=strongest(ours.filter(u=>u!==actor))[0]||actor;shield(actor,t,t.maxHp*0.2,{explodes:true});return;}
+        case 'thuy_ngoc':{const t=strongest(ob)[0]||strongest(ours)[0];shield(actor,t,actor.maxHp*rules(actor,action).shield,{explodes:true});return;}
         case 'hai_phong':D(backCarry);displace(actor,backCarry,'pull');B(backCarry,'stun',0,1);return;
-        case 'tram_chau':B(weakest(ours)[0],'bubble',0.25);return;
+        case 'tram_chau':{const r=rules(actor,action);shield(actor,weakest(ours)[0],actor.maxHp*r.shield,{bubble:true,turns:r.turns});return;}
         case 'da_xoa':hits([weakBack],2,base);B(weakBack,'rageSlow',0.3);return;
-        case 'nung':D(ff);B(opp,'stun',0,1);return;
-        case 'hoa_tieu':D(strongestEnemy);B(strongestEnemy,'blind',0.3);return;
-        case 'hoa_khieu':B(adjacent(actor,ours).slice(0,2),'attackUp',0.2);return;
+        case 'nung':{const primary=opp;D(primary);D(adjacent(primary,all),base*.5);B(primary,'stun',0,1);return;}
+        case 'hoa_tieu':{const t=strongestBack(all)||strongestEnemy;D(t);B(t,'blind',0.35,2);return;}
+        case 'hoa_khieu':{const row=Math.floor(actor.slot/3);const list=strongest(ours.filter(u=>u!==actor&&Math.floor(u.slot/3)===row)).slice(0,2);B(list,'attackUp',0.2);B(list,'lifesteal',0.15,2);return;}
         case 'cuu_tinh':D(backCarry,base,{type:'true'});B(backCarry,'shieldBan');return;
-        case 'hoa_bai':D(ff);B(ff,'armorDown',0.2);B(ff,'blind',0.3);return;
+        case 'hoa_bai':D(ff);B(ff,'blind',0.3,2);return;
         case 'hac_dao':D(target);B(target,'armorDown',0.4);B(target,'shieldBan');return;
         case 'hoa_duc':{const list=strongest(ob).slice(0,2);B(list,'attackUp',0.2);for(const t of list)energy(actor,t,20,'elixir');return;}
-        case 'mien_nuong':for(const t of of)cleanse(t,1);return;
-        case 'tram_tue':D(target);B(target,'sleep',0,1);return;
-        case 'hac_hoa':D(opp);B(opp,'entangle',0,1);return;
-        case 'tam_nuong':{const list=ff.slice(0,2);D(list);B(list,'root');B(list,'attackDown',0.2);return;}
+        case 'mien_nuong':{const list=weakest(of).slice(0,2);for(const t of list){cleanse(t,1);H(t,0.15);}return;}
+        case 'tram_tue':B(target,'sleep',0,1);return;
+        case 'hac_hoa':D(opp);B(opp,'disarm',0,1,{weaponSkills:false});return;
+        case 'tam_nuong':{const list=ff.slice(0,2);D(list);B(list,'entangle',0,2);B(list,'attackDown',0.2,2);return;}
         case 'son_cuong':{const list=all.filter(t=>t.slot%3===actor.slot%3);D(list,base,{critBonus:0.4});B(list,'bleed',0.04,2,{percentMaxHp:0.04});return;}
         case 'tue_y':{const list=weakest(ours).slice(0,3);H(list,0.2);B(list,'regen',0.06,2);return;}
-        case 'mang_xa':{const list=random(all).slice(0,3);for(const t of list)breakShield(actor,t);D(list,base,{armorPierce:0.3});B(list,'armorDown',0.25);return;}
-        case 'khaos':D(target);displace(actor,target,'random');return;
-        case 'kinh_nuong':D(strongestEnemy);B(strongestEnemy,'blind',0.3,1);return;
-        case 'hoi_anh':D(target);B(target,'confusion',0,2,{charges:1});return;
+        case 'mang_xa':{const list=random(all).slice(0,3);for(const t of list)breakShield(actor,t);D(list);B(list,'armorDown',0.25,2);return;}
+        case 'khaos':{const a=random(front(all))[0],b=random(back(all))[0];if(a&&b&&canMove(a)&&canMove(b)){const from=a.slot;a.slot=b.slot;b.slot=from;syncZones();emit('swap',actor,a,{otherId:b.id,from,to:a.slot});}return;}
+        case 'kinh_nuong':D(strongestEnemy);B(strongestEnemy,'blind',1,2,{charges:1});return;
+        case 'hoi_anh':{const victim=opp,friend=victim&&adjacent(victim,friends(victim))[0];if(victim&&friend){emit('forcedBasic',actor,victim,{victimId:friend.id});damage(victim,friend,{multiplier:1,action:'basic'});}return;}
         case 'van_phap':{
-          const donors=strongest(all).slice(0,2),recipients=strongest(ours).slice(0,2);
+          const donors=ff.slice(0,2),recipients=random(ours).slice(0,2);D(ff);
           donors.forEach((t,i)=>{const removed=cleanse(t,Infinity,s=>['attackUp','armorUp'].includes(s.type));for(const s of removed)B(recipients[i%recipients.length],s.type,s.power,2);});return;
         }
-        case 'cuu_trieu':{const list=[...ff,...back(all).filter(t=>t.slot%3===actor.slot%3).slice(0,1)];D(list);strip(list,1);energy(actor,actor,25,'drum');return;}
+        case 'cuu_trieu':{const list=[...ff,...back(all).filter(t=>t.slot%3===actor.slot%3).slice(0,1)];D(list,base,{type:'true'});strip(list,1);energy(actor,actor,25,'drum');return;}
         case 'thach_mong':D(ff);B(ff,'taunted',0,2,{polarity:'debuff'});for(const t of ff)siphon(actor,t,15);return;
         case 'to_linh':D(ff);for(const t of ff)displace(actor,t,'half');B(ff,'speedDown',0.3);return;
         default:D(target);return; // Legacy test opponent; no invented S+ kit.
       }
     }
     switch(k){
-      case 'co_trong':for(const t of ours)energy(actor,t,40,'ancient-machine');B(ours,'reflectAll',0.2,2);return;
-      case 'cuong_dong':B(all,'taunted',0,2,{polarity:'debuff'});B(actor,'armorUp',0.6,2);return;
-      case 'lac_an':hits([weakBack],7,defaults.singleUltimateMultiplier,{forceCrit:true});return;
-      case 'hac_pha':D(all.filter(t=>Math.floor(t.slot/3)===Math.floor((target||opp).slot/3)),2.0);return;
+      case 'co_trong':{const r=rules(actor,action);for(const t of ours)energy(actor,t,r.rage,'ancient-machine');B(ours,'reflectPhysical',r.reflect,r.turns);return;}
+      case 'cuong_dong':B(all,'taunted',0,2,{polarity:'debuff'});B(actor,'armorUp',0.6,2);B(actor,'hardControlImmune',0,2);return;
+      case 'lac_an':{const r=rules(actor,action);let t=forced||target||weakBack;for(let i=0;i<r.hits&&alive(actor);i++){if(!alive(t))t=strongest(foes(actor))[0];if(!t)break;D(t,defaults.singleUltimateMultiplier/r.hits*Math.pow(1+r.growth,i),{hitIndex:i,hitCount:r.hits});}return;}
+      case 'hac_pha':for(const t of ff)breakShield(actor,t);D(ff,2);B(ff.find(t=>t.slot===1)||opp,'stun',0,rules(actor,action).stun);return;
       case 'thiet_lanh':for(const t of ff)breakShield(actor,t);D(ff);B(ff,'stun',0,1);return;
-      case 'minh_toa':D(backCarry,defaults.singleUltimateMultiplier);B(backCarry,'hardSilence',0,2);energy(actor,backCarry,-50,'iron-lock');return;
+      case 'minh_toa':{const t=forced||enragedBack(all),r=rules(actor,action);D(t,defaults.singleUltimateMultiplier);B(t,'hardSilence',0,r.turns);B(t,'noExtraTurn',0,r.turns);energy(actor,t,-r.rageDrain,'iron-lock');return;}
       case 'thiem_ngan':H(ours,0.35);B(ours,'resistUp',0.3,2);B(ours,'deathWard',0,2,{charges:1});return;
       case 'linh_dong':D(all);B(all,'silence',0,1);return;
-      case 'tieu_hon':D(strongestEnemy,defaults.singleUltimateMultiplier);energy(actor,strongestEnemy,-n(strongestEnemy?.energy),'soul-empty');return;
-      case 'thach_kinh':B(ours,'magicResist',0.5,2);return;
-      case 'han_nuong':hits(all,3,base);B(all,'armorDown',0.4);return;
-      case 'vong_co':D(all);for(const t of strongest(all).slice(0,2))energy(actor,t,-t.energy,'forgetting');B(all,'damageDown',0.3,2);return;
-      case 'co_nuong':{let dealt=0;for(const t of all)dealt+=D(t,0,{raw:t.maxHp*0.12,type:'true'});for(const t of ours)heal(actor,t,dealt*0.3/ours.length);return;}
+      case 'tieu_hon':D(strongestEnemy,defaults.singleUltimateMultiplier);energy(actor,strongestEnemy,-n(strongestEnemy?.energy),'soul-empty');B(strongestEnemy,'silence',0,1);return;
+      case 'thach_kinh':{const r=rules(actor,action);B(ours,'magicResist',r.magicResist,r.turns);S(of,r.shield);return;}
+      case 'han_nuong':hits(all,3,base);B(all,'armorDown',0.4);B(all,'magicArmorDown',0.4);return;
+      case 'vong_co':D(all);for(const t of enraged(all).slice(0,2))energy(actor,t,-t.energy,'forgetting');B(all,'damageDown',0.3,2);return;
+      case 'co_nuong':{let dealt=D(all);for(const t of all)dealt+=detonate(t,s=>s.type==='parasite');const recipients=ours.filter(t=>t!==actor);for(const t of recipients)heal(actor,t,dealt*rules(actor,action).teamDrain/recipients.length);return;}
       case 'muc_chieu':{
-        H(ours,0.35);const mean=ours.reduce((sum,t)=>sum+ratio(t),0)/Math.max(1,ours.length);
+        H(ours,0.35);for(const t of ours)cleanse(t,Infinity,s=>s.type==='silence'||s.type==='hardSilence');const recipients=ours.filter(t=>t!==actor),mean=recipients.reduce((sum,t)=>sum+ratio(t),0)/Math.max(1,recipients.length);
         // Incoming equalization is healing and obeys anti-heal/conversion.
         // Donating health never kills the donor or invokes damage reflection.
-        for(const t of ours){const before=t.hp,desired=Math.max(1,Math.round(t.maxHp*mean));if(desired>before)heal(actor,t,desired-before);else t.hp=desired;emit('healthEqualize',actor,t,{amount:t.hp-before});cleanse(t,Infinity,s=>s.type==='silence'||s.type==='hardSilence');}return;
+        for(const t of recipients){const before=t.hp,desired=Math.max(1,Math.round(t.maxHp*mean));if(desired>before)heal(actor,t,desired-before);else t.hp=desired;emit('healthEqualize',actor,t,{amount:t.hp-before});cleanse(t,Infinity,s=>s.type==='silence'||s.type==='hardSilence');}return;
       }
-      case 'thuy_co':for(const t of ours)cleanse(t);B(ours,'speedUp',0.25,2);return;
+      case 'thuy_co':H(ours,rules(actor,action).heal);for(const t of ours)cleanse(t);B(ours,'speedUp',0.25,2);return;
       case 'ha_lang':D(all);B(all,'attackDown',0.3);return;
-      case 'giang_quan':D(ff);B(ff,'root',0,2);return;
-      case 'thuy_ngoc':H(ob,0.2);for(const t of ob)energy(actor,t,30,'pearl-ultimate');return;
+      case 'giang_quan':D(ff);B(ff,'root',0,2,{blocksMelee:true});return;
+      case 'thuy_ngoc':H(ob,0.2);for(const t of ob)energy(actor,t,30,'pearl-ultimate');B(ob,'rageRate',.2,2);return;
       case 'hai_phong':D(all);B(all,'armorDown',0.4);return;
-      case 'tram_chau':S(ours,0.3);B(ours,'damageToRage',0.5,2);B(all,'critDown',0.35,2);return;
-      case 'da_xoa':{const t=weakBack;D(t,defaults.singleUltimateMultiplier,{type:'true',bypassShield:true,bypassGuard:true});if(t&&!alive(t))B(actor,'stealth',0,1);return;}
-      case 'nung':B(of,'armorUp',0.4);B(ff,'burn',0.03,2,{percentMaxHp:0.03});return;
-      case 'hoa_tieu':hits(all,3,1.8);return;
+      case 'tram_chau':S(ours,0.3);B(ours,'damageToRage',0.5,1);B(all,'critDown',0.35,2);return;
+      case 'da_xoa':{const t=weakBack;D(t,defaults.singleUltimateMultiplier,{type:'true',bypassGuard:true});if(t&&!alive(t))B(actor,'stealth',0,1);return;}
+      case 'nung':B(actor,'armorUp',0.4,2);B(ff,'burn',0.03,2,{percentMaxHp:0.03,rawPerTick:actor.maxHp*0.03});return;
+      case 'hoa_tieu':{hits(all,3,1.8);for(const t of all)detonate(t,isBurn,1.2);return;}
       case 'hoa_khieu':{
         for(const helper of strongest(ours.filter(u=>u!==actor)).slice(0,2)){
           if(!canUse(helper,'basic')){emit('assistBlocked',actor,helper);continue;}
@@ -579,35 +579,35 @@ export function createSplusMechanics(options={}) {
         let dealt=D(all);for(const t of all){const s=status(t,'bloodDebt');if(s){const stacks=s.stacks;remove(t,x=>x===s,'detonate');dealt+=D(t,stacks*0.2,{secondary:true});}}
         heal(actor,actor,dealt*0.2);return;
       }
-      case 'hoa_bai':{const burning=all.filter(t=>statuses(t).some(isBurn));hits(all,3,1.5);B(burning,'stun',0,1);return;}
-      case 'hac_dao':{const t=tankiest(all)[0];D(t,defaults.singleUltimateMultiplier);if(t)B([t,...adjacent(t,all).slice(0,4)],'antiHeal',1,2);return;}
+      case 'hoa_bai':{const burning=all.filter(t=>statuses(t).some(isBurn));hits(all,3,1.5);for(const t of all)detonate(t,s=>s.type==='brimstone'&&s.zone);B(burning,'stun',0,1);return;}
+      case 'hac_dao':{const t=tankiest(all)[0],list=t?[t,...adjacent(t,all).slice(0,4)]:[];D(list,defaults.singleUltimateMultiplier);B(list,'antiHeal',1,2);return;}
       case 'hoa_duc':{
         H(ours,0.3);B(ours,'critUp',0.25);let pool=0;
-        for(const t of all)for(const s of statuses(t).filter(isBurn)){pool+=t.maxHp*n(s.percentMaxHp,s.power)*s.stacks*Math.max(0,n(s.ticksLeft));remove(t,x=>x===s,'healing-detonation');}
+        for(const t of all)for(const s of statuses(t).filter(isBurn)){pool+=n(s.rawPerTick,t.maxHp*n(s.percentMaxHp,s.power))*s.stacks*Math.max(0,n(s.ticksLeft));if(s.zone)for(let i=zones.length-1;i>=0;i--)if(zones[i].sourceId===s.sourceId&&zones[i].team===t.team&&zones[i].slot===t.slot)zones.splice(i,1);remove(t,x=>x===s,'healing-detonation');}
         for(const t of ours)heal(actor,t,pool/Math.max(1,ours.length));return;
       }
-      case 'mien_nuong':H(ours,0.25);B(ours,'resistUp',0.2,2);return;
-      case 'tram_tue':D(all);B(all,'attackDown',0.3);for(const t of all)emit('actionDelay',actor,t,{fraction:0.4});return;
-      case 'hac_hoa':D(ff);B(ff,'antiHeal',1,2);return;
-      case 'tam_nuong':B(all,'root',0,1);B(ff,'paralysis',0,1);H(ours,0.25);return;
+      case 'mien_nuong':H(ours,0.25);B(ours,'resistUp',0.2,2);B(ours,'regen',0.06,2,{beginRound:true,ticksLeft:2});return;
+      case 'tram_tue':D(all);B(all,'attackDown',0.3,2);B(all,'actionSlow',0.4,2);for(const t of all)emit('actionDelay',actor,t,{fraction:.4});return;
+      case 'hac_hoa':D(ff);B(ff,'antiHeal',1,2);B(ff,'root',0,1);return;
+      case 'tam_nuong':D(all);B(ff,'paralysis',0,1);H(ours,0.25);return;
       case 'son_cuong':{
-        const col=all.filter(t=>t.slot%3===actor.slot%3),killsBefore=n(actor.kills);D(col,2.1,{forceCrit:true});
+        const col=all.filter(t=>t.slot%3===actor.slot%3),killsBefore=n(actor.kills);D(col,2.1,{forceCrit:true});for(const t of col)detonate(t,s=>s.type==='bleed'||s.type==='resinBleed');
         if(n(actor.kills)>killsBefore&&alive(actor)){emit('recast',actor,actor);const remaining=foes(actor).filter(t=>t.slot%3===actor.slot%3);D(remaining.length?remaining:[opposite(actor,foes(actor))],2.1,{forceCrit:true});}return;
       }
       case 'tue_y':{
         H(ours,0.4);for(const t of ours)cleanse(t);
-        const fallen=units.filter(t=>t.team===actor.team&&!alive(t)).sort((a,b)=>n(a.splus.memory.deathSequence)-n(b.splus.memory.deathSequence)||bySlot(a,b))[0];
+        const fallen=units.filter(t=>t.team===actor.team&&!alive(t)).sort((a,b)=>n(b.splus.memory.deathSequence)-n(a.splus.memory.deathSequence)||bySlot(a,b))[0];
         if(fallen&&!actor.splus.memory.reviveUsed){actor.splus.memory.reviveUsed=true;fallen.dead=false;fallen.hp=Math.round(fallen.maxHp*0.5);fallen.energy=50;fallen.statuses=[];fallen.defeatedAt=0;emit('resurrect',actor,fallen,{hp:fallen.hp,energy:50});}return;
       }
       case 'mang_xa':{
-        D(all);for(const t of all)for(const s of statuses(t).filter(s=>s.type==='viperPoison'||s.type==='poison')){const raw=t.maxHp*n(s.percentMaxHp,s.power)*s.stacks*Math.max(0,n(s.ticksLeft));remove(t,x=>x===s,'detonate');D(t,0,{raw,type:'true',secondary:true,noTriggers:true});}
-        B(all,'blind',0.4,2);return;
+        D(all);for(const t of all)for(const s of statuses(t).filter(s=>s.type==='viperPoison'||s.type==='poison')){const raw=n(s.rawPerTick,t.maxHp*n(s.percentMaxHp,s.power))*s.stacks*Math.max(0,n(s.ticksLeft));remove(t,x=>x===s,'detonate');D(t,0,{raw,type:'true',secondary:true,noTriggers:true});}
+        B(all,'blind',0.4,2,{charges:1});return;
       }
-      case 'khaos':hits(all,3,base,{type:'true'});return;
+      case 'khaos':hits(all,3,base,{type:'true',bypassShield:true});B(all,'moveSlow',.3,2);return;
       case 'kinh_nuong':B(ours,'reflectSkills',0.35,1);return;
       case 'hoi_anh':{
-        const movable=all.filter(canMove),slots=random(movable.map(t=>t.slot));for(let i=0;i<movable.length;i++){const t=movable[i],old=t.slot;t.slot=slots[i];emit('displacement',actor,t,{from:old,to:t.slot});}
-        B(random(all).slice(0,2),'stun',0,1);return;
+        D(all);const movable=all.filter(canMove),slots=random(movable.map(t=>t.slot));for(let i=0;i<movable.length;i++){const t=movable[i],old=t.slot;t.slot=slots[i];emit('displacement',actor,t,{from:old,to:t.slot});}
+        syncZones();B(random(all).slice(0,2),'stun',0,1);return;
       }
       case 'van_phap':for(const t of ours){const removed=cleanse(t);H(t,removed.length*0.05);}airborne(all);return;
       case 'cuu_trieu':hits(all,9,1.8);return;
@@ -618,3 +618,4 @@ export function createSplusMechanics(options={}) {
   }
   return {schema:'luc-than-splus-combat/v2',profileVersion:'splus-profile/2026-09-08-v2',units,events,unit,start,beginTurn,beginRound,finishRound,act,damage,heal,shield,gainRage:energy,addStatus,cleanse,modifiers,stat,canUse,canMove,targets,chooseAction,hud,get round(){return round;}};
 }
+

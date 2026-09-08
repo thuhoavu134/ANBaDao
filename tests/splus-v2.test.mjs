@@ -105,7 +105,7 @@ test('V2 Kinh Nuong successful basic reflection negates damage and cannot bounce
 test('V2 Khaos clone explodes and respawns after 3 rounds; ultimate bypasses shield',()=>{
  const e=make([H('khaos'),H('enemy',2,0,{maxHp:1e6,hp:1e6,shield:5000}),H('other',2,1)]);
  e.damage('2:enemy','1:khaos',{raw:10000});assert.ok(e.events.some(x=>x.type==='cloneDestroyed'));e.beginRound(4);assert.ok(e.unit('1:khaos').splus.memory.cloneHp>0);
- const before=e.unit('2:enemy').hp;e.act('1:khaos','ultimate');assert.ok(e.unit('2:enemy').hp<before);assert.equal(e.unit('2:enemy').shield,5000);
+ const before=e.unit('2:enemy').hp,shieldBefore=e.unit('2:enemy').shield;e.act('1:khaos','ultimate');assert.ok(e.unit('2:enemy').hp<before);assert.equal(e.unit('2:enemy').shield,shieldBefore);
 });
 test('V2 Hoi Anh forces an immediate friendly strike; Van ward rolls 35% after action',()=>{
  const e=make([H('hoi_anh'),H('enemy',2,0),H('friend',2,1)]);e.act('1:hoi_anh','skill');assert.ok(e.unit('2:friend').hp<10000);
@@ -122,3 +122,4 @@ test('V2 Time Freeze suppresses rage gain and passive reflection',()=>{
  const e=make([H('to_linh'),H('cuong_dong',2)]);e.act('1:to_linh','ultimate');e.unit('2:cuong_dong').energy=0;
  assert.equal(e.gainRage('2:cuong_dong','2:cuong_dong',40),0);const before=e.unit('1:to_linh').hp;e.damage('1:to_linh','2:cuong_dong',{raw:1000});assert.equal(e.unit('1:to_linh').hp,before);
 });
+
