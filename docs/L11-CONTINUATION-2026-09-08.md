@@ -5,7 +5,7 @@ Source baseline: `b6a2ae20a9b1b3071a8f5263740312e9d1465b04`, branch `handoff/l11
 ## Verified source slice
 
 - Resolved all six original V2 regressions and reviewed handlers across all six elements against the authored profiles. Updated explicit V1 assertions only where V2 changed the requirement.
-- Added 33 regression cases (182 S+ before final lifecycle/consumption cases; full suite now 411/411). Build completed through `scripts/build-static.mjs`, including independent/embedded battle parity and old save/reward/seed regressions. See `qa/L11-SPLUS-PROFILES/continuation-full-green.log`.
+- Added 33 regression cases (182 S+ before final lifecycle/consumption cases; the prior checkpoint was 411/411). This continuation adds the crop/target-scope regression slice; current full suite is 414/414. Build completed through `scripts/build-static.mjs`, including independent/embedded battle parity and old save/reward/seed regressions. See `qa/L11-SPLUS-PROFILES/continuation-full-green.log`.
 - Source HP shields/heals, precise target scopes, control/rage restrictions, damage/shield bypass, immediate forced basic, latest-death revive, HoT final tick, Fire/Wood actions and consumed zone cleanup covered by new focused regressions.
 - Popup handles queued close/reopen, Escape, destroy and focus cleanup. Battle resolves current actor by ID, refuses orphan cast, resets UI on restart/exit. Source adapter remains the single scheduler owner.
 - Catalog/bridge/combat now identify V2. Runtime adapter script marker remains v1 as a build integration identifier.
@@ -16,7 +16,7 @@ Source baseline: `b6a2ae20a9b1b3071a8f5263740312e9d1465b04`, branch `handoff/l11
 - Trầm Tuệ actionSlow uses the existing queue: immediate delay by 40% of remaining queue length, then -40% ordering speed while the two-round status is active. This is a REVIEW interpretation of action bar wording in a round scheduler, not a new realtime clock.
 - Hạc Phá stun 1.5 rounds remains authored as fractional expiry but integer round evaluation is not exact half-round timing. Tố Linh half-slot movement and airborne presentation also need timing acceptance. No silent approval of these approximations.
 - Unquantified damage multipliers, Cửu Tính five-stack explosion magnitude, parasite cap, Hắc Đao four adjacent cells on a 2×3 board and Sơn Cương recast bleed consumption need explicit review. Passing tests do not certify all126 descriptions numerically.
-- 126 atlas crops, live list/detail/battle UI and restart require preview browser evidence. Local browser access was blocked (`ERR_BLOCKED_BY_CLIENT`); verify deployment URL next. Device/Safari NOT_RUN.
+- Source crop gutter and live 126 viewBox metadata now pass; full authored-atlas visual matrix remains REVIEW because no art bytes were changed. Target picker and clean reload restart are browser-verified. Device/Safari/mobile viewport remains NOT_RUN because the connected browser exposes no emulation capability.
 - Ticket Board unavailable; claim/lease null, locks empty. Owner explicitly authorized source/test continuation. Vibe gate run `20260908-153841-f3ao79i` retains these honest blockers. No DONE/MERGED.
 - Combat V2 stays on handoff branch. Main/production remains the documentation checkpoint `03d4fdf`; preview READY alone is not release approval.
 
@@ -41,3 +41,13 @@ Retained RED evidence: continuation-red, parity-red, fire-wood-red, ui-orphan-re
 - Art review finding: some metal crops show a sliver of adjacent-row ornament. Source atlas has tightly touching ornaments/alpha fringe. Full126 crop acceptance remains OPEN. No art bytes were modified.
 - UI targeting review: Nung S1 currently exposes all enemy target buttons while resolver chooses the authored opposite-front target. Scope resolution is correct, but target-picker presentation should be narrowed before release.
 - Vibe run progressed to evidence-review; gate is still open for these acceptance items, timing decisions and unavailable Board/device. This is a tested continuation checkpoint, not L11 completion or production promotion.
+
+## Scope/crop/restart follow-up — `e1f0b964`
+
+- Pushed fast-forward to `handoff/l11-splus-profiles-v2-20260908`; main/production were not changed.
+- Crop fix: every S+ icon rect has a source gutter `{x:3,y:5}` before its SVG viewBox. The browser catalog rendered 42 heroes / 126 icons; sampled viewBoxes were `3 5 268 240`, `277 5 268 240`, `551 5 267 240`. Full visual atlas acceptance stays REVIEW; no art bytes changed.
+- Target picker fix: Nung S1 Cast exposed exactly one button, `Chọn Tuệ Y, còn 24000 máu`; after selection the dialog and target layer cleared.
+- Restart: reload + `Vào trận giữ Ải Mây` produced one status panel, one skill strip, one closed dialog, actor `player:hero_splus_nung`, and zero stale target buttons.
+- Current source verification is **414/414 PASS**; focused scope/runtime/dialog slice is **10/10 PASS**. Machine evidence: [continuation-scope-crop-restart-20260908.json](qa/L11-SPLUS-PROFILES/continuation-scope-crop-restart-20260908.json).
+- Desktop catalog at 1363×936 had 42 cards and no horizontal overflow. Mobile/Safari/device is **NOT_RUN**: the available browser has no viewport/emulation capability. Fractional timing decisions remain REVIEW and are not rounded.
+- The branch-linked preview stayed on the old bundle, so browser QA used an isolated host only for this check; it is not a production promotion or release approval.

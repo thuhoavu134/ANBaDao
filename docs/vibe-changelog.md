@@ -1,3 +1,9 @@
+## L11 scope/crop/restart follow-up — `e1f0b964`
+
+Closed the source crop leak with a 3×5 atlas gutter and narrowed S+ target candidates to the authored scope. Full build/test is **414/414 PASS**; Nung S1 browser Cast shows exactly one target and resolves cleanly. Reload + start leaves one panel/strip and no stale target buttons. Desktop catalog is 42/126 with no horizontal overflow; mobile/Safari/device remains NOT_RUN because the browser has no viewport emulation. Fractional durations remain REVIEW; main/production unchanged.
+
+Evidence: [scope/crop/restart](qa/L11-SPLUS-PROFILES/continuation-scope-crop-restart-20260908.json). Current status stays REVIEW / IN_PROGRESS.
+
 ## L11 latest checkpoint — 4a79095
 
 Final source build/tests411/411; Vercel preview READY; Chrome battle15 rounds/139 actions/1649 events. Fixed browser-only pointer input bug. Crop/timing/target-picker/restart/device acceptance remains open; main unchanged. See [continuation](L11-CONTINUATION-2026-09-08.md).

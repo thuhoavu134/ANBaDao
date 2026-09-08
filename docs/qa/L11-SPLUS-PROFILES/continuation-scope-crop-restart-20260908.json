@@ -1,0 +1,67 @@
+{
+  "schema": "luc-than-qa/l11-splus-scope-crop-restart-v1",
+  "date": "2026-09-08",
+  "branch": "handoff/l11-splus-profiles-v2-20260908",
+  "baseCheckpoint": "ae3240e457c28ebdea536a047bb8938066043433",
+  "codeCommit": "e1f0b964bc657cd0914bbcfc6a00c9c4eb5221ec",
+  "production": {
+    "primaryProjectPromoted": false,
+    "mainChanged": false,
+    "combatV2ReleaseApproved": false
+  },
+  "source": {
+    "buildCommand": "npm test",
+    "build": "PASS",
+    "tests": "414/414 PASS",
+    "focusedCommand": "node --test tests/splus-ui-scope.test.mjs tests/splus-runtime.test.mjs tests/splus-dialog-lifetime.test.mjs",
+    "focusedTests": "10/10 PASS",
+    "redGreen": "The new scope/crop suite was RED before implementation and GREEN after the four source fixes."
+  },
+  "crop": {
+    "iconCount": 126,
+    "gutter": { "x": 3, "y": 5 },
+    "browserViewBoxSample": ["3 5 268 240", "277 5 268 240", "551 5 267 240"],
+    "sourceArtBytesChanged": false,
+    "visualMatrix": "REVIEW: the source rect gutter is verified; full authored-atlas visual acceptance remains open."
+  },
+  "targetPicker": {
+    "route": "battle.html?qaSplus42=hero_splus_nung",
+    "actor": "hero_splus_nung",
+    "action": "skill",
+    "targetCount": 1,
+    "targetLabels": ["Chọn Tuệ Y, còn 24000 máu"],
+    "dialogClosedAfterCast": true,
+    "targetLayerClearedAfterResolve": true
+  },
+  "restart": {
+    "method": "reload then Vào trận giữ Ải Mây",
+    "result": "PASS",
+    "statusPanels": 1,
+    "skillStrips": 1,
+    "dialogs": 1,
+    "dialogOpen": false,
+    "targetButtons": 0,
+    "actorAfterRestart": "player:hero_splus_nung"
+  },
+  "desktopCatalog": {
+    "viewport": "1363x936",
+    "cards": 42,
+    "icons": 126,
+    "horizontalOverflow": false,
+    "mobileMediaRulesPresent": true
+  },
+  "mobileSafariDevice": {
+    "status": "NOT_RUN",
+    "reason": "The connected browser exposes no viewport/emulation capability; Safari/device backend is unavailable."
+  },
+  "fractionalTiming": {
+    "status": "REVIEW_UNCHANGED",
+    "items": ["Trầm Tuệ actionSlow queue interpretation", "Hạc Phá 1.5-round stun", "Tố Linh half-slot movement", "Giang Quân one-second airborne presentation"]
+  },
+  "board": "UNAVAILABLE",
+  "screenshots": [
+    "/workspace/scratch/l11-splus-lab-desktop.jpg",
+    "/workspace/scratch/l11-splus-target-picker-visible.jpg"
+  ],
+  "hostNote": "Browser QA used an isolated Vercel host because the linked branch preview stayed on the prior bundle. It was not aliased to the primary luc-than project and is not release evidence."
+}

@@ -1,10 +1,10 @@
-# Latest verified revision: 4a79095
+# Latest verified revision: e1f0b964
 
-Full build/tests411/411 PASS; Chrome preview battle15 rounds139 actions1649 events. [Final source log](../../docs/qa/L11-SPLUS-PROFILES/continuation-final-full-green.log); [actual browser JSON](../../docs/qa/L11-SPLUS-PROFILES/continuation-browser-battle.json). Art/timing/restart/device gates OPEN.
+Full build/tests414/414 PASS; Chrome scope browser check found one Nung S1 target and clean reload restart. [Scope/crop/restart evidence](../../docs/qa/L11-SPLUS-PROFILES/continuation-scope-crop-restart-20260908.json); prior 15-round battle evidence remains [here](../../docs/qa/L11-SPLUS-PROFILES/continuation-browser-battle.json). Art/timing/mobile-device gates remain REVIEW/OPEN.
 
 # L11 continuation — current source verification
 
-`npm test`: build PASS, **411/411 tests PASS**. Baseline b6a2ae2 + continuation source in the handoff branch. [Scope/remaining gates](../../docs/L11-CONTINUATION-2026-09-08.md), [full log](../../docs/qa/L11-SPLUS-PROFILES/continuation-full-green.log). Browser/device/release tracked separately.
+`npm test`: build PASS, **414/414 tests PASS**. Baseline b6a2ae2 + continuation source in the handoff branch. [Scope/remaining gates](../../docs/L11-CONTINUATION-2026-09-08.md), [full log](../../docs/qa/L11-SPLUS-PROFILES/continuation-full-green.log). Browser/device/release tracked separately.
 
 # Test Results
 
