@@ -1,5 +1,19 @@
 # Kế hoạch tiếp tục Lục Thần — gói thực thi cho Luna
 
+## 2026-09-08 — L10-SPLUS42 · REVIEW / IN_PROGRESS
+
+Chủ dự án gửi hồ sơ mới 42 S+ và 42 icon. Contract: [SPLUS42-COMBAT-CONTRACT.md](SPLUS42-COMBAT-CONTRACT.md). Source mới có catalog 6×7, 42 nội tại, 42 Skill 1, 42 Ultimate, status owner và bridge vào scheduler trận hiện có. Trang `/splus-lab.html` cho chọn đủ 42 tướng; trận thử `/battle.html?qaSplus42=<hero_id>`. Art mới chưa có; dùng thẻ số/tên tạm và manifest icon chờ asset, không thay art hoặc save roster cũ.
+
+- Baseline main xác minh `d3ee56cd1391208ae262652b383e5b7d443308c7`; không làm lại L04b.
+- RED: 9 test đầu thiếu resolver; RED mở rộng bắt miễn tử Cửu Triều, giáp Kén và splash khi kết liễu. GREEN/REFACTOR: 150/150 focused+legacy regression; source và bundle factory có parity; không thêm scheduler.
+- `npm test`/`npm run build` đã chạy thật và bị chặn tại atlas part `asset-sources/luc-anh/idle-rgba-v1-atlas.webp.part01`. Partial compile còn gặp atlas Đinh Lôi thiếu; không gọi đó là full build PASS.
+- Chrome local `127.0.0.1:4173` bị `net::ERR_BLOCKED_BY_CLIENT`. Production Chrome truy cập được; build/deployment/QA bản mới đang chờ sau code push.
+- Device capabilities `[]`; Ticket Board/claim/lease/lock, doctor/smoke, agent-browser/game-dev CLI không khả dụng. Có chỉ thị chủ dự án tiếp tục source/test khi thiếu board; không giả claim.
+- Các hệ số/duration thiếu trong hồ sơ được ghi ở contract là review defaults; chưa coi balance hoàn tất. Tổng ticket giữ REVIEW / IN_PROGRESS.
+
+Bàn giao tiếp: xác minh complete-source Vercel build, production battle/HUD và cập nhật evidence; sau đó duyệt các default, nhập art mới và kiểm device/replay sâu.
+
+
 Ngày: **07/09/2026, giờ Việt Nam**. Current code checkpoint: [`005dc3a09661589ff7b96b6b7402212b1a26581e`](https://github.com/bktimmy247/luc-than/commit/005dc3a09661589ff7b96b6b7402212b1a26581e); L05b baseline: `fbb6f8137c98fcb25a99d308547cc2768de23a06`. Phân tích đầu vào: [source Hermes](HERMES-SOURCE-AUDIT-2026-09-07.md). Tiến độ: [snapshot hiện tại](HON-VIET-MONG-GIOI-PROGRESS-2026-09-06.md).
 
 **Cập nhật theo yêu cầu của anh:** Luna được tái sử dụng/port code mẫu. Đọc [guide thực hiện](HERMES-CODE-REUSE-GUIDE.md) để lấy bản đồ 27 phương thức/dependency và cách đọc từ archive đã nhận; các chỉ dẫn cũ cấm toàn bộ source đã được thay. Các phương thức hiện NOT_PORTED, không làm tăng trạng thái hoàn thành L01–L20. Mã gốc chưa được đưa lên GitHub vì auto-review chặn phân phối lại; repo chứa guide và plan.

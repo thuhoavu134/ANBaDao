@@ -1,0 +1,136 @@
+✖ S42-A1: 42 authored S+ heroes expose executable combat contract (1.429319ms)
+✖ S42-A2: gear adds 5% team defense after ally action and resets per battle (0.267833ms)
+✖ S42-A4: Cường Đồng mitigation and reflection cannot ping-pong (0.131483ms)
+✖ S42-A2: Lạc An accumulates 4 percentage points per arrow up to 40 (0.202988ms)
+✖ S42-A4: Hắc Đao passive is 80% anti-heal; Ultimate is 100% (0.140175ms)
+✖ S42-A4: cocoon consumes two incoming hits and third reaches HP (0.133496ms)
+✖ S42-A4: Mục Chiêu rescues once per battle, not per damage recursion (0.107898ms)
+✖ S42-A4: root, disarm and silence have different action restrictions (0.110592ms)
+✖ S42-A5: dispelled and expired statuses disappear from HUD with source provenance (0.146675ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 0
+ℹ fail 9
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 93.151415
+
+✖ failing tests:
+
+test at tests/splus-combat.test.mjs:10:1
+✖ S42-A1: 42 authored S+ heroes expose executable combat contract (1.429319ms)
+  AssertionError [ERR_ASSERTION]: Missing S+ combat resolver
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-combat.test.mjs:11:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/splus-combat.test.mjs:20:1
+✖ S42-A2: gear adds 5% team defense after ally action and resets per battle (0.267833ms)
+  TypeError: mod.createSplusCombat is not a function
+      at setup (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-combat.test.mjs:16:14)
+      at TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-combat.test.mjs:21:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at tests/splus-combat.test.mjs:28:1
+✖ S42-A4: Cường Đồng mitigation and reflection cannot ping-pong (0.131483ms)
+  TypeError: mod.createSplusCombat is not a function
+      at setup (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-combat.test.mjs:16:14)
+      at TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-combat.test.mjs:29:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/splus-combat.test.mjs:35:1
+✖ S42-A2: Lạc An accumulates 4 percentage points per arrow up to 40 (0.202988ms)
+  TypeError: mod.createSplusCombat is not a function
+      at setup (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-combat.test.mjs:16:14)
+      at TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-combat.test.mjs:36:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/splus-combat.test.mjs:41:1
+✖ S42-A4: Hắc Đao passive is 80% anti-heal; Ultimate is 100% (0.140175ms)
+  TypeError: mod.createSplusCombat is not a function
+      at setup (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-combat.test.mjs:16:14)
+      at TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-combat.test.mjs:42:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/splus-combat.test.mjs:51:1
+✖ S42-A4: cocoon consumes two incoming hits and third reaches HP (0.133496ms)
+  TypeError: mod.createSplusCombat is not a function
+      at setup (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-combat.test.mjs:16:14)
+      at TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-combat.test.mjs:52:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/splus-combat.test.mjs:59:1
+✖ S42-A4: Mục Chiêu rescues once per battle, not per damage recursion (0.107898ms)
+  TypeError: mod.createSplusCombat is not a function
+      at setup (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-combat.test.mjs:16:14)
+      at TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-combat.test.mjs:60:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/splus-combat.test.mjs:67:1
+✖ S42-A4: root, disarm and silence have different action restrictions (0.110592ms)
+  TypeError: mod.createSplusCombat is not a function
+      at setup (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-combat.test.mjs:16:14)
+      at TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-combat.test.mjs:68:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/splus-combat.test.mjs:79:1
+✖ S42-A5: dispelled and expired statuses disappear from HUD with source provenance (0.146675ms)
+  TypeError: mod.createSplusCombat is not a function
+      at setup (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-combat.test.mjs:16:14)
+      at TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-combat.test.mjs:80:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)

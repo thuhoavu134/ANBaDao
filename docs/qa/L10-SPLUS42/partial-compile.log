@@ -1,0 +1,28 @@
+PARTIAL COMPILE ONLY: authored binary atlas assembly unavailable; not a full build PASS
+Luc Anh runtime patch applied
+Runtime safety hotfix applied
+BGM routing patch applied: hub / hero / combat / challenge
+iOS audio unlock on first real interaction applied; no blocking gate
+Victory/defeat result audio integrated
+Luc Anh safe Retina draw patch applied: DPR3 + high-quality sampling, runtime atlas cache disabled
+[QA polish] skip Luc Anh 330 scale -> state-aware compensation
+[QA polish] skip Luc Anh deployed ultimate -> guaranteed voice
+[QA polish] skip Luc Anh deployed ultimate impact hold
+Runtime QA polish v3 applied: manifest-timed Luc Anh Ultimate and local iOS-safe voice bridge
+Runtime QA polish v4 applied: center-reaching triple ultimate, reliable victory taps, production QA disabled, sharper Luc Anh detail idle
+Runtime QA polish v5 applied safely: full-strength original black-smoke Ultimate, SOURCE-OVER preserves authored pixels
+Luc Anh migrated to anchor-based spatial pipeline with authored timing metadata
+Lục Ảnh IDLE 1080 wired: 96 frames · 480×480 cells
+Skill Atlas Runtime v1: Luc Anh Basic + Skill1 + Ultimate manifests wired to proven battle flow
+file:///workspace/scratch/205f4bc141b6/luc-than/scripts/skill-atlas-registry-v1.mjs:25
+  if(!existsSync(atlasPath)) throw new Error(`Skill Registry: missing atlas ${relative(root,atlasPath)}`);
+                                   ^
+
+Error: Skill Registry: missing atlas assets/characters/dinh-loi/basic-cast-atlas.png
+    at normalizeAtlasPart (file:///workspace/scratch/205f4bc141b6/luc-than/scripts/skill-atlas-registry-v1.mjs:25:36)
+    at file:///workspace/scratch/205f4bc141b6/luc-than/scripts/skill-atlas-registry-v1.mjs:36:77
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async file:///workspace/scratch/205f4bc141b6/luc-than/scripts/.splus-partial-build.mjs:50:1
+
+Node.js v24.19.0

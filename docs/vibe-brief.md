@@ -1,5 +1,19 @@
 # Hồn Việt v3.23.0 — Player Journey Core
 
+## 2026-09-08 — L10-SPLUS42 · REVIEW / IN_PROGRESS
+
+Chủ dự án gửi hồ sơ mới 42 S+ và 42 icon. Contract: [SPLUS42-COMBAT-CONTRACT.md](SPLUS42-COMBAT-CONTRACT.md). Source mới có catalog 6×7, 42 nội tại, 42 Skill 1, 42 Ultimate, status owner và bridge vào scheduler trận hiện có. Trang `/splus-lab.html` cho chọn đủ 42 tướng; trận thử `/battle.html?qaSplus42=<hero_id>`. Art mới chưa có; dùng thẻ số/tên tạm và manifest icon chờ asset, không thay art hoặc save roster cũ.
+
+- Baseline main xác minh `d3ee56cd1391208ae262652b383e5b7d443308c7`; không làm lại L04b.
+- RED: 9 test đầu thiếu resolver; RED mở rộng bắt miễn tử Cửu Triều, giáp Kén và splash khi kết liễu. GREEN/REFACTOR: 150/150 focused+legacy regression; source và bundle factory có parity; không thêm scheduler.
+- `npm test`/`npm run build` đã chạy thật và bị chặn tại atlas part `asset-sources/luc-anh/idle-rgba-v1-atlas.webp.part01`. Partial compile còn gặp atlas Đinh Lôi thiếu; không gọi đó là full build PASS.
+- Chrome local `127.0.0.1:4173` bị `net::ERR_BLOCKED_BY_CLIENT`. Production Chrome truy cập được; build/deployment/QA bản mới đang chờ sau code push.
+- Device capabilities `[]`; Ticket Board/claim/lease/lock, doctor/smoke, agent-browser/game-dev CLI không khả dụng. Có chỉ thị chủ dự án tiếp tục source/test khi thiếu board; không giả claim.
+- Các hệ số/duration thiếu trong hồ sơ được ghi ở contract là review defaults; chưa coi balance hoàn tất. Tổng ticket giữ REVIEW / IN_PROGRESS.
+
+Bàn giao tiếp: xác minh complete-source Vercel build, production battle/HUD và cập nhật evidence; sau đó duyệt các default, nhập art mới và kiểm device/replay sâu.
+
+
 Học nhịp trình bày rõ ràng từ video tham chiếu nhưng giữ bản sắc Hồn Việt và không sao chép lớp thương mại hóa dày đặc.
 
 Vertical slice này khóa bốn nguyên tắc: một encounter là một trận riêng, trận thường tối đa 15 hiệp, chuyển chương phải có nghi thức hình ảnh đủ mạnh, và hành trình Sảnh → Mộng Giới → Trận → Kết quả → Đi tiếp phải liền mạch.

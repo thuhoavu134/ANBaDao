@@ -1,0 +1,84 @@
+TAP version 13
+# Subtest: S42-A1: 42 authored S+ heroes expose executable combat contract
+ok 1 - S42-A1: 42 authored S+ heroes expose executable combat contract
+  ---
+  duration_ms: 0.813655
+  type: 'test'
+  ...
+# Subtest: S42-A2: gear adds 5% team defense after ally action and resets per battle
+ok 2 - S42-A2: gear adds 5% team defense after ally action and resets per battle
+  ---
+  duration_ms: 2.027759
+  type: 'test'
+  ...
+# Subtest: S42-A4: Cường Đồng mitigation and reflection cannot ping-pong
+ok 3 - S42-A4: Cường Đồng mitigation and reflection cannot ping-pong
+  ---
+  duration_ms: 0.4561
+  type: 'test'
+  ...
+# Subtest: S42-A2: Lạc An accumulates 4 percentage points per arrow up to 40
+ok 4 - S42-A2: Lạc An accumulates 4 percentage points per arrow up to 40
+  ---
+  duration_ms: 0.819784
+  type: 'test'
+  ...
+# Subtest: S42-A4: Hắc Đao passive is 80% anti-heal; Ultimate is 100%
+not ok 5 - S42-A4: Hắc Đao passive is 80% anti-heal; Ultimate is 100%
+  ---
+  duration_ms: 2.08282
+  type: 'test'
+  location: '/workspace/scratch/205f4bc141b6/luc-than/tests/splus-combat.test.mjs:41:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    200 permitted healing, half converted to damage
+    
+    5000 !== 5100
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 5100
+  actual: 5000
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-combat.test.mjs:46:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: S42-A4: cocoon consumes two incoming hits and third reaches HP
+ok 6 - S42-A4: cocoon consumes two incoming hits and third reaches HP
+  ---
+  duration_ms: 0.385406
+  type: 'test'
+  ...
+# Subtest: S42-A4: Mục Chiêu rescues once per battle, not per damage recursion
+ok 7 - S42-A4: Mục Chiêu rescues once per battle, not per damage recursion
+  ---
+  duration_ms: 0.63305
+  type: 'test'
+  ...
+# Subtest: S42-A4: root, disarm and silence have different action restrictions
+ok 8 - S42-A4: root, disarm and silence have different action restrictions
+  ---
+  duration_ms: 0.434769
+  type: 'test'
+  ...
+# Subtest: S42-A5: dispelled and expired statuses disappear from HUD with source provenance
+ok 9 - S42-A5: dispelled and expired statuses disappear from HUD with source provenance
+  ---
+  duration_ms: 0.423532
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 8
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 97.15623

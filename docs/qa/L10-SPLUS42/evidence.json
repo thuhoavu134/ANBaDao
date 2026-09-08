@@ -1,0 +1,46 @@
+{
+  "schema": "luc-than-splus42-evidence/v1",
+  "baseline": "d3ee56cd1391208ae262652b383e5b7d443308c7",
+  "status": "REVIEW / IN_PROGRESS",
+  "sourceTests": {
+    "passed": 150,
+    "failed": 0,
+    "log": "regression.tap"
+  },
+  "red": [
+    "red.tap",
+    "kits-red.tap"
+  ],
+  "localBuild": {
+    "status": "BLOCKED",
+    "reason": "ENOENT asset-sources/luc-anh/idle-rgba-v1-atlas.webp.part01",
+    "log": "local-build.log"
+  },
+  "npmTest": {
+    "status": "BLOCKED_AT_BUILD",
+    "log": "npm-test.log"
+  },
+  "localBrowser": {
+    "status": "BLOCKED",
+    "reason": "net::ERR_BLOCKED_BY_CLIENT http://127.0.0.1:4173/splus-lab.html"
+  },
+  "production": {
+    "status": "PENDING_NEW_DEPLOYMENT"
+  },
+  "device": {
+    "capabilities": [],
+    "status": "UNAVAILABLE"
+  },
+  "ticketBoard": {
+    "status": "UNAVAILABLE",
+    "claim": null,
+    "lease": null,
+    "locks": []
+  },
+  "art": {
+    "newHeroAtlases": 0,
+    "newHudIconAssets": 0,
+    "iconManifest": 42
+  },
+  "workflowRun": "20260907-205925-epmcgpc"
+}

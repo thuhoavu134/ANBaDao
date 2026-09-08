@@ -1,0 +1,166 @@
+✔ 42 unique identities, seven per element, no replacement art (2.254443ms)
+✔ Cơ Trọng: skill resolves authored target/effect (2.574043ms)
+✔ Cơ Trọng: ultimate resolves authored target/effect (1.025527ms)
+✔ Cường Đồng: skill resolves authored target/effect (1.786455ms)
+✔ Cường Đồng: ultimate resolves authored target/effect (1.78296ms)
+✔ Lạc An: skill resolves authored target/effect (0.509169ms)
+✔ Lạc An: ultimate resolves authored target/effect (0.783791ms)
+✔ Hạc Phá: skill resolves authored target/effect (0.348532ms)
+✔ Hạc Phá: ultimate resolves authored target/effect (0.452205ms)
+✔ Thiết Lãnh: skill resolves authored target/effect (0.395942ms)
+✔ Thiết Lãnh: ultimate resolves authored target/effect (0.479414ms)
+✔ Minh Tỏa: skill resolves authored target/effect (0.52429ms)
+✔ Minh Tỏa: ultimate resolves authored target/effect (0.268975ms)
+✔ Thiềm Ngân: skill resolves authored target/effect (0.464582ms)
+✔ Thiềm Ngân: ultimate resolves authored target/effect (0.582206ms)
+✔ Linh Đồng: skill resolves authored target/effect (0.383153ms)
+✔ Linh Đồng: ultimate resolves authored target/effect (0.657687ms)
+✔ Tiêu Hồn: skill resolves authored target/effect (0.288233ms)
+✔ Tiêu Hồn: ultimate resolves authored target/effect (0.369312ms)
+✔ Thạch Kinh: skill resolves authored target/effect (0.721551ms)
+✔ Thạch Kinh: ultimate resolves authored target/effect (0.195016ms)
+✔ Hàn Nương: skill resolves authored target/effect (0.419867ms)
+✔ Hàn Nương: ultimate resolves authored target/effect (1.150922ms)
+✔ Vọng Cơ: skill resolves authored target/effect (0.481157ms)
+✔ Vọng Cơ: ultimate resolves authored target/effect (0.742881ms)
+✔ Cổ Nương: skill resolves authored target/effect (0.457623ms)
+✔ Cổ Nương: ultimate resolves authored target/effect (0.567143ms)
+✔ Mục Chiêu: skill resolves authored target/effect (0.377945ms)
+✔ Mục Chiêu: ultimate resolves authored target/effect (0.489159ms)
+✔ Thủy Cơ: skill resolves authored target/effect (0.353419ms)
+✔ Thủy Cơ: ultimate resolves authored target/effect (0.636866ms)
+✔ Hà Lãng: skill resolves authored target/effect (0.460167ms)
+✔ Hà Lãng: ultimate resolves authored target/effect (0.927989ms)
+✔ Giang Quân: skill resolves authored target/effect (0.273312ms)
+✔ Giang Quân: ultimate resolves authored target/effect (0.23826ms)
+✔ Thủy Ngọc: skill resolves authored target/effect (0.391376ms)
+✔ Thủy Ngọc: ultimate resolves authored target/effect (0.207975ms)
+✔ Hải Phong: skill resolves authored target/effect (0.211661ms)
+✔ Hải Phong: ultimate resolves authored target/effect (0.240053ms)
+✔ Trầm Châu: skill resolves authored target/effect (0.130632ms)
+✔ Trầm Châu: ultimate resolves authored target/effect (0.197991ms)
+✔ Dạ Xoa: skill resolves authored target/effect (0.235436ms)
+✔ Dạ Xoa: ultimate resolves authored target/effect (0.200835ms)
+✔ Nung: skill resolves authored target/effect (0.230278ms)
+✔ Nung: ultimate resolves authored target/effect (0.239372ms)
+✔ Hỏa Tiêu: skill resolves authored target/effect (0.216378ms)
+✔ Hỏa Tiêu: ultimate resolves authored target/effect (0.936516ms)
+✔ Hỏa Khiêu: skill resolves authored target/effect (0.263808ms)
+✔ Hỏa Khiêu: ultimate resolves authored target/effect (0.266501ms)
+✔ Cửu Tính: skill resolves authored target/effect (0.186924ms)
+✔ Cửu Tính: ultimate resolves authored target/effect (0.766967ms)
+✔ Hỏa Bài: skill resolves authored target/effect (0.338067ms)
+✔ Hỏa Bài: ultimate resolves authored target/effect (0.763873ms)
+✔ Hắc Đao: skill resolves authored target/effect (0.309736ms)
+✔ Hắc Đao: ultimate resolves authored target/effect (0.327271ms)
+✔ Hỏa Dực: skill resolves authored target/effect (0.185763ms)
+✔ Hỏa Dực: ultimate resolves authored target/effect (0.17009ms)
+✔ Miên Nương: skill resolves authored target/effect (0.25151ms)
+✔ Miên Nương: ultimate resolves authored target/effect (0.853774ms)
+✔ Trầm Tuệ: skill resolves authored target/effect (0.327792ms)
+✔ Trầm Tuệ: ultimate resolves authored target/effect (0.239232ms)
+✔ Hạc Hoa: skill resolves authored target/effect (0.250699ms)
+✔ Hạc Hoa: ultimate resolves authored target/effect (0.266772ms)
+✔ Tằm Nương: skill resolves authored target/effect (0.380359ms)
+✔ Tằm Nương: ultimate resolves authored target/effect (0.27867ms)
+✔ Sơn Cương: skill resolves authored target/effect (0.344767ms)
+✔ Sơn Cương: ultimate resolves authored target/effect (0.243458ms)
+✔ Tuệ Y: skill resolves authored target/effect (0.153505ms)
+✔ Tuệ Y: ultimate resolves authored target/effect (0.19759ms)
+✔ Mãng Xà: skill resolves authored target/effect (0.409412ms)
+✔ Mãng Xà: ultimate resolves authored target/effect (0.378937ms)
+✔ Khaos: skill resolves authored target/effect (0.247254ms)
+✔ Khaos: ultimate resolves authored target/effect (0.808619ms)
+✔ Kính Nương: skill resolves authored target/effect (0.191612ms)
+✔ Kính Nương: ultimate resolves authored target/effect (0.148819ms)
+✔ Hồi Ảnh: skill resolves authored target/effect (0.153706ms)
+✔ Hồi Ảnh: ultimate resolves authored target/effect (0.191121ms)
+✔ Vân Pháp: skill resolves authored target/effect (0.339649ms)
+✔ Vân Pháp: ultimate resolves authored target/effect (0.194926ms)
+✔ Cửu Triều: skill resolves authored target/effect (0.237339ms)
+✔ Cửu Triều: ultimate resolves authored target/effect (1.341692ms)
+✔ Thạch Mộng: skill resolves authored target/effect (0.291929ms)
+✔ Thạch Mộng: ultimate resolves authored target/effect (0.215076ms)
+✔ Tố Linh: skill resolves authored target/effect (0.247764ms)
+✔ Tố Linh: ultimate resolves authored target/effect (0.155288ms)
+✖ Cửu Triều prevents her own fatal hit once; silence disables it (4.604988ms)
+✖ Tằm Nương armor persists after both cocoon hit charges (0.600583ms)
+✖ Hỏa Tiêu splash still hits adjacent enemies when primary dies (0.454868ms)
+✔ Vân Pháp reflects only one control, with no reflection loop (0.228475ms)
+✔ Vọng Cơ extends only skill cooldown, and expiration is round based (0.525032ms)
+✔ Tuệ Y revive costs once per battle and restores 50 HP percent / 50 rage (0.674151ms)
+✔ Mãng Xà uses three distinct seeded targets; replay is identical (0.849318ms)
+✔ Dạ Xoa execution ignores intercept and shield (0.400078ms)
+ℹ tests 93
+ℹ suites 0
+ℹ pass 90
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 148.221878
+
+✖ failing tests:
+
+test at tests/splus-kits.test.mjs:36:1
+✖ Cửu Triều prevents her own fatal hit once; silence disables it (4.604988ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(e.unit('1:0').hp>0)
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-kits.test.mjs:37:74)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/splus-kits.test.mjs:41:1
+✖ Tằm Nương armor persists after both cocoon hit charges (0.600583ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 0.3
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-kits.test.mjs:42:103)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 0.3,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/splus-kits.test.mjs:44:1
+✖ Hỏa Tiêu splash still hits adjacent enemies when primary dies (0.454868ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(e.unit('2:1').hp<50000)
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-kits.test.mjs:45:105)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
