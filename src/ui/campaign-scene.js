@@ -239,6 +239,7 @@ function onSceneRoute(name) {
     stopSceneClock(); sceneState.draft = null; sceneState.launching = false;
     sceneState.scope?.dispose(); sceneState.scope = null;
     if (sceneState.root) { sceneState.root.querySelector('dialog').close(); sceneState.root.hidden = true; }
+    sceneDiagnosticSnapshot();
     return;
   }
   if (!sceneState.scope?.isActive()) {
