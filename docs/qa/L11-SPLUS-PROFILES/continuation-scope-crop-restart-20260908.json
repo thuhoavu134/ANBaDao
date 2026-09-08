@@ -3,7 +3,7 @@
   "date": "2026-09-08",
   "branch": "handoff/l11-splus-profiles-v2-20260908",
   "baseCheckpoint": "ae3240e457c28ebdea536a047bb8938066043433",
-  "codeCommit": "e1f0b964bc657cd0914bbcfc6a00c9c4eb5221ec",
+  "codeCommit": "25c3a083d4904dc4b53140b04addb0808706d06c",
   "production": {
     "primaryProjectPromoted": false,
     "mainChanged": false,
@@ -12,17 +12,17 @@
   "source": {
     "buildCommand": "npm test",
     "build": "PASS",
-    "tests": "414/414 PASS",
+    "tests": "Prior checkpoint e1f0b964: 414/414 PASS; post-crop S+ suite: 192/192 PASS; current local full rerun: 398 pass / 2 infrastructure failures because sharp is absent.",
     "focusedCommand": "node --test tests/splus-ui-scope.test.mjs tests/splus-runtime.test.mjs tests/splus-dialog-lifetime.test.mjs",
     "focusedTests": "10/10 PASS",
     "redGreen": "The new scope/crop suite was RED before implementation and GREEN after the four source fixes."
   },
   "crop": {
     "iconCount": 126,
-    "gutter": { "x": 3, "y": 5 },
-    "browserViewBoxSample": ["3 5 268 240", "277 5 268 240", "551 5 267 240"],
+    "gutter": { "x": 12, "y": 12 },
+    "sourceViewBoxSample": ["12 12 250 226", "286 12 250 226", "560 12 249 226"],
     "sourceArtBytesChanged": false,
-    "visualMatrix": "REVIEW: the source rect gutter is verified; full authored-atlas visual acceptance remains open."
+    "visualMatrix": "PASS_LOCAL_CONTACT_SHEETS: 6 atlases / 126 cropped regions reviewed after the 12x12 inset; no adjacent-row/column fragment observed and no authored silhouette loss noted. Browser/mobile runtime matrix remains open."
   },
   "targetPicker": {
     "route": "battle.html?qaSplus42=hero_splus_nung",

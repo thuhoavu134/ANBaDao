@@ -2,11 +2,11 @@
 
 Chủ dự án yêu cầu chốt tiến độ và bàn giao ngay khi đang làm L11. **Trạng thái: REVIEW / IN_PROGRESS; combat V2 chưa GREEN.** Checkpoint này lưu công việc để Luna tiếp tục, không phải bản phát hành gameplay V2.
 
-> **Cập nhật tiếp nối `20bda88b` — đọc trước khi tiếp tục.** Phần lịch sử bên dưới giữ nguyên để truy vết, nhưng các số liệu/checklist cũ trong đó không còn là trạng thái hiện tại. Source-of-truth mới là [`docs/L11-CONTINUATION-2026-09-08.md`](L11-CONTINUATION-2026-09-08.md) và machine evidence [`continuation-scope-crop-restart-20260908.json`](qa/L11-SPLUS-PROFILES/continuation-scope-crop-restart-20260908.json).
+> **Cập nhật tiếp nối `25c3a083` — đọc trước khi tiếp tục.** Phần lịch sử bên dưới giữ nguyên để truy vết, nhưng các số liệu/checklist cũ trong đó không còn là trạng thái hiện tại. Source-of-truth mới là [`docs/L11-CONTINUATION-2026-09-08.md`](L11-CONTINUATION-2026-09-08.md) và machine evidence [`continuation-scope-crop-restart-20260908.json`](qa/L11-SPLUS-PROFILES/continuation-scope-crop-restart-20260908.json).
 >
-> - Code follow-up: `e1f0b964bc657cd0914bbcfc6a00c9c4eb5221ec`; docs/evidence follow-up: `20bda88b78273fa2a6bd8ded4f255e6a4230527f`.
-> - Full source suite: **414/414 PASS**; focused crop/target/restart/dialog slice: **10/10 PASS**.
-> - Đã sửa: crop inset `{x:3,y:5}`, target picker theo phạm vi authored, restart sạch; UI combat giữ layout đã thiết kế.
+> - Code follow-up: `25c3a083d4904dc4b53140b04addb0808706d06c`; prior docs/evidence follow-up: `20bda88b78273fa2a6bd8ded4f255e6a4230527f`.
+> - S+ source suite sau crop: **192/192 PASS**; focused crop/target/restart/dialog slice: **10/10 PASS**. Full-green **414/414** là checkpoint trước; full local rerun hiện bị thiếu `sharp` ở 2 image tests.
+> - Đã sửa: crop inset `{x:12,y:12}` sau review đủ 126 vùng, target picker theo phạm vi authored, restart sạch; UI combat giữ layout đã thiết kế.
 > - Còn mở: full visual atlas matrix, mobile/Safari/device (backend không có viewport emulation), và các quyết định duration phân số/giá trị chưa định lượng. Không tự làm tròn, không tự coi là DONE.
 > - Main/production vẫn ở `03d4fdf`; Combat V2 chưa promote. Preview isolated chỉ là QA host, không phải release evidence.
 

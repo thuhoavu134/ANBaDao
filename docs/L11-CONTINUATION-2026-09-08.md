@@ -51,3 +51,10 @@ Retained RED evidence: continuation-red, parity-red, fire-wood-red, ui-orphan-re
 - Current source verification is **414/414 PASS**; focused scope/runtime/dialog slice is **10/10 PASS**. Machine evidence: [continuation-scope-crop-restart-20260908.json](qa/L11-SPLUS-PROFILES/continuation-scope-crop-restart-20260908.json).
 - Desktop catalog at 1363×936 had 42 cards and no horizontal overflow. Mobile/Safari/device is **NOT_RUN**: the available browser has no viewport/emulation capability. Fractional timing decisions remain REVIEW and are not rounded.
 - The branch-linked preview stayed on the old bundle, so browser QA used an isolated host only for this check; it is not a production promotion or release approval.
+
+## Crop visual follow-up — `25c3a083`
+
+- Local contact-sheet review found residual adjacent-row/column fragments with the earlier `{x:3,y:5}` inset, most clearly in Dream row boundaries and Fire/Wood ultimate edges.
+- Source crop is now `{x:12,y:12}` for all 126 regions. Six generated contact sheets (21 regions per atlas) show no adjacent fragment and no visible loss of the authored icon silhouette. No art bytes changed.
+- Focused S+ suite after the crop change is **192/192 PASS**; focused scope/runtime/dialog slice remains **10/10 PASS**. Build completes. The current checkout's full rerun is blocked only by missing `sharp` in two pre-existing image tests (`398 pass / 2 infrastructure failures`); retain the prior verified `414/414` checkpoint as historical full-green evidence.
+- Browser preview used for the earlier target/restart evidence predates this crop-only commit; do not claim a new browser viewBox or mobile/device PASS until a host with the new bundle and a real viewport backend is available.

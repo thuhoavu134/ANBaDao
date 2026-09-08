@@ -1,3 +1,7 @@
+## L11 crop visual follow-up — `25c3a083`
+
+The first 3×5 crop gutter still exposed small atlas ornaments in a local 126-region contact-sheet review. Widened the source rect inset to 12×12, reviewed all six 21-region sheets, and kept authored art bytes unchanged. S+ suite is 192/192 PASS; the two full-suite image-test failures are the existing missing-`sharp` checkout dependency. Browser/device and fractional-timing gates remain REVIEW.
+
 ## L11 scope/crop/restart follow-up — `e1f0b964`
 
 Closed the source crop leak with a 3×5 atlas gutter and narrowed S+ target candidates to the authored scope. Full build/test is **414/414 PASS**; Nung S1 browser Cast shows exactly one target and resolves cleanly. Reload + start leaves one panel/strip and no stale target buttons. Desktop catalog is 42/126 with no horizontal overflow; mobile/Safari/device remains NOT_RUN because the browser has no viewport emulation. Fractional durations remain REVIEW; main/production unchanged.
