@@ -12,7 +12,7 @@ const frames={passive:'circle-silver-bronze',skill:'octagon-gold-cooldown',ultim
 // The generated atlas has touching alpha-fringed ornaments between rows and
 // columns. Keep the source rect inset before it is exposed as an SVG viewBox;
 // CSS overflow cannot hide pixels that are still inside that viewBox.
-const crop=Object.freeze({x:3,y:5});
+const crop=Object.freeze({x:12,y:12});
 export const SPLUS_SKILL_ICONS=Object.freeze(SPLUS_HEROES.flatMap(h=>{
   const row=SPLUS_HEROES.filter(x=>x.element===h.element).findIndex(x=>x.id===h.id),atlas=SPLUS_ATLASES[h.element];
   return slots.map((slot,column)=>Object.freeze({id:`splus.button.${h.key}.${slot}`,heroId:h.id,slot,element:h.element,

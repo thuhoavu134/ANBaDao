@@ -16,7 +16,7 @@ function engineFor(heroId) {
 }
 
 test('S+ atlas rects keep a source-pixel gutter on every side of each cell', () => {
-  const expected = { x: 3, y: 5 };
+  const expected = { x: 12, y: 12 };
   for (const icon of SPLUS_SKILL_ICONS) {
     assert.deepEqual(icon.crop, expected, `${icon.id} declares its crop gutter`);
     const atlas = SPLUS_ATLASES[icon.element];
