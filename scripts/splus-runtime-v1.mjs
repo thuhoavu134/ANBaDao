@@ -47,6 +47,7 @@ export function patchSplusBattleHtml(input) {
   once('  dom.exitBattleButton?.addEventListener("click", () => {','  dom.exitBattleButton?.addEventListener("click", () => {\n    splusReset();');
   once('  function legalTargetsFor(actor, action){','  function legalTargetsFor(actor, action){\n    if(splusCombat())return splusCombat().targets(actor,action);');
   once('  function preferredTargetFor(actor, action){','  function preferredTargetFor(actor, action){\n    if(splusCombat())return splusCombat().targets(actor,action)[0];');
+  once('    showTargets(candidates, targetsAllies ? actor.team : (actor.team === TEAM_PLAYER ? TEAM_ENEMY : TEAM_PLAYER));','    showTargets(candidates, splusTargetTeam(actor,candidates,targetsAllies ? actor.team : (actor.team === TEAM_PLAYER ? TEAM_ENEMY : TEAM_PLAYER)));');
   once('  function decideAi(actor){',`  function decideAi(actor){
     if(splusCombat()){const action=splusCombat().chooseAction(actor);return {action,target:splusCombat().targets(actor,action)[0]};}`);
   once("    if(action==='skill')return;","    if(action==='skill'&&!splusCombat())return;");
@@ -83,4 +84,3 @@ export function buildSplusRuntime(root=process.cwd()) {
   console.log('SPLUS42: source factory, existing scheduler bridge, 42 HUD identities');
 }
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url))buildSplusRuntime();
-

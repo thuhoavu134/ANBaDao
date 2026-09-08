@@ -21,6 +21,11 @@ function splusInspectAction(action,button){
   if(!splusCombat()||action==='basic')return chooseAction(action);
   const actor=getUnit(state.currentId);if(actor)splusSkillUI?.open(actor.sourceId,action,button,splusSkillOptions(actor));
 }
+function splusTargetTeam(actor,candidates,fallback){
+  if(!splusCombat())return fallback;
+  const teams=new Set((candidates||[]).filter(Boolean).map(unit=>unit.team));
+  return teams.size===1?[...teams][0]:fallback;
+}
 function splusSkillBar(){
   if(!splusSkillUI)splusSkillUI=globalThis.createSplusSkillUI(globalThis.SPLUS42.profiles);
   const actor=getUnit(state.currentId);let strip=document.getElementById('splus-battle-skills');
@@ -115,4 +120,3 @@ function drawSplusToken(context, unit, time) {
   context.fillStyle='#fff1d5';context.font='bold 15px sans-serif';context.fillText(unit.name,0,-48);context.font='11px sans-serif';context.fillStyle='#aec4ce';context.fillText('S+ · Đang thử cơ chế',0,-24);context.restore();
   drawUnitHud(context,unit,time,1);
 }
-

@@ -9,11 +9,16 @@ export const SPLUS_ATLASES=Object.freeze(Object.fromEntries(Object.entries({
 }).map(([element,rows])=>[element,Object.freeze({src:`/assets/skill-buttons/splus-v2/${element}.webp`,source:`assets/skill-buttons/splus-v2/${element}.png`,width:821,height:element==='water'?1915:1916,rows})])));
 const slots=['passive','skill','ultimate'];
 const frames={passive:'circle-silver-bronze',skill:'octagon-gold-cooldown',ultimate:'lotus-dragon-gold-rage'};
+// The generated atlas has touching alpha-fringed ornaments between rows and
+// columns. Keep the source rect inset before it is exposed as an SVG viewBox;
+// CSS overflow cannot hide pixels that are still inside that viewBox.
+const crop=Object.freeze({x:3,y:5});
 export const SPLUS_SKILL_ICONS=Object.freeze(SPLUS_HEROES.flatMap(h=>{
   const row=SPLUS_HEROES.filter(x=>x.element===h.element).findIndex(x=>x.id===h.id),atlas=SPLUS_ATLASES[h.element];
   return slots.map((slot,column)=>Object.freeze({id:`splus.button.${h.key}.${slot}`,heroId:h.id,slot,element:h.element,
     ...SPLUS_BUTTON_BRIEFS[h.key][column],frame:frames[slot],atlas:atlas.src,width:atlas.width,height:atlas.height,
-    rect:[column*274,atlas.rows[row],column===2?273:274,atlas.rows[row+1]-atlas.rows[row]],
+    crop,
+    rect:[column*274+crop.x,atlas.rows[row]+crop.y,(column===2?273:274)-crop.x*2,atlas.rows[row+1]-atlas.rows[row]-crop.y*2],
     generation:'imagegen-atlas/2026-09-08',status:'generated-review'}));
 }));
 export const SPLUS_PROFILES=Object.freeze(SPLUS_HEROES.map(h=>Object.freeze({...h,hudIconId:h.iconId,version:SPLUS_PROFILE_VERSION,

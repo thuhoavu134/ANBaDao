@@ -445,15 +445,59 @@ export function createSplusMechanics(options={}) {
       emit('roundStart',null,null);
     }
   }
+  const frontOrAll=list=>{const row=front(list);return row.length?row:list;};
+  const backOrAll=list=>{const row=back(list);return row.length?row:list;};
+  const unique=list=>list.filter((item,index,array)=>item&&array.findIndex(other=>other.id===item.id)===index);
+  function authoredTargets(actor,action,enemies,allies) {
+    if(action==='basic')return null;
+    const k=key(actor),r=rules(actor,action),enemyFront=frontOrAll(enemies),enemyBack=backOrAll(enemies),allyFront=frontOrAll(allies),allyBack=backOrAll(allies);
+    const oppositeTarget=opposite(actor,enemies),strongestEnemy=strongest(enemies)[0],weakestEnemyBack=weakestBack(enemies),strongestEnemyBack=strongestBack(enemies);
+    const one=value=>value?[value]:[];
+    if(action==='skill')switch(k){
+      case 'co_trong':return allyFront.slice(0,r.count||2);
+      case 'cuong_dong':case 'thiet_lanh':case 'minh_toa':case 'linh_dong':case 'ha_lang':case 'giang_quan':case 'hac_dao':case 'hac_hoa':case 'nung':return one(oppositeTarget);
+      case 'lac_an':case 'da_xoa':return one(weakestEnemyBack);
+      case 'hac_pha':case 'thach_kinh':case 'co_nuong':case 'hoa_bai':case 'thach_mong':case 'to_linh':return enemyFront;
+      case 'tieu_hon':return one(enragedBack(enemies));
+      case 'han_nuong':return enemyFront.slice(0,r.count||2);
+      case 'vong_co':case 'tram_tue':case 'kinh_nuong':return one(strongestEnemy);
+      case 'muc_chieu':return weakest(allies).slice(0,r.count||3);
+      case 'thuy_co':return one(weakest(allyFront)[0]);
+      case 'thuy_ngoc':return one(strongest(allyBack)[0]);
+      case 'hai_phong':case 'hoa_tieu':case 'cuu_tinh':return one(strongestEnemyBack);
+      case 'tram_chau':return one(weakest(allies)[0]);
+      case 'hoa_khieu':return strongest(allies.filter(u=>u!==actor&&Math.floor(u.slot/3)===Math.floor(actor.slot/3))).slice(0,r.count||2);
+      case 'mien_nuong':return weakest(allyFront).slice(0,r.count||2);
+      case 'tam_nuong':case 'van_phap':return enemyFront.slice(0,r.count||2);
+      case 'son_cuong':return enemies.filter(u=>u.slot%3===actor.slot%3);
+      case 'tue_y':return weakest(allies).slice(0,r.count||3);
+      case 'mang_xa':return enemies;
+      case 'khaos':return unique([front(enemies)[0],back(enemies)[0]]);
+      case 'hoi_anh':return one(oppositeTarget);
+      case 'cuu_trieu':return unique([...enemyFront,...back(enemies).filter(u=>u.slot%3===actor.slot%3).slice(0,1)]);
+      default:return null;
+    }
+    switch(k){
+      case 'co_trong':case 'thiem_ngan':case 'muc_chieu':case 'thuy_co':case 'tram_chau':case 'hoa_duc':case 'mien_nuong':case 'kinh_nuong':case 'thach_mong':return allies;
+      case 'thuy_ngoc':return allyBack;
+      case 'lac_an':return enemies;
+      case 'minh_toa':return one(enragedBack(enemies));
+      case 'tieu_hon':return one(strongestEnemy);
+      case 'da_xoa':return one(weakestEnemyBack);
+      case 'hac_pha':case 'thiet_lanh':case 'thach_kinh':case 'giang_quan':case 'hac_hoa':return enemyFront;
+      case 'nung':return enemyFront;
+      case 'hoa_khieu':return one(strongestEnemy);
+      case 'hac_dao':{const target=tankiest(enemies)[0];return target?unique([target,...adjacent(target,enemies).slice(0,4)]):[];}
+      case 'to_linh':case 'linh_dong':case 'cuong_dong':case 'han_nuong':case 'vong_co':case 'co_nuong':case 'ha_lang':case 'hai_phong':case 'hoa_tieu':case 'tram_tue':case 'hoi_anh':case 'cuu_trieu':case 'khaos':return enemies;
+      default:return null;
+    }
+  }
   function targets(actorId,action='basic') {
     const actor=unit(actorId);if(!actor)return [];
     let enemies=foes(actor);const visible=enemies.filter(u=>!has(u,'stealth'));if(visible.length)enemies=visible;
-    const allies=friends(actor);const k=key(actor);
-    if(action!=='basic'&&['co_trong','thiem_ngan','muc_chieu','thuy_co','thuy_ngoc','tram_chau','hoa_duc','mien_nuong','tue_y'].includes(k))return weakest(allies);
+    const allies=friends(actor);
     const taunt=status(actor,'taunted');const taunter=unit(taunt?.sourceId);if(alive(taunter)&&taunter.team!==actor.team)return [taunter];
-    if(k==='da_xoa'||(k==='lac_an'&&action!=='basic'))return [weakestBack(enemies)].filter(Boolean);
-    if((k==='tieu_hon'&&action==='skill')||(k==='minh_toa'&&action==='ultimate'))return [enragedBack(enemies)].filter(Boolean);
-    if(['tieu_hon','hai_phong'].includes(k)&&action!=='basic')return [strongestBack(enemies)].filter(Boolean);
+    const scoped=authoredTargets(actor,action,enemies,allies);if(scoped)return scoped.filter(alive);
     return [opposite(actor,enemies),...enemies].filter((u,i,a)=>u&&a.indexOf(u)===i);
   }
   function chooseAction(actorId) {return ['ultimate','skill','basic'].find(a=>canUse(actorId,a))||null;}
@@ -618,4 +662,3 @@ export function createSplusMechanics(options={}) {
   }
   return {schema:'luc-than-splus-combat/v2',profileVersion:'splus-profile/2026-09-08-v2',units,events,unit,start,beginTurn,beginRound,finishRound,act,damage,heal,shield,gainRage:energy,addStatus,cleanse,modifiers,stat,canUse,canMove,targets,chooseAction,hud,get round(){return round;}};
 }
-
