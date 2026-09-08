@@ -2,7 +2,7 @@
 
 Đọc `docs/LUNA-HANDOFF.md` trước khi sửa game. Tài liệu có bản đồ nguồn, pipeline asset, các lỗi đã gặp, cách kiểm tra và quy trình deploy.
 
-Bàn giao mới nhất 07/09/2026: đọc `docs/HON-VIET-MONG-GIOI-PROGRESS-2026-09-06.md` và `docs/LUNA-EXECUTION-PLAN-2026-09-07.md` để nhận đúng ticket. Phân tích source mẫu Hermes nằm ở `docs/HERMES-SOURCE-AUDIT-2026-09-07.md`. L02a là lát cắt code tiếp theo; các phần lịch sử không phải danh sách lỗi hiện tại.
+Bàn giao mới nhất 08/09/2026: đọc `docs/HON-VIET-MONG-GIOI-PROGRESS-2026-09-06.md`, `docs/LUNA-EXECUTION-PLAN-2026-09-07.md` và `docs/LUNA-HANDOFF-SPLUS-PROFILES-2026-09-08.md`. L11-SPLUS-PROFILES đang REVIEW / IN_PROGRESS; source WIP nằm trên nhánh bàn giao được ghim trong tài liệu, còn6 test V2 fail. Các mục L02a/L04/L10 phía dưới là lịch sử, không phải lệnh bỏ checkpoint L11. Phân tích source mẫu Hermes vẫn ở `docs/HERMES-SOURCE-AUDIT-2026-09-07.md`.
 
 - **Được tái sử dụng code mẫu theo yêu cầu của anh.** Đọc `docs/HERMES-CODE-REUSE-GUIDE.md`: bản đồ 27 phương thức, dependency, lỗi cần sửa và quy trình port từ archive người dùng đã gửi. Quy tắc này thay chỉ dẫn cũ cấm toàn bộ source mẫu. Nối vào owner Lục Thần, ghi khác biệt và test; giữ identity/save/art/luật đã chốt. Repo chứa hướng dẫn; mã gốc chưa được đưa lên GitHub và chưa tích hợp runtime.
 - Runtime production được tạo bởi `scripts/build-static.mjs`. Sửa nguồn hoặc patch sinh ra runtime; không dùng chỉnh sửa riêng trong `dist/` làm kết quả bàn giao.

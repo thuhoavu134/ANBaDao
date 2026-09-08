@@ -1,0 +1,445 @@
+✖ V2 metal: gear cap, 3% aura, caster HP shields and expiry (8.714276ms)
+✖ V2 Cuong: mitigation applies to ranged attacks and reflection never loops (0.553844ms)
+✖ V2 Lac An: eight focus stacks affect rate and crit damage, controlled targets guarantee crit (0.613973ms)
+✖ V2 Linh/Tieu: third basic mark drains rage; soul siphon is 15 and rage lock blocks gain (0.648313ms)
+✖ V2 Thach Kinh accumulates damage in 10% HP units, not one layer per hit (0.399708ms)
+✖ V2 Vong marks only highest attack and delays its skill cooldown (5.263015ms)
+✖ V2 Co Nuong parasite drains tankiest on hit and returns actual lost HP (0.781659ms)
+✖ V2 water: same-row haste, caster HP healing, critical-only cap (0.557008ms)
+✖ V2 Tram Chau bubble blocks crit/bleed only while shield remains and damage conversion prevents HP loss (1.437753ms)
+✖ V2 Nung burns only melee attackers using Nung HP; Deep Wound bleeds using source ATK (1.174977ms)
+✖ V2 Hoa Bai ground zone ticks on victim turn and follows the slot after displacement (0.356634ms)
+✖ V2 Mien heals at each ally turn start once when host prepares before act (0.226012ms)
+✖ V2 Tue Y emergency has a shared two-round cooldown and resurrects most recent death (0.7759ms)
+✖ V2 sleep survives DoT; Tằm Nương renews a two-hit cocoon after two rounds (0.368782ms)
+✖ V2 Mang poison spreads on each victim action, next-hit blindness consumes one charge (0.519704ms)
+✖ V2 Kinh Nuong successful basic reflection negates damage and cannot bounce (0.289716ms)
+✖ V2 Khaos clone explodes and respawns after 3 rounds; ultimate bypasses shield (0.599ms)
+✖ V2 Hoi Anh forces an immediate friendly strike; Van ward rolls 35% after action (0.617007ms)
+✖ V2 Cuu Trieu stacks on all actors, burns current HP, loses half stacks to silence (0.662864ms)
+✖ V2 Time Freeze suppresses rage gain and passive reflection (0.226412ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 0
+ℹ fail 20
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 126.891687
+
+✖ failing tests:
+
+test at tests/splus-v2.test.mjs:8:1
+✖ V2 metal: gear cap, 3% aura, caster HP shields and expiry (8.714276ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0.5 !== 0.3
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-v2.test.mjs:11:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0.5,
+    expected: 0.3,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/splus-v2.test.mjs:15:1
+✖ V2 Cuong: mitigation applies to ranged attacks and reflection never loops (0.553844ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  9250 !== 9000
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-v2.test.mjs:17:66)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 9250,
+    expected: 9000,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/splus-v2.test.mjs:21:1
+✖ V2 Lac An: eight focus stacks affect rate and crit damage, controlled targets guarantee crit (0.613973ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  10 !== 8
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-v2.test.mjs:24:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 10,
+    expected: 8,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/splus-v2.test.mjs:28:1
+✖ V2 Linh/Tieu: third basic mark drains rage; soul siphon is 15 and rage lock blocks gain (0.648313ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  100 !== 85
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-v2.test.mjs:31:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 100,
+    expected: 85,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/splus-v2.test.mjs:36:1
+✖ V2 Thach Kinh accumulates damage in 10% HP units, not one layer per hit (0.399708ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  4 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-v2.test.mjs:38:74)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 4,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/splus-v2.test.mjs:42:1
+✖ V2 Vong marks only highest attack and delays its skill cooldown (5.263015ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(status(e,'2:carry','cooldownDelay'))
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-v2.test.mjs:44:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/splus-v2.test.mjs:48:1
+✖ V2 Co Nuong parasite drains tankiest on hit and returns actual lost HP (0.781659ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(status(e,'2:tank','parasite'))
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-v2.test.mjs:50:49)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/splus-v2.test.mjs:53:1
+✖ V2 water: same-row haste, caster HP healing, critical-only cap (0.557008ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0.1 !== 0.12
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-v2.test.mjs:55:36)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0.1,
+    expected: 0.12,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/splus-v2.test.mjs:59:1
+✖ V2 Tram Chau bubble blocks crit/bleed only while shield remains and damage conversion prevents HP loss (1.437753ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 2500
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-v2.test.mjs:60:106)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 2500,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/splus-v2.test.mjs:65:1
+✖ V2 Nung burns only melee attackers using Nung HP; Deep Wound bleeds using source ATK (1.174977ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + {
+  +   appliedRound: 1,
+  +   expiresRound: 4,
+  +   iconId: 'splus.nung.passive',
+  +   maxStacks: 1,
+  +   percentMaxHp: 0.03,
+  +   polarity: 'debuff',
+  +   power: 0.03,
+  +   sourceHeroId: 'hero_splus_nung',
+  +   sourceId: '1:nung',
+  +   splus: true,
+  +   stacks: 1,
+  +   ticksLeft: 3,
+  +   turns: 3,
+  +   type: 'burn'
+  + }
+  - undefined
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-v2.test.mjs:67:59)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { type: 'burn', power: 0.03, turns: 3, percentMaxHp: 0.03, splus: true, polarity: 'debuff', sourceId: '1:nung', sourceHeroId: 'hero_splus_nung', iconId: 'splus.nung.passive', stacks: 1, maxStacks: 1, expiresRound: 4, appliedRound: 1, ticksLeft: 3 },
+    expected: undefined,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/splus-v2.test.mjs:71:1
+✖ V2 Hoa Bai ground zone ticks on victim turn and follows the slot after displacement (0.356634ms)
+  TypeError: e.beginTurn is not a function
+      at TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-v2.test.mjs:73:44)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/splus-v2.test.mjs:76:1
+✖ V2 Mien heals at each ally turn start once when host prepares before act (0.226012ms)
+  TypeError: e.beginTurn is not a function
+      at TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-v2.test.mjs:78:4)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/splus-v2.test.mjs:81:1
+✖ V2 Tue Y emergency has a shared two-round cooldown and resurrects most recent death (0.7759ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  2400 !== 4900
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-v2.test.mjs:85:64)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 2400,
+    expected: 4900,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/splus-v2.test.mjs:89:1
+✖ V2 sleep survives DoT; Tằm Nương renews a two-hit cocoon after two rounds (0.368782ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  true !== false
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-v2.test.mjs:90:161)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/splus-v2.test.mjs:94:1
+✖ V2 Mang poison spreads on each victim action, next-hit blindness consumes one charge (0.519704ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 2
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-v2.test.mjs:98:46)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 2,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/splus-v2.test.mjs:101:1
+✖ V2 Kinh Nuong successful basic reflection negates damage and cannot bounce (0.289716ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  9000 !== 10000
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-v2.test.mjs:103:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 9000,
+    expected: 10000,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/splus-v2.test.mjs:105:1
+✖ V2 Khaos clone explodes and respawns after 3 rounds; ultimate bypasses shield (0.599ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(e.events.some(x=>x.type==='cloneDestroyed'))
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-v2.test.mjs:107:51)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/splus-v2.test.mjs:110:1
+✖ V2 Hoi Anh forces an immediate friendly strike; Van ward rolls 35% after action (0.617007ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(e.unit('2:friend').hp<10000)
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-v2.test.mjs:111:96)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/splus-v2.test.mjs:115:1
+✖ V2 Cuu Trieu stacks on all actors, burns current HP, loses half stacks to silence (0.662864ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  undefined !== 8
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-v2.test.mjs:117:63)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 8,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/splus-v2.test.mjs:121:1
+✖ V2 Time Freeze suppresses rage gain and passive reflection (0.226412ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  40 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-v2.test.mjs:123:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 40,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

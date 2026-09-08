@@ -1,0 +1,147 @@
+{
+  "schema": "luc-than-handoff/v1",
+  "ticket": "L11-SPLUS-PROFILES",
+  "profileVersion": "splus-profile/2026-09-08-v2",
+  "recordedAt": "2026-09-08T07:58:20.143609+00:00",
+  "reason": "Owner requested immediate GitHub progress update and Luna handoff during implementation.",
+  "status": "REVIEW / IN_PROGRESS",
+  "releaseReady": false,
+  "baselineCommit": "f3dc071a82ead9851bd4495fe92296f7c8c6fe1f",
+  "sourceBranch": "handoff/l11-splus-profiles-v2-20260908",
+  "sourceCommit": "b6a2ae20a9b1b3071a8f5263740312e9d1465b04",
+  "sourceCommitNote": "Published WIP checkpoint; this main document pins it. The source snapshot itself has no self-referential SHA.",
+  "mainScope": "documentation and evidence only; WIP code remains on handoff branch",
+  "workflow": {
+    "runId": "20260907-233350-enmzoby",
+    "activeStep": "red-green-refactor",
+    "completedSteps": [
+      "gate-contract",
+      "ticket-guard"
+    ],
+    "RED": "recorded",
+    "GREEN": "partial",
+    "REFACTOR": "incomplete",
+    "finalEvidenceGate": "not completed",
+    "reviewGate": "not completed",
+    "trace": "docs/qa/L11-SPLUS-PROFILES/workflow-trace.jsonl"
+  },
+  "checks": {
+    "targeted": {
+      "file": "docs/qa/L11-SPLUS-PROFILES/handoff-targeted.tap",
+      "counts": {
+        "tests": 23,
+        "pass": 17,
+        "fail": 6
+      },
+      "exitCode": 1,
+      "failedTests": [
+        "V2 metal: gear cap, 3% aura, caster HP shields and expiry",
+        "V2 Linh/Tieu: third basic mark drains rage; soul siphon is 15 and rage lock blocks gain",
+        "V2 Tram Chau bubble blocks crit/bleed only while shield remains and damage conversion prevents HP loss",
+        "V2 Tue Y emergency has a shared two-round cooldown and resurrects most recent death",
+        "V2 Khaos clone explodes and respawns after 3 rounds; ultimate bypasses shield",
+        "V2 Hoi Anh forces an immediate friendly strike; Van ward rolls 35% after action"
+      ]
+    },
+    "existingSplus": {
+      "file": "docs/qa/L11-SPLUS-PROFILES/handoff-existing-splus.tap",
+      "counts": {
+        "tests": 133,
+        "pass": 117,
+        "fail": 16
+      },
+      "exitCode": 1,
+      "failedTests": [
+        "S42-A2: gear adds 5% team defense after ally action and resets per battle",
+        "S42-A4: Cường Đồng mitigation and reflection cannot ping-pong",
+        "Cửu Triều prevents her own fatal hit once; silence disables it",
+        "Vân Pháp reflects only one control, with no reflection loop",
+        "Vọng Cơ extends only skill cooldown, and expiration is round based",
+        "linh_dong passive records authored mark value and provenance",
+        "han_nuong passive records authored mark value and provenance",
+        "hac_dao passive records authored mark value and provenance",
+        "son_cuong passive records authored mark value and provenance",
+        "thiet_lanh retaliatory passive attaches to attacker",
+        "nung retaliatory passive attaches to attacker",
+        "Hạc Phá berserk and Hải Phong heavy-hit cap use HP thresholds",
+        "Thạch Kinh consumes five resentment stacks to heal 15% missing HP",
+        "Thủy Cơ buffs only adjacent slots after her action",
+        "Cổ Nương converts reflection to health; parasite ticks once per round",
+        "Miên Nương HoT and Hỏa Dực burn conversion heal weakest ally"
+      ]
+    },
+    "syntax": {
+      "testedFiles": 17,
+      "passed": 17,
+      "file": "docs/qa/L11-SPLUS-PROFILES/handoff-syntax.json"
+    },
+    "diffCheck": {
+      "exitCode": 0
+    },
+    "npmTest": {
+      "command": "npm test",
+      "exitCode": 1,
+      "build": "blocked",
+      "fullSuite": "not reached",
+      "file": "docs/qa/L11-SPLUS-PROFILES/handoff-npm-test.log",
+      "cause": "Local checkout missing asset-sources/luc-anh/idle-rgba-v1-atlas.webp.part01",
+      "remotePart01": {
+        "exists": true,
+        "baseline": "f3dc071a82ead9851bd4495fe92296f7c8c6fe1f",
+        "bytes": 11534336,
+        "gitBlobSha1": "022b30410989f42d8e5115634586144d2c08dc69"
+      }
+    },
+    "browserV2": {
+      "status": "NOT_RUN"
+    },
+    "deviceV2": {
+      "status": "NOT_RUN",
+      "backend": "unavailable",
+      "previousCapabilities": [],
+      "newDeviceProbe": false
+    },
+    "productionV2": {
+      "status": "NOT_DEPLOYED",
+      "promoted": false
+    }
+  },
+  "capabilities": {
+    "ticketBoard": "TICKET_BOARD_NOT_AVAILABLE",
+    "claim": null,
+    "lease": null,
+    "locks": [],
+    "cli": {
+      "agent-browser": null,
+      "game-dev": null,
+      "ticketctl": null
+    },
+    "doctorSmokeBootScripts": [],
+    "registryTicketOrDeviceTools": []
+  },
+  "sourceProgress": {
+    "profiles": 42,
+    "skills": 126,
+    "newProfileTestsPass": 3,
+    "newCombatTestsPass": 14,
+    "newCombatTestsFail": 6,
+    "skillHandlersAudit": "84 active/ultimate handlers require V2 parity review; many still V1",
+    "ui": "source written; no V2 browser QA",
+    "art": "6 generated atlases / 126 regions; browser crop QA required"
+  },
+  "historicalProduction": {
+    "scope": "L10 only; not evidence for L11",
+    "docsCommit": "f3dc071a82ead9851bd4495fe92296f7c8c6fe1f",
+    "codeCommits": [
+      "2314c2ef522e5ad1b5a88ee7cc058a0a36b87d89",
+      "889426acac6d3d860b3f945131969d93d8ce3107"
+    ],
+    "deploymentId": "dpl_Dgn15PFd2Qaf4Pd71r5TKHgXugHB",
+    "lastRecordedState": "READY"
+  },
+  "nextOwner": "Luna",
+  "handoff": "docs/LUNA-HANDOFF-SPLUS-PROFILES-2026-09-08.md",
+  "sourceTree": "229c2ff327778b7ae96a0c0f6cf66f78c0b9505a",
+  "sourceFileCount": 45,
+  "publishedAt": "2026-09-08T08:07:40.398643+00:00"
+}

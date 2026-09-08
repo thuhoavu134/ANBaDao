@@ -1,0 +1,11 @@
+✔ 42 authored profiles resolve all 126 skill descriptions with separate HUD/button identities (1.682011ms)
+✔ full skill names, owner-HP wording and new passive numbers are preserved (0.312339ms)
+✔ skill UI keeps cooldown and rage live, and text lookup drives one popup owner (0.490681ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 86.12641

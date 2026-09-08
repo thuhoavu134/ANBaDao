@@ -1,5 +1,28 @@
 # Test Results
 
+## 2026-09-08 — L11 handoff, REVIEW / IN_PROGRESS
+
+Source được kiểm tra: [b6a2ae20a9b1b3071a8f5263740312e9d1465b04](https://github.com/bktimmy247/luc-than/commit/b6a2ae20a9b1b3071a8f5263740312e9d1465b04), nhánh `handoff/l11-splus-profiles-v2-20260908`. Main chỉ cập nhật docs/evidence. **L11 chưa GREEN và chưa deploy production.**
+
+| Kiểm tra | Kết quả thực tế |
+| --- | --- |
+| `node --test --test-reporter=tap tests/splus-profiles.test.mjs tests/splus-v2.test.mjs` | **23 test:17 PASS,6 FAIL** (profiles3/3; combat14/20) |
+| `node --test --test-reporter=tap tests/splus-combat.test.mjs tests/splus-kits.test.mjs tests/splus-runtime.test.mjs` | **133 test:117 PASS,16 FAIL**; phân loại kỳ vọng V1 và regression thật |
+| `node --check` JS/MJS thay đổi | **17/17 PASS** |
+| `git diff --check` | **PASS** tại checkpoint source |
+| `npm test` / build | **EXIT1**, thiếu asset local `asset-sources/luc-anh/idle-rgba-v1-atlas.webp.part01`; chưa tới full suite. File gốc có trên GitHub |
+| Browser V2 / crop126 icon / production V2 | **NOT_RUN / NOT_DEPLOYED** |
+| Device/Safari V2 | **NOT_RUN**, backend unavailable; capability lịch sử `[]` |
+| Workflow | RED ghi nhận, GREEN một phần, REFACTOR chưa xong; active `red-green-refactor` |
+
+Sáu test mới fail: Cơ Trọng khiên casterHP; Tiêu Hồn rageBan; Trầm Châu bubble shield; Tuệ Y most-recent resurrection; Khaos shield bypass; Hồi Ảnh forced friendly attack. Nhiều S1/Ult khác vẫn handler V1, còn audit đủ84handler và shared mechanics.
+
+[Bàn giao Luna](../../docs/LUNA-HANDOFF-SPLUS-PROFILES-2026-09-08.md) · [Machine checkpoint](../../docs/qa/L11-SPLUS-PROFILES/handoff-checkpoint.json) · [Targeted TAP](../../docs/qa/L11-SPLUS-PROFILES/handoff-targeted.tap) · [Existing S+ TAP](../../docs/qa/L11-SPLUS-PROFILES/handoff-existing-splus.tap) · [Build log](../../docs/qa/L11-SPLUS-PROFILES/handoff-npm-test.log) · [Syntax](../../docs/qa/L11-SPLUS-PROFILES/handoff-syntax.json).
+
+## Lịch sử trước checkpoint L11
+
+Các con số PASS và production QA bên dưới thuộc L10 hoặc lát cắt trước; không được dùng để đánh dấu L11 hoàn thành.
+
 Loop: L10-SPLUS42 · Status: REVIEW / IN_PROGRESS · Date: 2026-09-08
 
 Baseline: d3ee56cd1391208ae262652b383e5b7d443308c7

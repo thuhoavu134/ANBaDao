@@ -1,0 +1,1123 @@
+TAP version 13
+# Subtest: S42-A1: 42 authored S+ heroes expose executable combat contract
+ok 1 - S42-A1: 42 authored S+ heroes expose executable combat contract
+  ---
+  duration_ms: 0.815789
+  type: 'test'
+  ...
+# Subtest: S42-A2: gear adds 5% team defense after ally action and resets per battle
+not ok 2 - S42-A2: gear adds 5% team defense after ally action and resets per battle
+  ---
+  duration_ms: 3.704095
+  type: 'test'
+  location: '/workspace/scratch/205f4bc141b6/luc-than/tests/splus-combat.test.mjs:20:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0.03 !== 0.05
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0.05
+  actual: 0.03
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-combat.test.mjs:23:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: S42-A4: Cường Đồng mitigation and reflection cannot ping-pong
+not ok 3 - S42-A4: Cường Đồng mitigation and reflection cannot ping-pong
+  ---
+  duration_ms: 0.416161
+  type: 'test'
+  location: '/workspace/scratch/205f4bc141b6/luc-than/tests/splus-combat.test.mjs:28:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    9000 !== 9250
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 9250
+  actual: 9000
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-combat.test.mjs:31:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: S42-A2: Lạc An accumulates 4 percentage points per arrow up to 40
+ok 4 - S42-A2: Lạc An accumulates 4 percentage points per arrow up to 40
+  ---
+  duration_ms: 0.698697
+  type: 'test'
+  ...
+# Subtest: S42-A4: Hắc Đao passive is 80% anti-heal; Ultimate is 100%
+ok 5 - S42-A4: Hắc Đao passive is 80% anti-heal; Ultimate is 100%
+  ---
+  duration_ms: 1.84334
+  type: 'test'
+  ...
+# Subtest: S42-A4: cocoon consumes two incoming hits and third reaches HP
+ok 6 - S42-A4: cocoon consumes two incoming hits and third reaches HP
+  ---
+  duration_ms: 0.426016
+  type: 'test'
+  ...
+# Subtest: S42-A4: Mục Chiêu rescues once per battle, not per damage recursion
+ok 7 - S42-A4: Mục Chiêu rescues once per battle, not per damage recursion
+  ---
+  duration_ms: 0.784342
+  type: 'test'
+  ...
+# Subtest: S42-A4: root, disarm and silence have different action restrictions
+ok 8 - S42-A4: root, disarm and silence have different action restrictions
+  ---
+  duration_ms: 0.423622
+  type: 'test'
+  ...
+# Subtest: S42-A5: dispelled and expired statuses disappear from HUD with source provenance
+ok 9 - S42-A5: dispelled and expired statuses disappear from HUD with source provenance
+  ---
+  duration_ms: 0.631228
+  type: 'test'
+  ...
+# Subtest: 42 unique identities, seven per element, no replacement art
+ok 10 - 42 unique identities, seven per element, no replacement art
+  ---
+  duration_ms: 3.61271
+  type: 'test'
+  ...
+# Subtest: Cơ Trọng: skill resolves authored target/effect
+ok 11 - Cơ Trọng: skill resolves authored target/effect
+  ---
+  duration_ms: 6.054579
+  type: 'test'
+  ...
+# Subtest: Cơ Trọng: ultimate resolves authored target/effect
+ok 12 - Cơ Trọng: ultimate resolves authored target/effect
+  ---
+  duration_ms: 0.663996
+  type: 'test'
+  ...
+# Subtest: Cường Đồng: skill resolves authored target/effect
+ok 13 - Cường Đồng: skill resolves authored target/effect
+  ---
+  duration_ms: 1.597178
+  type: 'test'
+  ...
+# Subtest: Cường Đồng: ultimate resolves authored target/effect
+ok 14 - Cường Đồng: ultimate resolves authored target/effect
+  ---
+  duration_ms: 0.4969
+  type: 'test'
+  ...
+# Subtest: Lạc An: skill resolves authored target/effect
+ok 15 - Lạc An: skill resolves authored target/effect
+  ---
+  duration_ms: 0.357765
+  type: 'test'
+  ...
+# Subtest: Lạc An: ultimate resolves authored target/effect
+ok 16 - Lạc An: ultimate resolves authored target/effect
+  ---
+  duration_ms: 0.786345
+  type: 'test'
+  ...
+# Subtest: Hạc Phá: skill resolves authored target/effect
+ok 17 - Hạc Phá: skill resolves authored target/effect
+  ---
+  duration_ms: 0.351086
+  type: 'test'
+  ...
+# Subtest: Hạc Phá: ultimate resolves authored target/effect
+ok 18 - Hạc Phá: ultimate resolves authored target/effect
+  ---
+  duration_ms: 0.559041
+  type: 'test'
+  ...
+# Subtest: Thiết Lãnh: skill resolves authored target/effect
+ok 19 - Thiết Lãnh: skill resolves authored target/effect
+  ---
+  duration_ms: 0.505433
+  type: 'test'
+  ...
+# Subtest: Thiết Lãnh: ultimate resolves authored target/effect
+ok 20 - Thiết Lãnh: ultimate resolves authored target/effect
+  ---
+  duration_ms: 0.555056
+  type: 'test'
+  ...
+# Subtest: Minh Tỏa: skill resolves authored target/effect
+ok 21 - Minh Tỏa: skill resolves authored target/effect
+  ---
+  duration_ms: 0.464503
+  type: 'test'
+  ...
+# Subtest: Minh Tỏa: ultimate resolves authored target/effect
+ok 22 - Minh Tỏa: ultimate resolves authored target/effect
+  ---
+  duration_ms: 0.391305
+  type: 'test'
+  ...
+# Subtest: Thiềm Ngân: skill resolves authored target/effect
+ok 23 - Thiềm Ngân: skill resolves authored target/effect
+  ---
+  duration_ms: 0.584749
+  type: 'test'
+  ...
+# Subtest: Thiềm Ngân: ultimate resolves authored target/effect
+ok 24 - Thiềm Ngân: ultimate resolves authored target/effect
+  ---
+  duration_ms: 0.452506
+  type: 'test'
+  ...
+# Subtest: Linh Đồng: skill resolves authored target/effect
+ok 25 - Linh Đồng: skill resolves authored target/effect
+  ---
+  duration_ms: 0.410123
+  type: 'test'
+  ...
+# Subtest: Linh Đồng: ultimate resolves authored target/effect
+ok 26 - Linh Đồng: ultimate resolves authored target/effect
+  ---
+  duration_ms: 1.024156
+  type: 'test'
+  ...
+# Subtest: Tiêu Hồn: skill resolves authored target/effect
+ok 27 - Tiêu Hồn: skill resolves authored target/effect
+  ---
+  duration_ms: 0.393789
+  type: 'test'
+  ...
+# Subtest: Tiêu Hồn: ultimate resolves authored target/effect
+ok 28 - Tiêu Hồn: ultimate resolves authored target/effect
+  ---
+  duration_ms: 0.333971
+  type: 'test'
+  ...
+# Subtest: Thạch Kinh: skill resolves authored target/effect
+ok 29 - Thạch Kinh: skill resolves authored target/effect
+  ---
+  duration_ms: 0.264338
+  type: 'test'
+  ...
+# Subtest: Thạch Kinh: ultimate resolves authored target/effect
+ok 30 - Thạch Kinh: ultimate resolves authored target/effect
+  ---
+  duration_ms: 0.181587
+  type: 'test'
+  ...
+# Subtest: Hàn Nương: skill resolves authored target/effect
+ok 31 - Hàn Nương: skill resolves authored target/effect
+  ---
+  duration_ms: 0.533194
+  type: 'test'
+  ...
+# Subtest: Hàn Nương: ultimate resolves authored target/effect
+ok 32 - Hàn Nương: ultimate resolves authored target/effect
+  ---
+  duration_ms: 1.780718
+  type: 'test'
+  ...
+# Subtest: Vọng Cơ: skill resolves authored target/effect
+ok 33 - Vọng Cơ: skill resolves authored target/effect
+  ---
+  duration_ms: 0.543149
+  type: 'test'
+  ...
+# Subtest: Vọng Cơ: ultimate resolves authored target/effect
+ok 34 - Vọng Cơ: ultimate resolves authored target/effect
+  ---
+  duration_ms: 0.699108
+  type: 'test'
+  ...
+# Subtest: Cổ Nương: skill resolves authored target/effect
+ok 35 - Cổ Nương: skill resolves authored target/effect
+  ---
+  duration_ms: 0.601464
+  type: 'test'
+  ...
+# Subtest: Cổ Nương: ultimate resolves authored target/effect
+ok 36 - Cổ Nương: ultimate resolves authored target/effect
+  ---
+  duration_ms: 0.878822
+  type: 'test'
+  ...
+# Subtest: Mục Chiêu: skill resolves authored target/effect
+ok 37 - Mục Chiêu: skill resolves authored target/effect
+  ---
+  duration_ms: 0.229177
+  type: 'test'
+  ...
+# Subtest: Mục Chiêu: ultimate resolves authored target/effect
+ok 38 - Mục Chiêu: ultimate resolves authored target/effect
+  ---
+  duration_ms: 0.220224
+  type: 'test'
+  ...
+# Subtest: Thủy Cơ: skill resolves authored target/effect
+ok 39 - Thủy Cơ: skill resolves authored target/effect
+  ---
+  duration_ms: 0.377735
+  type: 'test'
+  ...
+# Subtest: Thủy Cơ: ultimate resolves authored target/effect
+ok 40 - Thủy Cơ: ultimate resolves authored target/effect
+  ---
+  duration_ms: 0.322424
+  type: 'test'
+  ...
+# Subtest: Hà Lãng: skill resolves authored target/effect
+ok 41 - Hà Lãng: skill resolves authored target/effect
+  ---
+  duration_ms: 0.537961
+  type: 'test'
+  ...
+# Subtest: Hà Lãng: ultimate resolves authored target/effect
+ok 42 - Hà Lãng: ultimate resolves authored target/effect
+  ---
+  duration_ms: 0.512063
+  type: 'test'
+  ...
+# Subtest: Giang Quân: skill resolves authored target/effect
+ok 43 - Giang Quân: skill resolves authored target/effect
+  ---
+  duration_ms: 0.241394
+  type: 'test'
+  ...
+# Subtest: Giang Quân: ultimate resolves authored target/effect
+ok 44 - Giang Quân: ultimate resolves authored target/effect
+  ---
+  duration_ms: 0.30621
+  type: 'test'
+  ...
+# Subtest: Thủy Ngọc: skill resolves authored target/effect
+ok 45 - Thủy Ngọc: skill resolves authored target/effect
+  ---
+  duration_ms: 0.391465
+  type: 'test'
+  ...
+# Subtest: Thủy Ngọc: ultimate resolves authored target/effect
+ok 46 - Thủy Ngọc: ultimate resolves authored target/effect
+  ---
+  duration_ms: 0.195387
+  type: 'test'
+  ...
+# Subtest: Hải Phong: skill resolves authored target/effect
+ok 47 - Hải Phong: skill resolves authored target/effect
+  ---
+  duration_ms: 0.200434
+  type: 'test'
+  ...
+# Subtest: Hải Phong: ultimate resolves authored target/effect
+ok 48 - Hải Phong: ultimate resolves authored target/effect
+  ---
+  duration_ms: 0.252822
+  type: 'test'
+  ...
+# Subtest: Trầm Châu: skill resolves authored target/effect
+ok 49 - Trầm Châu: skill resolves authored target/effect
+  ---
+  duration_ms: 0.241846
+  type: 'test'
+  ...
+# Subtest: Trầm Châu: ultimate resolves authored target/effect
+ok 50 - Trầm Châu: ultimate resolves authored target/effect
+  ---
+  duration_ms: 0.831182
+  type: 'test'
+  ...
+# Subtest: Dạ Xoa: skill resolves authored target/effect
+ok 51 - Dạ Xoa: skill resolves authored target/effect
+  ---
+  duration_ms: 0.288755
+  type: 'test'
+  ...
+# Subtest: Dạ Xoa: ultimate resolves authored target/effect
+ok 52 - Dạ Xoa: ultimate resolves authored target/effect
+  ---
+  duration_ms: 0.220964
+  type: 'test'
+  ...
+# Subtest: Nung: skill resolves authored target/effect
+ok 53 - Nung: skill resolves authored target/effect
+  ---
+  duration_ms: 0.256617
+  type: 'test'
+  ...
+# Subtest: Nung: ultimate resolves authored target/effect
+ok 54 - Nung: ultimate resolves authored target/effect
+  ---
+  duration_ms: 0.343244
+  type: 'test'
+  ...
+# Subtest: Hỏa Tiêu: skill resolves authored target/effect
+ok 55 - Hỏa Tiêu: skill resolves authored target/effect
+  ---
+  duration_ms: 0.203169
+  type: 'test'
+  ...
+# Subtest: Hỏa Tiêu: ultimate resolves authored target/effect
+ok 56 - Hỏa Tiêu: ultimate resolves authored target/effect
+  ---
+  duration_ms: 0.426738
+  type: 'test'
+  ...
+# Subtest: Hỏa Khiêu: skill resolves authored target/effect
+ok 57 - Hỏa Khiêu: skill resolves authored target/effect
+  ---
+  duration_ms: 0.229988
+  type: 'test'
+  ...
+# Subtest: Hỏa Khiêu: ultimate resolves authored target/effect
+ok 58 - Hỏa Khiêu: ultimate resolves authored target/effect
+  ---
+  duration_ms: 0.366539
+  type: 'test'
+  ...
+# Subtest: Cửu Tính: skill resolves authored target/effect
+ok 59 - Cửu Tính: skill resolves authored target/effect
+  ---
+  duration_ms: 0.280923
+  type: 'test'
+  ...
+# Subtest: Cửu Tính: ultimate resolves authored target/effect
+ok 60 - Cửu Tính: ultimate resolves authored target/effect
+  ---
+  duration_ms: 0.451453
+  type: 'test'
+  ...
+# Subtest: Hỏa Bài: skill resolves authored target/effect
+ok 61 - Hỏa Bài: skill resolves authored target/effect
+  ---
+  duration_ms: 0.440267
+  type: 'test'
+  ...
+# Subtest: Hỏa Bài: ultimate resolves authored target/effect
+ok 62 - Hỏa Bài: ultimate resolves authored target/effect
+  ---
+  duration_ms: 2.39455
+  type: 'test'
+  ...
+# Subtest: Hắc Đao: skill resolves authored target/effect
+ok 63 - Hắc Đao: skill resolves authored target/effect
+  ---
+  duration_ms: 0.494597
+  type: 'test'
+  ...
+# Subtest: Hắc Đao: ultimate resolves authored target/effect
+ok 64 - Hắc Đao: ultimate resolves authored target/effect
+  ---
+  duration_ms: 0.214105
+  type: 'test'
+  ...
+# Subtest: Hỏa Dực: skill resolves authored target/effect
+ok 65 - Hỏa Dực: skill resolves authored target/effect
+  ---
+  duration_ms: 0.273582
+  type: 'test'
+  ...
+# Subtest: Hỏa Dực: ultimate resolves authored target/effect
+ok 66 - Hỏa Dực: ultimate resolves authored target/effect
+  ---
+  duration_ms: 0.21079
+  type: 'test'
+  ...
+# Subtest: Miên Nương: skill resolves authored target/effect
+ok 67 - Miên Nương: skill resolves authored target/effect
+  ---
+  duration_ms: 0.252291
+  type: 'test'
+  ...
+# Subtest: Miên Nương: ultimate resolves authored target/effect
+ok 68 - Miên Nương: ultimate resolves authored target/effect
+  ---
+  duration_ms: 0.248255
+  type: 'test'
+  ...
+# Subtest: Trầm Tuệ: skill resolves authored target/effect
+ok 69 - Trầm Tuệ: skill resolves authored target/effect
+  ---
+  duration_ms: 0.173235
+  type: 'test'
+  ...
+# Subtest: Trầm Tuệ: ultimate resolves authored target/effect
+ok 70 - Trầm Tuệ: ultimate resolves authored target/effect
+  ---
+  duration_ms: 0.241174
+  type: 'test'
+  ...
+# Subtest: Hạc Hoa: skill resolves authored target/effect
+ok 71 - Hạc Hoa: skill resolves authored target/effect
+  ---
+  duration_ms: 0.155579
+  type: 'test'
+  ...
+# Subtest: Hạc Hoa: ultimate resolves authored target/effect
+ok 72 - Hạc Hoa: ultimate resolves authored target/effect
+  ---
+  duration_ms: 0.175248
+  type: 'test'
+  ...
+# Subtest: Tằm Nương: skill resolves authored target/effect
+ok 73 - Tằm Nương: skill resolves authored target/effect
+  ---
+  duration_ms: 1.146656
+  type: 'test'
+  ...
+# Subtest: Tằm Nương: ultimate resolves authored target/effect
+ok 74 - Tằm Nương: ultimate resolves authored target/effect
+  ---
+  duration_ms: 0.362934
+  type: 'test'
+  ...
+# Subtest: Sơn Cương: skill resolves authored target/effect
+ok 75 - Sơn Cương: skill resolves authored target/effect
+  ---
+  duration_ms: 0.256407
+  type: 'test'
+  ...
+# Subtest: Sơn Cương: ultimate resolves authored target/effect
+ok 76 - Sơn Cương: ultimate resolves authored target/effect
+  ---
+  duration_ms: 0.230018
+  type: 'test'
+  ...
+# Subtest: Tuệ Y: skill resolves authored target/effect
+ok 77 - Tuệ Y: skill resolves authored target/effect
+  ---
+  duration_ms: 0.232702
+  type: 'test'
+  ...
+# Subtest: Tuệ Y: ultimate resolves authored target/effect
+ok 78 - Tuệ Y: ultimate resolves authored target/effect
+  ---
+  duration_ms: 0.216759
+  type: 'test'
+  ...
+# Subtest: Mãng Xà: skill resolves authored target/effect
+ok 79 - Mãng Xà: skill resolves authored target/effect
+  ---
+  duration_ms: 0.435
+  type: 'test'
+  ...
+# Subtest: Mãng Xà: ultimate resolves authored target/effect
+ok 80 - Mãng Xà: ultimate resolves authored target/effect
+  ---
+  duration_ms: 0.421259
+  type: 'test'
+  ...
+# Subtest: Khaos: skill resolves authored target/effect
+ok 81 - Khaos: skill resolves authored target/effect
+  ---
+  duration_ms: 0.246773
+  type: 'test'
+  ...
+# Subtest: Khaos: ultimate resolves authored target/effect
+ok 82 - Khaos: ultimate resolves authored target/effect
+  ---
+  duration_ms: 0.471343
+  type: 'test'
+  ...
+# Subtest: Kính Nương: skill resolves authored target/effect
+ok 83 - Kính Nương: skill resolves authored target/effect
+  ---
+  duration_ms: 0.180024
+  type: 'test'
+  ...
+# Subtest: Kính Nương: ultimate resolves authored target/effect
+ok 84 - Kính Nương: ultimate resolves authored target/effect
+  ---
+  duration_ms: 0.156901
+  type: 'test'
+  ...
+# Subtest: Hồi Ảnh: skill resolves authored target/effect
+ok 85 - Hồi Ảnh: skill resolves authored target/effect
+  ---
+  duration_ms: 0.343365
+  type: 'test'
+  ...
+# Subtest: Hồi Ảnh: ultimate resolves authored target/effect
+ok 86 - Hồi Ảnh: ultimate resolves authored target/effect
+  ---
+  duration_ms: 0.301012
+  type: 'test'
+  ...
+# Subtest: Vân Pháp: skill resolves authored target/effect
+ok 87 - Vân Pháp: skill resolves authored target/effect
+  ---
+  duration_ms: 1.078425
+  type: 'test'
+  ...
+# Subtest: Vân Pháp: ultimate resolves authored target/effect
+ok 88 - Vân Pháp: ultimate resolves authored target/effect
+  ---
+  duration_ms: 0.206713
+  type: 'test'
+  ...
+# Subtest: Cửu Triều: skill resolves authored target/effect
+ok 89 - Cửu Triều: skill resolves authored target/effect
+  ---
+  duration_ms: 0.325809
+  type: 'test'
+  ...
+# Subtest: Cửu Triều: ultimate resolves authored target/effect
+ok 90 - Cửu Triều: ultimate resolves authored target/effect
+  ---
+  duration_ms: 1.067609
+  type: 'test'
+  ...
+# Subtest: Thạch Mộng: skill resolves authored target/effect
+ok 91 - Thạch Mộng: skill resolves authored target/effect
+  ---
+  duration_ms: 0.473455
+  type: 'test'
+  ...
+# Subtest: Thạch Mộng: ultimate resolves authored target/effect
+ok 92 - Thạch Mộng: ultimate resolves authored target/effect
+  ---
+  duration_ms: 0.426087
+  type: 'test'
+  ...
+# Subtest: Tố Linh: skill resolves authored target/effect
+ok 93 - Tố Linh: skill resolves authored target/effect
+  ---
+  duration_ms: 1.595535
+  type: 'test'
+  ...
+# Subtest: Tố Linh: ultimate resolves authored target/effect
+ok 94 - Tố Linh: ultimate resolves authored target/effect
+  ---
+  duration_ms: 0.294082
+  type: 'test'
+  ...
+# Subtest: Cửu Triều prevents her own fatal hit once; silence disables it
+not ok 95 - Cửu Triều prevents her own fatal hit once; silence disables it
+  ---
+  duration_ms: 1.61256
+  type: 'test'
+  location: '/workspace/scratch/205f4bc141b6/luc-than/tests/splus-kits.test.mjs:36:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    35001 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 35001
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-kits.test.mjs:38:45)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: Tằm Nương armor persists after both cocoon hit charges
+ok 96 - Tằm Nương armor persists after both cocoon hit charges
+  ---
+  duration_ms: 0.252821
+  type: 'test'
+  ...
+# Subtest: Hỏa Tiêu splash still hits adjacent enemies when primary dies
+ok 97 - Hỏa Tiêu splash still hits adjacent enemies when primary dies
+  ---
+  duration_ms: 0.478563
+  type: 'test'
+  ...
+# Subtest: Vân Pháp reflects only one control, with no reflection loop
+not ok 98 - Vân Pháp reflects only one control, with no reflection loop
+  ---
+  duration_ms: 0.400809
+  type: 'test'
+  location: '/workspace/scratch/205f4bc141b6/luc-than/tests/splus-kits.test.mjs:47:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-kits.test.mjs:48:85)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: Vọng Cơ extends only skill cooldown, and expiration is round based
+not ok 99 - Vọng Cơ extends only skill cooldown, and expiration is round based
+  ---
+  duration_ms: 3.105984
+  type: 'test'
+  location: '/workspace/scratch/205f4bc141b6/luc-than/tests/splus-kits.test.mjs:51:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-kits.test.mjs:52:99)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: Tuệ Y revive costs once per battle and restores 50 HP percent / 50 rage
+ok 100 - Tuệ Y revive costs once per battle and restores 50 HP percent / 50 rage
+  ---
+  duration_ms: 0.852774
+  type: 'test'
+  ...
+# Subtest: Mãng Xà uses three distinct seeded targets; replay is identical
+ok 101 - Mãng Xà uses three distinct seeded targets; replay is identical
+  ---
+  duration_ms: 1.194126
+  type: 'test'
+  ...
+# Subtest: Dạ Xoa execution ignores intercept and shield
+ok 102 - Dạ Xoa execution ignores intercept and shield
+  ---
+  duration_ms: 0.441569
+  type: 'test'
+  ...
+# Subtest: Zero damage does not consume cocoon or attach attack marks
+ok 103 - Zero damage does not consume cocoon or attach attack marks
+  ---
+  duration_ms: 0.195567
+  type: 'test'
+  ...
+# Subtest: Taunt redirects forced single-target ultimate to the taunter
+ok 104 - Taunt redirects forced single-target ultimate to the taunter
+  ---
+  duration_ms: 0.594133
+  type: 'test'
+  ...
+# Subtest: linh_dong passive records authored mark value and provenance
+not ok 105 - linh_dong passive records authored mark value and provenance
+  ---
+  duration_ms: 0.452465
+  type: 'test'
+  location: '/workspace/scratch/205f4bc141b6/luc-than/tests/splus-kits.test.mjs:70:293'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0.2 !== 0.15
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0.15
+  actual: 0.2
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-kits.test.mjs:71:134)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: han_nuong passive records authored mark value and provenance
+not ok 106 - han_nuong passive records authored mark value and provenance
+  ---
+  duration_ms: 0.307963
+  type: 'test'
+  location: '/workspace/scratch/205f4bc141b6/luc-than/tests/splus-kits.test.mjs:70:293'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0.15 !== 0.1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0.1
+  actual: 0.15
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-kits.test.mjs:71:134)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: hoa_bai passive records authored mark value and provenance
+ok 107 - hoa_bai passive records authored mark value and provenance
+  ---
+  duration_ms: 0.192914
+  type: 'test'
+  ...
+# Subtest: hac_dao passive records authored mark value and provenance
+not ok 108 - hac_dao passive records authored mark value and provenance
+  ---
+  duration_ms: 0.360971
+  type: 'test'
+  location: '/workspace/scratch/205f4bc141b6/luc-than/tests/splus-kits.test.mjs:70:293'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0.05 !== 0.03
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0.03
+  actual: 0.05
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-kits.test.mjs:71:134)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: hac_hoa passive records authored mark value and provenance
+ok 109 - hac_hoa passive records authored mark value and provenance
+  ---
+  duration_ms: 0.144452
+  type: 'test'
+  ...
+# Subtest: cuu_tinh passive records authored mark value and provenance
+ok 110 - cuu_tinh passive records authored mark value and provenance
+  ---
+  duration_ms: 0.10209
+  type: 'test'
+  ...
+# Subtest: son_cuong passive records authored mark value and provenance
+not ok 111 - son_cuong passive records authored mark value and provenance
+  ---
+  duration_ms: 0.164872
+  type: 'test'
+  location: '/workspace/scratch/205f4bc141b6/luc-than/tests/splus-kits.test.mjs:70:293'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0.06 !== 0.02
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0.02
+  actual: 0.06
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-kits.test.mjs:71:134)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: mang_xa passive records authored mark value and provenance
+ok 112 - mang_xa passive records authored mark value and provenance
+  ---
+  duration_ms: 0.102611
+  type: 'test'
+  ...
+# Subtest: to_linh passive records authored mark value and provenance
+ok 113 - to_linh passive records authored mark value and provenance
+  ---
+  duration_ms: 0.09476
+  type: 'test'
+  ...
+# Subtest: thiet_lanh retaliatory passive attaches to attacker
+not ok 114 - thiet_lanh retaliatory passive attaches to attacker
+  ---
+  duration_ms: 0.275134
+  type: 'test'
+  location: '/workspace/scratch/205f4bc141b6/luc-than/tests/splus-kits.test.mjs:73:118'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'power')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-kits.test.mjs:74:116)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: nung retaliatory passive attaches to attacker
+not ok 115 - nung retaliatory passive attaches to attacker
+  ---
+  duration_ms: 0.174426
+  type: 'test'
+  location: '/workspace/scratch/205f4bc141b6/luc-than/tests/splus-kits.test.mjs:73:118'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'power')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-kits.test.mjs:74:116)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: tram_tue retaliatory passive attaches to attacker
+ok 116 - tram_tue retaliatory passive attaches to attacker
+  ---
+  duration_ms: 0.113136
+  type: 'test'
+  ...
+# Subtest: Tiêu Hồn cannot siphon more rage than the target owns
+ok 117 - Tiêu Hồn cannot siphon more rage than the target owns
+  ---
+  duration_ms: 0.13562
+  type: 'test'
+  ...
+# Subtest: Hạc Phá berserk and Hải Phong heavy-hit cap use HP thresholds
+not ok 118 - Hạc Phá berserk and Hải Phong heavy-hit cap use HP thresholds
+  ---
+  duration_ms: 0.232542
+  type: 'test'
+  location: '/workspace/scratch/205f4bc141b6/luc-than/tests/splus-kits.test.mjs:79:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0.35 !== 0.3
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0.3
+  actual: 0.35
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-kits.test.mjs:80:60)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: Thạch Kinh consumes five resentment stacks to heal 15% missing HP
+not ok 119 - Thạch Kinh consumes five resentment stacks to heal 15% missing HP
+  ---
+  duration_ms: 1.105295
+  type: 'test'
+  location: '/workspace/scratch/205f4bc141b6/luc-than/tests/splus-kits.test.mjs:83:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    45000 !== 53250
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 53250
+  actual: 45000
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-kits.test.mjs:84:93)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: Thiềm Ngân overheal becomes shield and respects shield ban
+ok 120 - Thiềm Ngân overheal becomes shield and respects shield ban
+  ---
+  duration_ms: 0.436982
+  type: 'test'
+  ...
+# Subtest: Thủy Cơ buffs only adjacent slots after her action
+not ok 121 - Thủy Cơ buffs only adjacent slots after her action
+  ---
+  duration_ms: 1.280181
+  type: 'test'
+  location: '/workspace/scratch/205f4bc141b6/luc-than/tests/splus-kits.test.mjs:89:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+        1,
+    +   2
+    -   3
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 1
+    1: 3
+  actual:
+    0: 1
+    1: 2
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-kits.test.mjs:90:58)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: Thủy Ngọc skill supplies 15 rage to strongest ally and explosive shield
+ok 122 - Thủy Ngọc skill supplies 15 rage to strongest ally and explosive shield
+  ---
+  duration_ms: 1.477532
+  type: 'test'
+  ...
+# Subtest: Cổ Nương converts reflection to health; parasite ticks once per round
+not ok 123 - Cổ Nương converts reflection to health; parasite ticks once per round
+  ---
+  duration_ms: 0.250458
+  type: 'test'
+  location: '/workspace/scratch/205f4bc141b6/luc-than/tests/splus-kits.test.mjs:95:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    50000 !== 44000
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 44000
+  actual: 50000
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-kits.test.mjs:96:140)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: Giang Quân mitigation is melee only; Trầm Châu protects two back allies
+ok 124 - Giang Quân mitigation is melee only; Trầm Châu protects two back allies
+  ---
+  duration_ms: 0.420939
+  type: 'test'
+  ...
+# Subtest: Miên Nương HoT and Hỏa Dực burn conversion heal weakest ally
+not ok 125 - Miên Nương HoT and Hỏa Dực burn conversion heal weakest ally
+  ---
+  duration_ms: 0.273051
+  type: 'test'
+  location: '/workspace/scratch/205f4bc141b6/luc-than/tests/splus-kits.test.mjs:102:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    20000 !== 25000
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 25000
+  actual: 20000
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-kits.test.mjs:103:79)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: Thạch Mộng intercepts 30%, then reduces shared damage by 35%
+ok 126 - Thạch Mộng intercepts 30%, then reduces shared damage by 35%
+  ---
+  duration_ms: 0.208066
+  type: 'test'
+  ...
+# Subtest: Khaos clone absorbs half damage until its finite pool is exhausted
+ok 127 - Khaos clone absorbs half damage until its finite pool is exhausted
+  ---
+  duration_ms: 0.202839
+  type: 'test'
+  ...
+# Subtest: Hồi Ảnh swaps rows after two rounds without duplicate slots
+ok 128 - Hồi Ảnh swaps rows after two rounds without duplicate slots
+  ---
+  duration_ms: 0.23129
+  type: 'test'
+  ...
+# Subtest: Mục Chiêu equalization cannot bypass absolute anti-heal
+ok 129 - Mục Chiêu equalization cannot bypass absolute anti-heal
+  ---
+  duration_ms: 0.36026
+  type: 'test'
+  ...
+# Subtest: Source runtime patch compiles and does not duplicate scheduler
+ok 130 - Source runtime patch compiles and does not duplicate scheduler
+  ---
+  duration_ms: 94.347406
+  type: 'test'
+  ...
+# Subtest: Every selectable hero reaches a valid 6v6 fixture without duplicate positions
+ok 131 - Every selectable hero reaches a valid 6v6 fixture without duplicate positions
+  ---
+  duration_ms: 2.119886
+  type: 'test'
+  ...
+# Subtest: Dream fixture reserves frontline for Thạch Mộng before support overflow
+ok 132 - Dream fixture reserves frontline for Thạch Mộng before support overflow
+  ---
+  duration_ms: 0.257869
+  type: 'test'
+  ...
+# Subtest: Bundled browser factory has the same damage/status/rage results as source
+ok 133 - Bundled browser factory has the same damage/status/rage results as source
+  ---
+  duration_ms: 90.729263
+  type: 'test'
+  ...
+1..133
+# tests 133
+# suites 0
+# pass 117
+# fail 16
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 283.436462

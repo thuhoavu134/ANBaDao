@@ -1,0 +1,95 @@
+{
+  "checkedAt": "2026-09-08T07:50:30.408908+00:00",
+  "node": "v24.19.0",
+  "checks": [
+    {
+      "path": "scripts/splus-runtime-v1.mjs",
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "path": "src/domain/combat/splus-mechanics.mjs",
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "path": "src/domain/hero/splus-catalog.mjs",
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "path": "src/domain/hero/splus-profile-data.mjs",
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "path": "src/domain/hero/splus-profiles.mjs",
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "path": "src/domain/hero/splus-profiles/dream.mjs",
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "path": "src/domain/hero/splus-profiles/fire.mjs",
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "path": "src/domain/hero/splus-profiles/metal.mjs",
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "path": "src/domain/hero/splus-profiles/soul.mjs",
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "path": "src/domain/hero/splus-profiles/water.mjs",
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "path": "src/domain/hero/splus-profiles/wood.mjs",
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "path": "src/domain/hero/splus-skill-art.mjs",
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "path": "src/runtime/splus-battle-bridge.js",
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "path": "src/ui/splus-encyclopedia.js",
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "path": "src/ui/splus-skill-details.js",
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "path": "tests/splus-profiles.test.mjs",
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "path": "tests/splus-v2.test.mjs",
+      "exitCode": 0,
+      "output": ""
+    }
+  ],
+  "diffCheck": {
+    "exitCode": 0,
+    "output": ""
+  }
+}
