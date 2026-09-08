@@ -1,6 +1,12 @@
 // Injected into the existing battle closure by the source build owner.
 // This bridge uses advanceTurn/sleep/render; it does not own a second clock.
 let splusEngine = null;
+let splusPresentation = null;
+function splusFloater(target,amount,healing=false,critical=false) {
+  if(!(amount>0))return;
+  if(splusPresentation){const id=target.id+':'+healing,previous=splusPresentation.get(id);splusPresentation.set(id,{target,amount:amount+(previous?.amount||0),healing,critical:critical||previous?.critical});return;}
+  addFloater(target,`${healing?'+':'−'}${amount}`,healing?'#8fe7bd':critical?'#ffd76f':'#ff9688',critical);
+}
 function splusActive() { return HEROES.some(h => globalThis.SPLUS42.catalog.some(c => c.id === h.sourceId)); }
 function splusCombat() {
   if (!splusActive() || !units.length) return null;
@@ -17,8 +23,8 @@ function splusHeroConfig(raw, index) {
 }
 function splusEvent(event) {
   const t=getUnit(event.targetId),a=getUnit(event.sourceId);
-  if(t&&event.type==='damage'){addFloater(t,`−${event.amount}`,event.critical?'#ffd76f':'#ff9688',event.critical);t.hpTween=null;const rec=intelUnit(t);if(rec)rec.damageTaken+=event.amount;const ar=intelUnit(a);if(ar)ar.damage+=event.amount;}
-  if(t&&event.type==='heal'){addFloater(t,`+${event.amount}`,'#8fe7bd');t.hpTween=null;const ar=intelUnit(a);if(ar)ar.healing+=event.amount;}
+  if(t&&event.type==='damage'){splusFloater(t,event.amount,false,event.critical);t.hpTween=null;const rec=intelUnit(t);if(rec)rec.damageTaken+=event.amount;const ar=intelUnit(a);if(ar)ar.damage+=event.amount;}
+  if(t&&event.type==='heal'){splusFloater(t,event.amount,true);t.hpTween=null;const ar=intelUnit(a);if(ar)ar.healing+=event.amount;}
   if(t&&event.type==='death')markDefeated(t);
   if(t&&event.type==='resurrect'){t.defeatedAt=0;t.displayHp=t.hp;setUnitState(t,'idle',800);}
   if(event.type==='extraTurn')state.queue.unshift(event.sourceId);
@@ -35,6 +41,7 @@ function splusStateView() {
   const e=splusCombat();if(!e)return;
   let panel=document.getElementById('splus-status-panel');
   if(!panel){panel=document.createElement('section');panel.id='splus-status-panel';panel.setAttribute('aria-label','Trạng thái 42 tướng S+');document.body.append(panel);}
+  document.body.classList.add('splus-battle');
   const heading=document.createElement('h2');heading.textContent=`Ấn ký trận đấu · Hiệp ${state.round||1}`;
   const grid=document.createElement('div');grid.className='splus-status-grid';
   for(const u of units){
@@ -62,7 +69,9 @@ async function performSplusAction(actor, action, target) {
   const title=globalThis.SPLUS42.catalog.find(h=>h.id===actor.sourceId)?.actions[action]?.name||action;
   setStatus(`${actor.name} · ${title}`);dom.phaseLabel.textContent=title;setUnitState(actor,'attack',TIMING.windup);
   if(!await sleep(TIMING.windup,battleId))return;
-  const result=e.act(actor.id,action,target?.id);
+  const totals=new Map();let result;splusPresentation=totals;
+  try{result=e.act(actor.id,action,target?.id);}finally{splusPresentation=null;}
+  for(const hit of totals.values())splusFloater(hit.target,hit.amount,hit.healing,hit.critical);
   if(result.ok){state.actionCount++;state.actionBreakdown[action]=(state.actionBreakdown[action]||0)+1;const rec=intelUnit(actor);if(rec){rec.actions++;if(action==='ultimate')rec.ultimates++;}addLog(`${actor.name} · ${title}`);}
   updateTeamCounters();splusStateView();updateActorHud(actor);
   if(!await sleep(TIMING.turnRest,battleId))return;

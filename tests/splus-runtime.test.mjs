@@ -16,6 +16,11 @@ test('Source runtime patch compiles and does not duplicate scheduler',()=>{
 test('Every selectable hero reaches a valid 6v6 fixture without duplicate positions',()=>{
   for(const h of SPLUS_HEROES){const f=createSplusFixture(SPLUS_HEROES,h.id);assert.equal(f.heroes.length,12);assert.ok(f.heroes.some(u=>u.team==='player'&&u.sourceId===h.id));assert.equal(new Set(f.heroes.map(u=>`${u.team}:${u.slot}`)).size,12);assert.equal(f.referenceSimple,true);}
 });
+test('Dream fixture reserves frontline for Thạch Mộng before support overflow',()=>{
+  const f=createSplusFixture(SPLUS_HEROES,'hero_splus_cuu_trieu');
+  assert.ok(f.heroes.find(u=>u.sourceId==='hero_splus_thach_mong').slot<3);
+  assert.equal(f.heroes.find(u=>u.sourceId==='hero_splus_cuu_trieu').slot,4);
+});
 test('Bundled browser factory has the same damage/status/rage results as source',()=>{
   const html=patchSplusBattleHtml(readFileSync(new URL('../battle.html',import.meta.url),'utf8'));
   const script=html.match(/<script id="splus42-runtime-v1">([\s\S]*?)<\/script>/)[1],context=vm.createContext({});vm.runInContext(script,context);

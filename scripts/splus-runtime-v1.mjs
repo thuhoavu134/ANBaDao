@@ -9,15 +9,17 @@ export function createSplusFixture(catalog, selectedId) {
   const selected=catalog.find(h=>h.id===selectedId)||catalog.find(h=>h.element===selectedId)||catalog[0];
   function team(element,side,chosen) {
     const pool=catalog.filter(h=>h.element===element),preferred=chosen||pool[0];
-    const picked=[preferred,...pool.filter(h=>h!==preferred)].slice(0,6),used=new Set();
+    const picked=[preferred,...pool.filter(h=>h!==preferred)].slice(0,6),used=new Set(),slots=new Map();
+    const placement=[preferred,...picked.filter(h=>h!==preferred).sort((a,b)=>(a.role==='guardian'?0:a.recommendedSlots.some(s=>s<3)?1:2)-(b.role==='guardian'?0:b.recommendedSlots.some(s=>s<3)?1:2))];
+    for(const h of placement){const slot=h.recommendedSlots.find(s=>!used.has(s))??[0,1,2,3,4,5].find(s=>!used.has(s));used.add(slot);slots.set(h.id,slot);}
     return picked.map((h,i)=>{
-      const slot=h.recommendedSlots.find(s=>!used.has(s))??[0,1,2,3,4,5].find(s=>!used.has(s));used.add(slot);
+      const slot=slots.get(h.id);
       return {id:`${side}:${h.id}`,sourceId:h.id,name:h.name,team:side,slot,archetype:h.role,color:({metal:'#edc66d',soul:'#a8baff',water:'#71daf5',fire:'#ffa176',wood:'#96e1ac',dream:'#cdacff'})[h.element],hp:24000,atk:1700,def:400,speed:100-i,energy:35,accuracy:100,evasion:0,crit:10,critRes:0,critDamage:1.5,level:1,stars:1};
     });
   }
   const elements=['metal','soul','water','fire','wood','dream'],opponent=elements[(elements.indexOf(selected.element)+1)%6];
   // Fixture-only stats; this config never grants ownership or emits campaign rewards.
-  return {splusReview:true,referenceSimple:true,timingScale:0.12,combatSeed:'splus42-review-v1',playerTeamName:selected.elementName,enemyTeamName:catalog.find(h=>h.element===opponent).elementName,heroes:[...team(selected.element,'player',selected),...team(opponent,'enemy')]};
+  return {splusReview:true,referenceSimple:true,timingScale:0.35,combatSeed:'splus42-review-v1',playerTeamName:selected.elementName,enemyTeamName:catalog.find(h=>h.element===opponent).elementName,heroes:[...team(selected.element,'player',selected),...team(opponent,'enemy')]};
 }
 
 export function patchSplusBattleHtml(input) {
@@ -27,7 +29,7 @@ export function patchSplusBattleHtml(input) {
   const bridge=readFileSync(new URL('../src/runtime/splus-battle-bridge.js',import.meta.url),'utf8');
   const json=x=>JSON.stringify(x).replaceAll('<','\\u003c');
   const payload=`(()=>{const catalog=${json(SPLUS_HEROES)},defaults=${json(SPLUS_REVIEW_DEFAULTS)};globalThis.SPLUS42=Object.freeze({catalog,icons:${json(SPLUS_ICON_MANIFEST)},labels:${json(SPLUS_STATUS_LABELS)},create:options=>(${createSplusMechanics.toString()})({...options,catalog,defaults}),fixture:id=>(${createSplusFixture.toString()})(catalog,id)});})();`;
-  once('</head>',`<script id="splus42-runtime-v1">${payload}</script><style id="splus42-style">body:has(#splus-status-panel){overflow:auto!important;height:auto!important;min-height:100vh}#splus-status-panel{position:relative;z-index:5;max-width:1200px;margin:24px auto;padding:20px;background:#111f29;color:#e9e6d8;font:14px/1.5 sans-serif;border:1px solid #687778;border-radius:16px}#splus-status-panel h2{font-size:20px}.splus-status-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}.splus-status-grid article{padding:12px;background:#1c2c36;border-radius:10px}.splus-status-grid p{color:#d8c793}.splus-status-grid ul{padding-left:18px;margin:8px 0}.splus-status-grid li[data-polarity=debuff]{color:#ffb4a7}.splus-status-grid li[data-polarity=buff]{color:#a5e0bd}#splus-evidence{max-height:320px;overflow:auto;font:11px monospace}</style></head>`);
+  once('</head>',`<script id="splus42-runtime-v1">${payload}</script><style id="splus42-style">body:has(#splus-status-panel){overflow:auto!important;height:auto!important;min-height:100vh}#splus-status-panel{position:relative;z-index:5;max-width:1200px;margin:24px auto;padding:20px;background:#111f29;color:#e9e6d8;font:14px/1.5 sans-serif;border:1px solid #687778;border-radius:16px}#splus-status-panel h2{font-size:20px}.splus-status-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}.splus-status-grid article{padding:12px;background:#1c2c36;border-radius:10px}.splus-status-grid p{color:#d8c793}.splus-status-grid ul{padding-left:18px;margin:8px 0}.splus-status-grid li[data-polarity=debuff]{color:#ffb4a7}.splus-status-grid li[data-polarity=buff]{color:#a5e0bd}.splus-battle #battleOrders{display:none!important}.splus-battle .action-zone{width:min(900px,calc(100vw - 20px))!important}.splus-battle .action-button strong{font-size:13px!important}.splus-battle .action-button small{font-size:10px!important}#splus-evidence{max-height:320px;overflow:auto;font:11px monospace}</style></head>`);
   once('  const Core = globalThis.HonVietCore;',`  const LegacyCore=globalThis.HonVietCore;
   const Core={...LegacyCore,
     canUseAction:(u,a)=>splusCombat()?splusCombat().canUse(u,a):LegacyCore.canUseAction(u,a),
@@ -55,7 +57,7 @@ export function patchSplusBattleHtml(input) {
   once('        state.round += 1;',`        state.round += 1;
         if(splusCombat()){if(state.round<=15)splusCombat().beginRound(state.round);else splusCombat().finishRound();splusStateView();}`);
   once('  function updateActorHud(actor) {',`  function updateActorHud(actor) {
-    if(splusCombat()){const button=document.querySelector('[data-action="skill"]');button.hidden=false;button.removeAttribute('aria-hidden');splusStateView();}`);
+    if(splusCombat()){const button=document.querySelector('[data-action="skill"]');button.hidden=false;button.removeAttribute('aria-hidden');document.querySelector('[data-action="ultimate"] .action-key').textContent='3';splusStateView();}`);
   once('  function drawUnit(context, unit, time) {','  function drawUnit(context, unit, time) {\n    if(unit.kitVersion===\'splus42-v1\')return drawSplusToken(context,unit,time);');
   once('  function gainEnergy(unit, amount){','  function gainEnergy(unit, amount){\n    if(splusCombat())return splusCombat().gainRage(unit,unit,amount);');
   once('    const visibleStatuses=[];','    const visibleStatuses=splusCombat()?splusCombat().hud(unit).slice(0,4):[];');

@@ -1,0 +1,35 @@
+✔ Source runtime patch compiles and does not duplicate scheduler (44.772052ms)
+✔ Every selectable hero reaches a valid 6v6 fixture without duplicate positions (1.2811ms)
+✖ Dream fixture reserves frontline for Thạch Mộng before support overflow (5.410408ms)
+✔ Bundled browser factory has the same damage/status/rage results as source (41.543965ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 3
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 175.292093
+
+✖ failing tests:
+
+test at tests/splus-runtime.test.mjs:19:1
+✖ Dream fixture reserves frontline for Thạch Mộng before support overflow (5.410408ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(f.heroes.find(u=>u.sourceId==='hero_splus_thach_mong').slot<3)
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/205f4bc141b6/luc-than/tests/splus-runtime.test.mjs:21:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
