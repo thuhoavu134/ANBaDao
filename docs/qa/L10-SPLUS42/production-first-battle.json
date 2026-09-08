@@ -1,0 +1,1419 @@
+{
+  "commit": "2314c2ef522e5ad1b5a88ee7cc058a0a36b87d89",
+  "url": "https://luc-than.vercel.app/battle.html?qaSplus42=hero_splus_cuu_trieu",
+  "domEvidence": {
+    "actionCount": 156,
+    "actionsByHero": {
+      "hero_splus_co_trong": [
+        "skill",
+        "basic"
+      ],
+      "hero_splus_cuong_dong": [
+        "skill",
+        "basic"
+      ],
+      "hero_splus_cuu_trieu": [
+        "skill",
+        "basic",
+        "ultimate"
+      ],
+      "hero_splus_hac_pha": [
+        "skill",
+        "basic"
+      ],
+      "hero_splus_hoi_anh": [
+        "skill",
+        "basic",
+        "ultimate"
+      ],
+      "hero_splus_khaos": [
+        "skill",
+        "basic"
+      ],
+      "hero_splus_kinh_nuong": [
+        "skill",
+        "basic"
+      ],
+      "hero_splus_lac_an": [
+        "skill",
+        "basic"
+      ],
+      "hero_splus_minh_toa": [
+        "skill",
+        "basic",
+        "ultimate"
+      ],
+      "hero_splus_thach_mong": [
+        "skill",
+        "ultimate",
+        "basic"
+      ],
+      "hero_splus_thiet_lanh": [
+        "skill",
+        "basic",
+        "ultimate"
+      ],
+      "hero_splus_van_phap": [
+        "skill",
+        "basic"
+      ]
+    },
+    "alive": 12,
+    "eventCount": 1936,
+    "events": [
+      {
+        "action": "basic",
+        "actionId": "splus:r15:a151",
+        "amount": 0,
+        "critical": false,
+        "damageType": "physical",
+        "dot": false,
+        "reflection": false,
+        "round": 15,
+        "secondary": false,
+        "sequence": 1877,
+        "sourceId": "enemy:hero_splus_hac_pha",
+        "targetId": "player:hero_splus_khaos",
+        "type": "damage"
+      },
+      {
+        "actionId": "splus:r15:a151",
+        "amount": 15,
+        "reason": "basic",
+        "round": 15,
+        "sequence": 1878,
+        "sourceId": "enemy:hero_splus_hac_pha",
+        "targetId": "enemy:hero_splus_hac_pha",
+        "type": "energy"
+      },
+      {
+        "actionId": null,
+        "amount": 8,
+        "reason": "gain",
+        "round": 15,
+        "sequence": 1879,
+        "sourceId": "enemy:hero_splus_thiet_lanh",
+        "targetId": "enemy:hero_splus_thiet_lanh",
+        "type": "energy"
+      },
+      {
+        "actionId": "splus:r15:a152",
+        "amount": -60,
+        "reason": "cost",
+        "round": 15,
+        "sequence": 1880,
+        "sourceId": "enemy:hero_splus_thiet_lanh",
+        "targetId": "enemy:hero_splus_thiet_lanh",
+        "type": "energy"
+      },
+      {
+        "action": "ultimate",
+        "actionId": "splus:r15:a152",
+        "round": 15,
+        "sequence": 1881,
+        "sourceId": "enemy:hero_splus_thiet_lanh",
+        "targetId": "player:hero_splus_thach_mong",
+        "type": "action"
+      },
+      {
+        "actionId": "splus:r15:a152",
+        "amount": 9652,
+        "round": 15,
+        "sequence": 1882,
+        "sourceId": "enemy:hero_splus_thiet_lanh",
+        "targetId": "player:hero_splus_kinh_nuong",
+        "type": "shieldBreak"
+      },
+      {
+        "actionId": "splus:r15:a152",
+        "amount": 11441,
+        "round": 15,
+        "sequence": 1883,
+        "sourceId": "enemy:hero_splus_thiet_lanh",
+        "targetId": "player:hero_splus_van_phap",
+        "type": "shieldBreak"
+      },
+      {
+        "actionId": "splus:r15:a152",
+        "amount": 13642,
+        "round": 15,
+        "sequence": 1884,
+        "sourceId": "enemy:hero_splus_thiet_lanh",
+        "targetId": "player:hero_splus_khaos",
+        "type": "shieldBreak"
+      },
+      {
+        "actionId": "splus:r15:a152",
+        "amount": 144,
+        "round": 15,
+        "sequence": 1885,
+        "sourceId": "enemy:hero_splus_thiet_lanh",
+        "targetId": "player:hero_splus_thach_mong",
+        "type": "shieldAbsorb"
+      },
+      {
+        "action": "ultimate",
+        "actionId": "splus:r15:a152",
+        "amount": 0,
+        "critical": false,
+        "damageType": "physical",
+        "dot": false,
+        "reflection": false,
+        "round": 15,
+        "secondary": true,
+        "sequence": 1886,
+        "sourceId": "enemy:hero_splus_thiet_lanh",
+        "targetId": "player:hero_splus_thach_mong",
+        "type": "damage"
+      },
+      {
+        "actionId": "splus:r15:a152",
+        "amount": 222,
+        "iconId": "splus.thach_mong.passive",
+        "round": 15,
+        "sequence": 1887,
+        "sourceId": "player:hero_splus_thach_mong",
+        "targetId": "player:hero_splus_kinh_nuong",
+        "type": "intercept"
+      },
+      {
+        "action": "ultimate",
+        "actionId": "splus:r15:a152",
+        "amount": 517,
+        "critical": false,
+        "damageType": "physical",
+        "dot": false,
+        "reflection": false,
+        "round": 15,
+        "secondary": false,
+        "sequence": 1888,
+        "sourceId": "enemy:hero_splus_thiet_lanh",
+        "targetId": "player:hero_splus_kinh_nuong",
+        "type": "damage"
+      },
+      {
+        "actionId": "splus:r15:a152",
+        "amount": 142,
+        "round": 15,
+        "sequence": 1889,
+        "sourceId": "enemy:hero_splus_thiet_lanh",
+        "targetId": "player:hero_splus_thach_mong",
+        "type": "shieldAbsorb"
+      },
+      {
+        "action": "ultimate",
+        "actionId": "splus:r15:a152",
+        "amount": 0,
+        "critical": false,
+        "damageType": "physical",
+        "dot": false,
+        "reflection": false,
+        "round": 15,
+        "secondary": true,
+        "sequence": 1890,
+        "sourceId": "enemy:hero_splus_thiet_lanh",
+        "targetId": "player:hero_splus_thach_mong",
+        "type": "damage"
+      },
+      {
+        "actionId": "splus:r15:a152",
+        "amount": 219,
+        "iconId": "splus.thach_mong.passive",
+        "round": 15,
+        "sequence": 1891,
+        "sourceId": "player:hero_splus_thach_mong",
+        "targetId": "player:hero_splus_van_phap",
+        "type": "intercept"
+      },
+      {
+        "action": "ultimate",
+        "actionId": "splus:r15:a152",
+        "amount": 511,
+        "critical": false,
+        "damageType": "physical",
+        "dot": false,
+        "reflection": false,
+        "round": 15,
+        "secondary": false,
+        "sequence": 1892,
+        "sourceId": "enemy:hero_splus_thiet_lanh",
+        "targetId": "player:hero_splus_van_phap",
+        "type": "damage"
+      },
+      {
+        "actionId": "splus:r15:a152",
+        "amount": 145,
+        "round": 15,
+        "sequence": 1893,
+        "sourceId": "enemy:hero_splus_thiet_lanh",
+        "targetId": "player:hero_splus_thach_mong",
+        "type": "shieldAbsorb"
+      },
+      {
+        "action": "ultimate",
+        "actionId": "splus:r15:a152",
+        "amount": 0,
+        "critical": false,
+        "damageType": "physical",
+        "dot": false,
+        "reflection": false,
+        "round": 15,
+        "secondary": true,
+        "sequence": 1894,
+        "sourceId": "enemy:hero_splus_thiet_lanh",
+        "targetId": "player:hero_splus_thach_mong",
+        "type": "damage"
+      },
+      {
+        "actionId": "splus:r15:a152",
+        "amount": 223,
+        "iconId": "splus.thach_mong.passive",
+        "round": 15,
+        "sequence": 1895,
+        "sourceId": "player:hero_splus_thach_mong",
+        "targetId": "player:hero_splus_khaos",
+        "type": "intercept"
+      },
+      {
+        "actionId": "splus:r15:a152",
+        "amount": 260.6628371945243,
+        "remaining": 5380.478670095926,
+        "round": 15,
+        "sequence": 1896,
+        "sourceId": "player:hero_splus_khaos",
+        "targetId": "player:hero_splus_khaos",
+        "type": "cloneAbsorb"
+      },
+      {
+        "action": "ultimate",
+        "actionId": "splus:r15:a152",
+        "amount": 261,
+        "critical": false,
+        "damageType": "physical",
+        "dot": false,
+        "reflection": false,
+        "round": 15,
+        "secondary": false,
+        "sequence": 1897,
+        "sourceId": "enemy:hero_splus_thiet_lanh",
+        "targetId": "player:hero_splus_khaos",
+        "type": "damage"
+      },
+      {
+        "actionId": "splus:r15:a152",
+        "effect": "stun",
+        "iconId": "splus.thiet_lanh.passive",
+        "round": 15,
+        "sequence": 1898,
+        "sourceId": "enemy:hero_splus_thiet_lanh",
+        "stacks": 1,
+        "targetId": "player:hero_splus_kinh_nuong",
+        "type": "status"
+      },
+      {
+        "actionId": "splus:r15:a152",
+        "effect": "stun",
+        "iconId": "splus.thiet_lanh.passive",
+        "round": 15,
+        "sequence": 1899,
+        "sourceId": "enemy:hero_splus_thiet_lanh",
+        "stacks": 1,
+        "targetId": "player:hero_splus_van_phap",
+        "type": "status"
+      },
+      {
+        "actionId": "splus:r15:a152",
+        "effect": "stun",
+        "iconId": "splus.thiet_lanh.passive",
+        "round": 15,
+        "sequence": 1900,
+        "sourceId": "enemy:hero_splus_thiet_lanh",
+        "stacks": 1,
+        "targetId": "player:hero_splus_khaos",
+        "type": "status"
+      },
+      {
+        "actionId": null,
+        "amount": 8,
+        "reason": "gain",
+        "round": 15,
+        "sequence": 1901,
+        "sourceId": "player:hero_splus_van_phap",
+        "targetId": "player:hero_splus_van_phap",
+        "type": "energy"
+      },
+      {
+        "actionId": null,
+        "amount": 8,
+        "reason": "gain",
+        "round": 15,
+        "sequence": 1902,
+        "sourceId": "enemy:hero_splus_minh_toa",
+        "targetId": "enemy:hero_splus_minh_toa",
+        "type": "energy"
+      },
+      {
+        "actionId": "splus:r15:a153",
+        "amount": -25,
+        "reason": "cost",
+        "round": 15,
+        "sequence": 1903,
+        "sourceId": "enemy:hero_splus_minh_toa",
+        "targetId": "enemy:hero_splus_minh_toa",
+        "type": "energy"
+      },
+      {
+        "action": "skill",
+        "actionId": "splus:r15:a153",
+        "round": 15,
+        "sequence": 1904,
+        "sourceId": "enemy:hero_splus_minh_toa",
+        "targetId": "player:hero_splus_thach_mong",
+        "type": "action"
+      },
+      {
+        "actionId": "splus:r15:a153",
+        "amount": 18192,
+        "round": 15,
+        "sequence": 1905,
+        "sourceId": "enemy:hero_splus_minh_toa",
+        "targetId": "player:hero_splus_thach_mong",
+        "type": "shieldBreak"
+      },
+      {
+        "action": "skill",
+        "actionId": "splus:r15:a153",
+        "amount": 458,
+        "critical": false,
+        "damageType": "physical",
+        "dot": false,
+        "reflection": false,
+        "round": 15,
+        "secondary": false,
+        "sequence": 1906,
+        "sourceId": "enemy:hero_splus_minh_toa",
+        "targetId": "player:hero_splus_thach_mong",
+        "type": "damage"
+      },
+      {
+        "actionId": "splus:r15:a153",
+        "effect": "shieldBan",
+        "iconId": "splus.minh_toa.passive",
+        "round": 15,
+        "sequence": 1907,
+        "sourceId": "enemy:hero_splus_minh_toa",
+        "stacks": 1,
+        "targetId": "player:hero_splus_thach_mong",
+        "type": "status"
+      },
+      {
+        "actionId": null,
+        "amount": 8,
+        "reason": "gain",
+        "round": 15,
+        "sequence": 1908,
+        "sourceId": "player:hero_splus_thach_mong",
+        "targetId": "player:hero_splus_thach_mong",
+        "type": "energy"
+      },
+      {
+        "actionId": "splus:r15:a154",
+        "amount": -60,
+        "reason": "cost",
+        "round": 15,
+        "sequence": 1909,
+        "sourceId": "player:hero_splus_thach_mong",
+        "targetId": "player:hero_splus_thach_mong",
+        "type": "energy"
+      },
+      {
+        "action": "ultimate",
+        "actionId": "splus:r15:a154",
+        "round": 15,
+        "sequence": 1910,
+        "sourceId": "player:hero_splus_thach_mong",
+        "targetId": "enemy:hero_splus_hac_pha",
+        "type": "action"
+      },
+      {
+        "actionId": "splus:r15:a154",
+        "amount": 8400,
+        "iconId": "splus.thach_mong.passive",
+        "round": 15,
+        "sequence": 1911,
+        "sourceId": "player:hero_splus_thach_mong",
+        "targetId": "player:hero_splus_kinh_nuong",
+        "type": "shield"
+      },
+      {
+        "actionId": "splus:r15:a154",
+        "amount": 8400,
+        "iconId": "splus.thach_mong.passive",
+        "round": 15,
+        "sequence": 1912,
+        "sourceId": "player:hero_splus_thach_mong",
+        "targetId": "player:hero_splus_van_phap",
+        "type": "shield"
+      },
+      {
+        "actionId": "splus:r15:a154",
+        "amount": 8400,
+        "iconId": "splus.thach_mong.passive",
+        "round": 15,
+        "sequence": 1913,
+        "sourceId": "player:hero_splus_thach_mong",
+        "targetId": "player:hero_splus_khaos",
+        "type": "shield"
+      },
+      {
+        "actionId": "splus:r15:a154",
+        "amount": 8400,
+        "iconId": "splus.thach_mong.passive",
+        "round": 15,
+        "sequence": 1914,
+        "sourceId": "player:hero_splus_thach_mong",
+        "targetId": "player:hero_splus_hoi_anh",
+        "type": "shield"
+      },
+      {
+        "actionId": "splus:r15:a154",
+        "amount": 8400,
+        "iconId": "splus.thach_mong.passive",
+        "round": 15,
+        "sequence": 1915,
+        "sourceId": "player:hero_splus_thach_mong",
+        "targetId": "player:hero_splus_cuu_trieu",
+        "type": "shield"
+      },
+      {
+        "actionId": "splus:r15:a154",
+        "round": 15,
+        "sequence": 1916,
+        "sourceId": "player:hero_splus_thach_mong",
+        "targetId": "player:hero_splus_thach_mong",
+        "type": "shieldBlocked"
+      },
+      {
+        "action": "ultimate",
+        "actionId": "splus:r15:a154",
+        "amount": 1101,
+        "critical": false,
+        "damageType": "true",
+        "dot": false,
+        "reflection": false,
+        "round": 15,
+        "secondary": true,
+        "sequence": 1917,
+        "sourceId": "player:hero_splus_thach_mong",
+        "targetId": "enemy:hero_splus_thiet_lanh",
+        "type": "damage"
+      },
+      {
+        "action": "ultimate",
+        "actionId": "splus:r15:a154",
+        "amount": 1376,
+        "critical": false,
+        "damageType": "true",
+        "dot": false,
+        "reflection": false,
+        "round": 15,
+        "secondary": true,
+        "sequence": 1918,
+        "sourceId": "player:hero_splus_thach_mong",
+        "targetId": "enemy:hero_splus_minh_toa",
+        "type": "damage"
+      },
+      {
+        "action": "ultimate",
+        "actionId": "splus:r15:a154",
+        "amount": 1376,
+        "critical": false,
+        "damageType": "true",
+        "dot": false,
+        "reflection": false,
+        "round": 15,
+        "secondary": true,
+        "sequence": 1919,
+        "sourceId": "player:hero_splus_thach_mong",
+        "targetId": "enemy:hero_splus_hac_pha",
+        "type": "damage"
+      },
+      {
+        "action": "ultimate",
+        "actionId": "splus:r15:a154",
+        "amount": 1376,
+        "critical": false,
+        "damageType": "true",
+        "dot": false,
+        "reflection": false,
+        "round": 15,
+        "secondary": true,
+        "sequence": 1920,
+        "sourceId": "player:hero_splus_thach_mong",
+        "targetId": "enemy:hero_splus_co_trong",
+        "type": "damage"
+      },
+      {
+        "action": "ultimate",
+        "actionId": "splus:r15:a154",
+        "amount": 1032,
+        "critical": false,
+        "damageType": "true",
+        "dot": false,
+        "reflection": false,
+        "round": 15,
+        "secondary": true,
+        "sequence": 1921,
+        "sourceId": "player:hero_splus_thach_mong",
+        "targetId": "enemy:hero_splus_cuong_dong",
+        "type": "damage"
+      },
+      {
+        "action": "ultimate",
+        "actionId": "splus:r15:a154",
+        "amount": 1376,
+        "critical": false,
+        "damageType": "true",
+        "dot": false,
+        "reflection": false,
+        "round": 15,
+        "secondary": true,
+        "sequence": 1922,
+        "sourceId": "player:hero_splus_thach_mong",
+        "targetId": "enemy:hero_splus_lac_an",
+        "type": "damage"
+      },
+      {
+        "actionId": null,
+        "amount": 8,
+        "reason": "gain",
+        "round": 15,
+        "sequence": 1923,
+        "sourceId": "player:hero_splus_cuu_trieu",
+        "targetId": "player:hero_splus_cuu_trieu",
+        "type": "energy"
+      },
+      {
+        "actionId": "splus:r15:a155",
+        "amount": 0,
+        "reason": "cost",
+        "round": 15,
+        "sequence": 1924,
+        "sourceId": "player:hero_splus_cuu_trieu",
+        "targetId": "player:hero_splus_cuu_trieu",
+        "type": "energy"
+      },
+      {
+        "action": "basic",
+        "actionId": "splus:r15:a155",
+        "round": 15,
+        "sequence": 1925,
+        "sourceId": "player:hero_splus_cuu_trieu",
+        "targetId": "enemy:hero_splus_minh_toa",
+        "type": "action"
+      },
+      {
+        "action": "basic",
+        "actionId": "splus:r15:a155",
+        "amount": 3179,
+        "critical": false,
+        "damageType": "true",
+        "dot": false,
+        "reflection": false,
+        "round": 15,
+        "secondary": false,
+        "sequence": 1926,
+        "sourceId": "player:hero_splus_cuu_trieu",
+        "targetId": "enemy:hero_splus_minh_toa",
+        "type": "damage"
+      },
+      {
+        "actionId": "splus:r15:a155",
+        "amount": 15,
+        "reason": "basic",
+        "round": 15,
+        "sequence": 1927,
+        "sourceId": "player:hero_splus_cuu_trieu",
+        "targetId": "player:hero_splus_cuu_trieu",
+        "type": "energy"
+      },
+      {
+        "action": "basic",
+        "actionId": "splus:r15:a155",
+        "amount": 1440,
+        "critical": false,
+        "damageType": "true",
+        "dot": false,
+        "reflection": false,
+        "round": 15,
+        "secondary": true,
+        "sequence": 1928,
+        "sourceId": "player:hero_splus_cuu_trieu",
+        "targetId": "player:hero_splus_cuu_trieu",
+        "type": "damage"
+      },
+      {
+        "actionId": null,
+        "amount": 8,
+        "reason": "gain",
+        "round": 15,
+        "sequence": 1929,
+        "sourceId": "player:hero_splus_kinh_nuong",
+        "targetId": "player:hero_splus_kinh_nuong",
+        "type": "energy"
+      },
+      {
+        "actionId": null,
+        "amount": 8,
+        "reason": "gain",
+        "round": 15,
+        "sequence": 1930,
+        "sourceId": "player:hero_splus_hoi_anh",
+        "targetId": "player:hero_splus_hoi_anh",
+        "type": "energy"
+      },
+      {
+        "actionId": "splus:r15:a156",
+        "amount": -25,
+        "reason": "cost",
+        "round": 15,
+        "sequence": 1931,
+        "sourceId": "player:hero_splus_hoi_anh",
+        "targetId": "player:hero_splus_hoi_anh",
+        "type": "energy"
+      },
+      {
+        "action": "skill",
+        "actionId": "splus:r15:a156",
+        "round": 15,
+        "sequence": 1932,
+        "sourceId": "player:hero_splus_hoi_anh",
+        "targetId": "enemy:hero_splus_thiet_lanh",
+        "type": "action"
+      },
+      {
+        "action": "skill",
+        "actionId": "splus:r15:a156",
+        "amount": 297,
+        "critical": false,
+        "damageType": "elemental",
+        "dot": false,
+        "reflection": false,
+        "round": 15,
+        "secondary": false,
+        "sequence": 1933,
+        "sourceId": "player:hero_splus_hoi_anh",
+        "targetId": "enemy:hero_splus_thiet_lanh",
+        "type": "damage"
+      },
+      {
+        "actionId": "splus:r15:a156",
+        "effect": "speedDown",
+        "iconId": "splus.thiet_lanh.passive",
+        "round": 15,
+        "sequence": 1934,
+        "sourceId": "enemy:hero_splus_thiet_lanh",
+        "stacks": 1,
+        "targetId": "player:hero_splus_hoi_anh",
+        "type": "status"
+      },
+      {
+        "actionId": "splus:r15:a156",
+        "effect": "confusion",
+        "iconId": "splus.hoi_anh.passive",
+        "round": 15,
+        "sequence": 1935,
+        "sourceId": "player:hero_splus_hoi_anh",
+        "stacks": 1,
+        "targetId": "enemy:hero_splus_thiet_lanh",
+        "type": "status"
+      },
+      {
+        "actionId": null,
+        "round": 15,
+        "sequence": 1936,
+        "sourceId": null,
+        "targetId": null,
+        "type": "roundEnd"
+      }
+    ],
+    "finite": true,
+    "mode": "result",
+    "round": 15,
+    "schema": "luc-than-splus-combat/v1",
+    "statuses": [
+      {
+        "heroId": "hero_splus_cuu_trieu",
+        "hp": 5733,
+        "id": "player:hero_splus_cuu_trieu",
+        "marks": [
+          {
+            "charges": null,
+            "iconId": "splus.thiet_lanh.passive",
+            "id": "speedDown:enemy:hero_splus_thiet_lanh",
+            "maxStacks": 1,
+            "name": "Thép Nguội",
+            "polarity": "debuff",
+            "remainingRounds": 1,
+            "sourceHeroId": "hero_splus_thiet_lanh",
+            "sourceId": "enemy:hero_splus_thiet_lanh",
+            "stacks": 1,
+            "type": "speedDown"
+          },
+          {
+            "charges": null,
+            "iconId": "splus.cuu_trieu.passive",
+            "id": "aura:cadence:player:hero_splus_cuu_trieu",
+            "maxStacks": null,
+            "name": "Thời Không Nhịp Điệu",
+            "polarity": "buff",
+            "remainingRounds": null,
+            "sourceHeroId": "hero_splus_cuu_trieu",
+            "sourceId": "player:hero_splus_cuu_trieu",
+            "stacks": 12,
+            "type": "cadence"
+          },
+          {
+            "charges": null,
+            "iconId": "splus.thach_mong.passive",
+            "id": "aura:interception:player:hero_splus_thach_mong",
+            "maxStacks": null,
+            "name": "Hư Giới Hấp Kình",
+            "polarity": "buff",
+            "remainingRounds": null,
+            "sourceHeroId": "hero_splus_thach_mong",
+            "sourceId": "player:hero_splus_thach_mong",
+            "stacks": 1,
+            "type": "interception"
+          },
+          {
+            "charges": null,
+            "iconId": "splus.minh_toa.passive",
+            "id": "aura:suppression:enemy:hero_splus_minh_toa",
+            "maxStacks": null,
+            "name": "Kim Thiết Trấn Khẩu",
+            "polarity": "debuff",
+            "remainingRounds": null,
+            "sourceHeroId": "hero_splus_minh_toa",
+            "sourceId": "enemy:hero_splus_minh_toa",
+            "stacks": 1,
+            "type": "suppression"
+          }
+        ],
+        "rage": 30
+      },
+      {
+        "heroId": "hero_splus_khaos",
+        "hp": 22820,
+        "id": "player:hero_splus_khaos",
+        "marks": [
+          {
+            "charges": null,
+            "iconId": "splus.hac_pha.passive",
+            "id": "armorDown:enemy:hero_splus_hac_pha",
+            "maxStacks": 1,
+            "name": "Cuồng Nộ Chim Lạc",
+            "polarity": "debuff",
+            "remainingRounds": 2,
+            "sourceHeroId": "hero_splus_hac_pha",
+            "sourceId": "enemy:hero_splus_hac_pha",
+            "stacks": 1,
+            "type": "armorDown"
+          },
+          {
+            "charges": null,
+            "iconId": "splus.cuong_dong.passive",
+            "id": "stun:enemy:hero_splus_cuong_dong",
+            "maxStacks": 1,
+            "name": "Đồng Thuẫn Bất Hoại",
+            "polarity": "debuff",
+            "remainingRounds": 1,
+            "sourceHeroId": "hero_splus_cuong_dong",
+            "sourceId": "enemy:hero_splus_cuong_dong",
+            "stacks": 1,
+            "type": "stun"
+          },
+          {
+            "charges": null,
+            "iconId": "splus.thiet_lanh.passive",
+            "id": "stun:enemy:hero_splus_thiet_lanh",
+            "maxStacks": 1,
+            "name": "Thép Nguội",
+            "polarity": "debuff",
+            "remainingRounds": 1,
+            "sourceHeroId": "hero_splus_thiet_lanh",
+            "sourceId": "enemy:hero_splus_thiet_lanh",
+            "stacks": 1,
+            "type": "stun"
+          },
+          {
+            "amount": 5380.478670095926,
+            "charges": null,
+            "iconId": "splus.khaos.passive",
+            "id": "aura:clone:player:hero_splus_khaos",
+            "maxStacks": null,
+            "name": "Ảnh Ảo Hư Không",
+            "polarity": "buff",
+            "remainingRounds": null,
+            "sourceHeroId": "hero_splus_khaos",
+            "sourceId": "player:hero_splus_khaos",
+            "stacks": 1,
+            "type": "clone"
+          },
+          {
+            "charges": null,
+            "iconId": "splus.thach_mong.passive",
+            "id": "aura:interception:player:hero_splus_thach_mong",
+            "maxStacks": null,
+            "name": "Hư Giới Hấp Kình",
+            "polarity": "buff",
+            "remainingRounds": null,
+            "sourceHeroId": "hero_splus_thach_mong",
+            "sourceId": "player:hero_splus_thach_mong",
+            "stacks": 1,
+            "type": "interception"
+          }
+        ],
+        "rage": 35
+      },
+      {
+        "heroId": "hero_splus_kinh_nuong",
+        "hp": 21032,
+        "id": "player:hero_splus_kinh_nuong",
+        "marks": [
+          {
+            "charges": null,
+            "iconId": "splus.hac_pha.passive",
+            "id": "armorDown:enemy:hero_splus_hac_pha",
+            "maxStacks": 1,
+            "name": "Cuồng Nộ Chim Lạc",
+            "polarity": "debuff",
+            "remainingRounds": 2,
+            "sourceHeroId": "hero_splus_hac_pha",
+            "sourceId": "enemy:hero_splus_hac_pha",
+            "stacks": 1,
+            "type": "armorDown"
+          },
+          {
+            "charges": null,
+            "iconId": "splus.thiet_lanh.passive",
+            "id": "speedDown:enemy:hero_splus_thiet_lanh",
+            "maxStacks": 1,
+            "name": "Thép Nguội",
+            "polarity": "debuff",
+            "remainingRounds": 1,
+            "sourceHeroId": "hero_splus_thiet_lanh",
+            "sourceId": "enemy:hero_splus_thiet_lanh",
+            "stacks": 1,
+            "type": "speedDown"
+          },
+          {
+            "charges": null,
+            "iconId": "splus.cuong_dong.passive",
+            "id": "stun:enemy:hero_splus_cuong_dong",
+            "maxStacks": 1,
+            "name": "Đồng Thuẫn Bất Hoại",
+            "polarity": "debuff",
+            "remainingRounds": 1,
+            "sourceHeroId": "hero_splus_cuong_dong",
+            "sourceId": "enemy:hero_splus_cuong_dong",
+            "stacks": 1,
+            "type": "stun"
+          },
+          {
+            "charges": null,
+            "iconId": "splus.thiet_lanh.passive",
+            "id": "stun:enemy:hero_splus_thiet_lanh",
+            "maxStacks": 1,
+            "name": "Thép Nguội",
+            "polarity": "debuff",
+            "remainingRounds": 1,
+            "sourceHeroId": "hero_splus_thiet_lanh",
+            "sourceId": "enemy:hero_splus_thiet_lanh",
+            "stacks": 1,
+            "type": "stun"
+          },
+          {
+            "charges": null,
+            "iconId": "splus.kinh_nuong.passive",
+            "id": "aura:passive:player:hero_splus_kinh_nuong",
+            "maxStacks": null,
+            "name": "Gương Soi Phản Pháo",
+            "polarity": "buff",
+            "remainingRounds": null,
+            "sourceHeroId": "hero_splus_kinh_nuong",
+            "sourceId": "player:hero_splus_kinh_nuong",
+            "stacks": 1,
+            "type": "passive"
+          },
+          {
+            "charges": null,
+            "iconId": "splus.thach_mong.passive",
+            "id": "aura:interception:player:hero_splus_thach_mong",
+            "maxStacks": null,
+            "name": "Hư Giới Hấp Kình",
+            "polarity": "buff",
+            "remainingRounds": null,
+            "sourceHeroId": "hero_splus_thach_mong",
+            "sourceId": "player:hero_splus_thach_mong",
+            "stacks": 1,
+            "type": "interception"
+          }
+        ],
+        "rage": 35
+      },
+      {
+        "heroId": "hero_splus_hoi_anh",
+        "hp": 24000,
+        "id": "player:hero_splus_hoi_anh",
+        "marks": [
+          {
+            "charges": 1,
+            "iconId": "splus.van_phap.passive",
+            "id": "ccReflect:player:hero_splus_van_phap",
+            "maxStacks": 1,
+            "name": "Lạc Mộng Chuông Khiên",
+            "polarity": "buff",
+            "remainingRounds": null,
+            "sourceHeroId": "hero_splus_van_phap",
+            "sourceId": "player:hero_splus_van_phap",
+            "stacks": 1,
+            "type": "ccReflect"
+          },
+          {
+            "charges": null,
+            "iconId": "splus.thiet_lanh.passive",
+            "id": "speedDown:enemy:hero_splus_thiet_lanh",
+            "maxStacks": 1,
+            "name": "Thép Nguội",
+            "polarity": "debuff",
+            "remainingRounds": 2,
+            "sourceHeroId": "hero_splus_thiet_lanh",
+            "sourceId": "enemy:hero_splus_thiet_lanh",
+            "stacks": 1,
+            "type": "speedDown"
+          },
+          {
+            "charges": null,
+            "iconId": "splus.thach_mong.passive",
+            "id": "aura:interception:player:hero_splus_thach_mong",
+            "maxStacks": null,
+            "name": "Hư Giới Hấp Kình",
+            "polarity": "buff",
+            "remainingRounds": null,
+            "sourceHeroId": "hero_splus_thach_mong",
+            "sourceId": "player:hero_splus_thach_mong",
+            "stacks": 1,
+            "type": "interception"
+          }
+        ],
+        "rage": 25
+      },
+      {
+        "heroId": "hero_splus_van_phap",
+        "hp": 21094,
+        "id": "player:hero_splus_van_phap",
+        "marks": [
+          {
+            "charges": null,
+            "iconId": "splus.hac_pha.passive",
+            "id": "armorDown:enemy:hero_splus_hac_pha",
+            "maxStacks": 1,
+            "name": "Cuồng Nộ Chim Lạc",
+            "polarity": "debuff",
+            "remainingRounds": 1,
+            "sourceHeroId": "hero_splus_hac_pha",
+            "sourceId": "enemy:hero_splus_hac_pha",
+            "stacks": 1,
+            "type": "armorDown"
+          },
+          {
+            "charges": null,
+            "iconId": "splus.cuong_dong.passive",
+            "id": "stun:enemy:hero_splus_cuong_dong",
+            "maxStacks": 1,
+            "name": "Đồng Thuẫn Bất Hoại",
+            "polarity": "debuff",
+            "remainingRounds": 1,
+            "sourceHeroId": "hero_splus_cuong_dong",
+            "sourceId": "enemy:hero_splus_cuong_dong",
+            "stacks": 1,
+            "type": "stun"
+          },
+          {
+            "charges": null,
+            "iconId": "splus.thiet_lanh.passive",
+            "id": "stun:enemy:hero_splus_thiet_lanh",
+            "maxStacks": 1,
+            "name": "Thép Nguội",
+            "polarity": "debuff",
+            "remainingRounds": 1,
+            "sourceHeroId": "hero_splus_thiet_lanh",
+            "sourceId": "enemy:hero_splus_thiet_lanh",
+            "stacks": 1,
+            "type": "stun"
+          },
+          {
+            "charges": null,
+            "iconId": "splus.thach_mong.passive",
+            "id": "aura:interception:player:hero_splus_thach_mong",
+            "maxStacks": null,
+            "name": "Hư Giới Hấp Kình",
+            "polarity": "buff",
+            "remainingRounds": null,
+            "sourceHeroId": "hero_splus_thach_mong",
+            "sourceId": "player:hero_splus_thach_mong",
+            "stacks": 1,
+            "type": "interception"
+          }
+        ],
+        "rage": 20
+      },
+      {
+        "heroId": "hero_splus_thach_mong",
+        "hp": 21325,
+        "id": "player:hero_splus_thach_mong",
+        "marks": [
+          {
+            "charges": 1,
+            "iconId": "splus.van_phap.passive",
+            "id": "ccReflect:player:hero_splus_van_phap",
+            "maxStacks": 1,
+            "name": "Lạc Mộng Chuông Khiên",
+            "polarity": "buff",
+            "remainingRounds": null,
+            "sourceHeroId": "hero_splus_van_phap",
+            "sourceId": "player:hero_splus_van_phap",
+            "stacks": 1,
+            "type": "ccReflect"
+          },
+          {
+            "charges": null,
+            "iconId": "splus.minh_toa.passive",
+            "id": "shieldBan:enemy:hero_splus_minh_toa",
+            "maxStacks": 1,
+            "name": "Kim Thiết Trấn Khẩu",
+            "polarity": "debuff",
+            "remainingRounds": 2,
+            "sourceHeroId": "hero_splus_minh_toa",
+            "sourceId": "enemy:hero_splus_minh_toa",
+            "stacks": 1,
+            "type": "shieldBan"
+          },
+          {
+            "charges": null,
+            "iconId": "splus.thach_mong.passive",
+            "id": "aura:interception:player:hero_splus_thach_mong",
+            "maxStacks": null,
+            "name": "Hư Giới Hấp Kình",
+            "polarity": "buff",
+            "remainingRounds": null,
+            "sourceHeroId": "hero_splus_thach_mong",
+            "sourceId": "player:hero_splus_thach_mong",
+            "stacks": 1,
+            "type": "interception"
+          }
+        ],
+        "rage": 21
+      },
+      {
+        "heroId": "hero_splus_co_trong",
+        "hp": 17692,
+        "id": "enemy:hero_splus_co_trong",
+        "marks": [
+          {
+            "charges": null,
+            "iconId": "splus.thach_mong.passive",
+            "id": "taunted:player:hero_splus_thach_mong",
+            "maxStacks": 1,
+            "name": "Hư Giới Hấp Kình",
+            "polarity": "debuff",
+            "remainingRounds": 1,
+            "sourceHeroId": "hero_splus_thach_mong",
+            "sourceId": "player:hero_splus_thach_mong",
+            "stacks": 1,
+            "type": "taunted"
+          },
+          {
+            "charges": null,
+            "iconId": "splus.co_trong.passive",
+            "id": "aura:gears:enemy:hero_splus_co_trong",
+            "maxStacks": null,
+            "name": "Bánh Răng Kim Cương",
+            "polarity": "buff",
+            "remainingRounds": null,
+            "sourceHeroId": "hero_splus_co_trong",
+            "sourceId": "enemy:hero_splus_co_trong",
+            "stacks": 20,
+            "type": "gears"
+          }
+        ],
+        "rage": 40
+      },
+      {
+        "heroId": "hero_splus_cuong_dong",
+        "hp": 18797,
+        "id": "enemy:hero_splus_cuong_dong",
+        "marks": [
+          {
+            "charges": null,
+            "iconId": "splus.co_trong.passive",
+            "id": "aura:gears:enemy:hero_splus_co_trong",
+            "maxStacks": null,
+            "name": "Bánh Răng Kim Cương",
+            "polarity": "buff",
+            "remainingRounds": null,
+            "sourceHeroId": "hero_splus_co_trong",
+            "sourceId": "enemy:hero_splus_co_trong",
+            "stacks": 20,
+            "type": "gears"
+          },
+          {
+            "charges": null,
+            "iconId": "splus.cuong_dong.passive",
+            "id": "aura:passive:enemy:hero_splus_cuong_dong",
+            "maxStacks": null,
+            "name": "Đồng Thuẫn Bất Hoại",
+            "polarity": "buff",
+            "remainingRounds": null,
+            "sourceHeroId": "hero_splus_cuong_dong",
+            "sourceId": "enemy:hero_splus_cuong_dong",
+            "stacks": 1,
+            "type": "passive"
+          }
+        ],
+        "rage": 15
+      },
+      {
+        "heroId": "hero_splus_lac_an",
+        "hp": 15878,
+        "id": "enemy:hero_splus_lac_an",
+        "marks": [
+          {
+            "charges": null,
+            "iconId": "splus.co_trong.passive",
+            "id": "aura:gears:enemy:hero_splus_co_trong",
+            "maxStacks": null,
+            "name": "Bánh Răng Kim Cương",
+            "polarity": "buff",
+            "remainingRounds": null,
+            "sourceHeroId": "hero_splus_co_trong",
+            "sourceId": "enemy:hero_splus_co_trong",
+            "stacks": 20,
+            "type": "gears"
+          },
+          {
+            "charges": null,
+            "iconId": "splus.lac_an.passive",
+            "id": "aura:focus:enemy:hero_splus_lac_an",
+            "maxStacks": null,
+            "name": "Thần Xạ Mục Tiêu",
+            "polarity": "buff",
+            "remainingRounds": null,
+            "sourceHeroId": "hero_splus_lac_an",
+            "sourceId": "enemy:hero_splus_lac_an",
+            "stacks": 10,
+            "type": "focus"
+          }
+        ],
+        "rage": 15
+      },
+      {
+        "heroId": "hero_splus_hac_pha",
+        "hp": 19565,
+        "id": "enemy:hero_splus_hac_pha",
+        "marks": [
+          {
+            "charges": null,
+            "iconId": "splus.co_trong.passive",
+            "id": "aura:gears:enemy:hero_splus_co_trong",
+            "maxStacks": null,
+            "name": "Bánh Răng Kim Cương",
+            "polarity": "buff",
+            "remainingRounds": null,
+            "sourceHeroId": "hero_splus_co_trong",
+            "sourceId": "enemy:hero_splus_co_trong",
+            "stacks": 20,
+            "type": "gears"
+          }
+        ],
+        "rage": 49
+      },
+      {
+        "heroId": "hero_splus_thiet_lanh",
+        "hp": 22076,
+        "id": "enemy:hero_splus_thiet_lanh",
+        "marks": [
+          {
+            "charges": null,
+            "iconId": "splus.thach_mong.passive",
+            "id": "taunted:player:hero_splus_thach_mong",
+            "maxStacks": 1,
+            "name": "Hư Giới Hấp Kình",
+            "polarity": "debuff",
+            "remainingRounds": 1,
+            "sourceHeroId": "hero_splus_thach_mong",
+            "sourceId": "player:hero_splus_thach_mong",
+            "stacks": 1,
+            "type": "taunted"
+          },
+          {
+            "charges": 1,
+            "iconId": "splus.hoi_anh.passive",
+            "id": "confusion:player:hero_splus_hoi_anh",
+            "maxStacks": 1,
+            "name": "Rối Hạp Loạn Mộng",
+            "polarity": "debuff",
+            "remainingRounds": 3,
+            "sourceHeroId": "hero_splus_hoi_anh",
+            "sourceId": "player:hero_splus_hoi_anh",
+            "stacks": 1,
+            "type": "confusion"
+          },
+          {
+            "charges": null,
+            "iconId": "splus.co_trong.passive",
+            "id": "aura:gears:enemy:hero_splus_co_trong",
+            "maxStacks": null,
+            "name": "Bánh Răng Kim Cương",
+            "polarity": "buff",
+            "remainingRounds": null,
+            "sourceHeroId": "hero_splus_co_trong",
+            "sourceId": "enemy:hero_splus_co_trong",
+            "stacks": 20,
+            "type": "gears"
+          },
+          {
+            "charges": null,
+            "iconId": "splus.thiet_lanh.passive",
+            "id": "aura:passive:enemy:hero_splus_thiet_lanh",
+            "maxStacks": null,
+            "name": "Thép Nguội",
+            "polarity": "buff",
+            "remainingRounds": null,
+            "sourceHeroId": "hero_splus_thiet_lanh",
+            "sourceId": "enemy:hero_splus_thiet_lanh",
+            "stacks": 1,
+            "type": "passive"
+          }
+        ],
+        "rage": 0
+      },
+      {
+        "heroId": "hero_splus_minh_toa",
+        "hp": 7581,
+        "id": "enemy:hero_splus_minh_toa",
+        "marks": [
+          {
+            "charges": null,
+            "iconId": "splus.thach_mong.passive",
+            "id": "taunted:player:hero_splus_thach_mong",
+            "maxStacks": 1,
+            "name": "Hư Giới Hấp Kình",
+            "polarity": "debuff",
+            "remainingRounds": 1,
+            "sourceHeroId": "hero_splus_thach_mong",
+            "sourceId": "player:hero_splus_thach_mong",
+            "stacks": 1,
+            "type": "taunted"
+          },
+          {
+            "charges": null,
+            "iconId": "splus.co_trong.passive",
+            "id": "aura:gears:enemy:hero_splus_co_trong",
+            "maxStacks": null,
+            "name": "Bánh Răng Kim Cương",
+            "polarity": "buff",
+            "remainingRounds": null,
+            "sourceHeroId": "hero_splus_co_trong",
+            "sourceId": "enemy:hero_splus_co_trong",
+            "stacks": 20,
+            "type": "gears"
+          }
+        ],
+        "rage": 10
+      }
+    ],
+    "uniqueSlots": 12
+  },
+  "console": [
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-09-08T04:28:50.888Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-09-08T04:42:15.520Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-09-08T04:42:23.249Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-09-08T04:42:30.772Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-09-08T04:42:32.182Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-09-08T04:42:57.046Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-09-08T04:42:57.061Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-09-08T04:43:25.713Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-09-08T04:43:41.243Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-09-08T04:43:41.243Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-09-08T04:43:41.250Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-09-08T04:43:42.391Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    },
+    {
+      "level": "error",
+      "message": "Error sending browser metadata to extension: Object",
+      "timestamp": "2026-09-08T04:44:14.158Z",
+      "url": "chrome-extension://kcdongibgcplmaagnmgpjhpjgmmaaaaa/content-script.bundle.js"
+    }
+  ]
+}

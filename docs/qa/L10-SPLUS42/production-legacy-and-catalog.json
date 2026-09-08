@@ -1,0 +1,48 @@
+{
+  "commit": "889426acac6d3d860b3f945131969d93d8ce3107",
+  "catalogUrl": "https://luc-than.vercel.app/splus-lab.html",
+  "filters": [
+    {
+      "element": "Kim Khí",
+      "count": 7
+    },
+    {
+      "element": "Âm Hồn",
+      "count": 7
+    },
+    {
+      "element": "Thương Thủy",
+      "count": 7
+    },
+    {
+      "element": "Viêm Hỏa",
+      "count": 7
+    },
+    {
+      "element": "Mộc Tinh",
+      "count": 7
+    },
+    {
+      "element": "Hư Mộng",
+      "count": 7
+    }
+  ],
+  "healers": 6,
+  "legacy": {
+    "url": "https://luc-than.vercel.app/",
+    "resultText": "+180\n+4\nXEM CHIẾN BÁO\nTIẾP TỤC\n✦\nCHIẾN BÁO\nPHE TA\nVS\nPHE ĐỊCH\nÔng Phở\nLv.1\n★\nĐình Lôi — Vệ Binh Trống Đồng\nLv.1\n★\nMVP\nCô Đào Gánh Hội\nLv.1\n★\nThầy Mo\nLv.1\n★\nThần Nỏ Sơn Nữ — Lạc Yên\nLv.1\n★\nNữ Cung Thủ Tre\nLv.1\n★\nSống\n6/6\nTổng ST\n2280\nHành động\n10\nKHẢI HOÀN\nLượt 2\nHành động 16\nCòn sống 6/6\nHạng S\nQuái KM 50%\nLv.1\n★\nQuái KM 50%\nLv.1\n★\nQuái KM 50%\nLv.1\n★\nQuái KM 50%\nLv.1\n★\nSống\n0/4\nTổng ST\n302\nHành động\n6\nPHẦN THƯỞNG TRẬN ĐẤU\n+180\n+4\nEXP TƯỚNG\n—\nEXP CHỦ CÔNG\n—\nTIẾP TỤC\n›\n×1\nThành Chính\nTướng\nTrợ trận\nLịch Luyện\nChinh chiến\n›|\nXUẤT SẮC NHẤT PHE TA\nCô Đào Gánh Hội\n\n⚔ 737 sát thương · ☠ 3 kết liễu\n\nTinh thông\nEXP tướng\nTrang bị\nXác nhận\nẢi sau",
+    "splusPanelCount": 0,
+    "appErrors": [],
+    "returnNavigation": {
+      "status": "PARTIAL",
+      "observed": "Xác nhận advanced from the first victory to BOSS — Chung Cư Mất Ngủ; parent showed mission progress and gold 800. Immediate snapshots were asynchronous and are not evidence of a confirmed navigation defect. Direct Thành Chính return was not established in this run. Ended QA by navigating to the catalog.",
+      "observedParentText": "HV\nHỒN VIỆT: MỘNG GIỚI\nGameplay Hồn Việt · toàn bộ hệ thống Mộng Giới\nENGINE CHIẾN ĐẤU HỒN VIỆT\n🪙\n800\n💎\n800\n＋\n🐚\n3\n⚡\n109\n/120\n+1⚡ 1p\n☀ 12h\nLƯỢT KẾ\nHiệp 0\n⚔ 0\nTự động: Tắt\nTốc độ: 1×\nBỏ trận\nBOSS — Chung Cư Mất Ngủ\nĐã qua nhiệm vụ 1/2 · đang tới nhiệm vụ kế tiếp.\nNhiệm vụ hoàn thành\nVượt ải 1-1 · tự mở nhiệm vụ kế tiếp",
+      "originalBattleResult": {
+        "round": 2,
+        "actions": 16,
+        "playerAlive": 6,
+        "enemyAlive": 0
+      }
+    }
+  }
+}

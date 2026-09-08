@@ -1,0 +1,78 @@
+{
+  "schema": "luc-than-qa-artifacts/v1",
+  "codeCommit": "889426acac6d3d860b3f945131969d93d8ce3107",
+  "files": {
+    "adapter-compile.log": {
+      "bytes": 155,
+      "sha256": "431df5620ac7eb47fbc20d3dfa0d627acf47965ee830bcb64d08ac61f9851887"
+    },
+    "browser-followup-red.tap": {
+      "bytes": 1443,
+      "sha256": "a95b28428a244b33b331d40b3b94386cdabe12480b14fb0de5eabd930e728224"
+    },
+    "core-green-progress.tap": {
+      "bytes": 2786,
+      "sha256": "629e02e1b5473af5edcb2520c37d77f2450c885a53b706afb3e7c489e8dedf12"
+    },
+    "evidence.json": {
+      "bytes": 6029,
+      "sha256": "87968f72b0aaccebba6557ae7e2acc2275a97426c1c6c2f9911e3bffc7306501"
+    },
+    "green.tap": {
+      "bytes": 9907,
+      "sha256": "e976c80765a3c02f4f18a4c38a3a7c9723656d5801dd4719a69740c92df1711d"
+    },
+    "kits-red.tap": {
+      "bytes": 9324,
+      "sha256": "bd0af174d08d06a083f7506792ce817300191db713e20f80fcd60be89df3b4b3"
+    },
+    "local-build.log": {
+      "bytes": 925,
+      "sha256": "568496a48e47370686e6fe465a07a9ab53ac03613b214012c28f3df6b1435a08"
+    },
+    "npm-test.log": {
+      "bytes": 1138,
+      "sha256": "7a6626d470a08f9517589634d70387dec07f2b27aff6f199c7879eb37abbf287"
+    },
+    "partial-compile.log": {
+      "bytes": 1949,
+      "sha256": "e8a42a599c5bc167515384ebbde147dd4d1a030305d6c4643239d1c06c6ef571"
+    },
+    "production-first-battle.jpg": {
+      "bytes": 126640,
+      "sha256": "fedbc3077a676abcc40f872a5c81922bc2c0bb23daa4405390eb42657b9f21af"
+    },
+    "production-first-battle.json": {
+      "bytes": 43518,
+      "sha256": "3cd08afedf41880fceb43838c33df16a28ce5e4be308aa55233ee72bbe59f1b2"
+    },
+    "production-legacy-and-catalog.json": {
+      "bytes": 2600,
+      "sha256": "d636a04d5bf25fed950fcb27e4aebee019a107ec04f670f6cf170faeaf768b1c"
+    },
+    "production-six-elements.json": {
+      "bytes": 239224,
+      "sha256": "3a9403937661f1a587fc889fa9e07d549b724f897e27185460de0c386a7c66ab"
+    },
+    "production-to-linh.jpg": {
+      "bytes": 110701,
+      "sha256": "c6512e188bfe21a75230a62b18c4b4337b0c2b6e88d671ca99bf06b93133976c"
+    },
+    "red.tap": {
+      "bytes": 8031,
+      "sha256": "73358fe37696b5f042b8c3a997f305ea9aa3bc2c02d81b459cd932e20fbe16a4"
+    },
+    "regression.tap": {
+      "bytes": 11583,
+      "sha256": "da2842ef657b39cee43a98cc3378de40732219d37c6938ad7f83754f55e0187b"
+    },
+    "vercel-code-deployment.json": {
+      "bytes": 2849,
+      "sha256": "4b6c74dbae9c3dbc97d1e50d5ec401bd2cf994e2bc0085f761ef76028d124e14"
+    },
+    "workflow-trace.jsonl": {
+      "bytes": 4410,
+      "sha256": "4f7de64c649754092f923e356448c5014f13e1e665bdfdac9bfc7247a8ee4b08"
+    }
+  }
+}

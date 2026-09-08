@@ -1,0 +1,18 @@
+{
+  "schema": "luc-than-deployment-evidence/v1",
+  "codeCommit": "889426acac6d3d860b3f945131969d93d8ce3107",
+  "deploymentId": "dpl_32S8AqbZtK3mtQ1nBacTKsj5Wpgz",
+  "readyState": "READY",
+  "productionAlias": "https://luc-than.vercel.app",
+  "buildLogs": [
+    "## Build Logs\n\n04:48:10  Summon pool guard installed before paid/free debit; no economy changes\n04:48:10  State-backed roster installed: official identities, live stats, one route owner\n04:48:10  Hero detail tabs installed: existing panels and commands, stable idle layout\n04:48:10  Supplied audio SFX, stable canvas/camera and authored Luc Anh motion applied\n04:48:10  Dinh Lôi retina source cells and result portrait cache patched\n04:48:10  Versioned hero skill kit runtime installed: Basic / Ultimate / passive mapping\n04:48:10  Save contract v1 installed: versioned state, revision, backup and recovery guards\n04:48:11  Transaction contract installed: receipts, loadout and forge commits with local ledger\n04:48:11  Campaign scene: live squad, preparation, capped AFK claim, router-owned lifecycle\n04:48:11  Forge item assets installed: 4 slots, 20 equipment icons, 3 material icons\n04:48:11  R08 settlement/navigation installed: protocol guard, one-result controller and reward commit\n04:48:11  R04 return context installed: hero detail back route, session context and stale fallback\n04:48:11  R10 opening loop retained atomic hero upgrade hook\n04:48:11  R10 opening loop installed: event/route/prerequisite contract and safe journey CTA\n04:48:11  QA full access v1 installed: opt-in feature/chapter unlock with save-safe progression sandbox\n04:48:11  Hub dock tray installed: tray begins at button midpoints and buttons stay above it\n04:48:11  Hub mobile side actions stabilized and main quest hub card removed\n04:48:11  Hub icon alpha hotfix installed: removed legacy disc background and stacked dark filters\n04:48:11  iPad formation, Lục Ảnh anchor/camera and combat audio fixes applied\n04:48:11  Battle close now cancels parent SFX, voices, result audio and stale iframe channels\n04:48:11  SPLUS42: source factory, existing scheduler bridge, 42 HUD identities\n04:48:11  Embedded battle payload synced: 1077714 bytes\n04:48:11  Static preview written to /vercel/path0/dist\n04:48:13  Build Completed in /vercel/output [5s]\n04:48:13  Deploying outputs...\n04:48:17  Deployment completed\n04:48:17  Creating build cache...\n04:48:18  Created build cache: 1s\n04:48:18  Uploading build cache [7.21 MB]\n04:48:18  Build cache uploaded: 212.000ms"
+  ],
+  "runtimeErrorsQuery": {
+    "since": "1h",
+    "projectId": "prj_vTsspdeRUMFECcaf8UUJUJKQwSUE",
+    "observedAt": "2026-09-08T05:01:30.561Z",
+    "result": [
+      "## Runtime Errors\n\n**Project:** prj_vTsspdeRUMFECcaf8UUJUJKQwSUE\n\nNo runtime errors found in the selected time range."
+    ]
+  }
+}

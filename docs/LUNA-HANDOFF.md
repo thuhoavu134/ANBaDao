@@ -2,17 +2,19 @@
 
 ## 2026-09-08 — L10-SPLUS42 · REVIEW / IN_PROGRESS
 
-Chủ dự án gửi hồ sơ mới 42 S+ và 42 icon. Contract: [SPLUS42-COMBAT-CONTRACT.md](SPLUS42-COMBAT-CONTRACT.md). Source mới có catalog 6×7, 42 nội tại, 42 Skill 1, 42 Ultimate, status owner và bridge vào scheduler trận hiện có. Trang `/splus-lab.html` cho chọn đủ 42 tướng; trận thử `/battle.html?qaSplus42=<hero_id>`. Art mới chưa có; dùng thẻ số/tên tạm và manifest icon chờ asset, không thay art hoặc save roster cũ.
+Hồ sơ 42 tướng S+ và 42 icon của chủ dự án đã được chuyển thành catalog 6×7, 42 nội tại, 42 Kỹ năng 1, 42 Ultimate, status owner và bridge vào scheduler trận hiện có. Contract: [SPLUS42-COMBAT-CONTRACT.md](SPLUS42-COMBAT-CONTRACT.md). Trang production: [chọn 42 tướng để thử cơ chế](https://luc-than.vercel.app/splus-lab.html); mỗi tướng mở trận 6v6 thật tại `/battle.html?qaSplus42=<hero_id>`.
 
-- Baseline main xác minh `d3ee56cd1391208ae262652b383e5b7d443308c7`; không làm lại L04b.
-- RED: 9 test đầu thiếu resolver; RED mở rộng bắt miễn tử Cửu Triều, giáp Kén và splash khi kết liễu. GREEN/REFACTOR: 150/150 focused+legacy regression; source và bundle factory có parity; không thêm scheduler.
-- `npm test`/`npm run build` đã chạy thật và bị chặn tại atlas part `asset-sources/luc-anh/idle-rgba-v1-atlas.webp.part01`. Partial compile còn gặp atlas Đinh Lôi thiếu; không gọi đó là full build PASS.
-- Chrome local `127.0.0.1:4173` bị `net::ERR_BLOCKED_BY_CLIENT`. Production Chrome truy cập được; build/deployment/QA bản mới đang chờ sau code push.
-- Device capabilities `[]`; Ticket Board/claim/lease/lock, doctor/smoke, agent-browser/game-dev CLI không khả dụng. Có chỉ thị chủ dự án tiếp tục source/test khi thiếu board; không giả claim.
-- Các hệ số/duration thiếu trong hồ sơ được ghi ở contract là review defaults; chưa coi balance hoàn tất. Tổng ticket giữ REVIEW / IN_PROGRESS.
+- Baseline upstream: `d3ee56cd1391208ae262652b383e5b7d443308c7`. Code chính: `2314c2ef522e5ad1b5a88ee7cc058a0a36b87d89`; code cuối sau browser QA: `889426acac6d3d860b3f945131969d93d8ce3107`. Đã push fast-forward lên main. Không làm lại L04b; không đổi seed/reward/save migration/roster sở hữu/art/audio cũ.
+- Source/build owner: `src/domain/hero/splus-*.mjs`, `src/domain/combat/splus-mechanics.mjs`, `src/runtime/splus-battle-bridge.js`, `scripts/splus-runtime-v1.mjs`, `scripts/build-static.mjs`, `splus-lab.html`. HUD theo mục tiêu có nguồn, tên ấn, tầng, charge và thời hạn. Art mới chưa có: thẻ số/tên tạm, 42 icon manifest chưa có file ảnh; không coi art integrated.
+- RED thật: 9 test đầu thiếu resolver; kit regression bắt miễn tử Cửu Triều, giáp Kén và splash khi kết liễu; browser follow-up bắt fixture chiếm chỗ tanker. GREEN cuối: **133 test S+**, combined focused+legacy **151 PASS / 0 FAIL**. 84 skill effects được kiểm bằng hành vi; source/bundle factory parity và không thêm scheduler. REFACTOR dùng chung factory, gom floater nhiều hit và ưu tiên vị trí tanker khi xếp fixture.
+- `npm test` và `npm run build` local đã chạy, BLOCKED tại `asset-sources/luc-anh/idle-rgba-v1-atlas.webp.part01`; partial compile còn thiếu atlas Đinh Lôi. Targeted adapter compile PASS, không gọi là full build. Local Chrome `127.0.0.1:4173` bị `net::ERR_BLOCKED_BY_CLIENT`.
+- Vercel full-source build **READY**, deployment `dpl_32S8AqbZtK3mtQ1nBacTKsj5Wpgz`, alias production đã gán. Embedded battle sync **1,077,714 bytes**; build hoàn tất 5 giây. Truy vấn runtime errors 1 giờ: **0**. [Machine deployment evidence](qa/L10-SPLUS42/vercel-code-deployment.json).
+- Chrome production trên code cuối: **6/6 trận kết thúc, 951 hành động, 9,718 event, đủ 42 hero actor**, HP hữu hạn, slot tướng sống duy nhất, app-origin errors **0**. Mãng Xà kết thúc hiệp 13, năm trận còn lại đúng giới hạn hiệp 15. Lọc catalog đủ 7/hệ và 6 healer. Không khẳng định browser đã cast đủ 84 skill hoặc full speed/replay parity. [Machine battle evidence](qa/L10-SPLUS42/production-six-elements.json).
+- Luồng thường: roster chuẩn bị 12 tướng, không có HUD S+, trận đầu thắng hiệp 2 / 16 hành động; Xác nhận xử lý kết quả và chuyển tới BOSS kế tiếp. Về Thành Chính chưa được xác minh riêng; không kết luận lỗi từ snapshot ngay sau click. [Legacy/catalog evidence](qa/L10-SPLUS42/production-legacy-and-catalog.json).
+- Device capabilities `[]`; Ticket Board/claim/lease/lock, doctor/smoke, agent-browser/game-dev CLI không khả dụng. Chủ dự án đã cho phép tiếp tục source/test khi thiếu board; không giả claim. Workflow vibe-lab run `20260907-205925-epmcgpc`; trace và RED/GREEN log ở `docs/qa/L10-SPLUS42/`.
+- Các hệ số/duration thiếu trong hồ sơ là **review defaults**, được liệt kê trong contract; chưa chốt balance hoặc khả năng vượt Tháp Nguyên Tố. Tổng ticket giữ **REVIEW / IN_PROGRESS**, không DONE/MERGED.
 
-Bàn giao tiếp: xác minh complete-source Vercel build, production battle/HUD và cập nhật evidence; sau đó duyệt các default, nhập art mới và kiểm device/replay sâu.
-
+Bàn giao tiếp: review các mặc định còn thiếu, nhập atlas 42 tướng và 42 icon alpha do chủ dự án cung cấp, rồi nối chính sách mở/sở hữu tướng được duyệt. Khi backend có, chạy device + browser speed/replay matrix, kiểm riêng return navigation L04a và cập nhật Ticket Board. `tests/results/latest.md` và `docs/qa/L10-SPLUS42/evidence.json` là điểm vào evidence; phần dưới giữ lịch sử các lát cắt trước.
 
 Cập nhật: **08/09/2026**. Đây là điểm vào cho Luna. Các mục pixel/render và evidence 05/09 phía dưới là lịch sử kỹ thuật; trạng thái hiện tại nằm ở mục 1 và progress.
 
