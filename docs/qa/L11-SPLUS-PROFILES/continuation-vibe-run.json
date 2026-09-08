@@ -1,0 +1,107 @@
+{
+  "id": "20260908-153841-f3ao79i",
+  "workflow": "vibe-gate",
+  "status": "running",
+  "started": "2026-09-08T08:38:41.383Z",
+  "ended": null,
+  "input": "Continue authorized L11 b6a2ae2: P2-A1 through P2-A5. Source/test allowed by handoff with unavailable Board recorded. Luna owns popup lifetime, root combat. No production before verification.",
+  "active": [
+    "evidence-review"
+  ],
+  "stepState": {
+    "gate-contract": {
+      "attempts": 1,
+      "status": "done",
+      "startedAt": "2026-09-08T08:38:41.386Z",
+      "endedAt": "2026-09-08T08:42:04.219Z",
+      "durationMs": 202833,
+      "outputs": [
+        {
+          "attempt": 1,
+          "at": "2026-09-08T08:42:04.219Z",
+          "output": {
+            "contract": "splus-profile/2026-09-08-v2",
+            "acceptance": [
+              "P2-A1",
+              "P2-A2",
+              "P2-A3",
+              "P2-A4",
+              "P2-A5"
+            ],
+            "upstream": "b6a2ae20a9b1b3071a8f5263740312e9d1465b04",
+            "localSnapshot": "0c0a724",
+            "scope": "L11 continuation combat and UI",
+            "release": "handoff branch until verified",
+            "preserve": [
+              "save",
+              "reward",
+              "seed",
+              "roster",
+              "art",
+              "scheduler"
+            ]
+          }
+        }
+      ]
+    },
+    "ticket-guard": {
+      "attempts": 1,
+      "status": "done",
+      "startedAt": "2026-09-08T08:42:04.220Z",
+      "endedAt": "2026-09-08T08:42:04.395Z",
+      "durationMs": 175,
+      "outputs": [
+        {
+          "attempt": 1,
+          "at": "2026-09-08T08:42:04.395Z",
+          "output": {
+            "ticket": "L11-SPLUS-PROFILES",
+            "board": "UNAVAILABLE",
+            "claim": null,
+            "locks": [],
+            "notPassed": true,
+            "sourceTestAuthorization": "docs/SPLUS42-PROFILE-V2-CONTRACT.md owner allows continuing source/test without Board; current user says proceed",
+            "root": "combat",
+            "luna": "UI and isolated Fire/Wood handlers"
+          }
+        }
+      ]
+    },
+    "red-green-refactor": {
+      "attempts": 1,
+      "status": "done",
+      "startedAt": "2026-09-08T08:42:04.396Z",
+      "endedAt": "2026-09-08T09:11:51.664Z",
+      "durationMs": 1787268,
+      "outputs": [
+        {
+          "attempt": 1,
+          "at": "2026-09-08T09:11:51.664Z",
+          "output": {
+            "scope": "continuation fixes only",
+            "red": "original V2 failures plus new parity/lifetime/consumption regressions and browser pointer failure",
+            "green": "411/411 full build/tests; final isolated verification avoids synchronized dist races",
+            "refactor": "source HP helpers, explicit control ternary, current actor and popup cleanup",
+            "sourceSha": "4a79095bedca6100f19c855f6edfc83ad75fd033",
+            "acceptanceComplete": false,
+            "remaining": [
+              "fractional timing decisions",
+              "art crop QA",
+              "device",
+              "Board unavailable"
+            ],
+            "status": "REVIEW / IN_PROGRESS"
+          }
+        }
+      ]
+    },
+    "evidence-review": {
+      "attempts": 1,
+      "status": "focus",
+      "startedAt": "2026-09-08T09:11:51.664Z"
+    }
+  },
+  "failedSteps": [],
+  "eventCount": 8,
+  "graphHash": "d59d385db06aa256"
+}

@@ -28,3 +28,16 @@ node --test --test-reporter=tap tests/splus-*.test.mjs
 ```
 
 Retained RED evidence: continuation-red, parity-red, fire-wood-red, ui-orphan-red, dialog-red, consumption-red. Intermediate failed builds are historical attempts; the final full-green log is the current source verification. Restored local runtime assets matched upstream Git blobs; no substitute art or dependency changes were introduced.
+
+## Final source/preview verification
+
+- Code revision `4a79095bedca6100f19c855f6edfc83ad75fd033` (main implementation `9c83ac2`). Both pushed fast-forward on the handoff branch.
+- Vercel `dpl_8dXiaDtsn4LBhkdEmRVu9CvWijYD` READY, target preview, exact code SHA confirmed. URL: https://luc-than-4ji0utvf2-cuong-duc-ai-s-projects.vercel.app/battle.html?qaSplus42=hero_splus_nung . Deployment protection retained; browser used a temporary Vercel access link, excluded from evidence.
+- Final full build/test: **411/411 PASS**, `continuation-final-full-green.log`. A repeated run under synchronized scratch had two generated-file parity failures. Isolated source verification in `/tmp` passed; source assets were unchanged. Treat this as workspace artifact synchronization, not a reason to weaken parity tests.
+- Chrome desktop: catalog42, Fire filter7, Nung search1, detail route and P/S1/Ult popup/close/Escape verified. The first catalog S1 Cơ Trọng also displayed the authored22% source HP shield. A bulk popup loop timed out; no claim of126 popup/crop PASS.
+- Browser RED at9c83ac2: inherited pointer-events:none prevented clicking battle skill buttons. Fixed in4a79095 via source shared button CSS. Browser GREEN: actual click opens Nung Ult with43/100 rage, disabled below60; S1 popup enabled, Cast selects target and resolves through the existing scheduler.
+- Completed Fire vs Wood battle: **15 rounds,139 actions,1649 events,12 actors**, finite HP/rage true,8 living units in8 unique slots; no QA rewards. Machine evidence: `continuation-browser-battle.json`. App-origin error query returned none; extension metadata errors were observed separately.
+- Remaining browser limitations: no full six-element matrix, no embedded-host restart certification, no mobile/Safari/device run. Result Continue was clicked without a confirmed restart; do not count this as restart PASS. Unit tests cover replacement IDs, orphan prevention and dialog lifecycle.
+- Art review finding: some metal crops show a sliver of adjacent-row ornament. Source atlas has tightly touching ornaments/alpha fringe. Full126 crop acceptance remains OPEN. No art bytes were modified.
+- UI targeting review: Nung S1 currently exposes all enemy target buttons while resolver chooses the authored opposite-front target. Scope resolution is correct, but target-picker presentation should be narrowed before release.
+- Vibe run progressed to evidence-review; gate is still open for these acceptance items, timing decisions and unavailable Board/device. This is a tested continuation checkpoint, not L11 completion or production promotion.

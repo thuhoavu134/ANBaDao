@@ -1,3 +1,7 @@
+## L11 latest checkpoint — 4a79095
+
+Final source build/tests411/411; Vercel preview READY; Chrome battle15 rounds/139 actions/1649 events. Fixed browser-only pointer input bug. Crop/timing/target-picker/restart/device acceptance remains open; main unchanged. See [continuation](L11-CONTINUATION-2026-09-08.md).
+
 
 ## 2026-09-08 — L11 continuation · REVIEW / IN_PROGRESS
 
