@@ -5,11 +5,11 @@ function hvApplyLoadoutOpeningEvent(state, eventId, detail) {
   });
 }
 
-function saveFormationCommand(squad, commandId) {
+function saveFormationCommand(squad, commandId, options = {}) {
   const commandKey = commandId || 'formation.save:' + (P.revision || 0);
   const duplicate = hvReceiptForCommand(commandKey);
   if (duplicate) return duplicate;
-  const change = prepareFormationChange(P, DATA.heroes, squad);
+  const change = prepareFormationChange(P, DATA.heroes, squad, options);
   if (!change.ok) return change;
   return hvRunCommittedTransaction({
     commandId: commandKey, source: 'formation.save', reason: 'formation',

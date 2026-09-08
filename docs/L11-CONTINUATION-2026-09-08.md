@@ -1,5 +1,9 @@
 # L11 continuation — 2026-09-08
 
+## Latest local continuation: campaign reference flow
+
+Implemented green-tick toggle, partial campaign squads, occupied-position drag, battlefield preparation and explicit confirm/next result routing. Build PASS; final tests **407 pass / 2 pre-existing missing-sharp failures**. Local browser is blocked, so visual/mobile acceptance remains open. Owner has now explicitly authorized source upload to `bktimmy247/luc-than` on the handoff branch; production remains unchanged. See [campaign reference contract, evidence and remaining work](qa/L11-SPLUS-PROFILES/campaign-reference-flow-20260908.md). This is a REVIEW candidate, not completion of the entire reference UI.
+
 Source baseline: `b6a2ae20a9b1b3071a8f5263740312e9d1465b04`, branch `handoff/l11-splus-profiles-v2-20260908`. Status REVIEW / IN_PROGRESS. This continuation supersedes earlier failing test counts, not the remaining acceptance gates.
 
 ## Verified source slice
@@ -60,6 +64,8 @@ Retained RED evidence: continuation-red, parity-red, fire-wood-red, ui-orphan-re
 - Browser preview used for the earlier target/restart evidence predates this crop-only commit; do not claim a new browser viewBox or mobile/device PASS until a host with the new bundle and a real viewport backend is available.
 
 ## Browser crop/restart follow-up — `9decbaae`
+
+Latest UI continuation: player hero detail now has a portrait scene, persistent stats/upgrades, skill disclosures and owned-hero arrows. Source/regression slice 23/23; build PASS. Browser/mobile/reference acceptance is pending, not approved. See [hero-detail scene evidence](qa/L11-SPLUS-PROFILES/hero-detail-scene-20260908.md). No combat, fractional timing or production changes.
 
 - The handoff branch Git preview `dpl_HxFbZEFrfgc3VpTcckHKouy7pYYb` is READY at [`luc-than-9lwfqw787`](https://luc-than-9lwfqw787-cuong-duc-ai-s-projects.vercel.app/battle.html?qaSplus42=hero_splus_nung), built from exact docs/evidence commit `9decbaae9b87b11ab649a1a9edda0cf302fee307`. This is a preview deployment only; no production alias or Combat V2 promotion was performed.
 - After `Vào trận giữ Ải Mây`, the live Nung skill strip rendered P/S1/Ult with fire-atlas viewBoxes `12 12 250 230`, `286 12 250 230`, and `560 12 249 230`. The desktop screenshot showed the three icons without a visible neighboring-row/column fragment; this is a runtime sample, not full 126-icon browser acceptance.

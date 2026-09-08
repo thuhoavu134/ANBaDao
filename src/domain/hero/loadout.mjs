@@ -2,9 +2,9 @@
 const loadoutFailure = (code, message) => ({ ok: false, code, message });
 const loadoutOwn = (value, key) => value != null && Object.prototype.hasOwnProperty.call(value, key);
 
-export function prepareFormationChange(player, catalog, squad) {
-  if (!Array.isArray(squad) || squad.length !== 6) {
-    return loadoutFailure('INVALID_FORMATION_SIZE', 'Cần chọn đủ 6 tướng khác nhau.');
+export function prepareFormationChange(player, catalog, squad, { allowPartial = false } = {}) {
+  if (!Array.isArray(squad) || squad.length > 6 || squad.length < (allowPartial ? 1 : 6)) {
+    return loadoutFailure('INVALID_FORMATION_SIZE', allowPartial ? 'Chọn từ 1 đến 6 tướng để xuất chiến.' : 'Cần chọn đủ 6 tướng khác nhau.');
   }
   const seen = new Set();
   for (const pick of squad) {

@@ -62,7 +62,9 @@
     const skills = children.filter(node => node.matches('.skillbox'));
     const bonds = children.filter(node => node.matches('.lorebox,.relbox'));
     const mastery = [body.querySelector('#masteryPanel'), body.querySelector('#awBtn')?.closest('.section')].filter(Boolean);
-    const assigned = new Set([stage, oldTabs, ...skills, ...bonds, ...mastery]);
+    const medals = body.querySelector('.medalrow');
+    const upgrades = body.querySelector('.upgrades');
+    const assigned = new Set([stage, oldTabs, medals, upgrades, ...skills, ...bonds, ...mastery]);
     const attributes = children.filter(node => !assigned.has(node));
     const content = { attributes, skills, equipment: [equipmentPanel(id)], bonds, mastery };
 
@@ -86,7 +88,44 @@
       strip.append(button); workspace.append(panel);
       buttons.set(key, button); panels.set(key, panel);
     }
-    body.replaceChildren(stage, workspace);
+    // Move live nodes, including their original command listeners; never clone
+    // the idle canvas or rebuild progression actions in the presentation layer.
+    const dock = document.createElement('div'); dock.className = 'hv-scene-dock';
+    dock.append(medals, upgrades);
+    const shortcuts = document.createElement('div'); shortcuts.className = 'hv-scene-skills';
+    shortcuts.setAttribute('aria-label', 'Chiêu thức của tướng');
+    const labels = { basic: 'Công thường', ultimate: 'Tuyệt kỹ', passive: 'Nội tại' };
+    for (const skill of skills) {
+      const slot = skill.dataset.skillSlot;
+      const button = document.createElement('button'); button.type = 'button';
+      button.className = 'hv-scene-skill'; button.dataset.skillSlot = slot;
+      const icon = document.createElement('span'); icon.className = 'hv-scene-skill-seal';
+      icon.textContent = skill.dataset.skillIcon || '✦'; icon.setAttribute('aria-hidden', 'true');
+      const label = document.createElement('span'); label.textContent = labels[slot] || 'Kỹ năng';
+      button.setAttribute('aria-label', skill.querySelector('.sn')?.textContent || label.textContent);
+      button.setAttribute('aria-controls', 'hero-panel-skills');
+      button.append(icon, label);
+      button.addEventListener('click', () => {
+        activate('skills', true);
+        skill.scrollIntoView({ block: 'nearest' });
+      });
+      shortcuts.append(button);
+    }
+    stage.append(shortcuts);
+    const owned = OFFICIAL_ROSTER_12_IDS.filter(heroId => P.heroes[heroId]?.owned);
+    if (owned.length > 1 && owned.includes(id)) {
+      for (const [delta, label, glyph] of [[-1, 'Tướng trước', '‹'], [1, 'Tướng sau', '›']]) {
+        const arrow = document.createElement('button'); arrow.type = 'button';
+        arrow.className = 'hv-scene-arrow ' + (delta < 0 ? 'is-prev' : 'is-next');
+        arrow.textContent = glyph; arrow.setAttribute('aria-label', label);
+        arrow.addEventListener('click', () => {
+          renderHeroDetail(owned[(owned.indexOf(id) + delta + owned.length) % owned.length]);
+          body.querySelector(delta < 0 ? '.is-prev' : '.is-next')?.focus({ preventScroll: true });
+        });
+        stage.append(arrow);
+      }
+    }
+    body.replaceChildren(stage, dock, workspace);
 
     function activate(key, focus = false) {
       if (!panels.has(key)) return;

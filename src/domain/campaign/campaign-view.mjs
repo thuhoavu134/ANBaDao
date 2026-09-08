@@ -1,4 +1,20 @@
 // Read models only. Opening a screen must not advance a stage or grant loot.
+export function toggleCampaignHero(squad, heroId, ownedIds) {
+  const draft = squad.map(pick => ({ ...pick }));
+  if (!ownedIds.includes(heroId)) return draft;
+  const index = draft.findIndex(pick => pick.id === heroId);
+  if (index >= 0) { draft.splice(index, 1); return draft; }
+  if (draft.length >= 6) return draft;
+  const row = draft.filter(pick => pick.row === 'front').length < 3 ? 'front' : 'back';
+  draft.push({ id: heroId, row });
+  return draft;
+}
+
+export function swapCampaignPositions(squad, from, to) {
+  if (![from, to].every(i => Number.isInteger(i) && i >= 0 && i < squad.length)) return squad.map(pick => ({ ...pick }));
+  return replaceCampaignSlot(squad, to, squad[from].id, squad.map(pick => pick.id));
+}
+
 export function campaignCheckpoint(player, chapters, sequenceFor) {
   const unlocked = new Set(player?.unlockedChapters || []);
   const cleared = new Set(player?.clearedChapters || []);
