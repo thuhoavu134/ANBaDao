@@ -136,7 +136,7 @@ function trackSceneTimer() {
 function sceneDiagnosticSnapshot() {
   const roots = [...document.querySelectorAll('#hvCampaignScene')];
   const scope = sceneState.scope?.snapshot();
-  return {
+  const snapshot = {
     schema: 'hon-viet-campaign-scene-diagnostics/v1',
     active: sceneState.active,
     rootCount: roots.length,
@@ -150,6 +150,10 @@ function sceneDiagnosticSnapshot() {
     resizeObserverActive: Number(Boolean(sceneState.resizeObserver)),
     imageCacheSize: sceneImages.size
   };
+  if (sceneDiagnosticsEnabled && sceneState.root) {
+    sceneState.root.dataset.qaL04bSnapshot = JSON.stringify(snapshot);
+  }
+  return snapshot;
 }
 if (sceneDiagnosticsEnabled) {
   window.__HV_CAMPAIGN_SCENE_DIAGNOSTICS = Object.freeze({ snapshot: sceneDiagnosticSnapshot });
@@ -246,6 +250,7 @@ function onSceneRoute(name) {
   sceneState.root.querySelector('.cs-home').hidden = false;
   sceneState.root.querySelector('.cs-prepare').hidden = true;
   startSceneClock();
+  sceneDiagnosticSnapshot();
 }
 function openPreparation() {
   if (!sceneState.active || sceneState.launching) return;

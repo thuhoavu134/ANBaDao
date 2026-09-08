@@ -14,6 +14,7 @@ test('L04b campaign exposes lifecycle diagnostics only behind the opt-in QA quer
   assert.match(campaign, /rootCount/);
   assert.match(campaign, /activationGeneration/);
   assert.match(campaign, /pendingResources/);
+  assert.match(campaign, /qaL04bSnapshot/);
 });
 
 test('L04b diagnostic snapshot proves one reusable root and active resource ownership', () => {
