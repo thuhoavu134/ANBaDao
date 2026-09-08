@@ -13,13 +13,15 @@ export function createSplusMechanics(options={}) {
   const defaults={skillCooldown:2,skillCost:25,ultimateCost:60,basicRage:15,duration:2,markDuration:3,skillMultiplier:1.4,singleUltimateMultiplier:2.4,aoeUltimateMultiplier:1.2,...options.defaults};
   const copy=v=>JSON.parse(JSON.stringify(v));
   const units=options.mutate===true?options.units:copy(options.units||[]);
-  const events=[];let round=1,started=false,eventDepth=0,actionSerial=0,currentAction=null;
+  const events=[],zones=[];let round=1,started=false,eventDepth=0,actionSerial=0,currentAction=null,preparedTurn=null;
   const rng=options.rng||(()=>{throw new Error('SPLUS_SEEDED_RNG_REQUIRED');});
   const n=(v,f=0)=>Number.isFinite(Number(v))?Number(v):f;
   const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
   const key=u=>String(u?.sourceId||u?.id||'').replace(/^hero_splus_/,'');
   const unit=id=>typeof id==='object'?id:units.find(u=>u.id===id)||null;
   const def=u=>catalog.get(u?.sourceId||u?.id);
+  const rules=(u,slot='passive')=>(slot==='passive'?def(u)?.passive:def(u)?.actions?.[slot])?.rules||{};
+  const melee=u=>['guardian','striker','duelist'].includes(def(u)?.role);
   const alive=u=>Boolean(u&&u.hp>0&&!u.dead);
   const bySlot=(a,b)=>a.slot-b.slot||String(a.id).localeCompare(String(b.id),'en');
   const ratio=u=>u.hp/Math.max(1,u.maxHp);
@@ -35,10 +37,12 @@ export function createSplusMechanics(options={}) {
   const opposite=(actor,list)=>list.find(v=>v.slot%3===actor.slot%3&&v.slot<3)||front(list)[0]||list[0];
   const weakestBack=list=>weakest(back(list).length?back(list):list)[0];
   const strongestBack=list=>strongest(back(list).length?back(list):list)[0];
+  const enraged=list=>list.slice().sort((a,b)=>b.energy-a.energy||bySlot(a,b));
+  const enragedBack=list=>enraged(back(list).length?back(list):list)[0];
   const random=list=>{const result=list.slice();for(let i=result.length-1;i>0;i--){const j=Math.min(i,Math.floor(clamp(rng('splus.targets'),0,0.999999999)*(i+1)));[result[i],result[j]]=[result[j],result[i]];}return result;};
   const hardCC=new Set(['stun','sleep','paralysis','timeFreeze','stasis']);
   const control=new Set([...hardCC,'root','disarm','silence','hardSilence','confusion','entangle']);
-  const harmful=new Set([...control,'healDown','antiHeal','armorDown','attackDown','speedDown','moveSlow','blind','rageSlow','shieldBan','bloodDebt','resinBleed','resinPoison','viperPoison','parasite','ink','burn','poison','bleed','brimstone','thornsDot','wound','damageDown','critDown','resistDown','cooldownDelay']);
+  const harmful=new Set([...control,'healDown','antiHeal','armorDown','magicArmorDown','attackDown','speedDown','moveSlow','blind','rageSlow','rageBan','shieldBan','buffBan','stealthBan','noExtraTurn','coldSteel','bloodDebt','resinBleed','resinPoison','viperPoison','parasite','ink','burn','poison','bleed','brimstone','thornsDot','wound','damageDown','critDown','resistDown','cooldownDelay','actionSlow']);
   const dots=new Set(['burn','poison','bleed','brimstone','thornsDot','parasite','resinBleed','viperPoison','wound']);
   const isBurn=s=>s.type==='burn'||s.type==='brimstone';
   const active=s=>s.splus===true&&(s.expiresRound==null||s.expiresRound>round)&&(s.charges==null||s.charges>0);
@@ -46,7 +50,7 @@ export function createSplusMechanics(options={}) {
   const has=(u,type)=>statuses(u).some(s=>s.type===type);
   const status=(u,type)=>statuses(u).find(s=>s.type===type);
   const power=(u,type)=>Math.max(0,...statuses(u).filter(s=>s.type===type).map(s=>n(s.power)*n(s.stacks,1)));
-  const passive=u=>alive(u)&&!has(u,'hardSilence');
+  const passive=u=>alive(u)&&!has(u,'timeFreeze');
   const holders=(u,name,enemy=false)=>(enemy?foes(u):friends(u)).filter(v=>key(v)===name&&passive(v));
   const emit=(type,source,target,extra={})=>{
     const entry={sequence:events.length+1,type,round,actionId:currentAction?.id||null,sourceId:source?.id||null,targetId:target?.id||null,...extra};
@@ -60,15 +64,18 @@ export function createSplusMechanics(options={}) {
   function addStatus(sourceId,targetId,effect={}) {
     const source=unit(sourceId),target=unit(targetId);if(!alive(target))return null;
     const type=String(effect.type||'');if(!type)throw new Error('STATUS_TYPE_REQUIRED');
-    if((type==='bleed'||type==='resinBleed'||type==='wound')&&has(target,'bubble')){emit('immune',source,target,{effect:type});return null;}
-    if(control.has(type)&&!effect.reflected){
-      if(has(target,'controlImmune')){emit('immune',source,target,{effect:type});return null;}
+    if(!harmful.has(type)&&effect.polarity!=='debuff'&&has(target,'buffBan')){emit('buffBlocked',source,target,{effect:type});return null;}
+    if(type==='stealth'&&has(target,'stealthBan')){emit('immune',source,target,{effect:type});return null;}
+    if(['bleed','resinBleed','thornsDot','wound'].includes(type)&&has(target,'bubble')){emit('immune',source,target,{effect:type});return null;}
+    if(control.has(type)){
+      if(has(target,'controlImmune')||(hardCC.has(type)&&has(target,'hardControlImmune'))){emit('immune',source,target,{effect:type});return null;}
       const ward=status(target,'ccReflect');
-      if(ward&&source&&source.team!==target.team){
-        ward.charges--;emit('controlReflect',target,source,{effect:type,iconId:ward.iconId});
-        return addStatus(target,source,{...effect,reflected:true,sourceHeroId:ward.sourceHeroId,iconId:ward.iconId});
+      if(ward&&!effect.reflected&&source&&source.team!==target.team){
+        ward.charges--;
+        if(rng('splus.control-reflect')<n(ward.chance,.35)){emit('controlReflect',target,source,{effect:type,iconId:ward.iconId});
+          return addStatus(target,source,{...effect,reflected:true,sourceHeroId:ward.sourceHeroId,iconId:ward.iconId});}
       }
-      const resistance=clamp(n(target.effectResist)+modifiers(target).resist);
+      const resistance=clamp(n(target.effectResist)+modifiers(target).resist+(type==='stun'&&key(target)==='giang_quan'&&target.slot<3&&passive(target)?0.2:0));
       if(resistance>0&&rng('splus.resistance')<resistance){emit('resist',source,target,{effect:type});return null;}
     }
     const same=statuses(target).find(s=>s.type===type&&s.sourceId===(source?.id||null));
@@ -76,13 +83,15 @@ export function createSplusMechanics(options={}) {
     const expiresRound=turns==null?null:round+turns+(target.splus.lastActRound===round?1:0);
     const entry={...effect,type,splus:true,polarity:effect.polarity||(harmful.has(type)?'debuff':'buff'),sourceId:source?.id||null,sourceHeroId:effect.sourceHeroId||source?.sourceId||null,iconId:effect.iconId||def(source)?.iconId||null,stacks:Math.min(n(effect.maxStacks,1),n(effect.stacks,1)+(effect.stack?same?.stacks||0:0)),maxStacks:n(effect.maxStacks,1),turns,expiresRound,appliedRound:round,ticksLeft:turns};
     if(same)Object.assign(same,entry);else target.statuses.push(entry);
+    if(key(target)==='cuu_trieu'&&['silence','hardSilence','stun'].includes(type))target.splus.memory.cadence=Math.floor(n(target.splus.memory.cadence)/2);
+    if(type==='stealthBan')remove(target,s=>s.type==='stealth','revealed');
     emit('status',source,target,{effect:type,stacks:entry.stacks,iconId:entry.iconId});return same||entry;
   }
   function remove(targetId,predicate,reason='dispel') {
     const target=unit(targetId);if(!target)return [];
     const removed=target.statuses.filter(s=>s.splus&&predicate(s));
     target.statuses=target.statuses.filter(s=>!removed.includes(s));
-    for(const s of removed)emit('statusRemove',unit(s.sourceId),target,{effect:s.type,reason,iconId:s.iconId});
+    for(const s of removed){if(s.shieldRemaining>0)target.shield=Math.max(0,target.shield-s.shieldRemaining);emit('statusRemove',unit(s.sourceId),target,{effect:s.type,reason,iconId:s.iconId});}
     return removed;
   }
   function cleanse(targetId,count=Infinity,filter=s=>s.polarity==='debuff') {
@@ -91,47 +100,54 @@ export function createSplusMechanics(options={}) {
   const buff=(a,t,type,powerValue=0,turns=defaults.duration,extra={})=>addStatus(a,t,{type,power:powerValue,turns,...extra});
   const mark=(a,t,type,powerValue,extra={})=>buff(a,t,type,powerValue,defaults.markDuration,extra);
   function modifiers(targetId) {
-    const u=unit(targetId);const m={attack:0,defense:0,speed:0,crit:0,critDamage:0,resist:0,lifesteal:0,mitigation:0};
+    const u=unit(targetId);const m={attack:0,defense:0,magicDefense:0,speed:0,crit:0,critDamage:0,resist:0,lifesteal:0,mitigation:0};
     if(!u)return m;
     m.attack=power(u,'attackUp')-power(u,'attackDown');m.defense=power(u,'armorUp')-power(u,'armorDown');
     m.speed=power(u,'speedUp')-power(u,'speedDown');m.crit=power(u,'critUp')-power(u,'critDown');m.resist=power(u,'resistUp')-power(u,'resistDown');
     m.lifesteal=power(u,'lifesteal');m.mitigation=power(u,'mitigation');
+    m.magicDefense=power(u,'magicArmorUp')-power(u,'magicArmorDown');m.speed-=power(u,'coldSteel');m.crit-=statuses(u).filter(s=>s.type==='coldSteel').reduce((v,s)=>v+s.stacks*.04,0);
     if(has(u,'resinPoison'))m.defense-=0.3;
     if(has(u,'ink'))m.resist-=0.2;
-    if(has(u,'bubble'))m.mitigation=Math.max(m.mitigation,0.25);
-    for(const source of holders(u,'co_trong'))m.defense+=Math.min(20,n(source.splus.memory.gears))*0.05;
+    for(const source of holders(u,'co_trong'))m.defense+=Math.min(10,n(source.splus.memory.gears))*rules(source).armorPerStack;
     if(passive(u)){
-      if(key(u)==='lac_an')m.crit+=Math.min(10,n(u.splus.memory.focus))*0.04;
-      if(key(u)==='hac_pha'&&ratio(u)<0.5){m.speed+=0.3;m.lifesteal+=0.2;}
-      if(key(u)==='cuu_trieu'){const stacks=n(u.splus.memory.cadence);m.attack+=stacks*0.05;m.crit+=stacks*0.03;}
-      if(key(u)==='cuong_dong')m.mitigation=Math.max(m.mitigation,0.25);
-      if(key(u)==='thiet_lanh')m.mitigation=Math.max(m.mitigation,0.20);
+      if(key(u)==='lac_an'){const stacks=Math.min(8,n(u.splus.memory.focus));m.crit+=stacks*rules(u).crit;m.critDamage+=stacks*rules(u).critDamage;}
+      if(key(u)==='hac_pha'&&ratio(u)<0.5){m.speed+=rules(u).speed;m.lifesteal+=rules(u).lifesteal;}
+      if(key(u)==='cuu_trieu'){const stacks=n(u.splus.memory.cadence);m.attack+=stacks*rules(u).attack;m.crit+=stacks*rules(u).crit;}
       if(key(u)==='thach_mong')m.mitigation=Math.max(m.mitigation,0.35);
-      if(key(u)==='tram_chau')m.defense+=Math.min(10,n(u.splus.memory.pearlArmor))*0.05;
+      if(key(u)==='tram_chau')m.defense+=Math.min(5,n(u.splus.memory.pearlArmor))*rules(u).armor;
+      if(key(u)==='thach_kinh')m.magicDefense+=n(u.splus.memory.resentment)*rules(u).magicArmor;
     }
     return m;
   }
   function stat(targetId,name) {const u=unit(targetId),m=modifiers(u);return Math.max(0,n(u?.[name])*(1+(name==='atk'?m.attack:name==='def'?m.defense:name==='speed'?m.speed:0)));}
   function energy(sourceId,targetId,amount,reason='gain') {
     const source=unit(sourceId),target=unit(targetId);if(!alive(target))return 0;
-    const before=target.energy,delta=amount>0?amount*(1-power(target,'rageSlow')):amount;
+    if(amount>0&&(has(target,'rageBan')||has(target,'timeFreeze'))){emit('energyBlocked',source,target,{reason});return 0;}
+    const before=target.energy,delta=amount>0?amount*Math.max(0,1-power(target,'rageSlow')+power(target,'rageRate')):amount;
     target.energy=clamp(before+delta,0,100);emit('energy',source,target,{amount:target.energy-before,reason});return target.energy-before;
   }
   function siphon(source,target,amount) {const removed=-energy(source,target,-Math.min(target?.energy||0,amount),'siphon');energy(source,source,removed,'siphon');return removed;}
   function shield(sourceId,targetId,amount,extra={}) {
     const source=unit(sourceId),target=unit(targetId);if(!alive(target))return 0;
     if(has(target,'shieldBan')){emit('shieldBlocked',source,target);return 0;}
-    const value=Math.max(0,Math.round(amount));target.shield+=value;
-    if(extra.explodes)buff(source,target,'waterShield',extra.explosionPower||0.5,defaults.duration,{shieldRemaining:value});
+    const value=Math.max(0,Math.round(amount)),type=extra.explodes?'waterShield':extra.bubble?'bubble':'shieldLayer';
+    const previous=statuses(target).find(s=>s.type===type&&s.sourceId===source?.id);
+    const layer=buff(source,target,type,extra.explosionPower||0.5,extra.turns??defaults.duration,{shieldRemaining:value+n(previous?.shieldRemaining)});
+    if(!layer)return 0;target.shield+=value;
     emit('shield',source,target,{amount:value,iconId:def(source)?.iconId||null});return value;
   }
   function breakShield(source,target) {
-    if(!target)return;const lost=target.shield;target.shield=0;emit('shieldBreak',source,target,{amount:lost});
-    const water=status(target,'waterShield');if(water){remove(target,s=>s===water,'shield-broken');if(alive(source))damage(unit(water.sourceId)||target,source,{multiplier:water.power,secondary:true});}
+    if(!target)return;const lost=target.shield;const layers=statuses(target).filter(s=>s.shieldRemaining!=null);target.shield=0;emit('shieldBreak',source,target,{amount:lost});
+    for(const layer of layers){layer.shieldRemaining=0;remove(target,s=>s===layer,'shield-broken');if(layer.type==='waterShield')waterExplosion(layer,source,target);}
+  }
+  function waterExplosion(layer,attacker,target){const caster=unit(layer.sourceId)||target;const list=alive(attacker)?[attacker,...adjacent(attacker,foes(caster))]:foes(caster);for(const t of list.slice(0,2))damage(caster,t,{multiplier:layer.power,secondary:true,noTriggers:true});}
+  function absorbShield(source,target,amount){const value=Math.min(target.shield,amount),layers=statuses(target).filter(s=>s.shieldRemaining!=null);let left=Math.max(0,value-Math.max(0,target.shield-layers.reduce((v,s)=>v+s.shieldRemaining,0)));target.shield-=value;
+    for(const layer of layers){const used=Math.min(left,layer.shieldRemaining);layer.shieldRemaining-=used;left-=used;if(layer.shieldRemaining<=0){remove(target,s=>s===layer,'shield-broken');if(layer.type==='waterShield')waterExplosion(layer,source,target);}}
+    emit('shieldAbsorb',source,target,{amount:value});return value;
   }
   function heal(sourceId,targetId,amount,extra={}) {
     const source=unit(sourceId),target=unit(targetId);if(!alive(target)||!(amount>0))return 0;
-    const anti=Math.max(power(target,'antiHeal'),power(target,'healDown'),has(target,'wound')?0.8:0,has(target,'brimstone')?0.25:0);
+    const anti=Math.max(power(target,'antiHeal'),power(target,'healDown'),has(target,'wound')?0.8:0,zones.some(z=>z.team===target.team&&z.slot===target.slot&&z.expiresRound>round)?0.25:0);
     const permitted=Math.max(0,Math.round(amount*(1-clamp(anti))));
     const converted=source!==target&&has(target,'wound')?Math.round(permitted*0.5):0;
     const actual=Math.min(target.maxHp-target.hp,permitted-converted);target.hp+=actual;
@@ -139,7 +155,7 @@ export function createSplusMechanics(options={}) {
     if(source&&key(source)==='thiem_ngan'&&passive(source)){
       buff(source,target,'armorUp',0.1);const over=permitted-converted-actual;if(over>0)shield(source,target,over);
     }
-    if(source&&key(source)==='tue_y'&&passive(source)&&actual>0)cleanse(target,1);
+    if(source&&key(source)==='tue_y'&&passive(source)&&actual>0)cleanse(target,1,s=>dots.has(s.type)&&s.type!=='parasite');
     if(converted>0)damage(unit(status(target,'wound')?.sourceId)||source,target,{raw:converted,type:'true',secondary:true,noTriggers:true,bypassShield:true});
     return actual;
   }
@@ -150,19 +166,20 @@ export function createSplusMechanics(options={}) {
     const guardian=holders(target,'muc_chieu').find(u=>!u.splus.memory.rescueUsed);
     if(guardian){guardian.splus.memory.rescueUsed=true;target.hp=1;buff(guardian,target,'immortal',0,1);heal(guardian,target,target.maxHp*0.15);emit('deathPrevented',guardian,target,{iconId:def(guardian)?.iconId});return true;}
     if(key(target)==='cuu_trieu'&&!has(target,'hardSilence')&&!target.splus.memory.rescueUsed&&!has(target,'silence')&&!statuses(target).some(s=>hardCC.has(s.type))){
-      target.splus.memory.rescueUsed=true;target.hp=1;heal(target,target,target.maxHp*0.35);emit('deathPrevented',target,target,{iconId:def(target)?.iconId});return true;
+      target.splus.memory.rescueUsed=true;target.hp=1;buff(target,target,'damageImmune',0,1);heal(target,target,target.maxHp*0.35);emit('deathPrevented',target,target,{iconId:def(target)?.iconId});return true;
     }
     return false;
   }
   function rescueLow(target) {
     if(!alive(target)||ratio(target)>=0.3)return;
     for(const healer of holders(target,'tue_y')){
-      const rescued=healer.splus.memory.rescued||(healer.splus.memory.rescued={});if(rescued[target.id])continue;
-      rescued[target.id]=true;heal(healer,target,target.maxHp*0.25);buff(healer,target,'controlImmune',0,1);break;
+      if(n(healer.splus.memory.rescueReady)>round)continue;
+      healer.splus.memory.rescueReady=round+2;heal(healer,target,target.maxHp*0.25);buff(healer,target,'controlImmune',0,1);break;
     }
   }
   function damage(sourceId,targetId,options={}) {
     const source=unit(sourceId),target=unit(targetId);if(!source||!alive(target)||eventDepth>20)return 0;
+    if(has(target,'damageImmune')){emit('immune',source,target,{effect:'damage'});return 0;}
     const previousAction=currentAction;eventDepth++;
     try {
       const action=options.action||currentAction?.action||'basic',sm=modifiers(source),tm=modifiers(target);
@@ -171,65 +188,80 @@ export function createSplusMechanics(options={}) {
       if(key(source)==='cuu_trieu'&&passive(source)&&source.splus.memory.cadence>=8)type='true';
       let amount=Math.max(0,n(options.raw));
       if(!specifiedRaw){
-        const accuracy=clamp(n(source.accuracy,100)/100-power(source,'blind')-n(target.evasion)/100,0.05,1);
+        const blind=status(source,'blind');const accuracy=clamp(n(source.accuracy,100)/100-power(source,'blind')-n(target.evasion)/100,0,1);
+        if(blind?.charges!=null)blind.charges--;
         if(!options.forceHit&&rng('splus.hit')>=accuracy){emit('miss',source,target,{action});return 0;}
         let critChance=n(source.crit)/100+sm.crit-n(target.critRes)/100;
         let critBonus=sm.critDamage+power(target,'bloodDebt');
+        if(key(source)==='tieu_hon'&&source.splus.memory.rageCritReady){critBonus+=.3;source.splus.memory.rageCritReady=false;}
+        const focusTarget=key(source)==='lac_an'&&passive(source)&&statuses(target).some(s=>control.has(s.type));
+        if(focusTarget)critical=true;
         if(key(source)==='da_xoa'&&passive(source)&&targetRatio<0.5){critChance+=0.35;critBonus+=0.5;}
         if(holders(source,'hoa_khieu').length&&statuses(target).some(isBurn))critChance+=0.15;
         critChance+=n(options.critBonus)+(has(target,'resinPoison')?0.2:0);
         critical=critical||rng('splus.crit')<clamp(critChance);
         if(has(target,'bubble'))critical=false;
-        const armor=type==='true'?0:stat(target,'def')*(1-clamp(n(options.armorPierce)));
+        const armor=type==='true'?0:Math.max(0,n(target.def)*(1+(type==='elemental'?tm.magicDefense:tm.defense)))*(1-clamp(Math.max(n(options.armorPierce),focusTarget?.25:0)));
         amount=Math.max(12,stat(source,'atk')*n(options.multiplier,1)*(100/(100+armor*0.82))*(0.94+clamp(rng('splus.variance'))*0.12)*1.22);
         if(critical)amount*=Math.max(1,n(source.critDamage,1.5)+critBonus);
       }
       if(has(target,'bubble'))critical=false;
+      if(action==='ultimate'&&key(source)==='cuu_trieu'&&targetRatio<.4)amount*=1.4;
+      // A successful mirror proc replaces the incoming hit entirely. Reflections
+      // carry provenance and never re-enter on-hit/reflect dispatch.
+      if(action==='basic'&&!options.secondary&&!options.dot&&key(target)==='kinh_nuong'&&passive(target)&&rng('splus.reflect')<.25){
+        emit('basicReflected',target,source,{amount:Math.round(amount)});damage(target,source,{raw:amount,type,reflection:true,secondary:true,noTriggers:true});return 0;
+      }
       amount*=1-clamp(power(source,'damageDown'));
-      const suppression=action!=='basic'&&holders(source,'minh_toa',true).find(h=>strongest(foes(h))[0]===source);
+      const suppression=action!=='basic'&&!options.secondary&&!options.dot&&holders(source,'minh_toa',true).find(h=>strongest(foes(h))[0]===source);
       if(suppression)amount*=0.75;
       amount*=1-clamp(tm.mitigation);
+      const incomingMelee=options.melee??melee(source);
+      if(passive(target)&&!options.dot&&!options.secondary){if(key(target)==='cuong_dong'&&!incomingMelee)amount*=.75;if(key(target)==='thiet_lanh')amount*=.8;}
       if(type==='elemental')amount*=1-clamp(power(target,'magicResist'));
-      if(key(target)==='giang_quan'&&passive(target)&&(options.melee??(['guardian','striker','duelist'].includes(def(source)?.role))))amount*=0.8;
+      if(key(target)==='giang_quan'&&passive(target)&&incomingMelee)amount*=0.8;
       if(critical){
         const pearl=holders(target,'tram_chau').find(h=>h===target||back(friends(h)).sort((a,b)=>near(h,a)-near(h,b)||bySlot(a,b)).slice(0,2).includes(target));
-        if(pearl){amount*=0.5;pearl.splus.memory.pearlArmor=Math.min(10,n(pearl.splus.memory.pearlArmor)+1);}
+        if(pearl){amount*=0.5;pearl.splus.memory.pearlArmor=Math.min(5,n(pearl.splus.memory.pearlArmor)+1);}
       }
-      if(key(target)==='hai_phong'&&passive(target)&&amount>target.maxHp*0.2){amount=target.maxHp*0.2;buff(target,target,'attackUp',0.25);buff(target,target,'lifesteal',0.2);}
+      if(critical&&key(target)==='hai_phong'&&passive(target)&&amount>target.maxHp*0.2){amount=target.maxHp*0.2;buff(target,target,'attackUp',0.25);buff(target,target,'lifesteal',0.2);}
       if(amount<=0)return 0;
       const cocoon=status(target,'cocoon');
       if(cocoon&&options.dot!==true){cocoon.charges--;emit('blockedHit',unit(cocoon.sourceId),target,{charges:cocoon.charges,iconId:cocoon.iconId});return 0;}
       if(!options.bypassGuard&&!options.secondary){
         const guard=holders(target,'thach_mong').find(h=>h!==target);
         if(guard){const shared=Math.round(amount*0.3);amount-=shared;guard.splus.memory.intercepted=n(guard.splus.memory.intercepted)+shared;guard.splus.memory.interceptMeter=n(guard.splus.memory.interceptMeter)+shared;damage(source,guard,{raw:shared,type,critical:false,secondary:true,noTriggers:true,bypassGuard:true});emit('intercept',guard,target,{amount:shared,iconId:def(guard)?.iconId});
-          if(alive(guard)&&guard.splus.memory.interceptMeter>=guard.maxHp*0.3){guard.splus.memory.interceptMeter=0;for(const t of front(foes(guard)))displace(guard,t,'push');}
+          if(alive(guard)&&guard.splus.memory.interceptMeter>=guard.maxHp*0.2){guard.splus.memory.interceptMeter%=guard.maxHp*.2;for(const t of front(foes(guard)))displace(guard,t,'push');}
         }
-        if(key(target)==='khaos'&&passive(target)&&target.splus.memory.cloneHp>0){const absorbed=Math.min(target.splus.memory.cloneHp,amount*0.5);target.splus.memory.cloneHp-=absorbed;amount-=absorbed;emit('cloneAbsorb',target,target,{amount:absorbed,remaining:target.splus.memory.cloneHp});}
+        if(key(target)==='khaos'&&passive(target)&&target.splus.memory.cloneHp>0){const absorbed=Math.min(target.splus.memory.cloneHp,amount*0.5);target.splus.memory.cloneHp-=absorbed;amount-=absorbed;emit('cloneAbsorb',target,target,{amount:absorbed,remaining:target.splus.memory.cloneHp});
+          if(target.splus.memory.cloneHp<=0){target.splus.memory.cloneReady=round+3;emit('cloneDestroyed',target,source);for(const t of [source,...adjacent(source,foes(target))].filter(alive).slice(0,2))damage(target,t,{multiplier:.5,type:'elemental',secondary:true,noTriggers:true});}
+        }
       }
       amount=Math.round(amount);
       if(options.reflection&&key(target)==='co_nuong'&&passive(target)){heal(target,target,amount);emit('reflectionConverted',target,target,{amount});return 0;}
-      if(!options.bypassShield&&target.shield>0){const absorbed=Math.min(target.shield,amount);target.shield-=absorbed;amount-=absorbed;emit('shieldAbsorb',source,target,{amount:absorbed});if(target.shield<=0&&has(target,'waterShield'))breakShield(source,target);}
+      if(has(target,'damageToRage')){const converted=Math.round(amount*.5);amount-=converted;energy(target,target,converted/target.maxHp*100,'pearl-conversion');emit('damageConverted',target,target,{amount:converted});}
+      if(!options.bypassShield&&target.shield>0)amount-=absorbShield(source,target,amount);
       const before=target.hp;const dealt=Math.min(before,Math.max(0,amount));target.hp-=dealt;
       emit('damage',source,target,{amount:dealt,critical,damageType:type,action,dot:options.dot||false,reflection:options.reflection||false,secondary:options.secondary||false});
-      if(dealt>0&&has(target,'sleep'))remove(target,s=>s.type==='sleep','awaken');
+      if(dealt>0&&!options.dot&&has(target,'sleep'))remove(target,s=>s.type==='sleep','awaken');
       if(target.hp<=0&&!preventDeath(target,source)){
         target.hp=0;target.dead=true;target.splus.memory.deathSequence=events.length;source.kills=n(source.kills)+1;
         emit('death',source,target);energy(source,source,12,'kill');
       } else rescueLow(target);
-      if(alive(target)&&dealt>0&&has(target,'damageToRage'))energy(target,target,(dealt/target.maxHp)*50,'pearl-conversion');
       if(options.dot&&options.burning&&dealt>0)for(const healer of holders(source,'hoa_duc')){
         const recipient=weakest(friends(healer))[0];if(recipient)heal(healer,recipient,dealt*0.5);
       }
       if(!options.noTriggers&&!options.secondary&&!options.dot){
         if(dealt>0&&sm.lifesteal>0)heal(source,source,dealt*sm.lifesteal);
+        if(dealt>0&&key(source)==='hac_pha'&&passive(source)&&ratio(source)<.5)shield(source,source,dealt*.15);
         onHit(source,target,{dealt,rawDamage:amount,action,critical,targetRatio});
-        onReceive(target,source,dealt);
+        onReceive(target,source,dealt,incomingMelee);
         if(alive(source)&&dealt>0){
           let reflect=power(target,'reflectAll');
+          if(type==='physical')reflect=Math.max(reflect,power(target,'reflectPhysical'));
           if(action!=='basic')reflect=Math.max(reflect,power(target,'reflectSkills'));
           if(key(target)==='cuong_dong'&&passive(target))reflect=Math.max(reflect,0.3);
-          if(action==='basic'&&key(target)==='kinh_nuong'&&passive(target)&&rng('splus.reflect')<0.25)reflect=1;
-          if(reflect>0)damage(target,source,{raw:Math.round(dealt*reflect),type:'elemental',reflection:true,secondary:true,noTriggers:true});
+          if(reflect>0)damage(target,source,{raw:Math.round(dealt*reflect),type:action!=='basic'&&has(target,'reflectSkills')?'true':'elemental',reflection:true,secondary:true,noTriggers:true});
           if(suppression&&alive(suppression)&&alive(source))damage(suppression,source,{raw:Math.round(dealt*0.2),reflection:true,secondary:true,noTriggers:true});
         }
       }
@@ -239,32 +271,33 @@ export function createSplusMechanics(options={}) {
 
   function onHit(source,target,hit) {
     if(!passive(source))return;
-    if(key(source)==='lac_an')source.splus.memory.focus=Math.min(10,n(source.splus.memory.focus)+1);
-    if(hit.action==='basic'&&['ha_lang','hoa_tieu'].includes(key(source))){
+    if(key(source)==='lac_an')source.splus.memory.focus=Math.min(8,n(source.splus.memory.focus)+1);
+    if(key(source)==='ha_lang'||(hit.action==='basic'&&key(source)==='hoa_tieu')){
       const count=key(source)==='ha_lang'?1:2;
       for(const next of adjacent(target,foes(source)).slice(0,count))damage(source,next,{raw:hit.rawDamage*0.3,secondary:true});
     }
+    if(holders(source,'hoa_khieu').length&&statuses(target).some(isBurn))for(const h of holders(source,'hoa_khieu'))buff(h,source,'speedUp',.2);
+    if(key(source)==='co_nuong'){const t=tankiest(foes(source))[0];if(t)mark(source,t,'parasite',.06,{percentMaxHp:.06,stack:true,maxStacks:5});}
     if(!alive(target))return;
     switch(key(source)){
-      case 'linh_dong':mark(source,target,'healDown',0.15);break;
-      case 'tieu_hon':if(hit.action==='basic')siphon(source,target,10);break;
-      case 'han_nuong':mark(source,target,'speedDown',0.1);mark(source,target,'moveSlow',0.1);break;
-      case 'hoa_bai':mark(source,target,'brimstone',0.04,{percentMaxHp:0.04});break;
-      case 'hac_dao':mark(source,target,'wound',0.03,{percentMaxHp:0.03});break;
-      case 'hac_hoa':mark(source,target,'thornsDot',0.04,{percentMaxHp:0.04});break;
+      case 'linh_dong':if(hit.action==='basic'){mark(source,target,'healDown',.2);const s=mark(source,target,'spiritMark',0,{stack:true,maxStacks:3,polarity:'debuff'});if(s?.stacks===3){remove(target,x=>x===s,'detonate');energy(source,target,-15,'spirit-mark');}}break;
+      case 'tieu_hon':if(hit.action==='basic'){siphon(source,target,15);if(source.energy>=100)source.splus.memory.rageCritReady=true;}break;
+      case 'han_nuong':mark(source,target,'speedDown',.15,{stack:true,maxStacks:3});mark(source,target,'moveSlow',.15,{stack:true,maxStacks:3});break;
+      case 'hoa_bai':{let z=zones.find(z=>z.team===target.team&&z.slot===target.slot&&z.sourceId===source.id);if(!z){z={team:target.team,slot:target.slot,sourceId:source.id};zones.push(z);}z.expiresRound=round+defaults.markDuration;syncZones();break;}
+      case 'hac_dao':mark(source,target,'wound',.05,{rawPerTick:stat(source,'atk')*.05});break;
+      case 'hac_hoa':if(hit.action==='basic'){mark(source,target,'thornsDot',.04,{percentMaxHp:.04});mark(source,target,'healDown',.2);}break;
       case 'cuu_tinh':{
         const previous=status(target,'bloodDebt')?.stacks||0;
         const s=mark(source,target,'bloodDebt',0.04,{stack:true,maxStacks:5});
-        if(s&&previous<5&&s.stacks===5)buff(source,target,'stun',0,1);break;
+        if(s&&previous<5&&s.stacks===5){remove(target,x=>x===s,'detonate');buff(source,target,'stun',0,1);}break;
       }
       case 'son_cuong':{
-        const s=mark(source,target,'resinBleed',0.02,{percentMaxHp:0.02,stack:true,maxStacks:4});
+        const s=mark(source,target,'resinBleed',0.06,{percentMaxHp:0.06,stack:true,maxStacks:4});
         if(s?.stacks===4){remove(target,x=>x===s,'convert');mark(source,target,'resinPoison',0.3);}break;
       }
       case 'mang_xa':{
-        const prev=status(target,'viperPoison')?.stacks||0;
         const s=mark(source,target,'viperPoison',0.05,{percentMaxHp:0.05,stack:true,maxStacks:5});
-        if(s?.stacks===5){buff(source,target,'speedDown',0.3);if(prev<5){const next=adjacent(target,foes(source))[0];if(next)mark(source,next,'viperPoison',0.05,{percentMaxHp:0.05,stack:true,maxStacks:5});}}break;
+        if(s?.stacks===5)buff(source,target,'speedDown',0.3);break;
       }
       case 'to_linh':{
         const s=mark(source,target,'ink',0.2,{stack:true,maxStacks:3});
@@ -272,14 +305,18 @@ export function createSplusMechanics(options={}) {
       }
     }
   }
-  function onReceive(target,source,dealt) {
+  function onReceive(target,source,dealt,incomingMelee) {
     if(!passive(target))return;
     switch(key(target)){
-      case 'thiet_lanh':buff(target,source,'speedDown',0.2);break;
-      case 'nung':mark(target,source,'burn',0.03,{percentMaxHp:0.03});break;
-      case 'tram_tue':buff(target,source,'attackDown',0.15);break;
-      case 'thach_kinh':target.splus.memory.resentment=n(target.splus.memory.resentment)+1;
-        if(target.splus.memory.resentment>=5){target.splus.memory.resentment=0;heal(target,target,(target.maxHp-target.hp)*0.15);}break;
+      case 'thiet_lanh':buff(target,source,'coldSteel',.06,2,{stack:true,maxStacks:4});break;
+      case 'nung':if(incomingMelee)buff(target,source,'burn',.03,2,{rawPerTick:target.maxHp*.03,stack:true,maxStacks:3});break;
+      case 'tram_tue':buff(target,source,'attackDown',.15,2,{stack:true,maxStacks:2});buff(target,source,'speedDown',.1,2,{stack:true,maxStacks:2});break;
+      case 'thach_kinh':{
+        const m=target.splus.memory;m.resentmentMeter=n(m.resentmentMeter)+dealt;
+        const earned=Math.floor(m.resentmentMeter/(target.maxHp*.1));m.resentmentMeter%=target.maxHp*.1;
+        m.resentment=n(m.resentment)+earned;
+        if(m.resentment>=5){m.resentment%=5;heal(target,target,(target.maxHp-target.hp)*.15);buff(target,source,'attackDown',.15);}break;
+      }
     }
   }
   function canMove(targetId) {const u=unit(targetId);return alive(u)&&!statuses(u).some(s=>hardCC.has(s.type)||s.type==='root'||s.type==='entangle');}
@@ -287,6 +324,8 @@ export function createSplusMechanics(options={}) {
     const u=unit(targetId);if(!alive(u)||!['basic','skill','ultimate'].includes(action))return false;
     if(statuses(u).some(s=>hardCC.has(s.type)))return false;
     if(action==='basic'&&(has(u,'disarm')||has(u,'entangle')))return false;
+    if(action!=='basic'&&melee(u)&&statuses(u).some(s=>s.type==='disarm'&&s.weaponSkills))return false;
+    if(melee(u)&&statuses(u).some(s=>s.type==='root'&&s.blocksMelee))return false;
     if(action!=='basic'&&(has(u,'silence')||has(u,'hardSilence')))return false;
     const cost=action==='basic'?0:action==='skill'?defaults.skillCost:defaults.ultimateCost;
     return u.energy>=cost&&n(u.splus.cooldowns[action])<=round;
@@ -294,13 +333,15 @@ export function createSplusMechanics(options={}) {
   function displace(source,target,mode='push') {
     if(!alive(target))return;
     if(!canMove(target)){emit('moveBlocked',source,target);return;}
+    if(mode!=='pull'&&mode!=='random'&&key(target)==='giang_quan'&&target.slot<3&&passive(target)&&rng('splus.push-resist')<.2){emit('resist',target,target,{effect:'push'});return;}
     const old=target.slot;
     if(mode==='half'){emit('displacement',source,target,{from:old,to:old,distance:0.5,presentationOnly:true});return;}
-    const desired=mode==='random'?random([0,1,2,3,4,5].filter(s=>s!==old))[0]:mode==='pull'?old%3:old%3+3;
+    const desired=mode==='random'?random([0,1,2,3,4,5].filter(s=>s!==old))[0]:mode==='pull'?source.slot%3:old%3+3;
     if(desired===old){emit('displacement',source,target,{from:old,to:old,presentationOnly:true});return;}
     const other=friends(target).find(u=>u.slot===desired);
     if(other&&!canMove(other)){emit('moveBlocked',source,target);return;}
     target.slot=desired;if(other)other.slot=old;
+    syncZones();
     emit('displacement',source,target,{from:old,to:desired,swappedId:other?.id||null});
   }
 
@@ -309,22 +350,31 @@ export function createSplusMechanics(options={}) {
   function resolveSkill(actor,action,target) { return skillHandlers(actor,action,target); }
   function afterAction(actor,action) {
     actor.splus.lastActRound=round;
-    for(const support of holders(actor,'co_trong'))if(support!==actor)support.splus.memory.gears=Math.min(20,n(support.splus.memory.gears)+1);
+    for(const support of holders(actor,'co_trong')){
+      const before=n(support.splus.memory.gears);support.splus.memory.gears=Math.min(10,before+1);
+      if(before<10&&support.splus.memory.gears===10)for(const t of friends(support))shield(support,t,support.maxHp*.15,{turns:2});
+    }
+    for(const h of units.filter(u=>key(u)==='cuu_trieu'&&passive(u)))h.splus.memory.cadence=Math.min(15,n(h.splus.memory.cadence)+1);
+    for(const h of holders(actor,'van_phap'))buff(h,actor,'ccReflect',0,2,{charges:1,chance:.35});
+    for(const s of statuses(actor).filter(s=>s.type==='viperPoison'&&s.stacks===5)){
+      const next=adjacent(actor,friends(actor))[0],source=unit(s.sourceId);if(next&&source)mark(source,next,'viperPoison',.05,{percentMaxHp:.05,stack:true,maxStacks:5});
+    }
     if(!passive(actor))return;
-    if(key(actor)==='thuy_co')for(const ally of adjacent(actor,friends(actor)))buff(actor,ally,'speedUp',0.1);
+    if(key(actor)==='thuy_co')for(const ally of friends(actor).filter(t=>t!==actor&&Math.floor(t.slot/3)===Math.floor(actor.slot/3))){buff(actor,ally,'speedUp',.12);buff(actor,ally,'moveSpeedUp',.1);}
     if(key(actor)==='thuy_ngoc'&&action!=='basic'){const ally=strongest(friends(actor).filter(u=>u!==actor))[0]||actor;energy(actor,ally,15,'pearl-passive');}
     if(key(actor)==='cuu_trieu'){
-      actor.splus.memory.cadence=Math.min(12,n(actor.splus.memory.cadence)+1);
-      if(actor.splus.memory.cadence>=8)damage(actor,actor,{raw:actor.maxHp*0.06,type:'true',secondary:true,noTriggers:true,bypassGuard:true,bypassShield:true});
+      if(actor.splus.memory.cadence>=8){const amount=Math.min(actor.hp-1,Math.round(actor.hp*.06));actor.hp-=Math.max(0,amount);emit('selfCost',actor,actor,{amount:Math.max(0,amount)});}
     }
   }
   function act(actorId,action,targetId,settings={}) {
     start();const actor=unit(actorId);if(!canUse(actor,action)&&!settings.alreadyPaid)return {ok:false,reason:'ACTION_UNAVAILABLE',events:[]};
     if(!alive(actor))return {ok:false,reason:'ACTOR_DEAD',events:[]};
+    if(preparedTurn!==actor.id)beginTurn(actor);preparedTurn=null;
+    if(!alive(actor))return {ok:false,reason:'ACTOR_DEAD',events:[]};
     const startIndex=events.length;let target=unit(targetId)||targets(actor,action)[0];
     if(!target)return {ok:false,reason:'TARGET_UNAVAILABLE',events:[]};
     const confusion=status(actor,'confusion');
-    if(confusion){target=random(friends(actor).filter(u=>u!==actor))[0];remove(actor,s=>s===confusion,'consumed');if(!target)return {ok:false,reason:'NO_CONFUSION_TARGET',events:[]};action='basic';}
+    if(confusion&&rng('splus.confusion')<n(confusion.chance,.5)){target=random(friends(actor).filter(u=>u!==actor))[0]||target;action='basic';}
     const previous=currentAction;currentAction={id:`splus:r${round}:a${++actionSerial}`,actorId:actor.id,action};
     try{
       if(!settings.alreadyPaid)energy(actor,actor,-(action==='skill'?defaults.skillCost:action==='ultimate'?defaults.ultimateCost:0),'cost');
@@ -332,8 +382,8 @@ export function createSplusMechanics(options={}) {
       const killsBefore=n(actor.kills);
       if(action==='basic'){damage(actor,target,{multiplier:1,action});energy(actor,actor,defaults.basicRage,'basic');}
       else resolveSkill(actor,action,target);
-      if(action==='skill')actor.splus.cooldowns.skill=round+defaults.skillCooldown+(holders(actor,'vong_co',true).length?1:0);
-      if(action==='ultimate'&&key(actor)==='cuu_trieu'&&n(actor.kills)>killsBefore&&actor.splus.memory.extraRound!==round){actor.splus.memory.extraRound=round;emit('extraTurn',actor,actor);}
+      if(action!=='basic')actor.splus.cooldowns[action]=round+(action==='skill'?defaults.skillCooldown:0)+(has(actor,'cooldownDelay')?1:0);
+      if(action==='ultimate'&&key(actor)==='cuu_trieu'&&n(actor.kills)>killsBefore&&actor.splus.memory.extraRound!==round&&!has(actor,'noExtraTurn')&&alive(actor)){actor.splus.memory.extraRound=round;emit('extraTurn',actor,actor);}
       afterAction(actor,action);return {ok:true,events:events.slice(startIndex),extraTurn:events.slice(startIndex).some(e=>e.type==='extraTurn')};
     }finally{currentAction=previous;}
   }
@@ -343,35 +393,57 @@ export function createSplusMechanics(options={}) {
       if(key(actor)==='khaos')actor.splus.memory.cloneHp=actor.maxHp*0.5;
       if(key(actor)==='tam_nuong'){
         const other=weakest(friends(actor).filter(u=>u!==actor))[0];
-        for(const t of [actor,other].filter(Boolean)){buff(actor,t,'cocoon',0,null,{charges:2});buff(actor,t,'armorUp',0.3,null);}
+        for(const t of [actor,other].filter(Boolean)){buff(actor,t,'cocoon',0,2,{charges:2});buff(actor,t,'armorUp',0.3,2);}
       }
-      if(key(actor)==='van_phap')for(const t of friends(actor))buff(actor,t,'ccReflect',0,null,{charges:1});
+      if(key(actor)==='vong_co'){const t=strongest(foes(actor))[0];if(t)buff(actor,t,'cooldownDelay',1,1);}
     }
     emit('battleStart',null,null);
   }
   let lastFinished=0;
+  function dotAmount(target,s,ticks=1){return Math.max(0,n(s.rawPerTick,target.maxHp*n(s.percentMaxHp,s.power))*n(s.stacks,1)*ticks);}
+  function tickDot(target,s,ticks=1,bonus=1){const source=unit(s.sourceId)||target;const dealt=damage(source,target,{raw:dotAmount(target,s,ticks)*bonus,type:'true',dot:true,burning:isBurn(s),secondary:true,noTriggers:true});if(s.type==='parasite'&&alive(source))heal(source,source,dealt);return dealt;}
+  function detonate(target,filter,bonus=1){let dealt=0;for(const s of statuses(target).filter(filter)){const ticks=Math.max(0,n(s.ticksLeft));remove(target,x=>x===s,'detonate');dealt+=tickDot(target,s,ticks,bonus);}return dealt;}
+  function syncZones(){
+    for(const target of units){remove(target,s=>s.type==='brimstone'&&s.zone&&!zones.some(z=>z.sourceId===s.sourceId&&z.team===target.team&&z.slot===target.slot&&z.expiresRound>round),'left-zone');
+      if(!alive(target))continue;for(const z of zones.filter(z=>z.team===target.team&&z.slot===target.slot&&z.expiresRound>round))if(!statuses(target).some(s=>s.type==='brimstone'&&s.sourceId===z.sourceId)){
+        const s=buff(unit(z.sourceId),target,'brimstone',.04,z.expiresRound-round,{zone:true,percentMaxHp:.04});if(s)s.expiresRound=z.expiresRound;
+      }
+    }
+  }
+  function beginTurn(actorId){start();const actor=unit(actorId);if(!alive(actor))return;preparedTurn=actor.id;
+    syncZones();emit('turnStart',actor,actor);
+    for(const h of holders(actor,'mien_nuong')){const t=weakest(friends(h))[0];if(t)heal(h,t,h.maxHp*.05);}
+    for(const s of statuses(actor).filter(s=>s.type==='brimstone'&&s.zone))tickDot(actor,s);
+  }
   function finishRound() {
     start();if(lastFinished===round)return;lastFinished=round;
     for(const source of units.filter(passive)){
-      if(key(source)==='co_nuong'){const t=tankiest(foes(source))[0];if(t)buff(source,t,'parasite',0.06,1,{percentMaxHp:0.06});}
-      if(key(source)==='mien_nuong'){const t=weakest(friends(source))[0];if(t)heal(source,t,t.maxHp*0.05);}
       if(key(source)==='hoi_anh'&&round%2===0){const fs=random(front(foes(source))),bs=random(back(foes(source)));if(fs[0]&&bs[0]&&canMove(fs[0])&&canMove(bs[0])){const a=fs[0].slot,b=bs[0].slot;fs[0].slot=b;bs[0].slot=a;emit('swap',source,fs[0],{otherId:bs[0].id,from:a,to:b});}}
     }
     for(const target of units.filter(alive))for(const s of statuses(target).slice()){
       if(!alive(target))break;
       const source=unit(s.sourceId)||target;
-      if(dots.has(s.type)&&s.ticksLeft>0){damage(source,target,{raw:target.maxHp*n(s.percentMaxHp,s.power)*s.stacks,type:'true',dot:true,burning:isBurn(s),secondary:true,noTriggers:true});s.ticksLeft--;}
-      if(s.type==='regen'&&s.ticksLeft>0){heal(source,target,target.maxHp*s.power);s.ticksLeft--;}
-      if((dots.has(s.type)||s.type==='regen')&&s.ticksLeft<=0)remove(target,x=>x===s,'ticks-complete');
+      if(dots.has(s.type)&&!s.zone&&s.ticksLeft>0){tickDot(target,s);s.ticksLeft--;}
+      if(s.type==='regen'&&!s.beginRound&&s.ticksLeft>0){heal(source,target,target.maxHp*s.power);s.ticksLeft--;}
+      if((dots.has(s.type)||s.type==='regen')&&!s.zone&&s.ticksLeft<=0)remove(target,x=>x===s,'ticks-complete');
     }
     emit('roundEnd',null,null);
   }
   function beginRound(next) {
     start();if(!Number.isInteger(next)||next<round||next>15)throw new Error('ROUND_OUT_OF_RANGE');
     if(next===round)return;
-    finishRound();round=next;
-    for(const u of units)remove(u,s=>s.expiresRound!=null&&s.expiresRound<=round,'expired');
-    emit('roundStart',null,null);
+    while(round<next){finishRound();round++;
+      // Begin-round HoT receives both authored ticks before its expiry boundary.
+      for(const t of units.filter(alive))for(const s of statuses(t).filter(s=>s.type==='regen'&&s.beginRound&&s.ticksLeft>0)){heal(unit(s.sourceId),t,t.maxHp*s.power);s.ticksLeft--;}
+      for(const u of units)remove(u,s=>s.expiresRound!=null&&s.expiresRound<=round,'expired');
+      for(let i=zones.length-1;i>=0;i--)if(zones[i].expiresRound<=round)zones.splice(i,1);syncZones();
+      for(const actor of units.filter(passive)){
+        if(key(actor)==='vong_co'){const t=strongest(foes(actor))[0];for(const u of foes(actor))remove(u,s=>s.type==='cooldownDelay'&&s.sourceId===actor.id,'retarget');if(t)buff(actor,t,'cooldownDelay',1,1);}
+        if(key(actor)==='tam_nuong'&&(round-1)%2===0){const other=weakest(friends(actor).filter(t=>t!==actor))[0];for(const t of [actor,other].filter(Boolean)){buff(actor,t,'cocoon',0,2,{charges:2});buff(actor,t,'armorUp',.3,2);}}
+        if(key(actor)==='khaos'&&actor.splus.memory.cloneReady&&actor.splus.memory.cloneReady<=round){actor.splus.memory.cloneReady=null;actor.splus.memory.cloneHp=actor.maxHp*.5;emit('cloneCreated',actor,actor);}
+      }
+      emit('roundStart',null,null);
+    }
   }
   function targets(actorId,action='basic') {
     const actor=unit(actorId);if(!actor)return [];
@@ -379,8 +451,9 @@ export function createSplusMechanics(options={}) {
     const allies=friends(actor);const k=key(actor);
     if(action!=='basic'&&['co_trong','thiem_ngan','muc_chieu','thuy_co','thuy_ngoc','tram_chau','hoa_duc','mien_nuong','tue_y'].includes(k))return weakest(allies);
     const taunt=status(actor,'taunted');const taunter=unit(taunt?.sourceId);if(alive(taunter)&&taunter.team!==actor.team)return [taunter];
-    if(k==='da_xoa'||(k==='lac_an'&&action==='ultimate'))return [weakestBack(enemies)].filter(Boolean);
-    if(['tieu_hon','minh_toa','hai_phong'].includes(k)&&action!=='basic')return [strongestBack(enemies)].filter(Boolean);
+    if(k==='da_xoa'||(k==='lac_an'&&action!=='basic'))return [weakestBack(enemies)].filter(Boolean);
+    if((k==='tieu_hon'&&action==='skill')||(k==='minh_toa'&&action==='ultimate'))return [enragedBack(enemies)].filter(Boolean);
+    if(['tieu_hon','hai_phong'].includes(k)&&action!=='basic')return [strongestBack(enemies)].filter(Boolean);
     return [opposite(actor,enemies),...enemies].filter((u,i,a)=>u&&a.indexOf(u)===i);
   }
   function chooseAction(actorId) {return ['ultimate','skill','basic'].find(a=>canUse(actorId,a))||null;}
@@ -400,7 +473,6 @@ export function createSplusMechanics(options={}) {
     for(const s of holders(target,'thach_mong'))aura(s,'interception');
     for(const s of holders(target,'tram_chau'))if(s===target||back(friends(s)).sort((a,b)=>near(s,a)-near(s,b)||bySlot(a,b)).slice(0,2).includes(target))aura(s,'antiCrit');
     for(const s of holders(target,'minh_toa',true))if(strongest(foes(s))[0]===target)aura(s,'suppression',1,{polarity:'debuff'});
-    for(const s of holders(target,'vong_co',true))aura(s,'cooldownDelay',1,{polarity:'debuff'});
     return entries;
   }
 
@@ -544,5 +616,5 @@ export function createSplusMechanics(options={}) {
       default:D(target,defaults.singleUltimateMultiplier);return;
     }
   }
-  return {schema:'luc-than-splus-combat/v1',units,events,unit,start,beginRound,finishRound,act,damage,heal,shield,gainRage:energy,addStatus,cleanse,modifiers,stat,canUse,canMove,targets,chooseAction,hud,get round(){return round;}};
+  return {schema:'luc-than-splus-combat/v2',profileVersion:'splus-profile/2026-09-08-v2',units,events,unit,start,beginTurn,beginRound,finishRound,act,damage,heal,shield,gainRage:energy,addStatus,cleanse,modifiers,stat,canUse,canMove,targets,chooseAction,hud,get round(){return round;}};
 }

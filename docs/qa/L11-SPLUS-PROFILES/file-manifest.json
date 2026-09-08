@@ -1,0 +1,273 @@
+{
+  "schema": "luc-than-handoff-files/v1",
+  "recordedAt": "2026-09-08T07:58:20.143609+00:00",
+  "baselineCommit": "f3dc071a82ead9851bd4495fe92296f7c8c6fe1f",
+  "sourceBranch": "handoff/l11-splus-profiles-v2-20260908",
+  "note": "Snapshot of changed/new files before source handoff commit. Manifest excludes itself; main later pins the source commit and updates documentation only.",
+  "files": [
+    {
+      "path": "assets/skill-buttons/splus-v2/atlas-prompts.json",
+      "bytes": 14595,
+      "sha256": "10269d807a5ee1b14b1fcb926c2a72b8e881b5600991062366c05b4881a4437e",
+      "gitBlobSha1": "2f0cb7428daaf6c84079acc9ab9b6af8240921c2"
+    },
+    {
+      "path": "assets/skill-buttons/splus-v2/dream.png",
+      "bytes": 2848666,
+      "sha256": "273ba9cb195cba60c7b525096a69c79cd2b0cd23fbb42022b65dc509d423780a",
+      "gitBlobSha1": "906ba7e38f6d34107017ea0502c4fb7bbc97d027"
+    },
+    {
+      "path": "assets/skill-buttons/splus-v2/dream.webp",
+      "bytes": 484222,
+      "sha256": "aeb00e5796d51f29f6972c0f8bac2a73a3e399cb966f1126d80f2bd9733fac3c",
+      "gitBlobSha1": "11f98f7d9e53c07f9a4bfd9895161d10e17e1e90"
+    },
+    {
+      "path": "assets/skill-buttons/splus-v2/fire.png",
+      "bytes": 2730214,
+      "sha256": "2979076eec82c511e18f03f464f2dabbafa03cfae1fa62e514ad78c8ddbd7a3f",
+      "gitBlobSha1": "96aaef6c08faa765266070861c723cfd5e5780b2"
+    },
+    {
+      "path": "assets/skill-buttons/splus-v2/fire.webp",
+      "bytes": 521182,
+      "sha256": "2be8e1bea9eb542931f42976aa162032a78ea11f696fd476d4d41a31a15406ce",
+      "gitBlobSha1": "ad27ffbd85c40dcda8f36a0d4c5cddfb765712ae"
+    },
+    {
+      "path": "assets/skill-buttons/splus-v2/metal.png",
+      "bytes": 2482520,
+      "sha256": "06f52b2d7f39c38556b9e4604ffe5714c1829d496e63224d45704576615313c3",
+      "gitBlobSha1": "103490ee15d7e4b57bda11dfa9dad3e25f429022"
+    },
+    {
+      "path": "assets/skill-buttons/splus-v2/metal.webp",
+      "bytes": 462396,
+      "sha256": "d1db917f46785810ea20ef9a0d8d836bc95728f2c5703698d3a9a4572914371e",
+      "gitBlobSha1": "d9bf586353b6fdd06258f1eba4b8cae89e126413"
+    },
+    {
+      "path": "assets/skill-buttons/splus-v2/provenance.json",
+      "bytes": 7375,
+      "sha256": "d3117346560ac05e980e5c5ad1f9e1a880bb7c4666071531ff08a32455ceb443",
+      "gitBlobSha1": "cb0b8e8e581ff5ac426ac9c1cf17a7c5ce51e23e"
+    },
+    {
+      "path": "assets/skill-buttons/splus-v2/soul.png",
+      "bytes": 2449715,
+      "sha256": "6bdf9f81ef08135ddb970c0e49154ca2d2989c1397b30d5188c4abb2142599d3",
+      "gitBlobSha1": "701c10ca1f3718557ec71d9f87dc8e8053a260e1"
+    },
+    {
+      "path": "assets/skill-buttons/splus-v2/soul.webp",
+      "bytes": 237910,
+      "sha256": "556974185ac2d232e1be0e15b7e0de355672dcc0f3fbd95a287896fb60f71354",
+      "gitBlobSha1": "deb6a9349b1279ed14c9015c3aafcd8b982136c0"
+    },
+    {
+      "path": "assets/skill-buttons/splus-v2/water.png",
+      "bytes": 3081573,
+      "sha256": "1da1e495ee80888b03102621373033299813b6f5fc27be4fb7d44a06d6610c08",
+      "gitBlobSha1": "8b745687d2308c93a780864d2c4d22bf81520766"
+    },
+    {
+      "path": "assets/skill-buttons/splus-v2/water.webp",
+      "bytes": 610492,
+      "sha256": "de46deb95c9f9e0feb405d7118d68950fc508b123c5be14b8be980816fd2b1ed",
+      "gitBlobSha1": "f4ccde9f81b785d71f4428b2a60b83c61335ccfb"
+    },
+    {
+      "path": "assets/skill-buttons/splus-v2/wood.png",
+      "bytes": 2769565,
+      "sha256": "a81e9b15caff5e682a6ac2ec847b307b1fafd30b07e8547394479d6076a29cff",
+      "gitBlobSha1": "bc8dabdacd88585191bca8ab563ac67f1e5ed704"
+    },
+    {
+      "path": "assets/skill-buttons/splus-v2/wood.webp",
+      "bytes": 485404,
+      "sha256": "a425a67b9e66b72249cb633ec266e9f7b499276d411223373bc529a963fe26d8",
+      "gitBlobSha1": "83df5b808f796d8c697e8348fbe8f440ba97ae3c"
+    },
+    {
+      "path": "docs/LUNA-HANDOFF-SPLUS-PROFILES-2026-09-08.md",
+      "bytes": 23357,
+      "sha256": "db0c30bb253a0722904c67ec6ee2d88e54289ee49cabfb0885bed2415a54447b",
+      "gitBlobSha1": "d528fdaeda919464676a80d8b88c71808764c3c2"
+    },
+    {
+      "path": "docs/SPLUS42-PROFILE-V2-CONTRACT.md",
+      "bytes": 3455,
+      "sha256": "4a84c14ae4b42e3d7989c629092dcf0d0716a138f8f3e04226815a0776f19239",
+      "gitBlobSha1": "7cd4b61cce4c36e0e753cc3ffc4ef6f0cb2ec0db"
+    },
+    {
+      "path": "docs/qa/L11-SPLUS-PROFILES/combat-red.tap",
+      "bytes": 19820,
+      "sha256": "490e74c8da6b9468916ee90eae4a1910494cdf0d8a6256f6eab51dbab6a6e1df",
+      "gitBlobSha1": "e2c5a73fb7af5dd85161133c78240423c5f735e8"
+    },
+    {
+      "path": "docs/qa/L11-SPLUS-PROFILES/handoff-checkpoint.json",
+      "bytes": 5421,
+      "sha256": "23f67b9fa763d093b432950582b55886178198a8afc1937aa00872b81b147b5a",
+      "gitBlobSha1": "e5f3964776876e21b51dae73291431e2f1ab918d"
+    },
+    {
+      "path": "docs/qa/L11-SPLUS-PROFILES/handoff-existing-splus.tap",
+      "bytes": 37298,
+      "sha256": "11d582ed660014fe7363d873fc5db1e6819fb1d185c2e5271a927207109ae488",
+      "gitBlobSha1": "1d925faab6d13b24fbd842386c426a74fdc2ab1d"
+    },
+    {
+      "path": "docs/qa/L11-SPLUS-PROFILES/handoff-npm-test.log",
+      "bytes": 1138,
+      "sha256": "7a6626d470a08f9517589634d70387dec07f2b27aff6f199c7879eb37abbf287",
+      "gitBlobSha1": "936bf08ad2810507bfd5ddb0199a6c2fbf13cb11"
+    },
+    {
+      "path": "docs/qa/L11-SPLUS-PROFILES/handoff-syntax.json",
+      "bytes": 1944,
+      "sha256": "f40d847016cc84edce7f95001d78a29ba2cce9a9c45c290214b5da04eb701cc4",
+      "gitBlobSha1": "0ad2aab7d84fceab27a23e5424a6efd9101a103a"
+    },
+    {
+      "path": "docs/qa/L11-SPLUS-PROFILES/handoff-targeted.tap",
+      "bytes": 9977,
+      "sha256": "d237dc06d9f016114b2e0fd1a407d4f027305ec558a275c9b0963446c6accd09",
+      "gitBlobSha1": "52840a23f09d1e98305a58843405b72c93ffce8d"
+    },
+    {
+      "path": "docs/qa/L11-SPLUS-PROFILES/profiles-green.tap",
+      "bytes": 407,
+      "sha256": "538557553b2438532d14827eda2cc106cc67854ffe9f4a89684bad534927f182",
+      "gitBlobSha1": "04557d32ed81a05d39ce118d13630f46333a3740"
+    },
+    {
+      "path": "docs/qa/L11-SPLUS-PROFILES/profiles-red.tap",
+      "bytes": 1446,
+      "sha256": "c09bae50d0c2b763f205680582bcb6319261805328ded1daf16896de6a22aa90",
+      "gitBlobSha1": "dd6b18d83b46cead954a0db105e402e91dcbb5a1"
+    },
+    {
+      "path": "docs/qa/L11-SPLUS-PROFILES/workflow-trace.jsonl",
+      "bytes": 1512,
+      "sha256": "4b42d54b0aa0ec6514dffe2b55b34870c3e8913a3f20151ca69b16356e46bb5f",
+      "gitBlobSha1": "793a148d1e3d6865084d2f4690ba3f261b71eacf"
+    },
+    {
+      "path": "scripts/splus-runtime-v1.mjs",
+      "bytes": 10520,
+      "sha256": "11a226670a1fe1202e1179fcdc9ea04bdfc07d60618fc5e684af0bfef59f8333",
+      "gitBlobSha1": "60546544ff741498c51f5a9c6140ed7f2969471b"
+    },
+    {
+      "path": "splus-lab.html",
+      "bytes": 7663,
+      "sha256": "6c86b8a29102eb7694d4ea74e44eb5f05a806adadd533b95e0e52734d7a23cba",
+      "gitBlobSha1": "4bc6e141da1b50fc6cb4d092e1536d2f4c47bc3a"
+    },
+    {
+      "path": "src/domain/combat/splus-mechanics.mjs",
+      "bytes": 52858,
+      "sha256": "cefe85f5441cb012f5c92060adf8b4f646a87a7ca3a969b438ea37175e778018",
+      "gitBlobSha1": "8422f9b11f8beef07fbf2c6c92c4f803d188960c"
+    },
+    {
+      "path": "src/domain/hero/splus-catalog.mjs",
+      "bytes": 10100,
+      "sha256": "94d559c5b98e4bbf87d90d09f42c4471c84db2bdb1d28ca87cf1de484f70e836",
+      "gitBlobSha1": "30d2eb7ea19475744db4566af975f8e5e936463e"
+    },
+    {
+      "path": "src/domain/hero/splus-profile-data.mjs",
+      "bytes": 556,
+      "sha256": "b3b7c92bdd8d09c4ea4ba0fb0fd815ff9b94b6213700df0a809909cc44f6e9b0",
+      "gitBlobSha1": "bd7e5ab46bc754c2db83f66236ac1dbcf8402f7f"
+    },
+    {
+      "path": "src/domain/hero/splus-profiles.mjs",
+      "bytes": 2284,
+      "sha256": "4e9d0f8f4075c79e221840edb511b3dbfa12ab40d84714341713da776c96777a",
+      "gitBlobSha1": "e1547f2519705749d45190cf6a17361b3f2a8e21"
+    },
+    {
+      "path": "src/domain/hero/splus-profiles/dream.mjs",
+      "bytes": 13045,
+      "sha256": "b3ce29fea3e85c2919e6e1e1875339859314aeaf27b029d98a7d0017c53e7651",
+      "gitBlobSha1": "dd1967d2053a45515ddf5befe17ace1b1dc82c17"
+    },
+    {
+      "path": "src/domain/hero/splus-profiles/fire.mjs",
+      "bytes": 12086,
+      "sha256": "5c019a0b97a6a0b8dd51e6d17f27cead08418e70deb48051be8c86934d226080",
+      "gitBlobSha1": "9d82ee9b3151c1461cdabaf935f45e5b585b8022"
+    },
+    {
+      "path": "src/domain/hero/splus-profiles/metal.mjs",
+      "bytes": 13023,
+      "sha256": "b2dee03e0b29b8c24c407a0a7fd6b44662a1b430439baa998781d04d9b1e5637",
+      "gitBlobSha1": "0dc0ae49d24e4ca9dd6a9681f13b2c0a1b885af5"
+    },
+    {
+      "path": "src/domain/hero/splus-profiles/soul.mjs",
+      "bytes": 12264,
+      "sha256": "fb8e9f95d27f77e4a83d719fdfef80af21a41743a7c931ff24772e36784622c9",
+      "gitBlobSha1": "06043041b292f99bbc057dd3a77e63dca33c624a"
+    },
+    {
+      "path": "src/domain/hero/splus-profiles/water.mjs",
+      "bytes": 12196,
+      "sha256": "871fb26939f3a9a0bb6ef637d941a0a2f07928059e4df69d56d682e0a2b0fceb",
+      "gitBlobSha1": "4b933c25825a6271f0acfb9d45f38d2e5a9dbef2"
+    },
+    {
+      "path": "src/domain/hero/splus-profiles/wood.mjs",
+      "bytes": 12414,
+      "sha256": "431edcbf9cfffffc4a3383d4cbba5c9ee7165ec8adc66f30fea44fd2188955ff",
+      "gitBlobSha1": "9ad7f7785bb5ce7bb23b9893d4924b2dcfe616a5"
+    },
+    {
+      "path": "src/domain/hero/splus-skill-art.mjs",
+      "bytes": 28582,
+      "sha256": "256c31a56e57870bb73e5a0276e67f25eb7b46de57b8e9467441aa357fd02087",
+      "gitBlobSha1": "61d0dfa20d76dd7f572cdf6d2c167fe6cfa7c3f3"
+    },
+    {
+      "path": "src/runtime/splus-battle-bridge.js",
+      "bytes": 9307,
+      "sha256": "fb48aaa43d2d57b227b79b78869a79f7f844b0b38a23edd9574bab1e5e4e8ff0",
+      "gitBlobSha1": "26751f76cf6b127e84d28b787f8bfad08c6717eb"
+    },
+    {
+      "path": "src/ui/splus-encyclopedia.js",
+      "bytes": 5011,
+      "sha256": "41b20575aca4d4925f0bae8c806015541b6ecc23f54c8222c38b05e87eb85c71",
+      "gitBlobSha1": "66ff38e68e0c6fca9d3f1e55fc3ef58a0fc659b4"
+    },
+    {
+      "path": "src/ui/splus-skill-details.css",
+      "bytes": 3244,
+      "sha256": "e5d2c3cdc82a1a33ed50afcf0168531e5a5c6aecbf9a5226e428b70a30209040",
+      "gitBlobSha1": "e345cd8e5a5f3049c9c4098eb7aa4ad47b7b9465"
+    },
+    {
+      "path": "src/ui/splus-skill-details.js",
+      "bytes": 5862,
+      "sha256": "4705a192a1aba28cd53d9803103f5b63b92c829efb0c47351e01997e016568f3",
+      "gitBlobSha1": "3b5deded70129954e71119dea2cc7b85689f5ba9"
+    },
+    {
+      "path": "tests/splus-profiles.test.mjs",
+      "bytes": 2388,
+      "sha256": "6dab00f2fcf57d1f005b27971ae355e05103926c34d8d12eea088148d5ccc5b5",
+      "gitBlobSha1": "b00907619809d671c91e5e0c3e8fbafb4c66e972"
+    },
+    {
+      "path": "tests/splus-v2.test.mjs",
+      "bytes": 10464,
+      "sha256": "3db80f4dfef6b1c46a6a447ed210c10dae99cb879845a771b699114f2e1715d5",
+      "gitBlobSha1": "3c87d724413bfc5630ec401dd3b6292f1e95fb82"
+    }
+  ]
+}

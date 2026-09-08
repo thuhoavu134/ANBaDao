@@ -4,6 +4,7 @@ import { join, resolve } from 'node:path';
 import { createSplusMechanics } from '../src/domain/combat/splus-mechanics.mjs';
 import { SPLUS_HEROES, SPLUS_REVIEW_DEFAULTS } from '../src/domain/hero/splus-catalog.mjs';
 import { SPLUS_STATUS_LABELS, SPLUS_ICON_MANIFEST } from '../src/domain/hero/splus-status.mjs';
+import { splusProfilePayload } from '../src/domain/hero/splus-profiles.mjs';
 
 export function createSplusFixture(catalog, selectedId) {
   const selected=catalog.find(h=>h.id===selectedId)||catalog.find(h=>h.element===selectedId)||catalog[0];
@@ -28,7 +29,7 @@ export function patchSplusBattleHtml(input) {
   if(html.includes('id="splus42-runtime-v1"'))throw new Error('SPLUS_ALREADY_PATCHED');
   const bridge=readFileSync(new URL('../src/runtime/splus-battle-bridge.js',import.meta.url),'utf8');
   const json=x=>JSON.stringify(x).replaceAll('<','\\u003c');
-  const payload=`(()=>{const catalog=${json(SPLUS_HEROES)},defaults=${json(SPLUS_REVIEW_DEFAULTS)};globalThis.SPLUS42=Object.freeze({catalog,icons:${json(SPLUS_ICON_MANIFEST)},labels:${json(SPLUS_STATUS_LABELS)},create:options=>(${createSplusMechanics.toString()})({...options,catalog,defaults}),fixture:id=>(${createSplusFixture.toString()})(catalog,id)});})();`;
+  const payload=`(()=>{const catalog=${json(SPLUS_HEROES)},defaults=${json(SPLUS_REVIEW_DEFAULTS)};globalThis.SPLUS42=Object.freeze({catalog,profiles:${json(splusProfilePayload())},icons:${json(SPLUS_ICON_MANIFEST)},labels:${json(SPLUS_STATUS_LABELS)},create:options=>(${createSplusMechanics.toString()})({...options,catalog,defaults}),fixture:id=>(${createSplusFixture.toString()})(catalog,id)});})();`;
   once('</head>',`<script id="splus42-runtime-v1">${payload}</script><style id="splus42-style">body:has(#splus-status-panel){overflow:auto!important;height:auto!important;min-height:100vh}#splus-status-panel{position:relative;z-index:5;max-width:1200px;margin:24px auto;padding:20px;background:#111f29;color:#e9e6d8;font:14px/1.5 sans-serif;border:1px solid #687778;border-radius:16px}#splus-status-panel h2{font-size:20px}.splus-status-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}.splus-status-grid article{padding:12px;background:#1c2c36;border-radius:10px}.splus-status-grid p{color:#d8c793}.splus-status-grid ul{padding-left:18px;margin:8px 0}.splus-status-grid li[data-polarity=debuff]{color:#ffb4a7}.splus-status-grid li[data-polarity=buff]{color:#a5e0bd}.splus-battle #battleOrders{display:none!important}.splus-battle .action-zone{width:min(900px,calc(100vw - 20px))!important}.splus-battle .action-button strong{font-size:13px!important}.splus-battle .action-button small{font-size:10px!important}#splus-evidence{max-height:320px;overflow:auto;font:11px monospace}</style></head>`);
   once('  const Core = globalThis.HonVietCore;',`  const LegacyCore=globalThis.HonVietCore;
   const Core={...LegacyCore,
@@ -67,12 +68,17 @@ export function patchSplusBattleHtml(input) {
   once('      if(isNemVi){\n        context.shadowBlur=0;',`      if(status.iconId){context.shadowBlur=0;context.fillStyle='#fff';context.font='bold 11px sans-serif';context.textAlign='center';const number=globalThis.SPLUS42.catalog.find(h=>h.iconId===status.iconId)?.number;context.fillText(String(number||'')+(status.stacks>1?'×'+status.stacks:''),sx,sy+4);}
       if(isNemVi){
         context.shadowBlur=0;`);
+  once('</head>','<link rel="stylesheet" href="/splus-skill-details.css"><script src="/splus-skill-details.js"></script><style>.splus-battle .action-buttons{grid-template-columns:1fr!important}.splus-battle .action-button[data-action="skill"],.splus-battle .action-button[data-action="ultimate"]{display:none!important}#splus-battle-skills{margin:0!important}#splus-battle-skills .splus-skill-visual{width:64px}#splus-battle-skills .splus-skill-name{font-size:11px}#splus-battle-skills .splus-skill-kind{margin:1px}.splus-battle .action-zone{max-width:510px!important;background:#10202cec;border:1px solid #8e784955;border-radius:14px}.splus-battle .action-button small{display:none!important}@media(max-width:600px){#splus-battle-skills .splus-skill-visual{width:48px}#splus-battle-skills .splus-skill-name{font-size:10px}}</style></head>');
+  once('dom.actionButtons.forEach((button) => button.addEventListener("click", () => chooseAction(button.dataset.action)));','dom.actionButtons.forEach((button) => button.addEventListener("click", () => splusInspectAction(button.dataset.action,button)));');
+  once('      chooseAction(actionByKey[event.key]);','      if(!document.getElementById("splus-skill-dialog")?.open)splusInspectAction(actionByKey[event.key]);');
+  once('    state.currentId = actor.id;','    state.currentId = actor.id;\n    if(splusCombat())splusCombat().beginTurn(actor);');
   return html;
 }
 
 export function buildSplusRuntime(root=process.cwd()) {
   const path=join(root,'dist','battle.html');writeFileSync(path,patchSplusBattleHtml(readFileSync(path,'utf8')));
-  writeFileSync(join(root,'dist','splus42-catalog.json'),JSON.stringify({heroes:SPLUS_HEROES,icons:SPLUS_ICON_MANIFEST},null,2));
+  writeFileSync(join(root,'dist','splus42-catalog.json'),JSON.stringify({heroes:SPLUS_HEROES,icons:SPLUS_ICON_MANIFEST,...splusProfilePayload()}));
+  for(const file of ['splus-skill-details.js','splus-skill-details.css','splus-encyclopedia.js'])writeFileSync(join(root,'dist',file),readFileSync(join(root,'src','ui',file)));
   console.log('SPLUS42: source factory, existing scheduler bridge, 42 HUD identities');
 }
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url))buildSplusRuntime();

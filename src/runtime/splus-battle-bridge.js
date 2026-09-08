@@ -2,6 +2,19 @@
 // This bridge uses advanceTurn/sleep/render; it does not own a second clock.
 let splusEngine = null;
 let splusPresentation = null;
+let splusSkillUI=null;
+function splusSkillOptions(actor){return {getState:()=>({energy:actor.energy,cooldowns:Object.fromEntries(['skill','ultimate'].map(a=>[a,Math.max(0,(actor.splus.cooldowns[a]||0)-splusCombat().round)])),canUse:Object.fromEntries(['skill','ultimate'].map(a=>[a,state.mode==='battle'&&state.currentId===actor.id&&!state.locked&&!state.auto&&splusCombat().canUse(actor,a)]))}),cast:action=>{if(state.currentId===actor.id&&!state.auto)chooseAction(action);}};}
+function splusInspectAction(action,button){
+  if(!splusCombat()||action==='basic')return chooseAction(action);
+  const actor=getUnit(state.currentId);if(actor)splusSkillUI?.open(actor.sourceId,action,button,splusSkillOptions(actor));
+}
+function splusSkillBar(){
+  if(!splusSkillUI)splusSkillUI=globalThis.createSplusSkillUI(globalThis.SPLUS42.profiles);
+  const actor=getUnit(state.currentId);let strip=document.getElementById('splus-battle-skills');
+  if(!strip){strip=document.createElement('div');strip.id='splus-battle-skills';strip.className='splus-skill-strip';document.querySelector('.action-zone').prepend(strip);}
+  if(actor&&strip.dataset.actorId!==actor.id){strip.dataset.actorId=actor.id;strip.replaceChildren(...['passive','skill','ultimate'].map(slot=>splusSkillUI.button(actor.sourceId,slot,splusSkillOptions(actor))));}
+  splusSkillUI.refresh();
+}
 function splusFloater(target,amount,healing=false,critical=false) {
   if(!(amount>0))return;
   if(splusPresentation){const id=target.id+':'+healing,previous=splusPresentation.get(id);splusPresentation.set(id,{target,amount:amount+(previous?.amount||0),healing,critical:critical||previous?.critical});return;}
@@ -39,6 +52,7 @@ function splusEvent(event) {
 }
 function splusStateView() {
   const e=splusCombat();if(!e)return;
+  splusSkillBar();
   let panel=document.getElementById('splus-status-panel');
   if(!panel){panel=document.createElement('section');panel.id='splus-status-panel';panel.setAttribute('aria-label','Trạng thái 42 tướng S+');document.body.append(panel);}
   document.body.classList.add('splus-battle');
