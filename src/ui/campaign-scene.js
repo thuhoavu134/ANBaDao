@@ -1,8 +1,16 @@
 /* Presentation owner for Chinh chiến. Rewards and battles keep their domain owners. */
 const sceneState = { root: null, canvas: null, active: false, scope: null, resizeObserver: null,
   raf: 0, rafRelease: null, timer: 0, timerRelease: null, booted: false,
-  lastFrame: 0, width: 390, height: 300, draft: null, slot: 0, checkpoint: null, launching: false };
+  lastFrame: 0, width: 390, height: 300, draft: null, slot: 0, checkpoint: null, launching: false,
+  activationGeneration: 0 };
 const sceneImages = new Map();
+const sceneDiagnosticsEnabled = (() => {
+  try {
+    return typeof location !== 'undefined' && new URLSearchParams(location.search).get('qaL04b') === 'scene-lifetime';
+  } catch (_) {
+    return false;
+  }
+})();
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const escapeScene = value => String(value ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const sceneNumber = value => new Intl.NumberFormat('vi-VN').format(Math.max(0, Number(value) || 0));
@@ -125,6 +133,27 @@ function trackSceneTimer() {
   sceneState.timer = timer;
   sceneState.timerRelease = sceneState.scope?.add(() => clearInterval(timer)) || null;
 }
+function sceneDiagnosticSnapshot() {
+  const roots = [...document.querySelectorAll('#hvCampaignScene')];
+  const scope = sceneState.scope?.snapshot();
+  return {
+    schema: 'hon-viet-campaign-scene-diagnostics/v1',
+    active: sceneState.active,
+    rootCount: roots.length,
+    visibleRootCount: roots.filter(root => !root.hidden).length,
+    activationGeneration: sceneState.activationGeneration,
+    scopeGeneration: scope?.generation ?? null,
+    scopeDisposed: scope?.disposed ?? true,
+    pendingResources: scope?.pending ?? 0,
+    timerActive: Number(Boolean(sceneState.timer)),
+    rafActive: Number(Boolean(sceneState.raf)),
+    resizeObserverActive: Number(Boolean(sceneState.resizeObserver)),
+    imageCacheSize: sceneImages.size
+  };
+}
+if (sceneDiagnosticsEnabled) {
+  window.__HV_CAMPAIGN_SCENE_DIAGNOSTICS = Object.freeze({ snapshot: sceneDiagnosticSnapshot });
+}
 function startSceneClock() {
   stopSceneClock();
   if (!sceneState.active || document.hidden) return;
@@ -208,7 +237,10 @@ function onSceneRoute(name) {
     if (sceneState.root) { sceneState.root.querySelector('dialog').close(); sceneState.root.hidden = true; }
     return;
   }
-  if (!sceneState.scope?.isActive()) sceneState.scope = createSceneLifetime('campaign');
+  if (!sceneState.scope?.isActive()) {
+    sceneState.scope = createSceneLifetime('campaign');
+    sceneState.activationGeneration += 1;
+  }
   sceneState.draft = null; sceneState.checkpoint = null; sceneState.launching = false;
   renderScene(); sceneState.root.hidden = false;
   sceneState.root.querySelector('.cs-home').hidden = false;
