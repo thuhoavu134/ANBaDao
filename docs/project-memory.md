@@ -113,3 +113,25 @@ player journey, combat rules, save ownership and production evidence stable.
   `DEVICE_BACKEND_NOT_AVAILABLE`/browser capabilities `[]`, missing game-dev,
   doctor/smoke, and incomplete local binary assets/dist. Next: device matrix
   plus Ticket Board claim/lock/evidence; keep REVIEW and never mark DONE/MERGED.
+
+## Latest L04b checkpoint — campaign lifecycle diagnostics (2026-09-08)
+
+- Active slice: `L04b-scene-lifetime-fault-diagnostics/v1`; status remains
+  `REVIEW / IN_PROGRESS`.
+- Final source/build commit: `4f8511bd52e2bd52eb79d44406b2b9153531f14c`,
+  following the diagnostic contract, `window.location` flag fix, DOM evidence
+  bridge and exit snapshot commits. Owners remain `src/ui/campaign-scene.js`
+  and `src/ui/scene-lifetime.js`; build embeds source and does not treat `dist`
+  as the source owner.
+- RED had two real baseline failures; GREEN `2/2`; REFACTOR `32/32`. Full
+  direct suite is `185/222` pass with 37 failures caused by missing connector
+  `dist`/binary assets/fixtures; local build is blocked by missing
+  `assets/characters/luc-anh/idle-rgba-v1-atlas.webp.json`.
+- Vercel `dpl_C4J7JGkqBB5PHjy4BZ6L8aZDiDXM` is READY, embedded battle is
+  `952395` bytes, selected runtime errors are `0`. Chrome normal route has no
+  snapshot; active/exit/12-loop evidence is recorded in
+  `docs/qa/L04b/l04b-scene-lifetime-diagnostics.json` with app-origin errors 0.
+- Device capabilities `[]`; Ticket Board/boot, archive, doctor/smoke,
+  `agent-browser`, `game-dev` and complete local assets remain blocked. Next
+  handoff is device matrix and Ticket Board claim/lock/evidence; never mark
+  this ticket DONE/MERGED.

@@ -1,6 +1,6 @@
 # Bàn giao Lục Thần / Hồn Việt cho Luna và các model tiếp theo
 
-Cập nhật: **07/09/2026**. Đây là điểm vào cho Luna. Các mục pixel/render và evidence 05/09 phía dưới là lịch sử kỹ thuật; trạng thái hiện tại nằm ở mục 1 và progress.
+Cập nhật: **08/09/2026**. Đây là điểm vào cho Luna. Các mục pixel/render và evidence 05/09 phía dưới là lịch sử kỹ thuật; trạng thái hiện tại nằm ở mục 1 và progress.
 
 ## 0. Quy tắc skill bắt buộc
 
@@ -13,6 +13,12 @@ Trước khi nhận hoặc thực hiện bất kỳ lát cắt nào, đọc quy 
 
 
 ## 1. Đọc nhanh: hiện có gì và làm tiếp ở đâu
+
+- Latest source/build checkpoint là `4f8511bd52e2bd52eb79d44406b2b9153531f14c`;
+  Vercel `dpl_C4J7JGkqBB5PHjy4BZ6L8aZDiDXM` đạt READY trên alias
+  `https://luc-than.vercel.app/`. L04b diagnostics đã qua focused `32/32`,
+  Chrome production active/exit/re-entry evidence; ticket tổng thể vẫn
+  `REVIEW / IN_PROGRESS`.
 
 - Repo `bktimmy247/luc-than`; [production](https://luc-than.vercel.app/). Game HTML/JavaScript + Canvas 2D, shell index và iframe battle, build bằng `scripts/build-static.mjs`.
 - Code bàn giao hiện tại là [`005dc3a09661589ff7b96b6b7402212b1a26581e`](https://github.com/bktimmy247/luc-than/commit/005dc3a09661589ff7b96b6b7402212b1a26581e), nối observer combat L05a/L05b, seeded RNG L05c-a và direct boundary L05c-b vào build owner. Focused L05c-b suite đạt **34/34 pass, 0 fail**; full `npm test`/CI chưa chạy trong phiên connector-only này. Vercel production `dpl_8JxKw4my7swxv4Yn6Not7w6bmRod` từ commit `005dc3a` đạt READY. Chrome production fixture đã capture `finished`, 28 action, 81 result, 219 impact, 219 direct boundary impact và 5 action có từ hai hit. Hotfix âm thanh thoát trận vẫn được giữ; round-cap/full replay và Safari/device còn mở.
@@ -740,3 +746,34 @@ claim/lock/evidence when those backends become available. Keep
 - Bước tiếp theo: khi device backend có, chạy cùng luồng save-fail trên Chrome
   responsive và Safari/iPhone/iPad; nếu chưa có thì chọn lát cắt source/test
   tiếp theo từ L04a/L05b. Giữ `REVIEW / IN_PROGRESS`.
+
+## 1.9 L04b — opt-in campaign lifecycle diagnostics (2026-09-08)
+
+**Trạng thái:** `REVIEW / IN_PROGRESS`; không đánh dấu `DONE` hoặc `MERGED`.
+
+- Contract `L04b-scene-lifetime-fault-diagnostics/v1` giữ nguyên ownership:
+  `src/ui/campaign-scene.js` sở hữu scene, `src/ui/scene-lifetime.js` sở hữu
+  activation resources, build owner chỉ nhúng source vào static build. Query
+  `qaL04b=scene-lifetime` là opt-in; route bình thường không có diagnostic
+  snapshot.
+- Code chain mới nhất: `5979d493` → `eae7b4f1` → `7b1f2d6c` → `4f8511bd`.
+  RED `2` failure thật; GREEN `2/2`; REFACTOR focused `32/32`, syntax và
+  `git diff --check` pass.
+- Production deployment `dpl_C4J7JGkqBB5PHjy4BZ6L8aZDiDXM` READY; build log
+  ghi embedded battle `952395` bytes, runtime errors `0`. Chrome alias normal
+  route không có bridge; active route có đúng 1 root, 8 pending resources,
+  timer/RAF/observer đang hoạt động và cache 5; exit route dispose về 0;
+  12 vòng re-entry giữ stable root/resource và app-origin errors `0`.
+- Machine evidence: `docs/qa/L04b/l04b-scene-lifetime-diagnostics.json`.
+- Full direct local suite: `185/222` pass, `37` fail do connector checkout
+  thiếu `dist/`, binary assets và fixture; local build bị chặn bởi
+  `assets/characters/luc-anh/idle-rgba-v1-atlas.webp.json`. Device backend là
+  `[]`; Ticket Board/boot, archive, doctor/smoke, `agent-browser` và `game-dev`
+  là blocker đã ghi chính xác.
+
+### Bàn giao tiếp
+
+Khi device backend hoặc Ticket Board khả dụng, chạy device matrix và claim/lock
+evidence cho L04b/L04a/L05b. Nếu chưa khả dụng, chọn lát cắt source/test tiếp
+theo của L04a/L05b; không đổi seed, reward, balance, save migration, roster,
+art, audio hoặc gameplay rule và giữ `REVIEW / IN_PROGRESS`.

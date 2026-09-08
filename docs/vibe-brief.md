@@ -87,6 +87,27 @@ The project remains `REVIEW / IN_PROGRESS`; device capabilities are `[]`, and
 Ticket Board, complete local assets, doctor/smoke, archive and `game-dev`
 remain unavailable.
 
+## 2026-09-08 — L04b campaign lifecycle diagnostics
+
+The source-owned campaign scene now has an opt-in `?qaL04b=scene-lifetime`
+diagnostic snapshot and a DOM evidence mirror. Normal production routes do not
+expose the mirror. The four-commit code chain ends at `4f8511bd`; RED had two
+real baseline failures, GREEN was `2/2`, and REFACTOR was `32/32` focused PASS
+with syntax/diff checks clean.
+
+Vercel `dpl_C4J7JGkqBB5PHjy4BZ6L8aZDiDXM` is READY with a `952395`-byte
+embedded battle build and zero selected runtime errors. Chrome production
+proved one root/one visible root, stable active resources (`pending=8`,
+timer/RAF/observer `1`, image cache `5`), and a clean exit (`pending=0`,
+timer/RAF/observer/image cache `0`) across 12 re-entry loops. Normal route and
+all app-origin console errors are clean. Evidence is
+`docs/qa/L04b/l04b-scene-lifetime-diagnostics.json`.
+
+The project remains `REVIEW / IN_PROGRESS`; device capabilities are `[]`, and
+Ticket Board/boot, archive, doctor/smoke, `agent-browser`, `game-dev` and the
+complete local asset checkout remain unavailable. Full direct local tests are
+`185/222` pass with 37 connector asset/dist failures.
+
 ## 2026-09-07 — L04b preparation timer scope
 
 The source-owned campaign scene now registers the existing preparation balance

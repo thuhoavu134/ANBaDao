@@ -264,3 +264,23 @@
 - Remains WIP/REVIEW pending device backend, Ticket Board, complete local asset
   harness, archive, doctor/smoke and game-dev gates. Evidence:
   `docs/qa/L03c/l03c-save-failure-browser.json`.
+
+## v3.24.9 — L04b campaign lifecycle diagnostics (REVIEW)
+
+- Added QA-only campaign scene diagnostics behind `?qaL04b=scene-lifetime`,
+  including one-root/visibility, activation/scope generation, pending
+  resources, timer/RAF/ResizeObserver state and image-cache counts. A DOM
+  mirror makes the opt-in snapshot readable by the browser evidence controller;
+  normal URLs remain unchanged.
+- Code chain: `5979d493` → `eae7b4f1` → `7b1f2d6c` → `4f8511bd`. RED: two
+  real baseline failures; GREEN: `2/2 PASS`; REFACTOR: `32/32 PASS`, syntax
+  and `git diff --check` pass. No gameplay/economy/save/roster/art/audio rule
+  changes.
+- Vercel `dpl_C4J7JGkqBB5PHjy4BZ6L8aZDiDXM` READY; embedded battle
+  `952395` bytes; selected runtime errors `0`.
+- Chrome production: normal route had no QA snapshot; active snapshot stayed
+  at one root and stable resources for 12 re-entry loops; exit disposed to
+  zero activation resources; app-origin errors `0`. Evidence:
+  `docs/qa/L04b/l04b-scene-lifetime-diagnostics.json`.
+- Remains WIP/REVIEW pending device backend, Ticket Board/boot, complete local
+  asset harness, archive, doctor/smoke and game-dev gates.

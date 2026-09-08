@@ -1,6 +1,6 @@
 # Hồn Việt / Lục Thần — tiến độ hiện tại
 
-Cập nhật **07/09/2026, giờ Việt Nam**. Giữ tên file cũ để các link bàn giao tiếp tục hoạt động. Nội dung này thay snapshot 06/09; lịch sử còn trong Git. Không dùng phần trăm tổng khi chưa có nghiệm thu từng hệ thống.
+Cập nhật **08/09/2026, giờ Việt Nam**. Giữ tên file cũ để các link bàn giao tiếp tục hoạt động. Nội dung này thay snapshot 06/09; lịch sử còn trong Git. Không dùng phần trăm tổng khi chưa có nghiệm thu từng hệ thống.
 
 ## 1. Baseline và công việc mới nhất
 
@@ -384,3 +384,28 @@ Status: `REVIEW` / `IN_PROGRESS`.
 - Device capabilities remain `[]`; Ticket Board, archive, doctor/smoke,
   `agent-browser`, `game-dev` and the complete local binary-asset checkout
   remain unavailable. Do not mark L03 or L03c `DONE`/`MERGED`.
+
+## 4.24 L04b — opt-in campaign lifecycle diagnostics (2026-09-08)
+
+Status: `REVIEW` / `IN_PROGRESS`.
+
+- Contract `L04b-scene-lifetime-fault-diagnostics/v1` is implemented in the
+  source owner. `?qaL04b=scene-lifetime` exposes a QA-only snapshot and a
+  DOM evidence mirror; ordinary production routes remain free of that mirror.
+- Code chain is `5979d493` → `eae7b4f1` → `7b1f2d6c` → `4f8511bd`. RED had
+  `2` real baseline failures; GREEN was `2/2`; REFACTOR focused scene/route
+  coverage was `32/32`, with syntax and diff checks passing.
+- Vercel deployment `dpl_C4J7JGkqBB5PHjy4BZ6L8aZDiDXM` is READY from the final
+  code SHA. Build logs show the complete-source build and `952395` embedded
+  battle bytes; selected runtime errors are `0`.
+- Chrome production verified normal route with no QA snapshot, active route
+  with exactly one visible root and `pending=8`, timer/RAF/observer `1`,
+  image cache `5`; exit route disposed to `pending=0`, timer/RAF/observer `0`,
+  image cache `0`. Twelve re-entry loops stayed stable and app-origin
+  console errors were `0`.
+- Machine evidence: `docs/qa/L04b/l04b-scene-lifetime-diagnostics.json`.
+- Device capabilities are `[]`; Ticket Board/boot, archive, doctor/smoke,
+  `agent-browser`, `game-dev` and the complete local binary checkout remain
+  blocked. Local direct suite is `185/222` pass with `37` connector
+  asset/dist failures; local build is blocked by the missing Luc Anh atlas
+  metadata. Do not mark L04b `DONE`/`MERGED`.

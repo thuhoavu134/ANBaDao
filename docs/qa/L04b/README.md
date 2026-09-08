@@ -85,3 +85,37 @@ device, profiler, fault-injection or Ticket Board gates.
 - Next exact action: rerun Chrome responsive plus Safari/iPhone/iPad and
   Ticket Board claim/lock/evidence when those backends are available. Keep
   `REVIEW`.
+
+## 2026-09-08 — opt-in campaign lifecycle diagnostics
+
+**Trạng thái:** `REVIEW` / `IN_PROGRESS`; the acceptance slice is evidenced,
+but device, Ticket Board, archive and complete local asset gates remain open.
+
+- Source owner `src/ui/campaign-scene.js` now exposes a QA-only diagnostics
+  snapshot for `?qaL04b=scene-lifetime` and mirrors it to the campaign root as
+  `data-qa-l04b-snapshot` for machine-readable browser evidence. The snapshot
+  reports root visibility, activation generation, scope disposal, pending
+  resources, timer/RAF/ResizeObserver state and image-cache size. Normal URLs
+  do not get the bridge.
+- Code chain: `5979d493` (diagnostic contract), `eae7b4f1` (window-location
+  flag fix), `7b1f2d6c` (browser evidence bridge), `4f8511bd` (exit snapshot).
+  RED was `2` real failures on the baseline; GREEN was `2/2`; REFACTOR was
+  `32/32` focused PASS with syntax and diff checks clean.
+- Final Vercel deployment `dpl_C4J7JGkqBB5PHjy4BZ6L8aZDiDXM` from
+  `4f8511bd` is READY. The complete-source build embedded `952395` battle
+  bytes and the selected runtime-error query is `0`.
+- Chrome production evidence: normal route had no QA snapshot; active route
+  had one visible root with `pending=8`, timer/RAF/observer `1` and image cache
+  `5`; leaving the route produced `scopeDisposed=true`, `pending=0`, timer/RAF/
+  observer `0` and image cache `0`. Twelve re-entry loops stayed at one root,
+  one visible root and stable resource counts; app-origin console errors were
+  `0`. Machine evidence:
+  `docs/qa/L04b/l04b-scene-lifetime-diagnostics.json`.
+- Device capabilities are `[]`; responsive Chrome/Safari/iPhone/iPad,
+  Ticket Board/boot protocol, archive, doctor/smoke, `agent-browser`,
+  `game-dev` and the complete local binary checkout remain unavailable.
+  Local full direct tests were `185/222` pass with `37` connector asset/dist
+  failures; local build is blocked by the missing Luc Anh atlas metadata.
+
+Next exact action: run the same evidence on the device matrix and complete the
+Ticket Board claim/lock/review gates when available. Keep `REVIEW`.

@@ -574,3 +574,29 @@ This source/build-owner slice is implemented and remains `REVIEW`, not `DONE`.
    `agent-browser`, `game-dev` and the complete local asset checkout remain
    unavailable. Next handoff is device matrix + Ticket Board evidence; retain
    `REVIEW / IN_PROGRESS`.
+
+## Checkpoint addendum — L04b opt-in scene lifecycle diagnostics (2026-09-08)
+
+This source/test slice is implemented and remains `REVIEW`, not `DONE`.
+
+1. Contract: `L04b-scene-lifetime-fault-diagnostics/v1`. The campaign source
+   owns a QA-only snapshot for `qaL04b=scene-lifetime`; the DOM mirror is only
+   written when that query is active. No seed, reward, balance, save
+   migration, roster, art, audio or gameplay rule changed.
+2. Code chain: `5979d493` → `eae7b4f1` → `7b1f2d6c` → `4f8511bd`. RED had two
+   real failures on the baseline; GREEN was `2/2`; REFACTOR focused coverage
+   was `32/32` with source/build-owner syntax and diff checks clean.
+3. Vercel `dpl_C4J7JGkqBB5PHjy4BZ6L8aZDiDXM` is READY from `4f8511bd`; build
+   logs confirm the source/build path and `952395` embedded battle bytes;
+   selected runtime errors are `0`.
+4. Chrome production normal route had no diagnostic snapshot. Active route
+   reported one root, one visible root, eight pending resources, timer/RAF/
+   observer active and five cached images. Exit disposed all activation
+   resources. Twelve enter/exit loops kept root/resource counts stable and
+   app-origin errors were `0`.
+5. Device capabilities are `[]`; Ticket Board/boot, archive, doctor/smoke,
+   `agent-browser`, `game-dev` and complete local assets remain unavailable.
+   Full direct local suite is `185/222` pass with `37` connector-only
+   asset/dist failures; local build is blocked by the missing Luc Anh atlas
+   metadata. Next action is device matrix plus Ticket Board claim/lock/evidence;
+   keep `REVIEW / IN_PROGRESS`.

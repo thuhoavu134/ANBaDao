@@ -1,0 +1,124 @@
+{
+  "schema": "hon-viet-qa-evidence/v1",
+  "ticket": "L04b-scene-lifetime-diagnostics",
+  "status": "REVIEW / IN_PROGRESS",
+  "recordedAt": "2026-09-08",
+  "baselineMain": "f4ebe7dbe98dbcaabfca1554719562e7b0be454d",
+  "codeCommitChain": [
+    "5979d493c8c62beedefea8aa73af12eae627a237",
+    "eae7b4f10ac26f3bd6ad30ee826bd5c1a7cd982b",
+    "7b1f2d6ca4fd076dbe41c0c3dbc4d750b88b0666",
+    "4f8511bd52e2bd52eb79d44406b2b9153531f14c"
+  ],
+  "contract": {
+    "revision": "L04b-scene-lifetime-fault-diagnostics/v1",
+    "acceptance": [
+      "Normal route has no QA diagnostics snapshot.",
+      "Opt-in QA route reports one reusable campaign root and active resource counts.",
+      "Leaving and re-entering campaign disposes the old scope without root/resource growth."
+    ],
+    "nonGoals": [
+      "seed",
+      "reward",
+      "balance",
+      "save migration",
+      "roster",
+      "art",
+      "audio",
+      "gameplay rules"
+    ]
+  },
+  "tdd": {
+    "red": {
+      "command": "node --test tests/qa-scene-lifetime.test.mjs",
+      "result": "2 real failures on the baseline: QA marker and diagnostic schema were absent."
+    },
+    "green": {
+      "command": "node --test tests/qa-scene-lifetime.test.mjs",
+      "result": "2/2 PASS"
+    },
+    "refactor": {
+      "command": "node --test --test-concurrency=1 tests/qa-scene-lifetime.test.mjs tests/scene-lifetime.test.mjs tests/campaign-scene.test.mjs tests/return-context.test.mjs tests/hero-roster-route.test.mjs tests/hero-roster-state.test.mjs",
+      "result": "32/32 PASS; node --check campaign source/build owner and git diff --check PASS"
+    },
+    "fullDirect": {
+      "command": "node --test --test-concurrency=1 --test-reporter=tap tests/*.test.mjs",
+      "total": 222,
+      "pass": 185,
+      "fail": 37,
+      "result": "Connector checkout is missing dist, binary assets and complete-source fixtures; failures are availability/ENOENT blockers, not new focused L04b failures."
+    },
+    "localBuild": {
+      "command": "node scripts/build-static.mjs",
+      "result": "BLOCKED: ENOENT assets/characters/luc-anh/idle-rgba-v1-atlas.webp.json"
+    }
+  },
+  "production": {
+    "deployment": "dpl_C4J7JGkqBB5PHjy4BZ6L8aZDiDXM",
+    "sourceSha": "4f8511bd52e2bd52eb79d44406b2b9153531f14c",
+    "state": "READY",
+    "alias": "https://luc-than.vercel.app/",
+    "embeddedBattleBytes": 952395,
+    "runtimeErrors": 0,
+    "buildResult": "Vercel build completed and deployment outputs uploaded."
+  },
+  "browser": {
+    "engine": "Chrome control-browser",
+    "normalUrl": "https://luc-than.vercel.app/",
+    "qaUrl": "https://luc-than.vercel.app/?qaL04b=scene-lifetime",
+    "normalRoute": {
+      "rootCount": 0,
+      "qaSnapshot": null,
+      "appOriginConsoleErrors": 0
+    },
+    "activeSnapshot": {
+      "schema": "hon-viet-campaign-scene-diagnostics/v1",
+      "active": true,
+      "rootCount": 1,
+      "visibleRootCount": 1,
+      "activationGeneration": 1,
+      "scopeGeneration": 0,
+      "scopeDisposed": false,
+      "pendingResources": 8,
+      "timerActive": 1,
+      "rafActive": 1,
+      "resizeObserverActive": 1,
+      "imageCacheSize": 5
+    },
+    "exitSnapshot": {
+      "active": false,
+      "rootCount": 1,
+      "visibleRootCount": 0,
+      "scopeGeneration": null,
+      "scopeDisposed": true,
+      "pendingResources": 0,
+      "timerActive": 0,
+      "rafActive": 0,
+      "resizeObserverActive": 0,
+      "imageCacheSize": 0
+    },
+    "reentry": {
+      "iterations": 12,
+      "firstActivationGeneration": 2,
+      "lastActivationGeneration": 13,
+      "maxRootCount": 1,
+      "maxVisibleRootCount": 1,
+      "activeResourcesStable": true,
+      "exitResourcesStable": true,
+      "appOriginConsoleErrors": 0
+    },
+    "browserControllerNote": "The controller's page-evaluate world cannot read inline-runtime globals directly; the opt-in data-qa-l04b-snapshot DOM bridge is used for machine evidence. Normal production has no bridge snapshot.",
+    "deviceCapabilities": []
+  },
+  "environmentGates": {
+    "ticketBoard": "TICKET_BOARD_NOT_AVAILABLE",
+    "bootProtocol": "BOOT_PROTOCOL_NOT_FOUND",
+    "archive": "SOURCE_NOT_AVAILABLE",
+    "doctor": "SOURCE_NOT_AVAILABLE",
+    "smoke": "SOURCE_NOT_AVAILABLE",
+    "agentBrowser": "COMMAND_NOT_FOUND",
+    "gameDev": "COMMAND_NOT_FOUND",
+    "deviceBackend": "DEVICE_BACKEND_NOT_AVAILABLE"
+  },
+  "handoff": "Keep REVIEW / IN_PROGRESS. Next action is device matrix plus Ticket Board claim/lock/evidence when those backends become available; do not mark DONE or MERGED."
+}
