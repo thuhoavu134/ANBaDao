@@ -20,9 +20,12 @@
   "crop": {
     "iconCount": 126,
     "gutter": { "x": 12, "y": 12 },
-    "sourceViewBoxSample": ["12 12 250 226", "286 12 250 226", "560 12 249 226"],
+    "sourceViewBoxSample": {
+      "metal": ["12 12 250 226", "286 12 250 226", "560 12 249 226"],
+      "fire": ["12 12 250 230", "286 12 250 230", "560 12 249 230"]
+    },
     "sourceArtBytesChanged": false,
-    "visualMatrix": "PASS_LOCAL_CONTACT_SHEETS: 6 atlases / 126 cropped regions reviewed after the 12x12 inset; no adjacent-row/column fragment observed and no authored silhouette loss noted. Browser/mobile runtime matrix remains open."
+    "visualMatrix": "PASS_LOCAL_CONTACT_SHEETS: 6 atlases / 126 cropped regions reviewed after the 12x12 inset; no adjacent-row/column fragment observed and no authored silhouette loss noted. PASS_BROWSER_SAMPLE: fire atlas P/S1/Ult rendered with the 12x12 inset and no visible neighboring fragment in the desktop skill strip. Full authored-atlas and mobile matrix remains REVIEW/NOT_RUN."
   },
   "targetPicker": {
     "route": "battle.html?qaSplus42=hero_splus_nung",
@@ -54,6 +57,18 @@
     "status": "NOT_RUN",
     "reason": "The connected browser exposes no viewport/emulation capability; Safari/device backend is unavailable."
   },
+  "browserPreview": {
+    "deploymentId": "dpl_HxFbZEFrfgc3VpTcckHKouy7pYYb",
+    "deployment": "READY",
+    "target": "preview",
+    "commit": "9decbaae9b87b11ab649a1a9edda0cf302fee307",
+    "url": "https://luc-than-9lwfqw787-cuong-duc-ai-s-projects.vercel.app/battle.html?qaSplus42=hero_splus_nung",
+    "runtimeViewBoxes": ["12 12 250 230", "286 12 250 230", "560 12 249 230"],
+    "targetPickerTarget": "enemy:hero_splus_tue_y",
+    "targetPickerAfterResolve": { "openDialogs": 0, "targetButtons": 0, "nextActor": "Hỏa Tiêu" },
+    "cleanReload": { "readyState": "complete", "startVisible": true, "openDialogs": 0, "targetButtons": 0, "status": "Trận đấu bắt đầu" },
+    "productionAlias": false
+  },
   "fractionalTiming": {
     "status": "REVIEW_UNCHANGED",
     "items": ["Trầm Tuệ actionSlow queue interpretation", "Hạc Phá 1.5-round stun", "Tố Linh half-slot movement", "Giang Quân one-second airborne presentation"]
@@ -63,5 +78,5 @@
     "/workspace/scratch/l11-splus-lab-desktop.jpg",
     "/workspace/scratch/l11-splus-target-picker-visible.jpg"
   ],
-  "hostNote": "Browser QA used an isolated Vercel host because the linked branch preview stayed on the prior bundle. It was not aliased to the primary luc-than project and is not release evidence."
+  "hostNote": "Browser QA used the READY Git preview for the handoff branch at the crop-fix docs commit. It is a preview URL only; no production alias or Combat V2 promotion was performed."
 }

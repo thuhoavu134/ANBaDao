@@ -1,3 +1,7 @@
+## L11 browser crop/restart follow-up — `9decbaae`
+
+The handoff branch preview is READY from the latest docs/evidence commit. Runtime Nung P/S1/Ult uses the 12×12 fire-atlas inset; Nung S1 presents one authored target, and both resolve and clean reload clear the dialog/target layer. Mobile/Safari/device and fractional timing remain open; no production promotion.
+
 ## L11 crop visual follow-up — `25c3a083`
 
 The first 3×5 crop gutter still exposed small atlas ornaments in a local 126-region contact-sheet review. Widened the source rect inset to 12×12, reviewed all six 21-region sheets, and kept authored art bytes unchanged. S+ suite is 192/192 PASS; the two full-suite image-test failures are the existing missing-`sharp` checkout dependency. Browser/device and fractional-timing gates remain REVIEW.

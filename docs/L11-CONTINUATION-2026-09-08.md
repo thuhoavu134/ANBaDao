@@ -5,7 +5,7 @@ Source baseline: `b6a2ae20a9b1b3071a8f5263740312e9d1465b04`, branch `handoff/l11
 ## Verified source slice
 
 - Resolved all six original V2 regressions and reviewed handlers across all six elements against the authored profiles. Updated explicit V1 assertions only where V2 changed the requirement.
-- Added 33 regression cases (182 S+ before final lifecycle/consumption cases; the prior checkpoint was 411/411). This continuation adds the crop/target-scope regression slice; current full suite is 414/414. Build completed through `scripts/build-static.mjs`, including independent/embedded battle parity and old save/reward/seed regressions. See `qa/L11-SPLUS-PROFILES/continuation-full-green.log`.
+- Added 33 regression cases (182 S+ before final lifecycle/consumption cases; the prior checkpoint was 411/411). This continuation adds the crop/target-scope regression slice; the prior full-green checkpoint is 414/414, while the current local rerun is 398 pass / 2 infrastructure failures because `sharp` is absent. Build completed through `scripts/build-static.mjs`, including independent/embedded battle parity and old save/reward/seed regressions. See `qa/L11-SPLUS-PROFILES/continuation-full-green.log`.
 - Source HP shields/heals, precise target scopes, control/rage restrictions, damage/shield bypass, immediate forced basic, latest-death revive, HoT final tick, Fire/Wood actions and consumed zone cleanup covered by new focused regressions.
 - Popup handles queued close/reopen, Escape, destroy and focus cleanup. Battle resolves current actor by ID, refuses orphan cast, resets UI on restart/exit. Source adapter remains the single scheduler owner.
 - Catalog/bridge/combat now identify V2. Runtime adapter script marker remains v1 as a build integration identifier.
@@ -58,3 +58,11 @@ Retained RED evidence: continuation-red, parity-red, fire-wood-red, ui-orphan-re
 - Source crop is now `{x:12,y:12}` for all 126 regions. Six generated contact sheets (21 regions per atlas) show no adjacent fragment and no visible loss of the authored icon silhouette. No art bytes changed.
 - Focused S+ suite after the crop change is **192/192 PASS**; focused scope/runtime/dialog slice remains **10/10 PASS**. Build completes. The current checkout's full rerun is blocked only by missing `sharp` in two pre-existing image tests (`398 pass / 2 infrastructure failures`); retain the prior verified `414/414` checkpoint as historical full-green evidence.
 - Browser preview used for the earlier target/restart evidence predates this crop-only commit; do not claim a new browser viewBox or mobile/device PASS until a host with the new bundle and a real viewport backend is available.
+
+## Browser crop/restart follow-up — `9decbaae`
+
+- The handoff branch Git preview `dpl_HxFbZEFrfgc3VpTcckHKouy7pYYb` is READY at [`luc-than-9lwfqw787`](https://luc-than-9lwfqw787-cuong-duc-ai-s-projects.vercel.app/battle.html?qaSplus42=hero_splus_nung), built from exact docs/evidence commit `9decbaae9b87b11ab649a1a9edda0cf302fee307`. This is a preview deployment only; no production alias or Combat V2 promotion was performed.
+- After `Vào trận giữ Ải Mây`, the live Nung skill strip rendered P/S1/Ult with fire-atlas viewBoxes `12 12 250 230`, `286 12 250 230`, and `560 12 249 230`. The desktop screenshot showed the three icons without a visible neighboring-row/column fragment; this is a runtime sample, not full 126-icon browser acceptance.
+- Nung S1 → `Thi triển` exposed exactly one `.unit-target`, `enemy:hero_splus_tue_y` (`Chọn Tuệ Y, còn 24000 máu`). Selecting it closed the dialog and cleared the target layer; the next actor was Hỏa Tiêu. This keeps target-picker presentation within the authored scope, not merely resolver correctness.
+- A clean reload returned `readyState=complete`, `Trận đấu bắt đầu`, one visible start control, zero open dialogs and zero stale target buttons. Mobile/Safari/device remains **NOT_RUN** because the connected browser still exposes no viewport/emulation capability.
+- Fractional timing remains **REVIEW_UNCHANGED**; no durations were rounded or silently approved. Main/production remains unchanged and Combat V2 remains on the handoff branch.

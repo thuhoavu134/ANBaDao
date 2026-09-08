@@ -1,6 +1,6 @@
-# Latest verified revision: 25c3a083
+# Latest verified revision: 9decbaae
 
-Crop follow-up uses a 12×12 source gutter after local review of all 126 cropped regions. S+ focused suite is **192/192 PASS**; the prior full-green checkpoint remains 414/414, while the current local rerun is blocked by missing `sharp` in two pre-existing image tests. [Scope/crop/restart evidence](../../docs/qa/L11-SPLUS-PROFILES/continuation-scope-crop-restart-20260908.json); prior 15-round battle evidence remains [here](../../docs/qa/L11-SPLUS-PROFILES/continuation-browser-battle.json). Art runtime, timing and mobile-device gates remain REVIEW/OPEN.
+Crop follow-up uses a 12×12 source gutter after local review of all 126 cropped regions. S+ focused suite is **192/192 PASS**; the prior full-green checkpoint remains 414/414, while the current local rerun is blocked by missing `sharp` in two pre-existing image tests. The latest branch preview rendered the fire P/S1/Ult sample with the 12×12 viewBoxes, narrowed Nung S1 to one target, and cleared dialogs/targets after resolve and clean reload. [Scope/crop/restart evidence](../../docs/qa/L11-SPLUS-PROFILES/continuation-scope-crop-restart-20260908.json); prior 15-round battle evidence remains [here](../../docs/qa/L11-SPLUS-PROFILES/continuation-browser-battle.json). Art runtime, timing and mobile-device gates remain REVIEW/OPEN.
 
 # L11 continuation — current source verification
 
