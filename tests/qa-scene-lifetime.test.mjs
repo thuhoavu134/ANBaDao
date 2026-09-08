@@ -8,6 +8,7 @@ test('L04b campaign exposes lifecycle diagnostics only behind the opt-in QA quer
   const campaign = read('../src/ui/campaign-scene.js');
 
   assert.match(campaign, /qaL04b/);
+  assert.match(campaign, /window\.location\?\.search/);
   assert.match(campaign, /__HV_CAMPAIGN_SCENE_DIAGNOSTICS/);
   assert.match(campaign, /hon-viet-campaign-scene-diagnostics\/v1/);
   assert.match(campaign, /rootCount/);

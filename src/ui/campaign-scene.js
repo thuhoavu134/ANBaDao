@@ -6,7 +6,7 @@ const sceneState = { root: null, canvas: null, active: false, scope: null, resiz
 const sceneImages = new Map();
 const sceneDiagnosticsEnabled = (() => {
   try {
-    return typeof location !== 'undefined' && new URLSearchParams(location.search).get('qaL04b') === 'scene-lifetime';
+    return typeof window !== 'undefined' && new URLSearchParams(window.location?.search || '').get('qaL04b') === 'scene-lifetime';
   } catch (_) {
     return false;
   }
