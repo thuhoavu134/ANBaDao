@@ -143,5 +143,16 @@
   "handoff": "docs/LUNA-HANDOFF-SPLUS-PROFILES-2026-09-08.md",
   "sourceTree": "229c2ff327778b7ae96a0c0f6cf66f78c0b9505a",
   "sourceFileCount": 45,
-  "publishedAt": "2026-09-08T08:07:40.398643+00:00"
+  "publishedAt": "2026-09-08T08:07:40.398643+00:00",
+  "historicalCheckpoint": true,
+  "currentContinuation": "docs/L11-CONTINUATION-2026-09-08.md",
+  "promotionApproval": {
+    "date": "2026-09-09",
+    "candidate": "2f8049cf6a0882503e4d45ab5275f8ad48aff8ff",
+    "pr": 17,
+    "ownerAuthorized": true,
+    "fractionalTiming": "REVIEW",
+    "mobileSafari": "NOT_RUN",
+    "production": "verify resulting merge deployment"
+  }
 }

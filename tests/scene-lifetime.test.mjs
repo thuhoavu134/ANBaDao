@@ -110,6 +110,8 @@ test('L04b preparation timer is registered with the campaign activation scope', 
   const campaign = read('../src/ui/campaign-scene.js');
   assert.match(campaign, /function trackSceneTimer\(\)/);
   assert.match(campaign, /function startSceneClock\(\)[\s\S]*trackSceneTimer\(\)/);
-  assert.match(campaign, /function openPreparation\(\)[\s\S]*trackSceneTimer\(\)/);
+  // Preparation now animates the same canvas: the clock owns both scoped
+  // resources, rather than installing a second standalone timer.
+  assert.match(campaign, /function openPreparation\(\)[\s\S]*startSceneClock\(\)/);
   assert.doesNotMatch(campaign, /sceneState\.timer = setInterval\(updateSceneNumbers, 1000\);/);
 });

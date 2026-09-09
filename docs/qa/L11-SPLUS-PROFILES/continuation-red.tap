@@ -1,0 +1,266 @@
+TAP version 13
+# Subtest: 42 authored profiles resolve all 126 skill descriptions with separate HUD/button identities
+ok 1 - 42 authored profiles resolve all 126 skill descriptions with separate HUD/button identities
+  ---
+  duration_ms: 2.553271
+  type: 'test'
+  ...
+# Subtest: full skill names, owner-HP wording and new passive numbers are preserved
+ok 2 - full skill names, owner-HP wording and new passive numbers are preserved
+  ---
+  duration_ms: 0.55102
+  type: 'test'
+  ...
+# Subtest: skill UI keeps cooldown and rage live, and text lookup drives one popup owner
+ok 3 - skill UI keeps cooldown and rage live, and text lookup drives one popup owner
+  ---
+  duration_ms: 1.016975
+  type: 'test'
+  ...
+# Subtest: V2 metal: gear cap, 3% aura, caster HP shields and expiry
+not ok 4 - V2 metal: gear cap, 3% aura, caster HP shields and expiry
+  ---
+  duration_ms: 26.448449
+  type: 'test'
+  location: '/workspace/scratch/16b3cf2fd315/luc-than/tests/splus-v2.test.mjs:8:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    5000 !== 7400
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 7400
+  actual: 5000
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/16b3cf2fd315/luc-than/tests/splus-v2.test.mjs:12:37)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.start (node:internal/test_runner/test:1242:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+  ...
+# Subtest: V2 Cuong: mitigation applies to ranged attacks and reflection never loops
+ok 5 - V2 Cuong: mitigation applies to ranged attacks and reflection never loops
+  ---
+  duration_ms: 1.370481
+  type: 'test'
+  ...
+# Subtest: V2 Lac An: eight focus stacks affect rate and crit damage, controlled targets guarantee crit
+ok 6 - V2 Lac An: eight focus stacks affect rate and crit damage, controlled targets guarantee crit
+  ---
+  duration_ms: 9.770247
+  type: 'test'
+  ...
+# Subtest: V2 Linh/Tieu: third basic mark drains rage; soul siphon is 15 and rage lock blocks gain
+not ok 7 - V2 Linh/Tieu: third basic mark drains rage; soul siphon is 15 and rage lock blocks gain
+  ---
+  duration_ms: 2.417555
+  type: 'test'
+  location: '/workspace/scratch/16b3cf2fd315/luc-than/tests/splus-v2.test.mjs:28:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    30 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 30
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/16b3cf2fd315/luc-than/tests/splus-v2.test.mjs:34:69)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: V2 Thach Kinh accumulates damage in 10% HP units, not one layer per hit
+ok 8 - V2 Thach Kinh accumulates damage in 10% HP units, not one layer per hit
+  ---
+  duration_ms: 5.525407
+  type: 'test'
+  ...
+# Subtest: V2 Vong marks only highest attack and delays its skill cooldown
+ok 9 - V2 Vong marks only highest attack and delays its skill cooldown
+  ---
+  duration_ms: 0.649945
+  type: 'test'
+  ...
+# Subtest: V2 Co Nuong parasite drains tankiest on hit and returns actual lost HP
+ok 10 - V2 Co Nuong parasite drains tankiest on hit and returns actual lost HP
+  ---
+  duration_ms: 0.933192
+  type: 'test'
+  ...
+# Subtest: V2 water: same-row haste, caster HP healing, critical-only cap
+ok 11 - V2 water: same-row haste, caster HP healing, critical-only cap
+  ---
+  duration_ms: 1.875453
+  type: 'test'
+  ...
+# Subtest: V2 Tram Chau bubble blocks crit/bleed only while shield remains and damage conversion prevents HP loss
+not ok 12 - V2 Tram Chau bubble blocks crit/bleed only while shield remains and damage conversion prevents HP loss
+  ---
+  duration_ms: 1.957213
+  type: 'test'
+  location: '/workspace/scratch/16b3cf2fd315/luc-than/tests/splus-v2.test.mjs:59:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 2500
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 2500
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/16b3cf2fd315/luc-than/tests/splus-v2.test.mjs:60:106)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: V2 Nung burns only melee attackers using Nung HP; Deep Wound bleeds using source ATK
+ok 13 - V2 Nung burns only melee attackers using Nung HP; Deep Wound bleeds using source ATK
+  ---
+  duration_ms: 0.718639
+  type: 'test'
+  ...
+# Subtest: V2 Hoa Bai ground zone ticks on victim turn and follows the slot after displacement
+ok 14 - V2 Hoa Bai ground zone ticks on victim turn and follows the slot after displacement
+  ---
+  duration_ms: 1.206461
+  type: 'test'
+  ...
+# Subtest: V2 Mien heals at each ally turn start once when host prepares before act
+ok 15 - V2 Mien heals at each ally turn start once when host prepares before act
+  ---
+  duration_ms: 0.397702
+  type: 'test'
+  ...
+# Subtest: V2 Tue Y emergency has a shared two-round cooldown and resurrects most recent death
+not ok 16 - V2 Tue Y emergency has a shared two-round cooldown and resurrects most recent death
+  ---
+  duration_ms: 6.233057
+  type: 'test'
+  location: '/workspace/scratch/16b3cf2fd315/luc-than/tests/splus-v2.test.mjs:81:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 5000
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 5000
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/16b3cf2fd315/luc-than/tests/splus-v2.test.mjs:87:37)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: V2 sleep survives DoT; Tằm Nương renews a two-hit cocoon after two rounds
+ok 17 - V2 sleep survives DoT; Tằm Nương renews a two-hit cocoon after two rounds
+  ---
+  duration_ms: 3.730466
+  type: 'test'
+  ...
+# Subtest: V2 Mang poison spreads on each victim action, next-hit blindness consumes one charge
+ok 18 - V2 Mang poison spreads on each victim action, next-hit blindness consumes one charge
+  ---
+  duration_ms: 3.110945
+  type: 'test'
+  ...
+# Subtest: V2 Kinh Nuong successful basic reflection negates damage and cannot bounce
+ok 19 - V2 Kinh Nuong successful basic reflection negates damage and cannot bounce
+  ---
+  duration_ms: 4.829887
+  type: 'test'
+  ...
+# Subtest: V2 Khaos clone explodes and respawns after 3 rounds; ultimate bypasses shield
+not ok 20 - V2 Khaos clone explodes and respawns after 3 rounds; ultimate bypasses shield
+  ---
+  duration_ms: 21.417944
+  type: 'test'
+  location: '/workspace/scratch/16b3cf2fd315/luc-than/tests/splus-v2.test.mjs:105:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(e.unit('2:enemy').hp<before)
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/16b3cf2fd315/luc-than/tests/splus-v2.test.mjs:108:71)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: V2 Hoi Anh forces an immediate friendly strike; Van ward rolls 35% after action
+not ok 21 - V2 Hoi Anh forces an immediate friendly strike; Van ward rolls 35% after action
+  ---
+  duration_ms: 6.877982
+  type: 'test'
+  location: '/workspace/scratch/16b3cf2fd315/luc-than/tests/splus-v2.test.mjs:110:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert.ok(e.unit('2:friend').hp<10000)
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/16b3cf2fd315/luc-than/tests/splus-v2.test.mjs:111:96)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: V2 Cuu Trieu stacks on all actors, burns current HP, loses half stacks to silence
+ok 22 - V2 Cuu Trieu stacks on all actors, burns current HP, loses half stacks to silence
+  ---
+  duration_ms: 16.666496
+  type: 'test'
+  ...
+# Subtest: V2 Time Freeze suppresses rage gain and passive reflection
+ok 23 - V2 Time Freeze suppresses rage gain and passive reflection
+  ---
+  duration_ms: 0.783426
+  type: 'test'
+  ...
+1..23
+# tests 23
+# suites 0
+# pass 17
+# fail 6
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 451.732875

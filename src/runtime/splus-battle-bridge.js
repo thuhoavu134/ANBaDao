@@ -2,6 +2,37 @@
 // This bridge uses advanceTurn/sleep/render; it does not own a second clock.
 let splusEngine = null;
 let splusPresentation = null;
+let splusSkillUI=null;
+function splusReset(){
+  splusSkillUI?.destroy();splusSkillUI=null;splusEngine=null;splusPresentation=null;
+  document.getElementById('splus-battle-skills')?.remove();
+  document.getElementById('splus-status-panel')?.remove();
+  document.body.classList.remove('splus-battle');
+}
+function splusSkillOptions(actor){
+  const actorId=actor.id;
+  const allowed=(current,combat,action)=>!!current&&!!combat&&state.mode==='battle'&&state.currentId===actorId&&!state.locked&&!state.auto&&combat.canUse(current,action);
+  return {getState:()=>{
+    const current=getUnit(actorId),combat=splusCombat();
+    return {energy:current?.energy||0,cooldowns:Object.fromEntries(['skill','ultimate'].map(a=>[a,Math.max(0,(current?.splus?.cooldowns?.[a]||0)-(combat?.round||0))])),canUse:Object.fromEntries(['skill','ultimate'].map(a=>[a,allowed(current,combat,a)]))};
+  },cast:action=>{if(allowed(getUnit(actorId),splusCombat(),action))chooseAction(action);}};
+}
+function splusInspectAction(action,button){
+  if(!splusCombat()||action==='basic')return chooseAction(action);
+  const actor=getUnit(state.currentId);if(actor)splusSkillUI?.open(actor.sourceId,action,button,splusSkillOptions(actor));
+}
+function splusTargetTeam(actor,candidates,fallback){
+  if(!splusCombat())return fallback;
+  const teams=new Set((candidates||[]).filter(Boolean).map(unit=>unit.team));
+  return teams.size===1?[...teams][0]:fallback;
+}
+function splusSkillBar(){
+  if(!splusSkillUI)splusSkillUI=globalThis.createSplusSkillUI(globalThis.SPLUS42.profiles);
+  const actor=getUnit(state.currentId);let strip=document.getElementById('splus-battle-skills');
+  if(!strip){strip=document.createElement('div');strip.id='splus-battle-skills';strip.className='splus-skill-strip';document.querySelector('.action-zone').prepend(strip);}
+  if(actor&&strip.dataset.actorId!==actor.id){strip.dataset.actorId=actor.id;strip.replaceChildren(...['passive','skill','ultimate'].map(slot=>splusSkillUI.button(actor.sourceId,slot,splusSkillOptions(actor))));}
+  splusSkillUI.refresh();
+}
 function splusFloater(target,amount,healing=false,critical=false) {
   if(!(amount>0))return;
   if(splusPresentation){const id=target.id+':'+healing,previous=splusPresentation.get(id);splusPresentation.set(id,{target,amount:amount+(previous?.amount||0),healing,critical:critical||previous?.critical});return;}
@@ -19,7 +50,7 @@ function splusCombat() {
 function splusHeroConfig(raw, index) {
   const h=normalizeConfiguredHero(raw,index),kit=globalThis.SPLUS42.catalog.find(c=>c.id===h.sourceId);
   if(!kit)return h;
-  return {...h,name:kit.name,title:kit.elementName,initial:String(kit.number),archetype:kit.role,roleClass:kit.role,kitVersion:'splus42-v1',skillKit:null,passive:kit.passive.description,passiveIds:[kit.passive.id],basicId:kit.actions.basic.id,basicName:kit.actions.basic.name,basicDetail:kit.actions.basic.description,basicKind:'damage',skillName:kit.actions.skill.name,skillDetail:kit.actions.skill.description,skillKind:['healer','support'].includes(kit.role)?'heal':'damage',ultimateId:kit.actions.ultimate.id,ultimateName:kit.actions.ultimate.name,ultimateDetail:kit.actions.ultimate.description,ultimateKind:'aoe',visualId:kit.id,visualSource:'splus-pending-art'};
+  return {...h,name:kit.name,title:kit.elementName,initial:String(kit.number),archetype:kit.role,roleClass:kit.role,kitVersion:'splus42-v2',skillKit:null,passive:kit.passive.description,passiveIds:[kit.passive.id],basicId:kit.actions.basic.id,basicName:kit.actions.basic.name,basicDetail:kit.actions.basic.description,basicKind:'damage',skillName:kit.actions.skill.name,skillDetail:kit.actions.skill.description,skillKind:['healer','support'].includes(kit.role)?'heal':'damage',ultimateId:kit.actions.ultimate.id,ultimateName:kit.actions.ultimate.name,ultimateDetail:kit.actions.ultimate.description,ultimateKind:'aoe',visualId:kit.id,visualSource:'splus-pending-art'};
 }
 function splusEvent(event) {
   const t=getUnit(event.targetId),a=getUnit(event.sourceId);
@@ -39,6 +70,7 @@ function splusEvent(event) {
 }
 function splusStateView() {
   const e=splusCombat();if(!e)return;
+  splusSkillBar();
   let panel=document.getElementById('splus-status-panel');
   if(!panel){panel=document.createElement('section');panel.id='splus-status-panel';panel.setAttribute('aria-label','Trạng thái 42 tướng S+');document.body.append(panel);}
   document.body.classList.add('splus-battle');

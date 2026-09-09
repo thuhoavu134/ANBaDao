@@ -1,0 +1,59 @@
+✖ queued close cannot clear reopened selection (4.669589ms)
+✖ destroy restores opener focus once (1.262238ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 126.253367
+
+✖ failing tests:
+
+test at tests/splus-dialog-lifetime.test.mjs:4:1
+✖ queued close cannot clear reopened selection (4.669589ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + []
+  - [
+  -   [
+  -     'new',
+  -     'skill'
+  -   ]
+  - ]
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/16b3cf2fd315/luna-dialog/tests/splus-dialog-lifetime.test.mjs:4:321)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [],
+    expected: [ [ 'new', 'skill' ] ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/splus-dialog-lifetime.test.mjs:5:1
+✖ destroy restores opener focus once (1.262238ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/16b3cf2fd315/luna-dialog/tests/splus-dialog-lifetime.test.mjs:5:131)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

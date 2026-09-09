@@ -1,0 +1,82 @@
+{
+  "schema": "luc-than-qa/l11-splus-scope-crop-restart-v1",
+  "date": "2026-09-08",
+  "branch": "handoff/l11-splus-profiles-v2-20260908",
+  "baseCheckpoint": "ae3240e457c28ebdea536a047bb8938066043433",
+  "codeCommit": "25c3a083d4904dc4b53140b04addb0808706d06c",
+  "production": {
+    "primaryProjectPromoted": false,
+    "mainChanged": false,
+    "combatV2ReleaseApproved": false
+  },
+  "source": {
+    "buildCommand": "npm test",
+    "build": "PASS",
+    "tests": "Prior checkpoint e1f0b964: 414/414 PASS; post-crop S+ suite: 192/192 PASS; current local full rerun: 398 pass / 2 infrastructure failures because sharp is absent.",
+    "focusedCommand": "node --test tests/splus-ui-scope.test.mjs tests/splus-runtime.test.mjs tests/splus-dialog-lifetime.test.mjs",
+    "focusedTests": "10/10 PASS",
+    "redGreen": "The new scope/crop suite was RED before implementation and GREEN after the four source fixes."
+  },
+  "crop": {
+    "iconCount": 126,
+    "gutter": { "x": 12, "y": 12 },
+    "sourceViewBoxSample": {
+      "metal": ["12 12 250 226", "286 12 250 226", "560 12 249 226"],
+      "fire": ["12 12 250 230", "286 12 250 230", "560 12 249 230"]
+    },
+    "sourceArtBytesChanged": false,
+    "visualMatrix": "PASS_LOCAL_CONTACT_SHEETS: 6 atlases / 126 cropped regions reviewed after the 12x12 inset; no adjacent-row/column fragment observed and no authored silhouette loss noted. PASS_BROWSER_SAMPLE: fire atlas P/S1/Ult rendered with the 12x12 inset and no visible neighboring fragment in the desktop skill strip. Full authored-atlas and mobile matrix remains REVIEW/NOT_RUN."
+  },
+  "targetPicker": {
+    "route": "battle.html?qaSplus42=hero_splus_nung",
+    "actor": "hero_splus_nung",
+    "action": "skill",
+    "targetCount": 1,
+    "targetLabels": ["Chọn Tuệ Y, còn 24000 máu"],
+    "dialogClosedAfterCast": true,
+    "targetLayerClearedAfterResolve": true
+  },
+  "restart": {
+    "method": "reload then Vào trận giữ Ải Mây",
+    "result": "PASS",
+    "statusPanels": 1,
+    "skillStrips": 1,
+    "dialogs": 1,
+    "dialogOpen": false,
+    "targetButtons": 0,
+    "actorAfterRestart": "player:hero_splus_nung"
+  },
+  "desktopCatalog": {
+    "viewport": "1363x936",
+    "cards": 42,
+    "icons": 126,
+    "horizontalOverflow": false,
+    "mobileMediaRulesPresent": true
+  },
+  "mobileSafariDevice": {
+    "status": "NOT_RUN",
+    "reason": "The connected browser exposes no viewport/emulation capability; Safari/device backend is unavailable."
+  },
+  "browserPreview": {
+    "deploymentId": "dpl_HxFbZEFrfgc3VpTcckHKouy7pYYb",
+    "deployment": "READY",
+    "target": "preview",
+    "commit": "9decbaae9b87b11ab649a1a9edda0cf302fee307",
+    "url": "https://luc-than-9lwfqw787-cuong-duc-ai-s-projects.vercel.app/battle.html?qaSplus42=hero_splus_nung",
+    "runtimeViewBoxes": ["12 12 250 230", "286 12 250 230", "560 12 249 230"],
+    "targetPickerTarget": "enemy:hero_splus_tue_y",
+    "targetPickerAfterResolve": { "openDialogs": 0, "targetButtons": 0, "nextActor": "Hỏa Tiêu" },
+    "cleanReload": { "readyState": "complete", "startVisible": true, "openDialogs": 0, "targetButtons": 0, "status": "Trận đấu bắt đầu" },
+    "productionAlias": false
+  },
+  "fractionalTiming": {
+    "status": "REVIEW_UNCHANGED",
+    "items": ["Trầm Tuệ actionSlow queue interpretation", "Hạc Phá 1.5-round stun", "Tố Linh half-slot movement", "Giang Quân one-second airborne presentation"]
+  },
+  "board": "UNAVAILABLE",
+  "screenshots": [
+    "/workspace/scratch/l11-splus-lab-desktop.jpg",
+    "/workspace/scratch/l11-splus-target-picker-visible.jpg"
+  ],
+  "hostNote": "Browser QA used the READY Git preview for the handoff branch at the crop-fix docs commit. It is a preview URL only; no production alias or Combat V2 promotion was performed."
+}
