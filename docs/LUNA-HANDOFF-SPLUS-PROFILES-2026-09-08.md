@@ -1,3 +1,11 @@
+## 2026-09-09 — Owner-approved promotion to main
+
+Owner reviewed candidate `2f8049cf6a0882503e4d45ab5275f8ad48aff8ff` and explicitly requested promotion to main. This supersedes the earlier no-production instruction. PR: https://github.com/bktimmy247/luc-than/pull/17. Preview `dpl_Ewq2LZDGiBJUrR9GDY13tAsEN6pV` is READY for that exact candidate. Main auto-deploys production; deployment completion must be checked against the resulting merge SHA.
+
+Approved scope includes hero-detail UI, campaign preparation/green-tick reserve selection/result routing, and the S+ V2 continuation. Build PASS; latest local suite: 409 tests, 407 PASS and 2 failures due to missing sharp. Earlier 411/414 counts are historical checkpoints. Mobile/Safari and full visual acceptance remain open; fractional-duration mechanics remain REVIEW and must not be rounded. Owner release approval does not close those technical review gates or mark a Ticket Board item DONE.
+
+The promotion merge changes documentation only relative to the approved candidate; runtime/assets retain the approved blob SHAs. Earlier status and no-production statements below are historical.
+
 # Bàn giao L11 cho Luna — 08/09/2026
 
 Chủ dự án yêu cầu chốt tiến độ và bàn giao ngay khi đang làm L11. **Trạng thái: REVIEW / IN_PROGRESS; combat V2 chưa GREEN.** Checkpoint này lưu công việc để Luna tiếp tục, không phải bản phát hành gameplay V2.
@@ -199,3 +207,6 @@ Art dùng image generation thật. Mỗi atlas 3 cột P/S1/Ult ×7 hàng tướ
 | P2-A5 — source/build/test/browser/device/evidence/release | Build blocked local asset; browser/device/V2 production chưa chạy |
 
 Checkpoint bàn giao không đóng L04a/L05b hoặc các acceptance lịch sử chưa chạy. L04b đã hoàn tất từ trước, không làm lại chỉ vì có nhánh mới.
+
+
+Historical source checkpoint on main: `b6a2ae20a9b1b3071a8f5263740312e9d1465b04`, 45 files; asset provenance: https://github.com/bktimmy247/luc-than/blob/b6a2ae20a9b1b3071a8f5263740312e9d1465b04/assets/skill-buttons/splus-v2/provenance.json.

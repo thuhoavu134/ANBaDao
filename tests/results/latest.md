@@ -1,3 +1,11 @@
+## 2026-09-09 — Owner-approved promotion to main
+
+Owner reviewed candidate `2f8049cf6a0882503e4d45ab5275f8ad48aff8ff` and explicitly requested promotion to main. This supersedes the earlier no-production instruction. PR: https://github.com/bktimmy247/luc-than/pull/17. Preview `dpl_Ewq2LZDGiBJUrR9GDY13tAsEN6pV` is READY for that exact candidate. Main auto-deploys production; deployment completion must be checked against the resulting merge SHA.
+
+Approved scope includes hero-detail UI, campaign preparation/green-tick reserve selection/result routing, and the S+ V2 continuation. Build PASS; latest local suite: 409 tests, 407 PASS and 2 failures due to missing sharp. Earlier 411/414 counts are historical checkpoints. Mobile/Safari and full visual acceptance remain open; fractional-duration mechanics remain REVIEW and must not be rounded. Owner release approval does not close those technical review gates or mark a Ticket Board item DONE.
+
+The promotion merge changes documentation only relative to the approved candidate; runtime/assets retain the approved blob SHAs. Earlier status and no-production statements below are historical.
+
 # Latest verified revision: 9decbaae
 
 Crop follow-up uses a 12×12 source gutter after local review of all 126 cropped regions. S+ focused suite is **192/192 PASS**; the prior full-green checkpoint remains 414/414, while the current local rerun is blocked by missing `sharp` in two pre-existing image tests. The latest branch preview rendered the fire P/S1/Ult sample with the 12×12 viewBoxes, narrowed Nung S1 to one target, and cleared dialogs/targets after resolve and clean reload. [Scope/crop/restart evidence](../../docs/qa/L11-SPLUS-PROFILES/continuation-scope-crop-restart-20260908.json); prior 15-round battle evidence remains [here](../../docs/qa/L11-SPLUS-PROFILES/continuation-browser-battle.json). Art runtime, timing and mobile-device gates remain REVIEW/OPEN.
@@ -55,3 +63,31 @@ Machine evidence: `docs/qa/L10-SPLUS42/evidence.json`, `production-six-elements.
 - Missing numeric values, stacking caps and duration defaults remain review decisions in `docs/SPLUS42-COMBAT-CONTRACT.md`.
 - Browser coverage does not assert every skill was cast, speed/replay matrix, device parity, Tower balance, or complete L04 return-navigation acceptance.
 - Remain REVIEW / IN_PROGRESS. Next handoff: review defaults and supply art; then approved roster unlock integration, device/replay QA and real board handoff.
+
+
+## Historical main handoff additions (03d4fdf)
+
+# Test Results
+
+## 2026-09-08 — L11 handoff, REVIEW / IN_PROGRESS
+
+Source được kiểm tra: [b6a2ae20a9b1b3071a8f5263740312e9d1465b04](https://github.com/bktimmy247/luc-than/commit/b6a2ae20a9b1b3071a8f5263740312e9d1465b04), nhánh `handoff/l11-splus-profiles-v2-20260908`. Main chỉ cập nhật docs/evidence. **L11 chưa GREEN và chưa deploy production.**
+
+| Kiểm tra | Kết quả thực tế |
+| --- | --- |
+| `node --test --test-reporter=tap tests/splus-profiles.test.mjs tests/splus-v2.test.mjs` | **23 test:17 PASS,6 FAIL** (profiles3/3; combat14/20) |
+| `node --test --test-reporter=tap tests/splus-combat.test.mjs tests/splus-kits.test.mjs tests/splus-runtime.test.mjs` | **133 test:117 PASS,16 FAIL**; phân loại kỳ vọng V1 và regression thật |
+| `node --check` JS/MJS thay đổi | **17/17 PASS** |
+| `git diff --check` | **PASS** tại checkpoint source |
+| `npm test` / build | **EXIT1**, thiếu asset local `asset-sources/luc-anh/idle-rgba-v1-atlas.webp.part01`; chưa tới full suite. File gốc có trên GitHub |
+| Browser V2 / crop126 icon / production V2 | **NOT_RUN / NOT_DEPLOYED** |
+| Device/Safari V2 | **NOT_RUN**, backend unavailable; capability lịch sử `[]` |
+| Workflow | RED ghi nhận, GREEN một phần, REFACTOR chưa xong; active `red-green-refactor` |
+
+Sáu test mới fail: Cơ Trọng khiên casterHP; Tiêu Hồn rageBan; Trầm Châu bubble shield; Tuệ Y most-recent resurrection; Khaos shield bypass; Hồi Ảnh forced friendly attack. Nhiều S1/Ult khác vẫn handler V1, còn audit đủ84handler và shared mechanics.
+
+[Bàn giao Luna](../../docs/LUNA-HANDOFF-SPLUS-PROFILES-2026-09-08.md) · [Machine checkpoint](../../docs/qa/L11-SPLUS-PROFILES/handoff-checkpoint.json) · [Targeted TAP](../../docs/qa/L11-SPLUS-PROFILES/handoff-targeted.tap) · [Existing S+ TAP](../../docs/qa/L11-SPLUS-PROFILES/handoff-existing-splus.tap) · [Build log](../../docs/qa/L11-SPLUS-PROFILES/handoff-npm-test.log) · [Syntax](../../docs/qa/L11-SPLUS-PROFILES/handoff-syntax.json).
+
+## Lịch sử trước checkpoint L11
+
+Các con số PASS và production QA bên dưới thuộc L10 hoặc lát cắt trước; không được dùng để đánh dấu L11 hoàn thành.

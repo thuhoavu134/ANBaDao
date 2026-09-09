@@ -8,8 +8,8 @@
   "releaseReady": false,
   "baselineCommit": "f3dc071a82ead9851bd4495fe92296f7c8c6fe1f",
   "sourceBranch": "handoff/l11-splus-profiles-v2-20260908",
-  "sourceCommit": null,
-  "sourceCommitNote": "Pinned in main handoff after the source checkpoint is published; branch snapshot cannot contain its own commit hash.",
+  "sourceCommit": "b6a2ae20a9b1b3071a8f5263740312e9d1465b04",
+  "sourceCommitNote": "Published WIP checkpoint; this main document pins it. The source snapshot itself has no self-referential SHA.",
   "mainScope": "documentation and evidence only; WIP code remains on handoff branch",
   "workflow": {
     "runId": "20260907-233350-enmzoby",
@@ -140,5 +140,19 @@
     "lastRecordedState": "READY"
   },
   "nextOwner": "Luna",
-  "handoff": "docs/LUNA-HANDOFF-SPLUS-PROFILES-2026-09-08.md"
+  "handoff": "docs/LUNA-HANDOFF-SPLUS-PROFILES-2026-09-08.md",
+  "sourceTree": "229c2ff327778b7ae96a0c0f6cf66f78c0b9505a",
+  "sourceFileCount": 45,
+  "publishedAt": "2026-09-08T08:07:40.398643+00:00",
+  "historicalCheckpoint": true,
+  "currentContinuation": "docs/L11-CONTINUATION-2026-09-08.md",
+  "promotionApproval": {
+    "date": "2026-09-09",
+    "candidate": "2f8049cf6a0882503e4d45ab5275f8ad48aff8ff",
+    "pr": 17,
+    "ownerAuthorized": true,
+    "fractionalTiming": "REVIEW",
+    "mobileSafari": "NOT_RUN",
+    "production": "verify resulting merge deployment"
+  }
 }

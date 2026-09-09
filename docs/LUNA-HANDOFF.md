@@ -1,5 +1,15 @@
 # Bàn giao Lục Thần / Hồn Việt cho Luna và các model tiếp theo
 
+## 2026-09-08 — Bàn giao L11 cho Luna: REVIEW / IN_PROGRESS
+
+Chủ dự án yêu cầu chốt tiến độ trong lúc triển khai hồ sơ V2 và 126 nút chiêu. Source đang làm được lưu ở [handoff/l11-splus-profiles-v2-20260908](https://github.com/bktimmy247/luc-than/tree/handoff/l11-splus-profiles-v2-20260908), commit [`b6a2ae2`](https://github.com/bktimmy247/luc-than/commit/b6a2ae20a9b1b3071a8f5263740312e9d1465b04). Main nhận tài liệu/evidence; combat V2 chưa phát hành production.
+
+[Bàn giao L11 đầy đủ](LUNA-HANDOFF-SPLUS-PROFILES-2026-09-08.md) là điểm bắt đầu mới nhất. Đã nhập 42 hồ sơ/126 chiêu, tạo 6 atlas ×21 vùng nút và viết UI giới thiệu/popup/bridge; resolver mới đồng bộ một phần. **23 test mới: 17 đạt, 6 fail; bộ S+ cũ trên WIP: 117/133 đạt, 16 fail; syntax: 17/17 đạt.** `npm test` dừng ở build do checkout local thiếu part01 atlas Lục Ảnh; GitHub đã xác nhận file gốc còn đủ. Browser/device V2 chưa chạy, REFACTOR chưa xong.
+
+Tiếp tục sáu handler Cơ Trọng, Tiêu Hồn, Trầm Châu, Tuệ Y, Khaos, Hồi Ảnh; sau đó audit đủ84 S1/Ult và các passive theo hồ sơ mới. Không hiểu 6 fail là toàn bộ việc còn thiếu. [Machine checkpoint](qa/L11-SPLUS-PROFILES/handoff-checkpoint.json) và [log test](qa/L11-SPLUS-PROFILES/handoff-targeted.tap) ghi trạng thái thực. Ticket Board/claim-lock, doctor/smoke/boot và device backend vẫn thiếu; không giả claim, PASS, DONE hoặc MERGED.
+
+Luna đọc bản bàn giao L11, lấy đúng nhánh/SHA source, tái hiện RED rồi tiếp tục GREEN → REFACTOR → build/browser/evidence → REVIEW. Các mốc L10 và lịch sử dưới đây không phải QA cho V2.
+
 ## 2026-09-08 — L10-SPLUS42 · REVIEW / IN_PROGRESS
 
 Hồ sơ 42 tướng S+ và 42 icon của chủ dự án đã được chuyển thành catalog 6×7, 42 nội tại, 42 Kỹ năng 1, 42 Ultimate, status owner và bridge vào scheduler trận hiện có. Contract: [SPLUS42-COMBAT-CONTRACT.md](SPLUS42-COMBAT-CONTRACT.md). Trang production: [chọn 42 tướng để thử cơ chế](https://luc-than.vercel.app/splus-lab.html); mỗi tướng mở trận 6v6 thật tại `/battle.html?qaSplus42=<hero_id>`.

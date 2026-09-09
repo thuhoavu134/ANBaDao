@@ -1,3 +1,11 @@
+## 2026-09-09 — Owner-approved promotion to main
+
+Owner reviewed candidate `2f8049cf6a0882503e4d45ab5275f8ad48aff8ff` and explicitly requested promotion to main. This supersedes the earlier no-production instruction. PR: https://github.com/bktimmy247/luc-than/pull/17. Preview `dpl_Ewq2LZDGiBJUrR9GDY13tAsEN6pV` is READY for that exact candidate. Main auto-deploys production; deployment completion must be checked against the resulting merge SHA.
+
+Approved scope includes hero-detail UI, campaign preparation/green-tick reserve selection/result routing, and the S+ V2 continuation. Build PASS; latest local suite: 409 tests, 407 PASS and 2 failures due to missing sharp. Earlier 411/414 counts are historical checkpoints. Mobile/Safari and full visual acceptance remain open; fractional-duration mechanics remain REVIEW and must not be rounded. Owner release approval does not close those technical review gates or mark a Ticket Board item DONE.
+
+The promotion merge changes documentation only relative to the approved candidate; runtime/assets retain the approved blob SHAs. Earlier status and no-production statements below are historical.
+
 ## L11 latest checkpoint — 4a79095
 
 Final source build/tests411/411; Vercel preview READY; Chrome battle15 rounds/139 actions/1649 events. Fixed browser-only pointer input bug. Crop/timing/target-picker/restart/device acceptance remains open; main unchanged. See [continuation](L11-CONTINUATION-2026-09-08.md).
@@ -161,3 +169,18 @@ Implement the owner-supplied 42 S+ hero mechanics and passive HUD identities in 
   `agent-browser`, `game-dev` and complete local assets remain blocked. Next
   handoff is device matrix and Ticket Board claim/lock/evidence; never mark
   this ticket DONE/MERGED.
+
+
+## Historical main handoff additions (03d4fdf)
+
+# Project memory — Hồn Việt / Lục Thần
+
+## 2026-09-08 — Bàn giao L11 cho Luna: REVIEW / IN_PROGRESS
+
+Chủ dự án yêu cầu chốt tiến độ trong lúc triển khai hồ sơ V2 và 126 nút chiêu. Source đang làm được lưu ở [handoff/l11-splus-profiles-v2-20260908](https://github.com/bktimmy247/luc-than/tree/handoff/l11-splus-profiles-v2-20260908), commit [`b6a2ae2`](https://github.com/bktimmy247/luc-than/commit/b6a2ae20a9b1b3071a8f5263740312e9d1465b04). Main nhận tài liệu/evidence; combat V2 chưa phát hành production.
+
+[Bàn giao L11 đầy đủ](LUNA-HANDOFF-SPLUS-PROFILES-2026-09-08.md) là điểm bắt đầu mới nhất. Đã nhập 42 hồ sơ/126 chiêu, tạo 6 atlas ×21 vùng nút và viết UI giới thiệu/popup/bridge; resolver mới đồng bộ một phần. **23 test mới: 17 đạt, 6 fail; bộ S+ cũ trên WIP: 117/133 đạt, 16 fail; syntax: 17/17 đạt.** `npm test` dừng ở build do checkout local thiếu part01 atlas Lục Ảnh; GitHub đã xác nhận file gốc còn đủ. Browser/device V2 chưa chạy, REFACTOR chưa xong.
+
+Tiếp tục sáu handler Cơ Trọng, Tiêu Hồn, Trầm Châu, Tuệ Y, Khaos, Hồi Ảnh; sau đó audit đủ84 S1/Ult và các passive theo hồ sơ mới. Không hiểu 6 fail là toàn bộ việc còn thiếu. [Machine checkpoint](qa/L11-SPLUS-PROFILES/handoff-checkpoint.json) và [log test](qa/L11-SPLUS-PROFILES/handoff-targeted.tap) ghi trạng thái thực. Ticket Board/claim-lock, doctor/smoke/boot và device backend vẫn thiếu; không giả claim, PASS, DONE hoặc MERGED.
+
+Ưu tiên bàn giao hiện tại là L11, thay các đoạn “active slice/next L02a/L04” mang tính lịch sử bên dưới. Hồ sơ gameplay đầy đủ mới nhất quyết định số liệu; prompt icon chỉ quyết định hình nút. Main runtime vẫn L10 trong lần cập nhật docs này.
