@@ -1,0 +1,34 @@
+{
+  "schema": "hon-viet-release-evidence/v1",
+  "date": "2026-09-09",
+  "candidate": "2f8049cf6a0882503e4d45ab5275f8ad48aff8ff",
+  "merge": {
+    "merged": true,
+    "message": "Pull Request successfully merged",
+    "sha": "f8ebc1a9038566ec9268f438b84f380e75307b24"
+  },
+  "deployment": {
+    "id": "dpl_C3Xgmu8qKhQJmVKTU3xdbZh2NCWm",
+    "state": "READY",
+    "target": "production",
+    "sha": "f8ebc1a9038566ec9268f438b84f380e75307b24",
+    "aliases": [
+      "luc-than.vercel.app",
+      "luc-than-cuong-duc-ai-s-projects.vercel.app",
+      "luc-than-git-main-cuong-duc-ai-s-projects.vercel.app"
+    ]
+  },
+  "verification": {
+    "promotionDiff": "documentation only relative to candidate; runtime/assets unchanged",
+    "localSuite": {
+      "total": 409,
+      "pass": 407,
+      "fail": 2,
+      "cause": "missing sharp"
+    },
+    "mobileSafari": "NOT_RUN",
+    "fractionalTiming": "REVIEW_UNCHANGED",
+    "newGameplayBrowserQA": "not certified by deployment"
+  },
+  "handoff": "docs/HANDOFF-2026-09-09.md"
+}

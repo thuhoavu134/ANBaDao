@@ -1,3 +1,5 @@
+> **Bàn giao hiện hành 09/09/2026:** [HANDOFF-2026-09-09.md](HANDOFF-2026-09-09.md). PR #17 đã merge tại `f8ebc1a`; production READY, alias chính đã xác minh. [Quy trình triển khai](AGENT-IMPLEMENTATION-WORKFLOW-2026-09-09.md). Các mục phía dưới giữ trạng thái lịch sử tại thời điểm ghi.
+
 ## 2026-09-09 — Owner-approved promotion to main
 
 Owner reviewed candidate `2f8049cf6a0882503e4d45ab5275f8ad48aff8ff` and explicitly requested promotion to main. This supersedes the earlier no-production instruction. PR: https://github.com/bktimmy247/luc-than/pull/17. Preview `dpl_Ewq2LZDGiBJUrR9GDY13tAsEN6pV` is READY for that exact candidate. Main auto-deploys production; deployment completion must be checked against the resulting merge SHA.

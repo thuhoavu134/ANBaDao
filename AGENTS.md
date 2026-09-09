@@ -2,7 +2,7 @@
 
 Đọc `docs/LUNA-HANDOFF.md` trước khi sửa game. Tài liệu có bản đồ nguồn, pipeline asset, các lỗi đã gặp, cách kiểm tra và quy trình deploy.
 
-Bàn giao mới nhất 09/09/2026: đọc `docs/L11-CONTINUATION-2026-09-08.md`. Chủ dự án đã duyệt candidate `2f8049c` và yêu cầu đưa lên main qua PR #17; quyền này thay chỉ dẫn chưa production trước đây. Build PASS, latest local suite 407 PASS / 2 thiếu sharp; timing phân số và mobile/Safari vẫn REVIEW. Các mốc 6 fail và 411/414 bên dưới là lịch sử.
+Bàn giao mới nhất 09/09/2026: đọc `docs/HANDOFF-2026-09-09.md` và `docs/AGENT-IMPLEMENTATION-WORKFLOW-2026-09-09.md`. Release code `f8ebc1a` đã lên main và production READY; tiếp tục từ main mới nhất. Lịch sử: `docs/L11-CONTINUATION-2026-09-08.md`. Chủ dự án đã duyệt candidate `2f8049c` và yêu cầu đưa lên main qua PR #17; quyền này thay chỉ dẫn chưa production trước đây. Build PASS, latest local suite 407 PASS / 2 thiếu sharp; timing phân số và mobile/Safari vẫn REVIEW. Các mốc 6 fail và 411/414 bên dưới là lịch sử.
 
 - **Được tái sử dụng code mẫu theo yêu cầu của anh.** Đọc `docs/HERMES-CODE-REUSE-GUIDE.md`: bản đồ 27 phương thức, dependency, lỗi cần sửa và quy trình port từ archive người dùng đã gửi. Quy tắc này thay chỉ dẫn cũ cấm toàn bộ source mẫu. Nối vào owner Lục Thần, ghi khác biệt và test; giữ identity/save/art/luật đã chốt. Repo chứa hướng dẫn; mã gốc chưa được đưa lên GitHub và chưa tích hợp runtime.
 - Runtime production được tạo bởi `scripts/build-static.mjs`. Sửa nguồn hoặc patch sinh ra runtime; không dùng chỉnh sửa riêng trong `dist/` làm kết quả bàn giao.
