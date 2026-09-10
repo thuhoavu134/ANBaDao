@@ -793,12 +793,12 @@ function patchDist() {
   }
   writeFileSync(battlePath, html);
   let indexHtml = readFileSync(indexPath, 'utf8');
-  const shellMarker = '    frame.src = `battle.html?embedded=1&session=${encodeURIComponent(sessionId)}&v=3173${qaSuffix}`;';
+  const shellMarker = '    const url = `battle.html?embedded=1&session=${encodeURIComponent(sessionId)}&autostart=1&v=3175${qaSuffix}`;';
   if (!indexHtml.includes('qaCombatFixture=l05a')) {
     if (!indexHtml.includes(shellMarker)) throw new Error('L05a combat fixture shell anchor missing');
     const shellPatch = [
       '    const fixtureSuffix = pageParams.get("qaCombatFixture") === "l05a" ? "&qaCombatFixture=l05a" : "";',
-      '    frame.src = `battle.html?embedded=1&session=${encodeURIComponent(sessionId)}&v=3173${qaSuffix}${fixtureSuffix}`;'
+      '    const url = `battle.html?embedded=1&session=${encodeURIComponent(sessionId)}&autostart=1&v=3175${qaSuffix}${fixtureSuffix}`;'
     ].join('\n');
     indexHtml = indexHtml.replace(shellMarker, shellPatch);
     writeFileSync(indexPath, indexHtml);

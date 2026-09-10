@@ -5,7 +5,7 @@ import { createContext, runInContext } from 'node:vm';
 import * as campaign from '../src/domain/campaign/campaign-view.mjs';
 import { prepareFormationChange } from '../src/domain/hero/loadout.mjs';
 const ids = ['a','b','c','d','e','f','g'];
-const squad = ids.slice(0,6).map((id,i)=>({id,row:i<3?'front':'back'}));
+const squad = ids.slice(0,6).map((id,i)=>({id,row:i<3?'front':'back',slot:i}));
 const player = {heroes:Object.fromEntries(ids.map(id=>[id,{owned:true}]))};
 const catalog = Object.fromEntries(ids.map(id=>[id,{}]));
 test('green tick removes, reserve fills a vacancy, full bench refuses replacement',()=>{

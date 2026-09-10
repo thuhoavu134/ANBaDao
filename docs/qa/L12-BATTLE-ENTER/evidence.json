@@ -1,0 +1,18 @@
+{
+  "schema": "hon-viet-battle-enter-evidence/v1",
+  "ticket_id": "TKT-0006",
+  "contract": "L12-battle-enter/v2",
+  "branch": "work/l12-battle-enter-20260910",
+  "tdd": {
+    "green": { "tests": 6, "pass": 6, "fail": 0, "file": "tests/battle-enter-loading.test.mjs" },
+    "build": "PASS via scripts/build-static.mjs"
+  },
+  "browser": {
+    "top_level": "390x844 Chrome: overlay iframe combat canvas ready, round 1, 6v4",
+    "nested_preview": "parent iframe then Xuất chiến navigates child to battle.html; canvas true",
+    "Safari": "NOT_RUN",
+    "device_touch": "NOT_RUN — owner iPhone screenshot was blank overlay before this fix"
+  },
+  "owner_approval": "PENDING",
+  "main_production": "unchanged"
+}

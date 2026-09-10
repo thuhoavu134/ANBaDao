@@ -36,7 +36,7 @@ test('leaving battle stops shared attack and result SFX but keeps normal UI usab
   assert.equal(parent.sources.length, 2);
   parent.bus.endBattle();
   assert.ok(parent.sources.every(s => s.stopped));
-  assert.equal(await child.bus.play('impact'), false);
+  assert.equal(await child.bus.play('skill'), false);
   child.bus.setCombatEnabled(true);
   assert.equal(await child.bus.play('ultimate'), false, 'late engine callback cannot reopen the closed channel');
   assert.equal(await parent.bus.play('ui'), true);
@@ -57,7 +57,7 @@ test('old iframe pagehide cannot mute the next battle; repeated exits stay safe'
   await next.bus.play('basic');
   first.events.pagehide(); first.events.pagehide(); first.bus.setCombatEnabled(false);
   assert.equal(parent.sources[0].stopped, undefined);
-  assert.equal(await next.bus.play('impact'), true);
+  assert.equal(await next.bus.play('skill'), true);
   next.events.pagehide();
   assert.ok(parent.sources.every(s => s.stopped));
 });

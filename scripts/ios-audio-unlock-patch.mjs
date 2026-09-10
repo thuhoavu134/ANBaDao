@@ -9,7 +9,16 @@ const manager = String.raw`<script id="honviet-ios-audio-unlock">
 (()=>{
   if(window.HonVietAudio)return;
   const AC=window.AudioContext||window.webkitAudioContext;
-  let ctx=null, unlocked=false, unlockPromise=null;
+  let ctx=window.__HV_EARLY_CTX||null, unlocked=false, unlockPromise=null;
+  try{
+    if(!ctx&&AC)ctx=new AC();
+    window.__HV_EARLY_CTX=ctx;
+    if(ctx&&ctx.state==='suspended')ctx.resume();
+    if(ctx){
+      const b=ctx.createBuffer(1,1,22050),s=ctx.createBufferSource();
+      s.buffer=b;s.connect(ctx.destination);s.start(0);
+    }
+  }catch(_e){}
   const buffers=new Map();
   const loads=new Map();
   const activeVoices=new Set();
@@ -25,7 +34,8 @@ const manager = String.raw`<script id="honviet-ios-audio-unlock">
     'assets/audio/voice-luc-anh-ultimate.mp3'
   ];
   function getCtx(){
-    if(!ctx&&AC)ctx=new AC();
+    if(!ctx) ctx=window.__HV_EARLY_CTX||(AC?new AC():null);
+    if(ctx) window.__HV_EARLY_CTX=ctx;
     return ctx;
   }
   async function decode(url){
@@ -105,20 +115,43 @@ const manager = String.raw`<script id="honviet-ios-audio-unlock">
   }
   window.HonVietAudio={unlock,playVoice,beginCombat,stopCombat,preload:(u)=>decode(u),isUnlocked:()=>unlocked,context:()=>getCtx()};
 
-  // No blocking splash. The first normal tap/click on ANY actual game control unlocks audio.
-  // Capture phase makes this run before the button's own handler (hero card, campaign, battle, etc.).
-  const firstGesture=()=>unlock().catch(()=>{});
+  // Keep unlocking on every gesture until the context is running. Full-page
+  // battle.html on iOS often misses the original Xuất chiến tap.
+  const firstGesture=()=>{
+    unlock().then(ok=>{
+      try{window.__HV_BATTLE_BGM?.play?.();}catch(_e){}
+      if(ok) document.getElementById('hvUnmuteAudio')?.remove();
+    }).catch(()=>{});
+  };
   ['pointerdown','touchstart','touchend','click','keydown'].forEach(t=>
-    document.addEventListener(t,firstGesture,{capture:true,passive:true,once:true})
+    document.addEventListener(t,firstGesture,{capture:true,passive:true})
   );
 
   // Resume again after iOS returns from background / tab switch.
   document.addEventListener('visibilitychange',()=>{
-    if(document.visibilityState==='visible'&&unlocked){
+    if(document.visibilityState==='visible'){
       const c=getCtx();
       if(c&&c.state==='suspended')c.resume().catch(()=>{});
+      try{window.__HV_BATTLE_BGM?.play?.();}catch(_e){}
     }
   });
+
+  function showUnmute(){
+    const c=getCtx();
+    if((c&&c.state==='running')||document.getElementById('hvUnmuteAudio'))return;
+    const host=document.body||document.documentElement;
+    if(!host)return;
+    const b=document.createElement('button');
+    b.id='hvUnmuteAudio';
+    b.type='button';
+    b.textContent='Bật tiếng';
+    b.setAttribute('aria-label','Bật tiếng trận đấu');
+    b.style.cssText='position:fixed;right:12px;top:max(12px,env(safe-area-inset-top));z-index:2147483647;min-height:44px;padding:8px 14px;border-radius:12px;border:1px solid #d7c07a;background:#102826f2;color:#f4dfaa;font:800 14px/1 system-ui,sans-serif';
+    b.addEventListener('pointerdown',ev=>{ev.stopPropagation();firstGesture();});
+    host.appendChild(b);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',()=>setTimeout(showUnmute,400));
+  else setTimeout(showUnmute,400);
 })();
 </script>`;
 
@@ -138,6 +171,9 @@ index=index.replace(/function playLucAnhVoice\(src,vol=[^)]*\)\{[\s\S]*?\}\s*(?=
 writeFileSync(indexPath,index);
 
 let battle = readFileSync(battlePath,'utf8');
+if(!battle.includes('honviet-ios-audio-unlock')){
+  battle=battle.replace(/<head(\s[^>]*)?>/i,m=>m+'\n'+manager);
+}
 // Ultimate voice is played by the parent page AudioContext which was unlocked by the first real UI interaction.
 battle=battle.replace(/function playLucAnhUltimateVoice\(\)\{[\s\S]*?\}\s*(?=function|async function|const |let |var )/,
 `function playLucAnhUltimateVoice(){

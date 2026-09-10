@@ -1,0 +1,51 @@
+{
+  "schema": "hon-viet-fixed-slots-evidence/v1",
+  "ticket_id": "TKT-0003",
+  "contract": "L12-fixed-campaign-slots/v1",
+  "parent": "9a81e00fc6c0c3b9632a34cdb09ca95f8272143d",
+  "baseline_main": "a6b5de61ebb4d1b136b5595766aa86b3a11fff29",
+  "rejected_visual_pass": "74b39762f048422932e2fe269fca6466e0e84982",
+  "revert": "0bac75d00d63fa723c3737bb8fe32ca26a6f5b4f",
+  "branch": "work/l12-fixed-slots-20260910",
+  "tdd": {
+    "focused_source": { "tests": 34, "pass": 34, "fail": 0 },
+    "campaign_loadout_save": { "tests": 59, "pass": 59, "fail": 0 },
+    "build": "PASS via scripts/build-static.mjs; campaign-fixed-slots-v1 assertion logged unique saved slots kept"
+  },
+  "browser": {
+    "desktop": "Chrome agent-browser, QA sandbox ?qa=unlock-all, no app-origin errors observed",
+    "mobile_viewport": "390x844, 6 slots, no horizontal overflow",
+    "Safari": "NOT_RUN",
+    "device_touch": "NOT_RUN; pointer drag simulated with PointerEvent, not a physical device"
+  },
+  "checks": {
+    "remove_three_heroes": {
+      "result": "3/6",
+      "slots": [
+        { "slot": 0, "empty": true, "label": "Ô trống hàng trước 1" },
+        { "slot": 1, "id": "dinh_loi" },
+        { "slot": 2, "id": "co_dao_ganh_hoi" },
+        { "slot": 3, "empty": true, "label": "Ô trống hàng sau 1" },
+        { "slot": 4, "empty": true, "label": "Ô trống hàng sau 2" },
+        { "slot": 5, "id": "cung_thu_tre" }
+      ],
+      "note": "Remaining heroes stayed on 1/2/5. No packing."
+    },
+    "click_empty_then_bench": {
+      "result": "Ông Phở placed on slot 0; holes 3 and 4 kept; 4/6"
+    },
+    "drag_occupied_onto_empty": {
+      "from": 5,
+      "to": 3,
+      "result": "Nữ Cung Thủ Tre moved to slot 3; slot 5 became empty; 4/6; no packing"
+    },
+    "launch_partial": "Xuất chiến enabled at 4/6"
+  },
+  "non_goals_kept": [
+    "Did not restore rejected visual pass 74b3976",
+    "Did not redesign Bày trận layout or art",
+    "Did not change crop, targeting, Combat V2, AFK, countdown, or balance"
+  ],
+  "owner_approval": "PENDING",
+  "main_production": "unchanged"
+}

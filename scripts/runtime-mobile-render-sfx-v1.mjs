@@ -27,9 +27,9 @@ for (const name of ['index.html', 'battle.html']) {
   }`);
     replace('window.__playLucAnhUltimateVoiceGuaranteed?.();', 'window.__playLucAnhUltimateVoiceGuaranteed?.();playActionSound(actor,"ultimate");', 'Luc Anh ultimate SFX');
     replace('tone(critical ? 105 : 135, critical ? 0.16 : 0.09, "square", 0.035);',
-      'if (state.sound) window.HonVietSfx?.play("impact");', 'impact SFX');
+      '/* No shared forge impact audio in combat; authored hit VFX stays in applyDamage. */', 'impact SFX');
     replace('tone(520, 0.16, "sine", 0.028);', 'if (state.sound) window.HonVietSfx?.play("heal");', 'heal SFX');
-    replace('tone(150, 0.07, "triangle", 0.018);', '/* Impact SFX is owned by applyDamage; no duplicate synthetic tone. */', 'duplicate impact beep');
+    replace('tone(150, 0.07, "triangle", 0.018);', '/* No synthetic approach beep; cast SFX remains owned by playActionSound. */', 'duplicate impact beep');
     replace('tone(146, 0.28, "sine", 0.05);\n    tone(219, 0.24, "triangle", 0.035, 0.12);',
       'window.HonVietSfx?.setCombatEnabled(state.sound);', 'battle-start audio');
     replace('tone(victory ? 392 : 110, 0.38, victory ? "triangle" : "sawtooth", 0.05);\n    if (victory) tone(523, 0.35, "sine", 0.035, 0.18);',

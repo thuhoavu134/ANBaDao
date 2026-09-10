@@ -1,0 +1,52 @@
+{
+  "contract": "L12 SFX isolation v1",
+  "ticket_id": "TKT-0002",
+  "source_revision": "235c66699a0340f36300b1d3c54d4039217ede8f",
+  "local_revision": "bf07edf2ded7aa7bafee1f535d775d9022d2e06b",
+  "red": {
+    "pass": 0,
+    "fail": 5
+  },
+  "green": {
+    "pass": 5,
+    "fail": 0
+  },
+  "focused": {
+    "pass": 13,
+    "fail": 1,
+    "failure": "missing dist/index.html"
+  },
+  "full": {
+    "tests": 418,
+    "pass": 386,
+    "fail": 32,
+    "failure": "missing assets/dist/sharp"
+  },
+  "syntax": "PASS",
+  "diff_check": "PASS",
+  "npm_test": "tool network approval cancelled before result; direct node build/test run instead",
+  "local_build": "ENOENT assets/characters/luc-anh/idle-rgba-v1-atlas.webp.json",
+  "doctor": "Ticket Board 3/3 PASS; no project doctor/smoke",
+  "preview": {
+    "url": "https://luc-than-9a271tpx7-cuong-duc-ai-s-projects.vercel.app/",
+    "id": "dpl_J2kf15rqd9gmyAFTKe4vApYBJjAR",
+    "state": "READY",
+    "sha": "235c66699a0340f36300b1d3c54d4039217ede8f",
+    "target": "preview"
+  },
+  "browser": {
+    "engine": "Chrome",
+    "viewport": "1363x936",
+    "qa": "unlock-all; no persistent save",
+    "forge": "real craft success, sfxLast forge-reveal, AudioContext running",
+    "combat": "6 vs 4; sampled basic then ultimate; sfxVersion forge-isolation-v3",
+    "vfx": "screenshot shows projectile/impact and damage number; no exhaustive VFX matrix",
+    "result": "victory round 2,16 actions; MVP Co Dao 737 damage/3 kills; sfxLast victory, active0, sfxError null",
+    "confirm": "returned campaign stage1-2, sfxBattleActive false, active0",
+    "audible_listening": "NOT_RUN; DOM event telemetry and behavior tests, no audio recording",
+    "Safari_mobile": "NOT_RUN"
+  },
+  "gate": "evidence-review OPEN; full local verification incomplete",
+  "owner_approval": "PENDING",
+  "production": "UNCHANGED"
+}

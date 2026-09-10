@@ -1,3 +1,50 @@
+## 10/09/2026 — tiếng trận iPhone (TKT-0006c)
+
+Full-page battle mở loa bằng early AudioContext, BGM combat và nút Bật tiếng.
+
+## 10/09/2026 — màn tối preview iPhone (TKT-0006b)
+
+Nested Grok iframe mở battle.html full-page; không tắt veil khi load. Chrome nested canvas PASS. Safari NOT_RUN.
+
+## 10/09/2026 — vào trận sau Bày trận (TKT-0006)
+
+Nhánh `work/l12-battle-enter-20260910` từ `eab9af7`. Lớp che Xuất chiến không còn copy engine; tắt khi iframe load; autostart=1. Chrome 390×844 vào trận 6v4. Safari/device NOT_RUN. Main không đổi.
+
+## 10/09/2026 — chạm tướng trên sân để gỡ (TKT-0005)
+
+Nhánh `work/l12-field-tap-remove-20260910` từ `0a9db3e`. Một lần chạm tướng trên sân Bày trận gỡ khỏi đội, giữ lỗ; ô trống vẫn chọn; kéo vẫn đổi chỗ. 26 focused PASS. Chrome 390×844 xác nhận gỡ Ông Phở ô 0. Visual pass `74b3976` không khôi phục. Main/production không đổi. Safari/device NOT_RUN.
+
+## 10/09/2026 — kéo thả không nuốt lần chạm ô trống (TKT-0004)
+
+Nhánh `work/l12-drag-tap-20260910` từ `ec5297f`. Sau kéo tướng, lần chạm đầu vào ô trống không còn bị nuốt; drop xóa ô đang chọn. 44 focused PASS; build PASS. Chrome 390×844 xác nhận kéo 5→3 rồi chạm ô trống lần đầu. Visual pass `74b3976` không khôi phục. Main/production không đổi. Safari/device NOT_RUN.
+
+## 10/09/2026 — ô trống cố định trên Bày trận (TKT-0003)
+
+Nhánh `work/l12-fixed-slots-20260910` từ `9a81e00`. Bảng 6 ô cố định: gỡ tướng để lỗ, kéo vào ô trống không dồn hàng, save giữ `slot` duy nhất, save cũ không slot vẫn pack theo hàng. 67 focused campaign/loadout/save/lifetime PASS; build PASS. Chrome QA sandbox xác nhận lỗ 0/3/4 và kéo 5→3. Visual pass `74b3976` không khôi phục. Main/production không đổi. Safari/device NOT_RUN.
+
+## 10/09/2026 — sửa âm rèn trong trận (TKT-0002)
+
+Code `235c66699a0340f36300b1d3c54d4039217ede8f`, nhánh `work/l12-pointer-lifecycle-20260909`. Tách `forge-reveal` riêng cho rèn; bỏ shared impact sound khỏi combat và chặn sự kiện rèn trong battle channel. Âm ra chiêu giữ nguyên; không thêm âm thay thế, không sửa asset/VFX/damage timing/UI/balance.
+
+RED 0/5 → GREEN 5/5. Focused 13 PASS / 1 thiếu dist; full local 386/418 PASS, 32 lỗi thiếu assets/dist/sharp; không full-green. Preview exact SHA READY: https://luc-than-9a271tpx7-cuong-duc-ai-s-projects.vercel.app/.
+
+Chrome QA đã rèn thành công (`forge-reveal`) → trận 6v4 (`basic`, `ultimate`) → Victory (`victory`, active0) → Xác nhận về ải1-2 (battleActive false). MVP Cô Đào 737 damage/3 kills;16 actions/2 rounds. Có quan sát VFX/số sát thương. Chưa thu/nghe audio, chưa Safari/mobile; telemetry không thay nghiệm thu âm sắc. [Evidence](qa/L12-SFX/evidence.json). Vibe gate còn OPEN vì full local verification; chưa DONE/MERGED.
+
+Main/production không đổi. Visual pass Bày trận `74b3976` vẫn bị từ chối/revert; không khôi phục. Next: owner nghe preview xác nhận tiếng rèn đã hết; bổ sung device/full checkout verification. Không mở rộng mapping âm riêng từng tướng trong lát cắt này.
+
+## Tiếp tục 10/09/2026 — pointer lifecycle, chờ kiểm chứng bổ sung
+
+Code trên nhánh `work/l12-pointer-lifecycle-20260909`, commit `9518581aee5b1406bcba94616be92a7cf9aaf504`. Chỉ sửa ownership và cleanup của pointer trong `src/ui/campaign-scene.js`: bỏ qua pointer khác, giải phóng capture khi hủy/rời màn, redraw khi reduced motion. Không đổi CSS, bố cục, art hoặc combat owner. Visual pass `74b3976` vẫn bị từ chối, revert `0bac75d` vẫn là quyết định áp dụng.
+
+- RED 0/9 PASS; GREEN 9/9; focused với scene lifetime 15/15. [Evidence và giới hạn](qa/L12-POINTER-LIFECYCLE/evidence.json).
+- Preview code chính xác SHA trên: https://luc-than-6fmr7sf4u-cuong-duc-ai-s-projects.vercel.app/ — Vercel READY, build hoàn tất. Đây không phải deployment production.
+- Chrome desktop 1363×936, QA sandbox: kéo đổi ô có tướng, thả ngoài, hủy/quay lại, tích xanh thêm/bỏ, đội trống bị chặn, một tướng vào trận đều đã kiểm. Đã thấy Defeat và MVP động; chưa kiểm Xác nhận sau thua/restart do phiên browser reset.
+- Full local direct: 413 tests, 381 PASS / 32 FAIL vì thiếu dist/assets/sharp trong snapshot. Local build thiếu atlas metadata. Không full-green; mobile/touch/Safari và reduced-motion browser chưa chạy.
+- Đã đọc vibe-builder/vibe-lab/ticket-board từ zip owner cung cấp; blocker thiếu skill ban đầu đã được giải quyết trong phiên triển khai. TKT-0001 và gate evidence-review chưa đóng. Sau reset, runner/trace trong /tmp không còn; không bịa trạng thái gate hoặc lease.
+- Main được đọc lại ngày 10/09: `a6b5de61ebb4d1b136b5595766aa86b3a11fff29`. Không cập nhật main/production. Owner approval còn PENDING.
+
+Bước tiếp: khôi phục runner từ zip, tiếp tục ticket/gate; kiểm lại đầy đủ thua → Xác nhận → Chinh chiến → trận mới trong host, rồi thiết bị mobile/Safari. Chưa mở rộng sang slot trống cố định, enemy preview, redesign hoặc balance.
+
 ## 2026-09-09 — Owner-approved promotion to main
 
 Owner reviewed candidate `2f8049cf6a0882503e4d45ab5275f8ad48aff8ff` and explicitly requested promotion to main. This supersedes the earlier no-production instruction. PR: https://github.com/bktimmy247/luc-than/pull/17. Preview `dpl_Ewq2LZDGiBJUrR9GDY13tAsEN6pV` is READY for that exact candidate. Main auto-deploys production; deployment completion must be checked against the resulting merge SHA.
@@ -184,3 +231,4 @@ Chủ dự án yêu cầu chốt tiến độ trong lúc triển khai hồ sơ V
 Tiếp tục sáu handler Cơ Trọng, Tiêu Hồn, Trầm Châu, Tuệ Y, Khaos, Hồi Ảnh; sau đó audit đủ84 S1/Ult và các passive theo hồ sơ mới. Không hiểu 6 fail là toàn bộ việc còn thiếu. [Machine checkpoint](qa/L11-SPLUS-PROFILES/handoff-checkpoint.json) và [log test](qa/L11-SPLUS-PROFILES/handoff-targeted.tap) ghi trạng thái thực. Ticket Board/claim-lock, doctor/smoke/boot và device backend vẫn thiếu; không giả claim, PASS, DONE hoặc MERGED.
 
 Ưu tiên bàn giao hiện tại là L11, thay các đoạn “active slice/next L02a/L04” mang tính lịch sử bên dưới. Hồ sơ gameplay đầy đủ mới nhất quyết định số liệu; prompt icon chỉ quyết định hình nút. Main runtime vẫn L10 trong lần cập nhật docs này.
+

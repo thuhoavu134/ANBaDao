@@ -1,0 +1,18 @@
+{
+  "ticket_id": "TKT-0002",
+  "tested_revision": "bf07edf2ded7aa7bafee1f535d775d9022d2e06b",
+  "source_revision": "235c66699a0340f36300b1d3c54d4039217ede8f",
+  "kind": "tdd",
+  "passed": true,
+  "exit_code": 0,
+  "command": "node --test --test-reporter=tap tests/forge-combat-sfx.test.mjs",
+  "acceptance_ids": [
+    "SFX-1",
+    "SFX-2",
+    "SFX-3"
+  ],
+  "gates": [
+    "tdd"
+  ],
+  "summary": "RED 0/5; GREEN/final 5/5; SFX-3 build-owner source regression, not full build"
+}

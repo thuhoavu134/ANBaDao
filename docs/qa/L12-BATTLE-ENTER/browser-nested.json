@@ -1,0 +1,18 @@
+{
+  "top": {
+    "after": {
+      "href": "http://127.0.0.1:8080/?qa=unlock-all",
+      "loadingHidden": true,
+      "iframeReady": true
+    },
+    "errors": []
+  },
+  "nested": {
+    "urls": [
+      "about:blank",
+      "http://127.0.0.1:8080/battle.html?embedded=1&session=hv-mtvdkpxb-4d541&autostart=1&v=3175"
+    ],
+    "title": "Hồn Việt · Mộng Giới: Trận Đường Phố",
+    "canvas": true
+  }
+}

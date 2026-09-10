@@ -16,7 +16,7 @@ const safeEmbedFallback = "const EMBEDDED = Boolean(EMBED_CONFIG.embedded) || ne
 if (s.includes(oldEmbedFallback)) s = s.replace(oldEmbedFallback, safeEmbedFallback);
 
 const oldAutoStart = 'if (EMBED_CONFIG.autoStart) setTimeout(beginBattle, 250);';
-const safeAutoStart = "if (EMBED_CONFIG.autoStart || (EMBEDDED && new URLSearchParams(location.search).get('autostart') === '1')) setTimeout(beginBattle, 250);";
+const safeAutoStart = "if (EMBED_CONFIG.autoStart || EMBEDDED) setTimeout(beginBattle, 250);";
 if (s.includes(oldAutoStart)) s = s.replace(oldAutoStart, safeAutoStart);
 
 writeFileSync(p, s);

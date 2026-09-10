@@ -2,12 +2,24 @@
 const loadoutFailure = (code, message) => ({ ok: false, code, message });
 const loadoutOwn = (value, key) => value != null && Object.prototype.hasOwnProperty.call(value, key);
 
+function uniqueFormationSlots(squad) {
+  const used = new Set();
+  for (const pick of squad) {
+    const slot = Number(pick?.slot);
+    if (!Number.isInteger(slot) || slot < 0 || slot > 5 || used.has(slot)) return false;
+    used.add(slot);
+  }
+  return true;
+}
+
 export function prepareFormationChange(player, catalog, squad, { allowPartial = false } = {}) {
-  if (!Array.isArray(squad) || squad.length > 6 || squad.length < (allowPartial ? 1 : 6)) {
+  const picks = Array.isArray(squad) ? squad.filter(pick => pick && typeof pick.id === 'string') : null;
+  if (!picks || picks.length > 6 || picks.length < (allowPartial ? 1 : 6)) {
     return loadoutFailure('INVALID_FORMATION_SIZE', allowPartial ? 'Chọn từ 1 đến 6 tướng để xuất chiến.' : 'Cần chọn đủ 6 tướng khác nhau.');
   }
   const seen = new Set();
-  for (const pick of squad) {
+  const keepSlots = uniqueFormationSlots(picks);
+  for (const pick of picks) {
     const id = pick?.id;
     if (typeof id !== 'string' || !loadoutOwn(catalog, id) || !loadoutOwn(player?.heroes, id) || !player.heroes[id].owned) {
       return loadoutFailure('HERO_NOT_OWNED', 'Chỉ có thể xếp tướng đã sở hữu.');
@@ -16,7 +28,10 @@ export function prepareFormationChange(player, catalog, squad, { allowPartial = 
     if (!['front', 'back'].includes(pick.row)) return loadoutFailure('INVALID_ROW', 'Hãy chọn hàng trước hoặc hàng sau.');
     seen.add(id);
   }
-  return { ok: true, squad: squad.map(({ id, row }) => ({ id, row })) };
+  return {
+    ok: true,
+    squad: picks.map(({ id, row, slot }) => keepSlots ? { id, row, slot: Number(slot) } : { id, row })
+  };
 }
 
 export function prepareEquipmentChange(player, catalog, slots, { uid, heroId, action = 'equip' } = {}) {

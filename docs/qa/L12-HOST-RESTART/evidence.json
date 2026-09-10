@@ -1,0 +1,63 @@
+{
+  "date": "2026-09-10",
+  "source_sha": "235c66699a0340f36300b1d3c54d4039217ede8f",
+  "branch_head_before_docs": "63cac627b63da33cb4d073bb6cbf927759bca255",
+  "preview": "https://luc-than-9a271tpx7-cuong-duc-ai-s-projects.vercel.app/?qa=unlock-all",
+  "scope": "browser QA only; no runtime edits",
+  "browser": "Chrome",
+  "device_capabilities": [],
+  "qa_save": "sandbox does not persist",
+  "defeat": {
+    "round": 4,
+    "actions": 18,
+    "mvp": "Ông Phở",
+    "damage": 1568,
+    "kills": 1,
+    "rewards": "none"
+  },
+  "confirmed": {
+    "checkpoint": "1-1",
+    "gold": 500,
+    "gems": 800,
+    "stamina": 114,
+    "party": [
+      "Ông Phở"
+    ],
+    "sfxActive": 0,
+    "sfxBattleActive": false,
+    "frameSrc": "about:blank"
+  },
+  "restart": {
+    "same_host_without_reload": true,
+    "selected_slots": 1,
+    "selected_hero": "Ông Phở",
+    "green_tick": true,
+    "player_count": 1,
+    "enemy_count": 4,
+    "stamina": 108,
+    "iframe_count": 1,
+    "old_confirm_visible": false,
+    "observed_round": 2,
+    "sfxLast": "ultimate",
+    "sfxActive": 2,
+    "sfxBattleActive": true,
+    "sfxError": null
+  },
+  "second_exit": {
+    "sfxActive": 0,
+    "sfxBattleActive": false,
+    "frameSrc": "about:blank"
+  },
+  "console": {
+    "filtered_luc_than_errors": [],
+    "unfiltered": "extension metadata errors observed"
+  },
+  "limitations": [
+    "No audio capture/listening",
+    "No exhaustive VFX/callback leak or stress test",
+    "No Safari/mobile backend",
+    "No new build/unit test needed for docs-only QA"
+  ],
+  "main": "a6b5de61ebb4d1b136b5595766aa86b3a11fff29",
+  "production": "UNCHANGED"
+}

@@ -26,7 +26,7 @@ function hvForgeReveal(item, kind = 'craft') {
   ST.forgeRevealItem = { uid: item.uid, slot: item.slot, rar: item.rar, lvl: item.lvl, mold: item.mold, kind };
   if (ST.forgeRevealAudioUid !== item.uid) {
     ST.forgeRevealAudioUid = item.uid;
-    window.HonVietSfx?.play('impact', { group: 'ui' });
+    window.HonVietSfx?.play('forge-reveal', { group: 'ui' });
   }
 }
 

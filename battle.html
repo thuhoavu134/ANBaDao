@@ -3140,7 +3140,19 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     console.warn("Không tìm thấy cấu hình trận tích hợp; dùng đội hình mặc định.");
     return {};
   })();
-  const EMBEDDED = Boolean(EMBED_CONFIG.embedded);
+  const EMBEDDED = Boolean(EMBED_CONFIG.embedded) || new URLSearchParams(location.search).get('embedded') === '1';
+  function postToHonVietHost(type, payload) {
+    const message = { source: "hon-viet-battle", type, payload };
+    if (parent && parent !== window) {
+      parent.postMessage(message, "*");
+      return;
+    }
+    if (type === "battle-result" || type === "battle-abort" || type === "battle-nav") {
+      try { sessionStorage.setItem("hvBattleHostEvent", JSON.stringify(message)); } catch (_) {}
+      location.replace("index.html?hvBattleReturn=1");
+    }
+  }
+  window.postToHonVietHost = postToHonVietHost;
   /* The campaign route deliberately mirrors the reference game's readable
      auto-battle loop.  Standalone battle.html keeps the deeper tactical lab;
      only embedded campaign encounters use this reduced ruleset. */
@@ -4767,9 +4779,13 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
   }
 
   function initAudio() {
-    if (!state.sound || audioContext) return;
-    const AudioCtor = globalThis.AudioContext || globalThis.webkitAudioContext;
-    if (AudioCtor) audioContext = new AudioCtor();
+    if (!state.sound) return;
+    if (!audioContext) {
+      const AudioCtor = globalThis.AudioContext || globalThis.webkitAudioContext;
+      audioContext = window.__HV_EARLY_CTX || (AudioCtor ? new AudioCtor() : null);
+      if (audioContext) window.__HV_EARLY_CTX = audioContext;
+    }
+    if (audioContext?.state === "suspended") audioContext.resume().catch(() => {});
   }
 
   function tone(frequency, duration = 0.08, type = "sine", volume = 0.035, delay = 0) {
@@ -6468,6 +6484,23 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
 
   function beginBattle() {
     initAudio();
+    window.HonVietAudio?.unlock?.();
+    window.HonVietSfx?.unlock?.();
+    if (EMBEDDED) {
+      const bgm = window.__HV_BATTLE_BGM || new Audio("assets/audio/bgm-combat-new.mp3");
+      bgm.loop = true;
+      bgm.volume = 0.42;
+      bgm.setAttribute("playsinline", "");
+      bgm.onerror = () => {
+        if (!bgm.dataset.fallback) {
+          bgm.dataset.fallback = "1";
+          bgm.src = "assets/audio/bgm-combat.mp3";
+          bgm.play().catch(() => {});
+        }
+      };
+      window.__HV_BATTLE_BGM = bgm;
+      bgm.play().catch(() => {});
+    }
     resetBattleState("battle");
     /* Reference battle loop is auto-resolve by default: enter the stage,
        watch the six-versus-six exchange, then adjust speed or reclaim manual
@@ -6851,7 +6884,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
         eliteTrait: unit.eliteTrait || null
       }))
     };
-    parent.postMessage({ source: "hon-viet-battle", type: "battle-result", payload }, "*");
+    postToHonVietHost("battle-result", payload);
     return true;
   }
 
@@ -8179,11 +8212,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
   dom.soundButton.addEventListener("click", toggleSound);
   document.querySelectorAll("[data-ref-nav]").forEach((button) => button.addEventListener("click", () => {
     if (!EMBEDDED) return;
-    parent.postMessage({
-      source: "hon-viet-battle",
-      type: "battle-nav",
-      payload: { sessionId: EMBED_CONFIG.sessionId || "", target: button.dataset.refNav || "hub" }
-    }, "*");
+    postToHonVietHost("battle-nav", { sessionId: EMBED_CONFIG.sessionId || "", target: button.dataset.refNav || "hub" });
   }));
   document.getElementById("embeddedSkipButton")?.addEventListener("click", () => {
     if (!EMBEDDED) return;
@@ -8196,11 +8225,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
   });
   dom.exitBattleButton?.addEventListener("click", () => {
     if (!EMBEDDED) return;
-    parent.postMessage({
-      source: "hon-viet-battle",
-      type: "battle-abort",
-      payload: { sessionId: EMBED_CONFIG.sessionId || "" }
-    }, "*");
+    postToHonVietHost("battle-abort", { sessionId: EMBED_CONFIG.sessionId || "" });
   });
   dom.actionButtons.forEach((button) => button.addEventListener("click", () => chooseAction(button.dataset.action)));
   addEventListener("keydown", (event) => {
@@ -8490,9 +8515,9 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     parent.postMessage({
       source: "hon-viet-battle",
       type: "battle-ready",
-      payload: { sessionId: EMBED_CONFIG.sessionId || "", heroCount: HEROES.length }
+      payload: { sessionId: EMBED_CONFIG.sessionId || new URLSearchParams(location.search).get("session") || "", heroCount: HEROES.length }
     }, "*");
-    if (EMBED_CONFIG.autoStart) setTimeout(beginBattle, 250);
+    if (EMBED_CONFIG.autoStart || EMBEDDED) setTimeout(beginBattle, 250);
   }
   if (STATUS_ICON_QA && !EMBEDDED) setTimeout(beginBattle, 180);
 })();
@@ -8505,7 +8530,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
  function mvpFromSnapshot(snap){const rows=snap?.player||[];return rows.slice().sort((a,b)=>(Number(b.damage)||0)-(Number(a.damage)||0)||(Number(b.kills)||0)-(Number(a.kills)||0))[0]||null}
  function heroFor(m){return HEROES.find(h=>String(h.id)===String(m?.id)||String(h.sourceId||h.id)===String(m?.sourceId||m?.id))||null}
  function paintHero(canvas,m){const hero=heroFor(m);const row={unit:{id:m?.id,sourceId:m?.sourceId||m?.id,name:m?.name||hero?.name,slot:Number(m?.slot)||0,team:TEAM_PLAYER,hp:Number(m?.hp)||1,maxHp:Number(m?.maxHp)||1,archetype:hero?.archetype||'balanced',accent:hero?.accent||'#d7aa57'},hero:hero||{},rec:{damage:Number(m?.damage)||0,kills:Number(m?.kills)||0},alive:Boolean(m?.alive)};drawReportPortrait(canvas,row)}
- function nav(target){if(EMBEDDED)parent.postMessage({source:'hon-viet-battle',type:'battle-nav',payload:{sessionId:EMBED_CONFIG.sessionId||'',target}},'*')}
+ function nav(target){if(EMBEDDED)(window.postToHonVietHost||function(type,payload){parent.postMessage({source:'hon-viet-battle',type,payload},'*')})('battle-nav',{sessionId:EMBED_CONFIG.sessionId||'',target})}
  function show(victory,snap){const m=mvpFromSnapshot(snap),name=m?.name||'Chiến tướng',damage=Math.round(Number(m?.damage)||0),kills=Math.round(Number(m?.kills)||0);root.className='show '+(victory?'irv-victory':'irv-defeat');
  const base=victory?'assets/result-victory-v6/':'assets/result-defeat-v4/';root.innerHTML=`<main class="irv-viewport"><img class="irv-stage" src="${base}victory-stage-original-quality-smooth-v5.apng"><img class="irv-card" src="${base}victory-info-card-portrait-v6.png"><img class="irv-title" src="${base}${victory?'victory-text-clean-smooth-v5.apng':'defeat-clean-loop.apng'}"><div class="irv-hero-wrap"><canvas class="irv-hero ${victory?'run':'fall'}" width="480" height="270"></canvas>${victory?'<canvas class="irv-hero idle" width="480" height="270"></canvas>':''}</div><section class="irv-result"><small>Xuất sắc nhất phe ta</small><h1>${name}</h1><p>⚔ ${damage} sát thương · ☠ ${kills} kết liễu</p></section>${victory?`<section class="irv-rewards"><div class="irv-grid"><div class="irv-tip"><img src="${base}tinh-thong.png">Tinh thông</div><div class="irv-tip"><img src="${base}sach-exp.png">EXP tướng</div><div class="irv-tip"><img src="${base}ruong-trang-bi-thuong.png">Trang bị</div></div></section>`:`<section class="irv-tips"><div class="irv-grid"><button class="irv-tip" data-nav="daily"><img src="${base}idle-reward.png">Thưởng treo máy</button><button class="irv-tip" data-nav="heroes"><img src="${base}upgrade-hero.png">Tăng cấp tướng</button><button class="irv-tip" data-nav="summon"><img src="${base}summon-hero.png">Chiêu mộ danh tướng</button><button class="irv-tip" data-nav="forge"><img src="${base}equip-gear.png">Mang trang bị</button></div></section>`}<section class="irv-actions"><button class="irv-btn" data-result-action="confirm">${victory?'Xác nhận':'Xác định'}</button><button class="irv-btn" data-result-action="${victory?'next':'back'}">${victory?'Ải sau':'Quay lại'}</button></section></main>`;root.querySelectorAll('canvas.irv-hero').forEach(c=>paintHero(c,m));root.querySelectorAll('[data-nav]').forEach(b=>b.onclick=()=>nav(b.dataset.nav));root.querySelector('[data-result-action="confirm"]').onclick=()=>continueFromBattleResult();const second=root.querySelector('[data-result-action="next"],[data-result-action="back"]');if(second)second.onclick=()=>victory?continueFromBattleResult():nav('campaign');}
  window.__showIntegratedResultV6=show;window.__hideIntegratedResultV6=()=>{root.className='';root.innerHTML=''};

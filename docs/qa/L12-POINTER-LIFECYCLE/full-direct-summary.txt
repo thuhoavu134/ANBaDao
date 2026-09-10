@@ -1,0 +1,97 @@
+not ok 16 - built close owner stops both parent buses and the child before blanking the iframe
+  error: "ENOENT: no such file or directory, open '/workspace/scratch/792606ef6caf/projects/luc-than/dist/index.html'"
+  code: 'ENOENT'
+# Error: ENOENT: no such file or directory, open '/workspace/scratch/792606ef6caf/projects/luc-than/dist/index.html'
+#   code: 'ENOENT',
+not ok 7 - tests/campaign-reference-interaction.test.mjs
+  error: 'test failed'
+not ok 45 - active index catalog is classified without silently hiding known legacy issues
+  error: "ENOENT: no such file or directory, scandir '/workspace/scratch/792606ef6caf/projects/luc-than/assets'"
+  code: 'ENOENT'
+not ok 95 - Đình Lôi binds all fourteen authored asset layers
+  error: 'idle-atlas.png'
+not ok 96 - Đình Lôi runtime uses native 2x atlases
+  error: "ENOENT: no such file or directory, open '/workspace/scratch/792606ef6caf/projects/luc-than/assets/characters/dinh-loi/idle-atlas.png'"
+  code: 'ENOENT'
+not ok 102 - craft debits once and commits item, pity, quest and receipt together across reload/retry
+  error: "ENOENT: no such file or directory, open '/workspace/scratch/792606ef6caf/projects/luc-than/dist/index.html'"
+  code: 'ENOENT'
+not ok 103 - invalid slot, locked forge, missing funds and invalid sequence reject before rolling or mutation
+  error: "ENOENT: no such file or directory, open '/workspace/scratch/792606ef6caf/projects/luc-than/dist/index.html'"
+  code: 'ENOENT'
+not ok 104 - every forge mutation rolls back all state on storage failure and can retry
+  error: "ENOENT: no such file or directory, open '/workspace/scratch/792606ef6caf/projects/luc-than/dist/index.html'"
+  code: 'ENOENT'
+not ok 105 - craft allocates beyond existing UIDs when an old itemSeq is behind inventory
+  error: "ENOENT: no such file or directory, open '/workspace/scratch/792606ef6caf/projects/luc-than/dist/index.html'"
+  code: 'ENOENT'
+not ok 106 - existing pity boundaries and two sequential dual rolls are preserved
+  error: "ENOENT: no such file or directory, open '/workspace/scratch/792606ef6caf/projects/luc-than/dist/index.html'"
+  code: 'ENOENT'
+not ok 107 - dual pending survives reload, failed choice keeps both, competing choices grant one item
+  error: "ENOENT: no such file or directory, open '/workspace/scratch/792606ef6caf/projects/luc-than/dist/index.html'"
+  code: 'ENOENT'
+not ok 108 - old dual pending without an ID is preserved and can be selected without another charge or roll
+  error: "ENOENT: no such file or directory, open '/workspace/scratch/792606ef6caf/projects/luc-than/dist/index.html'"
+  code: 'ENOENT'
+not ok 109 - enhancement updates the equipped stat once, preserves links and stops at cost/cap
+  error: "ENOENT: no such file or directory, open '/workspace/scratch/792606ef6caf/projects/luc-than/dist/index.html'"
+  code: 'ENOENT'
+not ok 110 - salvage protects worn/locked items, rejects missing/stale confirmation and credits exactly once
+  error: "ENOENT: no such file or directory, open '/workspace/scratch/792606ef6caf/projects/luc-than/dist/index.html'"
+  code: 'ENOENT'
+not ok 111 - lock toggles survive reload and block salvage while allowing enhancement
+  error: "ENOENT: no such file or directory, open '/workspace/scratch/792606ef6caf/projects/luc-than/dist/index.html'"
+  code: 'ENOENT'
+not ok 112 - salvage dialog previews exact gain, cancel keeps gear, failed write stays open and retry consumes once
+  error: "ENOENT: no such file or directory, open '/workspace/scratch/792606ef6caf/projects/luc-than/dist/index.html'"
+  code: 'ENOENT'
+not ok 113 - rendered action handler rejects double click and reuses its command after a storage retry
+  error: "ENOENT: no such file or directory, open '/workspace/scratch/792606ef6caf/projects/luc-than/dist/index.html'"
+  code: 'ENOENT'
+not ok 114 - nontransactional quest callers retain default persistence
+  error: "ENOENT: no such file or directory, open '/workspace/scratch/792606ef6caf/projects/luc-than/dist/index.html'"
+  code: 'ENOENT'
+not ok 131 - formation save and opening progress commit once, survive reload, and retry reuses receipt
+  error: "ENOENT: no such file or directory, open '/workspace/scratch/792606ef6caf/projects/luc-than/dist/index.html'"
+  code: 'ENOENT'
+not ok 132 - formation storage failure rolls back squad, receipt and opening progress, then can retry
+  error: "ENOENT: no such file or directory, open '/workspace/scratch/792606ef6caf/projects/luc-than/dist/index.html'"
+  code: 'ENOENT'
+not ok 133 - equipment transfer, duplicate and removal preserve inventory and reload ownership
+  error: "ENOENT: no such file or directory, open '/workspace/scratch/792606ef6caf/projects/luc-than/dist/index.html'"
+  code: 'ENOENT'
+not ok 134 - failed equipment transfer and removal keep old links and never report success
+  error: "ENOENT: no such file or directory, open '/workspace/scratch/792606ef6caf/projects/luc-than/dist/index.html'"
+  code: 'ENOENT'
+not ok 135 - final opening equip event shares the item commit and stays pending if storage fails
+  error: "ENOENT: no such file or directory, open '/workspace/scratch/792606ef6caf/projects/luc-than/dist/index.html'"
+  code: 'ENOENT'
+not ok 136 - built formation button stays open on failure, blocks duplicate click and retries
+  error: "ENOENT: no such file or directory, open '/workspace/scratch/792606ef6caf/projects/luc-than/dist/index.html'"
+  code: 'ENOENT'
+not ok 137 - Lục Ảnh golden runtime binds every authored visual and requested audio surface
+  error: 'assets/characters/luc-anh/master.webp'
+# Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'sharp' imported from /workspace/scratch/792606ef6caf/projects/luc-than/tests/luc-anh-idle-1080.test.mjs
+not ok 30 - tests/luc-anh-idle-1080.test.mjs
+  error: 'test failed'
+# Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'sharp' imported from /workspace/scratch/792606ef6caf/projects/luc-than/tests/mobile-render-sfx.test.mjs
+not ok 33 - tests/mobile-render-sfx.test.mjs
+  error: 'test failed'
+# Error: ENOENT: no such file or directory, open '/workspace/scratch/792606ef6caf/projects/luc-than/dist/index.html'
+#   code: 'ENOENT',
+not ok 36 - tests/qa-full-access.test.mjs
+  error: 'test failed'
+not ok 167 - result actions and all result assets are present
+  error: 'assets/result-victory-v6/victory-stage-original-quality-smooth-v5.apng'
+not ok 168 - the embedded battle engine is byte-identical to battle.html
+  error: "ENOENT: no such file or directory, open '/workspace/scratch/792606ef6caf/projects/luc-than/dist/index.html'"
+  code: 'ENOENT'
+not ok 200 - Rèn Mộng asset registry covers every item model and material deterministically
+  error: |-
+not ok 201 - hero detail background and skill kit runtime are shipped together
+  error: "ENOENT: no such file or directory, open '/workspace/scratch/792606ef6caf/projects/luc-than/dist/index.html'"
+  code: 'ENOENT'
+# tests 413
+# pass 381
+# fail 32

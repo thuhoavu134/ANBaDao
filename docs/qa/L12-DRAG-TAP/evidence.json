@@ -1,0 +1,44 @@
+{
+  "schema": "hon-viet-drag-tap-evidence/v1",
+  "ticket_id": "TKT-0004",
+  "contract": "L12-drag-tap/v1",
+  "parent": "ec5297fcc93de42ff3370de5958f465a2b98cdb3",
+  "baseline_main": "a6b5de61ebb4d1b136b5595766aa86b3a11fff29",
+  "rejected_visual_pass": "74b39762f048422932e2fe269fca6466e0e84982",
+  "branch": "work/l12-drag-tap-20260910",
+  "tdd": {
+    "red": { "tests": 13, "pass": 11, "fail": 2, "failed": ["L12-D1", "L12-D2"] },
+    "green": { "tests": 13, "pass": 13, "fail": 0 },
+    "focused_campaign": { "tests": 44, "pass": 44, "fail": 0 },
+    "build": "PASS via scripts/build-static.mjs"
+  },
+  "browser": {
+    "desktop": "NOT_RUN this slice; logic exercised at 390x844",
+    "mobile_viewport": "390x844 Chrome agent-browser, QA sandbox ?qa=unlock-all",
+    "Safari": "NOT_RUN",
+    "device_touch": "NOT_RUN"
+  },
+  "checks": {
+    "remove_three_heroes": { "result": "3/6", "holes": [0, 3, 4] },
+    "drag_occupied_onto_empty": {
+      "from": 5,
+      "to": 3,
+      "result": "Nữ Cung Thủ Tre on 3; slot 5 empty; no packing; selection cleared"
+    },
+    "first_empty_tap_after_drag": {
+      "slot": 5,
+      "result": "selected on first tap"
+    },
+    "place_reserve_on_selected_hole": {
+      "result": "Ông Phở on slot 5; 4/6; holes 0 and 4 kept"
+    },
+    "console": "no app-origin errors observed"
+  },
+  "non_goals_kept": [
+    "Did not restore rejected visual pass 74b3976",
+    "Did not add bench-to-field drag",
+    "Did not change crop, targeting, Combat V2, AFK, countdown, or balance"
+  ],
+  "owner_approval": "PENDING",
+  "main_production": "unchanged"
+}

@@ -1,0 +1,8 @@
+{"ts":"2026-09-10T02:42:46.928Z","ev":"run_started","workflow":"vibe-gate","input":"Remove shared forge impact sound from combat; keep cast audio and VFX; preview only"}
+{"ts":"2026-09-10T02:42:46.928Z","ev":"step_activated","step":"gate-contract","type":"task","from":null,"attempt":1}
+{"ts":"2026-09-10T02:43:19.159Z","ev":"step_done","step":"gate-contract","attempt":1,"durationMs":32230,"output":"{\"contract\":\"docs/qa/L12-SFX/contract.md\",\"baseline\":\"01b331ad2896fd7373d16aef721ad6058a3789c4\",\"release\":\"preview\",\"boot\":\"no Boot Protocol configured\"}","note":null}
+{"ts":"2026-09-10T02:43:19.159Z","ev":"step_activated","step":"ticket-guard","type":"task","from":"gate-contract","attempt":1}
+{"ts":"2026-09-10T02:43:30.708Z","ev":"step_done","step":"ticket-guard","attempt":1,"durationMs":11548,"output":"{\"ticket\":\"TKT-0002\",\"claim\":\"active\",\"resource\":\"battle-audio-dispatch\",\"checkpoint\":\"9db2bd5\"}","note":null}
+{"ts":"2026-09-10T02:43:30.708Z","ev":"step_activated","step":"red-green-refactor","type":"task","from":"ticket-guard","attempt":1}
+{"ts":"2026-09-10T02:46:28.628Z","ev":"step_done","step":"red-green-refactor","attempt":1,"durationMs":177920,"output":"{\"red\":\"0/5 PASS\",\"green\":\"5/5 PASS\",\"focused\":\"13 PASS / 1 missing dist\",\"full\":\"386 PASS / 32 missing assets/dist/sharp\",\"preview\":\"pending\",\"local\":\"bf07edf\"}","note":null}
+{"ts":"2026-09-10T02:46:28.628Z","ev":"step_activated","step":"evidence-review","type":"task","from":"red-green-refactor","attempt":1}

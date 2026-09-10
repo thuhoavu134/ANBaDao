@@ -1,0 +1,41 @@
+{
+  "schema": "hon-viet-field-remove-evidence/v1",
+  "ticket_id": "TKT-0005",
+  "contract": "L12-field-remove/v1",
+  "parent": "0a9db3ef",
+  "baseline_main": "a6b5de61ebb4d1b136b5595766aa86b3a11fff29",
+  "rejected_visual_pass": "74b39762f048422932e2fe269fca6466e0e84982",
+  "branch": "work/l12-field-tap-remove-20260910",
+  "tdd": {
+    "green": { "tests": 4, "pass": 4, "fail": 0, "file": "tests/campaign-field-remove.test.mjs" },
+    "focused_campaign": { "tests": 26, "pass": 26, "fail": 0 },
+    "build": "dist already injected via scripts/build-static.mjs / afk-chest-runtime-v1.mjs"
+  },
+  "browser": {
+    "desktop": "NOT_RUN this slice; logic exercised at 390x844",
+    "mobile_viewport": "390x844 Chrome headless, QA sandbox ?qa=unlock-all",
+    "Safari": "NOT_RUN",
+    "device_touch": "NOT_RUN"
+  },
+  "checks": {
+    "tap_occupied_undocks": {
+      "slot": 0,
+      "hero": "Ông Phở",
+      "result": "5/6; hole at 0; remaining keep slots 1-5"
+    },
+    "tap_empty_selects": {
+      "slot": 0,
+      "result": "selected on first tap after undock"
+    },
+    "instruction": "Bấm tướng trên sân để gỡ. Chọn ô trống rồi chọn dự bị để thêm. Kéo tướng trên sân để đổi chỗ.",
+    "console": "no app-origin errors observed"
+  },
+  "non_goals_kept": [
+    "Did not restore rejected visual pass 74b3976",
+    "Did not add bench-to-field drag",
+    "Did not change crop, targeting, Combat V2, AFK, countdown, or balance",
+    "Bench green-tick remains a secondary undock path"
+  ],
+  "owner_approval": "PENDING",
+  "main_production": "unchanged"
+}

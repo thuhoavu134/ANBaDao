@@ -1,0 +1,75 @@
+{
+  "nav": "button:has-text(\"Chinh chiến\")",
+  "errors": [],
+  "instruction": "Bấm tướng trên sân để gỡ. Chọn ô trống rồi chọn dự bị để thêm. Kéo tướng trên sân để đổi chỗ.",
+  "before": {
+    "teamCount": "6 / 6",
+    "occupied": [
+      {
+        "slot": "0",
+        "label": "Gỡ Ông Phở khỏi đội hình"
+      },
+      {
+        "slot": "1",
+        "label": "Gỡ Đình Lôi — Vệ Binh Trống Đồng khỏi đội hình"
+      },
+      {
+        "slot": "2",
+        "label": "Gỡ Cô Đào Gánh Hội khỏi đội hình"
+      },
+      {
+        "slot": "3",
+        "label": "Gỡ Thầy Mo khỏi đội hình"
+      },
+      {
+        "slot": "4",
+        "label": "Gỡ Thần Nỏ Sơn Nữ — Lạc Yên khỏi đội hình"
+      },
+      {
+        "slot": "5",
+        "label": "Gỡ Nữ Cung Thủ Tre khỏi đội hình"
+      }
+    ],
+    "empty": []
+  },
+  "tapped": {
+    "slot": "0",
+    "empty": false,
+    "label": "Gỡ Ông Phở khỏi đội hình"
+  },
+  "after": {
+    "teamCount": "5 / 6",
+    "occupied": [
+      {
+        "slot": "1",
+        "label": "Gỡ Đình Lôi — Vệ Binh Trống Đồng khỏi đội hình"
+      },
+      {
+        "slot": "2",
+        "label": "Gỡ Cô Đào Gánh Hội khỏi đội hình"
+      },
+      {
+        "slot": "3",
+        "label": "Gỡ Thầy Mo khỏi đội hình"
+      },
+      {
+        "slot": "4",
+        "label": "Gỡ Thần Nỏ Sơn Nữ — Lạc Yên khỏi đội hình"
+      },
+      {
+        "slot": "5",
+        "label": "Gỡ Nữ Cung Thủ Tre khỏi đội hình"
+      }
+    ],
+    "empty": [
+      "0"
+    ]
+  },
+  "selectedEmpty": {
+    "empty": true,
+    "selected": true,
+    "label": "Ô trống hàng trước 1"
+  },
+  "holeKept": true,
+  "remainingKeptSlots": true
+}

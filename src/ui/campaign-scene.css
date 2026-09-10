@@ -120,6 +120,9 @@ body.hv-campaign-active #toast{z-index:100001}
 #hvCampaignScene .cs-battlefield .cs-canvas{inset:0;width:100%;height:100%}
 #hvCampaignScene .cs-battlefield .cs-slots{position:absolute;inset:0;display:block;pointer-events:none}
 #hvCampaignScene .cs-field-unit{position:absolute;transform:translate(-50%,-100%);width:23%;height:27%;min-height:44px;background:none;border:0;color:#fff4c7;pointer-events:auto;touch-action:none;display:flex;flex-direction:column;justify-content:space-between;align-items:center;padding:0;text-shadow:0 1px 3px #000}
+#hvCampaignScene .cs-field-unit.is-empty{outline:1px dashed #fff4c74d;background:#0c1c1e3d;color:transparent;text-shadow:none}
+#hvCampaignScene .cs-field-unit.is-empty:focus-visible{outline:2px solid #ffe08a}
+#hvCampaignScene .cs-field-unit.is-selected{outline:2px solid #e9c572}
 #hvCampaignScene .cs-field-unit span{font-size:10px;border-radius:12px;background:#12282bbd;padding:2px 5px;white-space:nowrap}
 #hvCampaignScene .cs-field-unit small{font-size:9px;max-width:100%;line-height:1.1}
 #hvCampaignScene .cs-field-enemy{position:absolute;transform:translate(-50%,0);width:22%;text-align:center;font-size:9px;color:#ffecd5;text-shadow:0 1px 3px #000;pointer-events:none}

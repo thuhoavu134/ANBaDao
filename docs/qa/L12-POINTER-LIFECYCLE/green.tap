@@ -1,0 +1,64 @@
+TAP version 13
+# Subtest: L12-P1: foreign pointerup does not end the active drag
+ok 1 - L12-P1: foreign pointerup does not end the active drag
+  ---
+  duration_ms: 5.728872
+  type: 'test'
+  ...
+# Subtest: L12-P1: foreign pointercancel does not end the active drag
+ok 2 - L12-P1: foreign pointercancel does not end the active drag
+  ---
+  duration_ms: 1.309259
+  type: 'test'
+  ...
+# Subtest: L12-P1: a second pointer cannot replace the drag owner
+ok 3 - L12-P1: a second pointer cannot replace the drag owner
+  ---
+  duration_ms: 0.979212
+  type: 'test'
+  ...
+# Subtest: L12-P2: pointercancel restores a displaced sprite without committing a move
+ok 4 - L12-P2: pointercancel restores a displaced sprite without committing a move
+  ---
+  duration_ms: 2.176777
+  type: 'test'
+  ...
+# Subtest: L12-P2: lostpointercapture restores a displaced sprite without committing a move
+ok 5 - L12-P2: lostpointercapture restores a displaced sprite without committing a move
+  ---
+  duration_ms: 1.053142
+  type: 'test'
+  ...
+# Subtest: L12-P2: pointerup restores a displaced sprite without committing a move
+ok 6 - L12-P2: pointerup restores a displaced sprite without committing a move
+  ---
+  duration_ms: 0.98294
+  type: 'test'
+  ...
+# Subtest: L12-P3: cancelPreparation() releases capture and permits the next drag
+ok 7 - L12-P3: cancelPreparation() releases capture and permits the next drag
+  ---
+  duration_ms: 1.713184
+  type: 'test'
+  ...
+# Subtest: L12-P3: onSceneRoute('hub') releases capture and permits the next drag
+ok 8 - L12-P3: onSceneRoute('hub') releases capture and permits the next drag
+  ---
+  duration_ms: 2.091265
+  type: 'test'
+  ...
+# Subtest: L12-P1: primary drag swaps once, releases capture, and ignores late capture loss
+ok 9 - L12-P1: primary drag swaps once, releases capture, and ignores late capture loss
+  ---
+  duration_ms: 7.368411
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 168.310559

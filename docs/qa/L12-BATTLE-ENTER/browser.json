@@ -1,0 +1,17 @@
+{
+  "loading": {
+    "text": "Đang vào trận…Đội hình vừa bày sẽ ra sân ngay.",
+    "hidden": true,
+    "overlayLoading": false,
+    "exitShown": false,
+    "frameSrc": "battle.html?embedded=1&session=hv-mtvd0ij2-7kevt&autostart=1&v=3174"
+  },
+  "after": {
+    "loadingHidden": true,
+    "overlayLoading": false,
+    "iframeReady": true,
+    "iframeTitle": "Hồn Việt · Mộng Giới: Trận Đường Phố",
+    "frameSrc": "battle.html?embedded=1&session=hv-mtvd0ij2-7kevt&autostart=1&v=3174"
+  },
+  "errors": []
+}

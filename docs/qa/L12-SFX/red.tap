@@ -1,0 +1,264 @@
+TAP version 13
+# Subtest: SFX-1 legacy impact cannot play the forge sound in standalone battle
+not ok 1 - SFX-1 legacy impact cannot play the forge sound in standalone battle
+  ---
+  duration_ms: 2.918487
+  type: 'test'
+  location: '/workspace/scratch/792606ef6caf/projects/luc-than/tests/forge-combat-sfx.test.mjs:18:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/792606ef6caf/projects/luc-than/tests/forge-combat-sfx.test.mjs:19:25)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: SFX-1 battle channel rejects forge sound even with UI group override; casts still play
+not ok 2 - SFX-1 battle channel rejects forge sound even with UI group override; casts still play
+  ---
+  duration_ms: 1.513936
+  type: 'test'
+  location: '/workspace/scratch/792606ef6caf/projects/luc-than/tests/forge-combat-sfx.test.mjs:21:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/792606ef6caf/projects/luc-than/tests/forge-combat-sfx.test.mjs:23:56)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: SFX-2 shell forge event plays original sound only with explicit UI group
+not ok 3 - SFX-2 shell forge event plays original sound only with explicit UI group
+  ---
+  duration_ms: 0.675961
+  type: 'test'
+  location: '/workspace/scratch/792606ef6caf/projects/luc-than/tests/forge-combat-sfx.test.mjs:27:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/792606ef6caf/projects/luc-than/tests/forge-combat-sfx.test.mjs:29:10)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: SFX-2 actual forge reveal dispatches dedicated event once per item UID
+not ok 4 - SFX-2 actual forge reveal dispatches dedicated event once per item UID
+  ---
+  duration_ms: 0.9734
+  type: 'test'
+  location: '/workspace/scratch/792606ef6caf/projects/luc-than/tests/forge-combat-sfx.test.mjs:32:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'impact'
+    - 'forge-reveal'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'forge-reveal'
+  actual: 'impact'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/792606ef6caf/projects/luc-than/tests/forge-combat-sfx.test.mjs:37:39)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: SFX-3 build owner removes shared impact dispatch without replacing VFX or damage
+not ok 5 - SFX-3 build owner removes shared impact dispatch without replacing VFX or damage
+  ---
+  duration_ms: 0.820939
+  type: 'test'
+  location: '/workspace/scratch/792606ef6caf/projects/luc-than/tests/forge-combat-sfx.test.mjs:39:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input was expected to not match the regular expression /HonVietSfx\?\.play\(["']impact["']\)/. Input:
+    
+    "import { readFileSync, writeFileSync } from 'node:fs';\n" +
+      "import { join } from 'node:path';\n" +
+      '\n' +
+      "const out = join(process.cwd(), 'dist');\n" +
+      "const runtime = readFileSync(new URL('../src/ui/audio-sfx-runtime.js', import.meta.url), 'utf8');\n" +
+      "for (const name of ['index.html', 'battle.html']) {\n" +
+      '  const path = join(out, name);\n' +
+      "  let html = readFileSync(path, 'utf8');\n" +
+      `  if (html.includes('id="hon-viet-supplied-sfx"')) throw new Error('SFX patch applied twice');\n` +
+      '  html = html.replace(\'</head>\', `<script id="hon-viet-supplied-sfx">${runtime}</script>\\n</head>`);\n' +
+      "  if (name === 'battle.html') {\n" +
+      '    function replace(from, to, label) {\n' +
+      '      if (!html.includes(from)) throw new Error(`Runtime repair missing ${label}`);\n' +
+      '      html = html.replace(from, to);\n' +
+      '    }\n' +
+      '    function replaceFunction(name, nextName, replacement) {\n' +
+      '      const start = html.indexOf(`  function ${name}(`);\n' +
+      '      const end = html.indexOf(`  ${nextName}`, start + 12 + name.length);\n' +
+      '      if (start < 0 || end < start) throw new Error(`SFX function boundary missing ${name}`);\n' +
+      "      html = html.slice(0, start) + replacement + '\\n\\n' + html.slice(end);\n" +
+      '    }\n' +
+      "    replaceFunction('playActionSound', 'function ', `  function playActionSound(actor, action) {\n" +
+      "    if (state.sound) window.HonVietSfx?.play(action === 'ultimate' ? 'ultimate' : action === 'skill' ? 'skill' : 'basic');\n" +
+      '  }`);\n' +
+      "    replaceFunction('playReleaseSound', 'async function launchWeaponEffect', `  function playReleaseSound(actor) {\n" +
+      '    // Cast SFX is dispatched exactly once by playActionSound, not again on projectile release.\n' +
+      '  }`);\n' +
+      `    replace('window.__playLucAnhUltimateVoiceGuaranteed?.();', 'window.__playLucAnhUltimateVoiceGuaranteed?.();playActionSound(actor,"ultimate");', 'Luc Anh ultimate SFX');\n` +
+      `    replace('tone(critical ? 105 : 135, critical ? 0.16 : 0.09, "square", 0.035);',\n` +
+      `      'if (state.sound) window.HonVietSfx?.play("impact");', 'impact SFX');\n` +
+      `    replace('tone(520, 0.16, "sine", 0.028);', 'if (state.sound) window.HonVietSfx?.play("heal");', 'heal SFX');\n` +
+      `    replace('tone(150, 0.07, "triangle", 0.018);', '/* Impact SFX is owned by applyDamage; no duplicate synthetic tone. */', 'duplicate impact beep');\n` +
+      `    replace('tone(146, 0.28, "sine", 0.05);\\n    tone(219, 0.24, "triangle", 0.035, 0.12);',\n` +
+      "      'window.HonVietSfx?.setCombatEnabled(state.sound);', 'battle-start audio');\n" +
+      `    replace('tone(victory ? 392 : 110, 0.38, victory ? "triangle" : "sawtooth", 0.05);\\n    if (victory) tone(523, 0.35, "sine", 0.035, 0.18);',\n` +
+      `      'window.HonVietSfx?.stopCombat();\\n    if (state.sound) window.HonVietSfx?.play(victory ? "victory" : "defeat", {group:"ui"});', 'result SFX');\n` +
+      `    replace('if (state.sound) tone(440, 0.08, "sine", 0.025);',\n` +
+      `      'window.HonVietSfx?.setCombatEnabled(state.sound);\\n    if (state.sound) { window.HonVietSfx?.unlock(); window.HonVietSfx?.play("ui", {group:"ui"}); }', 'SFX mute');\n` +
+      '\n' +
+      '    // Keep source animation motion; do not add a second bob/rotation to Lục Ảnh.\n' +
+      "    replace('const idleBob = REDUCED_MOTION ? 0 :', 'const idleBob = REDUCED_MOTION || isLucAnh(unit) ? 0 :', 'authored idle motion');\n" +
+      "    replace('if (!isOngPho(unit)) context.rotate(lean', 'if (!isOngPho(unit) && !isLucAnh(unit)) context.rotate(lean', 'authored attack baseline');\n" +
+      '\n' +
+      '    // Full-screen flash and random camera impulses read as flicker in the reference battle layout.\n' +
+      '    // Retain local authored impact effects and damage feedback.\n' +
+      "    replace('    updateEffects(delta);\\n', `    updateEffects(delta);\n" +
+      "    if (document.body.classList.contains('reference-simple')) {\n" +
+      '      cameraFlash = 0; cameraShake = 0; cameraZoom = 0;\n' +
+      '    }\n' +
+      "`, 'stable reference camera');\n" +
+      "    replace('    ctx.setTransform(sx, 0, 0, sy, tx, ty);', `    // Clear the entire backing store without exposing transparent/unpainted margins.\n" +
+      '    ctx.setTransform(1, 0, 0, 1, 0, 0);\n' +
+      '    ctx.globalAlpha = 1;\n' +
+      "    ctx.globalCompositeOperation = 'source-over';\n" +
+      "    ctx.fillStyle = '#081416';\n" +
+      '    ctx.fillRect(0, 0, dom.canvas.width, dom.canvas.height);\n' +
+      "    ctx.setTransform(sx, 0, 0, sy, tx, ty);`, 'opaque backbuffer');\n" +
+      "    replace('    ctx.clearRect(-100, -100, WORLD.width + 200, WORLD.height + 200);',\n" +
+      "      '    // Background and actors are painted in the same animation frame.', 'transformed transparent clear');\n" +
+      '    html = html.replace(\'</head>\', `<style id="stable-battle-canvas">\n' +
+      '      .game-viewport{position:relative}\n' +
+      '      .game-viewport #gameCanvas{position:absolute!important;inset:0;display:block;width:100%!important;height:100%!important;background:#081416!important}\n' +
+      '    </style></head>`);\n' +
+      '  }\n' +
+      '  writeFileSync(path, html);\n' +
+      '}\n' +
+      "console.log('Supplied audio SFX, stable canvas/camera and authored Luc Anh motion applied');\n"
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    import { readFileSync, writeFileSync } from 'node:fs';
+    import { join } from 'node:path';
+    
+    const out = join(process.cwd(), 'dist');
+    const runtime = readFileSync(new URL('../src/ui/audio-sfx-runtime.js', import.meta.url), 'utf8');
+    for (const name of ['index.html', 'battle.html']) {
+      const path = join(out, name);
+      let html = readFileSync(path, 'utf8');
+      if (html.includes('id="hon-viet-supplied-sfx"')) throw new Error('SFX patch applied twice');
+      html = html.replace('</head>', `<script id="hon-viet-supplied-sfx">${runtime}</script>\n</head>`);
+      if (name === 'battle.html') {
+        function replace(from, to, label) {
+          if (!html.includes(from)) throw new Error(`Runtime repair missing ${label}`);
+          html = html.replace(from, to);
+        }
+        function replaceFunction(name, nextName, replacement) {
+          const start = html.indexOf(`  function ${name}(`);
+          const end = html.indexOf(`  ${nextName}`, start + 12 + name.length);
+          if (start < 0 || end < start) throw new Error(`SFX function boundary missing ${name}`);
+          html = html.slice(0, start) + replacement + '\n\n' + html.slice(end);
+        }
+        replaceFunction('playActionSound', 'function ', `  function playActionSound(actor, action) {
+        if (state.sound) window.HonVietSfx?.play(action === 'ultimate' ? 'ultimate' : action === 'skill' ? 'skill' : 'basic');
+      }`);
+        replaceFunction('playReleaseSound', 'async function launchWeaponEffect', `  function playReleaseSound(actor) {
+        // Cast SFX is dispatched exactly once by playActionSound, not again on projectile release.
+      }`);
+        replace('window.__playLucAnhUltimateVoiceGuaranteed?.();', 'window.__playLucAnhUltimateVoiceGuaranteed?.();playActionSound(actor,"ultimate");', 'Luc Anh ultimate SFX');
+        replace('tone(critical ? 105 : 135, critical ? 0.16 : 0.09, "square", 0.035);',
+          'if (state.sound) window.HonVietSfx?.play("impact");', 'impact SFX');
+        replace('tone(520, 0.16, "sine", 0.028);', 'if (state.sound) window.HonVietSfx?.play("heal");', 'heal SFX');
+        replace('tone(150, 0.07, "triangle", 0.018);', '/* Impact SFX is owned by applyDamage; no duplicate synthetic tone. */', 'duplicate impact beep');
+        replace('tone(146, 0.28, "sine", 0.05);\n    tone(219, 0.24, "triangle", 0.035, 0.12);',
+          'window.HonVietSfx?.setCombatEnabled(state.sound);', 'battle-start audio');
+        replace('tone(victory ? 392 : 110, 0.38, victory ? "triangle" : "sawtooth", 0.05);\n    if (victory) tone(523, 0.35, "sine", 0.035, 0.18);',
+          'window.HonVietSfx?.stopCombat();\n    if (state.sound) window.HonVietSfx?.play(victory ? "victory" : "defeat", {group:"ui"});', 'result SFX');
+        replace('if (state.sound) tone(440, 0.08, "sine", 0.025);',
+          'window.HonVietSfx?.setCombatEnabled(state.sound);\n    if (state.sound) { window.HonVietSfx?.unlock(); window.HonVietSfx?.play("ui", {group:"ui"}); }', 'SFX mute');
+    
+        // Keep source animation motion; do not add a second bob/rotation to Lục Ảnh.
+        replace('const idleBob = REDUCED_MOTION ? 0 :', 'const idleBob = REDUCED_MOTION || isLucAnh(unit) ? 0 :', 'authored idle motion');
+        replace('if (!isOngPho(unit)) context.rotate(lean', 'if (!isOngPho(unit) && !isLucAnh(unit)) context.rotate(lean', 'authored attack baseline');
+    
+        // Full-screen flash and random camera impulses read as flicker in the reference battle layout.
+        // Retain local authored impact effects and damage feedback.
+        replace('    updateEffects(delta);\n', `    updateEffects(delta);
+        if (document.body.classList.contains('reference-simple')) {
+          cameraFlash = 0; cameraShake = 0; cameraZoom = 0;
+        }
+    `, 'stable reference camera');
+        replace('    ctx.setTransform(sx, 0, 0, sy, tx, ty);', `    // Clear the entire backing store without exposing transparent/unpainted margins.
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.globalAlpha = 1;
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.fillStyle = '#081416';
+        ctx.fillRect(0, 0, dom.canvas.width, dom.canvas.height);
+        ctx.setTransform(sx, 0, 0, sy, tx, ty);`, 'opaque backbuffer');
+        replace('    ctx.clearRect(-100, -100, WORLD.width + 200, WORLD.height + 200);',
+          '    // Background and actors are painted in the same animation frame.', 'transformed transparent clear');
+        html = html.replace('</head>', `<style id="stable-battle-canvas">
+          .game-viewport{position:relative}
+          .game-viewport #gameCanvas{position:absolute!important;inset:0;display:block;width:100%!important;height:100%!important;background:#081416!important}
+        </style></head>`);
+      }
+      writeFileSync(path, html);
+    }
+    console.log('Supplied audio SFX, stable canvas/camera and authored Luc Anh motion applied');
+    
+  operator: 'doesNotMatch'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/792606ef6caf/projects/luc-than/tests/forge-combat-sfx.test.mjs:41:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 0
+# fail 5
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 84.80253

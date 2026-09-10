@@ -1,0 +1,80 @@
+{
+  "id": "20260909-194246-smh0sq4",
+  "workflow": "vibe-gate",
+  "status": "running",
+  "started": "2026-09-10T02:42:46.927Z",
+  "ended": null,
+  "input": "Remove shared forge impact sound from combat; keep cast audio and VFX; preview only",
+  "active": [
+    "evidence-review"
+  ],
+  "stepState": {
+    "gate-contract": {
+      "attempts": 1,
+      "status": "done",
+      "startedAt": "2026-09-10T02:42:46.928Z",
+      "endedAt": "2026-09-10T02:43:19.158Z",
+      "durationMs": 32230,
+      "outputs": [
+        {
+          "attempt": 1,
+          "at": "2026-09-10T02:43:19.158Z",
+          "output": {
+            "contract": "docs/qa/L12-SFX/contract.md",
+            "baseline": "01b331ad2896fd7373d16aef721ad6058a3789c4",
+            "release": "preview",
+            "boot": "no Boot Protocol configured"
+          }
+        }
+      ]
+    },
+    "ticket-guard": {
+      "attempts": 1,
+      "status": "done",
+      "startedAt": "2026-09-10T02:43:19.159Z",
+      "endedAt": "2026-09-10T02:43:30.707Z",
+      "durationMs": 11548,
+      "outputs": [
+        {
+          "attempt": 1,
+          "at": "2026-09-10T02:43:30.707Z",
+          "output": {
+            "ticket": "TKT-0002",
+            "claim": "active",
+            "resource": "battle-audio-dispatch",
+            "checkpoint": "9db2bd5"
+          }
+        }
+      ]
+    },
+    "red-green-refactor": {
+      "attempts": 1,
+      "status": "done",
+      "startedAt": "2026-09-10T02:43:30.708Z",
+      "endedAt": "2026-09-10T02:46:28.628Z",
+      "durationMs": 177920,
+      "outputs": [
+        {
+          "attempt": 1,
+          "at": "2026-09-10T02:46:28.628Z",
+          "output": {
+            "red": "0/5 PASS",
+            "green": "5/5 PASS",
+            "focused": "13 PASS / 1 missing dist",
+            "full": "386 PASS / 32 missing assets/dist/sharp",
+            "preview": "pending",
+            "local": "bf07edf"
+          }
+        }
+      ]
+    },
+    "evidence-review": {
+      "attempts": 1,
+      "status": "focus",
+      "startedAt": "2026-09-10T02:46:28.628Z"
+    }
+  },
+  "failedSteps": [],
+  "eventCount": 8,
+  "graphHash": "d59d385db06aa256"
+}

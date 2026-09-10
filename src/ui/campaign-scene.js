@@ -13,9 +13,43 @@ const sceneDiagnosticsEnabled = (() => {
 })();
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 let preparationDrag = null, suppressSlotClick = false;
+function clearPreparationDrag() {
+  const drag = preparationDrag;
+  preparationDrag = null;
+  // Release after clearing the owner: capture loss can fire during cleanup.
+  if (drag?.button.hasPointerCapture(drag.pointer)) drag.button.releasePointerCapture(drag.pointer);
+  if (drag?.moved && reducedMotion.matches) drawScene(performance.now());
+}
 function preparationEnemies() {
   const encounter = DATA.encounters[sceneState.checkpoint?.battleId];
-  return Array.isArray(encounter) ? encounter.slice(0,6).map(enemy => ({ ...enemy, id: enemy.sourceHeroId || enemy.heroId || enemy.id, enemy: true })) : [];
+  if (!Array.isArray(encounter)) return [];
+  const seen = new Set();
+  const enemies = encounter.map(enemy => ({ ...enemy, stats: { ...enemy.stats },
+    id: enemy.sourceHeroId || enemy.heroId || enemy.id, row: enemy.row || 'front',
+    archetype: inferArchetype(enemy), enemy: true })).filter(enemy => {
+      if (seen.has(enemy.id)) return false;
+      seen.add(enemy.id); return true;
+    }).slice(0, 6);
+  assignFormationSlots(enemies, 'foe');
+  return enemies.sort((a, b) => a.slot - b.slot);
+}
+function preparationEnemyPower() {
+  if (!Array.isArray(DATA.encounters[sceneState.checkpoint?.battleId])) return null;
+  const enemies = preparationEnemies();
+  if (!enemies.length || enemies.some(e => ['hp','atk','def','spd'].some(k => !Number.isFinite(e.stats[k])))) return null;
+  // Same displayed-score formula as heroPower, but only encounter-owned stats.
+  return enemies.reduce((sum, e) => sum + Math.round(e.stats.hp / 8 + e.stats.atk * 4 + e.stats.def * 3 + e.stats.spd * 2), 0);
+}
+function preparationEnemyArt(pick, enemies) {
+  // Match drawGeneratedHero's enemy idle row and duplicate-role slot fallback.
+  const poses = { guardian: '05', ranger: '06', healer: '07', striker: '08', duelist: '09', mystic: '10' };
+  const repeated = enemies.some(e => e.slot < pick.slot && e.archetype === pick.archetype);
+  if (!repeated && poses[pick.archetype]) return {
+    src: 'assets/battle-runtime/embedded-' + poses[pick.archetype] + '.webp',
+    cols: 4, rows: 2, column: 0, row: 1, mirror: true
+  };
+  return { src: 'assets/battle-runtime/embedded-04.webp', cols: 3, rows: 2,
+    column: pick.slot % 3, row: Math.floor(pick.slot / 3), mirror: false };
 }
 const escapeScene = value => String(value ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const sceneNumber = value => new Intl.NumberFormat('vi-VN').format(Math.max(0, Number(value) || 0));
@@ -37,9 +71,9 @@ function currentCheckpoint() { return campaignCheckpoint(P, DATA.chapters, chapt
 function ownedSceneHeroIds() { return OFFICIAL_ROSTER_12_IDS.filter(id => DATA.heroes[id] && P.heroes[id]?.owned); }
 function savedSceneSquad() {
   const picks = normalizeSquad(P.squad, P, false).map(pick => ({ ...pick }));
-  // Use the combat owner's six-slot layout on copies, never change the save here.
-  assignFormationSlots(picks, 'ally');
-  return picks.sort((a, b) => a.slot - b.slot).map(({ id, row }) => ({ id, row }));
+  // Combat copies may fill missing slots; keep authored holes when slot is unique.
+  if (!picks.every(pick => Number.isInteger(Number(pick.slot)))) assignFormationSlots(picks, 'ally');
+  return compactCampaignBoard(expandCampaignBoard(picks));
 }
 function scenePower(squad) { return squad.reduce((sum, pick) => sum + heroPower(pick.id), 0); }
 function setSceneText(selector, value) { const el = sceneState.root?.querySelector(selector); if (el && el.textContent !== String(value)) el.textContent = value; }
@@ -78,9 +112,15 @@ function drawScene(time) {
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, w, h);
   ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
   const preparing = Boolean(sceneState.draft);
-  const picks = preparing ? [...sceneState.draft, ...preparationEnemies()] : savedSceneSquad();
+  const enemies = preparing ? preparationEnemies() : [];
+  const picks = preparing ? [...sceneState.draft, ...enemies] : savedSceneSquad();
   const rowCounts = { front: 0, back: 0, enemyfront: 0, enemyback: 0 };
-  picks.map(pick => ({ ...pick, rowIndex: rowCounts[(pick.enemy ? 'enemy' : '') + pick.row]++ }))
+  picks.map(pick => {
+    const key = (pick.enemy ? 'enemy' : '') + pick.row;
+    const slot = Number(pick.slot);
+    const rowIndex = preparing && Number.isInteger(slot) ? slot % 3 : rowCounts[key]++;
+    return { ...pick, rowIndex };
+  })
     .sort((a, b) => (a.row === 'back' ? 0 : 1) - (b.row === 'back' ? 0 : 1))
     .forEach(pick => {
       const count = rowCounts[pick.row];
@@ -92,15 +132,20 @@ function drawScene(time) {
       const bodyH = preparing ? Math.min(w * .23, h * .28) : Math.min(108, w * .24, h * .34) * (pick.row === 'back' ? .86 : 1);
       ctx.fillStyle = 'rgba(15,30,23,.24)'; ctx.beginPath(); ctx.ellipse(x, y, bodyH * .31, bodyH * .075, 0, 0, Math.PI * 2); ctx.fill();
       const spec = spriteSpecs[pick.id];
-      const image = imageForScene(spec?.src || portraitSrc(pick.id, 'master'));
+      const enemyArt = pick.enemy && !spec ? preparationEnemyArt(pick, enemies) : null;
+      const image = imageForScene(spec?.src || enemyArt?.src || portraitSrc(pick.id, 'master'));
       if (!image.complete || image.naturalWidth < 1) return;
       ctx.save();
-      if (pick.enemy) { ctx.translate(2 * x, 0); ctx.scale(-1, 1); }
+      if (pick.enemy && (!enemyArt || enemyArt.mirror)) { ctx.translate(2 * x, 0); ctx.scale(-1, 1); }
       if (spec) {
         const frame = frameAt(spec, time), scale = bodyH / spec.body;
         const sx = frame % spec.cols * (spec.strideW || spec.cellW) + (spec.pad || 0);
         const sy = Math.floor(frame / spec.cols) * (spec.strideH || spec.cellH) + (spec.pad || 0);
         ctx.drawImage(image, sx, sy, spec.cellW, spec.cellH, x - spec.pivot * scale, y - spec.foot * scale, spec.cellW * scale, spec.cellH * scale);
+      } else if (enemyArt) {
+        const cw = image.naturalWidth / enemyArt.cols, ch = image.naturalHeight / enemyArt.rows;
+        const drawW = bodyH * cw / ch;
+        ctx.drawImage(image, enemyArt.column * cw, enemyArt.row * ch, cw, ch, x - drawW / 2, y - bodyH, drawW, bodyH);
       } else {
         const scale = bodyH / image.naturalHeight;
         ctx.drawImage(image, x - image.naturalWidth * scale / 2, y - bodyH, image.naturalWidth * scale, bodyH);
@@ -232,9 +277,9 @@ function observeSceneCanvas() {
 }
 function mountPreparationView() {
   const panel = sceneState.root.querySelector('.cs-prepare');
-  panel.innerHTML = `<header class="cs-prep-header"><button class="cs-back" data-scene-action="cancel" aria-label="Về Chinh chiến">‹</button><div><small data-prep-stage></small><h2 id="csPrepareTitle">Bày trận</h2></div><span>Lực chiến <b data-prep-power></b></span><b class="cs-team-count"></b></header>
+  panel.innerHTML = `<header class="cs-prep-header"><button class="cs-back" data-scene-action="cancel" aria-label="Về Chinh chiến">‹</button><div><small data-prep-stage></small><h2 id="csPrepareTitle">Bày trận</h2></div><span aria-label="Lực chiến hai đội">Ta <b data-prep-power></b><br>Địch <b data-prep-enemy-power></b></span><b class="cs-team-count"></b></header>
     <div class="cs-battlefield"><div data-prep-slots class="cs-slots"></div><div class="cs-enemy-labels" data-prep-enemy-labels></div></div>
-    <div class="cs-prep-scroll"><p class="cs-instruction">Bấm tích xanh để gỡ tướng. Chọn dự bị để thêm. Kéo tướng trên sân để đổi chỗ.</p><div class="cs-element-filter" role="group" aria-label="Lọc hệ"></div><div class="cs-bench" data-prep-bench></div></div>
+    <div class="cs-prep-scroll"><p class="cs-instruction">Bấm tướng trên sân để gỡ. Chọn ô trống rồi chọn dự bị để thêm. Kéo tướng trên sân để đổi chỗ.</p><div class="cs-element-filter" role="group" aria-label="Lọc hệ"></div><div class="cs-bench" data-prep-bench></div></div>
     <footer class="cs-prep-footer"><p data-prep-status role="status"></p><div class="cs-prep-actions"><button class="cs-primary" data-scene-action="quick">Ra trận nhanh</button><button class="cs-primary" data-scene-action="launch">Xuất chiến</button></div><small>Đội hình được lưu khi Xuất chiến.</small></footer>`;
   const filter = panel.querySelector('.cs-element-filter');
   const elements = [...new Set(ownedSceneHeroIds().map(id => DATA.heroes[id].he))];
@@ -246,10 +291,13 @@ function mountPreparationView() {
   }
   panel.addEventListener('pointerdown', event => {
     const button = event.target.closest('[data-scene-slot]');
-    if (!button || event.button !== 0 || !sceneState.draft) return;
+    if (!button || event.button !== 0 || event.isPrimary === false || preparationDrag || !sceneState.draft) return;
+    const from = Number(button.dataset.sceneSlot);
+    const heroId = expandCampaignBoard(sceneState.draft)[from]?.id;
     suppressSlotClick = false;
-    preparationDrag = { pointer: event.pointerId, from: Number(button.dataset.sceneSlot), heroId: sceneState.draft[Number(button.dataset.sceneSlot)]?.id, x: event.clientX, y: event.clientY, moved: false };
-    button.setPointerCapture(event.pointerId);
+    if (!heroId) return;
+    preparationDrag = { pointer: event.pointerId, button, from, heroId, x: event.clientX, y: event.clientY, moved: false };
+    try { button.setPointerCapture(event.pointerId); } catch (_) {}
   });
   panel.addEventListener('pointermove', event => {
     if (!preparationDrag || preparationDrag.pointer !== event.pointerId) return;
@@ -258,28 +306,36 @@ function mountPreparationView() {
     if (preparationDrag.moved) { event.preventDefault(); if (reducedMotion.matches) drawScene(performance.now()); }
   });
   panel.addEventListener('pointerup', event => {
-    const drag = preparationDrag; preparationDrag = null;
-    if (!drag || drag.pointer !== event.pointerId || !drag.moved || !sceneState.draft) return;
+    const drag = preparationDrag;
+    if (!drag || drag.pointer !== event.pointerId) return;
+    clearPreparationDrag();
+    if (!drag.moved || !sceneState.draft) return;
     suppressSlotClick = true;
     const target = document.elementFromPoint(event.clientX, event.clientY)?.closest('[data-scene-slot]');
     if (target) {
       sceneState.draft = swapCampaignPositions(sceneState.draft, drag.from, Number(target.dataset.sceneSlot));
+      sceneState.slot = -1;
       renderPreparation();
     }
   });
-  panel.addEventListener('pointercancel', () => { preparationDrag = null; });
+  const cancelDrag = event => { if (preparationDrag?.pointer === event.pointerId) clearPreparationDrag(); };
+  panel.addEventListener('pointercancel', cancelDrag);
+  panel.addEventListener('lostpointercapture', cancelDrag);
 }
 
 function renderPreparationField() {
-  const draft = sceneState.draft, counts = { front: 0, back: 0 };
+  const draft = sceneState.draft, board = expandCampaignBoard(draft);
   setSceneText('.cs-team-count', draft.length + ' / 6');
-  sceneState.root.querySelector('[data-prep-slots]').innerHTML = draft.map((pick,index) => {
-    const rowIndex = counts[pick.row]++;
-    return `<button class="cs-field-unit" data-scene-slot="${index}" style="left:${pick.row === 'front' ? 35 : 12}%;top:${38 + rowIndex * 27}%" aria-label="Đổi vị trí ${escapeScene(DATA.heroes[pick.id].name)}"><span>${'★'.repeat(heroStars(pick.id))} · Lv${heroLevel(pick.id)}</span><small>${escapeScene(DATA.heroes[pick.id].name)}</small></button>`;
+  sceneState.root.querySelector('[data-prep-slots]').innerHTML = board.map((pick, index) => {
+    const left = index < 3 ? 35 : 12, top = 38 + (index % 3) * 27;
+    const selected = sceneState.slot === index ? ' is-selected' : '';
+    if (!pick) {
+      return `<button class="cs-field-unit is-empty${selected}" data-scene-slot="${index}" style="left:${left}%;top:${top}%" aria-label="Ô trống ${index < 3 ? 'hàng trước' : 'hàng sau'} ${(index % 3) + 1}"></button>`;
+    }
+    return `<button class="cs-field-unit${selected}" data-scene-slot="${index}" style="left:${left}%;top:${top}%" aria-label="Gỡ ${escapeScene(DATA.heroes[pick.id].name)} khỏi đội hình"><span>${'★'.repeat(heroStars(pick.id))} · Lv${heroLevel(pick.id)}</span><small>${escapeScene(DATA.heroes[pick.id].name)}</small></button>`;
   }).join('');
-  const enemyCounts = { front: 0, back: 0 };
   sceneState.root.querySelector('[data-prep-enemy-labels]').innerHTML = preparationEnemies().map(enemy => {
-    const rowIndex = enemyCounts[enemy.row]++;
+    const rowIndex = Number.isInteger(Number(enemy.slot)) ? Number(enemy.slot) % 3 : 0;
     return `<span class="cs-field-enemy" style="left:${enemy.row === 'front' ? 65 : 88}%;top:${38 + rowIndex * 27}%">${escapeScene(enemy.name)}</span>`;
   }).join('');
   for (const button of sceneState.root.querySelectorAll('[data-scene-hero]')) {
@@ -312,7 +368,7 @@ function onSceneRoute(name) {
   sceneState.active = name === 'campaign';
   document.body.classList.toggle('hv-campaign-active', sceneState.active);
   if (!sceneState.active) {
-    preparationDrag = null; suppressSlotClick = false;
+    clearPreparationDrag(); suppressSlotClick = false;
     stopSceneClock(); sceneState.draft = null; sceneState.launching = false;
     sceneState.scope?.dispose(); sceneState.scope = null;
     if (sceneState.root) { sceneState.root.querySelector('dialog').close(); sceneState.root.hidden = true; }
@@ -352,6 +408,8 @@ function openPreparation() {
 function renderPreparation(focusSelector) {
   const draft = sceneState.draft; if (!draft) return;
   setSceneText('[data-prep-power]', sceneNumber(scenePower(draft)));
+  const enemyPower = preparationEnemyPower();
+  setSceneText('[data-prep-enemy-power]', enemyPower === null ? '—' : sceneNumber(enemyPower));
 
   const owned = ownedSceneHeroIds();
   setSceneText('[data-prep-owned-count]', owned.length + ' tướng');
@@ -370,7 +428,7 @@ function updateLaunchState() {
   setSceneText('[data-prep-status]', !validation.ok ? validation.message : !enough ? 'Cần thêm ' + (cost - P.stamina) + ' thể lực để xuất chiến.' : 'Sẵn sàng · thể lực hiện có ' + P.stamina + '/' + DATA.daily.stamCap);
 }
 function cancelPreparation() {
-  preparationDrag = null; suppressSlotClick = false;
+  clearPreparationDrag(); suppressSlotClick = false;
   sceneState.draft = null; sceneState.checkpoint = null;
   sceneState.root.querySelector('.cs-prepare').hidden = true;
   sceneState.root.querySelector('.cs-home').hidden = false;
@@ -430,22 +488,37 @@ function sceneClick(event) {
     renderPreparation(); return;
   }
   if (button.dataset.sceneAction === 'quick') {
-    sceneState.draft = ownedSceneHeroIds().sort((a,b) => heroPower(b) - heroPower(a)).slice(0,6).map((id,i) => ({ id, row: i < 3 ? 'front' : 'back' }));
+    sceneState.draft = ownedSceneHeroIds().sort((a,b) => heroPower(b) - heroPower(a)).slice(0,6).map((id,i) => ({ id, row: i < 3 ? 'front' : 'back', slot: i }));
     renderPreparation(); return;
   }
   if (button.hasAttribute('data-scene-slot')) {
     if (suppressSlotClick) { suppressSlotClick = false; return; }
     const index = Number(button.dataset.sceneSlot);
-    if (sceneState.slot >= 0 && sceneState.slot !== index) { sceneState.draft = swapCampaignPositions(sceneState.draft, sceneState.slot, index); sceneState.slot = -1; }
-    else sceneState.slot = index;
+    const pick = expandCampaignBoard(sceneState.draft)[index];
+    if (pick) {
+      sceneState.draft = toggleCampaignHero(sceneState.draft, pick.id, ownedSceneHeroIds());
+      sceneState.slot = -1;
+      renderPreparation();
+      return;
+    }
+    sceneState.slot = index;
     renderPreparation('[data-scene-slot="' + index + '"]');
   }
   else if (button.hasAttribute('data-scene-row')) { const index = Number(button.dataset.sceneRow); sceneState.draft = swapCampaignRows(sceneState.draft, index); sceneState.slot = index < 3 ? index + 3 : index - 3; renderPreparation('[data-scene-row="' + sceneState.slot + '"]'); }
   else if (button.dataset.sceneHero) {
     const id = button.dataset.sceneHero;
+    const board = expandCampaignBoard(sceneState.draft);
+    const selected = sceneState.slot;
+    if (Number.isInteger(selected) && selected >= 0 && selected < 6 && !board[selected] && !sceneState.draft.some(pick => pick.id === id)) {
+      if (sceneState.draft.length === 6) { toast('Số lượng tướng ra trận đã đủ.'); return; }
+      sceneState.draft = replaceCampaignSlot(sceneState.draft, selected, id, ownedSceneHeroIds());
+      sceneState.slot = -1;
+      renderPreparation('[data-scene-hero="' + id + '"]');
+      return;
+    }
     if (sceneState.draft.length === 6 && !sceneState.draft.some(pick => pick.id === id)) { toast('Số lượng tướng ra trận đã đủ.'); return; }
     sceneState.draft = toggleCampaignHero(sceneState.draft, id, ownedSceneHeroIds());
-    sceneState.slot = Math.min(sceneState.slot, Math.max(0, sceneState.draft.length - 1));
+    sceneState.slot = Math.min(sceneState.slot, 5);
     renderPreparation('[data-scene-hero="' + id + '"]');
   }
 }

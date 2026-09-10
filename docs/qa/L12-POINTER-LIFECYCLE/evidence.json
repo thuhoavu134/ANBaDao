@@ -1,0 +1,78 @@
+{
+  "schema": "hon-viet-pointer-evidence/v1",
+  "ticket_id": "TKT-0001",
+  "contract": "L12-pointer-lifecycle/v1",
+  "source_revision": "9518581aee5b1406bcba94616be92a7cf9aaf504",
+  "local_test_revision": "c3a891abc2349bf27d793c3cd2994f70b8565706",
+  "source_blob": "f06baeefa8285e2cae1927654ce053da2424e7b3",
+  "test_blob": "bf15115a638faf224b408eca8fa86cd482280641",
+  "baseline": "a6b5de61ebb4d1b136b5595766aa86b3a11fff29",
+  "rejected_visual_pass": "74b39762f048422932e2fe269fca6466e0e84982",
+  "revert": "0bac75d00d63fa723c3737bb8fe32ca26a6f5b4f",
+  "tdd": {
+    "red": {
+      "pass": 0,
+      "fail": 9,
+      "exit_code": 1,
+      "log": "red.tap"
+    },
+    "green": {
+      "pass": 9,
+      "fail": 0,
+      "exit_code": 0,
+      "log": "green.tap"
+    },
+    "focused": {
+      "pass": 15,
+      "fail": 0,
+      "exit_code": 0,
+      "log": "focused-committed.tap"
+    }
+  },
+  "verification": {
+    "syntax": "PASS",
+    "diff": "PASS",
+    "npm_test": "tool returned network approval cancelled before process started; direct build and node test commands used",
+    "local_build": "BLOCKED: missing assets/characters/luc-anh/idle-rgba-v1-atlas.webp.json",
+    "full_direct": {
+      "tests": 413,
+      "pass": 381,
+      "fail": 32,
+      "reason": "missing dist, assets and sharp",
+      "log_sha256": "59038cdb971d3b29a2b9b6030eb53067b45cdce85f6cba7dcb7097e3dea2d075"
+    },
+    "doctor": "Ticket Board doctor 3/3 PASS; project doctor/smoke absent",
+    "mobile_touch": "NOT_RUN; VM events are not device evidence",
+    "Safari": "NOT_RUN",
+    "reduced_motion_browser": "NOT_RUN; handler redraw covered by VM",
+    "owner_approval": "PENDING; UI layout/art unchanged",
+    "host_restart": "NOT_RUN: browser session reset; must repeat full result-confirm-reentry flow"
+  },
+  "deployment": {
+    "id": "dpl_3AWgkr5vhBVzQShZy67H4SjugcuZ",
+    "state": "READY",
+    "target": "preview",
+    "source_sha": "9518581aee5b1406bcba94616be92a7cf9aaf504",
+    "url": "https://luc-than-6fmr7sf4u-cuong-duc-ai-s-projects.vercel.app/",
+    "build": "Completed in 5s; embedded battle 1410907 bytes"
+  },
+  "browser": {
+    "engine": "Chrome",
+    "viewport": {
+      "width": 1363,
+      "height": 936
+    },
+    "qa": "unlock-all, sandbox does not save",
+    "drag_occupied": "PASS slot 0 and 4 swapped",
+    "outside_drop": "PASS formation unchanged",
+    "cancel_reentry": "PASS saved formation restored",
+    "tick_remove_add": "PASS",
+    "empty_launch": "disabled",
+    "single_launch": "enabled; embedded battle displayed 1 player vs 4 enemies",
+    "defeat_result": "OBSERVED: Defeat, dynamic MVP Ong Pho, 1568 damage, 1 kill; confirm/restart NOT_RUN before browser reset"
+  },
+  "gate_status": "OPEN: evidence-review incomplete; temporary skill runner/run trace unavailable after environment reset; no DONE/MERGED claim",
+  "production": "unchanged",
+  "handoff_date": "2026-09-10",
+  "main_reverified": "a6b5de61ebb4d1b136b5595766aa86b3a11fff29"
+}

@@ -1,0 +1,108 @@
+TAP version 13
+# Subtest: leaving battle stops shared attack and result SFX but keeps normal UI usable
+ok 1 - leaving battle stops shared attack and result SFX but keeps normal UI usable
+  ---
+  duration_ms: 3.537912
+  type: 'test'
+  ...
+# Subtest: pending decode and queued iframe click cannot restart sound after close
+ok 2 - pending decode and queued iframe click cannot restart sound after close
+  ---
+  duration_ms: 2.509931
+  type: 'test'
+  ...
+# Subtest: old iframe pagehide cannot mute the next battle; repeated exits stay safe
+ok 3 - old iframe pagehide cannot mute the next battle; repeated exits stay safe
+  ---
+  duration_ms: 2.985729
+  type: 'test'
+  ...
+# Subtest: disposing the child pauses its HTML voice player and invalidates its fallback
+ok 4 - disposing the child pauses its HTML voice player and invalidates its fallback
+  ---
+  duration_ms: 1.558744
+  type: 'test'
+  ...
+# Subtest: ultimate voice pending decode is cancelled even if a new battle starts before it resolves
+ok 5 - ultimate voice pending decode is cancelled even if a new battle starts before it resolves
+  ---
+  duration_ms: 2.566476
+  type: 'test'
+  ...
+# Subtest: stop combat cancels active ultimate voice while leaving hero-detail voice alone
+ok 6 - stop combat cancels active ultimate voice while leaving hero-detail voice alone
+  ---
+  duration_ms: 1.069756
+  type: 'test'
+  ...
+# Subtest: HTML fallback voice is owned and stopped on exit too
+ok 7 - HTML fallback voice is owned and stopped on exit too
+  ---
+  duration_ms: 0.914691
+  type: 'test'
+  ...
+# Subtest: result music cannot resume after stop while waiting for audio unlock
+ok 8 - result music cannot resume after stop while waiting for audio unlock
+  ---
+  duration_ms: 1.017256
+  type: 'test'
+  ...
+# Subtest: built close owner stops both parent buses and the child before blanking the iframe
+not ok 9 - built close owner stops both parent buses and the child before blanking the iframe
+  ---
+  duration_ms: 0.313233
+  type: 'test'
+  location: '/workspace/scratch/792606ef6caf/projects/luc-than/tests/battle-audio-lifecycle.test.mjs:147:1'
+  failureType: 'testCodeFailure'
+  error: "ENOENT: no such file or directory, open '/workspace/scratch/792606ef6caf/projects/luc-than/dist/index.html'"
+  code: 'ENOENT'
+  stack: |-
+    readFileSync (node:fs:484:20)
+    read (file:///workspace/scratch/792606ef6caf/projects/luc-than/tests/battle-audio-lifecycle.test.mjs:6:22)
+    TestContext.<anonymous> (file:///workspace/scratch/792606ef6caf/projects/luc-than/tests/battle-audio-lifecycle.test.mjs:148:17)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: SFX-1 legacy impact cannot play the forge sound in standalone battle
+ok 10 - SFX-1 legacy impact cannot play the forge sound in standalone battle
+  ---
+  duration_ms: 2.471643
+  type: 'test'
+  ...
+# Subtest: SFX-1 battle channel rejects forge sound even with UI group override; casts still play
+ok 11 - SFX-1 battle channel rejects forge sound even with UI group override; casts still play
+  ---
+  duration_ms: 2.041883
+  type: 'test'
+  ...
+# Subtest: SFX-2 shell forge event plays original sound only with explicit UI group
+ok 12 - SFX-2 shell forge event plays original sound only with explicit UI group
+  ---
+  duration_ms: 0.702631
+  type: 'test'
+  ...
+# Subtest: SFX-2 actual forge reveal dispatches dedicated event once per item UID
+ok 13 - SFX-2 actual forge reveal dispatches dedicated event once per item UID
+  ---
+  duration_ms: 0.732686
+  type: 'test'
+  ...
+# Subtest: SFX-3 build owner removes shared impact dispatch without replacing VFX or damage
+ok 14 - SFX-3 build owner removes shared impact dispatch without replacing VFX or damage
+  ---
+  duration_ms: 0.438903
+  type: 'test'
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 13
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 98.490439

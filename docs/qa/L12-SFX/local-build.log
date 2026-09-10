@@ -1,0 +1,16 @@
+node:internal/fs/promises:697
+  return new FileHandle(await PromisePrototypeThen(
+                        ^
+
+Error: ENOENT: no such file or directory, open '/workspace/scratch/792606ef6caf/projects/luc-than/assets/characters/luc-anh/idle-rgba-v1-atlas.webp.json'
+    at async open (node:internal/fs/promises:697:25)
+    at async readFile (node:internal/fs/promises:1348:14)
+    at async assembleLucAnhIdle (file:///workspace/scratch/792606ef6caf/projects/luc-than/scripts/luc-anh-idle-asset.mjs:25:29)
+    at async file:///workspace/scratch/792606ef6caf/projects/luc-than/scripts/build-static.mjs:6:1 {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/workspace/scratch/792606ef6caf/projects/luc-than/assets/characters/luc-anh/idle-rgba-v1-atlas.webp.json'
+}
+
+Node.js v24.19.0

@@ -1,0 +1,227 @@
+✖ L12-P1: foreign pointerup does not end the active drag (5.269384ms)
+✖ L12-P1: foreign pointercancel does not end the active drag (1.285308ms)
+✖ L12-P1: a second pointer cannot replace the drag owner (1.011468ms)
+✖ L12-P2: pointercancel restores a displaced sprite without committing a move (3.501416ms)
+✖ L12-P2: lostpointercapture restores a displaced sprite without committing a move (2.308102ms)
+✖ L12-P2: pointerup restores a displaced sprite without committing a move (2.229729ms)
+✖ L12-P3: cancelPreparation() releases capture and permits the next drag (2.29918ms)
+✖ L12-P3: onSceneRoute('hub') releases capture and permits the next drag (2.082848ms)
+✖ L12-P1: primary drag swaps once, releases capture, and ignores late capture loss (3.156862ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 0
+ℹ fail 9
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 145.325743
+
+✖ failing tests:
+
+test at tests/campaign-pointer-lifecycle.test.mjs:42:52
+✖ L12-P1: foreign pointerup does not end the active drag (5.269384ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  undefined !== 1
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/792606ef6caf/projects/luc-than/tests/campaign-pointer-lifecycle.test.mjs:44:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/campaign-pointer-lifecycle.test.mjs:42:52
+✖ L12-P1: foreign pointercancel does not end the active drag (1.285308ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  undefined !== 1
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/792606ef6caf/projects/luc-than/tests/campaign-pointer-lifecycle.test.mjs:44:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/campaign-pointer-lifecycle.test.mjs:48:1
+✖ L12-P1: a second pointer cannot replace the drag owner (1.011468ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  2 !== 1
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/792606ef6caf/projects/luc-than/tests/campaign-pointer-lifecycle.test.mjs:50:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/campaign-pointer-lifecycle.test.mjs:53:74
+✖ L12-P2: pointercancel restores a displaced sprite without committing a move (3.501416ms)
+  AssertionError [ERR_ASSERTION]: reduced-motion canvas must snap back immediately
+  + actual - expected
+  
+  + {
+  +   dx: 20,
+  +   dy: 20
+  + }
+  - null
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/792606ef6caf/projects/luc-than/tests/campaign-pointer-lifecycle.test.mjs:57:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: { dx: 20, dy: 20 },
+    expected: null,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/campaign-pointer-lifecycle.test.mjs:53:74
+✖ L12-P2: lostpointercapture restores a displaced sprite without committing a move (2.308102ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + {
+  +   dx: 20,
+  +   dy: 20,
+  +   from: 0,
+  +   heroId: 'a',
+  +   moved: true,
+  +   pointer: 1,
+  +   x: 0,
+  +   y: 0
+  + }
+  - null
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/792606ef6caf/projects/luc-than/tests/campaign-pointer-lifecycle.test.mjs:56:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { pointer: 1, from: 0, heroId: 'a', x: 0, y: 0, moved: true, dx: 20, dy: 20 },
+    expected: null,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/campaign-pointer-lifecycle.test.mjs:53:74
+✖ L12-P2: pointerup restores a displaced sprite without committing a move (2.229729ms)
+  AssertionError [ERR_ASSERTION]: reduced-motion canvas must snap back immediately
+  + actual - expected
+  
+  + {
+  +   dx: 20,
+  +   dy: 20
+  + }
+  - null
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/792606ef6caf/projects/luc-than/tests/campaign-pointer-lifecycle.test.mjs:57:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: { dx: 20, dy: 20 },
+    expected: null,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/campaign-pointer-lifecycle.test.mjs:62:71
+✖ L12-P3: cancelPreparation() releases capture and permits the next drag (2.29918ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/792606ef6caf/projects/luc-than/tests/campaign-pointer-lifecycle.test.mjs:64:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/campaign-pointer-lifecycle.test.mjs:62:71
+✖ L12-P3: onSceneRoute('hub') releases capture and permits the next drag (2.082848ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/792606ef6caf/projects/luc-than/tests/campaign-pointer-lifecycle.test.mjs:64:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/campaign-pointer-lifecycle.test.mjs:70:1
+✖ L12-P1: primary drag swaps once, releases capture, and ignores late capture loss (3.156862ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/792606ef6caf/projects/luc-than/tests/campaign-pointer-lifecycle.test.mjs:72:43)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

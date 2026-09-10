@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "ticket_id": "TKT-0002",
+  "summary": "Code235c666 preview READY; source tests5/5; browser forge-combat-victory-confirm checked; full local gates incomplete",
+  "next": "Owner listen to preview; obtain full asset checkout and device verification; resume evidence-review without changing main",
+  "revision": "bf07edf2ded7aa7bafee1f535d775d9022d2e06b",
+  "session": "default-session",
+  "brain": "unknown-model",
+  "created_at": "2026-09-10T02:52:56.019Z"
+}

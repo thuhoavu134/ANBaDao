@@ -430,11 +430,12 @@ canvas{width:100%;height:100%;display:block}
 .hv-engine-pill{flex:0 0 auto;border:1px solid rgba(91,194,171,.45);border-radius:999px;padding:6px 9px;color:#8fe5cf;background:rgba(16,65,58,.42);font-size:10.5px;font-weight:800}
 #hvBattleOverlay{position:fixed;inset:0;z-index:1000000;display:none;background:#061516;overscroll-behavior:contain}
 #hvBattleOverlay.is-open{display:block}
-#hvBattleFrame{display:block;width:100%;height:100%;border:0;background:#071c1c}
+#hvBattleFrame{position:absolute;inset:0;display:block;width:100%;height:100%;border:0;background:#071c1c}
 .hv-battle-loading{position:absolute;inset:0;z-index:2;display:grid;place-items:center;background:radial-gradient(circle at 50% 35%,#153f3b,#071c1c 62%,#031010);color:#f4dfaa;text-align:center;padding:24px;font-weight:800;letter-spacing:.02em}
 .hv-battle-loading[hidden]{display:none}
 .hv-battle-loading span{display:block;margin-top:8px;color:#91b8ae;font-size:12px;font-weight:600}
-.hv-battle-exit{display:none}
+.hv-battle-exit{position:absolute;top:max(12px,env(safe-area-inset-top));left:12px;z-index:3;min-height:44px;padding:8px 14px;border:1px solid #d7c07a99;border-radius:12px;background:#102826e6;color:#f4dfaa;font-weight:700;display:none}
+#hvBattleOverlay.is-open .hv-battle-exit{display:block}
 .hv-battle-exit:focus-visible{outline:2px solid #f2b544;outline-offset:2px}
 @media (max-width:540px){.hv-engine-pill{display:none}.hv-brandbar{padding:8px 10px}}
 
@@ -2209,10 +2210,14 @@ function rollQuests(){ return DATA.daily.quests.map(q=>({id:q.id,progress:0,clai
 
 function normalizeSquad(squad, owner, fill){
   const profile=owner||P||{}; const owned=profile.heroes||{}; const out=[]; const seen=new Set();
-  const source=Array.isArray(squad)?squad:[];
+  const source=Array.isArray(squad)?squad:[]; const usedSlots=new Set();
   for(const raw of source){ const id=String(raw&&raw.id||'');
     if(!id||seen.has(id)||!DATA.heroes[id]||!owned[id]||!owned[id].owned) continue;
-    seen.add(id); out.push({id,row:raw.row==='back'?'back':'front'}); if(out.length>=6) break; }
+    seen.add(id);
+    const pick={id,row:raw.row==='back'?'back':'front'};
+    const slot=Number(raw.slot);
+    if(Number.isInteger(slot)&&slot>=0&&slot<6&&!usedSlots.has(slot)){ pick.slot=slot; usedSlots.add(slot); }
+    out.push(pick); if(out.length>=6) break; }
   if(fill){
     const preferred=[...(defaultPlayer().squad||[]).map(x=>x.id),...Object.keys(DATA.heroes)];
     for(const id of preferred){ if(out.length>=6) break;
@@ -2691,10 +2696,11 @@ function formationSlotPos(side,i){ const ys=[130,240,350], front=i<3;
   return {x:side==='ally'?(front?300:175):(front?600:725),y:ys[i%3]+(front?14:-14)}; }
 function allySlotPos(i){ return formationSlotPos('ally',i); }
 function assignFormationSlots(list,side){ const slots=new Array(6), spill=[];
-  const front=list.filter(c=>c.row==='front'), back=list.filter(c=>c.row!=='front');
-  front.forEach((c,i)=>{ if(i<3) slots[i]=c; else spill.push(c); });
-  back.forEach((c,i)=>{ if(i<3) slots[i+3]=c; else spill.push(c); });
-  spill.forEach(c=>{ const i=slots.findIndex(x=>!x); if(i>=0) slots[i]=c; });
+  list.forEach(c=>{ const s=Number(c.slot); if(Number.isInteger(s)&&s>=0&&s<6&&!slots[s]) slots[s]=c; else spill.push(c); });
+  const leftover=[];
+  spill.filter(c=>c.row==='front').forEach(c=>{ const i=slots.findIndex((x,idx)=>!x&&idx<3); if(i>=0) slots[i]=c; else leftover.push(c); });
+  spill.filter(c=>c.row!=='front').forEach(c=>{ const i=slots.findIndex((x,idx)=>!x&&idx>=3); if(i>=0) slots[i]=c; else leftover.push(c); });
+  leftover.forEach(c=>{ const i=slots.findIndex(x=>!x); if(i>=0) slots[i]=c; });
   slots.forEach((c,i)=>{ if(!c) return; c.slot=i; c.row=i<3?'front':'back'; const p=formationSlotPos(side,i); c.x=p.x; c.y=p.y; }); }
 function assignAllySlots(){ assignFormationSlots(S.allies,'ally'); }
 function assignFoeSlots(){ assignFormationSlots(S.foes,'foe'); }
@@ -5233,7 +5239,7 @@ renderCampaign = function(){
   overlay.setAttribute("aria-label", "Chiến trường Hồn Việt");
   overlay.innerHTML = `
     <button class="hv-battle-exit" id="hvBattleExit" type="button" aria-label="Rút khỏi trận và về sảnh">Rút lui</button>
-    <div class="hv-battle-loading" id="hvBattleLoading">Đang dựng chiến trường Hồn Việt…<span>Giữ nguyên đội hình và chỉ thay engine chiến đấu.</span></div>
+    <div class="hv-battle-loading" id="hvBattleLoading">Đang vào trận…<span>Đội hình vừa bày sẽ ra sân ngay.</span></div>
     <iframe id="hvBattleFrame" title="Hồn Việt — Trận Chiến Lục Vị" allow="autoplay"></iframe>`;
   document.body.appendChild(overlay);
 
@@ -5243,13 +5249,10 @@ renderCampaign = function(){
   let activeBattle = null;
 
   function markBattleDocumentLoaded() {
-    if (!activeBattle || !frame.contentDocument) return;
-    // iOS Safari can complete the same-origin iframe document before the
-    // postMessage READY handshake is delivered. The deployment screen is
-    // already interactive at this point, so never leave the loading veil on top.
-    loading.hidden = true;
-    if (activeBattle.loadWatchdog) { clearTimeout(activeBattle.loadWatchdog); activeBattle.loadWatchdog = null; }
-    if (activeBattle.hardLoadNotice) { clearTimeout(activeBattle.hardLoadNotice); activeBattle.hardLoadNotice = null; }
+    if (!activeBattle) return;
+    // Do not hide the veil on iframe "load". iOS/Grok nested frames often fire
+    // load for a blank document long before combat JS boots; hiding here leaves
+    // a dark empty screen. battle-ready is the only hide signal.
   }
   frame.addEventListener("load", markBattleDocumentLoaded);
 
@@ -5524,8 +5527,8 @@ renderCampaign = function(){
     };
     S.onBattleEnd = null;
     loading.hidden = false;
-    loading.firstChild.textContent = "Đang dựng chiến trường Hồn Việt…";
-    overlay.classList.add("is-open");
+    loading.firstChild.textContent = "Đang vào trận…";
+    overlay.classList.add("is-open", "is-loading");
     document.documentElement.style.overflow = "hidden";
     const battleConfig = integratedConfig(sessionId, battleId);
     const serializedBattleConfig = JSON.stringify(battleConfig);
@@ -5536,6 +5539,13 @@ renderCampaign = function(){
     try { sessionStorage.setItem(`hvBattleConfig:${sessionId}`, serializedBattleConfig); } catch (error) {
       console.warn("Không lưu được cấu hình trận dự phòng vào sessionStorage.", error);
     }
+    try {
+      sessionStorage.setItem("hvBattleHostLease", JSON.stringify({
+        sessionId, battleId, mode: ST.mode || "campaign",
+        chapterIdx: ST.chapterIdx ?? null,
+        campaignBattleIndex: ST.campaignBattleIndex ?? 0
+      }));
+    } catch (_) {}
     // iOS Safari can stall on a very large srcdoc/base64 document. Load the real battle file instead.
     // frameElement.dataset.config remains readable because battle.html is same-origin with index.html.
     frame.removeAttribute("srcdoc");
@@ -5543,7 +5553,15 @@ renderCampaign = function(){
     const qaSuffix = pageParams.get("qa") === "status-icons" ? "&qa=status-icons" :
       (pageParams.get("qaThayMoIdle") === "1" ? "&qaThayMoIdle=1" :
       (pageParams.get("qaThayMoBasic") === "1" ? "&qaThayMoBasic=1" : ""));
-    frame.src = `battle.html?embedded=1&session=${encodeURIComponent(sessionId)}&v=3173${qaSuffix}`;
+    const url = `battle.html?embedded=1&session=${encodeURIComponent(sessionId)}&autostart=1&v=3175${qaSuffix}`;
+    // Grok/iOS preview is itself an iframe; a nested battle iframe stays blank.
+    // Open combat as the preview document so the player actually sees the fight.
+    if (window.parent !== window) {
+      window.name = `hvBattleConfig:${encodeURIComponent(serializedBattleConfig)}`;
+      location.assign(url);
+      return;
+    }
+    frame.src = url;
     if (activeBattle) {
       // Never reload a still-parsing battle document. On mobile/4G the old 6.5s watchdog
       // could continuously restart a 17MB battle.html and make the battle impossible to enter.
@@ -5555,6 +5573,11 @@ renderCampaign = function(){
         if (!activeBattle || activeBattle.sessionId !== sessionId || loading.hidden) return;
         loading.firstChild.textContent = "Khởi tạo trận lâu bất thường — có thể rút lui và thử lại.";
       }, 45000);
+      activeBattle.enterFallback = setTimeout(() => {
+        if (!activeBattle || activeBattle.sessionId !== sessionId || loading.hidden) return;
+        window.name = `hvBattleConfig:${encodeURIComponent(serializedBattleConfig)}`;
+        location.assign(url);
+      }, 1800);
     }
   }
 
@@ -5592,7 +5615,8 @@ renderCampaign = function(){
   function closeOverlay() {
     if (activeBattle?.loadWatchdog) { clearTimeout(activeBattle.loadWatchdog); activeBattle.loadWatchdog = null; }
     if (activeBattle?.hardLoadNotice) { clearTimeout(activeBattle.hardLoadNotice); activeBattle.hardLoadNotice = null; }
-    overlay.classList.remove("is-open");
+    if (activeBattle?.enterFallback) { clearTimeout(activeBattle.enterFallback); activeBattle.enterFallback = null; }
+    overlay.classList.remove("is-open", "is-loading");
     document.documentElement.style.overflow = "";
     loading.hidden = false;
     frame.removeAttribute("srcdoc");
@@ -5686,10 +5710,14 @@ renderCampaign = function(){
       }
       return;
     }
-    if (message.type === "battle-ready" && message.payload?.sessionId === activeBattle.sessionId) {
+    if (message.type === "battle-ready") {
+      const sid = message.payload?.sessionId;
+      if (sid && sid !== activeBattle.sessionId) return;
       if (activeBattle.loadWatchdog) { clearTimeout(activeBattle.loadWatchdog); activeBattle.loadWatchdog = null; }
       if (activeBattle.hardLoadNotice) { clearTimeout(activeBattle.hardLoadNotice); activeBattle.hardLoadNotice = null; }
+      if (activeBattle.enterFallback) { clearTimeout(activeBattle.enterFallback); activeBattle.enterFallback = null; }
       loading.hidden = true;
+      overlay.classList.remove("is-loading");
       return;
     }
     if (message.type === "battle-nav" && message.payload?.sessionId === activeBattle.sessionId) {
@@ -5721,6 +5749,44 @@ renderCampaign = function(){
     isActive: () => Boolean(activeBattle),
     active: () => activeBattle ? { ...activeBattle } : null
   });
+
+  (function consumeBattleReturn() {
+    if (new URLSearchParams(location.search).get("hvBattleReturn") !== "1") return;
+    try {
+      const url = new URL(location.href);
+      url.searchParams.delete("hvBattleReturn");
+      history.replaceState({}, "", url.pathname + url.search + url.hash);
+    } catch (_) {}
+    let message = null, lease = null;
+    try { message = JSON.parse(sessionStorage.getItem("hvBattleHostEvent") || "null"); sessionStorage.removeItem("hvBattleHostEvent"); } catch (_) {}
+    try { lease = JSON.parse(sessionStorage.getItem("hvBattleHostLease") || "null"); sessionStorage.removeItem("hvBattleHostLease"); } catch (_) {}
+    if (!message || message.source !== "hon-viet-battle") { if (typeof navTo === "function") navTo("campaign"); return; }
+    const payload = message.payload || {};
+    activeBattle = { sessionId: payload.sessionId || lease?.sessionId, battleId: payload.battleId || lease?.battleId, onEnd: null };
+    if (message.type === "battle-result") {
+      if (lease?.mode === "campaign") {
+        const idx = lease.chapterIdx, stageIndex = Number(lease.campaignBattleIndex) || 0;
+        activeBattle.onEnd = function (win) {
+          ST.mode = null;
+          if (!win) { navTo("campaign"); toast("Chưa vượt qua · có thể thử lại hoặc chỉnh đội hình."); return; }
+          const sequence = typeof chapterBattleSequence === "function" ? chapterBattleSequence(idx) : [];
+          if (Number.isInteger(idx) && stageIndex + 1 < sequence.length) {
+            P.campaignStages = P.campaignStages || {};
+            P.campaignStages[idx] = stageIndex + 1;
+            persist();
+            navTo("campaign");
+            toast("Đã qua nhiệm vụ. Mở Chinh chiến để khiêu chiến ải tiếp.");
+          } else if (Number.isInteger(idx) && typeof endChapter === "function") {
+            delete P.campaignStages[idx]; persist();
+            endChapter({ referenceLoop: true, autoContinue: false });
+          } else navTo("campaign");
+        };
+      }
+      finishIntegratedBattle(payload);
+    } else {
+      abortIntegratedBattle(payload.target || "campaign");
+    }
+  })();
 })();
 
 </script>
