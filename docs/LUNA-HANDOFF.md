@@ -1,10 +1,23 @@
 # Bàn giao Lục Thần / Hồn Việt cho Luna và các model tiếp theo
 
+## 2026-09-11 — Snapshot toàn bộ · điểm vào agent sau
+
+**Đọc [HANDOFF-2026-09-11.md](HANDOFF-2026-09-11.md) trước mọi mục dưới.** File đó là nguồn sự thật cho việc đang live, file owner, PR #18–#25, hub còn lại và TKT-0026.
+
+- Production: [luc-than.vercel.app](https://luc-than.vercel.app/) · main `ec6df191042b8a512e230e037cc5d8833bd30133` (PR #25 CI/CD).
+- Live đã có: vòng Chinh chiến/Bày trận/trận, Trợ trận 11 nan + Dung luyện, Tháp sơn mài khóa lực chiến + bù ngày, dist 361MB, GitHub Actions 537/537.
+- Việc kế: chờ owner `tiếp`. Gợi ý địa danh còn shell legacy: Mộng Lộ, Chợ Mộng, Gọi Mộng, Đấu Trường. Không tự mở Combat V2 hay đổi seed.
+- Safari/device: NOT_RUN. Ticket Board: không có. Builder dừng REVIEW.
+- Visual pass Bày trận 09/09 đã bị owner từ chối — không khôi phục.
+
+Contract Tháp: [tickets/TKT-0023](../tickets/TKT-0023/ticket.md). CI: [tickets/TKT-0025](../tickets/TKT-0025/ticket.md).
+
 ## 2026-09-11 — TKT-0023 Tháp khóa lực chiến · REVIEW
 
-Nhánh `work/l14-tower-20260911`. Mỗi tầng Tháp có mốc lực chiến; đủ thì auto-qua, thiếu thì kẹt và bù +12%/ngày (trần 5). Thua không tụt tầng, không đụng campaign. Chrome 390×844 PASS; Safari/device NOT_RUN. Không đẩy production trừ khi chủ dự án nói đưa lên live.
+Nhánh `work/l14-tower-20260911` **đã merge main** (PR #23). Mỗi tầng Tháp có mốc lực chiến; đủ thì auto-qua, thiếu thì kẹt và bù +12%/ngày (trần 5). Thua không tụt tầng, không đụng campaign. Chrome 390×844 PASS; Safari/device NOT_RUN. Owner đã cho lên live.
 
 Contract: [tickets/TKT-0023](../tickets/TKT-0023/ticket.md). Evidence: [qa/L22-TOWER](qa/L22-TOWER/).
+
 
 ## 2026-09-08 — Bàn giao L11 cho Luna: REVIEW / IN_PROGRESS
 

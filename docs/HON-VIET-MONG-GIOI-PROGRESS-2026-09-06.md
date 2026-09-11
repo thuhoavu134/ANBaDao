@@ -1,6 +1,25 @@
 # Hồn Việt / Lục Thần — tiến độ hiện tại
 
+## 2026-09-11 — Snapshot production (thay điểm vào L11)
+
+**Bản đầy đủ:** [HANDOFF-2026-09-11.md](HANDOFF-2026-09-11.md). Các mục L10/L11 bên dưới là lịch sử Combat V2, **không** phải việc hiện tại trên live.
+
+| Mốc | Trạng thái 11/09/2026 |
+|---|---|
+| Production | [luc-than.vercel.app](https://luc-than.vercel.app/) READY từ main `ec6df19` |
+| Vòng Chinh chiến → Bày trận → trận → kết quả | Live. HUD sơn mài, ẩn Rút lui/Bật tiếng |
+| Trợ trận 11 nan + Dung luyện + Bậc Thầy | Live. `heroStats` một đường vào `teamPower` |
+| Tháp Trắng Đêm | Live. Khóa lực 3800+(tầng−1)×420, bù +12%/ngày trần 5, auto-resolve |
+| Deploy | dist ~361MB, không `docs/`, sharp omit-dev |
+| CI | GitHub Actions PR/main, 537/537, live check 200 |
+| Safari / device | NOT_RUN |
+| Việc kế | TKT-0026 khi owner `tiếp`. Gợi ý: Mộng Lộ (L15), Chợ Mộng, Gọi Mộng, Đấu Trường |
+| Không làm | Visual Bày trận đã reject 09/09; Combat V2 vào roster; đổi seed/banner |
+
+L14 (Tháp) đã lên live ở mức product. L15 (Viễn chinh / Mộng Lộ) là mode kế trong execution plan.
+
 ## 2026-09-08 — Bàn giao L11 cho Luna: REVIEW / IN_PROGRESS
+
 
 Chủ dự án yêu cầu chốt tiến độ trong lúc triển khai hồ sơ V2 và 126 nút chiêu. Source đang làm được lưu ở [handoff/l11-splus-profiles-v2-20260908](https://github.com/bktimmy247/luc-than/tree/handoff/l11-splus-profiles-v2-20260908), commit [`b6a2ae2`](https://github.com/bktimmy247/luc-than/commit/b6a2ae20a9b1b3071a8f5263740312e9d1465b04). Main nhận tài liệu/evidence; combat V2 chưa phát hành production.
 

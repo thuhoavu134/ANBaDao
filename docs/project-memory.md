@@ -1,4 +1,9 @@
+## 11/09/2026 — Bàn giao agent sau
+
+Điểm vào: `docs/HANDOFF-2026-09-11.md`. Main `ec6df19`. Live đủ vòng chơi + Trợ trận + Tháp. TKT-0026 chưa mở. Owner `tiếp` = địa danh hub kế (Mộng Lộ / Chợ / Gọi Mộng / Đấu Trường). Không làm lại Bày trận visual 09/09, không merge S+ V2 vào roster.
+
 ## 11/09/2026 — CI/CD tự động (TKT-0025)
+
 
 `.github/workflows/ci.yml`: job `ci` (build+test) trên PR/main; job `production` chỉ trên main, curl live 200. Vercel Git vẫn là CD. First Actions run failed 6 stale tests; suite realigned to 537/537.
 

@@ -1,6 +1,11 @@
 # Hồn Việt v3.23.0 — Player Journey Core
 
+## 2026-09-11 — Điểm vào hiện tại
+
+Đọc [HANDOFF-2026-09-11.md](HANDOFF-2026-09-11.md). Live đã có vòng chơi, Trợ trận 11 nan, Tháp khóa lực. Lát L11 S+ V2 bên dưới là lịch sử lab, không phải việc production.
+
 ## 2026-09-08 — Bàn giao L11 cho Luna: REVIEW / IN_PROGRESS
+
 
 Chủ dự án yêu cầu chốt tiến độ trong lúc triển khai hồ sơ V2 và 126 nút chiêu. Source đang làm được lưu ở [handoff/l11-splus-profiles-v2-20260908](https://github.com/bktimmy247/luc-than/tree/handoff/l11-splus-profiles-v2-20260908), commit [`b6a2ae2`](https://github.com/bktimmy247/luc-than/commit/b6a2ae20a9b1b3071a8f5263740312e9d1465b04). Main nhận tài liệu/evidence; combat V2 chưa phát hành production.
 

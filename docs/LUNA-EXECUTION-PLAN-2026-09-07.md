@@ -1,6 +1,21 @@
 # Kế hoạch tiếp tục Lục Thần — gói thực thi cho Luna
 
+## 2026-09-11 — Cập nhật hàng đợi (không thay E/R)
+
+Điểm vào hiện tại: [HANDOFF-2026-09-11.md](HANDOFF-2026-09-11.md). Lấy `origin/main`, đừng checkout L11.
+
+| ID | Cập nhật 11/09 |
+|---|---|
+| L11 (Trợ trận túi–mặc–rèn) | Product live: bánh xe 11 nan + 12 ô + Dung luyện. Khép kín túi đầy đủ / SFX rèn sâu vẫn mở |
+| L14 (Tháp) | Product live: sơn mài + khóa lực + bù ngày. Settlement riêng, không đụng campaign |
+| L15 (Viễn chinh / Mộng Lộ) | **Gợi ý lát kế** khi owner `tiếp` và không gửi ảnh màn khác |
+| L08 Gọi Mộng / shop / arena | Shell legacy trong `index.html`; sơn mài + transaction còn mở. Banner D01/D02 chưa chốt |
+| L10/L11 S+ 42 tướng | Lab `/splus-lab.html`. Không vào roster live |
+
+Bảng L01–L20 bên dưới giữ nguyên mã E/R. Trạng thái “PLANNED” của L14 trong bảng gốc đã lỗi thời.
+
 ## 2026-09-08 — Bàn giao L11 cho Luna: REVIEW / IN_PROGRESS
+
 
 Chủ dự án yêu cầu chốt tiến độ trong lúc triển khai hồ sơ V2 và 126 nút chiêu. Source đang làm được lưu ở [handoff/l11-splus-profiles-v2-20260908](https://github.com/bktimmy247/luc-than/tree/handoff/l11-splus-profiles-v2-20260908), commit [`b6a2ae2`](https://github.com/bktimmy247/luc-than/commit/b6a2ae20a9b1b3071a8f5263740312e9d1465b04). Main nhận tài liệu/evidence; combat V2 chưa phát hành production.
 

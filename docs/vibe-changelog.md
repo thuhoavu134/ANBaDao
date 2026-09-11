@@ -1,4 +1,9 @@
+## 11/09/2026 — Bàn giao toàn bộ tiến độ cho agent sau
+
+Snapshot [HANDOFF-2026-09-11.md](HANDOFF-2026-09-11.md): live, PR #18–#25, bánh xe 11 nan, Tháp, deploy, CI. Ticket kế TKT-0026. Không đổi runtime.
+
 ## 11/09/2026 — CI/CD tự động (TKT-0025)
+
 
 GitHub Actions: mỗi PR và mỗi lần đẩy `main` chạy cài đặt → build → test. Vercel vẫn tự deploy live. Job production xác nhận luc-than.vercel.app trả 200. Cổng CI 537/537 PASS.
 
