@@ -1,3 +1,7 @@
+## 12/09/2026 — Săn Boss lên main (TKT-0030)
+
+Squash-merge PR #31 → main `f96e53d`. Vercel CD production READY. Inject arena → hunt. Painted boss tokens + 60-round hunt battle. Unlock still after 3 chapters.
+
 ## 11/09/2026 — Săn Boss sơn mài + domain khế/ấn (TKT-0030)
 
 Nhánh `work/l19-hunt-onto-main` từ main `1139ef4`. Giữ 6⚡, 2 lượt/ngày, 3 boss xoay, Săn Khế Phá Lõi/Quét/Đoạt Mệnh, mốc ấn 3/7/12. Domain thuần bất biến, màn sơn mài như Tháp / Mộng Lộ / Chợ / Gọi Mộng / Đấu Trường. Chọn khế + settle qua transaction. Không thêm nút hub thứ hai, không đổi trận 60 lượt. Chrome 390 PASS; Safari NOT_RUN. Builder dừng REVIEW.

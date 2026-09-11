@@ -1,8 +1,16 @@
 # Bàn giao Lục Thần / Hồn Việt cho Luna và các model tiếp theo
 
+## 2026-09-12 — TKT-0030 Săn Boss · LIVE
+
+Main `f96e53d764d50fda5a4c81fa72e0ce2cbe06fb6c`, PR [#31](https://github.com/bktimmy247/luc-than/pull/31) squash-merge. Vercel production `dpl_26SmNBM8BZarjCyP4U1ew3Cd9sDx` READY trên [luc-than.vercel.app](https://luc-than.vercel.app/). Sơn mài + domain khế/ấn + painted boss (Cá Voi / Nhện / Đồng Hồ Cát Vỡ) + 2 Mộng Tinh tinh thể. HUD HIỆP xx/60. Mở sau 3 chương. Công thức live giữ nguyên (6⚡, 2 lượt/ngày, 3 boss xoay, Săn Khế Phá Lõi/Quét/Đoạt Mệnh, mốc 3/7/12). Chrome 390×844 PASS; Safari/device NOT_RUN.
+
+Rollback: Vercel previous production (`1139ef4`) hoặc `git revert` `f96e53d`. Việc kế: owner `tiếp` = Lễ Hội (TKT-0031). Không merge S+ V2, không làm lại Bày trận visual 09/09, không đổi seed/banner/roster/audio cũ.
+
+Contract: [tickets/TKT-0030](../tickets/TKT-0030/ticket.md). Evidence: [qa/L08-HUNT](qa/L08-HUNT/).
+
 ## 2026-09-11 — TKT-0030 Săn Boss · REVIEW
 
-Nhánh `work/l19-hunt-onto-main` **chưa merge**. Sơn mài + domain khế/ấn/thưởng từ main `1139ef4`. Công thức live giữ nguyên (6⚡, 2 lượt/ngày, 3 boss xoay, Săn Khế Phá Lõi/Quét/Đoạt Mệnh, mốc 3/7/12). Chrome 390×844 PASS; Safari/device NOT_RUN. Owner gõ `live` mới lên production.
+Nhánh `work/l19-hunt-onto-main` đã squash-merge main. Sơn mài + domain khế/ấn/thưởng từ main `1139ef4`. Builder dừng REVIEW; owner đã gõ `live`.
 
 Contract: [tickets/TKT-0030](../tickets/TKT-0030/ticket.md). Evidence: [qa/L08-HUNT](qa/L08-HUNT/).
 

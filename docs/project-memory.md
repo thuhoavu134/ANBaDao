@@ -1,3 +1,7 @@
+## 12/09/2026 — TKT-0030 Săn Boss LIVE
+
+Main `f96e53d`, PR #31 squash-merge. Vercel production READY `dpl_26SmNBM8BZarjCyP4U1ew3Cd9sDx`. Domain hunt + lacquer + painted boss art trên production. Inject sau arena. Boss 1 con to (`huntForm`) + 2 Mộng Tinh tinh thể. Mở sau 3 chương. Formulas frozen.
+
 ## 11/09/2026 — TKT-0030 Săn Boss REVIEW
 
 Domain `src/domain/hunt/hunt-run.mjs` owns day/contract/start/settle. Runtime wraps `renderHunt` / `selectHuntContract` / `startHunt` / `huntSettle`, không thêm `data-art-go="hunt"`. Settle qua `hvRunCommittedTransaction`. Build: `scripts/hunt-runtime-v1.mjs` sau arena. Không đổi 6⚡/2 lượt/HP. Không merge cho tới khi owner nói `live`.
@@ -32,7 +36,7 @@ Domain `src/domain/expedition/expedition-run.mjs` owns start/route/bless/reroll/
 
 ## 11/09/2026 — Bàn giao agent sau
 
-Điểm vào: `docs/HANDOFF-2026-09-11.md`. Live đủ vòng chơi + Trợ trận + Tháp + Mộng Lộ + Chợ + Gọi Mộng + Đấu Trường. Owner `tiếp` = Săn Boss. Không làm lại Bày trận visual 09/09, không merge S+ V2 vào roster.
+Điểm vào: `docs/HANDOFF-2026-09-11.md`. Live đủ vòng chơi + Trợ trận + Tháp + Mộng Lộ + Chợ + Gọi Mộng + Đấu Trường + Săn Boss. Owner `tiếp` = Lễ Hội (TKT-0031). Không làm lại Bày trận visual 09/09, không merge S+ V2 vào roster.
 
 ## 11/09/2026 — CI/CD tự động (TKT-0025)
 
