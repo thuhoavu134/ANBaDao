@@ -160,7 +160,7 @@ test('roster portal has one grid scroll owner and explicit visibility on route c
   assert.match(ui, /document\.body\.append\(root\)/);
   assert.match(ui, /root\.hidden = ST\.screen !== 'heroes'/);
   assert.match(ui, /root\.querySelector\('\.v4-grid'\)/);
-  assert.match(css, /grid-template-rows:auto minmax\(0,1fr\) auto/);
+  assert.match(css, /#hvHeroRosterV4 \.v4-grid\{[^}]*min-height:420px/);
   assert.match(css, /#hvHeroRosterV4\[hidden\]\{display:none!important/);
   assert.doesNotMatch(css, /position:sticky/);
 });

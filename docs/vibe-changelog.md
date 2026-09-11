@@ -1,3 +1,9 @@
+## 12/09/2026 — Màn Tướng hiện lại (TKT-0035)
+
+Nhánh `work/l24-hero-roster-visible-20260912`. Owner «vẫn thế» / «vẫn ko hiện»: header còn, 12 thẻ trắng trên iOS/Grok. Overlay gắn `document.body` như Trợ trận (`position:fixed;inset:0;overflow:auto`), thẻ `min-height:150`, lưới `min-height:420`. Không flex-1fr, không `height:auto`, không visualViewport. Chrome 390 + 768 + iframe 768 PASS; Safari NOT_RUN. Builder dừng REVIEW.
+
+
+
 ## 12/09/2026 — TKT-0033 + TKT-0034 LIVE
 
 Squash-merge PR #35 → main `b5a91f6`. Vercel CD production. Trợ trận + Lịch Luyện giả 3D tươi. Owner gõ `live`. Ticket kế: chờ `tiếp`.

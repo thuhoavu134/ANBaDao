@@ -1,3 +1,13 @@
+## 2026-09-12 — TKT-0035 Màn Tướng hiện lại · REVIEW
+
+Nhánh `work/l24-hero-roster-visible-20260912` từ main `8282bc1`. Owner «vẫn ko hiện». Overlay `#hvHeroRosterV4` gắn `document.body` như `#hvGearRoot` (`position:fixed;inset:0;overflow:auto;is-open`), thẻ min-height 150, lưới min-height 420. Không mount trong `#heroesScreen`. Chrome 390×844 + 768×1024 + iframe 768 PASS; Safari/device NOT_RUN.
+
+Rollback: quay `src/ui/hero-roster-runtime.js` + `scripts/hero-roster-phase-a-v4.mjs` trên main `8282bc1`. Không merge trừ khi owner gõ `live`.
+
+Contract: [tickets/TKT-0035](../tickets/TKT-0035/ticket.md). Evidence: [qa/L24-HERO-ROSTER](qa/L24-HERO-ROSTER/).
+
+
+
 ## 2026-09-12 — TKT-0033 + TKT-0034 LIVE
 
 Main `b5a91f6d25ff6e194d10eab18dd67a2b2095ba81`, PR [#35](https://github.com/bktimmy247/luc-than/pull/35) squash-merge. Vercel production `dpl_GKLwZYfATjMewkmtfzjcPtJqRCSA` READY trên [luc-than.vercel.app](https://luc-than.vercel.app/). Owner gõ `live`. Trợ trận 11 nan token giả 3D + hall `assist-hall-day.jpg`. Lịch Luyện 11 nan token giả 3D + hall sáng. Không reuse `menu-v3233`. `heroStats` / daily formulas / `data-art-go` không đổi. Chrome 390×844 PASS; Safari/device NOT_RUN.

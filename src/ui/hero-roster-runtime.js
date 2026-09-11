@@ -5,11 +5,13 @@
   const root = document.createElement('section');
   root.id = 'hvHeroRosterV4';
   root.setAttribute('aria-label', 'Danh sách tướng');
-  // A viewport portal avoids legacy screen pseudo-elements and WebKit's nested
-  // fixed/overflow compositing. The existing router still owns visibility.
-  screen.replaceChildren();
-  root.hidden = ST.screen !== 'heroes';
+  // Same paint surface as Trợ trận: body-level fixed overlay. Mounting inside
+  // #heroesScreen (a .wrap > .screen) lets iOS/Grok iframe clip the card grid
+  // to header height. Overflow auto + min-height on cards cannot collapse.
+  if (screen) screen.replaceChildren();
   document.body.append(root);
+  root.hidden = ST.screen !== 'heroes';
+  root.classList.toggle('is-open', ST.screen === 'heroes');
   const scrollSurface = () => root.querySelector('.v4-grid');
   const rememberScroll = () => { state.scrollTop = scrollSurface()?.scrollTop || 0; };
   const esc = value => String(value ?? '').replace(/[&<>"']/g, ch =>
@@ -74,7 +76,7 @@
   });
   root.addEventListener('scroll', () => { if (ST.screen === 'heroes') rememberScroll(); }, { capture: true, passive: true });
 
-  // Keep one route owner; the portal is hidden whenever another screen opens.
+  // Keep one route owner. Overlay visibility follows the heroes route.
   const baseShowScreen = showScreen;
   showScreen = function showScreenWithRosterState(name) {
     const fromDetail = ST.screen === 'heroDetail';
@@ -84,6 +86,7 @@
     }
     baseShowScreen(name);
     root.hidden = ST.screen !== 'heroes';
+    root.classList.toggle('is-open', ST.screen === 'heroes');
     document.body.classList.toggle('hero-roster-active', ST.screen === 'heroes');
     if (name === 'heroes') {
       if (scrollSurface()) scrollSurface().scrollTop = state.scrollTop;
@@ -92,6 +95,7 @@
       }
     }
   };
+
   const baseRefresh = refreshResbar;
   refreshResbar = function refreshRosterResources() {
     baseRefresh();
@@ -128,5 +132,6 @@
     back.addEventListener('click', () => navTo('heroes')); oldBack.replaceWith(back);
   }
   document.body.classList.toggle('hero-roster-active', ST.screen === 'heroes');
+  root.classList.toggle('is-open', ST.screen === 'heroes');
   if (ST.screen === 'heroes') renderHeroes();
 })();

@@ -1,0 +1,124 @@
+{
+  "phone": {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "hubHeroes": 1,
+    "parentIsBody": true,
+    "screenDisplay": "block",
+    "rootDisplay": "flex",
+    "rootPosition": "fixed",
+    "rootHidden": false,
+    "rootOpen": true,
+    "bodyClass": true,
+    "cards": 12,
+    "screenBox": {
+      "x": 8,
+      "y": 10,
+      "w": 374,
+      "h": 716
+    },
+    "rootBox": {
+      "x": 0,
+      "y": 0,
+      "w": 390,
+      "h": 844
+    },
+    "gridBox": {
+      "x": 0,
+      "y": 157,
+      "w": 390,
+      "h": 624
+    },
+    "filterBox": {
+      "x": 0,
+      "y": 110,
+      "w": 390,
+      "h": 46
+    },
+    "dockBox": {
+      "x": 0,
+      "y": 781,
+      "w": 390,
+      "h": 63
+    },
+    "cardBox": {
+      "x": 7,
+      "y": 167,
+      "w": 102,
+      "h": 150
+    },
+    "tall": true,
+    "cardsVisible": true,
+    "chromeVisible": true,
+    "appErrors": [],
+    "pass": true
+  },
+  "tablet": {
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "hubHeroes": 1,
+    "parentIsBody": true,
+    "screenDisplay": "block",
+    "rootDisplay": "flex",
+    "rootPosition": "fixed",
+    "rootHidden": false,
+    "rootOpen": true,
+    "bodyClass": true,
+    "cards": 12,
+    "screenBox": {
+      "x": 14,
+      "y": 10,
+      "w": 740,
+      "h": 896
+    },
+    "rootBox": {
+      "x": 0,
+      "y": 0,
+      "w": 768,
+      "h": 1024
+    },
+    "gridBox": {
+      "x": 0,
+      "y": 157,
+      "w": 768,
+      "h": 804
+    },
+    "filterBox": {
+      "x": 0,
+      "y": 110,
+      "w": 768,
+      "h": 46
+    },
+    "dockBox": {
+      "x": 0,
+      "y": 961,
+      "w": 768,
+      "h": 63
+    },
+    "cardBox": {
+      "x": 7,
+      "y": 167,
+      "w": 184,
+      "h": 270.578125
+    },
+    "tall": true,
+    "cardsVisible": true,
+    "chromeVisible": true,
+    "appErrors": [],
+    "pass": true
+  },
+  "iframe": {
+    "cards": 12,
+    "parentIsBody": true,
+    "rootOpen": true,
+    "rootH": 1024,
+    "cardH": 270.578125,
+    "pass": true,
+    "appErrors": []
+  },
+  "pass": true
+}

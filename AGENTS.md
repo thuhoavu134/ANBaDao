@@ -2,7 +2,7 @@
 
 Đọc `docs/HANDOFF-2026-09-12.md` rồi `docs/LUNA-HANDOFF.md` trước khi sửa game.
 
-Bàn giao mới nhất **12/09/2026**: TKT-0033 Icon sơn Trợ trận **REVIEW** trên nhánh `work/l23-assist-spoke-icons-20260912` (chưa merge). 11 nan `#hvGearRoot` dùng `assets/ui/account-gear/spokes/{key}.jpg`. Hall `assist-hall.webp` giữ. `heroStats` không đổi. TKT-0032 Lịch Luyện **LIVE** `a1f936a` (PR #33). Vercel `dpl_G49Q6XjU29UzEYczLLRfvvq7VSpk` READY. Live `https://luc-than.vercel.app/` đã có Trợ trận 11 nan (icon sơn trên nhánh này), Tháp, Mộng Lộ, Chợ Mộng, Gọi Mộng, Đấu Trường, Săn Boss, Lễ Hội, Lịch Luyện, Nhật Ký Mơ. Safari/device vẫn NOT_RUN. Combat V2 42 tướng không phải việc hiện tại.
+Bàn giao mới nhất **12/09/2026**: TKT-0035 màn Tướng hiện lại **REVIEW** trên nhánh `work/l24-hero-roster-visible-20260912` (chưa merge). Overlay body như Trợ trận; Chrome 390+768+iframe PASS. TKT-0033+0034 LIVE `b5a91f6` (PR #35). Không merge TKT-0035 tới khi owner gõ `live`.
 
 
 - **Được tái sử dụng code mẫu theo yêu cầu của anh.** Đọc `docs/HERMES-CODE-REUSE-GUIDE.md`: bản đồ 27 phương thức, dependency, lỗi cần sửa và quy trình port từ archive người dùng đã gửi. Quy tắc này thay chỉ dẫn cũ cấm toàn bộ source mẫu. Nối vào owner Lục Thần, ghi khác biệt và test; giữ identity/save/art/luật đã chốt. Repo chứa hướng dẫn; mã gốc chưa được đưa lên GitHub và chưa tích hợp runtime.

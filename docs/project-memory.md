@@ -1,3 +1,9 @@
+## 12/09/2026 — TKT-0035 Màn Tướng hiện lại REVIEW
+
+Roster `#hvHeroRosterV4` gắn `document.body` như `#hvGearRoot`. overflow auto + min-height thẻ/lưới — không mount trong `.wrap > #heroesScreen` (iOS/Grok clip lưới về 0). 12 ID / `heroStats` / nan không đổi. Không merge tới khi owner nói `live`.
+
+
+
 ## 12/09/2026 — TKT-0033 + TKT-0034 LIVE
 
 Main `b5a91f6`, PR #35 squash-merge. Owner gõ `live`. Trợ trận + Lịch Luyện icon/nền giả 3D tươi trên production. Không đổi `heroStats` / daily formulas. Ticket kế: chờ `tiếp` (Rèn hall hoặc shell Túi/Mail/Bang).
