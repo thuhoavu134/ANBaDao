@@ -1,3 +1,7 @@
+## 12/09/2026 — TKT-0033 + TKT-0034 LIVE
+
+Squash-merge PR #35 → main `b5a91f6`. Vercel CD production. Trợ trận + Lịch Luyện giả 3D tươi. Owner gõ `live`. Ticket kế: chờ `tiếp`.
+
 ## 12/09/2026 — Lịch Luyện giả 3D tươi (TKT-0034)
 
 Cùng nhánh `work/l23-assist-spoke-icons-20260912`. Owner hỏi «lịch luyện đã đổi theo chưa» — chưa, art TKT-0032 còn sơn mài tối. Đổi 11 nan + hall + lõi sang token giả 3D tươi, không reuse icon hub. Công thức daily đóng băng. Chrome 390 PASS; Safari NOT_RUN.

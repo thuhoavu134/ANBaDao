@@ -1,3 +1,7 @@
+## 12/09/2026 — TKT-0033 + TKT-0034 LIVE
+
+Main `b5a91f6`, PR #35 squash-merge. Owner gõ `live`. Trợ trận + Lịch Luyện icon/nền giả 3D tươi trên production. Không đổi `heroStats` / daily formulas. Ticket kế: chờ `tiếp` (Rèn hall hoặc shell Túi/Mail/Bang).
+
 ## 12/09/2026 — TKT-0034 Lịch Luyện giả 3D tươi REVIEW
 
 Owner chốt: icon + nền **tươi, giả 3D, nhiều lớp**. Lịch Luyện 11 nan + hall đổi theo Trợ trận. Không reuse `menu-v3233`. Không overlay Thành Chính. Công thức daily đóng băng. Không merge tới khi owner nói `live`.

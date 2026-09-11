@@ -1,3 +1,11 @@
+## 2026-09-12 — TKT-0033 + TKT-0034 LIVE
+
+Main `b5a91f6d25ff6e194d10eab18dd67a2b2095ba81`, PR [#35](https://github.com/bktimmy247/luc-than/pull/35) squash-merge. Vercel production `dpl_GKLwZYfATjMewkmtfzjcPtJqRCSA` READY trên [luc-than.vercel.app](https://luc-than.vercel.app/). Owner gõ `live`. Trợ trận 11 nan token giả 3D + hall `assist-hall-day.jpg`. Lịch Luyện 11 nan token giả 3D + hall sáng. Không reuse `menu-v3233`. `heroStats` / daily formulas / `data-art-go` không đổi. Chrome 390×844 PASS; Safari/device NOT_RUN.
+
+Rollback: Vercel previous production (`82f1c61` / `dpl_G49Q6XjU29UzEYczLLRfvvq7VSpk`) hoặc `git revert` `b5a91f6`. Việc kế: chờ owner `tiếp`. Gợi ý: Rèn hall, hoặc shell Túi/Giao việc/Mail/Bang. Không merge S+ V2, không làm lại Bày trận visual 09/09, không đổi seed/banner/roster.
+
+Contract: [tickets/TKT-0033](../tickets/TKT-0033/ticket.md), [tickets/TKT-0034](../tickets/TKT-0034/ticket.md). Evidence: [qa/L23-ASSIST-SPOKES](qa/L23-ASSIST-SPOKES/), [qa/L21-DAILY](qa/L21-DAILY/).
+
 ## 2026-09-12 — TKT-0034 Lịch Luyện giả 3D tươi · REVIEW
 
 Nhánh `work/l23-assist-spoke-icons-20260912` (stacked TKT-0033). Owner: Lịch Luyện cũng phải tươi, giả 3D, nhiều lớp — không sơn mài tối. 11 nan token 3D `assets/daily/spokes/{key}.jpg` (không reuse `menu-v3233`). Hall `lich-hall.jpg` sáng; lacquer cũ `lich-hall-lacquer.jpg`. Công thức daily / 11 nan / `go` không đổi. Chrome 390 PASS; Safari NOT_RUN.

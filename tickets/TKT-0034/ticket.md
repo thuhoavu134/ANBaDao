@@ -5,7 +5,7 @@ status: REVIEW
 phase: REFACTOR
 priority: P1
 created: 2026-09-12T03:17:00.000Z
-updated: 2026-09-12T03:17:00.000Z
+updated: 2026-09-12T03:30:00.000Z
 acceptance_ids: ["L21-T1","L21-T2","L21-T3","L21-P1","L21-P2","L21-P3","L21-P4","L21-P5"]
 required_gates: ["vibelab","tdd"]
 affected_paths: ["assets/daily/","src/ui/daily-screen.css","tests/daily-run.test.mjs","scripts/qa-daily-screen.mjs"]
@@ -30,3 +30,12 @@ Giữ nguyên TKT-0032: stamCap 120, nap, idle, điểm danh, JOURNEY_UNLOCK, 11
 - Safari/device: NOT_RUN
 
 Builder moves this ticket to REVIEW. Do not mark MERGED/DONE.
+
+## Result
+
+- GREEN `tests/daily-run.test.mjs` (L21-T1..P5)
+- Chrome 390×844: dock Lịch Luyện hall sáng 3D, 11 nan token độc lập. Evidence `docs/qa/L21-DAILY/`
+- Safari / device: NOT_RUN
+- Deploy: squash-merge PR #35 → main `b5a91f6d25ff6e194d10eab18dd67a2b2095ba81`. Vercel production `dpl_GKLwZYfATjMewkmtfzjcPtJqRCSA` READY. Live HTTP 200.
+- Ticket Board: TICKET_BOARD_NOT_AVAILABLE — không giả claim / MERGED / DONE
+

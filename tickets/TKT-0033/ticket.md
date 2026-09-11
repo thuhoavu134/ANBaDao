@@ -5,7 +5,7 @@ status: REVIEW
 phase: REFACTOR
 priority: P1
 created: 2026-09-12T03:00:00.000Z
-updated: 2026-09-12T03:20:00.000Z
+updated: 2026-09-12T03:30:00.000Z
 acceptance_ids: ["L23-T1","L23-T2","L23-T3","L23-P1","L23-P2"]
 required_gates: ["vibelab","tdd"]
 affected_paths: ["src/ui/account-gear-runtime.js","src/ui/account-gear-board.css","tests/account-assist-spokes.test.mjs","scripts/qa-assist-spokes.mjs","assets/ui/account-gear/spokes/"]
@@ -41,4 +41,5 @@ Builder moves this ticket to REVIEW. Do not mark MERGED/DONE.
 - GREEN `tests/account-assist-spokes.test.mjs` (L23-T1..P2)
 - Chrome 390×844: evidence `docs/qa/L23-ASSIST-SPOKES/`
 - Safari / device: NOT_RUN
+- Deploy: squash-merge PR #35 → main `b5a91f6d25ff6e194d10eab18dd67a2b2095ba81`. Vercel production `dpl_GKLwZYfATjMewkmtfzjcPtJqRCSA` READY. Live HTTP 200.
 - Ticket Board: TICKET_BOARD_NOT_AVAILABLE — không giả claim / MERGED / DONE
