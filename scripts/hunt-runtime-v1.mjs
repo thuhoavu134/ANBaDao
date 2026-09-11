@@ -1,0 +1,119 @@
+import { readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { join } from 'node:path';
+
+const root = process.cwd();
+const indexTarget = join(root, 'dist/index.html');
+const battleTarget = join(root, 'dist/battle.html');
+const domain = readFileSync(join(root, 'src/domain/hunt/hunt-run.mjs'), 'utf8')
+  .replace(/^export /gm, '');
+const runtime = readFileSync(join(root, 'src/ui/hunt-runtime.js'), 'utf8');
+const css = readFileSync(join(root, 'src/ui/hunt-screen.css'), 'utf8');
+const battleVisual = readFileSync(join(root, 'src/ui/hunt-battle-visual.js'), 'utf8');
+new Function(domain);
+new Function(runtime);
+new Function(battleVisual);
+
+function replaceOnce(src, from, to, label) {
+  if (src.includes(to)) return src;
+  if (!src.includes(from)) {
+    console.warn('Hunt inject skip:', label);
+    return src;
+  }
+  return src.replace(from, to);
+}
+
+let html = readFileSync(indexTarget, 'utf8');
+html = html.replace(/<style id="hv-hunt-css">[\s\S]*?<\/style>\n?/, '');
+html = html.replace(/<script id="hv-hunt-js">[\s\S]*?<\/script>\n?/, '');
+html = html.replace('</head>', `<style id="hv-hunt-css">${css}</style>\n</head>`);
+const end = html.lastIndexOf('</body>');
+if (end < 0) throw new Error('Hunt shell body end missing');
+html = html.slice(0, end)
+  + `<script id="hv-hunt-js">(()=>{\n${domain}\n${runtime}\n})();</script>\n`
+  + html.slice(end);
+
+const huntObjectiveFrom = "if(/^ch\\d+_boss/.test(battleId)||battleId==='__hunt'||battleId==='__guildboss')return {type:'priority',targetId:enemyLead,maxRounds:6};";
+const huntObjectiveTo = "if(battleId==='__hunt')return {type:'eliminate',maxRounds:60};\n    if(/^ch\\d+_boss/.test(battleId)||battleId==='__guildboss')return {type:'priority',targetId:enemyLead,maxRounds:6};";
+html = replaceOnce(html, huntObjectiveFrom, huntObjectiveTo, 'index-objective');
+
+const huntHeroFrom = "      rarity: combatRarityValue(definition.rarity),\n      progression: heroBattleProgression(sourceId),\n      ...mapSkill({...combatant,skill:combatant.skill||definition.skill||null,ultimate:combatant.ultimate||definition.ultimate||null})";
+const huntHeroTo = "      rarity: combatRarityValue(definition.rarity),\n      progression: heroBattleProgression(sourceId),\n      huntForm: combatant.huntForm || null,\n      huntScale: Number(combatant.huntScale) || 1,\n      ...mapSkill({...combatant,skill:combatant.skill||definition.skill||null,ultimate:combatant.ultimate||definition.ultimate||null})";
+html = replaceOnce(html, huntHeroFrom, huntHeroTo, 'index-huntForm');
+
+html = replaceOnce(
+  html,
+  '      enemyTeamName: "Mộng Nhiễu",',
+  "      enemyTeamName: battleId==='__hunt' ? ((typeof todayBoss==='function'?todayBoss(typeof today==='function'?today():0).name:null)||'Boss Mộng') : \"Mộng Nhiễu\",",
+  'index-enemy-name'
+);
+html = replaceOnce(
+  html,
+  "      enemyTeamName: battleId==='__hunt' ? ((typeof todayBoss==='function'?todayBoss().name:null)||'Boss Mộng') : \"Mộng Nhiễu\",",
+  "      enemyTeamName: battleId==='__hunt' ? ((typeof todayBoss==='function'?todayBoss(typeof today==='function'?today():0).name:null)||'Boss Mộng') : \"Mộng Nhiễu\",",
+  'index-enemy-name-day'
+);
+
+html = replaceOnce(
+  html,
+  'const url = `battle.html?embedded=1&session=${encodeURIComponent(sessionId)}&autostart=1&v=3175${qaSuffix}${fixtureSuffix}`;',
+  'const url = `battle.html?embedded=1&session=${encodeURIComponent(sessionId)}&autostart=1&v=3175${qaSuffix}${fixtureSuffix}${battleId===\'__hunt\'?\'&battleId=__hunt&vHunt=2\':\'\'}`;',
+  'index-hunt-url'
+);
+
+html = replaceOnce(
+  html,
+  '    try { sessionStorage.setItem(`hvBattleConfig:${sessionId}`, serializedBattleConfig); } catch (error) {\n      console.warn("Không lưu được cấu hình trận dự phòng vào sessionStorage.", error);\n    }',
+  '    try { sessionStorage.setItem(`hvBattleConfig:${sessionId}`, serializedBattleConfig); } catch (error) {\n      console.warn("Không lưu được cấu hình trận dự phòng vào sessionStorage.", error);\n    }\n    if (battleId === "__hunt") {\n      try { sessionStorage.setItem("hvHuntBattleConfig", serializedBattleConfig); } catch (_) {}\n    }',
+  'index-hunt-storage'
+);
+
+writeFileSync(indexTarget, html);
+console.log('Hunt lacquer screen installed');
+
+if (existsSync(battleTarget)) {
+  let battle = readFileSync(battleTarget, 'utf8');
+  battle = battle.replace(/<script id="hv-hunt-battle-js">[\s\S]*?<\/script>\n?/, '');
+
+  battle = replaceOnce(
+    battle,
+    '    console.warn("Không tìm thấy cấu hình trận tích hợp; dùng đội hình mặc định.");\n    return {};',
+    '    try {\n      const huntCfg = sessionStorage.getItem("hvHuntBattleConfig");\n      if (huntCfg && (sessionId || params.get("battleId") === "__hunt")) {\n        const parsed = JSON.parse(huntCfg);\n        if (parsed && parsed.battleId === "__hunt") return parsed;\n      }\n    } catch (error) {\n      console.warn("Không đọc được cấu hình săn boss.", error);\n    }\n    console.warn("Không tìm thấy cấu hình trận tích hợp; dùng đội hình mặc định.");\n    return {};',
+    'battle-embed-fallback'
+  );
+
+  battle = replaceOnce(
+    battle,
+    "    const maxRounds=Math.max(1,Math.min(STANDARD_ROUND_LIMIT,Math.floor(Number(raw.maxRounds)|| (type==='challenge'?STANDARD_ROUND_LIMIT:type==='survive'||type==='protect'?5:type==='priority'||type==='ritual'?6:STANDARD_ROUND_LIMIT))));",
+    "    const roundCap=Number(raw.maxRounds)>=60?60:STANDARD_ROUND_LIMIT;\n    const maxRounds=Math.max(1,Math.min(roundCap,Math.floor(Number(raw.maxRounds)|| (type==='challenge'?STANDARD_ROUND_LIMIT:type==='survive'||type==='protect'?5:type==='priority'||type==='ritual'?6:STANDARD_ROUND_LIMIT))));",
+    'battle-round-cap'
+  );
+
+  battle = replaceOnce(
+    battle,
+    "    if(round>STANDARD_ROUND_LIMIT){\n      const playerHp=players.reduce((sum,u)=>sum+Math.max(0,Number(u.hp)||0),0);\n      const enemyHp=enemies.reduce((sum,u)=>sum+Math.max(0,Number(u.hp)||0),0);\n      if(playerHp!==enemyHp)return {winner:playerHp>enemyHp?'player':'enemy',reason:'round-limit-hp',playerHp,enemyHp};",
+    "    const roundCap=Math.max(STANDARD_ROUND_LIMIT,Math.min(60,Number(obj.maxRounds)||STANDARD_ROUND_LIMIT));\n    if(round>roundCap){\n      const playerHp=players.reduce((sum,u)=>sum+Math.max(0,Number(u.hp)||0),0);\n      const enemyHp=enemies.reduce((sum,u)=>sum+Math.max(0,Number(u.hp)||0),0);\n      if(playerHp!==enemyHp)return {winner:playerHp>enemyHp?'player':'enemy',reason:'round-limit-hp',playerHp,enemyHp};",
+    'battle-eval-cap'
+  );
+
+  battle = replaceOnce(
+    battle,
+    '  function updateRoundDisplay(round=state.round){\n    const shown=Math.max(1,Math.min(15,Number(round)||1));\n    if(dom.roundLabel)dom.roundLabel.textContent=`HIỆP ${String(shown).padStart(2,"0")}/15`;\n    const display=document.getElementById("roundDisplay");\n    if(display)display.dataset.danger=shown>=13?"true":"false";\n  }',
+    '  function updateRoundDisplay(round=state.round){\n    const hunt=String(EMBED_CONFIG.battleId||"")==="__hunt"||(Array.isArray(units)&&units.some(u=>u&&(u.huntForm||u.sourceId==="huntboss")));\n    const cap=hunt?60:15;\n    const shown=Math.max(1,Math.min(cap,Number(round)||1));\n    if(dom.roundLabel)dom.roundLabel.textContent=`HIỆP ${String(shown).padStart(2,"0")}/${String(cap).padStart(2,"0")}`;\n    const display=document.getElementById("roundDisplay");\n    if(display)display.dataset.danger=shown>=cap-8?"true":"false";\n  }',
+    'battle-round-hud'
+  );
+
+  battle = replaceOnce(
+    battle,
+    '  function drawUnit(context, unit, time) {\n    if(unit.kitVersion===\'splus42-v2\')return drawSplusToken(context,unit,time);',
+    '  function drawUnit(context, unit, time) {\n    /*hv-hunt-draw*/\n    if (unit && typeof honVietDrawHuntUnit === "function") {\n      const huntForm = unit.huntForm || (typeof honVietInferHuntForm === "function" ? honVietInferHuntForm(unit) : null);\n      if (huntForm) {\n        unit.huntForm = huntForm;\n        honVietDrawHuntUnit(context, unit, time, { drawHud: drawUnitHud, reducedMotion: REDUCED_MOTION });\n        return;\n      }\n    }\n    if(unit.kitVersion===\'splus42-v2\')return drawSplusToken(context,unit,time);',
+    'battle-drawUnit'
+  );
+
+  const headEnd = battle.indexOf('</head>');
+  if (headEnd < 0) throw new Error('Hunt battle head end missing');
+  battle = battle.slice(0, headEnd)
+    + `<script id="hv-hunt-battle-js">${battleVisual}</script>\n`
+    + battle.slice(headEnd);
+  writeFileSync(battleTarget, battle);
+  console.log('Hunt battle beast visual installed');
+}

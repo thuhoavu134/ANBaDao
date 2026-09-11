@@ -1,3 +1,7 @@
+## 11/09/2026 — Săn Boss sơn mài + domain khế/ấn (TKT-0030)
+
+Nhánh `work/l19-hunt-onto-main` từ main `1139ef4`. Giữ 6⚡, 2 lượt/ngày, 3 boss xoay, Săn Khế Phá Lõi/Quét/Đoạt Mệnh, mốc ấn 3/7/12. Domain thuần bất biến, màn sơn mài như Tháp / Mộng Lộ / Chợ / Gọi Mộng / Đấu Trường. Chọn khế + settle qua transaction. Không thêm nút hub thứ hai, không đổi trận 60 lượt. Chrome 390 PASS; Safari NOT_RUN. Builder dừng REVIEW.
+
 ## 11/09/2026 — Đấu Trường lên main (TKT-0029)
 
 Squash-merge PR #30 → main `9bd266a`. Vercel CD. Inject shop → summon → arena.

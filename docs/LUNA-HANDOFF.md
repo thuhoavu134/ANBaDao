@@ -1,5 +1,12 @@
 # Bàn giao Lục Thần / Hồn Việt cho Luna và các model tiếp theo
 
+## 2026-09-11 — TKT-0030 Săn Boss · REVIEW
+
+Nhánh `work/l19-hunt-onto-main` **chưa merge**. Sơn mài + domain khế/ấn/thưởng từ main `1139ef4`. Công thức live giữ nguyên (6⚡, 2 lượt/ngày, 3 boss xoay, Săn Khế Phá Lõi/Quét/Đoạt Mệnh, mốc 3/7/12). Chrome 390×844 PASS; Safari/device NOT_RUN. Owner gõ `live` mới lên production.
+
+Contract: [tickets/TKT-0030](../tickets/TKT-0030/ticket.md). Evidence: [qa/L08-HUNT](qa/L08-HUNT/).
+
+
 ## 2026-09-11 — Snapshot toàn bộ · điểm vào agent sau
 
 **Đọc [HANDOFF-2026-09-11.md](HANDOFF-2026-09-11.md) trước mọi mục dưới.** File đó là nguồn sự thật cho việc đang live, file owner, PR #18–#25, hub còn lại và TKT-0026.

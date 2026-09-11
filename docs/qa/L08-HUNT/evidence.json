@@ -1,0 +1,28 @@
+{
+  "hubMarks": 1,
+  "title": "Sổ Săn Đêm",
+  "boss": "Nhện Dệt Ác Mộng",
+  "contractCount": 3,
+  "selected": "break_core",
+  "gemsBefore": 800,
+  "gemsAfter": 805,
+  "goldBefore": 500,
+  "goldAfter": 1687,
+  "soBefore": 3,
+  "soAfter": 4,
+  "marksAfter": 3,
+  "claimed": [
+    3
+  ],
+  "chapters": [],
+  "chaptersUntouched": true,
+  "hubAfter": 1,
+  "appErrors": [],
+  "pass": true,
+  "battleVisual": {
+    "roundLabel": "HIỆP 01/60",
+    "enemyRibbon": "Đồng Hồ Cát Vỡ",
+    "art": "painted PNG tokens (whale/spider/hourglass/crystal)",
+    "shot": "hunt-battle-390x844.png"
+  }
+}
