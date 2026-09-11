@@ -2,7 +2,7 @@
 
 Đọc `docs/HANDOFF-2026-09-11.md` rồi `docs/LUNA-HANDOFF.md` trước khi sửa game.
 
-Bàn giao mới nhất **11/09/2026**: snapshot đầy đủ cho agent sau. Live `https://luc-than.vercel.app/` đã có Trợ trận 11 nan, Tháp khóa lực chiến, tối ưu deploy, CI/CD (main `ec6df19`, PR #25). Ticket kế **TKT-0026** — chờ owner `tiếp` (gợi ý: Mộng Lộ / Chợ Mộng / Gọi Mộng / Đấu Trường). Safari/device vẫn NOT_RUN. Combat V2 42 tướng không phải việc hiện tại.
+Bàn giao mới nhất **11/09/2026**: snapshot đầy đủ + **TKT-0026 Mộng Lộ REVIEW** trên `work/l15-expedition-20260911` (chưa merge). Live `https://luc-than.vercel.app/` đã có Trợ trận 11 nan, Tháp khóa lực chiến, tối ưu deploy, CI/CD (main `324501f`, PR #25). Owner gõ `live` mới merge Mộng Lộ. Gợi ý tiếp: Chợ Mộng / Gọi Mộng / Đấu Trường. Safari/device vẫn NOT_RUN. Combat V2 42 tướng không phải việc hiện tại.
 
 - **Được tái sử dụng code mẫu theo yêu cầu của anh.** Đọc `docs/HERMES-CODE-REUSE-GUIDE.md`: bản đồ 27 phương thức, dependency, lỗi cần sửa và quy trình port từ archive người dùng đã gửi. Quy tắc này thay chỉ dẫn cũ cấm toàn bộ source mẫu. Nối vào owner Lục Thần, ghi khác biệt và test; giữ identity/save/art/luật đã chốt. Repo chứa hướng dẫn; mã gốc chưa được đưa lên GitHub và chưa tích hợp runtime.
 - Runtime production được tạo bởi `scripts/build-static.mjs`. Sửa nguồn hoặc patch sinh ra runtime; không dùng chỉnh sửa riêng trong `dist/` làm kết quả bàn giao.
@@ -25,4 +25,3 @@ Khi tiếp tục phát triển game, đọc docs/VIBE-WORKFLOW-RULES.md và tuâ
 - **vibe-lab** là gate bắt buộc cho thay đổi runtime: contract → ticket/claim/lock → RED → GREEN → REFACTOR → evidence → REVIEW/handoff.
 - ticket-board là nguồn sự thật cho trạng thái ticket. Builder không tự chuyển ticket sang MERGED hoặc DONE.
 - Docs-only có thể kiểm tra thông thường; thay đổi code/UI/data/behavior/migration/release phải qua đầy đủ gate. Không âm thầm bỏ qua blocker, không force-push, không báo PASS chỉ từ build.
-

@@ -1,3 +1,7 @@
+## 11/09/2026 — TKT-0026 Mộng Lộ REVIEW
+
+Domain `src/domain/expedition/expedition-run.mjs` owns start/route/bless/reroll/win/lose. Runtime wraps `renderExpedition` / `startRogueBattle`, không thêm `data-art-go="expedition"`. Build: `scripts/expedition-runtime-v1.mjs` sau tower. Không merge cho tới khi owner nói `live`.
+
 ## 11/09/2026 — Bàn giao agent sau
 
 Điểm vào: `docs/HANDOFF-2026-09-11.md`. Main `ec6df19`. Live đủ vòng chơi + Trợ trận + Tháp. TKT-0026 chưa mở. Owner `tiếp` = địa danh hub kế (Mộng Lộ / Chợ / Gọi Mộng / Đấu Trường). Không làm lại Bày trận visual 09/09, không merge S+ V2 vào roster.

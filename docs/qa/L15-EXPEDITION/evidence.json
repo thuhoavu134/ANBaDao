@@ -1,0 +1,22 @@
+{
+  "hubMarks": 1,
+  "idleFloor": "Chưa lên đường",
+  "startLabel": "Bắt đầu Mộng Lộ",
+  "floorAfterStart": "Tầng 1 / 5",
+  "routeCount": 3,
+  "routeOn": 1,
+  "fightLabel": "Xuất chiến tầng 1",
+  "battles": 1,
+  "battleId": "__rogue",
+  "offerCount": 3,
+  "pendingFloor": "Chọn Phúc Mộng",
+  "chapters": [],
+  "chaptersUntouched": true,
+  "floorAfterBless": "Tầng 2 / 5",
+  "worn": 1,
+  "afterAbort": "Chưa lên đường",
+  "best": 1,
+  "hubAfter": 1,
+  "appErrors": [],
+  "pass": true
+}
