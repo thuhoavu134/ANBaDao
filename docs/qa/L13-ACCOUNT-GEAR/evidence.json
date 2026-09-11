@@ -1,13 +1,16 @@
 {
-  "ticket": "TKT-0008",
+  "ticket": "TKT-0009",
   "viewport": "390x844",
   "slotCount": 12,
   "filled": 12,
   "master": "0",
+  "masterArmed": "1",
+  "masterCopy": "Đã kích hoạt · HP +40 · Công +4 · Thủ +3 · Tốc +1",
+  "masterOn": true,
   "titleVisible": true,
   "titleBox": {
     "x": 12,
-    "y": 511.265625,
+    "y": 492.265625,
     "width": 366,
     "height": 23
   },
@@ -31,6 +34,7 @@
     "wheel-390x844.png",
     "board-390x844.png",
     "board-wear-390x844.png",
+    "board-master-390x844.png",
     "smelt-empty-390x844.png",
     "smelt-390x844.png",
     "smelt-enhance-390x844.png"

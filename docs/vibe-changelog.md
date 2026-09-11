@@ -1,3 +1,7 @@
+## 11/09/2026 — Bậc Thầy Trang Bị kích hoạt (TKT-0009)
+
+Nhánh `work/l13-gear-master-20260911`. 12 ô cùng +N (N≥1) cộng HP 40N / Công 4N / Thủ 3N / Tốc 1N cho toàn đội. Thanh 0/1 → 15/15. 14/14 tests; Chrome 390×844 Lv1 **Đã kích hoạt**; Safari NOT_RUN.
+
 ## 11/09/2026 — Dung luyện trên bảng trang bị (TKT-0008)
 
 Nhánh `work/l13-account-gear-20260910`. Nút Dung luyện mở màn riêng: tab Dung luyện nấu đồ thừa lấy Tinh Lực (b5/a8/s12/ss18/ssr28 + lvl×2), tab Cường hóa cường hóa từ túi. Không nấu món đang mặc (P.gear / P.equip) hay khóa. 12/12 tests; Chrome 390×844 toast rỗng + nấu +5 Tinh Lực; Safari NOT_RUN.

@@ -111,6 +111,10 @@
 }
 .hv-gear-power-ico{width:12px;height:12px;background:currentColor;clip-path:polygon(50% 0,62% 38%,100% 38%,58% 100%,50% 72%,42% 100%,0 38%,38% 38%);flex:0 0 12px}
 .hv-gear-title{margin:0;text-align:center;color:#f6e2b0;font-size:16px;font-weight:800;letter-spacing:.02em;flex-shrink:0;position:sticky;top:0;z-index:1;background:linear-gradient(180deg,#3a2818,#2a1b12);padding:2px 0}
+.hv-gear-master-track{display:flex;align-items:center;gap:8px;margin:2px 8px 4px;flex-shrink:0}
+.hv-gear-master-track span{flex:0 0 auto;color:#f0dcab;font-size:11px;font-weight:800;font-variant-numeric:tabular-nums}
+.hv-gear-master-bar{flex:1;height:8px;border-radius:999px;background:#1a120c;box-shadow:inset 0 0 0 1px #8a6a3c;overflow:hidden;display:block}
+.hv-gear-master-bar b{display:block;height:100%;width:0;background:linear-gradient(90deg,#f0d078,#c4892c);border-radius:999px}
 .hv-gear-copy{margin:4px 0 8px;text-align:center;color:#cbb48a;font-size:11px;line-height:1.4;flex-shrink:0}
 .hv-gear-slots{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:7px;flex-shrink:0}
 .hv-gear-slot{

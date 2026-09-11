@@ -136,6 +136,35 @@ export function accountGearMasterLevel(gear, inventory) {
   return min === Infinity ? 0 : min;
 }
 
+export const MASTER_BONUS_PER_LEVEL = Object.freeze({ hp: 40, atk: 4, def: 3, spd: 1 });
+const MASTER_MAX_LEVEL = 15;
+
+export function accountGearMasterBonus(level) {
+  const n = Math.max(0, Math.min(MASTER_MAX_LEVEL, Number(level) || 0));
+  return {
+    hp: MASTER_BONUS_PER_LEVEL.hp * n,
+    atk: MASTER_BONUS_PER_LEVEL.atk * n,
+    def: MASTER_BONUS_PER_LEVEL.def * n,
+    spd: MASTER_BONUS_PER_LEVEL.spd * n
+  };
+}
+
+export function accountGearMasterProgress(gear, inventory) {
+  const level = accountGearMasterLevel(gear, inventory);
+  const next = level >= MASTER_MAX_LEVEL ? MASTER_MAX_LEVEL : level + 1;
+  const board = normalizeAccountGear(gear);
+  const bag = Array.isArray(inventory) ? inventory : [];
+  let ready = 0;
+  for (const id of SLOT_IDS) {
+    const uid = board[id];
+    if (uid == null) continue;
+    const item = bag.find(entry => entry.uid === uid);
+    if (!item) continue;
+    if ((Number(item.lvl) || 0) >= next) ready++;
+  }
+  return { level, next, ready, need: SLOT_IDS.length, max: MASTER_MAX_LEVEL, active: level > 0 };
+}
+
 export function accountGearBonus(gear, inventory, { statMap = {}, itemStat = () => 0 } = {}) {
   const out = { hp: 0, atk: 0, def: 0, spd: 0 };
   const board = normalizeAccountGear(gear);
@@ -149,6 +178,11 @@ export function accountGearBonus(gear, inventory, { statMap = {}, itemStat = () 
     if (!key || out[key] == null) continue;
     out[key] += Number(itemStat(item)) || 0;
   }
+  const master = accountGearMasterBonus(accountGearMasterLevel(gear, inventory));
+  out.hp += master.hp;
+  out.atk += master.atk;
+  out.def += master.def;
+  out.spd += master.spd;
   return out;
 }
 

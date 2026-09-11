@@ -41,6 +41,16 @@ const heroFillsPortrait = !!(heroBox && heroBox.y <= 24 && heroBox.height >= 844
 await page.screenshot({ path: join(out, 'board-390x844.png'), fullPage: false });
 await page.locator('[data-gear-tab="wear"]').click();
 await page.screenshot({ path: join(out, 'board-wear-390x844.png'), fullPage: false });
+await page.evaluate(() => {
+  const worn = new Set(Object.values(P.gear || {}).filter(uid => Number.isSafeInteger(uid) && uid > 0));
+  (P.inventory || []).forEach(item => { if (worn.has(item.uid)) item.lvl = Math.max(item.lvl || 0, 1); });
+  window.HonVietAccountGear?.openBoard();
+});
+await page.waitForTimeout(300);
+const masterArmed = await page.locator('[data-gear-master]').textContent();
+const masterCopy = await page.locator('[data-gear-master-copy]').textContent();
+const masterOn = masterArmed === '1' && /Đã kích hoạt/.test(masterCopy || '');
+await page.screenshot({ path: join(out, 'board-master-390x844.png'), fullPage: false });
 
 await page.locator('[data-gear-unequip-all]').click();
 await page.waitForTimeout(2300);
@@ -68,15 +78,16 @@ await page.screenshot({ path: join(out, 'smelt-enhance-390x844.png'), fullPage: 
 
 const appErrors = errors.filter(text => !/extension|favicon|Failed to load resource/i.test(text));
 const result = {
-  ticket: 'TKT-0008',
+  ticket: 'TKT-0009',
   viewport: '390x844',
-  slotCount, filled, master, titleVisible, titleBox, heroBox, heroFillsPortrait,
+  slotCount, filled, master, masterArmed, masterCopy, masterOn, titleVisible, titleBox, heroBox, heroFillsPortrait,
   emptyToast, emptyToastOk, bagCount, tinhBefore, tinhAfter, smelted, smeltToast, enhanceOnce,
   appErrors,
   screenshots: [
     'wheel-390x844.png',
     'board-390x844.png',
     'board-wear-390x844.png',
+    'board-master-390x844.png',
     'smelt-empty-390x844.png',
     'smelt-390x844.png',
     'smelt-enhance-390x844.png'
@@ -84,5 +95,5 @@ const result = {
 };
 writeFileSync(join(out, 'evidence.json'), JSON.stringify(result, null, 2));
 console.log(JSON.stringify(result, null, 2));
-if (slotCount !== 12 || filled < 12 || !titleVisible || !heroFillsPortrait || !emptyToastOk || bagCount < 1 || !smelted || enhanceOnce < 1 || appErrors.length) process.exit(1);
+if (slotCount !== 12 || filled < 12 || !titleVisible || !heroFillsPortrait || !masterOn || !emptyToastOk || bagCount < 1 || !smelted || enhanceOnce < 1 || appErrors.length) process.exit(1);
 await browser.close();

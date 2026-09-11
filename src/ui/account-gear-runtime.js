@@ -71,7 +71,11 @@
       <div class="hv-gear-panel">
         <div class="hv-gear-power" data-gear-power></div>
         <h2 class="hv-gear-title">Bậc Thầy Trang Bị: Lv<span data-gear-master>0</span></h2>
-        <p class="hv-gear-copy">Tất cả trang bị đạt cùng mức độ bồi dưỡng sẽ kích hoạt</p>
+        <div class="hv-gear-master-track">
+          <span data-gear-master-progress>0/12</span>
+          <i class="hv-gear-master-bar"><b data-gear-master-fill></b></i>
+        </div>
+        <p class="hv-gear-copy" data-gear-master-copy>Tất cả trang bị đạt cùng mức độ bồi dưỡng sẽ kích hoạt</p>
         <div class="hv-gear-slots">
           <button type="button" class="hv-gear-slot" data-gear-slot="I" aria-label="Nón"><b class="roman">I</b><img alt=""><i class="plus">+</i><small class="lvl" hidden></small></button>
           <button type="button" class="hv-gear-slot" data-gear-slot="II" aria-label="Đai"><b class="roman">II</b><img alt=""><i class="plus">+</i><small class="lvl" hidden></small></button>
@@ -196,7 +200,28 @@
   function renderBoard() {
     const gear = board();
     const master = accountGearMasterLevel(gear, P.inventory || []);
+    const progress = typeof accountGearMasterProgress === 'function'
+      ? accountGearMasterProgress(gear, P.inventory || [])
+      : { level: master, next: master + 1, ready: 0, need: 12, active: master > 0 };
+    const masterAdd = typeof accountGearMasterBonus === 'function'
+      ? accountGearMasterBonus(master)
+      : { hp: 0, atk: 0, def: 0, spd: 0 };
     root.querySelector('[data-gear-master]').textContent = String(master);
+    const progressLabel = root.querySelector('[data-gear-master-progress]');
+    if (progressLabel) {
+      progressLabel.textContent = progress.level + '/' + progress.next;
+    }
+    const fill = root.querySelector('[data-gear-master-fill]');
+    if (fill) {
+      const pct = progress.next ? Math.round((progress.level / progress.next) * 100) : 0;
+      fill.style.width = pct + '%';
+    }
+    const copy = root.querySelector('[data-gear-master-copy]');
+    if (copy) {
+      copy.textContent = progress.active
+        ? ('Đã kích hoạt · HP +' + masterAdd.hp + ' · Công +' + masterAdd.atk + ' · Thủ +' + masterAdd.def + ' · Tốc +' + masterAdd.spd)
+        : ('Tất cả trang bị đạt +' + progress.next + ' sẽ kích hoạt (' + progress.ready + '/' + progress.need + ')');
+    }
     fillChips();
     const power = typeof teamPower === 'function' ? teamPower() : 0;
     root.querySelector('[data-gear-power]').innerHTML = '<i class="hv-gear-power-ico"></i>' + power.toLocaleString('vi-VN');

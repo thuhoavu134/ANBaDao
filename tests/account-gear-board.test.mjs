@@ -4,7 +4,9 @@ import { readFileSync } from 'node:fs';
 import {
   ACCOUNT_GEAR_SLOTS,
   accountGearBonus,
+  accountGearMasterBonus,
   accountGearMasterLevel,
+  accountGearMasterProgress,
   candidatesForGearSlot,
   emptyAccountGear,
   prepareAccountGearChange,
@@ -119,6 +121,58 @@ test('worn pieces add their stats to the whole roster and master level is the lo
   assert.ok(bonus.hp > 0 && bonus.atk > 0 && bonus.def > 0 && bonus.spd > 0);
 });
 
+test('master bonus stays off at +0 and grants a team table once all twelve share enhance', () => {
+  const inventory = ACCOUNT_GEAR_SLOTS.map((slot, index) => ({
+    uid: index + 1, slot: slot.kind, rar: 'b', lvl: 0
+  }));
+  const gear = emptyAccountGear();
+  for (const slot of ACCOUNT_GEAR_SLOTS) gear[slot.id] = ACCOUNT_GEAR_SLOTS.indexOf(slot) + 1;
+  assert.equal(accountGearMasterLevel(gear, inventory), 0);
+  assert.deepEqual(accountGearMasterBonus(0), { hp: 0, atk: 0, def: 0, spd: 0 });
+  const idle = accountGearMasterProgress(gear, inventory);
+  assert.equal(idle.ready, 0);
+  assert.equal(idle.need, 12);
+  assert.equal(idle.next, 1);
+  assert.equal(idle.active, false);
+  for (const item of inventory) item.lvl = 3;
+  assert.equal(accountGearMasterLevel(gear, inventory), 3);
+  assert.deepEqual(accountGearMasterBonus(3), { hp: 120, atk: 12, def: 9, spd: 3 });
+  const live = accountGearMasterProgress(gear, inventory);
+  assert.equal(live.ready, 0);
+  assert.equal(live.next, 4);
+  assert.equal(live.active, true);
+  inventory[0].lvl = 4;
+  inventory[1].lvl = 4;
+  assert.equal(accountGearMasterProgress(gear, inventory).ready, 2);
+  for (const item of inventory) item.lvl = 3;
+  const withMaster = accountGearBonus(gear, inventory, { statMap, itemStat });
+  const items = { hp: 0, atk: 0, def: 0, spd: 0 };
+  for (const slot of ACCOUNT_GEAR_SLOTS) {
+    const item = inventory[ACCOUNT_GEAR_SLOTS.indexOf(slot)];
+    items[statMap[item.slot]] += itemStat(item);
+  }
+  assert.equal(withMaster.hp, items.hp + 120);
+  assert.equal(withMaster.atk, items.atk + 12);
+  assert.equal(withMaster.def, items.def + 9);
+  assert.equal(withMaster.spd, items.spd + 3);
+});
+
+test('unequipping one slot drops master rank and removes the master addend', () => {
+  const inventory = ACCOUNT_GEAR_SLOTS.map((slot, index) => ({
+    uid: index + 1, slot: slot.kind, rar: 'b', lvl: 2
+  }));
+  const gear = emptyAccountGear();
+  for (const slot of ACCOUNT_GEAR_SLOTS) gear[slot.id] = ACCOUNT_GEAR_SLOTS.indexOf(slot) + 1;
+  const armed = accountGearBonus(gear, inventory, { statMap, itemStat });
+  gear.XII = null;
+  assert.equal(accountGearMasterLevel(gear, inventory), 0);
+  const dropped = accountGearBonus(gear, inventory, { statMap, itemStat });
+  assert.ok(dropped.hp < armed.hp);
+  assert.ok(dropped.atk < armed.atk);
+  assert.ok(dropped.def < armed.def);
+  assert.ok(dropped.spd < armed.spd);
+});
+
 test('ssr outranks a higher-level common piece when ranking bag items', () => {
   assert.ok(rankGearItem({ rar: 'ssr', lvl: 0 }, rarOrder) > rankGearItem({ rar: 'b', lvl: 15 }, rarOrder));
 });
@@ -165,6 +219,8 @@ test('assist wheel and 12-slot board are the Trợ trận equipment surface', ()
   assert.match(ui, /Tháo nhanh/);
   assert.match(ui, /Cường hóa nhanh/);
   assert.match(ui, /Bậc Thầy Trang Bị/);
+  assert.match(ui, /Đã kích hoạt/);
+  assert.match(ui, /data-gear-master-fill/);
   assert.match(ui, /Dung luyện x1/);
   assert.match(ui, /Hãy chọn trang bị/);
   assert.match(ui, /Cường hóa x1/);
@@ -178,5 +234,6 @@ test('assist wheel and 12-slot board are the Trợ trận equipment surface', ()
   assert.match(css, /\.hv-gear-hero/);
   assert.match(css, /object-position:\s*42% 0/);
   assert.match(css, /\.hv-smelt-bag/);
+  assert.match(css, /\.hv-gear-master-bar/);
   new Function(ui);
 });
