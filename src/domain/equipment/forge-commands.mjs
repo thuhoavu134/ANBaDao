@@ -47,6 +47,9 @@ export function previewForgeSalvage(state, uid, slots) {
   if (Object.values(state.equip || {}).some(links => Object.values(links || {}).includes(uid))) {
     return forgeFailure('EQUIPMENT_WORN', 'Tháo trang bị trước khi phân giải.');
   }
+  if (Object.values(state.gear || {}).includes(uid)) {
+    return forgeFailure('EQUIPMENT_WORN', 'Tháo trang bị trước khi phân giải.');
+  }
   const gain = FORGE_SALVAGE_BASE[item.rar] + item.lvl * 2;
   return { ok: true, item: { ...item }, quote: { uid, slot: item.slot, rar: item.rar, lvl: item.lvl, gain } };
 }

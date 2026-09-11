@@ -47,6 +47,13 @@
     forge.disabled = featLocked('forge');
     forge.addEventListener('click', () => navTo('forge'));
     panel.append(forge);
+    const board = document.createElement('button');
+    board.type = 'button'; board.className = 'btn sm'; board.textContent = 'Mở trang bị';
+    board.addEventListener('click', () => {
+      if (window.HonVietAccountGear?.openBoard) window.HonVietAccountGear.openBoard();
+      else navTo('team');
+    });
+    panel.append(board);
     if (forge.disabled) {
       const gate = document.createElement('p');
       gate.textContent = 'Rèn Mộng mở sau khi vượt ' + (JOURNEY_UNLOCK.forge?.ch || 1) + ' chương.';

@@ -2,7 +2,7 @@
 
 Đọc `docs/LUNA-HANDOFF.md` trước khi sửa game. Tài liệu có bản đồ nguồn, pipeline asset, các lỗi đã gặp, cách kiểm tra và quy trình deploy.
 
-Bàn giao mới nhất 10/09/2026: vào trận sau Bày trận (TKT-0006) trên nhánh `work/l12-battle-enter-20260910` (xem `docs/HANDOFF-2026-09-09.md` mục đầu). Lát cắt chạm tướng trên sân để gỡ ở `work/l12-field-tap-remove-20260910`. Main/production vẫn `a6b5de6` / `f8ebc1a`; visual pass Bày trận đã bị từ chối. Lịch sử: `docs/L11-CONTINUATION-2026-09-08.md`. Chủ dự án đã duyệt candidate `2f8049c` và yêu cầu đưa lên main qua PR #17; quyền này thay chỉ dẫn chưa production trước đây. Build PASS, latest local suite 407 PASS / 2 thiếu sharp; timing phân số và mobile/Safari vẫn REVIEW. Các mốc 6 fail và 411/414 bên dưới là lịch sử.
+Bàn giao mới nhất 11/09/2026: Dung luyện (TKT-0008) trên cùng nhánh `work/l13-account-gear-20260910` với bảng 12 ô (TKT-0007). Chủ dự án yêu cầu đưa lên live (`luc-than.vercel.app`) sau khi Dung luyện vào nhánh. Trước đó: vào trận sau Bày trận (TKT-0006). Visual pass Bày trận đã bị từ chối. Lịch sử: `docs/L11-CONTINUATION-2026-09-08.md`. Build PASS; Safari/device vẫn NOT_RUN.
 
 - **Được tái sử dụng code mẫu theo yêu cầu của anh.** Đọc `docs/HERMES-CODE-REUSE-GUIDE.md`: bản đồ 27 phương thức, dependency, lỗi cần sửa và quy trình port từ archive người dùng đã gửi. Quy tắc này thay chỉ dẫn cũ cấm toàn bộ source mẫu. Nối vào owner Lục Thần, ghi khác biệt và test; giữ identity/save/art/luật đã chốt. Repo chứa hướng dẫn; mã gốc chưa được đưa lên GitHub và chưa tích hợp runtime.
 - Runtime production được tạo bởi `scripts/build-static.mjs`. Sửa nguồn hoặc patch sinh ra runtime; không dùng chỉnh sửa riêng trong `dist/` làm kết quả bàn giao.

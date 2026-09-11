@@ -1,0 +1,38 @@
+{
+  "ticket": "TKT-0008",
+  "viewport": "390x844",
+  "slotCount": 12,
+  "filled": 12,
+  "master": "0",
+  "titleVisible": true,
+  "titleBox": {
+    "x": 12,
+    "y": 511.265625,
+    "width": 366,
+    "height": 23
+  },
+  "heroBox": {
+    "x": -142.59375,
+    "y": -50.625,
+    "width": 675.1875,
+    "height": 675.1875
+  },
+  "heroFillsPortrait": true,
+  "emptyToast": "Hãy chọn trang bị!",
+  "emptyToastOk": true,
+  "bagCount": 20,
+  "tinhBefore": "60",
+  "tinhAfter": "65",
+  "smelted": true,
+  "smeltToast": "Dung luyện → +5 Tinh Lực",
+  "enhanceOnce": 1,
+  "appErrors": [],
+  "screenshots": [
+    "wheel-390x844.png",
+    "board-390x844.png",
+    "board-wear-390x844.png",
+    "smelt-empty-390x844.png",
+    "smelt-390x844.png",
+    "smelt-enhance-390x844.png"
+  ]
+}

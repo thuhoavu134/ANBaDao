@@ -1,0 +1,14 @@
+{
+  "created": "2026-09-10",
+  "purpose": "Account-gear board and assist wheel backgrounds. No baked text.",
+  "files": {
+    "assist-hall.webp": "Wheel palace interior, generated, 9:16, no people/UI.",
+    "assist-core.webp": "Wheel center medallion, generated, circular crop in CSS.",
+    "slot-frame.webp": "Optional empty slot frame; CSS still draws plus/level."
+  },
+  "reused": {
+    "vietnamese-gateway-frame.png": "Board stage background from hub architecture-v3238.",
+    "gold.png": "Resource chip from items/materials.",
+    "hoat-luc.png": "Resource chip from items/materials."
+  }
+}

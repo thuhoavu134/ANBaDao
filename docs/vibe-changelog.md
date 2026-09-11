@@ -1,3 +1,11 @@
+## 11/09/2026 — Dung luyện trên bảng trang bị (TKT-0008)
+
+Nhánh `work/l13-account-gear-20260910`. Nút Dung luyện mở màn riêng: tab Dung luyện nấu đồ thừa lấy Tinh Lực (b5/a8/s12/ss18/ssr28 + lvl×2), tab Cường hóa cường hóa từ túi. Không nấu món đang mặc (P.gear / P.equip) hay khóa. 12/12 tests; Chrome 390×844 toast rỗng + nấu +5 Tinh Lực; Safari NOT_RUN.
+
+## 10/09/2026 — Trợ trận → Trang bị 12 ô (TKT-0007)
+
+Nhánh `work/l13-account-gear-20260910`. Dock Trợ trận mở vòng trợ trận; Trang bị là bảng 12 ô account-wide (I–XII), cường hóa / mặc nhanh / tháo nhanh. Bonus cộng vào toàn roster qua `heroStats`. Dung luyện và các nan khác vẫn khóa. 10/10 tests; Chrome 390×844 title visible, 12/12 filled; Safari NOT_RUN.
+
 ## 10/09/2026 — màn tối preview iPhone (TKT-0006b)
 
 Xuất chiến trong preview iframe đi thẳng vào battle.html. 6/6 tests; nested canvas PASS; Safari NOT_RUN.
