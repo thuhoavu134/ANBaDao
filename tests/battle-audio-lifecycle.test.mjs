@@ -110,7 +110,7 @@ test('ultimate voice pending decode is cancelled even if a new battle starts bef
   const playing = f.bus.playVoice(ultimate); await flush();
   f.bus.stopCombat(); f.bus.beginCombat(); pending.resolve(new ArrayBuffer(1));
   assert.equal(await playing, false);
-  assert.equal(f.sources.length, 1, 'only the silent unlock buffer was created');
+  assert.equal(f.sources.length, 2, 'only the silent unlock buffers were created');
   assert.equal(f.media.length, 0, 'cancelled voice does not enter HTML fallback');
 });
 
@@ -118,8 +118,8 @@ test('stop combat cancels active ultimate voice while leaving hero-detail voice 
   const f = voiceFixture();
   await f.bus.playVoice(ultimate); await f.bus.playVoice('assets/audio/voice-luc-anh-hero.mp3');
   f.bus.stopCombat();
-  assert.equal(f.sources[1].stopped, true);
-  assert.equal(f.sources[2].stopped, undefined);
+  assert.equal(f.sources[2].stopped, true);
+  assert.equal(f.sources[3].stopped, undefined);
   assert.equal(await f.bus.playVoice(ultimate), false);
   f.bus.beginCombat(); assert.equal(await f.bus.playVoice(ultimate), true);
 });

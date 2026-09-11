@@ -1,3 +1,7 @@
+## 11/09/2026 — CI/CD tự động (TKT-0025)
+
+`.github/workflows/ci.yml`: job `ci` (build+test) trên PR/main; job `production` chỉ trên main, curl live 200. Vercel Git vẫn là CD. First Actions run failed 6 stale tests; suite realigned to 537/537.
+
 ## 11/09/2026 — Tối ưu deploy (TKT-0024)
 
 `build-static` chỉ copy game (index/battle/qa/splus/assets). `sharp` là devDependency. Vercel install `--omit=dev`.
@@ -14,4 +18,3 @@ Domain `tower-progress` + màn leo tầng sơn mài. Hub landmark Tháp. Giữ c
 
 
 Trận nhúng ẩn topbar; ribbon 48px đêm/đồng; tốc độ và tua chip tròn 44px trên dock.
-

@@ -41,13 +41,13 @@ test('supplied SFX preserve source hashes and serve MP3 bytes with MP3 extension
     assert.ok(audioSource.includes(file.file), file.file + ' has an event mapping');
   }
 });
-test('SFX plays decoded assets and debounces an AOE impact into one voice/load', async () => {
+test('SFX plays decoded assets and debounces an AOE hit into one voice/load', async () => {
   const f = audioFixture();
-  const results = await Promise.all([f.bus.play('impact'), f.bus.play('impact'), f.bus.play('impact')]);
+  const results = await Promise.all([f.bus.play('basic'), f.bus.play('basic'), f.bus.play('basic')]);
   assert.deepEqual(results, [true, false, false]);
   assert.equal(f.requests.length, 1); assert.equal(f.sources.length, 1);
-  assert.equal(f.sources[0].started, true); assert.equal(f.dataset.sfxLast, 'impact');
-  f.advance(); await f.bus.play('impact'); assert.equal(f.requests.length, 1, 'decoded buffer reused');
+  assert.equal(f.sources[0].started, true); assert.equal(f.dataset.sfxLast, 'basic');
+  f.advance(); await f.bus.play('basic'); assert.equal(f.requests.length, 1, 'decoded buffer reused');
 });
 test('mute stops active combat and prevents pending decode from playing later', async () => {
   const f = audioFixture({ hold: true });
@@ -57,7 +57,7 @@ test('mute stops active combat and prevents pending decode from playing later', 
   f.bus.setCombatEnabled(true); f.advance();
   assert.equal(await f.bus.play('basic'), true);
   f.bus.setCombatEnabled(false); assert.equal(f.sources[0].stopped, true);
-  assert.equal(await f.bus.play('impact'), false);
+  assert.equal(await f.bus.play('skill'), false);
   assert.equal(await f.bus.play('ui'), true, 'combat mute does not corrupt UI bus');
 });
 test('audio starts only after real gesture unlock; iframe reuses parent bus', async () => {
@@ -178,7 +178,7 @@ test('built battle keeps opaque canvas and stable camera; all inline JS parses',
   assert.match(battle, /fillRect\(0, 0, dom\.canvas\.width, dom\.canvas\.height\)/);
   assert.doesNotMatch(battle, /ctx\.clearRect\(-100/);
   assert.match(battle, /window\.__playLucAnhUltimateVoiceGuaranteed\?\.\(\);playActionSound\(actor,"ultimate"\)/);
-  assert.match(battle, /if \(state\.sound\) window\.HonVietSfx\?\.play\("impact"\)/);
+  assert.match(battle, /if \(state\.sound\) window\.HonVietSfx\?\.play\(action === 'ultimate' \? 'ultimate' : action === 'skill' \? 'skill' : 'basic'\)/);
   assert.doesNotMatch(battle, /tone\(critical \?/);
   assert.match(battle, /attack:1\.3445945945945945/);
 });

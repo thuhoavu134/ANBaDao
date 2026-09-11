@@ -22,21 +22,18 @@ test('R08 build installs the battle protocol after the transaction contract', ()
 });
 
 test('battle bridge protocol annotates every parent message and remains syntactically valid', () => {
-  const battle = read('../battle.html');
+  const battle = read('../dist/battle.html');
   const messageCount = (battle.match(/parent\.postMessage\(\{/g) || []).length;
   assert.ok(messageCount >= 8);
-
-  const protocolPrefix = 'parent.postMessage({schema:"hon-viet-battle/v1",schemaVersion:1,sequence:(window.__HV_MESSAGE_SEQUENCE=(window.__HV_MESSAGE_SEQUENCE||0)+1),origin:location.origin,';
-  const patched = battle.split('parent.postMessage({').join(protocolPrefix);
   assert.equal(
-    (patched.match(/schema:"hon-viet-battle\/v1"/g) || []).length,
+    (battle.match(/schema:"hon-viet-battle\/v1"/g) || []).length,
     messageCount
   );
 
   const scriptBodies = [];
   const scriptPattern = /<script[^>]*>([\s\S]*?)<\/script>/g;
   let scriptMatch;
-  while ((scriptMatch = scriptPattern.exec(patched))) scriptBodies.push(scriptMatch[1]);
+  while ((scriptMatch = scriptPattern.exec(battle))) scriptBodies.push(scriptMatch[1]);
   for (const body of scriptBodies) new Function(body);
 });
 

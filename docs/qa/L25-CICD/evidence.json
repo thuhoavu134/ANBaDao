@@ -1,0 +1,34 @@
+{
+  "ticket": "TKT-0025",
+  "revision": "work/l14-cicd-20260911",
+  "when": "2026-09-11T11:25:00.000Z",
+  "acceptance": {
+    "L25-C1": "PASS",
+    "L25-C2": "PASS",
+    "L25-C3": "PASS workflow present; live 200 checked after merge to main"
+  },
+  "red": {
+    "pr": 25,
+    "run": "https://github.com/bktimmy247/luc-than/actions/runs/34593162585",
+    "tests": 537,
+    "pass": 531,
+    "fail": 6,
+    "failures": [
+      "ultimate voice pending decode is cancelled even if a new battle starts before it resolves",
+      "stop combat cancels active ultimate voice while leaving hero-detail voice alone",
+      "SFX plays decoded assets and debounces an AOE impact into one voice/load",
+      "built battle keeps opaque canvas and stable camera; all inline JS parses",
+      "battle bridge protocol annotates every parent message and remains syntactically valid",
+      "L03a audit source hash is stable for the captured active runtime"
+    ]
+  },
+  "green": {
+    "tests": 537,
+    "pass": 537,
+    "fail": 0,
+    "command": "npm run build && node --test --test-concurrency=1 tests/*.test.mjs"
+  },
+  "browser": "NOT_RUN",
+  "safari": "NOT_RUN",
+  "gameplay": "unchanged"
+}
