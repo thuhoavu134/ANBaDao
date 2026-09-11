@@ -1,3 +1,7 @@
+## 12/09/2026 — TKT-0035 LIVE
+
+PR [#36](https://github.com/bktimmy247/luc-than/pull/36) squash `f52e5fc`. Vercel `dpl_7N9JqoJDRJQGEX4XNKc1NYqzyAeP`. Roster overlay body. Việc kế: Rèn hall giả 3D, giữ `forgeCommand`.
+
 ## 12/09/2026 — TKT-0035 Màn Tướng hiện lại REVIEW
 
 Roster `#hvHeroRosterV4` gắn `document.body` như `#hvGearRoot`. overflow auto + min-height thẻ/lưới — không mount trong `.wrap > #heroesScreen` (iOS/Grok clip lưới về 0). 12 ID / `heroStats` / nan không đổi. Không merge tới khi owner nói `live`.

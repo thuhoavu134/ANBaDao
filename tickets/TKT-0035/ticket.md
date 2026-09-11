@@ -34,3 +34,10 @@ Branch: `work/l24-hero-roster-visible-20260912` from main `8282bc1`.
 - L24-P1: Chrome 390 + 768 + iframe 768 — 12 thẻ, thẻ > 80px, filter + dock
 
 Builder moves this ticket to REVIEW. Do not mark MERGED/DONE.
+
+## Result
+
+- Owner gõ `live` 12/09. Squash-merge PR [#36](https://github.com/bktimmy247/luc-than/pull/36) → main `f52e5fc329d19e4a832c101cdc1ec6579be51239`.
+- Vercel production `dpl_7N9JqoJDRJQGEX4XNKc1NYqzyAeP` READY. Live HTML có overlay body.
+- Ticket Board: TICKET_BOARD_NOT_AVAILABLE — không giả claim / MERGED / DONE.
+

@@ -2,7 +2,7 @@
 
 Đọc `docs/HANDOFF-2026-09-12.md` rồi `docs/LUNA-HANDOFF.md` trước khi sửa game.
 
-Bàn giao mới nhất **12/09/2026**: TKT-0035 màn Tướng hiện lại **REVIEW** trên nhánh `work/l24-hero-roster-visible-20260912` (chưa merge). Overlay body như Trợ trận; Chrome 390+768+iframe PASS. TKT-0033+0034 LIVE `b5a91f6` (PR #35). Không merge TKT-0035 tới khi owner gõ `live`.
+Bàn giao mới nhất **12/09/2026**: TKT-0035 LIVE `f52e5fc` (PR #36). Vercel `dpl_7N9JqoJDRJQGEX4XNKc1NYqzyAeP`. Việc kế **TKT-0036 Rèn hall**. TKT-0033+0034 LIVE `b5a91f6` (PR #35).
 
 
 - **Được tái sử dụng code mẫu theo yêu cầu của anh.** Đọc `docs/HERMES-CODE-REUSE-GUIDE.md`: bản đồ 27 phương thức, dependency, lỗi cần sửa và quy trình port từ archive người dùng đã gửi. Quy tắc này thay chỉ dẫn cũ cấm toàn bộ source mẫu. Nối vào owner Lục Thần, ghi khác biệt và test; giữ identity/save/art/luật đã chốt. Repo chứa hướng dẫn; mã gốc chưa được đưa lên GitHub và chưa tích hợp runtime.

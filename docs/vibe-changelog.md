@@ -1,3 +1,7 @@
+## 12/09/2026 — TKT-0035 LIVE
+
+Owner gõ `live`. Squash-merge PR [#36](https://github.com/bktimmy247/luc-than/pull/36) → main `f52e5fc`. Vercel production `dpl_7N9JqoJDRJQGEX4XNKc1NYqzyAeP` READY. Overlay Tướng gắn body trên luc-than.vercel.app. Ticket kế: Rèn hall (TKT-0036).
+
 ## 12/09/2026 — Màn Tướng hiện lại (TKT-0035)
 
 Nhánh `work/l24-hero-roster-visible-20260912`. Owner «vẫn thế» / «vẫn ko hiện»: header còn, 12 thẻ trắng trên iOS/Grok. Overlay gắn `document.body` như Trợ trận (`position:fixed;inset:0;overflow:auto`), thẻ `min-height:150`, lưới `min-height:420`. Không flex-1fr, không `height:auto`, không visualViewport. Chrome 390 + 768 + iframe 768 PASS; Safari NOT_RUN. Builder dừng REVIEW.

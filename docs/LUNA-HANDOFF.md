@@ -1,3 +1,9 @@
+## 2026-09-12 — TKT-0035 LIVE
+
+Owner gõ `live`. Squash-merge PR [#36](https://github.com/bktimmy247/luc-than/pull/36) → main `f52e5fc329d19e4a832c101cdc1ec6579be51239`. Vercel production `dpl_7N9JqoJDRJQGEX4XNKc1NYqzyAeP` READY. HTTP 200, HTML có overlay body. Safari/device NOT_RUN trên production.
+
+Việc kế: **TKT-0036 Rèn hall** — overlay `#hvForgeRoot` giả 3D tươi (không sơn mài), `forgeCommand` giữ nguyên CRAFT/DUAL/pity/+15.
+
 ## 2026-09-12 — TKT-0035 Màn Tướng hiện lại · REVIEW
 
 Nhánh `work/l24-hero-roster-visible-20260912` từ main `8282bc1`. Owner «vẫn ko hiện». Overlay `#hvHeroRosterV4` gắn `document.body` như `#hvGearRoot` (`position:fixed;inset:0;overflow:auto;is-open`), thẻ min-height 150, lưới min-height 420. Không mount trong `#heroesScreen`. Chrome 390×844 + 768×1024 + iframe 768 PASS; Safari/device NOT_RUN.
