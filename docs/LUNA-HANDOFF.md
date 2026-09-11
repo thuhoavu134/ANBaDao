@@ -1,5 +1,13 @@
 # Bàn giao Lục Thần / Hồn Việt cho Luna và các model tiếp theo
 
+## 2026-09-12 — TKT-0031 Lễ Hội · LIVE
+
+Main `3baffa84b9a0d690dd4cc6dbfee4461dfd56d618`, PR [#32](https://github.com/bktimmy247/luc-than/pull/32) squash-merge. Vercel production `dpl_CQjwBHTMpwKjPW7zu83pMeRovupz` READY trên [luc-than.vercel.app](https://luc-than.vercel.app/). Sơn mài + domain hoa đăng / Tam Nguyện / Lễ Ấn / Bách Bảo Luân / rương. Inject sau hunt. Công thức live giữ nguyên (5 đèn, đèn đầu miễn phí, 🪙100, 3 hướng, mốc 3/7/12, 20 ô 1🐚, bảng rương). Mở từ đêm đầu như Chợ. Chrome 390×844 PASS (save mới vào được); Safari/device NOT_RUN.
+
+Rollback: Vercel previous production (`f96e53d`) hoặc `git revert` `3baffa8`. Không merge S+ V2, không làm lại Bày trận visual 09/09, không đổi seed/banner/roster/audio cũ.
+
+Contract: [tickets/TKT-0031](../tickets/TKT-0031/ticket.md). Evidence: [qa/L08-FESTIVAL](qa/L08-FESTIVAL/).
+
 ## 2026-09-12 — TKT-0031 Lễ Hội · REVIEW
 
 Nhánh `work/l20-festival-onto-main` từ main `d62dea1`. Sơn mài + domain hoa đăng / Tam Nguyện / Lễ Ấn / Bách Bảo Luân / rương. Inject sau hunt. Công thức live giữ nguyên (5 đèn, đèn đầu miễn phí, 🪙100, 3 hướng, mốc 3/7/12, 20 ô 1🐚, bảng rương). Builder dừng REVIEW; không merge cho tới khi owner gõ `live`.

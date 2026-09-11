@@ -2,7 +2,7 @@
 
 Đọc `docs/HANDOFF-2026-09-11.md` rồi `docs/LUNA-HANDOFF.md` trước khi sửa game.
 
-Bàn giao mới nhất **12/09/2026**: TKT-0031 Lễ Hội REVIEW trên `work/l20-festival-onto-main`. TKT-0030 Săn Boss live `f96e53d` (PR #31). TKT-0028 Gọi Mộng live `4deed0e` (PR #29). TKT-0029 Đấu Trường live `9bd266a` (PR #30). Live `https://luc-than.vercel.app/` đã có Trợ trận 11 nan, Tháp, Mộng Lộ, Chợ Mộng, Gọi Mộng, Đấu Trường, Săn Boss. Lễ Hội chờ owner `live`. Safari/device vẫn NOT_RUN. Combat V2 42 tướng không phải việc hiện tại.
+Bàn giao mới nhất **12/09/2026**: TKT-0031 Lễ Hội live `3baffa8` (PR #32). TKT-0030 Săn Boss live `f96e53d` (PR #31). TKT-0028 Gọi Mộng live `4deed0e` (PR #29). TKT-0029 Đấu Trường live `9bd266a` (PR #30). Live `https://luc-than.vercel.app/` đã có Trợ trận 11 nan, Tháp, Mộng Lộ, Chợ Mộng, Gọi Mộng, Đấu Trường, Săn Boss, Lễ Hội. Safari/device vẫn NOT_RUN. Combat V2 42 tướng không phải việc hiện tại.
 
 - **Được tái sử dụng code mẫu theo yêu cầu của anh.** Đọc `docs/HERMES-CODE-REUSE-GUIDE.md`: bản đồ 27 phương thức, dependency, lỗi cần sửa và quy trình port từ archive người dùng đã gửi. Quy tắc này thay chỉ dẫn cũ cấm toàn bộ source mẫu. Nối vào owner Lục Thần, ghi khác biệt và test; giữ identity/save/art/luật đã chốt. Repo chứa hướng dẫn; mã gốc chưa được đưa lên GitHub và chưa tích hợp runtime.
 - Runtime production được tạo bởi `scripts/build-static.mjs`. Sửa nguồn hoặc patch sinh ra runtime; không dùng chỉnh sửa riêng trong `dist/` làm kết quả bàn giao.
