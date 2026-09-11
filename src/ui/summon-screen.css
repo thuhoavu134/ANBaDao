@@ -1,0 +1,97 @@
+#summonScreen.hv-summon-live{
+  background:#100c08;
+  padding:0;
+  display:flex;
+  flex-direction:column;
+  min-height:100%;
+}
+#summonScreen.hv-summon-live .pagehdr,
+#summonScreen.hv-summon-live .mode-intro{display:none!important}
+#summonScreen.hv-summon-live #summonBody{
+  flex:1;min-height:0;padding:0!important;max-width:none!important;margin:0!important
+}
+#hvSummonRoot{
+  --sum-ink:#f6e6c0;
+  --sum-muted:#cbb48a;
+  --sum-gold:#e2b45a;
+  --sum-mist:#9bcfd6;
+  position:relative;min-height:100%;height:100%;display:flex;flex-direction:column;
+  color:var(--sum-ink);font-family:inherit;
+  background:#100c08 url('https://luc-than.vercel.app/assets/hub/daylight-v3233/hub-daylight.png') center top/cover no-repeat;
+  overflow-x:hidden;overflow-y:auto;touch-action:manipulation;
+}
+#hvSummonRoot:before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(12,8,6,.55) 0%,rgba(12,8,6,.22) 28%,rgba(10,7,5,.6) 58%,rgba(8,6,4,.94) 100%);
+}
+#hvSummonRoot > *{position:relative;z-index:1}
+#hvSummonRoot button{font:inherit;color:inherit;cursor:pointer}
+#hvSummonRoot button:disabled{opacity:.45;cursor:default}
+#hvSummonRoot button:not(:disabled):active{transform:scale(.98)}
+.hv-sum-top{
+  display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:8px;
+  padding:calc(6px + env(safe-area-inset-top)) 12px 4px;
+}
+.hv-sum-back{
+  width:44px;height:44px;border:0;border-radius:50%;
+  background:rgba(24,16,10,.72);box-shadow:0 0 0 1px rgba(215,179,106,.45);
+  font-size:22px;line-height:1;
+}
+.hv-sum-top b{justify-self:center;font-size:16px;letter-spacing:.04em}
+.hv-sum-chips{display:flex;gap:6px}
+.hv-sum-chip{
+  min-height:28px;padding:4px 8px;border-radius:999px;
+  background:rgba(20,12,8,.72);box-shadow:0 0 0 1px rgba(215,179,106,.35);
+  font-size:11px;font-weight:800;
+}
+.hv-sum-hero{
+  min-height:52px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
+  padding:0 16px 6px;text-align:center;
+}
+.hv-sum-kicker{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--sum-mist);font-weight:800}
+.hv-sum-title{font-size:22px;line-height:1.1;font-weight:900;color:#fff4d4;text-shadow:0 8px 24px rgba(0,0,0,.55)}
+.hv-sum-best{margin-top:2px;font-size:11px;color:var(--sum-muted)}
+.hv-sum-panel{
+  display:flex;flex-direction:column;gap:8px;flex:1;
+  padding:8px 12px calc(72px + env(safe-area-inset-bottom));
+  background:linear-gradient(180deg,rgba(28,18,12,.82),rgba(16,10,8,.94));
+  box-shadow:0 -12px 28px rgba(0,0,0,.35);
+  border-top:1px solid rgba(215,179,106,.35);
+}
+.hv-sum-copy,.hv-sum-lock{margin:0;font-size:11px;line-height:1.35;color:var(--sum-muted)}
+.hv-sum-lock{color:#f2c14e;font-weight:700}
+.hv-sum-meter{display:flex;flex-direction:column;gap:4px;font-size:12px}
+.hv-sum-meter i{display:block;height:8px;border-radius:99px;background:rgba(42,28,18,.9);overflow:hidden}
+.hv-sum-meter u{display:block;height:100%;background:linear-gradient(90deg,#e2b45a,#f2c14e)}
+.hv-sum-meter small{color:var(--sum-muted)}
+.hv-sum-free{font-size:11px;color:var(--sum-muted)}
+.hv-sum-actions{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.hv-sum-actions [data-summon-pull="free"]{grid-column:1/-1}
+.hv-sum-btn{
+  min-height:40px;border:0;border-radius:12px;font-weight:800;
+  background:rgba(42,28,18,.9);color:var(--sum-ink);box-shadow:0 0 0 1px rgba(167,126,68,.4);
+}
+.hv-sum-btn.is-gold{background:linear-gradient(180deg,#e2b45a,#a06a22);color:#2a1608}
+.hv-sum-spark{display:flex;flex-direction:column;gap:4px}
+.hv-sum-spark-h{font-size:13px;font-weight:800}
+.hv-sum-spark small{color:var(--sum-muted);font-size:10px;line-height:1.3}
+.hv-sum-picks{display:flex;flex-wrap:wrap;gap:6px}
+.hv-sum-pick{
+  min-height:32px;padding:4px 8px;border:0;border-radius:999px;font-size:11px;font-weight:700;
+  background:rgba(42,28,18,.88);box-shadow:0 0 0 1px rgba(167,126,68,.4);
+}
+.hv-sum-grid{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;
+}
+.hv-sum-card{
+  min-height:72px;padding:8px;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-align:center;
+  background:rgba(42,28,18,.88);box-shadow:0 0 0 1px rgba(167,126,68,.4);
+  animation:hvSumIn .35s ease both;
+}
+.hv-sum-tier{font-size:11px;letter-spacing:.12em;color:var(--sum-gold)}
+.hv-sum-card.t-ssr .hv-sum-tier{color:#f3d48a}
+.hv-sum-card small{font-size:10px;color:var(--sum-muted)}
+@keyframes hvSumIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media(max-width:360px){
+  .hv-sum-title{font-size:20px}
+}

@@ -1,3 +1,12 @@
+## 11/09/2026 — TKT-0028 Gọi Mộng REVIEW
+
+
+Domain `src/domain/summon/summon-pull.mjs` owns pull/pity/spark. Runtime wraps `doSummon` / `renderSummon` / `sparkSelectHero`, không thêm `data-art-go="summon"`. Pull qua `hvRunCommittedTransaction`. Build: `scripts/summon-runtime-v1.mjs` sau shop. Không đổi tỉ lệ/pity. Không merge cho tới khi owner nói `live`.
+
+## 11/09/2026 — TKT-0027 Chợ Mộng LIVE
+
+Main `febfd5ec`, PR #28 squash-merge. Domain shop + lacquer đã trên production.
+
 ## 11/09/2026 — TKT-0027 Chợ Mộng REVIEW
 
 Domain `src/domain/shop/shop-day.mjs` owns open/buy/day. Runtime wraps `ensureShop` / `buyShop` / `renderShop`, không thêm `data-art-go="shop"`. Mua qua `hvRunCommittedTransaction`. Build: `scripts/shop-runtime-v1.mjs` sau expedition. Không merge cho tới khi owner nói `live`.

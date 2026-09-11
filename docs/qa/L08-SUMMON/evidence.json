@@ -1,0 +1,19 @@
+{
+  "hubMarks": 1,
+  "title": "Vòng Gọi Mộng",
+  "pity": "60",
+  "lockCount": 1,
+  "pickCount": 12,
+  "gemsBefore": 800,
+  "gemsAfterClick": 800,
+  "pityBefore": 0,
+  "pityAfterClick": 0,
+  "cardCount": 0,
+  "pickEnabled": 12,
+  "sparkAfter": 0,
+  "chapters": [],
+  "chaptersUntouched": true,
+  "hubAfter": 1,
+  "appErrors": [],
+  "pass": true
+}

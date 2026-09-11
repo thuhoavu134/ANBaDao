@@ -1,3 +1,12 @@
+## 11/09/2026 — Gọi Mộng sơn mài + domain triệu hồi (TKT-0028)
+
+
+Nhánh `work/l17-summon-20260911`. Giữ cost 80/720, pity 60, tỉ lệ 3/9/18/30/40, Hồi Ức 120. Domain thuần bất biến, màn sơn mài như Tháp / Mộng Lộ / Chợ. Pull + spark qua transaction. Không thêm nút hub thứ hai, không đổi seed/banner D01/D02. Pool 12 SSR-only vẫn khóa gacha như live. Chrome 390 PASS; Safari NOT_RUN. Builder dừng REVIEW.
+
+## 11/09/2026 — Chợ Mộng lên main (TKT-0027)
+
+Squash-merge PR #28 → main `febfd5ec`. Vercel CD.
+
 ## 11/09/2026 — Chợ Mộng sơn mài + quầy ngày (TKT-0027)
 
 Nhánh `work/l16-shop-20260911`. Giữ 5 quầy live, 1 lần/ngày, giá 320g / 60💎 / 160g / 40💎 / 220g. Domain thuần bất biến, màn sơn mài như Tháp / Mộng Lộ. Mua qua transaction. Không thêm nút hub thứ hai, không bán lực chiến. Chrome 390 PASS; Safari NOT_RUN. Builder dừng REVIEW.
