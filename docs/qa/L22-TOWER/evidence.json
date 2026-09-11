@@ -1,0 +1,28 @@
+{
+  "hubTower": 1,
+  "trialCount": 3,
+  "floorText": "Tầng 1",
+  "powerCopy": "\n            \n              Lực chiến\n              6.063\n              /\n              3.800\n            \n            \n            Đủ lực chiến. Leo là qua tầng này.\n          ",
+  "trialOn": 1,
+  "stamBefore": 120,
+  "powerBefore": 6063,
+  "climbLabel": "Leo tầng 1 · 5⚡",
+  "stamAfter": 115,
+  "spentStamina": true,
+  "battles": 0,
+  "floorAfter": "Tầng 2",
+  "goldSpentOrGained": 680,
+  "towerRootAfterClimb": 1,
+  "wallFloor": "Tầng 12",
+  "wallHint": "Thiếu 7.220. Bù tối đa 5 ngày (+60%) vẫn chưa đủ — phải tăng lực chiến.",
+  "wallAfter": "Tầng 12",
+  "stuck": {
+    "floor": 12,
+    "stuckFloor": 12,
+    "stuckSince": 1789124197764,
+    "stamina": 110
+  },
+  "backOnHub": 1,
+  "appErrors": [],
+  "pass": true
+}

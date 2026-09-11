@@ -1,6 +1,13 @@
 # Bàn giao Lục Thần / Hồn Việt cho Luna và các model tiếp theo
 
+## 2026-09-11 — TKT-0023 Tháp khóa lực chiến · REVIEW
+
+Nhánh `work/l14-tower-20260911`. Mỗi tầng Tháp có mốc lực chiến; đủ thì auto-qua, thiếu thì kẹt và bù +12%/ngày (trần 5). Thua không tụt tầng, không đụng campaign. Chrome 390×844 PASS; Safari/device NOT_RUN. Không đẩy production trừ khi chủ dự án nói đưa lên live.
+
+Contract: [tickets/TKT-0023](../tickets/TKT-0023/ticket.md). Evidence: [qa/L22-TOWER](qa/L22-TOWER/).
+
 ## 2026-09-08 — Bàn giao L11 cho Luna: REVIEW / IN_PROGRESS
+
 
 Chủ dự án yêu cầu chốt tiến độ trong lúc triển khai hồ sơ V2 và 126 nút chiêu. Source đang làm được lưu ở [handoff/l11-splus-profiles-v2-20260908](https://github.com/bktimmy247/luc-than/tree/handoff/l11-splus-profiles-v2-20260908), commit [`b6a2ae2`](https://github.com/bktimmy247/luc-than/commit/b6a2ae20a9b1b3071a8f5263740312e9d1465b04). Main nhận tài liệu/evidence; combat V2 chưa phát hành production.
 

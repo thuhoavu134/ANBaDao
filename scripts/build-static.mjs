@@ -79,6 +79,7 @@ buildSplusRuntime(root);
 await import('./campaign-reference-flow-v1.mjs');
 await import('./campaign-fixed-slots-v1.mjs');
 await import('./account-gear-v1.mjs');
+await import('./tower-runtime-v1.mjs');
 // The integrated battle is loaded from this embedded payload in production.
 // Keep it byte-identical to the patched battle.html; otherwise the visible
 // preview and the iframe can silently run different engines.

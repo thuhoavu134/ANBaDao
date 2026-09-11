@@ -2,7 +2,7 @@
 
 Đọc `docs/LUNA-HANDOFF.md` trước khi sửa game. Tài liệu có bản đồ nguồn, pipeline asset, các lỗi đã gặp, cách kiểm tra và quy trình deploy.
 
-Bàn giao mới nhất 11/09/2026: bánh xe Trợ trận đủ 11 nan trên `work/l13-relics-20260911` (Cẩu Cá TKT-0021 → Ảo Hình TKT-0020 → Tuệ Vận TKT-0019 → Cổ Vật TKT-0018 → Tướng Tinh TKT-0017 → Thần Binh TKT-0016 → Chiến Linh TKT-0015 → Linh Thú TKT-0014 → bánh xe TKT-0013 → Bảo Vật TKT-0012). HUD sơn mài / Bậc Thầy / Dung luyện / bảng 12 ô đã lên live `luc-than.vercel.app`. Safari/device vẫn NOT_RUN.
+Bàn giao mới nhất 11/09/2026: Tháp khóa lực chiến (TKT-0023) trên `work/l14-tower-20260911`. TKT-0022 sơn mài Tháp. Bánh xe Trợ trận 11 nan đã squash-merge lên live `luc-than.vercel.app`. Safari/device vẫn NOT_RUN.
 
 - **Được tái sử dụng code mẫu theo yêu cầu của anh.** Đọc `docs/HERMES-CODE-REUSE-GUIDE.md`: bản đồ 27 phương thức, dependency, lỗi cần sửa và quy trình port từ archive người dùng đã gửi. Quy tắc này thay chỉ dẫn cũ cấm toàn bộ source mẫu. Nối vào owner Lục Thần, ghi khác biệt và test; giữ identity/save/art/luật đã chốt. Repo chứa hướng dẫn; mã gốc chưa được đưa lên GitHub và chưa tích hợp runtime.
 - Runtime production được tạo bởi `scripts/build-static.mjs`. Sửa nguồn hoặc patch sinh ra runtime; không dùng chỉnh sửa riêng trong `dist/` làm kết quả bàn giao.

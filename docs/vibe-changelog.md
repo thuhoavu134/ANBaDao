@@ -1,3 +1,11 @@
+## 11/09/2026 — Tháp khóa lực chiến + bù ngày (TKT-0023)
+
+Mỗi tầng có mốc lực chiến (3800 + (tầng−1)×420). Đủ thì Leo tầng auto-qua. Thiếu thì Thử leo tốn 5⚡, không tụt tầng, bắt đầu đếm ngày bù +12%/ngày (trần 5 ngày = +60%). Hố lớn vẫn phải tăng lực ở Trợ trận / Rèn / sao.
+
+## 11/09/2026 — Tháp Trắng Đêm sơn mài (TKT-0022)
+
+Thành Chính có địa danh Tháp. Leo tầng bất biến: 5⚡, vàng 120+tầng×30, ấn thử, Tháp Ấn. Thua không tụt tầng, không tăng chiến dịch.
+
 ## 11/09/2026 — Trợ trận bánh xe đủ 11 nan (TKT-0021)
 
 Mở **Đồ Giám Cẩu Cá**: 8 loài, Câu vàng + Hoạt Lực, ngẫu nhiên +1. Cả đàn cộng chỉ số. Bậc Thầy khi cả 8 cùng cấp. Không còn nan khóa.
