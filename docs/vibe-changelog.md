@@ -1,3 +1,7 @@
+## 11/09/2026 — CI/CD tự động (TKT-0025)
+
+GitHub Actions: mỗi PR và mỗi lần đẩy `main` chạy cài đặt → build → test. Vercel vẫn tự deploy live. Job production xác nhận luc-than.vercel.app trả 200.
+
 ## 11/09/2026 — Tối ưu deploy (TKT-0024)
 
 Bản live không còn đóng gói 23MB ảnh QA. Vercel bỏ cài `sharp`. HTML không cache cứng để nhận bản mới ngay.

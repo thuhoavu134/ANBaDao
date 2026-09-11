@@ -1,3 +1,7 @@
+## 11/09/2026 — CI/CD tự động (TKT-0025)
+
+`.github/workflows/ci.yml`: job `ci` (build+test) trên PR/main; job `production` chỉ trên main, curl live 200. Vercel Git vẫn là CD.
+
 ## 11/09/2026 — Tối ưu deploy (TKT-0024)
 
 `build-static` chỉ copy game (index/battle/qa/splus/assets). `sharp` là devDependency. Vercel install `--omit=dev`.

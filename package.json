@@ -8,6 +8,7 @@
     "build": "node scripts/build-static.mjs",
     "preview": "npx serve dist",
     "test": "npm run build && node --test --test-concurrency=1 tests/*.test.mjs",
+    "ci": "npm run build && node --test --test-concurrency=1 tests/*.test.mjs",
     "check": "npm test"
   },
   "devDependencies": {
