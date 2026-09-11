@@ -1,5 +1,22 @@
 # Kế hoạch tiếp tục Lục Thần — gói thực thi cho Luna
 
+## 2026-09-12 — Cập nhật hàng đợi (không thay E/R)
+
+Điểm vào hiện tại: [HANDOFF-2026-09-12.md](HANDOFF-2026-09-12.md). Lấy `origin/main`, đừng checkout L11.
+
+| ID | Cập nhật 12/09 |
+|---|---|
+| L11 (Trợ trận túi–mặc–rèn) | Product live: bánh xe 11 nan + 12 ô + Dung luyện. **Icon nan còn SVG** — gợi ý TKT-0033 |
+| L12 (Daily) | Product live: Lịch Luyện hall riêng + Nhật Ký Mơ (TKT-0032 PR #33) |
+| L14 (Tháp) | Product live: sơn mài + khóa lực + bù ngày |
+| L15 (Mộng Lộ) | Product live TKT-0026 |
+| L08 Gọi Mộng / shop / arena / hunt / festival | Product live TKT-0027…0031. Banner D01/D02 chưa chốt |
+| L10/L11 S+ 42 tướng | Lab `/splus-lab.html`. Không vào roster live |
+| Shell legacy còn | Rèn hall, Túi, Giao việc, Mail, Bang, bạn bè, chat |
+
+Bảng L01–L20 bên dưới giữ nguyên mã E/R. Trạng thái “PLANNED” của L12/L14/L15 trong bảng gốc đã lỗi thời.
+
+
 ## 2026-09-11 — Cập nhật hàng đợi (không thay E/R)
 
 Điểm vào hiện tại: [HANDOFF-2026-09-11.md](HANDOFF-2026-09-11.md). Lấy `origin/main`, đừng checkout L11.

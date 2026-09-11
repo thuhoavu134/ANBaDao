@@ -1,10 +1,10 @@
 # AI Handoff — Hồn Việt: Mộng Giới
 
-Start with AGENTS.md and **docs/HANDOFF-2026-09-11.md** (current snapshot 11/09/2026). This file is a compatibility entrypoint for older handoffs.
+Start with AGENTS.md and **docs/HANDOFF-2026-09-12.md** (current snapshot 12/09/2026). This file is a compatibility entrypoint for older handoffs.
 
 > Quy tắc workflow hiện hành: đọc docs/VIBE-WORKFLOW-RULES.md và dùng vibe-builder + vibe-lab cho các thay đổi runtime; Builder dừng ở REVIEW và bàn giao evidence.
 
-> 11/09/2026: live đã có Trợ trận 11 nan, Tháp khóa lực chiến, CI/CD. Next ticket TKT-0026. Do not treat L11 S+ V2 as current work.
+> 12/09/2026: live đã có Trợ trận 11 nan (icon SVG), Tháp, Mộng Lộ, Chợ, Gọi Mộng, Đấu Trường, Săn Boss, Lễ Hội, Lịch Luyện hall, Nhật Ký Mơ. Next ticket TKT-0033. Do not treat L11 S+ V2 as current work.
 
 
 

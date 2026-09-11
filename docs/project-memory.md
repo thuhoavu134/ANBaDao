@@ -1,3 +1,7 @@
+## 12/09/2026 — TKT-0032 Lịch Luyện LIVE + bàn giao agent sau
+
+Main `a1f936a`, PR #33 squash-merge. Vercel production READY `dpl_G49Q6XjU29UzEYczLLRfvvq7VSpk`. Dock Lịch Luyện mở `#hvLichRoot` hall riêng 11 nan sơn; Nhiệm vụ giữ Nhật Ký Mơ. Snapshot [HANDOFF-2026-09-12.md](HANDOFF-2026-09-12.md). Ticket kế TKT-0033 (gợi ý icon sơn Trợ trận). Không đổi runtime trong commit docs bàn giao.
+
 ## 12/09/2026 — TKT-0032 Lịch Luyện REVIEW
 
 Dock Lịch Luyện mở **màn hall riêng** `#hvLichRoot` (inset 0, z-index 80, nền `lich-hall.jpg`, nút X, chip tài nguyên) — không overlay lên Thành Chính. 11 nan mỗi ải một icon sơn `assets/daily/spokes/{key}.jpg`, không dùng icon hub. Nan sống: Qua Ải Mộng, Giáo Trường Luyện, Tháp (ch.1), Mộng Lộ (ch.2), Đấu Trường + Săn Boss (ch.3). 5 nan sắp mở. Side Nhiệm vụ giữ Nhật Ký Mơ. Domain daily không đổi công thức. Không thêm `data-art-go`. Không merge cho tới khi owner nói `live`. Trợ trận icon sơn: chưa làm (ticket khác).

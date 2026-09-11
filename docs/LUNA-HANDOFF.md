@@ -1,5 +1,26 @@
 # Bàn giao Lục Thần / Hồn Việt cho Luna và các model tiếp theo
 
+## 2026-09-12 — Snapshot toàn bộ · điểm vào agent sau
+
+**Đọc [HANDOFF-2026-09-12.md](HANDOFF-2026-09-12.md) trước mọi mục dưới.** File đó là nguồn sự thật cho việc đang live, file owner, PR #18–#33, hub còn lại và TKT-0033.
+
+- Production: [luc-than.vercel.app](https://luc-than.vercel.app/) · main `a1f936a67e125fd4a22f5f1b62ee798b67b0fec6` (PR #33 TKT-0032). Vercel `dpl_G49Q6XjU29UzEYczLLRfvvq7VSpk` READY.
+- Live đã có: vòng Chinh chiến/Bày trận/trận, Trợ trận 11 nan + Dung luyện (icon SVG), Tháp khóa lực, Mộng Lộ, Chợ, Gọi Mộng, Đấu Trường, Săn Boss, Lễ Hội, **Lịch Luyện hall riêng 11 nan sơn**, Nhật Ký Mơ.
+- Việc kế: chờ owner `tiếp`. Gợi ý TKT-0033 = icon sơn Trợ trận (owner đã hỏi). Shell legacy: Rèn, Túi, Giao việc, Mail, Bang, bạn bè, chat. Không tự mở Combat V2 hay đổi seed.
+- Safari/device: NOT_RUN. Ticket Board: không có. Builder dừng REVIEW. Không merge trừ khi owner gõ `live`.
+- Visual pass Bày trận 09/09 đã bị owner từ chối — không khôi phục. Overlay Lịch Luyện lên Thành Chính cũng bị từ chối — hall riêng mới đúng.
+
+Contract Lịch Luyện: [tickets/TKT-0032](../tickets/TKT-0032/ticket.md). Evidence: [qa/L21-DAILY](qa/L21-DAILY/).
+
+## 2026-09-12 — TKT-0032 Lịch Luyện · LIVE
+
+Main `a1f936a67e125fd4a22f5f1b62ee798b67b0fec6`, PR [#33](https://github.com/bktimmy247/luc-than/pull/33) squash-merge. Vercel production `dpl_G49Q6XjU29UzEYczLLRfvvq7VSpk` READY trên [luc-than.vercel.app](https://luc-than.vercel.app/). Dock Lịch Luyện mở `#hvLichRoot` inset 0 z-index 80, nền `lich-hall.jpg`, 11 nan `assets/daily/spokes/{key}.jpg`. Side Nhiệm vụ giữ Nhật Ký Mơ. Công thức daily đóng băng. Inject sau festival. Chrome 390×844 PASS; Safari/device NOT_RUN.
+
+Rollback: Vercel previous production (`42b0e24` / `dpl_D9baFyGkYWMX6cxZZCunULac4ozC`) hoặc `git revert` `a1f936a`. Việc kế: owner `tiếp` = TKT-0033. Không merge S+ V2, không làm lại Bày trận visual 09/09, không đổi seed/banner/roster/audio cũ, không bịa ải `go:null`.
+
+Contract: [tickets/TKT-0032](../tickets/TKT-0032/ticket.md). Evidence: [qa/L21-DAILY](qa/L21-DAILY/).
+
+
 ## 2026-09-12 — TKT-0031 Lễ Hội · LIVE
 
 Main `3baffa84b9a0d690dd4cc6dbfee4461dfd56d618`, PR [#32](https://github.com/bktimmy247/luc-than/pull/32) squash-merge. Vercel production `dpl_CQjwBHTMpwKjPW7zu83pMeRovupz` READY trên [luc-than.vercel.app](https://luc-than.vercel.app/). Sơn mài + domain hoa đăng / Tam Nguyện / Lễ Ấn / Bách Bảo Luân / rương. Inject sau hunt. Công thức live giữ nguyên (5 đèn, đèn đầu miễn phí, 🪙100, 3 hướng, mốc 3/7/12, 20 ô 1🐚, bảng rương). Mở từ đêm đầu như Chợ. Chrome 390×844 PASS (save mới vào được); Safari/device NOT_RUN.

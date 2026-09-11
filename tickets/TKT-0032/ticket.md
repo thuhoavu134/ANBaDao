@@ -5,7 +5,7 @@ status: REVIEW
 phase: REFACTOR
 priority: P1
 created: 2026-09-11T19:10:00.000Z
-updated: 2026-09-11T19:50:00.000Z
+updated: 2026-09-12T02:46:00.000Z
 acceptance_ids: ["L21-T1","L21-T2","L21-T3","L21-P1","L21-P2","L21-P3","L21-P4","L21-P5"]
 required_gates: ["vibelab","tdd"]
 affected_paths: ["src/domain/daily/daily-run.mjs","src/ui/daily-runtime.js","src/ui/daily-screen.css","scripts/daily-runtime-v1.mjs","scripts/build-static.mjs","tests/daily-run.test.mjs","scripts/qa-daily-screen.mjs","assets/daily/"]
@@ -17,7 +17,7 @@ Goal: Dock **Lịch Luyện** opens a **dedicated full-screen hall** (Trợ tr�
 
 Non-goals: new currency, Combat V2, second `data-art-go`, seed/banner, changing 12-id roster, wrapping `questProgress`, Trợ trận painted icons (separate follow-up).
 
-Branch: `work/l21-daily-onto-main` from main `42b0e24`. Do not merge until owner says `live`.
+Branch: `work/l21-daily-onto-main` from main `42b0e24`. Owner gõ `live` 12/09 → squash-merge PR #33 → main `a1f936a`.
 
 ## Keep (live formulas)
 
@@ -40,5 +40,5 @@ Builder moves this ticket to REVIEW. Do not mark MERGED/DONE.
 - GREEN `tests/daily-run.test.mjs` (L21-T1..T3 + L21-P1..P5)
 - Chrome 390×844: dock Lịch Luyện → màn hall riêng 11 nan sơn; Qua Ải → Chinh chiến; Nhiệm vụ → Nhật Ký Mơ. Evidence `docs/qa/L21-DAILY/`
 - Safari / device: NOT_RUN
-- Deploy: not done — owner gõ `live` mới squash-merge
-- Ticket Board: TICKET_BOARD_NOT_AVAILABLE — không giả claim
+- Deploy: squash-merge PR #33 → main `a1f936a67e125fd4a22f5f1b62ee798b67b0fec6`. Vercel production `dpl_G49Q6XjU29UzEYczLLRfvvq7VSpk` READY. Live HTTP 200.
+- Ticket Board: TICKET_BOARD_NOT_AVAILABLE — không giả claim / MERGED / DONE. Owner gõ `live`; Builder ghi LIVE trên main, không tự chuyển board.

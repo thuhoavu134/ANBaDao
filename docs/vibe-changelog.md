@@ -1,3 +1,7 @@
+## 12/09/2026 — Lịch Luyện lên main + bàn giao (TKT-0032)
+
+Squash-merge PR #33 → main `a1f936a`. Vercel CD production READY `dpl_G49Q6XjU29UzEYczLLRfvvq7VSpk`. Inject hunt → festival → daily. Snapshot [HANDOFF-2026-09-12.md](HANDOFF-2026-09-12.md) cho agent sau. Ticket kế TKT-0033.
+
 ## 12/09/2026 — Lịch Luyện bánh xe đi ải + Nhật Ký Mơ (TKT-0032)
 
 Nhánh `work/l21-daily-onto-main`. Owner: Lịch Luyện là bánh xe ải trên **màn riêng**, mỗi nan icon sơn độc lập — không overlay Thành Chính, không tái icon hub. Nhiệm vụ giữ Nhật Ký Mơ. Qua Ải + Luyện mở đêm 1. Không thêm nút hub, không ải combat mới. Chrome 390 PASS; Safari NOT_RUN. Builder dừng REVIEW.
