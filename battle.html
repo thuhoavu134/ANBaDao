@@ -99,24 +99,27 @@ button:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
 
 .quick-controls { display: flex; gap: 8px; justify-content: flex-end; }
 .icon-button {
-  min-height: 39px;
+  width: 44px;
+  min-width: 44px;
+  min-height: 44px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 7px;
-  padding: 0 12px;
-  border: 1px solid rgba(215, 170, 87, 0.28);
-  color: var(--ink-soft);
-  background: rgba(255, 255, 255, 0.035);
-  border-radius: 8px;
+  padding: 0;
+  border: 1px solid rgba(215, 170, 87, 0.38);
+  color: var(--ink);
+  background: rgba(12, 36, 33, 0.88);
+  border-radius: 50%;
   cursor: pointer;
-  transition: border var(--motion-fast), background var(--motion-fast), color var(--motion-fast);
+  box-shadow: inset 0 1px rgba(255, 236, 186, 0.14), 0 4px 10px rgba(0, 0, 0, 0.28);
+  transition: border-color var(--motion-fast), background var(--motion-fast), color var(--motion-fast), transform var(--motion-fast);
 }
-.icon-button:hover { color: var(--ink); border-color: rgba(215, 170, 87, 0.65); }
-.icon-button[aria-pressed="true"] { background: rgba(73, 210, 179, 0.13); border-color: rgba(73, 210, 179, 0.55); color: #a9f5df; }
+.icon-button:hover { color: var(--ink); border-color: rgba(215, 170, 87, 0.7); }
+.icon-button:active { transform: scale(0.94); }
+.icon-button[aria-pressed="true"] { background: rgba(73, 210, 179, 0.18); border-color: rgba(73, 210, 179, 0.55); color: #a9f5df; }
 .exit-button { color: #f1c5b8; border-color: rgba(237, 106, 85, 0.38); }
 .exit-button:hover { color: #ffe4dc; border-color: rgba(237, 106, 85, 0.82); background: rgba(237, 106, 85, 0.12); }
-.control-copy { font-size: 11px; font-weight: 700; letter-spacing: 0.04em; }
+.control-copy { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 .sound-glyph { font-size: 17px; }
 
 main { width: 100%; flex: 1; }
@@ -422,10 +425,9 @@ noscript { display: block; padding: 2rem; text-align: center; }
   .brand-lockup small { font-size: 7px; }
   .bronze-seal { width: 34px; }
   .bronze-seal::before, .bronze-seal::after, .bronze-seal i::before, .bronze-seal i::after { left: 13px; top: 9px; height: 12px; }
-  .quick-controls { gap: 4px; }
-  .icon-button { width: 39px; min-height: 39px; padding: 0; gap: 0; }
-  .icon-button .control-copy { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-  .auto-button, .exit-button { width: 42px; }
+  .quick-controls { gap: 6px; }
+  .icon-button { width: 44px; min-width: 44px; min-height: 44px; padding: 0; }
+  .auto-button, .exit-button { width: 44px; }
   .battle-ribbon { min-height: 46px; padding: 4px 8px; gap: 6px; }
   .team-score { gap: 5px; }
   .team-sigil { width: 27px; height: 27px; font-size: 11px; }
@@ -1294,23 +1296,47 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
 }
 </style>
 <style id="v3237-reference-battle-loop">
-/* Embedded campaign battles use the reference game's single readable stage:
-   the field owns the viewport, while speed/auto remain the only persistent
-   controls. Build/formation tools are still available when battle.html is
-   opened on its own, but never interrupt a campaign encounter. */
+/* Embedded campaign battles: field owns the viewport. Brand topbar (Âm/1×/Tự động)
+   is hidden; speed and skip live on the dock as 44px lacquer chips. */
 .embedded-battle .reserve-deck{display:none!important}
 .embedded-battle .command-deck{display:none!important}
 .embedded-battle .battle-footer{display:none!important}
 .embedded-battle .app-shell{min-height:100svh!important;height:100svh!important}
 .embedded-battle main{flex:1 1 auto!important;min-height:0!important;display:flex!important}
 .embedded-battle .battle-shell{width:100%!important;max-width:none!important;min-height:0!important;display:flex!important;flex-direction:column!important}
-.embedded-battle .battle-ribbon{flex:0 0 auto!important}
-.embedded-battle .game-viewport{flex:1 1 auto!important;width:100%!important;height:auto!important;min-height:0!important;max-height:none!important;aspect-ratio:auto!important;border-radius:0!important}
-.embedded-battle .topbar{flex:0 0 auto!important}
+.embedded-battle .topbar{display:none!important}
 .embedded-battle .scene-caption{display:none!important}
-/* The reference battlefield keeps the readout to one clear focal line.
-   Objective/zone/hazard cards remain available in the standalone tactical
-   lab, but must not cover the six-versus-six field during the map loop. */
+.embedded-battle .battle-ribbon{
+  flex:0 0 auto!important;
+  min-height:48px!important;
+  padding:6px 10px!important;
+  padding-top:max(6px,env(safe-area-inset-top))!important;
+  gap:8px!important;
+  background:linear-gradient(180deg,#163532,#0b221f)!important;
+  border-bottom:1px solid rgba(215,170,87,.32)!important;
+  box-shadow:0 6px 16px rgba(0,0,0,.28)!important;
+  z-index:22;
+}
+.embedded-battle .team-score{
+  min-width:0;
+  gap:6px!important;
+  padding:4px 8px!important;
+  border:1px solid rgba(215,170,87,.26)!important;
+  border-radius:10px!important;
+  background:rgba(8,28,26,.72)!important;
+  box-shadow:inset 0 1px rgba(255,236,186,.12)!important;
+}
+.embedded-battle .team-score--enemy{background:rgba(48,22,20,.72)!important;border-color:rgba(237,106,85,.32)!important}
+.embedded-battle .team-score small{color:#b9c8bb!important;font-size:8px!important;letter-spacing:.1em!important}
+.embedded-battle .team-score strong{color:#f6ecd2!important;font-size:11px!important;margin-top:1px!important;font-variant-numeric:tabular-nums}
+.embedded-battle .team-score--enemy strong{color:#ffd2c8!important}
+.embedded-battle .team-sigil{width:28px!important;height:28px!important;border-radius:50%!important;font-size:11px!important;box-shadow:0 2px 6px rgba(0,0,0,.28)}
+.embedded-battle .team-sigil--lac{color:#bdffeb!important;border:1px solid #49d2b3!important;background:rgba(22,138,123,.42)!important}
+.embedded-battle .team-sigil--enemy{color:#ffd2c8!important;border:1px solid #ed6a55!important;background:rgba(143,48,44,.42)!important}
+.embedded-battle .round-display{min-width:72px!important}
+.embedded-battle .round-display small{color:#d7aa57!important;font-size:8px!important;letter-spacing:.12em!important}
+.embedded-battle .round-display strong{color:#f4dfaa!important;font-size:14px!important;letter-spacing:.06em!important;font-variant-numeric:tabular-nums}
+.embedded-battle .game-viewport{flex:1 1 auto!important;width:100%!important;height:auto!important;min-height:calc(100svh - 48px)!important;max-height:none!important;aspect-ratio:auto!important;border-radius:0!important}
 .embedded-battle .objective-hud,
 .embedded-battle .zone-hud,
 .embedded-battle .hazard-hud,
@@ -1320,85 +1346,49 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
 .embedded-battle .target-readout,
 .embedded-battle .battle-status,
 .embedded-battle .action-total{display:none!important}
-.reference-battle-dock{position:absolute;left:0;right:0;bottom:0;z-index:28;display:none;align-items:flex-end;justify-content:center;gap:clamp(6px,2vw,24px);min-height:78px;padding:12px 14px 7px;pointer-events:none;background:linear-gradient(180deg,transparent 0%,rgba(20,12,13,.18) 24%,rgba(14,8,10,.84) 82%,rgba(8,5,7,.96) 100%)}
+.reference-battle-dock{position:absolute;left:0;right:0;bottom:0;z-index:28;display:none;align-items:flex-end;justify-content:center;gap:clamp(6px,2vw,24px);min-height:78px;padding:12px 14px max(8px,env(safe-area-inset-bottom));pointer-events:none;background:linear-gradient(180deg,transparent 0%,rgba(20,12,13,.18) 24%,rgba(14,8,10,.84) 82%,rgba(8,5,7,.96) 100%)}
 .embedded-battle .reference-battle-dock{display:flex}
-.reference-battle-speed,.reference-battle-skip{pointer-events:auto;flex:0 0 auto;display:grid;place-items:center;color:#ffe9b0;text-shadow:0 2px 4px #000;font-weight:900;cursor:pointer}
-.reference-battle-speed{position:absolute;left:12px;bottom:12px;font-size:17px;letter-spacing:-.08em}
-.reference-battle-skip{position:absolute;right:11px;bottom:10px;width:32px;height:32px;border:0;border-radius:9px;background:rgba(45,25,19,.58);color:#ffd78d;font-size:19px;line-height:1}
-.reference-battle-skip:active,.reference-battle-nav button:active{transform:scale(.9);filter:brightness(1.22)}
+.reference-battle-speed,.reference-battle-skip{pointer-events:auto;flex:0 0 auto;display:grid;place-items:center;border:1px solid rgba(215,170,87,.48);background:rgba(12,36,33,.88);color:#f4dfaa;text-shadow:0 1px 3px #000;font-weight:800;cursor:pointer;box-shadow:inset 0 1px rgba(255,236,186,.16),0 4px 10px rgba(0,0,0,.35)}
+.reference-battle-speed{position:absolute;left:12px;bottom:max(12px,env(safe-area-inset-bottom));width:44px;height:44px;min-width:44px;min-height:44px;border-radius:50%;font-size:13px;letter-spacing:.02em}
+.reference-battle-skip{position:absolute;right:12px;bottom:max(12px,env(safe-area-inset-bottom));width:44px;height:44px;min-width:44px;min-height:44px;border-radius:50%;font-size:16px;line-height:1}
+.reference-battle-skip:active,.reference-battle-speed:active,.reference-battle-nav button:active{transform:scale(.92);filter:brightness(1.18)}
 .reference-battle-nav{display:flex;align-items:flex-end;justify-content:center;gap:clamp(4px,1.4vw,16px);pointer-events:auto}
-.reference-battle-nav button{min-width:48px;display:flex;flex-direction:column;align-items:center;gap:2px;padding:0;border:0;background:transparent;color:#ead9b8;cursor:pointer;text-shadow:0 2px 4px #000;transition:transform 120ms ease,filter 120ms ease}
+.reference-battle-nav button{min-width:48px;display:flex;flex-direction:column;align-items:center;gap:2px;padding:0;border:0;background:transparent;color:#ead9b8;cursor:pointer;text-shadow:0 2px 4px #000;transition:transform 160ms cubic-bezier(.22,1,.36,1),filter 160ms ease}
 .reference-battle-nav img{width:34px;height:34px;object-fit:contain;filter:drop-shadow(0 2px 4px rgba(0,0,0,.68))}
 .reference-battle-nav span{max-width:72px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:8px;line-height:1.1}
 .reference-battle-nav button[aria-current="page"] img{filter:drop-shadow(0 0 7px rgba(255,216,113,.75)) brightness(1.15)}
 .reference-battle-nav button[aria-current="page"] span{color:#ffd77e;font-weight:900}
-@media(max-width:430px){.reference-battle-dock{min-height:74px;gap:2px;padding-left:7px;padding-right:7px}.reference-battle-nav{gap:1px}.reference-battle-nav button{min-width:45px}.reference-battle-nav img{width:30px;height:30px}.reference-battle-nav span{font-size:7px}.reference-battle-speed{left:7px;bottom:10px;font-size:15px}.reference-battle-skip{right:6px;bottom:8px;width:28px;height:28px;font-size:17px}}
+@media(max-width:430px){
+  .embedded-battle .battle-ribbon{min-height:48px!important;padding:5px 8px!important;padding-top:max(5px,env(safe-area-inset-top))!important}
+  .embedded-battle .team-score{padding:3px 6px!important;border-radius:9px!important}
+  .embedded-battle .team-sigil{width:24px!important;height:24px!important;font-size:10px!important}
+  .embedded-battle .team-score small{font-size:7px!important}
+  .embedded-battle .team-score strong{font-size:10px!important}
+  .embedded-battle .round-display{min-width:64px!important}
+  .embedded-battle .round-display small{font-size:7px!important}
+  .embedded-battle .round-display strong{font-size:13px!important}
+  .embedded-battle .game-viewport{min-height:calc(100svh - 48px)!important}
+  .reference-battle-dock{min-height:74px;gap:2px;padding-left:7px;padding-right:7px}
+  .reference-battle-nav{gap:1px}
+  .reference-battle-nav button{min-width:45px}
+  .reference-battle-nav img{width:30px;height:30px}
+  .reference-battle-nav span{font-size:7px}
+  .reference-battle-speed,.reference-battle-skip{left:auto;width:44px;height:44px}
+  .reference-battle-speed{left:8px;bottom:max(10px,env(safe-area-inset-bottom));font-size:12px}
+  .reference-battle-skip{right:8px;bottom:max(10px,env(safe-area-inset-bottom));font-size:15px}
+}
 @media(min-width:761px){.reference-battle-dock{min-height:86px}.reference-battle-nav img{width:38px;height:38px}.reference-battle-nav span{font-size:9px}}
-@media(max-width:760px){
-  .embedded-battle .topbar{min-height:54px!important;padding:6px 8px!important}
-  .embedded-battle .brand-lockup strong{font-size:14px!important}
-  .embedded-battle .brand-lockup small{font-size:6px!important}
-  .embedded-battle .bronze-seal{width:31px!important}
-  .embedded-battle .battle-ribbon{min-height:42px!important;padding:3px 8px!important}
-  .embedded-battle .game-viewport{min-height:calc(100svh - 100px)!important}
-  .embedded-battle .objective-hud{top:5px!important}
-  .embedded-battle .turn-order{top:5px!important}
-}
 
-/* v3.23.6 — campaign battle parity.  The reference client puts the fight
-   front and centre in portrait, with a compact team/round ribbon and the
-   shaped navigation icons anchored to the bottom edge. */
-.embedded-battle.reference-simple .topbar{display:none!important}
-.embedded-battle.reference-simple{background:#e7f4ef!important;color:#204f56}
-.embedded-battle.reference-simple .battle-shell{background:#e7f4ef!important}
-.embedded-battle.reference-simple .battle-ribbon{
-  min-height:72px!important;
-  padding:8px 10px!important;
-  gap:6px!important;
-  background:linear-gradient(180deg,#f9fffc 0%,#d8eee6 100%)!important;
-  border-bottom:1px solid rgba(44,120,105,.25)!important;
-  box-shadow:0 3px 12px rgba(32,92,83,.14)!important;
-  z-index:22;
-}
-.embedded-battle.reference-simple .team-score{
-  min-width:0;
-  gap:6px!important;
-  padding:5px 7px!important;
-  border:1px solid rgba(48,124,112,.22)!important;
-  border-radius:12px!important;
-  background:rgba(255,255,255,.72)!important;
-  box-shadow:inset 0 1px rgba(255,255,255,.85),0 3px 8px rgba(45,112,101,.10)!important;
-}
-.embedded-battle.reference-simple .team-score--enemy{background:rgba(255,244,239,.82)!important;border-color:rgba(181,86,70,.24)!important}
-.embedded-battle.reference-simple .team-score small{color:#5b7c80!important;font-size:7px!important;letter-spacing:.08em!important}
-.embedded-battle.reference-simple .team-score strong{color:#245b62!important;font-size:10px!important;margin-top:1px!important}
-.embedded-battle.reference-simple .team-score--enemy strong{color:#8d4b43!important}
-.embedded-battle.reference-simple .team-sigil{width:29px!important;height:29px!important;border-radius:9px!important;font-size:12px!important;box-shadow:0 2px 6px rgba(0,0,0,.12)}
-.embedded-battle.reference-simple .team-sigil--lac{color:#fff!important;border:0!important;background:linear-gradient(145deg,#45b9a5,#167d72)!important}
-.embedded-battle.reference-simple .team-sigil--enemy{color:#fff!important;border:0!important;background:linear-gradient(145deg,#d47a66,#963e3d)!important}
-.embedded-battle.reference-simple .round-display{min-width:70px!important}
-.embedded-battle.reference-simple .round-display small{color:#367a73!important;font-size:8px!important;letter-spacing:.12em!important}
-.embedded-battle.reference-simple .round-display strong{color:#194f59!important;font-size:15px!important;letter-spacing:.06em!important}
-.embedded-battle.reference-simple .game-viewport{background:#bfe1d4!important;min-height:calc(100svh - 72px)!important}
-.embedded-battle.reference-simple #gameCanvas{background:linear-gradient(180deg,#b8dfd2,#f1d7ad)!important}
+.embedded-battle.reference-simple{background:#061716!important;color:#f6ecd2}
+.embedded-battle.reference-simple .battle-shell{background:#061716!important}
+.embedded-battle.reference-simple .game-viewport{background:#081416!important}
 .embedded-battle.reference-simple .turn-order{display:none!important}
-.embedded-battle.reference-simple .reference-battle-dock{min-height:84px!important;background:linear-gradient(180deg,transparent 0%,rgba(255,255,255,.26) 20%,rgba(22,87,77,.88) 84%,rgba(12,57,53,.98) 100%)!important}
+.embedded-battle.reference-simple .reference-battle-dock{min-height:84px!important;background:linear-gradient(180deg,transparent 0%,rgba(6,23,22,.18) 20%,rgba(6,40,36,.88) 84%,rgba(4,18,16,.98) 100%)!important}
 .embedded-battle.reference-simple .reference-battle-nav button{color:#f5fff8!important;text-shadow:0 1px 4px rgba(4,42,39,.75)!important}
 .embedded-battle.reference-simple .reference-battle-nav img{filter:drop-shadow(0 2px 4px rgba(0,0,0,.38))!important}
 .embedded-battle.reference-simple .reference-battle-nav button[aria-current="page"] img{filter:drop-shadow(0 0 8px rgba(255,235,156,.92)) brightness(1.18)!important}
 .embedded-battle.reference-simple .reference-battle-nav button[aria-current="page"] span{color:#ffe49a!important}
-.embedded-battle.reference-simple .reference-battle-speed{color:#fff2b9!important}
-.embedded-battle.reference-simple .reference-battle-skip{background:rgba(6,50,47,.58)!important;color:#fff0b4!important}
 @media(max-width:430px){
-  .embedded-battle.reference-simple .battle-ribbon{min-height:64px!important;padding:6px 6px!important}
-  .embedded-battle.reference-simple .team-score{padding:4px 5px!important;border-radius:10px!important}
-  .embedded-battle.reference-simple .team-sigil{width:25px!important;height:25px!important;font-size:10px!important}
-  .embedded-battle.reference-simple .team-score small{font-size:6px!important}
-  .embedded-battle.reference-simple .team-score strong{font-size:8px!important}
-  .embedded-battle.reference-simple .round-display{min-width:63px!important}
-  .embedded-battle.reference-simple .round-display small{font-size:7px!important}
-  .embedded-battle.reference-simple .round-display strong{font-size:13px!important}
-  .embedded-battle.reference-simple .game-viewport{min-height:calc(100svh - 64px)!important}
   .embedded-battle.reference-simple .reference-battle-dock{min-height:78px!important}
 }
 </style>
@@ -4236,7 +4226,6 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     if (introCopy && EMBED_CONFIG.introCopy) introCopy.textContent = EMBED_CONFIG.introCopy;
     if (startLabel && EMBEDDED) startLabel.textContent = EMBED_CONFIG.startLabel || "Xuất chiến";
     if (resultLabel && EMBEDDED) resultLabel.textContent = EMBED_CONFIG.continueLabel || "Tiếp tục hành trình";
-    if (dom.exitBattleButton) dom.exitBattleButton.hidden = !EMBEDDED;
     document.title = `${chapterTitle}: ${battleTitle}`;
   }
 

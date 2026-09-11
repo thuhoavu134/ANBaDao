@@ -1,0 +1,31 @@
+{
+  "ticket": "TKT-0011",
+  "viewport": "390x844",
+  "overlayOpen": true,
+  "bodyClass": "embedded-battle reference-simple",
+  "topbarHidden": true,
+  "ribbonH": 48,
+  "ribbonVisible": true,
+  "speedW": 44,
+  "speedH": 44,
+  "skipW": 44,
+  "skipH": 44,
+  "dockVisible": true,
+  "mintBody": false,
+  "bodyBg": "rgb(6, 23, 22)",
+  "exitPresent": false,
+  "unmutePresent": false,
+  "chromeCompact": true,
+  "appErrors": [],
+  "screenshots": [
+    "hud-390x844.png",
+    "hud-top-crop.png",
+    "hud-dock-crop.png"
+  ],
+  "tdd": {
+    "red": "0/3",
+    "green": "3/3",
+    "file": "tests/battle-hud-css.test.mjs"
+  },
+  "safari": "NOT_RUN"
+}

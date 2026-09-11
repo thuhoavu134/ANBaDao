@@ -434,9 +434,6 @@ canvas{width:100%;height:100%;display:block}
 .hv-battle-loading{position:absolute;inset:0;z-index:2;display:grid;place-items:center;background:radial-gradient(circle at 50% 35%,#153f3b,#071c1c 62%,#031010);color:#f4dfaa;text-align:center;padding:24px;font-weight:800;letter-spacing:.02em}
 .hv-battle-loading[hidden]{display:none}
 .hv-battle-loading span{display:block;margin-top:8px;color:#91b8ae;font-size:12px;font-weight:600}
-.hv-battle-exit{position:absolute;top:max(12px,env(safe-area-inset-top));left:12px;z-index:3;min-height:44px;padding:8px 14px;border:1px solid #d7c07a99;border-radius:12px;background:#102826e6;color:#f4dfaa;font-weight:700;display:none}
-#hvBattleOverlay.is-open .hv-battle-exit{display:block}
-.hv-battle-exit:focus-visible{outline:2px solid #f2b544;outline-offset:2px}
 @media (max-width:540px){.hv-engine-pill{display:none}.hv-brandbar{padding:8px 10px}}
 
 
@@ -5238,14 +5235,12 @@ renderCampaign = function(){
   overlay.id = "hvBattleOverlay";
   overlay.setAttribute("aria-label", "Chiến trường Hồn Việt");
   overlay.innerHTML = `
-    <button class="hv-battle-exit" id="hvBattleExit" type="button" aria-label="Rút khỏi trận và về sảnh">Rút lui</button>
     <div class="hv-battle-loading" id="hvBattleLoading">Đang vào trận…<span>Đội hình vừa bày sẽ ra sân ngay.</span></div>
     <iframe id="hvBattleFrame" title="Hồn Việt — Trận Chiến Lục Vị" allow="autoplay"></iframe>`;
   document.body.appendChild(overlay);
 
   const frame = overlay.querySelector("#hvBattleFrame");
   const loading = overlay.querySelector("#hvBattleLoading");
-  const exitButton = overlay.querySelector("#hvBattleExit");
   let activeBattle = null;
 
   function markBattleDocumentLoaded() {
@@ -5731,7 +5726,6 @@ renderCampaign = function(){
     if (message.type === "battle-result") finishIntegratedBattle(message.payload || {});
   });
 
-  exitButton.addEventListener("click", abortIntegratedBattle);
   window.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && activeBattle) abortIntegratedBattle();
   });

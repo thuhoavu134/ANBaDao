@@ -19,9 +19,9 @@ test('L12-B2: iframe load does not hide the veil; only battle-ready does', () =>
   assert.match(index, /overlay\.classList\.remove\("is-loading"\)/);
 });
 
-test('L12-B3: embedded battle URL forces autostart and a retreat control while the overlay is open', () => {
+test('L12-B3: embedded battle URL forces autostart without overlay retreat chrome', () => {
   assert.match(index, /battle\.html\?embedded=1&session=\$\{encodeURIComponent\(sessionId\)}&autostart=1/);
-  assert.match(index, /#hvBattleOverlay\.is-open \.hv-battle-exit\{display:block/);
+  assert.doesNotMatch(index, /#hvBattleOverlay\.is-open \.hv-battle-exit\{display:block/);
 });
 
 test('L12-B4: embedded battle.html starts combat and reports the URL session even if config parse fails', () => {
@@ -40,4 +40,20 @@ test('L12-B6: same-window embedded battle returns through sessionStorage, not a 
   assert.match(battle, /hvBattleHostEvent/);
   assert.match(battle, /index\.html\?hvBattleReturn=1/);
   assert.match(index, /hvBattleReturn/);
+});
+
+test('L12-C1: overlay markup has no Rút lui chrome button', () => {
+  const overlay = index.slice(
+    index.indexOf('const overlay = document.createElement("section")'),
+    index.indexOf('document.body.appendChild(overlay)')
+  );
+  assert.doesNotMatch(overlay, /hvBattleExit/);
+  assert.doesNotMatch(overlay, /Rút lui/);
+  assert.doesNotMatch(index, /id="hvBattleExit"/);
+  assert.match(index, /abortIntegratedBattle/);
+});
+
+test('L12-C3: in-combat HUD Rút lui stays hidden even when the fight is embedded', () => {
+  assert.match(battle, /id="exitBattleButton"[^>]*\bhidden\b/);
+  assert.doesNotMatch(battle, /exitBattleButton\)[\s\S]{0,40}hidden = !EMBEDDED/);
 });

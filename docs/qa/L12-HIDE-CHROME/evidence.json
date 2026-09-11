@@ -1,0 +1,29 @@
+{
+  "schema": "hon-viet-hide-chrome-evidence/v1",
+  "ticket_id": "TKT-0010",
+  "contract": "L12-hide-chrome/v1",
+  "branch": "work/l12-hide-chrome-20260911",
+  "tdd": {
+    "red": { "tests": 11, "pass": 7, "fail": 4, "files": ["tests/battle-enter-loading.test.mjs", "tests/battle-ios-audio.test.mjs"] },
+    "green": { "tests": 11, "pass": 11, "fail": 0, "files": ["tests/battle-enter-loading.test.mjs", "tests/battle-ios-audio.test.mjs"] },
+    "build": "PASS via scripts/build-static.mjs"
+  },
+  "browser": {
+    "viewport": "390x844",
+    "overlayOpen": true,
+    "exitPresent": false,
+    "unmutePresent": false,
+    "visibleChrome": [],
+    "hudExitHidden": true,
+    "hudSound": "♪Âm",
+    "bodyHasBatTieng": false,
+    "bodyHasRutLui": false,
+    "chromeGone": true,
+    "appErrors": [],
+    "Safari": "NOT_RUN",
+    "device_touch": "NOT_RUN"
+  },
+  "notes": "battle-audio-lifecycle tests 5–6 already failed on main (showUnmute called setTimeout inside vm). Out of scope.",
+  "owner_approval": "PENDING",
+  "main_production": "unchanged"
+}

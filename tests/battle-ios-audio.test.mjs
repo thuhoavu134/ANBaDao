@@ -12,9 +12,18 @@ test('L12-A1: battle reuses the early AudioContext instead of creating a locked 
   assert.match(sfx, /window\.__HV_EARLY_CTX/);
 });
 
-test('L12-A2: embedded battle starts combat BGM and offers a tap-to-unmute control', () => {
+test('L12-A2: embedded battle starts combat BGM and unlocks audio on gesture without a Bật tiếng button', () => {
   assert.match(battle, /bgm-combat-new\.mp3/);
   assert.match(battle, /__HV_BATTLE_BGM/);
-  assert.match(unlock, /Bật tiếng/);
   assert.match(unlock, /battle=battle\.replace\(\/<head/);
+  assert.match(unlock, /function unlock\(/);
+  assert.match(unlock, /firstGesture/);
+});
+
+test('L12-C2: iOS unlock does not inject a floating Bật tiếng control', () => {
+  assert.doesNotMatch(unlock, /Bật tiếng/);
+  assert.doesNotMatch(unlock, /hvUnmuteAudio/);
+  assert.doesNotMatch(unlock, /function showUnmute/);
+  assert.match(unlock, /pointerdown/);
+  assert.match(unlock, /ctx\.resume/);
 });

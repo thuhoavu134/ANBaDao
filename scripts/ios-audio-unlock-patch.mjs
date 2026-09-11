@@ -118,9 +118,8 @@ const manager = String.raw`<script id="honviet-ios-audio-unlock">
   // Keep unlocking on every gesture until the context is running. Full-page
   // battle.html on iOS often misses the original Xuất chiến tap.
   const firstGesture=()=>{
-    unlock().then(ok=>{
+    unlock().then(()=>{
       try{window.__HV_BATTLE_BGM?.play?.();}catch(_e){}
-      if(ok) document.getElementById('hvUnmuteAudio')?.remove();
     }).catch(()=>{});
   };
   ['pointerdown','touchstart','touchend','click','keydown'].forEach(t=>
@@ -135,23 +134,6 @@ const manager = String.raw`<script id="honviet-ios-audio-unlock">
       try{window.__HV_BATTLE_BGM?.play?.();}catch(_e){}
     }
   });
-
-  function showUnmute(){
-    const c=getCtx();
-    if((c&&c.state==='running')||document.getElementById('hvUnmuteAudio'))return;
-    const host=document.body||document.documentElement;
-    if(!host)return;
-    const b=document.createElement('button');
-    b.id='hvUnmuteAudio';
-    b.type='button';
-    b.textContent='Bật tiếng';
-    b.setAttribute('aria-label','Bật tiếng trận đấu');
-    b.style.cssText='position:fixed;right:12px;top:max(12px,env(safe-area-inset-top));z-index:2147483647;min-height:44px;padding:8px 14px;border-radius:12px;border:1px solid #d7c07a;background:#102826f2;color:#f4dfaa;font:800 14px/1 system-ui,sans-serif';
-    b.addEventListener('pointerdown',ev=>{ev.stopPropagation();firstGesture();});
-    host.appendChild(b);
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',()=>setTimeout(showUnmute,400));
-  else setTimeout(showUnmute,400);
 })();
 </script>`;
 
