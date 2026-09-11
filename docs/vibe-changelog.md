@@ -1,3 +1,7 @@
+## 12/09/2026 — Lễ Hội sơn mài + domain hoa đăng / Bách Bảo (TKT-0031)
+
+Nhánh `work/l20-festival-onto-main` từ main `d62dea1`. Giữ 5 đèn/ngày, đèn đầu miễn phí, 🪙100, 3 hướng An Khang / Duyên Phố / Khai Lộ, Tam Nguyện +1 ấn +🪙150 +💎5, mốc 3/7/12, Bách Bảo 20 ô 1🐚, bảng Rương Báu / Chí Bảo. Domain thuần bất biến, màn sơn mài như Tháp / Mộng Lộ / Chợ / Gọi Mộng / Đấu Trường / Săn Boss. Thả đèn + quay + mở rương qua transaction. Không thêm nút hub thứ hai. Chrome 390 PASS; Safari NOT_RUN. Builder dừng REVIEW.
+
 ## 12/09/2026 — Săn Boss lên main (TKT-0030)
 
 Squash-merge PR #31 → main `f96e53d`. Vercel CD production READY. Inject arena → hunt. Painted boss tokens + 60-round hunt battle. Unlock still after 3 chapters.

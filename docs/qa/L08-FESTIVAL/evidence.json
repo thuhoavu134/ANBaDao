@@ -1,0 +1,23 @@
+{
+  "hubMarks": 1,
+  "hubLocked": false,
+  "title": "Tam Nguyện Sông Mơ",
+  "themeCount": 3,
+  "wheelCells": 20,
+  "goldBefore": 500,
+  "goldAfterFree": 500,
+  "countAfterFree": 1,
+  "selected": "duyenpho",
+  "marksAfter": 3,
+  "claimed": [
+    3
+  ],
+  "gemsBefore": 800,
+  "gemsAfter": 820,
+  "goldAfterSet": 1050,
+  "chapters": [],
+  "chaptersUntouched": true,
+  "hubAfter": 1,
+  "appErrors": [],
+  "pass": true
+}

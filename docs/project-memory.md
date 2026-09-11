@@ -1,3 +1,7 @@
+## 12/09/2026 — TKT-0031 Lễ Hội REVIEW
+
+Domain `src/domain/festival/festival-run.mjs` owns hoa đăng / Tam Nguyện / Lễ Ấn / Bách Bảo / rương. Runtime wraps `renderFestival` / `releaseLantern` / `spinBachBaoCore` / `openBachBaoChest`, không thêm `data-art-go="festival"`. Transaction `hvRunCommittedTransaction`. Build: `scripts/festival-runtime-v1.mjs` sau hunt. Không đổi 5 đèn / 🪙100 / 20 ô / bảng rương. Không merge cho tới khi owner nói `live`.
+
 ## 12/09/2026 — TKT-0030 Săn Boss LIVE
 
 Main `f96e53d`, PR #31 squash-merge. Vercel production READY `dpl_26SmNBM8BZarjCyP4U1ew3Cd9sDx`. Domain hunt + lacquer + painted boss art trên production. Inject sau arena. Boss 1 con to (`huntForm`) + 2 Mộng Tinh tinh thể. Mở sau 3 chương. Formulas frozen.

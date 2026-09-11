@@ -76,6 +76,7 @@ await import('./shop-runtime-v1.mjs');
 await import('./summon-runtime-v1.mjs');
 await import('./arena-runtime-v1.mjs');
 await import('./hunt-runtime-v1.mjs');
+await import('./festival-runtime-v1.mjs');
 // The integrated battle is loaded from this embedded payload in production.
 // Keep it byte-identical to the patched battle.html; otherwise the visible
 // preview and the iframe can silently run different engines.
