@@ -1,3 +1,12 @@
+## 12/09/2026 — Lịch Luyện giả 3D tươi (TKT-0034)
+
+Cùng nhánh `work/l23-assist-spoke-icons-20260912`. Owner hỏi «lịch luyện đã đổi theo chưa» — chưa, art TKT-0032 còn sơn mài tối. Đổi 11 nan + hall + lõi sang token giả 3D tươi, không reuse icon hub. Công thức daily đóng băng. Chrome 390 PASS; Safari NOT_RUN.
+
+## 12/09/2026 — Icon sơn 11 nan Trợ trận (TKT-0033)
+
+Nhánh `work/l23-assist-spoke-icons-20260912` từ main `82f1c61`. Owner: «ngay bên trợ trận cũng ko có icon» rồi chốt icon/nền phải **tươi, giả 3D, nhiều lớp** — không sơn dầu tối. 11 nan lấy token 3D sẵn có (trống đồng, giáp SSR, cá lóc, kim quy…). Hall `assist-hall-day.jpg` sáng như Thành Chính / Mộng Lộ. `heroStats` / 11 nan / `data-art-go` không đổi. Chrome 390 PASS; Safari NOT_RUN. Builder dừng REVIEW.
+
+
 ## 12/09/2026 — Lịch Luyện lên main + bàn giao (TKT-0032)
 
 Squash-merge PR #33 → main `a1f936a`. Vercel CD production READY `dpl_G49Q6XjU29UzEYczLLRfvvq7VSpk`. Inject hunt → festival → daily. Snapshot [HANDOFF-2026-09-12.md](HANDOFF-2026-09-12.md) cho agent sau. Ticket kế TKT-0033.

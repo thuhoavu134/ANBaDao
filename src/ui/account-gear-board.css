@@ -28,9 +28,9 @@
 
 .hv-assist-stage{
   flex:1;min-height:0;position:relative;overflow:hidden;
-  background:#2a1c14 url('assets/ui/account-gear/assist-hall.webp') center/cover no-repeat;
+  background:#cbb58a url('assets/ui/account-gear/assist-hall-day.jpg') center/cover no-repeat;
 }
-.hv-assist-stage:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,10,8,.18),rgba(12,8,7,.28) 42%,rgba(14,8,6,.72))}
+.hv-assist-stage:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,244,214,.10),rgba(18,10,8,.06) 48%,rgba(14,8,6,.32))}
 .hv-assist-hero{
   position:absolute;left:50%;top:0;height:64%;width:auto;max-width:none;
   transform:translateX(-50%);object-fit:contain;object-position:42% 0;
@@ -46,21 +46,20 @@
   pointer-events:none;
 }
 .hv-assist-spoke{
-  position:absolute;left:50%;top:50%;width:56px;margin-left:-28px;margin-top:-28px;
+  position:absolute;left:50%;top:50%;width:64px;margin-left:-32px;margin-top:-32px;
   display:grid;justify-items:center;gap:2px;background:none;border:0;color:#f0dfb6;font:800 8px/1.15 inherit;
   pointer-events:none;
 }
 .hv-assist-spoke span{
-  width:54px;height:54px;border-radius:50%;display:grid;place-items:center;
-  background:radial-gradient(circle at 50% 28%,#5b4334,#241610);
-  box-shadow:0 0 0 2px #c4a06a;color:#f3d48a;pointer-events:auto;
+  width:58px;height:58px;border-radius:50%;overflow:hidden;display:grid;place-items:center;
+  background:#1a120c;box-shadow:0 0 0 2px #e2c07a,0 2px 8px rgba(0,0,0,.35);pointer-events:auto;padding:0;
 }
-.hv-assist-spoke svg{width:24px;height:24px;fill:currentColor;pointer-events:none}
+.hv-assist-spoke img{width:100%;height:100%;object-fit:cover;border-radius:50%;pointer-events:none;display:block}
 .hv-assist-spoke small{
   max-width:58px;max-height:22px;text-align:center;text-shadow:0 1px 2px #000;pointer-events:none;
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
 }
-.hv-assist-spoke.is-on span{background:radial-gradient(circle at 50% 28%,#d9a23c,#6a3d14);box-shadow:0 0 0 3px #f0c66a,0 0 16px rgba(240,180,70,.45);color:#fff4c8}
+.hv-assist-spoke.is-on span{box-shadow:0 0 0 3px #f0c66a,0 0 16px rgba(240,180,70,.45)}
 .hv-assist-spoke.is-on{color:#ffe7a4}
 .hv-assist-spoke.is-locked{opacity:.55}
 .hv-assist-spoke.is-locked span{box-shadow:0 0 0 2px #7a6550}

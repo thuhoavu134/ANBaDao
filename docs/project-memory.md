@@ -1,3 +1,12 @@
+## 12/09/2026 — TKT-0034 Lịch Luyện giả 3D tươi REVIEW
+
+Owner chốt: icon + nền **tươi, giả 3D, nhiều lớp**. Lịch Luyện 11 nan + hall đổi theo Trợ trận. Không reuse `menu-v3233`. Không overlay Thành Chính. Công thức daily đóng băng. Không merge tới khi owner nói `live`.
+
+## 12/09/2026 — TKT-0033 Icon sơn Trợ trận REVIEW
+
+Dock Trợ trận `#hvGearRoot`. Owner chốt: icon + nền **tươi, giả 3D, nhiều lớp** (art sẵn có), không sơn dầu tối. 11 nan `assets/ui/account-gear/spokes/{key}.jpg` từ token account/item. Hall `assist-hall-day.jpg`. WHEEL / `heroStats` không đổi. Không thêm `data-art-go`. Không merge tới khi owner nói `live`.
+
+
 ## 12/09/2026 — TKT-0032 Lịch Luyện LIVE + bàn giao agent sau
 
 Main `a1f936a`, PR #33 squash-merge. Vercel production READY `dpl_G49Q6XjU29UzEYczLLRfvvq7VSpk`. Dock Lịch Luyện mở `#hvLichRoot` hall riêng 11 nan sơn; Nhiệm vụ giữ Nhật Ký Mơ. Snapshot [HANDOFF-2026-09-12.md](HANDOFF-2026-09-12.md). Ticket kế TKT-0033 (gợi ý icon sơn Trợ trận). Không đổi runtime trong commit docs bàn giao.

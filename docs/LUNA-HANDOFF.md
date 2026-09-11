@@ -1,4 +1,20 @@
+## 2026-09-12 — TKT-0034 Lịch Luyện giả 3D tươi · REVIEW
+
+Nhánh `work/l23-assist-spoke-icons-20260912` (stacked TKT-0033). Owner: Lịch Luyện cũng phải tươi, giả 3D, nhiều lớp — không sơn mài tối. 11 nan token 3D `assets/daily/spokes/{key}.jpg` (không reuse `menu-v3233`). Hall `lich-hall.jpg` sáng; lacquer cũ `lich-hall-lacquer.jpg`. Công thức daily / 11 nan / `go` không đổi. Chrome 390 PASS; Safari NOT_RUN.
+
+Rollback art: copy `lich-hall-lacquer.jpg` → `lich-hall.jpg` hoặc quay commit. Không merge trừ khi owner gõ `live`.
+
+Contract: [tickets/TKT-0034](../tickets/TKT-0034/ticket.md). Evidence: [qa/L21-DAILY](qa/L21-DAILY/).
+
 # Bàn giao Lục Thần / Hồn Việt cho Luna và các model tiếp theo
+
+## 2026-09-12 — TKT-0033 Icon sơn Trợ trận · REVIEW
+
+Nhánh `work/l23-assist-spoke-icons-20260912` từ main `82f1c61`. Owner chốt icon/nền **tươi, giả 3D, nhiều lớp**. 11 nan dùng token 3D sẵn có `assets/ui/account-gear/spokes/{key}.jpg`. Hall `assist-hall-day.jpg` (lacquer `assist-hall.webp` giữ rollback). `heroStats` / 11 nan / dock `act('team')` không đổi. Chrome 390×844 PASS; Safari/device NOT_RUN.
+
+Rollback: quay runtime sang SVG `spokeGlyph` trên main `82f1c61`. Không merge trừ khi owner gõ `live`. Việc kế sau `live`: Rèn hall sơn, hoặc shell Túi/Giao việc/Mail/Bang.
+
+Contract: [tickets/TKT-0033](../tickets/TKT-0033/ticket.md). Evidence: [qa/L23-ASSIST-SPOKES](qa/L23-ASSIST-SPOKES/).
 
 ## 2026-09-12 — Snapshot toàn bộ · điểm vào agent sau
 

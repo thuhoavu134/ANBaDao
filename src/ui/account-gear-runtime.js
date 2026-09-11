@@ -10,19 +10,6 @@
     { kind: 'charm', label: 'Phụ kiện' },
     { kind: 'boots', label: 'Giày' }
   ];
-  const ICONS = {
-    relic: '<path d="M12 3l2.2 5.4H20l-4.6 3.4 1.8 5.5L12 14.2 6.8 17.3l1.8-5.5L4 8.4h5.8z"/>',
-    gear: '<path d="M13 3l1.2 4.2 3.6-2.4-2.4 3.6L20 10l-4.2 1.2 2.4 3.6-3.6-2.4L13 17l-1.2-4.2-3.6 2.4 2.4-3.6L6 10l4.2-1.2-2.4-3.6 3.6 2.4z"/><path d="M8 20h3l7-16h-3z"/>',
-    fish: '<path d="M3 12c5-7 13-7 16-1 0 0 3-1 4-3v8c-1-2-4-3-4-3-3 6-11 6-16-1zm6-1a1.2 1.2 0 1 0 0-2.4A1.2 1.2 0 0 0 9 11z"/>',
-    pet: '<path d="M7.5 9a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm9 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM6 13c1.4 5 10.6 5 12 0-3.2 3.4-8.8 3.4-12 0z"/>',
-    spirit: '<path d="M13 3a8 8 0 1 0 8 11A9 9 0 0 1 13 3z"/>',
-    divine: '<path d="M12 2l1.5 6.5H20l-5.2 3.8 2 6.7L12 15.6 7.2 19l2-6.7L4 8.5h6.5z"/>',
-    star: '<path d="M12 3l2.4 6.5H21l-5.2 4 2 6.5L12 16.5 6.2 20l2-6.5L3 9.5h6.6z"/>',
-    antique: '<path d="M8 6h8l1.2 3.5H6.8zm1.4 3.5h5.2V17H9.4zM9 18h6v2H9z"/>',
-    luck: '<path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zm0 3a6 6 0 1 1 0 12 6 6 0 0 1 0-12zm0 2.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z"/>',
-    illusion: '<path d="M12 5c5.4 0 9 7 9 7s-3.6 7-9 7-9-7-9-7 3.6-7 9-7zm0 3.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z"/>',
-    formation: '<path d="M12 3l8 4v6.2c0 4.6-3.4 7.2-8 8.8-4.6-1.6-8-4.2-8-8.8V7z"/>'
-  };
   const WHEEL = [
     { key: 'relic', label: 'Bảo Vật', angle: 0, open: 'relic' },
     { key: 'gear', label: 'Trang bị', angle: 33, open: 'board' },
@@ -37,8 +24,8 @@
     { key: 'formation', label: 'Quân Trận', angle: 327, open: 'formation' }
   ];
 
-  function spokeGlyph(key) {
-    return `<svg viewBox="0 0 24 24" aria-hidden="true">${ICONS[key] || ICONS.relic}</svg>`;
+  function spokeIcon(key) {
+    return 'assets/ui/account-gear/spokes/' + key + '.jpg';
   }
 
   const root = document.createElement('div');
@@ -51,7 +38,7 @@
         <img class="hv-assist-hero" alt="" data-gear-hero>
         <div class="hv-assist-wheel">
           <div class="hv-assist-core">Trợ trận</div>
-          ${WHEEL.map(item => `<button type="button" class="hv-assist-spoke${item.open === 'board' ? ' is-on' : ''}${item.open ? '' : ' is-locked'}" data-assist="${item.key}" style="transform:rotate(${item.angle}deg) translate(0, calc(-1 * var(--wheel-r))) rotate(${-item.angle}deg)"><span>${spokeGlyph(item.key)}</span><small>${item.label}</small></button>`).join('')}
+          ${WHEEL.map(item => `<button type="button" class="hv-assist-spoke${item.open === 'board' ? ' is-on' : ''}${item.open ? '' : ' is-locked'}" data-assist="${item.key}" style="transform:rotate(${item.angle}deg) translate(0, calc(-1 * var(--wheel-r))) rotate(${-item.angle}deg)"><span><img src="${spokeIcon(item.key)}" alt=""></span><small>${item.label}</small></button>`).join('')}
         </div>
       </div>
     </section>

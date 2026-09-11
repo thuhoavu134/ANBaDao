@@ -155,11 +155,11 @@
 }
 .hv-lich-stage{
   flex:1;min-height:0;position:relative;overflow:hidden;
-  background:#1c120c url('assets/daily/lich-hall.jpg') center 38%/cover no-repeat;
+  background:#cbb58a url('assets/daily/lich-hall.jpg') center 38%/cover no-repeat;
 }
 .hv-lich-stage:before{
   content:"";position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(180deg,rgba(18,10,8,.32) 0%,rgba(12,8,7,.06) 20%,rgba(14,8,6,.08) 58%,rgba(10,7,5,.28) 100%);
+  background:linear-gradient(180deg,rgba(255,244,214,.10) 0%,rgba(12,8,7,.04) 22%,rgba(14,8,6,.06) 58%,rgba(10,7,5,.28) 100%);
 }
 .hv-lich-wheel{
   pointer-events:auto;position:absolute;left:50%;bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:2;
@@ -187,7 +187,7 @@
   position:relative;width:58px;height:58px;border-radius:50%;overflow:hidden;
   display:grid;place-items:center;pointer-events:auto;padding:0;
   background:#1a120c;
-  box-shadow:0 0 0 2px #c4a06a;
+  box-shadow:0 0 0 2px #e2c07a,0 2px 8px rgba(0,0,0,.35);
 }
 .hv-lich-spoke img{
   width:100%;height:100%;object-fit:cover;border-radius:50%;

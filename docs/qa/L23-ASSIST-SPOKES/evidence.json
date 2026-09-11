@@ -1,0 +1,26 @@
+{
+  "hubTeam": 1,
+  "spokeCount": 11,
+  "svgCount": 0,
+  "spokeSrcs": [
+    "assets/ui/account-gear/spokes/relic.jpg",
+    "assets/ui/account-gear/spokes/gear.jpg",
+    "assets/ui/account-gear/spokes/fish.jpg",
+    "assets/ui/account-gear/spokes/pet.jpg",
+    "assets/ui/account-gear/spokes/spirit.jpg",
+    "assets/ui/account-gear/spokes/divine.jpg",
+    "assets/ui/account-gear/spokes/star.jpg",
+    "assets/ui/account-gear/spokes/antique.jpg",
+    "assets/ui/account-gear/spokes/luck.jpg",
+    "assets/ui/account-gear/spokes/illusion.jpg",
+    "assets/ui/account-gear/spokes/formation.jpg"
+  ],
+  "uniquePainted": true,
+  "hallKept": true,
+  "fullScreen": true,
+  "boardSlots": 12,
+  "relicTitle": "Bậc Thầy Bảo Vật: Lv0",
+  "closed": true,
+  "appErrors": [],
+  "pass": true
+}
