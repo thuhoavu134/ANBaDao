@@ -1,3 +1,11 @@
+## 11/09/2026 — Chợ Mộng sơn mài + quầy ngày (TKT-0027)
+
+Nhánh `work/l16-shop-20260911`. Giữ 5 quầy live, 1 lần/ngày, giá 320g / 60💎 / 160g / 40💎 / 220g. Domain thuần bất biến, màn sơn mài như Tháp / Mộng Lộ. Mua qua transaction. Không thêm nút hub thứ hai, không bán lực chiến. Chrome 390 PASS; Safari NOT_RUN. Builder dừng REVIEW.
+
+## 11/09/2026 — Mộng Lộ lên main (TKT-0026)
+
+Squash-merge PR #27 → main `571dd264`. Vercel CD.
+
 ## 11/09/2026 — Mộng Lộ sơn mài + domain run (TKT-0026)
 
 Nhánh `work/l15-expedition-20260911`. Giữ rogue 5 tầng live: Ngã Rẽ / Phúc Mộng / Mộng Ấn / checkpoint. Domain thuần bất biến, màn sơn mài như Tháp. Công thức vàng/ấn/gem không đổi. Không thêm nút hub thứ hai. Chrome 390 PASS; Safari NOT_RUN. Builder dừng REVIEW.

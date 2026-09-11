@@ -1,3 +1,11 @@
+## 11/09/2026 — TKT-0027 Chợ Mộng REVIEW
+
+Domain `src/domain/shop/shop-day.mjs` owns open/buy/day. Runtime wraps `ensureShop` / `buyShop` / `renderShop`, không thêm `data-art-go="shop"`. Mua qua `hvRunCommittedTransaction`. Build: `scripts/shop-runtime-v1.mjs` sau expedition. Không merge cho tới khi owner nói `live`.
+
+## 11/09/2026 — TKT-0026 Mộng Lộ LIVE
+
+Main `571dd264`, PR #27 squash-merge. Domain expedition + lacquer đã trên production.
+
 ## 11/09/2026 — TKT-0026 Mộng Lộ REVIEW
 
 Domain `src/domain/expedition/expedition-run.mjs` owns start/route/bless/reroll/win/lose. Runtime wraps `renderExpedition` / `startRogueBattle`, không thêm `data-art-go="expedition"`. Build: `scripts/expedition-runtime-v1.mjs` sau tower. Không merge cho tới khi owner nói `live`.

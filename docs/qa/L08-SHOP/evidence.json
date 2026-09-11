@@ -1,0 +1,26 @@
+{
+  "hubMarks": 1,
+  "title": "Chợ Đêm Mộng",
+  "cardCount": 5,
+  "buyCount": 5,
+  "goldBefore": 500,
+  "goldAfter": 340,
+  "stamBefore": 120,
+  "stamSold": 1,
+  "stamLabel": "Hết hàng",
+  "goldUnchanged": 340,
+  "bought": [
+    "stam"
+  ],
+  "afterRollover": {
+    "day": 20707,
+    "bought": 0,
+    "stock": 5
+  },
+  "stamOpen": 1,
+  "chapters": [],
+  "chaptersUntouched": true,
+  "hubAfter": 1,
+  "appErrors": [],
+  "pass": true
+}

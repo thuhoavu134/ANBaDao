@@ -1,0 +1,89 @@
+#shopScreen.hv-shop-live{
+  background:#100c08;
+  padding:0;
+  display:flex;
+  flex-direction:column;
+  min-height:100%;
+}
+#shopScreen.hv-shop-live .pagehdr,
+#shopScreen.hv-shop-live .mode-intro{display:none!important}
+#shopScreen.hv-shop-live #shopBody{
+  flex:1;min-height:0;padding:0!important;max-width:none!important;margin:0!important
+}
+#hvShopRoot{
+  --shop-ink:#f6e6c0;
+  --shop-muted:#cbb48a;
+  --shop-gold:#e2b45a;
+  --shop-mist:#9bcfd6;
+  position:relative;min-height:100%;height:100%;display:flex;flex-direction:column;
+  color:var(--shop-ink);font-family:inherit;
+  background:#100c08 url('https://luc-than.vercel.app/assets/hub/daylight-v3233/hub-daylight.png') center top/cover no-repeat;
+  overflow-x:hidden;overflow-y:auto;touch-action:manipulation;
+}
+#hvShopRoot:before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(12,8,6,.55) 0%,rgba(12,8,6,.22) 28%,rgba(10,7,5,.6) 58%,rgba(8,6,4,.94) 100%);
+}
+#hvShopRoot > *{position:relative;z-index:1}
+#hvShopRoot button{font:inherit;color:inherit;cursor:pointer}
+#hvShopRoot button:disabled{opacity:.45;cursor:default}
+#hvShopRoot button:not(:disabled):active{transform:scale(.98)}
+.hv-shop-top{
+  display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:8px;
+  padding:calc(6px + env(safe-area-inset-top)) 12px 4px;
+}
+.hv-shop-back{
+  width:44px;height:44px;border:0;border-radius:50%;
+  background:rgba(24,16,10,.72);box-shadow:0 0 0 1px rgba(215,179,106,.45);
+  font-size:22px;line-height:1;
+}
+.hv-shop-top b{justify-self:center;font-size:16px;letter-spacing:.04em}
+.hv-shop-chips{display:flex;gap:6px}
+.hv-shop-chip{
+  min-height:28px;padding:4px 8px;border-radius:999px;
+  background:rgba(20,12,8,.72);box-shadow:0 0 0 1px rgba(215,179,106,.35);
+  font-size:11px;font-weight:800;
+}
+.hv-shop-hero{
+  min-height:52px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
+  padding:0 16px 6px;text-align:center;
+}
+.hv-shop-kicker{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--shop-mist);font-weight:800}
+.hv-shop-title{font-size:22px;line-height:1.1;font-weight:900;color:#fff4d4;text-shadow:0 8px 24px rgba(0,0,0,.55)}
+.hv-shop-best{margin-top:2px;font-size:11px;color:var(--shop-muted)}
+.hv-shop-panel{
+  display:flex;flex-direction:column;gap:6px;flex:1;
+  padding:8px 12px calc(72px + env(safe-area-inset-bottom));
+  background:linear-gradient(180deg,rgba(28,18,12,.82),rgba(16,10,8,.94));
+  box-shadow:0 -12px 28px rgba(0,0,0,.35);
+  border-top:1px solid rgba(215,179,106,.35);
+}
+.hv-shop-copy{margin:0;font-size:11px;line-height:1.35;color:var(--shop-muted)}
+.hv-shop-shelf{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;
+}
+.hv-shop-card{
+  min-height:124px;padding:6px 8px 8px;border-radius:14px;
+  display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center;
+  background:rgba(42,28,18,.88);box-shadow:0 0 0 1px rgba(167,126,68,.4);
+}
+.hv-shop-card img{
+  width:32px;height:32px;object-fit:contain;border-radius:10px;
+  background:rgba(24,16,10,.7);padding:3px;
+}
+.hv-shop-card b{font-size:11px;line-height:1.2}
+.hv-shop-card small{font-size:10px;line-height:1.25;color:var(--shop-muted)}
+.hv-shop-card span{font-size:11px;font-weight:800;color:var(--shop-gold)}
+.hv-shop-card.is-sold span{color:var(--shop-muted)}
+.hv-shop-buy{
+  width:100%;min-height:36px;margin-top:auto;border:0;border-radius:11px;font-weight:800;
+  background:linear-gradient(180deg,#e2b45a,#a06a22);color:#2a1608;
+}
+.hv-shop-card.is-sold .hv-shop-buy{
+  background:rgba(42,28,18,.9);color:var(--shop-muted);box-shadow:0 0 0 1px rgba(167,126,68,.4);
+}
+.hv-shop-note{font-size:11px;color:var(--shop-muted);text-align:center}
+@media(max-width:360px){
+  .hv-shop-title{font-size:20px}
+  .hv-shop-card{min-height:116px}
+}
