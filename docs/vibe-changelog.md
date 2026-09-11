@@ -1,3 +1,10 @@
+## 12/09/2026 — Lịch Luyện bánh xe đi ải + Nhật Ký Mơ (TKT-0032)
+
+Nhánh `work/l21-daily-onto-main`. Owner: Lịch Luyện là bánh xe ải trên **màn riêng**, mỗi nan icon sơn độc lập — không overlay Thành Chính, không tái icon hub. Nhiệm vụ giữ Nhật Ký Mơ. Qua Ải + Luyện mở đêm 1. Không thêm nút hub, không ải combat mới. Chrome 390 PASS; Safari NOT_RUN. Builder dừng REVIEW.
+
+
+
+
 ## 12/09/2026 — Lễ Hội lên main (TKT-0031)
 
 Squash-merge PR #32 → main `3baffa8`. Vercel CD production READY. Inject hunt → festival. Mở từ đêm đầu như Chợ.

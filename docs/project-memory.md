@@ -1,3 +1,10 @@
+## 12/09/2026 — TKT-0032 Lịch Luyện REVIEW
+
+Dock Lịch Luyện mở **màn hall riêng** `#hvLichRoot` (inset 0, z-index 80, nền `lich-hall.jpg`, nút X, chip tài nguyên) — không overlay lên Thành Chính. 11 nan mỗi ải một icon sơn `assets/daily/spokes/{key}.jpg`, không dùng icon hub. Nan sống: Qua Ải Mộng, Giáo Trường Luyện, Tháp (ch.1), Mộng Lộ (ch.2), Đấu Trường + Săn Boss (ch.3). 5 nan sắp mở. Side Nhiệm vụ giữ Nhật Ký Mơ. Domain daily không đổi công thức. Không thêm `data-art-go`. Không merge cho tới khi owner nói `live`. Trợ trận icon sơn: chưa làm (ticket khác).
+
+
+
+
 ## 12/09/2026 — TKT-0031 Lễ Hội LIVE
 
 Main `3baffa8`, PR #32 squash-merge. Vercel production READY `dpl_CQjwBHTMpwKjPW7zu83pMeRovupz`. Domain festival + lacquer trên production. Inject sau hunt. Mở từ đêm đầu. Formulas frozen.
