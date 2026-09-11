@@ -1,0 +1,14 @@
+{
+  "slotCount": 6,
+  "petLocked": 0,
+  "spent": true,
+  "levelOne": "+1",
+  "deployed": 1,
+  "deployVisible": true,
+  "masterOn": true,
+  "masterArmed": "1",
+  "goldBefore": "500",
+  "goldAfter": "440",
+  "appErrors": [],
+  "pass": true
+}

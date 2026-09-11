@@ -1,0 +1,17 @@
+{
+  "slotCount": 8,
+  "relicLocked": 0,
+  "badgeCount": 11,
+  "badgeOverlap": 0,
+  "titleVisible": true,
+  "heroFillsPortrait": true,
+  "spent": true,
+  "levelOne": "+1",
+  "setVisible": true,
+  "masterOn": true,
+  "masterArmed": "1",
+  "goldBefore": "500",
+  "goldAfter": "420",
+  "appErrors": [],
+  "pass": true
+}

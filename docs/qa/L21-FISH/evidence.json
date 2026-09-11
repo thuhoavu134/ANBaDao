@@ -1,0 +1,15 @@
+{
+  "cellCount": 8,
+  "fishLocked": 0,
+  "lockedCount": 0,
+  "spent": true,
+  "caught": 1,
+  "leveled": true,
+  "loreVisible": true,
+  "masterOn": true,
+  "masterArmed": "1",
+  "goldBefore": "500",
+  "goldAfter": "450",
+  "appErrors": [],
+  "pass": true
+}
