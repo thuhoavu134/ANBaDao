@@ -10,7 +10,7 @@
     "test": "npm run build && node --test --test-concurrency=1 tests/*.test.mjs",
     "check": "npm test"
   },
-  "dependencies": {
+  "devDependencies": {
     "sharp": "0.34.3"
   }
 }

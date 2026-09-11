@@ -14,16 +14,7 @@ const entries = [
   'qa-dinh-loi-spacing.html',
   'qa-runtime.html',
   'splus-lab.html',
-  'assets',
-  'artifacts',
-  'docs',
-  'RUNTIME-FILES.txt',
-  'RUNTIME-PACKAGE.txt',
-  'BUILD-UTC.txt',
-  'SHA256SUMS.txt',
-  'SIZE-REPORT.txt',
-  'clean-runtime-report.json',
-  'vibelab.json'
+  'assets'
 ];
 
 for (const entry of entries) {

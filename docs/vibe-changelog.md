@@ -1,3 +1,7 @@
+## 11/09/2026 — Tối ưu deploy (TKT-0024)
+
+Bản live không còn đóng gói 23MB ảnh QA. Vercel bỏ cài `sharp`. HTML không cache cứng để nhận bản mới ngay.
+
 ## 11/09/2026 — Tháp khóa lực chiến + bù ngày (TKT-0023)
 
 Mỗi tầng có mốc lực chiến (3800 + (tầng−1)×420). Đủ thì Leo tầng auto-qua. Thiếu thì Thử leo tốn 5⚡, không tụt tầng, bắt đầu đếm ngày bù +12%/ngày (trần 5 ngày = +60%). Hố lớn vẫn phải tăng lực ở Trợ trận / Rèn / sao.

@@ -1,0 +1,13 @@
+{
+  "distBytesApprox": "361M",
+  "beforeApprox": "383M",
+  "docsInDist": false,
+  "indexPresent": true,
+  "battlePresent": true,
+  "assetsPresent": true,
+  "embeddedBattleBytes": 1416017,
+  "sharpProduction": false,
+  "installCommand": "npm install --omit=dev --no-audit --no-fund",
+  "tests": "3/3 L24-D1 D2 D3",
+  "pass": true
+}
