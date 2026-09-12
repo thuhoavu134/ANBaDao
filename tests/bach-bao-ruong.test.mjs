@@ -50,7 +50,9 @@ test('L109: cược 2/10/50, sao nhân, chế sò Tinh/Hoạt, shop điểm', ()
   assert.equal(BBR_UNLOCK.b, 10);
   assert.match(ui, /so-icon\.jpg/);
   assert.match(ui, /S\+/);
-  assert.match(ui, /data-bbr-step/);
+  assert.equal(BBR_BOARD.length, 16);
+  assert.match(ui, /hv-bbr-ring/);
+  assert.match(ui, /hv-bbr-stack/);
   assert.match(ui, /data-bbr-take/);
   assert.match(ui, /openSupreme/);
   assert.match(ui, /supPity/);

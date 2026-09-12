@@ -16,23 +16,33 @@
   };
   const BOARD = (typeof BBR_BOARD !== 'undefined') ? BBR_BOARD : [
     { t: 'gold', n: 1 }, { t: 'gold', n: 2 }, { t: 'gold', n: 3 },
-    { t: 'gems', n: 1 }, { t: 'gems', n: 2 }, { t: 'gems', n: 3 },
+    { t: 'gems', n: 1 }, { t: 'gems', n: 2 },
     { t: 'so', n: 1 }, { t: 'so', n: 2 },
     { t: 'tinh', n: 1 }, { t: 'tinh', n: 2 }, { t: 'tinh', n: 3 },
-    { t: 'hoat', n: 1 }, { t: 'hoat', n: 2 }, { t: 'hoat', n: 3 },
-    { t: 'sh_ss', n: 1 }, { t: 'sh_ss', n: 2 },
-    { t: 'sh_ssr', n: 1 }, { t: 'sh_ssr', n: 2 },
-    { t: 'chest', n: 1 }, { t: 'chest', n: 2 },
-    { t: 'supreme', n: 1 }, { t: 'gold', n: 1 },
-    { t: 'gems', n: 1 }, { t: 'tinh', n: 1 }
+    { t: 'hoat', n: 1 }, { t: 'hoat', n: 2 },
+    { t: 'sh_ss', n: 1 }, { t: 'sh_ssr', n: 1 },
+    { t: 'chest', n: 1 }, { t: 'supreme', n: 1 }
   ];
+  const RING = [
+    [1, 1], [2, 1], [3, 1], [4, 1], [5, 1],
+    [5, 2], [5, 3], [5, 4],
+    [5, 5], [4, 5], [3, 5], [2, 5], [1, 5],
+    [1, 4], [1, 3], [1, 2]
+  ];
+  const ART = {
+    gold: 'assets/ui/festival/bbr/gold.jpg',
+    gems: 'assets/ui/festival/bbr/gems.jpg',
+    tinh: 'assets/ui/festival/bbr/tinh.jpg',
+    hoat: 'assets/ui/festival/bbr/hoat.jpg',
+    sh_ss: 'assets/ui/festival/bbr/sh_ss.jpg',
+    sh_ssr: 'assets/ui/festival/bbr/sh_ssr.jpg',
+    chest: 'assets/ui/festival/bbr/chest.jpg',
+    supreme: 'assets/ui/festival/bbr/supreme.jpg',
+    so: 'assets/ui/festival/so-icon.jpg'
+  };
   const LAB = {
     gold: 'Vàng', gems: 'Ngọc', so: 'Sò', tinh: 'Tinh', hoat: 'Hoạt',
     sh_ss: 'Mảnh S', sh_ssr: 'Mảnh S+', chest: 'Rương', supreme: 'Chí Bảo'
-  };
-  const GLYPH = {
-    gold: '🪙', gems: '💎', so: 'sò', tinh: '⚗', hoat: '🔥',
-    sh_ss: '🧩', sh_ssr: '🌟', chest: '🎁', supreme: '👑'
   };
   const SHOP = [
     { id: 'ss8', pts: 100, sh_ss: 8, name: '8 mảnh S' },
@@ -62,9 +72,11 @@
   }
 
   function cellFace(c) {
-    const g = GLYPH[c.t] || '•';
-    if (c.t === 'so') return Array.from({ length: c.n }, () => SO_IC).join('');
-    return Array.from({ length: c.n }, () => '<span>' + g + '</span>').join('');
+    const src = ART[c.t] || ART.gold;
+    const n = Math.max(1, Math.min(3, c.n || 1));
+    return '<span class="hv-bbr-stack n' + n + '">'
+      + Array.from({ length: n }, () => '<img src="' + src + '" alt="">').join('')
+      + '</span>';
   }
 
   if (typeof giveHeroShards === 'function') {
@@ -88,12 +100,11 @@
     else if (type === 'supreme') st().supreme = (st().supreme || 0) + n;
   }
 
-  function doStep() {
+  function applyIdx(idx) {
     const b = st();
     const bet = b.bet || 2;
     if ((P.so || 0) < bet) { toast?.('Không đủ sò. Cược ' + bet + '.'); return null; }
     P.so -= bet;
-    const idx = Math.floor(Math.random() * BOARD.length);
     const cell = BOARD[idx];
     const same = !!(b.pending && b.pending.t === cell.t);
     const stars = same ? Math.min(6, b.pending.stars + cell.n) : cell.n;
@@ -106,6 +117,40 @@
     refreshResbar?.();
     questProgress?.('spin', 1);
     return { idx, cell, same, stars };
+  }
+
+  let spinning = false;
+  function light(i) {
+    document.querySelectorAll('#hvBbrDesk [data-bbr-cell]').forEach(el => {
+      el.classList.toggle('is-hot', Number(el.getAttribute('data-bbr-cell')) === i);
+    });
+  }
+  function delay(ms) { return new Promise(res => setTimeout(res, ms)); }
+
+  async function runSpin() {
+    if (spinning) return;
+    const bet = st().bet || 2;
+    if ((P.so || 0) < bet) { toast?.('Không đủ sò. Cược ' + bet + '.'); return; }
+    spinning = true;
+    const idx = Math.floor(Math.random() * BOARD.length);
+    const n = BOARD.length;
+    const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const total = reduced ? 1 : (n * 2 + idx + 1);
+    for (let k = 0; k < total; k++) {
+      light(k % n);
+      if (!reduced) {
+        const p = k / Math.max(1, total - 1);
+        await delay(p < 0.55 ? 40 : p < 0.8 ? 80 : 140);
+      }
+    }
+    const r = applyIdx(idx);
+    spinning = false;
+    if (r) toast?.(r.same ? ('Cộng ' + r.cell.n + ' → ' + r.stars + '★ ' + LAB[r.cell.t]) : (r.stars + '★ ' + LAB[r.cell.t]));
+    paintDesk();
+  }
+
+  function doStep() {
+    return applyIdx(Math.floor(Math.random() * BOARD.length));
   }
 
   function doTake() {
@@ -175,7 +220,7 @@
       return { ok: true, idx: step.idx, msg: step.stars + '★', z: { l: LAB[step.cell.t], t: step.cell.t }, stars: step.stars };
     };
   }
-  spinBachBaoAnimated = function () { doStep(); paintDesk(); };
+  spinBachBaoAnimated = function () { runSpin(); };
   if (typeof openBachBaoChest === 'function') {
     const prevOpen = openBachBaoChest;
     openBachBaoChest = function openBachBaoChestRare(kind) {
@@ -206,17 +251,24 @@
           <span>🎁 ${b.chests || 0}</span><span>👑 ${b.supreme || 0}</span></div>
       </div>
       <div class="hv-bbr-kt-body">
-        <div class="hv-bbr-grid" data-bbr-grid>${BOARD.map((c, i) =>
-          `<button type="button" class="hv-bbr-cell${pend && pend.t === c.t && pend.n === c.n ? ' is-hot' : ''}" data-bbr-cell="${i}" disabled>
-            <i>${cellFace(c)}</i><small>${c.n} ${LAB[c.t]}</small>
-          </button>`
-        ).join('')}</div>
+        <div class="hv-bbr-ring" data-bbr-grid>
+          ${BOARD.map((c, i) => {
+            const pos = RING[i] || [1, 1];
+            const hot = pend && pend.t === c.t && pend.n === c.n;
+            return `<button type="button" class="hv-bbr-cell${hot ? ' is-win' : ''}" data-bbr-cell="${i}" style="grid-column:${pos[0]};grid-row:${pos[1]}" disabled>
+              ${cellFace(c)}<small>${c.n}</small>
+            </button>`;
+          }).join('')}
+          <div class="hv-bbr-hub">
+            <img class="hv-bbr-hub-chest" src="assets/ui/festival/bbr/supreme.jpg" alt="">
+            <ul class="hv-bbr-stars">${starTable(type, bet, pend && pend.stars)}</ul>
+          </div>
+        </div>
         <div class="hv-bbr-side">
           <div class="hv-bbr-bets">${BETS.map(n =>
             `<button type="button" class="hv-bbr-bet${bet === n ? ' is-on' : ''}" data-bbr-bet="${n}">${n} ${SO_IC}</button>`
           ).join('')}</div>
           <p class="hv-bbr-now">${pend ? (pend.stars + '★ ' + LAB[pend.t] + ' · Tiếp cộng cục cùng loại') : 'Quay — trúng 2 cục rồi Tiếp trúng 3 = 5★'}</p>
-          <ul class="hv-bbr-stars">${starTable(type, bet, pend && pend.stars)}</ul>
           <div class="hv-bbr-actions">
             <button type="button" data-bbr-step ${((P.so || 0) < bet) ? 'disabled' : ''}>${pend ? 'Tiếp' : 'Quay'} · ${bet} ${SO_IC}</button>
             <button type="button" data-bbr-take ${pend ? '' : 'disabled'}>Thưởng</button>
@@ -249,9 +301,7 @@
       return;
     }
     if (ev.target.closest('[data-bbr-step]')) {
-      const r = doStep();
-      if (r) toast?.(r.same ? ('Cộng ' + r.cell.n + ' → ' + r.stars + '★ ' + LAB[r.cell.t]) : (r.stars + '★ ' + LAB[r.cell.t]));
-      paintDesk();
+      runSpin();
       return;
     }
     if (ev.target.closest('[data-bbr-take]')) {
@@ -303,8 +353,7 @@
       if (ev.target.closest('[data-fest-spin], #bbwSpin')) {
         ev.preventDefault();
         ev.stopImmediatePropagation();
-        doStep();
-        paintDesk();
+        runSpin();
         return;
       }
       if (ev.target.closest('[data-fest-open-supreme], #bbwOpenSupreme')) {

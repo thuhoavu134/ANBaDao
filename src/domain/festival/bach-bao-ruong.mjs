@@ -84,15 +84,12 @@ export function payAt(type, stars, bet) {
 /** 1/2/3 cục cùng loại. Tiếp cộng cục = sao (2+3=5★). */
 export const BBR_BOARD = Object.freeze([
   Object.freeze({ t: 'gold', n: 1 }), Object.freeze({ t: 'gold', n: 2 }), Object.freeze({ t: 'gold', n: 3 }),
-  Object.freeze({ t: 'gems', n: 1 }), Object.freeze({ t: 'gems', n: 2 }), Object.freeze({ t: 'gems', n: 3 }),
+  Object.freeze({ t: 'gems', n: 1 }), Object.freeze({ t: 'gems', n: 2 }),
   Object.freeze({ t: 'so', n: 1 }), Object.freeze({ t: 'so', n: 2 }),
   Object.freeze({ t: 'tinh', n: 1 }), Object.freeze({ t: 'tinh', n: 2 }), Object.freeze({ t: 'tinh', n: 3 }),
-  Object.freeze({ t: 'hoat', n: 1 }), Object.freeze({ t: 'hoat', n: 2 }), Object.freeze({ t: 'hoat', n: 3 }),
-  Object.freeze({ t: 'sh_ss', n: 1 }), Object.freeze({ t: 'sh_ss', n: 2 }),
-  Object.freeze({ t: 'sh_ssr', n: 1 }), Object.freeze({ t: 'sh_ssr', n: 2 }),
-  Object.freeze({ t: 'chest', n: 1 }), Object.freeze({ t: 'chest', n: 2 }),
-  Object.freeze({ t: 'supreme', n: 1 }), Object.freeze({ t: 'gold', n: 1 }),
-  Object.freeze({ t: 'gems', n: 1 }), Object.freeze({ t: 'tinh', n: 1 })
+  Object.freeze({ t: 'hoat', n: 1 }), Object.freeze({ t: 'hoat', n: 2 }),
+  Object.freeze({ t: 'sh_ss', n: 1 }), Object.freeze({ t: 'sh_ssr', n: 1 }),
+  Object.freeze({ t: 'chest', n: 1 }), Object.freeze({ t: 'supreme', n: 1 })
 ]);
 
 export function spinStep(player, { bet, rng, day, board } = {}) {

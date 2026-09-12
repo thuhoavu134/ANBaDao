@@ -1,3 +1,7 @@
+## 13/09/2026 — Wave S vành Bách Bảo REVIEW
+
+Vành chữ nhật, icon chồng, đèn chạy. Chợ hết tướng ngoài 12. Ấn món = công dụng.
+
 ## 13/09/2026 — Wave S Bách Bảo lưới LIVE
 
 Owner gõ live. Squash [#88](https://github.com/bktimmy247/luc-than/pull/88) → `3b4979e`. TKT-0112.

@@ -66,6 +66,13 @@ test('L08-T2: same day keeps stock; new day resets bought and rolls heroes', () 
   assert.deepEqual(next.shop.bought, []);
   assert.equal(next.shop.day, 11);
   assert.equal(first.shop.bought.length, 0);
+  const stale = prepareShopOpen(player({ shop: first.shop }), {
+    day: 10,
+    heroes: [{ id: 'ong_hang_pho', rarity: 'ssr' }, { id: 'luc_anh', rarity: 's' }],
+    rng: () => 0
+  });
+  assert.equal(stale.refreshed, true);
+  assert.equal(stale.shop.stock[0].hero, 'luc_anh');
 });
 
 test('L08-T3: prices keep the live catalog; second buy is sold out', () => {
@@ -155,6 +162,8 @@ test('L08-P4: lacquer screen is wired and does not add a second hub landmark', (
   assert.match(ui, /data-shop-buy/);
   assert.match(ui, /prepareShopBuy/);
   assert.match(ui, /Chợ Lục Châu/);
+  assert.match(ui, /hvShopInfo/);
+  assert.match(ui, /OFFICIAL_ROSTER_12_IDS/);
   assert.doesNotMatch(ui, /data-art-go="shop"/);
   assert.match(css, /#hvShopRoot/);
   assert.match(css, /[.]hv-shop-shelf/);

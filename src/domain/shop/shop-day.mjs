@@ -110,7 +110,10 @@ export function normalizeShop(shop) {
 export function prepareShopOpen(player, { day, heroes, rng } = {}) {
   const shop = normalizeShop(player?.shop);
   const d = asInt(day, shopDayIndex());
-  if (shop.day === d && shop.stock.length === SHOP_STALL_COUNT) {
+  const pools = heroPools(heroes);
+  const allow = new Set([...(pools.nonSsr || []), ...(pools.ssr || [])]);
+  const heroOk = !allow.size || shop.stock.every(it => it.type !== 'shards' || allow.has(it.hero));
+  if (shop.day === d && shop.stock.length === SHOP_STALL_COUNT && heroOk) {
     return { ok: true, shop, refreshed: false };
   }
   const next = emptyShop();

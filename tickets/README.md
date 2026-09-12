@@ -79,6 +79,7 @@ Board GitHub không có. File `tickets/TKT-00xx/ticket.md` là nguồn sự th�
 | TKT-0110 | S | Luân cược sao + Chí Bảo hiếm | LIVE (#86) |
 | TKT-0111 | S | Kinh tế Tinh/Hoạt + B/A/S/S+ | LIVE (#87) |
 | TKT-0112 | S | Bách Bảo cộng cục + cắt Mộng | LIVE (#88) |
+| TKT-0113 | S | Vành Bách Bảo + chợ 12 tướng | REVIEW |
 
 Cách tạo gift code (owner): [docs/GIFT-CODES.md](../docs/GIFT-CODES.md)
 

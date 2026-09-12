@@ -81,6 +81,28 @@
     return it.gold ? ('🪙 ' + fmt(it.gold)) : ('💎 ' + fmt(it.gems));
   }
 
+  const USE = {
+    sh10: 'Mảnh tướng 12 chính tuyến. Đủ mảnh → mở tướng. Thêm mảnh → lên sao (lực chiến).',
+    sh5ssr: 'Mảnh S+. Đủ 50 → mở tướng S+. Thêm mảnh → lên sao.',
+    stam: 'Độ Tỉnh Táo. Tiêu khi đánh ải, tháp, săn, đài.',
+    gold: 'Vàng. Lên cấp tướng và trả rèn.',
+    craft: 'Tinh + Hoạt. Rèn trang bị, hoặc chế 10 sò Bách Bảo.',
+    binh_tinh: 'Tinh Lực. Rèn đồ (20/lần) hoặc chế sò (25).',
+    lo_hoat: 'Hoạt Lực. Cường hoá đồ hoặc chế sò (25).',
+    goi_ngoc: 'Tinh+Hoạt catch-up. Rèn / cường / chế sò khi thiếu ngày.'
+  };
+
+  function showUse(k) {
+    let box = document.getElementById('hvShopInfo');
+    if (!box) {
+      box = document.createElement('div');
+      box.id = 'hvShopInfo';
+      document.getElementById('hvShopRoot')?.appendChild(box);
+    }
+    const it = (P.shop && P.shop.stock || []).find(x => x.k === k);
+    box.innerHTML = '<b>' + (it?.name || k) + '</b>' + (USE[k] || 'Nguyên liệu ngày.');
+  }
+
   function openArgs() {
     return { day: dayNow(), heroes: heroCatalog(), rng: Math.random.bind(Math), stamCap: DATA?.daily?.stamCap || 120 };
   }
@@ -133,7 +155,13 @@
       </div>`;
     body.querySelector('[data-shop-back]')?.addEventListener('click', () => navTo('hub'));
     body.querySelectorAll('[data-shop-buy]').forEach(btn => {
-      btn.addEventListener('click', () => buyShop(btn.dataset.shopBuy));
+      btn.addEventListener('click', ev => {
+        ev.stopPropagation();
+        buyShop(btn.dataset.shopBuy);
+      });
+    });
+    body.querySelectorAll('[data-shop-card]').forEach(card => {
+      card.addEventListener('click', () => showUse(card.getAttribute('data-shop-card')));
     });
   }
 
