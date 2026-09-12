@@ -2,7 +2,7 @@
 
 Đọc `docs/HANDOFF-2026-09-12.md` rồi `docs/LUNA-HANDOFF.md` trước khi sửa game.
 
-Bàn giao mới nhất **12/09/2026 tối**: TKT-0080 địch nhìn trái LIVE [#65](https://github.com/bktimmy247/luc-than/pull/65) `d92bff1`. Wave H overlay LIVE — Tháp #59 `0622509` · Giáo Trường #62 `298828b` · ấn D #61 `fa71369` · Thử Thách #63 `576d3c8` · chip #60 `6ddad79` · banner đỏ #64 `6686efa`. Việc kế: [TKT-0078](tickets/TKT-0078/ticket.md) alias sau 13/09 17:15 +07, [TKT-0076](tickets/TKT-0076/ticket.md) Neon. 72 tướng = wave sau.
+Bàn giao mới nhất **12/09/2026 tối**: TKT-0076 Neon store LIVE [#66](https://github.com/bktimmy247/luc-than/pull/66) `0895079` (chưa DATABASE_URL). TKT-0080 địch nhìn trái [#65](https://github.com/bktimmy247/luc-than/pull/65) `d92bff1`. Việc kế: [TKT-0078](tickets/TKT-0078/ticket.md) alias sau 13/09 17:15 +07 — gắn Neon URL trước đó. 72 tướng = wave sau.
 
 
 
