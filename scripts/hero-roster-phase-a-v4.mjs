@@ -20,14 +20,12 @@ const css = `<style id="hero-roster-phase-a-v4-css">
 #hvHeroRosterV4 .v4-card{position:relative;aspect-ratio:.68;min-height:150px;border:2px solid #e8c56a;border-radius:10px;background:#c9a050;box-shadow:0 0 0 2px #7a4a14,inset 0 0 0 2px #fff4d0,0 4px 10px rgba(70,40,8,.3);overflow:hidden;padding:0;margin:0;color:inherit;min-width:0;touch-action:manipulation}
 #hvHeroRosterV4 .v4-art{position:absolute;left:3px;right:3px;top:3px;bottom:3px;border-radius:7px;overflow:hidden;background:linear-gradient(180deg,#cde9df,#acd2c1);border:0}
 #hvHeroRosterV4 .v4-art img{width:168%;max-width:none;height:130%;object-fit:cover;object-position:50% 8%;margin-left:-34%;margin-top:-2%;display:block}
-#hvHeroRosterV4 .v4-grade{position:absolute;left:4px;top:4px;z-index:5;min-width:26px;height:22px;padding:0 5px;border-radius:6px 2px 8px 2px;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#f0d48a,#c09028);border:1.5px solid #fff6d4;color:#3a2414;font-size:10px;font-weight:1000;box-shadow:0 1px 3px rgba(0,0,0,.25)}
-#hvHeroRosterV4 .v4-card.r-splus .v4-grade{background:linear-gradient(180deg,#ffe9a8,#e2b45a);color:#5a3a10}
-#hvHeroRosterV4 .v4-card.r-s .v4-grade{background:linear-gradient(180deg,#f0c070,#c07818);color:#fff8e8}
-#hvHeroRosterV4 .v4-card.r-a .v4-grade{background:linear-gradient(180deg,#9ec8f0,#3a6aaa);color:#fff}
-#hvHeroRosterV4 .v4-card.r-b .v4-grade{background:linear-gradient(180deg,#c8d0d8,#6a7888);color:#fff}
+#hvHeroRosterV4 .v4-grade{position:absolute;left:3px;top:3px;z-index:5;width:30px;height:30px;padding:0;border:0;background:none;box-shadow:none;display:block}
+#hvHeroRosterV4 .v4-grade img{width:30px;height:30px;object-fit:contain;display:block;filter:drop-shadow(0 1px 2px rgba(0,0,0,.45))}
+#hvHeroRosterV4 .v4-card.r-splus .v4-grade,#hvHeroRosterV4 .v4-card.r-s .v4-grade,#hvHeroRosterV4 .v4-card.r-a .v4-grade,#hvHeroRosterV4 .v4-card.r-b .v4-grade{background:none}
 #hvHeroRosterV4 .v4-level{position:absolute;right:6px;top:5px;z-index:5;color:#fff;font-size:10px;font-weight:1000;text-shadow:0 1px 3px #000,0 0 4px #000}
 #hvHeroRosterV4 .v4-veil{position:absolute;left:3px;right:3px;bottom:3px;z-index:4;height:44%;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:0 4px 7px;pointer-events:none;background:linear-gradient(180deg,rgba(255,240,210,0) 0%,rgba(255,228,176,.38) 32%,rgba(242,198,112,.78) 70%,rgba(230,176,78,.95) 100%)}
-#hvHeroRosterV4 .v4-element{position:static;width:22px;height:22px;margin:0 0 2px;border-radius:50%;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;font-size:12px;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+#hvHeroRosterV4 .v4-element{position:static;width:14px;height:14px;margin:0 0 1px;border-radius:50%;background:rgba(255,255,255,.88);display:flex;align-items:center;justify-content:center;font-size:8px;box-shadow:0 1px 2px rgba(0,0,0,.18)}
 #hvHeroRosterV4 .v4-power,#hvHeroRosterV4 .v4-deployed{display:none}
 #hvHeroRosterV4 .v4-stars{position:static;text-align:center;color:#ffd24a;font-size:10px;letter-spacing:0;line-height:1;text-shadow:0 1px 1px #8d5600}
 #hvHeroRosterV4 .v4-stars i{font-style:normal;opacity:.28}

@@ -19,6 +19,8 @@ test('L04a roster route owns a full viewport surface for card hit targets', () =
   assert.match(css, /v4-veil/);
   assert.match(runtime, /v4-veil/);
   assert.match(runtime, /S\+/);
+  assert.match(runtime, /heroes\/grade-\$/);
+  assert.match(css, /v4-element\{[^}]*width:14px/);
   assert.match(runtime, /back\.dataset\.nav = 'heroes'/);
   assert.doesNotMatch(runtime, /document\.addEventListener\(['"](?:click|pointerdown|pointerup)/);
 });
