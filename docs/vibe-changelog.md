@@ -1,3 +1,7 @@
+## 12/09/2026 — TKT-0076 Neon store REVIEW
+
+`createPostgresStore` nhận sql mock, schema oauth payload JSONB, profile JOIN username. `/api/health` thêm `store`. Driver `@neondatabase/serverless`. L76A-P1 BLOCKED_ENV — chưa `DATABASE_URL`. Không merge tới live.
+
 ## 12/09/2026 — TKT-0080 LIVE cơ chế địch nhìn trái
 
 Owner gõ live. Squash [#65](https://github.com/bktimmy247/luc-than/pull/65) → `d92bff1`. `drawUnit` lật mọi thân `TEAM_ENEMY`. Safari NOT_RUN. Vercel luc-than hết quota (TKT-0078).

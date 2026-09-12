@@ -87,6 +87,7 @@ export function createApp(deps) {
         ok: true,
         auth: true,
         persist: store.kind || 'memory',
+        store: store.kind || 'memory',
         oauth: Boolean(google.clientId && google.clientSecret),
         providers: {
           google: Boolean(google.clientId && google.clientSecret),

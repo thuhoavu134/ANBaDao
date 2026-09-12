@@ -177,3 +177,14 @@ test('L74-T5: profile, rivals, chat, leaderboard, arena swap match live client',
   assert.equal(board.status, 200);
   assert.equal(board.json.top[0].user, 'DauSi_A');
 });
+
+test('L76A health reports store kind', async () => {
+  const memory = await json(app(), 'GET', '/api/health');
+  assert.equal(memory.json.store, 'memory');
+  assert.equal(memory.json.persist, 'memory');
+  const pg = createMemoryStore();
+  pg.kind = 'postgres';
+  const health = await json(app({ store: pg }), 'GET', '/api/health');
+  assert.equal(health.json.store, 'postgres');
+  assert.equal(health.json.persist, 'postgres');
+});

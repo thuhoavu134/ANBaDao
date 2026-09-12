@@ -37,6 +37,13 @@ Không có App ID thì nút MXH mở form email dự phòng. Email + Du khách c
 
 Không tạo project Vercel thứ hai.
 
+## Neon — 4 bước (TKT-0076)
+
+1. Tạo database Neon (region gần Singapore). Copy connection string `DATABASE_URL`.
+2. Project **luc-than** → Environment Variables: `DATABASE_URL` + `AUTH_SECRET` cho Production **và** Preview.
+3. Redeploy một lần. `/api/health` phải có `"store":"postgres"`.
+4. Tạo tài khoản máy A, đăng nhập máy B — còn. Không có URL = tài khoản mất khi máy ngủ.
+
 Ticket kế: [TKT-0076](../tickets/TKT-0076/ticket.md) gắn Neon · [TKT-0077](../tickets/TKT-0077/ticket.md) OAuth chờ App ID · [TKT-0078](../tickets/TKT-0078/ticket.md) retrigger alias sau 13/09 17:15 +07.
 
 ## Preview sandbox

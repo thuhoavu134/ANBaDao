@@ -1,0 +1,14 @@
+{
+  "ticket": "TKT-0076",
+  "safari": "NOT_RUN",
+  "L76A-T1": "GREEN",
+  "L76A-T2": "GREEN",
+  "L76A-T3": "GREEN",
+  "L76A-T4": "GREEN",
+  "L76A-P1": "BLOCKED_ENV",
+  "health": {
+    "url": "https://luc-than.vercel.app/api/health",
+    "persist": "memory",
+    "note": "Không DATABASE_URL trên project luc-than. Store memory mất cold start."
+  }
+}

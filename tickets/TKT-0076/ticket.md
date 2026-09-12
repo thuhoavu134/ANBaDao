@@ -1,11 +1,11 @@
 ---
 id: TKT-0076
 title: Neon Postgres — tài khoản và cloud save sống qua cold start
-status: READY
-phase: READY
+status: REVIEW
+phase: REVIEW
 priority: P0
 created: 2026-09-12T17:20:00.000Z
-updated: 2026-09-12T17:20:00.000Z
+updated: 2026-09-12T12:50:00.000Z
 acceptance_ids: ['L76A-T1', 'L76A-T2', 'L76A-T3', 'L76A-T4', 'L76A-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths: ['src/server/store.mjs', 'src/server/app.mjs', 'api/index.mjs', 'tests/auth-api.test.mjs', 'tests/store-postgres.test.mjs', 'docs/AUTH-VERCEL.md', 'docs/qa/L76A-NEON/']
@@ -61,4 +61,4 @@ Không PvP người-thật. Không IAP. Không Combat V2. Không 72 tướng. Kh
 
 Frozen: login-gate UI, net-3d, battle.html.
 
-Builder → REVIEW. Không tự MERGED/DONE.
+Builder → REVIEW. L76A-T1…T4 GREEN. L76A-P1 **BLOCKED_ENV**. Không LIVE tới khi `/api/health` `"store":"postgres"`. Không merge tới `live`.

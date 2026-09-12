@@ -147,9 +147,8 @@ export function createFileStore(filePath) {
   };
 }
 
-export async function createPostgresStore(databaseUrl) {
-  const { neon } = await import('@neondatabase/serverless');
-  const sql = neon(databaseUrl);
+export async function createPostgresStore(databaseUrl, sqlImpl) {
+  const sql = sqlImpl || (await import('@neondatabase/serverless')).neon(databaseUrl);
   await sql`CREATE TABLE IF NOT EXISTS hv_users (
     id TEXT PRIMARY KEY,
     username TEXT UNIQUE NOT NULL,
@@ -180,8 +179,10 @@ export async function createPostgresStore(databaseUrl) {
   )`;
   await sql`CREATE TABLE IF NOT EXISTS hv_oauth_state (
     state TEXT PRIMARY KEY,
-    created_at BIGINT NOT NULL
+    created_at BIGINT NOT NULL,
+    payload JSONB
   )`;
+  await sql`ALTER TABLE hv_oauth_state ADD COLUMN IF NOT EXISTS payload JSONB`;
   await sql`CREATE TABLE IF NOT EXISTS hv_oauth_codes (
     code TEXT PRIMARY KEY,
     user_id TEXT NOT NULL,
@@ -229,7 +230,7 @@ export async function createPostgresStore(databaseUrl) {
         ON CONFLICT (user_id) DO UPDATE SET save = excluded.save, updated_at = excluded.updated_at`;
     },
     async getProfile(userId) {
-      const rows = await sql`SELECT * FROM hv_profiles WHERE user_id = ${userId} LIMIT 1`;
+      const rows = await sql`SELECT p.*, u.username FROM hv_profiles p JOIN hv_users u ON u.id = p.user_id WHERE p.user_id = ${userId} LIMIT 1`;
       const row = rows[0];
       if (!row) return null;
       return { user: row.username, power: row.power, towerBest: row.tower_best, chapter: row.chapter, squad: row.squad, rank: row.rank, userId };
@@ -261,13 +262,15 @@ export async function createPostgresStore(databaseUrl) {
       return rows.map(r => ({ user: r.username, text: r.text, t: Number(r.t) }));
     },
     async putOauthState(state, row) {
-      await sql`INSERT INTO hv_oauth_state (state, created_at) VALUES (${state}, ${row.createdAt})
-        ON CONFLICT (state) DO UPDATE SET created_at = excluded.created_at`;
+      await sql`INSERT INTO hv_oauth_state (state, created_at, payload) VALUES (${state}, ${row.createdAt}, ${JSON.stringify(row || {})}::jsonb)
+        ON CONFLICT (state) DO UPDATE SET created_at = excluded.created_at, payload = excluded.payload`;
     },
     async takeOauthState(state) {
       const rows = await sql`SELECT * FROM hv_oauth_state WHERE state = ${state} LIMIT 1`;
       await sql`DELETE FROM hv_oauth_state WHERE state = ${state}`;
-      return rows[0] ? { createdAt: Number(rows[0].created_at) } : null;
+      if (!rows[0]) return null;
+      const payload = rows[0].payload && typeof rows[0].payload === 'object' ? rows[0].payload : {};
+      return { ...payload, createdAt: Number(rows[0].created_at) };
     },
     async putOauthCode(code, row) {
       await sql`INSERT INTO hv_oauth_codes (code, user_id, created_at) VALUES (${code}, ${row.userId}, ${row.createdAt})
@@ -281,10 +284,10 @@ export async function createPostgresStore(databaseUrl) {
   };
 }
 
-export async function createStoreFromEnv(env = process.env) {
+export async function createStoreFromEnv(env = process.env, options = {}) {
   if (env.DATABASE_URL) {
     try {
-      return await createPostgresStore(env.DATABASE_URL);
+      return await createPostgresStore(env.DATABASE_URL, options.sql);
     } catch (err) {
       console.error('honviet store postgres failed', err);
     }
