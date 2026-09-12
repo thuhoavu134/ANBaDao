@@ -25,8 +25,43 @@
 #hvFestivalRoot.hv-city.is-tile-open #hvFestCity{display:none}
 #hvFestivalRoot.hv-city[data-fcity="lamp"] .hv-fest-wheel-shell{display:none!important}
 #hvFestivalRoot.hv-city[data-fcity="wheel"] .hv-fest-panel > :not(.hv-fest-wheel-shell){display:none!important}
-#hvFestivalRoot.hv-city[data-fcity="chest"] .hv-fest-panel > :not(.hv-fest-wheel-shell){display:none!important}
-#hvFestivalRoot.hv-city[data-fcity="chest"] .hv-fest-wheel-shell > :not(.hv-fest-chests):not([data-fest-reveal]){display:none!important}
+#hvFestivalRoot.hv-city .hv-fest-panel{
+  background:#f3e4c4!important;color:#3a2414!important;box-shadow:none!important;border-top:0!important;
+}
+#hvFestivalRoot.hv-city .hv-fest-copy,
+#hvFestivalRoot.hv-city .hv-fest-lamps,
+#hvFestivalRoot.hv-city .hv-fest-wish,
+#hvFestivalRoot.hv-city .hv-fest-log,
+#hvFestivalRoot.hv-city .hv-fest-current small{color:#5a3a18!important}
+#hvFestivalRoot.hv-city .hv-fest-theme,
+#hvFestivalRoot.hv-city .hv-fest-mile,
+#hvFestivalRoot.hv-city .hv-fest-current{
+  background:#fff8e8!important;color:#3a2414!important;box-shadow:0 0 0 1px #d7b36a!important;
+}
+#hvFestivalRoot.hv-city .hv-fest-theme.is-on,
+#hvFestivalRoot.hv-city .hv-fest-mile.is-on{
+  background:linear-gradient(180deg,#e2b45a,#c09028)!important;color:#2a1608!important;
+}
+#hvFestivalRoot.hv-city .hv-fest-title{color:#5a3a18!important;text-shadow:none!important}
+#hvFestivalRoot.hv-city .hv-fest-best,#hvFestivalRoot.hv-city .hv-fest-kicker{color:#6a4a28!important}
+#hvFestVault{
+  display:none;padding:8px 12px 28px;color:#3a2414;
+}
+#hvFestivalRoot.hv-city[data-fcity="chest"] #hvFestVault{display:block}
+#hvFestivalRoot.hv-city[data-fcity="chest"] .hv-fest-panel{display:none!important}
+#hvFestVault .hv-vault-card{
+  display:grid;grid-template-columns:56px 1fr auto;gap:10px;align-items:center;
+  margin:8px 0;padding:10px;border-radius:14px;background:#fff8e8;box-shadow:0 0 0 1px #d7b36a;
+}
+#hvFestVault .hv-vault-card img{width:56px;height:56px;object-fit:contain;background:transparent}
+#hvFestVault .hv-vault-card b{display:block;font-size:14px;color:#6a3a10}
+#hvFestVault .hv-vault-card p{margin:4px 0 0;font-size:12px;color:#5a3a18;line-height:1.4}
+#hvFestVault .hv-vault-card button{
+  min-height:40px;padding:0 12px;border:0;border-radius:11px;font-weight:800;
+  background:linear-gradient(180deg,#e2b45a,#c09028);color:#2a1608;
+}
+#hvFestVault .hv-vault-card button:disabled{opacity:.45}
+#hvFestVault .hv-vault-note{font-size:12px;color:#6a4a28;line-height:1.4}
 #hvFestCity .hv-ftile{
   border:0;background:#f7ead2;border-radius:14px;padding:6px 6px 8px;
   box-shadow:0 0 0 1px #e2c48a,0 4px 10px rgba(80,50,20,.12);

@@ -24,8 +24,8 @@ test('L98: nhật ký city 6 ô, không document click', () => {
 test('L99: lễ hội city Hoa Đăng / Bách Bảo / Rương', () => {
   const ui = read('src/ui/festival-3d-runtime.js');
   const css = read('src/ui/festival-3d.css');
-  assert.match(ui, /hvFestCity/);
-  assert.match(css, /#hvFestCity/);
+  assert.match(ui, /hvFestVault/);
+  assert.match(css, /#hvFestVault/);
   assert.doesNotMatch(ui, /document\.addEventListener\(['"](?:click|pointerdown|pointerup)/);
   for (const f of ['hoa-dang','bach-bao','ruong']) {
     const p = join(root, 'assets/ui/festival/tiles', f + '.jpg');

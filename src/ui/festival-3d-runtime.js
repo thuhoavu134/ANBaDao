@@ -31,6 +31,7 @@
         if (!btn) return;
         root.dataset.fcity = btn.getAttribute('data-fcity');
         root.classList.add('is-tile-open');
+        paintVault(root);
       });
       root.addEventListener('click', ev => {
         if (!root.classList.contains('is-tile-open')) return;
@@ -40,7 +41,41 @@
         root.dataset.fcity = '';
       }, true);
     }
+    paintVault(root);
   };
+
+  function paintVault(root) {
+    if (!root) return;
+    let vault = root.querySelector('#hvFestVault');
+    if (!vault) {
+      vault = document.createElement('div');
+      vault.id = 'hvFestVault';
+      root.append(vault);
+      vault.addEventListener('click', ev => {
+        const btn = ev.target.closest('[data-vault-open]');
+        if (!btn) return;
+        const kind = btn.getAttribute('data-vault-open');
+        if (typeof openBachBaoChest === 'function') openBachBaoChest(kind);
+        else if (typeof honVietOpen === 'function') honVietOpen(kind);
+        paintVault(root);
+      });
+    }
+    const bb = (typeof P === 'object' && P.bachBao) || {};
+    const n = bb.chests || 0;
+    const s = bb.supreme || 0;
+    vault.innerHTML = `
+      <p class="hv-vault-note">Rương trúng ở Bách Bảo (bấm Thưởng) sẽ nằm đây. Mở để nhận mảnh / ngọc / đồ.</p>
+      <div class="hv-vault-card">
+        <img src="assets/ui/festival/bbr/chest.png" alt="">
+        <div><b>Rương Báu ×${n}</b><p>Mảnh S · S+ · ngọc. Trúng ô rương gỗ trên vành.</p></div>
+        <button type="button" data-vault-open="normal" ${n < 1 ? 'disabled' : ''}>Mở</button>
+      </div>
+      <div class="hv-vault-card">
+        <img src="assets/ui/festival/bbr/supreme.png" alt="">
+        <div><b>Rương Chí Bảo ×${s}</b><p>Mảnh S+ · đồ cực phẩm. Trúng ô giữa trên/dưới vành.</p></div>
+        <button type="button" data-vault-open="supreme" ${s < 1 ? 'disabled' : ''}>Mở</button>
+      </div>`;
+  }
 
   const syncOpen = name => {
     const root = hoist();

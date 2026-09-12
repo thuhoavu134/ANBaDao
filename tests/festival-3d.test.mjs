@@ -29,7 +29,7 @@ test('L42-T3: hall mounts on body and wraps showScreen without a second document
   assert.match(ui, /document\.body\.append\(root\)/);
   assert.match(ui, /const baseShowScreen = showScreen/);
   assert.match(ui, /root\.classList\.toggle\(['"]is-open['"]/);
-  assert.match(ui, /renderFestival/);
+  assert.match(ui, /hvFestVault/);
   assert.doesNotMatch(ui, /document\.addEventListener\(['"](?:click|pointerdown|pointerup)/);
 });
 
