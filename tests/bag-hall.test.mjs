@@ -29,6 +29,7 @@ test('L27-T3: hall mounts on body and wraps showScreen without a second document
   assert.match(ui, /root\.classList\.toggle\(['"]is-open['"]/);
   assert.match(ui, /getElementById\(['"]bagBody['"]\)/);
   assert.match(ui, /hvShowItemTip/);
+  assert.match(ui, /how:/);
   assert.match(ui, /data-bag-i/);
   assert.doesNotMatch(ui, /document\.addEventListener\(['"](?:click|pointerdown|pointerup)/);
 });

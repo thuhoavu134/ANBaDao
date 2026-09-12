@@ -27,3 +27,4 @@
 #hvShopRoot .hv-shop-copy,#hvShopRoot .hv-shop-card small{color:#5a3a18!important}
 body.shop-3d-active .hv-brandbar,body.shop-3d-active #resbar{display:none!important}
 #hvItemTip{z-index:140}
+#hvItemTip .hv-tip-head{position:relative}

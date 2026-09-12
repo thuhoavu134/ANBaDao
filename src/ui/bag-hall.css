@@ -54,3 +54,8 @@ body.bag-hall-active #hubScreen{display:block!important;visibility:visible!impor
 body.bag-hall-active #bagScreen{display:none!important}
 body.bag-hall-active .art-dock{z-index:96}
 body.bag-hall-active .hv-brandbar,body.bag-hall-active #resbar{display:none!important}
+#hvItemTip{
+  position:fixed;inset:0;z-index:140;display:flex;align-items:center;justify-content:center;
+  background:rgba(8,6,4,.62);
+}
+#hvItemTip[hidden]{display:none!important}

@@ -46,9 +46,10 @@
         const name = typeof itemName === 'function' ? itemName(it) : (it.slot || 'đồ');
         const slot = (typeof DATA === 'object' && DATA.items && DATA.items.slotName && DATA.items.slotName[it.slot]) || it.slot || '';
         html += cell('t-' + rar, (it.slot || '?').slice(0, 2), '+' + (it.lvl || 0), name, {
-          title: name,
+          title: name, ic: '⚔️', qty: 1, tone: 'gold', how: ['forge', 'fest'],
           what: (slot ? slot + ' · ' : '') + 'phẩm ' + rar.toUpperCase().replace('SSR', 'S+').replace('SS', 'S') + ' · +' + (it.lvl || 0) + '.',
-          use: 'Mặc cho tướng ở Đội hình. Cường hoá ở Rèn (vàng + Hoạt, tối đa +15). Phẩm càng cao chỉ số càng mạnh.'
+          use: 'Mặc cho tướng ở Đội hình. Cường hoá ở Rèn (vàng + Hoạt, tối đa +15).',
+          action: 'Dùng', go: 'heroes'
         });
       });
     } else if (tab === 'shard') {
@@ -62,31 +63,41 @@
         const rar = String(hero.rarity || 'a').toLowerCase();
         const need = rar === 'ssr' || rar === 'ss' ? 50 : (rar === 's' ? 30 : (rar === 'a' ? 20 : 10));
         html += cell('t-ss', name.slice(0, 2), n, name, {
-          title: 'Mảnh ' + name,
+          title: 'Mảnh ' + name, ic: '🧩', qty: n, tone: 'shard', how: ['shop', 'fest', 'summon', 'camp'],
           what: 'Đang có ' + n + ' mảnh. Cần ' + need + ' để mở tướng.',
-          use: 'Đủ mảnh thì mở tướng. Thêm mảnh để lên sao, tăng lực chiến. Kiếm từ Chợ, Bách Bảo, ải, thư.'
+          use: 'Đủ mảnh thì mở tướng. Thêm mảnh để lên sao, tăng lực chiến.',
+          action: 'Dùng', go: 'heroes'
         });
       });
     } else {
       html += cell('t-mat', '🪙', P.gold, 'Vàng', {
-        title: 'Vàng', what: 'Tiền tệ chính.', use: 'Lên cấp tướng, trả rèn/cường, mua quầy vàng ở Chợ.'
+        title: 'Vàng', ic: '🪙', qty: P.gold, tone: 'gold', how: ['camp', 'daily', 'mail', 'fest'],
+        what: 'Tiền tệ chính.', use: 'Lên cấp tướng, trả rèn/cường, mua quầy vàng ở Chợ.'
       });
       html += cell('t-mat', '💎', P.gems, 'Ngọc', {
-        title: 'Ngọc', what: 'Tiền hiếm.', use: 'Gọi mộng (gacha), mua gói ngọc ở Chợ, đổi đồ giá trị.'
+        title: 'Ngọc', ic: '💎', qty: P.gems, tone: 'gem', how: ['daily', 'fest', 'shop'],
+        what: 'Tiền hiếm.', use: 'Gọi tướng, mua gói ngọc ở Chợ, đổi đồ giá trị.'
       });
       html += cell('t-mat', '⚗', P.tinh || 0, 'Tinh', {
-        title: 'Tinh Lực', what: 'Nguyên liệu rèn.', use: 'Rèn trang bị ở Rèn (20/lần). Chế 10 sò Bách Bảo (25 Tinh + 25 Hoạt).'
+        title: 'Tinh Lực', ic: '⚗', qty: P.tinh || 0, tone: 'craft', how: ['shop', 'daily', 'fest'],
+        what: 'Nguyên liệu rèn.', use: 'Rèn trang bị ở Rèn (20/lần). Chế 10 sò Bách Bảo (25 Tinh + 25 Hoạt).',
+        action: 'Dùng', go: 'forge'
       });
       html += cell('t-mat', '🔥', P.hoat || 0, 'Hoạt', {
-        title: 'Hoạt Lực', what: 'Nguyên liệu cường hoá.', use: 'Cường trang bị ở Rèn. Chế sò Bách Bảo (25 Hoạt).'
+        title: 'Hoạt Lực', ic: '🔥', qty: P.hoat || 0, tone: 'craft', how: ['shop', 'fest'],
+        what: 'Nguyên liệu cường hoá.', use: 'Cường trang bị ở Rèn. Chế sò Bách Bảo (25 Hoạt).',
+        action: 'Dùng', go: 'forge'
       });
       html += cell('t-mat', '🐚', P.so || 0, 'Sò', {
-        title: 'Sò', what: 'Vé cược Bách Bảo Rương.', use: 'Cược 2 / 10 / 50 sò mỗi lượt quay. Chế sò ở Rèn. Đổi sò nếu không nhận thưởng vành.'
+        title: 'Sò', ic: '🐚', qty: P.so || 0, tone: 'so', how: ['forge', 'fest'],
+        what: 'Vé cược Bách Bảo Rương.', use: 'Cược 2 / 10 / 50 sò mỗi lượt quay. Chế sò ở Rèn.',
+        action: 'Dùng', go: 'festival'
       });
       const bag = P.bag || {};
       Object.keys(bag).forEach(id => {
         if (bag[id]) html += cell('t-a', id.slice(-2), bag[id], id, {
-          title: id, what: 'Đạo cụ trong túi.', use: 'Giữ trong túi. Dùng khi sự kiện hoặc rèn yêu cầu.'
+          title: id, ic: '◆', qty: bag[id], tone: 'gold', how: ['shop', 'mail', 'fest'],
+          what: 'Đạo cụ trong túi.', use: 'Giữ trong túi. Dùng khi sự kiện hoặc rèn yêu cầu.'
         });
       });
     }

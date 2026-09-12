@@ -94,40 +94,106 @@
     return it.gold ? ('🪙 ' + fmt(it.gold)) : ('💎 ' + fmt(it.gems));
   }
 
+  const SRC = {
+    shop: { name: 'Chợ Lục Châu', go: 'shop' },
+    forge: { name: 'Rèn', go: 'forge' },
+    fest: { name: 'Bách Bảo Rương', go: 'festival' },
+    camp: { name: 'Chinh chiến', go: 'campaign' },
+    daily: { name: 'Nhiệm vụ ngày', go: 'daily' },
+    arena: { name: 'Đấu trường', go: 'arena' },
+    hunt: { name: 'Săn', go: 'hunt' },
+    mail: { name: 'Hòm thư', go: 'mail' },
+    summon: { name: 'Gọi tướng', go: 'summon' },
+    jobs: { name: 'Giao việc', go: 'jobs' }
+  };
+
   const TIPS = {
     sh10: {
       what: 'Mảnh tướng 12 chính tuyến.',
-      use: 'Đủ mảnh thì mở tướng (B 10 · A 20 · S 30 · S+ 50). Thêm mảnh để lên sao, tăng lực chiến. Xem ở Túi → Mảnh hoặc chi tiết tướng.'
+      use: 'Đủ mảnh thì mở tướng (B 10 · A 20 · S 30 · S+ 50). Thêm mảnh để lên sao, tăng lực chiến.',
+      tone: 'shard', how: ['shop', 'fest', 'summon', 'camp']
     },
     sh5ssr: {
       what: 'Mảnh tướng phẩm S+.',
-      use: 'Đủ 50 mảnh mở tướng S+. Thêm mảnh lên sao. Dùng ở Đội hình / chi tiết tướng.'
+      use: 'Đủ 50 mảnh mở tướng S+. Thêm mảnh lên sao. Dùng ở Đội hình / chi tiết tướng.',
+      tone: 'shard', how: ['shop', 'fest', 'summon']
     },
     stam: {
       what: 'Độ Tỉnh Táo — thể lực đánh trận.',
-      use: 'Tiêu khi Chinh chiến, Tháp, Săn, Đài. Tự hồi +1 mỗi 5 phút, trần 120. Cà phê chợ +20 (1 lần/ngày).'
+      use: 'Tiêu khi Chinh chiến, Tháp, Săn, Đài. Tự hồi +1 mỗi 5 phút, trần 120.',
+      tone: 'stam', how: ['shop', 'daily', 'camp']
     },
     gold: {
       what: 'Vàng — tiền tệ chính.',
-      use: 'Lên cấp tướng, trả rèn/cường hoá, mua quầy vàng. Kiếm từ ải, thư, nhiệm vụ, Bách Bảo.'
+      use: 'Lên cấp tướng, trả rèn/cường hoá, mua quầy vàng.',
+      tone: 'gold', how: ['camp', 'daily', 'mail', 'fest']
     },
     craft: {
       what: 'Túi Tinh Lực + Hoạt Lực.',
-      use: 'Rèn trang bị ở Rèn (20 Tinh/lần). Chế 10 sò Bách Bảo ở Rèn (25 Tinh + 25 Hoạt, 2 lần/ngày).'
+      use: 'Rèn trang bị (20 Tinh/lần). Chế 10 sò Bách Bảo (25 Tinh + 25 Hoạt, 2 lần/ngày).',
+      tone: 'craft', how: ['shop', 'daily', 'fest']
     },
     binh_tinh: {
       what: 'Bình Tinh Lực.',
-      use: 'Rèn đồ (20/lần) hoặc chế sò ở Rèn (25/lần). Không tiêu trực tiếp ngoài Rèn.'
+      use: 'Rèn đồ (20/lần) hoặc chế sò ở Rèn (25/lần).',
+      tone: 'craft', how: ['shop', 'daily', 'fest']
     },
     lo_hoat: {
       what: 'Lò Hoạt Lực.',
-      use: 'Cường hoá trang bị ở Rèn, hoặc chế sò Bách Bảo (25 Hoạt).'
+      use: 'Cường hoá trang bị ở Rèn, hoặc chế sò Bách Bảo (25 Hoạt).',
+      tone: 'craft', how: ['shop', 'fest']
     },
     goi_ngoc: {
       what: 'Gói Tinh Hoả — 80 Tinh + 80 Hoạt.',
-      use: 'Dự trữ ngày thiếu. Đổ vào Rèn / chế sò. Trần mua 1 lần/ngày.'
+      use: 'Dự trữ ngày thiếu. Đổ vào Rèn / chế sò. Trần mua 1 lần/ngày.',
+      tone: 'gem', how: ['shop']
     }
   };
+
+  let tipInfo = null;
+  let tipView = 'item';
+
+  function goScreen(name) {
+    const tip = document.getElementById('hvItemTip');
+    if (tip) tip.hidden = true;
+    if (typeof navTo === 'function') navTo(name);
+    else if (typeof showScreen === 'function') showScreen(name);
+  }
+
+  function paintTip() {
+    const tip = document.getElementById('hvItemTip');
+    if (!tip || !tipInfo) return;
+    const info = tipInfo;
+    const how = (info.how || []).map(id => SRC[id]).filter(Boolean);
+    if (tipView === 'how') {
+      tip.innerHTML = `<div class="hv-tip-card" id="hvShopInfo">
+        <div class="hv-tip-head t-${info.tone || 'gold'}">
+          ${info.icon ? `<img src="${info.icon}" alt="">` : ''}
+          <b>${info.title || ''}</b>
+          <small>Số lượng sở hữu: ${info.qty != null ? info.qty : '—'}</small>
+        </div>
+        <div class="hv-tip-body">
+          <p>${info.use || info.what || ''}</p>
+          ${how.map(s => `<div class="hv-tip-src"><span>${s.name}</span><button type="button" data-tip-go="${s.go}">Đi</button></div>`).join('') || '<p>Chưa có nguồn nhận.</p>'}
+        </div>
+        <p class="hv-tip-hint">Nhấn vị trí bất kỳ để đóng</p>
+      </div>`;
+      return;
+    }
+    tip.innerHTML = `<div class="hv-tip-card" id="hvShopInfo">
+      <div class="hv-tip-head t-${info.tone || 'gold'}">
+        ${info.icon ? `<img src="${info.icon}" alt="">` : `<span class="hv-tip-ic">${info.ic || '◆'}</span>`}
+        <b>${info.title || ''}</b>
+        <small>Số lượng sở hữu: ${info.qty != null ? info.qty : '—'}</small>
+        <button type="button" class="hv-tip-how" data-tip-how>Cách nhận ⌕</button>
+      </div>
+      <div class="hv-tip-body">
+        <p>${info.use || info.what || ''}</p>
+        ${info.action ? `<button type="button" class="hv-tip-act" data-tip-act>${info.action}</button>` : ''}
+      </div>
+      <p class="hv-tip-hint">Nhấn vị trí bất kỳ để đóng</p>
+    </div>`;
+  }
 
   window.hvShowItemTip = function hvShowItemTip(info) {
     let tip = document.getElementById('hvItemTip');
@@ -137,30 +203,53 @@
       tip.setAttribute('role', 'dialog');
       document.body.append(tip);
       tip.addEventListener('click', ev => {
+        if (ev.target.closest('[data-tip-how]')) {
+          tipView = 'how';
+          paintTip();
+          return;
+        }
+        const go = ev.target.closest('[data-tip-go]');
+        if (go) {
+          goScreen(go.getAttribute('data-tip-go'));
+          return;
+        }
+        if (ev.target.closest('[data-tip-act]')) {
+          const k = tipInfo && tipInfo.buyKey;
+          tip.hidden = true;
+          if (k && typeof buyShop === 'function') buyShop(k);
+          else if (tipInfo && tipInfo.go) goScreen(tipInfo.go);
+          return;
+        }
         if (ev.target === tip || ev.target.closest('[data-tip-close]')) {
           tip.hidden = true;
         }
       });
     }
-    const icon = info.icon ? `<img src="${info.icon}" alt="">` : '';
+    tipInfo = info || {};
+    tipView = 'item';
     tip.hidden = false;
-    tip.innerHTML = `<div class="hv-tip-card" id="hvShopInfo">
-      ${icon}
-      <b>${info.title || ''}</b>
-      <p>${info.what || ''}</p>
-      <p class="hv-tip-use"><strong>Dùng:</strong> ${info.use || ''}</p>
-      <button type="button" data-tip-close>Đóng</button>
-    </div>`;
+    paintTip();
   };
 
   function showUse(k) {
     const it = (P.shop && P.shop.stock || []).find(x => x.k === k);
-    const tip = TIPS[k] || { what: 'Vật phẩm ngày.', use: 'Xem mô tả trên thẻ.' };
+    const tip = TIPS[k] || { what: 'Vật phẩm ngày.', use: 'Xem mô tả trên thẻ.', tone: 'gold', how: ['shop'] };
+    const sold = (P.shop && P.shop.bought || []).includes(k);
+    let qty = 0;
+    if (it?.type === 'shards') qty = (P.shards && it.hero && P.shards[it.hero]) || 0;
+    else if (it?.type === 'stam') qty = P.stamina || 0;
+    else if (it?.type === 'gold') qty = P.gold || 0;
+    else if (it?.type === 'craftpack') qty = (P.tinh || 0);
     window.hvShowItemTip({
       icon: it ? stallIcon(it) : '',
       title: it?.name || k,
       what: tip.what,
-      use: tip.use
+      use: tip.use,
+      tone: tip.tone,
+      how: tip.how,
+      qty,
+      action: sold ? '' : 'Mua',
+      buyKey: sold ? '' : k
     });
   }
 
