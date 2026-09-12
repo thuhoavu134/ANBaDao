@@ -30,12 +30,7 @@
     [7, 6], [6, 6], [5, 6], [4, 6], [3, 6], [2, 6], [1, 6],
     [1, 5], [1, 4], [1, 3], [1, 2]
   ];
-  const SO_CV = {
-    gold: [0, 1, 2, 4, 8, 16, 40], gems: [0, 2, 4, 8, 16, 32, 80],
-    tinh: [0, 1, 2, 5, 10, 22, 50], hoat: [0, 1, 2, 5, 10, 22, 50],
-    sh_ss: [0, 2, 4, 8, 18, 36, 80], sh_ssr: [0, 3, 6, 12, 24, 50, 120],
-    chest: [0, 4, 8, 16, 32, 70, 160], supreme: [0, 8, 16, 32, 70, 150, 360]
-  };
+  const SO_STAR = [0, 1, 3, 10, 28, 80, 220];
   const ART = {
     gold: 'assets/ui/festival/bbr/gold.png',
     gems: 'assets/ui/festival/bbr/gems.png',
@@ -287,8 +282,7 @@
   }
 
   function convertQty(type, stars, bet) {
-    const row = SO_CV[type] || SO_CV.gold;
-    return Math.max(1, Math.round((row[stars] || 1) * ((bet || 2) / 2)));
+    return Math.max(1, Math.round((SO_STAR[stars] || 1) * ((bet || 2) / 2)));
   }
 
   function doConvert() {
@@ -422,33 +416,29 @@
             </button>`;
           }).join('')}
           <div class="hv-bbr-hub">
-            <img class="hv-bbr-hub-chest" src="assets/ui/festival/bbr/supreme.png" alt="">
+            <button type="button" class="hv-bbr-go" data-bbr-step ${((P.so || 0) < bet) ? 'disabled' : ''}>${pend ? 'Tiếp' : 'Quay'}</button>
             <ul class="hv-bbr-stars">${starTable(type, bet, pend && pend.stars)}</ul>
           </div>
         </div>
         <div class="hv-bbr-side">
-          <div class="hv-bbr-tabs">
-            <button type="button" data-bbr-pane="play" class="${pane === 'play' ? 'is-on' : ''}">Quay</button>
-            <button type="button" data-bbr-pane="shop" class="${pane === 'shop' ? 'is-on' : ''}">Shop điểm</button>
-          </div>
           ${pane === 'shop' ? `
             <p class="hv-bbr-pts">Điểm ${b.pts || 0} · 🎁 ${b.chests || 0} · 👑 ${b.supreme || 0}</p>
-            <p class="hv-bbr-now">Điểm lấy từ <b>Nhận điểm</b> (đổi thưởng thành điểm) hoặc khi bấm <b>Thưởng</b>. Đổi mảnh / rương / ngọc tại đây.</p>
+            <p class="hv-bbr-now">Điểm từ <b>Nhận điểm</b> hoặc khi bấm <b>Thưởng</b>.</p>
             <div class="hv-bbr-shop">${SHOP.map(it =>
               `<button type="button" data-bbr-buy="${it.id}">${it.name} · ${it.pts}đ</button>`
             ).join('')}</div>
             ${(b.chests || 0) > 0 ? '<button type="button" data-bbr-open="chest">Mở Rương Báu</button>' : ''}
             ${(b.supreme || 0) > 0 ? '<button type="button" data-bbr-open="supreme">Mở Chí Bảo</button>' : ''}
+            <button type="button" data-bbr-pane="play">Về quay</button>
           ` : `
             <div class="hv-bbr-bets">${BETS.map(n =>
               `<button type="button" class="hv-bbr-bet${bet === n ? ' is-on' : ''}" data-bbr-bet="${n}">${n} ${SO_IC}</button>`
             ).join('')}</div>
-            <p class="hv-bbr-now">${pend ? (pend.stars + '★ ' + LAB[pend.t]) : 'Cược rồi Quay. Tiếp cùng loại cộng sao.'}</p>
+            <p class="hv-bbr-now">${pend ? (pend.stars + '★ ' + LAB[pend.t] + ' · Đổi sò ' + convertQty(pend.t, pend.stars, bet)) : 'Cược rồi Quay giữa khung.'}</p>
             <div class="hv-bbr-mid">
               <button type="button" data-bbr-pts ${pend ? '' : 'disabled'}>Nhận điểm</button>
               <button type="button" data-bbr-pane="shop">Shop điểm</button>
             </div>
-            <button type="button" class="hv-bbr-go" data-bbr-step ${((P.so || 0) < bet) ? 'disabled' : ''}>${pend ? 'Tiếp' : 'Quay'} · ${bet} ${SO_IC}</button>
             <div class="hv-bbr-sub">
               <button type="button" data-bbr-take ${pend ? '' : 'disabled'}>Thưởng</button>
               <button type="button" data-bbr-convert ${pend ? '' : 'disabled'}>Đổi sò</button>

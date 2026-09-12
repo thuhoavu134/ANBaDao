@@ -95,15 +95,11 @@ export const BBR_BOARD = Object.freeze([
   Object.freeze({ t: 'hoat', n: 3 }), Object.freeze({ t: 'gold', n: 3 }), Object.freeze({ t: 'sh_ssr', n: 2 }), Object.freeze({ t: 'tinh', n: 3 })
 ]);
 
+/** Đổi sò theo sao, cược 2. Cược 10 = ×5, 50 = ×25. */
+export const BBR_SO_STAR = Object.freeze([0, 1, 3, 10, 28, 80, 220]);
 export const BBR_SO_CONVERT = Object.freeze({
-  gold: Object.freeze([0, 1, 2, 4, 8, 16, 40]),
-  gems: Object.freeze([0, 2, 4, 8, 16, 32, 80]),
-  tinh: Object.freeze([0, 1, 2, 5, 10, 22, 50]),
-  hoat: Object.freeze([0, 1, 2, 5, 10, 22, 50]),
-  sh_ss: Object.freeze([0, 2, 4, 8, 18, 36, 80]),
-  sh_ssr: Object.freeze([0, 3, 6, 12, 24, 50, 120]),
-  chest: Object.freeze([0, 4, 8, 16, 32, 70, 160]),
-  supreme: Object.freeze([0, 8, 16, 32, 70, 150, 360])
+  gold: BBR_SO_STAR, gems: BBR_SO_STAR, tinh: BBR_SO_STAR, hoat: BBR_SO_STAR,
+  sh_ss: BBR_SO_STAR, sh_ssr: BBR_SO_STAR, chest: BBR_SO_STAR, supreme: BBR_SO_STAR
 });
 
 /** Tỷ lệ mặc định: đồ thường 50 · S/S+ 30 · Rương Báu 15 · Chí Bảo 5. */
