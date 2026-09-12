@@ -3,28 +3,41 @@
   if (typeof prepareShopOpen !== 'function') return;
 
   function commitShop(next, commandId, source) {
+    if (next.shop) P.shop = next.shop;
+    if (next.gold != null) P.gold = next.gold;
+    if (next.gems != null) P.gems = next.gems;
+    if (next.shards) P.shards = next.shards;
+    if (next.stamina != null) P.stamina = next.stamina;
+    if (next.tinh != null) P.tinh = next.tinh;
+    if (next.hoat != null) P.hoat = next.hoat;
+    persist?.();
     const run = typeof hvRunCommittedTransaction === 'function' ? hvRunCommittedTransaction : null;
-    const apply = player => {
-      if (next.shop) player.shop = next.shop;
-      if (next.gold != null) player.gold = next.gold;
-      if (next.gems != null) player.gems = next.gems;
-      if (next.shards) player.shards = next.shards;
-      if (next.stamina != null) player.stamina = next.stamina;
-      if (next.tinh != null) player.tinh = next.tinh;
-      if (next.hoat != null) player.hoat = next.hoat;
-      return { ok: true };
-    };
-    if (!run) {
-      apply(P);
-      persist?.();
-      return { ok: true };
+    if (run) {
+      run({
+        commandId: commandId || (source + ':' + (P.revision || 0)),
+        source,
+        reason: 'shop',
+        mutate: () => ({ ok: true })
+      });
     }
-    return run({
-      commandId: commandId || (source + ':' + (P.revision || 0)),
-      source,
-      reason: 'shop',
-      mutate: apply
+    return { ok: true };
+  }
+
+  function liveShopRoot() {
+    const nodes = [...document.querySelectorAll('#hvShopRoot')];
+    const keep = nodes[nodes.length - 1] || null;
+    nodes.forEach(el => { if (keep && el !== keep) el.remove(); });
+    return keep;
+  }
+
+  function closeShop() {
+    document.querySelectorAll('#hvShopRoot').forEach(el => {
+      el.hidden = true;
+      el.classList.remove('is-open');
     });
+    document.body.classList.remove('shop-3d-active');
+    if (typeof navTo === 'function') navTo('hub');
+    else if (typeof showScreen === 'function') showScreen('hub');
   }
 
   function adoptShop(opened) {
@@ -121,8 +134,7 @@
     adoptShop(opened);
     const shop = opened.shop || P.shop;
     const sold = shop.bought?.length || 0;
-    body.innerHTML = `
-      <div id="hvShopRoot" data-testid="hv-shop">
+    const inner = `
         <div class="hv-shop-top">
           <button type="button" class="hv-shop-back" data-shop-back aria-label="Về Thành Chính">‹</button>
           <b>Chợ Lục Châu</b>
@@ -151,16 +163,30 @@
             }).join('')}
           </div>
           <div class="hv-shop-note">⚗ Tinh ${fmt(P.tinh || 0)} · 🔥 Hoạt ${fmt(P.hoat || 0)} · ⚡ ${fmt(P.stamina || 0)}</div>
-        </div>
-      </div>`;
-    body.querySelector('[data-shop-back]')?.addEventListener('click', () => navTo('hub'));
-    body.querySelectorAll('[data-shop-buy]').forEach(btn => {
+        </div>`;
+    let root = liveShopRoot();
+    if (!root) {
+      body.innerHTML = `<div id="hvShopRoot" data-testid="hv-shop">${inner}</div>`;
+      root = body.querySelector('#hvShopRoot');
+    } else {
+      root.innerHTML = inner;
+    }
+    if (root && root.parentElement !== document.body) document.body.append(root);
+    root.hidden = false;
+    root.classList.add('is-open');
+    root.querySelector('[data-shop-back]')?.addEventListener('click', ev => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      closeShop();
+    });
+    root.querySelectorAll('[data-shop-buy]').forEach(btn => {
       btn.addEventListener('click', ev => {
+        ev.preventDefault();
         ev.stopPropagation();
-        buyShop(btn.dataset.shopBuy);
+        buyShop(btn.getAttribute('data-shop-buy'));
       });
     });
-    body.querySelectorAll('[data-shop-card]').forEach(card => {
+    root.querySelectorAll('[data-shop-card]').forEach(card => {
       card.addEventListener('click', () => showUse(card.getAttribute('data-shop-card')));
     });
   }

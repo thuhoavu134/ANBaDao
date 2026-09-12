@@ -2,10 +2,12 @@
   if (typeof document === 'undefined' || !document.body) return;
 
   const hoist = () => {
-    const root = document.getElementById('hvShopRoot');
+    const nodes = [...document.querySelectorAll('#hvShopRoot')];
+    const root = nodes[nodes.length - 1] || null;
     if (!root) return null;
+    nodes.forEach(el => { if (el !== root) el.remove(); });
     if (root.parentElement !== document.body) document.body.append(root);
-    root.setAttribute('aria-label', 'Chợ Mộng');
+    root.setAttribute('aria-label', 'Chợ Lục Châu');
     return root;
   };
 

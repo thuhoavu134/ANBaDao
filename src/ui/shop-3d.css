@@ -23,5 +23,6 @@
 #hvShopRoot .hv-shop-card,#hvShopRoot .hv-shop-chip,#hvShopRoot .hv-shop-back{
   background:#fff8e8!important;color:#2d251f!important;box-shadow:0 0 0 1px #e2c48a!important;
 }
+#hvShopRoot .hv-shop-back{position:relative;z-index:6;pointer-events:auto}
 #hvShopRoot .hv-shop-copy,#hvShopRoot .hv-shop-card small{color:#5a3a18!important}
 body.shop-3d-active .hv-brandbar,body.shop-3d-active #resbar{display:none!important}
