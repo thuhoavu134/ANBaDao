@@ -1,3 +1,7 @@
+## 12/09/2026 — Wave G TKT-0058…0063 coordinator LIVE
+
+Owner gõ `live`. Squash [#52](https://github.com/bktimmy247/luc-than/pull/52) → main `b77f35a`. Stub + ticket READY. 6 agent điền overlay/ấn. Owner: 72 tướng + asset đầy đủ là wave sau, **không** phải 12 nhân vật hiện tại. Wave F #51 không trộn.
+
 ## 12/09/2026 — Wave G TKT-0058…0063 coordinator READY
 
 Owner «tạo tkt chia agent». Stub `scripts/lanes/tkt-0058`…`0063` + ticket READY. 3 hall (Cốt truyện / Online / Trận Hình) + 9 ấn UI 3×3. Overlay chưa làm. Wave F #51 không trộn. Không merge tới `live`.

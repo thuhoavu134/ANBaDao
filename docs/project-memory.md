@@ -1,3 +1,7 @@
+## 12/09/2026 — 72 tướng full-asset = wave sau
+
+Owner `live` Wave G coordinator: «sau này mới bổ sung 72 tướng với asset đầy đủ chứ ko phải mấy nhân vật hiện tại». Roster playable **12**. Không nới 12 → 72. Không idle/combat/portrait sheet đầy đủ cho ID live. 42 S+ lab vẫn không vào production.
+
 ## 12/09/2026 — TKT-0036 Rèn hall REVIEW
 
 `#hvForgeRoot` body overlay + hall 3D tươi. Giữ `forgeCommand`. Không merge tới khi owner gõ `live`.

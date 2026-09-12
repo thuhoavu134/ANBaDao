@@ -31,11 +31,12 @@ Hồ sơ tướng: ấn `.hv-scene-skill-seal` + `.skillbox[data-skill-slot]:bef
 - Kit v2 tên Basic/Ultimate/Nội tại
 - `heroStats` / `teamPower` / roster 12
 - Combat atlas Đình Lôi sẵn có
+- Owner 12/09: 72 tướng + asset đầy đủ là wave sau, ID mới — **không** phải nhân vật hiện tại. Chỉ medallion UI.
 
 ## Non-goals
 
-`battle.html`, `src/domain/combat/**`, `assets/characters/**`, Combat V2, Hermes 27, visual Bày trận, hall overlay.
-Không sửa `index.html`. Không sửa `campaign-scene.js`. Không commit `dist/`. Không merge/live tới khi owner gõ `live`.
+`battle.html`, `src/domain/combat/**`, `assets/characters/**`, Combat V2, 72 tướng, Hermes 27, visual Bày trận, hall overlay.
+Không idle/combat/portrait sheet đầy đủ. Không sửa `index.html`. Không sửa `campaign-scene.js`. Không commit `dist/`. Không merge/live tới khi owner gõ `live`.
 
 ## Heroes (exclusive)
 

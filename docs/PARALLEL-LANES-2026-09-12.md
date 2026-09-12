@@ -14,7 +14,7 @@ Owner: rà soát chức năng còn thiếu, tách ticket **độc lập** để 
 
 **Wave F REVIEW** 12/09: TKT-0056…0057 Hành trình + Kết quả trên nhánh `work/l46-wave-f-3d-20260912` PR [#51](https://github.com/bktimmy247/luc-than/pull/51). **Không** trộn vào Wave G.
 
-**Wave G coordinator REVIEW** 12/09: TKT-0058…0063 stub + ticket READY. Overlay/ấn chưa làm. Không merge tới `live`.
+**Wave G coordinator LIVE** 12/09: owner gõ `live`. Squash [#52](https://github.com/bktimmy247/luc-than/pull/52) → main `b77f35a`. Stub + ticket READY. Overlay/ấn chưa làm. **72 tướng full-asset = wave sau, không phải 12 hiện tại.**
 
 
 
@@ -30,9 +30,9 @@ Owner: rà soát chức năng còn thiếu, tách ticket **độc lập** để 
 | Wave D | **LIVE** TKT-0053 (#49) Hồ sơ tướng overlay body + 9 nền showcase |
 | Wave E | **LIVE** TKT-0054…0055 (#50) Nhật Ký Mơ + Chinh chiến AFK home giả 3D |
 | Wave F | **REVIEW** TKT-0056…0057 (#51) Hành trình + Kết quả — nhánh riêng, không trộn G |
-| Wave G | **READY** TKT-0058…0063 Cốt truyện / Online / Trận Hình + 9 ấn UI (3×3) |
+| Wave G | **LIVE stub** TKT-0058…0063 (#52) — 6 agent điền stub |
 
-| Không mở ticket | Combat V2 / 42 S+ · 5 nan Lịch `go:null` · visual Bày trận · seed/banner/roster 12 · Auth/DB online · L02c reward (chờ owner) · Hermes 27 · atlas skill trận |
+| Không mở ticket | Combat V2 / 42 S+ · **72 tướng full-asset (wave sau, ID mới, không phải 12 hiện tại)** · 5 nan Lịch `go:null` · visual Bày trận · seed/banner/roster 12 · Auth/DB online · L02c reward (chờ owner) · Hermes 27 · atlas skill trận |
 
 ---
 
@@ -133,7 +133,7 @@ Hành trình + Kết quả. **Không** nhận việc Wave F trên nhánh Wave G.
 
 Hall (0058–0060): chỉ sửa file `*-3d.*` + hall jpg. Overlay `#hv{Story,Net,Team}Root` lên `document.body`. Bắt buộc `body.{story,net,team}-3d-active{filter:none}` + `width:100vw;height:100vh;min-height:100vh` (lỗi height 100px Wave F). TKT-0059 **Auth OFF** — restyle, đóng băng `netOnline`/`api`. TKT-0060 **không** sửa `campaign-scene.js` / `.cs-prepare`.
 
-Seals (0061–0063): wrap `renderHeroDetail`, inject CSS riêng, thư mục `assets/ui/skill-seals/{id}/` exclusive. **Không** sửa `hero-detail-tabs.js` / `battle.html` / `index.html` / `campaign-scene.js`. Không viết combat `skill.json`.
+Seals (0061–0063): wrap `renderHeroDetail`, inject CSS riêng, thư mục `assets/ui/skill-seals/{id}/` exclusive. **Không** sửa `hero-detail-tabs.js` / `battle.html` / `index.html` / `campaign-scene.js`. Không viết combat `skill.json`. **Chỉ medallion UI** — owner 12/09: 72 tướng + asset đầy đủ là wave sau, **không** phải nhân vật hiện tại. Cấm idle/combat/portrait sheet đầy đủ cho 12 live.
 
 Ghép Wave F: origin/main kết thúc `tkt-0055-campaign.mjs`. F chèn 0056/0057; G chèn comment `WAVE-G 2026-09-12` + 0058…. Conflict ~2–4 dòng — giữ F rồi block G.
 
@@ -149,7 +149,7 @@ Không sửa (trừ khi ticket ghi rõ):
 - `heroStats` / `teamPower` / `account-gear-runtime.js` `WHEEL` keys
 - `battle.html`, `src/domain/combat/**`, `src/domain/hero/splus-*`
 - `src/ui/campaign-scene.js` visual Bày trận
-- `OFFICIAL_ROSTER_12_IDS` / `defaultPlayer` ownership
+- `OFFICIAL_ROSTER_12_IDS` / `defaultPlayer` ownership — **không** nới thành 72
 - `dist/`, `scripts/preview-8080.py`
 
 ---
@@ -172,8 +172,9 @@ Không sửa (trừ khi ticket ghi rõ):
 |---|---|
 | 5 nan Lịch Luyện `hold/forgegate/abyss/palace/drill` | Cấm bịa combat |
 | Combat V2 / 42 tướng S+ | Nhánh `handoff/l11-*` / lab; không vào roster live |
+| **72 tướng + asset đầy đủ** | Owner 12/09: wave **sau**, ID **mới**, **không** phải 12 hiện tại. Không ticket READY |
 | Online / Auth / `mong-gioi-server` | Auth/DB **OFF** |
 | L02c map thưởng chương | 6 đích chờ owner duyệt |
 | Device Safari | Nợ QA, không phải chức năng mới |
 | Hermes 27 method | Archive user, chưa trên GitHub |
-| Atlas skill trận 9 tướng | Combat-adjacent; Wave G chỉ UI medallion |
+| Atlas skill trận 9 tướng | Combat-adjacent; cấm full asset cho 12 hiện tại. Wave G chỉ UI medallion |
