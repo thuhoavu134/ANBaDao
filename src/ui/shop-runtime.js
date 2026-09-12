@@ -94,26 +94,74 @@
     return it.gold ? ('🪙 ' + fmt(it.gold)) : ('💎 ' + fmt(it.gems));
   }
 
-  const USE = {
-    sh10: 'Mảnh tướng 12 chính tuyến. Đủ mảnh → mở tướng. Thêm mảnh → lên sao (lực chiến).',
-    sh5ssr: 'Mảnh S+. Đủ 50 → mở tướng S+. Thêm mảnh → lên sao.',
-    stam: 'Độ Tỉnh Táo. Tiêu khi đánh ải, tháp, săn, đài.',
-    gold: 'Vàng. Lên cấp tướng và trả rèn.',
-    craft: 'Tinh + Hoạt. Rèn trang bị, hoặc chế 10 sò Bách Bảo.',
-    binh_tinh: 'Tinh Lực. Rèn đồ (20/lần) hoặc chế sò (25).',
-    lo_hoat: 'Hoạt Lực. Cường hoá đồ hoặc chế sò (25).',
-    goi_ngoc: 'Tinh+Hoạt catch-up. Rèn / cường / chế sò khi thiếu ngày.'
+  const TIPS = {
+    sh10: {
+      what: 'Mảnh tướng 12 chính tuyến.',
+      use: 'Đủ mảnh thì mở tướng (B 10 · A 20 · S 30 · S+ 50). Thêm mảnh để lên sao, tăng lực chiến. Xem ở Túi → Mảnh hoặc chi tiết tướng.'
+    },
+    sh5ssr: {
+      what: 'Mảnh tướng phẩm S+.',
+      use: 'Đủ 50 mảnh mở tướng S+. Thêm mảnh lên sao. Dùng ở Đội hình / chi tiết tướng.'
+    },
+    stam: {
+      what: 'Độ Tỉnh Táo — thể lực đánh trận.',
+      use: 'Tiêu khi Chinh chiến, Tháp, Săn, Đài. Tự hồi +1 mỗi 5 phút, trần 120. Cà phê chợ +20 (1 lần/ngày).'
+    },
+    gold: {
+      what: 'Vàng — tiền tệ chính.',
+      use: 'Lên cấp tướng, trả rèn/cường hoá, mua quầy vàng. Kiếm từ ải, thư, nhiệm vụ, Bách Bảo.'
+    },
+    craft: {
+      what: 'Túi Tinh Lực + Hoạt Lực.',
+      use: 'Rèn trang bị ở Rèn (20 Tinh/lần). Chế 10 sò Bách Bảo ở Rèn (25 Tinh + 25 Hoạt, 2 lần/ngày).'
+    },
+    binh_tinh: {
+      what: 'Bình Tinh Lực.',
+      use: 'Rèn đồ (20/lần) hoặc chế sò ở Rèn (25/lần). Không tiêu trực tiếp ngoài Rèn.'
+    },
+    lo_hoat: {
+      what: 'Lò Hoạt Lực.',
+      use: 'Cường hoá trang bị ở Rèn, hoặc chế sò Bách Bảo (25 Hoạt).'
+    },
+    goi_ngoc: {
+      what: 'Gói Tinh Hoả — 80 Tinh + 80 Hoạt.',
+      use: 'Dự trữ ngày thiếu. Đổ vào Rèn / chế sò. Trần mua 1 lần/ngày.'
+    }
+  };
+
+  window.hvShowItemTip = function hvShowItemTip(info) {
+    let tip = document.getElementById('hvItemTip');
+    if (!tip) {
+      tip = document.createElement('div');
+      tip.id = 'hvItemTip';
+      tip.setAttribute('role', 'dialog');
+      document.body.append(tip);
+      tip.addEventListener('click', ev => {
+        if (ev.target === tip || ev.target.closest('[data-tip-close]')) {
+          tip.hidden = true;
+        }
+      });
+    }
+    const icon = info.icon ? `<img src="${info.icon}" alt="">` : '';
+    tip.hidden = false;
+    tip.innerHTML = `<div class="hv-tip-card" id="hvShopInfo">
+      ${icon}
+      <b>${info.title || ''}</b>
+      <p>${info.what || ''}</p>
+      <p class="hv-tip-use"><strong>Dùng:</strong> ${info.use || ''}</p>
+      <button type="button" data-tip-close>Đóng</button>
+    </div>`;
   };
 
   function showUse(k) {
-    let box = document.getElementById('hvShopInfo');
-    if (!box) {
-      box = document.createElement('div');
-      box.id = 'hvShopInfo';
-      document.getElementById('hvShopRoot')?.appendChild(box);
-    }
     const it = (P.shop && P.shop.stock || []).find(x => x.k === k);
-    box.innerHTML = '<b>' + (it?.name || k) + '</b>' + (USE[k] || 'Nguyên liệu ngày.');
+    const tip = TIPS[k] || { what: 'Vật phẩm ngày.', use: 'Xem mô tả trên thẻ.' };
+    window.hvShowItemTip({
+      icon: it ? stallIcon(it) : '',
+      title: it?.name || k,
+      what: tip.what,
+      use: tip.use
+    });
   }
 
   function openArgs() {
