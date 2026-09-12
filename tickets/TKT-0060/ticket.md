@@ -1,11 +1,11 @@
 ---
 id: TKT-0060
 title: Trận Hình hall giả 3D overlay body
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P1
 created: 2026-09-12T05:00:00.000Z
-updated: 2026-09-12T05:35:00.000Z
+updated: 2026-09-12T06:10:00.000Z
 acceptance_ids: ['L50-T1', 'L50-T2', 'L50-T3', 'L50-T4', 'L50-T5', 'L50-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths: ['src/ui/team-3d-runtime.js', 'src/ui/team-3d.css', 'scripts/team-3d-v1.mjs', 'scripts/lanes/tkt-0060-team.mjs', 'scripts/qa-team-3d.mjs', 'assets/ui/team/team-hall.jpg', 'tests/team-3d.test.mjs', 'docs/qa/L50-TEAM-3D/']

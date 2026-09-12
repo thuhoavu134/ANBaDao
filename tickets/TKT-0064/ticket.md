@@ -1,11 +1,11 @@
 ---
 id: TKT-0064
 title: Safari / Grok overlay pin — night filter + overflow-x containing-block
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 created: 2026-09-12T06:00:00.000Z
-updated: 2026-09-12T06:30:00.000Z
+updated: 2026-09-12T06:10:00.000Z
 acceptance_ids: ['L51-T1', 'L51-T2', 'L51-T3', 'L51-T4', 'L51-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths: ['src/ui/overlay-safari.css', 'src/ui/overlay-safari-runtime.js', 'scripts/overlay-safari-hotfix-v1.mjs', 'scripts/overlay-safari-hotfix-v1.mjs', 'tests/overlay-safari.test.mjs', 'scripts/qa-overlay-safari.mjs', 'docs/qa/L51-SAFARI-OVERLAY/']

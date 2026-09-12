@@ -1,3 +1,7 @@
+## 2026-09-12 — TKT-0058…0060 Wave G halls + TKT-0064 Safari pin · LIVE
+
+Owner gõ `live`. Squash [#53](https://github.com/bktimmy247/luc-than/pull/53) → main `b0d6d9d`. Overlay Cốt truyện / Trực Tuyến / Trận Hình + pin `visualViewport`. Safari device NOT_RUN. Ấn UI 0061–0063 READY. Wave F #51 không trộn.
+
 ## 2026-09-12 — TKT-0064 Safari overlay pin · REVIEW
 
 Nhánh `work/l48-wave-g-3d-20260912`. Inject `overlay-safari-hotfix-v1` sau Wave G stubs. `visualViewport` pin `#hv*.is-open` trên body; `html.hv-overlay-open` `filter:none` + `100dvh` + `overflow-x:clip`. `viewport-fit=cover` trên dist. Chrome 390/768 + iframe PASS; Safari device NOT_RUN. Không sửa `index.html` nguồn / `.cs-prepare`. Không merge tới `live`.

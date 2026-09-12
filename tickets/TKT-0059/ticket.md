@@ -1,11 +1,11 @@
 ---
 id: TKT-0059
 title: Trực Tuyến hall giả 3D overlay body
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P1
 created: 2026-09-12T05:00:00.000Z
-updated: 2026-09-12T05:35:00.000Z
+updated: 2026-09-12T06:10:00.000Z
 acceptance_ids: ['L49-T1', 'L49-T2', 'L49-T3', 'L49-T4', 'L49-T5', 'L49-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths: ['src/ui/net-3d-runtime.js', 'src/ui/net-3d.css', 'scripts/net-3d-v1.mjs', 'scripts/lanes/tkt-0059-net.mjs', 'scripts/qa-net-3d.mjs', 'assets/ui/net/net-hall.jpg', 'tests/net-3d.test.mjs', 'docs/qa/L49-NET-3D/']

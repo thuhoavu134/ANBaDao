@@ -1,11 +1,11 @@
 ---
 id: TKT-0058
 title: Cốt truyện VN hall giả 3D overlay body
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P1
 created: 2026-09-12T05:00:00.000Z
-updated: 2026-09-12T05:35:00.000Z
+updated: 2026-09-12T06:10:00.000Z
 acceptance_ids: ['L48-T1', 'L48-T2', 'L48-T3', 'L48-T4', 'L48-T5', 'L48-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths: ['src/ui/story-3d-runtime.js', 'src/ui/story-3d.css', 'scripts/story-3d-v1.mjs', 'scripts/lanes/tkt-0058-story.mjs', 'scripts/qa-story-3d.mjs', 'assets/ui/story/story-hall.jpg', 'tests/story-3d.test.mjs', 'docs/qa/L48-STORY-3D/']

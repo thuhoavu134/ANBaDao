@@ -1,3 +1,7 @@
+## 12/09/2026 — TKT-0058…0060 Wave G halls + TKT-0064 Safari pin LIVE
+
+Owner gõ `live`. Squash [#53](https://github.com/bktimmy247/luc-than/pull/53) → main `b0d6d9d`. Cốt truyện / Trực Tuyến / Trận Hình overlay body + pin Safari. Ấn UI 0061–0063 còn READY. Wave F #51 không trộn.
+
 ## 12/09/2026 — TKT-0064 Safari overlay pin REVIEW
 
 Owner «Debug Safari overlay rendering». `body.night{filter}` + `overflow-x:hidden` chứa `position:fixed` trên WebKit; hall dời DOM → overlay ~100px. Pin `visualViewport` + `filter:none` + `100dvh`. Không sửa `index.html` nguồn / Bày trận. Không merge tới `live`.

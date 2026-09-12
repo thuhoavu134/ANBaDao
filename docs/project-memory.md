@@ -1,3 +1,7 @@
+## 12/09/2026 — Wave G halls + Safari pin LIVE
+
+Owner `live` [#53](https://github.com/bktimmy247/luc-than/pull/53) → `b0d6d9d`. Cốt truyện / Trực Tuyến / Trận Hình overlay body. Pin Safari `visualViewport`. 72 tướng vẫn wave sau.
+
 ## 12/09/2026 — Safari overlay = night filter containing-block
 
 Owner iOS: overlay WebKit co vì `body.night{filter}` + `html overflow-x:hidden`. Pin `visualViewport`, `hv-overlay-open{filter:none}`. Safari device vẫn NOT_RUN (sandbox không WebKit).
