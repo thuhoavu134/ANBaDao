@@ -28,6 +28,10 @@ const WAVE_C = [
   ['TKT-0052', 'festival']
 ];
 
+const WAVE_D = [
+  ['TKT-0053', 'hero-detail']
+];
+
 test('lane stubs exist and are imported once from build-static', () => {
   const build = read('scripts/build-static.mjs');
   for (const [id, slug] of LANES) {
@@ -49,8 +53,18 @@ test('lane stubs exist and are imported once from build-static', () => {
     const reserved = new RegExp("LANE = '" + id + "'").test(stub);
     assert.equal(filled3d || reserved, true, id + ' wave C stub');
   }
+  for (const [id, slug] of WAVE_D) {
+    const rel = `./lanes/tkt-${id.slice(4)}-${slug}.mjs`;
+    const hits = build.split(rel).length - 1;
+    assert.equal(hits, 1, id + ' import count');
+    const stub = read('scripts/lanes/tkt-' + id.slice(4) + '-' + slug + '.mjs');
+    const filledHall = /await import\(['"]\.\.\/hero-detail-hall-v1\.mjs['"]\)/.test(stub);
+    const reserved = new RegExp("LANE = '" + id + "'").test(stub);
+    assert.equal(filledHall || reserved, true, id + ' wave D stub');
+  }
   assert.match(build, /daily-runtime-v1\.mjs[\s\S]*lanes\/tkt-0037-bag\.mjs/);
   assert.match(build, /lanes\/tkt-0044-vault\.mjs[\s\S]*lanes\/tkt-0046-tower\.mjs/);
+  assert.match(build, /lanes\/tkt-0052-festival\.mjs[\s\S]*lanes\/tkt-0053-hero-detail\.mjs/);
 });
 
 test('wave A tickets are exclusive and freeze hub wiring', () => {
@@ -82,6 +96,12 @@ test('wave A tickets are exclusive and freeze hub wiring', () => {
     const lock = md.match(/resource_locks: \["([^"]+)"\]/)[1];
     assert.equal(locks.has(lock) || locksC.has(lock), false, 'duplicate lock ' + lock);
     locksC.add(lock);
+  }
+  for (const [id] of WAVE_D) {
+    const md = read('tickets/' + id + '/ticket.md');
+    assert.match(md, /status: (READY|REVIEW|LIVE)/);
+    assert.match(md, /Không sửa `index\.html`/);
+    assert.match(md, /document\.body\.append/);
   }
 });
 

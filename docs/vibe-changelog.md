@@ -1,4 +1,9 @@
+## 12/09/2026 — Wave D TKT-0053 REVIEW
+
+Owner gõ `tiếp`. Hồ sơ tướng overlay body giả 3D + 9 nền showcase còn thiếu. Không merge tới `live`.
+
 ## 12/09/2026 — Wave C TKT-0046…0052 LIVE
+
 
 Owner gõ `live`. Squash [#48](https://github.com/bktimmy247/luc-than/pull/48) → main `9f2bbff`. 7 màn sơn mài thành hall giả 3D overlay body.
 

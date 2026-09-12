@@ -23,4 +23,4 @@ Board GitHub không có. File `tickets/TKT-00xx/ticket.md` là nguồn sự th�
 | TKT-0049 | C | Gọi Mộng giả 3D overlay body | LIVE |
 | TKT-0050 | C | Đấu Trường giả 3D overlay body | LIVE |
 | TKT-0051 | C | Săn Boss giả 3D overlay body | LIVE |
-| TKT-0052 | C | Lễ Hội giả 3D overlay body | LIVE |
+| TKT-0053 | D | Hồ sơ tướng hall + 9 nền showcase | REVIEW |

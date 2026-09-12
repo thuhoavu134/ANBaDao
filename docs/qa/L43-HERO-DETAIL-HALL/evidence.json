@@ -1,0 +1,98 @@
+{
+  "summary": [
+    {
+      "label": "390x844",
+      "ok": true,
+      "shots": {
+        "lac_yen": {
+          "parent": true,
+          "open": true,
+          "position": "fixed",
+          "height": 816,
+          "depth": true,
+          "bg": "url('assets/ui/hero-detail/lac-yen-showcase-bg.jpg')"
+        },
+        "cung_thu_tre": {
+          "parent": true,
+          "open": true,
+          "position": "fixed",
+          "height": 816,
+          "depth": true,
+          "bg": "url('assets/ui/hero-detail/cung-thu-tre-showcase-bg.jpg')"
+        },
+        "dinh_loi": {
+          "parent": true,
+          "open": true,
+          "position": "fixed",
+          "height": 816,
+          "depth": true,
+          "bg": "url('assets/ui/hero-detail/dinh-loi-showcase-bg.jpg')"
+        },
+        "to_diep": {
+          "parent": true,
+          "open": true,
+          "position": "fixed",
+          "height": 816,
+          "depth": true,
+          "bg": "url('assets/ui/hero-detail/to-diep-showcase-bg.jpg')"
+        },
+        "ong_hang_pho": {
+          "parent": true,
+          "open": true,
+          "position": "fixed",
+          "height": 816,
+          "depth": true,
+          "bg": "url('assets/ui/hero-detail/ong-pho-showcase-bg.png')"
+        }
+      },
+      "errors": []
+    },
+    {
+      "label": "768x1024",
+      "ok": true,
+      "shots": {
+        "lac_yen": {
+          "parent": true,
+          "open": true,
+          "position": "fixed",
+          "height": 996,
+          "depth": true,
+          "bg": "url('assets/ui/hero-detail/lac-yen-showcase-bg.jpg')"
+        },
+        "cung_thu_tre": {
+          "parent": true,
+          "open": true,
+          "position": "fixed",
+          "height": 996,
+          "depth": true,
+          "bg": "url('assets/ui/hero-detail/cung-thu-tre-showcase-bg.jpg')"
+        },
+        "dinh_loi": {
+          "parent": true,
+          "open": true,
+          "position": "fixed",
+          "height": 996,
+          "depth": true,
+          "bg": "url('assets/ui/hero-detail/dinh-loi-showcase-bg.jpg')"
+        },
+        "to_diep": {
+          "parent": true,
+          "open": true,
+          "position": "fixed",
+          "height": 996,
+          "depth": true,
+          "bg": "url('assets/ui/hero-detail/to-diep-showcase-bg.jpg')"
+        },
+        "ong_hang_pho": {
+          "parent": true,
+          "open": true,
+          "position": "fixed",
+          "height": 996,
+          "depth": true,
+          "bg": "url('assets/ui/hero-detail/ong-pho-showcase-bg.png')"
+        }
+      },
+      "errors": []
+    }
+  ]
+}
