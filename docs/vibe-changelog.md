@@ -1,3 +1,7 @@
+## 13/09/2026 — Wave Q kem hall LIVE
+
+Owner gõ live. Squash [#79](https://github.com/bktimmy247/luc-than/pull/79) → `1fec294`. TKT-0103.
+
 ## 13/09/2026 — Wave Q kem hall REVIEW
 
 Tháp, Chợ, Gọi Mộng, Săn, Mộng Lộ, Giao việc, Hòm thư: kem + ảnh dải trên.

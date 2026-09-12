@@ -70,7 +70,7 @@ Board GitHub không có. File `tickets/TKT-00xx/ticket.md` là nguồn sự th�
 | TKT-0100 | O | Đấu Trường city + FAB ‹ | LIVE (#77) |
 | TKT-0101 | P | Bạn bè người chơi thật | LIVE (#78) |
 | TKT-0102 | P | Nền kem lưới chức năng | LIVE (#78) |
-| TKT-0103 | Q | Kem dải trên Tháp/Chợ/Gọi/Săn/Lộ/Việc/Thư | REVIEW |
+| TKT-0103 | Q | Kem dải trên Tháp/Chợ/Gọi/Săn/Lộ/Việc/Thư | LIVE (#79) |
 
 Cách tạo gift code (owner): [docs/GIFT-CODES.md](../docs/GIFT-CODES.md)
 
