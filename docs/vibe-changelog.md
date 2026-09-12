@@ -1,3 +1,7 @@
+## 12/09/2026 — TKT-0085 mã quà mảnh tướng LIVE
+
+Owner gõ live. Squash [#73](https://github.com/bktimmy247/luc-than/pull/73) → `f5fcc4a`. Cầm tay: [docs/GIFT-CODES.md](https://github.com/bktimmy247/luc-than/blob/main/docs/GIFT-CODES.md).
+
 ## 12/09/2026 — TKT-0085 mã quà mảnh tướng REVIEW
 
 Catalog `shards` / tinh / hoạt / sò / essence. Không merge tới live.

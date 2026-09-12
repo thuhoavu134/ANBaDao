@@ -1,7 +1,7 @@
 ---
 id: TKT-0085
 title: Mã quà mảnh tướng + tinh/hoạt/sò/essence
-status: REVIEW
+status: LIVE
 phase: REVIEW
 priority: P1
 created: 2026-09-12T16:20:00.000Z
