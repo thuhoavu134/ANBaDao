@@ -1,0 +1,10 @@
+#netServer,
+#hvNetRoot #netServer{
+  display:none!important;
+}
+#hvNetGoogle,
+#hvNetRoot .hv-net-google{
+  background:linear-gradient(180deg,#fff9e9,#eee4ca)!important;
+  color:#5a3a18!important;
+  border:1px solid #92652b!important;
+}

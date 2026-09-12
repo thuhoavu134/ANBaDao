@@ -111,6 +111,10 @@ await import('./lanes/tkt-0063-skill-seals-c.mjs');
 // Keep AFTER Wave G stubs. Do not restyle .cs-prepare.
 await import('./overlay-safari-hotfix-v1.mjs');
 
+// WAVE-I 2026-09-12 TKT-0074 Auth API — fill stub; do not add imports.
+// Same-origin /api on this Vercel project. Keep AFTER safari. Do not edit index.html.
+await import('./lanes/tkt-0074-auth.mjs');
+
 
 // The integrated battle is loaded from this embedded payload in production.
 // Keep it byte-identical to the patched battle.html; otherwise the visible

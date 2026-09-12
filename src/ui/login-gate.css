@@ -1,0 +1,122 @@
+#hvLoginRoot{
+  position:fixed;inset:0;z-index:200;display:none;align-items:flex-end;justify-content:center;
+  overflow:hidden;width:100vw;height:100vh;height:100dvh;
+  padding:env(safe-area-inset-top) 12px calc(14px + env(safe-area-inset-bottom));
+  box-sizing:border-box;color:#4a3724;font-family:inherit;
+}
+#hvLoginRoot.is-open{display:flex}
+#hvLoginRoot[hidden]{display:none!important}
+#hvLoginRoot .hv-login-video{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;
+  background:#1a2740 url('assets/ui/auth/login-bg.jpg') center/cover no-repeat;
+}
+#hvLoginRoot .hv-login-veil{
+  position:absolute;inset:0;z-index:1;
+  background:linear-gradient(180deg,rgba(8,16,32,.08) 10%,rgba(8,16,32,.28) 48%,rgba(8,16,32,.55) 100%);
+}
+#hvLoginRoot .hv-login-age{
+  position:absolute;z-index:4;top:calc(10px + env(safe-area-inset-top));left:10px;
+  max-width:210px;margin:0;padding:8px 10px;border-radius:10px;
+  background:rgba(18,24,36,.72);color:#f3e7c8;font-size:11px;line-height:1.35;
+}
+#hvLoginRoot .hv-login-age b{display:block;font-size:16px;color:#ffd36a}
+#hvLoginRoot .hv-login-stage{
+  position:relative;z-index:3;width:min(392px,100%);
+}
+#hvLoginRoot .hv-login-frame{
+  position:relative;z-index:3;width:100%;box-sizing:border-box;
+  background:linear-gradient(180deg,#fbf4e6,#f4e6c8);
+  border:8px solid #c9a056;border-radius:18px;padding:16px 16px 14px;
+  box-shadow:inset 0 0 0 2px #ead7ae, 0 16px 36px rgba(0,0,0,.32);
+}
+#hvLoginRoot .hv-login-frame::before,
+#hvLoginRoot .hv-login-frame::after{
+  content:"";position:absolute;left:8px;right:8px;height:14px;border-radius:8px;
+  background:linear-gradient(180deg,#e8c47a,#9a6c32);border:1px solid #7d5524;
+}
+#hvLoginRoot .hv-login-frame::before{top:-10px}
+#hvLoginRoot .hv-login-frame::after{bottom:-10px}
+#hvLoginRoot .hv-login-who{
+  display:grid;grid-template-columns:44px 1fr auto;gap:8px;align-items:center;margin-bottom:10px;
+}
+#hvLoginRoot .hv-login-avatar{
+  width:44px;height:44px;border-radius:50%;background:#efe2c8;display:grid;place-items:center;
+  border:1px solid #d7b883;
+}
+#hvLoginRoot .hv-login-avatar svg{width:26px;height:26px}
+#hvLoginRoot .hv-login-who small{display:block;color:#8a6a3a;font-size:12px}
+#hvLoginRoot .hv-login-who b{display:block;font-size:15px;color:#3f2d18;word-break:break-all}
+#hvLoginRoot .hv-login-hint{margin:0 0 12px;text-align:center;font-size:12.5px;line-height:1.4;color:#6b5330}
+#hvLoginRoot .hv-login-head{
+  display:flex;align-items:center;justify-content:center;position:relative;margin:0 0 12px;
+}
+#hvLoginRoot .hv-login-head b{font-size:18px;color:#5a3d1c}
+#hvLoginRoot .hv-login-x{
+  position:absolute;right:0;top:50%;transform:translateY(-50%);
+  width:32px;height:32px;border:0;background:none;color:#8a6a3a;font-size:26px;cursor:pointer;
+}
+#hvLoginRoot .hv-login-pill{
+  width:100%;min-height:46px;margin:0 0 8px;border-radius:24px;border:1px solid #e6d3ad;
+  background:#fff;color:#3f2d18;font:inherit;font-size:14.5px;font-weight:650;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+#hvLoginRoot .hv-login-pill svg{width:22px;height:22px;flex:0 0 22px}
+#hvLoginRoot .hv-login-cta{
+  width:100%;min-height:48px;margin:6px 0 0;border:0;border-radius:24px;cursor:pointer;
+  background:linear-gradient(180deg,#f0a24a,#e07b1f);color:#fff;font:inherit;font-weight:800;font-size:16px;
+  box-shadow:0 6px 0 #c45f12;
+}
+#hvLoginRoot .hv-login-or{
+  display:flex;align-items:center;gap:8px;margin:8px 0;color:#9a7a48;font-size:12px;
+}
+#hvLoginRoot .hv-login-or::before,#hvLoginRoot .hv-login-or::after{
+  content:"";flex:1;height:1px;background:#e0cda8;
+}
+#hvLoginRoot .hv-login-or span{flex:0 0 auto}
+#hvLoginRoot .hv-login-split{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+#hvLoginRoot .hv-login-split .hv-login-pill{margin:0;font-size:13.5px}
+#hvLoginRoot .hv-login-check{
+  display:flex;align-items:flex-start;gap:8px;margin:10px 0 4px;font-size:12.5px;line-height:1.4;color:#c0452a;
+}
+#hvLoginRoot .hv-login-check input{width:16px;height:16px;margin-top:2px;flex:0 0 16px;accent-color:#e07b1f}
+#hvLoginRoot .hv-login-link{
+  display:inline;padding:0;margin:0;border:0;background:none;color:#c0452a;text-decoration:underline;
+  font:inherit;cursor:pointer;
+}
+#hvLoginRoot .hv-login-textbtn{
+  border:0;background:none;color:#8a5a22;font:inherit;font-size:12.5px;cursor:pointer;text-decoration:underline;
+}
+#hvLoginRoot input{
+  width:100%;box-sizing:border-box;margin:0 0 8px;padding:12px 14px;border-radius:14px;
+  border:1px solid #e0cda8;background:#fff;color:#3f2d18;font:inherit;font-size:15px;
+}
+#hvLoginRoot .hv-login-passwrap{position:relative}
+#hvLoginRoot .hv-login-passwrap input{padding-right:42px}
+#hvLoginRoot .hv-login-eye{
+  position:absolute;right:8px;top:8px;width:32px;height:32px;border:0;background:none;cursor:pointer;font-size:16px;
+}
+#hvLoginRoot .hv-login-foot{display:flex;justify-content:space-between;gap:8px;margin-top:10px}
+#hvLoginRoot .hv-login-err{margin:8px 0 0;color:#9a2f1a;font-size:12.5px;text-align:center}
+#hvLoginRoot .hv-login-legal{
+  position:absolute;z-index:20;inset:0;display:flex;flex-direction:column;
+  background:#fbf4e6;
+}
+#hvLoginRoot .hv-login-legal[hidden]{display:none!important}
+#hvLoginRoot .hv-login-legal header{
+  flex:0 0 auto;display:flex;align-items:center;justify-content:center;position:relative;
+  padding:12px 44px 10px;border-bottom:1px solid #e0cda8;color:#5a3a18;font-weight:800;
+}
+#hvLoginRoot .hv-login-legal-body{
+  flex:1;overflow:auto;-webkit-overflow-scrolling:touch;
+  padding:16px 18px 48px;color:#3f2d18;font-size:15px;line-height:1.55;
+  text-align:left;
+}
+#hvLoginRoot .hv-login-legal-body h1{font-size:20px;text-align:center;margin:0 0 8px}
+#hvLoginRoot .hv-login-legal-body h2{font-size:16px;margin:18px 0 8px;color:#5a3a18}
+#hvLoginRoot .hv-login-legal-body p,#hvLoginRoot .hv-login-legal-body li{margin:0 0 10px}
+#hvLoginRoot .hv-login-legal-body .meta{text-align:center;color:#7a5a2e;font-size:13px;margin-bottom:16px}
+body.login-gate-open{filter:none;overflow:hidden}
+body.login-gate-open .hv-brandbar,
+body.login-gate-open #resbar,
+body.login-gate-open #hubScreen,
+body.login-gate-open .art-dock{display:none!important}

@@ -5,6 +5,7 @@ tmp/
 *.zip
 .env
 .env.*
+data/
 
 # Reconstructed from verified asset-sources parts during build.
 /assets/characters/luc-anh/idle-rgba-v1-atlas.webp

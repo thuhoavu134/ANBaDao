@@ -20,6 +20,8 @@ Owner: rà soát chức năng còn thiếu, tách ticket **độc lập** để 
 
 **Wave G coordinator LIVE** 12/09: owner gõ `live`. Squash [#52](https://github.com/bktimmy247/luc-than/pull/52) → main `b77f35a`. Stub + ticket. **72 tướng full-asset = wave sau, không phải 12 hiện tại.**
 
+**Wave I REVIEW** 12/09: TKT-0074 tài khoản + `/api` cùng project Vercel (user/pass + Google email). **Không merge** tới `live`. Dán env trước khi lên production. Wave F #51 không trộn.
+
 
 
 
@@ -35,8 +37,9 @@ Owner: rà soát chức năng còn thiếu, tách ticket **độc lập** để 
 | Wave E | **LIVE** TKT-0054…0055 (#50) Nhật Ký Mơ + Chinh chiến AFK home giả 3D |
 | Wave F | **REVIEW** TKT-0056…0057 (#51) Hành trình + Kết quả — nhánh riêng, không trộn G |
 | Wave G | **Halls LIVE** TKT-0058…0060 + Safari pin TKT-0064 (#53). **Ấn UI LIVE** 0061…0063 (#54) |
+| Wave I | **REVIEW** TKT-0074 Auth API một project Vercel — user/pass + Google. Chưa live |
 
-| Không mở ticket | Combat V2 / 42 S+ · **72 tướng full-asset (wave sau, ID mới, không phải 12 hiện tại)** · 5 nan Lịch `go:null` · visual Bày trận · seed/banner/roster 12 · Auth/DB online · L02c reward (chờ owner) · Hermes 27 · atlas skill trận |
+| Không mở ticket | Combat V2 / 42 S+ · **72 tướng full-asset (wave sau, ID mới, không phải 12 hiện tại)** · 5 nan Lịch `go:null` · visual Bày trận · seed/banner/roster 12 · L02c reward (chờ owner) · Hermes 27 · atlas skill trận |
 
 ---
 

@@ -1,3 +1,7 @@
+## 12/09/2026 — TKT-0074 tài khoản + API cùng Vercel REVIEW
+
+Owner: bật tài khoản, một project Vercel, user/pass + OAuth Google (email). Gateway `api/[...path].js` + wrap Trực Tuyến same-origin. Không sửa `index.html` / `battle.html`. Chưa live — cần env Neon + Google. Wave F #51 không trộn.
+
 ## 12/09/2026 — TKT-0061…0063 ấn UI skill seals LIVE
 
 Owner gõ `live`. Squash [#54](https://github.com/bktimmy247/luc-than/pull/54) → main `d94f8a3`. 27 medallion hồ sơ 9 tướng. Wave F #51 không trộn. 72 tướng vẫn wave sau.

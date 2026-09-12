@@ -49,6 +49,10 @@ const WAVE_G_SEALS = [
   ['TKT-0063', 'skill-seals-c']
 ];
 
+const WAVE_I = [
+  ['TKT-0074', 'auth']
+];
+
 test('lane stubs exist and are imported once from build-static', () => {
   const build = read('scripts/build-static.mjs');
   for (const [id, slug] of LANES) {
@@ -118,6 +122,17 @@ test('lane stubs exist and are imported once from build-static', () => {
   assert.match(build, /lanes\/tkt-0060-team\.mjs[\s\S]*lanes\/tkt-0061-skill-seals-a\.mjs/);
   assert.match(build, /lanes\/tkt-0061-skill-seals-a\.mjs[\s\S]*lanes\/tkt-0062-skill-seals-b\.mjs/);
   assert.match(build, /lanes\/tkt-0062-skill-seals-b\.mjs[\s\S]*lanes\/tkt-0063-skill-seals-c\.mjs/);
+  for (const [id, slug] of WAVE_I) {
+    const rel = `./lanes/tkt-${id.slice(4)}-${slug}.mjs`;
+    const hits = build.split(rel).length - 1;
+    assert.equal(hits, 1, id + ' import count');
+    const stub = read('scripts/lanes/tkt-' + id.slice(4) + '-' + slug + '.mjs');
+    const filled = /await import\(['"]\.\.\/net-auth-v1\.mjs['"]\)/.test(stub);
+    const reserved = new RegExp("LANE = '" + id + "'").test(stub);
+    assert.equal(filled || reserved, true, id + ' wave I stub');
+  }
+  assert.match(build, /WAVE-I 2026-09-12 TKT-0074/);
+  assert.match(build, /overlay-safari-hotfix-v1\.mjs[\s\S]*lanes\/tkt-0074-auth\.mjs/);
 });
 
 test('wave A tickets are exclusive and freeze hub wiring', () => {
@@ -205,6 +220,19 @@ test('wave A tickets are exclusive and freeze hub wiring', () => {
     }
   }
   assert.equal(heroes.size, 9, 'Wave G seals cover 9 heroes');
+});
+
+test('wave I auth ticket is exclusive and freezes combat shells', () => {
+  const md = read('tickets/TKT-0074/ticket.md');
+  assert.match(md, /status: (READY|REVIEW|LIVE)/);
+  assert.match(md, /Không sửa `index\.html`/);
+  assert.match(md, /Không sửa `campaign-scene\.js`/);
+  assert.match(md, /battle\.html/);
+  assert.match(md, /wrap `renderNet`/);
+  assert.match(md, /oauth|Google/i);
+  assert.match(md, /\/api\/login/);
+  assert.match(md, /resource_locks: \["auth-api"\]/);
+  assert.doesNotMatch(md, /splus-lab|Combat V2 vào roster|go:null combat/);
 });
 
 test('forbidden work is not ticketed as READY hall', () => {

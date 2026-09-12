@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "node scripts/build-static.mjs",
     "preview": "npx serve dist",
+    "preview:api": "node scripts/preview-with-api.mjs",
     "test": "npm run build && node --test --test-concurrency=1 tests/*.test.mjs",
     "ci": "npm run build && node --test --test-concurrency=1 tests/*.test.mjs",
     "check": "npm test"
