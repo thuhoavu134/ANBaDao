@@ -1,11 +1,11 @@
 ---
 id: TKT-0044
 title: Kho lưu / mã quà hall giả 3D overlay body
-status: REVIEW
+status: LIVE
 phase: REFACTOR
 priority: P1
 created: 2026-09-12T02:35:00.000Z
-updated: 2026-09-12T02:35:00.000Z
+updated: 2026-09-12T03:45:00.000Z
 acceptance_ids: ['L34-T1', 'L34-T2', 'L34-T3', 'L34-T4', 'L34-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths: ['src/ui/vault-hall-runtime.js', 'src/ui/vault-hall.css', 'scripts/vault-hall-v1.mjs', 'scripts/lanes/tkt-0044-vault.mjs', 'scripts/qa-vault-hall.mjs', 'assets/ui/vault/vault-hall.jpg', 'tests/vault-hall.test.mjs', 'docs/qa/L34-VAULT-HALL/']

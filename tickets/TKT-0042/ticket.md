@@ -1,11 +1,11 @@
 ---
 id: TKT-0042
 title: Trò chuyện hall giả 3D overlay body
-status: REVIEW
+status: LIVE
 phase: REFACTOR
 priority: P1
 created: 2026-09-12T02:35:00.000Z
-updated: 2026-09-12T02:35:00.000Z
+updated: 2026-09-12T03:45:00.000Z
 acceptance_ids: ['L32-T1', 'L32-T2', 'L32-T3', 'L32-T4', 'L32-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths: ['src/ui/chat-hall-runtime.js', 'src/ui/chat-hall.css', 'scripts/chat-hall-v1.mjs', 'scripts/lanes/tkt-0042-chat.mjs', 'scripts/qa-chat-hall.mjs', 'assets/ui/chat/chat-hall.jpg', 'tests/chat-hall.test.mjs', 'docs/qa/L32-CHAT-HALL/']

@@ -1,11 +1,11 @@
 ---
 id: TKT-0043
 title: Gia Tộc hall giả 3D overlay body
-status: REVIEW
+status: LIVE
 phase: REFACTOR
 priority: P1
 created: 2026-09-12T02:35:00.000Z
-updated: 2026-09-12T02:35:00.000Z
+updated: 2026-09-12T03:45:00.000Z
 acceptance_ids: ['L33-T1', 'L33-T2', 'L33-T3', 'L33-T4', 'L33-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths: ['src/ui/clan-hall-runtime.js', 'src/ui/clan-hall.css', 'scripts/clan-hall-v1.mjs', 'scripts/lanes/tkt-0043-clan.mjs', 'scripts/qa-clan-hall.mjs', 'assets/ui/clan/clan-hall.jpg', 'tests/clan-hall.test.mjs', 'docs/qa/L33-CLAN-HALL/']

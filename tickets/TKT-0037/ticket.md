@@ -1,11 +1,11 @@
 ---
 id: TKT-0037
 title: Túi đồ hall giả 3D overlay body
-status: REVIEW
+status: LIVE
 phase: REFACTOR
 priority: P1
 created: 2026-09-12T02:35:00.000Z
-updated: 2026-09-12T02:35:00.000Z
+updated: 2026-09-12T03:45:00.000Z
 acceptance_ids: ['L27-T1', 'L27-T2', 'L27-T3', 'L27-T4', 'L27-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths: ['src/ui/bag-hall-runtime.js', 'src/ui/bag-hall.css', 'scripts/bag-hall-v1.mjs', 'scripts/lanes/tkt-0037-bag.mjs', 'scripts/qa-bag-hall.mjs', 'assets/ui/bag/bag-hall.jpg', 'tests/bag-hall.test.mjs', 'docs/qa/L27-BAG-HALL/']

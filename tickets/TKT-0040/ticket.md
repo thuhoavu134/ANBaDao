@@ -1,11 +1,11 @@
 ---
 id: TKT-0040
 title: Bang Hội hall giả 3D overlay body
-status: REVIEW
+status: LIVE
 phase: REFACTOR
 priority: P1
 created: 2026-09-12T02:35:00.000Z
-updated: 2026-09-12T02:35:00.000Z
+updated: 2026-09-12T03:45:00.000Z
 acceptance_ids: ['L30-T1', 'L30-T2', 'L30-T3', 'L30-T4', 'L30-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths: ['src/ui/guild-hall-runtime.js', 'src/ui/guild-hall.css', 'scripts/guild-hall-v1.mjs', 'scripts/lanes/tkt-0040-guild.mjs', 'scripts/qa-guild-hall.mjs', 'assets/ui/guild/guild-hall.jpg', 'tests/guild-hall.test.mjs', 'docs/qa/L30-GUILD-HALL/']

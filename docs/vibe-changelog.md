@@ -1,4 +1,9 @@
+## 12/09/2026 — TKT-0036…0045 LIVE
+
+Owner gõ `live`. Squash-merge PR #39–#47 (Túi/Thư/Việc/Bang/Bạn/Chat/Tộc/Kho + kit v2) rồi rebase-squash Rèn PR [#37](https://github.com/bktimmy247/luc-than/pull/37) → main `a2d8bf1`. Overlay body giả 3D; preview tạm mở khóa hành trình; tiếng rèn unlock iOS rồi mới gõ.
+
 ## 12/09/2026 — TKT-0037…0045 hall + kit squash-merge
+
 
 
 Owner gõ `live`. Squash-merge PR #39–#47 lên main. Overlay Túi/Thư/Việc/Bang/Bạn/Chat/Tộc/Kho + kit v2. TKT-0036 Rèn rebase sau halls.

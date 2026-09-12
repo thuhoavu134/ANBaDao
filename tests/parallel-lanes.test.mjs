@@ -37,7 +37,7 @@ test('wave A tickets are exclusive and freeze hub wiring', () => {
   const paths = new Map();
   for (const [id] of LANES) {
     const md = read('tickets/' + id + '/ticket.md');
-    assert.match(md, /status: (READY|REVIEW)/);
+    assert.match(md, /status: (READY|REVIEW|LIVE)/);
     assert.match(md, /Không sửa `index\.html`/);
     assert.match(md, /document\.body\.append/);
     const lock = md.match(/resource_locks: \["([^"]+)"\]/)[1];

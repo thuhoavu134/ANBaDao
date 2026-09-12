@@ -2,7 +2,8 @@
 
 Đọc `docs/HANDOFF-2026-09-12.md` rồi `docs/LUNA-HANDOFF.md` trước khi sửa game.
 
-Bàn giao mới nhất **12/09/2026**: hall Wave A **TKT-0037…0044** + kit **TKT-0045** đã squash lên main. Đọc `docs/PARALLEL-LANES-2026-09-12.md`. TKT-0036 Rèn hall đang rebase lên main để live cùng đợt.
+Bàn giao mới nhất **12/09/2026**: **LIVE** TKT-0036 Rèn + TKT-0037…0044 hall overlay + TKT-0045 kit v2. Main `a2d8bf1`. Đọc `docs/HANDOFF-2026-09-12.md`.
+
 
 
 

@@ -1,11 +1,11 @@
 ---
 id: TKT-0038
 title: Hòm thư hall giả 3D overlay body
-status: REVIEW
+status: LIVE
 phase: REFACTOR
 priority: P1
 created: 2026-09-12T02:35:00.000Z
-updated: 2026-09-12T02:35:00.000Z
+updated: 2026-09-12T03:45:00.000Z
 acceptance_ids: ['L28-T1', 'L28-T2', 'L28-T3', 'L28-T4', 'L28-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths: ['src/ui/mail-hall-runtime.js', 'src/ui/mail-hall.css', 'scripts/mail-hall-v1.mjs', 'scripts/lanes/tkt-0038-mail.mjs', 'scripts/qa-mail-hall.mjs', 'assets/ui/mail/mail-hall.jpg', 'tests/mail-hall.test.mjs', 'docs/qa/L28-MAIL-HALL/']

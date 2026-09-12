@@ -2,7 +2,10 @@
 
 Owner: rà soát chức năng còn thiếu, tách ticket **độc lập** để nhiều agent build cùng lúc. Ghép `main` không đè nhau.
 
-**Coordinator LIVE** 12/09: PR [#38](https://github.com/bktimmy247/luc-than/pull/38) squash `c990516`. Stub đã trên main. Ticket overlay vẫn READY — agent nhận lane rồi đẩy PR riêng, **không merge** tới khi owner gõ `live`.
+**Coordinator LIVE** 12/09: PR [#38](https://github.com/bktimmy247/luc-than/pull/38) squash `c990516`.
+
+**Hall + kit LIVE** 12/09: owner gõ `live`. Squash #39–#47 + rebase-merge Rèn #37 → main `a2d8bf1`.
+
 
 ---
 
@@ -10,10 +13,8 @@ Owner: rà soát chức năng còn thiếu, tách ticket **độc lập** để 
 
 | Nhóm | Việc |
 |---|---|
-| Live | Chinh chiến/AFK/Bày trận/6v6 · Tướng overlay · Trợ trận 11 nan · Lịch Luyện + Nhật Ký · Tháp · Mộng Lộ · Chợ · Gọi Mộng · Đấu · Săn · Lễ Hội · forge **command** |
-| REVIEW chờ `live` | [TKT-0036](../tickets/TKT-0036/ticket.md) Rèn hall — nhánh `work/l25-forge-hall-20260912`. **Không nhận lane forge.** |
-| Wave A — 8 agent song song | TKT-0037…0044 hall overlay cho shell legacy |
-| Wave B — 1 agent | TKT-0045 kit v2 10 tướng còn lại |
+| Live | Chinh chiến/AFK/Bày trận/6v6 · Tướng overlay · Trợ trận 11 nan · Lịch Luyện + Nhật Ký · Tháp · Mộng Lộ · Chợ · Gọi Mộng · Đấu · Săn · Lễ Hội · Rèn hall + command · Túi/Thư/Việc/Bang/Bạn/Chat/Tộc/Kho overlay · kit v2 12 tướng |
+| Wave A/B | **LIVE** TKT-0036…0045 |
 | Không mở ticket | Combat V2 / 42 S+ · 5 nan Lịch `go:null` · visual Bày trận · seed/banner/roster 12 · Auth/DB online · L02c reward (chờ owner) |
 
 ---

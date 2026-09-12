@@ -1,11 +1,11 @@
 ---
 id: TKT-0039
 title: Giao việc hall giả 3D overlay body
-status: REVIEW
+status: LIVE
 phase: REFACTOR
 priority: P1
 created: 2026-09-12T02:35:00.000Z
-updated: 2026-09-12T02:35:00.000Z
+updated: 2026-09-12T03:45:00.000Z
 acceptance_ids: ['L29-T1', 'L29-T2', 'L29-T3', 'L29-T4', 'L29-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths: ['src/ui/jobs-hall-runtime.js', 'src/ui/jobs-hall.css', 'scripts/jobs-hall-v1.mjs', 'scripts/lanes/tkt-0039-jobs.mjs', 'scripts/qa-jobs-hall.mjs', 'assets/ui/jobs/jobs-hall.jpg', 'tests/jobs-hall.test.mjs', 'docs/qa/L29-JOBS-HALL/']

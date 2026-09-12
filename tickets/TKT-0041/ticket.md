@@ -1,11 +1,11 @@
 ---
 id: TKT-0041
 title: Bạn bè hall giả 3D overlay body
-status: REVIEW
+status: LIVE
 phase: REFACTOR
 priority: P1
 created: 2026-09-12T02:35:00.000Z
-updated: 2026-09-12T02:35:00.000Z
+updated: 2026-09-12T03:45:00.000Z
 acceptance_ids: ['L31-T1', 'L31-T2', 'L31-T3', 'L31-T4', 'L31-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths: ['src/ui/friends-hall-runtime.js', 'src/ui/friends-hall.css', 'scripts/friends-hall-v1.mjs', 'scripts/lanes/tkt-0041-friends.mjs', 'scripts/qa-friends-hall.mjs', 'assets/ui/friends/friends-hall.jpg', 'tests/friends-hall.test.mjs', 'docs/qa/L31-FRIENDS-HALL/']

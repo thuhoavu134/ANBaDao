@@ -1,11 +1,11 @@
 ---
 id: TKT-0036
 title: Rèn hall giả 3D overlay body
-status: REVIEW
+status: LIVE
 phase: REFACTOR
 priority: P1
 created: 2026-09-12T04:28:00.000Z
-updated: 2026-09-12T04:28:00.000Z
+updated: 2026-09-12T03:45:00.000Z
 acceptance_ids: ["L25-T1","L25-T2","L25-T3","L25-T4","L25-T5","L25-P1"]
 required_gates: ["vibelab","tdd"]
 affected_paths: ["src/ui/forge-hall-runtime.js","src/ui/forge-hall.css","scripts/forge-hall-v1.mjs","scripts/build-static.mjs","assets/ui/forge/forge-hall.jpg","tests/forge-hall.test.mjs"]

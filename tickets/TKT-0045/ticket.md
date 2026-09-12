@@ -1,11 +1,11 @@
 ---
 id: TKT-0045
 title: Kit v2 cho 10 tướng legacy
-status: REVIEW
+status: LIVE
 phase: REFACTOR
 priority: P2
 created: 2026-09-12T02:35:00.000Z
-updated: 2026-09-12T02:35:00.000Z
+updated: 2026-09-12T03:45:00.000Z
 acceptance_ids: ["L35-T1","L35-T2","L35-T3","L35-P1"]
 required_gates: ["vibelab","tdd"]
 affected_paths: ["src/domain/hero/skill-kit.mjs","scripts/skill-kit-runtime-v1.mjs","tests/skill-kit.test.mjs"]
