@@ -1,3 +1,11 @@
+## 13/09/2026 — Wave N city halls REVIEW
+
+Bang Hội + Nhật Ký + Lễ Hội: lưới nhà isometric, ấn ô mở hoạt động.
+
+## 13/09/2026 — Wave N Bang Hội city REVIEW
+
+Lưới 8 ô isometric (Gia Tộc, Võ Đường, Kho Bảo, Hổ Trấn, Chiến Dịch, Bang Chiến, Công Vụ, Bang Thương). Dock Nhật ký / Quản lý / Thông tin.
+
 ## 13/09/2026 — Wave M LIVE
 
 Owner gõ live. Squash [#75](https://github.com/bktimmy247/luc-than/pull/75) → `347c4fb`. TKT-0092…0096.

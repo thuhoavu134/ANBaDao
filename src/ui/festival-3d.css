@@ -14,4 +14,19 @@
   background:linear-gradient(180deg,rgba(255,248,230,.2),rgba(247,237,216,.08) 42%,rgba(255,255,255,0))!important;
 }
 #hvFestivalRoot > *{position:relative;z-index:1}
-body.festival-3d-active .hv-brandbar,body.festival-3d-active #resbar{display:none!important}
+#hvFestivalRoot.hv-city #hvFestCity{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:8px 12px 24px;
+}
+#hvFestivalRoot.hv-city:not(.is-tile-open) .hv-fest-panel{display:none!important}
+#hvFestivalRoot.hv-city.is-tile-open #hvFestCity{display:none}
+#hvFestivalRoot.hv-city[data-fcity="lamp"] .hv-fest-wheel-shell{display:none!important}
+#hvFestivalRoot.hv-city[data-fcity="wheel"] .hv-fest-panel > :not(.hv-fest-wheel-shell){display:none!important}
+#hvFestivalRoot.hv-city[data-fcity="chest"] .hv-fest-panel > :not(.hv-fest-wheel-shell){display:none!important}
+#hvFestivalRoot.hv-city[data-fcity="chest"] .hv-fest-wheel-shell > :not(.hv-fest-chests):not([data-fest-reveal]){display:none!important}
+#hvFestCity .hv-ftile{
+  border:0;background:#f7ead2;border-radius:14px;padding:6px 6px 8px;
+  box-shadow:0 0 0 1px #e2c48a,0 4px 10px rgba(80,50,20,.12);
+  display:flex;flex-direction:column;align-items:center;cursor:pointer;
+}
+#hvFestCity .hv-ftile img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;display:block}
+#hvFestCity .hv-ftile b{margin-top:6px;font-size:12px;color:#5a3a18;text-align:center}

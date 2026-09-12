@@ -64,6 +64,9 @@ Board GitHub không có. File `tickets/TKT-00xx/ticket.md` là nguồn sự th�
 | TKT-0094 | M | Túi lưới ô | LIVE (#75) |
 | TKT-0095 | M | Rèn đập búa stub | LIVE (#75) |
 | TKT-0096 | M | Giao Lưu vào việc vặt | LIVE (#75) |
+| TKT-0097 | N | Bang Hội city ô hoạt động | REVIEW |
+| TKT-0098 | N | Nhật Ký city ô hoạt động | REVIEW |
+| TKT-0099 | N | Lễ Hội city ô hoạt động | REVIEW |
 
 Cách tạo gift code (owner): [docs/GIFT-CODES.md](../docs/GIFT-CODES.md)
 
