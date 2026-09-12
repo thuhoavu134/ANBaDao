@@ -1,3 +1,7 @@
+## 13/09/2026 — Wave P bạn bè thật + nền kem LIVE
+
+Owner gõ live. Squash [#78](https://github.com/bktimmy247/luc-than/pull/78) → `f24a2df`. TKT-0101…0102.
+
 ## 13/09/2026 — Wave P bạn bè thật + nền kem REVIEW
 
 Bạn bè = tài khoản server. Lưới chức năng kem trơn. Thành Chính + login giữ nguyên.
