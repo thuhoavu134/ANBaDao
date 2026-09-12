@@ -18,6 +18,16 @@ const LANES = [
   ['TKT-0044', 'vault']
 ];
 
+const WAVE_C = [
+  ['TKT-0046', 'tower'],
+  ['TKT-0047', 'expedition'],
+  ['TKT-0048', 'shop'],
+  ['TKT-0049', 'summon'],
+  ['TKT-0050', 'arena'],
+  ['TKT-0051', 'hunt'],
+  ['TKT-0052', 'festival']
+];
+
 test('lane stubs exist and are imported once from build-static', () => {
   const build = read('scripts/build-static.mjs');
   for (const [id, slug] of LANES) {
@@ -26,10 +36,21 @@ test('lane stubs exist and are imported once from build-static', () => {
     assert.equal(hits, 1, id + ' import count');
     const stub = read('scripts/lanes/tkt-' + id.slice(4) + '-' + slug + '.mjs');
     const filled = new RegExp("await import\\(['\"]\\.\\./" + slug + "-hall-v1\\.mjs['\"]\\)").test(stub);
+    const filled3d = new RegExp("await import\\(['\"]\\.\\./" + slug + "-3d-v1\\.mjs['\"]\\)").test(stub);
     const reserved = new RegExp("LANE = '" + id + "'").test(stub);
-    assert.equal(filled || reserved, true, id + ' stub must keep LANE or load hall-v1');
+    assert.equal(filled || filled3d || reserved, true, id + ' stub must keep LANE or load hall/3d');
+  }
+  for (const [id, slug] of WAVE_C) {
+    const rel = `./lanes/tkt-${id.slice(4)}-${slug}.mjs`;
+    const hits = build.split(rel).length - 1;
+    assert.equal(hits, 1, id + ' import count');
+    const stub = read('scripts/lanes/tkt-' + id.slice(4) + '-' + slug + '.mjs');
+    const filled3d = new RegExp("await import\\(['\"]\\.\\./" + slug + "-3d-v1\\.mjs['\"]\\)").test(stub);
+    const reserved = new RegExp("LANE = '" + id + "'").test(stub);
+    assert.equal(filled3d || reserved, true, id + ' wave C stub');
   }
   assert.match(build, /daily-runtime-v1\.mjs[\s\S]*lanes\/tkt-0037-bag\.mjs/);
+  assert.match(build, /lanes\/tkt-0044-vault\.mjs[\s\S]*lanes\/tkt-0046-tower\.mjs/);
 });
 
 test('wave A tickets are exclusive and freeze hub wiring', () => {
@@ -52,6 +73,16 @@ test('wave A tickets are exclusive and freeze hub wiring', () => {
   const kit = read('tickets/TKT-0045/ticket.md');
   assert.match(kit, /hero-kits-v2/);
   assert.doesNotMatch(kit, /lanes\/tkt-/);
+  const locksC = new Set();
+  for (const [id] of WAVE_C) {
+    const md = read('tickets/' + id + '/ticket.md');
+    assert.match(md, /status: (READY|REVIEW|LIVE)/);
+    assert.match(md, /Không sửa `index\.html`/);
+    assert.match(md, /document\.body\.append/);
+    const lock = md.match(/resource_locks: \["([^"]+)"\]/)[1];
+    assert.equal(locks.has(lock) || locksC.has(lock), false, 'duplicate lock ' + lock);
+    locksC.add(lock);
+  }
 });
 
 test('forbidden work is not ticketed as READY hall', () => {

@@ -1,0 +1,17 @@
+#hvHuntRoot{
+  --hall-ink:#2d251f;
+  --hall-gold:#d58a14;
+  position:fixed;inset:0;z-index:80;display:none;flex-direction:column;
+  overflow:auto;-webkit-overflow-scrolling:touch;touch-action:manipulation;
+  background:#d7eef5 url('assets/ui/hunt/hunt-hall.jpg') center top/cover no-repeat!important;
+  color:var(--hall-ink)!important;font-family:inherit;box-sizing:border-box;
+  padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);min-height:0;height:auto;
+}
+#hvHuntRoot.is-open{display:flex}
+#hvHuntRoot[hidden]{display:none!important}
+#hvHuntRoot:before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,248,230,.2),rgba(247,237,216,.08) 42%,rgba(255,255,255,0))!important;
+}
+#hvHuntRoot > *{position:relative;z-index:1}
+body.hunt-3d-active .hv-brandbar,body.hunt-3d-active #resbar{display:none!important}

@@ -1,0 +1,14 @@
+{
+  "screen": "festival",
+  "ok": true,
+  "info": {
+    "parent": true,
+    "position": "fixed",
+    "inset": "0px,0px,0px,0px",
+    "overflow": "auto",
+    "bg": "url(\"http://127.0.0.1:18046/assets/ui/festival/festival-hall.jpg\")",
+    "display": "flex",
+    "height": 996
+  },
+  "errors": []
+}

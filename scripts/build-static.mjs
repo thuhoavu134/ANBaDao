@@ -88,6 +88,13 @@ await import('./lanes/tkt-0041-friends.mjs');
 await import('./lanes/tkt-0042-chat.mjs');
 await import('./lanes/tkt-0043-clan.mjs');
 await import('./lanes/tkt-0044-vault.mjs');
+await import('./lanes/tkt-0046-tower.mjs');
+await import('./lanes/tkt-0047-expedition.mjs');
+await import('./lanes/tkt-0048-shop.mjs');
+await import('./lanes/tkt-0049-summon.mjs');
+await import('./lanes/tkt-0050-arena.mjs');
+await import('./lanes/tkt-0051-hunt.mjs');
+await import('./lanes/tkt-0052-festival.mjs');
 
 // The integrated battle is loaded from this embedded payload in production.
 // Keep it byte-identical to the patched battle.html; otherwise the visible

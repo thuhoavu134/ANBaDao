@@ -1,4 +1,9 @@
+## 12/09/2026 — Wave C TKT-0046…0052 REVIEW
+
+Owner gõ `tiếp`. 7 màn sơn mài (Tháp / Mộng Lộ / Chợ / Gọi / Đấu / Săn / Lễ) restyle hall giả 3D overlay body. Domain đóng băng. Không merge tới `live`.
+
 ## 12/09/2026 — TKT-0036…0045 LIVE
+
 
 Owner gõ `live`. Squash-merge PR #39–#47 (Túi/Thư/Việc/Bang/Bạn/Chat/Tộc/Kho + kit v2) rồi rebase-squash Rèn PR [#37](https://github.com/bktimmy247/luc-than/pull/37) → main `a2d8bf1`. Overlay body giả 3D; preview tạm mở khóa hành trình; tiếng rèn unlock iOS rồi mới gõ.
 

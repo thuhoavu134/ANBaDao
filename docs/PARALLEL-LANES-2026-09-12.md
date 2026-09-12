@@ -14,7 +14,7 @@ Owner: rà soát chức năng còn thiếu, tách ticket **độc lập** để 
 | Nhóm | Việc |
 |---|---|
 | Live | Chinh chiến/AFK/Bày trận/6v6 · Tướng overlay · Trợ trận 11 nan · Lịch Luyện + Nhật Ký · Tháp · Mộng Lộ · Chợ · Gọi Mộng · Đấu · Săn · Lễ Hội · Rèn hall + command · Túi/Thư/Việc/Bang/Bạn/Chat/Tộc/Kho overlay · kit v2 12 tướng |
-| Wave A/B | **LIVE** TKT-0036…0045 |
+| Wave C — 7 agent song song | TKT-0046…0052 restyle sơn mài → hall giả 3D overlay body (Tháp / Mộng Lộ / Chợ / Gọi / Đấu / Săn / Lễ) |
 | Không mở ticket | Combat V2 / 42 S+ · 5 nan Lịch `go:null` · visual Bày trận · seed/banner/roster 12 · Auth/DB online · L02c reward (chờ owner) |
 
 ---
@@ -59,9 +59,24 @@ Mỹ thuật: hall **giả 3D tươi nhiều lớp** (pattern Trợ trận / Tư
 
 ---
 
-## 3. Wave B
+## 3b. Wave C — 7 lane sơn mài → giả 3D
+
+| Ticket | Màn | Stub | Khóa | Hub |
+|---|---|---|---|---|
+| [TKT-0046](../tickets/TKT-0046/ticket.md) | Tháp Trắng Đêm | `tkt-0046-tower.mjs` | `tower-3d` | Nan Lịch + landmark |
+| [TKT-0047](../tickets/TKT-0047/ticket.md) | Mộng Lộ | `tkt-0047-expedition.mjs` | `expedition-3d` | Landmark phải |
+| [TKT-0048](../tickets/TKT-0048/ticket.md) | Chợ Mộng | `tkt-0048-shop.mjs` | `shop-3d` | Landmark Chợ |
+| [TKT-0049](../tickets/TKT-0049/ticket.md) | Gọi Mộng | `tkt-0049-summon.mjs` | `summon-3d` | Landmark Gọi |
+| [TKT-0050](../tickets/TKT-0050/ticket.md) | Đấu Trường | `tkt-0050-arena.mjs` | `arena-3d` | Landmark Đấu |
+| [TKT-0051](../tickets/TKT-0051/ticket.md) | Săn Boss | `tkt-0051-hunt.mjs` | `hunt-3d` | Side phải |
+| [TKT-0052](../tickets/TKT-0052/ticket.md) | Lễ Hội | `tkt-0052-festival.mjs` | `festival-3d` | Side trái Sự kiện |
+
+Chỉ sửa file `*-3d.*` + hall jpg. **Không** sửa domain / `*-runtime.js` / `*-screen.css` gốc (sơn mài giữ để freeze test). CSS 3d inject sau, kéo `#hv*Root` lên `document.body`.
+
+## 3. Wave B — LIVE
 
 | Ticket | Việc | Khóa | Song song với Wave A? |
+
 |---|---|---|---|
 | [TKT-0045](../tickets/TKT-0045/ticket.md) | Kit v2 10 tướng legacy | `hero-kits-v2` | Có — **không** sửa hall/lanes |
 

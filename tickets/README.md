@@ -7,13 +7,20 @@ Board GitHub không có. File `tickets/TKT-00xx/ticket.md` là nguồn sự th�
 | ID | Wave | Việc | Status |
 |---|---|---|---|
 | TKT-0035 | — | Màn Tướng overlay | LIVE |
-| TKT-0036 | — | Rèn hall | REVIEW (nhánh khác, chờ `live`) |
-| TKT-0037 | A | Túi đồ hall | READY |
-| TKT-0038 | A | Hòm thư hall | READY |
-| TKT-0039 | A | Giao việc hall | READY |
-| TKT-0040 | A | Bang Hội hall | READY |
-| TKT-0041 | A | Bạn bè hall | READY |
-| TKT-0042 | A | Trò chuyện hall | READY |
-| TKT-0043 | A | Gia Tộc hall (không nút hub) | READY |
-| TKT-0044 | A | Kho lưu / mã quà (không nút hub) | READY |
-| TKT-0045 | B | Kit v2 10 tướng | READY |
+| TKT-0036 | — | Rèn hall | LIVE |
+| TKT-0037 | A | Túi đồ hall | LIVE |
+| TKT-0038 | A | Hòm thư hall | LIVE |
+| TKT-0039 | A | Giao việc hall | LIVE |
+| TKT-0040 | A | Bang Hội hall | LIVE |
+| TKT-0041 | A | Bạn bè hall | LIVE |
+| TKT-0042 | A | Trò chuyện hall | LIVE |
+| TKT-0043 | A | Gia Tộc hall (không nút hub) | LIVE |
+| TKT-0044 | A | Kho lưu / mã quà (không nút hub) | LIVE |
+| TKT-0045 | B | Kit v2 10 tướng | LIVE |
+| TKT-0046 | C | Tháp giả 3D overlay body | REVIEW |
+| TKT-0047 | C | Mộng Lộ giả 3D overlay body | REVIEW |
+| TKT-0048 | C | Chợ Mộng giả 3D overlay body | REVIEW |
+| TKT-0049 | C | Gọi Mộng giả 3D overlay body | REVIEW |
+| TKT-0050 | C | Đấu Trường giả 3D overlay body | REVIEW |
+| TKT-0051 | C | Săn Boss giả 3D overlay body | REVIEW |
+| TKT-0052 | C | Lễ Hội giả 3D overlay body | REVIEW |
