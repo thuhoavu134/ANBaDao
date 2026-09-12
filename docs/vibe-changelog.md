@@ -1,3 +1,7 @@
+## 12/09/2026 — TKT-0075 LIVE
+
+Owner `cứ làm đi`. Squash [#57](https://github.com/bktimmy247/luc-than/pull/57) → main `ce1a0e1`. Nan không nướng khóa + điều khoản một câu. Vercel Hobby cũ 402 hết 100 deploy, reset 13/09 17:15 +07.
+
 ## 12/09/2026 — TKT-0075 nan Lịch Luyện không nướng khóa + điều khoản 1 dòng REVIEW
 
 Owner ảnh thật. 3 nan hold/abyss/palace sơn lại **không ổ khóa**. Khóa chỉ overlay CSS `.hv-lich-lock` khi `is-locked`. Dòng đồng ý: «Tôi đồng ý với Thỏa thuận người dùng và Chính sách bảo mật» một câu, link nowrap, bỏ ngoặc kép. L76-T1/T2/T3 GREEN. Không merge tới `live`.

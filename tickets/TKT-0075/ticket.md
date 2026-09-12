@@ -1,8 +1,8 @@
 ---
 id: TKT-0075
 title: Nan Lịch Luyện không nướng khóa + dòng điều khoản một hàng
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 created: 2026-09-12T10:05:00.000Z
 updated: 2026-09-12T10:05:00.000Z
@@ -40,5 +40,5 @@ Không điền Wave H. Không 72 tướng. Không Combat V2. Không merge tới 
 
 ## Result
 
-Builder → REVIEW. L76-T1/T2/T3 GREEN. Chrome 390×844 PASS (`docs/qa/L76-LOCK-TERMS/`). Safari NOT_RUN. Không merge tới khi owner gõ `live`.
+Builder → REVIEW. L76-T1/T2/T3 GREEN. Chrome 390×844 PASS (`docs/qa/L76-LOCK-TERMS/`). Safari NOT_RUN. Owner `cứ làm đi` squash [#57](https://github.com/bktimmy247/luc-than/pull/57) → main `ce1a0e1`. LIVE. Vercel Hobby cũ hết hạn deploy tới 13/09 17:15 +07.
 

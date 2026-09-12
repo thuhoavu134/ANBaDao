@@ -2,7 +2,7 @@
 
 Đọc `docs/HANDOFF-2026-09-12.md` rồi `docs/LUNA-HANDOFF.md` trước khi sửa game.
 
-Bàn giao mới nhất **12/09/2026**: Wave F TKT-0056…0057 Hành trình+Kết quả **trên Git** [#51](https://github.com/bktimmy247/luc-than/pull/51) `5bd9382`. Wave H coordinator TKT-0065…0073 stub [#55](https://github.com/bktimmy247/luc-than/pull/55) `b4915a9`. Đăng nhập TKT-0074 LIVE [#56](https://github.com/bktimmy247/luc-than/pull/56). **Vercel alias chưa Wave F/H** — Hobby hết 100 deploy/ngày, reset 13/09 16:58 +07. **Agent tiếp:** điền P0 TKT-0065 Tháp trận NPC + TKT-0066 nút Thành Chính. 72 tướng = wave sau.
+Bàn giao mới nhất **12/09/2026**: TKT-0075 LIVE [#57](https://github.com/bktimmy247/luc-than/pull/57) `ce1a0e1` (nan không nướng khóa + điều khoản 1 dòng). Wave F TKT-0056…0057 Hành trình+Kết quả **trên Git** [#51](https://github.com/bktimmy247/luc-than/pull/51) `5bd9382`. Wave H stub [#55](https://github.com/bktimmy247/luc-than/pull/55) `b4915a9`. Đăng nhập TKT-0074 LIVE [#56](https://github.com/bktimmy247/luc-than/pull/56). **Vercel Hobby cũ 402** hết 100 deploy/ngày, reset 13/09 17:15 +07 — alias luc-than.vercel.app còn kẹt login `282df9d`. **Agent tiếp:** điền P0 TKT-0065 Tháp trận NPC + TKT-0066 nút Thành Chính. 72 tướng = wave sau.
 
 
 

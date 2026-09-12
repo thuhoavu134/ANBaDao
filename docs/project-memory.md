@@ -1,3 +1,7 @@
+## 12/09/2026 — TKT-0075 LIVE
+
+Main `ce1a0e1` [#57](https://github.com/bktimmy247/luc-than/pull/57). Nan Lịch Luyện: icon = ải, khóa = overlay CSS. Điều khoản một câu. Vercel Hobby cũ hết hạn tới 13/09 17:15 +07.
+
 ## 12/09/2026 — TKT-0075 REVIEW
 
 Nan Lịch Luyện: icon = ải, khóa = overlay CSS (biến mất khi mở). Đăng nhập: điều khoản một câu nối liền. Wave H vẫn READY. Không merge tới `live`.
