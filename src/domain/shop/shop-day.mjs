@@ -1,14 +1,17 @@
 const shopFail = (code, message) => ({ ok: false, code, message });
 
 export const SHOP_STAM_CAP = 120;
-export const SHOP_STALL_COUNT = 5;
+export const SHOP_STALL_COUNT = 8;
 
 export const SHOP_STALLS = Object.freeze([
   Object.freeze({ k: 'sh10', type: 'shards', qty: 10, gold: 320, gems: 0, name: 'Gói ký ức bỏ quên', pool: 'nonSsr' }),
   Object.freeze({ k: 'sh5ssr', type: 'shards', qty: 5, gold: 0, gems: 60, name: 'Mảnh mộng hiếm', pool: 'ssr' }),
   Object.freeze({ k: 'stam', type: 'stam', qty: 20, gold: 160, gems: 0, name: 'Cà phê muối lúc nửa đêm' }),
   Object.freeze({ k: 'gold', type: 'gold', qty: 450, gold: 0, gems: 40, name: 'Heo đất ai đánh rơi' }),
-  Object.freeze({ k: 'craft', type: 'craftpack', tinh: 25, hoat: 25, gold: 220, gems: 0, name: 'Túi đồ nghề thợ mộng' })
+  Object.freeze({ k: 'craft', type: 'craftpack', tinh: 25, hoat: 25, gold: 220, gems: 0, name: 'Túi đồ nghề thợ mộng' }),
+  Object.freeze({ k: 'binh_tinh', type: 'craftpack', tinh: 30, hoat: 0, gold: 280, gems: 0, name: 'Bình Tinh' }),
+  Object.freeze({ k: 'lo_hoat', type: 'craftpack', tinh: 0, hoat: 30, gold: 280, gems: 0, name: 'Lò Hoạt' }),
+  Object.freeze({ k: 'goi_ngoc', type: 'craftpack', tinh: 80, hoat: 80, gold: 0, gems: 50, name: 'Gói Tinh Hỏa' })
 ]);
 
 export const SHOP_STALL_KEYS = Object.freeze(SHOP_STALLS.map(s => s.k));

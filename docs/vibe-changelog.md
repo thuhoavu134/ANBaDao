@@ -1,3 +1,7 @@
+## 13/09/2026 — Wave S Bách Bảo Rương REVIEW
+
+Cược 2/10/50 🐚, sao 1–6 (cùng loại +1), chế sò Tinh+Hoạt, shop điểm.
+
 ## 13/09/2026 — Wave S Lục Thần lore LIVE
 
 Owner gõ live. Squash [#84](https://github.com/bktimmy247/luc-than/pull/84) → `646e280`. TKT-0108. Sáu ấn, 18 ải, bậc thưởng S.

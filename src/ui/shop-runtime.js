@@ -56,7 +56,11 @@
   }
 
   function stallIcon(it) {
-    if (it.type === 'craftpack') return 'https://luc-than.vercel.app/assets/ui/menu-v3233/icons/forge.png';
+    if (it.type === 'craftpack') {
+      if (it.k === 'binh_tinh') return 'https://luc-than.vercel.app/assets/items/materials/tinh-luc.png';
+      if (it.k === 'lo_hoat') return 'https://luc-than.vercel.app/assets/items/materials/hoat-luc.png';
+      return 'https://luc-than.vercel.app/assets/ui/menu-v3233/icons/forge.png';
+    }
     if (it.type === 'gold') return 'https://luc-than.vercel.app/assets/ui/menu-v3233/icons/bag.png';
     if (it.type === 'stam') return 'https://luc-than.vercel.app/assets/ui/menu-v3233/icons/daily.png';
     return 'https://luc-than.vercel.app/assets/ui/menu-v3233/icons/summon.png';
@@ -65,7 +69,11 @@
   function stallWhat(it) {
     if (it.type === 'shards') return it.qty + ' mảnh ' + heroName(it.hero);
     if (it.type === 'stam') return '+' + it.qty + '⚡ Độ Tỉnh Táo';
-    if (it.type === 'craftpack') return '⚗ ' + it.tinh + ' Tinh + 🔥 ' + it.hoat + ' Hoạt';
+    if (it.type === 'craftpack') {
+      const a = it.tinh ? ('⚗ ' + it.tinh) : '';
+      const b = it.hoat ? ('🔥 ' + it.hoat) : '';
+      return [a, b].filter(Boolean).join(' + ') || 'Tinh/Hoạt';
+    }
     return '+🪙 ' + it.qty + ' vàng';
   }
 
@@ -104,7 +112,7 @@
         <div class="hv-shop-hero">
           <div class="hv-shop-kicker">Quầy đêm · đổi lúc nửa đêm</div>
           <div class="hv-shop-title" data-shop-title>Chợ Đêm Mộng</div>
-          <div class="hv-shop-best">Đã mua ${sold}/5 hôm nay · không bán lực chiến</div>
+          <div class="hv-shop-best">Đã mua ${sold}/8 hôm nay · Tinh/Hoạt có trần</div>
         </div>
         <div class="hv-shop-panel">
           <p class="hv-shop-copy">Mỗi món một lần/ngày. Không bán tăng lực chiến vô hạn.</p>

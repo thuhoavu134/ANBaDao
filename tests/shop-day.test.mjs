@@ -37,8 +37,8 @@ function player(extra = {}) {
 }
 
 test('L08-T1: five stalls, no combat goods, day index matches live formula', () => {
-  assert.equal(SHOP_STALL_COUNT, 5);
-  assert.equal(SHOP_STALL_KEYS.length, 5);
+  assert.equal(SHOP_STALL_COUNT, 8);
+  assert.equal(SHOP_STALL_KEYS.length, 8);
   assert.equal(shopHasCombatGoods(), false);
   const now = 1_746_000_000_000;
   const tz = -420;
@@ -53,7 +53,7 @@ test('L08-T2: same day keeps stock; new day resets bought and rolls heroes', () 
   const first = prepareShopOpen(player(), { day: 10, heroes, rng: () => 0 });
   assert.equal(first.ok, true);
   assert.equal(first.refreshed, true);
-  assert.equal(first.shop.stock.length, 5);
+  assert.equal(first.shop.stock.length, 8);
   assert.equal(first.shop.stock[0].hero, 'co_dao');
   assert.equal(first.shop.stock[1].hero, 'ong_pho');
   const same = prepareShopOpen(player({ shop: first.shop }), { day: 10, heroes, rng: () => 0.9 });
@@ -79,6 +79,11 @@ test('L08-T3: prices keep the live catalog; second buy is sold out', () => {
   assert.equal(byKey.craft.gold, 220);
   assert.equal(byKey.craft.tinh, 25);
   assert.equal(byKey.craft.hoat, 25);
+  assert.equal(byKey.binh_tinh.gold, 280);
+  assert.equal(byKey.binh_tinh.tinh, 30);
+  assert.equal(byKey.lo_hoat.hoat, 30);
+  assert.equal(byKey.goi_ngoc.gems, 50);
+  assert.equal(byKey.goi_ngoc.tinh, 80);
   const opened = prepareShopOpen(player(), { day: 3, heroes, rng: () => 0 });
   const buy = prepareShopBuy(player({ shop: opened.shop }), 'stam', { day: 3, heroes });
   assert.equal(buy.ok, true);
@@ -86,6 +91,15 @@ test('L08-T3: prices keep the live catalog; second buy is sold out', () => {
   assert.equal(buy.stamina, 100);
   assert.equal(buy.shop.bought.includes('stam'), true);
   assert.equal(opened.shop.bought.includes('stam'), false);
+  const tinh = prepareShopBuy(player({ gold: 300, shop: opened.shop }), 'binh_tinh', { day: 3, heroes });
+  assert.equal(tinh.ok, true);
+  assert.equal(tinh.tinh, 90);
+  assert.equal(tinh.hoat, 60);
+  const gemPack = prepareShopBuy(player({ gems: 50, shop: opened.shop }), 'goi_ngoc', { day: 3, heroes });
+  assert.equal(gemPack.ok, true);
+  assert.equal(gemPack.tinh, 140);
+  assert.equal(gemPack.hoat, 140);
+  assert.equal(gemPack.gems, 0);
   const again = prepareShopBuy(player({ shop: buy.shop, gold: buy.gold, stamina: buy.stamina }), 'stam', { day: 3, heroes });
   assert.equal(again.code, 'ALREADY_BOUGHT');
 });

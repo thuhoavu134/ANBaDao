@@ -137,6 +137,9 @@ await import('./lanes/tkt-0083-profile.mjs');
 // WAVE-S 2026-09-13 TKT-0108 Lục Thần lore — Chinh chiến sáu ấn. Keep AFTER profile.
 await import('./lanes/tkt-0108-lore.mjs');
 
+// WAVE-S 2026-09-13 TKT-0109 Bách Bảo Rương Kiếm Thế. Keep AFTER lore.
+await import('./lanes/tkt-0109-bbr.mjs');
+
 // The integrated battle is loaded from this embedded payload in production.
 // Keep it byte-identical to the patched battle.html; otherwise the visible
 // preview and the iframe can silently run different engines.

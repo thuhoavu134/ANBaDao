@@ -1,0 +1,7 @@
+#hvBbrDesk{margin:0 0 8px;padding:8px;border-radius:12px;background:#fff8e8;box-shadow:0 0 0 1px #e2c48a}
+#hvBbrDesk .hv-bbr-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:4px 0;font-size:12px;color:#3a2414}
+#hvBbrDesk .hv-bbr-bets,#hvBbrDesk .hv-bbr-shop{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
+#hvBbrDesk button{min-height:32px;padding:4px 10px;border:0;border-radius:8px;background:#f3e4c4;color:#3a2414;font:700 11px/1 inherit;cursor:pointer;box-shadow:0 0 0 1px #d7b36a}
+#hvBbrDesk .hv-bbr-bet.is-on{background:linear-gradient(180deg,#e2b45a,#a06a22);color:#2a1608}
+#hvBbrDesk .hv-bbr-note{margin:4px 0 0;font-size:11px;color:#6a4a28}
+#festivalBody .bbw-spin,#hvFestivalRoot .bbw-spin{min-width:160px}
