@@ -12,7 +12,7 @@ Owner: rà soát chức năng còn thiếu, tách ticket **độc lập** để 
 
 **Wave E LIVE** 12/09: owner gõ `live`. Squash #50 → main `f43545e`.
 
-**Wave F REVIEW** 12/09: TKT-0056…0057 Hành trình + Kết quả trên nhánh `work/l46-wave-f-3d-20260912` PR [#51](https://github.com/bktimmy247/luc-than/pull/51). **Không** trộn vào Wave G.
+**Wave F LIVE** 12/09: owner gõ `live`. Squash [#51](https://github.com/bktimmy247/luc-than/pull/51) → main `5bd9382`. TKT-0056…0057 Hành trình + Kết quả.
 
 **Wave G halls LIVE** 12/09: owner gõ `live`. Squash [#53](https://github.com/bktimmy247/luc-than/pull/53) → main `b0d6d9d`. TKT-0058…0060 + TKT-0064 Safari pin.
 
@@ -20,7 +20,9 @@ Owner: rà soát chức năng còn thiếu, tách ticket **độc lập** để 
 
 **Wave G coordinator LIVE** 12/09: owner gõ `live`. Squash [#52](https://github.com/bktimmy247/luc-than/pull/52) → main `b77f35a`. Stub + ticket. **72 tướng full-asset = wave sau, không phải 12 hiện tại.**
 
-**Wave I REVIEW** 12/09: TKT-0074 tài khoản + `/api` cùng project Vercel (user/pass + Google email). **Không merge** tới `live`. Dán env trước khi lên production. Wave F #51 không trộn.
+**Wave H coordinator LIVE** 12/09: owner gõ `live`. Squash [#55](https://github.com/bktimmy247/luc-than/pull/55) → main `b4915a9`. Stub TKT-0065…0073. Overlay/runtime **chưa điền**.
+
+**Wave I LIVE** 12/09: owner gõ `live`. Squash [#56](https://github.com/bktimmy247/luc-than/pull/56) → main `282df9d`. TKT-0074 đăng nhập.
 
 
 
@@ -35,9 +37,10 @@ Owner: rà soát chức năng còn thiếu, tách ticket **độc lập** để 
 | Live | Chinh chiến AFK **hall giả 3D** /Bày trận/6v6 · Tướng overlay · Hồ sơ tướng overlay + 12 nền showcase · Trợ trận 11 nan · Lịch Luyện + **Nhật Ký Mơ hall giả 3D** · Tháp/Mộng Lộ/Chợ/Gọi/Đấu/Săn/Lễ **hall giả 3D** · Rèn · Túi/Thư/Việc/Bang/Bạn/Chat/Tộc/Kho · kit v2 12 tướng |
 | Wave D | **LIVE** TKT-0053 (#49) Hồ sơ tướng overlay body + 9 nền showcase |
 | Wave E | **LIVE** TKT-0054…0055 (#50) Nhật Ký Mơ + Chinh chiến AFK home giả 3D |
-| Wave F | **REVIEW** TKT-0056…0057 (#51) Hành trình + Kết quả — nhánh riêng, không trộn G |
+| Wave F | **LIVE** TKT-0056…0057 (#51) Hành trình + Kết quả hall giả 3D |
 | Wave G | **Halls LIVE** TKT-0058…0060 + Safari pin TKT-0064 (#53). **Ấn UI LIVE** 0061…0063 (#54) |
-| Wave I | **REVIEW** TKT-0074 Auth API một project Vercel — user/pass + Google. Chưa live |
+| Wave H | **Coordinator LIVE** TKT-0065…0073 (#55) stub — điền overlay |
+| Wave I | **LIVE** TKT-0074 (#56) đăng nhập + tài khoản |
 
 | Không mở ticket | Combat V2 / 42 S+ · **72 tướng full-asset (wave sau, ID mới, không phải 12 hiện tại)** · 5 nan Lịch `go:null` · visual Bày trận · seed/banner/roster 12 · L02c reward (chờ owner) · Hermes 27 · atlas skill trận |
 

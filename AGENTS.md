@@ -2,7 +2,7 @@
 
 Đọc `docs/HANDOFF-2026-09-12.md` rồi `docs/LUNA-HANDOFF.md` trước khi sửa game.
 
-Bàn giao mới nhất **12/09/2026**: Wave I TKT-0074 màn đăng nhập **LIVE** [#56](https://github.com/bktimmy247/luc-than/pull/56) `282df9d`. Seals 0061…0063 LIVE (#54). Wave G LIVE. Wave F #51 Hành trình+Kết quả REVIEW riêng. **Agent tiếp:** đọc `docs/HANDOFF-2026-09-12.md` mục 0 + mục 3. Owner: 72 tướng + asset đầy đủ là **wave sau**.
+Bàn giao mới nhất **12/09/2026**: Wave F TKT-0056…0057 Hành trình+Kết quả **LIVE** [#51](https://github.com/bktimmy247/luc-than/pull/51) `5bd9382`. Wave H coordinator TKT-0065…0073 **LIVE stub** [#55](https://github.com/bktimmy247/luc-than/pull/55) `b4915a9`. Đăng nhập TKT-0074 LIVE [#56](https://github.com/bktimmy247/luc-than/pull/56). **Agent tiếp:** điền P0 TKT-0065 Tháp trận NPC + TKT-0066 nút Thành Chính. 72 tướng = wave sau.
 
 
 

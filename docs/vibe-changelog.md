@@ -1,3 +1,7 @@
+## 12/09/2026 — Wave F + Wave H coordinator LIVE
+
+Owner gõ `live` + deploy Vercel. Squash [#51](https://github.com/bktimmy247/luc-than/pull/51) → `5bd9382` Hành trình + Kết quả hall giả 3D. Squash [#55](https://github.com/bktimmy247/luc-than/pull/55) → `b4915a9` stub TKT-0065…0073 (overlay chưa điền). Việc kế: điền Tháp trận NPC + nút Thành Chính.
+
 ## 12/09/2026 — TKT-0074 màn đăng nhập + tài khoản LIVE
 
 Owner merge. Squash [#56](https://github.com/bktimmy247/luc-than/pull/56) → main `282df9d`. Overlay `#hvLoginRoot`, email/du khách, OAuth chờ App ID, điều khoản tiếng Việt. Wave F #51 không trộn.

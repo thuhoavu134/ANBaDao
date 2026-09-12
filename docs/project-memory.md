@@ -1,3 +1,7 @@
+## 12/09/2026 — Wave F + Wave H LIVE
+
+Main `b4915a9`. PR #51 Hành trình/Kết quả overlay body. PR #55 stub 0065…0073. Overlay Wave H chưa điền. Việc kế: TKT-0065 trận Tháp NPC, TKT-0066 Thành Chính.
+
 ## 12/09/2026 — TKT-0074 màn đăng nhập LIVE
 
 Owner merge [#56](https://github.com/bktimmy247/luc-than/pull/56) → `282df9d`. Mở game = login video rồi Thành Chính. Email + Du khách chạy mọi máy. Google/Facebook/Apple native cần App ID Vercel. Agent tiếp: Tháp có trận NPC, nút về Thành Chính, Wave F #51.
