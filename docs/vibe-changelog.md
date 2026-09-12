@@ -1,3 +1,7 @@
+## 13/09/2026 — Wave Q kem panel REVIEW
+
+Đè hero flex:1 + panel tối. Chat chữ sáng. Túi kem.
+
 ## 13/09/2026 — Wave Q kem hall LIVE
 
 Owner gõ live. Squash [#79](https://github.com/bktimmy247/luc-than/pull/79) → `1fec294`. TKT-0103.

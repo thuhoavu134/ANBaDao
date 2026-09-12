@@ -13,7 +13,7 @@
 #hvChatRoot .hv-chat-panel{
   pointer-events:auto;position:relative;max-height:min(58vh,460px);display:flex;flex-direction:column;
   border-radius:16px 16px 8px 8px;overflow:auto;
-  background:#f6ead2 url('assets/ui/chat/chat-hall.jpg') center/cover no-repeat;
+  background:#f3e4c4;
   box-shadow:0 16px 40px rgba(0,0,0,.45),0 0 0 1px rgba(215,179,106,.55);
   animation:hvChatSheet .28s ease;
 }
@@ -24,7 +24,8 @@
 #hvChatRoot .hv-chat-top{
   flex:0 0 auto;display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:8px;
   padding:8px 12px 6px;position:sticky;top:0;z-index:2;
-  background:linear-gradient(180deg,rgba(247,237,216,.96),rgba(247,237,216,.82));
+  background:#5c3a22 url('assets/ui/chat/chat-hall.jpg') center/cover no-repeat;
+  color:#fff4d4;
   border-bottom:1px solid #d7b883;
 }
 #hvChatRoot .hv-chat-back{
@@ -32,9 +33,21 @@
   background:linear-gradient(145deg,#fff7df,#f0c692);color:#7a4a1f;
   box-shadow:0 0 0 1px #d7b36a,0 2px 6px rgba(79,58,27,.2);font-size:22px;line-height:1;cursor:pointer;
 }
-#hvChatRoot .hv-chat-top b{justify-self:center;font-size:15px;letter-spacing:.04em}
-#hvChatRoot .hv-chat-stage{flex:1 1 auto;min-height:140px;padding:8px 10px 12px;box-sizing:border-box}
-#hvChatRoot #chatBody{min-height:120px}
+#hvChatRoot .hv-chat-top b{justify-self:center;font-size:15px;letter-spacing:.04em;color:#3a2414}
+#hvChatRoot .hv-chat-stage{flex:1 1 auto;min-height:140px;padding:8px 10px 12px;box-sizing:border-box;background:#f3e4c4}
+#hvChatRoot #chatBody{min-height:120px;color:#2d251f!important}
+#hvChatRoot .chat-bubble{
+  background:#5c3a22!important;border-color:#8a6234!important;
+  color:#fff8e8!important;font-size:15px!important;font-weight:700!important;line-height:1.4!important;
+}
+#hvChatRoot .chat-line.me .chat-bubble{
+  background:#2d251f!important;color:#fff8e8!important;
+}
+#hvChatRoot .chat-who{color:#6d5a3a!important;font-weight:800}
+#hvChatRoot .chat-line.me .chat-who{color:#8a6234!important}
+#hvChatRoot input,#hvChatRoot textarea,#hvChatRoot #chatIn{
+  background:#fff8e8!important;color:#1a1208!important;border:1px solid #d7b883!important;font-size:15px!important;
+}
 #hvChatRoot .chatQuick{display:none!important}
 #hvChatRoot #chatBody .section:has(#socialClaim){display:none!important}
 body.chat-hall-active #hubScreen{display:block!important;visibility:visible!important}

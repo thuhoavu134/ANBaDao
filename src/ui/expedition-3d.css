@@ -1,23 +1,28 @@
 #hvExpeditionRoot{
   --hall-ink:#2d251f;
   --hall-gold:#d58a14;
+  --exp-ink:#2d251f!important;
+  --exp-muted:#6d5a3a!important;
   position:fixed;inset:0;z-index:80;display:none;flex-direction:column;
   overflow:auto;-webkit-overflow-scrolling:touch;touch-action:manipulation;
   background:#f3e4c4!important;
-  color:var(--hall-ink)!important;font-family:inherit;box-sizing:border-box;
+  color:#2d251f!important;font-family:inherit;box-sizing:border-box;
   padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);min-height:0;height:auto;
 }
 #hvExpeditionRoot.is-open{display:flex}
 #hvExpeditionRoot[hidden]{display:none!important}
-#hvExpeditionRoot:before{content:none!important;background:none!important}
+#hvExpeditionRoot:before,#hvExpeditionRoot:after{display:none!important;content:none!important;background:none!important}
 #hvExpeditionRoot .hv-exp-hero{
+  flex:0 0 auto!important;min-height:132px!important;max-height:148px!important;
   background:url('assets/ui/expedition/expedition-hall.jpg') center/cover no-repeat!important;
-  min-height:140px;
+  color:#fff8e8!important;
 }
-#hvExpeditionRoot .hv-exp-panel,#hvExpeditionRoot .hv-exp-route,#hvExpeditionRoot .hv-exp-node{
-  background:#fff8e8!important;color:#3a2414!important;box-shadow:0 0 0 1px #e2c48a!important;
+#hvExpeditionRoot .hv-exp-title,#hvExpeditionRoot .hv-exp-kicker,#hvExpeditionRoot .hv-exp-best{color:#fff8e8!important;text-shadow:0 1px 4px #000!important}
+#hvExpeditionRoot .hv-exp-panel{background:#f3e4c4!important;box-shadow:none!important;border-top:1px solid #e2c48a!important;color:#2d251f!important}
+#hvExpeditionRoot .hv-exp-route,#hvExpeditionRoot .hv-exp-node,#hvExpeditionRoot .hv-exp-chip,#hvExpeditionRoot .hv-exp-back{
+  background:#fff8e8!important;color:#2d251f!important;box-shadow:0 0 0 1px #e2c48a!important;
 }
-#hvExpeditionRoot .hv-exp-copy,#hvExpeditionRoot .hv-exp-kicker,#hvExpeditionRoot .hv-exp-title,#hvExpeditionRoot .hv-exp-best{color:#3a2414!important;text-shadow:none!important}
+#hvExpeditionRoot .hv-exp-copy{color:#5a3a18!important}
 #hvExpeditionRoot .hv-exp-top{
   position:sticky;top:0;z-index:8;pointer-events:auto;
   padding-top:calc(10px + env(safe-area-inset-top))!important;

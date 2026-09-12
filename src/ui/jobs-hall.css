@@ -33,4 +33,6 @@
   min-height:36px;padding:0 12px;border:0;border-radius:10px;background:#e2b45a;color:#3a2414;font-weight:800;
 }
 #hvJobsRoot .hv-jobs-street button:disabled{opacity:.5}
-body.jobs-hall-active .hv-brandbar,body.jobs-hall-active #resbar{display:none!important}
+#hvJobsRoot #jobsBody .section,#hvJobsRoot #jobsBody .quest,#hvJobsRoot #jobsBody .hcard{
+  background:#fff8e8!important;color:#2d251f!important;border-color:#e2c48a!important;
+}

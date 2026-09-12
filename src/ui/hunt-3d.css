@@ -1,23 +1,29 @@
 #hvHuntRoot{
   --hall-ink:#2d251f;
   --hall-gold:#d58a14;
+  --hunt-ink:#2d251f!important;
+  --hunt-muted:#6d5a3a!important;
+  --hunt-gold:#a06a22!important;
   position:fixed;inset:0;z-index:80;display:none;flex-direction:column;
   overflow:auto;-webkit-overflow-scrolling:touch;touch-action:manipulation;
   background:#f3e4c4!important;
-  color:var(--hall-ink)!important;font-family:inherit;box-sizing:border-box;
+  color:#2d251f!important;font-family:inherit;box-sizing:border-box;
   padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);min-height:0;height:auto;
 }
 #hvHuntRoot.is-open{display:flex}
 #hvHuntRoot[hidden]{display:none!important}
-#hvHuntRoot:before{content:none!important;background:none!important}
+#hvHuntRoot:before,#hvHuntRoot:after{display:none!important;content:none!important;background:none!important}
 #hvHuntRoot .hv-hunt-hero{
+  flex:0 0 auto!important;min-height:132px!important;max-height:148px!important;
   background:url('assets/ui/hunt/hunt-hall.jpg') center/cover no-repeat!important;
-  min-height:140px;
+  color:#fff8e8!important;
 }
-#hvHuntRoot .hv-hunt-panel,#hvHuntRoot .hv-hunt-card,#hvHuntRoot .hv-hunt-mile{
-  background:#fff8e8!important;color:#3a2414!important;box-shadow:0 0 0 1px #e2c48a!important;
+#hvHuntRoot .hv-hunt-title,#hvHuntRoot .hv-hunt-kicker,#hvHuntRoot .hv-hunt-best{color:#fff8e8!important;text-shadow:0 1px 4px #000!important}
+#hvHuntRoot .hv-hunt-panel{background:#f3e4c4!important;box-shadow:none!important;border-top:1px solid #e2c48a!important;color:#2d251f!important}
+#hvHuntRoot .hv-hunt-card,#hvHuntRoot .hv-hunt-mile,#hvHuntRoot .hv-hunt-chip,#hvHuntRoot .hv-hunt-back{
+  background:#fff8e8!important;color:#2d251f!important;box-shadow:0 0 0 1px #e2c48a!important;
 }
-#hvHuntRoot .hv-hunt-copy,#hvHuntRoot .hv-hunt-kicker,#hvHuntRoot .hv-hunt-title,#hvHuntRoot .hv-hunt-best{color:#3a2414!important;text-shadow:none!important}
+#hvHuntRoot .hv-hunt-copy,#hvHuntRoot .hv-hunt-card small{color:#5a3a18!important}
 #hvHuntRoot .hv-hunt-top{
   position:sticky;top:0;z-index:8;pointer-events:auto;
   padding-top:calc(10px + env(safe-area-inset-top))!important;

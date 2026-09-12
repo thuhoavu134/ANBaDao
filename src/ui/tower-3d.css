@@ -1,21 +1,29 @@
 #hvTowerRoot{
   --hall-ink:#2d251f;
   --hall-gold:#d58a14;
+  --tower-ink:#2d251f!important;
+  --tower-muted:#6d5a3a!important;
+  --tower-gold:#a06a22!important;
   position:fixed;inset:0;z-index:80;display:none;flex-direction:column;
   overflow:auto;-webkit-overflow-scrolling:touch;touch-action:manipulation;
   background:#f3e4c4!important;
-  color:var(--hall-ink)!important;font-family:inherit;box-sizing:border-box;
+  color:#2d251f!important;font-family:inherit;box-sizing:border-box;
   padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);min-height:0;height:auto;
 }
 #hvTowerRoot.is-open{display:flex}
 #hvTowerRoot[hidden]{display:none!important}
-#hvTowerRoot:before{content:none!important;background:none!important}
+#hvTowerRoot:before,#hvTowerRoot:after{display:none!important;content:none!important;background:none!important}
 #hvTowerRoot .hv-tower-hero{
+  flex:0 0 auto!important;min-height:132px!important;max-height:148px!important;
   background:url('assets/ui/tower/tower-hall.jpg') center/cover no-repeat!important;
-  min-height:140px;
+  color:#fff8e8!important;
 }
-#hvTowerRoot .hv-tower-panel,#hvTowerRoot .hv-tower-trial,#hvTowerRoot .hv-tower-team,#hvTowerRoot .hv-tower-mark,#hvTowerRoot .hv-tower-power{
-  background:#fff8e8!important;color:#3a2414!important;box-shadow:0 0 0 1px #e2c48a!important;
+#hvTowerRoot .hv-tower-title,#hvTowerRoot .hv-tower-kicker,#hvTowerRoot .hv-tower-best{color:#fff8e8!important;text-shadow:0 1px 4px #000!important}
+#hvTowerRoot .hv-tower-panel{
+  background:#f3e4c4!important;box-shadow:none!important;border-top:1px solid #e2c48a!important;color:#2d251f!important;
 }
-#hvTowerRoot .hv-tower-copy,#hvTowerRoot .hv-tower-kicker,#hvTowerRoot .hv-tower-title,#hvTowerRoot .hv-tower-best{color:#3a2414!important;text-shadow:none!important}
+#hvTowerRoot .hv-tower-trial,#hvTowerRoot .hv-tower-team,#hvTowerRoot .hv-tower-mark,#hvTowerRoot .hv-tower-power,#hvTowerRoot .hv-tower-chip,#hvTowerRoot .hv-tower-back{
+  background:#fff8e8!important;color:#2d251f!important;box-shadow:0 0 0 1px #e2c48a!important;
+}
+#hvTowerRoot .hv-tower-copy,#hvTowerRoot .hv-tower-trial small,#hvTowerRoot .hv-tower-power small{color:#5a3a18!important}
 body.tower-3d-active .hv-brandbar,body.tower-3d-active #resbar{display:none!important}

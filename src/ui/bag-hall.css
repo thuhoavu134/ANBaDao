@@ -11,15 +11,15 @@
 #hvBagRoot .hv-bag-panel{
   pointer-events:auto;max-height:min(68vh,560px);display:flex;flex-direction:column;
   border-radius:20px 20px 10px 10px;overflow:auto;
-  background:#f4e6c8 url('assets/ui/bag/bag-hall.jpg') center top/cover no-repeat;
+  background:#f3e4c4;
   box-shadow:0 16px 40px rgba(0,0,0,.5),0 0 0 1px rgba(215,179,106,.55);
   animation:hvBagSheet .28s ease;
 }
 @keyframes hvBagSheet{from{transform:translateY(20px);opacity:0}to{transform:none;opacity:1}}
 #hvBagRoot .hv-bag-top{
   flex:0 0 auto;display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:8px;
-  padding:8px 12px;position:sticky;top:0;z-index:2;
-  background:linear-gradient(180deg,#5c3a22,#7a5230);color:#fff4d4;
+  padding:10px 12px;position:sticky;top:0;z-index:2;
+  background:#5c3a22 url('assets/ui/bag/bag-hall.jpg') center/cover no-repeat;color:#fff4d4;
 }
 #hvBagRoot .hv-bag-back{
   width:44px;height:44px;border:0;border-radius:50%;

@@ -23,4 +23,6 @@
 #hvMailRoot .hv-mail-top b{justify-self:center;font-size:16px;letter-spacing:.04em}
 #hvMailRoot .hv-mail-stage{flex:1 1 auto;min-height:420px;padding:8px 10px 28px;box-sizing:border-box}
 #hvMailRoot #mailBody{min-height:420px}
-body.mail-hall-active .hv-brandbar,body.mail-hall-active #resbar{display:none!important}
+#hvMailRoot #mailBody .section,#hvMailRoot #mailBody .quest,#hvMailRoot #mailBody .hcard{
+  background:#fff8e8!important;color:#2d251f!important;border-color:#e2c48a!important;
+}

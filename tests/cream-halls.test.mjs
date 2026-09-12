@@ -24,6 +24,11 @@ test('L103: hall chức năng nền kem, jpg chỉ dải trên; không đụng l
   assert.match(files.expedition, /#hvExpeditionRoot\{[^}]*background:#f3e4c4/);
   assert.match(files.jobs, /#hvJobsRoot\{[^}]*background:#f3e4c4;/);
   assert.match(files.mail, /#hvMailRoot\{[^}]*background:#f3e4c4;/);
+  const chat = read('src/ui/chat-hall.css');
+  const bag = read('src/ui/bag-hall.css');
+  assert.match(chat, /#hvChatRoot \.hv-chat-panel\{[^}]*background:#f3e4c4;/);
+  assert.match(chat, /\.chat-bubble\{[^}]*color:#fff8e8/);
+  assert.match(bag, /#hvBagRoot \.hv-bag-panel\{[^}]*background:#f3e4c4;/);
   assert.match(files.tower, /tower-hall\.jpg/);
   assert.match(files.shop, /shop-hall\.jpg/);
   assert.match(files.summon, /summon-hall\.jpg/);
