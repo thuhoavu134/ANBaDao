@@ -1,3 +1,7 @@
+## 13/09/2026 — Wave S Lục Thần lore LIVE
+
+Owner gõ live. Squash [#84](https://github.com/bktimmy247/luc-than/pull/84) → `646e280`. TKT-0108. Sáu ấn, 18 ải, bậc thưởng S.
+
 ## 13/09/2026 — Wave S Lục Thần lore REVIEW
 
 Tên game Lục Thần. Chinh chiến = đóng sáu ấn. Bỏ Hồn Việt/Mộng Giới trên UI.
