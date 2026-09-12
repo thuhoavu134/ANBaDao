@@ -40,7 +40,7 @@ test('L89: chat là panel trên dock', () => {
   const css = read('src/ui/chat-hall.css');
   const ui = read('src/ui/chat-hall-runtime.js');
   assert.match(css, /hv-chat-panel/);
-  assert.match(css, /calc\(76px \+ env\(safe-area-inset-bottom\)\)/);
+  assert.match(css, /calc\(72px \+ env\(safe-area-inset-bottom\)\)/);
   assert.match(ui, /hv-chat-panel/);
   assert.match(css, /assets\/ui\/chat\/chat-hall\.jpg/);
   assert.ok(existsSync(join(root, 'assets/ui/chat/chat-hall.jpg')));
@@ -50,7 +50,7 @@ test('L90: túi là khung ô thu/mở', () => {
   const css = read('src/ui/bag-hall.css');
   const ui = read('src/ui/bag-hall-runtime.js');
   assert.match(css, /hv-bag-panel/);
-  assert.match(css, /grid-template-columns:repeat\(4/);
+  assert.match(css, /grid-template-columns:repeat\(5/);
   assert.match(ui, /hv-bag-panel/);
   assert.match(css, /assets\/ui\/bag\/bag-hall\.jpg/);
 });

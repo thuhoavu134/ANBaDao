@@ -9,6 +9,23 @@
     return root;
   };
 
+  const fab = () => {
+    let el = document.getElementById('hvExpBackFab');
+    if (el) return el;
+    el = document.createElement('button');
+    el.id = 'hvExpBackFab';
+    el.type = 'button';
+    el.setAttribute('aria-label', 'Về Thành Chính');
+    el.textContent = '‹';
+    document.body.append(el);
+    el.addEventListener('click', ev => {
+      ev.preventDefault();
+      if (typeof navTo === 'function') navTo('hub');
+      syncOpen('hub');
+    });
+    return el;
+  };
+
   const pinBack = root => {
     if (!root) return;
     let btn = root.querySelector('[data-expedition-back]');
@@ -22,6 +39,15 @@
       root.prepend(btn);
     }
     btn.style.pointerEvents = 'auto';
+    if (!root.dataset.hvExpBound) {
+      root.dataset.hvExpBound = '1';
+      root.addEventListener('click', ev => {
+        if (!ev.target.closest('[data-expedition-back]')) return;
+        ev.preventDefault();
+        if (typeof navTo === 'function') navTo('hub');
+        syncOpen('hub');
+      });
+    }
   };
 
   const syncOpen = name => {
@@ -32,6 +58,7 @@
     root.classList.toggle('is-open', open);
     document.body.classList.toggle('expedition-3d-active', open);
     if (open) pinBack(root);
+    fab().classList.toggle('is-on', open);
   };
 
   const baseShowScreen = showScreen;
@@ -58,5 +85,6 @@
     });
   }
 
+  fab();
   syncOpen(typeof ST === 'object' ? ST.screen : '');
 })();

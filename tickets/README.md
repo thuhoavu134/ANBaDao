@@ -59,6 +59,11 @@ Board GitHub không có. File `tickets/TKT-00xx/ticket.md` là nguồn sự th�
 | TKT-0089 | L | Chat khung trên dock | LIVE (#74) |
 | TKT-0090 | L | Túi đồ khung ô | LIVE (#74) |
 | TKT-0091 | L | Rèn dễ nhìn | LIVE (#74) |
+| TKT-0092 | M | Chat sheet trên Thành Chính | REVIEW |
+| TKT-0093 | M | Săn FAB ‹ | REVIEW |
+| TKT-0094 | M | Túi lưới ô | REVIEW |
+| TKT-0095 | M | Rèn đập búa stub | REVIEW |
+| TKT-0096 | M | Giao Lưu vào việc vặt | REVIEW |
 
 Cách tạo gift code (owner): [docs/GIFT-CODES.md](../docs/GIFT-CODES.md)
 

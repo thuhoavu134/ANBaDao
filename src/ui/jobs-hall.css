@@ -23,4 +23,14 @@
 #hvJobsRoot .hv-jobs-top b{justify-self:center;font-size:16px;letter-spacing:.04em}
 #hvJobsRoot .hv-jobs-stage{flex:1 1 auto;min-height:420px;padding:8px 10px 28px;box-sizing:border-box}
 #hvJobsRoot #jobsBody{min-height:420px}
+#hvJobsRoot .hv-jobs-street{
+  margin:0 0 10px;padding:10px;border-radius:14px;border:1px solid #d7b883;
+  background:rgba(255,248,230,.92);color:#4a3016;
+}
+#hvJobsRoot .hv-jobs-street b{display:block;font-size:14px}
+#hvJobsRoot .hv-jobs-street small{display:block;margin:4px 0 8px;color:#6d5941}
+#hvJobsRoot .hv-jobs-street button{
+  min-height:36px;padding:0 12px;border:0;border-radius:10px;background:#e2b45a;color:#3a2414;font-weight:800;
+}
+#hvJobsRoot .hv-jobs-street button:disabled{opacity:.5}
 body.jobs-hall-active .hv-brandbar,body.jobs-hall-active #resbar{display:none!important}

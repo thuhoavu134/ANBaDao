@@ -13,6 +13,36 @@
   </header>
   <div class="hv-forge-stage"></div>`;
   root.querySelector('.hv-forge-stage').append(body);
+  const strike = document.createElement('div');
+  strike.id = 'hvForgeStrike';
+  strike.hidden = true;
+  strike.innerHTML = `<div class="hv-anvil-stage" data-forge-asset="pending">
+    <i class="hv-smith"></i><i class="hv-hammer"></i><i class="hv-anvil"></i><i class="hv-spark"></i>
+    <div class="hv-drop" data-forge-drop></div>
+  </div>`;
+  root.append(strike);
+
+  function playAnvil(item) {
+    const drop = strike.querySelector('[data-forge-drop]');
+    const rar = String((item && item.rar) || 'b').toLowerCase();
+    strike.hidden = false;
+    strike.className = 'is-play t-' + rar;
+    if (drop) {
+      drop.className = 'hv-drop t-' + rar;
+      drop.textContent = (item && (typeof itemName === 'function' ? itemName(item) : item.slot)) || '';
+    }
+    window.HonVietSfx?.play?.('forge-reveal', { group: 'ui' });
+    clearTimeout(playAnvil._t);
+    playAnvil._t = setTimeout(() => { strike.hidden = true; strike.className = ''; }, 1400);
+  }
+
+  if (typeof hvForgeReveal === 'function') {
+    const baseReveal = hvForgeReveal;
+    hvForgeReveal = function (item, kind) {
+      if (item && kind !== 'enhance') playAnvil(item);
+      return baseReveal.apply(this, arguments);
+    };
+  }
   document.body.append(root);
 
   const paintPity = () => {

@@ -1,43 +1,56 @@
 #hvBagRoot{
   --hall-ink:#2d251f;
-  --hall-gold:#d58a14;
-  position:fixed;inset:0;z-index:95;display:none;flex-direction:column;justify-content:flex-end;
+  position:fixed;inset:0;z-index:92;display:none;flex-direction:column;justify-content:flex-end;
   overflow:auto;-webkit-overflow-scrolling:touch;touch-action:manipulation;
-  background:rgba(8,6,4,.38);
-  color:var(--hall-ink);font-family:inherit;box-sizing:border-box;
-  padding:0 8px calc(76px + env(safe-area-inset-bottom));
+  background:transparent;color:var(--hall-ink);font-family:inherit;box-sizing:border-box;
+  padding:0 8px calc(72px + env(safe-area-inset-bottom));
+  pointer-events:none;
 }
 #hvBagRoot.is-open{display:flex}
 #hvBagRoot[hidden]{display:none!important}
 #hvBagRoot .hv-bag-panel{
-  position:relative;max-height:min(62vh,520px);display:flex;flex-direction:column;
-  border-radius:22px 22px 12px 12px;overflow:auto;
-  background:#3b2416 url('assets/ui/bag/bag-hall.jpg') center top/cover no-repeat;
+  pointer-events:auto;max-height:min(68vh,560px);display:flex;flex-direction:column;
+  border-radius:20px 20px 10px 10px;overflow:auto;
+  background:#f4e6c8 url('assets/ui/bag/bag-hall.jpg') center top/cover no-repeat;
   box-shadow:0 16px 40px rgba(0,0,0,.5),0 0 0 1px rgba(215,179,106,.55);
+  animation:hvBagSheet .28s ease;
 }
+@keyframes hvBagSheet{from{transform:translateY(20px);opacity:0}to{transform:none;opacity:1}}
 #hvBagRoot .hv-bag-top{
   flex:0 0 auto;display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:8px;
-  padding:8px 12px 6px;position:sticky;top:0;z-index:2;
-  background:linear-gradient(180deg,rgba(42,26,16,.82),rgba(42,26,16,.35));
-  color:#fff4d4;
+  padding:8px 12px;position:sticky;top:0;z-index:2;
+  background:linear-gradient(180deg,#5c3a22,#7a5230);color:#fff4d4;
 }
 #hvBagRoot .hv-bag-back{
   width:44px;height:44px;border:0;border-radius:50%;
   background:linear-gradient(145deg,#fff7df,#f0c692);color:#7a4a1f;
-  box-shadow:0 0 0 1px #d7b36a,0 2px 6px rgba(79,58,27,.2);font-size:22px;line-height:1;cursor:pointer;
+  box-shadow:0 0 0 1px #d7b36a;font-size:22px;line-height:1;cursor:pointer;
 }
-#hvBagRoot .hv-bag-top b{justify-self:center;font-size:15px;letter-spacing:.04em}
-#hvBagRoot .hv-bag-stage{flex:1 1 auto;min-height:220px;padding:8px 10px 18px;box-sizing:border-box}
-#hvBagRoot #bagBody{min-height:200px}
-#hvBagRoot #bagBody .section{
-  background:rgba(255,248,230,.88);border:1px solid rgba(215,179,106,.45);border-radius:12px;
-  padding:8px;margin:0 0 8px;
+#hvBagRoot .hv-bag-top b{justify-self:center;font-size:15px}
+#hvBagRoot .hv-bag-tabs{display:flex;gap:6px;padding:8px 10px 0}
+#hvBagRoot .hv-bag-tabs button{
+  flex:1;min-height:36px;border:1px solid #d7b883;border-radius:10px;background:#fff8e8;color:#6a4318;font-weight:800;font-size:12px;
 }
-#hvBagRoot #bagBody .grid{
-  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;
+#hvBagRoot .hv-bag-tabs button.is-on{background:#e2b45a;color:#3a2414}
+#hvBagRoot .hv-bag-grid{
+  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;padding:10px;
 }
-#hvBagRoot #bagBody .hcard.bagsh{
-  min-height:72px;border-radius:10px;background:rgba(255,255,255,.78);
-  border:1px solid rgba(166,120,48,.35);padding:6px;
+#hvBagRoot .hv-bag-cell{
+  aspect-ratio:1;border-radius:12px;border:2px solid rgba(90,60,20,.2);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-size:10px;font-weight:800;color:#fff;text-shadow:0 1px 2px #000;position:relative;
+  background:#c4b49a;
 }
+#hvBagRoot .hv-bag-cell small{position:absolute;right:4px;bottom:3px;font-size:10px}
+#hvBagRoot .hv-bag-cell.t-ssr{background:#8b5a12;border-color:#f2c14e}
+#hvBagRoot .hv-bag-cell.t-ss{background:#6b3fa0;border-color:#c9a0ff}
+#hvBagRoot .hv-bag-cell.t-s{background:#2d6a9a;border-color:#7ec8ff}
+#hvBagRoot .hv-bag-cell.t-a{background:#2f6b45;border-color:#8ee0a8}
+#hvBagRoot .hv-bag-cell.t-b{background:#5a5a5a;border-color:#cfcfcf}
+#hvBagRoot .hv-bag-cell.t-mat{background:#8a4a22;border-color:#e0a060}
+#hvBagRoot .hv-bag-stage{display:none}
+#hvBagRoot #bagBody{display:none}
+body.bag-hall-active #hubScreen{display:block!important;visibility:visible!important}
+body.bag-hall-active #bagScreen{display:none!important}
 body.bag-hall-active .art-dock{z-index:96}
+body.bag-hall-active .hv-brandbar,body.bag-hall-active #resbar{display:none!important}

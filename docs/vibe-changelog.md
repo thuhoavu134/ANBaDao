@@ -1,3 +1,7 @@
+## 13/09/2026 — Wave M chat/túi/săn/rèn REVIEW
+
+Chat sheet trên hub. Túi lưới 5 ô. Săn FAB ‹. Rèn đập búa stub. Giao Lưu → việc vặt.
+
 ## 13/09/2026 — Wave L UX LIVE
 
 Owner gõ live. Squash [#74](https://github.com/bktimmy247/luc-than/pull/74) → `32f3f29`. TKT-0086…0091.

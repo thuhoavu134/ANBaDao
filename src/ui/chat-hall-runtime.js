@@ -17,11 +17,14 @@
   root.querySelector('.hv-chat-stage').append(body);
   document.body.append(root);
 
+  const close = () => { if (typeof navTo === 'function') navTo('hub'); };
+
   const syncOpen = name => {
     const open = name === 'chat';
     root.hidden = !open;
     root.classList.toggle('is-open', open);
     document.body.classList.toggle('chat-hall-active', open);
+    if (open && typeof renderChat === 'function') renderChat();
   };
 
   const baseShowScreen = showScreen;
@@ -30,9 +33,7 @@
     syncOpen(ST.screen);
   };
 
-  root.querySelector('[data-chat-close]').addEventListener('click', () => navTo('hub'));
-  root.addEventListener('click', ev => {
-    if (ev.target === root) navTo('hub');
-  });
+  root.querySelector('[data-chat-close]').addEventListener('click', close);
+  root.addEventListener('click', ev => { if (ev.target === root) close(); });
   syncOpen(typeof ST === 'object' ? ST.screen : '');
 })();
