@@ -1,3 +1,7 @@
+## 13/09/2026 — Wave O Đấu Trường LIVE
+
+Owner gõ live. Squash [#77](https://github.com/bktimmy247/luc-than/pull/77) → `375ef94`. TKT-0100.
+
 ## 13/09/2026 — Wave O Đấu Trường city REVIEW
 
 3 ô isometric + FAB ‹ về hub (listener hoist cũ chết).
