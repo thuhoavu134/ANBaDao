@@ -1,3 +1,7 @@
+## 13/09/2026 — Wave U LIVE #100
+
+Owner gõ live. Squash [#100](https://github.com/bktimmy247/luc-than/pull/100) `b1b2a3f`. Nút Quay giữa khung nâu.
+
 ## 13/09/2026 — Wave U LIVE #98–#99
 
 Owner gõ live. Squash [#98](https://github.com/bktimmy247/luc-than/pull/98) `80eb4f7` · [#99](https://github.com/bktimmy247/luc-than/pull/99) `18d149e`.
