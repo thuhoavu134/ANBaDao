@@ -13,7 +13,8 @@ test('L100: đấu trường city 3 ô + FAB ‹, không document click', () => 
   assert.match(ui, /hvArenaCity/);
   assert.match(ui, /hvArenaBackFab/);
   assert.match(ui, /syncOpen\('hub'\)/);
-  assert.match(css, /#hvArenaBackFab/);
+  assert.match(css, /#hvArenaRoot \.hv-ar-back\{/);
+  assert.match(css, /#hvArenaBackFab\{display:none!important\}/);
   assert.match(css, /grid-template-columns:repeat\(3/);
   assert.doesNotMatch(ui, /document\.addEventListener\(['"](?:click|pointerdown|pointerup)/);
   for (const f of ['mua', 'dau-hang', 'vo-dai']) {

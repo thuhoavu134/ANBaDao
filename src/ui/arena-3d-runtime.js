@@ -90,7 +90,7 @@
     document.body.classList.toggle('arena-3d-active', open);
     const battle = document.getElementById('hvBattleOverlay');
     const inBattle = !!(battle && battle.classList.contains('is-open'));
-    fab().classList.toggle('is-on', open && !inBattle);
+    fab().classList.remove('is-on');
   };
 
   const baseShowScreen = showScreen;
