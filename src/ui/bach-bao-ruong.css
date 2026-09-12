@@ -33,9 +33,9 @@
 .hv-bbr-tabs,.hv-bbr-mid,.hv-bbr-sub,.hv-bbr-bets{display:flex;gap:6px;margin:6px 0}
 .hv-bbr-tabs button,.hv-bbr-mid button,.hv-bbr-sub button{flex:1;min-height:40px;font-weight:800}
 .hv-bbr-go{
-  width:min(92%,148px);min-height:48px;margin:4px 0 6px;border:0;border-radius:12px;cursor:pointer;
-  background:linear-gradient(180deg,#f0d48a,#c09028);color:#2a1608;font:900 16px/1 inherit;
-  box-shadow:0 3px 0 #7a5a18,0 0 0 1px #e2b45a;
+  width:100%;min-height:56px;margin:8px 0;border:0;border-radius:12px;cursor:pointer;
+  background:linear-gradient(180deg,#f0d48a,#c09028);color:#2a1608;font:900 18px/1 inherit;
+  box-shadow:0 4px 0 #7a5a18,0 0 0 1px #e2b45a;
 }
 .hv-bbr-go:disabled{opacity:.45}
 .hv-bbr-pts{margin:6px 0;font-weight:800}

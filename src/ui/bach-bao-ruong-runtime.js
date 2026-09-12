@@ -416,7 +416,7 @@
             </button>`;
           }).join('')}
           <div class="hv-bbr-hub">
-            <button type="button" class="hv-bbr-go" data-bbr-step ${((P.so || 0) < bet) ? 'disabled' : ''}>${pend ? 'Tiếp' : 'Quay'}</button>
+            <img class="hv-bbr-hub-chest" src="assets/ui/festival/bbr/supreme.png" alt="">
             <ul class="hv-bbr-stars">${starTable(type, bet, pend && pend.stars)}</ul>
           </div>
         </div>
@@ -434,11 +434,12 @@
             <div class="hv-bbr-bets">${BETS.map(n =>
               `<button type="button" class="hv-bbr-bet${bet === n ? ' is-on' : ''}" data-bbr-bet="${n}">${n} ${SO_IC}</button>`
             ).join('')}</div>
-            <p class="hv-bbr-now">${pend ? (pend.stars + '★ ' + LAB[pend.t] + ' · Đổi sò ' + convertQty(pend.t, pend.stars, bet)) : 'Cược rồi Quay giữa khung.'}</p>
+            <p class="hv-bbr-now">${pend ? (pend.stars + '★ ' + LAB[pend.t] + ' · Đổi sò ' + convertQty(pend.t, pend.stars, bet)) : 'Cược sò rồi Quay.'}</p>
             <div class="hv-bbr-mid">
               <button type="button" data-bbr-pts ${pend ? '' : 'disabled'}>Nhận điểm</button>
               <button type="button" data-bbr-pane="shop">Shop điểm</button>
             </div>
+            <button type="button" class="hv-bbr-go" data-bbr-step ${((P.so || 0) < bet) ? 'disabled' : ''}>${pend ? 'Tiếp' : 'Quay'} · ${bet} ${SO_IC}</button>
             <div class="hv-bbr-sub">
               <button type="button" data-bbr-take ${pend ? '' : 'disabled'}>Thưởng</button>
               <button type="button" data-bbr-convert ${pend ? '' : 'disabled'}>Đổi sò</button>

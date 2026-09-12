@@ -87,7 +87,8 @@ test('L109: cược 2/10/50, sao nhân, chế sò Tinh/Hoạt, shop điểm', ()
   assert.equal(convertBbr({ so: 0, bachBao: { pending: { t: 'gold', stars: 2 }, bet: 2 } }, { day: 1 }).so, 3);
   assert.equal(convertBbr({ so: 0, bachBao: { pending: { t: 'gold', stars: 3 }, bet: 10 } }, { day: 1 }).so, 50);
   assert.doesNotMatch(ui, /hv-bbr-tabs/);
-  assert.match(ui, /hv-bbr-hub[\s\S]*data-bbr-step/);
+  assert.match(ui, /hv-bbr-side[\s\S]*data-bbr-step/);
+  assert.match(ui, /hv-bbr-hub-chest/);
   assert.equal(BBR_BOARD[3].t, 'supreme');
   assert.match(ui, /lastIdx/);
   assert.match(ui, /is-run/);
