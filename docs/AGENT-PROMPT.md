@@ -37,11 +37,9 @@ Nói tiếng Việt với owner (anh). Product language: không kể cổng, loc
 
 Thứ tự bắt buộc:
 
-P0 ngay:  TKT-0065 Tháp Trắng Đêm — wrap startTower → 6 NPC unique + runBattle('__tower'). Cấm auto-win / towerPowerWinReport trên path live. Stub scripts/lanes/tkt-0065-tower-battle.mjs. Không sửa tower-3d / battle.html / tower-progress.mjs (trừ 1 assert qa-tower-screen battles>=1).
+P0 ngay:  TKT-0065 Tháp Trắng Đêm — wrap startTower → 6 NPC unique + runBattle('__tower'). Cấm auto-win / towerPowerWinReport trên path live. Stub scripts/lanes/tkt-0065-tower-battle.mjs. Không sửa tower-3d / battle.html / tower-progress.mjs (trừ 1 assert qa-tower-screen battles>=1). PR #59 REVIEW.
 
-P0 song song được (resource khác):  TKT-0066 chip Thành Chính chỗ thiếu. Không restyle .cs-prepare / journey-3d / end-3d.
-
-P0 sau 17:15 13/09 hoặc team Vercel mới:  TKT-0078 retrigger alias.
+P0 sau 17:15 13/09 hoặc team Vercel mới:  TKT-0078 retrigger alias (main đã có TKT-0066 `6ddad79`).
 
 P0 nhiều người chơi bền:  TKT-0076 Neon. createPostgresStore ĐÃ CÓ. Gắn DATABASE_URL + AUTH_SECRET. Không có URL thì evidence BLOCKED_ENV, đừng LIVE.
 

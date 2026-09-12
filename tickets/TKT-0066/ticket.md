@@ -1,11 +1,11 @@
 ---
 id: TKT-0066
 title: Nút Thành Chính trên mọi màn còn thiếu
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 created: 2026-09-12T07:20:00.000Z
-updated: 2026-09-12T11:15:00.000Z
+updated: 2026-09-12T11:20:00.000Z
 acceptance_ids: ['L66-T1', 'L66-T2', 'L66-T3', 'L66-T4', 'L66-T5', 'L66-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths: ['src/ui/hub-back-runtime.js', 'src/ui/hub-back.css', 'scripts/hub-back-v1.mjs', 'scripts/lanes/tkt-0066-hub-back.mjs', 'scripts/qa-hub-back.mjs', 'tests/hub-back.test.mjs', 'docs/qa/L66-HUB-BACK/']
@@ -71,4 +71,4 @@ Không sửa `index.html`. Không sửa `campaign-scene.js` / `.cs-prepare`. Kh�
 
 Frozen: `campaign-scene.js`, `battle.html`, `index.html`, `journey-3d-runtime.js`, `end-3d-runtime.js`, `account-gear-runtime.js`.
 
-Builder → REVIEW. Không tự MERGED/DONE.
+Builder → LIVE. Owner gõ `live`. Squash [#60](https://github.com/bktimmy247/luc-than/pull/60) → main `6ddad79`.

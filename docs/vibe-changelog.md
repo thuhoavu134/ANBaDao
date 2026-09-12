@@ -1,3 +1,7 @@
+## 12/09/2026 — TKT-0066 LIVE
+
+Owner gõ `live`. Squash [#60](https://github.com/bktimmy247/luc-than/pull/60) → main `6ddad79`. Chip Thành Chính trên trận / nan inner / kết quả. Lịch Luyện chỉ mũi tên ‹. Vercel Hobby vẫn hết quota — alias chưa đổi (TKT-0078). Safari NOT_RUN.
+
 ## 12/09/2026 — TKT-0066 Lịch Luyện: ẩn chip, giữ mũi tên ‹
 
 Owner ảnh thật: chip Thành Chính che góc trên Lịch Luyện. Chip ẩn khi `#hvLichRoot` mở; dùng `.hv-lich-back` ‹ có sẵn. Trận / nan inner / kết quả vẫn chip. L66-T5 GREEN. Không merge tới live.
