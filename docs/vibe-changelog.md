@@ -1,3 +1,7 @@
+## 12/09/2026 — Ô mã đổi gõ được LIVE
+
+Owner gõ live. Squash [#71](https://github.com/bktimmy247/luc-than/pull/71) → `dcb6147`.
+
 ## 12/09/2026 — Avatar Ông Phở bấm được LIVE
 
 Owner gõ live. Squash [#70](https://github.com/bktimmy247/luc-than/pull/70) → `cabac05`. `.art-player` pointer-events auto.
