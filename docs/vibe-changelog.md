@@ -1,3 +1,7 @@
+## 12/09/2026 — retrigger Vercel production Wave F+H
+
+Owner gõ gộp live + deploy. Git `main` đã có squash #51 `5bd9382` + #55 `b4915a9` + docs `ec9d7a0`, nhưng alias luc-than.vercel.app còn `dpl_Gw6KtJFxJYdGdxHVUBksnZAtYE2t` / `282df9d` (chỉ login, không `#hvJourneyRoot`). CI Live check chỉ HTTP 200 nên GREEN giả. Commit này kích CD.
+
 ## 12/09/2026 — Wave F + Wave H coordinator LIVE
 
 Owner gõ `live` + deploy Vercel. Squash [#51](https://github.com/bktimmy247/luc-than/pull/51) → `5bd9382` Hành trình + Kết quả hall giả 3D. Squash [#55](https://github.com/bktimmy247/luc-than/pull/55) → `b4915a9` stub TKT-0065…0073 (overlay chưa điền). Việc kế: điền Tháp trận NPC + nút Thành Chính.
