@@ -43,16 +43,16 @@
 
   function heroCatalog() {
     const data = typeof DATA === 'object' && DATA?.heroes ? DATA.heroes : {};
-    const ids = Object.keys(data);
-    const ssr = typeof poolOf === 'function'
-      ? poolOf('ssr')
-      : ids.filter(id => data[id]?.rarity === 'ssr');
-    const nonSsr = ids.filter(id => data[id] && data[id].rarity !== 'ssr');
+    const ids = (typeof OFFICIAL_ROSTER_12_IDS !== 'undefined' && OFFICIAL_ROSTER_12_IDS.length)
+      ? OFFICIAL_ROSTER_12_IDS.slice()
+      : Object.keys(data);
+    const ssr = ids.filter(id => data[id]?.rarity === 'ssr' || data[id]?.rarity === 'ss');
+    const nonSsr = ids.filter(id => data[id] && data[id].rarity !== 'ssr' && data[id].rarity !== 'ss');
     return { nonSsr, ssr };
   }
 
   function heroName(id) {
-    return DATA?.heroes?.[id]?.name || id || 'Kẻ Mất Ngủ';
+    return DATA?.heroes?.[id]?.name || id || 'Người Giữ Ấn';
   }
 
   function stallIcon(it) {
@@ -103,7 +103,7 @@
       <div id="hvShopRoot" data-testid="hv-shop">
         <div class="hv-shop-top">
           <button type="button" class="hv-shop-back" data-shop-back aria-label="Về Thành Chính">‹</button>
-          <b>Chợ Mộng</b>
+          <b>Chợ Lục Châu</b>
           <div class="hv-shop-chips">
             <span class="hv-shop-chip" data-shop-gold>🪙 ${fmt(P.gold)}</span>
             <span class="hv-shop-chip" data-shop-gems>💎 ${fmt(P.gems)}</span>
@@ -111,7 +111,7 @@
         </div>
         <div class="hv-shop-hero">
           <div class="hv-shop-kicker">Quầy đêm · đổi lúc nửa đêm</div>
-          <div class="hv-shop-title" data-shop-title>Chợ Đêm Mộng</div>
+          <div class="hv-shop-title" data-shop-title>Chợ Đêm</div>
           <div class="hv-shop-best">Đã mua ${sold}/8 hôm nay · Tinh/Hoạt có trần</div>
         </div>
         <div class="hv-shop-panel">

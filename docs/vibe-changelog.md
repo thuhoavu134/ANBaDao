@@ -1,3 +1,7 @@
+## 13/09/2026 — Wave S Bách Bảo lưới REVIEW
+
+Tiếp cộng cục (2+3=5★). Chợ Lục Châu, mảnh 12 tướng. Cắt Mộng.
+
 ## 13/09/2026 — Wave S kinh tế LIVE
 
 Owner gõ live. Squash [#87](https://github.com/bktimmy247/luc-than/pull/87) → `a645011`. TKT-0111.

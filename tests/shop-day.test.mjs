@@ -154,7 +154,7 @@ test('L08-P4: lacquer screen is wired and does not add a second hub landmark', (
   const inject = readFileSync(injectPath, 'utf8');
   assert.match(ui, /data-shop-buy/);
   assert.match(ui, /prepareShopBuy/);
-  assert.match(ui, /Chợ Mộng/);
+  assert.match(ui, /Chợ Lục Châu/);
   assert.doesNotMatch(ui, /data-art-go="shop"/);
   assert.match(css, /#hvShopRoot/);
   assert.match(css, /[.]hv-shop-shelf/);

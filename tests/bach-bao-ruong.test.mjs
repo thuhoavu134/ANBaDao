@@ -4,7 +4,8 @@ import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
-  BBR_BETS, BBR_CRAFT, BBR_UNLOCK, spinBbr, craftShells, buyBbrShop, rollStars, payAt
+  BBR_BETS, BBR_CRAFT, BBR_UNLOCK, BBR_BOARD, spinBbr, spinStep, takeBbr,
+  craftShells, buyBbrShop, rollStars, payAt
 } from '../src/domain/festival/bach-bao-ruong.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -17,12 +18,20 @@ const slots = [
 test('L109: cược 2/10/50, sao nhân, chế sò Tinh/Hoạt, shop điểm', () => {
   assert.deepEqual([...BBR_BETS], [2, 10, 50]);
   const src = { so: 50, gold: 0, tinh: 40, hoat: 40, bachBao: {} };
-  const spin = spinBbr(src, { bet: 50, rng: () => 0, slots, day: 1 });
-  assert.equal(spin.ok, true);
-  assert.equal(spin.stake, 50);
-  assert.equal(src.so, 50);
-  assert.equal(spin.so, 0);
-  assert.ok(spin.stars >= 1 && spin.stars <= 6);
+  const two = BBR_BOARD.filter(c => c.t === 'gold' && c.n === 2);
+  const three = BBR_BOARD.filter(c => c.t === 'gold' && c.n === 3);
+  assert.ok(two.length && three.length);
+  const board = [{ t: 'gold', n: 2 }, { t: 'gold', n: 3 }];
+  const p0 = { so: 20, gold: 0, bachBao: { bet: 2 } };
+  const s1 = spinStep(p0, { bet: 2, rng: () => 0, board, day: 1 });
+  assert.equal(s1.stars, 2);
+  const s2 = spinStep({ ...p0, so: s1.so, bachBao: s1.bachBao }, { bet: 2, rng: () => 0.9, board, day: 1 });
+  assert.equal(s2.stars, 5);
+  assert.equal(s2.same, true);
+  const take = takeBbr({ gold: 0, so: s2.so, bachBao: s2.bachBao }, { day: 1 });
+  assert.equal(take.ok, true);
+  assert.equal(take.stars, 5);
+  assert.equal(take.gold, payAt('gold', 5, 2));
   assert.equal(payAt('gold', 3, 50), 1200 * 25);
   const low = spinBbr({ so: 1 }, { bet: 2, rng: () => 0, slots });
   assert.equal(low.code, 'INSUFFICIENT_SO');
@@ -41,7 +50,8 @@ test('L109: cược 2/10/50, sao nhân, chế sò Tinh/Hoạt, shop điểm', ()
   assert.equal(BBR_UNLOCK.b, 10);
   assert.match(ui, /so-icon\.jpg/);
   assert.match(ui, /S\+/);
-  assert.match(ui, /data-fest-spin/);
+  assert.match(ui, /data-bbr-step/);
+  assert.match(ui, /data-bbr-take/);
   assert.match(ui, /openSupreme/);
   assert.match(ui, /supPity/);
   assert.match(ui, /grantExtremeEquipment/);

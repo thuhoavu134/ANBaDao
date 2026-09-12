@@ -29,7 +29,19 @@
       .replace(/Người Dẫn Mộng/g, 'Người Kể Ấn')
       .replace(/Người Gác Mộng/g, 'Kẻ Trộm Ấn')
       .replace(/Hết Mộng Châu/g, 'Đóng đủ sáu ấn')
-      .replace(/Hết Lục Châu/g, 'Đóng đủ sáu ấn');
+      .replace(/Hết Lục Châu/g, 'Đóng đủ sáu ấn')
+      .replace(/Chợ Đêm Mộng/g, 'Chợ Đêm')
+      .replace(/Chợ Mộng/g, 'Chợ Lục Châu')
+      .replace(/Mảnh mộng hiếm/g, 'Mảnh S+')
+      .replace(/thợ mộng/gi, 'thợ rèn')
+      .replace(/Rèn Mộng/g, 'Rèn Ấn')
+      .replace(/Xưởng Mộng/g, 'Xưởng Ấn')
+      .replace(/Mộng Lộ/g, 'Lộ Ấn')
+      .replace(/Boss Mộng/g, 'Boss')
+      .replace(/Săn Boss/g, 'Săn')
+      .replace(/Bách Bảo Luân/g, 'Bách Bảo Rương')
+      .replace(/Tam Nguyện Sông Mơ/g, 'Hoa Đăng Lục Châu')
+      .replace(/Bóng Mộng/g, 'Bóng Ấn');
   }
 
   function patchData() {
@@ -69,9 +81,11 @@
       el.textContent = 'Sáu ấn · Chinh chiến chính tuyến';
     });
     document.querySelectorAll('.hv-seal').forEach(el => { el.textContent = 'LT'; });
-    document.querySelectorAll('#hubScreen .scnm').forEach(el => {
-      if (/Mộng|Giới|Châu/.test(el.textContent) && /Hết|hết/.test(el.textContent)) {
-        el.textContent = 'Đóng đủ sáu ấn';
+    document.querySelectorAll('#hubScreen .scnm, #hubScreen .hv-land b, #hubScreen [data-art-go]').forEach(el => {
+      if (el && el.childNodes) {
+        el.childNodes.forEach(n => {
+          if (n.nodeType === 3) n.textContent = rewrite(n.textContent);
+        });
       }
     });
   }

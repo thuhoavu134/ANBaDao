@@ -38,7 +38,7 @@ function rng01(rng) {
 export function emptyBbr() {
   return {
     bet: 2, lastType: '', streak: 0, stars: 1, pts: 0, crafted: 0, craftDay: -1,
-    pool: 12000, spins: 0, chests: 0, supreme: 0, opened: 0, history: []
+    pool: 12000, spins: 0, chests: 0, supreme: 0, opened: 0, history: [], pending: null
   };
 }
 
@@ -52,6 +52,9 @@ export function normalizeBbr(raw, day = 0) {
   s.crafted = asInt(s.craftDay, -1) === asInt(day, 0) ? asInt(s.crafted, 0) : 0;
   s.craftDay = asInt(day, 0);
   s.history = Array.isArray(s.history) ? s.history.slice(0, 12) : [];
+  if (s.pending && typeof s.pending === 'object') {
+    s.pending = { t: String(s.pending.t || 'gold'), stars: Math.max(1, Math.min(6, asInt(s.pending.stars, 1))), n: asInt(s.pending.n, 1) };
+  } else s.pending = null;
   return s;
 }
 
@@ -76,6 +79,96 @@ export function payAt(type, stars, bet) {
   const row = BBR_PAY[type] || BBR_PAY.gold;
   const v = asInt(row[Math.max(1, Math.min(6, stars))], 0);
   return Math.round(v * betMult(bet));
+}
+
+/** 1/2/3 cục cùng loại. Tiếp cộng cục = sao (2+3=5★). */
+export const BBR_BOARD = Object.freeze([
+  Object.freeze({ t: 'gold', n: 1 }), Object.freeze({ t: 'gold', n: 2 }), Object.freeze({ t: 'gold', n: 3 }),
+  Object.freeze({ t: 'gems', n: 1 }), Object.freeze({ t: 'gems', n: 2 }), Object.freeze({ t: 'gems', n: 3 }),
+  Object.freeze({ t: 'so', n: 1 }), Object.freeze({ t: 'so', n: 2 }),
+  Object.freeze({ t: 'tinh', n: 1 }), Object.freeze({ t: 'tinh', n: 2 }), Object.freeze({ t: 'tinh', n: 3 }),
+  Object.freeze({ t: 'hoat', n: 1 }), Object.freeze({ t: 'hoat', n: 2 }), Object.freeze({ t: 'hoat', n: 3 }),
+  Object.freeze({ t: 'sh_ss', n: 1 }), Object.freeze({ t: 'sh_ss', n: 2 }),
+  Object.freeze({ t: 'sh_ssr', n: 1 }), Object.freeze({ t: 'sh_ssr', n: 2 }),
+  Object.freeze({ t: 'chest', n: 1 }), Object.freeze({ t: 'chest', n: 2 }),
+  Object.freeze({ t: 'supreme', n: 1 }), Object.freeze({ t: 'gold', n: 1 }),
+  Object.freeze({ t: 'gems', n: 1 }), Object.freeze({ t: 'tinh', n: 1 })
+]);
+
+export function spinStep(player, { bet, rng, day, board } = {}) {
+  const stake = BBR_BETS.includes(asInt(bet, 2)) ? asInt(bet, 2) : 2;
+  const so = asInt(player?.so, 0);
+  if (so < stake) return fail('INSUFFICIENT_SO', 'Không đủ sò. Cược ' + stake + '.');
+  const list = Array.isArray(board) && board.length ? board : BBR_BOARD;
+  const idx = Math.floor(rng01(rng) * list.length) % list.length;
+  const cell = list[idx] || { t: 'gold', n: 1 };
+  const bbr = normalizeBbr(player?.bachBao, day);
+  const n = Math.max(1, Math.min(3, asInt(cell.n, 1)));
+  const type = cell.t || 'gold';
+  const same = !!(bbr.pending && bbr.pending.t === type);
+  const stars = same ? Math.min(6, asInt(bbr.pending.stars, 1) + n) : n;
+  bbr.pending = { t: type, stars, n };
+  bbr.lastType = type;
+  bbr.stars = stars;
+  bbr.bet = stake;
+  bbr.spins = asInt(bbr.spins, 0) + 1;
+  bbr.pool += stake;
+  return {
+    ok: true,
+    idx,
+    cell,
+    type,
+    n,
+    stars,
+    same,
+    stake,
+    so: so - stake,
+    bachBao: bbr,
+    msg: (same ? 'Cộng ' + n + ' → ' : '') + stars + '★ ' + type
+  };
+}
+
+export function takeBbr(player, { day } = {}) {
+  const bbr = normalizeBbr(player?.bachBao, day);
+  if (!bbr.pending) return fail('NO_PENDING', 'Chưa có lượt để nhận.');
+  const type = bbr.pending.t;
+  const stars = bbr.pending.stars;
+  const stake = bbr.bet || 2;
+  const qty = payAt(type, stars, stake);
+  let gold = asInt(player?.gold, 0);
+  let gems = asInt(player?.gems, 0);
+  let tinh = asInt(player?.tinh, 0);
+  let hoat = asInt(player?.hoat, 0);
+  let stam = asInt(player?.stamina, 0);
+  let soOut = asInt(player?.so, 0);
+  const shards = { ...(player?.shards || {}) };
+  if (type === 'gold') gold += qty;
+  if (type === 'gems') gems += qty;
+  if (type === 'so') soOut += qty;
+  if (type === 'tinh') tinh += qty;
+  if (type === 'hoat') hoat += qty;
+  if (type === 'stam') stam += qty;
+  if (type === 'sh_ss' || type === 'sh_ssr') {
+    const hid = player?.shardHero || 'ong_hang_pho';
+    shards[hid] = asInt(shards[hid], 0) + qty;
+  }
+  if (type === 'chest') bbr.chests = asInt(bbr.chests, 0) + qty;
+  if (type === 'supreme') bbr.supreme = asInt(bbr.supreme, 0) + qty;
+  if (stars >= 6 && type === 'gold') {
+    const jack = Math.floor(bbr.pool * 0.2);
+    gold += jack;
+    bbr.pool = Math.max(0, bbr.pool - jack);
+  }
+  if (stars >= 3) bbr.pts += Math.max(1, payAt('so', stars, stake));
+  const label = stars + '★ ' + type + ' · +' + qty;
+  bbr.history.unshift({ kind: 'take', label, t: Date.now() });
+  if (bbr.history.length > 12) bbr.history.length = 12;
+  bbr.pending = null;
+  return {
+    ok: true, type, stars, qty, stake,
+    gold, gems, so: soOut, tinh, hoat, stamina: stam, shards, bachBao: bbr,
+    msg: label
+  };
 }
 
 export function craftShells(player, { day } = {}) {

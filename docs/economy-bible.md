@@ -1,39 +1,35 @@
-# Kinh tế Lục Thần
+# Kinh tế Lục Thần — tài nguyên → lực chiến
 
-Bậc: **B / A / S / S+** (không SR/SSR).
+Bậc mảnh: **B / A / S / S+**. Không SR/SSR.
 
-## Mảnh tướng
+## Vòng (làm gì → ra gì → dùng vào đâu)
 
-| Bậc | Mở 1 tướng | 1★→6★ |
+| Hoạt động | Ra | Đi vào | Lực chiến |
+|---|---|---|---|
+| Chinh chiến / Tháp / Đài / Săn | Vàng, Ngọc, mảnh | Lên cấp tướng, Gọi, sao | HP/ATK tướng |
+| Việc vặt + AFK | Vàng, Tinh, Hoạt | Rèn, cường, chế sò | đồ |
+| Rèn (Tinh+Vàng) | trang bị | mặc | ATK/HP/DEF |
+| Cường (Hoạt+Vàng) | +cấp đồ | mặc | đồ mạnh hơn |
+| Chợ | Tinh/Hoạt/mảnh/stam | rèn hoặc sao | đồ / tướng |
+| Tinh+Hoạt → sò (2/ngày) | Sò | Bách Bảo Rương | rương → đồ S+ / mảnh |
+| Bách Bảo (cược sò) | Vàng/Ngọc/Tinh/mảnh/rương | tùy ô | jackpot đồ |
+| Gọi Mộng (Ngọc) | tướng / mảnh | đội hình, sao | roster |
+
+Không có nguồn nào bán ATK thẳng.
+
+## Mảnh → tướng
+
+| Bậc | Mở | 1★→6★ |
 |---|---|---|
 | B | 10 | 300 |
 | A | 20 | 300 |
 | S | 30 | 300 |
 | S+ | 50 | 300 |
 
-## Ngày F2P (không Chợ, AFK 15h, làm daily)
+## Ngày F2P (không Chợ, AFK 15h)
 
-| | Vàng | Ngọc | Tinh | Hoạt |
-|---|---|---|---|---|
-| AFK | 900 | 0 | 15 | 15 |
-| Daily (kể drip TKT-0111) | ~2200 | 20 | ~28 | ~28 |
-| Săn / Đài | ~400 | ~10 | 4 | 6 |
-| **Tổng** | **~3500** | **~30** | **~47** | **~49** |
+Tinh ~47 · Hoạt ~49 · 1 rèn + cường. Chế sò thì phải bỏ rèn hoặc mua Bình/Lò.
 
-## Tiêu trong ngày
+## Bách Bảo Rương
 
-| | Tinh | Hoạt | Vàng |
-|---|---|---|---|
-| Rèn 1 món | 20 | 0 | 200 |
-| Cường 2 lần | 0 | ~16 | ~200 |
-| Chế sò 1 lần | 25 | 25 | 0 |
-
-Không đủ 2 lần chế sò nếu còn rèn — phải Chợ (Bình/Lò 30, 1 lần/ngày) hoặc bỏ rèn.
-
-## Chợ (1 lần/món/ngày)
-
-Túi 25+25 / 🪙220 · Bình 30 Tinh / 280 · Lò 30 Hoạt / 280 · Gói 80+80 / 💎50.
-
-## Luân
-
-Cược 2/10/50 sò. Sao 1–6. Sò chế 25+25, tối đa 2/ngày.
+Ô 1/2/3 cục cùng loại. **Tiếp** cộng cục (2+3=5★). Loại khác mất chuỗi. **Thưởng** nhận bảng sao × cược.
