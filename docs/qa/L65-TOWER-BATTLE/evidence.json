@@ -1,0 +1,66 @@
+{
+  "summary": [
+    {
+      "label": "390x844",
+      "ok": true,
+      "battle": {
+        "overlayOpen": true,
+        "frameSrc": "battle.html?embedded=1&session=hv-mty9b1ui-jxuxf&autostart=1&v=3175",
+        "mode": "tower",
+        "foeCount": 6,
+        "uniqueIds": 6,
+        "front": 3,
+        "back": 3,
+        "ids": [
+          "ong_hang_pho",
+          "thay_mo",
+          "lac_yen",
+          "cung_thu_tre",
+          "co_dao_ganh_hoi",
+          "phong_tu"
+        ]
+      },
+      "stamBefore": 120,
+      "stamAfter": 115,
+      "floorBefore": 1,
+      "weakStillFights": {
+        "overlayOpen": true,
+        "floor": 12,
+        "mode": "tower"
+      },
+      "appErrors": []
+    },
+    {
+      "label": "768x1024",
+      "ok": true,
+      "battle": {
+        "overlayOpen": true,
+        "frameSrc": "battle.html?embedded=1&session=hv-mty9b67o-istc7&autostart=1&v=3175",
+        "mode": "tower",
+        "foeCount": 6,
+        "uniqueIds": 6,
+        "front": 3,
+        "back": 3,
+        "ids": [
+          "ong_hang_pho",
+          "thay_mo",
+          "lac_yen",
+          "cung_thu_tre",
+          "co_dao_ganh_hoi",
+          "phong_tu"
+        ]
+      },
+      "stamBefore": 120,
+      "stamAfter": 115,
+      "floorBefore": 1,
+      "weakStillFights": {
+        "overlayOpen": true,
+        "floor": 12,
+        "mode": "tower"
+      },
+      "appErrors": []
+    }
+  ],
+  "safari": "NOT_RUN",
+  "pass": true
+}

@@ -1,11 +1,11 @@
 ---
 id: TKT-0065
 title: Tháp Trắng Đêm — đội NPC tự tạo + trận iframe thật
-status: READY
-phase: READY
+status: REVIEW
+phase: REVIEW
 priority: P0
 created: 2026-09-12T07:20:00.000Z
-updated: 2026-09-12T07:20:00.000Z
+updated: 2026-09-12T10:40:00.000Z
 acceptance_ids: ['L65-T1', 'L65-T2', 'L65-T3', 'L65-T4', 'L65-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths: ['src/domain/tower/tower-npc-team.mjs', 'src/ui/tower-battle-runtime.js', 'scripts/tower-battle-v1.mjs', 'scripts/lanes/tkt-0065-tower-battle.mjs', 'scripts/qa-tower-battle.mjs', 'tests/tower-battle.test.mjs', 'docs/qa/L65-TOWER-BATTLE/']

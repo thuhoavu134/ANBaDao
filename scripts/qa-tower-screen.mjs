@@ -106,7 +106,7 @@ const result = {
     && /Lực chiến/.test(powerCopy || '')
     && trialOn === 1
     && stamAfter === stamBefore - 5
-    && battles === 0
+    && battles >= 1
     && towerRootAfterClimb === 1
     && /Leo tầng/.test(climbLabel || '')
     && /Tầng 2/.test(floorAfter || '')
