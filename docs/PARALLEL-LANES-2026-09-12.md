@@ -10,7 +10,8 @@ Owner: rà soát chức năng còn thiếu, tách ticket **độc lập** để 
 
 **Wave D LIVE** 12/09: owner gõ `live`. Squash #49 → main `ea59313`.
 
-**Wave E REVIEW** 12/09: owner gõ `tiếp`. Nhật Ký Mơ + Chinh chiến AFK home hall giả 3D. Không merge tới `live`.
+**Wave E LIVE** 12/09: owner gõ `live`. Squash #50 → main `f43545e`.
+
 
 
 
@@ -21,9 +22,9 @@ Owner: rà soát chức năng còn thiếu, tách ticket **độc lập** để 
 
 | Nhóm | Việc |
 |---|---|
-| Live | Chinh chiến/AFK/Bày trận/6v6 · Tướng overlay · Hồ sơ tướng overlay + 12 nền showcase · Trợ trận 11 nan · Lịch Luyện + Nhật Ký · Tháp/Mộng Lộ/Chợ/Gọi/Đấu/Săn/Lễ **hall giả 3D** · Rèn · Túi/Thư/Việc/Bang/Bạn/Chat/Tộc/Kho · kit v2 12 tướng |
+| Live | Chinh chiến AFK **hall giả 3D** /Bày trận/6v6 · Tướng overlay · Hồ sơ tướng overlay + 12 nền showcase · Trợ trận 11 nan · Lịch Luyện + **Nhật Ký Mơ hall giả 3D** · Tháp/Mộng Lộ/Chợ/Gọi/Đấu/Săn/Lễ **hall giả 3D** · Rèn · Túi/Thư/Việc/Bang/Bạn/Chat/Tộc/Kho · kit v2 12 tướng |
 | Wave D | **LIVE** TKT-0053 (#49) Hồ sơ tướng overlay body + 9 nền showcase |
-| Wave E | **REVIEW** TKT-0054 Nhật Ký Mơ + TKT-0055 Chinh chiến AFK home giả 3D |
+| Wave E | **LIVE** TKT-0054…0055 (#50) Nhật Ký Mơ + Chinh chiến AFK home giả 3D |
 
 | Không mở ticket | Combat V2 / 42 S+ · 5 nan Lịch `go:null` · visual Bày trận · seed/banner/roster 12 · Auth/DB online · L02c reward (chờ owner) |
 

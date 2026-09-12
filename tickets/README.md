@@ -25,6 +25,6 @@ Board GitHub không có. File `tickets/TKT-00xx/ticket.md` là nguồn sự th�
 | TKT-0051 | C | Săn Boss giả 3D overlay body | LIVE |
 | TKT-0052 | C | Lễ Hội giả 3D overlay body | LIVE |
 | TKT-0053 | D | Hồ sơ tướng hall + 9 nền showcase | LIVE |
-| TKT-0054 | E | Nhật Ký Mơ giả 3D overlay body | REVIEW |
-| TKT-0055 | E | Chinh chiến AFK home giả 3D | REVIEW |
+| TKT-0054 | E | Nhật Ký Mơ giả 3D overlay body | LIVE |
+| TKT-0055 | E | Chinh chiến AFK home giả 3D | LIVE |
 

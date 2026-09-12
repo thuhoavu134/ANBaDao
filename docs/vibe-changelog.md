@@ -1,4 +1,9 @@
+## 12/09/2026 — Wave E TKT-0054…0055 LIVE
+
+Owner gõ `live`. Squash [#50](https://github.com/bktimmy247/luc-than/pull/50) → main `f43545e`. Nhật Ký Mơ + Chinh chiến AFK home overlay body. Bày trận đóng băng.
+
 ## 12/09/2026 — Wave E TKT-0054…0055 REVIEW
+
 
 Owner gõ `tiếp`. Nhật Ký Mơ + Chinh chiến AFK home restyle hall giả 3D overlay body. Bày trận đóng băng. Không merge tới `live`.
 

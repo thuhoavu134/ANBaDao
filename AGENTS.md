@@ -2,7 +2,8 @@
 
 Đọc `docs/HANDOFF-2026-09-12.md` rồi `docs/LUNA-HANDOFF.md` trước khi sửa game.
 
-Bàn giao mới nhất **12/09/2026**: Wave E TKT-0054…0055 **REVIEW** — Nhật Ký Mơ + Chinh chiến AFK giả 3D. LIVE trước: TKT-0053. Đọc `docs/HANDOFF-2026-09-12.md`.
+Bàn giao mới nhất **12/09/2026**: **LIVE** TKT-0054…0055 Nhật Ký Mơ + Chinh chiến AFK hall giả 3D. Main `f43545e`. Đọc `docs/HANDOFF-2026-09-12.md`.
+
 
 
 

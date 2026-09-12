@@ -1,11 +1,11 @@
 ---
 id: TKT-0055
 title: Chinh chiến AFK home hall giả 3D overlay body
-status: REVIEW
+status: LIVE
 phase: REFACTOR
 priority: P1
 created: 2026-09-12T04:30:00.000Z
-updated: 2026-09-12T04:30:00.000Z
+updated: 2026-09-12T04:36:00.000Z
 acceptance_ids: ['L45-T1', 'L45-T2', 'L45-T3', 'L45-T4', 'L45-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths: ['src/ui/campaign-3d-runtime.js', 'src/ui/campaign-3d.css', 'scripts/campaign-3d-v1.mjs', 'scripts/lanes/tkt-0055-campaign.mjs', 'scripts/qa-wave-e-3d.mjs', 'assets/ui/campaign/campaign-hall.jpg', 'tests/campaign-3d.test.mjs', 'docs/qa/L45-CAMPAIGN-3D/']
@@ -55,4 +55,7 @@ Không sửa `index.html`. Không commit `dist/`. Không merge/live tới khi ow
 
 Shared read-only: `src/ui/campaign-scene.js`, `src/ui/campaign-scene.css`.
 
-Builder → REVIEW. Không tự MERGED/DONE.
+## Result
+
+LIVE 12/09 squash [#50](https://github.com/bktimmy247/luc-than/pull/50) → main `f43545e`. Production đã phục vụ `campaign-hall.jpg`.
+
