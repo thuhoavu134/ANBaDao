@@ -2,7 +2,8 @@
 
 Đọc `docs/HANDOFF-2026-09-12.md` rồi `docs/LUNA-HANDOFF.md` trước khi sửa game.
 
-Bàn giao mới nhất **12/09/2026**: Wave C TKT-0046…0052 **REVIEW** — 7 màn sơn mài → hall giả 3D. LIVE trước: TKT-0036…0045. Đọc `docs/HANDOFF-2026-09-12.md`.
+Bàn giao mới nhất **12/09/2026**: **LIVE** TKT-0046…0052 Wave C hall giả 3D (Tháp/Mộng Lộ/Chợ/Gọi/Đấu/Săn/Lễ). Main `9f2bbff`. Đọc `docs/HANDOFF-2026-09-12.md`.
+
 
 
 

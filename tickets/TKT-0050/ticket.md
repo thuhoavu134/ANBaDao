@@ -1,11 +1,11 @@
 ---
 id: TKT-0050
 title: Đấu Trường hall giả 3D overlay body
-status: REVIEW
+status: LIVE
 phase: REFACTOR
 priority: P1
 created: 2026-09-12T04:00:00.000Z
-updated: 2026-09-12T04:00:00.000Z
+updated: 2026-09-12T04:10:00.000Z
 acceptance_ids: ['L40-T1', 'L40-T2', 'L40-T3', 'L40-T4', 'L40-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths: ['src/ui/arena-3d-runtime.js', 'src/ui/arena-3d.css', 'scripts/arena-3d-v1.mjs', 'scripts/lanes/tkt-0050-arena.mjs', 'scripts/qa-arena-3d.mjs', 'assets/ui/arena/arena-hall.jpg', 'tests/arena-3d.test.mjs', 'docs/qa/L40-ARENA-3D/']
@@ -64,4 +64,4 @@ Builder → REVIEW. Không tự MERGED/DONE.
 ## Result
 
 - Overlay `#hvArenaRoot` gắn body, hall `assets/ui/arena/arena-hall.jpg`.
-- Builder dừng REVIEW. Không merge tới khi owner gõ `live`.
+- LIVE 12/09 squash #48 → main `9f2bbff`.

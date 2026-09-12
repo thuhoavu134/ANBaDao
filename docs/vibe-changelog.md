@@ -1,4 +1,9 @@
+## 12/09/2026 — Wave C TKT-0046…0052 LIVE
+
+Owner gõ `live`. Squash [#48](https://github.com/bktimmy247/luc-than/pull/48) → main `9f2bbff`. 7 màn sơn mài thành hall giả 3D overlay body.
+
 ## 12/09/2026 — Wave C TKT-0046…0052 REVIEW
+
 
 Owner gõ `tiếp`. 7 màn sơn mài (Tháp / Mộng Lộ / Chợ / Gọi / Đấu / Săn / Lễ) restyle hall giả 3D overlay body. Domain đóng băng. Không merge tới `live`.
 

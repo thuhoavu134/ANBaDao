@@ -1,11 +1,11 @@
 ---
 id: TKT-0052
 title: Lễ Hội hall giả 3D overlay body
-status: REVIEW
+status: LIVE
 phase: REFACTOR
 priority: P1
 created: 2026-09-12T04:00:00.000Z
-updated: 2026-09-12T04:00:00.000Z
+updated: 2026-09-12T04:10:00.000Z
 acceptance_ids: ['L42-T1', 'L42-T2', 'L42-T3', 'L42-T4', 'L42-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths: ['src/ui/festival-3d-runtime.js', 'src/ui/festival-3d.css', 'scripts/festival-3d-v1.mjs', 'scripts/lanes/tkt-0052-festival.mjs', 'scripts/qa-festival-3d.mjs', 'assets/ui/festival/festival-hall.jpg', 'tests/festival-3d.test.mjs', 'docs/qa/L42-FESTIVAL-3D/']
@@ -64,4 +64,4 @@ Builder → REVIEW. Không tự MERGED/DONE.
 ## Result
 
 - Overlay `#hvFestivalRoot` gắn body, hall `assets/ui/festival/festival-hall.jpg`.
-- Builder dừng REVIEW. Không merge tới khi owner gõ `live`.
+- LIVE 12/09 squash #48 → main `9f2bbff`.

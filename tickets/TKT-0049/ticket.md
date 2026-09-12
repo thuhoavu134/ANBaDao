@@ -1,11 +1,11 @@
 ---
 id: TKT-0049
 title: Gọi Mộng hall giả 3D overlay body
-status: REVIEW
+status: LIVE
 phase: REFACTOR
 priority: P1
 created: 2026-09-12T04:00:00.000Z
-updated: 2026-09-12T04:00:00.000Z
+updated: 2026-09-12T04:10:00.000Z
 acceptance_ids: ['L39-T1', 'L39-T2', 'L39-T3', 'L39-T4', 'L39-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths: ['src/ui/summon-3d-runtime.js', 'src/ui/summon-3d.css', 'scripts/summon-3d-v1.mjs', 'scripts/lanes/tkt-0049-summon.mjs', 'scripts/qa-summon-3d.mjs', 'assets/ui/summon/summon-hall.jpg', 'tests/summon-3d.test.mjs', 'docs/qa/L39-SUMMON-3D/']
@@ -64,4 +64,4 @@ Builder → REVIEW. Không tự MERGED/DONE.
 ## Result
 
 - Overlay `#hvSummonRoot` gắn body, hall `assets/ui/summon/summon-hall.jpg`.
-- Builder dừng REVIEW. Không merge tới khi owner gõ `live`.
+- LIVE 12/09 squash #48 → main `9f2bbff`.

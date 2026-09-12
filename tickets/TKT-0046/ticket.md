@@ -1,11 +1,11 @@
 ---
 id: TKT-0046
 title: Tháp Trắng Đêm hall giả 3D overlay body
-status: REVIEW
+status: LIVE
 phase: REFACTOR
 priority: P1
 created: 2026-09-12T04:00:00.000Z
-updated: 2026-09-12T04:00:00.000Z
+updated: 2026-09-12T04:10:00.000Z
 acceptance_ids: ['L36-T1', 'L36-T2', 'L36-T3', 'L36-T4', 'L36-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths: ['src/ui/tower-3d-runtime.js', 'src/ui/tower-3d.css', 'scripts/tower-3d-v1.mjs', 'scripts/lanes/tkt-0046-tower.mjs', 'scripts/qa-tower-3d.mjs', 'assets/ui/tower/tower-hall.jpg', 'tests/tower-3d.test.mjs', 'docs/qa/L36-TOWER-3D/']
@@ -64,4 +64,4 @@ Builder → REVIEW. Không tự MERGED/DONE.
 ## Result
 
 - Overlay `#hvTowerRoot` gắn body, hall `assets/ui/tower/tower-hall.jpg`.
-- Builder dừng REVIEW. Không merge tới khi owner gõ `live`.
+- LIVE 12/09 squash #48 → main `9f2bbff`.

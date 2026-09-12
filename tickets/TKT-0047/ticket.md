@@ -1,11 +1,11 @@
 ---
 id: TKT-0047
 title: Mộng Lộ hall giả 3D overlay body
-status: REVIEW
+status: LIVE
 phase: REFACTOR
 priority: P1
 created: 2026-09-12T04:00:00.000Z
-updated: 2026-09-12T04:00:00.000Z
+updated: 2026-09-12T04:10:00.000Z
 acceptance_ids: ['L37-T1', 'L37-T2', 'L37-T3', 'L37-T4', 'L37-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths: ['src/ui/expedition-3d-runtime.js', 'src/ui/expedition-3d.css', 'scripts/expedition-3d-v1.mjs', 'scripts/lanes/tkt-0047-expedition.mjs', 'scripts/qa-expedition-3d.mjs', 'assets/ui/expedition/expedition-hall.jpg', 'tests/expedition-3d.test.mjs', 'docs/qa/L37-EXPEDITION-3D/']
@@ -64,4 +64,4 @@ Builder → REVIEW. Không tự MERGED/DONE.
 ## Result
 
 - Overlay `#hvExpeditionRoot` gắn body, hall `assets/ui/expedition/expedition-hall.jpg`.
-- Builder dừng REVIEW. Không merge tới khi owner gõ `live`.
+- LIVE 12/09 squash #48 → main `9f2bbff`.

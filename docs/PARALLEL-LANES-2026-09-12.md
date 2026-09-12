@@ -6,6 +6,9 @@ Owner: rà soát chức năng còn thiếu, tách ticket **độc lập** để 
 
 **Hall + kit LIVE** 12/09: owner gõ `live`. Squash #39–#47 + rebase-merge Rèn #37 → main `a2d8bf1`.
 
+**Wave C LIVE** 12/09: owner gõ `live`. Squash #48 → main `9f2bbff`.
+
+
 
 ---
 
@@ -13,8 +16,8 @@ Owner: rà soát chức năng còn thiếu, tách ticket **độc lập** để 
 
 | Nhóm | Việc |
 |---|---|
-| Live | Chinh chiến/AFK/Bày trận/6v6 · Tướng overlay · Trợ trận 11 nan · Lịch Luyện + Nhật Ký · Tháp · Mộng Lộ · Chợ · Gọi Mộng · Đấu · Săn · Lễ Hội · Rèn hall + command · Túi/Thư/Việc/Bang/Bạn/Chat/Tộc/Kho overlay · kit v2 12 tướng |
-| Wave C — 7 agent song song | TKT-0046…0052 restyle sơn mài → hall giả 3D overlay body (Tháp / Mộng Lộ / Chợ / Gọi / Đấu / Săn / Lễ) |
+| Live | Chinh chiến/AFK/Bày trận/6v6 · Tướng overlay · Trợ trận 11 nan · Lịch Luyện + Nhật Ký · Tháp/Mộng Lộ/Chợ/Gọi/Đấu/Săn/Lễ **hall giả 3D** · Rèn · Túi/Thư/Việc/Bang/Bạn/Chat/Tộc/Kho · kit v2 12 tướng |
+| Wave C | **LIVE** TKT-0046…0052 (#48) restyle sơn mài → hall giả 3D overlay body |
 | Không mở ticket | Combat V2 / 42 S+ · 5 nan Lịch `go:null` · visual Bày trận · seed/banner/roster 12 · Auth/DB online · L02c reward (chờ owner) |
 
 ---

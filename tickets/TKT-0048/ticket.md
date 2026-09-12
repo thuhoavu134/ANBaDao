@@ -1,11 +1,11 @@
 ---
 id: TKT-0048
 title: Chợ Mộng hall giả 3D overlay body
-status: REVIEW
+status: LIVE
 phase: REFACTOR
 priority: P1
 created: 2026-09-12T04:00:00.000Z
-updated: 2026-09-12T04:00:00.000Z
+updated: 2026-09-12T04:10:00.000Z
 acceptance_ids: ['L38-T1', 'L38-T2', 'L38-T3', 'L38-T4', 'L38-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths: ['src/ui/shop-3d-runtime.js', 'src/ui/shop-3d.css', 'scripts/shop-3d-v1.mjs', 'scripts/lanes/tkt-0048-shop.mjs', 'scripts/qa-shop-3d.mjs', 'assets/ui/shop/shop-hall.jpg', 'tests/shop-3d.test.mjs', 'docs/qa/L38-SHOP-3D/']
@@ -64,4 +64,4 @@ Builder → REVIEW. Không tự MERGED/DONE.
 ## Result
 
 - Overlay `#hvShopRoot` gắn body, hall `assets/ui/shop/shop-hall.jpg`.
-- Builder dừng REVIEW. Không merge tới khi owner gõ `live`.
+- LIVE 12/09 squash #48 → main `9f2bbff`.

@@ -1,11 +1,11 @@
 ---
 id: TKT-0051
 title: Săn Boss hall giả 3D overlay body
-status: REVIEW
+status: LIVE
 phase: REFACTOR
 priority: P1
 created: 2026-09-12T04:00:00.000Z
-updated: 2026-09-12T04:00:00.000Z
+updated: 2026-09-12T04:10:00.000Z
 acceptance_ids: ['L41-T1', 'L41-T2', 'L41-T3', 'L41-T4', 'L41-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths: ['src/ui/hunt-3d-runtime.js', 'src/ui/hunt-3d.css', 'scripts/hunt-3d-v1.mjs', 'scripts/lanes/tkt-0051-hunt.mjs', 'scripts/qa-hunt-3d.mjs', 'assets/ui/hunt/hunt-hall.jpg', 'tests/hunt-3d.test.mjs', 'docs/qa/L41-HUNT-3D/']
@@ -64,4 +64,4 @@ Builder → REVIEW. Không tự MERGED/DONE.
 ## Result
 
 - Overlay `#hvHuntRoot` gắn body, hall `assets/ui/hunt/hunt-hall.jpg`.
-- Builder dừng REVIEW. Không merge tới khi owner gõ `live`.
+- LIVE 12/09 squash #48 → main `9f2bbff`.
