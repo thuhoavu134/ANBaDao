@@ -1,3 +1,7 @@
+## 13/09/2026 — Wave S Chợ + Bách Bảo LIVE
+
+Owner gõ live. Squash [#93](https://github.com/bktimmy247/luc-than/pull/93) → `4004224`, [#94](https://github.com/bktimmy247/luc-than/pull/94) → `8b2b08c`.
+
 ## 13/09/2026 — Wave S đổi sò + Rèn LIVE
 
 Owner gõ live. Squash [#92](https://github.com/bktimmy247/luc-than/pull/92) → `8ea8d09`.
