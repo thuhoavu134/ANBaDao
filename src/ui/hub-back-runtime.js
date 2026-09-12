@@ -7,7 +7,7 @@
   chip.id = 'hvHubBackChip';
   chip.setAttribute('data-hv-hub', '');
   chip.setAttribute('aria-label', 'Thành Chính');
-  chip.textContent = 'Thành Chính';
+  chip.textContent = '‹';
   document.body.append(chip);
 
   function overlayOpen() {
@@ -33,8 +33,14 @@
     const root = document.getElementById('hvLichRoot');
     return !!(root && !root.hidden && root.classList.contains('is-open'));
   }
+  function hallOwnBack() {
+    if (overlayOpen()) return false;
+    const b = document.body.classList;
+    return b.contains('expedition-3d-active') || b.contains('hunt-3d-active');
+  }
   function needed() {
     if (lichOpen()) return false;
+    if (hallOwnBack()) return false;
     return overlayOpen() || endOpen() || gearInner();
   }
   function sync() {

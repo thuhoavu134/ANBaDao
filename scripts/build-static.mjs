@@ -27,6 +27,7 @@ for (const entry of entries) {
 }
 
 await import('./luc-anh-runtime-patch.mjs');
+await import('./lanes/tkt-0088-skip.mjs');
 await import('./runtime-safety-hotfix.mjs');
 await import('./bgm-runtime-patch.mjs');
 await import('./ios-audio-unlock-patch.mjs');

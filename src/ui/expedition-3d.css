@@ -13,5 +13,15 @@
   content:"";position:absolute;inset:0;pointer-events:none;
   background:linear-gradient(180deg,rgba(255,248,230,.2),rgba(247,237,216,.08) 42%,rgba(255,255,255,0))!important;
 }
-#hvExpeditionRoot > *{position:relative;z-index:1}
+#hvExpeditionRoot .hv-exp-top{
+  position:sticky;top:0;z-index:8;pointer-events:auto;
+  padding-top:calc(10px + env(safe-area-inset-top))!important;
+}
+#hvExpeditionRoot .hv-exp-back{
+  pointer-events:auto!important;position:relative;z-index:9;
+  width:44px!important;height:44px!important;border:0!important;border-radius:50%!important;
+  background:linear-gradient(145deg,#fff7df,#f0c692)!important;color:#7a4a1f!important;
+  box-shadow:0 0 0 1px #d7b36a,0 2px 8px rgba(79,58,27,.28)!important;
+  font-size:28px!important;line-height:1!important;cursor:pointer;
+}
 body.expedition-3d-active .hv-brandbar,body.expedition-3d-active #resbar{display:none!important}

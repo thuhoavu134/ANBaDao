@@ -6,12 +6,14 @@
   const root = document.createElement('section');
   root.id = 'hvChatRoot';
   root.setAttribute('aria-label', 'Trò chuyện');
-  root.innerHTML = `<header class="hv-chat-top">
-    <button type="button" class="hv-chat-back" data-chat-close aria-label="Đóng">‹</button>
-    <b>Trò chuyện</b>
-    <span></span>
-  </header>
-  <div class="hv-chat-stage"></div>`;
+  root.innerHTML = `<div class="hv-chat-panel">
+    <header class="hv-chat-top">
+      <button type="button" class="hv-chat-back" data-chat-close aria-label="Đóng">‹</button>
+      <b>Trò chuyện</b>
+      <span></span>
+    </header>
+    <div class="hv-chat-stage"></div>
+  </div>`;
   root.querySelector('.hv-chat-stage').append(body);
   document.body.append(root);
 
@@ -29,5 +31,8 @@
   };
 
   root.querySelector('[data-chat-close]').addEventListener('click', () => navTo('hub'));
+  root.addEventListener('click', ev => {
+    if (ev.target === root) navTo('hub');
+  });
   syncOpen(typeof ST === 'object' ? ST.screen : '');
 })();

@@ -6,12 +6,14 @@
   const root = document.createElement('section');
   root.id = 'hvBagRoot';
   root.setAttribute('aria-label', 'Túi đồ');
-  root.innerHTML = `<header class="hv-bag-top">
-    <button type="button" class="hv-bag-back" data-bag-close aria-label="Đóng">‹</button>
-    <b>Túi đồ</b>
-    <span></span>
-  </header>
-  <div class="hv-bag-stage"></div>`;
+  root.innerHTML = `<div class="hv-bag-panel">
+    <header class="hv-bag-top">
+      <button type="button" class="hv-bag-back" data-bag-close aria-label="Đóng">‹</button>
+      <b>Túi đồ</b>
+      <span></span>
+    </header>
+    <div class="hv-bag-stage"></div>
+  </div>`;
   root.querySelector('.hv-bag-stage').append(body);
   document.body.append(root);
 
@@ -29,5 +31,8 @@
   };
 
   root.querySelector('[data-bag-close]').addEventListener('click', () => navTo('hub'));
+  root.addEventListener('click', ev => {
+    if (ev.target === root) navTo('hub');
+  });
   syncOpen(typeof ST === 'object' ? ST.screen : '');
 })();

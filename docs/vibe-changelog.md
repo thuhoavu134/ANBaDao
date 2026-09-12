@@ -1,3 +1,7 @@
+## 12/09/2026 — Wave L UX halls REVIEW
+
+TKT-0086…0091: Mộng Lộ ‹, Săn BGM+‹, skip trận, chat/túi khung dock, rèn 2 cột. Không merge tới live.
+
 ## 12/09/2026 — TKT-0085 mã quà mảnh tướng LIVE
 
 Owner gõ live. Squash [#73](https://github.com/bktimmy247/luc-than/pull/73) → `f5fcc4a`. Cầm tay: [docs/GIFT-CODES.md](https://github.com/bktimmy247/luc-than/blob/main/docs/GIFT-CODES.md).
