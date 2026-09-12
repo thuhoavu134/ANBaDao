@@ -129,6 +129,10 @@ await import('./lanes/tkt-0073-npc-busts.mjs');
 // Same-origin /api on this Vercel project. Keep AFTER safari. Do not edit index.html.
 await import('./lanes/tkt-0074-auth.mjs');
 
+// WAVE-K 2026-09-12 TKT-0083 hồ sơ avatar / giftcode / cài đặt.
+// Keep AFTER auth. Capture #hubScreen .art-avatar. Do not edit index.html.
+await import('./lanes/tkt-0083-profile.mjs');
+
 // The integrated battle is loaded from this embedded payload in production.
 // Keep it byte-identical to the patched battle.html; otherwise the visible
 // preview and the iframe can silently run different engines.

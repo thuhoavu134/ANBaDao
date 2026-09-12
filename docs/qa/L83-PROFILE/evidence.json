@@ -1,0 +1,7 @@
+{
+  "ticket": "TKT-0083",
+  "status": "REVIEW",
+  "tests": "gift-codes.test.mjs + profile-screen.test.mjs GREEN",
+  "safari": "NOT_RUN",
+  "notes": "Avatar hub opens #hvProfileRoot. Gift uses redeemCode + LUCTHAN/THANHCHINH. No index.html/battle/campaign-scene."
+}

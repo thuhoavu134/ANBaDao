@@ -1,3 +1,7 @@
+## 12/09/2026 — TKT-0083 hồ sơ avatar + mã quà REVIEW
+
+Bấm `.art-avatar` Thành Chính → `#hvProfileRoot`. Đổi tên, mã đổi (MONGGIOI/ONGHANGPHO + LUCTHAN/THANHCHINH), cài đặt, CSKH trong game, hình tượng 12 tướng live. Không merge tới live.
+
 ## 12/09/2026 — OAuth Google 404 + Facebook dòng đỏ LIVE
 
 Owner gõ live. Squash [#68](https://github.com/bktimmy247/luc-than/pull/68) → `b266d69`. Rewrite `/api/auth/*` · Facebook không `FB.login(async)`.
