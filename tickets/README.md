@@ -50,7 +50,7 @@ Board GitHub không có. File `tickets/TKT-00xx/ticket.md` là nguồn sự th�
 | TKT-0076 | J | Neon Postgres — user/save sống qua cold start | LIVE (#66) postgres trên thuhoavu |
 | TKT-0077 | J | OAuth Google/Facebook (bỏ Apple) | LIVE env thuhoavu |
 | TKT-0078 | J | Retrigger Vercel alias sau Hobby reset | SUPERSEDED — chơi thuhoavu |
-| TKT-0083 | K | Hồ sơ avatar + mã quà + cài đặt | REVIEW |
+| TKT-0083 | K | Hồ sơ avatar + mã quà + cài đặt | LIVE (#69) |
 
 
 

@@ -1,7 +1,7 @@
 ---
 id: TKT-0083
 title: Hồ sơ avatar — mã quà, đổi tên, cài đặt
-status: REVIEW
+status: LIVE
 phase: REVIEW
 priority: P1
 created: 2026-09-12T15:40:00.000Z

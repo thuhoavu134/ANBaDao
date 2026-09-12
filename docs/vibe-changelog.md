@@ -1,3 +1,7 @@
+## 12/09/2026 — TKT-0083 hồ sơ avatar LIVE
+
+Owner gõ live. Squash [#69](https://github.com/bktimmy247/luc-than/pull/69) → `7b85cea`. Bấm avatar Thành Chính → hồ sơ, mã quà, cài đặt.
+
 ## 12/09/2026 — TKT-0083 hồ sơ avatar + mã quà REVIEW
 
 Bấm `.art-avatar` Thành Chính → `#hvProfileRoot`. Đổi tên, mã đổi (MONGGIOI/ONGHANGPHO + LUCTHAN/THANHCHINH), cài đặt, CSKH trong game, hình tượng 12 tướng live. Không merge tới live.
