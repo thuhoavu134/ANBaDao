@@ -1,0 +1,42 @@
+#hvChallengeRoot{
+  --hall-ink:#2d251f;
+  --hall-gold:#d58a14;
+  position:fixed;inset:0;z-index:90;display:none;flex-direction:column;
+  overflow:auto;-webkit-overflow-scrolling:touch;touch-action:manipulation;
+  background:#d7eef5 url('assets/ui/challenge/challenge-hall.jpg') center top/cover no-repeat;
+  color:var(--hall-ink);font-family:inherit;box-sizing:border-box;
+  padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+  width:100vw;height:100vh;min-height:100vh;height:100dvh;min-height:-webkit-fill-available;
+}
+#hvChallengeRoot.is-open{display:flex}
+#hvChallengeRoot[hidden]{display:none!important}
+#hvChallengeRoot .hv-challenge-top{
+  flex:0 0 auto;display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:8px;
+  padding:8px 12px 6px;position:sticky;top:0;z-index:2;
+  background:linear-gradient(180deg,rgba(188,220,231,.96),rgba(247,237,216,.92));
+  border-bottom:1px solid #d7b883;box-shadow:0 2px 8px rgba(79,58,27,.14);
+}
+#hvChallengeRoot .hv-challenge-back{
+  width:44px;height:44px;border:0;border-radius:50%;
+  background:linear-gradient(145deg,#fff7df,#f0c692);color:#7a4a1f;
+  box-shadow:0 0 0 1px #d7b36a,0 2px 6px rgba(79,58,27,.2);font-size:22px;line-height:1;cursor:pointer;
+}
+#hvChallengeRoot .hv-challenge-top b{justify-self:center;font-size:16px;letter-spacing:.04em}
+#hvChallengeRoot .hv-challenge-stage{
+  flex:1 1 auto;min-height:420px;padding:10px 12px 28px;box-sizing:border-box;
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;align-content:start;
+}
+#hvChallengeRoot .hv-challenge-card{
+  background:rgba(255,249,233,.94);border:1px solid #d7b883;border-radius:16px;padding:12px 14px;
+  box-shadow:0 8px 18px rgba(79,58,27,.12);display:flex;flex-direction:column;gap:6px;
+}
+#hvChallengeRoot .hv-challenge-card b{font-size:15px}
+#hvChallengeRoot .hv-challenge-card small{color:#6d5a3a}
+#hvChallengeRoot .hv-challenge-card p{margin:0;font-size:12.5px;line-height:1.5;color:#3d342c}
+#hvChallengeRoot [data-challenge-fight]{
+  margin-top:6px;min-height:40px;border:0;border-radius:999px;cursor:pointer;
+  background:linear-gradient(145deg,#fff7df,#f0c692);color:#7a4a1f;font:800 14px/1 system-ui,sans-serif;
+  box-shadow:0 0 0 1px #d7b36a,0 2px 8px rgba(79,58,27,.18);
+}
+body.challenge-3d-active{filter:none}
+body.challenge-3d-active .hv-brandbar,body.challenge-3d-active #resbar{display:none!important}

@@ -1,3 +1,7 @@
+## 12/09/2026 — TKT-0069 Thử Thách hall giả 3D REVIEW
+
+Wrap startChallenge mở hall chọn ải, Xuất chiến mới iframe. Chrome 390×844 + 768×1024 PASS. Safari NOT_RUN. Không merge tới live.
+
 ## 12/09/2026 — TKT-0068 ấn UI Ông Phở · Lục Ảnh · Thầy Mo REVIEW
 
 9 medallion jpg exclusive, wrap renderHeroDetail. Chrome 390×844 + 768×1024 PASS. Safari NOT_RUN. Không merge tới live.

@@ -1,11 +1,11 @@
 ---
 id: TKT-0069
 title: Thử Thách overlay giả 3D từ Mộng Lộ
-status: READY
-phase: READY
+status: REVIEW
+phase: REVIEW
 priority: P2
 created: 2026-09-12T07:20:00.000Z
-updated: 2026-09-12T07:20:00.000Z
+updated: 2026-09-12T12:30:00.000Z
 acceptance_ids: ['L69-T1', 'L69-T2', 'L69-T3', 'L69-T4', 'L69-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths: ['src/ui/challenge-3d-runtime.js', 'src/ui/challenge-3d.css', 'scripts/challenge-3d-v1.mjs', 'scripts/lanes/tkt-0069-challenge.mjs', 'scripts/qa-challenge-3d.mjs', 'assets/ui/challenge/challenge-hall.jpg', 'tests/challenge-3d.test.mjs', 'docs/qa/L69-CHALLENGE-3D/']

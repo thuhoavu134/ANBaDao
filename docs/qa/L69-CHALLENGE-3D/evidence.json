@@ -1,0 +1,36 @@
+{
+  "summary": [
+    {
+      "label": "390x844",
+      "ok": true,
+      "info": {
+        "parent": true,
+        "position": "fixed",
+        "height": 844,
+        "bg": "url(\"http://127.0.0.1:18069/assets/ui/challenge/challenge-hall.jpg\")",
+        "cards": 6
+      },
+      "fight": {
+        "overlay": true
+      },
+      "appErrors": []
+    },
+    {
+      "label": "768x1024",
+      "ok": true,
+      "info": {
+        "parent": true,
+        "position": "fixed",
+        "height": 1024,
+        "bg": "url(\"http://127.0.0.1:18069/assets/ui/challenge/challenge-hall.jpg\")",
+        "cards": 6
+      },
+      "fight": {
+        "overlay": true
+      },
+      "appErrors": []
+    }
+  ],
+  "safari": "NOT_RUN",
+  "pass": true
+}
