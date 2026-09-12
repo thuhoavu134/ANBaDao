@@ -1,8 +1,8 @@
 ---
 id: TKT-0042
 title: Trò chuyện hall giả 3D overlay body
-status: READY
-phase: CONTRACT
+status: REVIEW
+phase: REFACTOR
 priority: P1
 created: 2026-09-12T02:35:00.000Z
 updated: 2026-09-12T02:35:00.000Z
@@ -60,3 +60,9 @@ Shared read-only: `index.html` `#chatBody` / `showScreen` / `navTo('chat')`.
 `src/ui/forge-hall-runtime.js` + `src/ui/hero-roster-runtime.js` (body overlay). Imagegen hall jpg; metadata trong `docs/qa/L32-*-HALL/`.
 
 Builder → REVIEW. Không tự MERGED/DONE.
+
+
+## Result
+
+- Overlay `#hvChatRoot` gắn body, hall `assets/ui/chat/chat-hall.jpg`.
+- Builder dừng REVIEW. Không merge tới khi owner gõ `live`.
