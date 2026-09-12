@@ -490,6 +490,75 @@ export function createApp(deps) {
       return ok({ ok: true });
     }
 
+    if (m === 'GET' && path === '/api/friends') {
+      if (!user) return fail(401, 'Chưa đăng nhập.');
+      const mine = await ensureProfile(user);
+      const names = Array.isArray(mine.friends) ? mine.friends : [];
+      const inboxNames = Array.isArray(mine.friendInbox) ? mine.friendInbox : [];
+      const all = await store.listProfiles();
+      const pick = name => {
+        const p = all.find(x => x.user === name);
+        return p ? { user: p.user, power: p.power | 0, rank: p.rank, chapter: p.chapter | 0 } : { user: name, power: 0, rank: 0, chapter: 0 };
+      };
+      const list = names.map(pick);
+      const inbox = inboxNames.map(pick);
+      const suggest = all
+        .filter(p => p.user !== user.user && !names.includes(p.user))
+        .sort((a, b) => (b.power || 0) - (a.power || 0))
+        .slice(0, 12)
+        .map(p => ({ user: p.user, power: p.power | 0, rank: p.rank, chapter: p.chapter | 0 }));
+      return ok({ list, inbox, suggest, cap: 100, me: user.user });
+    }
+
+    if (m === 'POST' && path === '/api/friends') {
+      if (!user) return fail(401, 'Chưa đăng nhập.');
+      const targetName = String(body.user || '').trim();
+      const action = String(body.action || 'add');
+      if (!targetName) return fail(400, 'Thiếu tên người chơi.');
+      const target = await store.findUserByName(targetName);
+      if (!target) return fail(404, 'Không tìm thấy người chơi.');
+      if (target.id === user.id) return fail(400, 'Không kết bạn với chính mình.');
+      const mine = await ensureProfile(user);
+      const theirs = await ensureProfile(target);
+      mine.friends = Array.isArray(mine.friends) ? mine.friends : [];
+      mine.friendInbox = Array.isArray(mine.friendInbox) ? mine.friendInbox : [];
+      theirs.friends = Array.isArray(theirs.friends) ? theirs.friends : [];
+      theirs.friendInbox = Array.isArray(theirs.friendInbox) ? theirs.friendInbox : [];
+      if (action === 'add') {
+        if (mine.friends.includes(target.user)) return ok({ ok: true, already: true });
+        if (mine.friendInbox.includes(target.user)) {
+          mine.friendInbox = mine.friendInbox.filter(x => x !== target.user);
+          if (!mine.friends.includes(target.user)) mine.friends.push(target.user);
+          if (!theirs.friends.includes(user.user)) theirs.friends.push(user.user);
+          theirs.friendInbox = theirs.friendInbox.filter(x => x !== user.user);
+        } else if (!theirs.friendInbox.includes(user.user) && !theirs.friends.includes(user.user)) {
+          theirs.friendInbox.push(user.user);
+        }
+        await store.putProfile(user.id, mine);
+        await store.putProfile(target.id, theirs);
+        return ok({ ok: true });
+      }
+      if (action === 'accept') {
+        mine.friendInbox = mine.friendInbox.filter(x => x !== target.user);
+        if (!mine.friends.includes(target.user)) mine.friends.push(target.user);
+        if (!theirs.friends.includes(user.user)) theirs.friends.push(user.user);
+        theirs.friendInbox = theirs.friendInbox.filter(x => x !== user.user);
+        await store.putProfile(user.id, mine);
+        await store.putProfile(target.id, theirs);
+        return ok({ ok: true });
+      }
+      if (action === 'remove') {
+        mine.friends = mine.friends.filter(x => x !== target.user);
+        mine.friendInbox = mine.friendInbox.filter(x => x !== target.user);
+        theirs.friends = theirs.friends.filter(x => x !== user.user);
+        theirs.friendInbox = theirs.friendInbox.filter(x => x !== user.user);
+        await store.putProfile(user.id, mine);
+        await store.putProfile(target.id, theirs);
+        return ok({ ok: true });
+      }
+      return fail(400, 'Thao tác lạ.');
+    }
+
     if (m === 'GET' && path === '/api/leaderboard') {
       if (!user) return fail(401, 'Chưa đăng nhập.');
       const by = String(query.by || 'power');

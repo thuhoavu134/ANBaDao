@@ -3,7 +3,7 @@
   --hall-gold:#d58a14;
   position:fixed;inset:0;z-index:80;display:none;flex-direction:column;
   overflow:auto;-webkit-overflow-scrolling:touch;touch-action:manipulation;
-  background:#f3e4c4 url('assets/ui/guild/guild-hall.jpg') center top/cover no-repeat;
+  background:#f3e4c4;
   color:var(--hall-ink);font-family:inherit;box-sizing:border-box;
   padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
 }
@@ -23,9 +23,9 @@
 #hvGuildRoot .hv-guild-stage{display:none}
 #hvGuildRoot #guildBody{display:none}
 #hvGuildRoot .hv-guild-hero{
-  margin:0 10px;padding:14px 12px 12px;border-radius:16px;
-  background:linear-gradient(180deg,rgba(90,24,24,.72),rgba(90,24,24,.45));
-  color:#fff4d4;text-align:center;
+  margin:0;padding:48px 12px 16px;border-radius:0;
+  background:linear-gradient(180deg,rgba(90,24,24,.35),rgba(243,228,196,.92)),url('assets/ui/guild/guild-hall.jpg') center/cover no-repeat;
+  color:#3a2414;text-align:center;
 }
 #hvGuildRoot .hv-guild-hero .nm{font-weight:900;font-size:18px;letter-spacing:.04em}
 #hvGuildRoot .hv-guild-hero .sub{font-size:11px;opacity:.9;margin-top:4px}

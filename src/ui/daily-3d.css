@@ -5,7 +5,7 @@
   --daily-mist:#8a6736;
   position:fixed;inset:0;z-index:80;display:none;flex-direction:column;
   overflow:auto;-webkit-overflow-scrolling:touch;touch-action:manipulation;
-  background:#d7eef5 url('assets/ui/daily/daily-hall.jpg') center top/cover no-repeat!important;
+  background:#f3e4c4!important;
   color:var(--daily-ink)!important;font-family:inherit;box-sizing:border-box;
   padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);min-height:0;height:auto;
 }
@@ -13,9 +13,13 @@
 #hvDailyRoot[hidden]{display:none!important}
 #hvDailyRoot:before{
   content:"";position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(180deg,rgba(255,248,230,.22),rgba(247,237,216,.08) 42%,rgba(255,255,255,0))!important;
+  background:none!important;
 }
 #hvDailyRoot > *{position:relative;z-index:1}
+#hvDailyRoot .hv-daily-hero{
+  background:url('assets/ui/daily/daily-hall.jpg') center/cover no-repeat!important;
+  min-height:120px;
+}
 #hvDailyRoot .hv-daily-top{
   background:linear-gradient(180deg,rgba(188,220,231,.96),rgba(247,237,216,.92));
   border-bottom:1px solid #d7b883;

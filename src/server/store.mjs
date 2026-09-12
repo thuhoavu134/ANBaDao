@@ -183,6 +183,8 @@ export async function createPostgresStore(databaseUrl, sqlImpl) {
     payload JSONB
   )`;
   await sql`ALTER TABLE hv_oauth_state ADD COLUMN IF NOT EXISTS payload JSONB`;
+  await sql`ALTER TABLE hv_profiles ADD COLUMN IF NOT EXISTS friends JSONB DEFAULT '[]'::jsonb`;
+  await sql`ALTER TABLE hv_profiles ADD COLUMN IF NOT EXISTS friend_inbox JSONB DEFAULT '[]'::jsonb`;
   await sql`CREATE TABLE IF NOT EXISTS hv_oauth_codes (
     code TEXT PRIMARY KEY,
     user_id TEXT NOT NULL,
@@ -233,14 +235,14 @@ export async function createPostgresStore(databaseUrl, sqlImpl) {
       const rows = await sql`SELECT p.*, u.username FROM hv_profiles p JOIN hv_users u ON u.id = p.user_id WHERE p.user_id = ${userId} LIMIT 1`;
       const row = rows[0];
       if (!row) return null;
-      return { user: row.username, power: row.power, towerBest: row.tower_best, chapter: row.chapter, squad: row.squad, rank: row.rank, userId };
+      return { user: row.username, power: row.power, towerBest: row.tower_best, chapter: row.chapter, squad: row.squad, rank: row.rank, friends: row.friends || [], friendInbox: row.friend_inbox || [], userId };
     },
     async putProfile(userId, profile) {
-      await sql`INSERT INTO hv_profiles (user_id, power, tower_best, chapter, squad, rank, updated_at)
-        VALUES (${userId}, ${profile.power || 0}, ${profile.towerBest || 0}, ${profile.chapter || 0}, ${JSON.stringify(profile.squad || [])}::jsonb, ${profile.rank || 1000}, ${Date.now()})
+      await sql`INSERT INTO hv_profiles (user_id, power, tower_best, chapter, squad, rank, friends, friend_inbox, updated_at)
+        VALUES (${userId}, ${profile.power || 0}, ${profile.towerBest || 0}, ${profile.chapter || 0}, ${JSON.stringify(profile.squad || [])}::jsonb, ${profile.rank || 1000}, ${JSON.stringify(profile.friends || [])}::jsonb, ${JSON.stringify(profile.friendInbox || [])}::jsonb, ${Date.now()})
         ON CONFLICT (user_id) DO UPDATE SET
           power = excluded.power, tower_best = excluded.tower_best, chapter = excluded.chapter,
-          squad = excluded.squad, rank = excluded.rank, updated_at = excluded.updated_at`;
+          squad = excluded.squad, rank = excluded.rank, friends = excluded.friends, friend_inbox = excluded.friend_inbox, updated_at = excluded.updated_at`;
     },
     async listProfiles() {
       const rows = await sql`SELECT p.*, u.username FROM hv_profiles p JOIN hv_users u ON u.id = p.user_id`;
@@ -251,7 +253,9 @@ export async function createPostgresStore(databaseUrl, sqlImpl) {
         towerBest: row.tower_best,
         chapter: row.chapter,
         squad: row.squad,
-        rank: row.rank
+        rank: row.rank,
+        friends: row.friends || [],
+        friendInbox: row.friend_inbox || []
       }));
     },
     async appendChat(msg) {
