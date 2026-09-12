@@ -12,6 +12,10 @@ Owner: rà soát chức năng còn thiếu, tách ticket **độc lập** để 
 
 **Wave E LIVE** 12/09: owner gõ `live`. Squash #50 → main `f43545e`.
 
+**Wave F REVIEW** 12/09: TKT-0056…0057 Hành trình + Kết quả trên nhánh `work/l46-wave-f-3d-20260912` PR [#51](https://github.com/bktimmy247/luc-than/pull/51). **Không** trộn vào Wave G.
+
+**Wave G coordinator REVIEW** 12/09: TKT-0058…0063 stub + ticket READY. Overlay/ấn chưa làm. Không merge tới `live`.
+
 
 
 
@@ -25,8 +29,10 @@ Owner: rà soát chức năng còn thiếu, tách ticket **độc lập** để 
 | Live | Chinh chiến AFK **hall giả 3D** /Bày trận/6v6 · Tướng overlay · Hồ sơ tướng overlay + 12 nền showcase · Trợ trận 11 nan · Lịch Luyện + **Nhật Ký Mơ hall giả 3D** · Tháp/Mộng Lộ/Chợ/Gọi/Đấu/Săn/Lễ **hall giả 3D** · Rèn · Túi/Thư/Việc/Bang/Bạn/Chat/Tộc/Kho · kit v2 12 tướng |
 | Wave D | **LIVE** TKT-0053 (#49) Hồ sơ tướng overlay body + 9 nền showcase |
 | Wave E | **LIVE** TKT-0054…0055 (#50) Nhật Ký Mơ + Chinh chiến AFK home giả 3D |
+| Wave F | **REVIEW** TKT-0056…0057 (#51) Hành trình + Kết quả — nhánh riêng, không trộn G |
+| Wave G | **READY** TKT-0058…0063 Cốt truyện / Online / Trận Hình + 9 ấn UI (3×3) |
 
-| Không mở ticket | Combat V2 / 42 S+ · 5 nan Lịch `go:null` · visual Bày trận · seed/banner/roster 12 · Auth/DB online · L02c reward (chờ owner) |
+| Không mở ticket | Combat V2 / 42 S+ · 5 nan Lịch `go:null` · visual Bày trận · seed/banner/roster 12 · Auth/DB online · L02c reward (chờ owner) · Hermes 27 · atlas skill trận |
 
 ---
 
@@ -110,6 +116,27 @@ Không sửa `hero-detail-tabs.js` / 3 PNG Ông Phở · Lục Ảnh · Thầy M
 
 Chỉ sửa file `*-3d.*` + hall jpg. **Không** sửa `daily-runtime.js` / `campaign-scene.js`. TKT-0055 **không** restyle `.cs-prepare`.
 
+## 3e. Wave F — REVIEW riêng (#51)
+
+Hành trình + Kết quả. **Không** nhận việc Wave F trên nhánh Wave G. Không sửa file `journey-3d` / `end-3d`.
+
+## 3f. Wave G — 3 hall + 3 lane ấn UI
+
+| Ticket | Màn | Stub | Khóa | Hub |
+|---|---|---|---|---|
+| [TKT-0058](../tickets/TKT-0058/ticket.md) | Cốt truyện VN | `tkt-0058-story.mjs` | `story-3d` | `showScreen('story')` / `startStory` |
+| [TKT-0059](../tickets/TKT-0059/ticket.md) | Trực Tuyến | `tkt-0059-net.mjs` | `net-3d` | Cạnh trái **Online** |
+| [TKT-0060](../tickets/TKT-0060/ticket.md) | Trận Hình legacy | `tkt-0060-team.mjs` | `team-3d` | `navTo('team')` — **không** Bày trận |
+| [TKT-0061](../tickets/TKT-0061/ticket.md) | Ấn UI 3 tướng A | `tkt-0061-skill-seals-a.mjs` | `skill-seals-a` | Hồ sơ `lac_yen` `cung_thu_tre` `co_dao_ganh_hoi` |
+| [TKT-0062](../tickets/TKT-0062/ticket.md) | Ấn UI 3 tướng B | `tkt-0062-skill-seals-b.mjs` | `skill-seals-b` | Hồ sơ `phong_tu` `thuy_nuong_roi_nuoc` `hong_lien_dao_nuong` |
+| [TKT-0063](../tickets/TKT-0063/ticket.md) | Ấn UI 3 tướng C | `tkt-0063-skill-seals-c.mjs` | `skill-seals-c` | Hồ sơ `thach_quyen` `dinh_loi` `to_diep` |
+
+Hall (0058–0060): chỉ sửa file `*-3d.*` + hall jpg. Overlay `#hv{Story,Net,Team}Root` lên `document.body`. Bắt buộc `body.{story,net,team}-3d-active{filter:none}` + `width:100vw;height:100vh;min-height:100vh` (lỗi height 100px Wave F). TKT-0059 **Auth OFF** — restyle, đóng băng `netOnline`/`api`. TKT-0060 **không** sửa `campaign-scene.js` / `.cs-prepare`.
+
+Seals (0061–0063): wrap `renderHeroDetail`, inject CSS riêng, thư mục `assets/ui/skill-seals/{id}/` exclusive. **Không** sửa `hero-detail-tabs.js` / `battle.html` / `index.html` / `campaign-scene.js`. Không viết combat `skill.json`.
+
+Ghép Wave F: origin/main kết thúc `tkt-0055-campaign.mjs`. F chèn 0056/0057; G chèn comment `WAVE-G 2026-09-12` + 0058…. Conflict ~2–4 dòng — giữ F rồi block G.
+
 ---
 
 ## 4. File đóng băng — mọi ticket
@@ -148,4 +175,5 @@ Không sửa (trừ khi ticket ghi rõ):
 | Online / Auth / `mong-gioi-server` | Auth/DB **OFF** |
 | L02c map thưởng chương | 6 đích chờ owner duyệt |
 | Device Safari | Nợ QA, không phải chức năng mới |
-| Local `sharp` 2 test fail | Có sẵn; CI có sharp |
+| Hermes 27 method | Archive user, chưa trên GitHub |
+| Atlas skill trận 9 tướng | Combat-adjacent; Wave G chỉ UI medallion |

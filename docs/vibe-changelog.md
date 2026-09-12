@@ -1,3 +1,7 @@
+## 12/09/2026 — Wave G TKT-0058…0063 coordinator READY
+
+Owner «tạo tkt chia agent». Stub `scripts/lanes/tkt-0058`…`0063` + ticket READY. 3 hall (Cốt truyện / Online / Trận Hình) + 9 ấn UI 3×3. Overlay chưa làm. Wave F #51 không trộn. Không merge tới `live`.
+
 ## 12/09/2026 — Wave E TKT-0054…0055 LIVE
 
 Owner gõ `live`. Squash [#50](https://github.com/bktimmy247/luc-than/pull/50) → main `f43545e`. Nhật Ký Mơ + Chinh chiến AFK home overlay body. Bày trận đóng băng.

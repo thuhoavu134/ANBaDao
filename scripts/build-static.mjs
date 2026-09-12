@@ -98,6 +98,14 @@ await import('./lanes/tkt-0052-festival.mjs');
 await import('./lanes/tkt-0053-hero-detail.mjs');
 await import('./lanes/tkt-0054-daily.mjs');
 await import('./lanes/tkt-0055-campaign.mjs');
+// WAVE-G 2026-09-12 TKT-0058…0063 — fill stubs; do not add imports.
+// If Wave F (0056/0057) lands first, keep this block AFTER tkt-0057-end.mjs.
+await import('./lanes/tkt-0058-story.mjs');
+await import('./lanes/tkt-0059-net.mjs');
+await import('./lanes/tkt-0060-team.mjs');
+await import('./lanes/tkt-0061-skill-seals-a.mjs');
+await import('./lanes/tkt-0062-skill-seals-b.mjs');
+await import('./lanes/tkt-0063-skill-seals-c.mjs');
 
 // The integrated battle is loaded from this embedded payload in production.
 // Keep it byte-identical to the patched battle.html; otherwise the visible
