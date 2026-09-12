@@ -1,3 +1,7 @@
+## 12/09/2026 — TKT-0080 LIVE cơ chế địch nhìn trái
+
+Owner gõ live. Squash [#65](https://github.com/bktimmy247/luc-than/pull/65) → `d92bff1`. `drawUnit` lật mọi thân `TEAM_ENEMY`. Safari NOT_RUN. Vercel luc-than hết quota (TKT-0078).
+
 ## 12/09/2026 — TKT-0080 cơ chế địch nhìn trái
 
 Owner: không riêng Ông Phở. `drawUnit` lật mọi thân `TEAM_ENEMY`. Drawer sheet không lật lần hai. VFX đạn giữ flip world-space. Không merge tới live.

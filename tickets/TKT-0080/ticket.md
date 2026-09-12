@@ -1,11 +1,11 @@
 ---
 id: TKT-0080
 title: Cơ chế địch bên phải nhìn trái — mọi tướng
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 created: 2026-09-12T12:15:00.000Z
-updated: 2026-09-12T12:22:00.000Z
+updated: 2026-09-12T12:30:00.000Z
 acceptance_ids: ['L80-T1', 'L80-T2', 'L80-T3', 'L80-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths: ['battle.html', 'scripts/luc-anh-runtime-patch.mjs', 'scripts/runtime-qa-polish-v2.mjs', 'scripts/luc-anh-spatial-pipeline-v1.mjs', 'scripts/luc-anh-retina-sharpness-patch.mjs', 'tests/ong-pho-enemy-flip.test.mjs', 'scripts/qa-ong-pho-enemy-flip.mjs', 'docs/qa/L80-ONG-PHO-FLIP/', 'tickets/TKT-0080/ticket.md']
@@ -33,7 +33,7 @@ Gỡ lật rời ở Ông Phở / Đinh Lôi / Lục Ảnh body / pose atlas / s
 
 ## Non-goals
 
-Không sửa `index.html` / `campaign-scene.js`. Không 72 tướng. Không merge tới `live`.
+Không sửa `index.html` / `campaign-scene.js`. Không 72 tướng.
 
 ## Acceptance
 
@@ -42,4 +42,4 @@ Không sửa `index.html` / `campaign-scene.js`. Không 72 tướng. Không merg
 - L80-T3: `isOngPho` nhận `sourceHeroId`
 - L80-P1: Chrome 390×844 Tháp — địch nhìn trái
 
-Builder → REVIEW. Không merge tới `live`.
+Builder → LIVE squash [#65](https://github.com/bktimmy247/luc-than/pull/65) `d92bff1`. Safari NOT_RUN. Vercel luc-than hết quota (TKT-0078).
