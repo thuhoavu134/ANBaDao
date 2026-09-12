@@ -181,6 +181,7 @@
       b.pending = null;
       b.lastType = '';
       b.stars = 1;
+      b.lastIdx = 0;
       persist?.();
       refreshResbar?.();
       questProgress?.('spin', 1);
@@ -190,6 +191,7 @@
     b.pending = { t: cell.t, stars, n: cell.n };
     b.stars = stars;
     b.lastType = cell.t;
+    b.lastIdx = idx;
     persist?.();
     refreshResbar?.();
     questProgress?.('spin', 1);
@@ -197,6 +199,7 @@
   }
 
   let spinning = false;
+  let pane = 'play';
   function light(i) {
     document.querySelectorAll('#hvBbrDesk [data-bbr-cell]').forEach(el => {
       el.classList.toggle('is-hot', Number(el.getAttribute('data-bbr-cell')) === i);
@@ -217,19 +220,29 @@
     const bet = st().bet || 2;
     if ((P.so || 0) < bet) { toast?.('Không đủ sò. Cược ' + bet + '.'); return; }
     spinning = true;
-    document.querySelectorAll('[data-bbr-step]').forEach(b => { b.disabled = true; });
-    const idx = pickIdx();
+    document.querySelectorAll('[data-bbr-step],[data-bbr-take],[data-bbr-convert],[data-bbr-pts]').forEach(el => { el.disabled = true; });
+    const ring = document.querySelector('#hvBbrDesk .hv-bbr-ring');
+    ring?.classList.add('is-run');
+    const dest = pickIdx();
     const n = BOARD.length;
+    const b0 = st();
+    const continuing = !!b0.pending;
+    const start = continuing ? Math.max(0, asInt(b0.lastIdx, 0)) : 0;
     const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const total = reduced ? Math.max(8, idx + 1) : (n * 2 + idx + 1);
-    for (let k = 0; k < total; k++) {
-      light(k % n);
-      await delay(reduced ? 70 : spinDelay(k, total));
+    let dist = (dest - start + n) % n;
+    if (dist === 0) dist = n;
+    const total = reduced ? dist : ((continuing ? 1 : 2) * n + dist);
+    for (let k = 1; k <= total; k++) {
+      light((start + k) % n);
+      await delay(reduced ? 70 : spinDelay(k - 1, total));
     }
-    light(idx);
-    const r = applyIdx(idx);
+    light(dest);
+    const r = applyIdx(dest);
+    if (r && r.bust) st().lastIdx = 0;
+    else st().lastIdx = dest;
     await delay(280);
     spinning = false;
+    ring?.classList.remove('is-run');
     if (r) {
       toast?.(r.bust
         ? 'Trượt cùng loại. Mất sò lượt này.'
@@ -240,11 +253,17 @@
     paintDesk();
   }
 
+  function asInt(v, f) {
+    const n = Math.floor(Number(v));
+    return Number.isFinite(n) ? n : f;
+  }
+
   function doStep() {
     return applyIdx(pickIdx());
   }
 
   function doTake() {
+    if (spinning) { toast?.('Đang quay.'); return null; }
     const b = st();
     if (!b.pending) { toast?.('Quay rồi hãy nhận.'); return null; }
     const { t, stars } = b.pending;
@@ -255,7 +274,7 @@
       P.gold += jack;
       b.pool = Math.max(0, b.pool - jack);
     }
-    if (stars >= 3) b.pts = (b.pts || 0) + Math.max(1, pay('so', stars, b.bet || 2));
+    if (stars >= 1) b.pts = (b.pts || 0) + Math.max(1, pay('so', stars, b.bet || 2));
     const msg = stars + '★ ' + (LAB[t] || t) + ' · +' + n;
     b.history = b.history || [];
     b.history.unshift({ kind: 'take', label: msg, t: Date.now() });
@@ -263,6 +282,7 @@
     persist?.();
     refreshResbar?.();
     toast?.('🎡 ' + msg);
+    b.lastIdx = 0;
     return { msg, t, stars, n };
   }
 
@@ -272,18 +292,34 @@
   }
 
   function doConvert() {
+    if (spinning) { toast?.('Đang quay.'); return null; }
     const b = st();
     if (!b.pending) { toast?.('Quay rồi hãy đổi.'); return null; }
     const { t, stars } = b.pending;
     const n = convertQty(t, stars, b.bet || 2);
     P.so = (P.so || 0) + n;
     b.pending = null;
+    b.lastIdx = 0;
     b.history = b.history || [];
     b.history.unshift({ kind: 'convert', label: stars + '★ → sò ' + n, t: Date.now() });
     persist?.();
     refreshResbar?.();
     toast?.('🐚 +' + n + ' sò');
     return { n, t, stars };
+  }
+
+  function doScore() {
+    if (spinning) { toast?.('Đang quay.'); return null; }
+    const b = st();
+    if (!b.pending) { toast?.('Quay rồi hãy nhận điểm.'); return null; }
+    const { stars } = b.pending;
+    const n = Math.max(1, pay('so', stars, b.bet || 2) * 2);
+    b.pts = (b.pts || 0) + n;
+    b.pending = null;
+    b.lastIdx = 0;
+    persist?.();
+    toast?.('+' + n + ' điểm shop');
+    return { n, stars };
   }
 
   window.hvCraftSo = function hvCraftSo() {
@@ -373,8 +409,7 @@
     shell.innerHTML = `<div id="hvBbrDesk" class="hv-bbr-kt">
       <div class="hv-bbr-kt-head">
         <h3>Bách Bảo Rương</h3>
-        <div class="hv-bbr-row"><b>${SO_IC} ${P.so || 0}</b><span>Hũ ${b.pool}</span><span>Pity ${Math.min(200, (b.spent || 0) - (b.pityAt || 0))}/200</span><span>Điểm ${b.pts || 0}</span>
-          <span>🎁 ${b.chests || 0}</span><span>👑 ${b.supreme || 0}</span></div>
+        <div class="hv-bbr-row"><b>${SO_IC} ${P.so || 0}</b><span>Hũ ${b.pool}</span><span>Pity ${Math.min(200, (b.spent || 0) - (b.pityAt || 0))}/200</span></div>
       </div>
       <div class="hv-bbr-kt-body">
         <div class="hv-bbr-ring" data-bbr-grid>
@@ -392,19 +427,33 @@
           </div>
         </div>
         <div class="hv-bbr-side">
-          <div class="hv-bbr-bets">${BETS.map(n =>
-            `<button type="button" class="hv-bbr-bet${bet === n ? ' is-on' : ''}" data-bbr-bet="${n}">${n} ${SO_IC}</button>`
-          ).join('')}</div>
-          <p class="hv-bbr-now">${pend ? (pend.stars + '★ ' + LAB[pend.t] + ' · Tiếp cùng loại. Trượt = mất sò + mất thưởng') : 'Quay. Tiếp cùng loại cộng sao. Trượt thì mất sò.'}</p>
-          <div class="hv-bbr-actions">
-            <button type="button" data-bbr-step ${((P.so || 0) < bet) ? 'disabled' : ''}>${pend ? 'Tiếp' : 'Quay'} · ${bet} ${SO_IC}</button>
-            <button type="button" data-bbr-take ${pend ? '' : 'disabled'}>Thưởng</button>
-            <button type="button" data-bbr-convert ${pend ? '' : 'disabled'}>Đổi sò</button>
+          <div class="hv-bbr-tabs">
+            <button type="button" data-bbr-pane="play" class="${pane === 'play' ? 'is-on' : ''}">Quay</button>
+            <button type="button" data-bbr-pane="shop" class="${pane === 'shop' ? 'is-on' : ''}">Shop điểm</button>
           </div>
-          <div class="hv-bbr-shop">${SHOP.map(it =>
-            `<button type="button" data-bbr-buy="${it.id}">${it.name} · ${it.pts}đ</button>`
-          ).join('')}</div>
-          <p class="hv-bbr-note">Tiếp trúng cùng loại thì cộng sao. Trượt thì mất sò, mất thưởng, cược lại.</p>
+          ${pane === 'shop' ? `
+            <p class="hv-bbr-pts">Điểm ${b.pts || 0} · 🎁 ${b.chests || 0} · 👑 ${b.supreme || 0}</p>
+            <p class="hv-bbr-now">Điểm lấy từ <b>Nhận điểm</b> (đổi thưởng thành điểm) hoặc khi bấm <b>Thưởng</b>. Đổi mảnh / rương / ngọc tại đây.</p>
+            <div class="hv-bbr-shop">${SHOP.map(it =>
+              `<button type="button" data-bbr-buy="${it.id}">${it.name} · ${it.pts}đ</button>`
+            ).join('')}</div>
+            ${(b.chests || 0) > 0 ? '<button type="button" data-bbr-open="chest">Mở Rương Báu</button>' : ''}
+            ${(b.supreme || 0) > 0 ? '<button type="button" data-bbr-open="supreme">Mở Chí Bảo</button>' : ''}
+          ` : `
+            <div class="hv-bbr-bets">${BETS.map(n =>
+              `<button type="button" class="hv-bbr-bet${bet === n ? ' is-on' : ''}" data-bbr-bet="${n}">${n} ${SO_IC}</button>`
+            ).join('')}</div>
+            <p class="hv-bbr-now">${pend ? (pend.stars + '★ ' + LAB[pend.t]) : 'Cược rồi Quay. Tiếp cùng loại cộng sao.'}</p>
+            <div class="hv-bbr-mid">
+              <button type="button" data-bbr-pts ${pend ? '' : 'disabled'}>Nhận điểm</button>
+              <button type="button" data-bbr-pane="shop">Shop điểm</button>
+            </div>
+            <button type="button" class="hv-bbr-go" data-bbr-step ${((P.so || 0) < bet) ? 'disabled' : ''}>${pend ? 'Tiếp' : 'Quay'} · ${bet} ${SO_IC}</button>
+            <div class="hv-bbr-sub">
+              <button type="button" data-bbr-take ${pend ? '' : 'disabled'}>Thưởng</button>
+              <button type="button" data-bbr-convert ${pend ? '' : 'disabled'}>Đổi sò</button>
+            </div>
+          `}
         </div>
       </div>
     </div>`;
@@ -420,6 +469,10 @@
   }
 
   function onDesk(ev) {
+    if (spinning && ev.target.closest('[data-bbr-take],[data-bbr-convert],[data-bbr-pts],[data-bbr-buy]')) {
+      toast?.('Đang quay — chưa nhận được.');
+      return;
+    }
     const bet = ev.target.closest('[data-bbr-bet]');
     if (bet) {
       st().bet = Number(bet.getAttribute('data-bbr-bet')) || 2;
@@ -438,6 +491,25 @@
     }
     if (ev.target.closest('[data-bbr-convert]')) {
       doConvert();
+      paintDesk();
+      return;
+    }
+    if (ev.target.closest('[data-bbr-pts]')) {
+      doScore();
+      paintDesk();
+      return;
+    }
+    const tabBtn = ev.target.closest('[data-bbr-pane]');
+    if (tabBtn) {
+      pane = tabBtn.getAttribute('data-bbr-pane') === 'shop' ? 'shop' : 'play';
+      paintDesk();
+      return;
+    }
+    const open = ev.target.closest('[data-bbr-open]');
+    if (open) {
+      const kind = open.getAttribute('data-bbr-open');
+      if (kind === 'supreme') openSupreme();
+      else if (typeof openBachBaoChest === 'function') openBachBaoChest('chest');
       paintDesk();
       return;
     }

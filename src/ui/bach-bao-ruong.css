@@ -6,8 +6,17 @@
 .hv-bbr-cell{position:relative;min-height:44px;padding:2px;border:1px solid #2a6a7a;border-radius:8px;background:#1e4a5c;color:#f3e4c4;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:9px;overflow:hidden;transition:box-shadow .08s,background .08s,transform .08s}
 .hv-bbr-cell.is-sup{background:#3a2a10;box-shadow:inset 0 0 0 2px #e2b45a}
 .hv-bbr-cell.is-chest{background:#2a2218}
-.hv-bbr-cell.is-hot{background:#fff6d0;box-shadow:0 0 28px 10px #fff,inset 0 0 16px #fff;border-color:#fff;transform:scale(1.1);z-index:4}
-.hv-bbr-cell.is-hot:after{content:"";position:absolute;inset:-30% -50%;background:linear-gradient(115deg,transparent 22%,#fff 50%,transparent 78%);animation:bbrSweep .28s linear}
+.hv-bbr-ring.is-run .hv-bbr-cell:not(.is-hot){filter:brightness(.55);opacity:.7}
+.hv-bbr-cell.is-hot{
+  background:#fff!important;border:2px solid #fff!important;
+  box-shadow:0 0 0 3px #ffe566,0 0 24px 8px #fff,0 0 48px 18px #ffcc33;
+  transform:scale(1.16);z-index:8;filter:brightness(1.4)
+}
+.hv-bbr-cell.is-hot:after{
+  content:"";position:absolute;inset:-40% -60%;
+  background:linear-gradient(105deg,transparent 10%,#fff 42%,#ffe566 50%,#fff 58%,transparent 90%);
+  animation:bbrSweep .16s linear
+}
 @keyframes bbrSweep{from{transform:translateX(-40%)}to{transform:translateX(40%)}}
 .hv-bbr-cell.is-win{box-shadow:0 0 16px #e2b45a;border-color:#c09028}
 .hv-bbr-stack{position:relative;width:32px;height:32px;display:block}
@@ -20,14 +29,21 @@
 .hv-bbr-stack.n3 img:nth-child(3){left:10px;top:0;z-index:3}
 .hv-bbr-hub{grid-column:2/7;grid-row:2/6;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 20%,#fffdf6,#f3e4c4);border:1px solid #d7b36a;border-radius:10px;padding:6px;min-height:0}
 .hv-bbr-hub-chest{width:48px;height:48px;object-fit:contain;background:transparent;border-radius:8px}
-.hv-bbr-side{flex:1 1 150px;background:#fff8e8;color:#3a2414;border-radius:10px;padding:8px}
-.hv-bbr-actions{display:flex;gap:6px;margin:6px 0}
-.hv-bbr-actions button{flex:1;min-height:40px;font-weight:800}
+.hv-bbr-side{flex:1 1 150px;background:#5a3a22;color:#fff4d4;border-radius:10px;padding:10px}
+.hv-bbr-tabs,.hv-bbr-mid,.hv-bbr-sub,.hv-bbr-bets{display:flex;gap:6px;margin:6px 0}
+.hv-bbr-tabs button,.hv-bbr-mid button,.hv-bbr-sub button{flex:1;min-height:40px;font-weight:800}
+.hv-bbr-go{
+  width:100%;min-height:56px;margin:8px 0;border:0;border-radius:12px;cursor:pointer;
+  background:linear-gradient(180deg,#f0d48a,#c09028);color:#2a1608;font:900 18px/1 inherit;
+  box-shadow:0 4px 0 #7a5a18,0 0 0 1px #e2b45a;
+}
+.hv-bbr-go:disabled{opacity:.45}
+.hv-bbr-pts{margin:6px 0;font-weight:800}
+.hv-bbr-shop{display:flex;flex-direction:column;gap:6px;margin:6px 0}
 #hvBbrDesk .hv-bbr-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:4px 0;font-size:12px;color:#3a2414}
-#hvBbrDesk .hv-bbr-bets,#hvBbrDesk .hv-bbr-shop{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
-#hvBbrDesk button{min-height:32px;padding:4px 10px;border:0;border-radius:8px;background:#fff8e8;color:#3a2414;font:700 11px/1 inherit;cursor:pointer;box-shadow:0 0 0 1px #d7b36a}
-#hvBbrDesk .hv-bbr-bet.is-on{background:linear-gradient(180deg,#e2b45a,#c09028);color:#2a1608}
-#hvBbrDesk .hv-bbr-note,#hvBbrDesk .hv-bbr-now{margin:4px 0;font-size:11px;color:#6a4a28}
+#hvBbrDesk button{min-height:36px;padding:6px 10px;border:0;border-radius:8px;background:#fff8e8;color:#3a2414;font:700 12px/1 inherit;cursor:pointer;box-shadow:0 0 0 1px #d7b36a}
+#hvBbrDesk .hv-bbr-tabs button.is-on,#hvBbrDesk .hv-bbr-bet.is-on{background:linear-gradient(180deg,#e2b45a,#c09028);color:#2a1608}
+#hvBbrDesk .hv-bbr-now{margin:4px 0;font-size:12px;color:#f3e4c4;line-height:1.35}
 .hv-bbr-hub .hv-bbr-stars{margin:4px 0 0;padding:4px 6px;list-style:none;width:100%;background:#fff8e8cc;border-radius:6px}
 .hv-bbr-hub .hv-bbr-star{font-size:10px;line-height:1.4;color:#6a4a28;text-align:center}
 .hv-bbr-hub .hv-bbr-star.is-on{background:#e2b45a;color:#2a1608;font-weight:800;border-radius:4px}

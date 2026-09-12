@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 import {
   BBR_BETS, BBR_CRAFT, BBR_UNLOCK, BBR_BOARD, BBR_SO_CONVERT, BBR_WEIGHT, BBR_BUCKET, BBR_PITY_SO,
   spinBbr, spinStep, takeBbr,
-  convertBbr, craftShells, buyBbrShop, rollStars, payAt, pickBoardIdx
+  convertBbr, scoreBbr, craftShells, buyBbrShop, rollStars, payAt, pickBoardIdx
 } from '../src/domain/festival/bach-bao-ruong.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -84,7 +84,15 @@ test('L109: cược 2/10/50, sao nhân, chế sò Tinh/Hoạt, shop điểm', ()
   assert.equal(conv.ok, true);
   assert.equal(conv.so, BBR_SO_CONVERT.gold[3]);
   assert.equal(BBR_BOARD[3].t, 'supreme');
-  assert.match(ui, /pickIdx/);
+  assert.match(ui, /lastIdx/);
+  assert.match(ui, /is-run/);
+  assert.match(ui, /Đang quay/);
+  assert.match(ui, /data-bbr-pane/);
+  assert.match(ui, /data-bbr-pts/);
+  assert.match(ui, /scoreBbr|doScore/);
+  const scored = scoreBbr({ so: 0, bachBao: { pending: { t: 'gold', stars: 3 }, bet: 2 } }, { day: 1 });
+  assert.equal(scored.ok, true);
+  assert.ok(scored.pts >= 1);
   assert.match(ui, /bust/);
   assert.match(ui, /gold\.png/);
   assert.match(ui, /supreme\.png/);

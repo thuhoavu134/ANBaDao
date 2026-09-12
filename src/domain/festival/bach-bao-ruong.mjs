@@ -39,7 +39,7 @@ export function emptyBbr() {
   return {
     bet: 2, lastType: '', streak: 0, stars: 1, pts: 0, crafted: 0, craftDay: -1,
     pool: 12000, spins: 0, chests: 0, supreme: 0, opened: 0, history: [], pending: null,
-    spent: 0, pityAt: 0, poolMark: 2
+    spent: 0, pityAt: 0, poolMark: 2, lastIdx: 0
   };
 }
 
@@ -292,7 +292,7 @@ export function takeBbr(player, { day } = {}) {
     gold += jack;
     bbr.pool = Math.max(0, bbr.pool - jack);
   }
-  if (stars >= 3) bbr.pts += Math.max(1, payAt('so', stars, stake));
+  if (stars >= 1) bbr.pts += Math.max(1, payAt('so', stars, stake));
   const label = stars + '★ ' + type + ' · +' + qty;
   bbr.history.unshift({ kind: 'take', label, t: Date.now() });
   if (bbr.history.length > 12) bbr.history.length = 12;
@@ -321,6 +321,19 @@ export function convertBbr(player, { day } = {}) {
     bachBao: bbr,
     msg: 'Đổi ' + qty + ' sò'
   };
+}
+
+export function scoreBbr(player, { day } = {}) {
+  const bbr = normalizeBbr(player?.bachBao, day);
+  if (!bbr.pending) return fail('NO_PENDING', 'Chưa có lượt để nhận điểm.');
+  const stars = Math.max(1, Math.min(6, asInt(bbr.pending.stars, 1)));
+  const stake = bbr.bet || 2;
+  const qty = Math.max(1, payAt('so', stars, stake) * 2);
+  bbr.pts += qty;
+  bbr.history.unshift({ kind: 'pts', label: stars + '★ → ' + qty + ' điểm', t: Date.now() });
+  if (bbr.history.length > 12) bbr.history.length = 12;
+  bbr.pending = null;
+  return { ok: true, qty, stars, stake, pts: bbr.pts, bachBao: bbr, msg: '+' + qty + ' điểm' };
 }
 
 export function craftShells(player, { day } = {}) {
@@ -386,7 +399,7 @@ export function spinBbr(player, { bet, rng, day, slots } = {}) {
     gold += jack;
     bbr.pool = Math.max(0, bbr.pool - jack);
   }
-  if (stars >= 3) bbr.pts += Math.max(1, payAt('so', stars, stake));
+  if (stars >= 1) bbr.pts += Math.max(1, payAt('so', stars, stake));
   const label = stars + '★ ' + (slot.l || type) + ' ×' + betMult(stake);
   bbr.history.unshift({ kind: 'spin', label, t: Date.now() });
   if (bbr.history.length > 12) bbr.history.length = 12;
