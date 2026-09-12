@@ -3,15 +3,19 @@
   --hall-gold:#d58a14;
   position:fixed;inset:0;z-index:80;display:none;flex-direction:column;
   overflow:auto;-webkit-overflow-scrolling:touch;touch-action:manipulation;
-  background:#d7eef5 url('assets/ui/shop/shop-hall.jpg') center top/cover no-repeat!important;
+  background:#f3e4c4!important;
   color:var(--hall-ink)!important;font-family:inherit;box-sizing:border-box;
   padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);min-height:0;height:auto;
 }
 #hvShopRoot.is-open{display:flex}
 #hvShopRoot[hidden]{display:none!important}
-#hvShopRoot:before{
-  content:"";position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(180deg,rgba(255,248,230,.2),rgba(247,237,216,.08) 42%,rgba(255,255,255,0))!important;
+#hvShopRoot:before{content:none!important;background:none!important}
+#hvShopRoot .hv-shop-hero{
+  background:url('assets/ui/shop/shop-hall.jpg') center/cover no-repeat!important;
+  min-height:140px;
 }
-#hvShopRoot > *{position:relative;z-index:1}
+#hvShopRoot .hv-shop-panel,#hvShopRoot .hv-shop-card{
+  background:#fff8e8!important;color:#3a2414!important;box-shadow:0 0 0 1px #e2c48a!important;
+}
+#hvShopRoot .hv-shop-copy,#hvShopRoot .hv-shop-kicker,#hvShopRoot .hv-shop-title,#hvShopRoot .hv-shop-best{color:#3a2414!important;text-shadow:none!important}
 body.shop-3d-active .hv-brandbar,body.shop-3d-active #resbar{display:none!important}

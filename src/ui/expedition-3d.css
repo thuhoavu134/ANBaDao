@@ -3,16 +3,21 @@
   --hall-gold:#d58a14;
   position:fixed;inset:0;z-index:80;display:none;flex-direction:column;
   overflow:auto;-webkit-overflow-scrolling:touch;touch-action:manipulation;
-  background:#d7eef5 url('assets/ui/expedition/expedition-hall.jpg') center top/cover no-repeat!important;
+  background:#f3e4c4!important;
   color:var(--hall-ink)!important;font-family:inherit;box-sizing:border-box;
   padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);min-height:0;height:auto;
 }
 #hvExpeditionRoot.is-open{display:flex}
 #hvExpeditionRoot[hidden]{display:none!important}
-#hvExpeditionRoot:before{
-  content:"";position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(180deg,rgba(255,248,230,.2),rgba(247,237,216,.08) 42%,rgba(255,255,255,0))!important;
+#hvExpeditionRoot:before{content:none!important;background:none!important}
+#hvExpeditionRoot .hv-exp-hero{
+  background:url('assets/ui/expedition/expedition-hall.jpg') center/cover no-repeat!important;
+  min-height:140px;
 }
+#hvExpeditionRoot .hv-exp-panel,#hvExpeditionRoot .hv-exp-route,#hvExpeditionRoot .hv-exp-node{
+  background:#fff8e8!important;color:#3a2414!important;box-shadow:0 0 0 1px #e2c48a!important;
+}
+#hvExpeditionRoot .hv-exp-copy,#hvExpeditionRoot .hv-exp-kicker,#hvExpeditionRoot .hv-exp-title,#hvExpeditionRoot .hv-exp-best{color:#3a2414!important;text-shadow:none!important}
 #hvExpeditionRoot .hv-exp-top{
   position:sticky;top:0;z-index:8;pointer-events:auto;
   padding-top:calc(10px + env(safe-area-inset-top))!important;

@@ -3,15 +3,19 @@
   --hall-gold:#d58a14;
   position:fixed;inset:0;z-index:80;display:none;flex-direction:column;
   overflow:auto;-webkit-overflow-scrolling:touch;touch-action:manipulation;
-  background:#d7eef5 url('assets/ui/tower/tower-hall.jpg') center top/cover no-repeat!important;
+  background:#f3e4c4!important;
   color:var(--hall-ink)!important;font-family:inherit;box-sizing:border-box;
   padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);min-height:0;height:auto;
 }
 #hvTowerRoot.is-open{display:flex}
 #hvTowerRoot[hidden]{display:none!important}
-#hvTowerRoot:before{
-  content:"";position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(180deg,rgba(255,248,230,.2),rgba(247,237,216,.08) 42%,rgba(255,255,255,0))!important;
+#hvTowerRoot:before{content:none!important;background:none!important}
+#hvTowerRoot .hv-tower-hero{
+  background:url('assets/ui/tower/tower-hall.jpg') center/cover no-repeat!important;
+  min-height:140px;
 }
-#hvTowerRoot > *{position:relative;z-index:1}
+#hvTowerRoot .hv-tower-panel,#hvTowerRoot .hv-tower-trial,#hvTowerRoot .hv-tower-team,#hvTowerRoot .hv-tower-mark,#hvTowerRoot .hv-tower-power{
+  background:#fff8e8!important;color:#3a2414!important;box-shadow:0 0 0 1px #e2c48a!important;
+}
+#hvTowerRoot .hv-tower-copy,#hvTowerRoot .hv-tower-kicker,#hvTowerRoot .hv-tower-title,#hvTowerRoot .hv-tower-best{color:#3a2414!important;text-shadow:none!important}
 body.tower-3d-active .hv-brandbar,body.tower-3d-active #resbar{display:none!important}

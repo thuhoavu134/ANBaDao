@@ -1,3 +1,7 @@
+## 13/09/2026 — Wave Q kem hall REVIEW
+
+Tháp, Chợ, Gọi Mộng, Săn, Mộng Lộ, Giao việc, Hòm thư: kem + ảnh dải trên.
+
 ## 13/09/2026 — Wave P bạn bè thật + nền kem LIVE
 
 Owner gõ live. Squash [#78](https://github.com/bktimmy247/luc-than/pull/78) → `f24a2df`. TKT-0101…0102.

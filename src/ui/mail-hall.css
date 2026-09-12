@@ -3,17 +3,17 @@
   --hall-gold:#d58a14;
   position:fixed;inset:0;z-index:80;display:none;flex-direction:column;
   overflow:auto;-webkit-overflow-scrolling:touch;touch-action:manipulation;
-  background:#d7eef5 url('assets/ui/mail/mail-hall.jpg') center top/cover no-repeat;
+  background:#f3e4c4;
   color:var(--hall-ink);font-family:inherit;box-sizing:border-box;
   padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
 }
 #hvMailRoot.is-open{display:flex}
 #hvMailRoot[hidden]{display:none!important}
 #hvMailRoot .hv-mail-top{
-  flex:0 0 auto;display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:8px;
-  padding:8px 12px 6px;position:sticky;top:0;z-index:2;
-  background:linear-gradient(180deg,rgba(188,220,231,.96),rgba(247,237,216,.92));
-  border-bottom:1px solid #d7b883;box-shadow:0 2px 8px rgba(79,58,27,.14);
+  flex:0 0 auto;display:grid;grid-template-columns:44px 1fr auto;align-items:end;gap:8px;
+  padding:72px 12px 12px;position:sticky;top:0;z-index:2;
+  background:#5c3a22 url('assets/ui/mail/mail-hall.jpg') center/cover no-repeat;
+  color:#fff4d4;
 }
 #hvMailRoot .hv-mail-back{
   width:44px;height:44px;border:0;border-radius:50%;
