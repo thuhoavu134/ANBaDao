@@ -76,7 +76,8 @@ Board GitHub không có. File `tickets/TKT-00xx/ticket.md` là nguồn sự th�
 | TKT-0106 | R | Đấu Trường ‹ khớp header | LIVE (#82) |
 | TKT-0107 | R | Hub pill Chợ/Đấu/Gọi/Tháp | LIVE (#83) |
 | TKT-0108 | S | Cốt truyện Lục Thần · sáu ấn | LIVE (#84) |
-| TKT-0110 | S | Luân cược sao + Chí Bảo hiếm | REVIEW |
+| TKT-0110 | S | Luân cược sao + Chí Bảo hiếm | LIVE (#86) |
+| TKT-0111 | S | Kinh tế Tinh/Hoạt + B/A/S/S+ | REVIEW |
 
 Cách tạo gift code (owner): [docs/GIFT-CODES.md](../docs/GIFT-CODES.md)
 

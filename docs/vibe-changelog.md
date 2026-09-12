@@ -1,3 +1,11 @@
+## 13/09/2026 — Wave S kinh tế REVIEW
+
+Tinh/Hoạt nhỏ giọt daily/job/chương. Nhãn B/A/S/S+. Bible `docs/economy-bible.md`.
+
+## 13/09/2026 — Wave S BBR quay đúng LIVE
+
+Owner gõ live. Squash [#86](https://github.com/bktimmy247/luc-than/pull/86) → `c3eccfd`. TKT-0110. Icon sò, mảnh B/A/S/S+, Chí Bảo hiếm.
+
 ## 13/09/2026 — Wave S BBR quay đúng REVIEW
 
 Chặn QUAY 1🐚. Sao 1–6. Chí Bảo hiếm + pity 8.

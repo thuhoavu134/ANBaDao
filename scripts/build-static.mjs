@@ -140,6 +140,9 @@ await import('./lanes/tkt-0108-lore.mjs');
 // WAVE-S 2026-09-13 TKT-0109 Bách Bảo Rương Kiếm Thế. Keep AFTER lore.
 await import('./lanes/tkt-0109-bbr.mjs');
 
+// WAVE-S 2026-09-13 TKT-0111 economy drip Tinh/Hoạt + nhãn B/A/S/S+.
+await import('./lanes/tkt-0111-econ.mjs');
+
 // The integrated battle is loaded from this embedded payload in production.
 // Keep it byte-identical to the patched battle.html; otherwise the visible
 // preview and the iframe can silently run different engines.
