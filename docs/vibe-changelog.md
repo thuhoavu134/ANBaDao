@@ -1,3 +1,7 @@
+## 13/09/2026 — Wave R hub pill + arena ‹ LIVE
+
+Owner gõ live. Squash [#82](https://github.com/bktimmy247/luc-than/pull/82) → `07b3b33`, [#83](https://github.com/bktimmy247/luc-than/pull/83) → `caae6a8`. TKT-0106, TKT-0107.
+
 ## 13/09/2026 — Wave R hub pill REVIEW
 
 Owner gõ live. Squash [#81](https://github.com/bktimmy247/luc-than/pull/81) → `c9a52b3`. TKT-0105.
