@@ -1,3 +1,7 @@
+## 13/09/2026 — Wave S kinh tế LIVE
+
+Owner gõ live. Squash [#87](https://github.com/bktimmy247/luc-than/pull/87) → `a645011`. TKT-0111.
+
 ## 13/09/2026 — Wave S kinh tế REVIEW
 
 Tinh/Hoạt nhỏ giọt daily/job/chương. Nhãn B/A/S/S+. Bible `docs/economy-bible.md`.
