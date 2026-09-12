@@ -1,0 +1,94 @@
+{
+  "summary": [
+    {
+      "label": "390x844",
+      "ok": true,
+      "battle": {
+        "exists": true,
+        "visible": true,
+        "hub": false
+      },
+      "afterBattle": {
+        "overlay": false,
+        "screen": "hub"
+      },
+      "gear": {
+        "exists": true,
+        "visible": true,
+        "hub": false
+      },
+      "afterGear": {
+        "gearOpen": false,
+        "screen": "hub"
+      },
+      "lich": {
+        "exists": true,
+        "visible": false,
+        "hub": true
+      },
+      "lichBack": {
+        "exists": true,
+        "visible": true,
+        "label": "Về Thành Chính"
+      },
+      "afterLich": {
+        "lichOpen": false,
+        "body": false,
+        "screen": "hub"
+      },
+      "end": {
+        "exists": true,
+        "visible": true,
+        "hub": false
+      },
+      "afterEnd": "hub",
+      "appErrors": []
+    },
+    {
+      "label": "768x1024",
+      "ok": true,
+      "battle": {
+        "exists": true,
+        "visible": true,
+        "hub": false
+      },
+      "afterBattle": {
+        "overlay": false,
+        "screen": "hub"
+      },
+      "gear": {
+        "exists": true,
+        "visible": true,
+        "hub": false
+      },
+      "afterGear": {
+        "gearOpen": false,
+        "screen": "hub"
+      },
+      "lich": {
+        "exists": true,
+        "visible": false,
+        "hub": true
+      },
+      "lichBack": {
+        "exists": true,
+        "visible": true,
+        "label": "Về Thành Chính"
+      },
+      "afterLich": {
+        "lichOpen": false,
+        "body": false,
+        "screen": "hub"
+      },
+      "end": {
+        "exists": true,
+        "visible": true,
+        "hub": false
+      },
+      "afterEnd": "hub",
+      "appErrors": []
+    }
+  ],
+  "safari": "NOT_RUN",
+  "pass": true
+}

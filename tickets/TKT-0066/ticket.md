@@ -1,12 +1,12 @@
 ---
 id: TKT-0066
 title: Nút Thành Chính trên mọi màn còn thiếu
-status: READY
-phase: READY
+status: REVIEW
+phase: REVIEW
 priority: P0
 created: 2026-09-12T07:20:00.000Z
-updated: 2026-09-12T07:20:00.000Z
-acceptance_ids: ['L66-T1', 'L66-T2', 'L66-T3', 'L66-T4', 'L66-P1']
+updated: 2026-09-12T11:15:00.000Z
+acceptance_ids: ['L66-T1', 'L66-T2', 'L66-T3', 'L66-T4', 'L66-T5', 'L66-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths: ['src/ui/hub-back-runtime.js', 'src/ui/hub-back.css', 'scripts/hub-back-v1.mjs', 'scripts/lanes/tkt-0066-hub-back.mjs', 'scripts/qa-hub-back.mjs', 'tests/hub-back.test.mjs', 'docs/qa/L66-HUB-BACK/']
 resource_locks: ["hub-back"]
@@ -32,7 +32,7 @@ Chỉ **vá chỗ thiếu** bằng wrap + inject chip `[data-hv-hub]` (không s�
 | Trận iframe `#hvBattleOverlay` | Escape abort, `#exitBattleButton` hidden | Chip **Thành Chính** gọi `abortIntegratedBattle()` → hub |
 | Kết quả `#integratedResultV6` / `#endScreen` | back → campaign | Thêm `navTo('hub')` — **không** sửa `end-3d` (Wave F) |
 | Nan Trợ trận inner (`[data-gear-view]` ≠ wheel) | 2 bước về bánh xe | Chip hub trên view inner — **không** sửa `account-gear-runtime.js` |
-| Lịch Luyện `[data-lich-back]` | chỉ `hideLichWheel()` | thêm `navTo('hub')` |
+| Lịch Luyện `[data-lich-back]` | đã có mũi tên ‹ | **ẩn chip** — owner: chỉ cần mũi tên, không che góc trên |
 | Hồ sơ tướng | close → roster (2 bước, OK) | Chip hub tuỳ chọn, không bắt buộc |
 | Hành trình | `#journeyScreen .back[data-nav="hub"]` đã về hub | **Không** sửa `journey-3d` |
 | Bày trận `.cs-prepare` | `.cs-back` → home Chinh chiến | **Đóng băng** — không thêm hub, không sửa `campaign-scene.js` |
@@ -52,11 +52,12 @@ Không sửa `index.html`. Không sửa `campaign-scene.js` / `.cs-prepare`. Kh�
 
 ## Acceptance
 
-- L66-T1: wrap `showScreen`; chip `[data-hv-hub]` gọi `navTo('hub')` trên trận overlay + kết quả + gear inner + Lịch
+- L66-T1: wrap `showScreen`; chip `[data-hv-hub]` gọi `navTo('hub')` trên trận overlay + kết quả + gear inner
 - L66-T2: **không** đụng `.cs-prepare` / `campaign-scene.js` / `journey-3d` / `end-3d`
 - L66-T3: hall đã có close-hub **không** bị nhân đôi listener
 - L66-T4: stub lane `tkt-0066-hub-back.mjs` load runtime; không `battle.html`
-- L66-P1: Chrome 390×844 + 768×1024 — mở Tháp / Rèn / Trợ trận nan / trận iframe / kết quả, thấy **Thành Chính**, bấm về `#hubScreen`, 0 app error
+- L66-T5: Lịch Luyện **ẩn** chip Thành Chính; dùng mũi tên ‹ `[data-lich-back]` có sẵn
+- L66-P1: Chrome 390×844 + 768×1024 — trận iframe / nan inner / kết quả thấy **Thành Chính**; Lịch thấy ‹ không chip; 0 app error
 
 ## Affected paths (exclusive)
 

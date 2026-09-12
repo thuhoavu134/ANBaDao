@@ -1,3 +1,11 @@
+## 12/09/2026 — TKT-0066 Lịch Luyện: ẩn chip, giữ mũi tên ‹
+
+Owner ảnh thật: chip Thành Chính che góc trên Lịch Luyện. Chip ẩn khi `#hvLichRoot` mở; dùng `.hv-lich-back` ‹ có sẵn. Trận / nan inner / kết quả vẫn chip. L66-T5 GREEN. Không merge tới live.
+
+## 12/09/2026 — TKT-0066 chip Thành Chính chỗ thiếu REVIEW
+
+Chip `[data-hv-hub]` trên trận iframe, nan Trợ trận inner, Lịch Luyện, kết quả. Wrap `showScreen`. Hall đã có nút đóng không nhân listener. Chrome 390×844 + 768×1024 PASS. Safari NOT_RUN. Không merge tới live.
+
 ## 12/09/2026 tối — Wave J tickets + handoff
 
 Owner hết quota session. TKT-0076 Neon READY · TKT-0077 OAuth WAITING_OWNER · TKT-0078 alias WAITING_QUOTA. Prompt `docs/AGENT-PROMPT.md`. Việc kế agent mới: TKT-0065.
