@@ -1,3 +1,7 @@
+## 13/09/2026 — Wave S vành Bách Bảo LIVE
+
+Owner gõ live. Squash [#89](https://github.com/bktimmy247/luc-than/pull/89) → `2057d86`. TKT-0113.
+
 ## 13/09/2026 — Wave S vành Bách Bảo REVIEW
 
 Vành chữ nhật, icon chồng, đèn chạy. Chợ hết tướng ngoài 12. Ấn món = công dụng.
