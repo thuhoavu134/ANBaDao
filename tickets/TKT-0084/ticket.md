@@ -1,7 +1,7 @@
 ---
 id: TKT-0084
 title: Owner tự thêm mã quà — JSON + env Vercel
-status: REVIEW
+status: LIVE
 phase: REVIEW
 priority: P1
 created: 2026-09-12T16:12:00.000Z

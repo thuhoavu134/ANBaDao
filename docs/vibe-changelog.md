@@ -1,3 +1,7 @@
+## 12/09/2026 — TKT-0084 owner tự thêm mã quà LIVE
+
+Owner gõ live. Squash [#72](https://github.com/bktimmy247/luc-than/pull/72) → `a373ece`. Env `GIFT_CODES` + `gift-codes.json`.
+
 ## 12/09/2026 — TKT-0084 owner tự thêm mã quà REVIEW
 
 JSON `gift-codes.json` + env Vercel `GIFT_CODES` → POST `/api/gift`. Docs `docs/GIFT-CODES.md`. Không merge tới live.
