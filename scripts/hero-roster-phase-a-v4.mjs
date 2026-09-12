@@ -17,15 +17,22 @@ const css = `<style id="hero-roster-phase-a-v4-css">
 #hvHeroRosterV4 .v4-tab{height:33px;border:1px solid #b8844d;border-bottom:0;border-radius:7px 7px 0 0;background:linear-gradient(180deg,#956240,#75492f);color:#f5e1c5;font-size:9.5px;font-weight:900;display:flex;align-items:center;justify-content:center}
 #hvHeroRosterV4 .v4-tab.active{height:39px;background:linear-gradient(180deg,#ffe8be,#f0c692);color:#9f5b35;box-shadow:inset 0 1px 0 #fff8e9}
 #hvHeroRosterV4 .v4-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;padding:8px 7px 16px;flex:1 1 auto;min-height:420px;min-width:0}
-#hvHeroRosterV4 .v4-card{position:relative;aspect-ratio:.68;min-height:150px;border:3px solid #d88d17;border-radius:6px;background:linear-gradient(180deg,#fff7df,#f3c97d);box-shadow:0 2px 5px rgba(89,54,10,.25),inset 0 0 0 1px rgba(255,255,255,.8);overflow:hidden;padding:0;margin:0;color:inherit;min-width:0;touch-action:manipulation}
-#hvHeroRosterV4 .v4-art{position:absolute;left:3px;right:3px;top:3px;bottom:31px;border-radius:4px;overflow:hidden;background:linear-gradient(180deg,#cde9df,#acd2c1);border:1px solid rgba(255,255,255,.9)}
+#hvHeroRosterV4 .v4-card{position:relative;aspect-ratio:.68;min-height:150px;border:2px solid #e8c56a;border-radius:10px;background:#c9a050;box-shadow:0 0 0 2px #7a4a14,inset 0 0 0 2px #fff4d0,0 4px 10px rgba(70,40,8,.3);overflow:hidden;padding:0;margin:0;color:inherit;min-width:0;touch-action:manipulation}
+#hvHeroRosterV4 .v4-art{position:absolute;left:3px;right:3px;top:3px;bottom:3px;border-radius:7px;overflow:hidden;background:linear-gradient(180deg,#cde9df,#acd2c1);border:0}
 #hvHeroRosterV4 .v4-art img{width:168%;max-width:none;height:130%;object-fit:cover;object-position:50% 8%;margin-left:-34%;margin-top:-2%;display:block}
-#hvHeroRosterV4 .v4-grade{position:absolute;left:2px;top:2px;z-index:3;min-width:24px;height:24px;padding:0 4px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:#be2830;border:2px solid #ffe2a5;color:#fff6da;font-size:9.5px;font-weight:1000}
-#hvHeroRosterV4 .v4-level{position:absolute;right:4px;top:3px;z-index:3;color:white;font-size:9px;font-weight:1000;text-shadow:0 1px 2px #000,0 0 2px #000}
-#hvHeroRosterV4 .v4-element{position:absolute;left:4px;top:29px;z-index:3;width:21px;height:21px;border-radius:50%;background:rgba(255,255,255,.94);display:flex;align-items:center;justify-content:center;font-size:11px;box-shadow:0 1px 2px rgba(0,0,0,.2)}
-#hvHeroRosterV4 .v4-power{position:absolute;left:50%;bottom:27px;transform:translateX(-50%);z-index:4;min-width:53px;padding:3px 6px;border-radius:12px;background:linear-gradient(180deg,#ffe38e,#efad2a);border:1px solid #b6740f;color:#3d2b13;font-size:8.5px;font-weight:1000;text-align:center;box-shadow:0 1px 3px rgba(72,42,0,.25)}
-#hvHeroRosterV4 .v4-stars{position:absolute;left:2px;right:2px;bottom:15px;text-align:center;color:#ffd43d;font-size:9px;letter-spacing:-1px;text-shadow:0 1px 1px #8d5600;line-height:1}
-#hvHeroRosterV4 .v4-cardname{position:absolute;left:3px;right:3px;bottom:3px;text-align:center;color:#2c241e;font-size:8px;font-weight:1000;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 1px 0 #fff0cc;line-height:1.1}
+#hvHeroRosterV4 .v4-grade{position:absolute;left:4px;top:4px;z-index:5;min-width:26px;height:22px;padding:0 5px;border-radius:6px 2px 8px 2px;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#f0d48a,#c09028);border:1.5px solid #fff6d4;color:#3a2414;font-size:10px;font-weight:1000;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+#hvHeroRosterV4 .v4-card.r-splus .v4-grade{background:linear-gradient(180deg,#ffe9a8,#e2b45a);color:#5a3a10}
+#hvHeroRosterV4 .v4-card.r-s .v4-grade{background:linear-gradient(180deg,#f0c070,#c07818);color:#fff8e8}
+#hvHeroRosterV4 .v4-card.r-a .v4-grade{background:linear-gradient(180deg,#9ec8f0,#3a6aaa);color:#fff}
+#hvHeroRosterV4 .v4-card.r-b .v4-grade{background:linear-gradient(180deg,#c8d0d8,#6a7888);color:#fff}
+#hvHeroRosterV4 .v4-level{position:absolute;right:6px;top:5px;z-index:5;color:#fff;font-size:10px;font-weight:1000;text-shadow:0 1px 3px #000,0 0 4px #000}
+#hvHeroRosterV4 .v4-veil{position:absolute;left:3px;right:3px;bottom:3px;z-index:4;height:44%;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:0 4px 7px;pointer-events:none;background:linear-gradient(180deg,rgba(255,240,210,0) 0%,rgba(255,228,176,.38) 32%,rgba(242,198,112,.78) 70%,rgba(230,176,78,.95) 100%)}
+#hvHeroRosterV4 .v4-element{position:static;width:22px;height:22px;margin:0 0 2px;border-radius:50%;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;font-size:12px;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+#hvHeroRosterV4 .v4-power,#hvHeroRosterV4 .v4-deployed{display:none}
+#hvHeroRosterV4 .v4-stars{position:static;text-align:center;color:#ffd24a;font-size:10px;letter-spacing:0;line-height:1;text-shadow:0 1px 1px #8d5600}
+#hvHeroRosterV4 .v4-stars i{font-style:normal;opacity:.28}
+#hvHeroRosterV4 .v4-stars i.on{opacity:1}
+#hvHeroRosterV4 .v4-cardname{position:static;text-align:center;color:#3a2414;font-size:10px;font-weight:1000;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 1px 0 #fff0cc;line-height:1.15;max-width:100%}
 #hvHeroRosterV4 .v4-filter{position:static;z-index:6;height:50px;display:flex;align-items:center;justify-content:center;gap:6px;background:rgba(248,237,212,.98);border-top:1px solid #d7b37b;box-shadow:0 -3px 10px rgba(72,49,20,.14)}
 #hvHeroRosterV4 .v4-filter button{width:31px;height:31px;border-radius:50%;border:1px solid #cda45f;background:#fff6df;font-size:13px}.v4-filter button.active{outline:2px solid #df9f27;background:#f7d477}
 </style>`;
@@ -51,13 +58,8 @@ body.hero-roster-active #heroesScreen:before,body.hero-roster-active #heroesScre
 #hvHeroRosterV4 .v4-filter button{min-width:32px;min-height:34px;cursor:pointer}
 #hvHeroRosterV4 .v4-grid{flex:1 1 auto;min-height:420px;min-width:0;overflow:visible;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:minmax(150px,auto);padding:10px 7px 16px;align-content:start}
 #hvHeroRosterV4 .v4-card{aspect-ratio:.68;min-height:150px;height:auto;cursor:pointer}
-#hvHeroRosterV4 .v4-art{bottom:42px}
-#hvHeroRosterV4 .v4-art img{width:168%;max-width:none;height:130%;object-fit:cover;object-position:50% 8%;margin-left:-34%;margin-top:-2%}
-#hvHeroRosterV4 .v4-power{bottom:36px;font-size:10px}
-#hvHeroRosterV4 .v4-stars{bottom:24px;font-size:12px}
-#hvHeroRosterV4 .v4-cardname{bottom:5px;font-size:10px;line-height:1.2}
+#hvHeroRosterV4 .v4-art{bottom:3px}
 #hvHeroRosterV4 .v4-level{font-size:11px}
-#hvHeroRosterV4 .v4-deployed{position:absolute;right:3px;top:30px;background:#216f5f;color:#fff6d8;font-size:8px;border-radius:3px;padding:2px 3px}
 #hvHeroRosterV4 .is-locked .v4-art{filter:grayscale(1);opacity:.55}
 #hvHeroRosterV4 .v4-empty{grid-column:1/-1;text-align:center;font-size:13px;padding:24px 12px}
 #hvHeroRosterV4 .v4-dock{position:relative;bottom:auto;left:auto;transform:none;width:100%;flex:0 0 auto;display:grid;grid-template-columns:repeat(5,1fr);background:linear-gradient(180deg,#407e68,#113e36);padding:5px 4px calc(5px + env(safe-area-inset-bottom));box-sizing:border-box;z-index:6}

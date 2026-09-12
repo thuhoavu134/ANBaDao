@@ -16,6 +16,9 @@ test('L04a roster route owns a full viewport surface for card hit targets', () =
   assert.match(css, /#hvHeroRosterV4 \.v4-card\{[^}]*min-height:150px/);
   assert.match(runtime, /renderHeroDetail\(id\); showScreen\('heroDetail'\)/);
   assert.match(css, /object-fit:cover/);
+  assert.match(css, /v4-veil/);
+  assert.match(runtime, /v4-veil/);
+  assert.match(runtime, /S\+/);
   assert.match(runtime, /back\.dataset\.nav = 'heroes'/);
   assert.doesNotMatch(runtime, /document\.addEventListener\(['"](?:click|pointerdown|pointerup)/);
 });

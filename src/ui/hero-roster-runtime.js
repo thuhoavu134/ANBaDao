@@ -39,12 +39,19 @@
       ${['all', 'hoa', 'kim', 'moc', 'phong', 'thuy', 'tho', 'mong'].map(key =>
         `<button data-roster-element="${key}" class="${state.element === key ? 'active' : ''}" aria-label="${key === 'all' ? 'Tất cả hệ' : 'Hệ ' + HE[key].nm}" aria-pressed="${state.element === key}">${key === 'all' ? '▦' : HE[key].ic}</button>`).join('')}</div></header>
       <div class="v4-grid" aria-label="Thẻ tướng">
-      ${view.cards.map(card => `<button class="v4-card ${card.owned ? '' : 'is-locked'}" data-hero-id="${esc(card.id)}" aria-label="${esc(card.name)}${card.owned ? ', cấp ' + card.level + ', ' + card.stars + ' sao, lực chiến ' + card.power : ', chưa sở hữu'}">
+      ${view.cards.map(card => {
+        const grade = ({ SSR: 'S+', SS: 'S', S: 'S', A: 'A', B: 'B' }[card.rarity] || 'B');
+        const starN = Math.max(0, Math.min(5, card.stars || 0));
+        const stars = Array.from({ length: 5 }, (_, i) => '<i class="' + (i < starN ? 'on' : '') + '">★</i>').join('');
+        return `<button class="v4-card r-${grade === 'S+' ? 'splus' : grade.toLowerCase()} ${card.owned ? '' : 'is-locked'}" data-hero-id="${esc(card.id)}" aria-label="${esc(card.name)}${card.owned ? ', cấp ' + card.level + ', ' + card.stars + ' sao, lực chiến ' + card.power : ', chưa sở hữu'}">
         <div class="v4-art"><img src="${esc(card.portrait)}" alt="" loading="lazy" decoding="async"></div>
-        <div class="v4-grade">${esc(card.rarity)}</div><div class="v4-level">${card.owned ? 'Lv.' + card.level : '🔒'}</div>
-        <div class="v4-element">${HE[card.element]?.ic || ''}</div>${card.inSquad ? '<span class="v4-deployed">Ra trận</span>' : ''}
-        <div class="v4-power">${card.owned ? '⚔ ' + number(card.power) : 'Chưa sở hữu'}</div>
-        <div class="v4-stars">${'★'.repeat(card.stars)}</div><div class="v4-cardname" title="${esc(card.name)}">${esc(card.shortName)}</div></button>`).join('')}
+        <div class="v4-grade">${grade}</div><div class="v4-level">${card.owned ? 'Lv.' + card.level : '🔒'}</div>
+        <div class="v4-veil">
+          <div class="v4-element">${HE[card.element]?.ic || ''}</div>
+          <div class="v4-stars">${stars}</div>
+          <div class="v4-cardname" title="${esc(card.name)}">${esc(card.shortName)}</div>
+        </div></button>`;
+      }).join('')}
       ${view.cards.length ? '' : '<p class="v4-empty" role="status">Chưa có tướng phù hợp với bộ lọc này.</p>'}</div>
       <nav class="v4-dock" aria-label="Điều hướng game">${nav.map(([target, icon, label]) =>
         `<button data-roster-nav="${target}" ${target === 'heroes' ? 'aria-current="page"' : ''}><img src="assets/ui/menu-v3233/icons/${icon}.png" alt="">${label}</button>`).join('')}</nav>`;
