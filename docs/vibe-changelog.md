@@ -1,3 +1,7 @@
+## 12/09/2026 — Google vào Thành Chính LIVE
+
+Owner gõ live. Squash [#67](https://github.com/bktimmy247/luc-than/pull/67) → `600a17b`. Nút Google chuyển trang, không popup GIS.
+
 ## 12/09/2026 — TKT-0077 LIVE Google + Facebook
 
 Owner gõ live. thuhoavu health `"oauth":true` google+facebook, apple false. Bỏ Apple. Facebook Development = admin/tester. Không PR code — env Vercel.
