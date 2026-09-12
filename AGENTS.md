@@ -1,8 +1,8 @@
 # Hồn Việt / Lục Thần — hướng dẫn bắt đầu
 
-Đọc `docs/HANDOFF-2026-09-12.md` rồi `docs/LUNA-HANDOFF.md` trước khi sửa game.
+Đọc `docs/HANDOFF-2026-09-13.md` rồi `docs/HANDOFF-2026-09-12.md` trước khi sửa game.
 
-Bàn giao mới nhất **12/09/2026 tối**: Production [gamma thuhoavu](https://hon-viet-mong-gioi-v3-25-4-dinh-loi-gamma.vercel.app/) · postgres · Google/Facebook LIVE. TKT-0078 bỏ. Việc kế: [TKT-0070](tickets/TKT-0070/ticket.md)…[0073](tickets/TKT-0073/ticket.md) chờ ảnh. 72 tướng = wave sau.
+Bàn giao mới nhất **13/09/2026 sáng**: main `92e6708` · play [luc-than-neon.vercel.app](https://luc-than-neon.vercel.app/) · postgres/oauth gamma thuhoavu. Wave S–W #87–#107 LIVE. 72 tướng = wave sau.
 
 
 
