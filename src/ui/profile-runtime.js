@@ -236,7 +236,7 @@
     if (!m) return '';
     if (m === 'rename') {
       const used = Number(profile().renames || 0);
-      return `<div class="hv-pf-mask" data-pf-x><div class="hv-pf-dialog" role="dialog">
+      return `<div class="hv-pf-mask"><div class="hv-pf-dialog" role="dialog">
         <h3>Sửa tên</h3>
         <input id="hvPfNick" maxlength="14" placeholder="Hãy nhập 4-14 ký tự" value="${esc(nick())}">
         <p>${used ? 'Đổi tiếp theo: 200 ngọc' : 'Đổi tên lần đầu miễn phí'}</p>
@@ -244,7 +244,7 @@
       </div></div>`;
     }
     if (m === 'gift') {
-      return `<div class="hv-pf-mask" data-pf-x><div class="hv-pf-dialog" role="dialog">
+      return `<div class="hv-pf-mask"><div class="hv-pf-dialog" role="dialog">
         <h3>Mã đổi</h3>
         <input id="hvPfGift" maxlength="24" placeholder="Hãy nhập mã đổi" autocomplete="off">
         <p>Thử <b>MONGGIOI</b> hoặc <b>LUCTHAN</b></p>
@@ -255,7 +255,7 @@
       const vol = profile().vol || {};
       const bgm = vol.bgm != null ? vol.bgm : 0.7;
       const sfx = vol.sfx != null ? vol.sfx : 1;
-      return `<div class="hv-pf-mask" data-pf-x><div class="hv-pf-dialog hv-pf-settings" role="dialog">
+      return `<div class="hv-pf-mask"><div class="hv-pf-dialog hv-pf-settings" role="dialog">
         <h3>Cài đặt trò chơi</h3>
         <label>Nhạc <input type="range" min="0" max="1" step="0.05" value="${bgm}" data-pf-vol="bgm"></label>
         <label>Hiệu ứng âm thanh <input type="range" min="0" max="1" step="0.05" value="${sfx}" data-pf-vol="sfx"></label>
@@ -269,7 +269,7 @@
       </div></div>`;
     }
     if (m === 'contact') {
-      return `<div class="hv-pf-mask" data-pf-x><div class="hv-pf-dialog" role="dialog">
+      return `<div class="hv-pf-mask"><div class="hv-pf-dialog" role="dialog">
         <h3>Kênh CSKH Lục Thần</h3>
         <ul class="hv-pf-faq">
           <li>Mất tài khoản — đăng nhập lại Google/Facebook hoặc email đã tạo.</li>
@@ -281,7 +281,7 @@
     }
     if (m === 'link') {
       const linked = typeof NET === 'object' && NET.token;
-      return `<div class="hv-pf-mask" data-pf-x><div class="hv-pf-dialog" role="dialog">
+      return `<div class="hv-pf-mask"><div class="hv-pf-dialog" role="dialog">
         <h3>Liên kết tài khoản</h3>
         <p>${linked ? 'Đã liên kết — quà nhập môn giữ trên máy chủ.' : 'Đăng nhập Google/Facebook/email để không mất hồ sơ khi đổi máy.'}</p>
         <p class="hv-pf-giftline">Quà ràng buộc: 🪙 100 · 💎 30${profile().linkGift ? ' — đã nhận' : ''}</p>
@@ -305,6 +305,11 @@
   }
 
   root.addEventListener('click', ev => {
+    if (ev.target.classList && ev.target.classList.contains('hv-pf-mask')) {
+      state.modal = '';
+      paint();
+      return;
+    }
     const t = ev.target.closest('[data-pf-back],[data-pf-act],[data-pf-sheet],[data-pf-tab],[data-pf-pick],[data-pf-do],[data-pf-x]');
     if (!t) return;
     if (t.hasAttribute('data-pf-back')) {

@@ -80,6 +80,7 @@
 #hvProfileRoot .hv-pf-dialog h3{margin:0 0 10px;text-align:center}
 #hvProfileRoot .hv-pf-dialog input{
   width:100%;box-sizing:border-box;min-height:44px;border:1px solid #d7b883;border-radius:10px;padding:8px 10px;font:16px sans-serif;
+  pointer-events:auto;background:#fff;
 }
 #hvProfileRoot .hv-pf-row{display:flex;gap:8px;margin-top:12px}
 #hvProfileRoot .hv-pf-row button,.hv-pf-settings button{
