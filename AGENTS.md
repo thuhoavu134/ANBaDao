@@ -2,7 +2,7 @@
 
 Đọc `docs/HANDOFF-2026-09-12.md` rồi `docs/LUNA-HANDOFF.md` trước khi sửa game.
 
-Bàn giao mới nhất **12/09/2026 tối**: TKT-0076 Neon store LIVE [#66](https://github.com/bktimmy247/luc-than/pull/66) `0895079` (chưa DATABASE_URL). TKT-0080 địch nhìn trái [#65](https://github.com/bktimmy247/luc-than/pull/65) `d92bff1`. Việc kế: [TKT-0078](tickets/TKT-0078/ticket.md) alias sau 13/09 17:15 +07 — gắn Neon URL trước đó. 72 tướng = wave sau.
+Bàn giao mới nhất **12/09/2026 tối**: Production = [gamma thuhoavu](https://hon-viet-mong-gioi-v3-25-4-dinh-loi-gamma.vercel.app/) · Neon `"store":"postgres"`. TKT-0078 **bỏ** — không đẩy luc-than.vercel.app. Việc kế: [TKT-0077](tickets/TKT-0077/ticket.md) OAuth khi có App ID, [TKT-0070](tickets/TKT-0070/ticket.md)…[0073](tickets/TKT-0073/ticket.md) chờ ảnh. 72 tướng = wave sau.
 
 
 

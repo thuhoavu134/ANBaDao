@@ -1,3 +1,7 @@
+## 12/09/2026 — Production thuhoavu, TKT-0078 bỏ
+
+Owner: không đẩy luc-than.vercel.app. Chơi [gamma](https://hon-viet-mong-gioi-v3-25-4-dinh-loi-gamma.vercel.app/) team thuhoavu. Neon postgres. TKT-0078 SUPERSEDED.
+
 ## 12/09/2026 — TKT-0076 LIVE Neon store (chưa DATABASE_URL)
 
 Owner gõ live. Squash [#66](https://github.com/bktimmy247/luc-than/pull/66) → `0895079`. Code postgres sẵn. Health production vẫn memory. Cần `DATABASE_URL` + TKT-0078 redeploy.

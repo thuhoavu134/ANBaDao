@@ -37,14 +37,14 @@ Nói tiếng Việt với owner (anh). Product language: không kể cổng, loc
 
 Thứ tự bắt buộc:
 
-P0 ngay:  TKT-0078 retrigger alias sau 13/09 17:15 +07 (main đã có Wave H overlay `576d3c8` + TKT-0079 `6686efa`).
+P0 ngay:  Production = https://hon-viet-mong-gioi-v3-25-4-dinh-loi-gamma.vercel.app/ (team thuhoavu). TKT-0078 SUPERSEDED — không đẩy luc-than.vercel.app.
 
-P0 nhiều người chơi bền:  TKT-0076 Neon. createPostgresStore ĐÃ CÓ. Gắn DATABASE_URL + AUTH_SECRET. Không có URL thì evidence BLOCKED_ENV, đừng LIVE.
+P0 nhiều người chơi bền:  TKT-0076 Neon LIVE trên thuhoavu (`"store":"postgres"`).
 
 WAITING_ASSET (cấm imagegen): TKT-0070…0073 thân quái + bust NPC
 WAITING_OWNER: TKT-0077 OAuth — chỉ khi owner dán App ID
 
-Owner gõ «bật tài khoản đông người» = TKT-0076. Wave H overlay (0065–0069) đã LIVE.
+Owner gõ «bật tài khoản đông người» = TKT-0076 (đã LIVE thuhoavu). Wave H overlay (0065–0069) đã LIVE. Không làm TKT-0078.
 
 ## Cấm
 - Combat V2 / 42 S+ / 72 tướng (wave sau, ID mới, không phải 12 hiện tại)

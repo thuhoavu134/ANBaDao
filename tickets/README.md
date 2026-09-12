@@ -47,9 +47,9 @@ Board GitHub không có. File `tickets/TKT-00xx/ticket.md` là nguồn sự th�
 | TKT-0073 | H | Chân dung thoại NPC | WAITING_ASSET |
 | TKT-0074 | I | Màn đăng nhập + tài khoản cùng Vercel | LIVE (#56) |
 | TKT-0075 | — | Nan Lịch Luyện không nướng khóa + điều khoản 1 dòng | LIVE (#57) |
-| TKT-0076 | J | Neon Postgres — user/save sống qua cold start | LIVE (#66) code; BLOCKED_ENV URL |
+| TKT-0076 | J | Neon Postgres — user/save sống qua cold start | LIVE (#66) postgres trên thuhoavu |
 | TKT-0077 | J | OAuth Google/Facebook/Apple | WAITING_OWNER |
-| TKT-0078 | J | Retrigger Vercel alias sau Hobby reset | WAITING_QUOTA |
+| TKT-0078 | J | Retrigger Vercel alias sau Hobby reset | SUPERSEDED — chơi thuhoavu |
 
 
 

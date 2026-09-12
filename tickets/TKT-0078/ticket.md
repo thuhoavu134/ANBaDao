@@ -1,8 +1,8 @@
 ---
 id: TKT-0078
 title: Retrigger Vercel production sau khi Hobby hết hạn
-status: WAITING_QUOTA
-phase: WAITING_QUOTA
+status: SUPERSEDED
+phase: SUPERSEDED
 priority: P0
 created: 2026-09-12T17:20:00.000Z
 updated: 2026-09-12T17:20:00.000Z
@@ -47,3 +47,5 @@ Không sửa game. Không merge nhánh feature. Không đụng Hobby nếu remai
 - L78-P1: mở luc-than.vercel.app (hoặc URL team mới owner gửi) — login + Thành Chính + Lịch Luyện nan không khóa nướng
 
 Builder ghi evidence URL + SHA. Không tự MERGED/DONE.
+
+Owner 12/09 21:10: **bỏ** luc-than.vercel.app / Hobby CuongDucAi. Production = team **thuhoavu** `hon-viet-mong-gioi-v3-25-4-dinh-loi-spacing-root` → [hon-viet-mong-gioi-v3-25-4-dinh-loi-gamma.vercel.app](https://hon-viet-mong-gioi-v3-25-4-dinh-loi-gamma.vercel.app/). Không retrigger alias cũ.
