@@ -1,3 +1,7 @@
+import { readFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
 export const EXTRA_GIFTCODES = Object.freeze({
   LUCTHAN: { label: 'Lục Thần khai ấn', gold: 5000, gems: 300, stam: 40 },
   THANHCHINH: { label: 'Cổng Thành Chính', gold: 2200, gems: 180, stam: 25 }
@@ -5,6 +9,56 @@ export const EXTRA_GIFTCODES = Object.freeze({
 
 export function normalizeGiftKey(str) {
   return String(str || '').trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
+}
+
+function readJsonFile(path) {
+  try {
+    return JSON.parse(readFileSync(path, 'utf8'));
+  } catch {
+    return {};
+  }
+}
+
+export function parseGiftEnv(raw) {
+  if (!raw) return {};
+  if (typeof raw === 'object' && !Array.isArray(raw)) return normalizeCatalog(raw);
+  try {
+    return normalizeCatalog(JSON.parse(String(raw)));
+  } catch {
+    return {};
+  }
+}
+
+export function normalizeCatalog(obj) {
+  const out = {};
+  if (!obj || typeof obj !== 'object' || Array.isArray(obj)) return out;
+  for (const [k, v] of Object.entries(obj)) {
+    const key = normalizeGiftKey(k);
+    if (!key || !v || typeof v !== 'object') continue;
+    out[key] = {
+      label: String(v.label || key),
+      gold: Math.max(0, Number(v.gold) || 0),
+      gems: Math.max(0, Number(v.gems) || 0),
+      stam: Math.max(0, Number(v.stam) || 0)
+    };
+  }
+  return out;
+}
+
+export function loadFileCatalog() {
+  const here = dirname(fileURLToPath(import.meta.url));
+  const nested = readJsonFile(join(here, 'gift-catalog.json'));
+  const root = readJsonFile(join(process.cwd(), 'gift-codes.json'));
+  return { ...EXTRA_GIFTCODES, ...normalizeCatalog(nested), ...normalizeCatalog(root) };
+}
+
+export function loadGiftCatalog({ file, envRaw } = {}) {
+  return {
+    ...EXTRA_GIFTCODES,
+    ...normalizeCatalog(file),
+    ...loadFileCatalog(),
+    ...parseGiftEnv(envRaw)
+  };
 }
 
 export function redeemGiftCode(player, str, catalog) {

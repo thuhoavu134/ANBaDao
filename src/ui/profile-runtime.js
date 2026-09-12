@@ -91,27 +91,51 @@
     const src = art(id, 'avatar') || art(id, 'card');
     if (src) el.style.backgroundImage = 'url("' + src + '")';
   }
-  function redeem(str) {
-    const key = String(str || '').trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
-    if (!key) return { ok: false, msg: 'Chưa nhập mã.' };
-    if (typeof redeemCode === 'function') {
-      const r = redeemCode(str);
-      if (r && (r.ok || !/không tồn tại/i.test(r.msg || ''))) return r;
-    }
-    if (typeof P !== 'object') return { ok: false, msg: 'Chưa có dữ liệu.' };
-    const g = EXTRA[key];
-    if (!g) return { ok: false, msg: 'Mã không tồn tại hoặc đã hết hạn.' };
+  function origin() {
+    try { return location.origin; } catch { return ''; }
+  }
+  function applyGift(g) {
+    if (typeof P !== 'object' || !g || !g.ok) return g;
+    const key = g.key || String(g.label || '').toUpperCase();
     P.codes = P.codes || [];
-    if (P.codes.indexOf(key) >= 0) return { ok: false, msg: 'Mã này đã nhận rồi.' };
-    P.codes.push(key);
-    P.gold = (P.gold || 0) + g.gold;
-    P.gems = (P.gems || 0) + g.gems;
+    if (key && P.codes.indexOf(key) >= 0) return { ok: false, msg: 'Mã này đã nhận rồi.' };
+    if (key) P.codes.push(key);
+    P.gold = (P.gold || 0) + (g.gold || 0);
+    P.gems = (P.gems || 0) + (g.gems || 0);
     if (typeof refreshStamina === 'function') refreshStamina();
     if (P.stamina != null && typeof DATA === 'object') {
-      P.stamina = Math.min((DATA.daily && DATA.daily.stamCap) || 120, (P.stamina || 0) + g.stam);
+      P.stamina = Math.min((DATA.daily && DATA.daily.stamCap) || 120, (P.stamina || 0) + (g.stam || 0));
     }
     saveP();
-    return { ok: true, label: g.label, gold: g.gold, gems: g.gems, stam: g.stam };
+    return g;
+  }
+  async function redeem(str) {
+    const key = String(str || '').trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
+    if (!key) return { ok: false, msg: 'Chưa nhập mã.' };
+    if (typeof P === 'object' && P && Array.isArray(P.codes) && P.codes.indexOf(key) >= 0) {
+      return { ok: false, msg: 'Mã này đã nhận rồi.' };
+    }
+    if (typeof redeemCode === 'function') {
+      const r = redeemCode(str);
+      if (r && r.ok) return r;
+      if (r && /đã nhận/i.test(r.msg || '')) return r;
+    }
+    if (typeof P === 'object' && EXTRA[key]) {
+      const g = EXTRA[key];
+      return applyGift({ ok: true, key, label: g.label, gold: g.gold, gems: g.gems, stam: g.stam });
+    }
+    try {
+      const r = await fetch(origin() + '/api/gift', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ code: str })
+      });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok || !j.ok) return { ok: false, msg: j.error || j.msg || 'Mã không tồn tại hoặc đã hết hạn.' };
+      return applyGift({ ok: true, key: j.key || key, label: j.label, gold: j.gold, gems: j.gems, stam: j.stam });
+    } catch (e) {
+      return { ok: false, msg: 'Không đổi mã được. Thử lại.' };
+    }
   }
   function applyNick(value) {
     const s = String(value || '').trim();
@@ -350,11 +374,14 @@
     }
     if (doit === 'gift') {
       const el = root.querySelector('#hvPfGift');
-      const r = redeem(el && el.value);
-      if (!r.ok) { toast(r.msg); return; }
-      state.modal = '';
-      toast((r.label || 'Mã quà') + ' · 🪙' + (r.gold || 0) + ' 💎' + (r.gems || 0));
-      paint();
+      const raw = el && el.value;
+      toast('Đang đổi mã…');
+      Promise.resolve(redeem(raw)).then(r => {
+        if (!r.ok) { toast(r.msg); return; }
+        state.modal = '';
+        toast((r.label || 'Mã quà') + ' · 🪙' + (r.gold || 0) + ' 💎' + (r.gems || 0));
+        paint();
+      }).catch(() => toast('Không đổi mã được.'));
       return;
     }
     if (doit === 'logout') {

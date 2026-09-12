@@ -1,3 +1,7 @@
+## 12/09/2026 — TKT-0084 owner tự thêm mã quà REVIEW
+
+JSON `gift-codes.json` + env Vercel `GIFT_CODES` → POST `/api/gift`. Docs `docs/GIFT-CODES.md`. Không merge tới live.
+
 ## 12/09/2026 — Ô mã đổi gõ được LIVE
 
 Owner gõ live. Squash [#71](https://github.com/bktimmy247/luc-than/pull/71) → `dcb6147`.

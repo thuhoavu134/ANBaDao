@@ -1,4 +1,5 @@
 import { hashPassword, randomId, signToken, usernameFromEmail, verifyPassword, verifyToken } from './crypto.mjs';
+import { redeemGiftCode } from '../domain/profile/gift-codes.mjs';
 
 const USER_RE = /^[A-Za-z0-9_]{3,16}$/;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -47,6 +48,7 @@ export function createApp(deps) {
   const facebook = deps.facebook || {};
   const apple = deps.apple || {};
   const fetchImpl = deps.fetchImpl || globalThis.fetch;
+  const gifts = deps.gifts || {};
 
   async function currentUser(ctx) {
     const token = bearer(ctx.headers);
@@ -383,6 +385,19 @@ export function createApp(deps) {
       const user = await store.findUserById(row.userId);
       if (!user) return fail(400, 'Tài khoản không còn.');
       return ok({ user: user.user, token: signToken({ sub: user.id, user: user.user }, secret, now()) });
+    }
+
+    if (m === 'POST' && path === '/api/gift') {
+      const preview = redeemGiftCode({ codes: [], gold: 0, gems: 0 }, body.code || query.code, gifts);
+      if (!preview.ok) return fail(400, preview.msg);
+      return ok({
+        ok: true,
+        key: preview.key,
+        label: preview.label,
+        gold: preview.gold,
+        gems: preview.gems,
+        stam: preview.stam
+      });
     }
 
     const user = await currentUser(ctx);

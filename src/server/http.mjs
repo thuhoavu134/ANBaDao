@@ -1,5 +1,6 @@
 import { createApp } from './app.mjs';
 import { createStoreFromEnv } from './store.mjs';
+import { loadGiftCatalog } from '../domain/profile/gift-codes.mjs';
 
 let cached;
 
@@ -24,7 +25,8 @@ async function getHandle() {
       clientId: process.env.APPLE_CLIENT_ID || '',
       teamId: process.env.APPLE_TEAM_ID || '',
       keyId: process.env.APPLE_KEY_ID || ''
-    }
+    },
+    gifts: loadGiftCatalog({ envRaw: process.env.GIFT_CODES })
   });
   return cached;
 }

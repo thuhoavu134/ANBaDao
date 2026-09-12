@@ -24,11 +24,12 @@ test('L83-T1b: nick 4-14, normalize mã', () => {
   assert.equal(validateNick('<x>').ok, false);
 });
 
-test('L83-T2: runtime gọi redeemCode + mã thêm', () => {
+test('L83-T2: runtime gọi redeemCode + mã thêm + /api/gift', () => {
   const ui = readFileSync(join(root, 'src/ui/profile-runtime.js'), 'utf8');
   assert.match(ui, /redeemCode/);
   assert.match(ui, /LUCTHAN/);
   assert.match(ui, /THANHCHINH/);
+  assert.match(ui, /\/api\/gift/);
   assert.match(ui, /art-player/);
   assert.match(ui, /hvProfileRoot/);
 });
