@@ -1,11 +1,11 @@
 ---
 id: TKT-0053
 title: Hồ sơ tướng hall giả 3D overlay body + 9 nền showcase
-status: REVIEW
+status: LIVE
 phase: REFACTOR
 priority: P1
 created: 2026-09-12T04:20:00.000Z
-updated: 2026-09-12T04:20:00.000Z
+updated: 2026-09-12T04:25:00.000Z
 acceptance_ids: ['L43-T1', 'L43-T2', 'L43-T3', 'L43-T4', 'L43-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths: ['src/ui/hero-detail-hall-runtime.js', 'src/ui/hero-detail-hall.css', 'scripts/hero-detail-hall-v1.mjs', 'scripts/lanes/tkt-0053-hero-detail.mjs', 'scripts/qa-hero-detail-hall.mjs', 'assets/ui/hero-detail/hero-detail-hall.jpg', 'tests/hero-detail-hall.test.mjs', 'docs/qa/L43-HERO-DETAIL-HALL/']
@@ -58,4 +58,7 @@ Không sửa `index.html`. Không commit `dist/`. Không merge/live tới khi ow
 
 Shared read-only: `src/ui/hero-detail-tabs.js`, `src/ui/hero-detail-tabs.css`, `index.html` `#hdBody`.
 
-Builder → REVIEW. Không tự MERGED/DONE.
+## Result
+
+LIVE 12/09 squash [#49](https://github.com/bktimmy247/luc-than/pull/49) → main `ea59313`. Production đã phục vụ `hero-detail-hall.jpg`.
+

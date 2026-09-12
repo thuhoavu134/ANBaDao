@@ -1,4 +1,9 @@
+## 12/09/2026 — Wave D TKT-0053 LIVE
+
+Owner gõ `live`. Squash [#49](https://github.com/bktimmy247/luc-than/pull/49) → main `ea59313`. Hồ sơ tướng overlay body + 9 nền showcase.
+
 ## 12/09/2026 — Wave D TKT-0053 REVIEW
+
 
 Owner gõ `tiếp`. Hồ sơ tướng overlay body giả 3D + 9 nền showcase còn thiếu. Không merge tới `live`.
 
