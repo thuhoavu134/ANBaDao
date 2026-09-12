@@ -1,3 +1,9 @@
+## 13/09/2026 — Wave U LIVE #98–#99
+
+Owner gõ live. Squash [#98](https://github.com/bktimmy247/luc-than/pull/98) `80eb4f7` · [#99](https://github.com/bktimmy247/luc-than/pull/99) `18d149e`.
+
+Hoa Đăng kem, kho Rương Báu. Đổi sò 1/3/10, Quay giữa khung.
+
 ## 13/09/2026 — Wave T LIVE #95–#97
 
 Owner gõ live. Squash [#95](https://github.com/bktimmy247/luc-than/pull/95) `66e4a16` · [#96](https://github.com/bktimmy247/luc-than/pull/96) `c07e9d8` · [#97](https://github.com/bktimmy247/luc-than/pull/97) `93d64a5`.
