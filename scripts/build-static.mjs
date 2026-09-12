@@ -134,6 +134,9 @@ await import('./lanes/tkt-0074-auth.mjs');
 // Keep AFTER auth. Capture #hubScreen .art-avatar. Do not edit index.html.
 await import('./lanes/tkt-0083-profile.mjs');
 
+// WAVE-S 2026-09-13 TKT-0108 Lục Thần lore — Chinh chiến sáu ấn. Keep AFTER profile.
+await import('./lanes/tkt-0108-lore.mjs');
+
 // The integrated battle is loaded from this embedded payload in production.
 // Keep it byte-identical to the patched battle.html; otherwise the visible
 // preview and the iframe can silently run different engines.

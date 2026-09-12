@@ -1,3 +1,7 @@
+## 13/09/2026 — Wave S Lục Thần lore REVIEW
+
+Tên game Lục Thần. Chinh chiến = đóng sáu ấn. Bỏ Hồn Việt/Mộng Giới trên UI.
+
 ## 13/09/2026 — Wave R hub pill + arena ‹ LIVE
 
 Owner gõ live. Squash [#82](https://github.com/bktimmy247/luc-than/pull/82) → `07b3b33`, [#83](https://github.com/bktimmy247/luc-than/pull/83) → `caae6a8`. TKT-0106, TKT-0107.

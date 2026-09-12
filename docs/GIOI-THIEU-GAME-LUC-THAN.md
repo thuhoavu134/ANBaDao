@@ -1,10 +1,10 @@
-# Lục Thần — Hồn Việt: Mộng Giới
+# Lục Thần
 
 ## Giới thiệu ngắn
 
-**Lục Thần — Hồn Việt: Mộng Giới** là game nhập vai chiến thuật tự động lấy cảm hứng từ văn hóa, hình ảnh và tinh thần Việt Nam.
+**Lục Thần** là game nhập vai chiến thuật tự động. Người chơi là Người Giữ Ấn, tập hợp tướng, đóng sáu ấn xuyên Chinh chiến.
 
-Người chơi tập hợp các vị tướng mang bản sắc riêng, xây dựng đội hình sáu người và bước vào những trận chiến trong Mộng Giới — nơi các truyền thuyết, ký ức và linh lực Việt được tái hiện dưới phong cách chibi fantasy.
+Không còn tên Hồn Việt / Mộng Giới trên UI.
 
 ## Thể loại
 
