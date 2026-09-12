@@ -38,8 +38,8 @@ test('legacy Skill 1 investment maps into Basic without losing the source levels
   assert.equal(resolved.mapping.skill, 'ong_hang_pho.basic.thiet-va');
 });
 
-test('heroes without an opted-in kit remain legacy and retain all three saved levels', () => {
-  const resolved = resolveSkillProgression('thay_mo', {
+test('unknown heroes remain legacy and retain all three saved levels', () => {
+  const resolved = resolveSkillProgression('not_a_hero', {
     skillLevels: { basic: 2, skill: 4, ultimate: 3 }
   });
   assert.equal(resolved.kitVersion, 'legacy-v1');
@@ -57,11 +57,27 @@ test('Lục Ảnh kit uses existing Basic/Ultimate assets and keeps six effigies
   assert.equal(kit.legacyAssets.skill1.status, 'preserved-legacy-asset');
 });
 
-test('registry is explicit and does not silently convert the full roster', () => {
-  assert.deepEqual(Object.keys(HERO_SKILL_KIT_REGISTRY), ['ong_hang_pho', 'luc_anh']);
-  assert.equal(getHeroSkillKit('thay_mo'), null);
+test('L35-T1 registry covers the live 12 and freezes Ông Phở + Lục Ảnh', () => {
+  const ids = ['ong_hang_pho', 'luc_anh', 'thay_mo', 'lac_yen', 'cung_thu_tre', 'co_dao_ganh_hoi', 'phong_tu', 'thuy_nuong_roi_nuoc', 'hong_lien_dao_nuong', 'thach_quyen', 'dinh_loi', 'to_diep'];
+  assert.deepEqual(Object.keys(HERO_SKILL_KIT_REGISTRY).sort(), [...ids].sort());
+  assert.equal(getHeroSkillKit('ong_hang_pho').basicId, 'ong_hang_pho.basic.thiet-va');
+  assert.equal(getHeroSkillKit('luc_anh').ultimateId, 'luc_anh.ultimate.doc-van-phu-the');
+  assert.equal(getHeroSkillKit('not_a_hero'), null);
   const invalid = { ...getHeroSkillKit('ong_hang_pho'), actions: { basic: getHeroSkillKit('ong_hang_pho').actions.basic } };
   assert.equal(validateHeroSkillKit(invalid).ok, false);
+});
+
+test('L35-T2/T3 every official kit has basic, ultimate, passive and legacySkillMap', () => {
+  const ids = ['ong_hang_pho', 'luc_anh', 'thay_mo', 'lac_yen', 'cung_thu_tre', 'co_dao_ganh_hoi', 'phong_tu', 'thuy_nuong_roi_nuoc', 'hong_lien_dao_nuong', 'thach_quyen', 'dinh_loi', 'to_diep'];
+  for (const id of ids) {
+    const kit = getHeroSkillKit(id);
+    assert.notEqual(kit, null, id);
+    assert.equal(validateHeroSkillKit(kit).ok, true, id);
+    assert.ok(kit.actions.basic && kit.actions.ultimate);
+    assert.ok(kit.passives.length >= 1);
+    assert.equal(kit.legacySkillMap.skill1, kit.basicId);
+    assert.equal(kit.legacySkillMap.ultimate, kit.ultimateId);
+  }
 });
 
 test('Rèn Mộng asset registry covers every item model and material deterministically', () => {

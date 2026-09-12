@@ -1,8 +1,8 @@
 ---
 id: TKT-0045
 title: Kit v2 cho 10 tướng legacy
-status: READY
-phase: CONTRACT
+status: REVIEW
+phase: REFACTOR
 priority: P2
 created: 2026-09-12T02:35:00.000Z
 updated: 2026-09-12T02:35:00.000Z
@@ -48,3 +48,8 @@ Combat V2 / splus-*, hall overlay, seed/banner, atlas 42 tướng, Bày trận v
 - L35-P1: Chrome hồ sơ 1 tướng mẫu (không phải Ông Phở/Lục Ảnh) hiện tên Basic/Ultimate/Nội tại từ kit v2
 
 Builder → REVIEW. Không tự MERGED/DONE.
+
+
+## Result
+
+- 10 kit v2 cho tướng legacy. Ông Phở + Lục Ảnh không đổi. Registry 12 ID. Builder dừng REVIEW. Không merge tới khi owner gõ `live`.

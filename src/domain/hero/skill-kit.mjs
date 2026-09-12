@@ -142,10 +142,182 @@ const LUC_ANH_KIT = Object.freeze({
   })
 });
 
+const makeKit = spec => Object.freeze({
+  heroId: spec.heroId,
+  kitId: `${spec.heroId}.kit.samkok-v2.1`,
+  kitVersion: HERO_SKILL_KIT_VERSION,
+  basicId: `${spec.heroId}.basic.${spec.basicSlug}`,
+  ultimateId: `${spec.heroId}.ultimate.${spec.ultSlug}`,
+  passiveIds: Object.freeze([`${spec.heroId}.passive.${spec.passiveSlug}`]),
+  actions: Object.freeze({
+    basic: Object.freeze({
+      id: `${spec.heroId}.basic.${spec.basicSlug}`,
+      slot: 'basic',
+      name: spec.basicName,
+      cost: 0,
+      kind: spec.basicKind,
+      multiplier: spec.basicMult,
+      target: spec.basicTarget,
+      animation: spec.animation,
+      vfx: spec.basicVfx,
+      sfx: spec.sfx,
+      description: spec.basicDesc
+    }),
+    ultimate: Object.freeze({
+      id: `${spec.heroId}.ultimate.${spec.ultSlug}`,
+      slot: 'ultimate',
+      name: spec.ultName,
+      cost: spec.ultCost,
+      kind: spec.ultKind,
+      multiplier: spec.ultMult,
+      target: spec.ultTarget,
+      animation: spec.animation,
+      vfx: spec.ultVfx,
+      sfx: spec.sfx,
+      description: spec.ultDesc
+    })
+  }),
+  passives: Object.freeze([Object.freeze({
+    id: `${spec.heroId}.passive.${spec.passiveSlug}`,
+    name: spec.passiveName,
+    trigger: spec.passiveTrigger,
+    limit: Object.freeze({ maxStacks: spec.maxStacks || 3, durationTurns: spec.durationTurns || 3, perTarget: true }),
+    effect: spec.passiveEffect,
+    counterplay: spec.counterplay
+  })]),
+  legacySkillMap: Object.freeze({
+    skill1: `${spec.heroId}.basic.${spec.basicSlug}`,
+    skill: `${spec.heroId}.basic.${spec.basicSlug}`,
+    ultimate: `${spec.heroId}.ultimate.${spec.ultSlug}`
+  })
+});
+
+const THAY_MO_KIT = makeKit({
+  heroId: 'thay_mo', basicSlug: 'chuong-chan-phach', ultSlug: 'tran-anh-phong-mon', passiveSlug: 'an-tran',
+  basicName: 'Chuông Chấn Phách', basicKind: 'debuff', basicMult: 1.02, basicTarget: 'all_enemies',
+  ultName: 'Trận Ảnh Phong Môn', ultKind: 'aoe', ultMult: 1.32, ultTarget: 'all_enemies', ultCost: 60,
+  animation: 'thay-mo.skill', basicVfx: 'thay-mo.bell-wave', ultVfx: 'thay-mo.seal-burst', sfx: 'combat-cast',
+  basicDesc: 'Rung chuông tạo sóng chấn phách, gây sát thương diện rộng và giảm nhịp địch.',
+  ultDesc: 'Dựng đại trận đánh toàn bộ sáu vị trí địch và kích nổ Ấn Trấn.',
+  passiveName: 'Ấn Trấn', passiveTrigger: 'on_basic_hit',
+  passiveEffect: 'Basic đặt Ấn Trấn; Ultimate kích nổ ấn trên mỗi mục tiêu.',
+  counterplay: 'Giải ấn hoặc đổi mục tiêu trước khi Trận Ảnh Phong Môn nổ.'
+});
+const LAC_YEN_KIT = makeKit({
+  heroId: 'lac_yen', basicSlug: 'mui-no-pha-giap', ultSlug: 'thien-no-truy-hon', passiveSlug: 'pha-giap',
+  basicName: 'Mũi Nỏ Phá Giáp', basicKind: 'debuff', basicMult: 1.48, basicTarget: 'single_enemy',
+  ultName: 'Thiên Nỏ Truy Hồn', ultKind: 'execute', ultMult: 2.55, ultTarget: 'single_enemy', ultCost: 60,
+  animation: 'lac-yen.skill', basicVfx: 'lac-yen.bolt', ultVfx: 'lac-yen.execute', sfx: 'combat-projectile',
+  basicDesc: 'Bắn bolt nặng phá giáp mục tiêu; có thể xuyên sang tuyến sau.',
+  ultDesc: 'Khóa mục tiêu có phần trăm máu thấp nhất và tung phát kết liễu.',
+  passiveName: 'Phá Giáp', passiveTrigger: 'on_basic_hit',
+  passiveEffect: 'Basic giảm phòng; Ultimate ưu tiên mục tiêu máu thấp.',
+  counterplay: 'Giữ khiên hoặc đổi mục tiêu thấp máu ra sau hàng.'
+});
+const CUNG_THU_TRE_KIT = makeKit({
+  heroId: 'cung_thu_tre', basicSlug: 'truc-tien-xuyen-hang', ultSlug: 'van-truc-lac-vu', passiveSlug: 'ghim',
+  basicName: 'Trúc Tiễn Xuyên Hàng', basicKind: 'debuff', basicMult: 1.36, basicTarget: 'single_enemy',
+  ultName: 'Vạn Trúc Lạc Vũ', ultKind: 'aoe', ultMult: 1.28, ultTarget: 'all_enemies', ultCost: 60,
+  animation: 'cung-thu-tre.skill', basicVfx: 'cung-thu-tre.arrow', ultVfx: 'cung-thu-tre.arrow-rain', sfx: 'combat-projectile',
+  basicDesc: 'Tên tre xuyên trục trước–sau và ghim giảm tốc mục tiêu.',
+  ultDesc: 'Mưa tên tre phủ toàn bộ đội địch.',
+  passiveName: 'Ghim Tre', passiveTrigger: 'on_basic_hit',
+  passiveEffect: 'Basic ghim giảm tốc; Ultimate phủ mưa tên lên toàn địch.',
+  counterplay: 'Né tuyến thẳng hoặc giải chậm trước mưa tên.'
+});
+const CO_DAO_GANH_HOI_KIT = makeKit({
+  heroId: 'co_dao_ganh_hoi', basicSlug: 'doi-vai-giu-nhip', ultSlug: 'hoi-lang-rop-co', passiveSlug: 'giu-nhip',
+  basicName: 'Đổi Vai Giữ Nhịp', basicKind: 'haste', basicMult: 0, basicTarget: 'all_allies',
+  ultName: 'Hội Làng Rợp Cờ', ultKind: 'aoe', ultMult: 1.12, ultTarget: 'all_enemies', ultCost: 60,
+  animation: 'co-dao.skill', basicVfx: 'co-dao.haste', ultVfx: 'co-dao.festival', sfx: 'combat-cast',
+  basicDesc: 'Tăng nhịp và cấp khiên cho đồng minh đang thiếu nộ.',
+  ultDesc: 'Gây sát thương toàn địch và tăng tốc toàn đội.',
+  passiveName: 'Giữ Nhịp', passiveTrigger: 'on_basic_cast',
+  passiveEffect: 'Basic giữ nhịp đồng minh; Ultimate vừa đánh vừa tăng tốc đội.',
+  counterplay: 'Cắt nộ Cô Đào hoặc làm câm trước Hội Làng.'
+});
+const PHONG_TU_KIT = makeKit({
+  heroId: 'phong_tu', basicSlug: 'hoan-phong-doat-nhip', ultSlug: 'bat-phong-doan-anh', passiveSlug: 'doat-nhip',
+  basicName: 'Hoán Phong Đoạt Nhịp', basicKind: 'strip', basicMult: 1.42, basicTarget: 'single_enemy',
+  ultName: 'Bát Phong Đoạn Ảnh', ultKind: 'multi', ultMult: 0.72, ultTarget: 'random_enemy', ultCost: 60,
+  animation: 'phong-tu.skill', basicVfx: 'phong-tu.wind', ultVfx: 'phong-tu.multi', sfx: 'combat-slash',
+  basicDesc: 'Dash chém mục tiêu, gỡ nhịp tăng tốc và hất lùi lượt.',
+  ultDesc: 'Chuỗi dash lướt qua nhiều mục tiêu rồi trở về đúng vị trí.',
+  passiveName: 'Đoạt Nhịp', passiveTrigger: 'on_basic_hit',
+  passiveEffect: 'Basic gỡ tăng tốc địch; Ultimate dash nhiều nhịp.',
+  counterplay: 'Khiên hoặc taunt chặn dash, giữ tốc sau khi bị strip.'
+});
+const THUY_NUONG_KIT = makeKit({
+  heroId: 'thuy_nuong_roi_nuoc', basicSlug: 'keo-man-thuy-dinh', ultSlug: 'thuy-dinh-van-tuong', passiveSlug: 'roi-nuoc',
+  basicName: 'Kéo Màn Thủy Đình', basicKind: 'debuff', basicMult: 0.94, basicTarget: 'all_enemies',
+  ultName: 'Thủy Đình Vạn Tượng', ultKind: 'aoe', ultMult: 1.26, ultTarget: 'all_enemies', ultCost: 60,
+  animation: 'thuy-nuong.skill', basicVfx: 'thuy-nuong.water-stage', ultVfx: 'thuy-nuong.puppet-stage', sfx: 'combat-cast',
+  basicDesc: 'Dựng sân nước, gây sát thương và kéo lùi nhịp mục tiêu.',
+  ultDesc: 'Rối nước phủ sân khấu, gây AOE và làm chậm toàn địch.',
+  passiveName: 'Rối Nước', passiveTrigger: 'on_basic_hit',
+  passiveEffect: 'Basic kéo lùi nhịp; Ultimate phủ chậm toàn sân.',
+  counterplay: 'Giải chậm hoặc miễn khống trước Thủy Đình.'
+});
+const HONG_LIEN_KIT = makeKit({
+  heroId: 'hong_lien_dao_nuong', basicSlug: 'hong-lien-pha-tuyen', ultSlug: 'cuu-lien-phan-tran', passiveSlug: 'thieu-dot',
+  basicName: 'Hồng Liên Phá Tuyến', basicKind: 'damage', basicMult: 1.62, basicTarget: 'single_enemy',
+  ultName: 'Cửu Liên Phần Trận', ultKind: 'aoe', ultMult: 1.42, ultTarget: 'all_enemies', ultCost: 60,
+  animation: 'hong-lien.skill', basicVfx: 'hong-lien.lotus-slash', ultVfx: 'hong-lien.lotus-field', sfx: 'combat-slash',
+  basicDesc: 'Dash xuyên tuyến và thiêu đốt mục tiêu ở contact cuối.',
+  ultDesc: 'Chín cánh Hồng Liên quét toàn đội địch.',
+  passiveName: 'Thiêu Đốt', passiveTrigger: 'on_basic_hit',
+  passiveEffect: 'Basic thiêu đốt contact cuối; Ultimate quét cháy cả sân.',
+  counterplay: 'Hàng trước dày máu hoặc giải đốt trước Cửu Liên.'
+});
+const THACH_QUYEN_KIT = makeKit({
+  heroId: 'thach_quyen', basicSlug: 'dia-chan-lien-quyen', ultSlug: 'son-quyen-tran-dia', passiveSlug: 'chan-dong',
+  basicName: 'Địa Chấn Liên Quyền', basicKind: 'debuff', basicMult: 1.55, basicTarget: 'single_enemy',
+  ultName: 'Sơn Quyền Trấn Địa', ultKind: 'aoe', ultMult: 1.34, ultTarget: 'all_enemies', ultCost: 60,
+  animation: 'thach-quyen.skill', basicVfx: 'thach-quyen.shockwave', ultVfx: 'thach-quyen.ground-impact', sfx: 'combat-impact',
+  basicDesc: 'Đấm mục tiêu chính, phá thế và phát sóng chấn động sang mục tiêu cạnh bên.',
+  ultDesc: 'Đập đất gây sát thương hàng trước và lan ra hàng sau.',
+  passiveName: 'Chấn Động', passiveTrigger: 'on_basic_hit',
+  passiveEffect: 'Basic lan sóng cạnh bên; Ultimate đập đất cả hai hàng.',
+  counterplay: 'Tách đội hình, không đứng kề mục tiêu chính.'
+});
+const DINH_LOI_KIT = makeKit({
+  heroId: 'dinh_loi', basicSlug: 'hoi-van-ho-tran', ultSlug: 'dong-son-loi-tran', passiveSlug: 'ho-tran',
+  basicName: 'Hồi Văn Hộ Trận', basicKind: 'shield', basicMult: 0.2, basicTarget: 'ally',
+  ultName: 'Đông Sơn Lôi Trận', ultKind: 'shield', ultMult: 0.28, ultTarget: 'all_allies', ultCost: 60,
+  animation: 'dinh-loi.skill', basicVfx: 'dinh-loi.bronze-shield', ultVfx: 'dinh-loi.bronze-drum', sfx: 'combat-drum',
+  basicDesc: 'Cấp khiên cho đồng minh yếu nhất và bản thân, dựng thế phản vệ.',
+  ultDesc: 'Gióng trống đồng, dựng khiên toàn đội và chấn động quân địch.',
+  passiveName: 'Hộ Trận', passiveTrigger: 'on_basic_cast',
+  passiveEffect: 'Basic khiên đồng minh yếu; Ultimate khiên toàn đội.',
+  counterplay: 'Phá khiên hoặc bỏ qua Đình Lôi để dồn xạ thủ.'
+});
+const TO_DIEP_KIT = makeKit({
+  heroId: 'to_diep', basicSlug: 'khac-ban-sao-the', ultSlug: 'van-ban-dong-khac', passiveSlug: 'sao-an',
+  basicName: 'Khắc Bản Sao Thế', basicKind: 'shield', basicMult: 0.18, basicTarget: 'all_allies',
+  ultName: 'Vạn Bản Đồng Khắc', ultKind: 'debuff', ultMult: 1.16, ultTarget: 'all_enemies', ultCost: 60,
+  animation: 'to-diep.skill', basicVfx: 'to-diep.woodblock', ultVfx: 'to-diep.ink-field', sfx: 'combat-cast',
+  basicDesc: 'In bản suy giảm của tăng ích cho đồng minh yếu nhất; không có thì cấp khiên mực.',
+  ultDesc: 'Trải mộc bản lớn, gây AOE và khuếch đại dấu ấn có hại.',
+  passiveName: 'Sao Ấn', passiveTrigger: 'on_basic_cast',
+  passiveEffect: 'Basic sao ấn hỗ trợ; Ultimate khuếch đại dấu hại trên địch.',
+  counterplay: 'Giải dấu trước Vạn Bản hoặc cắt nộ Tố Điệp.'
+});
+
 export const HERO_SKILL_KIT_REGISTRY = Object.freeze({
   ong_hang_pho: ONG_HANG_PHO_KIT,
-  luc_anh: LUC_ANH_KIT
+  luc_anh: LUC_ANH_KIT,
+  thay_mo: THAY_MO_KIT,
+  lac_yen: LAC_YEN_KIT,
+  cung_thu_tre: CUNG_THU_TRE_KIT,
+  co_dao_ganh_hoi: CO_DAO_GANH_HOI_KIT,
+  phong_tu: PHONG_TU_KIT,
+  thuy_nuong_roi_nuoc: THUY_NUONG_KIT,
+  hong_lien_dao_nuong: HONG_LIEN_KIT,
+  thach_quyen: THACH_QUYEN_KIT,
+  dinh_loi: DINH_LOI_KIT,
+  to_diep: TO_DIEP_KIT
 });
+
 
 const clampLevel = (value) => Math.max(1, Math.min(5, Math.round(Number(value) || 1)));
 
