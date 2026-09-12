@@ -8,3 +8,33 @@
 #hvHubBackChip.is-on{display:block}
 body.hub-back-hide-chip #hvHubBackChip{display:none!important}
 body.hv-lich-open #hvHubBackChip{display:none!important}
+
+#hubScreen .art-center-links .art-landmark.shop,
+#hubScreen .art-center-links .art-landmark.arena,
+#hubScreen .art-center-links .art-landmark.summon,
+#hubScreen .art-center-links .art-landmark.tower{
+  flex-direction:row!important;flex-wrap:nowrap!important;align-items:center!important;justify-content:flex-start!important;
+  gap:6px!important;padding:5px 10px 5px 6px!important;border:0!important;border-radius:6px!important;
+  background:#16120f!important;color:#fff!important;
+  box-shadow:0 2px 8px rgba(0,0,0,.45)!important;
+  min-width:0!important;width:max-content!important;height:auto!important;min-height:0!important;
+}
+#hubScreen .art-center-links .art-landmark.shop img,
+#hubScreen .art-center-links .art-landmark.arena img,
+#hubScreen .art-center-links .art-landmark.summon img,
+#hubScreen .art-center-links .art-landmark.tower img{
+  width:18px!important;height:18px!important;border-radius:4px!important;object-fit:contain!important;
+  filter:saturate(1.2) brightness(1.15)!important;box-shadow:none!important;background:transparent!important;
+}
+#hubScreen .art-center-links .art-landmark.shop .label,
+#hubScreen .art-center-links .art-landmark.arena .label,
+#hubScreen .art-center-links .art-landmark.summon .label,
+#hubScreen .art-center-links .art-landmark.tower .label{
+  color:#fff!important;font:800 11px/1 system-ui,-apple-system,sans-serif!important;
+  text-shadow:none!important;padding:0!important;background:transparent!important;box-shadow:none!important;
+  white-space:nowrap!important;
+}
+#hubScreen .art-center-links .art-landmark.shop .hv-tap-ring,
+#hubScreen .art-center-links .art-landmark.arena .hv-tap-ring,
+#hubScreen .art-center-links .art-landmark.summon .hv-tap-ring,
+#hubScreen .art-center-links .art-landmark.tower .hv-tap-ring{display:none!important}

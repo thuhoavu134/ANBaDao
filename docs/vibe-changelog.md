@@ -1,8 +1,4 @@
-## 13/09/2026 — Wave R arena ‹ REVIEW
-
-Ẩn FAB lệch. Nút ‹ trong hàng title kem.
-
-## 13/09/2026 — Wave R slot/chat/túi LIVE
+## 13/09/2026 — Wave R hub pill REVIEW
 
 Owner gõ live. Squash [#81](https://github.com/bktimmy247/luc-than/pull/81) → `c9a52b3`. TKT-0105.
 
