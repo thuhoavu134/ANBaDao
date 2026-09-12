@@ -14,7 +14,9 @@ Owner: rà soát chức năng còn thiếu, tách ticket **độc lập** để 
 
 **Wave F REVIEW** 12/09: TKT-0056…0057 Hành trình + Kết quả trên nhánh `work/l46-wave-f-3d-20260912` PR [#51](https://github.com/bktimmy247/luc-than/pull/51). **Không** trộn vào Wave G.
 
-**Wave G halls LIVE** 12/09: owner gõ `live`. Squash [#53](https://github.com/bktimmy247/luc-than/pull/53) → main `b0d6d9d`. TKT-0058…0060 + TKT-0064 Safari pin. **Ấn UI 0061–0063 REVIEW** `work/l51-skill-seals-20260912`.
+**Wave G halls LIVE** 12/09: owner gõ `live`. Squash [#53](https://github.com/bktimmy247/luc-than/pull/53) → main `b0d6d9d`. TKT-0058…0060 + TKT-0064 Safari pin.
+
+**Wave G seals LIVE** 12/09: owner gõ `live`. Squash [#54](https://github.com/bktimmy247/luc-than/pull/54) → main `d94f8a3`. TKT-0061…0063 ấn UI 9 tướng.
 
 **Wave G coordinator LIVE** 12/09: owner gõ `live`. Squash [#52](https://github.com/bktimmy247/luc-than/pull/52) → main `b77f35a`. Stub + ticket. **72 tướng full-asset = wave sau, không phải 12 hiện tại.**
 
@@ -32,7 +34,7 @@ Owner: rà soát chức năng còn thiếu, tách ticket **độc lập** để 
 | Wave D | **LIVE** TKT-0053 (#49) Hồ sơ tướng overlay body + 9 nền showcase |
 | Wave E | **LIVE** TKT-0054…0055 (#50) Nhật Ký Mơ + Chinh chiến AFK home giả 3D |
 | Wave F | **REVIEW** TKT-0056…0057 (#51) Hành trình + Kết quả — nhánh riêng, không trộn G |
-| Wave G | **Halls LIVE** TKT-0058…0060 + Safari pin TKT-0064 (#53). **Ấn UI REVIEW** 0061…0063 |
+| Wave G | **Halls LIVE** TKT-0058…0060 + Safari pin TKT-0064 (#53). **Ấn UI LIVE** 0061…0063 (#54) |
 
 | Không mở ticket | Combat V2 / 42 S+ · **72 tướng full-asset (wave sau, ID mới, không phải 12 hiện tại)** · 5 nan Lịch `go:null` · visual Bày trận · seed/banner/roster 12 · Auth/DB online · L02c reward (chờ owner) · Hermes 27 · atlas skill trận |
 

@@ -1,11 +1,11 @@
 ---
 id: TKT-0061
 title: Ấn kỹ năng UI Lạc Yên · Cung Thủ Tre · Cô Đào
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P2
 created: 2026-09-12T05:00:00.000Z
-updated: 2026-09-12T06:30:00.000Z
+updated: 2026-09-12T06:40:00.000Z
 acceptance_ids: ['L51-T1', 'L51-T2', 'L51-T3', 'L51-T4', 'L51-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths: ['src/ui/skill-seals-a-runtime.js', 'src/ui/skill-seals-a.css', 'scripts/skill-seals-a-v1.mjs', 'scripts/lanes/tkt-0061-skill-seals-a.mjs', 'scripts/qa-skill-seals-a.mjs', 'assets/ui/skill-seals/lac_yen/basic.jpg', 'assets/ui/skill-seals/lac_yen/ultimate.jpg', 'assets/ui/skill-seals/lac_yen/passive.jpg', 'assets/ui/skill-seals/cung_thu_tre/basic.jpg', 'assets/ui/skill-seals/cung_thu_tre/ultimate.jpg', 'assets/ui/skill-seals/cung_thu_tre/passive.jpg', 'assets/ui/skill-seals/co_dao_ganh_hoi/basic.jpg', 'assets/ui/skill-seals/co_dao_ganh_hoi/ultimate.jpg', 'assets/ui/skill-seals/co_dao_ganh_hoi/passive.jpg', 'tests/skill-seals-a.test.mjs', 'docs/qa/L51-SKILL-SEALS-A/']

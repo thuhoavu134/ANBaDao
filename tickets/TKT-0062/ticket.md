@@ -1,11 +1,11 @@
 ---
 id: TKT-0062
 title: Ấn kỹ năng UI Phong Tử · Thủy Nương · Hồng Liên
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P2
 created: 2026-09-12T05:00:00.000Z
-updated: 2026-09-12T06:30:00.000Z
+updated: 2026-09-12T06:40:00.000Z
 acceptance_ids: ['L52-T1', 'L52-T2', 'L52-T3', 'L52-T4', 'L52-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths: ['src/ui/skill-seals-b-runtime.js', 'src/ui/skill-seals-b.css', 'scripts/skill-seals-b-v1.mjs', 'scripts/lanes/tkt-0062-skill-seals-b.mjs', 'scripts/qa-skill-seals-b.mjs', 'assets/ui/skill-seals/phong_tu/basic.jpg', 'assets/ui/skill-seals/phong_tu/ultimate.jpg', 'assets/ui/skill-seals/phong_tu/passive.jpg', 'assets/ui/skill-seals/thuy_nuong_roi_nuoc/basic.jpg', 'assets/ui/skill-seals/thuy_nuong_roi_nuoc/ultimate.jpg', 'assets/ui/skill-seals/thuy_nuong_roi_nuoc/passive.jpg', 'assets/ui/skill-seals/hong_lien_dao_nuong/basic.jpg', 'assets/ui/skill-seals/hong_lien_dao_nuong/ultimate.jpg', 'assets/ui/skill-seals/hong_lien_dao_nuong/passive.jpg', 'tests/skill-seals-b.test.mjs', 'docs/qa/L52-SKILL-SEALS-B/']

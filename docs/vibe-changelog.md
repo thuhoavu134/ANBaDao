@@ -1,3 +1,7 @@
+## 12/09/2026 — TKT-0061…0063 ấn UI skill seals LIVE
+
+Owner gõ `live`. Squash [#54](https://github.com/bktimmy247/luc-than/pull/54) → main `d94f8a3`. 27 medallion hồ sơ 9 tướng. Wave F #51 không trộn. 72 tướng vẫn wave sau.
+
 ## 12/09/2026 — TKT-0061…0063 ấn UI skill seals REVIEW
 
 Owner gõ `tiếp`. Wrap `renderHeroDetail`, 27 medallion jpg exclusive, CSS scoped `[data-hero-id]`. Không sửa `hero-detail-tabs.js` / `index.html` / `battle.html`. Chrome 390×844 + 768×1024 PASS. Safari NOT_RUN. Wave F #51 không trộn. Không merge tới `live`.

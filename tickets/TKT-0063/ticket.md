@@ -1,11 +1,11 @@
 ---
 id: TKT-0063
 title: Ấn kỹ năng UI Thạch Quyền · Đình Lôi · Tố Điệp
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P2
 created: 2026-09-12T05:00:00.000Z
-updated: 2026-09-12T06:30:00.000Z
+updated: 2026-09-12T06:40:00.000Z
 acceptance_ids: ['L53-T1', 'L53-T2', 'L53-T3', 'L53-T4', 'L53-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths: ['src/ui/skill-seals-c-runtime.js', 'src/ui/skill-seals-c.css', 'scripts/skill-seals-c-v1.mjs', 'scripts/lanes/tkt-0063-skill-seals-c.mjs', 'scripts/qa-skill-seals-c.mjs', 'assets/ui/skill-seals/thach_quyen/basic.jpg', 'assets/ui/skill-seals/thach_quyen/ultimate.jpg', 'assets/ui/skill-seals/thach_quyen/passive.jpg', 'assets/ui/skill-seals/dinh_loi/basic.jpg', 'assets/ui/skill-seals/dinh_loi/ultimate.jpg', 'assets/ui/skill-seals/dinh_loi/passive.jpg', 'assets/ui/skill-seals/to_diep/basic.jpg', 'assets/ui/skill-seals/to_diep/ultimate.jpg', 'assets/ui/skill-seals/to_diep/passive.jpg', 'tests/skill-seals-c.test.mjs', 'docs/qa/L53-SKILL-SEALS-C/']
