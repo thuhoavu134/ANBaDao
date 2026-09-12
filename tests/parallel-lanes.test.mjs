@@ -37,6 +37,11 @@ const WAVE_E = [
   ['TKT-0055', 'campaign']
 ];
 
+const WAVE_F = [
+  ['TKT-0056', 'journey'],
+  ['TKT-0057', 'end']
+];
+
 const WAVE_G_HALLS = [
   ['TKT-0058', 'story'],
   ['TKT-0059', 'net'],
@@ -92,6 +97,15 @@ test('lane stubs exist and are imported once from build-static', () => {
     const reserved = new RegExp("LANE = '" + id + "'").test(stub);
     assert.equal(filled3d || reserved, true, id + ' wave E stub');
   }
+  for (const [id, slug] of WAVE_F) {
+    const rel = `./lanes/tkt-${id.slice(4)}-${slug}.mjs`;
+    const hits = build.split(rel).length - 1;
+    assert.equal(hits, 1, id + ' import count');
+    const stub = read('scripts/lanes/tkt-' + id.slice(4) + '-' + slug + '.mjs');
+    const filled3d = new RegExp("await import\\(['\"]\\.\\./" + slug + "-3d-v1\\.mjs['\"]\\)").test(stub);
+    const reserved = new RegExp("LANE = '" + id + "'").test(stub);
+    assert.equal(filled3d || reserved, true, id + ' wave F stub');
+  }
   for (const [id, slug] of WAVE_G_HALLS) {
     const rel = `./lanes/tkt-${id.slice(4)}-${slug}.mjs`;
     const hits = build.split(rel).length - 1;
@@ -115,8 +129,10 @@ test('lane stubs exist and are imported once from build-static', () => {
   assert.match(build, /lanes\/tkt-0052-festival\.mjs[\s\S]*lanes\/tkt-0053-hero-detail\.mjs/);
   assert.match(build, /lanes\/tkt-0053-hero-detail\.mjs[\s\S]*lanes\/tkt-0054-daily\.mjs/);
   assert.match(build, /lanes\/tkt-0054-daily\.mjs[\s\S]*lanes\/tkt-0055-campaign\.mjs/);
+  assert.match(build, /lanes\/tkt-0055-campaign\.mjs[\s\S]*lanes\/tkt-0056-journey\.mjs/);
+  assert.match(build, /lanes\/tkt-0056-journey\.mjs[\s\S]*lanes\/tkt-0057-end\.mjs/);
   assert.match(build, /WAVE-G 2026-09-12 TKT-0058/);
-  assert.match(build, /lanes\/tkt-0055-campaign\.mjs[\s\S]*lanes\/tkt-0058-story\.mjs/);
+  assert.match(build, /lanes\/tkt-0057-end\.mjs[\s\S]*lanes\/tkt-0058-story\.mjs/);
   assert.match(build, /lanes\/tkt-0058-story\.mjs[\s\S]*lanes\/tkt-0059-net\.mjs/);
   assert.match(build, /lanes\/tkt-0059-net\.mjs[\s\S]*lanes\/tkt-0060-team\.mjs/);
   assert.match(build, /lanes\/tkt-0060-team\.mjs[\s\S]*lanes\/tkt-0061-skill-seals-a\.mjs/);
@@ -172,6 +188,12 @@ test('wave A tickets are exclusive and freeze hub wiring', () => {
     assert.match(md, /document\.body\.append/);
   }
   for (const [id] of WAVE_E) {
+    const md = read('tickets/' + id + '/ticket.md');
+    assert.match(md, /status: (READY|REVIEW|LIVE)/);
+    assert.match(md, /Không sửa `index\.html`/);
+    assert.match(md, /document\.body\.append/);
+  }
+  for (const [id] of WAVE_F) {
     const md = read('tickets/' + id + '/ticket.md');
     assert.match(md, /status: (READY|REVIEW|LIVE)/);
     assert.match(md, /Không sửa `index\.html`/);

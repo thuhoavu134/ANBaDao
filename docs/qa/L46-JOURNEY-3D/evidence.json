@@ -1,0 +1,13 @@
+{
+  "screen": "journey",
+  "ok": true,
+  "info": {
+    "parent": true,
+    "position": "fixed",
+    "overflow": "auto",
+    "bg": "url(\"http://127.0.0.1:18056/assets/ui/journey/journey-hall.jpg\")",
+    "display": "flex",
+    "height": 1024
+  },
+  "errors": []
+}

@@ -98,8 +98,10 @@ await import('./lanes/tkt-0052-festival.mjs');
 await import('./lanes/tkt-0053-hero-detail.mjs');
 await import('./lanes/tkt-0054-daily.mjs');
 await import('./lanes/tkt-0055-campaign.mjs');
+await import('./lanes/tkt-0056-journey.mjs');
+await import('./lanes/tkt-0057-end.mjs');
 // WAVE-G 2026-09-12 TKT-0058…0063 — fill stubs; do not add imports.
-// If Wave F (0056/0057) lands first, keep this block AFTER tkt-0057-end.mjs.
+// Keep AFTER tkt-0057-end.mjs.
 await import('./lanes/tkt-0058-story.mjs');
 await import('./lanes/tkt-0059-net.mjs');
 await import('./lanes/tkt-0060-team.mjs');
@@ -114,7 +116,6 @@ await import('./overlay-safari-hotfix-v1.mjs');
 // WAVE-I 2026-09-12 TKT-0074 Auth API — fill stub; do not add imports.
 // Same-origin /api on this Vercel project. Keep AFTER safari. Do not edit index.html.
 await import('./lanes/tkt-0074-auth.mjs');
-
 
 // The integrated battle is loaded from this embedded payload in production.
 // Keep it byte-identical to the patched battle.html; otherwise the visible

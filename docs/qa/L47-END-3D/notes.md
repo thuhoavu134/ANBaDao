@@ -1,0 +1,3 @@
+# L47-END-3D
+
+Chrome 390×844 + 768×1024. Safari NOT_RUN.

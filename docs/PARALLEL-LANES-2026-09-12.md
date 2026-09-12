@@ -123,9 +123,14 @@ Không sửa `hero-detail-tabs.js` / 3 PNG Ông Phở · Lục Ảnh · Thầy M
 
 Chỉ sửa file `*-3d.*` + hall jpg. **Không** sửa `daily-runtime.js` / `campaign-scene.js`. TKT-0055 **không** restyle `.cs-prepare`.
 
-## 3e. Wave F — REVIEW riêng (#51)
+## 3e. Wave F — 2 lane giấy/sơn mài → giả 3D
 
-Hành trình + Kết quả. **Không** nhận việc Wave F trên nhánh Wave G. Không sửa file `journey-3d` / `end-3d`.
+| Ticket | Màn | Stub | Khóa | Hub |
+|---|---|---|---|---|
+| [TKT-0056](../tickets/TKT-0056/ticket.md) | Hành trình | `tkt-0056-journey.mjs` | `journey-3d` | `navTo('journey')` / đích `featLocked` |
+| [TKT-0057](../tickets/TKT-0057/ticket.md) | Kết quả + reward veil | `tkt-0057-end.mjs` | `end-3d` | `showScreen('end')` |
+
+Chỉ sửa file `*-3d.*` + hall jpg. **Không** sửa `index.html` / `JOURNEY_UNLOCK`. TKT-0057 restyle `.rewardveil` CSS-only.
 
 ## 3f. Wave G — 3 hall + 3 lane ấn UI
 

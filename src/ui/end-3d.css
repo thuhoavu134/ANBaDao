@@ -1,0 +1,44 @@
+#hvEndRoot{
+  --hall-ink:#2d251f;
+  --hall-gold:#d58a14;
+  position:fixed;inset:0;z-index:90;display:none;flex-direction:column;
+  overflow:auto;-webkit-overflow-scrolling:touch;touch-action:manipulation;
+  background:#d7eef5 url('assets/ui/end/end-hall.jpg') center top/cover no-repeat;
+  color:var(--hall-ink);font-family:inherit;box-sizing:border-box;
+  padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+  width:100vw;height:100vh;min-height:100vh;
+  align-items:center;justify-content:center;
+}
+#hvEndRoot.is-open{display:flex}
+#hvEndRoot[hidden]{display:none!important}
+#hvEndRoot .card{
+  width:min(92vw,460px);margin:24px 16px;padding:24px 20px 20px;
+  border:1px solid #d7b883!important;border-radius:22px;
+  background:linear-gradient(180deg,#fff9e9ee,#eee4cadd)!important;
+  box-shadow:0 12px 32px rgba(79,58,27,.18)!important;
+  color:#2d251f!important;text-align:center;
+}
+#hvEndRoot .title{color:#5a3a18!important;text-shadow:none!important}
+#hvEndRoot .desc{color:#6d5a3a!important}
+#hvEndRoot .kicker{color:#8a6736!important}
+#hvEndRoot .moon{
+  background:radial-gradient(circle,#fff2b6,#efbd58 40%,#c69b4b)!important;
+  border-color:#d7b36a!important;
+}
+body.end-3d-active{filter:none}
+body.end-3d-active .hv-brandbar,body.end-3d-active #resbar{display:none!important}
+body.end-3d-active #endScreen{background:transparent!important}
+.rewardveil.show{
+  background:radial-gradient(circle at 50% 42%,rgba(255,248,230,.28),rgba(20,16,12,.45) 62%)!important;
+}
+.rewardcard{
+  background:linear-gradient(180deg,#fff9e9,#f3d7a4 42%,#eee4ca)!important;
+  color:#2d251f!important;border-color:#d7b883!important;
+}
+.rewardtitle{color:#5a3a18!important;text-shadow:none!important}
+.rewarddesc{color:#6d5a3a!important}
+.rewardkicker{color:#8a6736!important}
+.rewarditem{
+  background:linear-gradient(180deg,#fffaf0,#f4e2c2)!important;
+  color:#5a3a18!important;border-color:#d7b883!important;
+}
