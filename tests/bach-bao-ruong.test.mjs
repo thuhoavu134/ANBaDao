@@ -4,8 +4,9 @@ import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
-  BBR_BETS, BBR_CRAFT, BBR_UNLOCK, BBR_BOARD, BBR_SO_CONVERT, spinBbr, spinStep, takeBbr,
-  convertBbr, craftShells, buyBbrShop, rollStars, payAt
+  BBR_BETS, BBR_CRAFT, BBR_UNLOCK, BBR_BOARD, BBR_SO_CONVERT, BBR_WEIGHT, BBR_BUCKET, BBR_PITY_SO,
+  spinBbr, spinStep, takeBbr,
+  convertBbr, craftShells, buyBbrShop, rollStars, payAt, pickBoardIdx
 } from '../src/domain/festival/bach-bao-ruong.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -28,6 +29,27 @@ test('L109: cược 2/10/50, sao nhân, chế sò Tinh/Hoạt, shop điểm', ()
   const s2 = spinStep({ ...p0, so: s1.so, bachBao: s1.bachBao }, { bet: 2, rng: () => 0.9, board, day: 1 });
   assert.equal(s2.stars, 5);
   assert.equal(s2.same, true);
+  const bust = spinStep(
+    { so: 20, bachBao: { pending: { t: 'hoat', stars: 2 }, bet: 2 } },
+    { bet: 2, rng: () => 0, board: [{ t: 'gold', n: 1 }, { t: 'hoat', n: 1 }], day: 1 }
+  );
+  assert.equal(bust.bust, true);
+  assert.equal(bust.bachBao.pending, null);
+  assert.equal(bust.so, 18);
+  assert.ok(BBR_WEIGHT.gold[1] > BBR_WEIGHT.gold[3]);
+  assert.equal(BBR_BUCKET.common, 50);
+  assert.equal(BBR_BUCKET.shard, 30);
+  assert.equal(BBR_BUCKET.chest, 15);
+  assert.equal(BBR_BUCKET.supreme, 5);
+  assert.equal(BBR_PITY_SO, 200);
+  const pity = spinStep(
+    { so: 400, bachBao: { spent: 198, pityAt: 0, bet: 2, pool: 12000, poolMark: 2 } },
+    { bet: 2, rng: () => 0, day: 1 }
+  );
+  assert.equal(pity.cell.t, 'supreme');
+  assert.equal(pity.pity, true);
+  assert.ok(pity.bonusSup === 1 || pity.bonusSup === 2);
+  assert.equal(pickBoardIdx(() => 0, [{ t: 'gold', n: 1 }]), 0);
   const take = takeBbr({ gold: 0, so: s2.so, bachBao: s2.bachBao }, { day: 1 });
   assert.equal(take.ok, true);
   assert.equal(take.stars, 5);
@@ -50,19 +72,23 @@ test('L109: cược 2/10/50, sao nhân, chế sò Tinh/Hoạt, shop điểm', ()
   assert.equal(BBR_UNLOCK.b, 10);
   assert.match(ui, /so-icon\.jpg/);
   assert.match(ui, /S\+/);
-  assert.equal(BBR_BOARD.length, 24);
+  assert.equal(BBR_BOARD.length, 22);
   assert.equal(BBR_BOARD.filter(c => c.t === 'so').length, 0);
-  for (const t of ['gold', 'gems', 'tinh', 'hoat', 'sh_ss', 'sh_ssr', 'chest', 'supreme']) {
+  assert.ok(BBR_BOARD.filter(c => c.t === 'supreme').every(c => c.n === 1));
+  assert.equal(BBR_BOARD.filter(c => c.t === 'supreme').length, 2);
+  assert.ok(BBR_BOARD.filter(c => c.t === 'chest').every(c => c.n === 1));
+  for (const t of ['gold', 'gems', 'tinh', 'hoat', 'sh_ss', 'sh_ssr']) {
     assert.deepEqual([...new Set(BBR_BOARD.filter(c => c.t === t).map(c => c.n))].sort(), [1, 2, 3]);
   }
   const conv = convertBbr({ so: 0, bachBao: { pending: { t: 'gold', stars: 3 }, bet: 2 } }, { day: 1 });
   assert.equal(conv.ok, true);
   assert.equal(conv.so, BBR_SO_CONVERT.gold[3]);
   assert.equal(BBR_BOARD[3].t, 'supreme');
-  assert.match(ui, /spinDelay/);
+  assert.match(ui, /pickIdx/);
+  assert.match(ui, /bust/);
   assert.match(ui, /gold\.png/);
   assert.match(ui, /supreme\.png/);
-  assert.match(ui, /hv-bbr-stack/);
+  assert.doesNotMatch(ui, /<small>\$\{c\.n\}<\/small>/);
   assert.match(ui, /data-bbr-convert/);
   assert.match(ui, /hvCraftSo/);
   assert.doesNotMatch(ui, /data-bbr-craft/);

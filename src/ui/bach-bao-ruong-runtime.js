@@ -16,18 +16,18 @@
   };
   const BOARD = (typeof BBR_BOARD !== 'undefined') ? BBR_BOARD : [
     { t: 'tinh', n: 1 }, { t: 'gold', n: 2 }, { t: 'gold', n: 1 },
-    { t: 'supreme', n: 1 }, { t: 'hoat', n: 1 }, { t: 'gold', n: 3 },
-    { t: 'gems', n: 2 }, { t: 'gems', n: 3 },
-    { t: 'gems', n: 1 }, { t: 'tinh', n: 2 }, { t: 'hoat', n: 2 }, { t: 'sh_ssr', n: 1 },
-    { t: 'sh_ss', n: 1 }, { t: 'sh_ss', n: 3 }, { t: 'chest', n: 3 },
-    { t: 'supreme', n: 2 }, { t: 'supreme', n: 3 }, { t: 'chest', n: 1 },
-    { t: 'chest', n: 2 }, { t: 'sh_ss', n: 2 },
-    { t: 'hoat', n: 3 }, { t: 'tinh', n: 3 }, { t: 'sh_ssr', n: 2 }, { t: 'sh_ssr', n: 3 }
+    { t: 'supreme', n: 1 },
+    { t: 'hoat', n: 1 }, { t: 'gold', n: 1 }, { t: 'gems', n: 3 },
+    { t: 'gems', n: 1 }, { t: 'sh_ss', n: 1 }, { t: 'tinh', n: 2 }, { t: 'chest', n: 1 },
+    { t: 'sh_ssr', n: 3 }, { t: 'sh_ss', n: 3 }, { t: 'sh_ssr', n: 1 },
+    { t: 'supreme', n: 1 },
+    { t: 'hoat', n: 2 }, { t: 'gems', n: 2 }, { t: 'sh_ss', n: 2 },
+    { t: 'hoat', n: 3 }, { t: 'gold', n: 3 }, { t: 'sh_ssr', n: 2 }, { t: 'tinh', n: 3 }
   ];
   const RING = [
-    [1, 1], [2, 1], [3, 1], [4, 1], [5, 1], [6, 1], [7, 1], [8, 1],
-    [8, 2], [8, 3], [8, 4], [8, 5],
-    [8, 6], [7, 6], [6, 6], [5, 6], [4, 6], [3, 6], [2, 6], [1, 6],
+    [1, 1], [2, 1], [3, 1], [4, 1], [5, 1], [6, 1], [7, 1],
+    [7, 2], [7, 3], [7, 4], [7, 5],
+    [7, 6], [6, 6], [5, 6], [4, 6], [3, 6], [2, 6], [1, 6],
     [1, 5], [1, 4], [1, 3], [1, 2]
   ];
   const SO_CV = {
@@ -78,6 +78,54 @@
     return Math.round((row[stars] || 0) * ((bet || 2) / 2));
   }
 
+  const BUCKET = { common: 50, shard: 30, chest: 15, supreme: 5 };
+  const WN = { 1: 5, 2: 3, 3: 2 };
+  const CYCLE = ['sh_ss', 'chest', 'supreme', 'sh_ssr', 'chest', 'supreme'];
+
+  function bucketOf(t) {
+    if (t === 'supreme') return 'supreme';
+    if (t === 'chest') return 'chest';
+    if (t === 'sh_ss' || t === 'sh_ssr') return 'shard';
+    return 'common';
+  }
+
+  function firstType(t) {
+    const i = BOARD.findIndex(c => c.t === t);
+    return i < 0 ? 0 : i;
+  }
+
+  function pickIdx() {
+    const b = st();
+    const bet = b.bet || 2;
+    const continuing = !!b.pending;
+    const spent = (b.spent || 0) + bet;
+    if (!continuing && spent - (b.pityAt || 0) >= 200) return firstType('supreme');
+    const pool = (b.pool || 12000) + bet;
+    const mark = b.poolMark != null ? b.poolMark : 2;
+    const now = Math.floor(pool / 5000);
+    if (!continuing && now > mark) {
+      return firstType(CYCLE[(now - 1 + CYCLE.length) % CYCLE.length]);
+    }
+    const keys = ['common', 'shard', 'chest', 'supreme'];
+    let r = Math.random() * 100;
+    let bucket = 'common';
+    for (let i = 0; i < keys.length; i++) {
+      r -= BUCKET[keys[i]];
+      if (r < 0) { bucket = keys[i]; break; }
+    }
+    const hits = [];
+    BOARD.forEach((c, i) => { if (bucketOf(c.t) === bucket) hits.push(i); });
+    const poolHits = hits.length ? hits : BOARD.map((_, i) => i);
+    let s = 0;
+    const ww = poolHits.map(i => { const x = WN[BOARD[i].n] || 1; s += x; return x; });
+    let x = Math.random() * s;
+    for (let i = 0; i < poolHits.length; i++) {
+      x -= ww[i];
+      if (x < 0) return poolHits[i];
+    }
+    return poolHits[poolHits.length - 1];
+  }
+
   function cellFace(c) {
     const src = ART[c.t] || ART.gold;
     const n = Math.max(1, Math.min(3, c.n || 1));
@@ -113,17 +161,39 @@
     if ((P.so || 0) < bet) { toast?.('Không đủ sò. Cược ' + bet + '.'); return null; }
     P.so -= bet;
     const cell = BOARD[idx];
-    const same = !!(b.pending && b.pending.t === cell.t);
+    const continuing = !!b.pending;
+    const same = !!(continuing && b.pending.t === cell.t);
+    b.spins = (b.spins || 0) + 1;
+    b.spent = (b.spent || 0) + bet;
+    b.pool = (b.pool || 12000) + bet;
+    let pity = false;
+    let bonusSup = 0;
+    if (!continuing && b.spent - (b.pityAt || 0) >= 200) {
+      pity = true;
+      b.pityAt = b.spent;
+      bonusSup = Math.random() < 0.5 ? 2 : 1;
+      if (bonusSup === 2) b.supreme = (b.supreme || 0) + 1;
+    }
+    const mark = b.poolMark != null ? b.poolMark : 2;
+    const now = Math.floor(b.pool / 5000);
+    if (!continuing && now > mark) b.poolMark = now;
+    if (continuing && !same) {
+      b.pending = null;
+      b.lastType = '';
+      b.stars = 1;
+      persist?.();
+      refreshResbar?.();
+      questProgress?.('spin', 1);
+      return { idx, cell, same: false, stars: 0, bust: true, pity: false };
+    }
     const stars = same ? Math.min(6, b.pending.stars + cell.n) : cell.n;
     b.pending = { t: cell.t, stars, n: cell.n };
     b.stars = stars;
     b.lastType = cell.t;
-    b.spins = (b.spins || 0) + 1;
-    b.pool = (b.pool || 12000) + bet;
     persist?.();
     refreshResbar?.();
     questProgress?.('spin', 1);
-    return { idx, cell, same, stars };
+    return { idx, cell, same, stars, bust: false, pity, bonusSup };
   }
 
   let spinning = false;
@@ -136,10 +206,10 @@
 
   function spinDelay(k, total) {
     const t = k / Math.max(1, total - 1);
-    if (t < 0.2) return 210 - t * 800;
-    if (t < 0.62) return 28;
-    const u = (t - 0.62) / 0.38;
-    return 28 + u * u * 260;
+    if (t < 0.22) return 340 - t * 900;
+    if (t < 0.58) return 90;
+    const u = (t - 0.58) / 0.42;
+    return 90 + u * u * 360;
   }
 
   async function runSpin() {
@@ -148,10 +218,10 @@
     if ((P.so || 0) < bet) { toast?.('Không đủ sò. Cược ' + bet + '.'); return; }
     spinning = true;
     document.querySelectorAll('[data-bbr-step]').forEach(b => { b.disabled = true; });
-    const idx = Math.floor(Math.random() * BOARD.length);
+    const idx = pickIdx();
     const n = BOARD.length;
     const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const total = reduced ? Math.max(8, idx + 1) : (n * 3 + idx + 1);
+    const total = reduced ? Math.max(8, idx + 1) : (n * 2 + idx + 1);
     for (let k = 0; k < total; k++) {
       light(k % n);
       await delay(reduced ? 70 : spinDelay(k, total));
@@ -160,12 +230,18 @@
     const r = applyIdx(idx);
     await delay(280);
     spinning = false;
-    if (r) toast?.(r.same ? ('Cộng ' + r.cell.n + ' → ' + r.stars + '★ ' + LAB[r.cell.t]) : (r.stars + '★ ' + LAB[r.cell.t]));
+    if (r) {
+      toast?.(r.bust
+        ? 'Trượt cùng loại. Mất sò lượt này.'
+        : (r.pity
+          ? ('Pity · ' + r.bonusSup + ' Rương Chí Bảo')
+          : (r.same ? ('Cộng ' + r.cell.n + ' → ' + r.stars + '★ ' + LAB[r.cell.t]) : (r.stars + '★ ' + LAB[r.cell.t]))));
+    }
     paintDesk();
   }
 
   function doStep() {
-    return applyIdx(Math.floor(Math.random() * BOARD.length));
+    return applyIdx(pickIdx());
   }
 
   function doTake() {
@@ -297,7 +373,7 @@
     shell.innerHTML = `<div id="hvBbrDesk" class="hv-bbr-kt">
       <div class="hv-bbr-kt-head">
         <h3>Bách Bảo Rương</h3>
-        <div class="hv-bbr-row"><b>${SO_IC} ${P.so || 0}</b><span>Hũ ${b.pool}</span><span>Điểm ${b.pts || 0}</span>
+        <div class="hv-bbr-row"><b>${SO_IC} ${P.so || 0}</b><span>Hũ ${b.pool}</span><span>Pity ${Math.min(200, (b.spent || 0) - (b.pityAt || 0))}/200</span><span>Điểm ${b.pts || 0}</span>
           <span>🎁 ${b.chests || 0}</span><span>👑 ${b.supreme || 0}</span></div>
       </div>
       <div class="hv-bbr-kt-body">
@@ -307,7 +383,7 @@
             const hot = pend && pend.t === c.t && pend.n === c.n;
             const kind = c.t === 'supreme' ? ' is-sup' : (c.t === 'chest' ? ' is-chest' : '');
             return `<button type="button" class="hv-bbr-cell${hot ? ' is-win' : ''}${kind}" data-bbr-cell="${i}" style="grid-column:${pos[0]};grid-row:${pos[1]}" disabled>
-              ${cellFace(c)}<small>${c.n}</small>
+              ${cellFace(c)}
             </button>`;
           }).join('')}
           <div class="hv-bbr-hub">
@@ -319,7 +395,7 @@
           <div class="hv-bbr-bets">${BETS.map(n =>
             `<button type="button" class="hv-bbr-bet${bet === n ? ' is-on' : ''}" data-bbr-bet="${n}">${n} ${SO_IC}</button>`
           ).join('')}</div>
-          <p class="hv-bbr-now">${pend ? (pend.stars + '★ ' + LAB[pend.t] + ' · Tiếp cộng cục cùng loại') : 'Quay — trúng 2 cục rồi Tiếp trúng 3 = 5★'}</p>
+          <p class="hv-bbr-now">${pend ? (pend.stars + '★ ' + LAB[pend.t] + ' · Tiếp cùng loại. Trượt = mất sò + mất thưởng') : 'Quay. Tiếp cùng loại cộng sao. Trượt thì mất sò.'}</p>
           <div class="hv-bbr-actions">
             <button type="button" data-bbr-step ${((P.so || 0) < bet) ? 'disabled' : ''}>${pend ? 'Tiếp' : 'Quay'} · ${bet} ${SO_IC}</button>
             <button type="button" data-bbr-take ${pend ? '' : 'disabled'}>Thưởng</button>
@@ -328,7 +404,7 @@
           <div class="hv-bbr-shop">${SHOP.map(it =>
             `<button type="button" data-bbr-buy="${it.id}">${it.name} · ${it.pts}đ</button>`
           ).join('')}</div>
-          <p class="hv-bbr-note">Không nhận thì Đổi sò. Chế sò ở Rèn (25 Tinh + 25 Hoạt).</p>
+          <p class="hv-bbr-note">Tiếp trúng cùng loại thì cộng sao. Trượt thì mất sò, mất thưởng, cược lại.</p>
         </div>
       </div>
     </div>`;
