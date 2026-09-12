@@ -1,0 +1,136 @@
+{
+  "sampleId": "lac_yen",
+  "controlId": "ong_hang_pho",
+  "summary": [
+    {
+      "label": "390x844",
+      "ok": true,
+      "painted": {
+        "heroId": "lac_yen",
+        "sealCount": 3,
+        "sealText": [
+          "",
+          "",
+          ""
+        ],
+        "sealBg": [
+          "url(\"http://127.0.0.1:18061/assets/ui/skill-seals/lac_yen/basic.jpg\")",
+          "url(\"http://127.0.0.1:18061/assets/ui/skill-seals/lac_yen/ultimate.jpg\")",
+          "url(\"http://127.0.0.1:18061/assets/ui/skill-seals/lac_yen/passive.jpg\")"
+        ],
+        "before": [
+          {
+            "content": "\"\"",
+            "bg": "url(\"http://127.0.0.1:18061/assets/ui/skill-seals/lac_yen/basic.jpg\")"
+          },
+          {
+            "content": "\"\"",
+            "bg": "url(\"http://127.0.0.1:18061/assets/ui/skill-seals/lac_yen/ultimate.jpg\")"
+          },
+          {
+            "content": "\"\"",
+            "bg": "url(\"http://127.0.0.1:18061/assets/ui/skill-seals/lac_yen/passive.jpg\")"
+          }
+        ],
+        "emojiOnSeal": false,
+        "emojiOnBefore": false
+      },
+      "control": {
+        "heroId": "",
+        "sealCount": 3,
+        "sealText": [
+          "⚔",
+          "★",
+          "✦"
+        ],
+        "sealBg": [
+          "none",
+          "none",
+          "none"
+        ],
+        "before": [
+          {
+            "content": "none",
+            "bg": "none"
+          },
+          {
+            "content": "none",
+            "bg": "none"
+          },
+          {
+            "content": "none",
+            "bg": "none"
+          }
+        ],
+        "emojiOnSeal": true,
+        "emojiOnBefore": false
+      },
+      "errors": []
+    },
+    {
+      "label": "768x1024",
+      "ok": true,
+      "painted": {
+        "heroId": "lac_yen",
+        "sealCount": 3,
+        "sealText": [
+          "",
+          "",
+          ""
+        ],
+        "sealBg": [
+          "url(\"http://127.0.0.1:18061/assets/ui/skill-seals/lac_yen/basic.jpg\")",
+          "url(\"http://127.0.0.1:18061/assets/ui/skill-seals/lac_yen/ultimate.jpg\")",
+          "url(\"http://127.0.0.1:18061/assets/ui/skill-seals/lac_yen/passive.jpg\")"
+        ],
+        "before": [
+          {
+            "content": "\"\"",
+            "bg": "url(\"http://127.0.0.1:18061/assets/ui/skill-seals/lac_yen/basic.jpg\")"
+          },
+          {
+            "content": "\"\"",
+            "bg": "url(\"http://127.0.0.1:18061/assets/ui/skill-seals/lac_yen/ultimate.jpg\")"
+          },
+          {
+            "content": "\"\"",
+            "bg": "url(\"http://127.0.0.1:18061/assets/ui/skill-seals/lac_yen/passive.jpg\")"
+          }
+        ],
+        "emojiOnSeal": false,
+        "emojiOnBefore": false
+      },
+      "control": {
+        "heroId": "",
+        "sealCount": 3,
+        "sealText": [
+          "⚔",
+          "★",
+          "✦"
+        ],
+        "sealBg": [
+          "none",
+          "none",
+          "none"
+        ],
+        "before": [
+          {
+            "content": "none",
+            "bg": "none"
+          },
+          {
+            "content": "none",
+            "bg": "none"
+          },
+          {
+            "content": "none",
+            "bg": "none"
+          }
+        ],
+        "emojiOnSeal": true,
+        "emojiOnBefore": false
+      },
+      "errors": []
+    }
+  ]
+}

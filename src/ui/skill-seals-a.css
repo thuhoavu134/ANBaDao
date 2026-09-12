@@ -1,0 +1,31 @@
+/* TKT-0061 — ấn UI exclusive lac_yen / cung_thu_tre / co_dao_ganh_hoi */
+#hdBody[data-hero-id="lac_yen"] .hv-scene-skill-seal,
+#hdBody[data-hero-id="cung_thu_tre"] .hv-scene-skill-seal,
+#hdBody[data-hero-id="co_dao_ganh_hoi"] .hv-scene-skill-seal{
+  color:transparent!important;font-size:0!important;overflow:hidden;
+  background-size:cover!important;background-position:center!important;background-repeat:no-repeat!important;
+}
+#hdBody[data-hero-id="lac_yen"] .skillbox[data-skill-slot]:before,
+#hdBody[data-hero-id="cung_thu_tre"] .skillbox[data-skill-slot]:before,
+#hdBody[data-hero-id="co_dao_ganh_hoi"] .skillbox[data-skill-slot]:before{
+  content:""!important;color:transparent!important;font-size:0!important;
+  background-size:cover!important;background-position:center!important;background-repeat:no-repeat!important;
+}
+#hdBody[data-hero-id="lac_yen"] .hv-scene-skill[data-skill-slot="basic"] .hv-scene-skill-seal,
+#hdBody[data-hero-id="lac_yen"] .skillbox[data-skill-slot="basic"]:before{background-image:url('assets/ui/skill-seals/lac_yen/basic.jpg')!important}
+#hdBody[data-hero-id="lac_yen"] .hv-scene-skill[data-skill-slot="ultimate"] .hv-scene-skill-seal,
+#hdBody[data-hero-id="lac_yen"] .skillbox[data-skill-slot="ultimate"]:before{background-image:url('assets/ui/skill-seals/lac_yen/ultimate.jpg')!important}
+#hdBody[data-hero-id="lac_yen"] .hv-scene-skill[data-skill-slot="passive"] .hv-scene-skill-seal,
+#hdBody[data-hero-id="lac_yen"] .skillbox[data-skill-slot="passive"]:before{background-image:url('assets/ui/skill-seals/lac_yen/passive.jpg')!important}
+#hdBody[data-hero-id="cung_thu_tre"] .hv-scene-skill[data-skill-slot="basic"] .hv-scene-skill-seal,
+#hdBody[data-hero-id="cung_thu_tre"] .skillbox[data-skill-slot="basic"]:before{background-image:url('assets/ui/skill-seals/cung_thu_tre/basic.jpg')!important}
+#hdBody[data-hero-id="cung_thu_tre"] .hv-scene-skill[data-skill-slot="ultimate"] .hv-scene-skill-seal,
+#hdBody[data-hero-id="cung_thu_tre"] .skillbox[data-skill-slot="ultimate"]:before{background-image:url('assets/ui/skill-seals/cung_thu_tre/ultimate.jpg')!important}
+#hdBody[data-hero-id="cung_thu_tre"] .hv-scene-skill[data-skill-slot="passive"] .hv-scene-skill-seal,
+#hdBody[data-hero-id="cung_thu_tre"] .skillbox[data-skill-slot="passive"]:before{background-image:url('assets/ui/skill-seals/cung_thu_tre/passive.jpg')!important}
+#hdBody[data-hero-id="co_dao_ganh_hoi"] .hv-scene-skill[data-skill-slot="basic"] .hv-scene-skill-seal,
+#hdBody[data-hero-id="co_dao_ganh_hoi"] .skillbox[data-skill-slot="basic"]:before{background-image:url('assets/ui/skill-seals/co_dao_ganh_hoi/basic.jpg')!important}
+#hdBody[data-hero-id="co_dao_ganh_hoi"] .hv-scene-skill[data-skill-slot="ultimate"] .hv-scene-skill-seal,
+#hdBody[data-hero-id="co_dao_ganh_hoi"] .skillbox[data-skill-slot="ultimate"]:before{background-image:url('assets/ui/skill-seals/co_dao_ganh_hoi/ultimate.jpg')!important}
+#hdBody[data-hero-id="co_dao_ganh_hoi"] .hv-scene-skill[data-skill-slot="passive"] .hv-scene-skill-seal,
+#hdBody[data-hero-id="co_dao_ganh_hoi"] .skillbox[data-skill-slot="passive"]:before{background-image:url('assets/ui/skill-seals/co_dao_ganh_hoi/passive.jpg')!important}

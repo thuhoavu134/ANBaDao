@@ -1,0 +1,31 @@
+/* TKT-0063 — ấn UI exclusive thach_quyen / dinh_loi / to_diep */
+#hdBody[data-hero-id="thach_quyen"] .hv-scene-skill-seal,
+#hdBody[data-hero-id="dinh_loi"] .hv-scene-skill-seal,
+#hdBody[data-hero-id="to_diep"] .hv-scene-skill-seal{
+  color:transparent!important;font-size:0!important;overflow:hidden;
+  background-size:cover!important;background-position:center!important;background-repeat:no-repeat!important;
+}
+#hdBody[data-hero-id="thach_quyen"] .skillbox[data-skill-slot]:before,
+#hdBody[data-hero-id="dinh_loi"] .skillbox[data-skill-slot]:before,
+#hdBody[data-hero-id="to_diep"] .skillbox[data-skill-slot]:before{
+  content:""!important;color:transparent!important;font-size:0!important;
+  background-size:cover!important;background-position:center!important;background-repeat:no-repeat!important;
+}
+#hdBody[data-hero-id="thach_quyen"] .hv-scene-skill[data-skill-slot="basic"] .hv-scene-skill-seal,
+#hdBody[data-hero-id="thach_quyen"] .skillbox[data-skill-slot="basic"]:before{background-image:url('assets/ui/skill-seals/thach_quyen/basic.jpg')!important}
+#hdBody[data-hero-id="thach_quyen"] .hv-scene-skill[data-skill-slot="ultimate"] .hv-scene-skill-seal,
+#hdBody[data-hero-id="thach_quyen"] .skillbox[data-skill-slot="ultimate"]:before{background-image:url('assets/ui/skill-seals/thach_quyen/ultimate.jpg')!important}
+#hdBody[data-hero-id="thach_quyen"] .hv-scene-skill[data-skill-slot="passive"] .hv-scene-skill-seal,
+#hdBody[data-hero-id="thach_quyen"] .skillbox[data-skill-slot="passive"]:before{background-image:url('assets/ui/skill-seals/thach_quyen/passive.jpg')!important}
+#hdBody[data-hero-id="dinh_loi"] .hv-scene-skill[data-skill-slot="basic"] .hv-scene-skill-seal,
+#hdBody[data-hero-id="dinh_loi"] .skillbox[data-skill-slot="basic"]:before{background-image:url('assets/ui/skill-seals/dinh_loi/basic.jpg')!important}
+#hdBody[data-hero-id="dinh_loi"] .hv-scene-skill[data-skill-slot="ultimate"] .hv-scene-skill-seal,
+#hdBody[data-hero-id="dinh_loi"] .skillbox[data-skill-slot="ultimate"]:before{background-image:url('assets/ui/skill-seals/dinh_loi/ultimate.jpg')!important}
+#hdBody[data-hero-id="dinh_loi"] .hv-scene-skill[data-skill-slot="passive"] .hv-scene-skill-seal,
+#hdBody[data-hero-id="dinh_loi"] .skillbox[data-skill-slot="passive"]:before{background-image:url('assets/ui/skill-seals/dinh_loi/passive.jpg')!important}
+#hdBody[data-hero-id="to_diep"] .hv-scene-skill[data-skill-slot="basic"] .hv-scene-skill-seal,
+#hdBody[data-hero-id="to_diep"] .skillbox[data-skill-slot="basic"]:before{background-image:url('assets/ui/skill-seals/to_diep/basic.jpg')!important}
+#hdBody[data-hero-id="to_diep"] .hv-scene-skill[data-skill-slot="ultimate"] .hv-scene-skill-seal,
+#hdBody[data-hero-id="to_diep"] .skillbox[data-skill-slot="ultimate"]:before{background-image:url('assets/ui/skill-seals/to_diep/ultimate.jpg')!important}
+#hdBody[data-hero-id="to_diep"] .hv-scene-skill[data-skill-slot="passive"] .hv-scene-skill-seal,
+#hdBody[data-hero-id="to_diep"] .skillbox[data-skill-slot="passive"]:before{background-image:url('assets/ui/skill-seals/to_diep/passive.jpg')!important}

@@ -2,7 +2,7 @@
 
 Đọc `docs/HANDOFF-2026-09-12.md` rồi `docs/LUNA-HANDOFF.md` trước khi sửa game.
 
-Bàn giao mới nhất **12/09/2026**: **LIVE** TKT-0058…0060 Wave G halls + TKT-0064 Safari overlay pin (#53) → main `b0d6d9d`. Ấn UI 0061–0063 còn READY. Wave F #51 Hành trình+Kết quả REVIEW riêng. Owner: 72 tướng + asset đầy đủ là **wave sau**. Đọc `docs/HANDOFF-2026-09-12.md`.
+Bàn giao mới nhất **12/09/2026**: **REVIEW** TKT-0061…0063 ấn UI skill seals (`work/l51-skill-seals-20260912`). Wave G halls + Safari pin LIVE (#53). Wave F #51 Hành trình+Kết quả REVIEW riêng. Owner: 72 tướng + asset đầy đủ là **wave sau**. Đọc `docs/HANDOFF-2026-09-12.md`.
 
 
 

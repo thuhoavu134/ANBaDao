@@ -1,0 +1,136 @@
+{
+  "sampleId": "dinh_loi",
+  "controlId": "ong_hang_pho",
+  "summary": [
+    {
+      "label": "390x844",
+      "ok": true,
+      "painted": {
+        "heroId": "dinh_loi",
+        "sealCount": 3,
+        "sealText": [
+          "",
+          "",
+          ""
+        ],
+        "sealBg": [
+          "url(\"http://127.0.0.1:18063/assets/ui/skill-seals/dinh_loi/basic.jpg\")",
+          "url(\"http://127.0.0.1:18063/assets/ui/skill-seals/dinh_loi/ultimate.jpg\")",
+          "url(\"http://127.0.0.1:18063/assets/ui/skill-seals/dinh_loi/passive.jpg\")"
+        ],
+        "before": [
+          {
+            "content": "\"\"",
+            "bg": "url(\"http://127.0.0.1:18063/assets/ui/skill-seals/dinh_loi/basic.jpg\")"
+          },
+          {
+            "content": "\"\"",
+            "bg": "url(\"http://127.0.0.1:18063/assets/ui/skill-seals/dinh_loi/ultimate.jpg\")"
+          },
+          {
+            "content": "\"\"",
+            "bg": "url(\"http://127.0.0.1:18063/assets/ui/skill-seals/dinh_loi/passive.jpg\")"
+          }
+        ],
+        "emojiOnSeal": false,
+        "emojiOnBefore": false
+      },
+      "control": {
+        "heroId": "",
+        "sealCount": 3,
+        "sealText": [
+          "⚔",
+          "★",
+          "✦"
+        ],
+        "sealBg": [
+          "none",
+          "none",
+          "none"
+        ],
+        "before": [
+          {
+            "content": "none",
+            "bg": "none"
+          },
+          {
+            "content": "none",
+            "bg": "none"
+          },
+          {
+            "content": "none",
+            "bg": "none"
+          }
+        ],
+        "emojiOnSeal": true,
+        "emojiOnBefore": false
+      },
+      "errors": []
+    },
+    {
+      "label": "768x1024",
+      "ok": true,
+      "painted": {
+        "heroId": "dinh_loi",
+        "sealCount": 3,
+        "sealText": [
+          "",
+          "",
+          ""
+        ],
+        "sealBg": [
+          "url(\"http://127.0.0.1:18063/assets/ui/skill-seals/dinh_loi/basic.jpg\")",
+          "url(\"http://127.0.0.1:18063/assets/ui/skill-seals/dinh_loi/ultimate.jpg\")",
+          "url(\"http://127.0.0.1:18063/assets/ui/skill-seals/dinh_loi/passive.jpg\")"
+        ],
+        "before": [
+          {
+            "content": "\"\"",
+            "bg": "url(\"http://127.0.0.1:18063/assets/ui/skill-seals/dinh_loi/basic.jpg\")"
+          },
+          {
+            "content": "\"\"",
+            "bg": "url(\"http://127.0.0.1:18063/assets/ui/skill-seals/dinh_loi/ultimate.jpg\")"
+          },
+          {
+            "content": "\"\"",
+            "bg": "url(\"http://127.0.0.1:18063/assets/ui/skill-seals/dinh_loi/passive.jpg\")"
+          }
+        ],
+        "emojiOnSeal": false,
+        "emojiOnBefore": false
+      },
+      "control": {
+        "heroId": "",
+        "sealCount": 3,
+        "sealText": [
+          "⚔",
+          "★",
+          "✦"
+        ],
+        "sealBg": [
+          "none",
+          "none",
+          "none"
+        ],
+        "before": [
+          {
+            "content": "none",
+            "bg": "none"
+          },
+          {
+            "content": "none",
+            "bg": "none"
+          },
+          {
+            "content": "none",
+            "bg": "none"
+          }
+        ],
+        "emojiOnSeal": true,
+        "emojiOnBefore": false
+      },
+      "errors": []
+    }
+  ]
+}

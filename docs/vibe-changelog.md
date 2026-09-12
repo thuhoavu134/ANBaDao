@@ -1,3 +1,7 @@
+## 12/09/2026 — TKT-0061…0063 ấn UI skill seals REVIEW
+
+Owner gõ `tiếp`. Wrap `renderHeroDetail`, 27 medallion jpg exclusive, CSS scoped `[data-hero-id]`. Không sửa `hero-detail-tabs.js` / `index.html` / `battle.html`. Chrome 390×844 + 768×1024 PASS. Safari NOT_RUN. Wave F #51 không trộn. Không merge tới `live`.
+
 ## 12/09/2026 — TKT-0058…0060 Wave G halls + TKT-0064 Safari pin LIVE
 
 Owner gõ `live`. Squash [#53](https://github.com/bktimmy247/luc-than/pull/53) → main `b0d6d9d`. Cốt truyện / Trực Tuyến / Trận Hình overlay body + pin Safari. Ấn UI 0061–0063 còn READY. Wave F #51 không trộn.

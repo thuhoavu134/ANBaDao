@@ -1,3 +1,7 @@
+## 2026-09-12 — TKT-0061…0063 ấn UI skill seals · REVIEW
+
+Nhánh `work/l51-skill-seals-20260912`. Wrap `renderHeroDetail` sau tabs; 27 jpg `assets/ui/skill-seals/{id}/{basic,ultimate,passive}.jpg`; CSS `#hdBody[data-hero-id]`. Chrome 390×844 + 768×1024 PASS (Lạc Yên / Phong Tử / Đình Lôi). Safari NOT_RUN. Không sửa `hero-detail-tabs.js` / `index.html` / `battle.html` / `campaign-scene.js`. 72 tướng vẫn wave sau. Không merge tới `live`.
+
 ## 2026-09-12 — TKT-0058…0060 Wave G halls + TKT-0064 Safari pin · LIVE
 
 Owner gõ `live`. Squash [#53](https://github.com/bktimmy247/luc-than/pull/53) → main `b0d6d9d`. Overlay Cốt truyện / Trực Tuyến / Trận Hình + pin `visualViewport`. Safari device NOT_RUN. Ấn UI 0061–0063 READY. Wave F #51 không trộn.

@@ -1,3 +1,7 @@
+## 12/09/2026 — TKT-0061…0063 ấn UI skill seals REVIEW
+
+Wrap `renderHeroDetail` sau tabs. 9 tướng × 3 ấn jpg `assets/ui/skill-seals/{id}/`. CSS `#hdBody[data-hero-id]`. Ông Phở / Lục Ảnh / Thầy Mo giữ emoji. 72 tướng vẫn wave sau. Không merge tới `live`.
+
 ## 12/09/2026 — Wave G halls + Safari pin LIVE
 
 Owner `live` [#53](https://github.com/bktimmy247/luc-than/pull/53) → `b0d6d9d`. Cốt truyện / Trực Tuyến / Trận Hình overlay body. Pin Safari `visualViewport`. 72 tướng vẫn wave sau.
