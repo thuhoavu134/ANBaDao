@@ -1,4 +1,9 @@
+## 12/09/2026 — Wave E TKT-0054…0055 REVIEW
+
+Owner gõ `tiếp`. Nhật Ký Mơ + Chinh chiến AFK home restyle hall giả 3D overlay body. Bày trận đóng băng. Không merge tới `live`.
+
 ## 12/09/2026 — Wave D TKT-0053 LIVE
+
 
 Owner gõ `live`. Squash [#49](https://github.com/bktimmy247/luc-than/pull/49) → main `ea59313`. Hồ sơ tướng overlay body + 9 nền showcase.
 

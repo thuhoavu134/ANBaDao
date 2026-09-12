@@ -32,6 +32,11 @@ const WAVE_D = [
   ['TKT-0053', 'hero-detail']
 ];
 
+const WAVE_E = [
+  ['TKT-0054', 'daily'],
+  ['TKT-0055', 'campaign']
+];
+
 test('lane stubs exist and are imported once from build-static', () => {
   const build = read('scripts/build-static.mjs');
   for (const [id, slug] of LANES) {
@@ -62,9 +67,20 @@ test('lane stubs exist and are imported once from build-static', () => {
     const reserved = new RegExp("LANE = '" + id + "'").test(stub);
     assert.equal(filledHall || reserved, true, id + ' wave D stub');
   }
+  for (const [id, slug] of WAVE_E) {
+    const rel = `./lanes/tkt-${id.slice(4)}-${slug}.mjs`;
+    const hits = build.split(rel).length - 1;
+    assert.equal(hits, 1, id + ' import count');
+    const stub = read('scripts/lanes/tkt-' + id.slice(4) + '-' + slug + '.mjs');
+    const filled3d = new RegExp("await import\\(['\"]\\.\\./" + slug + "-3d-v1\\.mjs['\"]\\)").test(stub);
+    const reserved = new RegExp("LANE = '" + id + "'").test(stub);
+    assert.equal(filled3d || reserved, true, id + ' wave E stub');
+  }
   assert.match(build, /daily-runtime-v1\.mjs[\s\S]*lanes\/tkt-0037-bag\.mjs/);
   assert.match(build, /lanes\/tkt-0044-vault\.mjs[\s\S]*lanes\/tkt-0046-tower\.mjs/);
   assert.match(build, /lanes\/tkt-0052-festival\.mjs[\s\S]*lanes\/tkt-0053-hero-detail\.mjs/);
+  assert.match(build, /lanes\/tkt-0053-hero-detail\.mjs[\s\S]*lanes\/tkt-0054-daily\.mjs/);
+  assert.match(build, /lanes\/tkt-0054-daily\.mjs[\s\S]*lanes\/tkt-0055-campaign\.mjs/);
 });
 
 test('wave A tickets are exclusive and freeze hub wiring', () => {
@@ -98,6 +114,12 @@ test('wave A tickets are exclusive and freeze hub wiring', () => {
     locksC.add(lock);
   }
   for (const [id] of WAVE_D) {
+    const md = read('tickets/' + id + '/ticket.md');
+    assert.match(md, /status: (READY|REVIEW|LIVE)/);
+    assert.match(md, /Không sửa `index\.html`/);
+    assert.match(md, /document\.body\.append/);
+  }
+  for (const [id] of WAVE_E) {
     const md = read('tickets/' + id + '/ticket.md');
     assert.match(md, /status: (READY|REVIEW|LIVE)/);
     assert.match(md, /Không sửa `index\.html`/);

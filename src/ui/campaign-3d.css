@@ -1,0 +1,35 @@
+#hvCampaignScene{
+  position:fixed;inset:0;z-index:100000;
+  background:#d7eef5 url('assets/ui/campaign/campaign-hall.jpg') center top/cover no-repeat!important;
+  color:#2d251f!important;
+}
+#hvCampaignScene.is-open{display:flex;flex-direction:column}
+#hvCampaignScene.hv-campaign-3d .cs-home{
+  background:transparent!important;
+}
+#hvCampaignScene.hv-campaign-3d .cs-header{
+  background:linear-gradient(110deg,rgba(255,248,230,.94),rgba(227,236,225,.88))!important;
+  border-bottom:1px solid #d7b883!important;
+}
+#hvCampaignScene.hv-campaign-3d .cs-scroll{
+  background:transparent!important;
+}
+#hvCampaignScene.hv-campaign-3d .cs-landscape{
+  background:linear-gradient(0deg,rgba(247,237,216,.28) 0%,transparent 16%,transparent 78%,rgba(228,236,226,.2) 100%)!important;
+}
+#hvCampaignScene.hv-campaign-3d .cs-content{
+  background:transparent!important;
+}
+#hvCampaignScene.hv-campaign-3d .cs-chest{
+  background:linear-gradient(135deg,#fff9e9ee,#eee4cadd)!important;
+  border:1px solid #d7b883!important;
+}
+#hvCampaignScene.hv-campaign-3d .cs-dock{
+  background:linear-gradient(#fff6df,#f3d7a4)!important;
+  border-top:1px solid #d7b883!important;
+}
+#hvCampaignScene.hv-campaign-3d .cs-primary{
+  border:1px solid #92652b!important;
+  background:linear-gradient(#eccc7e,#c69b4b)!important;
+}
+body.campaign-3d-active .hv-brandbar,body.campaign-3d-active #resbar{display:none!important}

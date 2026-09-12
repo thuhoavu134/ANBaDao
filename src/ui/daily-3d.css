@@ -1,0 +1,53 @@
+#hvDailyRoot{
+  --daily-ink:#2d251f;
+  --daily-muted:#6d5a3a;
+  --daily-gold:#d58a14;
+  --daily-mist:#8a6736;
+  position:fixed;inset:0;z-index:80;display:none;flex-direction:column;
+  overflow:auto;-webkit-overflow-scrolling:touch;touch-action:manipulation;
+  background:#d7eef5 url('assets/ui/daily/daily-hall.jpg') center top/cover no-repeat!important;
+  color:var(--daily-ink)!important;font-family:inherit;box-sizing:border-box;
+  padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);min-height:0;height:auto;
+}
+#hvDailyRoot.is-open{display:flex}
+#hvDailyRoot[hidden]{display:none!important}
+#hvDailyRoot:before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,248,230,.22),rgba(247,237,216,.08) 42%,rgba(255,255,255,0))!important;
+}
+#hvDailyRoot > *{position:relative;z-index:1}
+#hvDailyRoot .hv-daily-top{
+  background:linear-gradient(180deg,rgba(188,220,231,.96),rgba(247,237,216,.92));
+  border-bottom:1px solid #d7b883;
+}
+#hvDailyRoot .hv-daily-back{
+  background:linear-gradient(145deg,#fff7df,#f0c692)!important;color:#7a4a1f!important;
+  box-shadow:0 0 0 1px #d7b36a,0 2px 6px rgba(79,58,27,.2)!important;
+}
+#hvDailyRoot .hv-daily-chip{
+  background:rgba(255,248,230,.88)!important;color:#5a3a18!important;
+  box-shadow:0 0 0 1px #d7b883!important;
+}
+#hvDailyRoot .hv-daily-title{color:#5a3a18!important;text-shadow:0 1px 0 #fff8e4!important}
+#hvDailyRoot .hv-daily-kicker,#hvDailyRoot .hv-daily-best,#hvDailyRoot .hv-daily-copy{color:#6d5a3a!important}
+#hvDailyRoot .hv-daily-panel{
+  background:linear-gradient(180deg,rgba(255,248,230,.9),rgba(247,237,216,.96))!important;
+  box-shadow:0 -12px 28px rgba(79,58,27,.12)!important;
+  border-top:1px solid #d7b883!important;
+}
+#hvDailyRoot .hv-daily-sec{
+  background:rgba(255,250,240,.78)!important;
+  box-shadow:0 0 0 1px #d7b883!important;
+}
+#hvDailyRoot .hv-daily-sec h3{color:#5a3a18!important}
+#hvDailyRoot .hv-daily-day{
+  background:linear-gradient(180deg,#fffaf0,#f4e2c2)!important;color:#2d251f!important;
+  box-shadow:0 0 0 1px #d7b883!important;
+}
+#hvDailyRoot .hv-daily-day.is-claimed{background:linear-gradient(180deg,#efe3c4,#e0c894)!important}
+#hvDailyRoot .hv-daily-go,#hvDailyRoot .hv-daily-claim,#hvDailyRoot .hv-daily-nap,#hvDailyRoot .hv-daily-mile{
+  background:linear-gradient(#eccc7e,#c69b4b)!important;color:#3e321c!important;
+  border:1px solid #92652b!important;
+}
+body.daily-3d-active .hv-brandbar,body.daily-3d-active #resbar{display:none!important}
+body.daily-3d-active #dailyScreen{background:transparent!important}

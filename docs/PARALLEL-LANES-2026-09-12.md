@@ -10,6 +10,8 @@ Owner: rà soát chức năng còn thiếu, tách ticket **độc lập** để 
 
 **Wave D LIVE** 12/09: owner gõ `live`. Squash #49 → main `ea59313`.
 
+**Wave E REVIEW** 12/09: owner gõ `tiếp`. Nhật Ký Mơ + Chinh chiến AFK home hall giả 3D. Không merge tới `live`.
+
 
 
 
@@ -21,6 +23,8 @@ Owner: rà soát chức năng còn thiếu, tách ticket **độc lập** để 
 |---|---|
 | Live | Chinh chiến/AFK/Bày trận/6v6 · Tướng overlay · Hồ sơ tướng overlay + 12 nền showcase · Trợ trận 11 nan · Lịch Luyện + Nhật Ký · Tháp/Mộng Lộ/Chợ/Gọi/Đấu/Săn/Lễ **hall giả 3D** · Rèn · Túi/Thư/Việc/Bang/Bạn/Chat/Tộc/Kho · kit v2 12 tướng |
 | Wave D | **LIVE** TKT-0053 (#49) Hồ sơ tướng overlay body + 9 nền showcase |
+| Wave E | **REVIEW** TKT-0054 Nhật Ký Mơ + TKT-0055 Chinh chiến AFK home giả 3D |
+
 | Không mở ticket | Combat V2 / 42 S+ · 5 nan Lịch `go:null` · visual Bày trận · seed/banner/roster 12 · Auth/DB online · L02c reward (chờ owner) |
 
 ---
@@ -95,6 +99,15 @@ Một agent. Không tách 10 PR (cùng `skill-kit.mjs`).
 | [TKT-0053](../tickets/TKT-0053/ticket.md) | Hồ sơ tướng overlay + 9 nền showcase | `tkt-0053-hero-detail.mjs` | `hero-detail-hall` |
 
 Không sửa `hero-detail-tabs.js` / 3 PNG Ông Phở · Lục Ảnh · Thầy Mo.
+
+## 3d. Wave E — 2 lane sơn mài/giấy → giả 3D
+
+| Ticket | Màn | Stub | Khóa | Hub |
+|---|---|---|---|---|
+| [TKT-0054](../tickets/TKT-0054/ticket.md) | Nhật Ký Mơ | `tkt-0054-daily.mjs` | `daily-3d` | Side trái Nhiệm vụ |
+| [TKT-0055](../tickets/TKT-0055/ticket.md) | Chinh chiến AFK home | `tkt-0055-campaign.mjs` | `campaign-3d` | Dock Chinh chiến |
+
+Chỉ sửa file `*-3d.*` + hall jpg. **Không** sửa `daily-runtime.js` / `campaign-scene.js`. TKT-0055 **không** restyle `.cs-prepare`.
 
 ---
 
