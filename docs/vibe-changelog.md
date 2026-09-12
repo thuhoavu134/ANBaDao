@@ -1,3 +1,7 @@
+## 12/09/2026 — Wave H overlay LIVE
+
+Owner gõ live nốt. Squash [#59](https://github.com/bktimmy247/luc-than/pull/59) → `0622509` Tháp NPC. [#62](https://github.com/bktimmy247/luc-than/pull/62) → `298828b` Giáo Trường. [#61](https://github.com/bktimmy247/luc-than/pull/61) → `fa71369` ấn 3 tướng. [#63](https://github.com/bktimmy247/luc-than/pull/63) → `576d3c8` Thử Thách. Safari NOT_RUN. Vercel Hobby luc-than hết quota (TKT-0078).
+
 ## 12/09/2026 — TKT-0069 Thử Thách hall giả 3D REVIEW
 
 Wrap startChallenge mở hall chọn ải, Xuất chiến mới iframe. Chrome 390×844 + 768×1024 PASS. Safari NOT_RUN. Không merge tới live.

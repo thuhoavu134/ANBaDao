@@ -2,7 +2,7 @@
 
 Đọc `docs/HANDOFF-2026-09-12.md` rồi `docs/LUNA-HANDOFF.md` trước khi sửa game.
 
-Bàn giao mới nhất **12/09/2026 tối**: owner hết quota session. Prompt dán [docs/AGENT-PROMPT.md](docs/AGENT-PROMPT.md). Snapshot [docs/HANDOFF-2026-09-12.md](docs/HANDOFF-2026-09-12.md). TKT-0075 LIVE [#57](https://github.com/bktimmy247/luc-than/pull/57) `ce1a0e1`. **Agent tiếp = TKT-0065** Tháp trận NPC (stub). Wave J: [TKT-0076](tickets/TKT-0076/ticket.md) Neon, [TKT-0077](tickets/TKT-0077/ticket.md) OAuth chờ owner, [TKT-0078](tickets/TKT-0078/ticket.md) Vercel sau 13/09 17:15 +07. Alias luc-than.vercel.app còn kẹt login `282df9d`. 72 tướng = wave sau.
+Bàn giao mới nhất **12/09/2026 tối**: Wave H overlay LIVE — Tháp #59 `0622509` · Giáo Trường #62 `298828b` · ấn D #61 `fa71369` · Thử Thách #63 `576d3c8` · chip #60 `6ddad79` · banner đỏ #64 `6686efa`. Việc kế: [TKT-0078](tickets/TKT-0078/ticket.md) alias sau 13/09 17:15 +07, [TKT-0076](tickets/TKT-0076/ticket.md) Neon. 72 tướng = wave sau.
 
 
 

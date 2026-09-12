@@ -1,11 +1,11 @@
 ---
 id: TKT-0065
 title: Tháp Trắng Đêm — đội NPC tự tạo + trận iframe thật
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 created: 2026-09-12T07:20:00.000Z
-updated: 2026-09-12T10:40:00.000Z
+updated: 2026-09-12T11:40:00.000Z
 acceptance_ids: ['L65-T1', 'L65-T2', 'L65-T3', 'L65-T4', 'L65-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths: ['src/domain/tower/tower-npc-team.mjs', 'src/ui/tower-battle-runtime.js', 'scripts/tower-battle-v1.mjs', 'scripts/lanes/tkt-0065-tower-battle.mjs', 'scripts/qa-tower-battle.mjs', 'tests/tower-battle.test.mjs', 'docs/qa/L65-TOWER-BATTLE/']
@@ -73,4 +73,4 @@ Shared read-only: `src/ui/tower-runtime.js` `startTower` (wrap, không rewrite f
 
 `index.html` `startHunt` / `startRogueBattle` / legacy `startTower` (~4188) — `DATA.encounters.__x` + `ST.mode` + `runBattle`. `rogueEncounter` / `rivalDefs` cho `sourceHeroId`.
 
-Builder → REVIEW. Không tự MERGED/DONE.
+Builder → LIVE. Owner gõ live nốt. Squash [#59](https://github.com/bktimmy247/luc-than/pull/59) → main `0622509`.

@@ -24,9 +24,11 @@ Owner: rà soát chức năng còn thiếu, tách ticket **độc lập** để 
 
 **Wave H overlay TKT-0066 LIVE** 12/09: owner gõ `live`. Squash [#60](https://github.com/bktimmy247/luc-than/pull/60) → main `6ddad79`. Chip Thành Chính; Lịch chỉ mũi tên ‹.
 
+**Wave H overlay LIVE** 12/09: owner gõ live nốt. Squash #59 Tháp `0622509` · #62 Giáo Trường `298828b` · #61 ấn `fa71369` · #63 Thử Thách `576d3c8`. Plus #60 chip `6ddad79`.
+
 **Wave J TKT-0079 LIVE** 12/09: owner gõ `live`. Squash [#64](https://github.com/bktimmy247/luc-than/pull/64) → main `6686efa`. Banner đỏ AbortError tắt.
 
-**Wave J tickets READY** 12/09 tối: TKT-0076 Neon, TKT-0077 OAuth WAITING_OWNER, TKT-0078 Vercel WAITING_QUOTA. TKT-0066 overlay đã điền; 0065/0067–0069 còn PR.
+**Wave J tickets READY** 12/09 tối: TKT-0076 Neon, TKT-0077 OAuth WAITING_OWNER, TKT-0078 Vercel WAITING_QUOTA. Wave H overlay đã điền.
 
 **Wave I LIVE** 12/09: owner gõ `live`. Squash [#56](https://github.com/bktimmy247/luc-than/pull/56) → main `282df9d`. TKT-0074 đăng nhập.
 
@@ -45,7 +47,7 @@ Owner: rà soát chức năng còn thiếu, tách ticket **độc lập** để 
 | Wave E | **LIVE** TKT-0054…0055 (#50) Nhật Ký Mơ + Chinh chiến AFK home giả 3D |
 | Wave F | **LIVE** TKT-0056…0057 (#51) Hành trình + Kết quả hall giả 3D |
 | Wave G | **Halls LIVE** TKT-0058…0060 + Safari pin TKT-0064 (#53). **Ấn UI LIVE** 0061…0063 (#54) |
-| Wave H | **Coordinator LIVE** #55 stub. **TKT-0066 LIVE** #60 chip Thành Chính. 0065/0067/0068/0069 còn PR REVIEW |
+| Wave H | **LIVE** #55 stub + #59 Tháp + #60 chip + #62 Giáo Trường + #61 ấn D + #63 Thử Thách |
 | Wave I | **LIVE** TKT-0074 (#56) đăng nhập + tài khoản |
 | Wave J | **Tickets READY** TKT-0076 Neon · TKT-0077 OAuth WAITING_OWNER · TKT-0078 alias WAITING_QUOTA |
 

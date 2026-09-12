@@ -37,18 +37,14 @@ Nói tiếng Việt với owner (anh). Product language: không kể cổng, loc
 
 Thứ tự bắt buộc:
 
-P0 ngay:  TKT-0065 Tháp Trắng Đêm — wrap startTower → 6 NPC unique + runBattle('__tower'). Cấm auto-win / towerPowerWinReport trên path live. Stub scripts/lanes/tkt-0065-tower-battle.mjs. Không sửa tower-3d / battle.html / tower-progress.mjs (trừ 1 assert qa-tower-screen battles>=1). PR #59 REVIEW.
-
-P0 sau 17:15 13/09 hoặc team Vercel mới:  TKT-0078 retrigger alias (main đã có TKT-0066 `6ddad79` + TKT-0079 `6686efa`).
+P0 ngay:  TKT-0078 retrigger alias sau 13/09 17:15 +07 (main đã có Wave H overlay `576d3c8` + TKT-0079 `6686efa`).
 
 P0 nhiều người chơi bền:  TKT-0076 Neon. createPostgresStore ĐÃ CÓ. Gắn DATABASE_URL + AUTH_SECRET. Không có URL thì evidence BLOCKED_ENV, đừng LIVE.
 
-P1: TKT-0067 Giáo Trường hall
-P2: TKT-0068 ấn Ông Phở/Lục Ảnh/Thầy Mo · TKT-0069 Thử Thách
 WAITING_ASSET (cấm imagegen): TKT-0070…0073 thân quái + bust NPC
 WAITING_OWNER: TKT-0077 OAuth — chỉ khi owner dán App ID
 
-Owner gõ «tiếp» = TKT-0065. Gõ «bật tài khoản đông người» = TKT-0076.
+Owner gõ «bật tài khoản đông người» = TKT-0076. Wave H overlay (0065–0069) đã LIVE.
 
 ## Cấm
 - Combat V2 / 42 S+ / 72 tướng (wave sau, ID mới, không phải 12 hiện tại)
