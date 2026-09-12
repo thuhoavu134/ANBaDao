@@ -1,11 +1,11 @@
 ---
 id: TKT-0067
 title: Giáo Trường hall giả 3D + vòng luyện iframe
-status: READY
-phase: READY
+status: REVIEW
+phase: REVIEW
 priority: P1
 created: 2026-09-12T07:20:00.000Z
-updated: 2026-09-12T07:20:00.000Z
+updated: 2026-09-12T12:30:00.000Z
 acceptance_ids: ['L67-T1', 'L67-T2', 'L67-T3', 'L67-T4', 'L67-T5', 'L67-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths: ['src/ui/train-3d-runtime.js', 'src/ui/train-3d.css', 'scripts/train-3d-v1.mjs', 'scripts/lanes/tkt-0067-train.mjs', 'scripts/qa-train-3d.mjs', 'assets/ui/train/train-hall.jpg', 'tests/train-3d.test.mjs', 'docs/qa/L67-TRAIN-3D/']

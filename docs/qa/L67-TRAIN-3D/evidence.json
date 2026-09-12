@@ -1,0 +1,42 @@
+{
+  "summary": [
+    {
+      "label": "390x844",
+      "ok": true,
+      "info": {
+        "parent": true,
+        "position": "fixed",
+        "overflow": "auto",
+        "bg": "url(\"http://127.0.0.1:18067/assets/ui/train/train-hall.jpg\")",
+        "display": "flex",
+        "height": 844,
+        "bodyFilter": "none"
+      },
+      "fight": {
+        "overlay": true,
+        "src": "battle.html?embedded=1&session=hv-mty9zsps-smx9c&autostart=1&v=3175"
+      },
+      "appErrors": []
+    },
+    {
+      "label": "768x1024",
+      "ok": true,
+      "info": {
+        "parent": true,
+        "position": "fixed",
+        "overflow": "auto",
+        "bg": "url(\"http://127.0.0.1:18067/assets/ui/train/train-hall.jpg\")",
+        "display": "flex",
+        "height": 1024,
+        "bodyFilter": "none"
+      },
+      "fight": {
+        "overlay": true,
+        "src": "battle.html?embedded=1&session=hv-mty9zv9x-oraqv&autostart=1&v=3175"
+      },
+      "appErrors": []
+    }
+  ],
+  "safari": "NOT_RUN",
+  "pass": true
+}

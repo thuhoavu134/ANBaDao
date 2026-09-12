@@ -1,6 +1,30 @@
+## 12/09/2026 — TKT-0067 Giáo Trường hall giả 3D REVIEW
+
+Wrap startTraining mở hall trước, Luyện mới trừ stamina + iframe luyen_tap, xong trận về hall. Chrome 390×844 + 768×1024 PASS. Safari NOT_RUN. Không merge tới live.
+
 ## 12/09/2026 tối — TKT-0065 Tháp trận NPC REVIEW
 
 Wrap `startTower`: 6 NPC unique roster 12 + `runBattle('__tower')` iframe. Cấm auto-win / `towerPowerWinReport` trên path live. Power thấp vẫn vào trận (toast). L65-T1…T4 + Chrome 390/768 PASS. Safari NOT_RUN. Không merge tới `live`.
+
+## 12/09/2026 — TKT-0079 LIVE
+
+Owner gõ `live`. Squash [#64](https://github.com/bktimmy247/luc-than/pull/64) → main `6686efa`. Banner đỏ AbortError tắt. Vercel Hobby luc-than hết quota; project `dinh-loi-spacing-root` CI SUCCESS. Safari NOT_RUN.
+
+## 12/09/2026 — TKT-0079 tắt banner đỏ AbortError
+
+Owner ảnh iPhone `The operation was aborted`. Filter capture unhandledrejection AbortError/NotAllowedError, gỡ `#__mgDiag` abort-only. Video login `play().catch`, bỏ autoplay. Không sửa `index.html`. Không merge tới live.
+
+## 12/09/2026 — TKT-0066 LIVE
+
+Owner gõ `live`. Squash [#60](https://github.com/bktimmy247/luc-than/pull/60) → main `6ddad79`. Chip Thành Chính trên trận / nan inner / kết quả. Lịch Luyện chỉ mũi tên ‹. Vercel Hobby vẫn hết quota — alias chưa đổi (TKT-0078). Safari NOT_RUN.
+
+## 12/09/2026 — TKT-0066 Lịch Luyện: ẩn chip, giữ mũi tên ‹
+
+Owner ảnh thật: chip Thành Chính che góc trên Lịch Luyện. Chip ẩn khi `#hvLichRoot` mở; dùng `.hv-lich-back` ‹ có sẵn. Trận / nan inner / kết quả vẫn chip. L66-T5 GREEN. Không merge tới live.
+
+## 12/09/2026 — TKT-0066 chip Thành Chính chỗ thiếu REVIEW
+
+Chip `[data-hv-hub]` trên trận iframe, nan Trợ trận inner, Lịch Luyện, kết quả. Wrap `showScreen`. Hall đã có nút đóng không nhân listener. Chrome 390×844 + 768×1024 PASS. Safari NOT_RUN. Không merge tới live.
 
 ## 12/09/2026 tối — Wave J tickets + handoff
 
