@@ -1,3 +1,7 @@
+## 13/09/2026 — Wave S Bách Bảo 7×6 LIVE
+
+Owner gõ live. Squash [#90](https://github.com/bktimmy247/luc-than/pull/90) → `c588218`.
+
 ## 13/09/2026 — Wave S vành Bách Bảo LIVE
 
 Owner gõ live. Squash [#89](https://github.com/bktimmy247/luc-than/pull/89) → `2057d86`. TKT-0113.
