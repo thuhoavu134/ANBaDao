@@ -36,6 +36,15 @@ Board GitHub không có. File `tickets/TKT-00xx/ticket.md` là nguồn sự th�
 | TKT-0062 | G | Ấn kỹ năng UI Phong Tử · Thủy Nương · Hồng Liên | LIVE (#54) |
 | TKT-0063 | G | Ấn kỹ năng UI Thạch Quyền · Đình Lôi · Tố Điệp | LIVE (#54) |
 | TKT-0064 | G | Safari overlay pin (night filter + 100dvh) | LIVE (#53) |
+| TKT-0065 | H | Tháp đội NPC + trận iframe thật | READY |
+| TKT-0066 | H | Nút Thành Chính chỗ thiếu | READY |
+| TKT-0067 | H | Giáo Trường hall giả 3D | READY |
+| TKT-0068 | H | Ấn UI Ông Phở · Lục Ảnh · Thầy Mo | READY |
+| TKT-0069 | H | Thử Thách overlay giả 3D | READY |
+| TKT-0070 | H | Thân quái ch.1–2 | WAITING_ASSET |
+| TKT-0071 | H | Thân quái ch.3–4 | WAITING_ASSET |
+| TKT-0072 | H | Thân quái ch.5–6 | WAITING_ASSET |
+| TKT-0073 | H | Chân dung thoại NPC | WAITING_ASSET |
 | TKT-0074 | I | Màn đăng nhập + tài khoản cùng Vercel | LIVE (#56) |
 
 

@@ -113,6 +113,18 @@ await import('./lanes/tkt-0063-skill-seals-c.mjs');
 // Keep AFTER Wave G stubs. Do not restyle .cs-prepare.
 await import('./overlay-safari-hotfix-v1.mjs');
 
+// WAVE-H 2026-09-12 TKT-0065…0073 — fill stubs; do not add imports.
+// Keep AFTER overlay-safari-hotfix-v1.mjs. Do not touch journey-3d / end-3d.
+await import('./lanes/tkt-0065-tower-battle.mjs');
+await import('./lanes/tkt-0066-hub-back.mjs');
+await import('./lanes/tkt-0067-train.mjs');
+await import('./lanes/tkt-0068-skill-seals-d.mjs');
+await import('./lanes/tkt-0069-challenge.mjs');
+await import('./lanes/tkt-0070-campaign-foes-a.mjs');
+await import('./lanes/tkt-0071-campaign-foes-b.mjs');
+await import('./lanes/tkt-0072-campaign-foes-c.mjs');
+await import('./lanes/tkt-0073-npc-busts.mjs');
+
 // WAVE-I 2026-09-12 TKT-0074 Auth API — fill stub; do not add imports.
 // Same-origin /api on this Vercel project. Keep AFTER safari. Do not edit index.html.
 await import('./lanes/tkt-0074-auth.mjs');

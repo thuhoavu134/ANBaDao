@@ -149,6 +149,28 @@ Seals (0061–0063): wrap `renderHeroDetail`, inject CSS riêng, thư mục `ass
 
 Ghép Wave F: origin/main kết thúc `tkt-0055-campaign.mjs`. F chèn 0056/0057; G chèn comment `WAVE-G 2026-09-12` + 0058…. Conflict ~2–4 dòng — giữ F rồi block G.
 
+## 3g. Wave H — trận tháp + nút hub + hall còn thiếu + WAITING_ASSET
+
+Stub **sau** `overlay-safari-hotfix-v1.mjs`, **trước** TKT-0074 auth. Filling **không** thêm import `build-static.mjs`. Không sửa `journey-3d` / `end-3d`.
+
+| Ticket | Việc | Stub | Khóa | Status |
+|---|---|---|---|---|
+| [TKT-0065](../tickets/TKT-0065/ticket.md) | Tháp: wrap `startTower` → 6 NPC + `runBattle('__tower')` | `tkt-0065-tower-battle.mjs` | `tower-battle` | READY P0 |
+| [TKT-0066](../tickets/TKT-0066/ticket.md) | Chip Thành Chính chỗ thiếu | `tkt-0066-hub-back.mjs` | `hub-back` | READY P0 |
+| [TKT-0067](../tickets/TKT-0067/ticket.md) | Giáo Trường hall + luyện iframe | `tkt-0067-train.mjs` | `train-3d` | READY |
+| [TKT-0068](../tickets/TKT-0068/ticket.md) | Ấn UI Ông Phở · Lục Ảnh · Thầy Mo | `tkt-0068-skill-seals-d.mjs` | `skill-seals-d` | READY |
+| [TKT-0069](../tickets/TKT-0069/ticket.md) | Thử Thách overlay từ Mộng Lộ | `tkt-0069-challenge.mjs` | `challenge-3d` | READY |
+| [TKT-0070](../tickets/TKT-0070/ticket.md) | Thân quái ch.1–2 | `tkt-0070-campaign-foes-a.mjs` | `campaign-foes-a` | **WAITING_ASSET** |
+| [TKT-0071](../tickets/TKT-0071/ticket.md) | Thân quái ch.3–4 | `tkt-0071-campaign-foes-b.mjs` | `campaign-foes-b` | **WAITING_ASSET** |
+| [TKT-0072](../tickets/TKT-0072/ticket.md) | Thân quái ch.5–6 | `tkt-0072-campaign-foes-c.mjs` | `campaign-foes-c` | **WAITING_ASSET** |
+| [TKT-0073](../tickets/TKT-0073/ticket.md) | Chân dung thoại NPC | `tkt-0073-npc-busts.mjs` | `npc-busts` | **WAITING_ASSET** |
+
+0065: **không** sửa `tower-3d*` / `tower-progress.mjs` / `battle.html`. Power gate = toast. Cấm auto-win. 6 `sourceHeroId` unique.
+
+0066: hall đã có close-hub thì bỏ. Không restyle `.cs-prepare`. Không sửa `journey-3d` / `end-3d`.
+
+0070–0073: **không** imagegen wave này. Stub rỗng tới khi art về, ghép file là xong.
+
 ---
 
 ## 4. File đóng băng — mọi ticket
