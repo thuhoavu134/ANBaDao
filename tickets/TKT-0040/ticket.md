@@ -1,8 +1,8 @@
 ---
 id: TKT-0040
 title: Bang Hội hall giả 3D overlay body
-status: READY
-phase: CONTRACT
+status: REVIEW
+phase: REFACTOR
 priority: P1
 created: 2026-09-12T02:35:00.000Z
 updated: 2026-09-12T02:35:00.000Z
@@ -60,3 +60,9 @@ Shared read-only: `index.html` `#guildBody` / `showScreen` / `navTo('guild')`.
 `src/ui/forge-hall-runtime.js` + `src/ui/hero-roster-runtime.js` (body overlay). Imagegen hall jpg; metadata trong `docs/qa/L30-*-HALL/`.
 
 Builder → REVIEW. Không tự MERGED/DONE.
+
+
+## Result
+
+- Overlay `#hvGuildRoot` gắn body, hall `assets/ui/guild/guild-hall.jpg`.
+- Builder dừng REVIEW. Không merge tới khi owner gõ `live`.
