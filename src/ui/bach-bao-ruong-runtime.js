@@ -15,19 +15,20 @@
     supreme: [0, 1, 1, 1, 2, 2, 3]
   };
   const BOARD = (typeof BBR_BOARD !== 'undefined') ? BBR_BOARD : [
-    { t: 'gold', n: 1 }, { t: 'gold', n: 2 }, { t: 'gold', n: 3 },
-    { t: 'gems', n: 1 }, { t: 'gems', n: 2 },
-    { t: 'so', n: 1 }, { t: 'so', n: 2 },
-    { t: 'tinh', n: 1 }, { t: 'tinh', n: 2 }, { t: 'tinh', n: 3 },
-    { t: 'hoat', n: 1 }, { t: 'hoat', n: 2 },
-    { t: 'sh_ss', n: 1 }, { t: 'sh_ssr', n: 1 },
-    { t: 'chest', n: 1 }, { t: 'supreme', n: 1 }
+    { t: 'gold', n: 1 }, { t: 'gold', n: 2 }, { t: 'chest', n: 1 },
+    { t: 'supreme', n: 1 },
+    { t: 'chest', n: 1 }, { t: 'gems', n: 1 }, { t: 'gems', n: 2 },
+    { t: 'so', n: 1 }, { t: 'so', n: 2 }, { t: 'tinh', n: 1 }, { t: 'tinh', n: 2 },
+    { t: 'tinh', n: 3 }, { t: 'hoat', n: 1 }, { t: 'hoat', n: 2 },
+    { t: 'supreme', n: 1 },
+    { t: 'sh_ss', n: 1 }, { t: 'sh_ssr', n: 1 }, { t: 'gold', n: 3 },
+    { t: 'hoat', n: 1 }, { t: 'chest', n: 1 }, { t: 'so', n: 1 }, { t: 'gems', n: 1 }
   ];
   const RING = [
-    [1, 1], [2, 1], [3, 1], [4, 1], [5, 1],
-    [5, 2], [5, 3], [5, 4],
-    [5, 5], [4, 5], [3, 5], [2, 5], [1, 5],
-    [1, 4], [1, 3], [1, 2]
+    [1, 1], [2, 1], [3, 1], [4, 1], [5, 1], [6, 1], [7, 1],
+    [7, 2], [7, 3], [7, 4], [7, 5],
+    [7, 6], [6, 6], [5, 6], [4, 6], [3, 6], [2, 6], [1, 6],
+    [1, 5], [1, 4], [1, 3], [1, 2]
   ];
   const ART = {
     gold: 'assets/ui/festival/bbr/gold.jpg',
@@ -42,7 +43,7 @@
   };
   const LAB = {
     gold: 'Vàng', gems: 'Ngọc', so: 'Sò', tinh: 'Tinh', hoat: 'Hoạt',
-    sh_ss: 'Mảnh S', sh_ssr: 'Mảnh S+', chest: 'Rương', supreme: 'Chí Bảo'
+    sh_ss: 'Mảnh S', sh_ssr: 'Mảnh S+', chest: 'Rương Báu', supreme: 'Chí Bảo'
   };
   const SHOP = [
     { id: 'ss8', pts: 100, sh_ss: 8, name: '8 mảnh S' },
@@ -127,23 +128,31 @@
   }
   function delay(ms) { return new Promise(res => setTimeout(res, ms)); }
 
+  function spinDelay(k, total) {
+    const t = k / Math.max(1, total - 1);
+    if (t < 0.2) return 210 - t * 800;
+    if (t < 0.62) return 28;
+    const u = (t - 0.62) / 0.38;
+    return 28 + u * u * 260;
+  }
+
   async function runSpin() {
     if (spinning) return;
     const bet = st().bet || 2;
     if ((P.so || 0) < bet) { toast?.('Không đủ sò. Cược ' + bet + '.'); return; }
     spinning = true;
+    document.querySelectorAll('[data-bbr-step]').forEach(b => { b.disabled = true; });
     const idx = Math.floor(Math.random() * BOARD.length);
     const n = BOARD.length;
     const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const total = reduced ? 1 : (n * 2 + idx + 1);
+    const total = reduced ? Math.max(8, idx + 1) : (n * 3 + idx + 1);
     for (let k = 0; k < total; k++) {
       light(k % n);
-      if (!reduced) {
-        const p = k / Math.max(1, total - 1);
-        await delay(p < 0.55 ? 40 : p < 0.8 ? 80 : 140);
-      }
+      await delay(reduced ? 70 : spinDelay(k, total));
     }
+    light(idx);
     const r = applyIdx(idx);
+    await delay(280);
     spinning = false;
     if (r) toast?.(r.same ? ('Cộng ' + r.cell.n + ' → ' + r.stars + '★ ' + LAB[r.cell.t]) : (r.stars + '★ ' + LAB[r.cell.t]));
     paintDesk();
@@ -238,6 +247,7 @@
   }
 
   function paintDesk() {
+    if (spinning && document.getElementById('hvBbrDesk')) return;
     const shell = document.querySelector('#hvFestivalRoot .hv-fest-wheel-shell, #festivalBody .bbw-wrap');
     if (!shell) return;
     const b = st();
@@ -277,7 +287,7 @@
           <div class="hv-bbr-shop">${SHOP.map(it =>
             `<button type="button" data-bbr-buy="${it.id}">${it.name} · ${it.pts}đ</button>`
           ).join('')}</div>
-          <p class="hv-bbr-note">Cục cộng sao. Loại khác = mất chuỗi. Tinh/Hoạt → sò → rương → đồ/mảnh → lực chiến.</p>
+          <p class="hv-bbr-note">Rương Báu = vàng + Tinh + mảnh S. Chí Bảo = mảnh S+ + đồ cực phẩm. 2+3 cục = 5★.</p>
         </div>
       </div>
     </div>`;
