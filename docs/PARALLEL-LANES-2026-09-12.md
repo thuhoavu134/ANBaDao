@@ -2,7 +2,7 @@
 
 Owner: rà soát chức năng còn thiếu, tách ticket **độc lập** để nhiều agent build cùng lúc. Ghép `main` không đè nhau.
 
-**Đọc file này trước khi nhận ticket.** Ticket Board không có — không giả claim/MERGED/DONE. Builder dừng **REVIEW**.
+**Coordinator LIVE** 12/09: PR [#38](https://github.com/bktimmy247/luc-than/pull/38) squash `c990516`. Stub đã trên main. Ticket overlay vẫn READY — agent nhận lane rồi đẩy PR riêng, **không merge** tới khi owner gõ `live`.
 
 ---
 

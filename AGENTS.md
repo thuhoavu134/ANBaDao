@@ -2,7 +2,7 @@
 
 Đọc `docs/HANDOFF-2026-09-12.md` rồi `docs/LUNA-HANDOFF.md` trước khi sửa game.
 
-Bàn giao mới nhất **12/09/2026**: TKT-0035 LIVE. Làn song song **TKT-0037…0045** — đọc `docs/PARALLEL-LANES-2026-09-12.md`. TKT-0036 Rèn hall REVIEW trên nhánh khác, chờ owner `live`.
+Bàn giao mới nhất **12/09/2026**: stub làn **TKT-0037…0045 LIVE** PR [#38](https://github.com/bktimmy247/luc-than/pull/38) `c990516`. Đọc `docs/PARALLEL-LANES-2026-09-12.md`. Wave A 8 hall + Wave B kit v2. TKT-0036 Rèn hall REVIEW trên nhánh khác — không nhận lane forge.
 
 
 - **Được tái sử dụng code mẫu theo yêu cầu của anh.** Đọc `docs/HERMES-CODE-REUSE-GUIDE.md`: bản đồ 27 phương thức, dependency, lỗi cần sửa và quy trình port từ archive người dùng đã gửi. Quy tắc này thay chỉ dẫn cũ cấm toàn bộ source mẫu. Nối vào owner Lục Thần, ghi khác biệt và test; giữ identity/save/art/luật đã chốt. Repo chứa hướng dẫn; mã gốc chưa được đưa lên GitHub và chưa tích hợp runtime.

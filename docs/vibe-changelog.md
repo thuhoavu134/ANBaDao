@@ -1,4 +1,9 @@
+## 12/09/2026 — TKT-0037…0045 LIVE (stub làn)
+
+Owner gõ `live` rồi cho agent chạy song song. Squash-merge PR [#38](https://github.com/bktimmy247/luc-than/pull/38) → main `c990516`. Stub `scripts/lanes/tkt-00xx-*.mjs` + ticket READY. Overlay hall chưa làm. TKT-0036 Rèn không merge trong lần này.
+
 ## 12/09/2026 — Làn song song TKT-0037…0045
+
 
 Owner: rà soát chức năng còn thiếu, tách ticket độc lập cho nhiều agent. 8 hall Wave A (Túi / Thư / Việc / Bang / Bạn / Chat / Tộc / Kho) + 1 Wave B kit v2. Stub `scripts/lanes/tkt-00xx-*.mjs` đã import sẵn — agent không sửa `build-static.mjs`. Cấm đụng Combat V2, nan `go:null`, Bày trận visual, Auth/DB.
 
