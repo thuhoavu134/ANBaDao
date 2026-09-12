@@ -1,3 +1,7 @@
+## 12/09/2026 — TKT-0074 màn đăng nhập LIVE
+
+Owner merge [#56](https://github.com/bktimmy247/luc-than/pull/56) → `282df9d`. Mở game = login video rồi Thành Chính. Email + Du khách chạy mọi máy. Google/Facebook/Apple native cần App ID Vercel. Agent tiếp: Tháp có trận NPC, nút về Thành Chính, Wave F #51.
+
 ## 12/09/2026 — TKT-0061…0063 ấn UI skill seals REVIEW
 
 Wrap `renderHeroDetail` sau tabs. 9 tướng × 3 ấn jpg `assets/ui/skill-seals/{id}/`. CSS `#hdBody[data-hero-id]`. Ông Phở / Lục Ảnh / Thầy Mo giữ emoji. 72 tướng vẫn wave sau. Không merge tới `live`.

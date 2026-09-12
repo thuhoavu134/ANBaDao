@@ -1,3 +1,7 @@
+## 2026-09-12 — TKT-0074 màn đăng nhập + tài khoản · LIVE
+
+Owner merge. Squash [#56](https://github.com/bktimmy247/luc-than/pull/56) → main `282df9d`. `#hvLoginRoot` video + email/du khách. MXH Google/Facebook/Apple cần App ID. Điều khoản overlay. Wave F #51 không trộn. 72 tướng vẫn wave sau.
+
 ## 2026-09-12 — TKT-0061…0063 ấn UI skill seals · LIVE
 
 Owner gõ `live`. Squash [#54](https://github.com/bktimmy247/luc-than/pull/54) → main `d94f8a3`. 27 medallion hồ sơ 9 tướng. Safari device NOT_RUN. Wave F #51 không trộn. 72 tướng vẫn wave sau.

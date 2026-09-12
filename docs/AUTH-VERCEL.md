@@ -6,7 +6,7 @@ Live game vẫn là `dist/` tĩnh. API cùng origin:
 
 | Context | Path | Việc |
 |---|---|---|
-| Auth | `/api/register` `/api/login` `/api/auth/*` | user/mật khẩu + Google email |
+| Auth | `/api/register` `/api/login` `/api/auth/*` | email/mật khẩu + Google/Facebook/Apple |
 | Player | `/api/save` `/api/profile` | cloud save, lực chiến |
 | Social | `/api/chat` `/api/rivals` `/api/arena/result` `/api/leaderboard` | chat / rank |
 
@@ -20,13 +20,20 @@ Project **luc-than** → Settings → Environment Variables (Production + Previe
 |---|---|---|
 | `AUTH_SECRET` | Có | chuỗi ngẫu nhiên dài, ký JWT |
 | `DATABASE_URL` | Có (prod) | Neon Postgres. Không có: process nhớ tạm, mất khi cold start |
-| `GOOGLE_CLIENT_ID` | OAuth | Google Cloud OAuth client |
+| `GOOGLE_CLIENT_ID` | OAuth | Google Cloud OAuth web client |
 | `GOOGLE_CLIENT_SECRET` | OAuth | |
+| `FACEBOOK_APP_ID` | OAuth | Facebook Login app |
+| `FACEBOOK_APP_SECRET` | OAuth | |
+| `APPLE_CLIENT_ID` | OAuth | Sign in with Apple Services ID |
 | `PUBLIC_BASE_URL` | Nên | `https://luc-than.vercel.app` |
 
-Google → Authorized redirect URI:
+Redirect URI (Authorized):
 
-`https://luc-than.vercel.app/api/auth/oauth/google/callback`
+- Google: `https://luc-than.vercel.app/api/auth/oauth/google/callback`
+- Facebook: `https://luc-than.vercel.app/api/auth/oauth/facebook/callback`
+- Apple: `https://luc-than.vercel.app/api/auth/oauth/apple/callback`
+
+Không có App ID thì nút MXH mở form email dự phòng. Email + Du khách chạy trên mọi máy không cần env OAuth.
 
 Không tạo project Vercel thứ hai.
 

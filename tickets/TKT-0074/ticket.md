@@ -1,11 +1,11 @@
 ---
 id: TKT-0074
 title: Màn đăng ký/đăng nhập video rồi vào Thành Chính
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 created: 2026-09-12T07:40:00.000Z
-updated: 2026-09-12T08:30:00.000Z
+updated: 2026-09-12T09:35:00.000Z
 acceptance_ids: ['L74-T1', 'L74-T2', 'L74-T3', 'L74-T4', 'L74-T5', 'L74-T6', 'L74-T7', 'L75-T1', 'L75-T2', 'L75-T3']
 required_gates: ["vibelab","tdd"]
 affected_paths: ['src/server/app.mjs', 'src/server/store.mjs', 'src/server/crypto.mjs', 'src/server/http.mjs', 'src/ui/net-auth-runtime.js', 'src/ui/net-auth.css', 'src/ui/login-gate-runtime.js', 'src/ui/login-gate.css', 'scripts/net-auth-v1.mjs', 'scripts/login-gate-v1.mjs', 'scripts/lanes/tkt-0074-auth.mjs', 'scripts/preview-with-api.mjs', 'assets/ui/auth/login-bg.mp4', 'assets/ui/auth/login-bg.jpg', 'tests/auth-api.test.mjs', 'tests/net-auth-client.test.mjs', 'tests/login-gate.test.mjs', 'docs/qa/L74-AUTH-API/', 'docs/AUTH-VERCEL.md']
@@ -63,4 +63,4 @@ Google redirect URI: `https://luc-than.vercel.app/api/auth/oauth/google/callback
 - L75-T2: `login-bg.mp4` + poster jpg + CSS full viewport
 - L75-T3: không sửa `index.html` / `battle.html` / `campaign-scene.js`; stub load login-gate
 
-Builder → REVIEW. Không tự MERGED/DONE.
+Builder → REVIEW. Owner merge 12/09 squash [#56](https://github.com/bktimmy247/luc-than/pull/56) → main `282df9d`. LIVE.

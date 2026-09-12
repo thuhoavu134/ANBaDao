@@ -32,11 +32,11 @@ Board GitHub không có. File `tickets/TKT-00xx/ticket.md` là nguồn sự th�
 | TKT-0058 | G | Cốt truyện VN giả 3D overlay body | LIVE (#53) |
 | TKT-0059 | G | Trực Tuyến giả 3D overlay body | LIVE (#53) |
 | TKT-0060 | G | Trận Hình legacy giả 3D overlay body | LIVE (#53) |
-| TKT-0061 | G | Ấn kỹ năng UI Lạc Yên · Cung Thủ Tre · Cô Đào | READY (stub LIVE #52) |
-| TKT-0062 | G | Ấn kỹ năng UI Phong Tử · Thủy Nương · Hồng Liên | READY (stub LIVE #52) |
-| TKT-0063 | G | Ấn kỹ năng UI Thạch Quyền · Đình Lôi · Tố Điệp | READY (stub LIVE #52) |
+| TKT-0061 | G | Ấn kỹ năng UI Lạc Yên · Cung Thủ Tre · Cô Đào | LIVE (#54) |
+| TKT-0062 | G | Ấn kỹ năng UI Phong Tử · Thủy Nương · Hồng Liên | LIVE (#54) |
+| TKT-0063 | G | Ấn kỹ năng UI Thạch Quyền · Đình Lôi · Tố Điệp | LIVE (#54) |
 | TKT-0064 | G | Safari overlay pin (night filter + 100dvh) | LIVE (#53) |
-| TKT-0074 | I | Tài khoản + API cùng Vercel (user/pass + Google) | REVIEW |
+| TKT-0074 | I | Màn đăng nhập + tài khoản cùng Vercel | LIVE (#56) |
 
 
 

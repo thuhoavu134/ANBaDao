@@ -2,7 +2,7 @@
 
 Đọc `docs/HANDOFF-2026-09-12.md` rồi `docs/LUNA-HANDOFF.md` trước khi sửa game.
 
-Bàn giao mới nhất **12/09/2026**: Wave I TKT-0074 tài khoản + API **REVIEW** (chưa live). Seals TKT-0061…0063 LIVE (#54). Wave G halls + Safari pin LIVE. Wave F #51 Hành trình+Kết quả REVIEW riêng. Owner: 72 tướng + asset đầy đủ là **wave sau**. Đọc `docs/HANDOFF-2026-09-12.md`.
+Bàn giao mới nhất **12/09/2026**: Wave I TKT-0074 màn đăng nhập **LIVE** [#56](https://github.com/bktimmy247/luc-than/pull/56) `282df9d`. Seals 0061…0063 LIVE (#54). Wave G LIVE. Wave F #51 Hành trình+Kết quả REVIEW riêng. **Agent tiếp:** đọc `docs/HANDOFF-2026-09-12.md` mục 0 + mục 3. Owner: 72 tướng + asset đầy đủ là **wave sau**.
 
 
 

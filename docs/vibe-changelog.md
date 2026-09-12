@@ -1,3 +1,7 @@
+## 12/09/2026 — TKT-0074 màn đăng nhập + tài khoản LIVE
+
+Owner merge. Squash [#56](https://github.com/bktimmy247/luc-than/pull/56) → main `282df9d`. Overlay `#hvLoginRoot`, email/du khách, OAuth chờ App ID, điều khoản tiếng Việt. Wave F #51 không trộn.
+
 ## 12/09/2026 — TKT-0074 tài khoản + API cùng Vercel REVIEW
 
 Owner: bật tài khoản, một project Vercel, user/pass + OAuth Google (email). Gateway `api/[...path].js` + wrap Trực Tuyến same-origin. Không sửa `index.html` / `battle.html`. Chưa live — cần env Neon + Google. Wave F #51 không trộn.
