@@ -1,6 +1,6 @@
 ## 12/09/2026 — retrigger Vercel production Wave F+H
 
-Owner gõ gộp live + deploy. Git `main` đã có squash #51 `5bd9382` + #55 `b4915a9` + docs `ec9d7a0`, nhưng alias luc-than.vercel.app còn `dpl_Gw6KtJFxJYdGdxHVUBksnZAtYE2t` / `282df9d` (chỉ login, không `#hvJourneyRoot`). CI Live check chỉ HTTP 200 nên GREEN giả. Commit này kích CD.
+Owner gõ gộp live + deploy. Git `main` đã squash #51+#55 nhưng alias luc-than.vercel.app còn `dpl_Gw6KtJFxJYdGdxHVUBksnZAtYE2t` / `282df9d`. Hobby hết 100 deploy/ngày, reset **13/09/2026 16:58 +07**. CI Live check chỉ HTTP 200 nên GREEN giả. Preview sandbox đã build lại (`#hvJourneyRoot` có).
 
 ## 12/09/2026 — Wave F + Wave H coordinator LIVE
 
