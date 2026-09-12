@@ -1,3 +1,9 @@
+## 13/09/2026 — Wave T LIVE #95–#97
+
+Owner gõ live. Squash [#95](https://github.com/bktimmy247/luc-than/pull/95) `66e4a16` · [#96](https://github.com/bktimmy247/luc-than/pull/96) `c07e9d8` · [#97](https://github.com/bktimmy247/luc-than/pull/97) `93d64a5`.
+
+Chợ/Túi sheet hướng dẫn. Bách Bảo panel Kiếm Thế, shop điểm tab, Tiếp từ ô dừng. Tile Lễ Hội nền kem.
+
 ## 13/09/2026 — Wave S Chợ + Bách Bảo LIVE
 
 Owner gõ live. Squash [#93](https://github.com/bktimmy247/luc-than/pull/93) → `4004224`, [#94](https://github.com/bktimmy247/luc-than/pull/94) → `8b2b08c`.
