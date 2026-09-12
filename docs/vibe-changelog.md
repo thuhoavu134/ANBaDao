@@ -1,3 +1,7 @@
+## 12/09/2026 — Avatar Ông Phở bấm được LIVE
+
+Owner gõ live. Squash [#70](https://github.com/bktimmy247/luc-than/pull/70) → `cabac05`. `.art-player` pointer-events auto.
+
 ## 12/09/2026 — TKT-0083 hồ sơ avatar LIVE
 
 Owner gõ live. Squash [#69](https://github.com/bktimmy247/luc-than/pull/69) → `7b85cea`. Bấm avatar Thành Chính → hồ sơ, mã quà, cài đặt.
