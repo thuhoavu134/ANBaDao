@@ -51,7 +51,7 @@
   root.id = 'hvLoginRoot';
   root.setAttribute('aria-label', 'Đăng nhập Lục Thần');
   root.innerHTML = `
-    <video class="hv-login-video" poster="assets/ui/auth/login-bg.jpg" autoplay muted loop playsinline webkit-playsinline>
+    <video class="hv-login-video" poster="assets/ui/auth/login-bg.jpg" muted loop playsinline webkit-playsinline>
       <source src="assets/ui/auth/login-bg.mp4" type="video/mp4">
     </video>
     <div class="hv-login-veil"></div>
@@ -243,7 +243,12 @@
     const who = root.querySelector('#hvLoginWho');
     if (who) who.textContent = displayName();
     showPanel('welcome');
-    try { video.muted = true; video.play(); } catch {}
+    try {
+      video.muted = true;
+      video.playsInline = true;
+      const playing = video.play();
+      if (playing && typeof playing.catch === 'function') playing.catch(() => {});
+    } catch {}
     playLoginMusic();
   }
   function hideLogin() {
@@ -251,7 +256,9 @@
     root.hidden = true;
     root.classList.remove('is-open');
     document.body.classList.remove('login-gate-open');
-    try { video.pause(); } catch {}
+    try {
+      video.pause();
+    } catch {}
   }
   function canEnter() {
     return hasSession() || (typeof NET === 'object' && NET.guest && NET.user);

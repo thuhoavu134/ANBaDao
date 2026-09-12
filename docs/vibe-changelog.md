@@ -1,3 +1,7 @@
+## 12/09/2026 — TKT-0079 tắt banner đỏ AbortError
+
+Owner ảnh iPhone `The operation was aborted`. Filter capture unhandledrejection AbortError/NotAllowedError, gỡ `#__mgDiag` abort-only. Video login `play().catch`, bỏ autoplay. Không sửa `index.html`. Không merge tới live.
+
 ## 12/09/2026 — TKT-0066 LIVE
 
 Owner gõ `live`. Squash [#60](https://github.com/bktimmy247/luc-than/pull/60) → main `6ddad79`. Chip Thành Chính trên trận / nan inner / kết quả. Lịch Luyện chỉ mũi tên ‹. Vercel Hobby vẫn hết quota — alias chưa đổi (TKT-0078). Safari NOT_RUN.

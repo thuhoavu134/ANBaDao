@@ -4,12 +4,15 @@ import { join } from 'node:path';
 const target = join(process.cwd(), 'dist/index.html');
 const runtime = readFileSync(join(process.cwd(), 'src/ui/login-gate-runtime.js'), 'utf8');
 const css = readFileSync(join(process.cwd(), 'src/ui/login-gate.css'), 'utf8');
+const noise = readFileSync(join(process.cwd(), 'src/ui/abort-noise-runtime.js'), 'utf8');
 new Function(runtime);
+new Function(noise);
 
 let html = readFileSync(target, 'utf8');
 html = html.replace(/<style id="hv-login-gate-css">[\s\S]*?<\/style>\n?/, '');
 html = html.replace(/<script id="hv-login-gate-js">[\s\S]*?<\/script>\n?/, '');
-html = html.replace('</head>', `<style id="hv-login-gate-css">${css}</style>\n</head>`);
+html = html.replace(/<script id="hv-abort-noise-js">[\s\S]*?<\/script>\n?/, '');
+html = html.replace('</head>', `<script id="hv-abort-noise-js">${noise}</script>\n<style id="hv-login-gate-css">${css}</style>\n</head>`);
 const end = html.lastIndexOf('</body>');
 if (end < 0) throw new Error('Login gate body end missing');
 html = html.slice(0, end)

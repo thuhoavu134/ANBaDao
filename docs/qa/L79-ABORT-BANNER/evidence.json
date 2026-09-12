@@ -1,0 +1,32 @@
+{
+  "summary": [
+    {
+      "label": "390x844",
+      "ok": true,
+      "state": {
+        "banner": false,
+        "abortText": false,
+        "errs": [],
+        "filterOn": true,
+        "videoAuto": false,
+        "hub": "hub"
+      },
+      "appErrors": []
+    },
+    {
+      "label": "768x1024",
+      "ok": true,
+      "state": {
+        "banner": false,
+        "abortText": false,
+        "errs": [],
+        "filterOn": true,
+        "videoAuto": false,
+        "hub": "hub"
+      },
+      "appErrors": []
+    }
+  ],
+  "safari": "NOT_RUN",
+  "pass": true
+}
