@@ -1,3 +1,7 @@
+## 13/09/2026 — Wave R slot/chat/túi LIVE
+
+Owner gõ live. Squash [#81](https://github.com/bktimmy247/luc-than/pull/81) → `c9a52b3`. TKT-0105.
+
 ## 13/09/2026 — Wave R slot/chat/túi REVIEW
 
 Giao việc ô tướng trống. Chat bỏ icon và dòng xanh. Túi 3/4 màn.
