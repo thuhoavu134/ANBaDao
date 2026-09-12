@@ -1,3 +1,11 @@
+## 12/09/2026 — TKT-0080 cơ chế địch nhìn trái
+
+Owner: không riêng Ông Phở. `drawUnit` lật mọi thân `TEAM_ENEMY`. Drawer sheet không lật lần hai. VFX đạn giữ flip world-space. Không merge tới live.
+
+## 12/09/2026 — TKT-0080 Ông Phở địch lật sang trái
+
+Owner: Tháp NPC Ông Phở nhìn cùng hướng phe ta. `drawOngPhoGifHero` `scale(-1,1)` khi `TEAM_ENEMY`. Phe ta không lật. Không merge tới live.
+
 ## 12/09/2026 — Wave H overlay LIVE
 
 Owner gõ live nốt. Squash [#59](https://github.com/bktimmy247/luc-than/pull/59) → `0622509` Tháp NPC. [#62](https://github.com/bktimmy247/luc-than/pull/62) → `298828b` Giáo Trường. [#61](https://github.com/bktimmy247/luc-than/pull/61) → `fa71369` ấn 3 tướng. [#63](https://github.com/bktimmy247/luc-than/pull/63) → `576d3c8` Thử Thách. Safari NOT_RUN. Vercel Hobby luc-than hết quota (TKT-0078).

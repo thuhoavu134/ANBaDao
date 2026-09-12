@@ -3729,7 +3729,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     const elapsed=key==="idle"?time:Math.max(0,time-(unit.stateStarted||time));
     const frame=key==="idle"?dinhLoiFrame(time,true):Math.min(DINH_LOI_FRAMES-1,Math.floor(elapsed/Math.max(1,duration)*DINH_LOI_FRAMES));
     context.save();context.shadowColor="rgba(217,174,94,.30)";context.shadowBlur=["attack","skill1","ultimate"].includes(key)?14:5;
-    drawDinhLoiAtlasFrame(context,DINH_LOI_IMAGES[key],frame,0,0,620,348,{baseline:42,flip:unit.team===TEAM_ENEMY});context.restore();return true;
+    drawDinhLoiAtlasFrame(context,DINH_LOI_IMAGES[key],frame,0,0,620,348,{baseline:42});context.restore();return true;
   }
   let dinhLoiFx=null;
   function startDinhLoiFx(kind,actor,target,duration=1000){dinhLoiFx={kind,actorId:actor?.id,targetId:target?.id||null,started:performance.now(),duration};}
@@ -3766,7 +3766,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
   function playLucAnhUltimateVoice(){try{if(lucAnhVoice){lucAnhVoice.pause();lucAnhVoice.currentTime=0;}lucAnhVoice=new Audio(LUC_ANH_ULTI_VOICE);lucAnhVoice.volume=.96;lucAnhVoice.play().catch(()=>{});}catch(_e){}}
   function lucAnhFrame(key,elapsed,loop=false){const m=LUC_ANH_META[key],raw=Math.max(0,Math.floor(elapsed/Math.max(1,m.ms)));return loop?raw%m.frames:Math.min(m.frames-1,raw);}
   function drawLucAnhAtlas(context,key,frame,x,y,width,height,options={}){const m=LUC_ANH_META[key],image=LUC_ANH_IMAGES[key];if(!m||!image?.complete||image.naturalWidth<2)return false;const sx=(frame%LUC_ANH_COLS)*m.w,sy=Math.floor(frame/LUC_ANH_COLS)*m.h;context.save();context.translate(x,y);if(options.flip)context.scale(-1,1);context.globalAlpha=options.alpha??1;if(options.screen)context.globalCompositeOperation="screen";context.drawImage(image,sx,sy,m.w,m.h,-width*.5,-height+(options.baseline??46),width,height);context.restore();return true;}
-  function drawLucAnhHero(context,unit,time){if(!isLucAnh(unit))return false;let key="idle",loop=true;if(unit.hp<=0){key="defeated";loop=false;}else if(unit.state==="hurt"){key="hurt";loop=false;}else if(unit.state==="run"){key="run";loop=true;}else if(unit.state==="attack"){key="attack";loop=false;}else if(unit.state==="skill1"){key="skill1";loop=false;}else if(unit.state==="ultimate"){key="ultimate";loop=false;}const meta=LUC_ANH_META[key],elapsed=key==="idle"?time:Math.max(0,time-(unit.stateStarted||time)),frame=lucAnhFrame(key,elapsed,loop);context.save();context.shadowColor="rgba(133,103,55,.34)";context.shadowBlur=["attack","skill1","ultimate"].includes(key)?15:5;drawLucAnhAtlas(context,key,frame,0,0,330,330,{baseline:48,flip:unit.team===TEAM_ENEMY});context.restore();return true;}
+  function drawLucAnhHero(context,unit,time){if(!isLucAnh(unit))return false;let key="idle",loop=true;if(unit.hp<=0){key="defeated";loop=false;}else if(unit.state==="hurt"){key="hurt";loop=false;}else if(unit.state==="run"){key="run";loop=true;}else if(unit.state==="attack"){key="attack";loop=false;}else if(unit.state==="skill1"){key="skill1";loop=false;}else if(unit.state==="ultimate"){key="ultimate";loop=false;}const meta=LUC_ANH_META[key],elapsed=key==="idle"?time:Math.max(0,time-(unit.stateStarted||time)),frame=lucAnhFrame(key,elapsed,loop);context.save();context.shadowColor="rgba(133,103,55,.34)";context.shadowBlur=["attack","skill1","ultimate"].includes(key)?15:5;drawLucAnhAtlas(context,key,frame,0,0,330,330,{baseline:48});context.restore();return true;}
   function startLucAnhFx(kind,actor,target=null,duration=1000){lucAnhFx.push({kind,actorId:actor?.id,targetId:target?.id||null,team:actor?.team,started:performance.now(),duration});}
   function drawLucAnhFx(context,time){lucAnhFx=lucAnhFx.filter(fx=>{const elapsed=time-fx.started;if(elapsed<0||elapsed>=fx.duration)return false;const actor=getUnit(fx.actorId);if(!actor)return false;const target=getUnit(fx.targetId),key=fx.kind,m=LUC_ANH_META[key],frame=lucAnhFrame(key,elapsed/fx.duration*(m.frames*m.ms),false),p=Math.max(0,Math.min(1,elapsed/fx.duration));
     if(key==="basicProjectile"&&target){const x=actor.x+(target.x-actor.x)*p,y=actor.y-78+(target.y-actor.y)*p;drawLucAnhAtlas(context,key,frame,x,y,300,206,{baseline:103,flip:actor.team===TEAM_ENEMY,alpha:.98});}
@@ -7492,7 +7492,6 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     const strike = unit.state === "attack" ? Math.sin(progress * Math.PI) : 0;
 
     context.save();
-    if (usePoseAtlas && unit.team === TEAM_ENEMY) context.scale(-1, 1);
     context.scale(1 - stride + strike * 0.055, breath + stride - strike * 0.025);
     context.shadowColor = unit.team === TEAM_PLAYER ? "rgba(245,203,103,.44)" : "rgba(233,75,58,.42)";
     context.shadowBlur = 8 + strike * 16;
@@ -7602,6 +7601,8 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     }
     if (!isOngPho(unit)) context.rotate(lean * (unit.team === TEAM_PLAYER ? 1 : -1));
 
+    if (unit.team === TEAM_ENEMY) context.scale(-1, 1);
+
     if (drawOngPhoGifHero(context, unit) || drawDinhLoiHero(context,unit,time) || drawLucAnhHero(context,unit,time) || drawThayMoIdleQa(context, unit) || drawGeneratedHero(context, unit, time, progress)) {
       if (unit.flashUntil > time && !isOngPho(unit)) {
         context.globalCompositeOperation = "screen";
@@ -7614,8 +7615,6 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
       drawUnitHud(context, unit, time, defeat.alpha);
       return;
     }
-
-    if (unit.team === TEAM_ENEMY) context.scale(-1, 1);
 
     context.strokeStyle = "#2b2520";
     context.lineWidth = 10;

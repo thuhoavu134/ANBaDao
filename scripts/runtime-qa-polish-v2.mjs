@@ -50,15 +50,15 @@ if (resultHeroStart >= 0 && resultHeroEnd > resultHeroStart) {
 // Idle stays at the approved 330 benchmark; action clips get a small compensation only.
 battle = replaceOptional(
   battle,
-  'drawLucAnhAtlas(context,key,frame,0,0,500,500,{baseline:72,flip:unit.team===TEAM_ENEMY});',
-  'const lucAnhVisualSize=(key==="attack"||key==="skill1"||key==="ultimate")?372:330;const lucAnhBaseline=(key==="attack"||key==="skill1"||key==="ultimate")?54:48;drawLucAnhAtlas(context,key,frame,0,0,lucAnhVisualSize,lucAnhVisualSize,{baseline:lucAnhBaseline,flip:unit.team===TEAM_ENEMY});',
+  'drawLucAnhAtlas(context,key,frame,0,0,500,500,{baseline:72});',
+  'const lucAnhVisualSize=(key==="attack"||key==="skill1"||key==="ultimate")?372:330;const lucAnhBaseline=(key==="attack"||key==="skill1"||key==="ultimate")?54:48;drawLucAnhAtlas(context,key,frame,0,0,lucAnhVisualSize,lucAnhVisualSize,{baseline:lucAnhBaseline});',
   'Luc Anh state-aware battle scale'
 );
 // If an earlier QA build already restored 330, still upgrade it to the state-aware form.
 battle = replaceOptional(
   battle,
-  'drawLucAnhAtlas(context,key,frame,0,0,330,330,{baseline:48,flip:unit.team===TEAM_ENEMY});',
-  'const lucAnhVisualSize=(key==="attack"||key==="skill1"||key==="ultimate")?372:330;const lucAnhBaseline=(key==="attack"||key==="skill1"||key==="ultimate")?54:48;drawLucAnhAtlas(context,key,frame,0,0,lucAnhVisualSize,lucAnhVisualSize,{baseline:lucAnhBaseline,flip:unit.team===TEAM_ENEMY});',
+  'drawLucAnhAtlas(context,key,frame,0,0,330,330,{baseline:48});',
+  'const lucAnhVisualSize=(key==="attack"||key==="skill1"||key==="ultimate")?372:330;const lucAnhBaseline=(key==="attack"||key==="skill1"||key==="ultimate")?54:48;drawLucAnhAtlas(context,key,frame,0,0,lucAnhVisualSize,lucAnhVisualSize,{baseline:lucAnhBaseline});',
   'Luc Anh 330 scale -> state-aware compensation'
 );
 

@@ -22,12 +22,12 @@ if (!s.includes('const LUC_ANH_SPATIAL=')) {
 }
 
 optionalReplace(
-  /const lucAnhVisualSize=\(key==="attack"\|\|key==="skill1"\|\|key==="ultimate"\)\?372:330;const lucAnhBaseline=\(key==="attack"\|\|key==="skill1"\|\|key==="ultimate"\)\?54:48;drawLucAnhAtlas\(context,key,frame,0,0,lucAnhVisualSize,lucAnhVisualSize,\{baseline:lucAnhBaseline,flip:unit\.team===TEAM_ENEMY\}\);/,
-  `const lucAnhVisualSize=lucAnhDisplaySize(key),lucAnhBaseline=lucAnhDisplayBaseline(key);drawLucAnhAtlas(context,key,frame,0,0,lucAnhVisualSize,lucAnhVisualSize,{baseline:lucAnhBaseline,flip:unit.team===TEAM_ENEMY});`
+  /const lucAnhVisualSize=\(key==="attack"\|\|key==="skill1"\|\|key==="ultimate"\)\?372:330;const lucAnhBaseline=\(key==="attack"\|\|key==="skill1"\|\|key==="ultimate"\)\?54:48;drawLucAnhAtlas\(context,key,frame,0,0,lucAnhVisualSize,lucAnhVisualSize,\{baseline:lucAnhBaseline\}\);/,
+  `const lucAnhVisualSize=lucAnhDisplaySize(key),lucAnhBaseline=lucAnhDisplayBaseline(key);drawLucAnhAtlas(context,key,frame,0,0,lucAnhVisualSize,lucAnhVisualSize,{baseline:lucAnhBaseline});`
 );
 optionalReplace(
-  /drawLucAnhAtlas\(context,key,frame,0,0,(?:330|500),(?:330|500),\{baseline:(?:48|72),flip:unit\.team===TEAM_ENEMY\}\);/,
-  `const lucAnhVisualSize=lucAnhDisplaySize(key),lucAnhBaseline=lucAnhDisplayBaseline(key);drawLucAnhAtlas(context,key,frame,0,0,lucAnhVisualSize,lucAnhVisualSize,{baseline:lucAnhBaseline,flip:unit.team===TEAM_ENEMY});`
+  /drawLucAnhAtlas\(context,key,frame,0,0,(?:330|500),(?:330|500),\{baseline:(?:48|72)\}\);/,
+  `const lucAnhVisualSize=lucAnhDisplaySize(key),lucAnhBaseline=lucAnhDisplayBaseline(key);drawLucAnhAtlas(context,key,frame,0,0,lucAnhVisualSize,lucAnhVisualSize,{baseline:lucAnhBaseline});`
 );
 if (!s.includes('lucAnhDisplaySize(key)')) throw new Error('Luc Anh spatial patch could not normalize hero display renderer');
 

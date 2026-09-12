@@ -1,0 +1,26 @@
+{
+  "summary": [
+    {
+      "label": "390x844",
+      "ok": true,
+      "state": {
+        "overlay": true,
+        "flipInFn": true,
+        "phoFoe": true
+      },
+      "appErrors": []
+    },
+    {
+      "label": "768x1024",
+      "ok": true,
+      "state": {
+        "overlay": true,
+        "flipInFn": true,
+        "phoFoe": true
+      },
+      "appErrors": []
+    }
+  ],
+  "safari": "NOT_RUN",
+  "pass": true
+}

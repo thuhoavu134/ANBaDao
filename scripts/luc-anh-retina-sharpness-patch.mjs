@@ -36,12 +36,12 @@ mustReplace(
 
 // Preserve current Golden Character visual size, but avoid any heavy runtime preprocessing.
 replaceIfPresent(
-  'drawLucAnhAtlas(context,key,frame,0,0,330,330,{baseline:48,flip:unit.team===TEAM_ENEMY});',
-  'drawLucAnhAtlas(context,key,frame,0,0,500,500,{baseline:72,flip:unit.team===TEAM_ENEMY});'
+  'drawLucAnhAtlas(context,key,frame,0,0,330,330,{baseline:48});',
+  'drawLucAnhAtlas(context,key,frame,0,0,500,500,{baseline:72});'
 );
 replaceIfPresent(
-  'drawLucAnhAtlas(context,key,frame,0,0,430,430,{baseline:62,flip:unit.team===TEAM_ENEMY});',
-  'drawLucAnhAtlas(context,key,frame,0,0,500,500,{baseline:72,flip:unit.team===TEAM_ENEMY});'
+  'drawLucAnhAtlas(context,key,frame,0,0,430,430,{baseline:62});',
+  'drawLucAnhAtlas(context,key,frame,0,0,500,500,{baseline:72});'
 );
 
 writeFileSync(battlePath, s);
