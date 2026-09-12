@@ -333,19 +333,8 @@
       setErr('Cần đồng ý Thỏa thuận người dùng và Chính sách bảo mật.');
       return;
     }
-    if (kind === 'google' && clients.google && window.google && window.google.accounts && window.google.accounts.oauth2) {
-      window.google.accounts.oauth2.initCodeClient({
-        client_id: clients.google,
-        scope: 'openid email profile',
-        ux_mode: 'popup',
-        callback: async (response) => {
-          if (!response || !response.code) return;
-          try {
-            const j = await postAuth('/api/auth/oauth/google/code', { code: response.code });
-            await applyAuth(j);
-          } catch (e) { setErr((e && e.message) || 'Google từ chối.'); }
-        }
-      }).requestCode();
+    if (kind === 'google' && (providers.google || clients.google)) {
+      location.href = origin() + '/api/auth/oauth/google';
       return;
     }
     if (kind === 'facebook' && clients.facebook && window.FB && typeof window.FB.login === 'function') {
