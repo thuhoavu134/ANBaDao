@@ -82,17 +82,28 @@ export function payAt(type, stars, bet) {
 }
 
 /** 1/2/3 cục cùng loại. Tiếp cộng cục = sao (2+3=5★). */
-/** Vành 7×6. Ô giữa hàng trên/dưới = Chí Bảo. Thứ tự kiểu Kiếm Thế. */
+/** Vành 8×6, 24 ô. Mỗi loại 1/2/3. Không ô sò. */
 export const BBR_BOARD = Object.freeze([
   Object.freeze({ t: 'tinh', n: 1 }), Object.freeze({ t: 'gold', n: 2 }), Object.freeze({ t: 'gold', n: 1 }),
-  Object.freeze({ t: 'supreme', n: 1 }),
-  Object.freeze({ t: 'hoat', n: 1 }), Object.freeze({ t: 'gold', n: 1 }), Object.freeze({ t: 'gems', n: 3 }),
-  Object.freeze({ t: 'gems', n: 1 }), Object.freeze({ t: 'so', n: 1 }), Object.freeze({ t: 'tinh', n: 2 }), Object.freeze({ t: 'sh_ssr', n: 1 }),
-  Object.freeze({ t: 'gems', n: 1 }), Object.freeze({ t: 'so', n: 3 }), Object.freeze({ t: 'so', n: 1 }),
-  Object.freeze({ t: 'supreme', n: 1 }),
-  Object.freeze({ t: 'chest', n: 1 }), Object.freeze({ t: 'gems', n: 2 }), Object.freeze({ t: 'so', n: 2 }),
-  Object.freeze({ t: 'hoat', n: 2 }), Object.freeze({ t: 'gold', n: 3 }), Object.freeze({ t: 'sh_ss', n: 1 }), Object.freeze({ t: 'so', n: 2 })
+  Object.freeze({ t: 'supreme', n: 1 }), Object.freeze({ t: 'hoat', n: 1 }), Object.freeze({ t: 'gold', n: 3 }),
+  Object.freeze({ t: 'gems', n: 2 }), Object.freeze({ t: 'gems', n: 3 }),
+  Object.freeze({ t: 'gems', n: 1 }), Object.freeze({ t: 'tinh', n: 2 }), Object.freeze({ t: 'hoat', n: 2 }), Object.freeze({ t: 'sh_ssr', n: 1 }),
+  Object.freeze({ t: 'sh_ss', n: 1 }), Object.freeze({ t: 'sh_ss', n: 3 }), Object.freeze({ t: 'chest', n: 3 }),
+  Object.freeze({ t: 'supreme', n: 2 }), Object.freeze({ t: 'supreme', n: 3 }), Object.freeze({ t: 'chest', n: 1 }),
+  Object.freeze({ t: 'chest', n: 2 }), Object.freeze({ t: 'sh_ss', n: 2 }),
+  Object.freeze({ t: 'hoat', n: 3 }), Object.freeze({ t: 'tinh', n: 3 }), Object.freeze({ t: 'sh_ssr', n: 2 }), Object.freeze({ t: 'sh_ssr', n: 3 })
 ]);
+
+export const BBR_SO_CONVERT = Object.freeze({
+  gold: Object.freeze([0, 1, 2, 4, 8, 16, 40]),
+  gems: Object.freeze([0, 2, 4, 8, 16, 32, 80]),
+  tinh: Object.freeze([0, 1, 2, 5, 10, 22, 50]),
+  hoat: Object.freeze([0, 1, 2, 5, 10, 22, 50]),
+  sh_ss: Object.freeze([0, 2, 4, 8, 18, 36, 80]),
+  sh_ssr: Object.freeze([0, 3, 6, 12, 24, 50, 120]),
+  chest: Object.freeze([0, 4, 8, 16, 32, 70, 160]),
+  supreme: Object.freeze([0, 8, 16, 32, 70, 150, 360])
+});
 
 export function spinStep(player, { bet, rng, day, board } = {}) {
   const stake = BBR_BETS.includes(asInt(bet, 2)) ? asInt(bet, 2) : 2;
@@ -167,6 +178,25 @@ export function takeBbr(player, { day } = {}) {
     ok: true, type, stars, qty, stake,
     gold, gems, so: soOut, tinh, hoat, stamina: stam, shards, bachBao: bbr,
     msg: label
+  };
+}
+
+export function convertBbr(player, { day } = {}) {
+  const bbr = normalizeBbr(player?.bachBao, day);
+  if (!bbr.pending) return fail('NO_PENDING', 'Chưa có lượt để đổi sò.');
+  const type = bbr.pending.t;
+  const stars = Math.max(1, Math.min(6, asInt(bbr.pending.stars, 1)));
+  const stake = bbr.bet || 2;
+  const row = BBR_SO_CONVERT[type] || BBR_SO_CONVERT.gold;
+  const qty = Math.max(1, Math.round((row[stars] || 1) * betMult(stake)));
+  bbr.history.unshift({ kind: 'convert', label: stars + '★ ' + type + ' → sò ' + qty, t: Date.now() });
+  if (bbr.history.length > 12) bbr.history.length = 12;
+  bbr.pending = null;
+  return {
+    ok: true, type, stars, qty, stake,
+    so: asInt(player?.so, 0) + qty,
+    bachBao: bbr,
+    msg: 'Đổi ' + qty + ' sò'
   };
 }
 

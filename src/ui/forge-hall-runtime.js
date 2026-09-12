@@ -10,6 +10,7 @@
     <button type="button" class="hv-forge-back" data-forge-close aria-label="Đóng">‹</button>
     <b>Rèn Mộng</b>
     <span class="hv-forge-chip" data-forge-pity></span>
+    <button type="button" class="hv-forge-so" data-forge-so>Chế 10 sò</button>
   </header>
   <div class="hv-forge-stage"></div>`;
   root.querySelector('.hv-forge-stage').append(body);
@@ -50,7 +51,17 @@
     if (!chip || typeof econ !== 'function') return;
     const cap = (typeof ECON === 'object' && ECON.craftPitySSR) || 30;
     chip.textContent = 'Pity ' + (econ().craftPity || 0) + '/' + cap;
+    const soBtn = root.querySelector('[data-forge-so]');
+    if (soBtn) {
+      const n = (P.bachBao && P.bachBao.crafted) || 0;
+      soBtn.textContent = 'Chế 10 sò · 25 Tinh+25 Hoạt (' + n + '/2)';
+    }
   };
+
+  root.querySelector('[data-forge-so]')?.addEventListener('click', () => {
+    window.hvCraftSo?.();
+    paintPity();
+  });
 
   const syncOpen = name => {
     const open = name === 'forge';

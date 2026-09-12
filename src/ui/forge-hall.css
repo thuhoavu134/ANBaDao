@@ -10,7 +10,7 @@
 #hvForgeRoot.is-open{display:flex}
 #hvForgeRoot[hidden]{display:none!important}
 #hvForgeRoot .hv-forge-top{
-  flex:0 0 auto;display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:8px;
+  flex:0 0 auto;display:grid;grid-template-columns:44px 1fr auto auto;align-items:center;gap:8px;
   padding:8px 12px 6px;position:sticky;top:0;z-index:2;
   background:linear-gradient(180deg,rgba(28,18,12,.88),rgba(28,18,12,.35));
   color:#fff4d4;
@@ -24,6 +24,10 @@
 #hvForgeRoot .hv-forge-chip{
   font-size:11px;font-weight:800;padding:5px 8px;border-radius:999px;
   background:rgba(255,244,212,.9);border:1px solid #d7b883;color:#7a4a1f;
+}
+#hvForgeRoot .hv-forge-so{
+  font-size:11px;font-weight:800;padding:8px 10px;border:0;border-radius:10px;cursor:pointer;
+  background:linear-gradient(180deg,#fff7df,#f0c692);color:#7a4a1f;box-shadow:0 0 0 1px #d7b36a;
 }
 #hvForgeRoot .hv-forge-stage{flex:1 1 auto;min-height:420px;padding:8px 10px 28px;box-sizing:border-box}
 #hvForgeRoot #forgeBody{min-height:420px}

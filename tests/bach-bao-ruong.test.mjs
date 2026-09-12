@@ -4,8 +4,8 @@ import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
-  BBR_BETS, BBR_CRAFT, BBR_UNLOCK, BBR_BOARD, spinBbr, spinStep, takeBbr,
-  craftShells, buyBbrShop, rollStars, payAt
+  BBR_BETS, BBR_CRAFT, BBR_UNLOCK, BBR_BOARD, BBR_SO_CONVERT, spinBbr, spinStep, takeBbr,
+  convertBbr, craftShells, buyBbrShop, rollStars, payAt
 } from '../src/domain/festival/bach-bao-ruong.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -50,14 +50,22 @@ test('L109: cược 2/10/50, sao nhân, chế sò Tinh/Hoạt, shop điểm', ()
   assert.equal(BBR_UNLOCK.b, 10);
   assert.match(ui, /so-icon\.jpg/);
   assert.match(ui, /S\+/);
-  assert.equal(BBR_BOARD.length, 22);
+  assert.equal(BBR_BOARD.length, 24);
+  assert.equal(BBR_BOARD.filter(c => c.t === 'so').length, 0);
+  for (const t of ['gold', 'gems', 'tinh', 'hoat', 'sh_ss', 'sh_ssr', 'chest', 'supreme']) {
+    assert.deepEqual([...new Set(BBR_BOARD.filter(c => c.t === t).map(c => c.n))].sort(), [1, 2, 3]);
+  }
+  const conv = convertBbr({ so: 0, bachBao: { pending: { t: 'gold', stars: 3 }, bet: 2 } }, { day: 1 });
+  assert.equal(conv.ok, true);
+  assert.equal(conv.so, BBR_SO_CONVERT.gold[3]);
   assert.equal(BBR_BOARD[3].t, 'supreme');
-  assert.equal(BBR_BOARD[14].t, 'supreme');
   assert.match(ui, /spinDelay/);
   assert.match(ui, /gold\.png/);
   assert.match(ui, /supreme\.png/);
   assert.match(ui, /hv-bbr-stack/);
-  assert.match(ui, /data-bbr-take/);
+  assert.match(ui, /data-bbr-convert/);
+  assert.match(ui, /hvCraftSo/);
+  assert.doesNotMatch(ui, /data-bbr-craft/);
   assert.match(ui, /openSupreme/);
   assert.match(ui, /supPity/);
   assert.match(ui, /grantExtremeEquipment/);

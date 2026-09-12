@@ -32,6 +32,8 @@ test('L25-T3: hall mounts on body and wraps showScreen without a second document
   assert.match(ui, /root\.classList\.toggle\(['"]is-open['"]/);
   assert.match(ui, /getElementById\(['"]forgeBody['"]\)/);
   assert.match(ui, /window\.HonVietSfx\?\.unlock/);
+  assert.match(ui, /data-forge-so/);
+  assert.match(ui, /hvCraftSo/);
   assert.doesNotMatch(ui, /document\.addEventListener\(['"](?:click|pointerdown|pointerup)/);
 });
 

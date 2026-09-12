@@ -16,20 +16,26 @@
   };
   const BOARD = (typeof BBR_BOARD !== 'undefined') ? BBR_BOARD : [
     { t: 'tinh', n: 1 }, { t: 'gold', n: 2 }, { t: 'gold', n: 1 },
-    { t: 'supreme', n: 1 },
-    { t: 'hoat', n: 1 }, { t: 'gold', n: 1 }, { t: 'gems', n: 3 },
-    { t: 'gems', n: 1 }, { t: 'so', n: 1 }, { t: 'tinh', n: 2 }, { t: 'sh_ssr', n: 1 },
-    { t: 'gems', n: 1 }, { t: 'so', n: 3 }, { t: 'so', n: 1 },
-    { t: 'supreme', n: 1 },
-    { t: 'chest', n: 1 }, { t: 'gems', n: 2 }, { t: 'so', n: 2 },
-    { t: 'hoat', n: 2 }, { t: 'gold', n: 3 }, { t: 'sh_ss', n: 1 }, { t: 'so', n: 2 }
+    { t: 'supreme', n: 1 }, { t: 'hoat', n: 1 }, { t: 'gold', n: 3 },
+    { t: 'gems', n: 2 }, { t: 'gems', n: 3 },
+    { t: 'gems', n: 1 }, { t: 'tinh', n: 2 }, { t: 'hoat', n: 2 }, { t: 'sh_ssr', n: 1 },
+    { t: 'sh_ss', n: 1 }, { t: 'sh_ss', n: 3 }, { t: 'chest', n: 3 },
+    { t: 'supreme', n: 2 }, { t: 'supreme', n: 3 }, { t: 'chest', n: 1 },
+    { t: 'chest', n: 2 }, { t: 'sh_ss', n: 2 },
+    { t: 'hoat', n: 3 }, { t: 'tinh', n: 3 }, { t: 'sh_ssr', n: 2 }, { t: 'sh_ssr', n: 3 }
   ];
   const RING = [
-    [1, 1], [2, 1], [3, 1], [4, 1], [5, 1], [6, 1], [7, 1],
-    [7, 2], [7, 3], [7, 4], [7, 5],
-    [7, 6], [6, 6], [5, 6], [4, 6], [3, 6], [2, 6], [1, 6],
+    [1, 1], [2, 1], [3, 1], [4, 1], [5, 1], [6, 1], [7, 1], [8, 1],
+    [8, 2], [8, 3], [8, 4], [8, 5],
+    [8, 6], [7, 6], [6, 6], [5, 6], [4, 6], [3, 6], [2, 6], [1, 6],
     [1, 5], [1, 4], [1, 3], [1, 2]
   ];
+  const SO_CV = {
+    gold: [0, 1, 2, 4, 8, 16, 40], gems: [0, 2, 4, 8, 16, 32, 80],
+    tinh: [0, 1, 2, 5, 10, 22, 50], hoat: [0, 1, 2, 5, 10, 22, 50],
+    sh_ss: [0, 2, 4, 8, 18, 36, 80], sh_ssr: [0, 3, 6, 12, 24, 50, 120],
+    chest: [0, 4, 8, 16, 32, 70, 160], supreme: [0, 8, 16, 32, 70, 150, 360]
+  };
   const ART = {
     gold: 'assets/ui/festival/bbr/gold.png',
     gems: 'assets/ui/festival/bbr/gems.png',
@@ -184,6 +190,40 @@
     return { msg, t, stars, n };
   }
 
+  function convertQty(type, stars, bet) {
+    const row = SO_CV[type] || SO_CV.gold;
+    return Math.max(1, Math.round((row[stars] || 1) * ((bet || 2) / 2)));
+  }
+
+  function doConvert() {
+    const b = st();
+    if (!b.pending) { toast?.('Quay rồi hãy đổi.'); return null; }
+    const { t, stars } = b.pending;
+    const n = convertQty(t, stars, b.bet || 2);
+    P.so = (P.so || 0) + n;
+    b.pending = null;
+    b.history = b.history || [];
+    b.history.unshift({ kind: 'convert', label: stars + '★ → sò ' + n, t: Date.now() });
+    persist?.();
+    refreshResbar?.();
+    toast?.('🐚 +' + n + ' sò');
+    return { n, t, stars };
+  }
+
+  window.hvCraftSo = function hvCraftSo() {
+    const b = st();
+    const day = typeof today === 'function' ? today() : 0;
+    if (b.craftDay !== day) { b.crafted = 0; b.craftDay = day; }
+    if (b.crafted >= 2) { toast?.('Hôm nay đã chế đủ sò.'); return { ok: false }; }
+    if ((P.tinh || 0) < 25 || (P.hoat || 0) < 25) {
+      toast?.('Cần 25 Tinh + 25 Hoạt. Mua Bình/Lò ở Chợ.');
+      return { ok: false };
+    }
+    P.tinh -= 25; P.hoat -= 25; P.so = (P.so || 0) + 10; b.crafted++;
+    persist?.(); refreshResbar?.(); toast?.('Chế 10 sò.');
+    return { ok: true };
+  };
+
   function openSupreme() {
     const b = st();
     if ((b.supreme || 0) < 1) { toast?.('Chưa có Rương Chí Bảo.'); return { ok: false }; }
@@ -283,12 +323,12 @@
           <div class="hv-bbr-actions">
             <button type="button" data-bbr-step ${((P.so || 0) < bet) ? 'disabled' : ''}>${pend ? 'Tiếp' : 'Quay'} · ${bet} ${SO_IC}</button>
             <button type="button" data-bbr-take ${pend ? '' : 'disabled'}>Thưởng</button>
+            <button type="button" data-bbr-convert ${pend ? '' : 'disabled'}>Đổi sò</button>
           </div>
-          <button type="button" data-bbr-craft>Chế 10 ${SO_IC} · 25⚗+25🔥 (${b.crafted || 0}/2)</button>
           <div class="hv-bbr-shop">${SHOP.map(it =>
             `<button type="button" data-bbr-buy="${it.id}">${it.name} · ${it.pts}đ</button>`
           ).join('')}</div>
-          <p class="hv-bbr-note">Rương Báu = vàng + Tinh + mảnh S. Chí Bảo = mảnh S+ + đồ cực phẩm. 2+3 cục = 5★.</p>
+          <p class="hv-bbr-note">Không nhận thì Đổi sò. Chế sò ở Rèn (25 Tinh + 25 Hoạt).</p>
         </div>
       </div>
     </div>`;
@@ -320,17 +360,8 @@
       paintDesk();
       return;
     }
-    if (ev.target.closest('[data-bbr-craft]')) {
-      const b = st();
-      const day = typeof today === 'function' ? today() : 0;
-      if (b.craftDay !== day) { b.crafted = 0; b.craftDay = day; }
-      if (b.crafted >= 2) { toast?.('Hôm nay đã chế đủ sò.'); return; }
-      if ((P.tinh || 0) < 25 || (P.hoat || 0) < 25) {
-        toast?.('Cần 25 Tinh + 25 Hoạt. Mua Bình/Lò ở Chợ.');
-        return;
-      }
-      P.tinh -= 25; P.hoat -= 25; P.so = (P.so || 0) + 10; b.crafted++;
-      persist?.(); refreshResbar?.(); toast?.('Chế 10 sò.');
+    if (ev.target.closest('[data-bbr-convert]')) {
+      doConvert();
       paintDesk();
       return;
     }
