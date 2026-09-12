@@ -1,3 +1,7 @@
+## 12/09/2026 — Làn song song TKT-0037…0045
+
+Owner: rà soát chức năng còn thiếu, tách ticket độc lập cho nhiều agent. 8 hall Wave A (Túi / Thư / Việc / Bang / Bạn / Chat / Tộc / Kho) + 1 Wave B kit v2. Stub `scripts/lanes/tkt-00xx-*.mjs` đã import sẵn — agent không sửa `build-static.mjs`. Cấm đụng Combat V2, nan `go:null`, Bày trận visual, Auth/DB.
+
 ## 12/09/2026 — TKT-0035 LIVE
 
 Owner gõ `live`. Squash-merge PR [#36](https://github.com/bktimmy247/luc-than/pull/36) → main `f52e5fc`. Vercel production `dpl_7N9JqoJDRJQGEX4XNKc1NYqzyAeP` READY. Overlay Tướng gắn body trên luc-than.vercel.app. Ticket kế: Rèn hall (TKT-0036).
