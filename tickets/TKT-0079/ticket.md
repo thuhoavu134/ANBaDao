@@ -1,11 +1,11 @@
 ---
 id: TKT-0079
 title: Tắt banner đỏ AbortError video login Safari
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 created: 2026-09-12T11:25:00.000Z
-updated: 2026-09-12T11:30:00.000Z
+updated: 2026-09-12T11:32:00.000Z
 acceptance_ids: ['L79-T1', 'L79-T2', 'L79-T3', 'L79-T4', 'L79-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths: ['src/ui/abort-noise-runtime.js', 'src/ui/login-gate-runtime.js', 'scripts/login-gate-v1.mjs', 'tests/abort-noise.test.mjs', 'scripts/qa-abort-banner.mjs', 'docs/qa/L79-ABORT-BANNER/', 'tickets/TKT-0079/ticket.md']
@@ -44,4 +44,4 @@ Không sửa `index.html` / `battle.html` / `campaign-scene.js`. Không 72 tư�
 - L79-T4: không `document.addEventListener('click'`
 - L79-P1: Chrome 390×844 — vào game, 0 banner aborted
 
-Builder → REVIEW. L79-T1…T4 GREEN. Chrome 390×844 + 768×1024 PASS. Safari NOT_RUN. Không merge tới `live`.
+Builder → LIVE. Owner gõ `live`. Squash [#64](https://github.com/bktimmy247/luc-than/pull/64) → main `6686efa`.

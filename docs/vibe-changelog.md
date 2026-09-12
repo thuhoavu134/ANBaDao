@@ -1,3 +1,7 @@
+## 12/09/2026 — TKT-0079 LIVE
+
+Owner gõ `live`. Squash [#64](https://github.com/bktimmy247/luc-than/pull/64) → main `6686efa`. Banner đỏ AbortError tắt. Vercel Hobby luc-than hết quota; project `dinh-loi-spacing-root` CI SUCCESS. Safari NOT_RUN.
+
 ## 12/09/2026 — TKT-0079 tắt banner đỏ AbortError
 
 Owner ảnh iPhone `The operation was aborted`. Filter capture unhandledrejection AbortError/NotAllowedError, gỡ `#__mgDiag` abort-only. Video login `play().catch`, bỏ autoplay. Không sửa `index.html`. Không merge tới live.
