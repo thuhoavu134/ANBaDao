@@ -1,3 +1,9 @@
+## 13/09/2026 — Wave W LIVE #105–#106
+
+Owner gõ live. Squash [#105](https://github.com/bktimmy247/luc-than/pull/105) `be059da` · [#106](https://github.com/bktimmy247/luc-than/pull/106) `b7cb9e2`.
+
+Phóng hình bình/vàng/ngọc. Huy hiệu S+ đỏ / S / A / B, icon hệ nhỏ.
+
 ## 13/09/2026 — Wave V LIVE #104
 
 Owner gõ live. Squash [#104](https://github.com/bktimmy247/luc-than/pull/104) `b996606`. Thẻ tướng viền vàng, lớp mờ bụng, S+/sao/phái.
