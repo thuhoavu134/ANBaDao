@@ -3,6 +3,7 @@
   "installCommand": "npm install --omit=dev --no-audit --no-fund",
   "outputDirectory": "dist",
   "rewrites": [
+    { "source": "/api/auth/:path*", "destination": "/api/oauth?orig=/api/auth/:path*" },
     { "source": "/battle", "destination": "/battle.html" },
     { "source": "/qa-dinh-loi-spacing", "destination": "/qa-dinh-loi-spacing.html" }
   ],

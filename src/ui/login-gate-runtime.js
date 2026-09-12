@@ -333,19 +333,8 @@
       setErr('Cần đồng ý Thỏa thuận người dùng và Chính sách bảo mật.');
       return;
     }
-    if (kind === 'google' && (providers.google || clients.google)) {
-      location.href = origin() + '/api/auth/oauth/google';
-      return;
-    }
-    if (kind === 'facebook' && clients.facebook && window.FB && typeof window.FB.login === 'function') {
-      window.FB.login(async function (response) {
-        const token = response && response.authResponse && response.authResponse.accessToken;
-        if (!token) return;
-        try {
-          const j = await postAuth('/api/auth/oauth/facebook/token', { accessToken: token });
-          await applyAuth(j);
-        } catch (e) { setErr((e && e.message) || 'Facebook từ chối.'); }
-      }, { scope: 'public_profile,email' });
+    if ((kind === 'google' || kind === 'facebook') && (providers[kind] || clients[kind])) {
+      location.href = origin() + '/api/auth/oauth/' + kind;
       return;
     }
     if (kind === 'apple' && clients.apple && window.AppleID && window.AppleID.auth) {

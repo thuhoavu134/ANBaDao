@@ -56,9 +56,23 @@ async function readBody(req) {
   try { return JSON.parse(raw); } catch { return {}; }
 }
 
+export function resolveIncomingUrl(req) {
+  const raw = String((req && req.url) || '/');
+  try {
+    const u = new URL(raw, 'http://local');
+    const orig = u.searchParams.get('orig');
+    if (orig && orig.startsWith('/api/')) {
+      u.searchParams.delete('orig');
+      const q = u.searchParams.toString();
+      return orig + (q ? (orig.includes('?') ? '&' : '?') + q : '');
+    }
+  } catch {}
+  return raw;
+}
+
 export async function handleNode(req, res) {
   const handle = await getHandle();
-  const result = await handle(req.method, req.url || '/', {
+  const result = await handle(req.method, resolveIncomingUrl(req), {
     body: await readBody(req),
     headers: req.headers || {},
     origin: originOf(req)

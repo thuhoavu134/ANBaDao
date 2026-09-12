@@ -33,9 +33,9 @@ test('L75-T1: login gate wraps navTo, mounts overlay, no document click', () => 
   assert.match(ui, /data-panel="facebook"/);
   assert.match(ui, /data-panel="apple"/);
   assert.match(ui, /hvLoginLegalBody/);
-  assert.match(ui, /\/api\/auth\/oauth\/google/);
+  assert.match(ui, /\/api\/auth\/oauth\/' \+ kind/);
   assert.doesNotMatch(ui, /initCodeClient/);
-  assert.match(ui, /FB\.login/);
+  assert.doesNotMatch(ui, /FB\.login\(async/);
   assert.match(ui, /AppleID/);
   assert.doesNotMatch(ui, /<iframe/);
   assert.doesNotMatch(ui, /document\.addEventListener\(['"]click['"]/);
