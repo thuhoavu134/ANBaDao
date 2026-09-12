@@ -1,3 +1,7 @@
+## 12/09/2026 — OAuth Google 404 + Facebook dòng đỏ LIVE
+
+Owner gõ live. Squash [#68](https://github.com/bktimmy247/luc-than/pull/68) → `b266d69`. Rewrite `/api/auth/*` · Facebook không `FB.login(async)`.
+
 ## 12/09/2026 — Google vào Thành Chính LIVE
 
 Owner gõ live. Squash [#67](https://github.com/bktimmy247/luc-than/pull/67) → `600a17b`. Nút Google chuyển trang, không popup GIS.
