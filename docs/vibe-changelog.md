@@ -1,3 +1,7 @@
+## 13/09/2026 — Wave N city halls LIVE
+
+Owner gõ live. Squash [#76](https://github.com/bktimmy247/luc-than/pull/76) → `5e4b420`. TKT-0097…0099.
+
 ## 13/09/2026 — Wave N city halls REVIEW
 
 Bang Hội + Nhật Ký + Lễ Hội: lưới nhà isometric, ấn ô mở hoạt động.
