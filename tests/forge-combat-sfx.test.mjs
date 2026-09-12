@@ -36,6 +36,24 @@ test('SFX-2 actual forge reveal dispatches dedicated event once per item UID',()
   vm.runInContext(source.slice(start,end)+'\nhvForgeReveal({uid:"one"});hvForgeReveal({uid:"one"});',sandbox);
   assert.equal(calls.length,1);assert.equal(calls[0][0],'forge-reveal');assert.equal(calls[0][1].group,'ui');
 });
+test('SFX-2 forge reveal unlocks iOS audio then plays', async () => {
+  const calls=[], ST={}; let unlocked=false;
+  const source=read('src/ui/forge-item-assets-runtime.js');
+  const start=source.indexOf('function hvForgeReveal('),end=source.indexOf('\nconst hvCraftItemWithReveal',start);
+  const sandbox={ST,Promise,window:{HonVietSfx:{
+    unlock: async () => { unlocked=true; return true; },
+    play: (...args) => calls.push(args)
+  }}};
+  vm.createContext(sandbox);
+  vm.runInContext(source.slice(start,end)+'\nhvForgeReveal({uid:"two"});',sandbox);
+  assert.equal(calls.length,0);
+  await new Promise(resolve => setImmediate(resolve));
+  await new Promise(resolve => setImmediate(resolve));
+  assert.equal(unlocked,true);
+  assert.equal(calls.length,1);
+  assert.equal(calls[0][0],'forge-reveal');
+  assert.equal(calls[0][1].group,'ui');
+});
 test('SFX-3 build owner removes shared impact dispatch without replacing VFX or damage',()=>{
   const patch=read('scripts/runtime-mobile-render-sfx-v1.mjs');
   assert.doesNotMatch(patch,/HonVietSfx\?\.play\(["']impact["']\)/);

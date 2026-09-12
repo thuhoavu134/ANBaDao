@@ -26,7 +26,11 @@ function hvForgeReveal(item, kind = 'craft') {
   ST.forgeRevealItem = { uid: item.uid, slot: item.slot, rar: item.rar, lvl: item.lvl, mold: item.mold, kind };
   if (ST.forgeRevealAudioUid !== item.uid) {
     ST.forgeRevealAudioUid = item.uid;
-    window.HonVietSfx?.play('forge-reveal', { group: 'ui' });
+    const sfx = window.HonVietSfx;
+    const fire = () => sfx?.play('forge-reveal', { group: 'ui' });
+    if (sfx && typeof sfx.unlock === 'function') {
+      Promise.resolve(sfx.unlock()).then(ready => { if (ready !== false) fire(); });
+    } else fire();
   }
 }
 

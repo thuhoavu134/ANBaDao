@@ -1,3 +1,9 @@
+## 2026-09-12 — TKT-0036 Rèn hall · REVIEW
+
+Nhánh `work/l25-forge-hall-20260912` từ main `32b32de`. Overlay `#hvForgeRoot` `position:fixed;inset:0;overflow:auto` gắn `document.body`. Hall `assets/ui/forge/forge-hall.jpg` giả 3D tươi. Wrap `showScreen`, không thêm `data-art-go` / document click. CRAFT/DUAL/pity/+15 đóng băng. Chrome 390×844 + 768×1024 PASS; Safari NOT_RUN.
+
+Rollback: xóa `src/ui/forge-hall-*` + `scripts/forge-hall-v1.mjs` inject. Không merge trừ khi owner gõ `live`.
+
 ## 2026-09-12 — TKT-0035 LIVE
 
 Owner gõ `live`. Squash-merge PR [#36](https://github.com/bktimmy247/luc-than/pull/36) → main `f52e5fc329d19e4a832c101cdc1ec6579be51239`. Vercel production `dpl_7N9JqoJDRJQGEX4XNKc1NYqzyAeP` READY. HTTP 200, HTML có overlay body. Safari/device NOT_RUN trên production.

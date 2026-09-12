@@ -1,0 +1,11 @@
+{
+  "id": "forge-hall",
+  "path": "assets/ui/forge/forge-hall.jpg",
+  "source": "imagine-reference-to-image",
+  "created": "2026-09-12",
+  "refs": [
+    "assets/ui/account-gear/assist-hall-day.jpg",
+    "assets/items/equipment/armor-ssr.png"
+  ],
+  "prompt": "Bright fake-3D Vietnamese forge workshop hall, sunny layered CGI, no dark lacquer. Cream/sky-blue walls, gold beams, bronze drums, furnace, anvil, golden armor racks, citadel courtyard beyond. No text, no UI."
+}

@@ -78,6 +78,8 @@ await import('./arena-runtime-v1.mjs');
 await import('./hunt-runtime-v1.mjs');
 await import('./festival-runtime-v1.mjs');
 await import('./daily-runtime-v1.mjs');
+await import('./forge-hall-v1.mjs');
+await import('./preview-journey-unlock-v1.mjs');
 await import('./lanes/tkt-0037-bag.mjs');
 await import('./lanes/tkt-0038-mail.mjs');
 await import('./lanes/tkt-0039-jobs.mjs');

@@ -1,3 +1,7 @@
+## 12/09/2026 — TKT-0036 Rèn hall REVIEW
+
+`#hvForgeRoot` body overlay + hall 3D tươi. Giữ `forgeCommand`. Không merge tới khi owner gõ `live`.
+
 ## 12/09/2026 — TKT-0035 LIVE
 
 PR [#36](https://github.com/bktimmy247/luc-than/pull/36) squash `f52e5fc`. Vercel `dpl_7N9JqoJDRJQGEX4XNKc1NYqzyAeP`. Roster overlay body. Việc kế: Rèn hall giả 3D, giữ `forgeCommand`.

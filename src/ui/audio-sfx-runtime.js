@@ -142,7 +142,7 @@
       }
       const source = c.createBufferSource(), gain = c.createGain();
       source.buffer = buffer;
-      gain.gain.value = event === 'forge-reveal' ? 0.22 : group === 'ui' ? 0.3 : 0.38;
+      gain.gain.value = event === 'forge-reveal' ? 0.4 : group === 'ui' ? 0.3 : 0.38;
       source.connect(gain); gain.connect(c.destination);
       const voice = { source, group, cleanup() {
         if (!active.delete(voice)) return;

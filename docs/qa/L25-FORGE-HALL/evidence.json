@@ -1,0 +1,61 @@
+{
+  "phone": {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "parentIsBody": true,
+    "bodyInside": true,
+    "open": true,
+    "hidden": false,
+    "display": "flex",
+    "position": "fixed",
+    "molds": 3,
+    "slots": 4,
+    "rootBox": {
+      "x": 0,
+      "y": 0,
+      "w": 390,
+      "h": 816
+    },
+    "bodyBox": {
+      "x": 10,
+      "y": 67,
+      "w": 370,
+      "h": 1354.640625
+    },
+    "hallBg": "url(\"http://127.0.0.1:8080/assets/ui/forge/forge-hall.jpg\")",
+    "appErrors": [],
+    "pass": true
+  },
+  "tablet": {
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "parentIsBody": true,
+    "bodyInside": true,
+    "open": true,
+    "hidden": false,
+    "display": "flex",
+    "position": "fixed",
+    "molds": 3,
+    "slots": 4,
+    "rootBox": {
+      "x": 0,
+      "y": 0,
+      "w": 768,
+      "h": 996
+    },
+    "bodyBox": {
+      "x": 10,
+      "y": 67,
+      "w": 748,
+      "h": 838.671875
+    },
+    "hallBg": "url(\"http://127.0.0.1:8080/assets/ui/forge/forge-hall.jpg\")",
+    "appErrors": [],
+    "pass": true
+  },
+  "pass": true
+}

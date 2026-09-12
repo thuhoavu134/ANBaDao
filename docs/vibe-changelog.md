@@ -1,11 +1,28 @@
+## 12/09/2026 — TKT-0037…0045 hall + kit squash-merge
+
+
+Owner gõ `live`. Squash-merge PR #39–#47 lên main. Overlay Túi/Thư/Việc/Bang/Bạn/Chat/Tộc/Kho + kit v2. TKT-0036 Rèn rebase sau halls.
+
 ## 12/09/2026 — TKT-0037…0045 LIVE (stub làn)
 
 Owner gõ `live` rồi cho agent chạy song song. Squash-merge PR [#38](https://github.com/bktimmy247/luc-than/pull/38) → main `c990516`. Stub `scripts/lanes/tkt-00xx-*.mjs` + ticket READY. Overlay hall chưa làm. TKT-0036 Rèn không merge trong lần này.
 
 ## 12/09/2026 — Làn song song TKT-0037…0045
 
-
 Owner: rà soát chức năng còn thiếu, tách ticket độc lập cho nhiều agent. 8 hall Wave A (Túi / Thư / Việc / Bang / Bạn / Chat / Tộc / Kho) + 1 Wave B kit v2. Stub `scripts/lanes/tkt-00xx-*.mjs` đã import sẵn — agent không sửa `build-static.mjs`. Cấm đụng Combat V2, nan `go:null`, Bày trận visual, Auth/DB.
+## 12/09/2026 — Tiếng rèn unlock iOS rồi mới gõ
+
+Owner «tiếng rèn bị mất». `hvForgeReveal` gọi `HonVietSfx.unlock` trước `forge-reveal`. Hall mở cũng unlock. Gain 0.22→0.4. Combat vẫn chặn forge-reveal.
+
+## 12/09/2026 — Preview tạm mở khóa hành trình
+
+
+Owner: «làm đến chức năng nào khoá thì e tạm mở để a test». Preview wrap `featLocked=false` (không đụng `JOURNEY_UNLOCK`). `luc-than.vercel.app` vẫn khóa theo chương. Rèn mở được trên save mới.
+
+## 12/09/2026 — TKT-0036 Rèn hall giả 3D REVIEW
+
+
+Nhánh `work/l25-forge-hall-20260912`. Overlay `#hvForgeRoot` gắn body, hall `assets/ui/forge/forge-hall.jpg` sáng nhiều lớp. `forgeCommand` / CRAFT 20·200 / DUAL 42·420 / pity 30 / +15 không đổi. Chrome 390+768 PASS. Không merge tới `live`.
 
 ## 12/09/2026 — TKT-0035 LIVE
 
