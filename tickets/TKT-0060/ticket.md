@@ -1,11 +1,11 @@
 ---
 id: TKT-0060
 title: Trận Hình hall giả 3D overlay body
-status: READY
-phase: REFACTOR
+status: REVIEW
+phase: REVIEW
 priority: P1
 created: 2026-09-12T05:00:00.000Z
-updated: 2026-09-12T05:00:00.000Z
+updated: 2026-09-12T05:35:00.000Z
 acceptance_ids: ['L50-T1', 'L50-T2', 'L50-T3', 'L50-T4', 'L50-T5', 'L50-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths: ['src/ui/team-3d-runtime.js', 'src/ui/team-3d.css', 'scripts/team-3d-v1.mjs', 'scripts/lanes/tkt-0060-team.mjs', 'scripts/qa-team-3d.mjs', 'assets/ui/team/team-hall.jpg', 'tests/team-3d.test.mjs', 'docs/qa/L50-TEAM-3D/']
@@ -13,7 +13,7 @@ resource_locks: ["team-3d"]
 parallel_wave: G
 depends_on: []
 conflicts_with: []
-branch_hint: work/l50-team-3d-20260912
+branch_hint: work/l48-wave-g-3d-20260912
 ---
 # TKT-0060 — Trận Hình hall giả 3D overlay body
 
@@ -66,3 +66,6 @@ Shared read-only: `index.html` `#teamScreen` / `navTo('team')`. Frozen: `src/ui/
 `src/ui/bag-hall-runtime.js` (body overlay). Imagegen hall jpg sáng nhiều lớp; metadata trong `docs/qa/L50-TEAM-3D/`.
 
 Builder → REVIEW. Không tự MERGED/DONE.
+
+Chrome 390×844 + 768×1024 PASS (height 844 / 1024). Safari NOT_RUN. Evidence `docs/qa/L50-TEAM-3D/`.
+Open path QA: `ST.hvOpenFormation=true` rồi `navTo('team')` — Trợ trận chặn `navTo('team')` trần.

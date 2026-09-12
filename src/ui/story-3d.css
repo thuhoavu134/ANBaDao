@@ -1,0 +1,49 @@
+#hvStoryRoot{
+  --hall-ink:#2d251f;
+  --hall-gold:#d58a14;
+  position:fixed;inset:0;z-index:90;display:none;flex-direction:column;
+  overflow:auto;-webkit-overflow-scrolling:touch;touch-action:manipulation;
+  background:#d7eef5 url('assets/ui/story/story-hall.jpg') center top/cover no-repeat;
+  color:var(--hall-ink);font-family:inherit;box-sizing:border-box;
+  padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+  width:100vw;height:100vh;min-height:100vh;height:100dvh;min-height:-webkit-fill-available;
+}
+#hvStoryRoot.is-open{display:flex}
+#hvStoryRoot[hidden]{display:none!important}
+#hvStoryRoot .hv-story-top{
+  flex:0 0 auto;display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:8px;
+  padding:8px 12px 6px;position:sticky;top:0;z-index:2;
+  background:linear-gradient(180deg,rgba(188,220,231,.96),rgba(247,237,216,.92));
+  border-bottom:1px solid #d7b883;box-shadow:0 2px 8px rgba(79,58,27,.14);
+}
+#hvStoryRoot .hv-story-back{
+  width:44px;height:44px;border:0;border-radius:50%;
+  background:linear-gradient(145deg,#fff7df,#f0c692);color:#7a4a1f;
+  box-shadow:0 0 0 1px #d7b36a,0 2px 6px rgba(79,58,27,.2);font-size:22px;line-height:1;cursor:pointer;
+}
+#hvStoryRoot .hv-story-top b{justify-self:center;font-size:16px;letter-spacing:.04em}
+#hvStoryRoot .hv-story-stage{flex:1 1 auto;min-height:420px;padding:8px 10px 28px;box-sizing:border-box;display:flex}
+#hvStoryRoot .vnstage{
+  flex:1 1 auto;width:100%;aspect-ratio:auto;min-height:70vh;border-radius:18px;
+  background:linear-gradient(180deg,rgba(255,248,230,.16),rgba(247,237,216,.06) 42%,transparent)!important;
+  border:1px solid #d7b883!important;box-shadow:0 12px 28px rgba(79,58,27,.12)!important;
+}
+#hvStoryRoot .vnstars{opacity:.18}
+#hvStoryRoot .vnbox{
+  background:rgba(255,249,233,.94)!important;border:1px solid #d7b883!important;
+  color:#2d251f!important;backdrop-filter:blur(6px);
+}
+#hvStoryRoot .vntext{color:#2d251f!important}
+#hvStoryRoot .vnname{text-shadow:0 1px 0 #fff8e4}
+#hvStoryRoot .vnemo{color:#6d5a3a!important}
+#hvStoryRoot .vnprog{
+  background:rgba(255,248,230,.88)!important;color:#5a3a18!important;border:1px solid #d7b883;
+}
+#hvStoryRoot .eventcard{
+  background:rgba(255,248,230,.82)!important;color:#2d251f!important;
+}
+#hvStoryRoot .eventcard .etitle{color:#5a3a18!important}
+#hvStoryRoot .eventcard .edesc{color:#6d5a3a!important}
+body.story-3d-active{filter:none}
+body.story-3d-active .hv-brandbar,body.story-3d-active #resbar{display:none!important}
+body.story-3d-active #storyScreen{background:transparent!important}

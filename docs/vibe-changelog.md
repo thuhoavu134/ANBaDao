@@ -1,3 +1,11 @@
+## 12/09/2026 — TKT-0064 Safari overlay pin REVIEW
+
+Owner «Debug Safari overlay rendering». `body.night{filter}` + `overflow-x:hidden` chứa `position:fixed` trên WebKit; hall dời DOM → overlay ~100px. Pin `visualViewport` + `filter:none` + `100dvh`. Không sửa `index.html` nguồn / Bày trận. Không merge tới `live`.
+
+## 12/09/2026 — Wave G TKT-0058…0060 halls REVIEW
+
+Owner gõ `tiếp`. Cốt truyện / Trực Tuyến / Trận Hình overlay body giả 3D. Stub lane điền, không thêm import `build-static.mjs`. 100vh + `filter:none`. Auth/DB OFF. Bày trận đóng băng. 72 tướng không đụng. Không merge tới `live`.
+
 ## 12/09/2026 — Wave G TKT-0058…0063 coordinator LIVE
 
 Owner gõ `live`. Squash [#52](https://github.com/bktimmy247/luc-than/pull/52) → main `b77f35a`. Stub + ticket READY. 6 agent điền overlay/ấn. Owner: 72 tướng + asset đầy đủ là wave sau, **không** phải 12 nhân vật hiện tại. Wave F #51 không trộn.

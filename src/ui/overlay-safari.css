@@ -1,0 +1,25 @@
+/* TKT-0064 Safari / Grok iframe overlay pin.
+   html,body overflow-x:hidden + body.night{filter} make position:fixed a
+   containing-block on WebKit, so halls collapse to the emptied shell (~100px). */
+html.hv-overlay-open,body.hv-overlay-open{
+  filter:none!important;
+  height:100%!important;
+  height:100dvh!important;
+  min-height:100dvh!important;
+  min-height:-webkit-fill-available!important;
+  overflow-x:clip!important;
+}
+html.hv-overlay-open body::before{display:none!important}
+body.hv-overlay-open [id^="hv"].is-open{
+  top:0!important;
+  height:100vh;
+  height:100dvh!important;
+  min-height:100dvh!important;
+  min-height:-webkit-fill-available!important;
+  max-height:100dvh!important;
+  -webkit-transform:translateZ(0);
+  transform:translateZ(0);
+}
+@supports (-webkit-touch-callout:none){
+  html,body{overflow-x:clip}
+}

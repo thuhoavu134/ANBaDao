@@ -1,0 +1,158 @@
+{
+  "ok": true,
+  "summary": [
+    {
+      "screen": "story",
+      "label": "story-390x844",
+      "ok": true,
+      "info": {
+        "parent": true,
+        "open": true,
+        "htmlOpen": true,
+        "bodyFilter": "none",
+        "position": "fixed",
+        "height": 844,
+        "innerH": 844,
+        "vvH": 844
+      },
+      "errors": [],
+      "delta": 0
+    },
+    {
+      "screen": "bag",
+      "label": "bag-390x844",
+      "ok": true,
+      "info": {
+        "parent": true,
+        "open": true,
+        "htmlOpen": true,
+        "bodyFilter": "none",
+        "position": "fixed",
+        "height": 844,
+        "innerH": 844,
+        "vvH": 844
+      },
+      "errors": [],
+      "delta": 0
+    },
+    {
+      "screen": "heroes",
+      "label": "heroes-390x844",
+      "ok": true,
+      "info": {
+        "parent": true,
+        "open": true,
+        "htmlOpen": true,
+        "bodyFilter": "none",
+        "position": "fixed",
+        "height": 844,
+        "innerH": 844,
+        "vvH": 844
+      },
+      "errors": [],
+      "delta": 0
+    },
+    {
+      "screen": "team",
+      "label": "team-390x844",
+      "ok": true,
+      "info": {
+        "parent": true,
+        "open": true,
+        "htmlOpen": true,
+        "bodyFilter": "none",
+        "position": "fixed",
+        "height": 844,
+        "innerH": 844,
+        "vvH": 844
+      },
+      "errors": [],
+      "delta": 0
+    },
+    {
+      "screen": "story",
+      "label": "story-768x1024",
+      "ok": true,
+      "info": {
+        "parent": true,
+        "open": true,
+        "htmlOpen": true,
+        "bodyFilter": "none",
+        "position": "fixed",
+        "height": 1024,
+        "innerH": 1024,
+        "vvH": 1024
+      },
+      "errors": [],
+      "delta": 0
+    },
+    {
+      "screen": "bag",
+      "label": "bag-768x1024",
+      "ok": true,
+      "info": {
+        "parent": true,
+        "open": true,
+        "htmlOpen": true,
+        "bodyFilter": "none",
+        "position": "fixed",
+        "height": 1024,
+        "innerH": 1024,
+        "vvH": 1024
+      },
+      "errors": [],
+      "delta": 0
+    },
+    {
+      "screen": "heroes",
+      "label": "heroes-768x1024",
+      "ok": true,
+      "info": {
+        "parent": true,
+        "open": true,
+        "htmlOpen": true,
+        "bodyFilter": "none",
+        "position": "fixed",
+        "height": 1024,
+        "innerH": 1024,
+        "vvH": 1024
+      },
+      "errors": [],
+      "delta": 0
+    },
+    {
+      "screen": "team",
+      "label": "team-768x1024",
+      "ok": true,
+      "info": {
+        "parent": true,
+        "open": true,
+        "htmlOpen": true,
+        "bodyFilter": "none",
+        "position": "fixed",
+        "height": 1024,
+        "innerH": 1024,
+        "vvH": 1024
+      },
+      "errors": [],
+      "delta": 0
+    },
+    {
+      "screen": "iframe-story",
+      "label": "iframe-390x844",
+      "ok": true,
+      "info": {
+        "parent": true,
+        "open": true,
+        "htmlOpen": true,
+        "bodyFilter": "none",
+        "position": "fixed",
+        "height": 844,
+        "innerH": 844,
+        "vvH": 844
+      },
+      "errors": [],
+      "delta": 0
+    }
+  ]
+}

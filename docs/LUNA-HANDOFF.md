@@ -1,3 +1,15 @@
+## 2026-09-12 — TKT-0064 Safari overlay pin · REVIEW
+
+Nhánh `work/l48-wave-g-3d-20260912`. Inject `overlay-safari-hotfix-v1` sau Wave G stubs. `visualViewport` pin `#hv*.is-open` trên body; `html.hv-overlay-open` `filter:none` + `100dvh` + `overflow-x:clip`. `viewport-fit=cover` trên dist. Chrome 390/768 + iframe PASS; Safari device NOT_RUN. Không sửa `index.html` nguồn / `.cs-prepare`. Không merge tới `live`.
+
+## 2026-09-12 — TKT-0058…0060 Wave G halls · REVIEW
+
+Nhánh `work/l48-wave-g-3d-20260912` từ main `6b50a5b`. Overlay `#hvStoryRoot` / `#hvNetRoot` / `#hvTeamRoot` `position:fixed;inset:0;overflow:auto` + `width:100vw;height:100vh;min-height:100vh` + `body.{story,net,team}-3d-active{filter:none}`. Stub lane điền, không thêm import `build-static.mjs`. Auth/DB OFF. Bày trận đóng băng. Chrome 390×844 + 768×1024 PASS; Safari NOT_RUN.
+
+Rollback: xóa `src/ui/{story,net,team}-3d-*` + inject + hall jpg, trả stub về LANE-only. Không merge trừ khi owner gõ `live`.
+
+Việc kế: Ấn UI TKT-0061…0063 (medallion, không full-asset 72). Wave F #51 `live` riêng.
+
 ## 2026-09-12 — TKT-0036 Rèn hall · REVIEW
 
 Nhánh `work/l25-forge-hall-20260912` từ main `32b32de`. Overlay `#hvForgeRoot` `position:fixed;inset:0;overflow:auto` gắn `document.body`. Hall `assets/ui/forge/forge-hall.jpg` giả 3D tươi. Wrap `showScreen`, không thêm `data-art-go` / document click. CRAFT/DUAL/pity/+15 đóng băng. Chrome 390×844 + 768×1024 PASS; Safari NOT_RUN.

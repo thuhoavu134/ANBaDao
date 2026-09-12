@@ -1,11 +1,11 @@
 ---
 id: TKT-0059
 title: Trực Tuyến hall giả 3D overlay body
-status: READY
-phase: REFACTOR
+status: REVIEW
+phase: REVIEW
 priority: P1
 created: 2026-09-12T05:00:00.000Z
-updated: 2026-09-12T05:00:00.000Z
+updated: 2026-09-12T05:35:00.000Z
 acceptance_ids: ['L49-T1', 'L49-T2', 'L49-T3', 'L49-T4', 'L49-T5', 'L49-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths: ['src/ui/net-3d-runtime.js', 'src/ui/net-3d.css', 'scripts/net-3d-v1.mjs', 'scripts/lanes/tkt-0059-net.mjs', 'scripts/qa-net-3d.mjs', 'assets/ui/net/net-hall.jpg', 'tests/net-3d.test.mjs', 'docs/qa/L49-NET-3D/']
@@ -13,7 +13,7 @@ resource_locks: ["net-3d"]
 parallel_wave: G
 depends_on: []
 conflicts_with: []
-branch_hint: work/l49-net-3d-20260912
+branch_hint: work/l48-wave-g-3d-20260912
 ---
 # TKT-0059 — Trực Tuyến hall giả 3D overlay body
 
@@ -66,3 +66,5 @@ Shared read-only: `index.html` `#netScreen` / `renderNet` / `netOnline` / `api`.
 `src/ui/bag-hall-runtime.js` (body overlay). Imagegen hall jpg sáng nhiều lớp; metadata trong `docs/qa/L49-NET-3D/`.
 
 Builder → REVIEW. Không tự MERGED/DONE.
+
+Chrome 390×844 + 768×1024 PASS (height 844 / 1024). Safari NOT_RUN. Evidence `docs/qa/L49-NET-3D/`. Auth/DB OFF.

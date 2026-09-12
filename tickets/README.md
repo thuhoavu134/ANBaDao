@@ -29,10 +29,12 @@ Board GitHub không có. File `tickets/TKT-00xx/ticket.md` là nguồn sự th�
 | TKT-0055 | E | Chinh chiến AFK home giả 3D | LIVE |
 | TKT-0056 | F | Hành trình giả 3D overlay body | REVIEW (#51, nhánh riêng) |
 | TKT-0057 | F | Kết quả + reward veil giả 3D | REVIEW (#51, nhánh riêng) |
-| TKT-0058 | G | Cốt truyện VN giả 3D overlay body | READY (stub LIVE #52) |
-| TKT-0059 | G | Trực Tuyến giả 3D overlay body | READY (stub LIVE #52) |
-| TKT-0060 | G | Trận Hình legacy giả 3D overlay body | READY (stub LIVE #52) |
+| TKT-0058 | G | Cốt truyện VN giả 3D overlay body | REVIEW (nhánh Wave G halls) |
+| TKT-0059 | G | Trực Tuyến giả 3D overlay body | REVIEW (nhánh Wave G halls) |
+| TKT-0060 | G | Trận Hình legacy giả 3D overlay body | REVIEW (nhánh Wave G halls) |
 | TKT-0061 | G | Ấn kỹ năng UI Lạc Yên · Cung Thủ Tre · Cô Đào | READY (stub LIVE #52) |
 | TKT-0062 | G | Ấn kỹ năng UI Phong Tử · Thủy Nương · Hồng Liên | READY (stub LIVE #52) |
 | TKT-0063 | G | Ấn kỹ năng UI Thạch Quyền · Đình Lôi · Tố Điệp | READY (stub LIVE #52) |
+| TKT-0064 | G | Safari overlay pin (night filter + 100dvh) | REVIEW (#53 follow-up) |
+
 

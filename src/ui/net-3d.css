@@ -1,0 +1,57 @@
+#hvNetRoot{
+  --hall-ink:#2d251f;
+  --hall-gold:#d58a14;
+  position:fixed;inset:0;z-index:90;display:none;flex-direction:column;
+  overflow:auto;-webkit-overflow-scrolling:touch;touch-action:manipulation;
+  background:#d7eef5 url('assets/ui/net/net-hall.jpg') center top/cover no-repeat;
+  color:var(--hall-ink);font-family:inherit;box-sizing:border-box;
+  padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+  width:100vw;height:100vh;min-height:100vh;height:100dvh;min-height:-webkit-fill-available;
+}
+#hvNetRoot.is-open{display:flex}
+#hvNetRoot[hidden]{display:none!important}
+#hvNetRoot .hv-net-top{
+  flex:0 0 auto;display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:8px;
+  padding:8px 12px 6px;position:sticky;top:0;z-index:2;
+  background:linear-gradient(180deg,rgba(188,220,231,.96),rgba(247,237,216,.92));
+  border-bottom:1px solid #d7b883;box-shadow:0 2px 8px rgba(79,58,27,.14);
+}
+#hvNetRoot .hv-net-back{
+  width:44px;height:44px;border:0;border-radius:50%;
+  background:linear-gradient(145deg,#fff7df,#f0c692);color:#7a4a1f;
+  box-shadow:0 0 0 1px #d7b36a,0 2px 6px rgba(79,58,27,.2);font-size:22px;line-height:1;cursor:pointer;
+}
+#hvNetRoot .hv-net-top b{justify-self:center;font-size:16px;letter-spacing:.04em}
+#hvNetRoot .hv-net-stage{flex:1 1 auto;min-height:420px;padding:8px 10px 28px;box-sizing:border-box}
+#hvNetRoot #netBody{min-height:420px;color:#2d251f!important}
+#hvNetRoot .section{
+  background:linear-gradient(180deg,rgba(255,250,240,.92),rgba(247,237,216,.94))!important;
+  border:1px solid #d7b883!important;color:#2d251f!important;
+  border-radius:16px;padding:14px 14px 16px;margin:0 0 12px;
+  box-shadow:0 8px 20px rgba(79,58,27,.12)!important;
+}
+#hvNetRoot .section h3{color:#5a3a18!important}
+#hvNetRoot #netBody [style*="color:#c3cbee"],
+#hvNetRoot #netBody [style*="color:#aeb8d6"],
+#hvNetRoot #netBody [style*="color:var(--muted)"]{color:#6d5a3a!important}
+#hvNetRoot input,
+#hvNetRoot #netServer,
+#hvNetRoot #netUser,
+#hvNetRoot #netPass{
+  background:#fffaf0!important;border:1px solid #d7b883!important;color:#2d251f!important;
+  border-radius:10px!important;padding:10px 12px!important;font-size:13px!important;
+}
+#hvNetRoot .btn{
+  background:linear-gradient(#eccc7e,#c69b4b)!important;color:#3e321c!important;
+  border:1px solid #92652b!important;
+}
+#hvNetRoot .btn.ghost{
+  background:linear-gradient(180deg,#fff9e9,#eee4ca)!important;color:#5a3a18!important;
+}
+#hvNetRoot .btn.gold{
+  background:linear-gradient(#f0d48a,#d4a44a)!important;color:#3e321c!important;
+}
+body.net-3d-active{filter:none}
+body.net-3d-active .hv-brandbar,body.net-3d-active #resbar{display:none!important}
+body.net-3d-active #netScreen{background:transparent!important}
+body.net-3d-active #netScreen .pagehdr{display:none!important}

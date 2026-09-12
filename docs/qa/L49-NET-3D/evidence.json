@@ -1,0 +1,37 @@
+{
+  "screen": "net",
+  "summary": [
+    {
+      "screen": "net",
+      "label": "390x844",
+      "ok": true,
+      "info": {
+        "parent": true,
+        "position": "fixed",
+        "overflow": "auto",
+        "bg": "url(\"http://127.0.0.1:18059/assets/ui/net/net-hall.jpg\")",
+        "display": "flex",
+        "height": 844,
+        "inputBg": "rgb(255, 250, 240)",
+        "bodyFilter": "none"
+      },
+      "errors": []
+    },
+    {
+      "screen": "net",
+      "label": "768x1024",
+      "ok": true,
+      "info": {
+        "parent": true,
+        "position": "fixed",
+        "overflow": "auto",
+        "bg": "url(\"http://127.0.0.1:18059/assets/ui/net/net-hall.jpg\")",
+        "display": "flex",
+        "height": 1024,
+        "inputBg": "rgb(255, 250, 240)",
+        "bodyFilter": "none"
+      },
+      "errors": []
+    }
+  ]
+}

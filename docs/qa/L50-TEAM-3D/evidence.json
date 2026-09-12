@@ -1,0 +1,41 @@
+{
+  "screen": "team",
+  "summary": [
+    {
+      "screen": "team",
+      "label": "390x844",
+      "ok": true,
+      "info": {
+        "parent": true,
+        "position": "fixed",
+        "overflow": "auto",
+        "bg": "url(\"http://127.0.0.1:18060/assets/ui/team/team-hall.jpg\")",
+        "display": "flex",
+        "height": 844,
+        "hasGrid": true,
+        "hasField": true,
+        "prepareOpen": false,
+        "bodyFilter": "none"
+      },
+      "errors": []
+    },
+    {
+      "screen": "team",
+      "label": "768x1024",
+      "ok": true,
+      "info": {
+        "parent": true,
+        "position": "fixed",
+        "overflow": "auto",
+        "bg": "url(\"http://127.0.0.1:18060/assets/ui/team/team-hall.jpg\")",
+        "display": "flex",
+        "height": 1024,
+        "hasGrid": true,
+        "hasField": true,
+        "prepareOpen": false,
+        "bodyFilter": "none"
+      },
+      "errors": []
+    }
+  ]
+}

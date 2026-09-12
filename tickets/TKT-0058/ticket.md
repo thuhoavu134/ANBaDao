@@ -1,11 +1,11 @@
 ---
 id: TKT-0058
 title: Cốt truyện VN hall giả 3D overlay body
-status: READY
-phase: REFACTOR
+status: REVIEW
+phase: REVIEW
 priority: P1
 created: 2026-09-12T05:00:00.000Z
-updated: 2026-09-12T05:00:00.000Z
+updated: 2026-09-12T05:35:00.000Z
 acceptance_ids: ['L48-T1', 'L48-T2', 'L48-T3', 'L48-T4', 'L48-T5', 'L48-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths: ['src/ui/story-3d-runtime.js', 'src/ui/story-3d.css', 'scripts/story-3d-v1.mjs', 'scripts/lanes/tkt-0058-story.mjs', 'scripts/qa-story-3d.mjs', 'assets/ui/story/story-hall.jpg', 'tests/story-3d.test.mjs', 'docs/qa/L48-STORY-3D/']
@@ -13,7 +13,7 @@ resource_locks: ["story-3d"]
 parallel_wave: G
 depends_on: []
 conflicts_with: []
-branch_hint: work/l48-story-3d-20260912
+branch_hint: work/l48-wave-g-3d-20260912
 ---
 # TKT-0058 — Cốt truyện VN hall giả 3D overlay body
 
@@ -64,3 +64,5 @@ Shared read-only: `index.html` `#storyScreen` / `startStory` / `playScene`.
 `src/ui/bag-hall-runtime.js` (body overlay). Imagegen hall jpg sáng nhiều lớp; metadata trong `docs/qa/L48-STORY-3D/`.
 
 Builder → REVIEW. Không tự MERGED/DONE.
+
+Chrome 390×844 + 768×1024 PASS (height 844 / 1024). Safari NOT_RUN. Evidence `docs/qa/L48-STORY-3D/`.

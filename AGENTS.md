@@ -2,7 +2,7 @@
 
 Đọc `docs/HANDOFF-2026-09-12.md` rồi `docs/LUNA-HANDOFF.md` trước khi sửa game.
 
-Bàn giao mới nhất **12/09/2026**: **LIVE** TKT-0058…0063 Wave G coordinator (#52) stub trên main `b77f35a`. 6 ticket READY — agent điền stub. Owner: 72 tướng + asset đầy đủ là **wave sau, ID mới, không phải 12 hiện tại**. Wave F #51 Hành trình+Kết quả REVIEW riêng. Đọc `docs/HANDOFF-2026-09-12.md`.
+Bàn giao mới nhất **12/09/2026**: **REVIEW** TKT-0064 Safari overlay pin + TKT-0058…0060 Wave G halls trên `work/l48-wave-g-3d-20260912`. Owner: 72 tướng + asset đầy đủ là **wave sau**. Đọc `docs/HANDOFF-2026-09-12.md`.
 
 
 

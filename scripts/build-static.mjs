@@ -107,6 +107,11 @@ await import('./lanes/tkt-0061-skill-seals-a.mjs');
 await import('./lanes/tkt-0062-skill-seals-b.mjs');
 await import('./lanes/tkt-0063-skill-seals-c.mjs');
 
+// SAFARI 2026-09-12 overlay pin — visualViewport + drop body.night containing-block.
+// Keep AFTER Wave G stubs. Do not restyle .cs-prepare.
+await import('./overlay-safari-hotfix-v1.mjs');
+
+
 // The integrated battle is loaded from this embedded payload in production.
 // Keep it byte-identical to the patched battle.html; otherwise the visible
 // preview and the iframe can silently run different engines.

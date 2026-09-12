@@ -1,0 +1,35 @@
+{
+  "screen": "story",
+  "summary": [
+    {
+      "screen": "story",
+      "label": "390x844",
+      "ok": true,
+      "info": {
+        "parent": true,
+        "position": "fixed",
+        "overflow": "auto",
+        "bg": "url(\"http://127.0.0.1:18058/assets/ui/story/story-hall.jpg\")",
+        "display": "flex",
+        "height": 844,
+        "bodyFilter": "none"
+      },
+      "errors": []
+    },
+    {
+      "screen": "story",
+      "label": "768x1024",
+      "ok": true,
+      "info": {
+        "parent": true,
+        "position": "fixed",
+        "overflow": "auto",
+        "bg": "url(\"http://127.0.0.1:18058/assets/ui/story/story-hall.jpg\")",
+        "display": "flex",
+        "height": 1024,
+        "bodyFilter": "none"
+      },
+      "errors": []
+    }
+  ]
+}

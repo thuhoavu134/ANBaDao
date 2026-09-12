@@ -1,3 +1,11 @@
+## 12/09/2026 — Safari overlay = night filter containing-block
+
+Owner iOS: overlay WebKit co vì `body.night{filter}` + `html overflow-x:hidden`. Pin `visualViewport`, `hv-overlay-open{filter:none}`. Safari device vẫn NOT_RUN (sandbox không WebKit).
+
+## 12/09/2026 — Wave G halls TKT-0058…0060 REVIEW
+
+Cốt truyện / Trực Tuyến / Trận Hình overlay `#hv{Story,Net,Team}Root` body, 100vh + `filter:none`. Không merge tới `live`. 72 tướng vẫn wave sau.
+
 ## 12/09/2026 — 72 tướng full-asset = wave sau
 
 Owner `live` Wave G coordinator: «sau này mới bổ sung 72 tướng với asset đầy đủ chứ ko phải mấy nhân vật hiện tại». Roster playable **12**. Không nới 12 → 72. Không idle/combat/portrait sheet đầy đủ cho ID live. 42 S+ lab vẫn không vào production.
