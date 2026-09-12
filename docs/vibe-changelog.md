@@ -1,3 +1,7 @@
+## 13/09/2026 — Wave V LIVE #103
+
+Owner gõ live. Squash [#103](https://github.com/bktimmy247/luc-than/pull/103) `e856d38`. Icon vành to vừa ô.
+
 ## 13/09/2026 — Wave V LIVE #101–#102
 
 Owner gõ live. Squash [#101](https://github.com/bktimmy247/luc-than/pull/101) `6faf91f` · [#102](https://github.com/bktimmy247/luc-than/pull/102) `cc6d382`.
