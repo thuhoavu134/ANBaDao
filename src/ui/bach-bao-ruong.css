@@ -42,6 +42,10 @@
 .hv-bbr-shop{display:flex;flex-direction:column;gap:6px;margin:6px 0}
 #hvBbrDesk .hv-bbr-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:4px 0;font-size:12px;color:#3a2414}
 #hvBbrDesk button{min-height:36px;padding:6px 10px;border:0;border-radius:8px;background:#fff8e8;color:#3a2414;font:700 12px/1 inherit;cursor:pointer;box-shadow:0 0 0 1px #d7b36a}
+#hvBbrDesk .hv-bbr-go{
+  min-height:56px;background:linear-gradient(180deg,#e2b45a,#c09028);color:#2a1608;font:900 18px/1 inherit;
+  box-shadow:0 4px 0 #7a5a18,0 0 0 1px #e2b45a;
+}
 #hvBbrDesk .hv-bbr-tabs button.is-on,#hvBbrDesk .hv-bbr-bet.is-on{background:linear-gradient(180deg,#e2b45a,#c09028);color:#2a1608}
 #hvBbrDesk .hv-bbr-now{margin:4px 0;font-size:12px;color:#f3e4c4;line-height:1.35}
 .hv-bbr-hub .hv-bbr-stars{margin:4px 0 0;padding:4px 6px;list-style:none;width:100%;background:#fff8e8cc;border-radius:6px}

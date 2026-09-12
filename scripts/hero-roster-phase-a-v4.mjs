@@ -19,7 +19,7 @@ const css = `<style id="hero-roster-phase-a-v4-css">
 #hvHeroRosterV4 .v4-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;padding:8px 7px 16px;flex:1 1 auto;min-height:420px;min-width:0}
 #hvHeroRosterV4 .v4-card{position:relative;aspect-ratio:.68;min-height:150px;border:3px solid #d88d17;border-radius:6px;background:linear-gradient(180deg,#fff7df,#f3c97d);box-shadow:0 2px 5px rgba(89,54,10,.25),inset 0 0 0 1px rgba(255,255,255,.8);overflow:hidden;padding:0;margin:0;color:inherit;min-width:0;touch-action:manipulation}
 #hvHeroRosterV4 .v4-art{position:absolute;left:3px;right:3px;top:3px;bottom:31px;border-radius:4px;overflow:hidden;background:linear-gradient(180deg,#cde9df,#acd2c1);border:1px solid rgba(255,255,255,.9)}
-#hvHeroRosterV4 .v4-art img{width:100%;height:100%;object-fit:contain;object-position:center bottom;display:block}
+#hvHeroRosterV4 .v4-art img{width:168%;max-width:none;height:130%;object-fit:cover;object-position:50% 8%;margin-left:-34%;margin-top:-2%;display:block}
 #hvHeroRosterV4 .v4-grade{position:absolute;left:2px;top:2px;z-index:3;min-width:24px;height:24px;padding:0 4px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:#be2830;border:2px solid #ffe2a5;color:#fff6da;font-size:9.5px;font-weight:1000}
 #hvHeroRosterV4 .v4-level{position:absolute;right:4px;top:3px;z-index:3;color:white;font-size:9px;font-weight:1000;text-shadow:0 1px 2px #000,0 0 2px #000}
 #hvHeroRosterV4 .v4-element{position:absolute;left:4px;top:29px;z-index:3;width:21px;height:21px;border-radius:50%;background:rgba(255,255,255,.94);display:flex;align-items:center;justify-content:center;font-size:11px;box-shadow:0 1px 2px rgba(0,0,0,.2)}
@@ -52,6 +52,7 @@ body.hero-roster-active #heroesScreen:before,body.hero-roster-active #heroesScre
 #hvHeroRosterV4 .v4-grid{flex:1 1 auto;min-height:420px;min-width:0;overflow:visible;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:minmax(150px,auto);padding:10px 7px 16px;align-content:start}
 #hvHeroRosterV4 .v4-card{aspect-ratio:.68;min-height:150px;height:auto;cursor:pointer}
 #hvHeroRosterV4 .v4-art{bottom:42px}
+#hvHeroRosterV4 .v4-art img{width:168%;max-width:none;height:130%;object-fit:cover;object-position:50% 8%;margin-left:-34%;margin-top:-2%}
 #hvHeroRosterV4 .v4-power{bottom:36px;font-size:10px}
 #hvHeroRosterV4 .v4-stars{bottom:24px;font-size:12px}
 #hvHeroRosterV4 .v4-cardname{bottom:5px;font-size:10px;line-height:1.2}

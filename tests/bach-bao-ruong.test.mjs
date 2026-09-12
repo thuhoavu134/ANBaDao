@@ -99,7 +99,8 @@ test('L109: cược 2/10/50, sao nhân, chế sò Tinh/Hoạt, shop điểm', ()
   const scored = scoreBbr({ so: 0, bachBao: { pending: { t: 'gold', stars: 3 }, bet: 2 } }, { day: 1 });
   assert.equal(scored.ok, true);
   assert.ok(scored.pts >= 1);
-  assert.match(ui, /bust/);
+  const css = readFileSync(join(root, 'src/ui/bach-bao-ruong.css'), 'utf8');
+  assert.match(css, /#hvBbrDesk \.hv-bbr-go/);
   assert.match(ui, /gold\.png/);
   assert.match(ui, /supreme\.png/);
   assert.doesNotMatch(ui, /<small>\$\{c\.n\}<\/small>/);
