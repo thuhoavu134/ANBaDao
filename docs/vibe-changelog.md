@@ -1,3 +1,7 @@
+## 13/09/2026 — Wave W LIVE #107
+
+Owner gõ live. Squash [#107](https://github.com/bktimmy247/luc-than/pull/107) `7fae34c`. Icon vành đủ hình, S+ đỏ đủ màu.
+
 ## 13/09/2026 — Wave W LIVE #105–#106
 
 Owner gõ live. Squash [#105](https://github.com/bktimmy247/luc-than/pull/105) `be059da` · [#106](https://github.com/bktimmy247/luc-than/pull/106) `b7cb9e2`.
