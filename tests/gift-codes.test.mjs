@@ -29,6 +29,6 @@ test('L83-T2: runtime gọi redeemCode + mã thêm', () => {
   assert.match(ui, /redeemCode/);
   assert.match(ui, /LUCTHAN/);
   assert.match(ui, /THANHCHINH/);
-  assert.match(ui, /art-avatar/);
+  assert.match(ui, /art-player/);
   assert.match(ui, /hvProfileRoot/);
 });

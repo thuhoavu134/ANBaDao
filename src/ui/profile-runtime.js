@@ -85,7 +85,7 @@
     if (typeof refreshResbar === 'function') refreshResbar();
   }
   function pinAvatar() {
-    const el = document.querySelector('#hubScreen .art-avatar');
+    const el = document.querySelector('#hubScreen .art-player .art-avatar') || document.querySelector('#hubScreen .art-avatar');
     if (!el) return;
     const id = profile().avatarId || leaderId();
     const src = art(id, 'avatar') || art(id, 'card');
@@ -384,13 +384,21 @@
     if (kind) setVol(kind, ev.target.value);
   });
 
-  document.addEventListener('click', ev => {
-    const av = ev.target.closest && ev.target.closest('#hubScreen .art-avatar');
-    if (!av) return;
+  function hitPlayer(el) {
+    return !!(el && el.closest && el.closest('#hubScreen .art-player'));
+  }
+  let lastOpen = 0;
+  function tryOpen(ev) {
+    if (!hitPlayer(ev.target)) return;
     ev.preventDefault();
     ev.stopPropagation();
+    const now = Date.now();
+    if (now - lastOpen < 400) return;
+    lastOpen = now;
     open();
-  }, true);
+  }
+  document.addEventListener('pointerup', tryOpen, true);
+  document.addEventListener('click', tryOpen, true);
 
   pinAvatar();
 })();

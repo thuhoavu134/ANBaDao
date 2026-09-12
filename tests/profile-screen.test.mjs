@@ -11,7 +11,8 @@ test('L83-T3: overlay hồ sơ, gift, cài đặt; không đụng shell đóng b
   const ui = read('src/ui/profile-runtime.js');
   const css = read('src/ui/profile-screen.css');
   assert.match(ui, /root\.id = ['"]hvProfileRoot['"]/);
-  assert.match(ui, /#hubScreen \.art-avatar/);
+  assert.match(ui, /#hubScreen \.art-player/);
+  assert.match(css, /pointer-events:\s*auto/);
   assert.match(ui, /data-pf-act="gift"/);
   assert.match(ui, /data-pf-act="settings"/);
   assert.match(ui, /data-pf-act="rename"/);

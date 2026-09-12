@@ -1,4 +1,11 @@
-#hubScreen .art-avatar{cursor:pointer}
+#hubScreen .art-player,
+#hubScreen .art-avatar,
+#hubScreen .art-playercopy{
+  pointer-events:auto!important;
+  cursor:pointer;
+  position:relative;
+  z-index:26;
+}
 #hvProfileRoot{
   position:fixed;inset:0;z-index:110;display:none;flex-direction:column;
   overflow:hidden;width:100vw;height:100vh;height:100dvh;
