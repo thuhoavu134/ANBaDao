@@ -1,3 +1,7 @@
+## 12/09/2026 tối — bàn giao hết quota
+
+Wave J tickets 0076–0078. Agent tiếp TKT-0065. Vercel alias vẫn 282df9d tới 13/09 17:15 +07. Neon chưa gắn — nhiều người chưa bền. Prompt `docs/AGENT-PROMPT.md`.
+
 ## 12/09/2026 — TKT-0075 LIVE
 
 Main `ce1a0e1` [#57](https://github.com/bktimmy247/luc-than/pull/57). Nan Lịch Luyện: icon = ải, khóa = overlay CSS. Điều khoản một câu. Vercel Hobby cũ hết hạn tới 13/09 17:15 +07.

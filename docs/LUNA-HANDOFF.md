@@ -1,3 +1,7 @@
+## 2026-09-12 tối — Wave J tickets + bàn giao session
+
+Owner hết quota. Mở TKT-0076 Neon READY, TKT-0077 OAuth WAITING_OWNER, TKT-0078 Vercel WAITING_QUOTA. Prompt [AGENT-PROMPT.md](AGENT-PROMPT.md). Agent mới nhận TKT-0065. Không merge game. 72 tướng vẫn wave sau.
+
 ## 2026-09-12 — TKT-0074 màn đăng nhập + tài khoản · LIVE
 
 Owner merge. Squash [#56](https://github.com/bktimmy247/luc-than/pull/56) → main `282df9d`. `#hvLoginRoot` video + email/du khách. MXH Google/Facebook/Apple cần App ID. Điều khoản overlay. Wave F #51 không trộn. 72 tướng vẫn wave sau.

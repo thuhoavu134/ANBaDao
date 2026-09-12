@@ -1,3 +1,7 @@
+## 12/09/2026 tối — Wave J tickets + handoff
+
+Owner hết quota session. TKT-0076 Neon READY · TKT-0077 OAuth WAITING_OWNER · TKT-0078 alias WAITING_QUOTA. Prompt `docs/AGENT-PROMPT.md`. Việc kế agent mới: TKT-0065.
+
 ## 12/09/2026 — TKT-0075 LIVE
 
 Owner `cứ làm đi`. Squash [#57](https://github.com/bktimmy247/luc-than/pull/57) → main `ce1a0e1`. Nan không nướng khóa + điều khoản một câu. Vercel Hobby cũ 402 hết 100 deploy, reset 13/09 17:15 +07.

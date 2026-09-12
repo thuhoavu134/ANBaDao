@@ -22,6 +22,8 @@ Owner: rà soát chức năng còn thiếu, tách ticket **độc lập** để 
 
 **Wave H coordinator LIVE** 12/09: owner gõ `live`. Squash [#55](https://github.com/bktimmy247/luc-than/pull/55) → main `b4915a9`. Stub TKT-0065…0073. Overlay/runtime **chưa điền**.
 
+**Wave J tickets READY** 12/09 tối: TKT-0076 Neon, TKT-0077 OAuth WAITING_OWNER, TKT-0078 Vercel WAITING_QUOTA. Overlay Wave H **vẫn stub**.
+
 **Wave I LIVE** 12/09: owner gõ `live`. Squash [#56](https://github.com/bktimmy247/luc-than/pull/56) → main `282df9d`. TKT-0074 đăng nhập.
 
 
@@ -41,6 +43,7 @@ Owner: rà soát chức năng còn thiếu, tách ticket **độc lập** để 
 | Wave G | **Halls LIVE** TKT-0058…0060 + Safari pin TKT-0064 (#53). **Ấn UI LIVE** 0061…0063 (#54) |
 | Wave H | **Coordinator LIVE** TKT-0065…0073 (#55) stub — điền overlay |
 | Wave I | **LIVE** TKT-0074 (#56) đăng nhập + tài khoản |
+| Wave J | **Tickets READY** TKT-0076 Neon · TKT-0077 OAuth WAITING_OWNER · TKT-0078 alias WAITING_QUOTA |
 
 | Không mở ticket | Combat V2 / 42 S+ · **72 tướng full-asset (wave sau, ID mới, không phải 12 hiện tại)** · 5 nan Lịch `go:null` · visual Bày trận · seed/banner/roster 12 · L02c reward (chờ owner) · Hermes 27 · atlas skill trận |
 
@@ -173,6 +176,18 @@ Stub **sau** `overlay-safari-hotfix-v1.mjs`, **trước** TKT-0074 auth. Filling
 0066: hall đã có close-hub thì bỏ. Không restyle `.cs-prepare`. Không sửa `journey-3d` / `end-3d`.
 
 0070–0073: **không** imagegen wave này. Stub rỗng tới khi art về, ghép file là xong.
+
+## 3h. Wave J — bền tài khoản + alias Vercel
+
+Không stub `build-static.mjs`. Ops + store.
+
+| Ticket | Việc | Khóa | Status |
+|---|---|---|---|
+| [TKT-0076](../tickets/TKT-0076/ticket.md) | Neon `DATABASE_URL` — `createPostgresStore` đã có | `auth-api` | READY P0 |
+| [TKT-0077](../tickets/TKT-0077/ticket.md) | OAuth MXH khi owner dán App ID | `auth-api` | **WAITING_OWNER** |
+| [TKT-0078](../tickets/TKT-0078/ticket.md) | Retrigger luc-than.vercel.app sau 13/09 17:15 +07 | `vercel-alias` | **WAITING_QUOTA** |
+
+0076 conflicts 0074 (cùng store). 0077 conflicts 0076/0074 — làm tuần tự. 0078 không sửa game.
 
 ---
 
