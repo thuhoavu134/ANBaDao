@@ -17,6 +17,20 @@
   root.querySelector('.hv-chat-stage').append(body);
   document.body.append(root);
 
+  if (typeof renderChat === 'function') {
+    const baseChat = renderChat;
+    renderChat = function renderChatPlainTabs() {
+      baseChat.apply(this, arguments);
+      body.querySelectorAll('.chatTab').forEach(b => {
+        const k = b.getAttribute('data-ch');
+        const lab = (typeof CHAT_CHANNELS === 'object' && CHAT_CHANNELS[k] && CHAT_CHANNELS[k].label) || '';
+        if (!lab) return;
+        const unread = (b.textContent.match(/·\s*(\d+)/) || [])[1];
+        b.textContent = unread ? (lab + ' · ' + unread) : lab;
+      });
+    };
+  }
+
   const close = () => { if (typeof navTo === 'function') navTo('hub'); };
 
   const syncOpen = name => {

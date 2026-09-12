@@ -9,7 +9,7 @@
 #hvBagRoot.is-open{display:flex}
 #hvBagRoot[hidden]{display:none!important}
 #hvBagRoot .hv-bag-panel{
-  pointer-events:auto;max-height:min(68vh,560px);display:flex;flex-direction:column;
+  pointer-events:auto;max-height:75vh;min-height:75vh;display:flex;flex-direction:column;
   border-radius:20px 20px 10px 10px;overflow:auto;
   background:#f3e4c4;
   box-shadow:0 16px 40px rgba(0,0,0,.5),0 0 0 1px rgba(215,179,106,.55);

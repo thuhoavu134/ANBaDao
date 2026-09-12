@@ -33,6 +33,20 @@
   min-height:36px;padding:0 12px;border:0;border-radius:10px;background:#e2b45a;color:#3a2414;font-weight:800;
 }
 #hvJobsRoot .hv-jobs-street button:disabled{opacity:.5}
-#hvJobsRoot #jobsBody .section,#hvJobsRoot #jobsBody .quest,#hvJobsRoot #jobsBody .hcard{
-  background:#fff8e8!important;color:#2d251f!important;border-color:#e2c48a!important;
+#hvJobsRoot #jobsBody .jobcard{background:#fff8e8!important;color:#2d251f!important;border:1px solid #e2c48a;border-radius:16px;padding:12px;margin:0 0 12px}
+#hvJobsRoot .hv-job-slots{display:flex;gap:10px;justify-content:center;margin:8px 0}
+#hvJobsRoot .hv-job-slot{
+  width:64px;height:64px;border-radius:12px;border:2px solid #d7b883;padding:0;
+  background:#cfc8c0 center/cover no-repeat;box-shadow:inset 0 8px 16px rgba(0,0,0,.18);
 }
+#hvJobsRoot .hv-job-slot.is-empty{
+  background:#3a3a3a url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><circle cx='32' cy='24' r='10' fill='%23666'/><ellipse cx='32' cy='48' rx='16' ry='10' fill='%23666'/></svg>") center/70% no-repeat;
+}
+#hvJobsRoot .jpick{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:8px 0}
+#hvJobsRoot .jchip,#hvJobsRoot .hv-job-face{
+  width:auto;aspect-ratio:1;min-height:56px;border-radius:12px;border:2px solid #d7b883;
+  background:#efe0c0 center/cover no-repeat;color:transparent!important;font-size:0!important;overflow:hidden;
+}
+#hvJobsRoot .jchip.on{box-shadow:0 0 0 3px #e2b45a}
+#hvJobsRoot .jrow{display:flex;justify-content:flex-end;gap:8px;align-items:center;margin-top:8px}
+#hvJobsRoot .jst{font-size:11px;color:#6a4318}

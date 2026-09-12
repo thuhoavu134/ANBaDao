@@ -37,6 +37,47 @@
     if (open) paintStreet();
   };
 
+  if (typeof renderJobs === 'function') {
+    const baseJobs = renderJobs;
+    renderJobs = function renderJobsWithSlots() {
+      baseJobs.apply(this, arguments);
+      restyleJobs();
+    };
+  }
+
+  function face(id) {
+    if (typeof heroThumbInline === 'function') return heroThumbInline(id, 'avatar');
+    return '';
+  }
+
+  function restyleJobs() {
+    body.querySelectorAll('.jobcard').forEach(card => {
+      const pick = card.querySelector('.jpick');
+      const go = card.querySelector('[data-jgo]');
+      if (!pick || !go) return;
+      const jid = go.getAttribute('data-jgo');
+      const picks = (typeof _jobsPick === 'object' && _jobsPick[jid]) || [];
+      let slots = card.querySelector('.hv-job-slots');
+      if (!slots) {
+        slots = document.createElement('div');
+        slots.className = 'hv-job-slots';
+        pick.before(slots);
+      }
+      slots.innerHTML = [0, 1].map(i => {
+        const id = picks[i];
+        if (!id) return `<button type="button" class="hv-job-slot is-empty" aria-label="Chọn tướng"></button>`;
+        return `<button type="button" class="hv-job-slot is-on" data-jh="${jid}:${id}" style="${face(id)}" aria-label="Bỏ tướng"></button>`;
+      }).join('');
+      pick.querySelectorAll('.jchip').forEach(b => {
+        const id = (b.getAttribute('data-jh') || '').split(':')[1];
+        if (!id) return;
+        b.textContent = '';
+        b.setAttribute('style', (b.getAttribute('style') || '') + face(id));
+        b.classList.add('hv-job-face');
+      });
+    });
+  }
+
   const baseShowScreen = showScreen;
   showScreen = function showScreenWithJobsHall(name) {
     baseShowScreen(name);
@@ -44,6 +85,12 @@
   };
 
   root.querySelector('[data-jobs-close]').addEventListener('click', () => navTo('hub'));
+  root.addEventListener('click', ev => {
+    const slot = ev.target.closest('.hv-job-slot[data-jh]');
+    if (!slot || !root.contains(slot)) return;
+    const chip = body.querySelector('.jchip[data-jh="' + slot.getAttribute('data-jh') + '"]');
+    if (chip) chip.click();
+  });
   street.addEventListener('click', ev => {
     if (!ev.target.closest('[data-jobs-street-claim]')) return;
     if (typeof socialClaimDaily === 'function' && socialClaimDaily()) paintStreet();

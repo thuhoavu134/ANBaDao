@@ -1,3 +1,7 @@
+## 13/09/2026 — Wave R slot/chat/túi REVIEW
+
+Giao việc ô tướng trống. Chat bỏ icon và dòng xanh. Túi 3/4 màn.
+
 ## 13/09/2026 — Wave Q kem panel LIVE
 
 Owner gõ live. Squash [#80](https://github.com/bktimmy247/luc-than/pull/80) → `df066bb`. TKT-0104.

@@ -50,6 +50,7 @@
 }
 #hvChatRoot .chatQuick{display:none!important}
 #hvChatRoot #chatBody .section:has(#socialClaim){display:none!important}
+#hvChatRoot #chatBody .section:first-child > div:nth-of-type(2){display:none!important}
 body.chat-hall-active #hubScreen{display:block!important;visibility:visible!important}
 body.chat-hall-active #chatScreen{display:none!important}
 body.chat-hall-active .art-dock{z-index:96;pointer-events:auto}
