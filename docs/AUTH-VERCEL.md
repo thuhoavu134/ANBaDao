@@ -24,16 +24,15 @@ Project **luc-than** → Settings → Environment Variables (Production + Previe
 | `GOOGLE_CLIENT_SECRET` | OAuth | |
 | `FACEBOOK_APP_ID` | OAuth | Facebook Login app |
 | `FACEBOOK_APP_SECRET` | OAuth | |
-| `APPLE_CLIENT_ID` | OAuth | Sign in with Apple Services ID |
-| `PUBLIC_BASE_URL` | Nên | `https://luc-than.vercel.app` |
+| `APPLE_CLIENT_ID` | Bỏ | Owner 12/09: không làm Sign in with Apple |
+| `PUBLIC_BASE_URL` | Nên | `https://hon-viet-mong-gioi-v3-25-4-dinh-loi-gamma.vercel.app` |
 
-Redirect URI (Authorized):
+Redirect URI (Authorized) — origin thuhoavu:
 
-- Google: `https://luc-than.vercel.app/api/auth/oauth/google/callback`
-- Facebook: `https://luc-than.vercel.app/api/auth/oauth/facebook/callback`
-- Apple: `https://luc-than.vercel.app/api/auth/oauth/apple/callback`
+- Google: `https://hon-viet-mong-gioi-v3-25-4-dinh-loi-gamma.vercel.app/api/auth/oauth/google/callback`
+- Facebook: `https://hon-viet-mong-gioi-v3-25-4-dinh-loi-gamma.vercel.app/api/auth/oauth/facebook/callback`
 
-Không có App ID thì nút MXH mở form email dự phòng. Email + Du khách chạy trên mọi máy không cần env OAuth.
+Không Apple. Không có App ID thì nút MXH mở form email dự phòng. Email + Du khách chạy trên mọi máy không cần env OAuth.
 
 Không tạo project Vercel thứ hai.
 

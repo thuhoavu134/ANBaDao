@@ -1,6 +1,6 @@
 ---
 id: TKT-0077
-title: OAuth Google / Facebook / Apple — nút MXH chạy thật
+title: OAuth Google / Facebook — nút MXH chạy thật
 status: WAITING_OWNER
 phase: WAITING_OWNER
 priority: P1
@@ -17,6 +17,8 @@ branch_hint: work/l77-oauth-apps-YYYYMMDD
 ---
 # TKT-0077 — OAuth MXH (chờ App ID owner)
 
+Owner 12/09 21:27: **bỏ Apple**. Chỉ Google + Facebook.
+
 Wave **J**. **Không làm** tới khi owner dán App ID/Secret vào chat hoặc Vercel env.
 
 Hiện tại không có `GOOGLE_CLIENT_ID` / `FACEBOOK_APP_ID` / `APPLE_CLIENT_ID` thì nút MXH **mở form email dự phòng** (đúng TKT-0074).
@@ -28,11 +30,11 @@ Khi owner gửi key:
 1. Gắn env Production + Preview trên **một** project `luc-than`.
 2. Redirect URI đúng `docs/AUTH-VERCEL.md`.
 3. `/api/health` `oauth: true` cho provider đã có.
-4. Nút Google/Facebook/Apple trên `#hvLoginRoot` mở OAuth, không fallback email.
+4. Nút Google/Facebook trên `#hvLoginRoot` mở OAuth, không fallback email. Apple giữ fallback email.
 
 ## Non-goals
 
-Không tự tạo Google Cloud / Facebook App / Apple Services ID. Không Neon (0076). Không sửa hall. Không 72 tướng. Không merge tới `live`.
+Không tự tạo Google Cloud / Facebook App. **Không Apple.** Không Neon (0076). Không sửa hall. Không 72 tướng. Không merge tới `live`.
 
 ## Acceptance
 
