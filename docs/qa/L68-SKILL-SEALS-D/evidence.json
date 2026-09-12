@@ -1,0 +1,137 @@
+{
+  "sampleId": "ong_hang_pho",
+  "controlId": "lac_yen",
+  "summary": [
+    {
+      "label": "390x844",
+      "ok": true,
+      "painted": {
+        "heroId": "ong_hang_pho",
+        "sealCount": 3,
+        "sealText": [
+          "",
+          "",
+          ""
+        ],
+        "sealBg": [
+          "url(\"http://127.0.0.1:18068/assets/ui/skill-seals/ong_hang_pho/basic.jpg\")",
+          "url(\"http://127.0.0.1:18068/assets/ui/skill-seals/ong_hang_pho/ultimate.jpg\")",
+          "url(\"http://127.0.0.1:18068/assets/ui/skill-seals/ong_hang_pho/passive.jpg\")"
+        ],
+        "before": [
+          {
+            "content": "\"\"",
+            "bg": "url(\"http://127.0.0.1:18068/assets/ui/skill-seals/ong_hang_pho/basic.jpg\")"
+          },
+          {
+            "content": "\"\"",
+            "bg": "url(\"http://127.0.0.1:18068/assets/ui/skill-seals/ong_hang_pho/ultimate.jpg\")"
+          },
+          {
+            "content": "\"\"",
+            "bg": "url(\"http://127.0.0.1:18068/assets/ui/skill-seals/ong_hang_pho/passive.jpg\")"
+          }
+        ],
+        "emojiOnSeal": false,
+        "emojiOnBefore": false
+      },
+      "control": {
+        "heroId": "lac_yen",
+        "sealCount": 3,
+        "sealText": [
+          "",
+          "",
+          ""
+        ],
+        "sealBg": [
+          "url(\"http://127.0.0.1:18068/assets/ui/skill-seals/lac_yen/basic.jpg\")",
+          "url(\"http://127.0.0.1:18068/assets/ui/skill-seals/lac_yen/ultimate.jpg\")",
+          "url(\"http://127.0.0.1:18068/assets/ui/skill-seals/lac_yen/passive.jpg\")"
+        ],
+        "before": [
+          {
+            "content": "\"\"",
+            "bg": "url(\"http://127.0.0.1:18068/assets/ui/skill-seals/lac_yen/basic.jpg\")"
+          },
+          {
+            "content": "\"\"",
+            "bg": "url(\"http://127.0.0.1:18068/assets/ui/skill-seals/lac_yen/ultimate.jpg\")"
+          },
+          {
+            "content": "\"\"",
+            "bg": "url(\"http://127.0.0.1:18068/assets/ui/skill-seals/lac_yen/passive.jpg\")"
+          }
+        ],
+        "emojiOnSeal": false,
+        "emojiOnBefore": false
+      },
+      "appErrors": []
+    },
+    {
+      "label": "768x1024",
+      "ok": true,
+      "painted": {
+        "heroId": "ong_hang_pho",
+        "sealCount": 3,
+        "sealText": [
+          "",
+          "",
+          ""
+        ],
+        "sealBg": [
+          "url(\"http://127.0.0.1:18068/assets/ui/skill-seals/ong_hang_pho/basic.jpg\")",
+          "url(\"http://127.0.0.1:18068/assets/ui/skill-seals/ong_hang_pho/ultimate.jpg\")",
+          "url(\"http://127.0.0.1:18068/assets/ui/skill-seals/ong_hang_pho/passive.jpg\")"
+        ],
+        "before": [
+          {
+            "content": "\"\"",
+            "bg": "url(\"http://127.0.0.1:18068/assets/ui/skill-seals/ong_hang_pho/basic.jpg\")"
+          },
+          {
+            "content": "\"\"",
+            "bg": "url(\"http://127.0.0.1:18068/assets/ui/skill-seals/ong_hang_pho/ultimate.jpg\")"
+          },
+          {
+            "content": "\"\"",
+            "bg": "url(\"http://127.0.0.1:18068/assets/ui/skill-seals/ong_hang_pho/passive.jpg\")"
+          }
+        ],
+        "emojiOnSeal": false,
+        "emojiOnBefore": false
+      },
+      "control": {
+        "heroId": "lac_yen",
+        "sealCount": 3,
+        "sealText": [
+          "",
+          "",
+          ""
+        ],
+        "sealBg": [
+          "url(\"http://127.0.0.1:18068/assets/ui/skill-seals/lac_yen/basic.jpg\")",
+          "url(\"http://127.0.0.1:18068/assets/ui/skill-seals/lac_yen/ultimate.jpg\")",
+          "url(\"http://127.0.0.1:18068/assets/ui/skill-seals/lac_yen/passive.jpg\")"
+        ],
+        "before": [
+          {
+            "content": "\"\"",
+            "bg": "url(\"http://127.0.0.1:18068/assets/ui/skill-seals/lac_yen/basic.jpg\")"
+          },
+          {
+            "content": "\"\"",
+            "bg": "url(\"http://127.0.0.1:18068/assets/ui/skill-seals/lac_yen/ultimate.jpg\")"
+          },
+          {
+            "content": "\"\"",
+            "bg": "url(\"http://127.0.0.1:18068/assets/ui/skill-seals/lac_yen/passive.jpg\")"
+          }
+        ],
+        "emojiOnSeal": false,
+        "emojiOnBefore": false
+      },
+      "appErrors": []
+    }
+  ],
+  "safari": "NOT_RUN"
+}

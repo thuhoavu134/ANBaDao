@@ -1,11 +1,11 @@
 ---
 id: TKT-0068
 title: Ấn kỹ năng UI Ông Phở · Lục Ảnh · Thầy Mo
-status: READY
-phase: READY
+status: REVIEW
+phase: REVIEW
 priority: P2
 created: 2026-09-12T07:20:00.000Z
-updated: 2026-09-12T07:20:00.000Z
+updated: 2026-09-12T12:30:00.000Z
 acceptance_ids: ['L68-T1', 'L68-T2', 'L68-T3', 'L68-T4', 'L68-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths: ['src/ui/skill-seals-d-runtime.js', 'src/ui/skill-seals-d.css', 'scripts/skill-seals-d-v1.mjs', 'scripts/lanes/tkt-0068-skill-seals-d.mjs', 'scripts/qa-skill-seals-d.mjs', 'assets/ui/skill-seals/ong_hang_pho/basic.jpg', 'assets/ui/skill-seals/ong_hang_pho/ultimate.jpg', 'assets/ui/skill-seals/ong_hang_pho/passive.jpg', 'assets/ui/skill-seals/luc_anh/basic.jpg', 'assets/ui/skill-seals/luc_anh/ultimate.jpg', 'assets/ui/skill-seals/luc_anh/passive.jpg', 'assets/ui/skill-seals/thay_mo/basic.jpg', 'assets/ui/skill-seals/thay_mo/ultimate.jpg', 'assets/ui/skill-seals/thay_mo/passive.jpg', 'tests/skill-seals-d.test.mjs', 'docs/qa/L68-SKILL-SEALS-D/']

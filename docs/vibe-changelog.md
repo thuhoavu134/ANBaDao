@@ -1,3 +1,7 @@
+## 12/09/2026 — TKT-0068 ấn UI Ông Phở · Lục Ảnh · Thầy Mo REVIEW
+
+9 medallion jpg exclusive, wrap renderHeroDetail. Chrome 390×844 + 768×1024 PASS. Safari NOT_RUN. Không merge tới live.
+
 ## 12/09/2026 — TKT-0067 Giáo Trường hall giả 3D REVIEW
 
 Wrap startTraining mở hall trước, Luyện mới trừ stamina + iframe luyen_tap, xong trận về hall. Chrome 390×844 + 768×1024 PASS. Safari NOT_RUN. Không merge tới live.
