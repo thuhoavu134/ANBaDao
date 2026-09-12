@@ -2,6 +2,7 @@
 
 Bright fake-3D tokens (owner art language). No UI text in the images; labels stay DOM.
 Do **not** reuse hub `menu-v3233` icons.
+Do **not** paint padlocks into spoke JPGs — no padlock in the painting. Lock is CSS overlay `.hv-lich-lock` only while the nan is locked.
 
 | file | use | source |
 | --- | --- | --- |
@@ -12,11 +13,11 @@ Do **not** reuse hub `menu-v3233` icons.
 | `spokes/campaign.jpg` | nan Qua Ải Mộng | 3D city gate token |
 | `spokes/train.jpg` | nan Giáo Trường | 3D training dummy |
 | `spokes/tower.jpg` | nan Tháp Trắng Đêm | `ui/tower/hub-icon.png` |
-| `spokes/hold.jpg` | nan Trì Thủ Phố Đêm | `ui/tower/seal-intact.png` |
+| `spokes/hold.jpg` | nan Trì Thủ Phố Đêm | bronze citadel shield, no padlock |
 | `spokes/arena.jpg` | nan Đấu Trường | `account-relics/kiem-ngoc.png` |
 | `spokes/expedition.jpg` | nan Mộng Lộ | 3D compass token |
 | `spokes/forgegate.jpg` | nan Lò Ải Thiên Công | 3D anvil/furnace |
 | `spokes/hunt.jpg` | nan Săn Boss | `hunt/mong-tinh.png` |
-| `spokes/abyss.jpg` | nan Vực Sâu Tiềm Long | 3D dragon token |
-| `spokes/palace.jpg` | nan Vận Cơ Thiên Cung | 3D cloud pavilion |
+| `spokes/abyss.jpg` | nan Vực Sâu Tiềm Long | 3D dragon token, no padlock |
+| `spokes/palace.jpg` | nan Vận Cơ Thiên Cung | 3D cloud pavilion, no padlock |
 | `spokes/drill.jpg` | nan Chỉnh Lý Liệt Binh | 3D six-banner cluster |

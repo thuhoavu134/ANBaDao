@@ -199,14 +199,23 @@
 }
 .hv-lich-spoke small b{display:block;font-size:9px;color:#ffe7a4}
 .hv-lich-spoke.is-on span{box-shadow:0 0 0 3px #f0c66a,0 0 16px rgba(240,180,70,.45)}
-.hv-lich-spoke.is-locked{opacity:.78}
+.hv-lich-spoke.is-locked{opacity:.9}
 .hv-lich-spoke.is-locked span:after{
   content:"";position:absolute;inset:0;border-radius:50%;
-  background:rgba(10,7,5,.42);pointer-events:none;
+  background:rgba(10,7,5,.38);pointer-events:none;
 }
 .hv-lich-lock{
-  position:absolute;right:0;top:0;z-index:1;width:18px;height:18px;border-radius:50%;
-  background:#1a120c;box-shadow:0 0 0 1px #c4a06a;font-size:10px;line-height:18px;font-style:normal;
+  position:absolute;left:50%;top:0;z-index:2;width:18px;height:18px;margin-left:12px;margin-top:-2px;
+  border-radius:50%;background:#1a120c;box-shadow:0 0 0 1.5px #e2c07a,0 2px 6px rgba(0,0,0,.45);
+  pointer-events:none;font-style:normal;
+}
+.hv-lich-lock:before{
+  content:"";position:absolute;left:5px;top:3px;width:8px;height:5px;box-sizing:border-box;
+  border:2px solid #f0d48a;border-bottom:0;border-radius:6px 6px 0 0;
+}
+.hv-lich-lock:after{
+  content:"";position:absolute;left:4px;top:7px;width:10px;height:8px;
+  background:#f0d48a;border-radius:2px;
 }
 @media(max-width:360px){
   .hv-lich-spoke{width:58px;margin-left:-29px;margin-top:-29px}

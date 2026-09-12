@@ -1,0 +1,14 @@
+{
+  "ticket": "TKT-0075",
+  "acceptance": ["L76-T1", "L76-T2", "L76-T3"],
+  "viewport": "390x844",
+  "chrome": "PASS",
+  "safari": "NOT_RUN",
+  "agree": "Tôi đồng ý với Thỏa thuận người dùng và Chính sách bảo mật",
+  "agreeHeightPx": 15.5,
+  "oneLine": true,
+  "campaignLockOverlay": 0,
+  "holdLockOverlay": 1,
+  "palaceSrc": "assets/daily/spokes/palace.jpg",
+  "screens": ["login-terms-390x844.png", "lich-wheel-390x844.png"]
+}

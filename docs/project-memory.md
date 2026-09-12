@@ -1,4 +1,9 @@
+## 12/09/2026 — TKT-0075 REVIEW
+
+Nan Lịch Luyện: icon = ải, khóa = overlay CSS (biến mất khi mở). Đăng nhập: điều khoản một câu nối liền. Wave H vẫn READY. Không merge tới `live`.
+
 ## 12/09/2026 — Wave F + Wave H LIVE
+
 
 Main `b4915a9`. PR #51 Hành trình/Kết quả overlay body. PR #55 stub 0065…0073. Overlay Wave H chưa điền. Việc kế: TKT-0065 trận Tháp NPC, TKT-0066 Thành Chính.
 

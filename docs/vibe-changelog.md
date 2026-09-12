@@ -1,4 +1,9 @@
+## 12/09/2026 — TKT-0075 nan Lịch Luyện không nướng khóa + điều khoản 1 dòng REVIEW
+
+Owner ảnh thật. 3 nan hold/abyss/palace sơn lại **không ổ khóa**. Khóa chỉ overlay CSS `.hv-lich-lock` khi `is-locked`. Dòng đồng ý: «Tôi đồng ý với Thỏa thuận người dùng và Chính sách bảo mật» một câu, link nowrap, bỏ ngoặc kép. L76-T1/T2/T3 GREEN. Không merge tới `live`.
+
 ## 12/09/2026 — retrigger Vercel production Wave F+H
+
 
 Owner gõ gộp live + deploy. Git `main` đã squash #51+#55 nhưng alias luc-than.vercel.app còn `dpl_Gw6KtJFxJYdGdxHVUBksnZAtYE2t` / `282df9d`. Hobby hết 100 deploy/ngày, reset **13/09/2026 16:58 +07**. CI Live check chỉ HTTP 200 nên GREEN giả. Preview sandbox đã build lại (`#hvJourneyRoot` có).
 

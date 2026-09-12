@@ -9,7 +9,7 @@
   const I_GG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#EA4335" d="M12 10.2v3.6h5.1c-.2 1.2-1.5 3.6-5.1 3.6-3.1 0-5.6-2.5-5.6-5.6S8.9 6.2 12 6.2c1.8 0 3 .7 3.7 1.4l2.5-2.4C16.7 3.7 14.6 2.8 12 2.8 6.9 2.8 2.8 6.9 2.8 12S6.9 21.2 12 21.2c5.5 0 9.1-3.8 9.1-9.2 0-.6-.1-1.1-.2-1.8H12z"/><path fill="#34A853" d="M3.9 7.4l3 2.2C7.7 7.3 9.7 6.2 12 6.2c1.8 0 3 .7 3.7 1.4l2.5-2.4C16.7 3.7 14.6 2.8 12 2.8 8.2 2.8 4.9 4.9 3.9 7.4z"/><path fill="#FBBC05" d="M12 21.2c2.5 0 4.6-.8 6.1-2.2l-2.8-2.2c-.8.5-1.8.9-3.3.9-3.5 0-4.9-2.4-5.1-3.6H3.8v2.3C5 19.3 8.2 21.2 12 21.2z"/><path fill="#4285F4" d="M21.1 12c0-.6-.1-1.1-.2-1.8H12v3.6h5.1c-.3 1.4-1.2 2.4-2.4 3.1l2.8 2.2c1.6-1.5 2.6-3.7 2.6-7.1z"/></svg>';
   const I_MAIL = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#8a5a22" d="M4 6h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2zm0 2 8 5 8-5H4z"/></svg>';
   const I_GUEST = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.2" fill="#8a5a22"/><path fill="#8a5a22" d="M5 19c.6-3.4 3.4-5.2 7-5.2s6.4 1.8 7 5.2"/></svg>';
-  const TERMS_CHECK = '<label class="hv-login-check"><input type="checkbox" data-terms checked> Tôi đồng ý với "<button type="button" class="hv-login-link" data-legal="terms">Thỏa thuận người dùng</button>" và "<button type="button" class="hv-login-link" data-legal="privacy">Chính sách bảo mật</button>"</label>';
+  const TERMS_CHECK = '<label class="hv-login-check"><input type="checkbox" data-terms checked><span class="hv-login-agree">Tôi đồng ý với <button type="button" class="hv-login-link" data-legal="terms">Thỏa thuận người dùng</button> và <button type="button" class="hv-login-link" data-legal="privacy">Chính sách bảo mật</button></span></label>';
 
   function origin() {
     try { return location.origin; } catch { return ''; }
@@ -84,7 +84,7 @@
             <button type="button" class="hv-login-pill" data-go="email">${I_MAIL} Email</button>
             <button type="button" class="hv-login-pill" id="hvLoginGuest">${I_GUEST} Du khách</button>
           </div>
-          <label class="hv-login-check"><input type="checkbox" data-terms checked> Tôi đồng ý với "<button type="button" class="hv-login-link" data-legal="terms">Thỏa thuận người dùng</button>" và "<button type="button" class="hv-login-link" data-legal="privacy">Chính sách bảo mật</button>"</label>
+          ${TERMS_CHECK}
         </div>
         <form data-panel="email" id="hvLoginEmail" hidden autocomplete="on">
           <header class="hv-login-head"><b>Đăng nhập bằng email</b><button type="button" class="hv-login-x" data-go="methods" aria-label="Đóng">×</button></header>
@@ -93,7 +93,7 @@
             <input id="hvLoginPass" name="password" type="password" autocomplete="current-password" placeholder="Mật khẩu">
             <button type="button" class="hv-login-eye" data-eye="hvLoginPass" aria-label="Hiện mật khẩu">👁</button>
           </div>
-          <label class="hv-login-check"><input type="checkbox" data-terms checked> Tôi đồng ý với "<button type="button" class="hv-login-link" data-legal="terms">Thỏa thuận người dùng</button>" và "<button type="button" class="hv-login-link" data-legal="privacy">Chính sách bảo mật</button>"</label>
+          ${TERMS_CHECK}
           <button type="submit" class="hv-login-cta">Vào game</button>
           <div class="hv-login-foot">
             <button type="button" class="hv-login-textbtn" data-go="register">Đăng ký tài khoản mới</button>
@@ -107,7 +107,7 @@
             <input id="hvLoginRegPass" name="password" type="password" autocomplete="new-password" placeholder="Mật khẩu (tối thiểu 6 ký tự)">
             <button type="button" class="hv-login-eye" data-eye="hvLoginRegPass" aria-label="Hiện mật khẩu">👁</button>
           </div>
-          <label class="hv-login-check"><input type="checkbox" data-terms checked> Tôi đồng ý với "<button type="button" class="hv-login-link" data-legal="terms">Thỏa thuận người dùng</button>" và "<button type="button" class="hv-login-link" data-legal="privacy">Chính sách bảo mật</button>"</label>
+          ${TERMS_CHECK}
           <button type="submit" class="hv-login-cta">Tạo tài khoản</button>
           <p class="hv-login-hint">Tạo tài khoản xong thì dùng đúng email đó để đăng nhập.</p>
         </form>
@@ -128,7 +128,7 @@
             <input data-social-pass type="password" autocomplete="current-password" placeholder="Mật khẩu">
             <button type="button" class="hv-login-eye" aria-label="Hiện mật khẩu">👁</button>
           </div>
-          <label class="hv-login-check"><input type="checkbox" data-terms checked> Tôi đồng ý với "<button type="button" class="hv-login-link" data-legal="terms">Thỏa thuận người dùng</button>" và "<button type="button" class="hv-login-link" data-legal="privacy">Chính sách bảo mật</button>"</label>
+          ${TERMS_CHECK}
           <button type="submit" class="hv-login-cta">Vào game</button>
         </form>
         <form data-panel="facebook" hidden autocomplete="on">
@@ -138,7 +138,7 @@
             <input data-social-pass type="password" autocomplete="current-password" placeholder="Mật khẩu">
             <button type="button" class="hv-login-eye" aria-label="Hiện mật khẩu">👁</button>
           </div>
-          <label class="hv-login-check"><input type="checkbox" data-terms checked> Tôi đồng ý với "<button type="button" class="hv-login-link" data-legal="terms">Thỏa thuận người dùng</button>" và "<button type="button" class="hv-login-link" data-legal="privacy">Chính sách bảo mật</button>"</label>
+          ${TERMS_CHECK}
           <button type="submit" class="hv-login-cta">Vào game</button>
         </form>
         <form data-panel="apple" hidden autocomplete="on">
@@ -148,7 +148,7 @@
             <input data-social-pass type="password" autocomplete="current-password" placeholder="Mật khẩu">
             <button type="button" class="hv-login-eye" aria-label="Hiện mật khẩu">👁</button>
           </div>
-          <label class="hv-login-check"><input type="checkbox" data-terms checked> Tôi đồng ý với "<button type="button" class="hv-login-link" data-legal="terms">Thỏa thuận người dùng</button>" và "<button type="button" class="hv-login-link" data-legal="privacy">Chính sách bảo mật</button>"</label>
+          ${TERMS_CHECK}
           <button type="submit" class="hv-login-cta">Vào game</button>
         </form>
         <p class="hv-login-err" id="hvLoginErr" hidden></p>

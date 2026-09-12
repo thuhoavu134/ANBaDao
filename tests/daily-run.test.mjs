@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync, statSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import {
@@ -380,3 +380,21 @@ test('L21-P5: 11 ải spokes; night-1 opens Qua Ải + Luyện; Tháp after ch.1
   }
   assert.equal(icons.size, 11);
 });
+
+test('L76-T2: nan lock is CSS overlay; spoke JPG has no baked padlock', () => {
+  const ui = readFileSync(uiPath, 'utf8');
+  const css = readFileSync(cssPath, 'utf8');
+  assert.match(ui, /locked \? '<i class="hv-lich-lock"/);
+  assert.match(ui, /<\/span>' \+ \(locked \? '<i class="hv-lich-lock"/);
+  assert.doesNotMatch(ui, /🔒/);
+  assert.match(css, /[.]hv-lich-lock\{/);
+  assert.match(css, /[.]hv-lich-lock:before/);
+  const asset = readFileSync(join(root, 'assets/daily/ASSET.md'), 'utf8');
+  assert.match(asset, /no padlock/i);
+  for (const key of ['hold', 'abyss', 'palace']) {
+    const jpg = join(root, 'assets/daily/spokes', key + '.jpg');
+    assert.equal(existsSync(jpg), true, key);
+    assert.ok(statSync(jpg).size > 8 * 1024, key + ' too small');
+  }
+});
+

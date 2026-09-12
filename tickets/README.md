@@ -46,6 +46,8 @@ Board GitHub không có. File `tickets/TKT-00xx/ticket.md` là nguồn sự th�
 | TKT-0072 | H | Thân quái ch.5–6 | WAITING_ASSET |
 | TKT-0073 | H | Chân dung thoại NPC | WAITING_ASSET |
 | TKT-0074 | I | Màn đăng nhập + tài khoản cùng Vercel | LIVE (#56) |
+| TKT-0075 | — | Nan Lịch Luyện không nướng khóa + điều khoản 1 dòng | REVIEW |
+
 
 
 

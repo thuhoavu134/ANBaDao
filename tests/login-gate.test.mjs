@@ -73,3 +73,23 @@ test('L75-T3: frozen shells stay frozen; stub loads gate after auth', () => {
   assert.match(stub, /await import\(['"]\.\.\/net-auth-v1\.mjs['"]\)/);
   assert.match(stub, /await import\(['"]\.\.\/login-gate-v1\.mjs['"]\)/);
 });
+
+test('L76-T1: điều khoản là một câu nối liền, không bọc ngoặc kép', () => {
+  const ui = read('src/ui/login-gate-runtime.js');
+  const css = read('src/ui/login-gate.css');
+  assert.match(ui, /hv-login-agree/);
+  assert.match(ui, /Tôi đồng ý với <button/);
+  assert.doesNotMatch(ui, /đồng ý với "/);
+  assert.doesNotMatch(ui, /<\/button>" và "/);
+  assert.ok(ui.includes('TERMS_CHECK'), 'TERMS_CHECK missing');
+  assert.equal((ui.match(/class="hv-login-check"/g) || []).length, 1, 'reuse TERMS_CHECK, do not duplicate labels');
+  assert.match(css, /hv-login-agree/);
+  assert.match(css, /[.]hv-login-link\{[^}]*white-space:\s*nowrap/);
+});
+
+test('L76-T3: frozen shells stay frozen after terms polish', () => {
+  assert.doesNotMatch(read('index.html'), /hv-login-agree/);
+  assert.doesNotMatch(read('battle.html'), /hv-login-agree|hvLoginRoot/);
+  assert.doesNotMatch(read('src/ui/campaign-scene.js'), /hv-login-agree|hvLoginRoot/);
+});
+

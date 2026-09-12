@@ -412,7 +412,7 @@
     const n = clearedN();
     ring.innerHTML = LICH_LUYEN_SPOKES.map(spoke => {
       const locked = typeof lichSpokeLocked === 'function' ? lichSpokeLocked(spoke, n) : true;
-      return '<button type="button" class="hv-lich-spoke' + (locked ? ' is-locked' : '') + (spoke.key === 'campaign' ? ' is-on' : '') + '" data-lich-spoke="' + spoke.key + '" style="transform:rotate(' + spoke.angle + 'deg) translate(0, calc(-1 * var(--lich-r))) rotate(-' + spoke.angle + 'deg)" aria-label="' + spoke.label + '"><span><img src="' + spokeIcon(spoke) + '" alt="">' + (locked ? '<i class="hv-lich-lock" aria-hidden="true">🔒</i>' : '') + '</span><small><b>' + spoke.label + '</b>' + spoke.sub + '</small></button>';
+      return '<button type="button" class="hv-lich-spoke' + (locked ? ' is-locked' : '') + (spoke.key === 'campaign' ? ' is-on' : '') + '" data-lich-spoke="' + spoke.key + '" style="transform:rotate(' + spoke.angle + 'deg) translate(0, calc(-1 * var(--lich-r))) rotate(-' + spoke.angle + 'deg)" aria-label="' + spoke.label + '"><span><img src="' + spokeIcon(spoke) + '" alt=""></span>' + (locked ? '<i class="hv-lich-lock" aria-hidden="true"></i>' : '') + '<small><b>' + spoke.label + '</b>' + spoke.sub + '</small></button>';
     }).join('');
     fillLichChips(root);
   }
