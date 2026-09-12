@@ -4,4 +4,7 @@
 #hvBbrDesk button{min-height:32px;padding:4px 10px;border:0;border-radius:8px;background:#f3e4c4;color:#3a2414;font:700 11px/1 inherit;cursor:pointer;box-shadow:0 0 0 1px #d7b36a}
 #hvBbrDesk .hv-bbr-bet.is-on{background:linear-gradient(180deg,#e2b45a,#a06a22);color:#2a1608}
 #hvBbrDesk .hv-bbr-note{margin:4px 0 0;font-size:11px;color:#6a4a28}
-#festivalBody .bbw-spin,#hvFestivalRoot .bbw-spin{min-width:160px}
+#hvBbrDesk .hv-bbr-stars{margin:6px 0;padding:6px 8px;list-style:none;border:1px dashed #d7b36a;border-radius:8px;background:#fff6d8}
+#hvBbrDesk .hv-bbr-star{font-size:11px;line-height:1.55;color:#5a3a18}
+#hvBbrDesk .hv-bbr-star.is-on{background:#e2b45a;color:#2a1608;font-weight:800;border-radius:4px;padding:0 4px}
+img.hv-so-ic{width:18px;height:18px;object-fit:cover;border-radius:50%;vertical-align:-4px;box-shadow:0 0 0 1px #d7b36a}

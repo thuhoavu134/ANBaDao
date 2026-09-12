@@ -1,3 +1,7 @@
+## 13/09/2026 — Wave S BBR quay đúng REVIEW
+
+Chặn QUAY 1🐚. Sao 1–6. Chí Bảo hiếm + pity 8.
+
 ## 13/09/2026 — Wave S Bách Bảo Rương LIVE
 
 Owner gõ live. Squash [#85](https://github.com/bktimmy247/luc-than/pull/85) → `757f3e9`. TKT-0109. Cược 2/10/50, sao, Chợ Tinh/Hoạt.

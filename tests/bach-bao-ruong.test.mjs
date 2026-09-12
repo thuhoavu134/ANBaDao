@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
-  BBR_BETS, BBR_CRAFT, spinBbr, craftShells, buyBbrShop, rollStars, payAt
+  BBR_BETS, BBR_CRAFT, BBR_UNLOCK, spinBbr, craftShells, buyBbrShop, rollStars, payAt
 } from '../src/domain/festival/bach-bao-ruong.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -37,7 +37,14 @@ test('L109: cược 2/10/50, sao nhân, chế sò Tinh/Hoạt, shop điểm', ()
   assert.equal(shop.bachBao.pts, 0);
   assert.equal(rollStars(() => 0.99, false), 6);
   const ui = readFileSync(join(root, 'src/ui/bach-bao-ruong-runtime.js'), 'utf8');
-  assert.match(ui, /data-bbr-bet/);
+  assert.equal(BBR_UNLOCK.ssr, 50);
+  assert.equal(BBR_UNLOCK.b, 10);
+  assert.match(ui, /so-icon\.jpg/);
+  assert.match(ui, /S\+/);
+  assert.match(ui, /data-fest-spin/);
+  assert.match(ui, /openSupreme/);
+  assert.match(ui, /supPity/);
+  assert.match(ui, /grantExtremeEquipment/);
   assert.match(ui, /spinBachBaoCore/);
   assert.doesNotMatch(ui, /document\.addEventListener\(['"](?:click|pointerdown)/);
   const build = readFileSync(join(root, 'scripts/build-static.mjs'), 'utf8');

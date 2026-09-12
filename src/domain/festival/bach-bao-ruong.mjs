@@ -3,6 +3,7 @@ const fail = (code, message) => ({ ok: false, code, message });
 export const BBR_BETS = Object.freeze([2, 10, 50]);
 export const BBR_STAR_W = Object.freeze([0, 40, 26, 18, 10, 5, 1]);
 export const BBR_CRAFT = Object.freeze({ tinh: 25, hoat: 25, so: 10, cap: 2 });
+export const BBR_UNLOCK = Object.freeze({ b: 10, a: 20, s: 30, ss: 50, ssr: 50 });
 export const BBR_PAY = Object.freeze({
   gold: Object.freeze([0, 180, 480, 1200, 3600, 10000, 36000]),
   gems: Object.freeze([0, 3, 8, 18, 48, 120, 400]),
@@ -12,8 +13,8 @@ export const BBR_PAY = Object.freeze({
   sh_ss: Object.freeze([0, 2, 4, 8, 18, 40, 90]),
   sh_ssr: Object.freeze([0, 1, 2, 5, 12, 28, 70]),
   stam: Object.freeze([0, 4, 10, 20, 40, 80, 160]),
-  chest: Object.freeze([0, 0, 0, 1, 1, 2, 2]),
-  supreme: Object.freeze([0, 0, 0, 0, 1, 1, 2])
+  chest: Object.freeze([0, 1, 1, 1, 1, 2, 3]),
+  supreme: Object.freeze([0, 1, 1, 1, 2, 2, 3])
 });
 export const BBR_SHOP = Object.freeze([
   Object.freeze({ id: 'ss8', pts: 100, sh_ss: 8, name: '8 mảnh SS' }),
