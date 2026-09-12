@@ -1,3 +1,7 @@
+## 12/09/2026 — TKT-0077 LIVE Google + Facebook
+
+Owner gõ live. thuhoavu health `"oauth":true` google+facebook, apple false. Bỏ Apple. Facebook Development = admin/tester. Không PR code — env Vercel.
+
 ## 12/09/2026 — Production thuhoavu, TKT-0078 bỏ
 
 Owner: không đẩy luc-than.vercel.app. Chơi [gamma](https://hon-viet-mong-gioi-v3-25-4-dinh-loi-gamma.vercel.app/) team thuhoavu. Neon postgres. TKT-0078 SUPERSEDED.

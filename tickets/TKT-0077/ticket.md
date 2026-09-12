@@ -1,8 +1,8 @@
 ---
 id: TKT-0077
 title: OAuth Google / Facebook — nút MXH chạy thật
-status: WAITING_OWNER
-phase: WAITING_OWNER
+status: LIVE
+phase: LIVE
 priority: P1
 created: 2026-09-12T17:20:00.000Z
 updated: 2026-09-12T17:20:00.000Z
@@ -44,3 +44,5 @@ Không tự tạo Google Cloud / Facebook App. **Không Apple.** Không Neon (00
 - L77-P1: Chrome 390×844 — một provider owner chọn, về Thành Chính. Safari NOT_RUN ghi rõ
 
 Builder → REVIEW khi có key. Không tự MERGED/DONE.
+
+Owner 12/09 22:11 gõ **live**. Health thuhoavu `"oauth":true` google+facebook, apple false. Evidence `docs/qa/L77-OAUTH/`.

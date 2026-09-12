@@ -37,9 +37,9 @@ Nói tiếng Việt với owner (anh). Product language: không kể cổng, loc
 
 Thứ tự bắt buộc:
 
-P0 ngay:  Production = https://hon-viet-mong-gioi-v3-25-4-dinh-loi-gamma.vercel.app/ (team thuhoavu). TKT-0078 SUPERSEDED — không đẩy luc-than.vercel.app.
+P0 ngay:  Production = https://hon-viet-mong-gioi-v3-25-4-dinh-loi-gamma.vercel.app/ (team thuhoavu). TKT-0078 SUPERSEDED. TKT-0077 Google+Facebook LIVE.
 
-P0 nhiều người chơi bền:  TKT-0076 Neon LIVE trên thuhoavu (`"store":"postgres"`).
+P0 nhiều người chơi bền:  TKT-0076 Neon LIVE (`"store":"postgres"`).
 
 WAITING_ASSET (cấm imagegen): TKT-0070…0073 thân quái + bust NPC
 WAITING_OWNER: TKT-0077 OAuth — chỉ khi owner dán App ID

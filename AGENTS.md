@@ -2,7 +2,7 @@
 
 Đọc `docs/HANDOFF-2026-09-12.md` rồi `docs/LUNA-HANDOFF.md` trước khi sửa game.
 
-Bàn giao mới nhất **12/09/2026 tối**: Production = [gamma thuhoavu](https://hon-viet-mong-gioi-v3-25-4-dinh-loi-gamma.vercel.app/) · Neon `"store":"postgres"`. TKT-0078 **bỏ** — không đẩy luc-than.vercel.app. Việc kế: [TKT-0077](tickets/TKT-0077/ticket.md) OAuth khi có App ID, [TKT-0070](tickets/TKT-0070/ticket.md)…[0073](tickets/TKT-0073/ticket.md) chờ ảnh. 72 tướng = wave sau.
+Bàn giao mới nhất **12/09/2026 tối**: Production [gamma thuhoavu](https://hon-viet-mong-gioi-v3-25-4-dinh-loi-gamma.vercel.app/) · postgres · Google/Facebook LIVE. TKT-0078 bỏ. Việc kế: [TKT-0070](tickets/TKT-0070/ticket.md)…[0073](tickets/TKT-0073/ticket.md) chờ ảnh. 72 tướng = wave sau.
 
 
 

@@ -1,0 +1,13 @@
+{
+  "ticket": "TKT-0077",
+  "status": "LIVE",
+  "when": "2026-09-12T15:11:00.000Z",
+  "url": "https://hon-viet-mong-gioi-v3-25-4-dinh-loi-gamma.vercel.app/",
+  "health": {
+    "ok": true,
+    "store": "postgres",
+    "oauth": true,
+    "providers": { "google": true, "facebook": true, "apple": false }
+  },
+  "notes": "Owner bỏ Apple. Env GOOGLE_* + FACEBOOK_* trên thuhoavu. L77-P1 Safari NOT_RUN. Facebook Development = admin/tester only."
+}
