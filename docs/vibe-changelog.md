@@ -1,3 +1,7 @@
+## 13/09/2026 — Wave S Bách Bảo lưới LIVE
+
+Owner gõ live. Squash [#88](https://github.com/bktimmy247/luc-than/pull/88) → `3b4979e`. TKT-0112.
+
 ## 13/09/2026 — Wave S Bách Bảo lưới REVIEW
 
 Tiếp cộng cục (2+3=5★). Chợ Lục Châu, mảnh 12 tướng. Cắt Mộng.
