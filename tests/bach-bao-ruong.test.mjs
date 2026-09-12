@@ -54,7 +54,8 @@ test('L109: cược 2/10/50, sao nhân, chế sò Tinh/Hoạt, shop điểm', ()
   assert.equal(BBR_BOARD[3].t, 'supreme');
   assert.equal(BBR_BOARD[14].t, 'supreme');
   assert.match(ui, /spinDelay/);
-  assert.match(ui, /hv-bbr-ring/);
+  assert.match(ui, /gold\.png/);
+  assert.match(ui, /supreme\.png/);
   assert.match(ui, /hv-bbr-stack/);
   assert.match(ui, /data-bbr-take/);
   assert.match(ui, /openSupreme/);

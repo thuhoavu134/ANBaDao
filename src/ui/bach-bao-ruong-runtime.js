@@ -15,14 +15,14 @@
     supreme: [0, 1, 1, 1, 2, 2, 3]
   };
   const BOARD = (typeof BBR_BOARD !== 'undefined') ? BBR_BOARD : [
-    { t: 'gold', n: 1 }, { t: 'gold', n: 2 }, { t: 'chest', n: 1 },
+    { t: 'tinh', n: 1 }, { t: 'gold', n: 2 }, { t: 'gold', n: 1 },
     { t: 'supreme', n: 1 },
-    { t: 'chest', n: 1 }, { t: 'gems', n: 1 }, { t: 'gems', n: 2 },
-    { t: 'so', n: 1 }, { t: 'so', n: 2 }, { t: 'tinh', n: 1 }, { t: 'tinh', n: 2 },
-    { t: 'tinh', n: 3 }, { t: 'hoat', n: 1 }, { t: 'hoat', n: 2 },
+    { t: 'hoat', n: 1 }, { t: 'gold', n: 1 }, { t: 'gems', n: 3 },
+    { t: 'gems', n: 1 }, { t: 'so', n: 1 }, { t: 'tinh', n: 2 }, { t: 'sh_ssr', n: 1 },
+    { t: 'gems', n: 1 }, { t: 'so', n: 3 }, { t: 'so', n: 1 },
     { t: 'supreme', n: 1 },
-    { t: 'sh_ss', n: 1 }, { t: 'sh_ssr', n: 1 }, { t: 'gold', n: 3 },
-    { t: 'hoat', n: 1 }, { t: 'chest', n: 1 }, { t: 'so', n: 1 }, { t: 'gems', n: 1 }
+    { t: 'chest', n: 1 }, { t: 'gems', n: 2 }, { t: 'so', n: 2 },
+    { t: 'hoat', n: 2 }, { t: 'gold', n: 3 }, { t: 'sh_ss', n: 1 }, { t: 'so', n: 2 }
   ];
   const RING = [
     [1, 1], [2, 1], [3, 1], [4, 1], [5, 1], [6, 1], [7, 1],
@@ -31,15 +31,15 @@
     [1, 5], [1, 4], [1, 3], [1, 2]
   ];
   const ART = {
-    gold: 'assets/ui/festival/bbr/gold.jpg',
-    gems: 'assets/ui/festival/bbr/gems.jpg',
-    tinh: 'assets/ui/festival/bbr/tinh.jpg',
-    hoat: 'assets/ui/festival/bbr/hoat.jpg',
-    sh_ss: 'assets/ui/festival/bbr/sh_ss.jpg',
-    sh_ssr: 'assets/ui/festival/bbr/sh_ssr.jpg',
-    chest: 'assets/ui/festival/bbr/chest.jpg',
-    supreme: 'assets/ui/festival/bbr/supreme.jpg',
-    so: 'assets/ui/festival/so-icon.jpg'
+    gold: 'assets/ui/festival/bbr/gold.png',
+    gems: 'assets/ui/festival/bbr/gems.png',
+    tinh: 'assets/ui/festival/bbr/tinh.png',
+    hoat: 'assets/ui/festival/bbr/hoat.png',
+    sh_ss: 'assets/ui/festival/bbr/sh_ss.png',
+    sh_ssr: 'assets/ui/festival/bbr/sh_ssr.png',
+    chest: 'assets/ui/festival/bbr/chest.png',
+    supreme: 'assets/ui/festival/bbr/supreme.png',
+    so: 'assets/ui/festival/bbr/so.png'
   };
   const LAB = {
     gold: 'Vàng', gems: 'Ngọc', so: 'Sò', tinh: 'Tinh', hoat: 'Hoạt',
@@ -265,12 +265,13 @@
           ${BOARD.map((c, i) => {
             const pos = RING[i] || [1, 1];
             const hot = pend && pend.t === c.t && pend.n === c.n;
-            return `<button type="button" class="hv-bbr-cell${hot ? ' is-win' : ''}" data-bbr-cell="${i}" style="grid-column:${pos[0]};grid-row:${pos[1]}" disabled>
+            const kind = c.t === 'supreme' ? ' is-sup' : (c.t === 'chest' ? ' is-chest' : '');
+            return `<button type="button" class="hv-bbr-cell${hot ? ' is-win' : ''}${kind}" data-bbr-cell="${i}" style="grid-column:${pos[0]};grid-row:${pos[1]}" disabled>
               ${cellFace(c)}<small>${c.n}</small>
             </button>`;
           }).join('')}
           <div class="hv-bbr-hub">
-            <img class="hv-bbr-hub-chest" src="assets/ui/festival/bbr/supreme.jpg" alt="">
+            <img class="hv-bbr-hub-chest" src="assets/ui/festival/bbr/supreme.png" alt="">
             <ul class="hv-bbr-stars">${starTable(type, bet, pend && pend.stars)}</ul>
           </div>
         </div>
