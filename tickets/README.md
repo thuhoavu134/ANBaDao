@@ -71,7 +71,7 @@ Board GitHub không có. File `tickets/TKT-00xx/ticket.md` là nguồn sự th�
 | TKT-0101 | P | Bạn bè người chơi thật | LIVE (#78) |
 | TKT-0102 | P | Nền kem lưới chức năng | LIVE (#78) |
 | TKT-0103 | Q | Kem dải trên Tháp/Chợ/Gọi/Săn/Lộ/Việc/Thư | LIVE (#79) |
-| TKT-0104 | Q | Kem panel thật + chat chữ sáng | REVIEW |
+| TKT-0104 | Q | Kem panel thật + chat chữ sáng | LIVE (#80) |
 
 Cách tạo gift code (owner): [docs/GIFT-CODES.md](../docs/GIFT-CODES.md)
 

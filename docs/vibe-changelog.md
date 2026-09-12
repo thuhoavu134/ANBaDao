@@ -1,3 +1,7 @@
+## 13/09/2026 — Wave Q kem panel LIVE
+
+Owner gõ live. Squash [#80](https://github.com/bktimmy247/luc-than/pull/80) → `df066bb`. TKT-0104.
+
 ## 13/09/2026 — Wave Q kem panel REVIEW
 
 Đè hero flex:1 + panel tối. Chat chữ sáng. Túi kem.
