@@ -1,3 +1,9 @@
+## 13/09/2026 — Wave V LIVE #101–#102
+
+Owner gõ live. Squash [#101](https://github.com/bktimmy247/luc-than/pull/101) `6faf91f` · [#102](https://github.com/bktimmy247/luc-than/pull/102) `cc6d382`.
+
+Popup đồ + Cách nhận. Nút Quay vàng, thẻ tướng crop từ đùi lên.
+
 ## 13/09/2026 — Wave U LIVE #100
 
 Owner gõ live. Squash [#100](https://github.com/bktimmy247/luc-than/pull/100) `b1b2a3f`. Nút Quay giữa khung nâu.
