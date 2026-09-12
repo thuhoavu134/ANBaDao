@@ -53,12 +53,12 @@ Board GitHub không có. File `tickets/TKT-00xx/ticket.md` là nguồn sự th�
 | TKT-0083 | K | Hồ sơ avatar + mã quà + cài đặt | LIVE (#69) |
 | TKT-0084 | K | Owner tự thêm mã quà (JSON + env Vercel) | LIVE (#72) |
 | TKT-0085 | K | Mã quà mảnh tướng + tinh/hoạt/sò | LIVE (#73) |
-| TKT-0086 | L | Mộng Lộ mũi tên ‹ | REVIEW |
-| TKT-0087 | L | Săn Boss ‹ + BGM kép | REVIEW |
-| TKT-0088 | L | Skip trận + chip ‹ | REVIEW |
-| TKT-0089 | L | Chat khung trên dock | REVIEW |
-| TKT-0090 | L | Túi đồ khung ô | REVIEW |
-| TKT-0091 | L | Rèn dễ nhìn | REVIEW |
+| TKT-0086 | L | Mộng Lộ mũi tên ‹ | LIVE (#74) |
+| TKT-0087 | L | Săn Boss ‹ + BGM kép | LIVE (#74) |
+| TKT-0088 | L | Skip trận + chip ‹ | LIVE (#74) |
+| TKT-0089 | L | Chat khung trên dock | LIVE (#74) |
+| TKT-0090 | L | Túi đồ khung ô | LIVE (#74) |
+| TKT-0091 | L | Rèn dễ nhìn | LIVE (#74) |
 
 Cách tạo gift code (owner): [docs/GIFT-CODES.md](../docs/GIFT-CODES.md)
 

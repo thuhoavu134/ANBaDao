@@ -1,3 +1,7 @@
+## 13/09/2026 — Wave L UX LIVE
+
+Owner gõ live. Squash [#74](https://github.com/bktimmy247/luc-than/pull/74) → `32f3f29`. TKT-0086…0091.
+
 ## 12/09/2026 — Wave L UX halls REVIEW
 
 TKT-0086…0091: Mộng Lộ ‹, Săn BGM+‹, skip trận, chat/túi khung dock, rèn 2 cột. Không merge tới live.
