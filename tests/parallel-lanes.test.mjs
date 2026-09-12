@@ -25,7 +25,9 @@ test('lane stubs exist and are imported once from build-static', () => {
     const hits = build.split(rel).length - 1;
     assert.equal(hits, 1, id + ' import count');
     const stub = read('scripts/lanes/tkt-' + id.slice(4) + '-' + slug + '.mjs');
-    assert.match(stub, new RegExp("LANE = '" + id + "'"));
+    const filled = new RegExp("await import\\(['\"]\\.\\./" + slug + "-hall-v1\\.mjs['\"]\\)").test(stub);
+    const reserved = new RegExp("LANE = '" + id + "'").test(stub);
+    assert.equal(filled || reserved, true, id + ' stub must keep LANE or load hall-v1');
   }
   assert.match(build, /daily-runtime-v1\.mjs[\s\S]*lanes\/tkt-0037-bag\.mjs/);
 });
@@ -35,7 +37,7 @@ test('wave A tickets are exclusive and freeze hub wiring', () => {
   const paths = new Map();
   for (const [id] of LANES) {
     const md = read('tickets/' + id + '/ticket.md');
-    assert.match(md, /status: READY/);
+    assert.match(md, /status: (READY|REVIEW)/);
     assert.match(md, /Không sửa `index\.html`/);
     assert.match(md, /document\.body\.append/);
     const lock = md.match(/resource_locks: \["([^"]+)"\]/)[1];

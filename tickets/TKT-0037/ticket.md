@@ -1,8 +1,8 @@
 ---
 id: TKT-0037
 title: Túi đồ hall giả 3D overlay body
-status: READY
-phase: CONTRACT
+status: REVIEW
+phase: REFACTOR
 priority: P1
 created: 2026-09-12T02:35:00.000Z
 updated: 2026-09-12T02:35:00.000Z
@@ -60,3 +60,9 @@ Shared read-only: `index.html` `#bagBody` / `showScreen` / `navTo('bag')`.
 `src/ui/forge-hall-runtime.js` + `src/ui/hero-roster-runtime.js` (body overlay). Imagegen hall jpg; metadata trong `docs/qa/L27-*-HALL/`.
 
 Builder → REVIEW. Không tự MERGED/DONE.
+
+
+## Result
+
+- Overlay `#hvBagRoot` gắn body, hall `assets/ui/bag/bag-hall.jpg`.
+- Builder dừng REVIEW. Không merge tới khi owner gõ `live`.

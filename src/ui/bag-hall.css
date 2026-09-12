@@ -1,0 +1,26 @@
+#hvBagRoot{
+  --hall-ink:#2d251f;
+  --hall-gold:#d58a14;
+  position:fixed;inset:0;z-index:80;display:none;flex-direction:column;
+  overflow:auto;-webkit-overflow-scrolling:touch;touch-action:manipulation;
+  background:#d7eef5 url('assets/ui/bag/bag-hall.jpg') center top/cover no-repeat;
+  color:var(--hall-ink);font-family:inherit;box-sizing:border-box;
+  padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+}
+#hvBagRoot.is-open{display:flex}
+#hvBagRoot[hidden]{display:none!important}
+#hvBagRoot .hv-bag-top{
+  flex:0 0 auto;display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:8px;
+  padding:8px 12px 6px;position:sticky;top:0;z-index:2;
+  background:linear-gradient(180deg,rgba(188,220,231,.96),rgba(247,237,216,.92));
+  border-bottom:1px solid #d7b883;box-shadow:0 2px 8px rgba(79,58,27,.14);
+}
+#hvBagRoot .hv-bag-back{
+  width:44px;height:44px;border:0;border-radius:50%;
+  background:linear-gradient(145deg,#fff7df,#f0c692);color:#7a4a1f;
+  box-shadow:0 0 0 1px #d7b36a,0 2px 6px rgba(79,58,27,.2);font-size:22px;line-height:1;cursor:pointer;
+}
+#hvBagRoot .hv-bag-top b{justify-self:center;font-size:16px;letter-spacing:.04em}
+#hvBagRoot .hv-bag-stage{flex:1 1 auto;min-height:420px;padding:8px 10px 28px;box-sizing:border-box}
+#hvBagRoot #bagBody{min-height:420px}
+body.bag-hall-active .hv-brandbar,body.bag-hall-active #resbar{display:none!important}
