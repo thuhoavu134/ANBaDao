@@ -49,6 +49,7 @@ export function createApp(deps) {
   const apple = deps.apple || {};
   const fetchImpl = deps.fetchImpl || globalThis.fetch;
   const gifts = deps.gifts || {};
+  const giftIndex = deps.giftIndex || { currencies: [], heroes: [], items: [], pets: [] };
 
   async function currentUser(ctx) {
     const token = bearer(ctx.headers);
@@ -387,6 +388,10 @@ export function createApp(deps) {
       return ok({ user: user.user, token: signToken({ sub: user.id, user: user.user }, secret, now()) });
     }
 
+    if (m === 'GET' && path === '/api/gift') {
+      return ok({ ok: true, rewards: giftIndex });
+    }
+
     if (m === 'POST' && path === '/api/gift') {
       const preview = redeemGiftCode({ codes: [], gold: 0, gems: 0 }, body.code || query.code, gifts);
       if (!preview.ok) return fail(400, preview.msg);
@@ -396,7 +401,14 @@ export function createApp(deps) {
         label: preview.label,
         gold: preview.gold,
         gems: preview.gems,
-        stam: preview.stam
+        stam: preview.stam,
+        tinh: preview.tinh || 0,
+        hoat: preview.hoat || 0,
+        so: preview.so || 0,
+        essence: preview.essence || 0,
+        shards: preview.shards || {},
+        items: preview.items || {},
+        pets: preview.pets || {}
       });
     }
 

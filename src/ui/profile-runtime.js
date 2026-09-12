@@ -102,12 +102,52 @@
     if (key) P.codes.push(key);
     P.gold = (P.gold || 0) + (g.gold || 0);
     P.gems = (P.gems || 0) + (g.gems || 0);
+    P.tinh = (P.tinh || 0) + (g.tinh || 0);
+    P.hoat = (P.hoat || 0) + (g.hoat || 0);
+    P.so = (P.so || 0) + (g.so || 0);
+    if (g.essence) {
+      P.economy = P.economy || {};
+      P.economy.dreamEssence = (P.economy.dreamEssence || 0) + g.essence;
+    }
+    if (g.shards && typeof g.shards === 'object') {
+      P.shards = P.shards || {};
+      Object.keys(g.shards).forEach(id => {
+        const n = Math.floor(Number(g.shards[id]) || 0);
+        if (id && n > 0) P.shards[id] = (P.shards[id] || 0) + n;
+      });
+    }
+    if (g.items && typeof g.items === 'object') {
+      P.bag = P.bag || {};
+      Object.keys(g.items).forEach(id => {
+        const n = Math.floor(Number(g.items[id]) || 0);
+        if (id && n > 0) P.bag[id] = (P.bag[id] || 0) + n;
+      });
+    }
+    if (g.pets && typeof g.pets === 'object') {
+      P.pet = P.pet || { owned: {} };
+      P.pet.owned = P.pet.owned || {};
+      Object.keys(g.pets).forEach(id => { if (id) P.pet.owned[id] = true; });
+    }
     if (typeof refreshStamina === 'function') refreshStamina();
-    if (P.stamina != null && typeof DATA === 'object') {
+    if (g.stam && P.stamina != null && typeof DATA === 'object') {
       P.stamina = Math.min((DATA.daily && DATA.daily.stamCap) || 120, (P.stamina || 0) + (g.stam || 0));
     }
     saveP();
     return g;
+  }
+  function giftLine(g) {
+    const bits = [g.label || 'Mã quà'];
+    if (g.gold) bits.push('🪙' + g.gold);
+    if (g.gems) bits.push('💎' + g.gems);
+    if (g.stam) bits.push('⚡' + g.stam);
+    if (g.tinh) bits.push('⚗' + g.tinh);
+    if (g.hoat) bits.push('🔥' + g.hoat);
+    if (g.so) bits.push('🐚' + g.so);
+    if (g.essence) bits.push('✨' + g.essence);
+    if (g.shards) Object.keys(g.shards).forEach(id => bits.push(id + ' ×' + g.shards[id] + ' mảnh'));
+    if (g.items) Object.keys(g.items).forEach(id => bits.push(id + ' ×' + g.items[id]));
+    if (g.pets) Object.keys(g.pets).forEach(id => bits.push('pet:' + id));
+    return bits.join(' · ');
   }
   async function redeem(str) {
     const key = String(str || '').trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
@@ -122,7 +162,7 @@
     }
     if (typeof P === 'object' && EXTRA[key]) {
       const g = EXTRA[key];
-      return applyGift({ ok: true, key, label: g.label, gold: g.gold, gems: g.gems, stam: g.stam });
+      return applyGift({ ok: true, key, label: g.label, gold: g.gold, gems: g.gems, stam: g.stam, tinh: g.tinh, hoat: g.hoat, so: g.so, essence: g.essence, shards: g.shards });
     }
     try {
       const r = await fetch(origin() + '/api/gift', {
@@ -132,7 +172,21 @@
       });
       const j = await r.json().catch(() => ({}));
       if (!r.ok || !j.ok) return { ok: false, msg: j.error || j.msg || 'Mã không tồn tại hoặc đã hết hạn.' };
-      return applyGift({ ok: true, key: j.key || key, label: j.label, gold: j.gold, gems: j.gems, stam: j.stam });
+      return applyGift({
+        ok: true,
+        key: j.key || key,
+        label: j.label,
+        gold: j.gold,
+        gems: j.gems,
+        stam: j.stam,
+        tinh: j.tinh,
+        hoat: j.hoat,
+        so: j.so,
+        essence: j.essence,
+        shards: j.shards,
+        items: j.items,
+        pets: j.pets
+      });
     } catch (e) {
       return { ok: false, msg: 'Không đổi mã được. Thử lại.' };
     }
@@ -379,7 +433,7 @@
       Promise.resolve(redeem(raw)).then(r => {
         if (!r.ok) { toast(r.msg); return; }
         state.modal = '';
-        toast((r.label || 'Mã quà') + ' · 🪙' + (r.gold || 0) + ' 💎' + (r.gems || 0));
+        toast(giftLine(r));
         paint();
       }).catch(() => toast('Không đổi mã được.'));
       return;

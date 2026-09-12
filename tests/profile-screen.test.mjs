@@ -23,7 +23,8 @@ test('L83-T3: overlay hồ sơ, gift, cài đặt; không đụng shell đóng b
   assert.doesNotMatch(ui, /campaign-scene/);
   assert.doesNotMatch(ui, /battle\.html/);
   assert.doesNotMatch(ui, /hv-pf-mask" data-pf-x/);
-  assert.match(ui, /hvPfGift/);
+  assert.match(ui, /P\.shards/);
+  assert.match(ui, /giftLine/);
 });
 
 test('L83-P1: inject lane + build-static sau auth', () => {

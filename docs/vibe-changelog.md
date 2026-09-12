@@ -1,3 +1,7 @@
+## 12/09/2026 — TKT-0085 mã quà mảnh tướng REVIEW
+
+Catalog `shards` / tinh / hoạt / sò / essence. Không merge tới live.
+
 ## 12/09/2026 — TKT-0084 owner tự thêm mã quà LIVE
 
 Owner gõ live. Squash [#72](https://github.com/bktimmy247/luc-than/pull/72) → `a373ece`. Env `GIFT_CODES` + `gift-codes.json`.

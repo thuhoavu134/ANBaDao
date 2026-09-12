@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { EXTRA_GIFTCODES, redeemGiftCode, validateNick, normalizeGiftKey } from '../src/domain/profile/gift-codes.mjs';
+import { EXTRA_GIFTCODES, redeemGiftCode, validateNick, normalizeGiftKey, applyGiftToPlayer } from '../src/domain/profile/gift-codes.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -32,4 +32,23 @@ test('L83-T2: runtime gọi redeemCode + mã thêm + /api/gift', () => {
   assert.match(ui, /\/api\/gift/);
   assert.match(ui, /art-player/);
   assert.match(ui, /hvProfileRoot/);
+});
+
+test('L85-T1: mã event cộng mảnh tướng + tinh', () => {
+  const cat = {
+    SUKIEN: {
+      label: 'Sự kiện Lục Ảnh',
+      gold: 100,
+      shards: { luc_anh: 20, ong_hang_pho: 5 },
+      tinh: 40
+    }
+  };
+  const a = redeemGiftCode({ gold: 0, gems: 0, tinh: 1, shards: { luc_anh: 2 }, codes: [] }, 'sukien', cat);
+  assert.equal(a.ok, true);
+  assert.equal(a.player.shards.luc_anh, 22);
+  assert.equal(a.player.shards.ong_hang_pho, 5);
+  assert.equal(a.player.tinh, 41);
+  const b = applyGiftToPlayer({ economy: { dreamEssence: 3 } }, { essence: 10, so: 2 });
+  assert.equal(b.player.economy.dreamEssence, 13);
+  assert.equal(b.player.so, 2);
 });

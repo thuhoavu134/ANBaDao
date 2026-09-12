@@ -38,3 +38,15 @@ test('L84-T3: env GIFT_CODES đè file', () => {
   assert.equal(parseGiftEnv('not-json').TET2026, undefined);
   assert.ok(cat.LUCTHAN);
 });
+
+test('L85-T2: POST /api/gift trả shards', async () => {
+  const handle = app({
+    gifts: {
+      ANH20: { label: 'Mảnh Lục Ảnh', shards: { luc_anh: 20 }, gems: 50 }
+    }
+  });
+  const ok = await handle('POST', '/api/gift', { body: { code: 'anh20' } });
+  assert.equal(ok.status, 200);
+  assert.equal(ok.json.shards.luc_anh, 20);
+  assert.equal(ok.json.gems, 50);
+});
