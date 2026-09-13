@@ -1,0 +1,27 @@
+{
+  "ticket": "TKT-0133",
+  "a": {
+    "hold": true,
+    "hotCount": 1,
+    "hotIdx": 7,
+    "lastIdx": 7,
+    "anim": "bbrSheen",
+    "duration": "1.7s",
+    "transform": "matrix(0.707107, 0.707107, -0.707107, 0.707107, 0.742572, -0.33247)",
+    "pulse": false
+  },
+  "b": {
+    "hold": true,
+    "hotCount": 1,
+    "hotIdx": 7,
+    "lastIdx": 7,
+    "anim": "bbrSheen",
+    "duration": "1.7s",
+    "transform": "matrix(0.707107, 0.707107, -0.707107, 0.707107, 15.6365, 239.379)",
+    "pulse": false
+  },
+  "moved": true,
+  "appErrors": [],
+  "ok": true,
+  "ts": "2026-09-13T17:11:32.267Z"
+}

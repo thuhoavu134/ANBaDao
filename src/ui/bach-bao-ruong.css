@@ -24,12 +24,26 @@
 .hv-bbr-cell.is-hot:after{
   content:"";position:absolute;inset:-40% -60%;
   background:linear-gradient(105deg,transparent 10%,#fff 42%,#ffe566 50%,#fff 58%,transparent 90%);
-  animation:bbrSweep .16s linear
+  animation:bbrSweep .16s linear;pointer-events:none
 }
 @keyframes bbrSweep{from{transform:translateX(-40%)}to{transform:translateX(40%)}}
-.hv-bbr-ring.is-hold .hv-bbr-cell.is-hot:after{animation:none;opacity:.28}
+.hv-bbr-ring.is-hold .hv-bbr-cell.is-hot:after{
+  inset:auto;top:-80%;left:-110%;width:18%;height:280%;z-index:9;
+  background:linear-gradient(90deg,transparent 0 30%,rgba(255,255,255,.35) 42%,#fff 50%,#ffe566 58%,transparent 72%);
+  box-shadow:0 0 12px 2px rgba(255,255,255,.7);
+  transform:rotate(45deg);transform-origin:center;
+  animation:bbrSheen 1.7s ease-in-out infinite;opacity:1;pointer-events:none
+}
+@keyframes bbrSheen{
+  0%{transform:translate(-30%,-40%) rotate(45deg);opacity:0}
+  8%{opacity:1}
+  62%{transform:translate(280%,260%) rotate(45deg);opacity:1}
+  72%,100%{transform:translate(280%,260%) rotate(45deg);opacity:0}
+}
 @media (prefers-reduced-motion:reduce){
-  .hv-bbr-cell.is-hot:after{animation:none}
+  /* bbrSheen */
+  .hv-bbr-cell.is-hot:after,
+  .hv-bbr-ring.is-hold .hv-bbr-cell.is-hot:after{animation:none;opacity:.28}
 }
 .hv-bbr-cell.is-win{box-shadow:0 0 16px #e2b45a;border-color:#c09028}
 .hv-bbr-stack{position:absolute;inset:1px;width:auto;height:auto;min-height:0;display:block;overflow:hidden}
