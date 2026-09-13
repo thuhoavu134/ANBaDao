@@ -1,11 +1,11 @@
 ---
 id: TKT-0122
 title: Đồng vàng — một PNG chung mọi tính năng
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 created: 2026-09-13T11:20:00.000Z
-updated: 2026-09-13T11:28:00.000Z
+updated: 2026-09-13T11:28:25.000Z
 acceptance_ids: ['L122-T1', 'L122-T2', 'L122-T3', 'L122-T4', 'L122-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths:

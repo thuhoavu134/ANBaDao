@@ -1,7 +1,7 @@
 ## 13/09 — TKT-0122: đồng vàng một PNG chung
 
 Owner: vàng lệch giữa Thành chính (đồng tròn), Túi (thỏi), Bách Bảo (đống xu). Gộp về `assets/items/materials/gold.png`. Copy cùng bytes sang ví Chinh chiến + file BBR. Chip Chợ dùng img. Không đổi số vàng/cược.
-RED 4 fail → GREEN 4/4 L122 + npm test 886. Chrome 390×844 + 768×1024 L122-P1 PASS. Safari NOT_RUN. REVIEW, chờ owner gõ `live`.
+RED 4 fail → GREEN 4/4 L122 + npm test 886. Chrome 390×844 + 768×1024 L122-P1 PASS. Safari NOT_RUN. LIVE #116 `2d14c58`. Owner tự `git pull && vercel --prod`.
 
 ## 13/09 — TKT-0121: túi đồ icon PNG đồng nhất, Hoạt lực bình đỏ
 
