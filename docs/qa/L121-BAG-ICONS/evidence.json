@@ -1,0 +1,91 @@
+{
+  "ticket": "TKT-0121",
+  "chrome": [
+    {
+      "label": "390x844",
+      "ok": true,
+      "cells": [
+        {
+          "src": "assets/items/materials/gold.png",
+          "alt": "Vàng",
+          "imgW": 56,
+          "cellW": 64,
+          "ratio": 0.8626546954622665
+        },
+        {
+          "src": "assets/ui/festival/bbr/gems.png",
+          "alt": "Ngọc",
+          "imgW": 56,
+          "cellW": 64,
+          "ratio": 0.8626880155264435
+        },
+        {
+          "src": "assets/items/materials/tinh-luc.png",
+          "alt": "Tinh Lực",
+          "imgW": 56,
+          "cellW": 64,
+          "ratio": 0.8626546954622665
+        },
+        {
+          "src": "assets/items/materials/hoat-luc.png",
+          "alt": "Hoạt Lực",
+          "imgW": 56,
+          "cellW": 64,
+          "ratio": 0.8626880155264435
+        },
+        {
+          "src": "assets/ui/festival/bbr/so.png",
+          "alt": "Sò",
+          "imgW": 56,
+          "cellW": 64,
+          "ratio": 0.8626880155264435
+        }
+      ],
+      "appErrors": []
+    },
+    {
+      "label": "768x1024",
+      "ok": true,
+      "cells": [
+        {
+          "src": "assets/items/materials/gold.png",
+          "alt": "Vàng",
+          "imgW": 125,
+          "cellW": 140,
+          "ratio": 0.8936383928571429
+        },
+        {
+          "src": "assets/ui/festival/bbr/gems.png",
+          "alt": "Ngọc",
+          "imgW": 125,
+          "cellW": 140,
+          "ratio": 0.8936383928571429
+        },
+        {
+          "src": "assets/items/materials/tinh-luc.png",
+          "alt": "Tinh Lực",
+          "imgW": 125,
+          "cellW": 140,
+          "ratio": 0.8936383928571429
+        },
+        {
+          "src": "assets/items/materials/hoat-luc.png",
+          "alt": "Hoạt Lực",
+          "imgW": 125,
+          "cellW": 140,
+          "ratio": 0.8936383928571429
+        },
+        {
+          "src": "assets/ui/festival/bbr/so.png",
+          "alt": "Sò",
+          "imgW": 125,
+          "cellW": 140,
+          "ratio": 0.8936383928571429
+        }
+      ],
+      "appErrors": []
+    }
+  ],
+  "safari": "NOT_RUN",
+  "ts": "2026-09-13T10:51:11.481Z"
+}

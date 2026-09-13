@@ -1,3 +1,8 @@
+## 13/09 — TKT-0121: túi đồ icon PNG đồng nhất, Hoạt lực bình đỏ
+
+Owner screenshot Đạo cụ: emoji bé, Hoạt lực là đống lửa. Năm ô vàng/ngọc/tinh/hoạt/sò dùng PNG chung Rèn–Bách Bảo–HUD. Hoạt lực = bình lục giác giống Tinh, màu đỏ. Ô túi icon 92% cạnh. Chợ Tinh/Hoạt local path. Không đổi số lượng/công thức/cược.
+RED 3 fail → GREEN 4/4 L121 + npm test 882. Chrome 390×844 + 768×1024 L121-P1 PASS. Safari NOT_RUN. REVIEW, chờ owner gõ `live`.
+
 ## 13/09 — TKT-0120: CSS popup đồ ôm nội dung
 
 Owner screenshot Sách Tinh Thông: thẻ kem cao, khoảng trống giữa header và Cách nhận. Cắt `id="hvShopInfo"` (CSS Bách Bảo đệm padding), thẻ `height:auto` / `max-height:min(72dvh,540px)`, một mặt icon+sao+số lượng+Cách nhận+×. Chrome 390×844 PASS. Safari NOT_RUN. LIVE #114 `bb34ae3`. Owner tự `git pull && vercel --prod`.

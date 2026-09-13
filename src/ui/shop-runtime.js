@@ -70,13 +70,13 @@
 
   function stallIcon(it) {
     if (it.type === 'craftpack') {
-      if (it.k === 'binh_tinh') return 'https://luc-than.vercel.app/assets/items/materials/tinh-luc.png';
-      if (it.k === 'lo_hoat') return 'https://luc-than.vercel.app/assets/items/materials/hoat-luc.png';
-      return 'https://luc-than.vercel.app/assets/ui/menu-v3233/icons/forge.png';
+      if (it.k === 'binh_tinh') return 'assets/items/materials/tinh-luc.png';
+      if (it.k === 'lo_hoat') return 'assets/items/materials/hoat-luc.png';
+      return 'assets/ui/menu-v3233/icons/forge.png';
     }
-    if (it.type === 'gold') return 'https://luc-than.vercel.app/assets/ui/menu-v3233/icons/bag.png';
-    if (it.type === 'stam') return 'https://luc-than.vercel.app/assets/ui/menu-v3233/icons/daily.png';
-    return 'https://luc-than.vercel.app/assets/ui/menu-v3233/icons/summon.png';
+    if (it.type === 'gold') return 'assets/items/materials/gold.png';
+    if (it.type === 'stam') return 'assets/ui/menu-v3233/icons/daily.png';
+    return 'assets/ui/menu-v3233/icons/summon.png';
   }
 
   function stallWhat(it) {

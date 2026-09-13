@@ -25,6 +25,14 @@
 
   let tab = 'gear';
 
+  const ICO = {
+    gold: 'assets/items/materials/gold.png',
+    gems: 'assets/ui/festival/bbr/gems.png',
+    tinh: 'assets/items/materials/tinh-luc.png',
+    hoat: 'assets/items/materials/hoat-luc.png',
+    so: 'assets/ui/festival/bbr/so.png'
+  };
+
   const BAG_KNOWN = {
     mastery: {
       title: 'Sách Tinh Thông',
@@ -55,6 +63,10 @@
     if (/tinh\s*thông|tinh.?thong|mastery/.test(raw)) return BAG_KNOWN.mastery;
     if (/sách\s*exp|sach.?exp/.test(raw)) return BAG_KNOWN.exp;
     return null;
+  }
+
+  function ico(src, alt) {
+    return `<img class="hv-bag-ico" src="${src}" alt="${alt || ''}">`;
   }
 
   function cell(cls, label, n, title, tip) {
@@ -102,26 +114,26 @@
         });
       });
     } else {
-      html += cell('t-mat', '🪙', P.gold, 'Vàng', {
-        title: 'Vàng', ic: '🪙', qty: P.gold, tone: 'gold', how: ['camp', 'daily', 'mail', 'fest'],
+      html += cell('t-mat', ico(ICO.gold, 'Vàng'), P.gold, 'Vàng', {
+        title: 'Vàng', icon: ICO.gold, qty: P.gold, tone: 'gold', how: ['camp', 'daily', 'mail', 'fest'],
         what: 'Tiền tệ chính.', use: 'Lên cấp tướng, trả rèn/cường, mua quầy vàng ở Chợ.'
       });
-      html += cell('t-mat', '💎', P.gems, 'Ngọc', {
-        title: 'Ngọc', ic: '💎', qty: P.gems, tone: 'gem', how: ['daily', 'fest', 'shop'],
+      html += cell('t-mat', ico(ICO.gems, 'Ngọc'), P.gems, 'Ngọc', {
+        title: 'Ngọc', icon: ICO.gems, qty: P.gems, tone: 'gem', how: ['daily', 'fest', 'shop'],
         what: 'Tiền hiếm.', use: 'Gọi tướng, mua gói ngọc ở Chợ, đổi đồ giá trị.'
       });
-      html += cell('t-mat', '⚗', P.tinh || 0, 'Tinh', {
-        title: 'Tinh Lực', ic: '⚗', qty: P.tinh || 0, tone: 'craft', how: ['shop', 'daily', 'fest'],
+      html += cell('t-mat', ico(ICO.tinh, 'Tinh Lực'), P.tinh || 0, 'Tinh', {
+        title: 'Tinh Lực', icon: ICO.tinh, qty: P.tinh || 0, tone: 'craft', how: ['shop', 'daily', 'fest'],
         what: 'Nguyên liệu rèn.', use: 'Rèn trang bị ở Rèn (20/lần). Chế 10 sò Bách Bảo (25 Tinh + 25 Hoạt).',
         action: 'Dùng', go: 'forge'
       });
-      html += cell('t-mat', '🔥', P.hoat || 0, 'Hoạt', {
-        title: 'Hoạt Lực', ic: '🔥', qty: P.hoat || 0, tone: 'craft', how: ['shop', 'fest'],
+      html += cell('t-mat', ico(ICO.hoat, 'Hoạt Lực'), P.hoat || 0, 'Hoạt', {
+        title: 'Hoạt Lực', icon: ICO.hoat, qty: P.hoat || 0, tone: 'craft', how: ['shop', 'fest'],
         what: 'Nguyên liệu cường hoá.', use: 'Cường trang bị ở Rèn. Chế sò Bách Bảo (25 Hoạt).',
         action: 'Dùng', go: 'forge'
       });
-      html += cell('t-mat', '🐚', P.so || 0, 'Sò', {
-        title: 'Sò', ic: '🐚', qty: P.so || 0, tone: 'so', how: ['forge', 'fest'],
+      html += cell('t-mat', ico(ICO.so, 'Sò'), P.so || 0, 'Sò', {
+        title: 'Sò', icon: ICO.so, qty: P.so || 0, tone: 'so', how: ['forge', 'fest'],
         what: 'Vé cược Bách Bảo Rương.', use: 'Cược 2 / 10 / 50 sò mỗi lượt quay. Chế sò ở Rèn.',
         action: 'Dùng', go: 'festival'
       });
@@ -129,7 +141,7 @@
       Object.keys(bag).forEach(id => {
         if (!bag[id]) return;
         const known = knownBag(id);
-        html += cell('t-a', known ? '📖' : id.slice(-2), bag[id], known ? known.title : id, Object.assign({
+        html += cell('t-a', known?.icon ? ico(known.icon, known.title) : id.slice(-2), bag[id], known ? known.title : id, Object.assign({
           title: id, ic: '◆', qty: bag[id], tone: 'gold', how: ['shop', 'mail', 'fest'],
           what: 'Đạo cụ trong túi.', use: 'Giữ trong túi. Dùng khi sự kiện hoặc rèn yêu cầu.'
         }, known || {}, { qty: bag[id] }));
@@ -174,4 +186,32 @@
     if (typeof window.hvShowItemTip === 'function') window.hvShowItemTip(info);
   });
   syncOpen(typeof ST === 'object' ? ST.screen : '');
+
+  function pinResIcons() {
+    const map = [
+      ['rGoldBtn', ICO.gold, 'Vàng'],
+      ['rGemsBtn', ICO.gems, 'Ngọc'],
+      ['rSoBtn', ICO.so, 'Sò']
+    ];
+    map.forEach(([id, src, alt]) => {
+      const el = document.getElementById(id);
+      if (!el || el.querySelector('img.hv-res-ico')) return;
+      const img = document.createElement('img');
+      img.className = 'hv-res-ico';
+      img.src = src;
+      img.alt = alt;
+      el.insertBefore(img, el.firstChild);
+      el.childNodes.forEach(n => {
+        if (n.nodeType === 3) n.textContent = n.textContent.replace(/[🪙💎🐚]\s*/g, '');
+      });
+    });
+  }
+  if (typeof refreshResbar === 'function') {
+    const baseRes = refreshResbar;
+    refreshResbar = function refreshResbarWithIcons() {
+      baseRes();
+      pinResIcons();
+    };
+  }
+  pinResIcons();
 })();
