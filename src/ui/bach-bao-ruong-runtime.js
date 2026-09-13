@@ -32,7 +32,7 @@
   ];
   const SO_STAR = [0, 1, 3, 10, 28, 80, 220];
   const ART = {
-    gold: 'assets/ui/festival/bbr/gold.png',
+    gold: 'assets/items/materials/gold.png',
     gems: 'assets/ui/festival/bbr/gems.png',
     tinh: 'assets/ui/festival/bbr/tinh.png',
     hoat: 'assets/ui/festival/bbr/hoat.png',

@@ -1,0 +1,61 @@
+{
+  "ticket": "TKT-0122",
+  "chrome": [
+    {
+      "label": "390x844",
+      "ok": true,
+      "hub": {
+        "ok": true,
+        "bg": "url(\"http://127.0.0.1:8080/assets/items/materials/gold.png\")"
+      },
+      "bag": {
+        "ok": true,
+        "src": "assets/items/materials/gold.png"
+      },
+      "bbr": {
+        "ok": true,
+        "imgs": [
+          "assets/ui/festival/so-icon.jpg",
+          "assets/ui/festival/bbr/tinh.png",
+          "assets/items/materials/gold.png",
+          "assets/ui/festival/bbr/supreme.png",
+          "assets/ui/festival/bbr/hoat.png",
+          "assets/ui/festival/bbr/gems.png",
+          "assets/ui/festival/bbr/sh_ss.png",
+          "assets/ui/festival/bbr/chest.png",
+          "assets/ui/festival/bbr/sh_ssr.png"
+        ]
+      },
+      "appErrors": []
+    },
+    {
+      "label": "768x1024",
+      "ok": true,
+      "hub": {
+        "ok": true,
+        "bg": "url(\"http://127.0.0.1:8080/assets/items/materials/gold.png\")"
+      },
+      "bag": {
+        "ok": true,
+        "src": "assets/items/materials/gold.png"
+      },
+      "bbr": {
+        "ok": true,
+        "imgs": [
+          "assets/ui/festival/so-icon.jpg",
+          "assets/ui/festival/bbr/tinh.png",
+          "assets/items/materials/gold.png",
+          "assets/ui/festival/bbr/supreme.png",
+          "assets/ui/festival/bbr/hoat.png",
+          "assets/ui/festival/bbr/gems.png",
+          "assets/ui/festival/bbr/sh_ss.png",
+          "assets/ui/festival/bbr/chest.png",
+          "assets/ui/festival/bbr/sh_ssr.png"
+        ]
+      },
+      "appErrors": []
+    }
+  ],
+  "safari": "NOT_RUN",
+  "ts": "2026-09-13T11:22:57.636Z"
+}

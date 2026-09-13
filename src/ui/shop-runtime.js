@@ -267,7 +267,7 @@
           <button type="button" class="hv-shop-back" data-shop-back aria-label="Về Thành Chính">‹</button>
           <b>Chợ Lục Châu</b>
           <div class="hv-shop-chips">
-            <span class="hv-shop-chip" data-shop-gold>🪙 ${fmt(P.gold)}</span>
+            <span class="hv-shop-chip" data-shop-gold><img class="hv-cur-ico" src="assets/items/materials/gold.png" alt=""> ${fmt(P.gold)}</span>
             <span class="hv-shop-chip" data-shop-gems>💎 ${fmt(P.gems)}</span>
           </div>
         </div>

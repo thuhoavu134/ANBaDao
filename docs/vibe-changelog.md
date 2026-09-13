@@ -1,3 +1,8 @@
+## 13/09 — TKT-0122: đồng vàng một PNG chung
+
+Owner: vàng lệch giữa Thành chính (đồng tròn), Túi (thỏi), Bách Bảo (đống xu). Gộp về `assets/items/materials/gold.png`. Copy cùng bytes sang ví Chinh chiến + file BBR. Chip Chợ dùng img. Không đổi số vàng/cược.
+RED 4 fail → GREEN 4/4 L122 + npm test 886. Chrome 390×844 + 768×1024 L122-P1 PASS. Safari NOT_RUN. REVIEW, chờ owner gõ `live`.
+
 ## 13/09 — TKT-0121: túi đồ icon PNG đồng nhất, Hoạt lực bình đỏ
 
 Owner screenshot Đạo cụ: emoji bé, Hoạt lực là đống lửa. Năm ô vàng/ngọc/tinh/hoạt/sò dùng PNG chung Rèn–Bách Bảo–HUD. Hoạt lực = bình lục giác giống Tinh, màu đỏ. Ô túi icon 92% cạnh. Chợ Tinh/Hoạt local path. Không đổi số lượng/công thức/cược.

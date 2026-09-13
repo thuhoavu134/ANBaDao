@@ -43,7 +43,9 @@
   min-height:28px;padding:4px 8px;border-radius:999px;
   background:rgba(20,12,8,.72);box-shadow:0 0 0 1px rgba(215,179,106,.35);
   font-size:11px;font-weight:800;
+  display:inline-flex;align-items:center;gap:4px;
 }
+.hv-cur-ico{width:16px;height:16px;object-fit:contain;flex:0 0 auto;display:block}
 .hv-shop-hero{
   min-height:52px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
   padding:0 16px 6px;text-align:center;

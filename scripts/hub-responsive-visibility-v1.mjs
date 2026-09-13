@@ -116,7 +116,7 @@ const style = String.raw`<style id="hv-hub-responsive-visibility-v3">
   box-shadow:none!important;
   filter:drop-shadow(0 1px 2px rgba(0,0,0,.55))!important
 }
-#hubScreen .art-res .res-icon-gold{background-image:url('assets/ui/menu-v3233/icons/resource-gold-imagen.png')!important}
+#hubScreen .art-res .res-icon-gold{background-image:url('assets/items/materials/gold.png')!important}
 #hubScreen .art-res .res-icon-gem{background-image:url('assets/ui/menu-v3233/icons/resource-gem-imagen.png')!important}
 #hubScreen .art-res .res-icon-energy{
   width:20px!important;
