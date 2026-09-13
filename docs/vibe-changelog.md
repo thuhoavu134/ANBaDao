@@ -1,3 +1,8 @@
+## 13/09 — TKT-0125: Hoa đăng sông đêm, mở rương bung sáng, chữ banner đỏ
+
+Owner: màn thả đèn nhạt; mở rương cần video bung nắp + icon thưởng; chữ trên banner khó đọc. Sông đêm + đèn nổi, overlay mp4 rương gỗ/Chí Bảo rồi icon loot. Chữ hero đỏ. Không đổi tỉ lệ rương.
+RED 3 fail → GREEN 4/4 L125 + npm test 898. Chrome 390×844 + 768×1024 L125-P1 PASS. Safari NOT_RUN. REVIEW, chờ owner gõ `live`.
+
 ## 13/09 — TKT-0124: Hoạt lực cùng PNG, ô Bách Bảo Rương, hoa văn tâm vành
 
 Owner: túi Hoạt lực ≠ vành; ô sự kiện thiếu chữ Rương; tâm vành trống. ART.hoat = `materials/hoat-luc.png` (bình đỏ). Tile `Bách Bảo Rương`. Tâm: khung son, rương chìm, chữ 寶 mờ. Cược/pay không đổi.

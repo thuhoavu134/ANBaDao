@@ -1,0 +1,43 @@
+{
+  "ticket": "TKT-0125",
+  "chrome": [
+    {
+      "label": "390x844",
+      "ok": true,
+      "hero": {
+        "color": "rgb(196, 22, 28)",
+        "red": true
+      },
+      "lamp": {
+        "n": 12,
+        "vis": true,
+        "fcity": "lamp"
+      },
+      "fx": {
+        "open": true,
+        "src": "assets/ui/festival/fx/chest-open.mp4"
+      },
+      "appErrors": []
+    },
+    {
+      "label": "768x1024",
+      "ok": true,
+      "hero": {
+        "color": "rgb(196, 22, 28)",
+        "red": true
+      },
+      "lamp": {
+        "n": 12,
+        "vis": true,
+        "fcity": "lamp"
+      },
+      "fx": {
+        "open": true,
+        "src": "assets/ui/festival/fx/chest-open.mp4"
+      },
+      "appErrors": []
+    }
+  ],
+  "safari": "NOT_RUN",
+  "ts": "2026-09-13T12:00:50.528Z"
+}

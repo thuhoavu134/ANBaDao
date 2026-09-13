@@ -86,6 +86,7 @@ Board GitHub không có. File `tickets/TKT-00xx/ticket.md` là nguồn sự th�
 | TKT-0122 | — | Đồng vàng PNG chung mọi tính năng | LIVE (#116) |
 | TKT-0123 | — | Vành Bách Bảo icon gần full ô | LIVE (#117) |
 | TKT-0124 | — | Hoạt lực + tên Rương + hoa văn tâm | LIVE (#118) |
+| TKT-0125 | — | Hoa đăng sống · mở rương bung sáng · chữ đỏ | REVIEW |
 
 Cách tạo gift code (owner): [docs/GIFT-CODES.md](../docs/GIFT-CODES.md)
 
