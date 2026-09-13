@@ -127,18 +127,25 @@ const HOME_SLOT = [
   { x: 0.58, y: 0.455, s: 0.88 }
 ];
 // Authored map coordinates, independent of chapter progress and reward time.
-// No camera travel until the owner supplies the party's Run assets.
-function campaignMapView(w, h) {
-  const width = Math.max(w, Math.min(Math.max(w, h * 9 / 16) * 1.8, h * 2.4 * 9 / 16));
+// Owner permits Idle travel temporarily; authored Run replaces it when available.
+function campaignMapView(w, h, focus = null) {
+  const width = Math.max(w, Math.min(Math.max(w, h * 9 / 16) * (focus ? 2.3 : 1.8), h * (focus ? 3.1 : 2.4) * 9 / 16));
   const height = width * 16 / 9;
-  const left = w / 2 - .45 * width;
-  const top = h * .625 - .515 * height;
+  const left = focus ? Math.max(w-width,Math.min(0,w*.5-focus.x*width)) : w / 2 - .45 * width;
+  const top = focus ? Math.max(h-height,Math.min(0,h*.60-focus.y*height)) : h * .625 - .515 * height;
   return { width, height, left, top,
     viewport: { x: -left / width, y: -top / height, width: w / width, height: h / height } };
 }
-function homePartyPose(pick, w, h) {
+function homePartyPose(pick, w, h, farm = null) {
   const slot = Number.isInteger(Number(pick.slot)) ? Math.max(0, Math.min(5, Number(pick.slot))) : (pick.row === 'back' ? 3 : 0);
   const pose = HOME_SLOT[slot];
+  if (farm) {
+    const map=campaignMapView(w,h,farm.center);
+    const worldX=farm.center.x+(slot%3-1)*.048;
+    const worldY=farm.center.y+(slot<3?.016:-.018);
+    return {x:map.left+worldX*map.width,y:map.top+worldY*map.height,worldX,worldY,
+      bodyH:Math.min(80,w*.145,h*.12)*(slot<3?1:.9)};
+  }
   const map = campaignMapView(w, h);
   const plaza = {
     x: map.left + pose.x * map.width,
@@ -148,15 +155,15 @@ function homePartyPose(pick, w, h) {
   };
   return plaza;
 }
-function syncCampaignMap(w, h) {
-  const map = campaignMapView(w, h);
+function syncCampaignMap(w, h, farm = null) {
+  const map = campaignMapView(w, h, farm?.center);
   const landscape = sceneState.root?.querySelector('.cs-landscape');
   if (!landscape) return;
   landscape.style.setProperty('--cs-map-size', map.width + 'px ' + map.height + 'px');
   landscape.style.setProperty('--cs-map-position', map.left + 'px ' + map.top + 'px');
   const squad = savedSceneSquad();
   const center = squad.reduce((p, hero) => {
-    const pose = homePartyPose(hero, w, h);
+    const pose = homePartyPose(hero, w, h, farm);
     return { x: p.x + pose.worldX, y: p.y + pose.worldY };
   }, {x:0,y:0});
   for (const marker of sceneState.root.querySelectorAll('[data-map-party]')) {
@@ -169,64 +176,107 @@ function syncCampaignMap(w, h) {
       width:map.viewport.width*100+'%',height:map.viewport.height*100+'%'});
   }
 }
-// Pure visual timeline: never touches inventory, progression, RNG or battle scheduling.
+const CAMPAIGN_TRAVEL_PATH = [
+  {x:.32,y:.72},{x:.30,y:.64},{x:.43,y:.555},
+  {x:.59,y:.485},{x:.70,y:.415},{x:.755,y:.325},{x:.67,y:.245}
+];
+// One shared, deterministic presentation clock; no transactions or combat state.
 function sampleCampaignFarm(time, squad, quiet = false, specs = {}) {
   if (quiet || !squad.length) return null;
-  const tick = Math.max(0, Number(time) || 0);
-  const cycle = Math.floor(tick / 10000), elapsed = tick % 10000;
-  const hero = squad[cycle % squad.length];
-  const spec = specs[hero.id];
-  const duration = spec ? spec.frames * spec.ms : 1200;
-  const hitAt = 1600 + duration * .68;
-  const dissolveAt = hitAt + 250;
-  const phase = elapsed < 1400 ? 'spawn' : elapsed < dissolveAt ? 'attack' : elapsed < dissolveAt+1200 ? 'dissolve' : 'rest';
-  const alpha = phase === 'spawn' ? Math.min(1, elapsed / 650) : phase === 'dissolve' ? 1-(elapsed-dissolveAt)/1200 : phase === 'rest' ? 0 : 1;
-  const attackTime = elapsed - 1600;
-  return { hero, cycle, elapsed, phase, alpha, attackTime, duration,
-    hp: elapsed < hitAt ? 1 : 0 };
-}
-function drawCampaignFarm(ctx, farm, w, h) {
-  if (!farm || farm.phase === 'rest') return;
-  if (farmAttackSpecs[farm.hero.id]) imageForScene(farmAttackSpecs[farm.hero.id].src);
-  const hero = homePartyPose(farm.hero, w, h);
-  const size = hero.bodyH * .60;
-  const x = Math.min(w - size * .55, hero.x + hero.bodyH * .76);
-  const y = hero.y + hero.bodyH * .18;
-  const approach = farm.phase === 'spawn' ? (1-Math.min(1,farm.elapsed/1400))*size*.4 : 0;
-  const hop = farm.phase === 'spawn' ? Math.abs(Math.sin(farm.elapsed/1400*Math.PI*2))*size*.14 : 0;
-  const pulse = Math.sin(farm.elapsed / 240) * .025;
-  const image = imageForScene('assets/ui/campaign/farm-moss-v1.webp');
-  if (!image.complete || !image.naturalWidth) return;
-  ctx.save(); ctx.globalAlpha = farm.alpha;
-  ctx.fillStyle='rgba(20,35,22,.22)'; ctx.beginPath(); ctx.ellipse(x+approach,y,size*.36,size*.075,0,0,Math.PI*2);ctx.fill();
-  // Original RGBA bounds: body x248..1015, y135..1093 in a 1254px canvas.
-  const scale = size / 958;
-  const shrink = farm.phase === 'dissolve' ? Math.max(.05,farm.alpha) : 1;
-  ctx.translate(x+approach,y-hop);ctx.scale(1+pulse,shrink*(1-pulse));
-  ctx.drawImage(image,-631*scale,-1093*scale,1254*scale,1254*scale);
-  ctx.restore();
-  if (farm.phase === 'attack') {
-    // Health is a local visual cue, not a combat HP value.
-    ctx.save();ctx.fillStyle='#302d26aa';ctx.fillRect(x-size*.32,y-size-7,size*.64,3);
-    ctx.fillStyle='#c25c3f';ctx.fillRect(x-size*.32,y-size-7,size*.64*farm.hp,3);ctx.restore();
-    const spec = farmAttackSpecs[farm.hero.id];
-    const duration = spec ? spec.frames * spec.ms : 1200;
-    const beat = farm.attackTime / duration;
-    const impact = Math.max(0,1-Math.abs(beat-.68)/.08);
-    if (impact > 0) {
-      ctx.save();ctx.globalAlpha=impact;ctx.strokeStyle='#fff4b5';ctx.lineWidth=2;
-      ctx.beginPath();ctx.arc(x,y-size*.48,size*.32*(2-impact),0,Math.PI*2);ctx.stroke();
-      for(let i=0;i<6;i++){const a=i*Math.PI/3;ctx.beginPath();ctx.moveTo(x+Math.cos(a)*size*.15,y-size*.48+Math.sin(a)*size*.15);ctx.lineTo(x+Math.cos(a)*size*.46,y-size*.48+Math.sin(a)*size*.46);ctx.stroke();}
-      ctx.restore();
+  const tick=Math.max(0,Number(time)||0), cycle=Math.floor(tick/24000), elapsed=tick%24000;
+  const last=CAMPAIGN_TRAVEL_PATH.length-1;
+  const index=n=>{const q=n%(last*2);return q<=last?q:last*2-q;};
+  const from=CAMPAIGN_TRAVEL_PATH[index(cycle)],to=CAMPAIGN_TRAVEL_PATH[index(cycle+1)];
+  const u=Math.min(1,elapsed/5000), ease=u*u*(3-2*u);
+  const center={x:from.x+(to.x-from.x)*ease,y:from.y+(to.y-from.y)*ease};
+  const length=Math.hypot(to.x-from.x,to.y-from.y);
+  const direction={x:(to.x-from.x)/length,y:(to.y-from.y)/length};
+  const count=Math.min(4,Math.max(1,squad.length));
+  const events=[], actors=squad.map((hero,i)=>{
+    const spec=specs[hero.id],duration=spec ? (spec.durations?.reduce((a,b)=>a+b,0)||spec.frames*spec.ms) : 1200;
+    const start=6200+i*110;
+    let attackTime=-1;
+    for(let round=0;round<2;round++) {
+      const at=start+round*6500;
+      if(elapsed>=at&&elapsed<at+duration)attackTime=elapsed-at;
+      const crit=(cycle+i+round)%4===0,damage=Math.round((118+i*19+(cycle%5)*11)*(crit?1.8:1));
+      events.push({at:at+duration*.68,actorId:hero.id,lane:i,target:i%count,crit,damage});
     }
-    // A short trail links the acting hero to the target; it carries no reward.
-    if (beat>.48 && beat<.68) {
-      const t=(beat-.48)/.2, sx=hero.x+hero.bodyH*.22, sy=hero.y-hero.bodyH*.45;
-      ctx.save();ctx.strokeStyle='#ffe9a6';ctx.lineWidth=2;ctx.globalAlpha=.8;
-      ctx.beginPath();ctx.moveTo(sx+(x-sx)*Math.max(0,t-.14),sy+(y-size*.48-sy)*Math.max(0,t-.14));ctx.lineTo(sx+(x-sx)*t,sy+(y-size*.48-sy)*t);ctx.stroke();ctx.restore();
-    }
+    return {...hero,attackTime,duration,target:i%count};
+  });
+  const mobs=Array.from({length:count},(_,i)=>{
+    const hits=events.filter(e=>e.target===i),total=hits.reduce((n,e)=>n+e.damage,0);
+    const deadAt=Math.max(...hits.map(e=>e.at));
+    const hurt=hits.filter(e=>e.at<=elapsed).reduce((n,e)=>n+e.damage,0);
+    const spawnAt=5000+i*160;
+    const alpha=Math.max(0,Math.min(1,(elapsed-spawnAt)/650,1-(elapsed-deadAt-180)/650));
+    return {index:i,worldX:to.x+direction.x*.075+(i%2-.5)*.065,
+      worldY:to.y+direction.y*.055+(Math.floor(i/2)-.5)*.028,
+      hp:Math.max(0,1-hurt/total),deadAt,spawnAt,alpha};
+  });
+  const hits=events.filter(e=>elapsed>=e.at&&elapsed<e.at+1000).map(e=>({...e,age:elapsed-e.at}));
+  const loot=[];
+  for(const mob of mobs)for(let item=0;item<2;item++) {
+    const age=elapsed-mob.deadAt-280-item*120;
+    if(age>=0&&age<2100)loot.push({target:mob.index,item,age,
+      phase:age<850?'drop':age<1900?'fly':'arrive',progress:Math.max(0,Math.min(1,(age-850)/1050))});
   }
+  return {cycle,elapsed,center,direction,actors,mobs,hits,loot,
+    phase:elapsed<5000?'march':elapsed<6200?'spawn':elapsed<19500?'attack':elapsed<22500?'loot':'rest'};
 }
+function drawCampaignFarm(ctx, farm, w, h, layer = 'effects') {
+  if (!farm) return;
+  const map=campaignMapView(w,h,farm.center);
+  const project=m=>({x:map.left+m.worldX*map.width,y:map.top+m.worldY*map.height});
+  const size=Math.min(52,w*.115,h*.085);
+  const image=imageForScene('assets/ui/campaign/farm-moss-v1.webp');
+  const ready=image.complete&&image.naturalWidth>0;
+  if(layer==='monsters-back'||layer==='monsters-front') {
+    for(const actor of farm.actors)if(farmAttackSpecs[actor.id])imageForScene(farmAttackSpecs[actor.id].src);
+    for(const mob of [...farm.mobs].sort((a,b)=>a.worldY-b.worldY)) {
+      if(!ready||mob.alpha<=0)continue;
+      if((mob.worldY<farm.center.y)!==(layer==='monsters-back'))continue;
+      const p=project(mob),age=farm.elapsed-mob.spawnAt;
+      const hop=age<1000?Math.abs(Math.sin(age/1000*Math.PI*2))*size*.15:0;
+      const pulse=Math.sin(age/240)*.025,scale=size/958;
+      ctx.save();ctx.globalAlpha=mob.alpha;
+      ctx.fillStyle='#14231644';ctx.beginPath();ctx.ellipse(p.x,p.y,size*.36,size*.075,0,0,Math.PI*2);ctx.fill();
+      ctx.translate(p.x,p.y-hop);ctx.scale((farm.direction.x<0?-1:1)*(1+pulse),Math.max(.1,mob.alpha)*(1-pulse));
+      ctx.drawImage(image,-631*scale,-1093*scale,1254*scale,1254*scale);ctx.restore();
+      if(mob.hp>0&&age>650){ctx.save();ctx.globalAlpha=.85;ctx.fillStyle='#302d26';ctx.fillRect(p.x-size*.34,p.y-size-6,size*.68,3);ctx.fillStyle='#cb6845';ctx.fillRect(p.x-size*.34,p.y-size-6,size*.68*mob.hp,3);ctx.restore();}
+    }
+    return;
+  }
+  for(const actor of farm.actors) {
+    if(actor.attackTime<0)continue;
+    const beat=actor.attackTime/actor.duration;
+    if(beat<.48||beat>.68)continue;
+    const hero=homePartyPose(actor,w,h,farm),target=project(farm.mobs[actor.target]);
+    const t=(beat-.48)/.2,sx=hero.x,sy=hero.y-hero.bodyH*.5,tx=target.x,ty=target.y-size*.45;
+    ctx.save();ctx.strokeStyle='#ffedb1';ctx.lineWidth=2;ctx.globalAlpha=.85;ctx.beginPath();ctx.moveTo(sx+(tx-sx)*Math.max(0,t-.13),sy+(ty-sy)*Math.max(0,t-.13));ctx.lineTo(sx+(tx-sx)*t,sy+(ty-sy)*t);ctx.stroke();ctx.restore();
+  }
+  for(const hit of farm.hits) {
+    const target=project(farm.mobs[hit.target]);
+    const t=hit.age/1000,pop=1+.24*Math.sin(Math.min(1,t*4)*Math.PI);
+    ctx.save();ctx.globalAlpha=Math.min(1,(1-t)*2);ctx.translate(target.x+(hit.lane%3-1)*12,target.y-size-9-42*t);ctx.scale(pop,pop);
+    ctx.font=`900 ${hit.crit?27:18}px system-ui`;ctx.textAlign='center';ctx.lineJoin='round';ctx.lineWidth=3.5;ctx.strokeStyle='#432821';ctx.fillStyle=hit.crit?'#ff4941':'#fff1bb';ctx.strokeText(String(hit.damage),0,0);ctx.fillText(String(hit.damage),0,0);ctx.restore();
+    if(hit.age<220){ctx.save();ctx.globalAlpha=1-hit.age/220;ctx.strokeStyle=hit.crit?'#ffb16a':'#fff6bb';ctx.lineWidth=2;ctx.beginPath();ctx.arc(target.x,target.y-size*.45,6+hit.age*.065,0,Math.PI*2);ctx.stroke();ctx.restore();}
+  }
+  // DOM-derived chest target stays aligned when the HUD or viewport changes.
+  const chest=sceneState.chestPoint||{x:w*.12,y:h-42};
+  let arriving=false;
+  for(const loot of farm.loot) {
+    const p=project(farm.mobs[loot.target]),ox=(loot.item?1:-1)*13;
+    let x=p.x+ox,y=p.y-6;
+    if(loot.phase==='drop'){const t=Math.min(1,loot.age/550);x=p.x+ox*t;y=p.y-6-Math.sin(t*Math.PI)*26;}
+    else if(loot.phase==='fly'){const t=loot.progress*tEase(loot.progress);x+=(chest.x-x)*t;y+=(chest.y-y)*t-Math.sin(t*Math.PI)*48;}
+    else {arriving=true;continue;}
+    const art=imageForScene(loot.item?'assets/result-icons-art/mastery-imagen.png':'assets/result-icons-art/gold-imagen.png');
+    if(art.complete&&art.naturalWidth){const s=18*(1-loot.progress*.35);ctx.save();ctx.globalAlpha=1-loot.progress*.2;ctx.drawImage(art,x-s/2,y-s/2,s,s);ctx.restore();}
+  }
+  sceneState.root?.querySelector('.cs-chest-fab')?.classList.toggle('cs-loot-arrival',arriving);
+}
+function tEase(t) { return t*(3-2*t); }
 function drawScene(time) {
   const canvas = sceneState.canvas;
   if (!canvas || !sceneState.active) return;
@@ -238,6 +288,7 @@ function drawScene(time) {
   const enemies = preparing ? preparationEnemies() : [];
   const picks = preparing ? [...sceneState.draft, ...enemies] : savedSceneSquad();
   const farm = preparing ? null : sampleCampaignFarm(sceneState.farmTime, picks, reducedMotion.matches, farmAttackSpecs);
+  if (!preparing) { syncCampaignMap(w,h,farm); drawCampaignFarm(ctx,farm,w,h,'monsters-back'); }
   const rowCounts = { front: 0, back: 0, enemyfront: 0, enemyback: 0 };
   picks.map(pick => {
     const key = (pick.enemy ? 'enemy' : '') + pick.row;
@@ -247,7 +298,7 @@ function drawScene(time) {
   })
     .sort((a, b) => preparing
       ? (a.row === 'back' ? 0 : 1) - (b.row === 'back' ? 0 : 1)
-      : (homePartyPose(a, w, h).y - homePartyPose(b, w, h).y) || (homePartyPose(a, w, h).x - homePartyPose(b, w, h).x))
+      : (homePartyPose(a, w, h, farm).y - homePartyPose(b, w, h, farm).y) || (homePartyPose(a, w, h, farm).x - homePartyPose(b, w, h, farm).x))
     .forEach(pick => {
       let x, y, bodyH;
       if (preparing) {
@@ -255,28 +306,29 @@ function drawScene(time) {
         y = h * (.38 + .27 * pick.rowIndex);
         bodyH = Math.min(w * .23, h * .28);
       } else {
-        const plaza = homePartyPose(pick, w, h);
+        const plaza = homePartyPose(pick, w, h, farm);
         x = plaza.x; y = plaza.y; bodyH = plaza.bodyH;
       }
       if (preparing && !pick.enemy && preparationDrag?.heroId === pick.id && preparationDrag.moved) {
         x += preparationDrag.dx || 0; y += preparationDrag.dy || 0;
       }
       ctx.fillStyle = 'rgba(15,30,23,.24)'; ctx.beginPath(); ctx.ellipse(x, y, bodyH * .31, bodyH * .075, 0, 0, Math.PI * 2); ctx.fill();
-      const attack = farm && farm.attackTime >= 0 && farm.hero.id === pick.id && farm.attackTime < (farmAttackSpecs[pick.id]?.frames * farmAttackSpecs[pick.id]?.ms || 0);
+      const actor = farm?.actors.find(a=>a.id===pick.id);
+      const attack = actor && actor.attackTime >= 0 && farmAttackSpecs[pick.id];
       const attackImage = attack ? imageForScene(farmAttackSpecs[pick.id].src) : null;
       const readyAttack = attackImage?.complete && attackImage.naturalWidth > 0;
-      const spec = readyAttack ? farmAttackSpecs[pick.id] : farm ? spriteSpecs[pick.id] : specForAfk(pick);
+      const spec = readyAttack ? farmAttackSpecs[pick.id] : farm && farm.phase !== 'march' ? spriteSpecs[pick.id] : specForAfk(pick);
       const enemyArt = pick.enemy && !spec ? preparationEnemyArt(pick, enemies) : null;
       const image = imageForScene(spec?.src || enemyArt?.src || portraitSrc(pick.id, 'master'));
       if (!image.complete || image.naturalWidth < 1) return;
       ctx.save();
-      if (farm?.hero.id === pick.id && !farmAttackSpecs[pick.id] && farm.attackTime > 0 && farm.attackTime < farm.duration) {
-        const lean = Math.sin(farm.attackTime / farm.duration * Math.PI) * .055;
+      if (actor && !farmAttackSpecs[pick.id] && actor.attackTime >= 0) {
+        const lean = Math.sin(actor.attackTime / actor.duration * Math.PI) * .08;
         ctx.translate(x,y); ctx.rotate(lean); ctx.translate(-x,-y);
       }
-      if (pick.enemy && (!enemyArt || enemyArt.mirror)) { ctx.translate(2 * x, 0); ctx.scale(-1, 1); }
+      if ((farm && farm.direction.x < 0) || (pick.enemy && (!enemyArt || enemyArt.mirror))) { ctx.translate(2 * x, 0); ctx.scale(-1, 1); }
       if (spec) {
-        const frame = frameAt(spec, readyAttack ? farm.attackTime : time), scale = bodyH / spec.body;
+        const frame = frameAt(spec, readyAttack ? actor.attackTime : time), scale = bodyH / spec.body;
         const sx = frame % spec.cols * (spec.strideW || spec.cellW) + (spec.pad || 0);
         const sy = Math.floor(frame / spec.cols) * (spec.strideH || spec.cellH) + (spec.pad || 0);
         ctx.drawImage(image, sx, sy, spec.cellW, spec.cellH, x - spec.pivot * scale, y - spec.foot * scale, spec.cellW * scale, spec.cellH * scale);
@@ -290,6 +342,7 @@ function drawScene(time) {
       }
       ctx.restore();
     });
+  drawCampaignFarm(ctx,farm,w,h,'monsters-front');
   drawCampaignFarm(ctx, farm, w, h);
 }
 function sceneTick(time) {
@@ -308,6 +361,8 @@ function resizeScene() {
   if (!box.width || !box.height) return;
   sceneState.width = box.width; sceneState.height = box.height;
   if (!sceneState.draft) syncCampaignMap(box.width, box.height);
+  const chest=sceneState.root?.querySelector('.cs-chest-fab')?.getBoundingClientRect();
+  if(chest)sceneState.chestPoint={x:chest.left+chest.width/2-box.left,y:chest.top+chest.height/2-box.top};
   const dpr = Math.min(2, window.devicePixelRatio || 1);
   const width = Math.round(box.width * dpr), height = Math.round(box.height * dpr);
   if (sceneState.canvas.width !== width || sceneState.canvas.height !== height) {

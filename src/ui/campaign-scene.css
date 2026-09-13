@@ -182,3 +182,6 @@ body.hv-campaign-active #toast{z-index:100001}
 #hvCampaignScene .cs-map-sheet h2{font:700 21px Georgia,serif;margin-bottom:12px;padding-right:28px}
 #hvCampaignScene .cs-map-sheet .cs-map-art{height:auto;width:min(100%,32.625dvh,287px);margin:auto;border:1px solid #ab8857}
 #hvCampaignScene .cs-map-sheet p{font-size:11px;line-height:1.5;margin-top:12px;text-align:center}
+/* TKT-0115: visual loot arrival, controlled by the scene clock. */
+#hvCampaignScene .cs-chest-fab.cs-loot-arrival{box-shadow:0 0 0 3px #ffd98099,0 0 22px #ffcf6799;filter:brightness(1.15)}
+@media(prefers-reduced-motion:reduce){#hvCampaignScene .cs-chest-fab.cs-loot-arrival{filter:none;box-shadow:none}}
