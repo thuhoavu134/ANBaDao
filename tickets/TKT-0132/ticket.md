@@ -1,11 +1,11 @@
 ---
 id: TKT-0132
 title: Đổi sò pop nhỏ tự tắt · spotlight steady
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 created: 2026-09-13T16:42:00.000Z
-updated: 2026-09-13T16:50:00.000Z
+updated: 2026-09-13T16:47:00.000Z
 acceptance_ids: ['L132-T1', 'L132-T2', 'L132-T3', 'L132-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths:
@@ -39,5 +39,5 @@ Không đổi BETS 2/10/50, convertQty, loot. Không 72 tướng. HUD 🐚 ngoà
 
 RED 3 fail (còn Nhận / bbrHold) → GREEN 3/3 L132 + npm test 920 PASS.
 Chrome 390×844 L132-P1 PASS. Safari NOT_RUN.
-Builder dừng REVIEW. Gõ **live** để squash-merge.
+LIVE #126 `7683ada`.
 

@@ -93,7 +93,7 @@ Board GitHub không có. File `tickets/TKT-00xx/ticket.md` là nguồn sự th�
 | TKT-0129 | — | Chợ 2 ô · rương mở nắp chroma rồi loot | LIVE (#123) |
 | TKT-0130 | — | Đổi sò icon cowrie, không ốc | LIVE (#125) |
 | TKT-0131 | — | Spotlight dừng trên ô trúng, tắt khi Thưởng/Đổi sò | LIVE (#125) |
-| TKT-0132 | — | Đổi sò pop nhỏ tự tắt · spotlight steady | REVIEW |
+| TKT-0132 | — | Đổi sò pop nhỏ tự tắt · spotlight steady | LIVE (#126) |
 
 
 Cách tạo gift code (owner): [docs/GIFT-CODES.md](../docs/GIFT-CODES.md)
