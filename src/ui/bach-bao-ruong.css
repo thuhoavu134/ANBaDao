@@ -33,13 +33,14 @@
   content:"";position:absolute;top:-80%;left:-40%;width:36%;height:260%;z-index:9;
   background:linear-gradient(90deg,transparent 0 22%,rgba(255,255,255,.35) 38%,#fff 50%,rgba(255,255,255,.35) 62%,transparent 78%);
   box-shadow:0 0 12px 3px rgba(255,255,255,.85);
-  transform:rotate(45deg) translate3d(-240%,0,0);
-  animation:bbrSheen 1.5s linear infinite;opacity:1;pointer-events:none;will-change:transform
+  transform:rotate(45deg) translate3d(-280%,0,0);
+  animation:bbrSheen 1.5s linear infinite;opacity:0;pointer-events:none;will-change:transform,opacity
 }
 @keyframes bbrSheen{
-  0%{transform:rotate(45deg) translate3d(-240%,0,0)}
-  78%{transform:rotate(45deg) translate3d(260%,0,0)}
-  100%{transform:rotate(45deg) translate3d(260%,0,0)}
+  0%{transform:rotate(45deg) translate3d(-280%,0,0);opacity:0}
+  12%{opacity:1}
+  88%{opacity:1}
+  100%{transform:rotate(45deg) translate3d(280%,0,0);opacity:0}
 }
 @media (prefers-reduced-motion:reduce){
   /* bbrSheen */

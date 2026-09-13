@@ -1,3 +1,8 @@
+## 14/09 — TKT-0138: Vệt sáng loop mượt, không khựng
+
+Owner: vệt khựng loop. Bỏ hold 78%, 0→100% translate3d + fade hai đầu. 1.5s. Vệt trắng. Cược/loot không đổi.
+RED 1 fail → GREEN 3/3 L138 + npm test 938. Chrome 390×844 L138-P1 PASS. Safari NOT_RUN. PR REVIEW. Owner gõ live rồi tự `git pull && vercel --prod`.
+
 ## 14/09 — TKT-0137: Vệt sáng trắng, không đường vàng
 
 Owner: đừng đường vàng, là vệt sáng. Thanh chéo `#fff`, translate3d 1.5s. Ô hold không flood trắng. Cược/loot không đổi.

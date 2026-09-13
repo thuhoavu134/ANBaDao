@@ -1,0 +1,42 @@
+{
+  "ticket": "TKT-0138",
+  "samples": [
+    {
+      "hold": true,
+      "hotCount": 1,
+      "anim": "bbrSheen",
+      "duration": "1.5s",
+      "transform": "matrix(0.707107, 0.707107, -0.707107, 0.707107, -20.149, -20.149)",
+      "opacity": "1"
+    },
+    {
+      "hold": true,
+      "hotCount": 1,
+      "anim": "bbrSheen",
+      "duration": "1.5s",
+      "transform": "matrix(0.707107, 0.707107, -0.707107, 0.707107, 0.590615, 0.590615)",
+      "opacity": "1"
+    },
+    {
+      "hold": true,
+      "hotCount": 1,
+      "anim": "bbrSheen",
+      "duration": "1.5s",
+      "transform": "matrix(0.707107, 0.707107, -0.707107, 0.707107, 18.9587, 18.9587)",
+      "opacity": "1"
+    },
+    {
+      "hold": true,
+      "hotCount": 1,
+      "anim": "bbrSheen",
+      "duration": "1.5s",
+      "transform": "matrix(0.707107, 0.707107, -0.707107, 0.707107, -26.6664, -26.6664)",
+      "opacity": "6.11111e-05"
+    }
+  ],
+  "unique": 4,
+  "stalled": false,
+  "appErrors": [],
+  "ok": true,
+  "ts": "2026-09-13T23:39:50.330Z"
+}
