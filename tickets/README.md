@@ -99,7 +99,7 @@ Board GitHub không có. File `tickets/TKT-00xx/ticket.md` là nguồn sự th�
 | TKT-0135 | — | Sheen phủ hết ô trúng · 1.5s/lần | LIVE (#129) |
 | TKT-0136 | — | Vệt loáng là đường chéo chạy, không wash ô | LIVE (#130) |
 | TKT-0137 | — | Vệt sáng trắng, không đường vàng | LIVE (#130) |
-| TKT-0138 | — | Vệt sáng loop mượt, không khựng | REVIEW |
+| TKT-0138 | — | Vệt sáng loop mượt, không khựng | LIVE (#131) |
 
 
 Cách tạo gift code (owner): [docs/GIFT-CODES.md](../docs/GIFT-CODES.md)

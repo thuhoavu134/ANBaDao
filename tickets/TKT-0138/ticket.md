@@ -1,11 +1,11 @@
 ---
 id: TKT-0138
 title: Vệt sáng loop mượt, không khựng
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 created: 2026-09-13T23:38:00.000Z
-updated: 2026-09-13T23:40:00.000Z
+updated: 2026-09-13T23:42:00.000Z
 acceptance_ids: ['L138-T1', 'L138-T2', 'L138-T3', 'L138-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths:
@@ -35,4 +35,4 @@ Không đổi BETS, loot. Không sheen lúc quay. Không pulse cả ô. Không �
 
 RED 1 fail (hold 78%) → GREEN 3/3 L138 + npm test 938 PASS.
 Chrome 390×844 L138-P1 PASS (không stall). Safari NOT_RUN.
-Builder dừng REVIEW. Gõ **live** để squash-merge.
+LIVE #131 `0cbb993`.
