@@ -84,8 +84,8 @@ Board GitHub không có. File `tickets/TKT-00xx/ticket.md` là nguồn sự th�
 | TKT-0120 | — | CSS popup đồ ôm nội dung | LIVE (#114) |
 | TKT-0121 | — | Túi đồ icon PNG + Hoạt bình đỏ | LIVE (#115) |
 | TKT-0122 | — | Đồng vàng PNG chung mọi tính năng | LIVE (#116) |
-| TKT-0123 | — | Vành Bách Bảo icon gần full ô | REVIEW |
-| TKT-0124 | — | Hoạt lực + tên Rương + hoa văn tâm | REVIEW |
+| TKT-0123 | — | Vành Bách Bảo icon gần full ô | LIVE (#117) |
+| TKT-0124 | — | Hoạt lực + tên Rương + hoa văn tâm | LIVE (#118) |
 
 Cách tạo gift code (owner): [docs/GIFT-CODES.md](../docs/GIFT-CODES.md)
 

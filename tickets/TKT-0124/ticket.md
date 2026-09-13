@@ -1,11 +1,11 @@
 ---
 id: TKT-0124
 title: Hoạt lực cùng PNG · ô sự kiện Bách Bảo Rương · hoa văn tâm vành
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 created: 2026-09-13T11:36:00.000Z
-updated: 2026-09-13T11:42:00.000Z
+updated: 2026-09-13T11:45:45.000Z
 acceptance_ids: ['L124-T1', 'L124-T2', 'L124-T3', 'L124-T4', 'L124-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths:

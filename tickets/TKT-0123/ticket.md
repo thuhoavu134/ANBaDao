@@ -1,11 +1,11 @@
 ---
 id: TKT-0123
 title: Vành Bách Bảo — icon gần full ô, không crop, không mất nét
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 created: 2026-09-13T11:30:00.000Z
-updated: 2026-09-13T11:40:00.000Z
+updated: 2026-09-13T11:42:55.000Z
 acceptance_ids: ['L123-T1', 'L123-T2', 'L123-T3', 'L123-T4', 'L123-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths:
