@@ -1,3 +1,8 @@
+## 13/09 — TKT-0118: owner chốt cấp người chơi 1–60
+
+Triển khai khóa108 ải theo cấp + thắng ải trước, giữ catalog lt_seal hiện có. Cấp tướng trần30 không đổi. EXP lần đầu/việc ngày-tuần/nhận rươngAFK ghép transaction cũ; migration cấp bù theo tiến độ, backup additive, clear keys chống nhậnEXP lại. UI cấp/EXP và đường rương/nhiệm vụ khi khóa. Sửa truyền Next qua2 wrapper lore và cursor replay. Chi tiết: docs/CAMPAIGN-LEVEL-PROPOSAL.md.
+Tests domain + built owners kiểm gate trước hoạt lực, đủ108, migration3 save, duplicate/rollback/AFK cap và fractional carry. Full CI cần kiểm ở revision PR. Chrome390×844 vẫn BLOCKED do automatic approval review từ chối preview đăng nhập; Safari NOT_RUN. IN_PROGRESS/EVIDENCE, chưa merge/deploy. PR111 kiếm vẫn riêng, không hiểu «ok chốt» là live.
+
 ## 13/09 — TKT-0116: cơ chế AFK xuyên 6 chương
 
 Owner duyệt cơ chế #109, main 305002f. Giữ hành quân cả đội, đánh bầy, damage/crit và loot về rương. Registry 6 world theo chapterIndex: Ấn Phố dùng art đã duyệt; 5 chương sau có map và quái khác silhouette. Waypoint được đặt sau khi xem từng ảnh, không dùng chung đường cũ. Chương mới reset clock và đổi cảnh lớn/minimap cùng nguồn; cùng chương không reset khi đổi ải. Chương chưa có cấu hình fallback Ấn Phố, cần bổ sung world trước khi phát hành chương mới.

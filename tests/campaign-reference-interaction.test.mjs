@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createContext, runInContext } from 'node:vm';
 import * as campaign from '../src/domain/campaign/campaign-view.mjs';
+import * as progress from '../src/domain/campaign/player-progress.mjs';
 import { prepareFormationChange } from '../src/domain/hero/loadout.mjs';
 const ids = ['a','b','c','d','e','f','g'];
 const squad = ids.slice(0,6).map((id,i)=>({id,row:i<3?'front':'back',slot:i}));
@@ -36,13 +37,14 @@ test('drag swap preserves destination rows and never mutates saved records',()=>
 
 const built = readFileSync(new URL('../dist/index.html',import.meta.url),'utf8');
 function flowHarness() {
-  const context=createContext({P:{unlockedChapters:[0],clearedChapters:[],campaignStages:{},squad:[squad[0]]},
+  const context=createContext({...progress,window:{},P:{hvPlayerProgress:{version:1,xp:0,clears:[],afkRemainder:0},unlockedChapters:[0],clearedChapters:[],campaignStages:{},squad:[squad[0]]},
     DATA:{chapters:[{idx:0}],daily:{costCampaign:6}},ST:{},calls:[],timer:null,
     ensureWorld(){},refreshStamina(){},refreshResbar(){},persist(){return true;},toast(){},
     chapterBattleSequence(){return ['first','boss'];},spendStamina(){return true;}});
   context.navTo=route=>context.calls.push(['route',route]);
   context.setTimeout=fn=>{context.timer=fn;};
-  context.runBattle=(id,callback)=>{context.calls.push(['battle',id]);context.finish=callback;};
+  context.runBattle=(id,callback)=>{context.calls.push(['battle',id]);context.finish=(win,action)=>{context.hvCampaignSettlementXp(context.P,{win,battleId:id});callback(win,action);};};
+  runInContext(readFileSync(new URL('../src/ui/player-progress-runtime.js',import.meta.url),'utf8'),context);
   context.endChapter=options=>context.calls.push(['end',options.autoContinue]);
   runInContext(built.slice(built.indexOf('function startChapter(idx,options={})'),built.indexOf('function startTraining()')),context);
   runInContext('startChapter(0)',context);return context;
