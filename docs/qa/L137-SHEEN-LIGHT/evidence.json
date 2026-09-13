@@ -1,0 +1,25 @@
+{
+  "ticket": "TKT-0137",
+  "a": {
+    "hold": true,
+    "hotCount": 1,
+    "anim": "bbrSheen",
+    "duration": "1.5s",
+    "transform": "matrix(0.707107, 0.707107, -0.707107, 0.707107, -19.4658, -19.4658)",
+    "bg": "linear-gradient(90deg, rgba(0, 0, 0, 0) 0px, rgba(0, 0, 0, 0) 22%, rgba(255, 255, 255, 0.35) 38%, rgb(255, 255, 255) 50%, rgba(255, 255, 255, 0.35) 62%, rgba(0, 0, 0, 0) 78%)",
+    "gold": false
+  },
+  "b": {
+    "hold": true,
+    "hotCount": 1,
+    "anim": "bbrSheen",
+    "duration": "1.5s",
+    "transform": "matrix(0.707107, 0.707107, -0.707107, 0.707107, -0.471023, -0.471023)",
+    "bg": "linear-gradient(90deg, rgba(0, 0, 0, 0) 0px, rgba(0, 0, 0, 0) 22%, rgba(255, 255, 255, 0.35) 38%, rgb(255, 255, 255) 50%, rgba(255, 255, 255, 0.35) 62%, rgba(0, 0, 0, 0) 78%)",
+    "gold": false
+  },
+  "moved": true,
+  "appErrors": [],
+  "ok": true,
+  "ts": "2026-09-13T17:56:02.235Z"
+}

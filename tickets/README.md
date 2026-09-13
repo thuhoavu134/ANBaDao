@@ -97,6 +97,8 @@ Board GitHub không có. File `tickets/TKT-00xx/ticket.md` là nguồn sự th�
 | TKT-0133 | — | Ô trúng sheen chéo góc TL→BR | LIVE (#127) |
 | TKT-0134 | — | Quay sáng đều · ô trúng mới loáng | LIVE (#128) |
 | TKT-0135 | — | Sheen phủ hết ô trúng · 1.5s/lần | LIVE (#129) |
+| TKT-0136 | — | Vệt loáng là đường chéo chạy, không wash ô | REVIEW |
+| TKT-0137 | — | Vệt sáng trắng, không đường vàng | REVIEW |
 
 
 Cách tạo gift code (owner): [docs/GIFT-CODES.md](../docs/GIFT-CODES.md)

@@ -7,12 +7,11 @@ import { fileURLToPath } from 'node:url';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const read = rel => readFileSync(join(root, rel), 'utf8');
 
-test('L135-T1: sheen phủ hết ô, 1.5s/lần, chéo 135deg', () => {
+test('L135-T1: sheen 1.5s/lần trên ô trúng', () => {
   const css = read('src/ui/bach-bao-ruong.css');
-  assert.match(css, /\.hv-bbr-ring\.is-hold \.hv-bbr-cell\.is-hot:after\{[^}]*inset:\s*0/);
-  assert.match(css, /\.hv-bbr-ring\.is-hold \.hv-bbr-cell\.is-hot:after\{[^}]*135deg/);
   assert.match(css, /\.hv-bbr-ring\.is-hold \.hv-bbr-cell\.is-hot:after\{[^}]*animation:\s*bbrSheen 1\.5s/);
   assert.match(css, /\.hv-bbr-ring\.is-hold \.hv-bbr-cell\.is-hot:after\{[^}]*infinite/);
+  assert.match(css, /\.hv-bbr-ring\.is-hold \.hv-bbr-cell\.is-hot:after\{[^}]*(?:rotate\(45deg\)|135deg)/);
 });
 
 test('L135-T2: lúc quay không vệt', () => {

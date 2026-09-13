@@ -1,0 +1,30 @@
+{
+  "ticket": "TKT-0136",
+  "a": {
+    "hold": true,
+    "hotCount": 1,
+    "anim": "bbrSheen",
+    "duration": "1.5s",
+    "transform": "matrix(0.707107, 0.707107, -0.707107, 0.707107, -22.6988, -22.6988)",
+    "width": 15.7031,
+    "cellW": 37,
+    "top": "-32px",
+    "pulse": false
+  },
+  "b": {
+    "hold": true,
+    "hotCount": 1,
+    "anim": "bbrSheen",
+    "duration": "1.5s",
+    "transform": "matrix(0.707107, 0.707107, -0.707107, 0.707107, 0.239538, 0.239538)",
+    "width": 15.7031,
+    "cellW": 37,
+    "top": "-32px",
+    "pulse": false
+  },
+  "moved": true,
+  "slash": true,
+  "appErrors": [],
+  "ok": true,
+  "ts": "2026-09-13T17:51:49.489Z"
+}
