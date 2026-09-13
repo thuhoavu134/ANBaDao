@@ -1,11 +1,11 @@
 ---
 id: TKT-0121
 title: Túi đồ icon PNG đồng nhất — Hoạt lực bình đỏ
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 created: 2026-09-13T10:40:00.000Z
-updated: 2026-09-13T10:50:00.000Z
+updated: 2026-09-13T10:59:34.000Z
 acceptance_ids: ['L121-T1', 'L121-T2', 'L121-T3', 'L121-T4', 'L121-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths:
