@@ -1,3 +1,8 @@
+## 14/09 — TKT-0134: Quay sáng đều · ô trúng mới loáng
+
+Owner iOS: vệt loáng đang hiện lúc quay, ô trúng lại sáng đều. Tắt `bbrSweep` khi quay; `bbrSheen` chỉ khi `is-hold`. Cược/loot không đổi.
+RED 2 fail → GREEN 3/3 L134 + npm test 926. Chrome 390×844 L134-P1 PASS. Safari NOT_RUN. PR REVIEW. Owner gõ live rồi tự `git pull && vercel --prod`.
+
 ## 14/09 — TKT-0133: Ô trúng sheen chéo góc TL→BR
 
 Owner iOS (IMG_7321): spotlight ổn, muốn đường sáng kéo từ trên-trái xuống dưới-phải, sáng loáng. Không pulse cả ô. `bbrSheen` infinite trên `:after` khi `is-hold`. Cược/loot không đổi.

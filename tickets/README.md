@@ -95,6 +95,7 @@ Board GitHub không có. File `tickets/TKT-00xx/ticket.md` là nguồn sự th�
 | TKT-0131 | — | Spotlight dừng trên ô trúng, tắt khi Thưởng/Đổi sò | LIVE (#125) |
 | TKT-0132 | — | Đổi sò pop nhỏ tự tắt · spotlight steady | LIVE (#126) |
 | TKT-0133 | — | Ô trúng sheen chéo góc TL→BR | LIVE (#127) |
+| TKT-0134 | — | Quay sáng đều · ô trúng mới loáng | REVIEW |
 
 
 Cách tạo gift code (owner): [docs/GIFT-CODES.md](../docs/GIFT-CODES.md)

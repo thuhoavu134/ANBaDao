@@ -1,0 +1,30 @@
+{
+  "ticket": "TKT-0134",
+  "spinning": {
+    "run": true,
+    "hold": false,
+    "hotCount": 1,
+    "anim": "none",
+    "content": "none",
+    "pulse": false
+  },
+  "held": {
+    "run": false,
+    "hold": true,
+    "hotCount": 1,
+    "anim": "bbrSheen",
+    "content": "\"\"",
+    "pulse": false
+  },
+  "held2": {
+    "run": false,
+    "hold": true,
+    "hotCount": 1,
+    "anim": "bbrSheen",
+    "content": "\"\"",
+    "pulse": false
+  },
+  "appErrors": [],
+  "ok": true,
+  "ts": "2026-09-13T17:23:49.148Z"
+}
