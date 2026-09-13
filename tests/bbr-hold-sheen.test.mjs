@@ -12,7 +12,7 @@ test('L133-T1: hold sheen chéo góc TL→BR, lặp', () => {
   assert.match(css, /@keyframes bbrSheen/);
   assert.match(css, /\.hv-bbr-ring\.is-hold \.hv-bbr-cell\.is-hot:after\{[^}]*animation:\s*bbrSheen/);
   assert.match(css, /\.hv-bbr-ring\.is-hold \.hv-bbr-cell\.is-hot:after\{[^}]*infinite/);
-  assert.match(css, /\.hv-bbr-ring\.is-hold \.hv-bbr-cell\.is-hot:after\{[^}]*rotate\(45deg\)/);
+  assert.match(css, /\.hv-bbr-ring\.is-hold \.hv-bbr-cell\.is-hot:after\{[^}]*(?:rotate\(45deg\)|135deg)/);
 });
 
 test('L133-T2: sheen không freeze, không pulse cả ô', () => {

@@ -1,0 +1,19 @@
+{
+  "ticket": "TKT-0135",
+  "held": {
+    "hold": true,
+    "hotCount": 1,
+    "anim": "bbrSheen",
+    "duration": "1.5s",
+    "content": "\"\"",
+    "inset0": true,
+    "afterW": 37.4375,
+    "cellW": 37,
+    "boxW": 41.4375,
+    "pulse": false
+  },
+  "covers": true,
+  "appErrors": [],
+  "ok": true,
+  "ts": "2026-09-13T17:40:12.657Z"
+}

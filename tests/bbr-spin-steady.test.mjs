@@ -20,7 +20,7 @@ test('L134-T2: ô trúng hold mới sheen chéo góc', () => {
   assert.match(css, /\.hv-bbr-ring\.is-hold \.hv-bbr-cell\.is-hot:after\{[^}]*content:\s*""/);
   assert.match(css, /\.hv-bbr-ring\.is-hold \.hv-bbr-cell\.is-hot:after\{[^}]*animation:\s*bbrSheen/);
   assert.match(css, /\.hv-bbr-ring\.is-hold \.hv-bbr-cell\.is-hot:after\{[^}]*infinite/);
-  assert.match(css, /\.hv-bbr-ring\.is-hold \.hv-bbr-cell\.is-hot:after\{[^}]*rotate\(45deg\)/);
+  assert.match(css, /\.hv-bbr-ring\.is-hold \.hv-bbr-cell\.is-hot:after\{[^}]*(?:rotate\(45deg\)|135deg)/);
 });
 
 test('L134-T3: không pulse cả ô; BETS đóng băng; không document click', () => {

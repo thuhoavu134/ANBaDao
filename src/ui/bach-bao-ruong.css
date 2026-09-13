@@ -25,15 +25,21 @@
   content:none;animation:none;pointer-events:none
 }
 .hv-bbr-ring.is-hold .hv-bbr-cell.is-hot:after{
-  content:"";position:absolute;inset:auto;top:-90%;left:-120%;width:26%;height:300%;z-index:9;
-  background:linear-gradient(90deg,transparent 0 18%,rgba(255,255,255,.4) 34%,#fff 48%,#ffe566 54%,#fff 62%,transparent 78%);
-  box-shadow:0 0 16px 3px #fff,0 0 8px 2px #ffcc33;
-  transform:rotate(45deg);transform-origin:center;
-  animation:bbrSheen 1.35s linear infinite;opacity:1;pointer-events:none
+  content:"";position:absolute;inset:0;z-index:9;
+  background:linear-gradient(135deg,
+    transparent 0 18%,
+    rgba(255,255,255,.35) 32%,
+    #fff 46%,
+    #ffe566 52%,
+    #fff 58%,
+    rgba(255,255,255,.35) 70%,
+    transparent 84% 100%);
+  background-size:250% 250%;
+  animation:bbrSheen 1.5s linear infinite;opacity:1;pointer-events:none
 }
 @keyframes bbrSheen{
-  0%{transform:translate(-90%,-90%) rotate(45deg)}
-  100%{transform:translate(340%,320%) rotate(45deg)}
+  0%{background-position:120% -20%}
+  100%{background-position:-20% 120%}
 }
 @media (prefers-reduced-motion:reduce){
   /* bbrSheen */
