@@ -1,11 +1,11 @@
 ---
 id: TKT-0131
 title: Spotlight dừng trên ô trúng, tắt khi Thưởng/Đổi sò
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 created: 2026-09-13T15:12:00.000Z
-updated: 2026-09-13T15:22:00.000Z
+updated: 2026-09-13T16:18:00.000Z
 acceptance_ids: ['L131-T1', 'L131-T2', 'L131-T3', 'L131-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths:
@@ -35,10 +35,8 @@ Không đổi BETS 2/10/50, convertQty, loot table, pity. Không 72 tướng.
 - L131-T3: CSS `is-hold` giữ sáng; reduced-motion tắt pulse; không document click; BETS đóng băng
 - L131-P1: Chrome 390×844 — 1 ô is-hot sau quay; tắt sau Đổi sò
 
-## Gate
+## Result
 
-- RED 2 fail (thiếu is-hold / lastIdx is-hot)
-- GREEN 3/3 L131 + npm test 917 PASS
-- Chrome 390×844 L131-P1 PASS
-- Safari NOT_RUN
-- Builder dừng REVIEW. Gõ **live** để squash-merge.
+RED 2 fail → GREEN 3/3 L131 + npm test 917 PASS. Chrome 390×844 L131-P1 PASS. Safari NOT_RUN.
+LIVE #125 `32072ad`.
+

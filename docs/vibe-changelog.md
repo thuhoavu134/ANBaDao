@@ -2,12 +2,12 @@
 
 Owner: vòng quay kết thúc thì ánh sáng vẫn chiếu vật phẩm ấy, không tắt. Chờ Thưởng hoặc Đổi sò mới tắt. Quay tiếp thì ánh sáng đi tiếp từ `lastIdx`.
 `paintDesk` gắn `is-hot is-win` đúng ô, vành `is-hold` (ô khác tối). Cược/loot không đổi.
-RED 2 fail → GREEN 3/3 L131. Chrome 390×844 L131-P1. Safari NOT_RUN. PR REVIEW. Owner gõ live rồi tự `git pull && vercel --prod`.
+RED 2 fail → GREEN 3/3 L131. Chrome 390×844 L131-P1 PASS. Safari NOT_RUN. LIVE #125 `32072ad`. Owner tự `git pull && vercel --prod`.
 
 ## 13/09 — TKT-0130: Đổi sò hiện icon sò cowrie, không ốc
 
 Owner iOS: đổi sò ra icon ốc (`so-icon.jpg` / 🐚). `SO_IC` + overlay nhận dùng `assets/ui/festival/bbr/so.png` (cowrie túi Đạo cụ). Overlay `#hvSoFx` khung như rương. Không toast 🐚. Cược/convertQty không đổi.
-RED 3 fail → GREEN 3/3 L130 + npm test. Chrome 390×844 L130-P1 PASS. Safari NOT_RUN. PR REVIEW. Owner gõ live rồi tự `git pull && vercel --prod`.
+RED 3 fail → GREEN 3/3 L130 + npm test. Chrome 390×844 L130-P1 PASS. Safari NOT_RUN. LIVE via #125 `32072ad`. Owner tự `git pull && vercel --prod`.
 
 ## 13/09 — TKT-0129: Chợ 2 ô, rương mở nắp chroma rồi loot
 

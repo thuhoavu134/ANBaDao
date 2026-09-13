@@ -1,11 +1,11 @@
 ---
 id: TKT-0130
 title: Đổi sò hiện icon sò cowrie, không ốc
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 created: 2026-09-13T14:22:00.000Z
-updated: 2026-09-13T14:32:00.000Z
+updated: 2026-09-13T16:18:00.000Z
 acceptance_ids: ['L130-T1', 'L130-T2', 'L130-T3', 'L130-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths:
@@ -35,10 +35,8 @@ Không đổi BETS 2/10/50, convertQty, loot table. Không 72 tướng. HUD `rSo
 - L130-T3: BETS đóng băng; không document click
 - L130-P1: Chrome 390×844
 
-## Gate
+## Result
 
-- RED 3 fail (SO_IC còn so-icon.jpg, toast 🐚, chưa hvSoFx)
-- GREEN 3/3 L130 + npm test
-- Chrome 390×844 L130-P1 PASS
-- Safari NOT_RUN
-- Builder dừng REVIEW. Gõ **live** để squash-merge.
+RED 3 fail → GREEN 3/3 L130 + npm test. Chrome 390×844 L130-P1 PASS. Safari NOT_RUN.
+LIVE via #125 `32072ad` (gộp với TKT-0131).
+

@@ -4,4 +4,4 @@
 - Đổi sò: `is-hot` = 0, ring không `is-hold`
 - Quay thật (reduced-motion): 1 ô `is-hot` = `lastIdx`, ring `is-hold`
 - 0 app error
-- Safari NOT_RUN
+- LIVE #125 `32072ad`
