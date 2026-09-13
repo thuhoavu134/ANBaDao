@@ -1,3 +1,8 @@
+## 13/09 — TKT-0132: Đổi sò pop nhỏ tự tắt · spotlight steady
+
+Owner iOS: Đổi sò icon to + nút Nhận bất tiện; spotlight bập bùng khó chịu. Pop sò 48px tự tắt 1s, sò đã cộng, không nút. Ô trúng sáng đều, bỏ pulse. Cược/loot không đổi.
+RED 3 fail → GREEN 3/3 L132 + npm test 920. Chrome 390×844 L132-P1 PASS. Safari NOT_RUN. PR REVIEW. Owner gõ live rồi tự `git pull && vercel --prod`.
+
 ## 13/09 — TKT-0131: Spotlight dừng trên ô trúng
 
 Owner: vòng quay kết thúc thì ánh sáng vẫn chiếu vật phẩm ấy, không tắt. Chờ Thưởng hoặc Đổi sò mới tắt. Quay tiếp thì ánh sáng đi tiếp từ `lastIdx`.

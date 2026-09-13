@@ -310,25 +310,16 @@
     if (!fx) {
       fx = document.createElement('div');
       fx.id = 'hvSoFx';
-      fx.innerHTML = `
-        <div class="hv-chest-fx-card">
-          <div class="hv-chest-fx-loot">
-            <span class="hv-chest-fx-frame"><img alt="sò"></span>
-            <b></b>
-          </div>
-          <button type="button" data-so-fx-done>Nhận</button>
-        </div>`;
+      fx.innerHTML = '<div class="hv-so-fx-pop"><img alt="sò"><b></b></div>';
       document.body.append(fx);
-      fx.addEventListener('click', ev => {
-        if (!ev.target.closest('[data-so-fx-done]') && ev.target !== fx) return;
-        fx.classList.remove('is-open');
-      });
     }
+    clearTimeout(fx._hide);
     const img = fx.querySelector('img');
     const lab = fx.querySelector('b');
     img.src = ART.so;
     lab.textContent = '+' + n + ' sò';
     fx.classList.add('is-open');
+    fx._hide = setTimeout(() => fx.classList.remove('is-open'), 1000);
   }
 
   function doScore() {

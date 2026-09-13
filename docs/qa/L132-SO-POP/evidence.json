@@ -1,0 +1,26 @@
+{
+  "ticket": "TKT-0132",
+  "hold": {
+    "hold": true,
+    "hot": true,
+    "pulse": false
+  },
+  "soBefore": 20,
+  "pop": {
+    "open": true,
+    "src": "assets/ui/festival/bbr/so.png",
+    "w": 34,
+    "h": 34,
+    "btn": false,
+    "text": "+1 sò",
+    "so": 21,
+    "pe": "none"
+  },
+  "gone": {
+    "open": false,
+    "so": 21
+  },
+  "appErrors": [],
+  "ok": true,
+  "ts": "2026-09-13T16:44:40.573Z"
+}

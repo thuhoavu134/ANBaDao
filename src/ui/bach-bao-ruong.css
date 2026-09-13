@@ -27,16 +27,8 @@
   animation:bbrSweep .16s linear
 }
 @keyframes bbrSweep{from{transform:translateX(-40%)}to{transform:translateX(40%)}}
-.hv-bbr-ring.is-hold .hv-bbr-cell.is-hot{
-  animation:bbrHold 1.4s ease-in-out infinite;
-}
-.hv-bbr-ring.is-hold .hv-bbr-cell.is-hot:after{animation:none;opacity:.4}
-@keyframes bbrHold{
-  0%,100%{box-shadow:0 0 0 3px #ffe566,0 0 24px 8px #fff,0 0 48px 18px #ffcc33}
-  50%{box-shadow:0 0 0 4px #fff,0 0 36px 14px #ffe566,0 0 72px 28px #ffcc33}
-}
+.hv-bbr-ring.is-hold .hv-bbr-cell.is-hot:after{animation:none;opacity:.28}
 @media (prefers-reduced-motion:reduce){
-  .hv-bbr-ring.is-hold .hv-bbr-cell.is-hot{animation:none}
   .hv-bbr-cell.is-hot:after{animation:none}
 }
 .hv-bbr-cell.is-win{box-shadow:0 0 16px #e2b45a;border-color:#c09028}
@@ -176,21 +168,28 @@
 img.hv-so-ic{width:18px;height:18px;object-fit:contain;background:transparent;border-radius:0;vertical-align:-4px}
 #hvSoFx{
   display:none;position:fixed;inset:0;z-index:160;align-items:center;justify-content:center;
-  background:rgba(8,5,3,.72);padding:16px;
+  background:transparent;pointer-events:none;
 }
 #hvSoFx.is-open{display:flex}
-#hvSoFx .hv-chest-fx-card{
-  width:min(92vw,360px);display:flex;flex-direction:column;align-items:center;gap:12px;
+#hvSoFx .hv-so-fx-pop{
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  animation:hvSoPop 1s ease-out forwards;
 }
-#hvSoFx .hv-chest-fx-loot{
-  display:flex;flex-direction:column;align-items:center;gap:8px;min-height:140px;
+#hvSoFx .hv-so-fx-pop img{
+  width:48px;height:48px;object-fit:contain;
+  filter:drop-shadow(0 0 10px #ffd36a);
 }
-#hvSoFx .hv-chest-fx-loot b{
-  color:#ffe29a;font-size:15px;text-align:center;text-shadow:0 2px 8px #000;
+#hvSoFx .hv-so-fx-pop b{
+  color:#ffe29a;font-size:14px;text-align:center;text-shadow:0 2px 8px #000;
 }
-#hvSoFx [data-so-fx-done]{
-  min-height:44px;padding:0 22px;border:0;border-radius:12px;font:800 15px inherit;
-  background:linear-gradient(180deg,#e2b45a,#c09028);color:#2a1608;
+@keyframes hvSoPop{
+  0%{transform:scale(.7) translateY(10px);opacity:0}
+  16%{transform:scale(1) translateY(0);opacity:1}
+  72%{opacity:1}
+  100%{transform:scale(.92) translateY(-14px);opacity:0}
+}
+@media (prefers-reduced-motion:reduce){
+  #hvSoFx .hv-so-fx-pop{animation:none}
 }
 @media (max-width:430px){
   .hv-bbr-ring{grid-template-rows:repeat(6,minmax(44px,1fr))}

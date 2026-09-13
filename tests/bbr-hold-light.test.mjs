@@ -29,8 +29,9 @@ test('L131-T3: CSS is-hold; reduced-motion; BETS đóng băng; không document c
   const ui = read('src/ui/bach-bao-ruong-runtime.js');
   const css = read('src/ui/bach-bao-ruong.css');
   assert.match(css, /\.hv-bbr-ring\.is-hold/);
-  assert.match(css, /@keyframes bbrHold/);
-  assert.match(css, /prefers-reduced-motion:reduce[\s\S]*?\.hv-bbr-ring\.is-hold[\s\S]*?animation:\s*none/);
+  assert.doesNotMatch(css, /@keyframes bbrHold/);
+  assert.doesNotMatch(css, /animation:\s*bbrHold/);
+  assert.match(css, /prefers-reduced-motion:reduce/);
   assert.match(ui, /const BETS = \[2, 10, 50\]/);
   assert.doesNotMatch(ui, /document\.addEventListener\(['"](?:click|pointerdown)/);
 });
