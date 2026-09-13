@@ -1,3 +1,29 @@
+
+## 13/09 — TKT-0114 AC12: farm chỉ diễn hoạt
+
+Đội lấy từ savedSceneSquad. Quái rêu RGBA xuất hiện, nhún nhẹ, nhận đòn và tan; nghỉ rồi luân phiên tướng tiếp theo. Basic authored: Ông Phở/Thầy Mo/Đình Lôi/Lục Ảnh, giữ số frame và thời gian atlas; tướng còn thiếu Basic dùng nghiêng người nhẹ + tia tiếp xúc tạm, không coi là asset hoàn chỉnh. Tướng không bị thay bằng art mới. Quái riêng phục vụ yêu cầu này, không mở roster 72 hoặc các ticket NPC.
+Dùng clock/RAF của cảnh, pause khi ẩn hoặc Bày trận, reset khi vào cảnh mới, reduced motion không chạy farm. Không chạm save/thưởng/tiến ải/combat scheduler; HP quái chỉ để vẽ. Run WAITING_ASSET.
+RED 2 fail → GREEN 78/78 focused. Chrome 390×844 visual/actions BLOCKED do preview chuyển tới đăng nhập Vercel, automatic approval review đã từ chối. Safari NOT_RUN. Chưa xác nhận thẩm mỹ/độ mượt; IN_PROGRESS/EVIDENCE, không merge/deploy.
+
+## 13/09/2026 — TKT-0114 bản đồ hành quân + mini map
+
+Owner từ chối nền sân v2, yêu cầu bám góc nhìn bản đồ của video. Bản v3 nhìn từ trên xuống có đường nối cầu/làng/cổng; cảnh chính, mini map và bản đồ mở rộng dùng cùng một ảnh. Viewport và dấu đội dùng đúng phép chiếu; không mô phỏng tiến ải. Thiếu Run: giữ Idle và camera tĩnh.
+76/76 test Chinh chiến/AFK PASS sau RED 2 lỗi thiếu map. Syntax PASS. Chờ CI revision mới. Chrome visual/actions vẫn BLOCKED do preview yêu cầu đăng nhập Vercel đã bị auto-review từ chối; Safari NOT_RUN. Chưa nghiệm thu thẩm mỹ.
+Tiếp tục PR108, không merge hoặc deploy. AC11: mini map đồng nhất cảnh, mở/đóng được qua handler cũ. Thuật toán được kiểm thử; thao tác UI thật chưa được kiểm chứng.
+
+## 13/09/2026 — TKT-0114 correction, browser gate pending
+
+Owner rejected floating party and giant chest; Codex continues PR108 from 9ddec88.
+New dedicated road-v2 background, explicit full-height canvas, cover-projected staggered feet; keep popup/claim/prepare behavior. Run WAITING_ASSET.
+RED: 3 grounding tests fail; GREEN/regression: 74/74. Syntax and build PASS.
+Local full suite: 780/831 PASS, 51 FAIL in partial asset checkout; use remote CI to determine complete-checkout result. No tests disabled.
+Cloud browser cannot access local preview; hosted PR preview redirected to Vercel login and auto-review rejected dashboard access. Chrome visual/actions PENDING; Safari NOT_RUN. No claim of visual PASS. No merge/deploy.
+Evidence: docs/qa/L114-CAMPAIGN-AFK-UI/correction-contract.md and correction-*.tap.
+
+## 13/09/2026 — Wave X TKT-0114 REVIEW
+
+Chinh chiến: cảnh đội chiếm màn, rương fab + popup, pill ải. Idle trên đường. Run WAITING_ASSET.
+
 ## 13/09/2026 — HANDOFF 06:07 +07
 
 Snapshot [docs/HANDOFF-2026-09-13.md](HANDOFF-2026-09-13.md) · prompt [docs/AGENT-PROMPT.md](AGENT-PROMPT.md). Main `92e6708`. PR mở: không.

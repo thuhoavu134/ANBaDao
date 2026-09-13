@@ -1,0 +1,9 @@
+{
+  "source": "built-in image generation",
+  "created": "2026-09-13",
+  "scope": "TKT-0114 AC12 decorative AFK farm only; owner requested natural monster spawning",
+  "prompt": "Create ONE production game sprite, a small hostile moss spirit monster for a colorful Vietnamese fantasy 2.5D chibi RPG AFK village road. Premium near-3D painted volume, simple compact bouncy teardrop slime body made of jade green translucent jelly with moss cap and two tiny leaves, amber mischievous eyes looking LEFT, tiny mouth, no limbs, clean readable silhouette at 50 pixels. Three-quarter elevated camera matching an isometric stone village road. Entire body centered occupying 75% canvas with ground contact at 85% canvas height. Single sprite only, not a sheet. TRUE TRANSPARENT RGBA background, no checkerboard drawn, no scenery, no platform, no cast shadow, no text, no UI. Natural daylight from upper left. This is a minor farm monster, not a hero.",
+  "rgba": true,
+  "normalization": "256x256 WebP, original alpha preserved; fixed original body bounds x248..1015 y135..1093 on1254 square",
+  "animation": "runtime jelly squash/hop/fade; not a humanoid Run replacement"
+}

@@ -1,0 +1,230 @@
+✖ AC11 minimap viewport is the inverse of the actual world projection (5.898391ms)
+✖ AC11 map and scene share art; map opens and closes through the existing scene handler (2.591361ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 298.846947
+
+✖ failing tests:
+
+test at tests/campaign-map.test.mjs:8:1
+✖ AC11 minimap viewport is the inverse of the actual world projection (5.898391ms)
+  evalmachine.<anonymous>:23
+  ({ campaignMapView, homePartyPose });
+     ^
+  
+  ReferenceError: campaignMapView is not defined
+      at evalmachine.<anonymous>:23:4
+      at Script.runInContext (node:vm:149:12)
+      at Script.runInNewContext (node:vm:154:17)
+      at runInNewContext (node:vm:310:38)
+      at TestContext.<anonymous> (file:///workspace/luc-than/tests/campaign-map.test.mjs:9:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+
+test at tests/campaign-map.test.mjs:26:1
+✖ AC11 map and scene share art; map opens and closes through the existing scene handler (2.591361ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /data-scene-action="open-map"/. Input:
+  
+  '/* Presentation owner for Chinh chiến. Rewards and battles keep their domain owners. */\n' +
+    'const sceneState = { root: null, canvas: null, active: false, scope: null, resizeObserver: null,\n' +
+    '  raf: 0, rafRelease: null, timer: 0, timerRelease: null, booted: false,\n' +
+    '  lastFrame: 0, width: 390, height: 300, draft: null, slot: 0, checkpoint: null, launching: false,\n' +
+    '  claiming: false, activationGeneration: 0 };\n' +
+    'const sceneImages = new Map();\n' +
+    'const sceneDiagnosticsEnabled = (() => {\n' +
+    '  try {\n' +
+    "    return typeof window !== 'undefined' && new URLSearchParams(window.location?.search || '').get('qaL04b') === 'scene-lifetime';\n" +
+    '  } catch (_) {\n' +
+    '    return false;\n' +
+    '  }\n' +
+    '})();\n' +
+    "const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');\n" +
+    'let preparationDrag = null, suppressSlotClick = false;\n' +
+    'function clearPreparationDrag() {\n' +
+    '  const drag = preparationDrag;\n' +
+    '  preparationDrag = null;\n' +
+    '  // Release after clearing the owner: capture loss can fire during cleanup.\n' +
+    '  if (drag?.button.hasPointerCapture(drag.pointer)) drag.button.releasePointerCapture(drag.pointer);\n' +
+    '  if (drag?.moved && reducedMotion.matches) drawScene(performance.now());\n' +
+    '}\n' +
+    'function preparationEnemies() {\n' +
+    '  const encounter = DATA.encounters[sceneState.checkpoint?.battleId];\n' +
+    '  if (!Array.isArray(encounter)) return [];\n' +
+    '  const seen = new Set();\n' +
+    '  const enemies = encounter.map(enemy => ({ ...enemy, stats: { ...enemy.stats },\n' +
+    "    id: enemy.sourceHeroId || enemy.heroId || enemy.id, row: enemy.row || 'front',\n" +
+    '    archetype: inferArchetype(enemy), enemy: true })).filter(enemy => {\n' +
+    '      if (seen.has(enemy.id)) return false;\n' +
+    '      seen.add(enemy.id); return true;\n' +
+    '    }).slice(0, 6);\n' +
+    "  assignFormationSlots(enemies, 'foe');\n" +
+    '  return enemies.sort((a, b) => a.slot - b.slot);\n' +
+    '}\n' +
+    'function preparationEnemyPower() {\n' +
+    '  if (!Array.isArray(DATA.encounters[sceneState.checkpoint?.battleId])) return null;\n' +
+    '  const enemies = preparationEnemies();\n' +
+    "  if (!enemies.length || enemies.some(e => ['hp','atk','def','spd'].some(k => !Number.isFinite(e.stats[k])))) return null;\n" +
+    '  // Same displayed-score formula as heroPower, but only encounter-owned stats.\n' +
+    '  return enemies.reduce((sum, e) => sum + Math.round(e.stats.hp / 8 + e.stats.atk * 4 + e.stats.def * 3 + e.stats.spd * 2), 0);\n' +
+    '}\n' +
+    'function preparationEnemyArt(pick, enemies) {\n' +
+    "  // Match drawGeneratedHero's enemy idle row and duplicate-role slot fallback.\n" +
+    "  const poses = { guardian: '05', ranger: '06', healer: '07', striker: '08', duelist: '09', mystic: '10' };\n" +
+    '  const repeated = enemies.some(e => e.slot < pick.slot && e.archetype === pick.archetype);\n' +
+    '  if (!repeated && poses[pick.archetype]) return {\n' +
+    "    src: 'assets/battle-runtime/embedded-' + poses[pick.archetype] + '.webp',\n" +
+    '    cols: 4, rows: 2, column: 0, row: 1, mirror: true\n' +
+    '  };\n' +
+    "  return { src: 'assets/battle-runtime/embedded-04.webp', cols: 3, rows: 2,\n" +
+    '    column: pick.slot % 3, row: Math.floor(pick.slot / 3), mirror: false };\n' +
+    '}\n' +
+    `const escapeScene = value => String(value ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));\n` +
+    "const sceneNumber = value => new Intl.NumberFormat('vi-VN').format(Math.max(0, Number(value) || 0));\n" +
+    "const sceneClock = value => { const s = Math.max(0, Math.floor(value)); return [Math.floor(s / 3600), Math.floor(s % 3600 / 60), s % 60].map(n => String(n).padStart(2, '0')).join(':'); };\n" +
+    'const sceneRewards = [\n' +
+    "  ['gold', 'Vàng', 'assets/result-icons-art/gold-imagen.png'],\n" +
+    "  ['tinh', 'Tinh thông', 'assets/result-icons-art/mastery-imagen.png'],\n" +
+    "  ['hoat', 'Hoạt lực', 'assets/ui/menu-v3233/icons/resource-energy-imagen.png']\n" +
+    '];\n' +
+    "const sceneDock = [['hub', 'hub', 'Thành Chính'], ['heroes', 'heroes', 'Tướng'], ['team', 'team', 'Trợ trận'], ['daily', 'daily', 'Lịch Luyện'], ['campaign', 'expedition', 'Chinh chiến']];\n" +
+    'const spriteSpecs = {\n' +
+    "  ong_hang_pho: { src: 'assets/battle-runtime/embedded-12.png', frames: 48, cols: 8, cellW: 240, cellH: 135, ms: 120, pivot: 100, foot: 128, body: 124 },\n" +
+    '  luc_anh: { ...LUC_ANH_IDLE_1080, pivot: 240, foot: 427, body: 398 },\n' +
+    "  thay_mo: { src: 'assets/characters/thay-mo/idle-v3193-atlas.png', frames: 96, cols: 12, cellW: 235, cellH: 264, strideW: 241, strideH: 270, pad: 3, durations: AFK_THAY_MO_IDLE_DURATIONS, pivot: 117.5, foot: 260, body: 250 },\n" +
+    "  dinh_loi: { src: 'assets/characters/dinh-loi/idle-atlas.png', frames: 64, cols: 8, cellW: 480, cellH: 270, ms: 62.5, pivot: 265, foot: 258, body: 233 }\n" +
+    '};\n' +
+    '\n' +
+    'function currentCheckpoint() { return campaignCheckpoint(P, DATA.chapters, chapterBattleSequence); }\n' +
+    'function ownedSceneHeroIds() { return OFFICIAL_ROSTER_12_IDS.filter(id => DATA.heroes[id] && P.heroes[id]?.owned); }\n' +
+    'function savedSceneSquad() {\n' +
+    '  const picks = normalizeSquad(P.squad, P, false).map(pick => ({ ...pick }));\n' +
+    '  // Combat copies may fill missing slots; keep authored holes when slot is unique.\n' +
+    "  if (!picks.every(pick => Number.isInteger(Number(pick.slot)))) assignFormationSlots(picks, 'ally');\n" +
+    '  return compactCampaignBoard(expandCampaignBoard(picks));\n' +
+    '}\n' +
+    'function scenePower(squad) { return squad.reduce((sum, pick) => sum + heroPower(pick.id), 0); }\n' +
+    'function setSceneText(selector, value) { const el = sceneState.root?.querySelector(selector); if (el && el.textContent !== String(value)) el.textContent = value; }\n' +
+    'function imageForScene(src) {\n' +
+    '  let image = sceneImages.get(src);\n' +
+    '  if (!image) {\n' +
+    "    image = new Image(); image.decoding = 'async';\n" +
+    '    const onload = () => { if (sceneState.active && reducedMotion.matches) drawScene(0); };\n' +
+    '    image.onload = onload;\n' +
+    '    image.src = src; sceneImages.set(src, image);\n' +
+    '    sceneState.scope?.add(() => {\n' +
+    '      if (image.onload === onload) image.onload = null;\n' +
+    "      if (!image.complete) image.src = '';\n" +
+    '      if (sceneImages.get(src) === image) sceneImages.delete(src);\n' +
+    '    });\n' +
+    '  }\n' +
+    '  return image;\n' +
+    '}\n' +
+    'function frameAt(spec, time) {\n' +
+    '  if (reducedMotion.matches) return 0;\n' +
+    '  if (spec.durations) {\n' +
+    '    let elapsed = time % spec.durations.reduce((sum, ms) => sum + ms, 0);\n' +
+    '    for (let frame = 0; frame < spec.durations.length; frame++) {\n' +
+    '      if (elapsed < spec.durations[frame]) return frame;\n' +
+    '      elapsed -= spec.durations[frame];\n' +
+    '    }\n' +
+    '    return 0;\n' +
+    '  }\n' +
+    '  return Math.floor(time / spec.ms) % spec.frames;\n' +
+    '}\n' +
+    'function specForAfk(pick) {\n' +
+    '  if (sceneState.draft) return spriteSpecs[pick.id];\n' +
+    '  const run = window.HonVietCampaignRunSpecs?.[pick.id];\n' +
+    '  if (run && run.src && Number(run.frames) > 0 && run.cellW && run.cellH && run.pivot && run.foot && run.body) return run;\n' +
+    '  return spriteSpecs[pick.id];\n' +
+    '}\n' +
+    'const HOME_SLOT = [\n' +
+    '  { x: 0.28, y: 0.69, s: 1.00 },\n' +
+    '  { x: 0.52, y: 0.665, s: 1.00 },\n' +
+    '  { x: 0.76, y: 0.64, s: 1.00 },\n' +
+    '  { x: 0.20, y: 0.585, s: 0.88 },\n' +
+    '  { x: 0.44, y: 0.56, s: 0.88 },\n' +
+    '  { x: 0.68, y: 0.535, s: 0.88 }\n' +
+    '];\n' +
+    'function homePartyPose(pick, w, h) {\n' +
+    "  const slot = Number.isInteger(Number(pick.slot)) ? Math.max(0, Math.min(5, Number(pick.slot))) : (pick.row === 'back' ? 3 : 0);\n" +
+    '  const pose = HOME_SLOT[slot];\n' +
+    '  // CSS draws the road with cover/center. Project feet through the same\n' +
+    '  // 9:16 image plane, so changing viewport aspect cannot lift them off it.\n' +
+    '  const roadHeight = Math.max(h, w * 16 / 9);\n' +
+    '  const plaza = {\n' +
+    '    x: w * pose.x,\n' +
+    '    y: h / 2 + (pose.y - .5) * roadHeight,\n' +
+    '    bodyH: Math.min(118, w * .24, h * .19) * pose.s\n' +
+    '  };\n' +
+    '  return plaza;\n' +
+    '}\n' +
+    'function drawScene(time) {\n' +
+    '  const canvas = sceneState.canvas;\n' +
+    '  if (!canvas || !sceneState.active) return;\n' +
+    "  const ctx = canvas.getContext('2d'); if (!ctx) return;\n" +
+    '  const w = sceneState.width, h = sceneState.height, dpr = canvas.width / w;\n' +
+    '  ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, w, h);\n' +
+    "  ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';\n" +
+    '  const preparing = Boolean(sceneState.draft);\n' +
+    '  const enemies = preparing ? preparationEnemies() : [];\n' +
+    '  const picks = preparing ? [...sceneState.draft, ...enemies] : savedSceneSquad();\n' +
+    '  const rowCounts = { front: 0, back: 0, enemyfront: 0, enemyback: 0 };\n' +
+    '  picks.map(pick => {\n' +
+    "    const key = (pick.enemy ? 'enemy' : '') + pick.row;\n" +
+    '    const slot = Number(pick.slot);\n' +
+    '    const rowIndex = preparing && Number.isInteger(slot) ? slot % 3 : rowCounts[key]++;\n' +
+    '    return { ...pick, rowIndex };\n' +
+    '  })\n' +
+    '    .sort((a, b) => preparing\n' +
+    "      ? (a.row === 'back' ? 0 : 1) - (b.row === 'back' ? 0 : 1)\n" +
+    '      : (homePartyPose(a, w, h).y - homePartyPose(b, w, h).y) || (homePartyPose(a, w, h).x - homePartyPose(b, w, h).x))\n' +
+    '    .forEach(pick => {\n' +
+    '      let x, y, bodyH;\n' +
+    '      if (preparing) {\n' +
+    "        x = w * (pick.enemy ? (pick.row === 'front' ? .65 : .88) : (pick.row === 'front' ? .35 : .12));\n" +
+    '        y = h * (.38 + .27 * pick.rowIndex);\n' +
+    '        bodyH = Math.min(w * .23, h * .28);\n' +
+    '      } else {\n' +
+    '        const plaza = homePartyPose(pick, w, h);\n' +
+    '        x = plaza.x; y = plaza.y; bodyH = plaza.bodyH;\n' +
+    '      }\n' +
+    '      if (preparing && !pick.enemy && preparationDrag?.heroId === pick.id && preparationDrag.moved) {\n' +
+    '        x += preparationDrag.dx || 0; y += preparationDrag.dy || 0;\n' +
+    '      }\n' +
+    "      ctx.fillStyle = 'rgba(15,30,23,.24)'; ctx.beginPath(); ctx.ellipse(x, y, bodyH * .31, bodyH * .075, 0, 0, Math.PI * 2); ctx.fill();\n" +
+    '      const spec = specForAfk(pick);\n' +
+    '      const enemyArt = pick.enemy && !spec ? preparationEnemyArt(pick, enemies) : null;\n' +
+    "      const image = imageForScene(spec?.src || enemyArt?.src || portraitSrc(pick.id, 'master'));\n" +
+    '      if (!image.complete || image.naturalWidth < 1) return;\n' +
+    '      ctx.save();\n' +
+    '      if (pick.enemy && (!enemyArt || enemyArt.mirror)) { ctx.translate(2 * x, 0); ctx.scale(-1, 1); }\n' +
+    '      if (spec) {\n' +
+    '        const frame = frameAt(spec, time), scale = bodyH / spec.body;\n' +
+    '        const sx = frame % spec.cols * (spec.strideW || spec.cellW) + (spec.pad || 0);\n' +
+    '        const sy = Math.floor(frame / spec.cols) * (spec.strideH || spec.cellH) + (spec.pad || 0);\n' +
+    '        ctx.drawImage(image, sx, sy, spec.cellW, spec.cellH, x - spec.pivot * scale, y - spec.foot * scale, spec.cellW * scale, spec.cellH * scale);\n' +
+    '      } else if (enemyArt) {\n' +
+    '        const cw = image.naturalWidth / enemyArt.cols, ch = image.naturalHeight / enemyArt.rows;\n' +
+    '   '... 29377 more characters
+  
+      at TestContext.<anonymous> (file:///workspace/luc-than/tests/campaign-map.test.mjs:27:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: `/* Presentation owner for Chinh chiến. Rewards and battles keep their domain owners. */\nconst sceneState = { root: null, canvas: null, active: false, scope: null, resizeObserver: null,\n  raf: 0, rafRelease: null, timer: 0, timerRelease: null, booted: false,\n  lastFrame: 0, width: 390, height: 300, draft: null, slot: 0, checkpoint: null, launching: false,\n  claiming: false, activationGeneration: 0 };\nconst sceneImages = new Map();\nconst sceneDiagnosticsEnabled = (() => {\n  try {\n    return typeof window !== 'undefined' && new URLSearchParams(window.location?.search || '').get('qaL04b') === 'scene-lifetime';\n  } catch (_) {\n    return false;\n  }\n})();\nconst reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');\nlet preparationDrag = null, suppressSlotClick = false;\nfunction clearPreparationDrag() {\n  const drag = preparationDrag;\n  preparationDrag = null;\n  // Release after clearing the owner: capture loss can fire during cleanup.\n  if (drag?.button.hasPointerCapture(drag.pointer)) drag.button.releasePointerCapture(drag.pointer);\n  if (drag?.moved && reducedMotion.matches) drawScene(performance.now());\n}\nfunction preparationEnemies() {\n  const encounter = DATA.encounters[sceneState.checkpoint?.battleId];\n  if (!Array.isArray(encounter)) return [];\n  const seen = new Set();\n  const enemies = encounter.map(enemy => ({ ...enemy, stats: { ...enemy.stats },\n    id: enemy.sourceHeroId || enemy.heroId || enemy.id, row: enemy.row || 'front',\n    archetype: inferArchetype(enemy), enemy: true })).filter(enemy => {\n      if (seen.has(enemy.id)) return false;\n      seen.add(enemy.id); return true;\n    }).slice(0, 6);\n  assignFormationSlots(enemies, 'foe');\n  return enemies.sort((a, b) => a.slot - b.slot);\n}\nfunction preparationEnemyPower() {\n  if (!Array.isArray(DATA.encounters[sceneState.checkpoint?.battleId])) return null;\n  const enemies = preparationEnemies();\n  if (!enemies.length || enemies.some(e => ['hp','atk','def','spd'].some(k => !Number.isFinite(e.stats[k])))) return null;\n  // Same displayed-score formula as heroPower, but only encounter-owned stats.\n  return enemies.reduce((sum, e) => sum + Math.round(e.stats.hp / 8 + e.stats.atk * 4 + e.stats.def * 3 + e.stats.spd * 2), 0);\n}\nfunction preparationEnemyArt(pick, enemies) {\n  // Match drawGeneratedHero's enemy idle row and duplicate-role slot fallback.\n  const poses = { guardian: '05', ranger: '06', healer: '07', striker: '08', duelist: '09', mystic: '10' };\n  const repeated = enemies.some(e => e.slot < pick.slot && e.archetype === pick.archetype);\n  if (!repeated && poses[pick.archetype]) return {\n    src: 'assets/battle-runtime/embedded-' + poses[pick.archetype] + '.webp',\n    cols: 4, rows: 2, column: 0, row: 1, mirror: true\n  };\n  return { src: 'assets/battle-runtime/embedded-04.webp', cols: 3, rows: 2,\n    column: pick.slot % 3, row: Math.floor(pick.slot / 3), mirror: false };\n}\nconst escapeScene = value => String(value ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));\nconst sceneNumber = value => new Intl.NumberFormat('vi-VN').format(Math.max(0, Number(value) || 0));\nconst sceneClock = value => { const s = Math.max(0, Math.floor(value)); return [Math.floor(s / 3600), Math.floor(s % 3600 / 60), s % 60].map(n => String(n).padStart(2, '0')).join(':'); };\nconst sceneRewards = [\n  ['gold', 'Vàng', 'assets/result-icons-art/gold-imagen.png'],\n  ['tinh', 'Tinh thông', 'assets/result-icons-art/mastery-imagen.png'],\n  ['hoat', 'Hoạt lực', 'assets/ui/menu-v3233/icons/resource-energy-imagen.png']\n];\nconst sceneDock = [['hub', 'hub', 'Thành Chính'], ['heroes', 'heroes', 'Tướng'], ['team', 'team', 'Trợ trận'], ['daily', 'daily', 'Lịch Luyện'], ['campaign', 'expedition', 'Chinh chiến']];\nconst spriteSpecs = {\n  ong_hang_pho: { src: 'assets/battle-runtime/embedded-12.png', frames: 48, cols: 8, cellW: 240, cellH: 135, ms: 120, pivot: 100, foot: 128, body: 124 },\n  luc_anh: { ...LUC_ANH_IDLE_1080, pivot: 240, foot: 427, body: 398 },\n  thay_mo: { src: 'assets/characters/thay-mo/idle-v3193-atlas.png', frames: 96, cols: 12, cellW: 235, cellH: 264, strideW: 241, strideH: 270, pad: 3, durations: AFK_THAY_MO_IDLE_DURATIONS, pivot: 117.5, foot: 260, body: 250 },\n  dinh_loi: { src: 'assets/characters/dinh-loi/idle-atlas.png', frames: 64, cols: 8, cellW: 480, cellH: 270, ms: 62.5, pivot: 265, foot: 258, body: 233 }\n};\n\nfunction currentCheckpoint() { return campaignCheckpoint(P, DATA.chapters, chapterBattleSequence); }\nfunction ownedSceneHeroIds() { return OFFICIAL_ROSTER_12_IDS.filter(id => DATA.heroes[id] && P.heroes[id]?.owned); }\nfunction savedSceneSquad() {\n  const picks = normalizeSquad(P.squad, P, false).map(pick => ({ ...pick }));\n  // Combat copies may fill missing slots; keep authored holes when slot is unique.\n  if (!picks.every(pick => Number.isInteger(Number(pick.slot)))) assignFormationSlots(picks, 'ally');\n  return compactCampaignBoard(expandCampaignBoard(picks));\n}\nfunction scenePower(squad) { return squad.reduce((sum, pick) => sum + heroPower(pick.id), 0); }\nfunction setSceneText(selector, value) { const el = sceneState.root?.querySelector(selector); if (el && el.textContent !== String(value)) el.textContent = value; }\nfunction imageForScene(src) {\n  let image = sceneImages.get(src);\n  if (!image) {\n    image = new Image(); image.decoding = 'async';\n    const onload = () => { if (sceneState.active && reducedMotion.matches) drawScene(0); };\n    image.onload = onload;\n    image.src = src; sceneImages.set(src, image);\n    sceneState.scope?.add(() => {\n      if (image.onload === onload) image.onload = null;\n      if (!image.complete) image.src = '';\n      if (sceneImages.get(src) === image) sceneImages.delete(src);\n    });\n  }\n  return image;\n}\nfunction frameAt(spec, time) {\n  if (reducedMotion.matches) return 0;\n  if (spec.durations) {\n    let elapsed = time % spec.durations.reduce((sum, ms) => sum + ms, 0);\n    for (let frame = 0; frame < spec.durations.length; frame++) {\n      if (elapsed < spec.durations[frame]) return frame;\n      elapsed -= spec.durations[frame];\n    }\n    return 0;\n  }\n  return Math.floor(time / spec.ms) % spec.frames;\n}\nfunction specForAfk(pick) {\n  if (sceneState.draft) return spriteSpecs[pick.id];\n  const run = window.HonVietCampaignRunSpecs?.[pick.id];\n  if (run && run.src && Number(run.frames) > 0 && run.cellW && run.cellH && run.pivot && run.foot && run.body) return run;\n  return spriteSpecs[pick.id];\n}\nconst HOME_SLOT = [\n  { x: 0.28, y: 0.69, s: 1.00 },\n  { x: 0.52, y: 0.665, s: 1.00 },\n  { x: 0.76, y: 0.64, s: 1.00 },\n  { x: 0.20, y: 0.585, s: 0.88 },\n  { x: 0.44, y: 0.56, s: 0.88 },\n  { x: 0.68, y: 0.535, s: 0.88 }\n];\nfunction homePartyPose(pick, w, h) {\n  const slot = Number.isInteger(Number(pick.slot)) ? Math.max(0, Math.min(5, Number(pick.slot))) : (pick.row === 'back' ? 3 : 0);\n  const pose = HOME_SLOT[slot];\n  // CSS draws the road with cover/center. Project feet through the same\n  // 9:16 image plane, so changing viewport aspect cannot lift them off it.\n  const roadHeight = Math.max(h, w * 16 / 9);\n  const plaza = {\n    x: w * pose.x,\n    y: h / 2 + (pose.y - .5) * roadHeight,\n    bodyH: Math.min(118, w * .24, h * .19) * pose.s\n  };\n  return plaza;\n}\nfunction drawScene(time) {\n  const canvas = sceneState.canvas;\n  if (!canvas || !sceneState.active) return;\n  const ctx = canvas.getContext('2d'); if (!ctx) return;\n  const w = sceneState.width, h = sceneState.height, dpr = canvas.width / w;\n  ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, w, h);\n  ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';\n  const preparing = Boolean(sceneState.draft);\n  const enemies = preparing ? preparationEnemies() : [];\n  const picks = preparing ? [...sceneState.draft, ...enemies] : savedSceneSquad();\n  const rowCounts = { front: 0, back: 0, enemyfront: 0, enemyback: 0 };\n  picks.map(pick => {\n    const key = (pick.enemy ? 'enemy' : '') + pick.row;\n    const slot = Number(pick.slot);\n    const rowIndex = preparing && Number.isInteger(slot) ? slot % 3 : rowCounts[key]++;\n    return { ...pick, rowIndex };\n  })\n    .sort((a, b) => preparing\n      ? (a.row === 'back' ? 0 : 1) - (b.row === 'back' ? 0 : 1)\n      : (homePartyPose(a, w, h).y - homePartyPose(b, w, h).y) || (homePartyPose(a, w, h).x - homePartyPose(b, w, h).x))\n    .forEach(pick => {\n      let x, y, bodyH;\n      if (preparing) {\n        x = w * (pick.enemy ? (pick.row === 'front' ? .65 : .88) : (pick.row === 'front' ? .35 : .12));\n        y = h * (.38 + .27 * pick.rowIndex);\n        bodyH = Math.min(w * .23, h * .28);\n      } else {\n        const plaza = homePartyPose(pick, w, h);\n        x = plaza.x; y = plaza.y; bodyH = plaza.bodyH;\n      }\n      if (preparing && !pick.enemy && preparationDrag?.heroId === pick.id && preparationDrag.moved) {\n        x += preparationDrag.dx || 0; y += preparationDrag.dy || 0;\n      }\n      ctx.fillStyle = 'rgba(15,30,23,.24)'; ctx.beginPath(); ctx.ellipse(x, y, bodyH * .31, bodyH * .075, 0, 0, Math.PI * 2); ctx.fill();\n      const spec = specForAfk(pick);\n      const enemyArt = pick.enemy && !spec ? preparationEnemyArt(pick, enemies) : null;\n      const image = imageForScene(spec?.src || enemyArt?.src || portraitSrc(pick.id, 'master'));\n      if (!image.complete || image.naturalWidth < 1) return;\n      ctx.save();\n      if (pick.enemy && (!enemyArt || enemyArt.mirror)) { ctx.translate(2 * x, 0); ctx.scale(-1, 1); }\n      if (spec) {\n        const frame = frameAt(spec, time), scale = bodyH / spec.body;\n        const sx = frame % spec.cols * (spec.strideW || spec.cellW) + (spec.pad || 0);\n        const sy = Math.floor(frame / spec.cols) * (spec.strideH || spec.cellH) + (spec.pad || 0);\n        ctx.drawImage(image, sx, sy, spec.cellW, spec.cellH, x - spec.pivot * scale, y - spec.foot * scale, spec.cellW * scale, spec.cellH * scale);\n      } else if (enemyArt) {\n        const cw = image.naturalWidth / enemyArt.cols, ch = image.naturalHeight / enemyArt.rows;\n   `... 29377 more characters,
+    expected: /data-scene-action="open-map"/,
+    operator: 'match',
+    diff: 'simple'
+  }

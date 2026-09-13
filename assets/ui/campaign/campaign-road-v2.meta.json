@@ -1,0 +1,10 @@
+{
+  "ticket": "TKT-0114",
+  "date": "2026-09-13",
+  "source": "built-in image generation",
+  "file": "campaign-road-v2.webp",
+  "prompt": "Use case: stylized-concept. Production background asset for Lục Thần premium 2.5D chibi fantasy mobile RPG AFK campaign. Create ONE portrait 9:16 environment painting, no UI. Bright jade mountain village gateway, ancient Vietnamese inspired wooden curved tiled roof pavilions at distant upper right, limestone peaks and mist at upper left, peach blossom and bamboo framing only the extreme edges, warm morning light. CRITICAL GAMEPLAY COMPOSITION: elevated three-quarter camera looking slightly downward at a BROAD LEVEL stone-and-earth travel road crossing the entire canvas LEFT TO RIGHT with a gentle diagonal rising toward the right, NOT a road disappearing toward a central vanishing point. Huge unobstructed walkable ground across x=8% to 92%, y=43% to 76% of the image. Road depth substantial enough to place two staggered rows of three small characters. The open road is the main subject, large worn stones at consistent scale, soft believable contact-lighting. Architecture MUST stay above y=38%, never beneath character placement. Top 15% low-detail misty mountain sky suitable for live heading. Bottom 15% understated ground with small edge grasses suitable for live controls. Rich volumetric stylized illustration, near-3D depth, handcrafted premium game art, detailed materials with calm clear center, warm ivory and moss jade greens, antique gold highlights. No people, no characters, no creatures, no chests, no treasure, no hanging chains, no cart, no platforms, no stairs or railings in road, no text, no letters, no buttons, no interface, no watermark. Full bleed vertical background.",
+  "composition": "9:16; broad left-to-right road; feet projected through centered cover plane; no embedded chest/text/characters",
+  "optimization": "WebP quality 90; original generated PNG retained in session; no hero art changed",
+  "run": "WAITING_ASSET"
+}

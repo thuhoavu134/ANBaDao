@@ -1,0 +1,19 @@
+{
+  "ticket": "TKT-0114",
+  "date": "2026-09-13",
+  "source": "built-in image generation",
+  "file": "campaign-map-v3.webp",
+  "prompt": "Production game environment map for Lục Thần 2.5D chibi RPG. ONE tall portrait 9:16 full-bleed image. Orthographic bird's-eye three-quarter top-down camera, 60 degrees downward, NO horizon NO sky NO distant landscape panorama. View an entire compact ancient mountain settlement travel map from above. Clearly connected broad stone walking lanes winding around clusters of Vietnamese-inspired curved tiled roofs, mossy retaining walls, bamboo gardens, red lantern posts, small streams and stone bridges. Premium stylized near-3D painted mobile RPG terrain, strong volumetric props, charming miniature scale, warm jade green/ochre/terracotta, bright soft daylight, readable calm stone ground. Important route geometry: a broad continuous road enters lower left at (10%,88%), travels to (30%,74%), then a broad diagonal lane crosses the CENTER from (18%,68%) through (50%,56%) to (82%,44%), continues via a gentle turn to (73%,23%), finally a village gate near (48%,12%). The central diagonal lane must be at least 23% of total image HEIGHT wide, completely empty flat walkable stone, with NO roofs, railing, rocks or objects intruding between x15%-85% and its walkable diagonal strip; this is where a six-character party will be overlaid. NOT a large plaza: distinct winding road with readable edges and buildings/gardens on both sides. Secondary small connecting paths at top and bottom make it read as an explorable route map. Roads all physically connected and level through center, no floating islands. Similar scale across entire map, only slight foreshortening. Crisp material detail, ambient occlusion around buildings. No people, characters, creatures, treasure chests, interface, minimap frame, lettering, symbols, labels or watermark. This exact image will also be reduced into a minimap so route topology must be legible.",
+  "map": {
+    "aspect": [
+      9,
+      16
+    ],
+    "center": [
+      0.45,
+      0.515
+    ],
+    "zoomMax": 1.8,
+    "description": "Single world image for scene, minimap and expanded map. Static AFK presentation until Run supplied. Not chapter progress."
+  }
+}

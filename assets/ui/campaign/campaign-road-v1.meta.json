@@ -1,0 +1,8 @@
+{
+  "file": "campaign-road-v1.jpg",
+  "source": "imagine",
+  "date": "2026-09-13",
+  "ticket": "TKT-0114",
+  "style": "portrait 9:16 empty cobblestone road through center, no people, no UI, no text",
+  "waiting_asset": "Run animation per hero ID on window.HonVietCampaignRunSpecs"
+}

@@ -1,6 +1,6 @@
 #hvCampaignScene{
   position:fixed;inset:0;z-index:100000;
-  background:#d7eef5 url('assets/ui/campaign/campaign-hall.jpg') center top/cover no-repeat!important;
+  background:#d7dfc8!important;
   color:#2d251f!important;
 }
 #hvCampaignScene.is-open{display:flex;flex-direction:column}
@@ -15,7 +15,9 @@
   background:transparent!important;
 }
 #hvCampaignScene.hv-campaign-3d .cs-landscape{
-  background:linear-gradient(0deg,rgba(247,237,216,.28) 0%,transparent 16%,transparent 78%,rgba(228,236,226,.2) 100%)!important;
+  background:#c9d8bd url('assets/ui/campaign/campaign-map-v3.webp') var(--cs-map-position,center)/var(--cs-map-size,cover) no-repeat!important;
+  min-height:52dvh;
+  flex:1 1 auto;
 }
 #hvCampaignScene.hv-campaign-3d .cs-content{
   background:transparent!important;

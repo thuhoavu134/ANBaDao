@@ -20,7 +20,7 @@ test('L45-T2: #hvCampaignScene home is a 3D overlay with overflow auto', () => {
   const css = read('src/ui/campaign-3d.css');
   assert.match(css, /#hvCampaignScene\{[^}]*position:fixed;[^}]*inset:0/);
   assert.match(css, /#hvCampaignScene\.is-open\{display:flex/);
-  assert.match(css, /assets\/ui\/campaign\/campaign-hall\.jpg/);
+  assert.match(css, /assets\/ui\/campaign\/campaign-map-v3\.webp/);
   assert.doesNotMatch(css, /menu-v3233/);
   assert.doesNotMatch(css, /\.cs-prepare/);
 });
@@ -46,9 +46,9 @@ test('L45-T4: stub lane loads runtime and build-static keeps the reserved import
 });
 
 test('L45-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse', () => {
-  const hall = join(root, 'assets/ui/campaign/campaign-hall.jpg');
+  const hall = join(root, 'assets/ui/campaign/campaign-map-v3.webp');
   assert.equal(existsSync(hall), true);
-  assert.ok(readFileSync(hall).length > 50000, 'hall jpg must be a real painted background');
+  assert.ok(readFileSync(hall).length > 50000, 'road webp must be a real painted background');
   const css = read('src/ui/campaign-3d.css');
   assert.doesNotMatch(css, /menu-v3233/);
   assert.doesNotMatch(css, /mong-lo-background-v1/);

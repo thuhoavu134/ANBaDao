@@ -1,0 +1,50 @@
+✖ AC12 farm spawns, takes visual hits, dissolves, rests and rotates through actual squad (2.818777ms)
+✖ AC12 farm is presentation-only and shares scene lifetime, no reward or combat owner (9.41129ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 297.265687
+
+✖ failing tests:
+
+test at tests/campaign-farm.test.mjs:7:1
+✖ AC12 farm spawns, takes visual hits, dissolves, rests and rotates through actual squad (2.818777ms)
+  AssertionError [ERR_ASSERTION]: farm presentation sampler exists
+      at api (file:///workspace/luc-than/tests/campaign-farm.test.mjs:6:82)
+      at TestContext.<anonymous> (file:///workspace/luc-than/tests/campaign-farm.test.mjs:8:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/campaign-farm.test.mjs:20:1
+✖ AC12 farm is presentation-only and shares scene lifetime, no reward or combat owner (9.41129ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(start>=0)
+  
+      at TestContext.<anonymous> (file:///workspace/luc-than/tests/campaign-farm.test.mjs:21:68)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
