@@ -1,11 +1,11 @@
 ---
 id: TKT-0125
 title: Hoa đăng sống · mở rương bung sáng · chữ banner đỏ
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 created: 2026-09-13T11:56:00.000Z
-updated: 2026-09-13T12:02:00.000Z
+updated: 2026-09-13T12:08:16.000Z
 acceptance_ids: ['L125-T1', 'L125-T2', 'L125-T3', 'L125-T4', 'L125-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths:
