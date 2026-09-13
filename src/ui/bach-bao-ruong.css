@@ -29,8 +29,34 @@
 .hv-bbr-stack.n3 img:nth-child(1){left:0;top:16%;z-index:1}
 .hv-bbr-stack.n3 img:nth-child(2){left:10%;top:8%;z-index:2}
 .hv-bbr-stack.n3 img:nth-child(3){left:20%;top:0;z-index:3}
-.hv-bbr-hub{grid-column:2/7;grid-row:2/6;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 20%,#fffdf6,#f3e4c4);border:1px solid #d7b36a;border-radius:10px;padding:6px;min-height:0}
-.hv-bbr-hub-chest{width:48px;height:48px;object-fit:contain;background:transparent;border-radius:8px}
+.hv-bbr-hub{
+  grid-column:2/7;grid-row:2/6;position:relative;overflow:hidden;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:8px 6px 6px;min-height:0;border-radius:10px;
+  background:
+    radial-gradient(circle at 50% 28%,#fffdf8 0 30%,#f3e4c4 68%,#e6d09a 100%);
+  border:1px solid #d7b36a;
+  box-shadow:inset 0 0 0 5px #f7ead0,inset 0 0 0 6px rgba(192,144,40,.4)
+}
+.hv-bbr-hub-mark{
+  position:absolute;inset:4% 6% 26%;pointer-events:none;z-index:0;
+  background:url('assets/ui/festival/bbr/supreme.png') center 8%/72% no-repeat;
+  opacity:.2;filter:saturate(.85)
+}
+.hv-bbr-hub-mark:after{
+  content:"寶";position:absolute;left:50%;top:58%;transform:translate(-50%,-50%);
+  font-size:58px;font-weight:900;color:#c09028;opacity:.18;letter-spacing:.12em;line-height:1
+}
+.hv-bbr-hub:before{
+  content:"";position:absolute;inset:7px;pointer-events:none;z-index:0;border-radius:8px;
+  border:1px dashed rgba(169,120,40,.4);
+  background:
+    radial-gradient(circle at 11% 12%,transparent 58%,rgba(192,144,40,.28) 59% 64%,transparent 65%),
+    radial-gradient(circle at 89% 12%,transparent 58%,rgba(192,144,40,.28) 59% 64%,transparent 65%),
+    radial-gradient(circle at 11% 88%,transparent 58%,rgba(192,144,40,.28) 59% 64%,transparent 65%),
+    radial-gradient(circle at 89% 88%,transparent 58%,rgba(192,144,40,.28) 59% 64%,transparent 65%)
+}
+.hv-bbr-hub-chest{width:72px;height:72px;object-fit:contain;background:transparent;border-radius:8px;position:relative;z-index:1;filter:drop-shadow(0 4px 8px rgba(80,40,10,.28))}
 .hv-bbr-side{flex:1 1 150px;background:#5a3a22;color:#fff4d4;border-radius:10px;padding:10px}
 .hv-bbr-tabs,.hv-bbr-mid,.hv-bbr-sub,.hv-bbr-bets{display:flex;gap:6px;margin:6px 0}
 .hv-bbr-tabs button,.hv-bbr-mid button,.hv-bbr-sub button{flex:1;min-height:40px;font-weight:800}
@@ -123,7 +149,7 @@
 }
 #hvBbrDesk .hv-bbr-tabs button.is-on,#hvBbrDesk .hv-bbr-bet.is-on{background:linear-gradient(180deg,#e2b45a,#c09028);color:#2a1608}
 #hvBbrDesk .hv-bbr-now{margin:4px 0;font-size:12px;color:#f3e4c4;line-height:1.35}
-.hv-bbr-hub .hv-bbr-stars{margin:4px 0 0;padding:4px 6px;list-style:none;width:100%;background:#fff8e8cc;border-radius:6px}
+.hv-bbr-hub .hv-bbr-stars{margin:4px 0 0;padding:4px 6px;list-style:none;width:100%;background:#fff8e8ee;border-radius:6px;position:relative;z-index:1}
 .hv-bbr-hub .hv-bbr-star{font-size:10px;line-height:1.4;color:#6a4a28;text-align:center}
 .hv-bbr-hub .hv-bbr-star.is-on{background:#e2b45a;color:#2a1608;font-weight:800;border-radius:4px}
 img.hv-so-ic{width:16px;height:16px;object-fit:contain;background:transparent;border-radius:50%;vertical-align:-3px}

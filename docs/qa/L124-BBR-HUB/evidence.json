@@ -1,0 +1,43 @@
+{
+  "ticket": "TKT-0124",
+  "chrome": [
+    {
+      "label": "390x844",
+      "ok": true,
+      "tile": {
+        "ok": true,
+        "labels": [
+          "Hoa Đăng",
+          "Bách Bảo Rương",
+          "Rương Báu"
+        ]
+      },
+      "hub": {
+        "mark": true,
+        "hoat": true,
+        "chestW": 72
+      },
+      "appErrors": []
+    },
+    {
+      "label": "768x1024",
+      "ok": true,
+      "tile": {
+        "ok": true,
+        "labels": [
+          "Hoa Đăng",
+          "Bách Bảo Rương",
+          "Rương Báu"
+        ]
+      },
+      "hub": {
+        "mark": true,
+        "hoat": true,
+        "chestW": 72
+      },
+      "appErrors": []
+    }
+  ],
+  "safari": "NOT_RUN",
+  "ts": "2026-09-13T11:40:08.416Z"
+}

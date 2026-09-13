@@ -68,4 +68,4 @@
   display:flex;flex-direction:column;align-items:center;cursor:pointer;
 }
 #hvFestCity .hv-ftile img{width:100%;aspect-ratio:1;object-fit:contain;border-radius:10px;display:block;background:#f7ead2}
-#hvFestCity .hv-ftile b{margin-top:6px;font-size:12px;color:#5a3a18;text-align:center}
+#hvFestCity .hv-ftile b{margin-top:6px;font-size:11px;line-height:1.25;color:#5a3a18;text-align:center;min-height:2.4em}

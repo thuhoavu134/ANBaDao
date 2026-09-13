@@ -35,7 +35,7 @@
     gold: 'assets/items/materials/gold.png',
     gems: 'assets/ui/festival/bbr/gems.png',
     tinh: 'assets/items/materials/tinh-luc.png',
-    hoat: 'assets/ui/festival/bbr/hoat.png',
+    hoat: 'assets/items/materials/hoat-luc.png',
     sh_ss: 'assets/ui/festival/bbr/sh_ss.png',
     sh_ssr: 'assets/ui/festival/bbr/sh_ssr.png',
     chest: 'assets/ui/festival/bbr/chest.png',
@@ -479,6 +479,7 @@
             </button>`;
           }).join('')}
           <div class="hv-bbr-hub">
+            <i class="hv-bbr-hub-mark" aria-hidden="true"></i>
             <img class="hv-bbr-hub-chest" src="assets/ui/festival/bbr/supreme.png" alt="">
             <ul class="hv-bbr-stars">${starTable(type, bet, pend && pend.stars)}</ul>
           </div>

@@ -1,3 +1,8 @@
+## 13/09 — TKT-0124: Hoạt lực cùng PNG, ô Bách Bảo Rương, hoa văn tâm vành
+
+Owner: túi Hoạt lực ≠ vành; ô sự kiện thiếu chữ Rương; tâm vành trống. ART.hoat = `materials/hoat-luc.png` (bình đỏ). Tile `Bách Bảo Rương`. Tâm: khung son, rương chìm, chữ 寶 mờ. Cược/pay không đổi.
+RED 3 fail → GREEN 4/4 L124 + npm test 890. Chrome 390×844 + 768×1024 L124-P1 PASS. Safari NOT_RUN. REVIEW, chờ owner gõ `live`.
+
 ## 13/09 — TKT-0123: vành Bách Bảo icon gần full ô
 
 Owner screenshot: icon bé trong ô xám. Trim padding PNG, scale LANCZOS đều tỉ lệ 92% canvas, CSS n1 100% / n2 88% / n3 80%, stack absolute fill, `contain` không crop. Tinh vành = bình túi. Không đổi cược/pay.

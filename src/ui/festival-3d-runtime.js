@@ -11,7 +11,7 @@
 
   const TILES = [
     { id: 'lamp', name: 'Hoa Đăng', fact: 'lantern', img: 'assets/ui/festival/tiles/hoa-dang.jpg' },
-    { id: 'wheel', name: 'Bách Bảo', fact: 'wheel', img: 'assets/ui/festival/tiles/bach-bao.jpg' },
+    { id: 'wheel', name: 'Bách Bảo Rương', fact: 'wheel', img: 'assets/ui/festival/tiles/bach-bao.jpg' },
     { id: 'chest', name: 'Rương Báu', fact: 'chest', img: 'assets/ui/festival/tiles/ruong.jpg' }
   ];
 
