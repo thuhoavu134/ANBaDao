@@ -1,0 +1,58 @@
+[
+  {
+    "label": "390x844",
+    "ok": true,
+    "info": {
+      "hidden": false,
+      "open": true,
+      "shopInfo": false,
+      "title": "Sách Tinh Thông",
+      "stars": "★★★",
+      "qty": "Số lượng sở hữu: 3",
+      "how": "Cách nhận",
+      "src": [
+        "Bách Bảo Rương",
+        "Chinh chiến"
+      ],
+      "close": true,
+      "icon": "assets/result-victory-v6/tinh-thong.png",
+      "tipH": 844,
+      "cardH": 442,
+      "cardW": 340,
+      "headTop": 0,
+      "pad": "0px",
+      "margin": "0px",
+      "height": "441.531px",
+      "maxH": "540px"
+    },
+    "appErrors": []
+  },
+  {
+    "label": "768x1024",
+    "ok": true,
+    "info": {
+      "hidden": false,
+      "open": true,
+      "shopInfo": false,
+      "title": "Sách Tinh Thông",
+      "stars": "★★★",
+      "qty": "Số lượng sở hữu: 3",
+      "how": "Cách nhận",
+      "src": [
+        "Bách Bảo Rương",
+        "Chinh chiến"
+      ],
+      "close": true,
+      "icon": "assets/result-victory-v6/tinh-thong.png",
+      "tipH": 1024,
+      "cardH": 442,
+      "cardW": 340,
+      "headTop": 0,
+      "pad": "0px",
+      "margin": "0px",
+      "height": "441.531px",
+      "maxH": "540px"
+    },
+    "appErrors": []
+  }
+]

@@ -1,3 +1,7 @@
+## 13/09 — TKT-0120: CSS popup đồ ôm nội dung
+
+Owner screenshot Sách Tinh Thông: thẻ kem cao, khoảng trống giữa header và Cách nhận. Cắt `id="hvShopInfo"` (CSS Bách Bảo đệm padding), thẻ `height:auto` / `max-height:min(72dvh,540px)`, một mặt icon+sao+số lượng+Cách nhận+×. Chrome 390×844 PASS. Safari NOT_RUN. Chờ live.
+
 ## 13/09 — TKT-0119: icon Lễ Hội đúng hoạt động + popup Shop điểm
 
 Owner gửi screenshot play: 3 ô Lễ Hội đang nhà isometric sai việc; Shop điểm Bách Bảo chỉ vài dòng chữ. Đổi tile Hoa Đăng / Bách Bảo / Rương Báu thành icon thả đèn, vòng quay, rương thật. Shop điểm mở overlay full-hall: ảnh chủ shop, ruy băng vàng, lưới 2 cột thẻ kem có icon + SL + tên + giá điểm (giá BBR_SHOP đóng băng 100/250/400/800/1500/3000). Panel quay giữ nút Quay. Không đổi cược/pity/công thức. Không 72 tướng.

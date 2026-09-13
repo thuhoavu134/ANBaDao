@@ -81,6 +81,7 @@ Board GitHub không có. File `tickets/TKT-00xx/ticket.md` là nguồn sự th�
 | TKT-0112 | S | Bách Bảo cộng cục + cắt Mộng | LIVE (#88) |
 | TKT-0113 | S | Vành Bách Bảo + chợ 12 tướng | LIVE (#89) |
 | TKT-0119 | — | Icon Lễ Hội + popup Shop điểm | LIVE (#113) |
+| TKT-0120 | — | CSS popup đồ ôm nội dung | REVIEW |
 
 Cách tạo gift code (owner): [docs/GIFT-CODES.md](../docs/GIFT-CODES.md)
 

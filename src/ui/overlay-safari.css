@@ -23,3 +23,11 @@ body.hv-overlay-open [id^="hv"].is-open{
 @supports (-webkit-touch-callout:none){
   html,body{overflow-x:clip}
 }
+body.hv-overlay-open #hvItemTip:not([hidden]){
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  flex-direction:column!important;
+}
+body.hv-overlay-open #hvItemTip .hv-tip-card{
+  height:auto!important;min-height:0!important;max-height:min(72dvh,540px)!important;
+  transform:none!important;
+}

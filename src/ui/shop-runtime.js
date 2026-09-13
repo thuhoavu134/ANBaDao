@@ -151,11 +151,16 @@
   };
 
   let tipInfo = null;
-  let tipView = 'item';
+
+  function hideTip() {
+    const tip = document.getElementById('hvItemTip');
+    if (!tip) return;
+    tip.hidden = true;
+    tip.classList.remove('is-open');
+  }
 
   function goScreen(name) {
-    const tip = document.getElementById('hvItemTip');
-    if (tip) tip.hidden = true;
+    hideTip();
     if (typeof navTo === 'function') navTo(name);
     else if (typeof showScreen === 'function') showScreen(name);
   }
@@ -165,33 +170,25 @@
     if (!tip || !tipInfo) return;
     const info = tipInfo;
     const how = (info.how || []).map(id => SRC[id]).filter(Boolean);
-    if (tipView === 'how') {
-      tip.innerHTML = `<div class="hv-tip-card" id="hvShopInfo">
-        <div class="hv-tip-head t-${info.tone || 'gold'}">
-          ${info.icon ? `<img src="${info.icon}" alt="">` : ''}
-          <b>${info.title || ''}</b>
-          <small>Số lượng sở hữu: ${info.qty != null ? info.qty : '—'}</small>
-        </div>
-        <div class="hv-tip-body">
-          <p>${info.use || info.what || ''}</p>
-          ${how.map(s => `<div class="hv-tip-src"><span>${s.name}</span><button type="button" data-tip-go="${s.go}">Đi</button></div>`).join('') || '<p>Chưa có nguồn nhận.</p>'}
-        </div>
-        <p class="hv-tip-hint">Nhấn vị trí bất kỳ để đóng</p>
-      </div>`;
-      return;
-    }
-    tip.innerHTML = `<div class="hv-tip-card" id="hvShopInfo">
+    const icon = info.icon
+      ? `<img src="${info.icon}" alt="">`
+      : `<span class="hv-tip-ic">${info.ic || '◆'}</span>`;
+    const stars = Math.max(0, Math.min(5, Number(info.stars) || 0));
+    const starHtml = stars ? `<span class="hv-tip-stars">${'★'.repeat(stars)}</span>` : '';
+    tip.innerHTML = `<div class="hv-tip-card">
+      <button type="button" class="hv-tip-x" data-tip-close aria-label="Đóng">×</button>
       <div class="hv-tip-head t-${info.tone || 'gold'}">
-        ${info.icon ? `<img src="${info.icon}" alt="">` : `<span class="hv-tip-ic">${info.ic || '◆'}</span>`}
+        ${icon}
         <b>${info.title || ''}</b>
+        ${starHtml}
         <small>Số lượng sở hữu: ${info.qty != null ? info.qty : '—'}</small>
-        <button type="button" class="hv-tip-how" data-tip-how>Cách nhận ⌕</button>
       </div>
       <div class="hv-tip-body">
         <p>${info.use || info.what || ''}</p>
         ${info.action ? `<button type="button" class="hv-tip-act" data-tip-act>${info.action}</button>` : ''}
+        <h4 class="hv-tip-how-title" data-tip-how>Cách nhận</h4>
+        ${how.map(s => `<div class="hv-tip-src"><span>${s.name}</span><button type="button" data-tip-go="${s.go}">Đi</button></div>`).join('') || '<p>Chưa có nguồn nhận.</p>'}
       </div>
-      <p class="hv-tip-hint">Nhấn vị trí bất kỳ để đóng</p>
     </div>`;
   }
 
@@ -203,11 +200,7 @@
       tip.setAttribute('role', 'dialog');
       document.body.append(tip);
       tip.addEventListener('click', ev => {
-        if (ev.target.closest('[data-tip-how]')) {
-          tipView = 'how';
-          paintTip();
-          return;
-        }
+        if (ev.target.closest('[data-tip-how]')) return;
         const go = ev.target.closest('[data-tip-go]');
         if (go) {
           goScreen(go.getAttribute('data-tip-go'));
@@ -215,19 +208,17 @@
         }
         if (ev.target.closest('[data-tip-act]')) {
           const k = tipInfo && tipInfo.buyKey;
-          tip.hidden = true;
+          hideTip();
           if (k && typeof buyShop === 'function') buyShop(k);
           else if (tipInfo && tipInfo.go) goScreen(tipInfo.go);
           return;
         }
-        if (ev.target === tip || ev.target.closest('[data-tip-close]')) {
-          tip.hidden = true;
-        }
+        if (ev.target === tip || ev.target.closest('[data-tip-close]')) hideTip();
       });
     }
     tipInfo = info || {};
-    tipView = 'item';
     tip.hidden = false;
+    tip.classList.add('is-open');
     paintTip();
   };
 

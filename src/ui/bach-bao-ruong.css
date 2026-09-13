@@ -127,8 +127,6 @@
 .hv-bbr-hub .hv-bbr-star{font-size:10px;line-height:1.4;color:#6a4a28;text-align:center}
 .hv-bbr-hub .hv-bbr-star.is-on{background:#e2b45a;color:#2a1608;font-weight:800;border-radius:4px}
 img.hv-so-ic{width:16px;height:16px;object-fit:contain;background:transparent;border-radius:50%;vertical-align:-3px}
-#hvShopInfo{margin:8px 10px 12px;padding:10px 12px;border-radius:12px;background:#fff8e8;box-shadow:0 0 0 1px #e2c48a;color:#3a2414;font-size:13px;line-height:1.45}
-#hvShopInfo b{display:block;margin-bottom:4px;color:#6a3a10}
 @media (max-width:430px){
   .hv-bbr-ring{grid-template-rows:repeat(6,minmax(44px,1fr))}
 }

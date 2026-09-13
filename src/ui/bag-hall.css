@@ -56,6 +56,10 @@ body.bag-hall-active .art-dock{z-index:96}
 body.bag-hall-active .hv-brandbar,body.bag-hall-active #resbar{display:none!important}
 #hvItemTip{
   position:fixed;inset:0;z-index:140;display:flex;align-items:center;justify-content:center;
-  background:rgba(8,6,4,.62);
+  flex-direction:column;background:rgba(8,6,4,.62);
 }
 #hvItemTip[hidden]{display:none!important}
+#hvItemTip .hv-tip-card{
+  flex:0 0 auto;align-self:center;height:auto;min-height:0;max-height:min(72dvh,540px);
+  margin:0;padding:0;
+}

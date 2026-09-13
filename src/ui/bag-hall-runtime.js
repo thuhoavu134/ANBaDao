@@ -25,6 +25,38 @@
 
   let tab = 'gear';
 
+  const BAG_KNOWN = {
+    mastery: {
+      title: 'Sách Tinh Thông',
+      icon: 'assets/result-victory-v6/tinh-thong.png',
+      stars: 3,
+      tone: 'gold',
+      how: ['fest', 'camp'],
+      what: 'Sách tăng Tinh Thông tướng.',
+      use: 'Dùng cho tướng để tăng Tinh Thông. Rơi từ Bách Bảo Rương và Chinh chiến.',
+      action: 'Dùng',
+      go: 'heroes'
+    },
+    exp: {
+      title: 'Sách EXP',
+      icon: 'assets/result-victory-v6/sach-exp.png',
+      stars: 3,
+      tone: 'gold',
+      how: ['fest', 'camp'],
+      what: 'Sách kinh nghiệm tướng.',
+      use: 'Dùng cho tướng để tăng EXP. Rơi từ Bách Bảo Rương và Chinh chiến.',
+      action: 'Dùng',
+      go: 'heroes'
+    }
+  };
+
+  function knownBag(id) {
+    const raw = String(id || '').normalize('NFC').toLowerCase();
+    if (/tinh\s*thông|tinh.?thong|mastery/.test(raw)) return BAG_KNOWN.mastery;
+    if (/sách\s*exp|sach.?exp/.test(raw)) return BAG_KNOWN.exp;
+    return null;
+  }
+
   function cell(cls, label, n, title, tip) {
     const i = tips.length;
     tips.push(tip || { title, what: title, use: '' });
@@ -95,10 +127,12 @@
       });
       const bag = P.bag || {};
       Object.keys(bag).forEach(id => {
-        if (bag[id]) html += cell('t-a', id.slice(-2), bag[id], id, {
+        if (!bag[id]) return;
+        const known = knownBag(id);
+        html += cell('t-a', known ? '📖' : id.slice(-2), bag[id], known ? known.title : id, Object.assign({
           title: id, ic: '◆', qty: bag[id], tone: 'gold', how: ['shop', 'mail', 'fest'],
           what: 'Đạo cụ trong túi.', use: 'Giữ trong túi. Dùng khi sự kiện hoặc rèn yêu cầu.'
-        });
+        }, known || {}, { qty: bag[id] }));
       });
     }
     grid.innerHTML = html;
