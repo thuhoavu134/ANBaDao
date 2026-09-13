@@ -1,0 +1,8 @@
+{
+  "created": "2026-09-13",
+  "source": "built-in image generation",
+  "prompt": "ONE isolated fantasy sword sprite for a premium near-3D chibi RPG UI button. Vertical sword pointing straight UP, grip down, perfectly centered and straight, full blade, guard, grip and pommel visible with generous transparent padding. Broad polished warm silver blade with a golden central ridge, ornate ancient Vietnamese bronze-gold crossguard, compact dark red wrapped grip and small red gem pommel. Strong readable silhouette at 70 pixels tall, sculpted painted volume, warm highlights, subtle dark edge definition. Symmetric front view, no perspective tilt. TRUE transparent RGBA background, no shadow outside sword, no platform, no circle badge, no second sword, no text, no decorative particles. Canvas portrait 1:2.",
+  "ticket": "TKT-0117",
+  "normalization": "RGBA alpha preserved; scaled to 256px high, original aspect ratio",
+  "usage": "Two independent CSS transform layers; no text baked into art"
+}
