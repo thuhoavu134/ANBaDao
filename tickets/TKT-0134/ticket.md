@@ -1,11 +1,11 @@
 ---
 id: TKT-0134
 title: Quay sáng đều · ô trúng mới loáng
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 created: 2026-09-13T17:21:00.000Z
-updated: 2026-09-13T17:24:00.000Z
+updated: 2026-09-13T17:26:00.000Z
 acceptance_ids: ['L134-T1', 'L134-T2', 'L134-T3', 'L134-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths:
@@ -35,4 +35,4 @@ Không đổi BETS 2/10/50, convertQty, loot, lastIdx. Không 72 tướng. Khôn
 
 RED 2 fail (còn bbrSweep) → GREEN 3/3 L134 + npm test 926 PASS.
 Chrome 390×844 L134-P1 PASS (spin anim none, hold bbrSheen). Safari NOT_RUN.
-Builder dừng REVIEW. Gõ **live** để squash-merge.
+LIVE #128 `ea4aac9`.
