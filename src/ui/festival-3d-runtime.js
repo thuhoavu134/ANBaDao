@@ -2,8 +2,10 @@
   if (typeof document === 'undefined' || !document.body) return;
 
   const hoist = () => {
-    const root = document.getElementById('hvFestivalRoot');
-    if (!root) return null;
+    const all = Array.from(document.querySelectorAll('#hvFestivalRoot'));
+    if (!all.length) return null;
+    const root = all.find(el => el.parentElement === document.body) || all[0];
+    all.forEach(el => { if (el !== root) el.remove(); });
     if (root.parentElement !== document.body) document.body.append(root);
     root.setAttribute('aria-label', 'Lễ Hội');
     return root;
@@ -37,14 +39,17 @@
         paintLamp(root);
       });
       root.addEventListener('click', ev => {
-        if (!root.classList.contains('is-tile-open')) return;
         if (!ev.target.closest('[data-fest-back]')) return;
         ev.preventDefault();
         ev.stopImmediatePropagation();
-        root.classList.remove('is-tile-open');
-        root.dataset.fcity = '';
-        prevFcity = '';
-        prevTileOpen = false;
+        if (root.classList.contains('is-tile-open')) {
+          root.classList.remove('is-tile-open');
+          root.dataset.fcity = '';
+          prevFcity = '';
+          prevTileOpen = false;
+          return;
+        }
+        if (typeof navTo === 'function') navTo('hub');
       }, true);
     }
     city.innerHTML = TILES.map(t =>
@@ -108,7 +113,7 @@
     fx.innerHTML = `
       <div class="hv-chest-fx-card">
         <div class="hv-chest-fx-stage">
-          <img class="hv-chest-fx-seq" alt="">
+          <video class="hv-chest-fx-seq" playsinline muted></video>
         </div>
         <div class="hv-chest-fx-loot" hidden>
           <span class="hv-chest-fx-frame"><img alt=""></span>
@@ -119,9 +124,9 @@
     document.body.append(fx);
     fx.addEventListener('click', ev => {
       if (!ev.target.closest('[data-chest-fx-done]') && ev.target !== fx) return;
-      const seq = fx.querySelector('.hv-chest-fx-seq');
+      const vid = fx.querySelector('video');
       const stage = fx.querySelector('.hv-chest-fx-stage');
-      if (seq) seq.removeAttribute('src');
+      if (vid) { vid.pause(); vid.removeAttribute('src'); vid.load(); }
       stage?.classList.remove('is-shake');
       fx.classList.remove('is-open');
     });
@@ -130,7 +135,7 @@
 
   function playChestFx(kind, result) {
     const fx = ensureFx();
-    const seq = fx.querySelector('.hv-chest-fx-seq');
+    const vid = fx.querySelector('video');
     const stage = fx.querySelector('.hv-chest-fx-stage');
     const loot = fx.querySelector('.hv-chest-fx-loot');
     const img = loot.querySelector('img');
@@ -142,18 +147,20 @@
     const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const showLoot = () => { loot.hidden = false; stage.classList.remove('is-shake'); };
     const src = kind === 'supreme'
-      ? 'assets/ui/festival/fx/supreme-open.webp'
-      : 'assets/ui/festival/fx/chest-open.webp';
+      ? 'assets/ui/festival/fx/supreme-open.mp4'
+      : 'assets/ui/festival/fx/chest-open.mp4';
     if (reduced) {
-      seq.removeAttribute('src');
+      vid.removeAttribute('src');
+      vid.load();
       showLoot();
       return;
     }
-    seq.removeAttribute('src');
-    seq.src = src + '?fps=' + FX_FPS;
+    vid.src = src;
     stage.classList.add('is-shake');
-    setTimeout(() => stage.classList.remove('is-shake'), 1200);
-    setTimeout(showLoot, 2200);
+    setTimeout(() => stage.classList.remove('is-shake'), 900);
+    const t = setTimeout(showLoot, 3200);
+    vid.onended = () => { clearTimeout(t); showLoot(); };
+    vid.play().catch(() => { clearTimeout(t); showLoot(); });
   }
 
   function paintVault(root) {
@@ -227,7 +234,7 @@
       const old = document.getElementById('hvFestivalRoot');
       if (old) {
         prevFcity = old.dataset.fcity || prevFcity;
-        prevTileOpen = old.classList.contains('is-tile-open') || prevTileOpen;
+        prevTileOpen = old.classList.contains('is-tile-open');
       }
       baseRender.apply(this, arguments);
       syncOpen(typeof ST === 'object' ? ST.screen : 'festival');

@@ -1,0 +1,21 @@
+{
+  "ticket": "TKT-0127",
+  "mid": {
+    "open": true,
+    "video": true,
+    "lootHidden": true
+  },
+  "after": {
+    "lootShown": true
+  },
+  "city": {
+    "tileOpen": false
+  },
+  "hub": {
+    "screen": "hub",
+    "festOpen": false
+  },
+  "appErrors": [],
+  "ok": true,
+  "ts": "2026-09-13T13:05:15.514Z"
+}

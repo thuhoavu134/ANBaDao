@@ -1,3 +1,8 @@
+## 13/09 — TKT-0127: Hoạt ảnh mở rương rồi loot, nút ‹ về Thành Chính
+
+Owner iOS: webp đứng hình nên không thấy bung nắp; ‹ không về hub vì hai #hvFestivalRoot. Video mp4 60fps từ PNG Blender, onended mới hiện khung thưởng. Capture ‹: đóng ô / navTo hub. Gỡ root trùng.
+RED 2 fail → GREEN 3/3 L127 + npm test 905. Chrome 390×844 L127-P1 PASS. Safari NOT_RUN. REVIEW, chờ owner gõ `live`.
+
 ## 13/09 — TKT-0126: Hoa Đăng sáng, rương chroma-key 60fps, icon có khung
 
 Owner: nền Hoa Đăng tối; diễn hoạt rương cần rung, ≥60fps, hút nền xanh, rương nhỏ, icon to có khung. Lamp brightness 1.28. Blender Keying node → PNG RGBA 60fps → webp alpha. CSS shake, stage 200px, khung 108px. Không đổi loot.
