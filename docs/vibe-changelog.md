@@ -1,7 +1,7 @@
 ## 13/09 — TKT-0119: icon Lễ Hội đúng hoạt động + popup Shop điểm
 
 Owner gửi screenshot play: 3 ô Lễ Hội đang nhà isometric sai việc; Shop điểm Bách Bảo chỉ vài dòng chữ. Đổi tile Hoa Đăng / Bách Bảo / Rương Báu thành icon thả đèn, vòng quay, rương thật. Shop điểm mở overlay full-hall: ảnh chủ shop, ruy băng vàng, lưới 2 cột thẻ kem có icon + SL + tên + giá điểm (giá BBR_SHOP đóng băng 100/250/400/800/1500/3000). Panel quay giữ nút Quay. Không đổi cược/pity/công thức. Không 72 tướng.
-RED 4 test thiếu data-fact/#hvBbrShop → GREEN 12/12 L119+L109+L98/L99+L42. Build PASS. Chrome 390×844 + 768×1024 L119-P1 PASS. Safari NOT_RUN. REVIEW, chờ owner gõ `live`.
+RED 4 test thiếu data-fact/#hvBbrShop → GREEN 12/12 L119+L109+L98/L99+L42. Build PASS. Chrome 390×844 + 768×1024 L119-P1 PASS. Safari NOT_RUN. LIVE #113 `52e6577`. Owner tự `git pull && vercel --prod`.
 
 ## 13/09 — Gộp bản owner đã duyệt live: #111 + #112
 

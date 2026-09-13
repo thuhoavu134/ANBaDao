@@ -1,11 +1,11 @@
 ---
 id: TKT-0119
 title: Lễ Hội icon hoạt động + popup Shop điểm
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 created: 2026-09-13T09:50:00.000Z
-updated: 2026-09-13T09:50:00.000Z
+updated: 2026-09-13T10:23:41.000Z
 acceptance_ids: ['L119-T1', 'L119-T2', 'L119-T3', 'L119-T4', 'L119-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths:
