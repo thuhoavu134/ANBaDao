@@ -1,11 +1,11 @@
 ---
 id: TKT-0129
 title: Chợ Mộng 2 ô · rương sprite chroma rồi loot
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 created: 2026-09-13T13:38:00.000Z
-updated: 2026-09-13T14:08:00.000Z
+updated: 2026-09-13T14:10:00.000Z
 acceptance_ids: ['L129-T1', 'L129-T2', 'L129-T3', 'L129-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths:
@@ -44,3 +44,4 @@ Không đổi BETS/BBR_SHOP giá, loot table. Không 72 tướng.
 
 RED 3 fail → GREEN 3/3 L129 + npm test 911. Chrome 390×844 L129-P1 PASS (black:false, loot after lid-open). Safari NOT_RUN.
 Sheet 12×145 cell 180 từ video magenta → numpy key. Burst lúc nắp mở (~38%).
+LIVE #123 `ab00dc7`.
