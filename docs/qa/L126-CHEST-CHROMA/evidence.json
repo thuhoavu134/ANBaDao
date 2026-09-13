@@ -1,0 +1,39 @@
+{
+  "ticket": "TKT-0126",
+  "chrome": [
+    {
+      "label": "390x844",
+      "ok": true,
+      "lamp": {
+        "filter": "brightness(1.28) saturate(1.08)",
+        "bright": true
+      },
+      "fx": {
+        "open": true,
+        "seq": true,
+        "canvas": false,
+        "stageW": 200.01681518554688,
+        "frameW": 108
+      },
+      "appErrors": []
+    },
+    {
+      "label": "768x1024",
+      "ok": true,
+      "lamp": {
+        "filter": "brightness(1.28) saturate(1.08)",
+        "bright": true
+      },
+      "fx": {
+        "open": true,
+        "seq": true,
+        "canvas": false,
+        "stageW": 200.00271606445312,
+        "frameW": 108
+      },
+      "appErrors": []
+    }
+  ],
+  "safari": "NOT_RUN",
+  "ts": "2026-09-13T12:50:50.229Z"
+}

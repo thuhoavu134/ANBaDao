@@ -31,14 +31,14 @@ test('L125-T3: video mở rương + icon loot; tỉ lệ đóng băng', () => {
   const ui = read('src/ui/festival-3d-runtime.js');
   const bbr = read('src/ui/bach-bao-ruong-runtime.js');
   const domain = read('src/domain/festival/festival-run.mjs');
-  assert.match(ui, /assets\/ui\/festival\/fx\/chest-open\.mp4/);
-  assert.match(ui, /assets\/ui\/festival\/fx\/supreme-open\.mp4/);
+  assert.match(ui, /assets\/ui\/festival\/fx\/chest-open\.webp/);
+  assert.match(ui, /assets\/ui\/festival\/fx\/supreme-open\.webp/);
   assert.match(ui, /hvChestFx/);
   assert.match(ui, /sh_ssr\.png/);
   assert.match(bbr, /const BETS = \[2, 10, 50\]/);
   assert.match(domain, /if \(r < 35\) return giveHeroShards\('ss', 30/);
   assert.match(domain, /if \(r < 45\) return giveHeroShards\('ssr', 40/);
-  for (const f of ['chest-open.mp4', 'supreme-open.mp4']) {
+  for (const f of ['chest-open.webp', 'supreme-open.webp']) {
     const p = join(root, 'assets/ui/festival/fx', f);
     assert.equal(existsSync(p), true, f);
     assert.ok(statSync(p).size > 80000, f);

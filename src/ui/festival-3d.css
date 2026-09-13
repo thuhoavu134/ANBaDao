@@ -84,8 +84,9 @@
 
 #hvFestivalRoot.hv-city[data-fcity="lamp"] .hv-fest-panel{
   position:relative;overflow:hidden;min-height:58vh;
+  filter:brightness(1.28) saturate(1.08);
   background:
-    linear-gradient(180deg,rgba(12,8,6,.12) 0%,rgba(12,8,6,.78) 42%,rgba(10,7,5,.94) 100%),
+    linear-gradient(180deg,rgba(255,236,200,.12) 0%,rgba(48,28,14,.28) 46%,rgba(32,18,10,.52) 100%),
     url('assets/ui/festival/lamp-river.jpg') center top/cover no-repeat!important;
   color:#f6e6c0!important;
   padding-top:10px;
@@ -146,26 +147,37 @@
 
 #hvChestFx{
   display:none;position:fixed;inset:0;z-index:160;align-items:center;justify-content:center;
-  background:rgba(8,5,3,.78);padding:16px;
+  background:rgba(8,5,3,.72);padding:16px;
 }
 #hvChestFx.is-open{display:flex}
 #hvChestFx .hv-chest-fx-card{
-  width:min(92vw,360px);display:flex;flex-direction:column;align-items:center;gap:10px;
+  width:min(92vw,360px);display:flex;flex-direction:column;align-items:center;gap:12px;
 }
-#hvChestFx .hv-chest-fx-vid{
-  width:100%;aspect-ratio:1;border-radius:16px;object-fit:cover;background:#120c08;
-  box-shadow:0 0 0 2px #e2b45a,0 12px 40px rgba(0,0,0,.5);
+.hv-chest-fx-stage{width:200px;height:200px;position:relative}
+.hv-chest-fx-stage.is-shake{animation:hvChestShake .1s linear 12}
+@keyframes hvChestShake{
+  0%,100%{transform:translate3d(0,0,0) rotate(0)}
+  25%{transform:translate3d(-8px,1px,0) rotate(-2.4deg)}
+  50%{transform:translate3d(7px,-1px,0) rotate(2deg)}
+  75%{transform:translate3d(-5px,0,0) rotate(-1.4deg)}
 }
+.hv-chest-fx-seq{width:100%;height:100%;object-fit:contain;display:block;pointer-events:none}
 #hvChestFx .hv-chest-fx-loot{
-  display:flex;flex-direction:column;align-items:center;gap:6px;min-height:96px;
+  display:flex;flex-direction:column;align-items:center;gap:8px;min-height:140px;
 }
-#hvChestFx .hv-chest-fx-loot img{
-  width:72px;height:72px;object-fit:contain;
-  filter:drop-shadow(0 0 16px #ffd36a);
+.hv-chest-fx-frame{
+  width:108px;height:108px;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(180deg,#fff4d4,#e2c48a);
+  border-radius:18px;
+  box-shadow:0 0 0 2px #c09028,0 0 0 6px #3a2414,0 10px 22px rgba(0,0,0,.4);
+}
+.hv-chest-fx-frame img{
+  width:92%;height:92%;object-fit:contain;
+  filter:drop-shadow(0 0 10px #ffd36a);
   animation:hvLootPop .45s ease-out;
 }
 #hvChestFx .hv-chest-fx-loot b{
-  color:#ffe29a;font-size:14px;text-align:center;text-shadow:0 2px 8px #000;
+  color:#ffe29a;font-size:15px;text-align:center;text-shadow:0 2px 8px #000;line-height:1.35;padding:0 8px;
 }
 #hvChestFx [data-chest-fx-done]{
   min-height:44px;padding:0 22px;border:0;border-radius:12px;font:800 15px inherit;
@@ -177,6 +189,7 @@
 }
 @media(prefers-reduced-motion:reduce){
   .hv-float-lamp{animation:none;opacity:.8}
-  #hvChestFx .hv-chest-fx-loot img{animation:none}
+  .hv-chest-fx-frame img{animation:none}
+  .hv-chest-fx-stage.is-shake{animation:none}
 }
 

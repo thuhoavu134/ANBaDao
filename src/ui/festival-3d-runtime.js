@@ -98,6 +98,8 @@
     return kind === 'supreme' ? 'assets/ui/festival/bbr/supreme.png' : 'assets/ui/festival/bbr/chest.png';
   }
 
+  const FX_FPS = 60;
+
   function ensureFx() {
     let fx = document.getElementById('hvChestFx');
     if (fx) return fx;
@@ -105,9 +107,11 @@
     fx.id = 'hvChestFx';
     fx.innerHTML = `
       <div class="hv-chest-fx-card">
-        <video class="hv-chest-fx-vid" playsinline muted></video>
+        <div class="hv-chest-fx-stage">
+          <img class="hv-chest-fx-seq" alt="">
+        </div>
         <div class="hv-chest-fx-loot" hidden>
-          <img alt="">
+          <span class="hv-chest-fx-frame"><img alt=""></span>
           <b></b>
         </div>
         <button type="button" data-chest-fx-done>Nhận</button>
@@ -115,8 +119,10 @@
     document.body.append(fx);
     fx.addEventListener('click', ev => {
       if (!ev.target.closest('[data-chest-fx-done]') && ev.target !== fx) return;
-      const vid = fx.querySelector('video');
-      if (vid) { vid.pause(); vid.removeAttribute('src'); }
+      const seq = fx.querySelector('.hv-chest-fx-seq');
+      const stage = fx.querySelector('.hv-chest-fx-stage');
+      if (seq) seq.removeAttribute('src');
+      stage?.classList.remove('is-shake');
       fx.classList.remove('is-open');
     });
     return fx;
@@ -124,7 +130,8 @@
 
   function playChestFx(kind, result) {
     const fx = ensureFx();
-    const vid = fx.querySelector('video');
+    const seq = fx.querySelector('.hv-chest-fx-seq');
+    const stage = fx.querySelector('.hv-chest-fx-stage');
     const loot = fx.querySelector('.hv-chest-fx-loot');
     const img = loot.querySelector('img');
     const lab = loot.querySelector('b');
@@ -133,20 +140,20 @@
     loot.hidden = true;
     fx.classList.add('is-open');
     const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const showLoot = () => { loot.hidden = false; };
+    const showLoot = () => { loot.hidden = false; stage.classList.remove('is-shake'); };
     const src = kind === 'supreme'
-      ? 'assets/ui/festival/fx/supreme-open.mp4'
-      : 'assets/ui/festival/fx/chest-open.mp4';
+      ? 'assets/ui/festival/fx/supreme-open.webp'
+      : 'assets/ui/festival/fx/chest-open.webp';
     if (reduced) {
-      vid.removeAttribute('src');
-      vid.load();
+      seq.removeAttribute('src');
       showLoot();
       return;
     }
-    vid.src = src;
-    const t = setTimeout(showLoot, 2200);
-    vid.onended = () => { clearTimeout(t); showLoot(); };
-    vid.play().catch(() => { clearTimeout(t); showLoot(); });
+    seq.removeAttribute('src');
+    seq.src = src + '?fps=' + FX_FPS;
+    stage.classList.add('is-shake');
+    setTimeout(() => stage.classList.remove('is-shake'), 1200);
+    setTimeout(showLoot, 2200);
   }
 
   function paintVault(root) {
