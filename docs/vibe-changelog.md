@@ -1,9 +1,14 @@
 ## 13/09 — TKT-0128: Rương không đổi sò, điểm tự cộng, shop icon
 
 Owner: trúng rương không được đổi sò; bỏ Nhận điểm, tự +1 điểm / 1 sò; Shop là icon cô gái; Quay to, dưới Thưởng + Đổi sò. Cược 2/10/50 và giá shop giữ.
-RED 3 fail → GREEN 3/3 L128 + npm test. Chrome 390×844 L128-P1 PASS. Safari NOT_RUN. REVIEW, chờ owner gõ `live`.
+RED 3 fail → GREEN 3/3 L128 + npm test. Chrome 390×844 L128-P1 PASS. Safari NOT_RUN. LIVE #122 `5815756`. Owner tự `git pull && vercel --prod`.
 
 ## 13/09 — TKT-0127: Hoạt ảnh mở rương rồi loot, nút ‹ về Thành Chính
+
+Owner iOS: webp đứng hình nên không thấy bung nắp; ‹ không về hub vì hai #hvFestivalRoot. Video mp4 60fps từ PNG Blender, onended mới hiện khung thưởng. Capture ‹: đóng ô / navTo hub. Gỡ root trùng.
+RED 2 fail → GREEN 3/3 L127 + npm test. Chrome 390×844 L127-P1 PASS. Safari NOT_RUN. LIVE #121 `93669c4`. Owner tự `git pull && vercel --prod`.
+
+## 13/09 — TKT-0126: Hoa Đăng sáng, rương chroma-key 60fps, icon có khung
 
 Owner: nền Hoa Đăng tối; diễn hoạt rương cần rung, ≥60fps, hút nền xanh, rương nhỏ, icon to có khung. Lamp brightness 1.28. Blender Keying node → PNG RGBA 60fps → webp alpha. CSS shake, stage 200px, khung 108px. Không đổi loot.
 RED 3 fail → GREEN 4/4 L126 + npm test. Chrome 390×844 + 768×1024 L126-P1 PASS. Safari NOT_RUN. LIVE #120 `0cd2d76`. Owner tự `git pull && vercel --prod`.

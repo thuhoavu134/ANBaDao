@@ -1,11 +1,11 @@
 ---
 id: TKT-0127
 title: Hoạt ảnh mở rương rồi mới loot · nút ‹ về Thành Chính
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 created: 2026-09-13T12:58:00.000Z
-updated: 2026-09-13T13:05:00.000Z
+updated: 2026-09-13T13:28:20.000Z
 acceptance_ids: ['L127-T1', 'L127-T2', 'L127-T3', 'L127-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths:

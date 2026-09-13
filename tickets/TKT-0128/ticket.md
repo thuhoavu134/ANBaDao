@@ -1,11 +1,11 @@
 ---
 id: TKT-0128
 title: Rương không đổi sò · điểm tự cộng · shop icon
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 created: 2026-09-13T13:10:00.000Z
-updated: 2026-09-13T13:16:00.000Z
+updated: 2026-09-13T13:30:38.000Z
 acceptance_ids: ['L128-T1', 'L128-T2', 'L128-T3', 'L128-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths:
