@@ -1,11 +1,11 @@
 ---
 id: TKT-0120
 title: CSS popup đồ — thẻ ôm nội dung, không khoảng trống
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 created: 2026-09-13T10:10:00.000Z
-updated: 2026-09-13T10:10:00.000Z
+updated: 2026-09-13T10:36:06.000Z
 acceptance_ids: ['L120-T1', 'L120-T2', 'L120-T3', 'L120-T4', 'L120-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths:

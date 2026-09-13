@@ -1,6 +1,6 @@
 ## 13/09 — TKT-0120: CSS popup đồ ôm nội dung
 
-Owner screenshot Sách Tinh Thông: thẻ kem cao, khoảng trống giữa header và Cách nhận. Cắt `id="hvShopInfo"` (CSS Bách Bảo đệm padding), thẻ `height:auto` / `max-height:min(72dvh,540px)`, một mặt icon+sao+số lượng+Cách nhận+×. Chrome 390×844 PASS. Safari NOT_RUN. Chờ live.
+Owner screenshot Sách Tinh Thông: thẻ kem cao, khoảng trống giữa header và Cách nhận. Cắt `id="hvShopInfo"` (CSS Bách Bảo đệm padding), thẻ `height:auto` / `max-height:min(72dvh,540px)`, một mặt icon+sao+số lượng+Cách nhận+×. Chrome 390×844 PASS. Safari NOT_RUN. LIVE #114 `bb34ae3`. Owner tự `git pull && vercel --prod`.
 
 ## 13/09 — TKT-0119: icon Lễ Hội đúng hoạt động + popup Shop điểm
 
