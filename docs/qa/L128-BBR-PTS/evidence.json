@@ -1,0 +1,16 @@
+{
+  "ticket": "TKT-0128",
+  "vis": {
+    "goH": 64,
+    "shopSrc": true,
+    "note": true,
+    "noPts": true,
+    "noShopTxt": true,
+    "take": true,
+    "conv": true
+  },
+  "shopOpen": true,
+  "appErrors": [],
+  "ok": true,
+  "ts": "2026-09-13T13:13:22.885Z"
+}

@@ -160,6 +160,7 @@
     const same = !!(continuing && b.pending.t === cell.t);
     b.spins = (b.spins || 0) + 1;
     b.spent = (b.spent || 0) + bet;
+    b.pts = (b.pts || 0) + bet;
     b.pool = (b.pool || 12000) + bet;
     let pity = false;
     let bonusSup = 0;
@@ -215,7 +216,7 @@
     const bet = st().bet || 2;
     if ((P.so || 0) < bet) { toast?.('Không đủ sò. Cược ' + bet + '.'); return; }
     spinning = true;
-    document.querySelectorAll('[data-bbr-step],[data-bbr-take],[data-bbr-convert],[data-bbr-pts]').forEach(el => { el.disabled = true; });
+    document.querySelectorAll('[data-bbr-step],[data-bbr-take],[data-bbr-convert]').forEach(el => { el.disabled = true; });
     const ring = document.querySelector('#hvBbrDesk .hv-bbr-ring');
     ring?.classList.add('is-run');
     const dest = pickIdx();
@@ -269,7 +270,6 @@
       P.gold += jack;
       b.pool = Math.max(0, b.pool - jack);
     }
-    if (stars >= 1) b.pts = (b.pts || 0) + Math.max(1, pay('so', stars, b.bet || 2));
     const msg = stars + '★ ' + (LAB[t] || t) + ' · +' + n;
     b.history = b.history || [];
     b.history.unshift({ kind: 'take', label: msg, t: Date.now() });
@@ -290,6 +290,10 @@
     const b = st();
     if (!b.pending) { toast?.('Quay rồi hãy đổi.'); return null; }
     const { t, stars } = b.pending;
+    if (t === 'chest' || t === 'supreme') {
+      toast?.('Rương không đổi sò. Bấm Thưởng.');
+      return { ok: false, code: 'CHEST_NO_CONVERT' };
+    }
     const n = convertQty(t, stars, b.bet || 2);
     P.so = (P.so || 0) + n;
     b.pending = null;
@@ -465,8 +469,14 @@
     const type = pend ? pend.t : 'gold';
     shell.innerHTML = `<div id="hvBbrDesk" class="hv-bbr-kt">
       <div class="hv-bbr-kt-head">
-        <h3>Bách Bảo Rương</h3>
+        <div class="hv-bbr-kt-top">
+          <h3>Bách Bảo Rương</h3>
+          <button type="button" class="hv-bbr-shop-ic" data-bbr-pane="shop" aria-label="Shop điểm">
+            <img src="assets/ui/festival/bbr/shop-girl.jpg" alt="">
+          </button>
+        </div>
         <div class="hv-bbr-row"><b>${SO_IC} ${P.so || 0}</b><span>Hũ ${b.pool}</span><span>Pity ${Math.min(200, (b.spent || 0) - (b.pityAt || 0))}/200</span></div>
+        <p class="hv-bbr-pts-note">Điểm tích luỹ <b>${b.pts || 0}</b> · tự động nhận sau khi tiêu mỗi 100 sò</p>
       </div>
       <div class="hv-bbr-kt-body">
         <div class="hv-bbr-ring" data-bbr-grid>
@@ -488,15 +498,15 @@
             <div class="hv-bbr-bets">${BETS.map(n =>
               `<button type="button" class="hv-bbr-bet${bet === n ? ' is-on' : ''}" data-bbr-bet="${n}">${n} ${SO_IC}</button>`
             ).join('')}</div>
-            <p class="hv-bbr-now">${pend ? (pend.stars + '★ ' + LAB[pend.t] + ' · Đổi sò ' + convertQty(pend.t, pend.stars, bet)) : 'Cược sò rồi Quay.'}</p>
-            <div class="hv-bbr-mid">
-              <button type="button" data-bbr-pts ${pend ? '' : 'disabled'}>Nhận điểm</button>
-              <button type="button" data-bbr-pane="shop">Shop điểm</button>
-            </div>
+            <p class="hv-bbr-now">${pend
+              ? ((pend.t === 'chest' || pend.t === 'supreme')
+                ? (pend.stars + '★ ' + LAB[pend.t] + ' · chỉ nhận thưởng, không đổi sò')
+                : (pend.stars + '★ ' + LAB[pend.t] + ' · Đổi sò ' + convertQty(pend.t, pend.stars, bet)))
+              : 'Cược sò rồi Quay.'}</p>
             <button type="button" class="hv-bbr-go" data-bbr-step ${((P.so || 0) < bet) ? 'disabled' : ''}>${pend ? 'Tiếp' : 'Quay'} · ${bet} ${SO_IC}</button>
             <div class="hv-bbr-sub">
               <button type="button" data-bbr-take ${pend ? '' : 'disabled'}>Thưởng</button>
-              <button type="button" data-bbr-convert ${pend ? '' : 'disabled'}>Đổi sò</button>
+              <button type="button" data-bbr-convert ${(pend && pend.t !== 'chest' && pend.t !== 'supreme') ? '' : 'disabled'}>Đổi sò</button>
             </div>
         </div>
       </div>
@@ -514,7 +524,7 @@
   }
 
   function onDesk(ev) {
-    if (spinning && ev.target.closest('[data-bbr-take],[data-bbr-convert],[data-bbr-pts],[data-bbr-buy]')) {
+    if (spinning && ev.target.closest('[data-bbr-take],[data-bbr-convert],[data-bbr-buy]')) {
       toast?.('Đang quay — chưa nhận được.');
       return;
     }
@@ -536,11 +546,6 @@
     }
     if (ev.target.closest('[data-bbr-convert]')) {
       doConvert();
-      paintDesk();
-      return;
-    }
-    if (ev.target.closest('[data-bbr-pts]')) {
-      doScore();
       paintDesk();
       return;
     }

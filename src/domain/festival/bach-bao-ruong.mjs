@@ -105,6 +105,8 @@ export const BBR_SO_CONVERT = Object.freeze({
 /** Tỷ lệ mặc định: đồ thường 50 · S/S+ 30 · Rương Báu 15 · Chí Bảo 5. */
 export const BBR_BUCKET = Object.freeze({ common: 50, shard: 30, chest: 15, supreme: 5 });
 export const BBR_PITY_SO = 200;
+export const BBR_PTS_PER_SO = 1;
+export const BBR_PTS_CHUNK = 100;
 export const BBR_POOL_STEP = 5000;
 export const BBR_POOL_CYCLE = Object.freeze(['sh_ss', 'chest', 'supreme', 'sh_ssr', 'chest', 'supreme']);
 export const BBR_WEIGHT = Object.freeze({
@@ -195,6 +197,7 @@ export function spinStep(player, { bet, rng, day, board } = {}) {
   bbr.bet = stake;
   bbr.spins = asInt(bbr.spins, 0) + 1;
   bbr.spent = asInt(bbr.spent, 0) + stake;
+  bbr.pts = asInt(bbr.pts, 0) + stake * BBR_PTS_PER_SO;
   bbr.pool += stake;
   const pityDue = !continuing && (bbr.spent - asInt(bbr.pityAt, 0) >= BBR_PITY_SO);
   const mark = asInt(bbr.poolMark, Math.floor(12000 / BBR_POOL_STEP));
@@ -288,7 +291,6 @@ export function takeBbr(player, { day } = {}) {
     gold += jack;
     bbr.pool = Math.max(0, bbr.pool - jack);
   }
-  if (stars >= 1) bbr.pts += Math.max(1, payAt('so', stars, stake));
   const label = stars + '★ ' + type + ' · +' + qty;
   bbr.history.unshift({ kind: 'take', label, t: Date.now() });
   if (bbr.history.length > 12) bbr.history.length = 12;
@@ -304,6 +306,9 @@ export function convertBbr(player, { day } = {}) {
   const bbr = normalizeBbr(player?.bachBao, day);
   if (!bbr.pending) return fail('NO_PENDING', 'Chưa có lượt để đổi sò.');
   const type = bbr.pending.t;
+  if (type === 'chest' || type === 'supreme') {
+    return fail('CHEST_NO_CONVERT', 'Rương không đổi sò.');
+  }
   const stars = Math.max(1, Math.min(6, asInt(bbr.pending.stars, 1)));
   const stake = bbr.bet || 2;
   const row = BBR_SO_CONVERT[type] || BBR_SO_CONVERT.gold;
