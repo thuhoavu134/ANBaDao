@@ -1,10 +1,8 @@
-# Đề xuất 108 ải — cấp người chơi 1–60
+# Cấp người chơi 1–60 — owner đã chốt 13/09/2026
 
-Trạng thái: PROPOSED, chờ owner chốt. Không có khóa level mới đang hoạt động.
+Owner «ok chốt». Implementation TKT-0118; chưa merge/deploy. Cấp người chơi tách riêng cấp tướng (trần30). Không dùng tướng dẫn đội để khóa ải.
 
-Mục tiêu owner: 6 chương × 18 ải = 108 ải. Đề xuất dùng **cấp người chơi riêng**, không lấy cấp một tướng làm khóa. Hiện runtime có cấp tướng tối đa 30 (`scripts/transaction-contract-v1.mjs`); không nâng trần tướng hoặc đổi chỉ số tướng trong đề xuất này.
-
-| Chương | Ải toàn tuyến | Khoảng cấp yêu cầu |
+| Chương | Ải toàn tuyến | Cấp yêu cầu |
 |---|---|---|
 | 1 · Ấn Phố | 1–18 | 1–10 |
 | 2 · Ấn Rừng | 19–36 | 11–20 |
@@ -13,16 +11,25 @@ Mục tiêu owner: 6 chương × 18 ải = 108 ải. Đề xuất dùng **cấp 
 | 5 · Ấn Quên | 73–90 | 41–50 |
 | 6 · Lục Thần | 91–108 | 51–60 |
 
-Với c là chương 1..6, s là ải trong chương 1..18:
-`requiredLevel = 1 + 10 * (c - 1) + floor(9 * (s - 1) / 17)`.
-Mốc trong mỗi chương: 1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,10; cộng 10 cho chương tiếp theo. Cấp 60 mở điều kiện ải 108; vẫn cần thắng ải trước, không tự bỏ ải.
+Runtime lore `expandSeals` đã sinh đúng108 ID `lt_seal_c_s`; không mở rộng hay đổi roster/seed/thưởng/độ khó. Chuỗi truyện gốc chỉ là template, không phải số ải production.
+Với chương c=1..6 và ải s=1..18: `1+10*(c-1)+floor(9*(s-1)/17)`. Mốc mỗi chương1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,10 rồi cộng10 mỗi chương.
 
-Luật dự kiến:
-- Cấp người chơi tăng bằng EXP tích lũy, không phải Tinh thông có thể tiêu để nâng tướng.
-- Nguồn EXP: thưởng thắng ải lần đầu, nhiệm vụ và AFK đã nhận; phải còn nguồn EXP khi ải tiếp theo bị khóa để tránh kẹt vòng lặp. EXP/level và thời gian đạt cấp cần cân riêng, chưa chốt số.
-- Đã vượt ải thì giữ quyền chơi lại; đổi đội không làm khóa lại.
-- Save cũ cần migration bảo toàn tiến độ, không khóa lại chương đã vượt. Điều kiện phải kiểm tra ở lệnh bắt đầu trận, không chỉ làm mờ nút.
-- Thiếu level: hiện “Cần cấp X” và lối tới nguồn EXP, không tiêu hoạt lực.
-- Kiểm tra danh sách encounter thực tế trước khi chuẩn hóa thành 18/chương; không đếm hội thoại là ải, không đổi reward/seed chỉ để đủ số.
+## EXP v1 (mặc định cân bằng để chơi thử)
 
-Quyết định owner cần chốt: dùng cấp người chơi riêng 1–60, hay dùng cấp tướng hiện có (trần 30). PR nút hai kiếm không kích hoạt hệ cấp mới.
+- Lên cấp L→L+1: `100+20*(L-1)` EXP. Tổng cấp60:40.120 EXP.
+- Thắng ải lần đầu: `80+20*chapterIndex+8*stageIndex` EXP; index0-based.
+- Rương AFK:240 EXP/giờ, tối đa15h=3.600 EXP/lần đầy; chỉ cộng khi nhận. Giữ phần lẻ qua các lần nhận sớm.
+- Nhận việc ngày80 EXP; việc tuần240 EXP. Không cộng thêm từ các mốc/điểm danh/idle cũ.
+- EXP tích lũy không thể tiêu, không phải Tinh thông. Không tự lên cấp tướng; trần cấp người chơi60.
+- Người bị khóa ải vẫn vào rương và nhiệm vụ để lên cấp. Thời gian hoàn tất tuyến cần playtest; đây không phải lời hứa nhịp chơi cuối cùng.
+
+## Khóa, lưu và tương thích
+
+`P.hvPlayerProgress={version:1,xp,clears:["c:s"],afkRemainder}`. Cấp suy ra từxp để không lệch hai trường. Cả108 clear keys giữ lâu dài, độc lập receipt window và Biên Niên+.
+Migration trong giao dịch cũ trước khi dùng tiến trình: cấp bù đến yêu cầu của ải hiện tại ở chương đã mở; đánh dấu các ải đã vượt để không nhận lại EXP lần đầu. Không sửa con trỏ/chương/tướng/tiền cũ. Backup con trỏ/chương cũ ở`hvPlayerProgressLegacy` trong cùngsave; chạy một lần.
+Ải đã vượt/chương đã hoàn thành giữ chơi lại. Chương mới cần hoàn tất chương trước; ải mới cần thắng ải trước và đủ cấp. Kiểm tra tại`startChapter` trước trừ hoạt lực, cả từ Next và nhiệm vụ; UI hiển thị cấp/EXP, yêu cầu mở và đường nhậnEXP. Sửa cursor replay để đi tiếp trong chương đã qua.
+XP trận ghép vào transaction settlement hiện có; XP nhiệm vụ ghép mutation hiện có; XP AFK ghép cùngreset rương. Save thất bại rollback; settlement fail không tiến ải. Không thêm listener hoặc scheduler. Hai wrapper lore truyền tiếp resultAction để Next đến đúng gate.
+
+## Phát hành
+
+PR riêng từ main2074081; PR111 nút kiếm vẫn riêng. Chờ owner`live` cho bản này. Chrome390×844 BLOCKED theo từ chối kiểm duyệt truy cập preview yêu cầu đăng nhập; Safari NOT_RUN. Không khẳng định UI/motion đã nghiệm thu.

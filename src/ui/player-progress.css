@@ -1,0 +1,6 @@
+#hvCampaignScene .cs-player-xp{display:block;font-size:10px;color:#55654c;line-height:1.4;margin-top:3px}
+#hvCampaignScene .cs-level-gate{display:block;max-width:200px;padding:6px 9px;margin-top:8px;border:1px solid #ad8646;border-radius:12px;background:#fff8e8e8;color:#644824;font-size:11px;line-height:1.4}
+#hvCampaignScene .cs-level-gate[hidden]{display:none}
+#hvCampaignScene .cs-xp-help{font:inherit;color:#536d42;text-decoration:underline;background:none;border:0;padding:6px 0;min-height:32px;cursor:pointer}
+#hvCampaignScene .cs-milestones .is-locked{opacity:.65}
+#hvCampaignScene [data-player-exp-help]{font-size:12px;color:#55654c;line-height:1.6}

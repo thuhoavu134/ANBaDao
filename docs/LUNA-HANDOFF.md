@@ -1,8 +1,11 @@
-## 13/09 — TKT-0117: Khiêu chiến hai kiếm + đề xuất level
+## 13/09 — Gộp bản owner đã duyệt live: #111 + #112
 
-Nút Khiêu chiến đổi thành huy hiệu vàng, hai layer kiếm RGBA tách/chém nhau và flash, giữ handler Bày trận. Reduced-motion/disabled/ẩn trang dừng animation; các nút prepare/receipt không đổi. Asset mới có prompt/metadata.
-RED 2 fail → GREEN 87/87 campaign/AFK, syntax PASS. Chrome 390×844 vẫn BLOCKED do auto-review preview đăng nhập; Safari NOT_RUN, chưa nghiệm thu UI runtime. Không merge/deploy trước live.
-Yêu cầu level: docs/CAMPAIGN-LEVEL-PROPOSAL.md đề xuất cấp người chơi riêng 1–60 cho 108 ải, mỗi chương khoảng 10 cấp. Hiện chỉ có cấp tướng trần30. Chờ owner chốt loại level; chưa thêm EXP hoặc bật khóa ải, không nâng trần tướng. Đây là phần thiết kế còn chờ quyết định, không báo đã hoàn thành cơ chế level.
+#112 cấp người chơi đã merge tại147325b. Ghép #111 huy hiệu hai kiếm vào cùng cây nguồn, giữ đề xuất cấp đã chốt/implementation TKT-0118. Không quay lại trạng thái chờ chốt level. Kiểm tra bản kết hợp trước cập nhật main; Chrome390×844 BLOCKED (preview đăng nhập bị auto-review từ chối), Safari NOT_RUN. Owner tự deploy.
+
+## 13/09 — TKT-0118: owner chốt cấp người chơi 1–60
+
+Triển khai khóa108 ải theo cấp + thắng ải trước, giữ catalog lt_seal hiện có. Cấp tướng trần30 không đổi. EXP lần đầu/việc ngày-tuần/nhận rươngAFK ghép transaction cũ; migration cấp bù theo tiến độ, backup additive, clear keys chống nhậnEXP lại. UI cấp/EXP và đường rương/nhiệm vụ khi khóa. Sửa truyền Next qua2 wrapper lore và cursor replay. Chi tiết: docs/CAMPAIGN-LEVEL-PROPOSAL.md.
+Tests domain + built owners kiểm gate trước hoạt lực, đủ108, migration3 save, duplicate/rollback/AFK cap và fractional carry. Full CI cần kiểm ở revision PR. Chrome390×844 vẫn BLOCKED do automatic approval review từ chối preview đăng nhập; Safari NOT_RUN. IN_PROGRESS/EVIDENCE, chưa merge/deploy. PR111 kiếm vẫn riêng, không hiểu «ok chốt» là live.
 
 ## 13/09 — TKT-0116: cơ chế AFK xuyên 6 chương
 

@@ -1,0 +1,317 @@
+✖ AC3: built start owner checks level before stamina and blocks Next at threshold (3.420438ms)
+✖ AC4: daily EXP is transaction-bound; duplicates and save failures do not grant (4.10722ms)
+✔ AC4: campaign XP checks active battle identity, win and first clear (2.19038ms)
+✖ AC3/4: built UI and AFK grant are inside existing handlers (2.769234ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 1
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 312.045506
+
+✖ failing tests:
+
+test at tests/player-progress-runtime.test.mjs:17:1
+✖ AC3: built start owner checks level before stamina and blocks Next at threshold (3.420438ms)
+  AssertionError [ERR_ASSERTION]: build installs feature
+      at TestContext.<anonymous> (file:///workspace/luc-than/tests/player-progress-runtime.test.mjs:18:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/player-progress-runtime.test.mjs:26:1
+✖ AC4: daily EXP is transaction-bound; duplicates and save failures do not grant (4.10722ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 80
+  
+      at TestContext.<anonymous> (file:///workspace/luc-than/tests/player-progress-runtime.test.mjs:29:39)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 80,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/player-progress-runtime.test.mjs:41:1
+✖ AC3/4: built UI and AFK grant are inside existing handlers (2.769234ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /data-player-level/. Input:
+  
+  '<!DOCTYPE html>\n' +
+    '<!-- Hồn Việt: Mộng Giới 1.0.2 — offline static-folder build --><html lang="vi"><head>\n' +
+    '<script id="honviet-ios-audio-unlock">\n' +
+    '(()=>{\n' +
+    '  if(window.HonVietAudio)return;\n' +
+    '  const AC=window.AudioContext||window.webkitAudioContext;\n' +
+    '  let ctx=window.__HV_EARLY_CTX||null, unlocked=false, unlockPromise=null;\n' +
+    '  try{\n' +
+    '    if(!ctx&&AC)ctx=new AC();\n' +
+    '    window.__HV_EARLY_CTX=ctx;\n' +
+    "    if(ctx&&ctx.state==='suspended')ctx.resume();\n" +
+    '    if(ctx){\n' +
+    '      const b=ctx.createBuffer(1,1,22050),s=ctx.createBufferSource();\n' +
+    '      s.buffer=b;s.connect(ctx.destination);s.start(0);\n' +
+    '    }\n' +
+    '  }catch(_e){}\n' +
+    '  const buffers=new Map();\n' +
+    '  const loads=new Map();\n' +
+    '  const activeVoices=new Set();\n' +
+    '  let combatEpoch=0,combatEnabled=true;\n' +
+    '  function beginCombat(){combatEnabled=true;}\n' +
+    '  function stopCombat(){\n' +
+    '    combatEnabled=false;combatEpoch++;\n' +
+    '    for(const voice of activeVoices)if(voice.combat){voice.stop();voice.cleanup();}\n' +
+    '    document.documentElement.dataset.voiceCombatActive=String([...activeVoices].filter(v=>v.combat).length);\n' +
+    '  }\n' +
+    '  const voiceUrls=[\n' +
+    "    'assets/audio/voice-luc-anh-hero.mp3',\n" +
+    "    'assets/audio/voice-luc-anh-ultimate.mp3'\n" +
+    '  ];\n' +
+    '  function getCtx(){\n' +
+    '    if(!ctx) ctx=window.__HV_EARLY_CTX||(AC?new AC():null);\n' +
+    '    if(ctx) window.__HV_EARLY_CTX=ctx;\n' +
+    '    return ctx;\n' +
+    '  }\n' +
+    '  async function decode(url){\n' +
+    '    if(buffers.has(url))return buffers.get(url);\n' +
+    '    if(loads.has(url))return loads.get(url);\n' +
+    '    const c=getCtx();\n' +
+    "    if(!c)throw new Error('AudioContext unavailable');\n" +
+    "    const p=fetch(url,{cache:'force-cache'})\n" +
+    "      .then(r=>{if(!r.ok)throw new Error('audio '+r.status);return r.arrayBuffer();})\n" +
+    '      .then(b=>c.decodeAudioData(b))\n' +
+    '      .then(buf=>{buffers.set(url,buf);loads.delete(url);return buf;})\n' +
+    '      .catch(e=>{loads.delete(url);throw e;});\n' +
+    '    loads.set(url,p);return p;\n' +
+    '  }\n' +
+    '  async function unlock(){\n' +
+    '    if(unlocked){\n' +
+    '      const c=getCtx();\n' +
+    "      if(c&&c.state==='suspended')try{await c.resume();}catch(_e){}\n" +
+    '      return true;\n' +
+    '    }\n' +
+    '    if(unlockPromise)return unlockPromise;\n' +
+    '    unlockPromise=(async()=>{\n' +
+    '      const c=getCtx();\n' +
+    '      if(c){\n' +
+    "        try{if(c.state==='suspended')await c.resume();}catch(_e){}\n" +
+    '        try{\n' +
+    '          const b=c.createBuffer(1,1,22050),s=c.createBufferSource();\n' +
+    '          s.buffer=b;s.connect(c.destination);s.start(0);\n' +
+    '        }catch(_e){}\n' +
+    '      }\n' +
+    "      // Prime existing HTML media during the user's first real game interaction.\n" +
+    "      document.querySelectorAll('audio,video').forEach(el=>{\n" +
+    '        try{\n' +
+    '          const wasMuted=el.muted;\n' +
+    '          el.muted=true;\n' +
+    '          const p=el.play();\n' +
+    '          if(p&&p.then)p.then(()=>{el.pause();el.currentTime=0;el.muted=wasMuted;}).catch(()=>{el.muted=wasMuted;});\n' +
+    '          else {el.pause();el.currentTime=0;el.muted=wasMuted;}\n' +
+    '        }catch(_e){}\n' +
+    '      });\n' +
+    '      unlocked=true;\n' +
+    "      document.documentElement.dataset.audioUnlocked='1';\n" +
+    '      voiceUrls.forEach(u=>decode(u).catch(()=>{}));\n' +
+    '      return true;\n' +
+    '    })().finally(()=>{unlockPromise=null;});\n' +
+    '    return unlockPromise;\n' +
+    '  }\n' +
+    '  async function playVoice(url,gainValue=1){\n' +
+    "    const combat=String(url).includes('voice-luc-anh-ultimate.mp3'),ticket=combatEpoch;\n" +
+    '    const current=()=>!combat||(combatEnabled&&ticket===combatEpoch);\n' +
+    '    if(!current())return false;\n' +
+    '    await unlock();\n' +
+    '    if(!current())return false;\n' +
+    '    const c=getCtx();\n' +
+    '    if(!c)return false;\n' +
+    '    try{\n' +
+    '      const buf=await decode(url);\n' +
+    '      if(!current())return false;\n' +
+    "      if(c.state==='suspended')await c.resume();\n" +
+    '      if(!current())return false;\n' +
+    '      const src=c.createBufferSource(),gain=c.createGain();\n' +
+    '      src.buffer=buf;gain.gain.value=Math.max(0,Number(gainValue)||1);\n' +
+    '      src.connect(gain);gain.connect(c.destination);\n' +
+    '      const voice={combat,stop(){try{src.stop();}catch(_e){}},cleanup(){if(!activeVoices.delete(voice))return;src.disconnect();gain.disconnect();document.documentElement.dataset.voiceCombatActive=String([...activeVoices].filter(v=>v.combat).length);}};\n' +
+    '      src.onended=voice.cleanup;activeVoices.add(voice);src.start(0);\n' +
+    '      document.documentElement.dataset.voiceCombatActive=String([...activeVoices].filter(v=>v.combat).length);\n' +
+    '      return true;\n' +
+    '    }catch(_e){\n' +
+    '      if(!current())return false;\n' +
+    '      try{\n' +
+    "        const a=new Audio(url);a.preload='auto';a.volume=1;\n" +
+    '        const voice={combat,stop(){a.pause();a.currentTime=0;},cleanup(){activeVoices.delete(voice);}};\n' +
+    '        a.onended=voice.cleanup;activeVoices.add(voice);\n' +
+    '        try{await a.play();return current();}catch(_e2){voice.cleanup();return false;}\n' +
+    '      }catch(_e2){return false;}\n' +
+    '    }\n' +
+    '  }\n' +
+    '  window.HonVietAudio={unlock,playVoice,beginCombat,stopCombat,preload:(u)=>decode(u),isUnlocked:()=>unlocked,context:()=>getCtx()};\n' +
+    '\n' +
+    '  // Keep unlocking on every gesture until the context is running. Full-page\n' +
+    '  // battle.html on iOS often misses the original Xuất chiến tap.\n' +
+    '  const firstGesture=()=>{\n' +
+    '    unlock().then(()=>{\n' +
+    '      try{window.__HV_BATTLE_BGM?.play?.();}catch(_e){}\n' +
+    '    }).catch(()=>{});\n' +
+    '  };\n' +
+    "  ['pointerdown','touchstart','touchend','click','keydown'].forEach(t=>\n" +
+    '    document.addEventListener(t,firstGesture,{capture:true,passive:true})\n' +
+    '  );\n' +
+    '\n' +
+    '  // Resume again after iOS returns from background / tab switch.\n' +
+    "  document.addEventListener('visibilitychange',()=>{\n" +
+    "    if(document.visibilityState==='visible'){\n" +
+    '      const c=getCtx();\n' +
+    "      if(c&&c.state==='suspended')c.resume().catch(()=>{});\n" +
+    '      try{window.__HV_BATTLE_BGM?.play?.();}catch(_e){}\n' +
+    '    }\n' +
+    '  });\n' +
+    '})();\n' +
+    '/* hv-main-quest-v1-runtime */\n' +
+    '(()=> {\n' +
+    '  const __hvMainQuestModule = (()=> {\n' +
+    "const MAIN_QUEST_SCHEMA = 'hon-viet-main-quest/v1';\n" +
+    '\n' +
+    'function integer(value, fallback = 0) {\n' +
+    '  const n = Number(value);\n' +
+    '  return Number.isFinite(n) ? Math.round(n) : fallback;\n' +
+    '}\n' +
+    '\n' +
+    'function clamp(value, min, max) {\n' +
+    '  return Math.max(min, Math.min(max, value));\n' +
+    '}\n' +
+    '\n' +
+    'function uniqueStrings(value) {\n' +
+    '  return [...new Set((Array.isArray(value) ? value : []).map((item) => String(item)).filter(Boolean))];\n' +
+    '}\n' +
+    '\n' +
+    'function mainQuestId(chapterIndex, stageIndex) {\n' +
+    '  return `main:${Math.max(0, integer(chapterIndex))}:${Math.max(0, integer(stageIndex))}`;\n' +
+    '}\n' +
+    '\n' +
+    'function createMainQuestState(options = {}) {\n' +
+    '  return {\n' +
+    '    schema: MAIN_QUEST_SCHEMA,\n' +
+    '    chapterIndex: Math.max(0, integer(options.chapterIndex, 0)),\n' +
+    '    stageIndex: Math.max(0, integer(options.stageIndex, 0)),\n' +
+    '    progress: clamp(integer(options.progress, 0), 0, 1),\n' +
+    '    allComplete: options.allComplete === true,\n' +
+    '    campaignCycle: Math.max(1, integer(options.campaignCycle, 1)),\n' +
+    '    claimed: uniqueStrings(options.claimed),\n' +
+    '    history: Array.isArray(options.history) ? options.history.slice(-20) : []\n' +
+    '  };\n' +
+    '}\n' +
+    '\n' +
+    'function normalizeMainQuestState(input = {}, options = {}) {\n' +
+    '  const chapterCount = Math.max(0, integer(options.chapterCount, 0));\n' +
+    '  const state = createMainQuestState(input);\n' +
+    '  if (chapterCount > 0) {\n' +
+    '    state.chapterIndex = clamp(state.chapterIndex, 0, chapterCount - 1);\n' +
+    "    const stageCount = typeof options.stageCount === 'function'\n" +
+    '      ? Math.max(1, integer(options.stageCount(state.chapterIndex), 1))\n' +
+    '      : Math.max(1, integer(options.stageCount, 1));\n' +
+    '    state.stageIndex = clamp(state.stageIndex, 0, stageCount - 1);\n' +
+    '  } else {\n' +
+    '    state.chapterIndex = 0;\n' +
+    '    state.stageIndex = 0;\n' +
+    '    state.progress = 0;\n' +
+    '  }\n' +
+    '  return state;\n' +
+    '}\n' +
+    '\n' +
+    '/**\n' +
+    ' * Bootstrap a quest cursor for a save created before the main-quest module.\n' +
+    ' * The campaign cursor is authoritative, so returning players never restart\n' +
+    ' * at ải 1 merely because this module is new.\n' +
+    ' */\n' +
+    'function bootstrapMainQuestState(options = {}) {\n' +
+    '  const chapters = Array.isArray(options.chapters) ? options.chapters : [];\n' +
+    '  const unlocked = new Set((Array.isArray(options.unlockedChapters) ? options.unlockedChapters : []).map((value) => integer(value)));\n' +
+    '  const cleared = new Set((Array.isArray(options.clearedChapters) ? options.clearedChapters : []).map((value) => integer(value)));\n' +
+    "  const campaignStages = options.campaignStages && typeof options.campaignStages === 'object' ? options.campaignStages : {};\n" +
+    '  const open = chapters.find((chapter) => {\n' +
+    '    const index = integer(chapter?.idx, -1);\n' +
+    '    return index >= 0 && unlocked.has(index) && !cleared.has(index);\n' +
+    '  });\n' +
+    '  if (open) {\n' +
+    '    const chapterIndex = integer(open.idx, 0);\n' +
+    '    return createMainQuestState({\n' +
+    '      chapterIndex,\n' +
+    '      stageIndex: Math.max(0, integer(campaignStages[chapterIndex], 0)),\n' +
+    '      campaignCycle: Math.max(1, integer(options.campaignCycle, 1))\n' +
+    '    });\n' +
+    '  }\n' +
+    '  if (chapters.length) {\n' +
+    '    return createMainQuestState({\n' +
+    '      chapterIndex: Math.max(0, integer(chapters[chapters.length - 1]?.idx, chapters.length - 1)),\n' +
+    '      allComplete: true,\n' +
+    '      campaignCycle: Math.max(1, integer(options.campaignCycle, 1))\n' +
+    '    });\n' +
+    '  }\n' +
+    '  return createMainQuestState();\n' +
+    '}\n' +
+    '\n' +
+    'function getCurrentMainQuest(state, options = {}) {\n' +
+    '  const normalized = normalizeMainQuestState(state, options);\n' +
+    '  const chapterIndex = normalized.chapterIndex;\n' +
+    '  const stageIndex = normalized.stageIndex;\n' +
+    '  const id = mainQuestId(chapterIndex, stageIndex);\n' +
+    '  const claimed = normalized.claimed.includes(id);\n' +
+    '  return {\n' +
+    '    id,\n' +
+    '    chapterIndex,\n' +
+    '    stageIndex,\n' +
+    '    chapterNumber: chapterIndex + 1,\n' +
+    '    stageNumber: stageIndex + 1,\n' +
+    '    battleId: options.battleId == null ? null : String(options.battleId),\n' +
+    '    title: options.title == null ? `Chương ${chapterIndex + 1}` : String(options.title),\n' +
+    '    objective: options.objective == null ? `Vượt ải ${chapterIndex + 1}-${stageIndex + 1}` : String(options.objective),\n' +
+    '    goal: 1,\n' +
+    '    progress: normalized.progress,\n' +
+    '    ready: normalized.progress >= 1 && !claimed,\n' +
+    '    claimed,\n' +
+    '    complete: normalized.allComplete\n' +
+    '  };\n' +
+    '}\n' +
+    '\n' +
+    'function recordMainQuestBattle(state, quest, result = {}) {\n' +
+    '  const next = createMainQuestState(state);\n' +
+    "  const expectedId = quest?.id == null ? '' : String(quest.id);\n" +
+    "  const expectedBattle = quest?.battleId == null ? '' : String(quest.battleId);\n" +
+    "  const actualBattle = result?.battleId == null ? '' : String(result.battleId);\n" +
+    '  if (!result?.win || !expectedId || (expectedBattle && expectedBattle !== actualBattle) || next.claimed.includes(expectedId)) {\n' +
+    '    return { state'... 3784096 more characters
+  
+      at TestContext.<anonymous> (file:///workspace/luc-than/tests/player-progress-runtime.test.mjs:42:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '<!DOCTYPE html>\n<!-- Hồn Việt: Mộng Giới 1.0.2 — offline static-folder build --><html lang="vi"><head>\n<script id="honviet-ios-audio-unlock">\n(()=>{\n  if(window.HonVietAudio)return;\n  const AC=window.AudioContext||window.webkitAudioContext;\n  let ctx=window.__HV_EARLY_CTX||null, unlocked=false, unlockPromise=null;\n  try{\n    if(!ctx&&AC)ctx=new AC();\n    window.__HV_EARLY_CTX=ctx;\n    if(ctx&&ctx.state===\'suspended\')ctx.resume();\n    if(ctx){\n      const b=ctx.createBuffer(1,1,22050),s=ctx.createBufferSource();\n      s.buffer=b;s.connect(ctx.destination);s.start(0);\n    }\n  }catch(_e){}\n  const buffers=new Map();\n  const loads=new Map();\n  const activeVoices=new Set();\n  let combatEpoch=0,combatEnabled=true;\n  function beginCombat(){combatEnabled=true;}\n  function stopCombat(){\n    combatEnabled=false;combatEpoch++;\n    for(const voice of activeVoices)if(voice.combat){voice.stop();voice.cleanup();}\n    document.documentElement.dataset.voiceCombatActive=String([...activeVoices].filter(v=>v.combat).length);\n  }\n  const voiceUrls=[\n    \'assets/audio/voice-luc-anh-hero.mp3\',\n    \'assets/audio/voice-luc-anh-ultimate.mp3\'\n  ];\n  function getCtx(){\n    if(!ctx) ctx=window.__HV_EARLY_CTX||(AC?new AC():null);\n    if(ctx) window.__HV_EARLY_CTX=ctx;\n    return ctx;\n  }\n  async function decode(url){\n    if(buffers.has(url))return buffers.get(url);\n    if(loads.has(url))return loads.get(url);\n    const c=getCtx();\n    if(!c)throw new Error(\'AudioContext unavailable\');\n    const p=fetch(url,{cache:\'force-cache\'})\n      .then(r=>{if(!r.ok)throw new Error(\'audio \'+r.status);return r.arrayBuffer();})\n      .then(b=>c.decodeAudioData(b))\n      .then(buf=>{buffers.set(url,buf);loads.delete(url);return buf;})\n      .catch(e=>{loads.delete(url);throw e;});\n    loads.set(url,p);return p;\n  }\n  async function unlock(){\n    if(unlocked){\n      const c=getCtx();\n      if(c&&c.state===\'suspended\')try{await c.resume();}catch(_e){}\n      return true;\n    }\n    if(unlockPromise)return unlockPromise;\n    unlockPromise=(async()=>{\n      const c=getCtx();\n      if(c){\n        try{if(c.state===\'suspended\')await c.resume();}catch(_e){}\n        try{\n          const b=c.createBuffer(1,1,22050),s=c.createBufferSource();\n          s.buffer=b;s.connect(c.destination);s.start(0);\n        }catch(_e){}\n      }\n      // Prime existing HTML media during the user\'s first real game interaction.\n      document.querySelectorAll(\'audio,video\').forEach(el=>{\n        try{\n          const wasMuted=el.muted;\n          el.muted=true;\n          const p=el.play();\n          if(p&&p.then)p.then(()=>{el.pause();el.currentTime=0;el.muted=wasMuted;}).catch(()=>{el.muted=wasMuted;});\n          else {el.pause();el.currentTime=0;el.muted=wasMuted;}\n        }catch(_e){}\n      });\n      unlocked=true;\n      document.documentElement.dataset.audioUnlocked=\'1\';\n      voiceUrls.forEach(u=>decode(u).catch(()=>{}));\n      return true;\n    })().finally(()=>{unlockPromise=null;});\n    return unlockPromise;\n  }\n  async function playVoice(url,gainValue=1){\n    const combat=String(url).includes(\'voice-luc-anh-ultimate.mp3\'),ticket=combatEpoch;\n    const current=()=>!combat||(combatEnabled&&ticket===combatEpoch);\n    if(!current())return false;\n    await unlock();\n    if(!current())return false;\n    const c=getCtx();\n    if(!c)return false;\n    try{\n      const buf=await decode(url);\n      if(!current())return false;\n      if(c.state===\'suspended\')await c.resume();\n      if(!current())return false;\n      const src=c.createBufferSource(),gain=c.createGain();\n      src.buffer=buf;gain.gain.value=Math.max(0,Number(gainValue)||1);\n      src.connect(gain);gain.connect(c.destination);\n      const voice={combat,stop(){try{src.stop();}catch(_e){}},cleanup(){if(!activeVoices.delete(voice))return;src.disconnect();gain.disconnect();document.documentElement.dataset.voiceCombatActive=String([...activeVoices].filter(v=>v.combat).length);}};\n      src.onended=voice.cleanup;activeVoices.add(voice);src.start(0);\n      document.documentElement.dataset.voiceCombatActive=String([...activeVoices].filter(v=>v.combat).length);\n      return true;\n    }catch(_e){\n      if(!current())return false;\n      try{\n        const a=new Audio(url);a.preload=\'auto\';a.volume=1;\n        const voice={combat,stop(){a.pause();a.currentTime=0;},cleanup(){activeVoices.delete(voice);}};\n        a.onended=voice.cleanup;activeVoices.add(voice);\n        try{await a.play();return current();}catch(_e2){voice.cleanup();return false;}\n      }catch(_e2){return false;}\n    }\n  }\n  window.HonVietAudio={unlock,playVoice,beginCombat,stopCombat,preload:(u)=>decode(u),isUnlocked:()=>unlocked,context:()=>getCtx()};\n\n  // Keep unlocking on every gesture until the context is running. Full-page\n  // battle.html on iOS often misses the original Xuất chiến tap.\n  const firstGesture=()=>{\n    unlock().then(()=>{\n      try{window.__HV_BATTLE_BGM?.play?.();}catch(_e){}\n    }).catch(()=>{});\n  };\n  [\'pointerdown\',\'touchstart\',\'touchend\',\'click\',\'keydown\'].forEach(t=>\n    document.addEventListener(t,firstGesture,{capture:true,passive:true})\n  );\n\n  // Resume again after iOS returns from background / tab switch.\n  document.addEventListener(\'visibilitychange\',()=>{\n    if(document.visibilityState===\'visible\'){\n      const c=getCtx();\n      if(c&&c.state===\'suspended\')c.resume().catch(()=>{});\n      try{window.__HV_BATTLE_BGM?.play?.();}catch(_e){}\n    }\n  });\n})();\n/* hv-main-quest-v1-runtime */\n(()=> {\n  const __hvMainQuestModule = (()=> {\nconst MAIN_QUEST_SCHEMA = \'hon-viet-main-quest/v1\';\n\nfunction integer(value, fallback = 0) {\n  const n = Number(value);\n  return Number.isFinite(n) ? Math.round(n) : fallback;\n}\n\nfunction clamp(value, min, max) {\n  return Math.max(min, Math.min(max, value));\n}\n\nfunction uniqueStrings(value) {\n  return [...new Set((Array.isArray(value) ? value : []).map((item) => String(item)).filter(Boolean))];\n}\n\nfunction mainQuestId(chapterIndex, stageIndex) {\n  return `main:${Math.max(0, integer(chapterIndex))}:${Math.max(0, integer(stageIndex))}`;\n}\n\nfunction createMainQuestState(options = {}) {\n  return {\n    schema: MAIN_QUEST_SCHEMA,\n    chapterIndex: Math.max(0, integer(options.chapterIndex, 0)),\n    stageIndex: Math.max(0, integer(options.stageIndex, 0)),\n    progress: clamp(integer(options.progress, 0), 0, 1),\n    allComplete: options.allComplete === true,\n    campaignCycle: Math.max(1, integer(options.campaignCycle, 1)),\n    claimed: uniqueStrings(options.claimed),\n    history: Array.isArray(options.history) ? options.history.slice(-20) : []\n  };\n}\n\nfunction normalizeMainQuestState(input = {}, options = {}) {\n  const chapterCount = Math.max(0, integer(options.chapterCount, 0));\n  const state = createMainQuestState(input);\n  if (chapterCount > 0) {\n    state.chapterIndex = clamp(state.chapterIndex, 0, chapterCount - 1);\n    const stageCount = typeof options.stageCount === \'function\'\n      ? Math.max(1, integer(options.stageCount(state.chapterIndex), 1))\n      : Math.max(1, integer(options.stageCount, 1));\n    state.stageIndex = clamp(state.stageIndex, 0, stageCount - 1);\n  } else {\n    state.chapterIndex = 0;\n    state.stageIndex = 0;\n    state.progress = 0;\n  }\n  return state;\n}\n\n/**\n * Bootstrap a quest cursor for a save created before the main-quest module.\n * The campaign cursor is authoritative, so returning players never restart\n * at ải 1 merely because this module is new.\n */\nfunction bootstrapMainQuestState(options = {}) {\n  const chapters = Array.isArray(options.chapters) ? options.chapters : [];\n  const unlocked = new Set((Array.isArray(options.unlockedChapters) ? options.unlockedChapters : []).map((value) => integer(value)));\n  const cleared = new Set((Array.isArray(options.clearedChapters) ? options.clearedChapters : []).map((value) => integer(value)));\n  const campaignStages = options.campaignStages && typeof options.campaignStages === \'object\' ? options.campaignStages : {};\n  const open = chapters.find((chapter) => {\n    const index = integer(chapter?.idx, -1);\n    return index >= 0 && unlocked.has(index) && !cleared.has(index);\n  });\n  if (open) {\n    const chapterIndex = integer(open.idx, 0);\n    return createMainQuestState({\n      chapterIndex,\n      stageIndex: Math.max(0, integer(campaignStages[chapterIndex], 0)),\n      campaignCycle: Math.max(1, integer(options.campaignCycle, 1))\n    });\n  }\n  if (chapters.length) {\n    return createMainQuestState({\n      chapterIndex: Math.max(0, integer(chapters[chapters.length - 1]?.idx, chapters.length - 1)),\n      allComplete: true,\n      campaignCycle: Math.max(1, integer(options.campaignCycle, 1))\n    });\n  }\n  return createMainQuestState();\n}\n\nfunction getCurrentMainQuest(state, options = {}) {\n  const normalized = normalizeMainQuestState(state, options);\n  const chapterIndex = normalized.chapterIndex;\n  const stageIndex = normalized.stageIndex;\n  const id = mainQuestId(chapterIndex, stageIndex);\n  const claimed = normalized.claimed.includes(id);\n  return {\n    id,\n    chapterIndex,\n    stageIndex,\n    chapterNumber: chapterIndex + 1,\n    stageNumber: stageIndex + 1,\n    battleId: options.battleId == null ? null : String(options.battleId),\n    title: options.title == null ? `Chương ${chapterIndex + 1}` : String(options.title),\n    objective: options.objective == null ? `Vượt ải ${chapterIndex + 1}-${stageIndex + 1}` : String(options.objective),\n    goal: 1,\n    progress: normalized.progress,\n    ready: normalized.progress >= 1 && !claimed,\n    claimed,\n    complete: normalized.allComplete\n  };\n}\n\nfunction recordMainQuestBattle(state, quest, result = {}) {\n  const next = createMainQuestState(state);\n  const expectedId = quest?.id == null ? \'\' : String(quest.id);\n  const expectedBattle = quest?.battleId == null ? \'\' : String(quest.battleId);\n  const actualBattle = result?.battleId == null ? \'\' : String(result.battleId);\n  if (!result?.win || !expectedId || (expectedBattle && expectedBattle !== actualBattle) || next.claimed.includes(expectedId)) {\n    return { state'... 3784096 more characters,
+    expected: /data-player-level/,
+    operator: 'match',
+    diff: 'simple'
+  }
