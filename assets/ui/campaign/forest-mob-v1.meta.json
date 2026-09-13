@@ -1,0 +1,26 @@
+{
+  "source": "built-in image generation",
+  "created": "2026-09-13",
+  "ticket": "TKT-0116",
+  "chapter": "Ấn Rừng",
+  "prompt": "ONE production enemy sprite for a 2.5D Vietnamese fantasy chibi RPG. Premium near-3D painted volume, clean readable silhouette at 50 pixels. Facing LEFT, elevated three-quarter orthographic camera, whole creature visible centered with 10% breathing room. TRUE transparent RGBA background, no backdrop, no checkerboard drawn, no ground shadow, no platform, no text, no UI, no props outside creature. Single pose, not a sheet. Warm upper left lighting. Minor monster, not a hero. Subject: a squat hostile walking tree stump spirit, two sturdy root feet and two branch arms, small amber eyes in bark, a cap of fern fronds, asymmetrical wooden horns, compact wide silhouette; NOT a slime",
+  "originalSize": [
+    1295,
+    1214
+  ],
+  "boundsAlpha128": [
+    110,
+    17,
+    1206,
+    1182
+  ],
+  "sprite": {
+    "src": "assets/ui/campaign/forest-mob-v1.webp",
+    "width": 1295,
+    "height": 1214,
+    "pivot": 658.0,
+    "foot": 1182,
+    "body": 1165,
+    "motion": "step"
+  }
+}

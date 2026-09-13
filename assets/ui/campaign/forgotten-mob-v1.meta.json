@@ -1,0 +1,26 @@
+{
+  "source": "built-in image generation",
+  "created": "2026-09-13",
+  "ticket": "TKT-0116",
+  "chapter": "Ấn Quên",
+  "prompt": "ONE production enemy sprite for a 2.5D Vietnamese fantasy chibi RPG. Premium near-3D painted volume, clean readable silhouette at 50 pixels. Facing LEFT, elevated three-quarter orthographic camera, whole creature visible centered with 10% breathing room. TRUE transparent RGBA background, no backdrop, no checkerboard drawn, no ground shadow, no platform, no text, no UI, no props outside creature. Single pose, not a sheet. Warm upper left lighting. Minor monster, not a hero. Subject: a small floating spectral creature with a cracked porcelain oval mask, two long ragged violet cloth tails and outstretched wispy arms, pale cyan glowing eyes, clearly asymmetric ghost silhouette; NOT a slime",
+  "originalSize": [
+    1332,
+    1181
+  ],
+  "boundsAlpha128": [
+    45,
+    31,
+    1301,
+    1165
+  ],
+  "sprite": {
+    "src": "assets/ui/campaign/forgotten-mob-v1.webp",
+    "width": 1332,
+    "height": 1181,
+    "pivot": 673.0,
+    "foot": 1165,
+    "body": 1256,
+    "motion": "hover"
+  }
+}

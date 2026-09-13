@@ -1,0 +1,26 @@
+{
+  "source": "built-in image generation",
+  "created": "2026-09-13",
+  "ticket": "TKT-0116",
+  "chapter": "Ấn Lò",
+  "prompt": "ONE production enemy sprite for a 2.5D Vietnamese fantasy chibi RPG. Premium near-3D painted volume, clean readable silhouette at 50 pixels. Facing LEFT, elevated three-quarter orthographic camera, whole creature visible centered with 10% breathing room. TRUE transparent RGBA background, no backdrop, no checkerboard drawn, no ground shadow, no platform, no text, no UI, no props outside creature. Single pose, not a sheet. Warm upper left lighting. Minor monster, not a hero. Subject: a compact quadruped bronze furnace beast shaped like a boar, four short blocky legs, charcoal armor plates, glowing orange furnace mouth, bronze tusks and a chimney-like ridge on back; NOT a slime",
+  "originalSize": [
+    1374,
+    1145
+  ],
+  "boundsAlpha128": [
+    69,
+    87,
+    1326,
+    1085
+  ],
+  "sprite": {
+    "src": "assets/ui/campaign/forge-mob-v1.webp",
+    "width": 1374,
+    "height": 1145,
+    "pivot": 697.5,
+    "foot": 1085,
+    "body": 1257,
+    "motion": "step"
+  }
+}

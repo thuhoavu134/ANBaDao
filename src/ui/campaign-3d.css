@@ -15,7 +15,7 @@
   background:transparent!important;
 }
 #hvCampaignScene.hv-campaign-3d .cs-landscape{
-  background:#c9d8bd url('assets/ui/campaign/campaign-map-v3.webp') var(--cs-map-position,center)/var(--cs-map-size,cover) no-repeat!important;
+  background:#c9d8bd var(--cs-world-map,url('assets/ui/campaign/campaign-map-v3.webp')) var(--cs-map-position,center)/var(--cs-map-size,cover) no-repeat!important;
   min-height:52dvh;
   flex:1 1 auto;
 }

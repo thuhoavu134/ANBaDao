@@ -180,13 +180,18 @@ const CAMPAIGN_TRAVEL_PATH = [
   {x:.32,y:.72},{x:.30,y:.64},{x:.43,y:.555},
   {x:.59,y:.485},{x:.70,y:.415},{x:.755,y:.325},{x:.67,y:.245}
 ];
+const CAMPAIGN_CHAPTER_WORLDS = [{"id":"city","name":"Ấn Phố","map":"assets/ui/campaign/campaign-map-v3.webp","path":[{"x":0.32,"y":0.72},{"x":0.3,"y":0.64},{"x":0.43,"y":0.555},{"x":0.59,"y":0.485},{"x":0.7,"y":0.415},{"x":0.755,"y":0.325},{"x":0.67,"y":0.245}],"monster":{"src":"assets/ui/campaign/farm-moss-v1.webp","width":1254,"height":1254,"pivot":631,"foot":1093,"body":958,"motion":"jelly"}},{"id":"forest","name":"Ấn Rừng","map":"assets/ui/campaign/forest-map-v1.webp","path":[{"x":0.4,"y":0.82},{"x":0.52,"y":0.72},{"x":0.62,"y":0.62},{"x":0.55,"y":0.52},{"x":0.39,"y":0.43},{"x":0.38,"y":0.34},{"x":0.61,"y":0.24}],"monster":{"src":"assets/ui/campaign/forest-mob-v1.webp","width":1295,"height":1214,"pivot":658.0,"foot":1182,"body":1165,"motion":"step"}},{"id":"sea","name":"Ấn Biển","map":"assets/ui/campaign/sea-map-v1.webp","path":[{"x":0.32,"y":0.82},{"x":0.4,"y":0.73},{"x":0.65,"y":0.64},{"x":0.69,"y":0.55},{"x":0.51,"y":0.45},{"x":0.43,"y":0.35},{"x":0.57,"y":0.25}],"monster":{"src":"assets/ui/campaign/sea-mob-v1.webp","width":1312,"height":1199,"pivot":663.0,"foot":1129,"body":1128,"motion":"step"}},{"id":"forge","name":"Ấn Lò","map":"assets/ui/campaign/forge-map-v1.webp","path":[{"x":0.39,"y":0.82},{"x":0.38,"y":0.73},{"x":0.56,"y":0.64},{"x":0.67,"y":0.53},{"x":0.56,"y":0.42},{"x":0.45,"y":0.32},{"x":0.57,"y":0.23}],"monster":{"src":"assets/ui/campaign/forge-mob-v1.webp","width":1374,"height":1145,"pivot":697.5,"foot":1085,"body":1257,"motion":"step"}},{"id":"forgotten","name":"Ấn Quên","map":"assets/ui/campaign/forgotten-map-v1.webp","path":[{"x":0.4,"y":0.82},{"x":0.6,"y":0.74},{"x":0.72,"y":0.65},{"x":0.68,"y":0.54},{"x":0.44,"y":0.43},{"x":0.35,"y":0.34},{"x":0.49,"y":0.25}],"monster":{"src":"assets/ui/campaign/forgotten-mob-v1.webp","width":1332,"height":1181,"pivot":673.0,"foot":1165,"body":1256,"motion":"hover"}},{"id":"sanctum","name":"Lục Thần","map":"assets/ui/campaign/sanctum-map-v1.webp","path":[{"x":0.32,"y":0.82},{"x":0.37,"y":0.73},{"x":0.58,"y":0.64},{"x":0.67,"y":0.54},{"x":0.57,"y":0.43},{"x":0.42,"y":0.33},{"x":0.42,"y":0.24}],"monster":{"src":"assets/ui/campaign/sanctum-mob-v1.webp","width":1312,"height":1199,"pivot":654.5,"foot":1166,"body":1201,"motion":"step"}}];
+function campaignWorldForChapter(index) {
+  return CAMPAIGN_CHAPTER_WORLDS[Number.isInteger(index) ? index : 0] || CAMPAIGN_CHAPTER_WORLDS[0];
+}
 // One shared, deterministic presentation clock; no transactions or combat state.
-function sampleCampaignFarm(time, squad, quiet = false, specs = {}) {
+function sampleCampaignFarm(time, squad, quiet = false, specs = {}, world = null) {
   if (quiet || !squad.length) return null;
   const tick=Math.max(0,Number(time)||0), cycle=Math.floor(tick/24000), elapsed=tick%24000;
-  const last=CAMPAIGN_TRAVEL_PATH.length-1;
+  const path=world?.path||CAMPAIGN_TRAVEL_PATH;
+  const last=path.length-1;
   const index=n=>{const q=n%(last*2);return q<=last?q:last*2-q;};
-  const from=CAMPAIGN_TRAVEL_PATH[index(cycle)],to=CAMPAIGN_TRAVEL_PATH[index(cycle+1)];
+  const from=path[index(cycle)],to=path[index(cycle+1)];
   const u=Math.min(1,elapsed/5000), ease=u*u*(3-2*u);
   const center={x:from.x+(to.x-from.x)*ease,y:from.y+(to.y-from.y)*ease};
   const length=Math.hypot(to.x-from.x,to.y-from.y);
@@ -221,7 +226,7 @@ function sampleCampaignFarm(time, squad, quiet = false, specs = {}) {
     if(age>=0&&age<2100)loot.push({target:mob.index,item,age,
       phase:age<850?'drop':age<1900?'fly':'arrive',progress:Math.max(0,Math.min(1,(age-850)/1050))});
   }
-  return {cycle,elapsed,center,direction,actors,mobs,hits,loot,
+  return {cycle,elapsed,center,direction,actors,mobs,hits,loot,world:world||campaignWorldForChapter(0),
     phase:elapsed<5000?'march':elapsed<6200?'spawn':elapsed<19500?'attack':elapsed<22500?'loot':'rest'};
 }
 function drawCampaignFarm(ctx, farm, w, h, layer = 'effects') {
@@ -229,7 +234,8 @@ function drawCampaignFarm(ctx, farm, w, h, layer = 'effects') {
   const map=campaignMapView(w,h,farm.center);
   const project=m=>({x:map.left+m.worldX*map.width,y:map.top+m.worldY*map.height});
   const size=Math.min(52,w*.115,h*.085);
-  const image=imageForScene('assets/ui/campaign/farm-moss-v1.webp');
+  const monster=farm.world.monster;
+  const image=imageForScene(monster.src);
   const ready=image.complete&&image.naturalWidth>0;
   if(layer==='monsters-back'||layer==='monsters-front') {
     for(const actor of farm.actors)if(farmAttackSpecs[actor.id])imageForScene(farmAttackSpecs[actor.id].src);
@@ -237,12 +243,12 @@ function drawCampaignFarm(ctx, farm, w, h, layer = 'effects') {
       if(!ready||mob.alpha<=0)continue;
       if((mob.worldY<farm.center.y)!==(layer==='monsters-back'))continue;
       const p=project(mob),age=farm.elapsed-mob.spawnAt;
-      const hop=age<1000?Math.abs(Math.sin(age/1000*Math.PI*2))*size*.15:0;
-      const pulse=Math.sin(age/240)*.025,scale=size/958;
+      const hop=monster.motion==='hover' ? size*(.10+.035*Math.sin(age/330)) : age<1000?Math.abs(Math.sin(age/1000*Math.PI*2))*size*(monster.motion==='jelly'?.15:.035):0;
+      const pulse=Math.sin(age/240)*(monster.motion==='jelly'?.025:0),scale=size/monster.body;
       ctx.save();ctx.globalAlpha=mob.alpha;
       ctx.fillStyle='#14231644';ctx.beginPath();ctx.ellipse(p.x,p.y,size*.36,size*.075,0,0,Math.PI*2);ctx.fill();
       ctx.translate(p.x,p.y-hop);ctx.scale((farm.direction.x<0?-1:1)*(1+pulse),Math.max(.1,mob.alpha)*(1-pulse));
-      ctx.drawImage(image,-631*scale,-1093*scale,1254*scale,1254*scale);ctx.restore();
+      ctx.drawImage(image,-monster.pivot*scale,-monster.foot*scale,monster.width*scale,monster.height*scale);ctx.restore();
       if(mob.hp>0&&age>650){ctx.save();ctx.globalAlpha=.85;ctx.fillStyle='#302d26';ctx.fillRect(p.x-size*.34,p.y-size-6,size*.68,3);ctx.fillStyle='#cb6845';ctx.fillRect(p.x-size*.34,p.y-size-6,size*.68*mob.hp,3);ctx.restore();}
     }
     return;
@@ -287,7 +293,7 @@ function drawScene(time) {
   const preparing = Boolean(sceneState.draft);
   const enemies = preparing ? preparationEnemies() : [];
   const picks = preparing ? [...sceneState.draft, ...enemies] : savedSceneSquad();
-  const farm = preparing ? null : sampleCampaignFarm(sceneState.farmTime, picks, reducedMotion.matches, farmAttackSpecs);
+  const farm = preparing ? null : sampleCampaignFarm(reducedMotion.matches ? 0 : sceneState.farmTime, picks, false, farmAttackSpecs, sceneState.world||campaignWorldForChapter(0));
   if (!preparing) { syncCampaignMap(w,h,farm); drawCampaignFarm(ctx,farm,w,h,'monsters-back'); }
   const rowCounts = { front: 0, back: 0, enemyfront: 0, enemyback: 0 };
   picks.map(pick => {
@@ -558,10 +564,22 @@ function renderPreparationField() {
   for (const button of sceneState.root.querySelectorAll('[data-scene-hero]')) button.hidden = selectedElement !== 'all' && DATA.heroes[button.dataset.sceneHero].he !== selectedElement;
   resizeScene();
 }
+function setCampaignWorld(chapterIndex) {
+  const world=campaignWorldForChapter(chapterIndex);
+  if(sceneState.world?.id!==world.id)sceneState.farmTime=0;
+  sceneState.world=world;
+  const landscape=sceneState.root?.querySelector('.cs-landscape');
+  landscape?.style.setProperty('--cs-world-map',`url('${world.map}')`);
+  for(const image of sceneState.root?.querySelectorAll('.cs-map-art img')||[]) {
+    if(image.getAttribute('src')!==world.map)image.setAttribute('src',world.map);
+    image.alt='Đường hành quân '+world.name;
+  }
+}
 function renderScene() {
   if (!P) return;
   mountScene(); ensureSceneChest();
   const checkpoint = currentCheckpoint(), squad = savedSceneSquad();
+  setCampaignWorld(checkpoint?.chapterIndex ?? 0);
   setSceneText('[data-scene-leader]', DATA.heroes[squad[0]?.id]?.name || 'Người dẫn đường');
   setSceneText('[data-scene-power]', sceneNumber(scenePower(squad)));
   if (squad[0]) sceneState.root.querySelector('[data-scene-avatar]').src = portraitSrc(squad[0].id, 'avatar');

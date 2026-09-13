@@ -20,7 +20,7 @@ body.hv-campaign-active #toast{z-index:100001}
 #hvCampaignScene .cs-wallet span{display:flex;align-items:center;gap:5px;font-size:10px;background:#64766112;padding:1px 6px;border-radius:5px}
 #hvCampaignScene .cs-wallet img{width:17px;height:17px}
 #hvCampaignScene .cs-scroll{overflow:hidden;min-height:0;overscroll-behavior:contain;scrollbar-width:thin;display:flex;flex-direction:column}
-#hvCampaignScene .cs-landscape{position:relative;flex:1 1 auto;min-height:52dvh;height:auto;background:#c9d8bd url('assets/ui/campaign/campaign-map-v3.webp') var(--cs-map-position,center)/var(--cs-map-size,cover) no-repeat;overflow:hidden}
+#hvCampaignScene .cs-landscape{position:relative;flex:1 1 auto;min-height:52dvh;height:auto;background:#c9d8bd var(--cs-world-map,url('assets/ui/campaign/campaign-map-v3.webp')) var(--cs-map-position,center)/var(--cs-map-size,cover) no-repeat;overflow:hidden}
 #hvCampaignScene .cs-route{position:relative;z-index:1;text-align:center;padding:16px 15px 0;text-shadow:0 1px 6px #fff7dc}
 #hvCampaignScene .cs-route h1{font:700 clamp(19px,4.5vw,25px)/1.2 Georgia,"Times New Roman",serif;margin:4px 0 13px;color:#284e40}
 #hvCampaignScene .cs-milestones{display:flex;justify-content:center;gap:0;margin:0 auto;padding:0;list-style:none;max-width:360px}

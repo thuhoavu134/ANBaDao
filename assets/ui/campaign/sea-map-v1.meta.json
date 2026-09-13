@@ -1,0 +1,11 @@
+{
+  "source": "built-in image generation",
+  "created": "2026-09-13",
+  "ticket": "TKT-0116",
+  "chapter": "Ấn Biển",
+  "prompt": "Production 2.5D RPG exploration background, tall portrait 9:16. Orthographic elevated bird's-eye camera, no horizon or sky at top. One continuous BROAD unobstructed WALKABLE S-shaped lane from bottom center-left to top center-right. Lane center follows normalized coordinates x/y: .32/.80, .30/.70, .30/.64, .43/.55, .59/.48, .70/.41, .755/.32, .67/.24, .60/.12. Road wide enough for a six hero squad and monsters, minimum width 22% image, no stairs across route, no obstacles on road, clearly defined edges. Scenery ONLY at sides of the lane, route visually dominant. Premium near-3D painted chibi RPG environment with depth, detailed atmospheric daylight, same scale throughout. No people, no monsters, no treasure chest, no UI, no text, no markers. Theme: a dried seabed, pale golden sand, turquoise tide pools outside the route, enormous coral and shell formations, weathered Vietnamese fishing boat wrecks. Road is broad dry compact sand with flat shell fragments, never water.",
+  "originalSize": [
+    941,
+    1672
+  ]
+}

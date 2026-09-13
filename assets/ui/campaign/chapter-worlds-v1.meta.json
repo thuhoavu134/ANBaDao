@@ -1,0 +1,270 @@
+{
+  "source": "built-in image generation; waypoints manually authored after image inspection",
+  "ticket": "TKT-0116",
+  "worlds": [
+    {
+      "id": "city",
+      "name": "Ấn Phố",
+      "map": "assets/ui/campaign/campaign-map-v3.webp",
+      "path": [
+        {
+          "x": 0.32,
+          "y": 0.72
+        },
+        {
+          "x": 0.3,
+          "y": 0.64
+        },
+        {
+          "x": 0.43,
+          "y": 0.555
+        },
+        {
+          "x": 0.59,
+          "y": 0.485
+        },
+        {
+          "x": 0.7,
+          "y": 0.415
+        },
+        {
+          "x": 0.755,
+          "y": 0.325
+        },
+        {
+          "x": 0.67,
+          "y": 0.245
+        }
+      ],
+      "monster": {
+        "src": "assets/ui/campaign/farm-moss-v1.webp",
+        "width": 1254,
+        "height": 1254,
+        "pivot": 631,
+        "foot": 1093,
+        "body": 958,
+        "motion": "jelly"
+      }
+    },
+    {
+      "id": "forest",
+      "name": "Ấn Rừng",
+      "map": "assets/ui/campaign/forest-map-v1.webp",
+      "path": [
+        {
+          "x": 0.4,
+          "y": 0.82
+        },
+        {
+          "x": 0.52,
+          "y": 0.72
+        },
+        {
+          "x": 0.62,
+          "y": 0.62
+        },
+        {
+          "x": 0.55,
+          "y": 0.52
+        },
+        {
+          "x": 0.39,
+          "y": 0.43
+        },
+        {
+          "x": 0.38,
+          "y": 0.34
+        },
+        {
+          "x": 0.61,
+          "y": 0.24
+        }
+      ],
+      "monster": {
+        "src": "assets/ui/campaign/forest-mob-v1.webp",
+        "width": 1295,
+        "height": 1214,
+        "pivot": 658.0,
+        "foot": 1182,
+        "body": 1165,
+        "motion": "step"
+      }
+    },
+    {
+      "id": "sea",
+      "name": "Ấn Biển",
+      "map": "assets/ui/campaign/sea-map-v1.webp",
+      "path": [
+        {
+          "x": 0.32,
+          "y": 0.82
+        },
+        {
+          "x": 0.4,
+          "y": 0.73
+        },
+        {
+          "x": 0.65,
+          "y": 0.64
+        },
+        {
+          "x": 0.69,
+          "y": 0.55
+        },
+        {
+          "x": 0.51,
+          "y": 0.45
+        },
+        {
+          "x": 0.43,
+          "y": 0.35
+        },
+        {
+          "x": 0.57,
+          "y": 0.25
+        }
+      ],
+      "monster": {
+        "src": "assets/ui/campaign/sea-mob-v1.webp",
+        "width": 1312,
+        "height": 1199,
+        "pivot": 663.0,
+        "foot": 1129,
+        "body": 1128,
+        "motion": "step"
+      }
+    },
+    {
+      "id": "forge",
+      "name": "Ấn Lò",
+      "map": "assets/ui/campaign/forge-map-v1.webp",
+      "path": [
+        {
+          "x": 0.39,
+          "y": 0.82
+        },
+        {
+          "x": 0.38,
+          "y": 0.73
+        },
+        {
+          "x": 0.56,
+          "y": 0.64
+        },
+        {
+          "x": 0.67,
+          "y": 0.53
+        },
+        {
+          "x": 0.56,
+          "y": 0.42
+        },
+        {
+          "x": 0.45,
+          "y": 0.32
+        },
+        {
+          "x": 0.57,
+          "y": 0.23
+        }
+      ],
+      "monster": {
+        "src": "assets/ui/campaign/forge-mob-v1.webp",
+        "width": 1374,
+        "height": 1145,
+        "pivot": 697.5,
+        "foot": 1085,
+        "body": 1257,
+        "motion": "step"
+      }
+    },
+    {
+      "id": "forgotten",
+      "name": "Ấn Quên",
+      "map": "assets/ui/campaign/forgotten-map-v1.webp",
+      "path": [
+        {
+          "x": 0.4,
+          "y": 0.82
+        },
+        {
+          "x": 0.6,
+          "y": 0.74
+        },
+        {
+          "x": 0.72,
+          "y": 0.65
+        },
+        {
+          "x": 0.68,
+          "y": 0.54
+        },
+        {
+          "x": 0.44,
+          "y": 0.43
+        },
+        {
+          "x": 0.35,
+          "y": 0.34
+        },
+        {
+          "x": 0.49,
+          "y": 0.25
+        }
+      ],
+      "monster": {
+        "src": "assets/ui/campaign/forgotten-mob-v1.webp",
+        "width": 1332,
+        "height": 1181,
+        "pivot": 673.0,
+        "foot": 1165,
+        "body": 1256,
+        "motion": "hover"
+      }
+    },
+    {
+      "id": "sanctum",
+      "name": "Lục Thần",
+      "map": "assets/ui/campaign/sanctum-map-v1.webp",
+      "path": [
+        {
+          "x": 0.32,
+          "y": 0.82
+        },
+        {
+          "x": 0.37,
+          "y": 0.73
+        },
+        {
+          "x": 0.58,
+          "y": 0.64
+        },
+        {
+          "x": 0.67,
+          "y": 0.54
+        },
+        {
+          "x": 0.57,
+          "y": 0.43
+        },
+        {
+          "x": 0.42,
+          "y": 0.33
+        },
+        {
+          "x": 0.42,
+          "y": 0.24
+        }
+      ],
+      "monster": {
+        "src": "assets/ui/campaign/sanctum-mob-v1.webp",
+        "width": 1312,
+        "height": 1199,
+        "pivot": 654.5,
+        "foot": 1166,
+        "body": 1201,
+        "motion": "step"
+      }
+    }
+  ]
+}

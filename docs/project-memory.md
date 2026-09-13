@@ -1,3 +1,9 @@
+## 13/09 — TKT-0116: cơ chế AFK xuyên 6 chương
+
+Owner duyệt cơ chế #109, main 305002f. Giữ hành quân cả đội, đánh bầy, damage/crit và loot về rương. Registry 6 world theo chapterIndex: Ấn Phố dùng art đã duyệt; 5 chương sau có map và quái khác silhouette. Waypoint được đặt sau khi xem từng ảnh, không dùng chung đường cũ. Chương mới reset clock và đổi cảnh lớn/minimap cùng nguồn; cùng chương không reset khi đổi ải. Chương chưa có cấu hình fallback Ấn Phố, cần bổ sung world trước khi phát hành chương mới.
+5 map + 5 quái mới có prompt/metadata, RGBA giữ nguyên, pivot/bounds đo alpha 128 một lần; jelly/step/hover tách chuyển động. Không thay tướng, roster hoặc mở ticket NPC khác. Không thay thưởng/save/progression/combat.
+RED 2 lỗi thiếu world resolver → GREEN 85/85 campaign/AFK; syntax và build PASS. Chrome 390×844 vẫn BLOCKED do automatic review từ chối preview đăng nhập; Safari NOT_RUN. Asset đã xem, UI runtime mới chưa nghiệm thu. VibeLab browser gate còn thiếu; ticket-file fallback, không claim giả. Chưa merge/deploy, chờ live riêng.
+
 ## 13/09 — TKT-0115: đội hành quân, đánh bầy và loot về rương
 
 Tiếp từ main be983ff (#108 đã merge theo live của owner). Owner cho phép di chuyển bằng Idle tạm, thay quy tắc cũ chờ Run mới di chuyển. Camera theo tuyến đường 7 điểm trong map v3, quay lại liên tục không teleport; mini map đồng bộ cùng tọa độ. Cả đội đã lưu đánh đồng thời tối đa 4 quái, hai lượt Basic, giữ timing authored; thiếu Basic dùng gesture tạm.
