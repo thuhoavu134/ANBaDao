@@ -34,7 +34,7 @@
   const ART = {
     gold: 'assets/items/materials/gold.png',
     gems: 'assets/ui/festival/bbr/gems.png',
-    tinh: 'assets/ui/festival/bbr/tinh.png',
+    tinh: 'assets/items/materials/tinh-luc.png',
     hoat: 'assets/ui/festival/bbr/hoat.png',
     sh_ss: 'assets/ui/festival/bbr/sh_ss.png',
     sh_ssr: 'assets/ui/festival/bbr/sh_ssr.png',

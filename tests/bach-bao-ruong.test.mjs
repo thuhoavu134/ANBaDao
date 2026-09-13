@@ -101,7 +101,7 @@ test('L109: cược 2/10/50, sao nhân, chế sò Tinh/Hoạt, shop điểm', ()
   assert.ok(scored.pts >= 1);
   const css = readFileSync(join(root, 'src/ui/bach-bao-ruong.css'), 'utf8');
   assert.match(css, /#hvBbrDesk \.hv-bbr-go/);
-  assert.match(css, /hv-bbr-stack\.n1 img:nth-child\(1\)\{left:2%;top:2%;width:96%/);
+  assert.match(css, /hv-bbr-stack\.n1 img:nth-child\(1\)\{left:0;top:0;width:100%/);
   assert.match(css, /object-fit:contain/);
   assert.match(ui, /gold\.png/);
   assert.match(ui, /supreme\.png/);

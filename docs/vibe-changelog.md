@@ -1,3 +1,8 @@
+## 13/09 — TKT-0123: vành Bách Bảo icon gần full ô
+
+Owner screenshot: icon bé trong ô xám. Trim padding PNG, scale LANCZOS đều tỉ lệ 92% canvas, CSS n1 100% / n2 88% / n3 80%, stack absolute fill, `contain` không crop. Tinh vành = bình túi. Không đổi cược/pay.
+RED 3 fail → GREEN 4/4 L123 + npm test 890. Chrome 390×844 + 768×1024 L123-P1 PASS (n1 ≥0.95). Safari NOT_RUN. REVIEW, chờ owner gõ `live`.
+
 ## 13/09 — TKT-0122: đồng vàng một PNG chung
 
 Owner: vàng lệch giữa Thành chính (đồng tròn), Túi (thỏi), Bách Bảo (đống xu). Gộp về `assets/items/materials/gold.png`. Copy cùng bytes sang ví Chinh chiến + file BBR. Chip Chợ dùng img. Không đổi số vàng/cược.
