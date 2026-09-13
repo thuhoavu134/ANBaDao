@@ -1,12 +1,12 @@
 ## 14/09 — TKT-0137: Vệt sáng trắng, không đường vàng
 
 Owner: đừng đường vàng, là vệt sáng. Thanh chéo `#fff`, translate3d 1.5s. Ô hold không flood trắng. Cược/loot không đổi.
-RED 1 fail → GREEN 3/3 L137 + npm test 935. Chrome 390×844 L137-P1 PASS. Safari NOT_RUN. Gắn PR #130. Owner gõ live rồi tự `git pull && vercel --prod`.
+RED 1 fail → GREEN 3/3 L137 + npm test 935. Chrome 390×844 L137-P1 PASS. Safari NOT_RUN. LIVE #130 `ab75870`. Owner tự `git pull && vercel --prod`.
 
 ## 14/09 — TKT-0136: Vệt loáng là đường chéo chạy
 
 Owner iOS (video 00:44): wash cả ô, không phải vệt. iOS không animate background-position. Thanh `rotate(45deg)` + `translate3d`, 1.5s/lần, clip trong ô. Cược/loot không đổi.
-RED 1 fail → GREEN 3/3 L136 + npm test 932. Chrome 390×844 L136-P1 PASS. Safari NOT_RUN. PR REVIEW. Owner gõ live rồi tự `git pull && vercel --prod`.
+RED 1 fail → GREEN 3/3 L136 + npm test 932. Chrome 390×844 L136-P1 PASS. Safari NOT_RUN. LIVE #130 `ab75870`. Owner tự `git pull && vercel --prod`.
 
 ## 14/09 — TKT-0135: Sheen phủ hết ô trúng · 1.5s/lần
 

@@ -1,11 +1,11 @@
 ---
 id: TKT-0137
 title: Vệt sáng trắng, không đường vàng
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 created: 2026-09-13T17:54:00.000Z
-updated: 2026-09-13T17:57:00.000Z
+updated: 2026-09-13T17:58:00.000Z
 acceptance_ids: ['L137-T1', 'L137-T2', 'L137-T3', 'L137-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths:
@@ -34,4 +34,4 @@ Không đổi BETS, loot. Không sheen lúc quay. Không pulse cả ô.
 
 RED 1 fail (còn #ffd36a) → GREEN 3/3 L137 + npm test 935 PASS.
 Chrome 390×844 L137-P1 PASS. Safari NOT_RUN.
-Gắn PR #130. Gõ **live** để squash-merge.
+LIVE #130 `ab75870`.

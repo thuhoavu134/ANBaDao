@@ -1,11 +1,11 @@
 ---
 id: TKT-0136
 title: Vệt loáng là đường chéo chạy, không wash ô
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 created: 2026-09-13T17:47:00.000Z
-updated: 2026-09-13T17:52:00.000Z
+updated: 2026-09-13T17:58:00.000Z
 acceptance_ids: ['L136-T1', 'L136-T2', 'L136-T3', 'L136-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths:
@@ -36,4 +36,4 @@ Không đổi BETS 2/10/50, loot. Không sheen lúc quay. Không pulse cả ô.
 
 RED 1 fail (wash background-position) → GREEN 3/3 L136 + npm test 932 PASS.
 Chrome 390×844 L136-P1 PASS (transform chạy, 1.5s). Safari NOT_RUN.
-Builder dừng REVIEW. Gõ **live** để squash-merge.
+LIVE #130 `ab75870`.
