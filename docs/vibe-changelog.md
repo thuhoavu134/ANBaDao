@@ -1,7 +1,7 @@
 ## 14/09 — TKT-0135: Sheen phủ hết ô trúng · 1.5s/lần
 
 Owner iOS (IMG_7324): vệt loáng chỉ một góc nhỏ. Phủ `inset:0` chéo 135deg hết ô, 1.5s/lần. Không sheen lúc quay. Cược/loot không đổi.
-RED 1 fail → GREEN 3/3 L135 + npm test 929. Chrome 390×844 L135-P1 PASS. Safari NOT_RUN. PR REVIEW. Owner gõ live rồi tự `git pull && vercel --prod`.
+RED 1 fail → GREEN 3/3 L135 + npm test 929. Chrome 390×844 L135-P1 PASS. Safari NOT_RUN. LIVE #129 `50fee93`. Owner tự `git pull && vercel --prod`.
 
 ## 14/09 — TKT-0134: Quay sáng đều · ô trúng mới loáng
 

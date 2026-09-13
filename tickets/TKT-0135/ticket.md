@@ -1,11 +1,11 @@
 ---
 id: TKT-0135
 title: Sheen phủ hết ô trúng · 1.5s/lần
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 created: 2026-09-13T17:37:00.000Z
-updated: 2026-09-13T17:41:00.000Z
+updated: 2026-09-13T17:42:00.000Z
 acceptance_ids: ['L135-T1', 'L135-T2', 'L135-T3', 'L135-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths:
@@ -36,4 +36,4 @@ Không đổi BETS 2/10/50, loot, lastIdx. Không sheen lúc quay. Không bbrHol
 
 RED 1 fail (inset:auto, 1.35s) → GREEN 3/3 L135 + npm test 929 PASS.
 Chrome 390×844 L135-P1 PASS (inset 0, 1.5s, phủ ô). Safari NOT_RUN.
-Builder dừng REVIEW. Gõ **live** để squash-merge.
+LIVE #129 `50fee93`.
