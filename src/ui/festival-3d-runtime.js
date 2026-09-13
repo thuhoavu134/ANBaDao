@@ -10,9 +10,9 @@
   };
 
   const TILES = [
-    { id: 'lamp', name: 'Hoa Đăng', img: 'assets/ui/festival/tiles/hoa-dang.jpg' },
-    { id: 'wheel', name: 'Bách Bảo', img: 'assets/ui/festival/tiles/bach-bao.jpg' },
-    { id: 'chest', name: 'Rương Báu', img: 'assets/ui/festival/tiles/ruong.jpg' }
+    { id: 'lamp', name: 'Hoa Đăng', fact: 'lantern', img: 'assets/ui/festival/tiles/hoa-dang.jpg' },
+    { id: 'wheel', name: 'Bách Bảo', fact: 'wheel', img: 'assets/ui/festival/tiles/bach-bao.jpg' },
+    { id: 'chest', name: 'Rương Báu', fact: 'chest', img: 'assets/ui/festival/tiles/ruong.jpg' }
   ];
 
   const ensureCity = root => {
@@ -22,9 +22,6 @@
     if (!city) {
       city = document.createElement('div');
       city.id = 'hvFestCity';
-      city.innerHTML = TILES.map(t =>
-        `<button type="button" class="hv-ftile" data-fcity="${t.id}"><img src="${t.img}" alt=""><b>${t.name}</b></button>`
-      ).join('');
       root.append(city);
       city.addEventListener('click', ev => {
         const btn = ev.target.closest('[data-fcity]');
@@ -41,6 +38,9 @@
         root.dataset.fcity = '';
       }, true);
     }
+    city.innerHTML = TILES.map(t =>
+      `<button type="button" class="hv-ftile" data-fcity="${t.id}" data-fact="${t.fact}"><img src="${t.img}" alt="${t.name}"><b>${t.name}</b></button>`
+    ).join('');
     paintVault(root);
   };
 

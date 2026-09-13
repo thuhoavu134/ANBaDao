@@ -67,5 +67,5 @@
   box-shadow:0 0 0 1px #e2c48a,0 4px 10px rgba(80,50,20,.12);
   display:flex;flex-direction:column;align-items:center;cursor:pointer;
 }
-#hvFestCity .hv-ftile img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;display:block}
+#hvFestCity .hv-ftile img{width:100%;aspect-ratio:1;object-fit:contain;border-radius:10px;display:block;background:#f7ead2}
 #hvFestCity .hv-ftile b{margin-top:6px;font-size:12px;color:#5a3a18;text-align:center}

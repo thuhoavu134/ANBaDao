@@ -1,0 +1,147 @@
+{
+  "ticket": "TKT-0119",
+  "chrome": [
+    {
+      "label": "390x844",
+      "ok": true,
+      "city": {
+        "tiles": [
+          {
+            "id": "lamp",
+            "fact": "lantern",
+            "name": "Hoa Đăng",
+            "src": "assets/ui/festival/tiles/hoa-dang.jpg"
+          },
+          {
+            "id": "wheel",
+            "fact": "wheel",
+            "name": "Bách Bảo",
+            "src": "assets/ui/festival/tiles/bach-bao.jpg"
+          },
+          {
+            "id": "chest",
+            "fact": "chest",
+            "name": "Rương Báu",
+            "src": "assets/ui/festival/tiles/ruong.jpg"
+          }
+        ],
+        "city": true
+      },
+      "shop": {
+        "open": true,
+        "keep": true,
+        "goods": [
+          {
+            "id": "ss8",
+            "img": "assets/ui/festival/bbr/sh_ss.png",
+            "name": "Mảnh S",
+            "cost": "100 điểm"
+          },
+          {
+            "id": "ssr12",
+            "img": "assets/ui/festival/bbr/sh_ssr.png",
+            "name": "Mảnh S+",
+            "cost": "250 điểm"
+          },
+          {
+            "id": "chest",
+            "img": "assets/ui/festival/bbr/chest.png",
+            "name": "Rương Báu",
+            "cost": "400 điểm"
+          },
+          {
+            "id": "gems40",
+            "img": "assets/ui/festival/bbr/gems.png",
+            "name": "Ngọc",
+            "cost": "800 điểm"
+          },
+          {
+            "id": "supreme",
+            "img": "assets/ui/festival/bbr/supreme.png",
+            "name": "Rương Chí Bảo",
+            "cost": "1500 điểm"
+          },
+          {
+            "id": "ssr40",
+            "img": "assets/ui/festival/bbr/sh_ssr.png",
+            "name": "Mảnh S+",
+            "cost": "3000 điểm"
+          }
+        ]
+      },
+      "appErrors": []
+    },
+    {
+      "label": "768x1024",
+      "ok": true,
+      "city": {
+        "tiles": [
+          {
+            "id": "lamp",
+            "fact": "lantern",
+            "name": "Hoa Đăng",
+            "src": "assets/ui/festival/tiles/hoa-dang.jpg"
+          },
+          {
+            "id": "wheel",
+            "fact": "wheel",
+            "name": "Bách Bảo",
+            "src": "assets/ui/festival/tiles/bach-bao.jpg"
+          },
+          {
+            "id": "chest",
+            "fact": "chest",
+            "name": "Rương Báu",
+            "src": "assets/ui/festival/tiles/ruong.jpg"
+          }
+        ],
+        "city": true
+      },
+      "shop": {
+        "open": true,
+        "keep": true,
+        "goods": [
+          {
+            "id": "ss8",
+            "img": "assets/ui/festival/bbr/sh_ss.png",
+            "name": "Mảnh S",
+            "cost": "100 điểm"
+          },
+          {
+            "id": "ssr12",
+            "img": "assets/ui/festival/bbr/sh_ssr.png",
+            "name": "Mảnh S+",
+            "cost": "250 điểm"
+          },
+          {
+            "id": "chest",
+            "img": "assets/ui/festival/bbr/chest.png",
+            "name": "Rương Báu",
+            "cost": "400 điểm"
+          },
+          {
+            "id": "gems40",
+            "img": "assets/ui/festival/bbr/gems.png",
+            "name": "Ngọc",
+            "cost": "800 điểm"
+          },
+          {
+            "id": "supreme",
+            "img": "assets/ui/festival/bbr/supreme.png",
+            "name": "Rương Chí Bảo",
+            "cost": "1500 điểm"
+          },
+          {
+            "id": "ssr40",
+            "img": "assets/ui/festival/bbr/sh_ssr.png",
+            "name": "Mảnh S+",
+            "cost": "3000 điểm"
+          }
+        ]
+      },
+      "appErrors": []
+    }
+  ],
+  "safari": "NOT_RUN",
+  "ts": "2026-09-13T10:02:02.164Z"
+}

@@ -384,6 +384,69 @@
     };
   }
 
+  function shopIcon(it) {
+    if (it.sh_ss) return ART.sh_ss;
+    if (it.sh_ssr) return ART.sh_ssr;
+    if (it.chest) return ART.chest;
+    if (it.gems) return ART.gems;
+    if (it.supreme) return ART.supreme;
+    return ART.gold;
+  }
+  function shopTag(it) {
+    if (it.supreme || (it.sh_ssr && it.pts >= 1500)) return { cls: 't-super', label: 'Siêu' };
+    if (it.chest || it.sh_ssr || it.gems) return { cls: 't-rare', label: 'Hiếm' };
+    return { cls: 't-ok', label: 'Đổi' };
+  }
+  function shopQty(it) {
+    return it.sh_ss || it.sh_ssr || it.gems || it.chest || it.supreme || 1;
+  }
+  function shopTitle(it) {
+    if (it.sh_ss) return 'Mảnh S';
+    if (it.sh_ssr) return 'Mảnh S+';
+    if (it.chest) return 'Rương Báu';
+    if (it.gems) return 'Ngọc';
+    if (it.supreme) return 'Rương Chí Bảo';
+    return it.name;
+  }
+
+  function paintShop() {
+    const host = document.getElementById('hvFestivalRoot') || document.getElementById('festivalBody');
+    if (!host) return;
+    let shop = document.getElementById('hvBbrShop');
+    if (!shop) {
+      shop = document.createElement('div');
+      shop.id = 'hvBbrShop';
+      shop.hidden = true;
+      host.append(shop);
+    }
+    const b = st();
+    shop.innerHTML = `
+      <div class="hv-bbr-shop-hero">
+        <img src="assets/ui/festival/shop-keep.jpg" alt="">
+        <button type="button" class="hv-bbr-shop-x" data-bbr-pane="play" aria-label="Đóng">‹</button>
+        <div class="hv-bbr-shop-pts">Điểm <b>${b.pts || 0}</b></div>
+        <div class="hv-bbr-shop-ribbon">Shop Điểm</div>
+      </div>
+      <div class="hv-bbr-shop-body">
+        <div class="hv-bbr-shop-tab">Điểm</div>
+        <div class="hv-bbr-goods">${SHOP.map(it => {
+        const tag = shopTag(it);
+        return `<button type="button" class="hv-bbr-good" data-bbr-buy="${it.id}">
+          <i class="hv-bbr-tag ${tag.cls}">${tag.label}</i>
+          <span class="hv-bbr-ico"><img src="${shopIcon(it)}" alt=""><em>${shopQty(it)}</em></span>
+          <span class="hv-bbr-meta">
+            <b>${shopTitle(it)}</b>
+            <small>Đổi bằng điểm</small>
+            <span class="hv-bbr-cost">${it.pts} điểm</span>
+          </span>
+        </button>`;
+      }).join('')}</div>
+      </div>`;
+    shop.hidden = pane !== 'shop';
+    shop.classList.toggle('is-open', pane === 'shop');
+    host.classList.toggle('is-bbr-shop', pane === 'shop');
+  }
+
   function starTable(type, bet, on) {
     const row = PAY[type] || PAY.gold;
     return [1, 2, 3, 4, 5, 6].map(s => {
@@ -421,16 +484,6 @@
           </div>
         </div>
         <div class="hv-bbr-side">
-          ${pane === 'shop' ? `
-            <p class="hv-bbr-pts">Điểm ${b.pts || 0} · 🎁 ${b.chests || 0} · 👑 ${b.supreme || 0}</p>
-            <p class="hv-bbr-now">Điểm từ <b>Nhận điểm</b> hoặc khi bấm <b>Thưởng</b>.</p>
-            <div class="hv-bbr-shop">${SHOP.map(it =>
-              `<button type="button" data-bbr-buy="${it.id}">${it.name} · ${it.pts}đ</button>`
-            ).join('')}</div>
-            ${(b.chests || 0) > 0 ? '<button type="button" data-bbr-open="chest">Mở Rương Báu</button>' : ''}
-            ${(b.supreme || 0) > 0 ? '<button type="button" data-bbr-open="supreme">Mở Chí Bảo</button>' : ''}
-            <button type="button" data-bbr-pane="play">Về quay</button>
-          ` : `
             <div class="hv-bbr-bets">${BETS.map(n =>
               `<button type="button" class="hv-bbr-bet${bet === n ? ' is-on' : ''}" data-bbr-bet="${n}">${n} ${SO_IC}</button>`
             ).join('')}</div>
@@ -444,7 +497,6 @@
               <button type="button" data-bbr-take ${pend ? '' : 'disabled'}>Thưởng</button>
               <button type="button" data-bbr-convert ${pend ? '' : 'disabled'}>Đổi sò</button>
             </div>
-          `}
         </div>
       </div>
     </div>`;
@@ -457,6 +509,7 @@
     });
     const spin = document.querySelector('[data-fest-spin], #bbwSpin');
     if (spin) spin.style.display = 'none';
+    paintShop();
   }
 
   function onDesk(ev) {
@@ -525,7 +578,7 @@
     if (!root || root.dataset.bbrCap === '1') return;
     root.dataset.bbrCap = '1';
     root.addEventListener('click', ev => {
-      if (ev.target.closest('#hvBbrDesk')) {
+      if (ev.target.closest('#hvBbrDesk, #hvBbrShop')) {
         ev.preventDefault();
         ev.stopImmediatePropagation();
         onDesk(ev);
