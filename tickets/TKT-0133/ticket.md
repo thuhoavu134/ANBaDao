@@ -1,11 +1,11 @@
 ---
 id: TKT-0133
 title: Ô trúng sheen chéo góc TL→BR
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 created: 2026-09-13T17:08:00.000Z
-updated: 2026-09-13T17:12:00.000Z
+updated: 2026-09-13T17:14:00.000Z
 acceptance_ids: ['L133-T1', 'L133-T2', 'L133-T3', 'L133-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths:
@@ -34,4 +34,4 @@ Không đổi BETS 2/10/50, convertQty, loot, lastIdx. Không 72 tướng. Khôn
 
 RED 3 fail (chưa bbrSheen) → GREEN 3/3 L133 + npm test 923 PASS.
 Chrome 390×844 L133-P1 PASS (`bbrSheen`, transform A≠B). Safari NOT_RUN.
-Builder dừng REVIEW. Gõ **live** để squash-merge.
+LIVE #127 `4cb1b79`.

@@ -1,7 +1,7 @@
 ## 14/09 — TKT-0133: Ô trúng sheen chéo góc TL→BR
 
 Owner iOS (IMG_7321): spotlight ổn, muốn đường sáng kéo từ trên-trái xuống dưới-phải, sáng loáng. Không pulse cả ô. `bbrSheen` infinite trên `:after` khi `is-hold`. Cược/loot không đổi.
-RED 3 fail → GREEN 3/3 L133 + npm test 923. Chrome 390×844 L133-P1 PASS. Safari NOT_RUN. PR REVIEW. Owner gõ live rồi tự `git pull && vercel --prod`.
+RED 3 fail → GREEN 3/3 L133 + npm test 923. Chrome 390×844 L133-P1 PASS. Safari NOT_RUN. LIVE #127 `4cb1b79`. Owner tự `git pull && vercel --prod`.
 
 ## 13/09 — TKT-0132: Đổi sò pop nhỏ tự tắt · spotlight steady
 
