@@ -1,7 +1,7 @@
 ## 13/09 — TKT-0126: Hoa Đăng sáng, rương chroma-key 60fps, icon có khung
 
 Owner: nền Hoa Đăng tối; diễn hoạt rương cần rung, ≥60fps, hút nền xanh, rương nhỏ, icon to có khung. Lamp brightness 1.28. Blender Keying node → PNG RGBA 60fps → webp alpha. CSS shake, stage 200px, khung 108px. Không đổi loot.
-RED 3 fail → GREEN 4/4 L126 + npm test. Chrome 390×844 + 768×1024 L126-P1 PASS. Safari NOT_RUN. REVIEW, chờ owner gõ `live`.
+RED 3 fail → GREEN 4/4 L126 + npm test. Chrome 390×844 + 768×1024 L126-P1 PASS. Safari NOT_RUN. LIVE #120 `0cd2d76`. Owner tự `git pull && vercel --prod`.
 
 ## 13/09 — TKT-0125: Hoa đăng sông đêm, mở rương bung sáng, chữ banner đỏ
 

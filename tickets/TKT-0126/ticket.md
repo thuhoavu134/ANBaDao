@@ -1,11 +1,11 @@
 ---
 id: TKT-0126
 title: Hoa Đăng sáng hơn · rương chroma-key 60fps · icon khung to
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 created: 2026-09-13T12:35:00.000Z
-updated: 2026-09-13T12:40:00.000Z
+updated: 2026-09-13T12:54:17.000Z
 acceptance_ids: ['L126-T1', 'L126-T2', 'L126-T3', 'L126-T4', 'L126-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths:

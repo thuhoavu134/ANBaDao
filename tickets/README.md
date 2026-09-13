@@ -87,7 +87,7 @@ Board GitHub không có. File `tickets/TKT-00xx/ticket.md` là nguồn sự th�
 | TKT-0123 | — | Vành Bách Bảo icon gần full ô | LIVE (#117) |
 | TKT-0124 | — | Hoạt lực + tên Rương + hoa văn tâm | LIVE (#118) |
 | TKT-0125 | — | Hoa đăng sống · mở rương bung sáng · chữ đỏ | LIVE (#119) |
-| TKT-0126 | — | Hoa Đăng sáng · rương chroma 60fps · icon khung | REVIEW |
+| TKT-0126 | — | Hoa Đăng sáng · rương chroma 60fps · icon khung | LIVE (#120) |
 
 Cách tạo gift code (owner): [docs/GIFT-CODES.md](../docs/GIFT-CODES.md)
 
