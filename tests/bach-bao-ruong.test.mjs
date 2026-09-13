@@ -70,7 +70,7 @@ test('L109: cược 2/10/50, sao nhân, chế sò Tinh/Hoạt, shop điểm', ()
   const ui = readFileSync(join(root, 'src/ui/bach-bao-ruong-runtime.js'), 'utf8');
   assert.equal(BBR_UNLOCK.ssr, 50);
   assert.equal(BBR_UNLOCK.b, 10);
-  assert.match(ui, /so-icon\.jpg/);
+  assert.match(ui, /bbr\/so\.png/);
   assert.match(ui, /S\+/);
   assert.equal(BBR_BOARD.length, 22);
   assert.equal(BBR_BOARD.filter(c => c.t === 'so').length, 0);

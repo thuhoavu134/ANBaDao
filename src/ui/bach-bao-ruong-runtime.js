@@ -55,7 +55,7 @@
     { id: 'ssr40', pts: 3000, sh_ssr: 40, name: '40 mảnh S+' }
   ];
   const UNLOCK_AT = { b: 10, a: 20, s: 30, ss: 50, ssr: 50 };
-  const SO_IC = '<img class="hv-so-ic" src="assets/ui/festival/so-icon.jpg" alt="sò">';
+  const SO_IC = '<img class="hv-so-ic" src="assets/ui/festival/bbr/so.png" alt="sò">';
 
   function st() {
     P.bachBao = P.bachBao || {};
@@ -302,8 +302,33 @@
     b.history.unshift({ kind: 'convert', label: stars + '★ → sò ' + n, t: Date.now() });
     persist?.();
     refreshResbar?.();
-    toast?.('🐚 +' + n + ' sò');
     return { n, t, stars };
+  }
+
+  function showConvertLoot(n) {
+    let fx = document.getElementById('hvSoFx');
+    if (!fx) {
+      fx = document.createElement('div');
+      fx.id = 'hvSoFx';
+      fx.innerHTML = `
+        <div class="hv-chest-fx-card">
+          <div class="hv-chest-fx-loot">
+            <span class="hv-chest-fx-frame"><img alt="sò"></span>
+            <b></b>
+          </div>
+          <button type="button" data-so-fx-done>Nhận</button>
+        </div>`;
+      document.body.append(fx);
+      fx.addEventListener('click', ev => {
+        if (!ev.target.closest('[data-so-fx-done]') && ev.target !== fx) return;
+        fx.classList.remove('is-open');
+      });
+    }
+    const img = fx.querySelector('img');
+    const lab = fx.querySelector('b');
+    img.src = ART.so;
+    lab.textContent = '+' + n + ' sò';
+    fx.classList.add('is-open');
   }
 
   function doScore() {
@@ -464,12 +489,12 @@
         <p class="hv-bbr-pts-note">Điểm tích luỹ <b>${b.pts || 0}</b> · tự động nhận sau khi tiêu mỗi 100 sò</p>
       </div>
       <div class="hv-bbr-kt-body">
-        <div class="hv-bbr-ring" data-bbr-grid>
+        <div class="hv-bbr-ring${pend ? ' is-hold' : ''}" data-bbr-grid>
           ${BOARD.map((c, i) => {
             const pos = RING[i] || [1, 1];
-            const hot = pend && pend.t === c.t && pend.n === c.n;
+            const lit = !!(pend && asInt(b.lastIdx, -1) === i);
             const kind = c.t === 'supreme' ? ' is-sup' : (c.t === 'chest' ? ' is-chest' : '');
-            return `<button type="button" class="hv-bbr-cell${hot ? ' is-win' : ''}${kind}" data-bbr-cell="${i}" style="grid-column:${pos[0]};grid-row:${pos[1]}" disabled>
+            return `<button type="button" class="hv-bbr-cell${lit ? ' is-hot is-win' : ''}${kind}" data-bbr-cell="${i}" style="grid-column:${pos[0]};grid-row:${pos[1]}" disabled>
               ${cellFace(c)}
             </button>`;
           }).join('')}
@@ -530,8 +555,9 @@
       return;
     }
     if (ev.target.closest('[data-bbr-convert]')) {
-      doConvert();
+      const r = doConvert();
       paintDesk();
+      if (r && r.n) showConvertLoot(r.n);
       return;
     }
     const tabBtn = ev.target.closest('[data-bbr-pane]');

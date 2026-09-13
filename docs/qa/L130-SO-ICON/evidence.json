@@ -1,0 +1,17 @@
+{
+  "ticket": "TKT-0130",
+  "desk": {
+    "src": "assets/ui/festival/bbr/so.png",
+    "snail": false
+  },
+  "loot": {
+    "open": true,
+    "src": "assets/ui/festival/bbr/so.png",
+    "snail": false,
+    "cowrie": true,
+    "text": "\n        \n          \n            \n            +1 sò\n          \n          Nhận\n        "
+  },
+  "appErrors": [],
+  "ok": true,
+  "ts": "2026-09-13T14:28:55.526Z"
+}

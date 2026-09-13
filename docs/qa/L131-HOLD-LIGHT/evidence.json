@@ -1,0 +1,26 @@
+{
+  "ticket": "TKT-0131",
+  "hold": {
+    "hold": true,
+    "hotCount": 1,
+    "hotIdx": 7,
+    "lastIdx": 7,
+    "pending": true
+  },
+  "after": {
+    "hold": false,
+    "hotCount": 0,
+    "lastIdx": 0,
+    "pending": false
+  },
+  "spun": {
+    "hold": true,
+    "hotCount": 1,
+    "hotIdx": 1,
+    "lastIdx": 1,
+    "pending": true
+  },
+  "appErrors": [],
+  "ok": true,
+  "ts": "2026-09-13T15:14:14.342Z"
+}
