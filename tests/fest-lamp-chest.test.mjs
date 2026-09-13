@@ -31,8 +31,8 @@ test('L125-T3: video mở rương + icon loot; tỉ lệ đóng băng', () => {
   const ui = read('src/ui/festival-3d-runtime.js');
   const bbr = read('src/ui/bach-bao-ruong-runtime.js');
   const domain = read('src/domain/festival/festival-run.mjs');
-  assert.match(ui, /assets\/ui\/festival\/fx\/chest-open\.(mp4|webp)/);
-  assert.match(ui, /assets\/ui\/festival\/fx\/supreme-open\.(mp4|webp)/);
+  assert.match(ui, /assets\/ui\/festival\/fx\/chest-(open|sheet)\.(mp4|webp)/);
+  assert.match(ui, /assets\/ui\/festival\/fx\/supreme-(open|sheet)\.(mp4|webp)/);
   assert.match(ui, /hvChestFx/);
   assert.match(ui, /sh_ssr\.png/);
   assert.match(bbr, /const BETS = \[2, 10, 50\]/);

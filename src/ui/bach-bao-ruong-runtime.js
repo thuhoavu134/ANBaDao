@@ -414,20 +414,12 @@
   }
 
   function paintShop() {
-    const host = document.getElementById('hvFestivalRoot') || document.getElementById('festivalBody');
+    const host = document.getElementById('hvShopPts');
     if (!host) return;
-    let shop = document.getElementById('hvBbrShop');
-    if (!shop) {
-      shop = document.createElement('div');
-      shop.id = 'hvBbrShop';
-      shop.hidden = true;
-      host.append(shop);
-    }
     const b = st();
-    shop.innerHTML = `
+    host.innerHTML = `
       <div class="hv-bbr-shop-hero">
         <img src="assets/ui/festival/shop-keep.jpg" alt="">
-        <button type="button" class="hv-bbr-shop-x" data-bbr-pane="play" aria-label="Đóng">‹</button>
         <div class="hv-bbr-shop-pts">Điểm <b>${b.pts || 0}</b></div>
         <div class="hv-bbr-shop-ribbon">Shop Điểm</div>
       </div>
@@ -446,10 +438,8 @@
         </button>`;
       }).join('')}</div>
       </div>`;
-    shop.hidden = pane !== 'shop';
-    shop.classList.toggle('is-open', pane === 'shop');
-    host.classList.toggle('is-bbr-shop', pane === 'shop');
   }
+  window.paintBbrShop = paintShop;
 
   function starTable(type, bet, on) {
     const row = PAY[type] || PAY.gold;
@@ -469,12 +459,7 @@
     const type = pend ? pend.t : 'gold';
     shell.innerHTML = `<div id="hvBbrDesk" class="hv-bbr-kt">
       <div class="hv-bbr-kt-head">
-        <div class="hv-bbr-kt-top">
-          <h3>Bách Bảo Rương</h3>
-          <button type="button" class="hv-bbr-shop-ic" data-bbr-pane="shop" aria-label="Shop điểm">
-            <img src="assets/ui/festival/bbr/shop-girl.jpg" alt="">
-          </button>
-        </div>
+        <h3>Bách Bảo Rương</h3>
         <div class="hv-bbr-row"><b>${SO_IC} ${P.so || 0}</b><span>Hũ ${b.pool}</span><span>Pity ${Math.min(200, (b.spent || 0) - (b.pityAt || 0))}/200</span></div>
         <p class="hv-bbr-pts-note">Điểm tích luỹ <b>${b.pts || 0}</b> · tự động nhận sau khi tiêu mỗi 100 sò</p>
       </div>
@@ -584,7 +569,7 @@
     if (!root || root.dataset.bbrCap === '1') return;
     root.dataset.bbrCap = '1';
     root.addEventListener('click', ev => {
-      if (ev.target.closest('#hvBbrDesk, #hvBbrShop')) {
+      if (ev.target.closest('#hvBbrDesk, #hvBbrShop, #hvShopPts')) {
         ev.preventDefault();
         ev.stopImmediatePropagation();
         onDesk(ev);
@@ -614,7 +599,17 @@
     };
   }
 
+  if (typeof renderShop === 'function') {
+    const baseShop = renderShop;
+    renderShop = function renderShopWithBbrPts() {
+      baseShop.apply(this, arguments);
+      bindCapture(document.getElementById('hvShopRoot'));
+      paintShop();
+    };
+  }
+
   bindCapture(document.getElementById('hvFestivalRoot'));
   bindCapture(document.getElementById('festivalBody'));
+  bindCapture(document.getElementById('hvShopRoot'));
   paintDesk();
 })();

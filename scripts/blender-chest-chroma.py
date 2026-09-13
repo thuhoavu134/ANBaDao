@@ -49,7 +49,7 @@ image_node.frame_offset = 0
 image_node.use_auto_refresh = True
 
 key = nt.new('CompositorNodeKeying')
-key.inputs['Key Color'].default_value = (0.05, 1.0, 0.08, 1.0)
+key.inputs['Key Color'].default_value = (1.0, 0.0, 1.0, 1.0)
 key.screen_balance = 0.5
 key.clip_black = 0.28
 key.clip_white = 0.68

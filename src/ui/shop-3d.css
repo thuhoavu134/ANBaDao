@@ -28,3 +28,25 @@
 body.shop-3d-active .hv-brandbar,body.shop-3d-active #resbar{display:none!important}
 #hvItemTip{z-index:140}
 #hvItemTip .hv-tip-head{position:relative}
+#hvShopRoot.hv-city #hvShopCity{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:10px 14px 28px;
+}
+#hvShopRoot.hv-city:not(.is-tile-open) .hv-shop-panel{display:none!important}
+#hvShopRoot.hv-city.is-tile-open #hvShopCity{display:none}
+#hvShopPts{display:none;padding:8px 12px 28px}
+#hvShopRoot.hv-city[data-scity="pts"] #hvShopPts{display:block}
+#hvShopRoot.hv-city[data-scity="pts"] .hv-shop-panel{display:none!important}
+#hvShopCity .hv-stile{
+  border:0;background:#f7ead2;border-radius:14px;padding:6px 6px 8px;
+  box-shadow:0 0 0 1px #e2c48a,0 4px 10px rgba(80,50,20,.12);
+  display:flex;flex-direction:column;align-items:center;cursor:pointer;
+}
+#hvShopCity .hv-stile img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;display:block;background:#f7ead2}
+#hvShopCity .hv-stile b{margin-top:6px;font-size:13px;line-height:1.25;color:#5a3a18;text-align:center}
+#hvShopPts .hv-bbr-shop-hero{position:relative;min-height:140px;max-height:180px;overflow:hidden;border-radius:12px}
+#hvShopPts .hv-bbr-shop-hero img{width:100%;height:140px;object-fit:cover;object-position:center 22%;display:block}
+#hvShopPts .hv-bbr-shop-x{display:none}
+#hvShopPts .hv-bbr-shop-body{
+  margin-top:8px;background:linear-gradient(180deg,#6a4228,#3e2816);border-radius:12px;padding:8px 0 12px;
+}
+#hvShopPts .hv-bbr-goods{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:4px 12px 12px}

@@ -1,3 +1,8 @@
+## 13/09 — TKT-0129: Chợ 2 ô, rương mở nắp chroma rồi loot
+
+Owner iOS: Chợ Mộng grid Chợ Đêm + Shop điểm; bỏ icon shop trên màn quay BBR. Rương live còn hộp đen + loot sớm. Sprite RGBA 12×145 60fps (magenta key), nắp mở bung vàng rồi mới khung thưởng. Cược/shop giá không đổi.
+RED 3 fail → GREEN 3/3 L129 + npm test 911. Chrome 390×844 L129-P1 PASS. Safari NOT_RUN.
+
 ## 13/09 — TKT-0128: Rương không đổi sò, điểm tự cộng, shop icon
 
 Owner: trúng rương không được đổi sò; bỏ Nhận điểm, tự +1 điểm / 1 sò; Shop là icon cô gái; Quay to, dưới Thưởng + Đổi sò. Cược 2/10/50 và giá shop giữ.

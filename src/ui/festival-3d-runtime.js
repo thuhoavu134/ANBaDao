@@ -104,6 +104,41 @@
   }
 
   const FX_FPS = 60;
+  const FX_SHEET = { cols: 12, n: 145, cell: 180 };
+  const sheetCache = {};
+
+  function loadSheet(src) {
+    if (sheetCache[src]) return Promise.resolve(sheetCache[src]);
+    return new Promise((resolve, reject) => {
+      const im = new Image();
+      im.onload = () => { sheetCache[src] = im; resolve(im); };
+      im.onerror = reject;
+      im.src = src;
+    });
+  }
+
+  function playSheet(cv, img, ondone) {
+    const ctx = cv.getContext('2d');
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+    const t0 = performance.now();
+    const stage = cv.closest('.hv-chest-fx-stage');
+    const burstAt = Math.floor(FX_SHEET.n * 0.38);
+    const tick = () => {
+      const i = Math.min(FX_SHEET.n - 1, Math.floor((performance.now() - t0) / 1000 * FX_FPS));
+      const x = (i % FX_SHEET.cols) * FX_SHEET.cell;
+      const y = Math.floor(i / FX_SHEET.cols) * FX_SHEET.cell;
+      ctx.clearRect(0, 0, cv.width, cv.height);
+      ctx.drawImage(img, x, y, FX_SHEET.cell, FX_SHEET.cell, 0, 0, cv.width, cv.height);
+      if (i >= burstAt) {
+        stage?.classList.remove('is-shake');
+        stage?.classList.add('is-burst');
+      }
+      if (i < FX_SHEET.n - 1) requestAnimationFrame(tick);
+      else ondone();
+    };
+    requestAnimationFrame(tick);
+  }
 
   function ensureFx() {
     let fx = document.getElementById('hvChestFx');
@@ -113,7 +148,8 @@
     fx.innerHTML = `
       <div class="hv-chest-fx-card">
         <div class="hv-chest-fx-stage">
-          <video class="hv-chest-fx-seq" playsinline muted></video>
+          <canvas class="hv-chest-fx-seq" width="200" height="200"></canvas>
+          <i class="hv-chest-fx-burst" aria-hidden="true"></i>
         </div>
         <div class="hv-chest-fx-loot" hidden>
           <span class="hv-chest-fx-frame"><img alt=""></span>
@@ -124,10 +160,9 @@
     document.body.append(fx);
     fx.addEventListener('click', ev => {
       if (!ev.target.closest('[data-chest-fx-done]') && ev.target !== fx) return;
-      const vid = fx.querySelector('video');
       const stage = fx.querySelector('.hv-chest-fx-stage');
-      if (vid) { vid.pause(); vid.removeAttribute('src'); vid.load(); }
-      stage?.classList.remove('is-shake');
+      stage?.classList.remove('is-shake', 'is-burst', 'is-done');
+      if (stage) stage.hidden = false;
       fx.classList.remove('is-open');
     });
     return fx;
@@ -135,7 +170,7 @@
 
   function playChestFx(kind, result) {
     const fx = ensureFx();
-    const vid = fx.querySelector('video');
+    const cv = fx.querySelector('canvas');
     const stage = fx.querySelector('.hv-chest-fx-stage');
     const loot = fx.querySelector('.hv-chest-fx-loot');
     const img = loot.querySelector('img');
@@ -143,24 +178,25 @@
     img.src = lootArt(result, kind);
     lab.textContent = (result && result.msg) || (kind === 'supreme' ? 'Rương Chí Bảo đã mở' : 'Rương Báu đã mở');
     loot.hidden = true;
+    stage.hidden = false;
+    stage.classList.remove('is-done', 'is-burst', 'is-shake');
     fx.classList.add('is-open');
     const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const showLoot = () => { loot.hidden = false; stage.classList.remove('is-shake'); };
+    const showLoot = () => {
+      loot.hidden = false;
+      stage.classList.remove('is-shake', 'is-burst');
+      stage.classList.add('is-done');
+      stage.hidden = true;
+    };
     const src = kind === 'supreme'
-      ? 'assets/ui/festival/fx/supreme-open.mp4'
-      : 'assets/ui/festival/fx/chest-open.mp4';
+      ? 'assets/ui/festival/fx/supreme-sheet.webp'
+      : 'assets/ui/festival/fx/chest-sheet.webp';
     if (reduced) {
-      vid.removeAttribute('src');
-      vid.load();
       showLoot();
       return;
     }
-    vid.src = src;
     stage.classList.add('is-shake');
-    setTimeout(() => stage.classList.remove('is-shake'), 900);
-    const t = setTimeout(showLoot, 3200);
-    vid.onended = () => { clearTimeout(t); showLoot(); };
-    vid.play().catch(() => { clearTimeout(t); showLoot(); });
+    loadSheet(src).then(sheet => playSheet(cv, sheet, showLoot)).catch(showLoot);
   }
 
   function paintVault(root) {

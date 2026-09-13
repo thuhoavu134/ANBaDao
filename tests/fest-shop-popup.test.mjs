@@ -39,7 +39,7 @@ test('L119-T2: Shop điểm là popup lưới thẻ có icon', () => {
 test('L119-T3: panel quay giữ nút Quay; shop không nuốt side', () => {
   const ui = read('src/ui/bach-bao-ruong-runtime.js');
   assert.match(ui, /hv-bbr-side[\s\S]*data-bbr-step/);
-  assert.match(ui, /data-bbr-pane="shop"/);
+  assert.match(read('src/ui/shop-3d-runtime.js'), /Shop điểm/);
   assert.doesNotMatch(ui, /pane === 'shop' \? `/);
 });
 

@@ -1,0 +1,29 @@
+{
+  "ticket": "TKT-0129",
+  "city": {
+    "tiles": [
+      "Chợ Đêm",
+      "Shop điểm"
+    ],
+    "noBbrIcon": true,
+    "city": true
+  },
+  "pts": {
+    "scity": "pts",
+    "goods": 6
+  },
+  "mid": {
+    "open": true,
+    "canvas": true,
+    "lootHidden": true,
+    "stageOn": true,
+    "black": false
+  },
+  "after": {
+    "lootShown": true,
+    "stageOff": true
+  },
+  "appErrors": [],
+  "ok": true,
+  "ts": "2026-09-13T14:06:44.169Z"
+}

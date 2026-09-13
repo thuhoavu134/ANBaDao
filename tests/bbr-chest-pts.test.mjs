@@ -37,19 +37,16 @@ test('L128-T2: điểm tự cộng theo sò tiêu, bỏ nút Nhận điểm', ()
   assert.match(ui, /100 sò/);
 });
 
-test('L128-T3: shop icon cô gái, Quay to, Thưởng + Đổi sò', () => {
+test('L128-T3: Quay to, Thưởng + Đổi sò; shop điểm ở Chợ', () => {
   const ui = read('src/ui/bach-bao-ruong-runtime.js');
-  const css = read('src/ui/bach-bao-ruong.css');
+  const shop = read('src/ui/shop-3d-runtime.js');
   const p = join(root, 'assets/ui/festival/bbr/shop-girl.jpg');
   assert.equal(existsSync(p), true);
   assert.ok(statSync(p).size > 8000);
-  assert.match(ui, /shop-girl\.jpg/);
-  assert.match(ui, /data-bbr-pane="shop"/);
+  assert.match(shop, /shop-girl\.jpg/);
   assert.match(ui, /data-bbr-take/);
   assert.match(ui, /data-bbr-convert/);
   assert.match(ui, /hv-bbr-go/);
-  assert.match(css, /hv-bbr-shop-ic/);
-  assert.doesNotMatch(ui, />Shop điểm</);
-  const bbr = read('src/ui/bach-bao-ruong-runtime.js');
-  assert.doesNotMatch(bbr, /document\.addEventListener\(['"](?:click|pointerdown)/);
+  assert.doesNotMatch(ui, /hv-bbr-shop-ic/);
+  assert.doesNotMatch(ui, /document\.addEventListener\(['"](?:click|pointerdown)/);
 });

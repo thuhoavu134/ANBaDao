@@ -93,7 +93,7 @@ test('L109: cược 2/10/50, sao nhân, chế sò Tinh/Hoạt, shop điểm', ()
   assert.match(ui, /lastIdx/);
   assert.match(ui, /is-run/);
   assert.match(ui, /Đang quay/);
-  assert.match(ui, /data-bbr-pane/);
+  assert.match(ui, /data-bbr-buy/);
   assert.match(ui, /scoreBbr|doScore|Điểm tích luỹ/);
   const scored = scoreBbr({ so: 0, bachBao: { pending: { t: 'gold', stars: 3 }, bet: 2 } }, { day: 1 });
   assert.equal(scored.ok, true);
