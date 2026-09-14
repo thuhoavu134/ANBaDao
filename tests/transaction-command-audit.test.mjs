@@ -47,5 +47,5 @@ test('L03a records receipt absence instead of treating direct persist as atomic'
 
 test('L03a audit source hash is stable for the captured active runtime', () => {
   const hash = crypto.createHash('sha256').update(source).digest('hex');
-  assert.equal(hash, '04770c9691db89eceb9d539d9106e50bd7f33536ba3cd22a21f38bdee27f9823');
+  assert.equal(hash, '6ba6418bc20c077f5fb1e1d1b515e0985399de6eadbbf743614165009bccbea4');
 });

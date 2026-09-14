@@ -151,7 +151,7 @@ async function writeSkillKit(outDir) {
         'cast/frames.json': framesJson('linh-dong.basic.cast', 'basic-atlas.webp', attack, LINH_DONG_CHAR, {
           timeline: { frameDurationMs: attack.ms, loop: false },
           anchor: { type: 'footAnchor', offsetX: 0, offsetY: 0 },
-          display: { width: 328, height: 320, baseline: 48, scale: 1, layer: 'character', blendMode: 'normal' }
+          display: { width: LINH_DONG_CHAR.cellW, height: LINH_DONG_CHAR.cellH, baseline: 48, scale: 1, layer: 'character', blendMode: 'normal' }
         }),
         'vfx/frames.json': framesJson('linh-dong.basic.vfx', 'skill1_vfx-atlas.webp', skillVfx, LINH_DONG_VFX, {
           motion: { type: 'projectile', startAnchor: 'castAnchor', targetAnchor: 'hitAnchor', interpolation: 'linear' },
@@ -179,7 +179,7 @@ async function writeSkillKit(outDir) {
         'cast/frames.json': framesJson('linh-dong.skill1.cast', 'basic-atlas.webp', attack, LINH_DONG_CHAR, {
           timeline: { frameDurationMs: attack.ms, loop: false },
           anchor: { type: 'footAnchor', offsetX: 0, offsetY: 0 },
-          display: { width: 328, height: 320, baseline: 48, scale: 1, layer: 'character', blendMode: 'normal' }
+          display: { width: LINH_DONG_CHAR.cellW, height: LINH_DONG_CHAR.cellH, baseline: 48, scale: 1, layer: 'character', blendMode: 'normal' }
         }),
         'vfx/frames.json': framesJson('linh-dong.skill1.vfx', 'skill1_vfx-atlas.webp', skillVfx, LINH_DONG_VFX, {
           spawn: { type: 'singleTarget', team: 'enemy', anchor: 'hitAnchor' },
@@ -206,7 +206,7 @@ async function writeSkillKit(outDir) {
         'cast/frames.json': framesJson('linh-dong.ultimate.cast', 'ultimate-atlas.webp', ult, LINH_DONG_CHAR, {
           timeline: { frameDurationMs: ult.ms, loop: false },
           anchor: { type: 'footAnchor', offsetX: 0, offsetY: 0 },
-          display: { width: 328, height: 320, baseline: 48, scale: 1, layer: 'character', blendMode: 'normal' }
+          display: { width: LINH_DONG_CHAR.cellW, height: LINH_DONG_CHAR.cellH, baseline: 48, scale: 1, layer: 'character', blendMode: 'normal' }
         }),
         'vfx/frames.json': framesJson('linh-dong.ultimate.vfx', 'ultimate_vfx-atlas.webp', ultVfx, LINH_DONG_VFX, {
           spawn: { type: 'enemyGroup', coverage: 'allEnemies', maxTargets: 6 },
@@ -253,7 +253,7 @@ export async function packLinhDong(sourceRoot, outDir = join(root, LINH_DONG_ASS
   await writeSkillKit(outDir);
   const report = {
     schema: 'hon-viet-linh-dong-atlas/v1',
-    source: 'Drive pack 14/09/2026 isolated RGBA',
+    source: 'Drive pack 14/09/2026 blender compositor keying RGBA',
     encoding: 'webp-lossless-rgba',
     char: LINH_DONG_CHAR,
     vfx: LINH_DONG_VFX,
@@ -266,7 +266,7 @@ export async function packLinhDong(sourceRoot, outDir = join(root, LINH_DONG_ASS
   await writeFile(join(outDir, 'runtime-meta.json'), `${JSON.stringify(report, null, 2)}\n`);
   await writeFile(join(outDir, 'ASSET.md'), `# Linh Đồng — authored combat kit
 
-Nguồn: Google Drive pack 14/09/2026 (chroma keyed RGBA, isolated character vs VFX).
+Nguồn: Google Drive pack 14/09/2026 (Blender Compositor Keying RGBA, isolated character vs VFX).
 Pack: \`node scripts/pack-linh-dong-rgba.mjs <extracted-pack-dir>\`
 
 - Character: scale ${LINH_DONG_CHAR.scale} vào cell ${LINH_DONG_CHAR.cellW}×${LINH_DONG_CHAR.cellH}, chân đáy-giữa. Không crop từng frame.

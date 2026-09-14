@@ -9,7 +9,7 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 const origin = process.env.BBR_QA_ORIGIN || 'http://127.0.0.1:8080';
-const out = join(process.cwd(), 'docs/qa/L142-LINH-DONG-BATTLE');
+const out = join(process.cwd(), 'docs/qa/L143-LINH-DONG-REKEY');
 mkdirSync(out, { recursive: true });
 
 const browser = await chromium.launch({ args: ['--no-sandbox', '--disable-web-security'] });
@@ -36,7 +36,7 @@ const snap = await page.evaluate(() => {
   }
   return {
     canvasW: w, canvasH: h, painted,
-    drawSize: /drawLinhDongAtlas\(context,key,frame,0,0,451,440,\{baseline:64\}\)/.test(src),
+    drawSize: /drawLinhDongAtlas\(context,key,frame,0,0,477,440,\{baseline:64\}\)/.test(src),
     oldSize: /drawLinhDongAtlas\(context,key,frame,0,0,340,332/.test(src),
     sourceOver: /blend:"source-over"/.test(src),
     screenVfx: /drawLinhDongAtlas\(context,fx\.kind[\s\S]{0,180}screen:true/.test(src),
@@ -61,9 +61,9 @@ const ok = snap.drawSize && !snap.oldSize && snap.sourceOver && !snap.screenVfx
   && snap.sfxBus && !snap.oggAudio && snap.identityScale && snap.hasHero
   && snap.painted > 50000 && appErrors.length === 0;
 writeFileSync(join(out, 'evidence.json'), JSON.stringify({
-  ticket: 'TKT-0142', snap, appErrors, ok, ts: new Date().toISOString()
+  ticket: 'TKT-0143', snap, appErrors, ok, ts: new Date().toISOString()
 }, null, 2));
-console.log(ok ? 'PASS' : 'FAIL', 'L142-P1', JSON.stringify({
+console.log(ok ? 'PASS' : 'FAIL', 'L143-P1', JSON.stringify({
   painted: snap.painted, draw: snap.drawSize, sfx: snap.sfxBus, err: appErrors[0] || ''
 }));
 process.exit(ok ? 0 : 1);

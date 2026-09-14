@@ -7,7 +7,7 @@
     "columns": 8,
     "rows": 6,
     "frameCount": 44,
-    "cellWidth": 328,
+    "cellWidth": 347,
     "cellHeight": 320
   },
   "timeline": {
@@ -20,7 +20,7 @@
     "offsetY": 0
   },
   "display": {
-    "width": 328,
+    "width": 347,
     "height": 320,
     "baseline": 48,
     "scale": 1,

@@ -7,14 +7,14 @@ const root = new URL('../', import.meta.url);
 const read = rel => fs.readFileSync(new URL(rel, root), 'utf8');
 
 test('L142-T1 battle draws Linh Dong at authored cell aspect and Luc Anh idle multiplier', () => {
-  assert.equal(LINH_DONG_CHAR.cellW, 328);
+  assert.equal(LINH_DONG_CHAR.cellW, 347);
   assert.equal(LINH_DONG_CHAR.cellH, 320);
   assert.equal(LINH_DONG_CHAR.scale, 0.5);
-  assert.equal(LINH_DONG_FIELD.drawW, 451);
+  assert.equal(LINH_DONG_FIELD.drawW, 477);
   assert.equal(LINH_DONG_FIELD.drawH, 440);
   assert.equal(LINH_DONG_FIELD.baseline, 64);
   const battle = read('battle.html');
-  assert.match(battle, /drawLinhDongAtlas\(context,key,frame,0,0,451,440,\{baseline:64\}\)/);
+  assert.match(battle, /drawLinhDongAtlas\(context,key,frame,0,0,477,440,\{baseline:64\}\)/);
   assert.doesNotMatch(battle, /drawLinhDongAtlas\(context,key,frame,0,0,340,332/);
 });
 
@@ -63,8 +63,8 @@ test('L142-T4 hurt\/fall timing matches pack; S\+ token uses campaign identitySc
   assert.equal(LINH_DONG_CLIPS.fall.ms, 42);
   const battle = read('battle.html');
   const bridge = read('src/runtime/splus-battle-bridge.js');
-  assert.match(battle, /hurt:\{file:"hit-atlas\.webp",frames:96,cols:8,w:328,h:320,ms:42/);
-  assert.match(battle, /defeated:\{file:"fall-atlas\.webp",frames:96,cols:8,w:328,h:320,ms:42/);
+  assert.match(battle, /hurt:\{file:"hit-atlas\.webp",frames:96,cols:8,w:347,h:320,ms:42/);
+  assert.match(battle, /defeated:\{file:"fall-atlas\.webp",frames:96,cols:8,w:347,h:320,ms:42/);
   assert.match(bridge, /identityScale=\(innerWidth<600\?0\.52:0\.74\)/);
   assert.match(bridge, /context\.scale\(depthScale\*identityScale,depthScale\*identityScale\)/);
 });

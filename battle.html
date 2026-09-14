@@ -3776,17 +3776,17 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     return true;});}
 
   // TKT-0139 — Linh Đồng authored RGBA atlas. Isolated character vs VFX/SFX.
-  // Uniform cell 328×320 (char) and 320×180 (VFX). No per-frame crop, no black-key.
+  // Uniform cell 347×320 (char) and 320×180 (VFX). No per-frame crop, no black-key.
   const LINH_DONG_IDS=Object.freeze(["linh_dong","hero_splus_linh_dong","linh-dong"]);
   const LINH_DONG_ASSET_BASE="assets/characters/linh-dong/";
   const LINH_DONG_META=Object.freeze({
-    idle:{file:"idle-atlas.webp",frames:96,cols:8,w:328,h:320,ms:42,loop:true},
-    run:{file:"run-atlas.webp",frames:96,cols:8,w:328,h:320,ms:42,loop:true},
-    hurt:{file:"hit-atlas.webp",frames:96,cols:8,w:328,h:320,ms:42,loop:false},
-    defeated:{file:"fall-atlas.webp",frames:96,cols:8,w:328,h:320,ms:42,loop:false},
-    attack:{file:"basic-atlas.webp",frames:44,cols:8,w:328,h:320,ms:34,loop:false},
-    skill1:{file:"basic-atlas.webp",frames:44,cols:8,w:328,h:320,ms:34,loop:false},
-    ultimate:{file:"ultimate-atlas.webp",frames:60,cols:8,w:328,h:320,ms:33,loop:false},
+    idle:{file:"idle-atlas.webp",frames:96,cols:8,w:347,h:320,ms:42,loop:true},
+    run:{file:"run-atlas.webp",frames:96,cols:8,w:347,h:320,ms:42,loop:true},
+    hurt:{file:"hit-atlas.webp",frames:96,cols:8,w:347,h:320,ms:42,loop:false},
+    defeated:{file:"fall-atlas.webp",frames:96,cols:8,w:347,h:320,ms:42,loop:false},
+    attack:{file:"basic-atlas.webp",frames:44,cols:8,w:347,h:320,ms:34,loop:false},
+    skill1:{file:"basic-atlas.webp",frames:44,cols:8,w:347,h:320,ms:34,loop:false},
+    ultimate:{file:"ultimate-atlas.webp",frames:60,cols:8,w:347,h:320,ms:33,loop:false},
     skill1Vfx:{file:"skill1_vfx-atlas.webp",frames:120,cols:10,w:320,h:180,ms:33,loop:false},
     ultimateVfx:{file:"ultimate_vfx-atlas.webp",frames:120,cols:10,w:320,h:180,ms:33,loop:false}
   });
@@ -3817,7 +3817,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     else if(unit.state==="ultimate"){key="ultimate";loop=false;}
     const elapsed=key==="idle"?time:Math.max(0,time-(unit.stateStarted||time)),frame=linhDongFrame(key,elapsed,loop);
     context.save();context.shadowColor="rgba(120,150,210,.32)";context.shadowBlur=["attack","skill1","ultimate"].includes(key)?14:5;
-    drawLinhDongAtlas(context,key,frame,0,0,451,440,{baseline:64});context.restore();return true;
+    drawLinhDongAtlas(context,key,frame,0,0,477,440,{baseline:64});context.restore();return true;
   }
   function startLinhDongFx(action,actor,target=null){
     const kind=action==='ultimate'?'ultimateVfx':'skill1Vfx';
