@@ -1,12 +1,11 @@
 ## 14/09 — TKT-0141: Linh Đồng tướng đầy đủ như Lục Ảnh
 
 Owner: tích hợp Linh Đồng vào toàn bộ tính năng giống các tướng khác, y hệt Lục Ảnh. DATA.heroes + roster chính thức + kit v2 + hồ sơ idle + trận campaign atlas. Không đổi BETS/loot/công thức 12 tướng cũ. Không mở 42 S+ còn lại.
-RED L141-T1…T5 fail → GREEN 6/6 + npm test 953. Chrome 390×844 L141-P1 PASS. Safari NOT_RUN. PR REVIEW. Owner gõ live rồi tự `git pull && vercel --prod`.
+RED L141-T1…T5 fail → GREEN 6/6 + npm test 953. Chrome 390×844 L141-P1 PASS. Safari NOT_RUN. LIVE #135 `8a79dcc`. Owner tự `git pull && vercel --prod`.
 
 ## 14/09 — TKT-0140: Hiện thẻ Linh Đồng trên Tướng và Đồ Giám
 
-Owner iOS: Tướng và Đồ Giám 12/12 không có Linh Đồng. Thẻ portrait extras, không vào `OFFICIAL_ROSTER_12_IDS`. Chạm thẻ mở trận thử atlas. Cược/loot/công thức không đổi.
-RED 3 fail → GREEN 3/3 L140 + npm test 947. Chrome 390×844 L140-P1 PASS. Safari NOT_RUN. PR REVIEW. Owner gõ live rồi tự `git pull && vercel --prod`.
+Owner iOS: Tướng và Đồ Giám 12/12 không có Linh Đồng. Thẻ extras preview, chạm mở trận thử. SUPERSEDED bởi TKT-0141 / #135 — Linh Đồng là tướng chính thức.
 
 ## 14/09 — TKT-0139: Bind Linh Đồng authored animation, VFX, SFX
 

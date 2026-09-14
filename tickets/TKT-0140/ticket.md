@@ -1,11 +1,11 @@
 ---
 id: TKT-0140
 title: Hiện thẻ Linh Đồng trên Tướng và Đồ Giám
-status: REVIEW
-phase: REVIEW
+status: SUPERSEDED
+phase: SUPERSEDED
 priority: P0
 created: 2026-09-14T04:12:00.000Z
-updated: 2026-09-14T04:20:00.000Z
+updated: 2026-09-14T05:20:00.000Z
 acceptance_ids: ['L140-T1', 'L140-T2', 'L140-T3', 'L140-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths:
@@ -34,6 +34,4 @@ Không sửa `OFFICIAL_ROSTER_12_IDS`. Không Gọi Mộng. Không đổi BETS 2
 
 ## Result
 
-RED 3 fail → GREEN 3/3 L140 + npm test 947 PASS.
-Chrome 390×844 L140-P1 PASS (Tướng + Đồ Giám 13 thẻ, portrait Linh Đồng góc trên-trái). Safari NOT_RUN.
-Chạm thẻ mở trận thử atlas. Roster 12 / Gọi Mộng / BETS không đổi.
+SUPERSEDED bởi TKT-0141 / #135. Owner mở Linh Đồng thành tướng chính thức như Lục Ảnh, không còn thẻ extras/trận thử. PR #134 đóng.
