@@ -57,8 +57,8 @@ test('Lục Ảnh kit uses existing Basic/Ultimate assets and keeps six effigies
   assert.equal(kit.legacyAssets.skill1.status, 'preserved-legacy-asset');
 });
 
-test('L35-T1 registry covers the live 12 and freezes Ông Phở + Lục Ảnh', () => {
-  const ids = ['ong_hang_pho', 'luc_anh', 'thay_mo', 'lac_yen', 'cung_thu_tre', 'co_dao_ganh_hoi', 'phong_tu', 'thuy_nuong_roi_nuoc', 'hong_lien_dao_nuong', 'thach_quyen', 'dinh_loi', 'to_diep'];
+test('L35-T1 registry covers the live 12 plus Linh Đồng and freezes Ông Phở + Lục Ảnh', () => {
+  const ids = ['ong_hang_pho', 'luc_anh', 'thay_mo', 'lac_yen', 'cung_thu_tre', 'co_dao_ganh_hoi', 'phong_tu', 'thuy_nuong_roi_nuoc', 'hong_lien_dao_nuong', 'thach_quyen', 'dinh_loi', 'to_diep', 'linh_dong'];
   assert.deepEqual(Object.keys(HERO_SKILL_KIT_REGISTRY).sort(), [...ids].sort());
   assert.equal(getHeroSkillKit('ong_hang_pho').basicId, 'ong_hang_pho.basic.thiet-va');
   assert.equal(getHeroSkillKit('luc_anh').ultimateId, 'luc_anh.ultimate.doc-van-phu-the');
@@ -68,7 +68,7 @@ test('L35-T1 registry covers the live 12 and freezes Ông Phở + Lục Ảnh', 
 });
 
 test('L35-T2/T3 every official kit has basic, ultimate, passive and legacySkillMap', () => {
-  const ids = ['ong_hang_pho', 'luc_anh', 'thay_mo', 'lac_yen', 'cung_thu_tre', 'co_dao_ganh_hoi', 'phong_tu', 'thuy_nuong_roi_nuoc', 'hong_lien_dao_nuong', 'thach_quyen', 'dinh_loi', 'to_diep'];
+  const ids = ['ong_hang_pho', 'luc_anh', 'thay_mo', 'lac_yen', 'cung_thu_tre', 'co_dao_ganh_hoi', 'phong_tu', 'thuy_nuong_roi_nuoc', 'hong_lien_dao_nuong', 'thach_quyen', 'dinh_loi', 'to_diep', 'linh_dong'];
   for (const id of ids) {
     const kit = getHeroSkillKit(id);
     assert.notEqual(kit, null, id);
@@ -113,10 +113,13 @@ test('hero detail background and skill kit runtime are shipped together', () => 
   const lucBuiltAsset = new URL('../dist/assets/ui/hero-detail/luc-anh-showcase-bg.png', import.meta.url);
   const thaySourceAsset = new URL('../assets/ui/hero-detail/thay-mo-showcase-bg.png', import.meta.url);
   const thayBuiltAsset = new URL('../dist/assets/ui/hero-detail/thay-mo-showcase-bg.png', import.meta.url);
+  const linhSourceAsset = new URL('../assets/ui/hero-detail/linh-dong-showcase-bg.jpg', import.meta.url);
+  const linhBuiltAsset = new URL('../dist/assets/ui/hero-detail/linh-dong-showcase-bg.jpg', import.meta.url);
 
   assert.match(sourceIndex, /detailBackground:'assets\/ui\/hero-detail\/ong-pho-showcase-bg\.png'/);
   assert.match(sourceIndex, /detailBackground:'assets\/ui\/hero-detail\/luc-anh-showcase-bg\.png'/);
   assert.match(sourceIndex, /detailBackground:'assets\/ui\/hero-detail\/thay-mo-showcase-bg\.png'/);
+  assert.match(sourceIndex, /detailBackground:'assets\/ui\/hero-detail\/linh-dong-showcase-bg\.jpg'/);
   assert.match(sourceIndex, /hv-depth-bg/);
   assert.match(sourceCss, /hvShowcaseLight/);
   assert.match(sourceCss, /prefers-reduced-motion:reduce/);
@@ -131,6 +134,8 @@ test('hero detail background and skill kit runtime are shipped together', () => 
   assert.equal(existsSync(lucBuiltAsset), true);
   assert.equal(existsSync(thaySourceAsset), true);
   assert.equal(existsSync(thayBuiltAsset), true);
+  assert.equal(existsSync(linhSourceAsset), true);
+  assert.equal(existsSync(linhBuiltAsset), true);
   assert.ok(statSync(builtAsset).size > 1000);
   assert.ok(statSync(lucBuiltAsset).size > 1000);
   assert.ok(statSync(thayBuiltAsset).size > 1000);

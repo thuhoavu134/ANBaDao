@@ -31,13 +31,13 @@ test('L139-T1 Linh Dong authored atlases, portraits and SFX exist', () => {
   for (const rel of requiredAtlases) assert.ok(exists(rel), rel);
 });
 
-test('L139-T2 CHARACTER_MANIFEST binds Linh Dong art; roster 12 stays closed', () => {
+test('L139-T2 CHARACTER_MANIFEST binds Linh Dong art; TKT-0141 opens roster identity', () => {
   const index = read('index.html');
   assert.match(index, /linh_dong:\{slug:'linh-dong'/);
   assert.match(index, /assets\/characters\/linh-dong\/avatar\.webp/);
   assert.match(index, /assets\/characters\/linh-dong\/card\.webp/);
   assert.match(index, /OFFICIAL_ROSTER_12_IDS=Object\.freeze\(\[/);
-  assert.doesNotMatch(index, /OFFICIAL_ROSTER_12_IDS=Object\.freeze\(\[[^\]]*linh_dong/);
+  assert.match(index, /OFFICIAL_ROSTER_12_IDS=Object\.freeze\(\[[^\]]*linh_dong/);
 });
 
 test('L139-T3 battle runtime draws Linh Dong atlas and S+ token delegates', () => {

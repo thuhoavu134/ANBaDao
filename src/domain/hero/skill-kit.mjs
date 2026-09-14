@@ -302,6 +302,17 @@ const TO_DIEP_KIT = makeKit({
   passiveEffect: 'Basic sao ấn hỗ trợ; Ultimate khuếch đại dấu hại trên địch.',
   counterplay: 'Giải dấu trước Vạn Bản hoặc cắt nộ Tố Điệp.'
 });
+const LINH_DONG_KIT = makeKit({
+  heroId: 'linh_dong', basicSlug: 'lac-hon-tieng-chuong', ultSlug: 'bach-quy-da-hanh', passiveSlug: 'am-ty',
+  basicName: 'Lạc Hồn Tiếng Chuông', basicKind: 'debuff', basicMult: 1.05, basicTarget: 'single_enemy',
+  ultName: 'Bách Quỷ Dạ Hành', ultKind: 'aoe', ultMult: 1.18, ultTarget: 'all_enemies', ultCost: 60,
+  animation: 'linh-dong.skill', basicVfx: 'linh-dong.skill1-vfx', ultVfx: 'linh-dong.ultimate-vfx', sfx: 'linh-dong-atk-v1',
+  basicDesc: 'Rung chuông gieo Nhiễu Loạn lên một địch phía trước.',
+  ultDesc: 'Triệu Bách Quỷ, gây sát thương toàn địch và Câm lặng.',
+  passiveName: 'Ấn Âm Ty', passiveTrigger: 'on_basic_hit',
+  passiveEffect: 'Basic đặt giảm hồi máu; Skill gây Nhiễu Loạn; Ultimate Câm lặng toàn địch.',
+  counterplay: 'Giải khống hoặc miễn CC trước Bách Quỷ Dạ Hành.'
+});
 
 export const HERO_SKILL_KIT_REGISTRY = Object.freeze({
   ong_hang_pho: ONG_HANG_PHO_KIT,
@@ -315,7 +326,8 @@ export const HERO_SKILL_KIT_REGISTRY = Object.freeze({
   hong_lien_dao_nuong: HONG_LIEN_KIT,
   thach_quyen: THACH_QUYEN_KIT,
   dinh_loi: DINH_LOI_KIT,
-  to_diep: TO_DIEP_KIT
+  to_diep: TO_DIEP_KIT,
+  linh_dong: LINH_DONG_KIT
 });
 
 

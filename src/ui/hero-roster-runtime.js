@@ -21,8 +21,11 @@
     ['team', 'team', 'Trợ trận'], ['daily', 'daily', 'Lịch Luyện'], ['campaign', 'expedition', 'Chinh chiến']];
 
   renderHeroes = function renderPlayerRoster() {
-    const view = buildRosterView({ ids: OFFICIAL_ROSTER_12_IDS, heroes: DATA.heroes, player: P,
-      powerFor: heroPower, portraitFor: id => portraitSrc(id, 'card'), ...state });
+    const view = buildRosterView({
+      ids: ['linh_dong', ...OFFICIAL_ROSTER_12_IDS.filter(id => id !== 'linh_dong')],
+      heroes: DATA.heroes, player: P,
+      powerFor: heroPower, portraitFor: id => portraitSrc(id, 'card'),
+      ...state });
     root.innerHTML = `<header class="v4-top"><div class="v4-profile">
       <button class="v4-avatar" data-roster-nav="hub" aria-label="Về Thành Chính">‹</button>
       <div><div class="v4-name">Hồn Việt</div><div class="v4-sub">Sở hữu ${view.owned}/${view.total} tướng</div>
@@ -118,14 +121,22 @@
   const baseDetail = renderHeroDetail;
   renderHeroDetail = function renderDetailWithoutIdleRestart(id) {
     const canvas = ST.screen === 'heroDetail' && ST._heroDetailId === id
-      ? document.getElementById('lucAnhDetailIdle') : null;
+      ? (document.getElementById('lucAnhDetailIdle') || document.getElementById('linhDongDetailIdle')) : null;
     const raf = canvas ? _lucDetailRaf : 0;
-    const startIdle = startLucAnhDetailIdle;
-    if (canvas) startLucAnhDetailIdle = () => {};
-    try { baseDetail(id); }
-    finally { startLucAnhDetailIdle = startIdle; }
+    const startLucIdle = startLucAnhDetailIdle;
+    const startLinhIdle = typeof startLinhDongDetailIdle === 'function' ? startLinhDongDetailIdle : null;
     if (canvas) {
-      document.getElementById('lucAnhDetailIdle')?.replaceWith(canvas);
+      startLucAnhDetailIdle = () => {};
+      if (startLinhIdle) startLinhDongDetailIdle = () => {};
+    }
+    try { baseDetail(id); }
+    finally {
+      startLucAnhDetailIdle = startLucIdle;
+      if (startLinhIdle) startLinhDongDetailIdle = startLinhIdle;
+    }
+    if (canvas) {
+      const next = document.getElementById(canvas.id);
+      if (next) next.replaceWith(canvas);
       _lucDetailRaf = raf;
     }
   };

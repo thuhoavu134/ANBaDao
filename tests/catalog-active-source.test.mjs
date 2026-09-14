@@ -26,7 +26,7 @@ test('active index catalog is classified without silently hiding known legacy is
   const report = validateCatalog(catalog);
   const codes = new Set(report.issues.map((entry) => entry.code));
 
-  assert.equal(report.summary.playableHeroCount, 12);
+  assert.equal(report.summary.playableHeroCount, 13);
   assert.equal(report.summary.nonPlayableHeroCount, 11);
   assert.deepEqual(report.summary.npcIds, ['narrator', 'mob_sale', 'boss_chungcu']);
   assert.equal(report.summary.enemyCount, 11);

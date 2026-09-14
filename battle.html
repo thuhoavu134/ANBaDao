@@ -5686,7 +5686,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
       addLog(`${target.name} đã gục ngã. ${actor.name} +12 nộ.`);
       burst(target.x, target.y, "#d7aa57", 24, "leaf");
     } else {
-      const hurtMs = isOngPho(target) ? ONG_PHO_HIT_MS : isDinhLoi(target) ? DINH_LOI_HIT_MS : isLucAnh(target) ? LUC_ANH_META.hurt.frames*LUC_ANH_META.hurt.ms : 230;
+      const hurtMs = isOngPho(target) ? ONG_PHO_HIT_MS : isDinhLoi(target) ? DINH_LOI_HIT_MS : isLucAnh(target) ? LUC_ANH_META.hurt.frames*LUC_ANH_META.hurt.ms : isLinhDong(target) ? linhDongActionMs('hurt') : 230;
       // v3.14.1: an enemy already knocked down by Ong Pho's Ultimate must stay down
       // through follow-up chase hits; ordinary hit reactions cannot pop it upright early.
       if(target.state !== "knockdown") setUnitState(target, "hurt", hurtMs);
@@ -5696,6 +5696,8 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
         setTimeout(()=>{ if(target.hp>0&&target.state==="hurt") setUnitState(target,"idle",800); }, motionDuration(DINH_LOI_HIT_MS));
       }else if(isLucAnh(target)){
         setTimeout(()=>{ if(target.hp>0&&target.state==="hurt") setUnitState(target,"idle",800); }, motionDuration(LUC_ANH_META.hurt.frames*LUC_ANH_META.hurt.ms));
+      }else if(isLinhDong(target)){
+        setTimeout(()=>{ if(target.hp>0&&target.state==="hurt") setUnitState(target,"idle",800); }, motionDuration(linhDongActionMs('hurt')));
       }
       if(target.counterReady && actor.hp>0){ target.counterReady=false; const counterMult=target?.teamSynergy?.archetype?.mastered&&target?.teamSynergy?.archetype?.id==="counter"?0.68:0.55; const counter=Math.min(actor.hp,Math.max(10,Math.round(Core.calculateDamage(target,actor,counterMult,0.5)))); actor.hp-=counter; const rr=intelUnit(target),aa=intelUnit(actor);if(rr)rr.damage+=counter;if(aa)aa.damageTaken+=counter; addFloater(actor,`PHẢN ${counter}`,"#f8df90"); if(actor.hp<=0){markDefeated(actor);if(aa&&aa.deathAction==null)aa.deathAction=state.actionCount;} }
     }
@@ -5882,6 +5884,17 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     }
     if(isLucAnh(actor)&&action==="ultimate"){
       let total=0;let markedTargets=0;foes.forEach(foe=>{if(foe.hp<=0)return;const marks=isVersionedLucAnh(actor)?lucAnhMarkStacks(foe):0;const markBonus=1+marks*.08;const dealt=applyDamage(actor,foe,multiplier*.44*markBonus,{color:"#536044",forceHit:true});total+=dealt;if(isVersionedLucAnh(actor)&&marks>0){markedTargets+=1;consumeLucAnhMark(foe);addFloater(foe,"ẢNH TAN · "+marks,"#c9b27b",true);}if(foe.hp>0){const dot=Math.max(1,Math.round(foe.maxHp*.06));addStatus(foe,{type:"poison",turns:3,power:dot,sourceId:actor.id,sourceHeroId:LUC_ANH_ID,percentMaxHp:.06});addFloater(foe,"ĐỘC VÂN · 6% HP","#98a86d",true);}});addLog(`☠ ${actor.name} khai Độc Vân Phủ Thế: độc khí phủ toàn đội, gây ${total} sát thương và Độc 3 lượt (6% HP tối đa/lượt)${markedTargets?`; giải ${markedTargets} dấu Ảnh Dẫn`:""}.`);return;
+    }
+    if(isLinhDong(actor)&&action==="skill"){
+      const hit=target&&target.team!==actor.team&&target.hp>0?target:foes.find(f=>f.hp>0);
+      if(!hit)return;
+      const dealt=applyDamage(actor,hit,multiplier,{color:"#8aa4d4",forceHit:true});
+      if(hit.hp>0){addStatus(hit,{type:"confusion",turns:1,chance:.5,sourceId:actor.id,sourceHeroId:"linh_dong"});addFloater(hit,"NHIỄU LOẠN","#9bb6e8",true);}
+      addLog(`◈ ${actor.name} Nhiễu Loạn Âm Ty: gây ${dealt} sát thương và gieo Nhiễu Loạn.`);return;
+    }
+    if(isLinhDong(actor)&&action==="ultimate"){
+      let total=0;foes.forEach(foe=>{if(foe.hp<=0)return;total+=applyDamage(actor,foe,multiplier*.72,{color:"#6a7eb8",forceHit:true});if(foe.hp>0){addStatus(foe,{type:"silence",turns:1,sourceId:actor.id,sourceHeroId:"linh_dong"});addFloater(foe,"CÂM LẶNG","#c9d4f0",true);}});
+      addLog(`☠ ${actor.name} khai Bách Quỷ Dạ Hành: gây ${total} sát thương và Câm lặng toàn địch.`);return;
     }
     if(isDinhLoi(actor)&&action==="skill"){
       const protectedAlly=target&&target.team===actor.team?target:Core.lowestHealth(friends)||actor;
@@ -6109,6 +6122,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     const usesOngPhoGif = isOngPho(actor);
     const usesDinhLoi = isDinhLoi(actor);
     const usesLucAnh = isLucAnh(actor);
+    const usesLinhDong = isLinhDong(actor);
     const usesThayMoBasicQa = isThayMoBasicQa(actor) && action === "basic";
     const usesOngPhoSkill1 = usesOngPhoGif && (action === "skill" || isVersionedBasic(actor));
     const usesOngPhoUltimate = usesOngPhoGif && action === "ultimate";
@@ -6128,6 +6142,21 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
         setStatus(`${actor.name} khai Độc Vân Phủ Thế`);dom.phaseLabel.textContent="Tuyệt kỹ • Đèn xoay cực đại";setUnitState(actor,"ultimate",LUC_ANH_META.ultimate.frames*LUC_ANH_META.ultimate.ms);playLucAnhUltimateVoice();
         if(!await sleepVisualMilliseconds(980,battleId))return;startLucAnhFx("ultimateVfx",actor,null,2200);dom.phaseLabel.textContent="Tuyệt kỹ • Độc vân phủ toàn trận";
         if(!await sleepVisualMilliseconds(1050,battleId))return;
+      }
+    } else if(usesLinhDong){
+      actor.x=actor.baseX;actor.y=actor.baseY;
+      if(action==="basic"){
+        setStatus(`${actor.name} rung chuông Lạc Hồn`);dom.phaseLabel.textContent="Basic • Tiếng chuông";setUnitState(actor,"attack",linhDongActionMs("attack"));playLinhDongSfx("basic");
+        if(!await sleepVisualMilliseconds(420,battleId))return;startLinhDongFx("basic",actor,target);dom.phaseLabel.textContent="Basic • Âm ty";
+        if(!await sleepVisualMilliseconds(Math.max(400,linhDongActionMs("attack")-420),battleId))return;
+      }else if(action==="skill"){
+        setStatus(`${actor.name} gieo Nhiễu Loạn Âm Ty`);dom.phaseLabel.textContent="Kỹ năng 1 • Nhiễu loạn";setUnitState(actor,"skill1",linhDongActionMs("skill1"));playLinhDongSfx("skill");
+        if(!await sleepVisualMilliseconds(420,battleId))return;startLinhDongFx("skill",actor,target);dom.phaseLabel.textContent="Kỹ năng 1 • Chuông nhiễu";
+        if(!await sleepVisualMilliseconds(Math.max(500,linhDongActionMs("skill1")-420),battleId))return;
+      }else{
+        setStatus(`${actor.name} khai Bách Quỷ Dạ Hành`);dom.phaseLabel.textContent="Tuyệt kỹ • Bách quỷ";setUnitState(actor,"ultimate",linhDongActionMs("ultimate"));playLinhDongSfx("ultimate");
+        if(!await sleepVisualMilliseconds(400,battleId))return;startLinhDongFx("ultimate",actor,target);dom.phaseLabel.textContent="Tuyệt kỹ • Câm lặng toàn trận";
+        if(!await sleepVisualMilliseconds(Math.max(800,linhDongActionMs("ultimate")-400),battleId))return;
       }
     } else if(usesDinhLoi){
       actor.x=actor.baseX;actor.y=actor.baseY;

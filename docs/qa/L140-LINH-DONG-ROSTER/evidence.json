@@ -1,0 +1,92 @@
+{
+  "ticket": "TKT-0140",
+  "owned": {
+    "count": 13,
+    "ids": [
+      "linh_dong",
+      "ong_hang_pho",
+      "thay_mo",
+      "lac_yen",
+      "cung_thu_tre",
+      "co_dao_ganh_hoi",
+      "phong_tu",
+      "thuy_nuong_roi_nuoc",
+      "hong_lien_dao_nuong",
+      "thach_quyen",
+      "dinh_loi",
+      "luc_anh",
+      "to_diep"
+    ],
+    "names": [
+      "Linh Đồng",
+      "Ông Phở",
+      "Thầy Mo",
+      "Thần Nỏ Sơn Nữ",
+      "Nữ Cung Thủ Tre",
+      "Cô Đào Gánh Hội",
+      "Phong Tử",
+      "Thủy Nương Rối Nước",
+      "Hồng Liên Đao Nương",
+      "Thạch Quyền",
+      "Đình Lôi",
+      "Lục Ảnh",
+      "Tố Điệp"
+    ],
+    "sub": "Sở hữu 13/13 tướng",
+    "hasLinh": true,
+    "portrait": "assets/characters/linh-dong/card.webp",
+    "imgW": 512
+  },
+  "catalog": {
+    "count": 13,
+    "ids": [
+      "linh_dong",
+      "ong_hang_pho",
+      "thay_mo",
+      "lac_yen",
+      "cung_thu_tre",
+      "co_dao_ganh_hoi",
+      "phong_tu",
+      "thuy_nuong_roi_nuoc",
+      "hong_lien_dao_nuong",
+      "thach_quyen",
+      "dinh_loi",
+      "luc_anh",
+      "to_diep"
+    ],
+    "names": [
+      "Linh Đồng",
+      "Ông Phở",
+      "Thầy Mo",
+      "Thần Nỏ Sơn Nữ",
+      "Nữ Cung Thủ Tre",
+      "Cô Đào Gánh Hội",
+      "Phong Tử",
+      "Thủy Nương Rối Nước",
+      "Hồng Liên Đao Nương",
+      "Thạch Quyền",
+      "Đình Lôi",
+      "Lục Ảnh",
+      "Tố Điệp"
+    ],
+    "sub": "Sở hữu 13/13 tướng",
+    "hasLinh": true,
+    "portrait": "assets/characters/linh-dong/card.webp",
+    "imgW": 512
+  },
+  "fire": {
+    "hasLinh": false,
+    "count": 3
+  },
+  "moon": {
+    "hasLinh": true,
+    "names": [
+      "Linh Đồng",
+      "Thầy Mo",
+      "Lục Ảnh"
+    ]
+  },
+  "appErrors": [],
+  "ok": true,
+  "ts": "2026-09-14T04:15:36.589Z"
+}

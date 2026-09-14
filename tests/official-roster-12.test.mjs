@@ -16,16 +16,17 @@ const roster = [
   ['thach_quyen', 'Thạch Quyền'],
   ['dinh_loi', 'Đình Lôi — Vệ Binh Trống Đồng'],
   ['luc_anh', 'Lục Ảnh — Kép Đèn Kéo Quân'],
-  ['to_diep', 'Tố Điệp — Mộc Bản Nương']
+  ['to_diep', 'Tố Điệp — Mộc Bản Nương'],
+  ['linh_dong', 'Linh Đồng']
 ];
 
-test('official production roster contains exactly the locked 12 runtime identities', () => {
+test('official production roster contains the locked 12 plus Linh Đồng', () => {
   for (const [id, name] of roster) {
     assert.match(index, new RegExp(`\\b${id}:\\{`), id);
     assert.ok(index.includes(`name:"${name}"`), name);
   }
-  const ownership = index.match(/\["ong_hang_pho","thay_mo"[^\]]+"to_diep"\]\.forEach\(id=>\{ if\(heroes\[id\]\) heroes\[id\]\.owned=true; \}\);/);
-  assert.ok(ownership, 'default profile unlocks all official 12');
+  const ownership = index.match(/\["ong_hang_pho","thay_mo"[^\]]+"linh_dong"\]\.forEach\(id=>\{ if\(heroes\[id\]\) heroes\[id\]\.owned=true; \}\);/);
+  assert.ok(ownership, 'default profile unlocks official identities including Linh Đồng');
 });
 
 test('every official hero has Basic runtime, Skill 1 and Ultimate contracts', () => {
