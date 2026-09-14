@@ -1,11 +1,11 @@
 ---
 id: TKT-0142
 title: Gắn tỷ lệ trận + VFX/SFX Linh Đồng
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 created: 2026-09-14T06:05:00.000Z
-updated: 2026-09-14T06:25:00.000Z
+updated: 2026-09-14T06:30:00.000Z
 acceptance_ids: ['L142-T1', 'L142-T2', 'L142-T3', 'L142-T4', 'L142-T5', 'L142-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths:
@@ -14,8 +14,6 @@ affected_paths:
   - src/runtime/splus-battle-bridge.js
   - src/ui/audio-sfx-runtime.js
   - scripts/runtime-mobile-render-sfx-v1.mjs
-  - scripts/pack-linh-dong-rgba.mjs
-  - assets/characters/linh-dong/
   - tests/linh-dong-battle-scale.test.mjs
   - docs/qa/L142-LINH-DONG-BATTLE/
 resource_locks: ["linh-dong-battle-scale"]
@@ -40,6 +38,6 @@ Không đổi BETS 2/10/50, loot, công thức combat. Không per-frame crop, kh
 
 ## Result
 
-REVIEW. Cell 451×440 baseline 64. VFX 360×202 / 720×405 source-over. SFX wav qua HonVietSfx. Skill.json + registry wav, không ogg trong HTML trận. Token S+ cùng identityScale 0.52/0.74. Hurt/fall 42ms.
+LIVE #136 `2dba572`. Cell 328×320 × 330/240 → 451×440. VFX source-over. SFX wav HonVietSfx. Hurt/fall 42ms. S+ cùng identityScale. BETS 2/10/50 đóng. Không Hồng Trầu. Không per-frame crop.
 L142-T1…T5 PASS. npm test 958. L142-P1 Chrome 390×844 PASS. Safari NOT_RUN.
-Owner gõ live rồi tự `git pull && vercel --prod`.
+Owner tự `git pull && vercel --prod`.

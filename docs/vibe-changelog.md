@@ -1,7 +1,7 @@
 ## 14/09 — TKT-0142: Gắn tỷ lệ trận + VFX/SFX Linh Đồng
 
 Owner: tỷ lệ hình trận, VFX, SFX chưa gắn đúng pack authored. Cell 328×320 × 330/240 → 451×440, VFX source-over, SFX wav qua HonVietSfx. Không đổi BETS/loot/công thức.
-RED L142-T1…T5 fail → GREEN 5/5 + npm test 958. Chrome 390×844 L142-P1 PASS. Safari NOT_RUN. PR REVIEW. Owner gõ live rồi tự `git pull && vercel --prod`.
+RED L142-T1…T5 fail → GREEN 5/5 + npm test 958. Chrome 390×844 L142-P1 PASS. Safari NOT_RUN. LIVE #136 `2dba572`. Owner tự `git pull && vercel --prod`.
 
 ## 14/09 — TKT-0141: Linh Đồng tướng đầy đủ như Lục Ảnh
 
