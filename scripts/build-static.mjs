@@ -150,6 +150,10 @@ await import('./player-progress-v1.mjs');
 const { installLinhDongMemory } = await import('./linh-dong-memory-v1.mjs');
 installLinhDongMemory(root);
 
+// TKT-0145: patch the current main battle/index after memory binding so the
+// canonical Linh Đồng bridge owns the final rendered payload.
+await import('./linh-dong-timing-main-v1.mjs');
+
 // The integrated battle is loaded from this embedded payload in production.
 // Keep it byte-identical to the patched battle.html; otherwise the visible
 // preview and the iframe can silently run different engines.
