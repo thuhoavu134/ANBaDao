@@ -2,10 +2,12 @@
 
 Source of truth for future AI agents, artists, and runtime maintainers.
 
-Updated: 2026-09-01
+Updated: 2026-09-14
 Status: LOCKED STANDARD v1
-Project: Hồn Việt: Mộng Giới
+Project: Hồn Việt: Mộng Giới / Lục Thần
 Current visual benchmark: Ông Phở Golden Character battle scale
+
+Prompt tạo video Animation / VFX / SFX (chroma `#00FF00`, isolated pass): [HUONG-DAN-ANIMATION-VFX-SFX.md](./HUONG-DAN-ANIMATION-VFX-SFX.md).
 
 ---
 

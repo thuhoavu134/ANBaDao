@@ -1,3 +1,7 @@
+## 14/09 — Hướng dẫn Animation / VFX / SFX tướng
+
+Owner khóa quy chuẩn chroma `#00FF00`, isolated pass, 8 template + mẫu Linh Đồng. File [docs/HUONG-DAN-ANIMATION-VFX-SFX.md](./HUONG-DAN-ANIMATION-VFX-SFX.md). Không đổi runtime/cược/loot.
+
 ## 14/09 — TKT-0138: Vệt sáng loop mượt, không khựng
 
 Owner: vệt khựng loop. Bỏ hold 78%, 0→100% translate3d + fade hai đầu. 1.5s. Vệt trắng. Cược/loot không đổi.

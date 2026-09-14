@@ -103,3 +103,4 @@ Board GitHub không có. File `tickets/TKT-00xx/ticket.md` là nguồn sự th�
 
 
 Cách tạo gift code (owner): [docs/GIFT-CODES.md](../docs/GIFT-CODES.md)
+Tạo animation / VFX / SFX tướng: [docs/HUONG-DAN-ANIMATION-VFX-SFX.md](../docs/HUONG-DAN-ANIMATION-VFX-SFX.md)
