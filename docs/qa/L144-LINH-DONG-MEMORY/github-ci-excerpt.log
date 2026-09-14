@@ -1,0 +1,27 @@
+2026-09-14T07:54:39.3562569Z TKT-0144: lazy Linh Dong atlas cache, fallback and screen cleanup installed
+2026-09-14T07:54:39.3747789Z Embedded battle payload synced: 1458341 bytes
+2026-09-14T07:54:44.6086715Z # Subtest: L24-D2: embedded battle payload still matches the built battle file
+2026-09-14T07:54:44.6088082Z ok 331 - L24-D2: embedded battle payload still matches the built battle file
+2026-09-14T07:54:47.6772633Z # Subtest: L144-T1 host and battle boot without requesting Linh Dong atlases
+2026-09-14T07:54:47.6774383Z ok 508 - L144-T1 host and battle boot without requesting Linh Dong atlases
+2026-09-14T07:54:47.6778747Z # Subtest: L144-T2 attack and skill1 share one Image; two in-flight loads maximum
+2026-09-14T07:54:47.6780267Z ok 509 - L144-T2 attack and skill1 share one Image; two in-flight loads maximum
+2026-09-14T07:54:47.6786958Z # Subtest: L144-T2 long action sequence stays within the decoded RGBA byte budget
+2026-09-14T07:54:47.6789401Z ok 510 - L144-T2 long action sequence stays within the decoded RGBA byte budget
+2026-09-14T07:54:47.6803762Z # Subtest: L144-T3 failed and malformed atlases do not retry on every animation frame
+2026-09-14T07:54:47.6815815Z ok 511 - L144-T3 failed and malformed atlases do not retry on every animation frame
+2026-09-14T07:54:47.6853963Z # Subtest: L144-T3 clear cancels outstanding sources and makes stale load callbacks harmless
+2026-09-14T07:54:47.6855343Z ok 512 - L144-T3 clear cancels outstanding sources and makes stale load callbacks harmless
+2026-09-14T07:54:47.6860355Z # Subtest: L144-T4 battle renderer returns false before loading and uses idle during action loading
+2026-09-14T07:54:47.6862466Z ok 513 - L144-T4 battle renderer returns false before loading and uses idle during action loading
+2026-09-14T07:54:47.6877816Z # Subtest: L144-T4 profile keeps atlas aspect ratio and stops when its screen is hidden
+2026-09-14T07:54:47.6879095Z ok 514 - L144-T4 profile keeps atlas aspect ratio and stops when its screen is hidden
+2026-09-14T07:54:47.6882246Z # Subtest: L144-T5 campaign and preparation select the full-body idle atlas, not master portrait
+2026-09-14T07:54:47.6883699Z ok 515 - L144-T5 campaign and preparation select the full-body idle atlas, not master portrait
+2026-09-14T07:54:48.5807890Z # Subtest: claim advances to the next stage and keeps a reward payload
+2026-09-14T07:54:48.5810294Z ok 555 - claim advances to the next stage and keeps a reward payload
+2026-09-14T07:54:53.8425616Z # tests 970
+2026-09-14T07:54:53.8426804Z # pass 970
+2026-09-14T07:54:53.8427371Z # fail 0
+2026-09-14T07:54:53.8428472Z # skipped 0
+

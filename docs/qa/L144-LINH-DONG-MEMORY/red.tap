@@ -1,0 +1,156 @@
+✖ L144-T1 host and battle boot without requesting Linh Dong atlases (71.921574ms)
+✖ L144-T2 attack and skill1 share one Image; two in-flight loads maximum (35.118508ms)
+✖ L144-T2 long action sequence stays within the decoded RGBA byte budget (15.147125ms)
+✖ L144-T3 failed and malformed atlases do not retry on every animation frame (15.688896ms)
+✖ L144-T3 clear cancels outstanding sources and makes stale load callbacks harmless (13.200281ms)
+✖ L144-T4 battle renderer returns false before loading and uses idle during action loading (15.330989ms)
+✖ L144-T4 profile keeps atlas aspect ratio and stops when its screen is hidden (59.692259ms)
+✖ L144-T5 campaign and preparation select the full-body idle atlas, not master portrait (4.75245ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 0
+ℹ fail 8
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 619.864339
+
+✖ failing tests:
+
+test at tests/linh-dong-memory.test.mjs:30:1
+✖ L144-T1 host and battle boot without requesting Linh Dong atlases (71.921574ms)
+  AssertionError [ERR_ASSERTION]: host must not eager-load animation clips
+  
+  6 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/linh-dong-memory.test.mjs:33:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 6,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/linh-dong-memory.test.mjs:38:1
+✖ L144-T2 attack and skill1 share one Image; two in-flight loads maximum (35.118508ms)
+  AssertionError [ERR_ASSERTION]: Values have same structure but are not reference-equal:
+  
+  Image {
+    _src: 'assets/characters/linh-dong/basic-atlas.webp',
+    complete: false,
+    decoding: 'async',
+    naturalWidth: 0
+  }
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/linh-dong-memory.test.mjs:41:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { complete: false, naturalWidth: 0, decoding: 'async', _src: 'assets/characters/linh-dong/basic-atlas.webp' },
+    expected: { complete: false, naturalWidth: 0, decoding: 'async', _src: 'assets/characters/linh-dong/basic-atlas.webp' },
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/linh-dong-memory.test.mjs:51:1
+✖ L144-T2 long action sequence stays within the decoded RGBA byte budget (15.147125ms)
+  TypeError: Cannot read properties of undefined (reading 'inspect')
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/linh-dong-memory.test.mjs:56:25)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/linh-dong-memory.test.mjs:65:1
+✖ L144-T3 failed and malformed atlases do not retry on every animation frame (15.688896ms)
+  TypeError: idle.onerror is not a function
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/linh-dong-memory.test.mjs:67:36)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/linh-dong-memory.test.mjs:76:1
+✖ L144-T3 clear cancels outstanding sources and makes stale load callbacks harmless (13.200281ms)
+  TypeError: Cannot read properties of undefined (reading 'clear')
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/linh-dong-memory.test.mjs:78:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/linh-dong-memory.test.mjs:86:1
+✖ L144-T4 battle renderer returns false before loading and uses idle during action loading (15.330989ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  true !== false
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/linh-dong-memory.test.mjs:95:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/linh-dong-memory.test.mjs:101:1
+✖ L144-T4 profile keeps atlas aspect ratio and stops when its screen is hidden (59.692259ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(Math.abs(a[7]/a[8]-347/320)<1e-9)
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/linh-dong-memory.test.mjs:113:27)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/linh-dong-memory.test.mjs:117:1
+✖ L144-T5 campaign and preparation select the full-body idle atlas, not master portrait (4.75245ms)
+  AssertionError [ERR_ASSERTION]: missing Linh Dong sprite entry sends both screens to portraitSrc(master)
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/linh-dong-memory.test.mjs:122:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

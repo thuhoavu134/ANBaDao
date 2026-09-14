@@ -146,6 +146,10 @@ await import('./lanes/tkt-0111-econ.mjs');
 // TKT-0118 — player EXP and level gates; after all campaign/reward owners.
 await import('./player-progress-v1.mjs');
 
+// Bound Linh Đồng texture memory in both documents before syncing the iframe payload.
+const { installLinhDongMemory } = await import('./linh-dong-memory-v1.mjs');
+installLinhDongMemory(root);
+
 // The integrated battle is loaded from this embedded payload in production.
 // Keep it byte-identical to the patched battle.html; otherwise the visible
 // preview and the iframe can silently run different engines.

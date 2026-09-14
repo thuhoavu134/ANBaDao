@@ -1,0 +1,105 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> hon-viet-mong-gioi-visual-qa@3.26.0 build
+> node scripts/build-static.mjs
+
+Luc Anh runtime patch applied
+Runtime safety hotfix applied
+BGM routing patch applied: hub / hero / combat / challenge
+iOS audio unlock on first real interaction applied; no blocking gate
+Victory/defeat result audio integrated
+Luc Anh safe Retina draw patch applied: DPR3 + high-quality sampling, runtime atlas cache disabled
+[QA polish] skip Luc Anh 330 scale -> state-aware compensation
+[QA polish] skip Luc Anh deployed ultimate -> guaranteed voice
+[QA polish] skip Luc Anh deployed ultimate impact hold
+Runtime QA polish v3 applied: manifest-timed Luc Anh Ultimate and local iOS-safe voice bridge
+Runtime QA polish v4 applied: center-reaching triple ultimate, reliable victory taps, production QA disabled, sharper Luc Anh detail idle
+Runtime QA polish v5 applied safely: full-strength original black-smoke Ultimate, SOURCE-OVER preserves authored pixels
+Luc Anh migrated to anchor-based spatial pipeline with authored timing metadata
+Lục Ảnh IDLE 1080 wired: 96 frames · 480×480 cells
+Skill Atlas Runtime v1: Luc Anh Basic + Skill1 + Ultimate manifests wired to proven battle flow
+Skill Atlas Registry v1: 12 skills / 4 heroes
+Luc Anh local x1/x2/x3 + authored timing metadata applied with stable block boundary
+Battle visual polish v1 applied: image chapter map + stacked bouncing damage font
+Battle backgrounds v2 applied: 20 authored stages · single full-bleed layer
+3Q combat domain adapter v1 wired: round → move → action → typed result replay
+3Q-style main quest v1 wired: sequential ải → auto-battle → reward → next quest
+Result actions v5 applied: embedded confirm publishes the result and the visible Ải sau label always follows the next-stage path
+M0/P0 runtime repair applied: idle=assets/characters/luc-anh/idle-rgba-v1-atlas.webp (96 frames, full-cell) · single background owner · result CTA owner
+Summon pool guard installed before paid/free debit; no economy changes
+State-backed roster installed: official identities, live stats, one route owner
+Hero detail tabs installed: existing panels and commands, stable idle layout
+Supplied audio SFX, stable canvas/camera and authored Luc Anh motion applied
+Dinh Lôi retina source cells and result portrait cache patched
+Versioned hero skill kit runtime installed: Basic / Ultimate / passive mapping
+Save contract v1 installed: versioned state, revision, backup and recovery guards
+Transaction contract installed: receipts, loadout and forge commits with local ledger
+Campaign scene: live squad, preparation, capped AFK claim, router-owned lifecycle
+Forge item assets installed: 4 slots, 20 equipment icons, 3 material icons
+R08 settlement/navigation installed: protocol guard, one-result controller and reward commit
+R04 return context installed: hero detail back route, session context and stale fallback
+R10 opening loop retained atomic hero upgrade hook
+R10 opening loop installed: event/route/prerequisite contract and safe journey CTA
+QA full access v1 installed: opt-in feature/chapter unlock with save-safe progression sandbox
+Hub dock tray installed: tray begins at button midpoints and buttons stay above it
+Hub mobile side actions stabilized and main quest hub card removed
+Hub icon alpha hotfix installed: removed legacy disc background and stacked dark filters
+iPad formation, Lục Ảnh anchor/camera and combat audio fixes applied
+Battle close now cancels parent SFX, voices, result audio and stale iframe channels
+SPLUS42: source factory, existing scheduler bridge, 42 HUD identities
+Campaign reference flow: intentional partial squad, confirm to AFK, explicit next battle
+Campaign fixed slots: unique saved slots kept through formation layout and save
+Account gear board installed: Trợ trận wheel complete
+Tower lacquer screen installed
+Expedition lacquer screen installed
+Shop lacquer screen installed
+Summon lacquer screen installed
+Arena lacquer screen installed
+Hunt lacquer screen installed
+Hunt battle beast visual installed
+Festival lacquer screen installed
+Daily lacquer screen installed
+Forge hall overlay installed
+Preview journey unlock installed (off luc-than.vercel.app)
+Túi đồ hall overlay installed
+Hòm thư hall overlay installed
+Giao việc hall overlay installed
+Bang Hội hall overlay installed
+Bạn bè hall overlay installed
+Trò chuyện hall overlay installed
+Gia Tộc hall overlay installed
+Kho lưu hall overlay installed
+Tháp Trắng Đêm 3D overlay installed
+Mộng Lộ 3D overlay installed
+Chợ Mộng 3D overlay installed
+Gọi Mộng 3D overlay installed
+Đấu Trường 3D overlay installed
+Săn Boss 3D overlay installed
+Lễ Hội 3D overlay installed
+Hồ sơ tướng 3D overlay installed
+Nhật Ký Mơ 3D overlay installed
+Chinh chiến 3D overlay installed
+Hành trình 3D overlay installed
+Kết quả 3D overlay installed
+Cốt truyện 3D overlay installed
+Trực Tuyến 3D overlay installed
+Trận Hình 3D overlay installed
+Skill seals A installed
+Skill seals B installed
+Skill seals C installed
+Safari overlay pin installed
+Tháp trận NPC installed
+Hub back chip installed
+Giáo Trường 3D overlay installed
+Skill seals D installed
+Thử Thách 3D overlay installed
+Trực Tuyến auth (same-origin + Google) installed
+Login gate (video + register/login) installed
+Hồ sơ avatar overlay installed
+Lục Thần lore overlay installed
+Bách Bảo Rương overlay installed
+Economy balance overlay installed
+Player level1–60: existing108 encounters, entry gate, atomic XP and additive migration
+TKT-0144: lazy Linh Dong atlas cache, fallback and screen cleanup installed
+Embedded battle payload synced: 1458341 bytes
+Static preview written to /workspace/scratch/4eca5b558d27/luc-than/dist

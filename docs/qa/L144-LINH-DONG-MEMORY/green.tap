@@ -1,0 +1,16 @@
+✔ L144-T1 host and battle boot without requesting Linh Dong atlases (236.906001ms)
+✔ L144-T2 attack and skill1 share one Image; two in-flight loads maximum (41.75362ms)
+✔ L144-T2 long action sequence stays within the decoded RGBA byte budget (30.791774ms)
+✔ L144-T3 failed and malformed atlases do not retry on every animation frame (38.757936ms)
+✔ L144-T3 clear cancels outstanding sources and makes stale load callbacks harmless (38.139511ms)
+✔ L144-T4 battle renderer returns false before loading and uses idle during action loading (32.281713ms)
+✔ L144-T4 profile keeps atlas aspect ratio and stops when its screen is hidden (140.87316ms)
+✔ L144-T5 campaign and preparation select the full-body idle atlas, not master portrait (1.811742ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 900.652129

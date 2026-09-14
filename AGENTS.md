@@ -1,5 +1,7 @@
 # Hồn Việt / Lục Thần — hướng dẫn bắt đầu
 
+Bản sửa Linh Đồng 14/09 đang kiểm chứng: đọc `docs/HANDOFF-LINH-DONG-CRASH-2026-09-14.md`. Chưa xác nhận iPhone thật hoặc deploy; không coi đây là LIVE.
+
 Đọc `docs/HANDOFF-2026-09-13.md` rồi `docs/HANDOFF-2026-09-12.md` trước khi sửa game.
 
 Bàn giao mới nhất **13/09/2026 sáng**: main `92e6708` · play [luc-than-neon.vercel.app](https://luc-than-neon.vercel.app/) · postgres/oauth gamma thuhoavu. Wave S–W #87–#107 LIVE. 72 tướng = wave sau.

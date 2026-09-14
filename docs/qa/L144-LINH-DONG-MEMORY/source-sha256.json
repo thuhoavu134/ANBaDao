@@ -1,0 +1,7 @@
+{
+  "scripts/build-static.mjs": "c7d2f6694c0ebd9594d34c7c67bed4c478910430fb13229406651b132d67e470",
+  "scripts/linh-dong-memory-v1.mjs": "c8379e403a649f85e388059afe4978c197b47bccf94d068731b0742e94d489cc",
+  "src/domain/character/atlas-image-cache.mjs": "c2b4835ec77149eeafed651428190fe3af5a4df534de28fd60e8bed023c8020f",
+  "src/ui/campaign-scene.js": "d9d99b4e6be7e7731e835ad9167448058306078f05ff629249880455808c66fc",
+  "tests/linh-dong-memory.test.mjs": "a9daf16e964caa8ed31d5926976761d97f270ecfa0f7e72fd474b927fa41b8fc"
+}

@@ -2,6 +2,10 @@
 
 #112 cấp người chơi đã merge tại147325b. Ghép #111 huy hiệu hai kiếm vào cùng cây nguồn, giữ đề xuất cấp đã chốt/implementation TKT-0118. Không quay lại trạng thái chờ chốt level. Kiểm tra bản kết hợp trước cập nhật main; Chrome390×844 BLOCKED (preview đăng nhập bị auto-review từ chối), Safari NOT_RUN. Owner tự deploy.
 
+## 14/09 — TKT-0144: Linh Đồng crash / ảnh bust trên sân
+
+Baseline 3accc0e. Source fix + 8 regression tests; focused 46/46 và build PASS. Cache lazy/dedup 112 MiB, 2 loads; cleanup route/iframe; spriteSpecs idle toàn thân; renderer fallback; hồ sơ không ép vuông. Local suite 897/970 do checkout thiếu asset/ticket/API; CI PASS: build + 970/970 tests on runtime f3f071490c072278a9c5e4b52c5b79acd6de69fb, run 34820015965, PR #138. Owner explicitly approved uploading task source/docs/test logs to private bktimmy247/luc-than and creating a PR on 2026-09-14. Chrome candidate BLOCKED, iPhone NOT_RUN, production NOT_DEPLOYED. Đọc `HANDOFF-LINH-DONG-CRASH-2026-09-14.md`; tiếp tục từ CI và review/thiết bị, không báo hết crash iPhone trước xác minh.
+
 ## 13/09 — TKT-0118: owner chốt cấp người chơi 1–60
 
 Triển khai khóa108 ải theo cấp + thắng ải trước, giữ catalog lt_seal hiện có. Cấp tướng trần30 không đổi. EXP lần đầu/việc ngày-tuần/nhận rươngAFK ghép transaction cũ; migration cấp bù theo tiến độ, backup additive, clear keys chống nhậnEXP lại. UI cấp/EXP và đường rương/nhiệm vụ khi khóa. Sửa truyền Next qua2 wrapper lore và cursor replay. Chi tiết: docs/CAMPAIGN-LEVEL-PROPOSAL.md.

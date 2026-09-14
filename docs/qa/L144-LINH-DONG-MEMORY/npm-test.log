@@ -1,0 +1,2593 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> hon-viet-mong-gioi-visual-qa@3.26.0 test
+> npm run build && node --test --test-concurrency=1 tests/*.test.mjs
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> hon-viet-mong-gioi-visual-qa@3.26.0 build
+> node scripts/build-static.mjs
+
+Luc Anh runtime patch applied
+Runtime safety hotfix applied
+BGM routing patch applied: hub / hero / combat / challenge
+iOS audio unlock on first real interaction applied; no blocking gate
+Victory/defeat result audio integrated
+Luc Anh safe Retina draw patch applied: DPR3 + high-quality sampling, runtime atlas cache disabled
+[QA polish] skip Luc Anh 330 scale -> state-aware compensation
+[QA polish] skip Luc Anh deployed ultimate -> guaranteed voice
+[QA polish] skip Luc Anh deployed ultimate impact hold
+Runtime QA polish v3 applied: manifest-timed Luc Anh Ultimate and local iOS-safe voice bridge
+Runtime QA polish v4 applied: center-reaching triple ultimate, reliable victory taps, production QA disabled, sharper Luc Anh detail idle
+Runtime QA polish v5 applied safely: full-strength original black-smoke Ultimate, SOURCE-OVER preserves authored pixels
+Luc Anh migrated to anchor-based spatial pipeline with authored timing metadata
+Lục Ảnh IDLE 1080 wired: 96 frames · 480×480 cells
+Skill Atlas Runtime v1: Luc Anh Basic + Skill1 + Ultimate manifests wired to proven battle flow
+Skill Atlas Registry v1: 12 skills / 4 heroes
+Luc Anh local x1/x2/x3 + authored timing metadata applied with stable block boundary
+Battle visual polish v1 applied: image chapter map + stacked bouncing damage font
+Battle backgrounds v2 applied: 20 authored stages · single full-bleed layer
+3Q combat domain adapter v1 wired: round → move → action → typed result replay
+3Q-style main quest v1 wired: sequential ải → auto-battle → reward → next quest
+Result actions v5 applied: embedded confirm publishes the result and the visible Ải sau label always follows the next-stage path
+M0/P0 runtime repair applied: idle=assets/characters/luc-anh/idle-rgba-v1-atlas.webp (96 frames, full-cell) · single background owner · result CTA owner
+Summon pool guard installed before paid/free debit; no economy changes
+State-backed roster installed: official identities, live stats, one route owner
+Hero detail tabs installed: existing panels and commands, stable idle layout
+Supplied audio SFX, stable canvas/camera and authored Luc Anh motion applied
+Dinh Lôi retina source cells and result portrait cache patched
+Versioned hero skill kit runtime installed: Basic / Ultimate / passive mapping
+Save contract v1 installed: versioned state, revision, backup and recovery guards
+Transaction contract installed: receipts, loadout and forge commits with local ledger
+Campaign scene: live squad, preparation, capped AFK claim, router-owned lifecycle
+Forge item assets installed: 4 slots, 20 equipment icons, 3 material icons
+R08 settlement/navigation installed: protocol guard, one-result controller and reward commit
+R04 return context installed: hero detail back route, session context and stale fallback
+R10 opening loop retained atomic hero upgrade hook
+R10 opening loop installed: event/route/prerequisite contract and safe journey CTA
+QA full access v1 installed: opt-in feature/chapter unlock with save-safe progression sandbox
+Hub dock tray installed: tray begins at button midpoints and buttons stay above it
+Hub mobile side actions stabilized and main quest hub card removed
+Hub icon alpha hotfix installed: removed legacy disc background and stacked dark filters
+iPad formation, Lục Ảnh anchor/camera and combat audio fixes applied
+Battle close now cancels parent SFX, voices, result audio and stale iframe channels
+SPLUS42: source factory, existing scheduler bridge, 42 HUD identities
+Campaign reference flow: intentional partial squad, confirm to AFK, explicit next battle
+Campaign fixed slots: unique saved slots kept through formation layout and save
+Account gear board installed: Trợ trận wheel complete
+Tower lacquer screen installed
+Expedition lacquer screen installed
+Shop lacquer screen installed
+Summon lacquer screen installed
+Arena lacquer screen installed
+Hunt lacquer screen installed
+Hunt battle beast visual installed
+Festival lacquer screen installed
+Daily lacquer screen installed
+Forge hall overlay installed
+Preview journey unlock installed (off luc-than.vercel.app)
+Túi đồ hall overlay installed
+Hòm thư hall overlay installed
+Giao việc hall overlay installed
+Bang Hội hall overlay installed
+Bạn bè hall overlay installed
+Trò chuyện hall overlay installed
+Gia Tộc hall overlay installed
+Kho lưu hall overlay installed
+Tháp Trắng Đêm 3D overlay installed
+Mộng Lộ 3D overlay installed
+Chợ Mộng 3D overlay installed
+Gọi Mộng 3D overlay installed
+Đấu Trường 3D overlay installed
+Săn Boss 3D overlay installed
+Lễ Hội 3D overlay installed
+Hồ sơ tướng 3D overlay installed
+Nhật Ký Mơ 3D overlay installed
+Chinh chiến 3D overlay installed
+Hành trình 3D overlay installed
+Kết quả 3D overlay installed
+Cốt truyện 3D overlay installed
+Trực Tuyến 3D overlay installed
+Trận Hình 3D overlay installed
+Skill seals A installed
+Skill seals B installed
+Skill seals C installed
+Safari overlay pin installed
+Tháp trận NPC installed
+Hub back chip installed
+Giáo Trường 3D overlay installed
+Skill seals D installed
+Thử Thách 3D overlay installed
+Trực Tuyến auth (same-origin + Google) installed
+Login gate (video + register/login) installed
+Hồ sơ avatar overlay installed
+Lục Thần lore overlay installed
+Bách Bảo Rương overlay installed
+Economy balance overlay installed
+Player level1–60: existing108 encounters, entry gate, atomic XP and additive migration
+TKT-0144: lazy Linh Dong atlas cache, fallback and screen cleanup installed
+Embedded battle payload synced: 1458341 bytes
+Static preview written to /workspace/scratch/4eca5b558d27/luc-than/dist
+✔ L79-T1: capture AbortError, sweep __mgErrs, remove abort-only banner (2.081175ms)
+✔ L79-T2: login video play catch, no autoplay (1.234252ms)
+✔ L79-T3: inject filter in head; index.html source frozen (60.535462ms)
+✔ L79-T4: no second document click listener (0.783107ms)
+✔ L18-A1: six antiques cover combat stats and empty board grants nothing (3.454917ms)
+✔ L18-A2: enhance spends gold and hoat, stays immutable, and rejects max or missing funds (0.918986ms)
+✔ L18-A3: only the equipped antique counts, An vị swaps the one slot, Bậc Thầy needs all six (0.642448ms)
+✔ L18-A4: wheel opens Cổ Vật as a 2x3 An vị board (6.468465ms)
+✔ L23-T1: 11 nan Trợ trận giữ key / nhãn / góc / open (4.743943ms)
+✔ L23-T2: nan dùng ảnh sơn, không còn spokeGlyph SVG (0.503389ms)
+✖ L23-T3: 11 file sơn unique + hall giữ + heroStats không đổi công thức (2.460928ms)
+✔ L23-P1: clip tròn + pointer-events badge-only (7.47827ms)
+✔ L23-P2: không thêm data-art-go; inject account-gear giữ chỗ (43.118219ms)
+✔ L16-D1: four troop banners cover percent stats and empty board grants nothing (3.797002ms)
+✔ L16-D2: enhance spends gold and hoat, stays immutable, and rejects max or missing funds (0.829269ms)
+✔ L16-D3: troop percent stacks, Bậc Thầy needs all four (0.410263ms)
+✔ L16-D4: wheel opens Thần Binh as 2x2 percent banners (7.481703ms)
+✔ L21-F1: eight fish cover combat stats and empty board grants nothing (3.29093ms)
+✔ L21-F2: Câu spends gold and hoat, stays immutable, rng picks the fish, and rejects missing funds or a full dex (0.97675ms)
+✔ L21-F3: every leveled fish counts and Bậc Thầy needs all eight (0.558483ms)
+✔ L21-F4: wheel opens Đồ Giám Cẩu Cá as a catch catalog (6.634724ms)
+✔ board keeps twelve roman slots, three of each forge kind (3.716419ms)
+✔ empty board stays at master 0 and grants no combat bonus (1.089412ms)
+✔ matching kind equips, wrong kind is rejected, and a uid only occupies one slot (0.834413ms)
+✔ unequip clears the worn slot and rejects items the board is not wearing (0.4048ms)
+✔ picker lists unused matching pieces and skips the piece already in that slot (0.66317ms)
+✔ quick equip fills empty slots with the best leftover of each kind (1.049407ms)
+✔ quick unequip returns every board link to the bag (0.493255ms)
+✔ worn pieces add their stats to the whole roster and master level is the lowest shared enhance (0.916932ms)
+✔ master bonus stays off at +0 and grants a team table once all twelve share enhance (1.561539ms)
+✔ unequipping one slot drops master rank and removes the master addend (1.045438ms)
+✔ ssr outranks a higher-level common piece when ranking bag items (0.363698ms)
+✔ smelt rejects empty picks, worn board pieces and locked bag items (2.939541ms)
+✔ smelt quotes tinh for unused extras and sums a batch without touching worn uids (0.727391ms)
+✔ assist wheel and 12-slot board are the Trợ trận equipment surface (7.039625ms)
+✔ L20-I1: six illusions cover combat stats and empty board grants nothing (4.308905ms)
+✔ L20-I2: enhance spends gold and hoat, stays immutable, and rejects max or missing funds (0.911487ms)
+✔ L20-I3: chính is full, phụ is half, An vị toggles, Bậc Thầy needs all six (1.129651ms)
+✔ L20-I4: wheel opens Ảo Hình as a 2x3 chính/phụ board (6.668403ms)
+✔ L19-L1: five seals cover combat stats and empty board grants nothing (4.812258ms)
+✔ L19-L2: enhance spends gold and hoat, stays immutable, and rejects max or missing funds (0.879025ms)
+✔ L19-L3: only the chosen seal counts, Ninh grants all stats, Bậc Thầy needs all five (0.838038ms)
+✔ L19-L4: wheel opens Tuệ Vận as five fortune seals (8.820617ms)
+✔ L14-P1: six Vietnamese pets cover the four combat stats and empty board grants nothing (4.509813ms)
+✔ L14-P2: enhance spends gold and hoat, stays immutable, and rejects max or missing funds (0.941193ms)
+✔ L14-P3: deployed pet is full power, others are support, Bậc Thầy needs all six (0.858017ms)
+✔ L14-P4: wheel opens Linh Thú as a flanking pet board with deploy (6.690699ms)
+✔ L13-R1: eight relics sit in two sets of four and empty board grants nothing (3.448709ms)
+✔ L13-R2: enhance spends gold and hoat, stays immutable, and rejects max or missing funds (0.928588ms)
+✔ L13-R3: combat bonus adds per-level primary stat, 2/4-set and Bậc Thầy (1.102979ms)
+✔ normalize fills missing relics at level 0 and clamps junk (0.368415ms)
+✔ L13-R4: wheel opens Bảo Vật as a flanking relic board (7.739008ms)
+✔ L15-S1: nine spirits sit in three triads and empty board grants nothing (4.366887ms)
+✔ L15-S2: enhance spends gold and hoat, stays immutable, and rejects max or missing funds (1.700936ms)
+✔ L15-S3: only slotted spirits count, triad bonus needs three matching slots, Bậc Thầy needs all nine (1.037487ms)
+✔ L15-S4: wheel opens Cửu Ứ Chiến Linh as a 3x3 an vị board (6.766646ms)
+✔ L17-T1: star cost matches live 20x current stars and caps at 6 (1.7563ms)
+✔ L17-T2: prepare spends shards, stays immutable, and rejects max/unowned/missing shards (0.862728ms)
+✔ L17-T3: Bậc Thầy is the min star of all twelve, unowned counts as zero (0.487438ms)
+✔ L17-T4: wheel opens Tướng Tinh as a 12-hero star board (10.757468ms)
+✔ starts empty and accrues elapsed time into the chest (4.358473ms)
+✔ caps at exactly 15 hours and discards time beyond the cap (0.515626ms)
+✔ claim returns the reward atomically and opens a fresh accumulation cycle (1.016405ms)
+✔ does not accrue when the device clock moves backwards (0.494874ms)
+✔ allows a partial claim and keeps sub-unit reward progress (0.58086ms)
+✔ normalization cannot exceed the cap or carry invalid values (0.36904ms)
+✔ a new chest without a clock does not start at Unix epoch (0.35962ms)
+✔ L40-T1: live domain and lacquer runtime stay frozen (2.17288ms)
+✔ L40-T2: #hvArenaRoot is a body overlay with overflow auto (0.671821ms)
+✔ L40-T3: hall mounts on body and wraps showScreen without a second document listener (0.650062ms)
+✔ L40-T4: stub lane loads runtime and build-static keeps the reserved import (0.703065ms)
+✖ L40-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (2.220757ms)
+✖ L100: đấu trường city 3 ô + FAB ‹, không document click (4.038755ms)
+✔ L18-T1: live catalog frozen — cost 5, 8 võ đài, mốc LP/hạng/vinh ấn (4.27157ms)
+✔ L18-T2: rivalPower / rankCandidates / LP delta keep live formulas (0.967406ms)
+✔ L18-T3: rank win takes rival rank +220g; lose does not drop; player not mutated (1.876928ms)
+✔ L18-P1: rank gem milestones fire once; net kèo rejected (1.380364ms)
+✔ L18-P2: rivalry first/leap/revenge; day rollover clears deeds; marks are not combat stats (0.819496ms)
+✔ L18-P3: season LP claim, defense snapshot, PvE first vs rematch, lock (2.835379ms)
+✔ L18-P4: lacquer screen is wired and does not add a second hub landmark (2.062791ms)
+✔ L74-T2: register then login issues a token; duplicate user is rejected (35.103199ms)
+✔ L74-T2b: username and password are validated (0.828286ms)
+✔ L74-T2c: email register then login (17.499263ms)
+✔ L74-T3: cloud save round-trips behind bearer token (5.88892ms)
+✔ L74-T4: Google OAuth start redirects and callback exchanges to a token (2.649306ms)
+✔ L74-T4b: OAuth is disabled when Google env is missing (0.482546ms)
+✔ L74-T4c: Facebook token login and public client ids on health (1.48529ms)
+✔ L74-T5: profile, rivals, chat, leaderboard, arena swap match live client (12.746401ms)
+✔ L76A health reports store kind (0.692615ms)
+✔ L109: cược 2/10/50, sao nhân, chế sò Tinh/Hoạt, shop điểm (7.074427ms)
+✔ L121-T1: túi Đạo cụ dùng PNG chung, không lửa Hoạt lực (1.87072ms)
+✖ L121-T2: Hoạt lực là bình đỏ cùng dáng Tinh, không đống lửa (2.193986ms)
+✔ L121-T3: ô túi icon to; Chợ Tinh/Hoạt local path (0.5036ms)
+✔ L121-T4: không document click; giá shop điểm đóng băng (0.642733ms)
+✔ L27-T1: live commands stay frozen (45.959241ms)
+✔ L27-T2: #hvBagRoot is a body overlay with overflow auto (0.805304ms)
+✔ L27-T3: hall mounts on body and wraps showScreen without a second document listener (0.935566ms)
+✔ L27-T4: stub lane loads runtime and build-static keeps the reserved import (0.715732ms)
+✖ L27-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (2.032376ms)
+✔ leaving battle stops shared attack and result SFX but keeps normal UI usable (8.783309ms)
+✔ pending decode and queued iframe click cannot restart sound after close (5.002517ms)
+✔ old iframe pagehide cannot mute the next battle; repeated exits stay safe (5.659194ms)
+✔ disposing the child pauses its HTML voice player and invalidates its fallback (4.198784ms)
+✔ ultimate voice pending decode is cancelled even if a new battle starts before it resolves (3.977218ms)
+✔ stop combat cancels active ultimate voice while leaving hero-detail voice alone (2.988043ms)
+✔ HTML fallback voice is owned and stopped on exit too (2.705228ms)
+✔ result music cannot resume after stop while waiting for audio unlock (2.549543ms)
+✔ built close owner stops both parent buses and the child before blanking the iframe (82.298366ms)
+✔ 20 battle-stage entries are unique and ordered (3.023556ms)
+✔ campaign IDs select their authored stage and reserve fallback themes (0.615016ms)
+✔ unknown battle IDs receive a deterministic stage (0.460397ms)
+✔ L12-B1: loading copy tells the player combat is starting, not a formation/engine lab (4.856197ms)
+✔ L12-B2: iframe load does not hide the veil; only battle-ready does (2.665882ms)
+✔ L12-B3: embedded battle URL forces autostart without overlay retreat chrome (1.356674ms)
+✔ L12-B4: embedded battle.html starts combat and reports the URL session even if config parse fails (1.223657ms)
+✔ L12-B5: a nested preview (Grok/iOS webview) opens battle.html as a full page instead of a child iframe (2.63352ms)
+✔ L12-B6: same-window embedded battle returns through sessionStorage, not a missing parent iframe (2.058599ms)
+✔ L12-C1: overlay markup has no Rút lui chrome button (2.970913ms)
+✔ L12-C3: in-combat HUD Rút lui stays hidden even when the fight is embedded (1.037213ms)
+✔ L12-H1: embedded campaign HUD hides the brand topbar (2.153279ms)
+✔ L12-H2: campaign ribbon is compact lacquer, not mint pastel (0.753629ms)
+✔ L12-H3: dock speed and skip are 44px circular chips (0.597426ms)
+✔ L12-A1: battle reuses the early AudioContext instead of creating a locked one after navigation (2.115348ms)
+✔ L12-A2: embedded battle starts combat BGM and unlocks audio on gesture without a Bật tiếng button (1.480061ms)
+✔ L12-C2: iOS unlock does not inject a floating Bật tiếng control (0.51411ms)
+✔ L128-T1: trúng rương không đổi sò (3.765537ms)
+✔ L128-T2: điểm tự cộng theo sò tiêu, bỏ nút Nhận điểm (1.579229ms)
+✖ L128-T3: Quay to, Thưởng + Đổi sò; shop điểm ở Chợ (2.438885ms)
+✔ L131-T1: spotlight khoá đúng lastIdx, không tô mọi ô cùng loại (2.135809ms)
+✔ L131-T2: Thưởng/Đổi sò tắt lastIdx; quay tiếp đi từ đó (0.911792ms)
+✔ L131-T3: CSS is-hold; reduced-motion; BETS đóng băng; không document click (0.964153ms)
+✔ L133-T1: hold sheen chéo góc TL→BR, lặp (2.534107ms)
+✔ L133-T2: sheen không freeze, không pulse cả ô (0.82616ms)
+✔ L133-T3: reduced-motion tắt sheen; BETS đóng băng; không document click (1.08358ms)
+✔ L124-T1: Hoạt lực túi và vành cùng materials/hoat-luc.png (2.419941ms)
+✔ L124-T2: ô sự kiện ghi Bách Bảo Rương (0.710029ms)
+✔ L124-T3: tâm vành hoa văn chìm; cược đóng băng (1.123614ms)
+✔ L124-T4: không document click (0.883676ms)
+✔ L123-T1: stack n1/n2/n3 gần full ô, contain không crop (2.012604ms)
+✖ L123-T2: PNG vành cạnh vẽ ≥82% canvas (10.37019ms)
+✔ L123-T3: cược/pay đóng băng; không document click (2.16398ms)
+✔ L123-T4: ART.tinh cùng bình túi (0.479013ms)
+✔ L135-T1: sheen 1.5s/lần trên ô trúng (2.106842ms)
+✔ L135-T2: lúc quay không vệt (0.688097ms)
+✔ L135-T3: không pulse cả ô; BETS đóng băng; không document click (1.097211ms)
+✔ L137-T1: vệt sáng trắng, không đường vàng (2.802282ms)
+✔ L137-T2: lúc quay không vệt (0.592346ms)
+✔ L137-T3: không pulse cả ô; BETS đóng băng; không document click (0.938953ms)
+✔ L136-T1: vệt là thanh chéo translate, không wash background-position (2.421472ms)
+✔ L136-T2: lúc quay không vệt (0.625911ms)
+✔ L136-T3: không pulse cả ô; BETS đóng băng; không document click (1.021095ms)
+✔ L138-T1: sheen 0→100% liên tục, fade hai đầu, không hold 78% (2.258319ms)
+✔ L138-T2: lúc quay không vệt (0.615593ms)
+✔ L138-T3: không pulse cả ô; BETS đóng băng; không document click (0.9611ms)
+✖ L130-T1: SO_IC là sò cowrie, không ốc so-icon.jpg (4.056061ms)
+✔ L130-T2: Đổi sò hiện khung so.png, không 🐚 (0.815539ms)
+✔ L130-T3: không document click; BETS đóng băng (0.857187ms)
+✔ L132-T1: đổi sò pop nhỏ tự tắt, không nút Nhận (2.230781ms)
+✔ L132-T2: icon sò ≤56px, overlay không chặn tay (0.669579ms)
+✔ L132-T3: spotlight steady, không bập bùng; BETS đóng băng (1.021176ms)
+✔ L134-T1: lúc quay không vệt loáng (2.175787ms)
+✔ L134-T2: ô trúng hold mới sheen chéo góc (0.698755ms)
+✔ L134-T3: không pulse cả ô; BETS đóng băng; không document click (1.043065ms)
+✔ transaction and opening-loop build owners accept the atomic level-up hook (1.783594ms)
+✔ L45-T1: live campaign scene and Bày trận stay frozen (2.979134ms)
+✔ L45-T2: #hvCampaignScene home is a 3D overlay with overflow auto (0.600646ms)
+✔ L45-T3: hall mounts on body and wraps showScreen without a second document listener (0.68877ms)
+✔ L45-T4: stub lane loads runtime and build-static keeps the reserved import (0.609846ms)
+✖ L45-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (1.915845ms)
+✔ AC01: cảnh chiếm chiều cao chính, rương fab gọn, không bảng lớn luôn hiện (5.527544ms)
+✔ AC04: popup rương có thời gian, cap 15 giờ, nhận, đóng (1.258663ms)
+✔ AC05: nhận thưởng khóa nhấn nhanh, chỉ commit một lần (1.207815ms)
+✔ AC07: Khiêu chiến và Đổi đội hình giữ luồng prepare (2.205527ms)
+✔ AC08: rời màn dừng clock, đóng dialog, một scope (1.479101ms)
+✔ AC09: điểm nối Run theo ID, thiếu thì Idle, không bịa FPS (1.331309ms)
+✖ AC03: đường giữa màn, chân theo slot, prepare không đổi (3.061977ms)
+✔ AC10: domain AFK và board không bị ticket này sửa công thức (0.481106ms)
+✔ AC02: canvas aria-label theo đội đang chọn, art theo pick.id (1.245841ms)
+✔ AC01 decorative sword children retain the single challenge button and preparation handler (5.972192ms)
+✔ AC02-03 swords have mirrored motion, collision flash and accessible static fallback (0.604464ms)
+✖ AC01-03 six chapters have distinct real maps, routes and monster silhouettes (16.535597ms)
+✔ AC02 all chapter paths loop continuously, keep presentation and preserve squad (65.800456ms)
+✔ AC02 changing chapter updates both maps and resets travel; same chapter preserves travel (3.714287ms)
+✔ EP-1 enemy power is 2966 from encounter, independent of player upgrades (5.896096ms)
+✔ EP-1 preview copies rows and uses combat formation slots (6.224976ms)
+✔ EP-1 dynamic factory is not invoked or reported as zero strength (2.970823ms)
+✔ EP-2 generic enemy selects enemy pose row then team atlas by slot (2.964055ms)
+✔ farm keeps sparse squad identities and authored fractional frame durations (5.925009ms)
+✔ farm remains presentation-only and shares scene lifetime, no reward or combat owner (0.794125ms)
+✔ L12-R1: one tap on an occupied field hero undocks that hero and keeps the hole (12.336929ms)
+✔ L12-R2: a tap on an empty field slot still selects it for a reserve (3.002314ms)
+✔ L12-R3: a leftover drag click does not undock or select (5.413346ms)
+✔ L12-R1: occupied field copy tells the player a tap will undock (0.550226ms)
+✔ L12-S1: a six-cell board keeps authored holes instead of packing remaining heroes (3.458061ms)
+✔ L12-S2: reserve fill occupies the first hole and leaves other slots in place (0.631244ms)
+✔ L12-S3: drag onto an empty slot moves without compacting (0.475206ms)
+✔ L12-S4: placing a reserve onto a selected empty slot keeps existing holes (0.438504ms)
+✔ L12-S5: unique slots survive formation save; missing slots stay legacy-safe (0.744103ms)
+✔ L12-S6: compacting the board never invents extra heroes or duplicate slots (0.349368ms)
+✔ L12-S7: source normalizeSquad keeps unique slots and still recovers empty saves (43.880733ms)
+✔ L12-S8: source assignFormationSlots honors unique saved slots before packing leftovers (44.211063ms)
+✔ L12-S11: occupied field units keep authored position and pointer hit targets (0.89842ms)
+✔ campaign exposes one current mission instead of a chapter selector (20.113965ms)
+✔ winning an encounter automatically starts the next mission (0.808881ms)
+✔ campaign retains independent battles and the 15-round rule (1.524642ms)
+✔ loss stops the chain and exposes recovery routes (1.26607ms)
+✔ AC03 feet stay on the open road and clear of controls at 390x696 (3.298168ms)
+✔ AC03 feet stay on the open road and clear of controls at 375x520 (0.815153ms)
+✔ AC03 feet stay on the open road and clear of controls at 620x850 (0.338939ms)
+✔ AC11 minimap viewport is the inverse of the actual world projection (6.626127ms)
+✔ AC11 map and scene share art; map opens and closes through the existing scene handler (0.673698ms)
+✔ AC01 party travels continuously, pauses to fight, and reverses without teleporting (10.449754ms)
+✔ AC02-04 all squad attack multiple monsters, hits kill before loot drops and flies (36.392315ms)
+✔ AC05 cosmetic sampler cannot access state or create clocks (5.106159ms)
+✔ AC01 moving camera keeps squad and encounters inside mobile viewport and minimap projection (38.534001ms)
+✔ L12-P1: foreign pointerup does not end the active drag (10.897338ms)
+✔ L12-P1: foreign pointercancel does not end the active drag (3.114615ms)
+✔ L12-P1: a second pointer cannot replace the drag owner (4.56517ms)
+✔ L12-P2: pointercancel restores a displaced sprite without committing a move (2.964649ms)
+✔ L12-P2: lostpointercapture restores a displaced sprite without committing a move (2.796727ms)
+✔ L12-P2: pointerup restores a displaced sprite without committing a move (3.282465ms)
+✔ L12-P3: cancelPreparation() releases capture and permits the next drag (6.660608ms)
+✔ L12-P3: onSceneRoute('hub') releases capture and permits the next drag (2.578313ms)
+✔ L12-P1: primary drag swaps once, releases capture, and ignores late capture loss (2.393885ms)
+✔ L12-S9: occupied drag onto an empty slot moves without compacting (2.212579ms)
+✔ L12-S9: empty slots cannot start a drag (2.307356ms)
+✔ L12-D1: a completed drag does not swallow the next empty-slot tap (2.060398ms)
+✔ L12-D2: a moved drop clears the selected slot so the vacated hole is not still armed (2.072988ms)
+✔ green tick removes, reserve fills a vacancy, full bench refuses replacement (3.717732ms)
+✔ campaign can launch one to six owned heroes, but never empty or duplicate (0.731994ms)
+✔ drag swap preserves destination rows and never mutates saved records (0.526125ms)
+✔ shipped confirm advances the checkpoint then returns to AFK without launching again (5.451534ms)
+✔ shipped next starts the next independent encounter, defeat keeps the checkpoint (5.596562ms)
+✔ normalization preserves an intentional single hero through load and combat snapshots (2.517418ms)
+✔ opening AFK and preparation retains the saved checkpoint and does not advance the player (4.837869ms)
+✔ no unlocked chapter cannot launch; completed campaign replays latest unlocked chapter (0.473439ms)
+✔ invalid or stale stage cursors stay inside authored encounters (0.677693ms)
+✔ replacing an occupied hero swaps identities and preserves slot rows without duplicating a hero (4.245295ms)
+✔ reserve replacement and row edits remain a draft until confirmed; invalid selections are ignored (1.012987ms)
+✔ two launch taps reach the existing battle owner once (10.430708ms)
+✔ insufficient stamina or failed formation save never reaches battle (11.861478ms)
+✔ a changed campaign cursor cancels preparation before any save or stamina command (4.66663ms)
+✔ changing row swaps the paired slots and keeps the exact three-by-three battle layout (0.734422ms)
+✔ legacy chapter reward heroes do not enter the official preparation bench (5.584978ms)
+✖ active index catalog is classified without silently hiding known legacy issues (112.182226ms)
+✔ L02b proposal covers every active legacy chapter reward without changing reward values (3.517925ms)
+✔ L02b proposal rejects legacy or non-playable replacement targets (0.774083ms)
+✔ valid catalog passes without changing the input data (6.668371ms)
+✔ catalog report separates legacy reward, unknown reward, cycle and unreachable data (1.782015ms)
+✔ extractor reads only the active catalog bindings and resolves role fallback assets (19.199526ms)
+✔ L69-T1: #hvChallengeRoot is a body overlay with overflow auto and wrap showScreen/startChallenge (2.442804ms)
+✖ L69-T2: hall jpg is dedicated and larger than 50KB (2.086029ms)
+✔ L69-T3: back navTo hub; fight calls baseStart; settleChallenge untouched (0.586347ms)
+✔ L69-T4: stub lane loads runtime; build-static keeps reserved import; no expedition-3d or battle.html (0.786214ms)
+✔ preview separates an already-cleared legacy chapter from an unclaimed proposal (3.755272ms)
+✔ receipt backfill preserves existing ownership, shards, currencies and progress (7.723818ms)
+✔ explicit unclaimed claim applies proposed reward once and preserves legacy data (0.860838ms)
+✔ cleared chapter cannot be regranted even when it has no receipt yet (0.875052ms)
+✔ explicit unclaimed claim requires a stable command id (0.413177ms)
+✔ L32-T1: live commands stay frozen (40.892016ms)
+✔ L32-T2: #hvChatRoot is a body overlay with overflow auto (0.668396ms)
+✔ L32-T3: hall mounts on body and wraps showScreen without a second document listener (0.677223ms)
+✔ L32-T4: stub lane loads runtime and build-static keeps the reserved import (0.680744ms)
+✖ L32-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (2.055873ms)
+✔ L25-C1: CI workflow fires on PR, main, and manual run (1.8982ms)
+✔ L25-C2: CI installs devDependencies, builds, and runs node tests (0.536719ms)
+✔ L25-C3: main push checks live after CI (0.567532ms)
+✖ L98: nhật ký city 6 ô, không document click (3.76089ms)
+✖ L99: lễ hội city Hoa Đăng / Bách Bảo / Rương (0.971684ms)
+✔ L33-T1: live commands stay frozen (43.175544ms)
+✔ L33-T2: #hvClanRoot is a body overlay with overflow auto (0.736116ms)
+✔ L33-T3: hall mounts on body and wraps showScreen without a second document listener (0.663806ms)
+✔ L33-T4: stub lane loads runtime and build-static keeps the reserved import (0.705787ms)
+✖ L33-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (2.038969ms)
+✔ 3Q-derived fighter lifecycle stays compositional and resettable (3.466089ms)
+✔ round → move → action produces typed deterministic results and stable IDs (18.349966ms)
+✔ target selection is deterministic and supports front, back, health and seeded modes (1.031009ms)
+✔ cooldown availability follows a round-ready record with rewrite config (0.609368ms)
+✔ browser injection factory has no Node-only closure dependencies (4.564365ms)
+✔ Fighter module keeps 3Q composition and blocked-action semantics (3.245632ms)
+✔ TargetSelector has deterministic slot, priority and seeded ordering (1.375084ms)
+✔ Cooldown module preserves ready-round and rewrite semantics (0.688355ms)
+✔ Fighter module is parity-compatible with core normalization/reset/action gate (3.803561ms)
+✔ TargetSelector module matches core across every supported mode (1.421002ms)
+✔ Cooldown module matches core ready-round and offset behavior (0.912602ms)
+✔ module snapshot and result derivation stay byte-compatible with the 3Q core (22.751327ms)
+✔ module round/action lifecycle matches core IDs, counters and ordered result stream (2.354632ms)
+✔ module round manager preserves core round rollover and battle finish behavior (1.490698ms)
+✔ module result contract keeps miss/noop fallback aligned with core (0.600288ms)
+✔ BattleSession store owns identity and finishing is idempotent (2.047405ms)
+✔ RoundManager creates stable round and move ownership (0.784945ms)
+✔ CombatResult derives the same typed damage/status/death sequence deterministically (18.558742ms)
+✔ recordCombatAction attaches ordered results to a session replay stream (1.005631ms)
+✔ module surface is browser-safe and has no DOM/Node dependency (3.278463ms)
+✔ L05c report closes final-action and per-impact snapshot gaps (31.10565ms)
+✔ L05c report keeps final-action snapshot gap open when any action omits the explicit capture (1.885546ms)
+✔ L05c build owner injects action-cost and tick-status boundaries at source runtime (2.95122ms)
+✔ L05c round-cap report records terminal round 15 without allowing round 16 (37.650851ms)
+✔ L05c full replay parity ignores session identity but catches deterministic outcome drift (18.820564ms)
+✔ L05c parity includes explicit final-action snapshot drift (13.357662ms)
+✔ L05c build owner exposes round-cap fixture and terminal replay metadata (1.151784ms)
+✔ L05a fixture recorder keeps ordered before/after evidence for basic, combo, AOE, heal and status cases (35.388608ms)
+✔ L05a can attach an explicit sub-impact without mutating the captured snapshots (6.641593ms)
+✔ L05a build owner exposes opt-in fixture capture at resolveAction boundary and records the known gap (49.004615ms)
+✔ every runtime unit receives a stable team-and-slot home anchor (2.077733ms)
+✔ movement profiles distinguish contact actions from stationary ranged actions (1.595305ms)
+✔ damage, critical, healing and HP presentation follow impact-readable rules (1.397896ms)
+✔ future hero tooling exposes resolved profiles and home anchor (0.744691ms)
+✔ same combat seed keeps rule values stable when presentation calls are interleaved (2.41568ms)
+✔ session RNG is cached per battle object without changing the session shape (1.901834ms)
+✔ observation report closes only when every expected rule call is captured (21.707211ms)
+✔ core replay preserves captured RNG calls and cursor without changing existing fields (2.839771ms)
+✔ 3Q build owner wires seeded rule and presentation streams through source patching (2.920579ms)
+✔ L103: hall chức năng nền kem, jpg chỉ dải trên; không đụng login/hub (2.833977ms)
+✔ L44-T1: live daily domain and lacquer runtime stay frozen (2.255658ms)
+✔ L44-T2: #hvDailyRoot is a body overlay with overflow auto (0.686698ms)
+✔ L44-T3: hall mounts on body and wraps showScreen without a second document listener (0.639905ms)
+✔ L44-T4: stub lane loads runtime and build-static keeps the reserved import (0.619805ms)
+✖ L44-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (2.02137ms)
+✔ L21-T1: frozen catalog — 14 quests, mốc ngày/tuần, sign-in 28/14/7, idle 12h/60g, nap 50 (3.742659ms)
+✔ L21-T2: first sign-in 🪙120 +1🐚; day 7/14/28 gems; already claimed; meo_mun +2⚡; input not mutated (4.450789ms)
+✔ L21-T3: nap noon/eve +50 cap 120; idle formula + pet ×1.15; min 0.02h (2.277986ms)
+✔ L21-P1: claim quest pts+reward; act 20→🪙200; weekly quest+mốc; input not mutated (2.238076ms)
+✔ L21-P2: day rollover resets quests/naps/signInClaimed, keeps streak; weekly weekIndex; chapters untouched (2.411594ms)
+✔ L21-P3: rollQuests maps all 14; journal max 40; idle uses chapterMult only (0.767797ms)
+✔ L21-P4: lacquer journal + Lịch Luyện wheel; no second hub landmark; inject after festival (2.168254ms)
+✖ L21-P5: 11 ải spokes; night-1 opens Qua Ải + Luyện; Tháp after ch.1; locked stay locked (2.331714ms)
+✖ L76-T2: nan lock is CSS overlay; spoke JPG has no baked padlock (1.211519ms)
+✔ L24-D3: sharp stays off the production install (2.144871ms)
+✔ L24-D1: production copy list ships the game, not QA docs (0.766711ms)
+✔ L24-D2: embedded battle payload still matches the built battle file (129.633884ms)
+✖ Đình Lôi binds all fourteen authored asset layers (3.267087ms)
+✖ Đình Lôi runtime uses native 2x atlases (0.49987ms)
+✔ Đình Lôi uses deterministic authored character states and separate VFX layers (3.16124ms)
+✔ Đình Lôi reference adapter keeps attack distance readable and support casts on-screen (3.033035ms)
+✔ Đình Lôi action choreography resolves at authored impact and returns home (1.035502ms)
+✔ Đình Lôi gameplay grants targeted shield, team shield, counter and enemy shock damage (1.972564ms)
+✔ one-battle QA sequence covers Basic, Talent Skill and Ultimate (1.369488ms)
+✔ L111: Tinh/Hoạt nhỏ giọt + nhãn B/A/S/S+ + mở tướng (2.205054ms)
+✔ L47-T1: live end screen and reward veil stay frozen in index (42.031715ms)
+✔ L47-T2: #hvEndRoot is a body overlay with overflow auto (0.728887ms)
+✔ L47-T3: hall mounts on body and wraps showScreen without a second document listener (0.778742ms)
+✔ L47-T4: stub lane loads runtime and build-static keeps the reserved import (0.988115ms)
+✖ L47-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (2.146099ms)
+✔ L37-T1: live domain and lacquer runtime stay frozen (2.076353ms)
+✔ L37-T2: #hvExpeditionRoot is a body overlay with overflow auto (0.630022ms)
+✔ L37-T3: hall mounts on body and wraps showScreen without a second document listener (0.675811ms)
+✔ L37-T4: stub lane loads runtime and build-static keeps the reserved import (0.614477ms)
+✖ L37-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (1.916851ms)
+✔ L15-T1: empty run is inactive, five floors, three routes (2.339001ms)
+✔ L15-T2: fight needs a route except the dream lord; gold and sigils keep the live formula (2.991795ms)
+✔ L15-T3: blessing offer, pick advances the floor, reroll costs two sigils once (0.791949ms)
+✔ L15-P1: resume keeps the run; abandon keeps the record; lose does not drop best (0.559874ms)
+✔ L15-P2: clearing floor 5 pays gems, does not touch campaign, and a stale floor is rejected (0.468366ms)
+✔ L15-P3: encounter scale is immutable and boss is four units (0.459408ms)
+✔ L15-P4: lacquer screen is wired and does not add a second hub landmark (2.075668ms)
+✔ L127-T1: mở rương xong mới hiện loot (2.402692ms)
+✔ L127-T2: nút ‹ đóng ô rồi về Thành Chính (0.871336ms)
+✔ L127-T3: không document click; BETS đóng băng (1.295358ms)
+✔ L126-T1: Hoa Đăng sáng hơn (1.755722ms)
+✖ L126-T2: Blender chroma PNG + webp 60fps, rương rung (0.911112ms)
+✔ L126-T3: rương nhỏ, icon có khung to (0.5511ms)
+✖ L126-T4: PNG alpha sạch, webp 60fps, không document click (1.976846ms)
+✔ L125-T1: chữ banner Lễ Hội màu đỏ (2.036056ms)
+✖ L125-T2: Hoa Đăng sông đêm + đèn nổi (2.440098ms)
+✖ L125-T3: video mở rương + icon loot; tỉ lệ đóng băng (1.551211ms)
+✔ L125-T4: không document click; giữ ô sự kiện khi render (0.66062ms)
+✖ L119-T1: 3 ô Lễ Hội là icon hoạt động lantern / wheel / chest (3.9741ms)
+✔ L119-T2: Shop điểm là popup lưới thẻ có icon (1.190713ms)
+✔ L119-T3: panel quay giữ nút Quay; shop không nuốt side (0.82992ms)
+✖ L119-T4: không document click; giá shop đóng băng (13.119055ms)
+✔ L42-T1: live domain and lacquer runtime stay frozen (2.172726ms)
+✔ L42-T2: #hvFestivalRoot is a body overlay with overflow auto (0.619973ms)
+✔ L42-T3: hall mounts on body and wraps showScreen without a second document listener (0.792994ms)
+✔ L42-T4: stub lane loads runtime and build-static keeps the reserved import (0.664166ms)
+✖ L42-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (1.96209ms)
+✔ L20-T1: live catalog frozen — 5 đèn, 🪙100, 3 hướng, mốc 3/7/12, 20 ô, bảng rương (2.828987ms)
+✔ L20-T2: đèn đầu miễn phí, sau đó 🪙100, trần 5/ngày; không mutate input (2.097648ms)
+✔ L20-T3: Tam Nguyện đủ 3 hướng +1 Lễ Ấn · +🪙150 · +💎5 một lần/ngày (0.913278ms)
+✔ L20-P1: mốc ấn 3/7/12; rollover ngày reset đèn/hướng, giữ ấn (0.698982ms)
+✔ L20-P2: Bách Bảo Luân 20 ô, 1🐚 / lượt; thiếu sò fail; không mutate input (0.906377ms)
+✔ L20-P3: Rương Báu 35/33/22/10 và Chí Bảo 45/40/15 (1.529912ms)
+✔ L20-P4: lacquer #hvFestivalRoot; no second hub landmark; inject after hunt (2.08487ms)
+✔ SFX-1 legacy impact cannot play the forge sound in standalone battle (6.054005ms)
+✔ SFX-1 battle channel rejects forge sound even with UI group override; casts still play (6.156713ms)
+✔ SFX-2 shell forge event plays original sound only with explicit UI group (2.26595ms)
+✔ SFX-2 actual forge reveal dispatches dedicated event once per item UID (2.249841ms)
+✔ SFX-2 forge reveal unlocks iOS audio then plays (11.800476ms)
+✔ SFX-3 build owner removes shared impact dispatch without replacing VFX or damage (0.849279ms)
+✔ L25-T1: forge costs, pity and +15 stay frozen (56.050098ms)
+✔ L25-T2: #hvForgeRoot is a body overlay with overflow auto (1.012729ms)
+✔ L25-T3: hall mounts on body and wraps showScreen without a second document listener (0.889299ms)
+✔ L25-T4: forge hall injects after daily and keeps one forgeCommand owner (1.119135ms)
+✖ L25-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (2.407055ms)
+✔ craft debits once and commits item, pity, quest and receipt together across reload/retry (99.984472ms)
+✔ invalid slot, locked forge, missing funds and invalid sequence reject before rolling or mutation (944.77816ms)
+✔ every forge mutation rolls back all state on storage failure and can retry (431.464269ms)
+✔ craft allocates beyond existing UIDs when an old itemSeq is behind inventory (96.583009ms)
+✔ existing pity boundaries and two sequential dual rolls are preserved (398.980096ms)
+✔ dual pending survives reload, failed choice keeps both, competing choices grant one item (112.020017ms)
+✔ old dual pending without an ID is preserved and can be selected without another charge or roll (111.712436ms)
+✔ enhancement updates the equipped stat once, preserves links and stops at cost/cap (464.809459ms)
+✔ salvage protects worn/locked items, rejects missing/stale confirmation and credits exactly once (113.567134ms)
+✔ lock toggles survive reload and block salvage while allowing enhancement (129.946576ms)
+✔ salvage dialog previews exact gain, cancel keeps gear, failed write stays open and retry consumes once (95.411425ms)
+✔ rendered action handler rejects double click and reuses its command after a storage retry (191.71992ms)
+✔ nontransactional quest callers retain default persistence (82.640019ms)
+✔ L31-T1: live commands stay frozen (42.743028ms)
+✔ L31-T2: #hvFriendsRoot is a body overlay with overflow auto (0.898382ms)
+✔ L31-T3: hall mounts on body and wraps showScreen without a second document listener (0.761286ms)
+✔ L31-T4: stub lane loads runtime and build-static keeps the reserved import (0.693569ms)
+✖ L31-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (2.071449ms)
+✔ L101: API bạn bè người thật, không NPC (33.010013ms)
+✔ L102: lưới chức năng nền kem, jpg chỉ hero; không đụng login/hub (1.208034ms)
+✔ L84-T2: POST /api/gift trả quà, mã lạ 400 (5.41438ms)
+✔ L84-T3: env GIFT_CODES đè file (1.742103ms)
+✔ L85-T2: POST /api/gift trả shards (0.715681ms)
+✔ L83-T1: mã LUCTHAN nhận một lần, nhập lại bị chặn (2.324044ms)
+✔ L83-T1b: nick 4-14, normalize mã (0.429602ms)
+✔ L83-T2: runtime gọi redeemCode + mã thêm + /api/gift (0.758296ms)
+✔ L85-T1: mã event cộng mảnh tướng + tinh (0.513713ms)
+✔ L86-T1: tướng/vật phẩm mới tự vào danh sách thưởng (2.182965ms)
+✔ L86-T2: mã tặng item + pet ghi bag/owned (1.328457ms)
+✔ L86-T3: GET /api/gift trả index (3.158597ms)
+✔ L122-T1: BBR / túi / Chợ cùng materials/gold.png (5.078646ms)
+✔ L122-T2: Thành chính chip vàng dùng materials/gold.png (0.578275ms)
+✖ L122-T3: file vàng Chinh chiến + Bách Bảo cùng bytes túi (1.542207ms)
+✔ L122-T4: chip Chợ img vàng; không document click (1.080537ms)
+✖ L97: bang hội city 3 cột + dock + 8 tile art (3.887347ms)
+✔ L30-T1: live commands stay frozen (41.24436ms)
+✔ L30-T2: #hvGuildRoot is a body overlay with overflow auto (0.746298ms)
+✔ L30-T3: hall mounts on body and wraps showScreen without a second document listener (0.794423ms)
+✔ L30-T4: stub lane loads runtime and build-static keeps the reserved import (0.6652ms)
+✖ L30-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (7.702902ms)
+✔ L43-T1: live hero-detail tabs and three authored showcases stay frozen (45.10862ms)
+✔ L43-T2: #hvHeroDetailRoot is a body overlay with overflow auto (0.688125ms)
+✔ L43-T3: hall mounts on body and wraps showScreen without a second document listener (0.787245ms)
+✔ L43-T4: stub lane loads runtime and build-static keeps the reserved import (0.699182ms)
+✖ L43-T5: nine remaining showcases are dedicated 3D files, not menu-v3233 (2.169182ms)
+✔ showcase keeps live stats and existing upgrade nodes outside tab panels (2.042666ms)
+✔ skill shortcuts disclose authored descriptions through the existing tabs (1.445082ms)
+✔ portrait showcase is bounded on desktop with mobile-safe sizing (0.317404ms)
+✔ L04a roster route owns a full viewport surface for card hit targets (2.830334ms)
+✔ L24-T1: roster mounts on document.body like Trợ trận, not inside .wrap (0.758408ms)
+✔ L24-T2: active roster must not hide #heroesScreen (0.38765ms)
+✔ L24-T3: roster is a body overlay with overflow auto and cards that cannot collapse (0.554991ms)
+✔ L24-T4: one route owner still wraps showScreen without a second document listener (0.558615ms)
+✔ upgraded heroes remain visible with current level, stars and exact power below 1000 (4.043958ms)
+✔ element filters use stable IDs and collection exposes locked heroes without fake levels (0.431311ms)
+✔ only official unique identities are displayed, even with extra heroes in DATA (0.466499ms)
+✔ sorting changes presentation, never the player save or official order (0.676015ms)
+✔ returning after a level change recomputes all card data, not cached DOM labels (0.481746ms)
+✔ roster build excludes DOM scraping, duplicate pointer commands and offscreen parking (2.43711ms)
+✔ all-SSR official roster rejects the old mixed-rarity banner before spending anything (0.904981ms)
+✔ guaranteed tiers and rate total are validated, not only random pools (0.687327ms)
+✔ valid banner dispatches once and invalid pull counts never dispatch (0.504339ms)
+✔ L66-T1: wrap showScreen; chip data-hv-hub goes hub on battle/result/gear (3.126216ms)
+✔ L66-T2: does not touch prepare visual, journey-3d, end-3d, campaign-scene (1.623223ms)
+✔ L66-T3: does not add a second listener on existing hall close-hub buttons (0.828633ms)
+✔ L66-T4: stub lane loads runtime; build-static keeps reserved import; no battle.html (0.703429ms)
+✔ L66-T5: Lịch Luyện hides chip; keeps existing ‹ back arrow (0.883764ms)
+✔ L107: Chợ Đấu Gọi Tháp = pill chữ trắng + icon trên nền đen (1.739608ms)
+✔ L41-T1: live domain and lacquer runtime stay frozen (2.250417ms)
+✔ L41-T2: #hvHuntRoot is a body overlay with overflow auto (0.795289ms)
+✔ L41-T3: hall mounts on body and wraps showScreen without a second document listener (0.803889ms)
+✔ L41-T4: stub lane loads runtime and build-static keeps the reserved import (0.65575ms)
+✖ L41-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (1.933207ms)
+✔ L19-T1: live catalog frozen — 6⚡, 2 lượt, 60 hiệp, 3 boss, 3 khế, mốc 3/7/12 (3.046141ms)
+✔ L19-T2: todayBoss / HP / encounter keep live formulas (0.638877ms)
+✔ L19-T3: settle vàng/mảnh theo ST; hạ gục +💎40; không mutate input (1.315176ms)
+✔ L19-P1: start trừ 6⚡ + 1 lượt; thiếu khế / hết lượt / thiếu ⚡ fail (0.764898ms)
+✔ L19-P2: Săn Khế Phá Lõi / Quét / Đoạt Mệnh; khóa khế sau lần đầu (0.779376ms)
+✔ L19-P3: mốc 3 Săn Ấn; rollover ngày reset lượt/khế, giữ ấn (0.689447ms)
+✔ L19-P4: lacquer screen is wired and does not add a second hub landmark (2.320655ms)
+✔ L19-P5: hunt battle draws beasts in-engine and keeps 60-round HUD (34.957149ms)
+✔ L120-T1: tip card không dùng id hvShopInfo — tránh CSS Bách Bảo đệm rỗng (2.215473ms)
+✔ L120-T2: thẻ popup ôm nội dung, không kéo 100dvh (0.851832ms)
+✔ L120-T3: một thẻ — icon / sao / số lượng / Cách nhận / nút đóng (0.696462ms)
+✔ L120-T4: Sách Tinh Thông có icon + nguồn Bách Bảo / Chinh chiến (0.571303ms)
+✔ L29-T1: live commands stay frozen (46.531177ms)
+✔ L29-T2: #hvJobsRoot is a body overlay with overflow auto (0.800927ms)
+✔ L29-T3: hall mounts on body and wraps showScreen without a second document listener (0.716046ms)
+✔ L29-T4: stub lane loads runtime and build-static keeps the reserved import (0.752065ms)
+✖ L29-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (2.40548ms)
+✔ L105: Giao việc slot trống, chat chữ thuần, túi 3/4 màn (2.441234ms)
+✔ L46-T1: live journey screen and render stay frozen (42.10218ms)
+✔ L46-T2: #hvJourneyRoot is a body overlay with overflow auto (0.760535ms)
+✔ L46-T3: hall mounts on body and wraps showScreen without a second document listener (0.638607ms)
+✔ L46-T4: stub lane loads runtime and build-static keeps the reserved import (0.754099ms)
+✖ L46-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (2.053348ms)
+✖ L139-T1 Linh Dong authored atlases, portraits and SFX exist (2.887472ms)
+✔ L139-T2 CHARACTER_MANIFEST binds Linh Dong art; TKT-0141 opens roster identity (40.719494ms)
+✔ L139-T3 battle runtime draws Linh Dong atlas and S+ token delegates (25.093269ms)
+✔ L139-T4 skill manifests register isolated ATK and ULT passes (1.141675ms)
+✔ L139-T5 catalog art is authored; combat numbers stay frozen (1.077876ms)
+✔ L139-T6 uniform cells, RGBA pack contract, BETS frozen (1.136848ms)
+✔ L142-T1 battle draws Linh Dong at authored cell aspect and Luc Anh idle multiplier (19.940896ms)
+✔ L142-T2 VFX uses frames.json display size and source-over, not screen (21.679691ms)
+✔ L142-T3 authored SFX ride HonVietSfx wav, not new Audio ogg (124.477459ms)
+✔ L142-T4 hurt/fall timing matches pack; S+ token uses campaign identityScale (21.046415ms)
+✔ L142-T5 dist patch skips idle bob and lean on Linh Dong like Luc Anh (0.482409ms)
+✖ L141-T1 DATA.heroes.linh_dong and CHARACTER_MANIFEST surfaces match Lục Ảnh (42.112651ms)
+✔ L141-T2 official ids, default owned, stars include Linh Đồng (43.564751ms)
+✔ L141-T3 skill kit v2 is valid and names match authored skill.json (1.097737ms)
+✔ L141-T4 roster tap opens hero detail with idle canvas, not trial battle (44.100816ms)
+✔ L141-T4 dist keeps startLinhDongDetailIdle after luc-anh idle patches (66.245453ms)
+✔ L141-T5 campaign battle draws atlas and authored skills; 6v6 slices stay (58.858458ms)
+✔ L144-T1 host and battle boot without requesting Linh Dong atlases (166.310451ms)
+✔ L144-T2 attack and skill1 share one Image; two in-flight loads maximum (32.132514ms)
+✔ L144-T2 long action sequence stays within the decoded RGBA byte budget (28.228584ms)
+✔ L144-T3 failed and malformed atlases do not retry on every animation frame (29.549346ms)
+✔ L144-T3 clear cancels outstanding sources and makes stale load callbacks harmless (33.093367ms)
+✔ L144-T4 battle renderer returns false before loading and uses idle during action loading (33.079176ms)
+✔ L144-T4 profile keeps atlas aspect ratio and stops when its screen is hidden (135.520045ms)
+✔ L144-T5 campaign and preparation select the full-body idle atlas, not master portrait (1.84721ms)
+✔ L143-T1 blender rekey clip sizes pack into uniform 347×320 cell (1.576277ms)
+✖ L143-T2 atlases are blender-rekeyed; idle sha leaves ffmpeg colorkey pack (49.152044ms)
+✔ L143-T3 battle draw uses 477×440; VFX source-over; SFX wav (18.535321ms)
+✔ L143-T4 hero-detail idle atlas uses rekey cell 347×320 (40.847615ms)
+✔ L140-T1 Linh Dong preview card shows on owned and all, moon filter, not fire (4.261245ms)
+✔ L140-T2 roster runtime paints Linh Dong as official identity; BETS frozen (40.077434ms)
+✔ L140-T3 tap Linh Dong opens hero detail like official heroes (0.612694ms)
+✔ formation keeps six unique owned identities, rows and order without aliasing the draft (4.454039ms)
+✔ moving and replacing equipment moves links while preserving every inventory instance (1.064502ms)
+✔ invalid ownership, item instances and unequip requests leave the loadout untouched (0.80658ms)
+✔ formation save and opening progress commit once, survive reload, and retry reuses receipt (130.968626ms)
+✔ formation storage failure rolls back squad, receipt and opening progress, then can retry (112.28268ms)
+✔ equipment transfer, duplicate and removal preserve inventory and reload ownership (95.317603ms)
+✔ failed equipment transfer and removal keep old links and never report success (197.656646ms)
+✔ final opening equip event shares the item commit and stays pending if storage fails (112.308063ms)
+✔ built formation button stays open on failure, blocks duplicate click and retries (183.673216ms)
+✔ L75-T1: login gate wraps navTo, mounts overlay, no document click (3.224543ms)
+✖ L75-T2: video + poster exist and CSS covers the viewport (2.390291ms)
+✔ L75-T3: frozen shells stay frozen; stub loads gate after auth (64.22941ms)
+✔ L76-T1: điều khoản là một câu nối liền, không bọc ngoặc kép (0.881236ms)
+✔ L76-T3: frozen shells stay frozen after terms polish (58.471528ms)
+✖ L108: Lục Thần lore overlay — sáu ấn, không sửa index.html (2.476476ms)
+✖ Lục Ảnh golden runtime binds every authored visual and requested audio surface (2.680489ms)
+✔ Lục Ảnh Skill 1 uses six-slot effigy VFX and Ultimate uses exact 3x full-team poison cloud (2.545331ms)
+✔ BGM routes hub/features, battles, and traversal modes to the three supplied tracks (1.472712ms)
+✔ reject flattened RGB sources instead of silently keying black into alpha (13.670206ms)
+✔ preserve opaque black clothing, transparent holes, and partial edge alpha (16.856099ms)
+✔ fixed crop retains identical pixel coordinates as frame contents change (8.181914ms)
+✔ shipped atlas matches the RGBA source provenance and all 96 frame cells (551.498921ms)
+✔ Lục Ảnh Ultimate VFX keeps authored aspect and source-cell scale (2.002185ms)
+✔ Lục Ảnh Ultimate voice uses local iOS-safe unlock bridge (0.352159ms)
+✔ L28-T1: live commands stay frozen (41.787878ms)
+✔ L28-T2: #hvMailRoot is a body overlay with overflow auto (0.646891ms)
+✔ L28-T3: hall mounts on body and wraps showScreen without a second document listener (0.708136ms)
+✔ L28-T4: stub lane loads runtime and build-static keeps the reserved import (0.718682ms)
+✖ L28-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (2.041292ms)
+✔ main quest state follows chapter and stage bounds (3.074629ms)
+✔ bootstrap follows an existing campaign cursor instead of restarting (0.732152ms)
+✔ matching victory completes the current quest exactly once (0.731148ms)
+✔ claim advances to the next stage and keeps a reward payload (0.804915ms)
+✖ supplied SFX preserve source hashes and serve MP3 bytes with MP3 extensions (2.114822ms)
+✔ SFX plays decoded assets and debounces an AOE hit into one voice/load (6.161781ms)
+✔ mute stops active combat and prevents pending decode from playing later (2.450959ms)
+✔ audio starts only after real gesture unlock; iframe reuses parent bus (5.09077ms)
+✔ polyphony is bounded to six source nodes (2.862489ms)
+✔ actual first-frame pixels preserve Idle-to-Basic body height and foot baseline (2735.894564ms)
+✖ Đình Lôi retina atlases use the committed 2x source cells (36.655268ms)
+✔ result MVP portrait cache resolves authored Ông Phở art without a text placeholder (23.907474ms)
+✔ integrated victory result paints authored Ông Phở MVP art (24.91234ms)
+✖ other MVP heroes reuse the loaded battle portrait renderer (24.798235ms)
+✔ roster portal has one grid scroll owner and explicit visibility on route changes (0.665122ms)
+✔ built battle keeps opaque canvas and stable camera; all inline JS parses (274.024924ms)
+✔ L49-T1: live net commands stay frozen (42.545375ms)
+✔ L49-T2: #hvNetRoot is a body overlay with overflow auto and 100vh filter fix (0.731367ms)
+✔ L49-T3: hall mounts on body and wraps showScreen without a second document listener (0.589482ms)
+✔ L49-T4: stub lane loads runtime and build-static keeps the reserved import (0.63218ms)
+✖ L49-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (1.994405ms)
+✔ L74-T1: wrap renderNet + netAuth, hide server field, add Google button (2.198403ms)
+✔ L74-T6: do not edit frozen shells (63.023962ms)
+✖ L74-T7: one Vercel project gateway + lane stub (0.747708ms)
+✔ L82-T1: nested /api/auth rewrite restores original path + oauth query (1.937515ms)
+✔ L82-T2: vercel rewrites nested auth onto one-segment /api/oauth (0.514155ms)
+✔ L82-T3: login gate Google+Facebook chuyển trang, không FB.login async (0.872598ms)
+✔ official production roster contains the locked 12 plus Linh Đồng (6.888719ms)
+✔ every official hero has Basic runtime, Skill 1 and Ultimate contracts (2.179468ms)
+✔ six-slot starter team and twelve-hero reserve pool remain 6v6-safe (5.383033ms)
+✔ L80-T1: drawUnit flips every enemy body toward the left (1.748026ms)
+✔ L80-T2: authored body drawers do not double-flip (0.658356ms)
+✔ L80-T3: isOngPho matches tower NPC sourceHeroId (0.935154ms)
+✔ opening contract exposes stable schema and validates a linear graph (4.103073ms)
+✔ step validator requires route, target, event and explicit terminal shape (0.40444ms)
+✔ graph rejects missing links, cycles, and prerequisite deadlocks (0.679669ms)
+✔ event key and transaction guard prevent double counting (2.100282ms)
+✔ opening events advance only through the current route and do not consume future events (1.133366ms)
+✔ resume view reports progress and terminal state safely (1.571048ms)
+✔ reward steps distinguish completed from claimed and keep reward IDs only (1.414811ms)
+✔ skip and route validators are explicit and recoverable (2.702391ms)
+✔ R10 build wires runtime instrumentation without touching seed or economy values (1.687387ms)
+✔ L51-T1: live night filter, overflow-x and Bày trận stay frozen (41.496395ms)
+✔ L51-T2: Safari overlay CSS pins viewport and drops the night containing-block (0.630274ms)
+✔ L51-T3: pin uses visualViewport, wraps showScreen, no second document click (0.660048ms)
+✔ L51-T4: hotfix injects after Wave G stubs without touching hall lanes (0.792268ms)
+✔ lane stubs exist and are imported once from build-static (6.928478ms)
+✖ wave A tickets are exclusive and freeze hub wiring (1.057316ms)
+✖ wave H tickets are exclusive and freeze combat visual (0.451592ms)
+✖ wave H waiting-asset tickets are plug-only (0.392731ms)
+✖ wave I auth ticket is exclusive and freezes combat shells (0.325708ms)
+✔ forbidden work is not ticketed as READY hall (0.770817ms)
+✔ AC3: built start owner checks level before stamina and blocks Next at threshold (12.041514ms)
+✔ AC4: daily EXP is transaction-bound; duplicates and save failures do not grant (3.921715ms)
+✔ AC4: campaign XP checks active battle identity, win and first clear (3.368323ms)
+✔ AC3/4: built UI and AFK grant are inside existing handlers (7.413323ms)
+✔ AC1: production lore produces 6×18 stable encounters and forwards Next (5.490136ms)
+✔ AC4: real AFK claim credits EXP together with chest reset, including save rollback (11.037752ms)
+✔ AC4: actual settlement commit rolls first-clear XP back on save failure (13.081923ms)
+✔ AC1: 108 ordered gates, cap60, monotonic XP and invalid coordinates fail closed (4.350009ms)
+✔ AC2: migration preserves three legacy histories and only runs once (2.977653ms)
+✔ AC3: level and previous win both required; changing heroes cannot change access (0.486428ms)
+✔ AC4: first clear once, AFK fractional/cap and non-reward sources (0.593639ms)
+✔ AC1/3: all108 stages reachable with claimed EXP and previous wins; final cap60 (1.487922ms)
+✔ L26-T1: journey unlock table stays frozen (42.431721ms)
+✔ L26-T2: preview unlock wraps featLocked off production and does not add a document click (0.832578ms)
+✔ L26-T3: preview unlock injects after forge hall (0.635767ms)
+✔ L83-T3: overlay hồ sơ, gift, cài đặt; không đụng shell đóng băng (3.618918ms)
+✔ L83-P1: inject lane + build-static sau auth (0.821112ms)
+✔ QA full access is present but opt-in (8.963314ms)
+✔ L03c QA bridge exposes an opt-in one-shot persist failure and retry control (2.299528ms)
+✔ L03c transaction build owner restores the candidate state after save failure (0.610059ms)
+✔ L04b campaign exposes lifecycle diagnostics only behind the opt-in QA query (2.914964ms)
+✔ L04b diagnostic snapshot proves one reusable root and active resource ownership (1.468596ms)
+✔ v3.26.0 package and every inline battle script are syntax-valid (95.828903ms)
+✔ result flow keeps dynamic MVP and Victory Run -> Idle plus Defeat Fall (2.31795ms)
+✖ result actions and all result assets are present (1.850623ms)
+✔ the embedded battle engine is byte-identical to battle.html (93.2619ms)
+✔ return context captures route, hero, tab, scroll and draft revision immutably (3.693009ms)
+✔ return context rejects malformed routes and uses a safe fallback for unavailable or stale sources (0.7601ms)
+✔ R04 build owner wires return context after settlement and before opening-loop patches (1.667662ms)
+✔ R04 runtime propagates the live draft revision and checks it before restoring (0.578002ms)
+✔ Samkok v2 roster capacity is explicit and totals 72 slots (2.762483ms)
+✔ the current 12-hero production roster leaves future capacity without placeholders (0.891612ms)
+✔ future tiers can be counted from authored data before art is attached (0.47574ms)
+✔ invalid, unknown and over-capacity entries fail validation with actionable codes (0.890426ms)
+✔ roster read-model carries the capacity summary without changing visible cards (0.808916ms)
+✔ the build embeds the plan module and exposes capacity metadata without fake cards (2.462843ms)
+✔ save contract keeps the existing storage key and adds explicit version/revision (1.754536ms)
+✔ legacy v1 fixture migrates without mutating the source object (0.912989ms)
+✔ versioned fixture increments revision and stamps save time (0.482834ms)
+✔ parser rejects corrupt JSON and future schemas without falling back silently (1.006899ms)
+✔ empty storage is distinguishable from invalid storage (1.665134ms)
+✔ recovery marker is non-enumerable and survives migration (0.417346ms)
+✔ scene lifetime disposes resources once in reverse order and rejects stale callbacks (5.256707ms)
+✔ scene lifetime unregisters listeners, tracks cancel handles and releases late registrations immediately (0.740957ms)
+✔ scene lifetime releases one-shot timers after they fire so completed callbacks cannot accumulate (2.315255ms)
+✔ scene lifetime reports disposal errors without preventing other owners from cleaning up (0.601211ms)
+✔ L04b source/build owner keeps campaign activation scope separate from the reusable DOM root (1.997023ms)
+✔ L04b preparation timer is registered with the campaign activation scope (1.532889ms)
+✔ R08 build installs the battle protocol after the transaction contract (3.224723ms)
+✔ battle bridge protocol annotates every parent message and remains syntactically valid (88.355622ms)
+✔ settlement hook keeps existing reward values but commits before progress/navigation (0.806266ms)
+✔ navigation controller has one active session and blocks stale/duplicate messages (0.540602ms)
+✔ L38-T1: live domain and lacquer runtime stay frozen (2.141961ms)
+✔ L38-T2: #hvShopRoot is a body overlay with overflow auto (0.604198ms)
+✔ L38-T3: hall mounts on body and wraps showScreen without a second document listener (0.658188ms)
+✔ L38-T4: stub lane loads runtime and build-static keeps the reserved import (0.617182ms)
+✖ L38-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (1.979894ms)
+✖ L129-T1: Chợ Mộng 2 ô, bỏ shop icon trên BBR (3.312976ms)
+✖ L129-T2: sprite chroma 60fps, loot sau khi bung sáng (0.984188ms)
+✔ L129-T3: không document click; BETS đóng băng (0.620994ms)
+✔ L08-T1: five stalls, no combat goods, day index matches live formula (3.455178ms)
+✔ L08-T2: same day keeps stock; new day resets bought and rolls heroes (3.273039ms)
+✔ L08-T3: prices keep the live catalog; second buy is sold out (1.602987ms)
+✔ L08-P1: rolling the day is independent of campaign chapters (0.688579ms)
+✔ L08-P2: shop catalog never sells combat power (0.463876ms)
+✔ L08-P3: funds check and grants match live; input player is not mutated (0.891615ms)
+✔ L08-P4: lacquer screen is wired and does not add a second hub landmark (2.06707ms)
+✔ Ông Phở kit v2 has exactly Basic, Ultimate and a bounded passive (3.018333ms)
+✔ legacy Skill 1 investment maps into Basic without losing the source levels (0.499006ms)
+✔ unknown heroes remain legacy and retain all three saved levels (0.334483ms)
+✔ Lục Ảnh kit uses existing Basic/Ultimate assets and keeps six effigies legacy (0.314841ms)
+✔ L35-T1 registry covers the live 12 plus Linh Đồng and freezes Ông Phở + Lục Ảnh (0.397115ms)
+✔ L35-T2/T3 every official kit has basic, ultimate, passive and legacySkillMap (0.777473ms)
+✖ Rèn Mộng asset registry covers every item model and material deterministically (2.522896ms)
+✖ hero detail background and skill kit runtime are shipped together (232.811706ms)
+✔ L51-T1: wrap renderHeroDetail calls base; hero-detail-tabs stays frozen (41.354794ms)
+✖ L51-T2: nine exclusive jpgs exist and are larger than 8KB (2.273592ms)
+✔ L51-T3: CSS is scoped to the three A ids and does not paint others (0.818101ms)
+✔ L51-T4: stub lane loads runtime; build-static keeps the reserved import; no battle.html (0.780994ms)
+✔ L52-T1: wrap renderHeroDetail calls base; hero-detail-tabs stays frozen (41.849719ms)
+✖ L52-T2: nine exclusive jpgs exist and are larger than 8KB (2.292663ms)
+✔ L52-T3: CSS is scoped to the three B ids and does not paint others (0.876613ms)
+✔ L52-T4: stub lane loads runtime; build-static keeps the reserved import; no battle.html (0.823953ms)
+✔ L53-T1: wrap renderHeroDetail calls base; hero-detail-tabs stays frozen (41.156952ms)
+✖ L53-T2: nine exclusive jpgs exist and are larger than 8KB (2.263699ms)
+✔ L53-T3: CSS is scoped to the three C ids and does not paint others (0.806754ms)
+✔ L53-T4: stub lane loads runtime; no battle.html; Đình Lôi combat atlas stays frozen (0.880147ms)
+✔ L68-T1: wrap renderHeroDetail calls base; hero-detail-tabs stays frozen (2.365351ms)
+✖ L68-T2: nine exclusive jpgs exist and are larger than 8KB (2.001065ms)
+✔ L68-T3: CSS is scoped to the three D ids and does not paint others (0.61061ms)
+✔ L68-T4: stub lane loads runtime; build-static keeps the reserved import; no battle.html (0.724425ms)
+✔ S42-A1: 42 authored S+ heroes expose executable combat contract (1.815705ms)
+✔ S42-A2: gear adds 3% team defense after ally action and resets per battle (7.243957ms)
+✔ S42-A4: Cường Đồng mitigation and reflection cannot ping-pong (0.927637ms)
+✔ S42-A2: Lạc An accumulates 4 percentage points per arrow up to 40 (2.311495ms)
+✔ S42-A4: Hắc Đao passive is 80% anti-heal; Ultimate is 100% (6.211697ms)
+✔ S42-A4: cocoon consumes two incoming hits and third reaches HP (1.519988ms)
+✔ S42-A4: Mục Chiêu rescues once per battle, not per damage recursion (1.965814ms)
+✔ S42-A4: root, disarm and silence have different action restrictions (1.253477ms)
+✔ S42-A5: dispelled and expired statuses disappear from HUD with source provenance (1.538431ms)
+✔ queued close cannot clear reopened selection (8.947739ms)
+✔ destroy restores opener focus once (2.224456ms)
+✔ Escape clears selection and destroyed UI refuses to reopen (2.24573ms)
+✔ Nung ultimate armor is personal and burn uses caster HP (9.474174ms)
+✔ Hoa Tieu targets back carry and detonates remaining burn with 20 percent bonus (7.460969ms)
+✔ Hoa Khieu buffs two same-row allies and calls exactly two assists (3.921507ms)
+✔ Hoa Bai no longer breaks armor and consumed ground zones cannot reappear (3.95768ms)
+✔ Hac Dao ultimate splash damages nearby enemies; Hoa Duc preserves source-based remaining burn (3.822136ms)
+✔ Mien Nuong heals two fronts, cleanses one each and delivers both authored regeneration ticks (8.012906ms)
+✔ Tram Tue sleep applies without damage; action slow persists two rounds (0.738421ms)
+✔ Hac Hoa uses disarm; Tam Nuong ultimate damages all enemies and only paralyzes front (2.316124ms)
+✔ Son Cuong detonates remaining bleed; Mang Xa miss debuff affects one attack (3.179288ms)
+✔ 42 unique identities, seven per element, no replacement art (6.357181ms)
+✔ Cơ Trọng: skill resolves authored target/effect (14.124305ms)
+✔ Cơ Trọng: ultimate resolves authored target/effect (1.541243ms)
+✔ Cường Đồng: skill resolves authored target/effect (2.266104ms)
+✔ Cường Đồng: ultimate resolves authored target/effect (0.807793ms)
+✔ Lạc An: skill resolves authored target/effect (0.834909ms)
+✔ Lạc An: ultimate resolves authored target/effect (2.916111ms)
+✔ Hạc Phá: skill resolves authored target/effect (2.192489ms)
+✔ Hạc Phá: ultimate resolves authored target/effect (2.647738ms)
+✔ Thiết Lãnh: skill resolves authored target/effect (2.152209ms)
+✔ Thiết Lãnh: ultimate resolves authored target/effect (2.399ms)
+✔ Minh Tỏa: skill resolves authored target/effect (2.671608ms)
+✔ Minh Tỏa: ultimate resolves authored target/effect (0.785424ms)
+✔ Thiềm Ngân: skill resolves authored target/effect (1.05128ms)
+✔ Thiềm Ngân: ultimate resolves authored target/effect (0.744176ms)
+✔ Linh Đồng: skill resolves authored target/effect (0.591866ms)
+✔ Linh Đồng: ultimate resolves authored target/effect (1.589507ms)
+✔ Tiêu Hồn: skill resolves authored target/effect (3.93628ms)
+✔ Tiêu Hồn: ultimate resolves authored target/effect (2.22834ms)
+✔ Thạch Kinh: skill resolves authored target/effect (2.263352ms)
+✔ Thạch Kinh: ultimate resolves authored target/effect (2.155642ms)
+✔ Hàn Nương: skill resolves authored target/effect (2.876719ms)
+✔ Hàn Nương: ultimate resolves authored target/effect (5.339601ms)
+✔ Vọng Cơ: skill resolves authored target/effect (0.896185ms)
+✔ Vọng Cơ: ultimate resolves authored target/effect (1.480151ms)
+✔ Cổ Nương: skill resolves authored target/effect (0.77801ms)
+✔ Cổ Nương: ultimate resolves authored target/effect (1.818729ms)
+✔ Mục Chiêu: skill resolves authored target/effect (1.004176ms)
+✔ Mục Chiêu: ultimate resolves authored target/effect (1.076196ms)
+✔ Thủy Cơ: skill resolves authored target/effect (0.94177ms)
+✔ Thủy Cơ: ultimate resolves authored target/effect (2.127532ms)
+✔ Hà Lãng: skill resolves authored target/effect (1.48616ms)
+✔ Hà Lãng: ultimate resolves authored target/effect (1.077704ms)
+✔ Giang Quân: skill resolves authored target/effect (0.911848ms)
+✔ Giang Quân: ultimate resolves authored target/effect (0.647323ms)
+✔ Thủy Ngọc: skill resolves authored target/effect (0.832873ms)
+✔ Thủy Ngọc: ultimate resolves authored target/effect (0.749376ms)
+✔ Hải Phong: skill resolves authored target/effect (0.420738ms)
+✔ Hải Phong: ultimate resolves authored target/effect (1.093806ms)
+✔ Trầm Châu: skill resolves authored target/effect (0.43144ms)
+✔ Trầm Châu: ultimate resolves authored target/effect (4.408355ms)
+✔ Dạ Xoa: skill resolves authored target/effect (0.554699ms)
+✔ Dạ Xoa: ultimate resolves authored target/effect (0.47554ms)
+✔ Nung: skill resolves authored target/effect (2.879195ms)
+✔ Nung: ultimate resolves authored target/effect (0.491241ms)
+✔ Hỏa Tiêu: skill resolves authored target/effect (0.42827ms)
+✔ Hỏa Tiêu: ultimate resolves authored target/effect (3.183312ms)
+✔ Hỏa Khiêu: skill resolves authored target/effect (0.681774ms)
+✔ Hỏa Khiêu: ultimate resolves authored target/effect (0.572758ms)
+✔ Cửu Tính: skill resolves authored target/effect (0.647985ms)
+✔ Cửu Tính: ultimate resolves authored target/effect (2.579137ms)
+✔ Hỏa Bài: skill resolves authored target/effect (1.729141ms)
+✔ Hỏa Bài: ultimate resolves authored target/effect (3.150202ms)
+✔ Hắc Đao: skill resolves authored target/effect (0.456214ms)
+✔ Hắc Đao: ultimate resolves authored target/effect (0.689255ms)
+✔ Hỏa Dực: skill resolves authored target/effect (0.419172ms)
+✔ Hỏa Dực: ultimate resolves authored target/effect (1.558941ms)
+✔ Miên Nương: skill resolves authored target/effect (0.591897ms)
+✔ Miên Nương: ultimate resolves authored target/effect (0.579447ms)
+✔ Trầm Tuệ: skill resolves authored target/effect (0.315252ms)
+✔ Trầm Tuệ: ultimate resolves authored target/effect (0.602952ms)
+✔ Hạc Hoa: skill resolves authored target/effect (0.550364ms)
+✔ Hạc Hoa: ultimate resolves authored target/effect (0.47373ms)
+✔ Tằm Nương: skill resolves authored target/effect (1.125045ms)
+✔ Tằm Nương: ultimate resolves authored target/effect (0.799875ms)
+✔ Sơn Cương: skill resolves authored target/effect (1.049102ms)
+✔ Sơn Cương: ultimate resolves authored target/effect (1.903828ms)
+✔ Tuệ Y: skill resolves authored target/effect (0.586957ms)
+✔ Tuệ Y: ultimate resolves authored target/effect (0.954577ms)
+✔ Mãng Xà: skill resolves authored target/effect (1.073607ms)
+✔ Mãng Xà: ultimate resolves authored target/effect (1.827714ms)
+✔ Khaos: skill resolves authored target/effect (0.897475ms)
+✔ Khaos: ultimate resolves authored target/effect (1.837713ms)
+✔ Kính Nương: skill resolves authored target/effect (0.696489ms)
+✔ Kính Nương: ultimate resolves authored target/effect (0.640577ms)
+✔ Hồi Ảnh: skill resolves authored target/effect (0.746482ms)
+✔ Hồi Ảnh: ultimate resolves authored target/effect (2.44148ms)
+✔ Vân Pháp: skill resolves authored target/effect (3.763989ms)
+✔ Vân Pháp: ultimate resolves authored target/effect (0.67071ms)
+✔ Cửu Triều: skill resolves authored target/effect (0.793454ms)
+✔ Cửu Triều: ultimate resolves authored target/effect (13.374634ms)
+✔ Thạch Mộng: skill resolves authored target/effect (0.779607ms)
+✔ Thạch Mộng: ultimate resolves authored target/effect (0.496774ms)
+✔ Tố Linh: skill resolves authored target/effect (0.602341ms)
+✔ Tố Linh: ultimate resolves authored target/effect (1.96869ms)
+✔ Cửu Triều prevents her own fatal hit once; silence disables it (1.520425ms)
+✔ Tằm Nương armor persists after both cocoon hit charges (2.716014ms)
+✔ Hỏa Tiêu splash still hits adjacent enemies when primary dies (0.356714ms)
+✔ Vân Pháp reflects only one control, with no reflection loop (0.47769ms)
+✔ Vọng Cơ extends only skill cooldown, and expiration is round based (0.996152ms)
+✔ Tuệ Y revive costs once per battle and restores 50 HP percent / 50 rage (1.534596ms)
+✔ Mãng Xà uses three distinct seeded targets; replay is identical (2.921216ms)
+✔ Dạ Xoa execution respects individual shield; kill grants stealth (3.657848ms)
+✔ Zero damage does not consume cocoon or attach attack marks (0.710572ms)
+✔ Taunt redirects forced single-target ultimate to the taunter (3.262405ms)
+✔ linh_dong passive records authored mark value and provenance (0.687241ms)
+✔ han_nuong passive records authored mark value and provenance (0.52981ms)
+✔ hoa_bai passive records authored mark value and provenance (0.792288ms)
+✔ hac_dao passive records authored mark value and provenance (0.600281ms)
+✔ hac_hoa passive records authored mark value and provenance (0.833624ms)
+✔ cuu_tinh passive records authored mark value and provenance (0.488445ms)
+✔ son_cuong passive records authored mark value and provenance (0.722868ms)
+✔ mang_xa passive records authored mark value and provenance (0.477138ms)
+✔ to_linh passive records authored mark value and provenance (0.538304ms)
+✔ thiet_lanh retaliatory passive attaches to attacker (0.626583ms)
+✔ nung retaliatory passive attaches to attacker (0.538737ms)
+✔ tram_tue retaliatory passive attaches to attacker (0.521522ms)
+✔ Tiêu Hồn cannot siphon more rage than the target owns (0.55447ms)
+✔ Hạc Phá berserk and Hải Phong heavy-hit cap use HP thresholds (0.974041ms)
+✔ Thạch Kinh consumes five resentment stacks to heal 15% missing HP (1.056374ms)
+✔ Thiềm Ngân overheal becomes shield and respects shield ban (0.514196ms)
+✔ Thủy Cơ buffs only other same-row slots after her action (1.135407ms)
+✔ Thủy Ngọc skill supplies 15 rage to strongest ally and explosive shield (4.942992ms)
+✔ Cổ Nương converts reflection to health; parasite ticks once per round (1.03613ms)
+✔ Giang Quân mitigation is melee only; Trầm Châu protects two back allies (1.211094ms)
+✔ Miên Nương HoT and Hỏa Dực burn conversion heal weakest ally (0.998485ms)
+✔ Thạch Mộng intercepts 30%, then reduces shared damage by 35% (0.849289ms)
+✔ Khaos clone absorbs half damage until its finite pool is exhausted (0.565127ms)
+✔ Hồi Ảnh swaps rows after two rounds without duplicate slots (1.040555ms)
+✔ Mục Chiêu equalization cannot bypass absolute anti-heal (2.36956ms)
+✔ 42 authored profiles resolve all 126 skill descriptions with separate HUD/button identities (3.384004ms)
+✔ full skill names, owner-HP wording and new passive numbers are preserved (0.641468ms)
+✔ skill UI keeps cooldown and rage live, and text lookup drives one popup owner (1.106062ms)
+✔ Source runtime patch compiles and does not duplicate scheduler (494.067716ms)
+✔ Every selectable hero reaches a valid 6v6 fixture without duplicate positions (3.21711ms)
+✔ Dream fixture reserves frontline for Thạch Mộng before support overflow (0.376219ms)
+✔ Bundled browser factory has the same damage/status/rage results as source (379.274876ms)
+✔ battle skill options follow the replacement actor when a battle restarts with the same id (6.123986ms)
+✔ orphaned skill options cannot cast after their actor leaves the battle (2.446306ms)
+✔ S+ atlas rects keep a source-pixel gutter on every side of each cell (4.571515ms)
+✔ Nung Skill 1 exposes only the opposing front target, not every enemy slot (5.291955ms)
+✔ row-scoped S+ skills keep the picker inside the authored row while targeted ultimates remain selectable (7.70038ms)
+✔ action slow affects ordering speed for both authored rounds and emits current queue delay (10.763713ms)
+✔ poison detonation consumes the authored raw tick amount once (8.79645ms)
+✔ burn-to-healing consumes the zone source so it cannot return next turn (4.29124ms)
+✔ catalog identifies V2 (2.111302ms)
+✔ Cuong shield strike uses caster HP against only opposing front; ultimate grants hard CC immunity (12.260387ms)
+✔ Lac An skill finds weakest back and prevents stealth; seven arrows grow and retarget (4.547769ms)
+✔ Hac Pha destroys front shields and preserves fractional stun metadata (2.784848ms)
+✔ Thiet Lanh disarms weapon skills and Minh Toa locks the highest rage back (6.184387ms)
+✔ Thiem Ngan healing is caster based and armor lasts three rounds (0.874521ms)
+✔ Linh Dong confusion replaces old root; Han Nuong strips exactly one front buff and bans new buffs (2.235719ms)
+✔ Vong Co drains two highest rage enemies; Co Nuong strike uses current HP (1.22684ms)
+✔ Thach Kinh ultimate grants caster HP shields and Muc Chieu skill heals from caster HP (1.007814ms)
+✔ Thuy Co cleanses one burn on skill and heals team on ultimate (0.761193ms)
+✔ Ha Lang pushes only opposing front; Giang Quan root blocks melee attacks (0.939863ms)
+✔ Thuy Ngoc shield selects back carry and ultimate boosts rage rate (0.54476ms)
+✔ Da Xoa bypasses shared guard but retains individual shield absorption (0.634289ms)
+✔ Khaos swaps front/back, Kinh Nuong blinds one attack and Hoi Anh ultimate damages (1.514824ms)
+✔ Van Phap strikes fronts, steals buffs and Thach Mong shields from caster HP (1.654337ms)
+✔ begin-round regeneration receives two ticks including expiry boundary (1.225063ms)
+✔ V2 metal: gear cap, 3% aura, caster HP shields and expiry (19.034337ms)
+✔ V2 Cuong: mitigation applies to ranged attacks and reflection never loops (1.264435ms)
+✔ V2 Lac An: eight focus stacks affect rate and crit damage, controlled targets guarantee crit (2.212449ms)
+✔ V2 Linh/Tieu: third basic mark drains rage; soul siphon is 15 and rage lock blocks gain (6.968719ms)
+✔ V2 Thach Kinh accumulates damage in 10% HP units, not one layer per hit (0.79123ms)
+✔ V2 Vong marks only highest attack and delays its skill cooldown (1.114458ms)
+✔ V2 Co Nuong parasite drains tankiest on hit and returns actual lost HP (0.958498ms)
+✔ V2 water: same-row haste, caster HP healing, critical-only cap (0.730425ms)
+✔ V2 Tram Chau bubble blocks crit/bleed only while shield remains and damage conversion prevents HP loss (1.869187ms)
+✔ V2 Nung burns only melee attackers using Nung HP; Deep Wound bleeds using source ATK (0.966614ms)
+✔ V2 Hoa Bai ground zone ticks on victim turn and follows the slot after displacement (0.834958ms)
+✔ V2 Mien heals at each ally turn start once when host prepares before act (0.389082ms)
+✔ V2 Tue Y emergency has a shared two-round cooldown and resurrects most recent death (1.406361ms)
+✔ V2 sleep survives DoT; Tằm Nương renews a two-hit cocoon after two rounds (0.706648ms)
+✔ V2 Mang poison spreads on each victim action, next-hit blindness consumes one charge (1.339692ms)
+✔ V2 Kinh Nuong successful basic reflection negates damage and cannot bounce (0.665886ms)
+✔ V2 Khaos clone explodes and respawns after 3 rounds; ultimate bypasses shield (2.845279ms)
+✔ V2 Hoi Anh forces an immediate friendly strike; Van ward rolls 35% after action (1.789595ms)
+✔ V2 Cuu Trieu stacks on all actors, burns current HP, loses half stacks to silence (2.857126ms)
+✔ V2 Time Freeze suppresses rage gain and passive reflection (0.816197ms)
+✔ L76A-T1: createStoreFromEnv with DATABASE_URL uses postgres (2.700957ms)
+✔ L76A-T2: no DATABASE_URL + VERCEL=1 is memory; local is file (1.398453ms)
+✔ L76A-T3: createUser + findUserByName roundtrip (0.944382ms)
+✔ L76A-T4: putSave / getSave JSONB keeps nested fields (2.201404ms)
+✔ L48-T1: live story markup and startStory stay frozen (63.346975ms)
+✔ L48-T2: #hvStoryRoot is a body overlay with overflow auto and 100vh filter fix (0.90949ms)
+✔ L48-T3: hall mounts on body and wraps showScreen without a second document listener (0.869286ms)
+✔ L48-T4: stub lane loads runtime and build-static keeps the reserved import (0.866843ms)
+✖ L48-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (2.55733ms)
+✔ L39-T1: live domain and lacquer runtime stay frozen (2.112615ms)
+✔ L39-T2: #hvSummonRoot is a body overlay with overflow auto (0.576006ms)
+✔ L39-T3: hall mounts on body and wraps showScreen without a second document listener (0.655711ms)
+✔ L39-T4: stub lane loads runtime and build-static keeps the reserved import (0.614099ms)
+✖ L39-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (1.954493ms)
+✔ L07-T1: live catalog frozen — rates sum 100, costs and pity unchanged (3.103587ms)
+✔ L07-T2: pity 60 forces SSR; rate SSR resets; player is not mutated (1.531347ms)
+✔ L07-T3: ×10 floor to S+; free is once per day and only ×1 (1.308792ms)
+✔ L07-P1: funds check, campaign untouched, empty official-12 pool does not debit (0.758333ms)
+✔ L07-P2: new own vs duplicate shards and essence; spark increases by n (0.626729ms)
+✔ L07-P3: Hồi Ức 120 picks SSR; owned converts to 30 shards + 8 essence (0.619449ms)
+✔ L07-P4: lacquer screen is wired and does not add a second hub landmark (1.887636ms)
+✔ all 12 official heroes have an automatic talent rule (4.070254ms)
+✔ Skill 1 cannot be manually selected and remains animation-backed (0.890206ms)
+✔ talent activation is star-gated, conditional, free and cooldown-limited (1.037488ms)
+✔ ordinary AI only chooses Basic or Ultimate unless talent trigger arms Skill 1 (0.666725ms)
+✔ L50-T1: live team screen and Bày trận stay frozen (53.5046ms)
+✔ L50-T2: #hvTeamRoot is a body overlay with overflow auto and 100vh filter fix (0.746056ms)
+✔ L50-T3: hall mounts on body and wraps showScreen without a second document listener (0.759624ms)
+✔ L50-T4: stub lane loads runtime and build-static keeps the reserved import (0.665205ms)
+✖ L50-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (2.180359ms)
+✔ L36-T1: live domain and lacquer runtime stay frozen (2.083121ms)
+✔ L36-T2: #hvTowerRoot is a body overlay with overflow auto (0.605623ms)
+✔ L36-T3: hall mounts on body and wraps showScreen without a second document listener (0.597826ms)
+✔ L36-T4: stub lane loads runtime and build-static keeps the reserved import (0.634858ms)
+✖ L36-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (1.936307ms)
+✔ L65-T1: wrap startTower calls runBattle __tower and never auto-wins (2.363201ms)
+✔ L65-T2: factory returns 6 unique roster clones, 3 front / 3 back (1.255518ms)
+✔ L65-T3: win/lose settle uses real report, stamina 5, gold formula (1.655592ms)
+✔ L65-T4: stub lane loads runtime; no battle.html; no tower-3d rewrite (0.940382ms)
+✔ L22-T1: empty tower starts at floor 1 and encounters stay four units (2.213239ms)
+✔ L22-T2: clear is immutable, keeps campaign, and rejects a stale floor (2.384723ms)
+✔ L22-T3: rotating trials, bonus on success, milestone claim rejects duplicates (0.929931ms)
+✔ L22-P1: required power rises with the floor and floor 1 sits under a 6-hero start (0.297664ms)
+✔ L22-P2: under-power attempt spends stamina, keeps the floor, and records the stuck clock (0.939905ms)
+✔ L22-P3: a near-miss can pass after a few catch-up days and the bonus caps (0.66115ms)
+✔ L22-T4: hub landmark and lacquer climb screen are wired (1.159978ms)
+✔ L22-P4: climb screen shows the power gate and auto-resolves attempts (0.859352ms)
+✔ L67-T1: #hvTrainRoot is a body overlay with overflow auto and wrap showScreen/startTraining (2.541488ms)
+✖ L67-T2: hall jpg is dedicated and larger than 50KB (1.928337ms)
+✔ L67-T3: Luyện spends stamina + runBattle luyen_tap; back navTo hub; after battle openHall (39.426539ms)
+✔ L67-T4: stub lane loads runtime; build-static keeps reserved import; no battle.html (0.803714ms)
+✔ L67-T5: does not unlock the five locked lich spokes (0.558038ms)
+✔ L03a source audit verifies the mutation inventory and opening sequence (55.383456ms)
+✔ L03a records receipt absence instead of treating direct persist as atomic (40.251406ms)
+✔ L03a audit source hash is stable for the captured active runtime (20.350892ms)
+✔ successful transaction debits and records one receipt plus a ledger delta (4.96917ms)
+✔ reward settlement applies reward once and records positive ledger delta (1.357487ms)
+✔ duplicate command returns the original receipt without running mutation twice (1.036526ms)
+✔ stale revision and insufficient funds reject before mutation (0.673155ms)
+✔ rejected and thrown mutations roll back every in-memory change (0.958356ms)
+✔ request validation rejects invalid cost and transaction history stays bounded (22.248322ms)
+✔ static build wires the contract after the save contract and patches both safe mutation paths (0.749983ms)
+✔ L03b build owner keeps quest progress inside the level-up transaction (2.811426ms)
+✔ L03b failed persist restores gold, hero, quest, weekly state and history (1.533471ms)
+✔ L03b success commits one debit, progress and receipt; retry after reload is duplicate (2.06244ms)
+✔ L03c build owner makes quest command id stable and keeps clan XP inside the transaction (2.580917ms)
+✔ L03c failed persist restores reward, quest, activity, clan XP and receipt (2.775131ms)
+✔ L03c success commits reward, quest, activity and clan XP once; retry is duplicate (0.915596ms)
+✔ L34-T1: live commands stay frozen (50.168202ms)
+✔ L34-T2: #hvVaultRoot is a body overlay with overflow auto (0.737446ms)
+✔ L34-T3: hall mounts on body and wraps showScreen without a second document listener (0.764328ms)
+✔ L34-T4: stub lane loads runtime and build-static keeps the reserved import (0.784264ms)
+✖ L34-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (2.759962ms)
+✔ L86: Mộng Lộ hoisted root có ‹ Thành Chính (2.131021ms)
+✔ L87: Săn Boss ‹ + pause BGM trước trận (0.700164ms)
+✔ L88: skip không cần EMBEDDED; chip trận là ‹ (0.693154ms)
+✖ L89: chat là panel trên dock (10.077823ms)
+✔ L90: túi là khung ô thu/mở (0.594702ms)
+✔ L91: rèn 2 cột, nền mới (0.383044ms)
+✔ L92: chat sheet trên hub, ẩn gợi ý và Giao Lưu (2.153086ms)
+✔ L93: săn FAB ‹ cố định, không document click (0.791117ms)
+✔ L94: túi lưới ô + tab (0.742872ms)
+✔ L95: rèn đập búa + màu phẩm chất, asset pending (0.627695ms)
+✔ L96: Giao Lưu Phố trong giao việc (0.529779ms)
+ℹ tests 970
+ℹ suites 0
+ℹ pass 897
+ℹ fail 73
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 70417.347559
+
+✖ failing tests:
+
+test at tests/account-assist-spokes.test.mjs:59:1
+✖ L23-T3: 11 file sơn unique + hall giữ + heroStats không đổi công thức (2.460928ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/account-assist-spokes.test.mjs:61:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/arena-3d.test.mjs:46:1
+✖ L40-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (2.220757ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/arena-3d.test.mjs:48:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/arena-city.test.mjs:10:1
+✖ L100: đấu trường city 3 ô + FAB ‹, không document click (4.038755ms)
+  AssertionError [ERR_ASSERTION]: mua
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/arena-city.test.mjs:22:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/bag-currency-icons.test.mjs:40:1
+✖ L121-T2: Hoạt lực là bình đỏ cùng dáng Tinh, không đống lửa (2.193986ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/bag-currency-icons.test.mjs:44:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/bag-hall.test.mjs:47:1
+✖ L27-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (2.032376ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/bag-hall.test.mjs:49:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/bbr-chest-pts.test.mjs:40:1
+✖ L128-T3: Quay to, Thưởng + Đổi sò; shop điểm ở Chợ (2.438885ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/bbr-chest-pts.test.mjs:44:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/bbr-icon-fill.test.mjs:46:1
+✖ L123-T2: PNG vành cạnh vẽ ≥82% canvas (10.37019ms)
+  Error: Input file is missing: /workspace/scratch/4eca5b558d27/luc-than/assets/items/materials/gold.png
+      at Sharp.toBuffer (file:///opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modules/sharp/dist/output.mjs:159:17)
+      at contentFill (file:///workspace/scratch/4eca5b558d27/luc-than/tests/bbr-icon-fill.test.mjs:12:75)
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/bbr-icon-fill.test.mjs:59:21)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at tests/bbr-so-icon.test.mjs:10:1
+✖ L130-T1: SO_IC là sò cowrie, không ốc so-icon.jpg (4.056061ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/bbr-so-icon.test.mjs:18:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/campaign-3d.test.mjs:48:1
+✖ L45-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (1.915845ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/campaign-3d.test.mjs:50:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/campaign-afk-ui.test.mjs:66:1
+✖ AC03: đường giữa màn, chân theo slot, prepare không đổi (3.061977ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/campaign-afk-ui.test.mjs:70:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/campaign-chapter-worlds.test.mjs:7:1
+✖ AC01-03 six chapters have distinct real maps, routes and monster silhouettes (16.535597ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(existsSync(new URL('../'+w.map,import.meta.url)))
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/campaign-chapter-worlds.test.mjs:9:177)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/catalog-active-source.test.mjs:21:1
+✖ active index catalog is classified without silently hiding known legacy issues (112.182226ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + [
+  +   'hero:ong_hang_pho:master',
+  +   'hero:ong_hang_pho:avatar',
+  +   'hero:ong_hang_pho:dialogue',
+  +   'hero:ong_hang_pho:card',
+  +   'hero:ong_hang_pho:icon',
+  +   'hero:ong_hang_pho:detailBackground',
+  +   'hero:luc_anh:master',
+  +   'hero:luc_anh:avatar',
+  +   'hero:luc_anh:dialogue',
+  +   'hero:luc_anh:card',
+  +   'hero:luc_anh:icon',
+  +   'hero:luc_anh:idle',
+  +   'hero:luc_anh:detailBackground',
+  +   'hero:thay_mo:master',
+  +   'hero:thay_mo:avatar',
+  +   'hero:thay_mo:dialogue',
+  +   'hero:thay_mo:card',
+  +   'hero:thay_mo:icon',
+  +   'hero:thay_mo:idle',
+  +   'hero:thay_mo:detailBackground',
+  +   'hero:linh_dong:master',
+  +   'hero:linh_dong:avatar',
+  +   'hero:linh_dong:dialogue',
+  +   'hero:linh_dong:card',
+  +   'hero:linh_dong:icon',
+  +   'hero:linh_dong:detailBackground',
+  +   'hero:ong_hang_pho:role-fallback',
+  +   'hero:thay_mo:role-fallback',
+  +   'hero:lac_yen:role-fallback',
+  +   'hero:cung_thu_tre:role-fallback',
+  +   'hero:co_dao_ganh_hoi:role-fallback',
+  +   'hero:phong_tu:role-fallback',
+  +   'hero:thuy_nuong_roi_nuoc:role-fallback',
+  +   'hero:hong_lien_dao_nuong:role-fallback',
+  +   'hero:thach_quyen:role-fallback',
+  +   'hero:dinh_loi:role-fallback',
+  +   'hero:luc_anh:role-fallback',
+  +   'hero:to_diep:role-fallback',
+  +   'hero:linh_dong:role-fallback'
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/catalog-active-source.test.mjs:35:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [
+      'hero:ong_hang_pho:master',               'hero:ong_hang_pho:avatar',
+      'hero:ong_hang_pho:dialogue',             'hero:ong_hang_pho:card',
+      'hero:ong_hang_pho:icon',                 'hero:ong_hang_pho:detailBackground',
+      'hero:luc_anh:master',                    'hero:luc_anh:avatar',
+      'hero:luc_anh:dialogue',                  'hero:luc_anh:card',
+      'hero:luc_anh:icon',                      'hero:luc_anh:idle',
+      'hero:luc_anh:detailBackground',          'hero:thay_mo:master',
+      'hero:thay_mo:avatar',                    'hero:thay_mo:dialogue',
+      'hero:thay_mo:card',                      'hero:thay_mo:icon',
+      'hero:thay_mo:idle',                      'hero:thay_mo:detailBackground',
+      'hero:linh_dong:master',                  'hero:linh_dong:avatar',
+      'hero:linh_dong:dialogue',                'hero:linh_dong:card',
+      'hero:linh_dong:icon',                    'hero:linh_dong:detailBackground',
+      'hero:ong_hang_pho:role-fallback',        'hero:thay_mo:role-fallback',
+      'hero:lac_yen:role-fallback',             'hero:cung_thu_tre:role-fallback',
+      'hero:co_dao_ganh_hoi:role-fallback',     'hero:phong_tu:role-fallback',
+      'hero:thuy_nuong_roi_nuoc:role-fallback', 'hero:hong_lien_dao_nuong:role-fallback',
+      'hero:thach_quyen:role-fallback',         'hero:dinh_loi:role-fallback',
+      'hero:luc_anh:role-fallback',             'hero:to_diep:role-fallback',
+      'hero:linh_dong:role-fallback'
+    ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/challenge-3d.test.mjs:25:1
+✖ L69-T2: hall jpg is dedicated and larger than 50KB (2.086029ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/challenge-3d.test.mjs:27:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/chat-hall.test.mjs:44:1
+✖ L32-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (2.055873ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/chat-hall.test.mjs:46:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/city-halls.test.mjs:10:1
+✖ L98: nhật ký city 6 ô, không document click (3.76089ms)
+  AssertionError [ERR_ASSERTION]: diem-danh
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/city-halls.test.mjs:19:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/city-halls.test.mjs:24:1
+✖ L99: lễ hội city Hoa Đăng / Bách Bảo / Rương (0.971684ms)
+  AssertionError [ERR_ASSERTION]: hoa-dang
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/city-halls.test.mjs:32:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/clan-hall.test.mjs:44:1
+✖ L33-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (2.038969ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/clan-hall.test.mjs:46:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/daily-3d.test.mjs:49:1
+✖ L44-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (2.02137ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/daily-3d.test.mjs:51:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/daily-run.test.mjs:339:1
+✖ L21-P5: 11 ải spokes; night-1 opens Qua Ải + Luyện; Tháp after ch.1; locked stay locked (2.331714ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/daily-run.test.mjs:374:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/daily-run.test.mjs:384:1
+✖ L76-T2: nan lock is CSS overlay; spoke JPG has no baked padlock (1.211519ms)
+  Error: ENOENT: no such file or directory, open '/workspace/scratch/4eca5b558d27/luc-than/assets/daily/ASSET.md'
+      at readFileSync (node:fs:484:20)
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/daily-run.test.mjs:392:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/workspace/scratch/4eca5b558d27/luc-than/assets/daily/ASSET.md'
+  }
+
+test at tests/dinh-loi-golden-runtime.test.mjs:7:1
+✖ Đình Lôi binds all fourteen authored asset layers (3.267087ms)
+  AssertionError [ERR_ASSERTION]: idle-atlas.png
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/dinh-loi-golden-runtime.test.mjs:9:73)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/dinh-loi-golden-runtime.test.mjs:12:1
+✖ Đình Lôi runtime uses native 2x atlases (0.49987ms)
+  Error: ENOENT: no such file or directory, open '/workspace/scratch/4eca5b558d27/luc-than/assets/characters/dinh-loi/idle-atlas.png'
+      at Object.openSync (node:fs:622:18)
+      at Object.readFileSync (node:fs:488:35)
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/dinh-loi-golden-runtime.test.mjs:14:45)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/workspace/scratch/4eca5b558d27/luc-than/assets/characters/dinh-loi/idle-atlas.png'
+  }
+
+test at tests/end-3d.test.mjs:48:1
+✖ L47-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (2.146099ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/end-3d.test.mjs:50:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/expedition-3d.test.mjs:46:1
+✖ L37-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (1.916851ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/expedition-3d.test.mjs:48:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/fest-chest-chroma.test.mjs:17:1
+✖ L126-T2: Blender chroma PNG + webp 60fps, rương rung (0.911112ms)
+  Error: ENOENT: no such file or directory, open '/workspace/scratch/4eca5b558d27/luc-than/scripts/blender-chest-chroma.py'
+      at readFileSync (node:fs:484:20)
+      at read (file:///workspace/scratch/4eca5b558d27/luc-than/tests/fest-chest-chroma.test.mjs:9:21)
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/fest-chest-chroma.test.mjs:25:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/workspace/scratch/4eca5b558d27/luc-than/scripts/blender-chest-chroma.py'
+  }
+
+test at tests/fest-chest-chroma.test.mjs:40:1
+✖ L126-T4: PNG alpha sạch, webp 60fps, không document click (1.976846ms)
+  AssertionError [ERR_ASSERTION]: chest-open.webp
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/fest-chest-chroma.test.mjs:45:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/fest-lamp-chest.test.mjs:18:1
+✖ L125-T2: Hoa Đăng sông đêm + đèn nổi (2.440098ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/fest-lamp-chest.test.mjs:26:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/fest-lamp-chest.test.mjs:30:1
+✖ L125-T3: video mở rương + icon loot; tỉ lệ đóng băng (1.551211ms)
+  AssertionError [ERR_ASSERTION]: chest-open.mp4
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/fest-lamp-chest.test.mjs:43:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/fest-shop-popup.test.mjs:11:1
+✖ L119-T1: 3 ô Lễ Hội là icon hoạt động lantern / wheel / chest (3.9741ms)
+  AssertionError [ERR_ASSERTION]: hoa-dang
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/fest-shop-popup.test.mjs:21:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/fest-shop-popup.test.mjs:46:1
+✖ L119-T4: không document click; giá shop đóng băng (13.119055ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(existsSync(join(root, 'assets/ui/festival/shop-keep.jpg')))
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/fest-shop-popup.test.mjs:52:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/festival-3d.test.mjs:46:1
+✖ L42-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (1.96209ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/festival-3d.test.mjs:48:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/forge-hall.test.mjs:50:1
+✖ L25-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (2.407055ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/forge-hall.test.mjs:52:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/friends-hall.test.mjs:44:1
+✖ L31-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (2.071449ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/friends-hall.test.mjs:46:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/gold-icon-unify.test.mjs:29:1
+✖ L122-T3: file vàng Chinh chiến + Bách Bảo cùng bytes túi (1.542207ms)
+  Error: ENOENT: no such file or directory, open '/workspace/scratch/4eca5b558d27/luc-than/assets/items/materials/gold.png'
+      at Object.openSync (node:fs:622:18)
+      at readFileSync (node:fs:488:35)
+      at sha (file:///workspace/scratch/4eca5b558d27/luc-than/tests/gold-icon-unify.test.mjs:10:48)
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/gold-icon-unify.test.mjs:30:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/workspace/scratch/4eca5b558d27/luc-than/assets/items/materials/gold.png'
+  }
+
+test at tests/guild-city.test.mjs:10:1
+✖ L97: bang hội city 3 cột + dock + 8 tile art (3.887347ms)
+  AssertionError [ERR_ASSERTION]: gia-toc
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/guild-city.test.mjs:21:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/guild-hall.test.mjs:44:1
+✖ L30-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (7.702902ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/guild-hall.test.mjs:46:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/hero-detail-hall.test.mjs:56:1
+✖ L43-T5: nine remaining showcases are dedicated 3D files, not menu-v3233 (2.169182ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/hero-detail-hall.test.mjs:59:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/hunt-3d.test.mjs:46:1
+✖ L41-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (1.933207ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/hunt-3d.test.mjs:48:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/jobs-hall.test.mjs:44:1
+✖ L29-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (2.40548ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/jobs-hall.test.mjs:46:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/journey-3d.test.mjs:47:1
+✖ L46-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (2.053348ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/journey-3d.test.mjs:49:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/linh-dong-atlas.test.mjs:30:1
+✖ L139-T1 Linh Dong authored atlases, portraits and SFX exist (2.887472ms)
+  AssertionError [ERR_ASSERTION]: assets/characters/linh-dong/run-atlas.webp
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/linh-dong-atlas.test.mjs:31:45)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/linh-dong-hero.test.mjs:11:1
+✖ L141-T1 DATA.heroes.linh_dong and CHARACTER_MANIFEST surfaces match Lục Ảnh (42.112651ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/linh-dong-hero.test.mjs:21:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/linh-dong-rekey.test.mjs:37:1
+✖ L143-T2 atlases are blender-rekeyed; idle sha leaves ffmpeg colorkey pack (49.152044ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(fs.existsSync(new URL('assets/characters/linh-dong/avatar.webp', root)))
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/linh-dong-rekey.test.mjs:47:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/login-gate.test.mjs:46:1
+✖ L75-T2: video + poster exist and CSS covers the viewport (2.390291ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/login-gate.test.mjs:55:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/lore-luc-than.test.mjs:10:1
+✖ L108: Lục Thần lore overlay — sáu ấn, không sửa index.html (2.476476ms)
+  Error: ENOENT: no such file or directory, open '/workspace/scratch/4eca5b558d27/luc-than/docs/COT-TRUYEN-LUC-THAN.md'
+      at readFileSync (node:fs:484:20)
+      at read (file:///workspace/scratch/4eca5b558d27/luc-than/tests/lore-luc-than.test.mjs:8:21)
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/lore-luc-than.test.mjs:15:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/workspace/scratch/4eca5b558d27/luc-than/docs/COT-TRUYEN-LUC-THAN.md'
+  }
+
+test at tests/luc-anh-golden.test.mjs:17:1
+✖ Lục Ảnh golden runtime binds every authored visual and requested audio surface (2.680489ms)
+  AssertionError [ERR_ASSERTION]: assets/characters/luc-anh/master.webp
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/luc-anh-golden.test.mjs:18:37)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/mail-hall.test.mjs:44:1
+✖ L28-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (2.041292ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/mail-hall.test.mjs:46:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/mobile-render-sfx.test.mjs:34:1
+✖ supplied SFX preserve source hashes and serve MP3 bytes with MP3 extensions (2.114822ms)
+  Error: ENOENT: no such file or directory, open '/workspace/scratch/4eca5b558d27/luc-than/assets/audio/sfx/se_button_click.mp3'
+      at Object.openSync (node:fs:622:18)
+      at readFileSync (node:fs:488:35)
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/mobile-render-sfx.test.mjs:38:19)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/workspace/scratch/4eca5b558d27/luc-than/assets/audio/sfx/se_button_click.mp3'
+  }
+
+test at tests/mobile-render-sfx.test.mjs:98:1
+✖ Đình Lôi retina atlases use the committed 2x source cells (36.655268ms)
+  Error: Input file is missing: /workspace/scratch/4eca5b558d27/luc-than/assets/characters/dinh-loi/idle-atlas.png
+      at Sharp.metadata (file:///opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modules/sharp/dist/input.mjs:651:17)
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/mobile-render-sfx.test.mjs:103:106)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/mobile-render-sfx.test.mjs:125:1
+✖ other MVP heroes reuse the loaded battle portrait renderer (24.798235ms)
+  Error: ENOENT: no such file or directory, open '/workspace/scratch/4eca5b558d27/luc-than/assets/characters/ong-pho/card.png'
+      at Object.openSync (node:fs:622:18)
+      at readFileSync (node:fs:488:35)
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/mobile-render-sfx.test.mjs:155:58)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/workspace/scratch/4eca5b558d27/luc-than/assets/characters/ong-pho/card.png'
+  }
+
+test at tests/net-3d.test.mjs:54:1
+✖ L49-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (1.994405ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/net-3d.test.mjs:56:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/net-auth-client.test.mjs:40:1
+✖ L74-T7: one Vercel project gateway + lane stub (0.747708ms)
+  Error: ENOENT: no such file or directory, open '/workspace/scratch/4eca5b558d27/luc-than/api/[...path].js'
+      at readFileSync (node:fs:484:20)
+      at read (file:///workspace/scratch/4eca5b558d27/luc-than/tests/net-auth-client.test.mjs:8:21)
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/net-auth-client.test.mjs:41:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/workspace/scratch/4eca5b558d27/luc-than/api/[...path].js'
+  }
+
+test at tests/parallel-lanes.test.mjs:184:1
+✖ wave A tickets are exclusive and freeze hub wiring (1.057316ms)
+  Error: ENOENT: no such file or directory, open '/workspace/scratch/4eca5b558d27/luc-than/tickets/TKT-0037/ticket.md'
+      at readFileSync (node:fs:484:20)
+      at read (file:///workspace/scratch/4eca5b558d27/luc-than/tests/parallel-lanes.test.mjs:8:21)
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/parallel-lanes.test.mjs:188:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/workspace/scratch/4eca5b558d27/luc-than/tickets/TKT-0037/ticket.md'
+  }
+
+test at tests/parallel-lanes.test.mjs:277:1
+✖ wave H tickets are exclusive and freeze combat visual (0.451592ms)
+  Error: ENOENT: no such file or directory, open '/workspace/scratch/4eca5b558d27/luc-than/tickets/TKT-0065/ticket.md'
+      at readFileSync (node:fs:484:20)
+      at read (file:///workspace/scratch/4eca5b558d27/luc-than/tests/parallel-lanes.test.mjs:8:21)
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/parallel-lanes.test.mjs:292:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/workspace/scratch/4eca5b558d27/luc-than/tickets/TKT-0065/ticket.md'
+  }
+
+test at tests/parallel-lanes.test.mjs:336:1
+✖ wave H waiting-asset tickets are plug-only (0.392731ms)
+  Error: ENOENT: no such file or directory, open '/workspace/scratch/4eca5b558d27/luc-than/tickets/TKT-0070/ticket.md'
+      at readFileSync (node:fs:484:20)
+      at read (file:///workspace/scratch/4eca5b558d27/luc-than/tests/parallel-lanes.test.mjs:8:21)
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/parallel-lanes.test.mjs:339:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/workspace/scratch/4eca5b558d27/luc-than/tickets/TKT-0070/ticket.md'
+  }
+
+test at tests/parallel-lanes.test.mjs:353:1
+✖ wave I auth ticket is exclusive and freezes combat shells (0.325708ms)
+  Error: ENOENT: no such file or directory, open '/workspace/scratch/4eca5b558d27/luc-than/tickets/TKT-0074/ticket.md'
+      at readFileSync (node:fs:484:20)
+      at read (file:///workspace/scratch/4eca5b558d27/luc-than/tests/parallel-lanes.test.mjs:8:21)
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/parallel-lanes.test.mjs:354:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/workspace/scratch/4eca5b558d27/luc-than/tickets/TKT-0074/ticket.md'
+  }
+
+test at tests/result-flow-integration.test.mjs:34:1
+✖ result actions and all result assets are present (1.850623ms)
+  AssertionError [ERR_ASSERTION]: assets/result-victory-v6/victory-stage-original-quality-smooth-v5.apng
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/result-flow-integration.test.mjs:45:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/shop-3d.test.mjs:46:1
+✖ L38-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (1.979894ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/shop-3d.test.mjs:48:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/shop-chest-fx.test.mjs:11:1
+✖ L129-T1: Chợ Mộng 2 ô, bỏ shop icon trên BBR (3.312976ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/shop-chest-fx.test.mjs:23:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/shop-chest-fx.test.mjs:27:1
+✖ L129-T2: sprite chroma 60fps, loot sau khi bung sáng (0.984188ms)
+  AssertionError [ERR_ASSERTION]: chest-sheet.webp
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/shop-chest-fx.test.mjs:43:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/skill-kit.test.mjs:83:1
+✖ Rèn Mộng asset registry covers every item model and material deterministically (2.522896ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/skill-kit.test.mjs:93:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/skill-kit.test.mjs:104:1
+✖ hero detail background and skill kit runtime are shipped together (232.811706ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/skill-kit.test.mjs:131:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/skill-seals-a.test.mjs:29:1
+✖ L51-T2: nine exclusive jpgs exist and are larger than 8KB (2.273592ms)
+  AssertionError [ERR_ASSERTION]: lac_yen/basic
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/skill-seals-a.test.mjs:33:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/skill-seals-b.test.mjs:28:1
+✖ L52-T2: nine exclusive jpgs exist and are larger than 8KB (2.292663ms)
+  AssertionError [ERR_ASSERTION]: phong_tu/basic
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/skill-seals-b.test.mjs:32:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/skill-seals-c.test.mjs:29:1
+✖ L53-T2: nine exclusive jpgs exist and are larger than 8KB (2.263699ms)
+  AssertionError [ERR_ASSERTION]: thach_quyen/basic
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/skill-seals-c.test.mjs:33:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/skill-seals-d.test.mjs:25:1
+✖ L68-T2: nine exclusive jpgs exist and are larger than 8KB (2.001065ms)
+  AssertionError [ERR_ASSERTION]: ong_hang_pho/basic
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/skill-seals-d.test.mjs:29:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/story-3d.test.mjs:52:1
+✖ L48-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (2.55733ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/story-3d.test.mjs:54:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/summon-3d.test.mjs:46:1
+✖ L39-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (1.954493ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/summon-3d.test.mjs:48:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/team-3d.test.mjs:63:1
+✖ L50-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (2.180359ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/team-3d.test.mjs:65:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/tower-3d.test.mjs:46:1
+✖ L36-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (1.936307ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/tower-3d.test.mjs:48:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/train-3d.test.mjs:25:1
+✖ L67-T2: hall jpg is dedicated and larger than 50KB (1.928337ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/train-3d.test.mjs:27:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/vault-hall.test.mjs:45:1
+✖ L34-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (2.759962ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/vault-hall.test.mjs:47:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/wave-l-ux.test.mjs:39:1
+✖ L89: chat là panel trên dock (10.077823ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(existsSync(join(root, 'assets/ui/chat/chat-hall.jpg')))
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4eca5b558d27/luc-than/tests/wave-l-ux.test.mjs:46:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

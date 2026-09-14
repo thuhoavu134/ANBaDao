@@ -1,3 +1,8 @@
+## 14/09 — TKT-0144: giảm bộ nhớ Linh Đồng và sửa ảnh trên sân — EVIDENCE
+
+Loại bỏ tải sẵn atlas ở host/trận; cache theo URL tối đa 112 MiB RGBA ước lượng, 2 ảnh tải đồng thời, giải phóng khi rời màn. Bày trận/Chinh chiến dùng idle toàn thân thay bust; fallback khi clip chưa sẵn sàng; hồ sơ giữ tỷ lệ và dừng vẽ khi rời màn. Không đổi art gốc/save/combat/kinh tế.
+RED 8 lỗi → GREEN 8/8 → focused 46/46; build và embedded parity PASS. Local full suite 897/970, 73 fail do checkout thiếu asset/tài liệu/API cũ; CI PASS: build + 970/970 trên runtime f3f0714, run 34820015965, PR #138. Browser bản sửa BLOCKED ERR_BLOCKED_BY_CLIENT; iPhone NOT_RUN; chưa deploy. Chi tiết `HANDOFF-LINH-DONG-CRASH-2026-09-14.md`.
+
 ## 14/09 — TKT-0143: Thay pack Linh Đồng Blender rekey
 
 Owner: dùng pack Drive mới thay asset Linh Đồng. Blender Compositor Keying, hết viền xanh. Cell 347×320, trận 477×440. Không đổi BETS/loot/công thức.

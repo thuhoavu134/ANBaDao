@@ -61,6 +61,9 @@ const sceneRewards = [
 ];
 const sceneDock = [['hub', 'hub', 'Thành Chính'], ['heroes', 'heroes', 'Tướng'], ['team', 'team', 'Trợ trận'], ['daily', 'daily', 'Lịch Luyện'], ['campaign', 'expedition', 'Chinh chiến']];
 const spriteSpecs = {
+  // Same fixed cell and bottom-center pivot as the authored combat pack.
+  // Idle occupies 240px of the 320px cell; portrait/master is a bust, not a body.
+  linh_dong: { src: 'assets/characters/linh-dong/idle-atlas.webp', frames: 96, cols: 8, cellW: 347, cellH: 320, ms: 42, pivot: 173.5, foot: 320, body: 240 },
   ong_hang_pho: { src: 'assets/battle-runtime/embedded-12.png', frames: 48, cols: 8, cellW: 240, cellH: 135, ms: 120, pivot: 100, foot: 128, body: 124 },
   luc_anh: { ...LUC_ANH_IDLE_1080, pivot: 240, foot: 427, body: 398 },
   thay_mo: { src: 'assets/characters/thay-mo/idle-v3193-atlas.png', frames: 96, cols: 12, cellW: 235, cellH: 264, strideW: 241, strideH: 270, pad: 3, durations: AFK_THAY_MO_IDLE_DURATIONS, pivot: 117.5, foot: 260, body: 250 },
@@ -94,7 +97,9 @@ function imageForScene(src) {
     image.src = src; sceneImages.set(src, image);
     sceneState.scope?.add(() => {
       if (image.onload === onload) image.onload = null;
-      if (!image.complete) image.src = '';
+      if (!image.complete || src.startsWith('assets/characters/linh-dong/')) {
+        if (image.removeAttribute) image.removeAttribute('src'); else image.src = '';
+      }
       if (sceneImages.get(src) === image) sceneImages.delete(src);
     });
   }

@@ -1,0 +1,78 @@
+{
+  "ticket": "TKT-0144",
+  "baseline": "3accc0ed82261cba2c8adeb34a6dc9771abbb37e",
+  "contract": "tickets/TKT-0144/ticket.md",
+  "sourceFingerprints": "source-sha256.json",
+  "red": {
+    "command": "node --test tests/linh-dong-memory.test.mjs",
+    "exit_code": 1,
+    "passed": 0,
+    "failed": 8,
+    "log": "red.tap"
+  },
+  "green": {
+    "command": "node --test tests/linh-dong-memory.test.mjs",
+    "exit_code": 0,
+    "passed": 8,
+    "failed": 0,
+    "log": "green.tap"
+  },
+  "refactor": {
+    "exit_code": 0,
+    "passed": 46,
+    "failed": 0,
+    "log": "refactor.tap"
+  },
+  "syntax": {
+    "exit_code": 0,
+    "files": 3
+  },
+  "build": {
+    "exit_code": 0,
+    "log": "build.log",
+    "embeddedBattleBytes": 1458341,
+    "embeddedParity": true
+  },
+  "fullSuiteLocal": {
+    "command": "npm test",
+    "exit_code": 1,
+    "passed": 897,
+    "failed": 73,
+    "reason": "incomplete local repository assets and supporting files",
+    "log": "npm-test.log"
+  },
+  "githubCI": {
+    "status": "PASS",
+    "headSha": "f3f071490c072278a9c5e4b52c5b79acd6de69fb",
+    "runId": 34820015965,
+    "url": "https://github.com/bktimmy247/luc-than/actions/runs/34820015965",
+    "build": "PASS",
+    "tests": 970,
+    "passed": 970,
+    "failed": 0,
+    "skipped": 0,
+    "log": "github-ci-excerpt.log"
+  },
+  "browserCandidate": {
+    "status": "BLOCKED",
+    "error": "net::ERR_BLOCKED_BY_CLIENT",
+    "url": "http://127.0.0.1:8080/qa-linh-dong-memory.html"
+  },
+  "safariIphone": "NOT_RUN",
+  "production": "NOT_DEPLOYED",
+  "memory": {
+    "unit": "bytes of estimated decoded RGBA",
+    "cacheBudget": 117440512,
+    "maxLoading": 2,
+    "totalBrowserMemoryMeasured": false
+  },
+  "acceptance": {
+    "L144-T1": "PASS",
+    "L144-T2": "PASS",
+    "L144-T3": "PASS",
+    "L144-T4": "PASS",
+    "L144-T5": "PASS",
+    "L144-P1": "BLOCKED"
+  },
+  "pullRequest": "https://github.com/bktimmy247/luc-than/pull/138"
+}

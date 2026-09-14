@@ -1,3 +1,15 @@
+# 2026-09-14 — TKT-0144 / EVIDENCE
+
+Baseline `3accc0ed82261cba2c8adeb34a6dc9771abbb37e`. Linh Đồng lazy atlas cache and full-body scene binding.
+
+- RED: 8 fail. GREEN: 8/8 pass. Related regression: 46/46 pass.
+- Build and embedded battle byte parity PASS (1,458,341 bytes).
+- Full local suite: 897 pass / 73 fail; checkout lacks upstream assets and supporting files. Not a full-suite PASS. GitHub CI PASS: build + 970/970 tests on runtime f3f071490c072278a9c5e4b52c5b79acd6de69fb, run 34820015965, PR #138. Owner explicitly approved uploading task source/docs/test logs to private bktimmy247/luc-than and creating a PR on 2026-09-14.
+- Candidate browser BLOCKED (`net::ERR_BLOCKED_BY_CLIENT`); Safari/iPhone NOT_RUN; production NOT_DEPLOYED.
+- Evidence: [L144 evidence](../../docs/qa/L144-LINH-DONG-MEMORY/evidence.json). [Handoff](../../docs/HANDOFF-LINH-DONG-CRASH-2026-09-14.md).
+
+Earlier results below are historical and do not establish acceptance for this revision.
+
 ## 2026-09-09 — Owner-approved promotion to main
 
 Owner reviewed candidate `2f8049cf6a0882503e4d45ab5275f8ad48aff8ff` and explicitly requested promotion to main. This supersedes the earlier no-production instruction. PR: https://github.com/bktimmy247/luc-than/pull/17. Preview `dpl_Ewq2LZDGiBJUrR9GDY13tAsEN6pV` is READY for that exact candidate. Main auto-deploys production; deployment completion must be checked against the resulting merge SHA.
