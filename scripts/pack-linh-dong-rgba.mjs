@@ -144,7 +144,7 @@ async function writeSkillKit(outDir) {
         anchors: { castAnchor: { x: 0, y: -96 }, hitAnchor: { x: 0, y: -80 } },
         timing: { castDelayMs: 420, projectileTravelMs: 900, impactDurationMs: 1500, vfxDurationMs: 4000 },
         parts: { cast: 'cast/frames.json', vfx: 'vfx/frames.json' },
-        audio: { cast: 'assets/audio/sfx/linh-dong/atk.ogg', impact: null, profile: 'linh-dong-atk-v1' },
+        audio: { cast: 'assets/audio/sfx/linh-dong/atk.wav', impact: null, profile: 'linh-dong-atk-v1' },
         runtime: { speedModes: [1, 2, 3], preserveAllFrames: true, lockCharacterScale: true }
       },
       files: {
@@ -155,7 +155,7 @@ async function writeSkillKit(outDir) {
         }),
         'vfx/frames.json': framesJson('linh-dong.basic.vfx', 'skill1_vfx-atlas.webp', skillVfx, LINH_DONG_VFX, {
           motion: { type: 'projectile', startAnchor: 'castAnchor', targetAnchor: 'hitAnchor', interpolation: 'linear' },
-          display: { width: 320, height: 180, baseline: 90, scale: 1, layer: 'front', blendMode: 'screen', alpha: 0.96 }
+          display: { width: 320, height: 180, baseline: 90, scale: 1, layer: 'front', blendMode: 'source-over', alpha: 0.96 }
         })
       }
     },
@@ -172,7 +172,7 @@ async function writeSkillKit(outDir) {
         anchors: { castAnchor: { x: 0, y: -96 }, hitAnchor: { x: 0, y: -80 } },
         timing: { castDelayMs: 420, vfxDurationMs: 4000 },
         parts: { cast: 'cast/frames.json', vfx: 'vfx/frames.json' },
-        audio: { cast: 'assets/audio/sfx/linh-dong/atk.ogg', impact: null, profile: 'linh-dong-atk-v1' },
+        audio: { cast: 'assets/audio/sfx/linh-dong/atk.wav', impact: null, profile: 'linh-dong-atk-v1' },
         runtime: { speedModes: [1, 2, 3], preserveAllFrames: true, lockCharacterScale: true }
       },
       files: {
@@ -183,7 +183,7 @@ async function writeSkillKit(outDir) {
         }),
         'vfx/frames.json': framesJson('linh-dong.skill1.vfx', 'skill1_vfx-atlas.webp', skillVfx, LINH_DONG_VFX, {
           spawn: { type: 'singleTarget', team: 'enemy', anchor: 'hitAnchor' },
-          display: { width: 360, height: 202, baseline: 101, scale: 1, layer: 'front', blendMode: 'screen', alpha: 0.94 }
+          display: { width: 360, height: 202, baseline: 101, scale: 1, layer: 'front', blendMode: 'source-over', alpha: 0.94 }
         })
       }
     },
@@ -199,7 +199,7 @@ async function writeSkillKit(outDir) {
         targeting: { type: 'allEnemies', maxTargets: 6 },
         timing: { voiceLeadMs: 200, vfxDelayMs: 400, impactHoldMs: 1600, vfxDurationMs: 4000 },
         parts: { cast: 'cast/frames.json', vfx: 'vfx/frames.json' },
-        audio: { cast: 'assets/audio/sfx/linh-dong/ult.ogg', impact: null, profile: 'linh-dong-ult-v1' },
+        audio: { cast: 'assets/audio/sfx/linh-dong/ult.wav', impact: null, profile: 'linh-dong-ult-v1' },
         runtime: { speedModes: [1, 2, 3], preserveAllFrames: true, lockCharacterScale: true }
       },
       files: {
@@ -210,7 +210,7 @@ async function writeSkillKit(outDir) {
         }),
         'vfx/frames.json': framesJson('linh-dong.ultimate.vfx', 'ultimate_vfx-atlas.webp', ultVfx, LINH_DONG_VFX, {
           spawn: { type: 'enemyGroup', coverage: 'allEnemies', maxTargets: 6 },
-          display: { width: 720, height: 405, baseline: 202, scale: 1, layer: 'front', blendMode: 'screen', alpha: 0.96 }
+          display: { width: 720, height: 405, baseline: 202, scale: 1, layer: 'front', blendMode: 'source-over', alpha: 0.96 }
         })
       }
     }

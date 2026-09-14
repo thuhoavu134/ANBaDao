@@ -38,8 +38,8 @@ for (const name of ['index.html', 'battle.html']) {
       'window.HonVietSfx?.setCombatEnabled(state.sound);\n    if (state.sound) { window.HonVietSfx?.unlock(); window.HonVietSfx?.play("ui", {group:"ui"}); }', 'SFX mute');
 
     // Keep source animation motion; do not add a second bob/rotation to Lục Ảnh.
-    replace('const idleBob = REDUCED_MOTION ? 0 :', 'const idleBob = REDUCED_MOTION || isLucAnh(unit) ? 0 :', 'authored idle motion');
-    replace('if (!isOngPho(unit)) context.rotate(lean', 'if (!isOngPho(unit) && !isLucAnh(unit)) context.rotate(lean', 'authored attack baseline');
+    replace('const idleBob = REDUCED_MOTION ? 0 :', 'const idleBob = REDUCED_MOTION || isLucAnh(unit) || isLinhDong(unit) ? 0 :', 'authored idle motion');
+    replace('if (!isOngPho(unit)) context.rotate(lean', 'if (!isOngPho(unit) && !isLucAnh(unit) && !isLinhDong(unit)) context.rotate(lean', 'authored attack baseline');
 
     // Full-screen flash and random camera impulses read as flicker in the reference battle layout.
     // Retain local authored impact effects and damage feedback.

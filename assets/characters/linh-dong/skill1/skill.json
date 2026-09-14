@@ -30,7 +30,7 @@
     "vfx": "vfx/frames.json"
   },
   "audio": {
-    "cast": "assets/audio/sfx/linh-dong/atk.ogg",
+    "cast": "assets/audio/sfx/linh-dong/atk.wav",
     "impact": null,
     "profile": "linh-dong-atk-v1"
   },

@@ -1,0 +1,19 @@
+{
+  "ticket": "TKT-0142",
+  "snap": {
+    "canvasW": 390,
+    "canvasH": 739,
+    "painted": 71813,
+    "drawSize": true,
+    "oldSize": false,
+    "sourceOver": true,
+    "screenVfx": false,
+    "sfxBus": true,
+    "oggAudio": false,
+    "identityScale": true,
+    "hasHero": true
+  },
+  "appErrors": [],
+  "ok": true,
+  "ts": "2026-09-14T06:23:15.205Z"
+}

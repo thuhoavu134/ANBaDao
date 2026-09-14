@@ -5,7 +5,8 @@
     ui: 'se_button_click.mp3', select: 'se_icon_click.wav',
     victory: 'se_battlewin.mp3', defeat: 'se_battlelose.mp3', heal: 'se_gift.mp3',
     basic: '201800_se_atk.wav', skill: '201800_se_s1.wav',
-    ultimate: '201800_se_s2.wav', 'forge-reveal': '400500_se_s1_beaten.wav'
+    ultimate: '201800_se_s2.wav', 'forge-reveal': '400500_se_s1_beaten.wav',
+    'linh-dong-atk': 'linh-dong/atk.wav', 'linh-dong-ult': 'linh-dong/ult.wav'
   };
   const assetBase = new URL('assets/audio/sfx/', document.baseURI).href;
   let parentBus = null;

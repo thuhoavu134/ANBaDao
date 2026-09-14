@@ -23,7 +23,7 @@
     "vfx": "vfx/frames.json"
   },
   "audio": {
-    "cast": "assets/audio/sfx/linh-dong/ult.ogg",
+    "cast": "assets/audio/sfx/linh-dong/ult.wav",
     "impact": null,
     "profile": "linh-dong-ult-v1"
   },

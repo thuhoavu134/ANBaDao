@@ -18,6 +18,16 @@ export const LINH_DONG_CHAR = Object.freeze({
   foot: 'bottom-center'
 });
 
+// Campaign slot uses Lục Ảnh idle 240→330. Same multiplier so a 0.5-packed
+// idle body (~240 of the 320 cell) reads at ~330 after drawUnit identityScale.
+const LINH_DONG_CELL_TO_FIELD = 330 / 240;
+export const LINH_DONG_FIELD = Object.freeze({
+  multiplier: LINH_DONG_CELL_TO_FIELD,
+  drawW: Math.round(LINH_DONG_CHAR.cellW * LINH_DONG_CELL_TO_FIELD),
+  drawH: Math.round(LINH_DONG_CHAR.cellH * LINH_DONG_CELL_TO_FIELD),
+  baseline: Math.round(48 * (LINH_DONG_CHAR.cellH * LINH_DONG_CELL_TO_FIELD) / 330)
+});
+
 export const LINH_DONG_VFX = Object.freeze({
   scale: 320 / 854,
   cellW: 320,
@@ -47,8 +57,8 @@ export const LINH_DONG_STILLS = Object.freeze({
 });
 
 export const LINH_DONG_AUDIO = Object.freeze({
-  atk: ['atk.wav', 'atk.ogg'],
-  ult: ['ult.wav', 'ult.ogg']
+  atk: ['atk.wav'],
+  ult: ['ult.wav']
 });
 
 export function linhDongMeta(key) {

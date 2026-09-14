@@ -119,7 +119,10 @@ async function performSplusAction(actor, action, target) {
 function drawSplusToken(context, unit, time) {
   if(typeof isLinhDong==='function'&&isLinhDong(unit)&&typeof drawLinhDongHero==='function'){
     const lift=unit.splusAirborneUntil>time?Math.sin((1-(unit.splusAirborneUntil-time)/1000)*Math.PI)*40:0;
-    context.save();context.translate(unit.x,unit.y-lift);if(unit.team===TEAM_ENEMY)context.scale(-1,1);
+    const depthScale=0.83+(unit.y-290)/1500;
+    const identityScale=(innerWidth<600?0.52:0.74);
+    context.save();context.translate(unit.x,unit.y-lift);context.scale(depthScale*identityScale,depthScale*identityScale);
+    if(unit.team===TEAM_ENEMY)context.scale(-1,1);
     drawLinhDongHero(context,unit,time);context.restore();
     if(unit.hp>0)drawUnitHud(context,unit,time,1);
     return;

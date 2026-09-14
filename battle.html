@@ -3782,8 +3782,8 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
   const LINH_DONG_META=Object.freeze({
     idle:{file:"idle-atlas.webp",frames:96,cols:8,w:328,h:320,ms:42,loop:true},
     run:{file:"run-atlas.webp",frames:96,cols:8,w:328,h:320,ms:42,loop:true},
-    hurt:{file:"hit-atlas.webp",frames:96,cols:8,w:328,h:320,ms:18,loop:false},
-    defeated:{file:"fall-atlas.webp",frames:96,cols:8,w:328,h:320,ms:28,loop:false},
+    hurt:{file:"hit-atlas.webp",frames:96,cols:8,w:328,h:320,ms:42,loop:false},
+    defeated:{file:"fall-atlas.webp",frames:96,cols:8,w:328,h:320,ms:42,loop:false},
     attack:{file:"basic-atlas.webp",frames:44,cols:8,w:328,h:320,ms:34,loop:false},
     skill1:{file:"basic-atlas.webp",frames:44,cols:8,w:328,h:320,ms:34,loop:false},
     ultimate:{file:"ultimate-atlas.webp",frames:60,cols:8,w:328,h:320,ms:33,loop:false},
@@ -3791,12 +3791,11 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     ultimateVfx:{file:"ultimate_vfx-atlas.webp",frames:120,cols:10,w:320,h:180,ms:33,loop:false}
   });
   const LINH_DONG_IMAGES=Object.fromEntries(Object.entries(LINH_DONG_META).map(([key,m])=>{const image=new Image();image.decoding="async";image.src=LINH_DONG_ASSET_BASE+m.file;return [key,image];}));
-  let linhDongFx=[],linhDongSfx=null;
+  let linhDongFx=[];
   function isLinhDong(unit){return !!unit&&LINH_DONG_IDS.includes(String(unit.sourceId||unit.sourceHeroId||unit.id||""));}
   function linhDongActionMs(key){const m=LINH_DONG_META[key];return m?m.frames*m.ms:1500;}
   function playLinhDongSfx(action){
-    const src=action==='ultimate'?"assets/audio/sfx/linh-dong/ult.ogg":"assets/audio/sfx/linh-dong/atk.ogg";
-    try{if(linhDongSfx){linhDongSfx.pause();linhDongSfx.currentTime=0;}linhDongSfx=new Audio(src);linhDongSfx.volume=.9;linhDongSfx.play().catch(()=>{});}catch(_e){}
+    try{if(state.sound)window.HonVietSfx?.play(action==='ultimate'?'linh-dong-ult':'linh-dong-atk',{group:'combat'});}catch(_e){}
   }
   function linhDongFrame(key,elapsed,loop=false){const m=LINH_DONG_META[key],raw=Math.max(0,Math.floor(elapsed/Math.max(1,m.ms)));return loop?raw%m.frames:Math.min(m.frames-1,raw);}
   function drawLinhDongAtlas(context,key,frame,x,y,width,height,options={}){
@@ -3804,7 +3803,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     const sx=(frame%m.cols)*m.w,sy=Math.floor(frame/m.cols)*m.h;
     context.save();context.imageSmoothingEnabled=true;context.imageSmoothingQuality="high";
     context.translate(x,y);if(options.flip)context.scale(-1,1);context.globalAlpha=options.alpha??1;
-    if(options.screen)context.globalCompositeOperation="screen";
+    if(options.blend)context.globalCompositeOperation=options.blend;
     context.drawImage(image,sx,sy,m.w,m.h,-width*.5,-height+(options.baseline??48),width,height);context.restore();return true;
   }
   function drawLinhDongHero(context,unit,time){
@@ -3818,7 +3817,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     else if(unit.state==="ultimate"){key="ultimate";loop=false;}
     const elapsed=key==="idle"?time:Math.max(0,time-(unit.stateStarted||time)),frame=linhDongFrame(key,elapsed,loop);
     context.save();context.shadowColor="rgba(120,150,210,.32)";context.shadowBlur=["attack","skill1","ultimate"].includes(key)?14:5;
-    drawLinhDongAtlas(context,key,frame,0,0,340,332,{baseline:48});context.restore();return true;
+    drawLinhDongAtlas(context,key,frame,0,0,451,440,{baseline:64});context.restore();return true;
   }
   function startLinhDongFx(action,actor,target=null){
     const kind=action==='ultimate'?'ultimateVfx':'skill1Vfx';
@@ -3834,16 +3833,22 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
         const foe=target||units.find(u=>u.team!==actor.team&&u.hp>0);
         if(!foe)return true;
         const x=actor.x+(foe.x-actor.x)*p,y=actor.y-70+(foe.y-actor.y)*p;
-        drawLinhDongAtlas(context,fx.kind,frame,x,y,360,202,{baseline:101,flip:actor.team===TEAM_ENEMY,screen:true,alpha:.94});
+        drawLinhDongAtlas(context,fx.kind,frame,x,y,360,202,{baseline:101,flip:actor.team===TEAM_ENEMY,blend:"source-over",alpha:.94});
       }else{
         const enemyTeam=actor.team===TEAM_PLAYER?TEAM_ENEMY:TEAM_PLAYER,slots=units.filter(u=>u.team===enemyTeam);
         const cx=slots.length?slots.reduce((a,u)=>a+u.x,0)/slots.length:(actor.team===TEAM_PLAYER?WORLD.width*.72:WORLD.width*.28);
         const cy=slots.length?slots.reduce((a,u)=>a+u.y,0)/slots.length:WORLD.height*.52;
-        drawLinhDongAtlas(context,fx.kind,frame,cx,cy,720,405,{baseline:202,screen:true,alpha:.96});
+        drawLinhDongAtlas(context,fx.kind,frame,cx,cy,720,405,{baseline:202,blend:"source-over",alpha:.96});
       }
       return true;
     });
   }
+  function linhDongQaPulse(action){
+    const actor=units.find(u=>isLinhDong(u)&&u.hp>0);if(!actor)return false;
+    startLinhDongFx(action||'skill',actor,units.find(u=>u.team!==actor.team&&u.hp>0)||null);
+    playLinhDongSfx(action||'skill');return true;
+  }
+  window.drawLinhDongHero=drawLinhDongHero;window.isLinhDong=isLinhDong;window.startLinhDongFx=startLinhDongFx;window.playLinhDongSfx=playLinhDongSfx;window.__HV_LINH_DONG_QA=linhDongQaPulse;
 
   // v3.13: authored status icon art generated for the Hồn Việt combat HUD.
   // Keep one persistent Image per icon so canvas markers never flash back to procedural dots.

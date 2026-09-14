@@ -26,7 +26,7 @@
     "baseline": 202,
     "scale": 1,
     "layer": "front",
-    "blendMode": "screen",
+    "blendMode": "source-over",
     "alpha": 0.96
   }
 }

@@ -68,8 +68,8 @@ test('L139-T4 skill manifests register isolated ATK and ULT passes', () => {
   assert.equal(basic.heroId, 'linh-dong');
   assert.equal(skill1.id, 'linh-dong.skill1');
   assert.equal(ult.id, 'linh-dong.ultimate');
-  assert.equal(basic.audio.cast, 'assets/audio/sfx/linh-dong/atk.ogg');
-  assert.equal(ult.audio.cast, 'assets/audio/sfx/linh-dong/ult.ogg');
+  assert.equal(basic.audio.cast, 'assets/audio/sfx/linh-dong/atk.wav');
+  assert.equal(ult.audio.cast, 'assets/audio/sfx/linh-dong/ult.wav');
   const vfx = JSON.parse(read('assets/characters/linh-dong/ultimate/vfx/frames.json'));
   assert.equal(vfx.schema, 'hon-viet-vfx-atlas/v1');
   assert.equal(vfx.layout.cellWidth, LINH_DONG_VFX.cellW);

@@ -103,6 +103,7 @@ Board GitHub không có. File `tickets/TKT-00xx/ticket.md` là nguồn sự th�
 | TKT-0139 | — | Bind Linh Đồng authored animation, VFX, SFX | LIVE (#133) |
 | TKT-0140 | — | Hiện thẻ Linh Đồng trên Tướng và Đồ Giám | SUPERSEDED (#135) |
 | TKT-0141 | — | Linh Đồng tướng đầy đủ như Lục Ảnh | LIVE (#135) |
+| TKT-0142 | — | Gắn tỷ lệ trận + VFX/SFX Linh Đồng | REVIEW |
 
 
 Cách tạo gift code (owner): [docs/GIFT-CODES.md](../docs/GIFT-CODES.md)
