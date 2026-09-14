@@ -1,7 +1,7 @@
 ## 14/09 — TKT-0143: Thay pack Linh Đồng Blender rekey
 
 Owner: dùng pack Drive mới thay asset Linh Đồng. Blender Compositor Keying, hết viền xanh. Cell 347×320, trận 477×440. Không đổi BETS/loot/công thức.
-RED L143-T1…T4 fail → GREEN 4/4 + npm test 962. Chrome 390×844 L143-P1 PASS. Safari NOT_RUN. PR REVIEW. Owner gõ live rồi tự `git pull && vercel --prod`.
+RED L143-T1…T4 fail → GREEN 4/4 + npm test 962. Chrome 390×844 L143-P1 PASS. Safari NOT_RUN. LIVE #137 `a39b587`. Owner tự `git pull && vercel --prod`.
 
 
 ## 14/09 — TKT-0142: Gắn tỷ lệ trận + VFX/SFX Linh Đồng

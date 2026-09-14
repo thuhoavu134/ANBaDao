@@ -104,7 +104,7 @@ Board GitHub không có. File `tickets/TKT-00xx/ticket.md` là nguồn sự th�
 | TKT-0140 | — | Hiện thẻ Linh Đồng trên Tướng và Đồ Giám | SUPERSEDED (#135) |
 | TKT-0141 | — | Linh Đồng tướng đầy đủ như Lục Ảnh | LIVE (#135) |
 | TKT-0142 | — | Gắn tỷ lệ trận + VFX/SFX Linh Đồng | LIVE (#136) |
-| TKT-0143 | — | Thay pack Linh Đồng Blender rekey | REVIEW |
+| TKT-0143 | — | Thay pack Linh Đồng Blender rekey | LIVE (#137) |
 
 
 Cách tạo gift code (owner): [docs/GIFT-CODES.md](../docs/GIFT-CODES.md)

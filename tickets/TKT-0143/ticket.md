@@ -1,11 +1,11 @@
 ---
 id: TKT-0143
 title: Thay pack Linh Đồng Blender rekey
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 created: 2026-09-14T06:40:00.000Z
-updated: 2026-09-14T06:50:00.000Z
+updated: 2026-09-14T06:55:00.000Z
 acceptance_ids: ['L143-T1', 'L143-T2', 'L143-T3', 'L143-T4', 'L143-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths:
@@ -40,4 +40,6 @@ Không đổi BETS 2/10/50, loot, công thức combat. Không mở 42 S+ còn l�
 
 ## Result
 
-RED L143-T1…T4 fail → GREEN 4/4 + npm test 962. Chrome 390×844 L143-P1 PASS (`docs/qa/L143-LINH-DONG-REKEY/`). Safari NOT_RUN. REVIEW. Owner gõ live rồi tự `git pull && vercel --prod`.
+LIVE #137 `a39b587`. Cell 347×320 × 330/240 → 477×440. Blender Compositor Keying, hết viền xanh ffmpeg. VFX source-over. SFX wav HonVietSfx. BETS 2/10/50 đóng. Không Hồng Trầu. Không per-frame crop.
+L143-T1…T4 PASS. npm test 962. L143-P1 Chrome 390×844 PASS. Safari NOT_RUN.
+Owner tự `git pull && vercel --prod`.
