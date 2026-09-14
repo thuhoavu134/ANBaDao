@@ -1,6 +1,6 @@
 ## 14/09 — Hướng dẫn Animation / VFX / SFX tướng
 
-Owner khóa quy chuẩn chroma `#00FF00`, isolated pass, 8 template + mẫu Linh Đồng. File [docs/HUONG-DAN-ANIMATION-VFX-SFX.md](./HUONG-DAN-ANIMATION-VFX-SFX.md). Không đổi runtime/cược/loot.
+Owner khóa quy chuẩn chroma `#00FF00`, isolated pass, 8 template + mẫu Linh Đồng. File [docs/HUONG-DAN-ANIMATION-VFX-SFX.md](./HUONG-DAN-ANIMATION-VFX-SFX.md). Không đổi runtime/cược/loot. LIVE #132 `7d6fb93`.
 
 ## 14/09 — TKT-0138: Vệt sáng loop mượt, không khựng
 
