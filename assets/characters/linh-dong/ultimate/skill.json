@@ -1,0 +1,39 @@
+{
+  "schema": "hon-viet-skill/v1",
+  "id": "linh-dong.ultimate",
+  "heroId": "linh-dong",
+  "kind": "ultimate",
+  "name": "Bách Quỷ Dạ Hành",
+  "movement": {
+    "moveType": 0,
+    "stationary": true
+  },
+  "targeting": {
+    "type": "allEnemies",
+    "maxTargets": 6
+  },
+  "timing": {
+    "voiceLeadMs": 200,
+    "vfxDelayMs": 400,
+    "impactHoldMs": 1600,
+    "vfxDurationMs": 4000
+  },
+  "parts": {
+    "cast": "cast/frames.json",
+    "vfx": "vfx/frames.json"
+  },
+  "audio": {
+    "cast": "assets/audio/sfx/linh-dong/ult.ogg",
+    "impact": null,
+    "profile": "linh-dong-ult-v1"
+  },
+  "runtime": {
+    "speedModes": [
+      1,
+      2,
+      3
+    ],
+    "preserveAllFrames": true,
+    "lockCharacterScale": true
+  }
+}

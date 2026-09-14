@@ -1,0 +1,66 @@
+{
+  "ticket": "TKT-0139",
+  "acceptance": "L139-P1",
+  "mobile": {
+    "canvasW": 390,
+    "canvasH": 739,
+    "painted": 71751,
+    "bronze": 5208,
+    "tokenCyan": 1526,
+    "atlasHit": [
+      {
+        "name": "idle-atlas.webp",
+        "present": true
+      },
+      {
+        "name": "basic-atlas.webp",
+        "present": true
+      },
+      {
+        "name": "ultimate-atlas.webp",
+        "present": true
+      }
+    ],
+    "artStatus": "authored-rgba-v1",
+    "artPortrait": "assets/characters/linh-dong/avatar.webp",
+    "hasDrawFn": true,
+    "hasDelegate": true,
+    "placeholderTokenFn": true
+  },
+  "desktop": {
+    "canvasW": 1280,
+    "canvasH": 696,
+    "painted": 222578,
+    "bronze": 571,
+    "tokenCyan": 1152,
+    "atlasHit": [
+      {
+        "name": "idle-atlas.webp",
+        "present": true
+      },
+      {
+        "name": "basic-atlas.webp",
+        "present": true
+      },
+      {
+        "name": "ultimate-atlas.webp",
+        "present": true
+      }
+    ],
+    "artStatus": "authored-rgba-v1",
+    "artPortrait": "assets/characters/linh-dong/avatar.webp",
+    "hasDrawFn": true,
+    "hasDelegate": true,
+    "placeholderTokenFn": true
+  },
+  "portrait": {
+    "src": "assets/characters/linh-dong/avatar.webp",
+    "complete": true,
+    "w": 966,
+    "h": 899,
+    "title": "Linh Đồng"
+  },
+  "appErrors": [],
+  "ok": true,
+  "ts": "2026-09-14T03:51:43.994Z"
+}

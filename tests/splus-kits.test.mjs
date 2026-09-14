@@ -14,7 +14,15 @@ const damage=e=>e.events.filter(x=>x.type==='damage'&&!x.secondary);
 test('42 unique identities, seven per element, no replacement art',()=>{
   assert.deepEqual(validateSplusCatalog().errors,[]);
   assert.equal(new Set(SPLUS_HEROES.map(h=>h.iconId)).size,42);
-  for(const h of SPLUS_HEROES)assert.equal(h.art.portrait,null);
+  for(const h of SPLUS_HEROES){
+    if(h.key==='linh_dong'){
+      assert.equal(h.art.status,'authored-rgba-v1');
+      assert.equal(h.art.portrait,'assets/characters/linh-dong/avatar.webp');
+      continue;
+    }
+    assert.equal(h.art.status,'awaiting-authored-assets');
+    assert.equal(h.art.portrait,null);
+  }
 });
 
 // Each row asserts an observable authored effect, not merely successful dispatch.

@@ -1,0 +1,224 @@
+{
+  "schema": "hon-viet-linh-dong-atlas/v1",
+  "source": "Drive pack 14/09/2026 isolated RGBA",
+  "encoding": "webp-lossless-rgba",
+  "char": {
+    "scale": 0.5,
+    "cellW": 328,
+    "cellH": 320,
+    "cols": 8,
+    "maxSourceW": 654,
+    "maxSourceH": 640,
+    "foot": "bottom-center"
+  },
+  "vfx": {
+    "scale": 0.3747072599531616,
+    "cellW": 320,
+    "cellH": 180,
+    "cols": 10,
+    "sourceW": 854,
+    "sourceH": 480
+  },
+  "clips": {
+    "idle": {
+      "file": "idle-atlas.webp",
+      "frames": 96,
+      "cols": 8,
+      "rows": 12,
+      "w": 328,
+      "h": 320,
+      "ms": 42,
+      "loop": true,
+      "durationMs": 4000
+    },
+    "run": {
+      "file": "run-atlas.webp",
+      "frames": 96,
+      "cols": 8,
+      "rows": 12,
+      "w": 328,
+      "h": 320,
+      "ms": 42,
+      "loop": true,
+      "durationMs": 4000
+    },
+    "hit": {
+      "file": "hit-atlas.webp",
+      "frames": 96,
+      "cols": 8,
+      "rows": 12,
+      "w": 328,
+      "h": 320,
+      "ms": 42,
+      "loop": false,
+      "durationMs": 4000
+    },
+    "fall": {
+      "file": "fall-atlas.webp",
+      "frames": 96,
+      "cols": 8,
+      "rows": 12,
+      "w": 328,
+      "h": 320,
+      "ms": 42,
+      "loop": false,
+      "durationMs": 4000
+    },
+    "attack": {
+      "file": "basic-atlas.webp",
+      "frames": 44,
+      "cols": 8,
+      "rows": 6,
+      "w": 328,
+      "h": 320,
+      "ms": 34,
+      "loop": false,
+      "durationMs": 1500
+    },
+    "skill1": {
+      "file": "basic-atlas.webp",
+      "frames": 44,
+      "cols": 8,
+      "rows": 6,
+      "w": 328,
+      "h": 320,
+      "ms": 34,
+      "loop": false,
+      "durationMs": 1500
+    },
+    "ultimate": {
+      "file": "ultimate-atlas.webp",
+      "frames": 60,
+      "cols": 8,
+      "rows": 8,
+      "w": 328,
+      "h": 320,
+      "ms": 33,
+      "loop": false,
+      "durationMs": 2000
+    },
+    "skill1Vfx": {
+      "file": "skill1_vfx-atlas.webp",
+      "frames": 120,
+      "cols": 10,
+      "rows": 12,
+      "w": 320,
+      "h": 180,
+      "ms": 33,
+      "loop": false,
+      "durationMs": 4000
+    },
+    "ultimateVfx": {
+      "file": "ultimate_vfx-atlas.webp",
+      "frames": 120,
+      "cols": 10,
+      "rows": 12,
+      "w": 320,
+      "h": 180,
+      "ms": 33,
+      "loop": false,
+      "durationMs": 4000
+    }
+  },
+  "packed": [
+    {
+      "file": "idle-atlas.webp",
+      "frames": 96,
+      "cols": 8,
+      "rows": 12,
+      "cellW": 328,
+      "cellH": 320,
+      "atlasW": 2624,
+      "atlasH": 3840,
+      "bytes": 5308292,
+      "sha256": "c4137fb31e0aad0128d0b5ac1df23ce5ffcaf8c9e5674e4bfa83a74bd9930a44"
+    },
+    {
+      "file": "run-atlas.webp",
+      "frames": 96,
+      "cols": 8,
+      "rows": 12,
+      "cellW": 328,
+      "cellH": 320,
+      "atlasW": 2624,
+      "atlasH": 3840,
+      "bytes": 4826854,
+      "sha256": "74b7eb7a5b2c46c16d6c7a1f4870501768e7db752e2ca281c644d207ec477e61"
+    },
+    {
+      "file": "hit-atlas.webp",
+      "frames": 96,
+      "cols": 8,
+      "rows": 12,
+      "cellW": 328,
+      "cellH": 320,
+      "atlasW": 2624,
+      "atlasH": 3840,
+      "bytes": 7750324,
+      "sha256": "efa6fd289c5d30e84257c0fdff6dda52dc705274669e8abc71ce78969adfa287"
+    },
+    {
+      "file": "fall-atlas.webp",
+      "frames": 96,
+      "cols": 8,
+      "rows": 12,
+      "cellW": 328,
+      "cellH": 320,
+      "atlasW": 2624,
+      "atlasH": 3840,
+      "bytes": 8418708,
+      "sha256": "c208f1e9a0f060ca780dcf0cfa243a2587a1aeebf4b7c0c7a2e7ce7c24226aaf"
+    },
+    {
+      "file": "basic-atlas.webp",
+      "frames": 44,
+      "cols": 8,
+      "rows": 6,
+      "cellW": 328,
+      "cellH": 320,
+      "atlasW": 2624,
+      "atlasH": 1920,
+      "bytes": 4320194,
+      "sha256": "d68cb476c91fd767819137b87ec003277dc8a991499d2284b46a7382001d791f"
+    },
+    {
+      "file": "ultimate-atlas.webp",
+      "frames": 60,
+      "cols": 8,
+      "rows": 8,
+      "cellW": 328,
+      "cellH": 320,
+      "atlasW": 2624,
+      "atlasH": 2560,
+      "bytes": 7917746,
+      "sha256": "9d4b7bf385a37f4dd4f7ff05091400fbaccf196f96f0d27cb3f6cf5295690c04"
+    },
+    {
+      "file": "skill1_vfx-atlas.webp",
+      "frames": 120,
+      "cols": 10,
+      "rows": 12,
+      "cellW": 320,
+      "cellH": 180,
+      "atlasW": 3200,
+      "atlasH": 2160,
+      "bytes": 4229384,
+      "sha256": "51c5e4fc4f3cb68aefbc2b2286b72a32b083a22b7044b3834a3b108ff779071a"
+    },
+    {
+      "file": "ultimate_vfx-atlas.webp",
+      "frames": 120,
+      "cols": 10,
+      "rows": 12,
+      "cellW": 320,
+      "cellH": 180,
+      "atlasW": 3200,
+      "atlasH": 2160,
+      "bytes": 7260120,
+      "sha256": "5834cc08e5006f3fa3d6e636dfed18f901e7fcd5da5f092ab7f072134f0a9094"
+    }
+  ],
+  "uniformScale": true,
+  "perFrameCrop": false,
+  "blackKeyForbidden": true
+}

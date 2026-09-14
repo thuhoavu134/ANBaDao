@@ -1,0 +1,30 @@
+{
+  "schema": "hon-viet-vfx-atlas/v1",
+  "id": "linh-dong.ultimate.cast",
+  "atlas": "../../ultimate-atlas.webp",
+  "layout": {
+    "type": "grid",
+    "columns": 8,
+    "rows": 8,
+    "frameCount": 60,
+    "cellWidth": 328,
+    "cellHeight": 320
+  },
+  "timeline": {
+    "frameDurationMs": 33,
+    "loop": false
+  },
+  "anchor": {
+    "type": "footAnchor",
+    "offsetX": 0,
+    "offsetY": 0
+  },
+  "display": {
+    "width": 328,
+    "height": 320,
+    "baseline": 48,
+    "scale": 1,
+    "layer": "character",
+    "blendMode": "normal"
+  }
+}

@@ -20,7 +20,9 @@
     if(!h){document.title='Đồ giám S+ · Lục Thần';if(returnHero){const a=[...document.querySelectorAll('[data-profile-link]')].find(a=>a.dataset.profileLink===returnHero);a?.focus({preventScroll:true});window.scrollTo(0,scroll);}return;}
     document.title=`${h.name} · Đồ giám Lục Thần`;panel.replaceChildren();
     const back=node('button','back','← Về danh sách tướng');back.type='button';back.addEventListener('click',()=>{location.hash='';});
-    const top=node('div','profile-top'),emblem=node('div','hero-emblem');emblem.append(ui.iconNode(h.skills.passive.iconId));
+    const top=node('div','profile-top'),emblem=node('div','hero-emblem');
+    if(h.art?.portrait){const img=node('img','hero-portrait');img.src=h.art.portrait;img.alt=h.name;emblem.append(img);}
+    else emblem.append(ui.iconNode(h.skills.passive.iconId));
     const about=node('div'),meta=node('p','meta',`${h.elementName} · S+ · ${roles[h.role]}`);meta.style.color=colors[h.element];const title=node('h2','',h.name);title.tabIndex=-1;
     const facts=node('dl','profile-facts');for(const [label,text] of [['Vị trí đề xuất',h.recommendedSlots.map(s=>`Ô ${s+1}`).join(' / ')],['Vũ khí',h.weapon],['Giới tính',h.gender],['Tuổi',h.age]]){const pair=node('div');pair.append(node('dt','',label),node('dd','',text));facts.append(pair);}
     about.append(meta,title,node('p','introduction',h.introduction),facts);top.append(emblem,about);

@@ -1,3 +1,8 @@
+## 14/09 — TKT-0139: Bind Linh Đồng authored animation, VFX, SFX
+
+Owner: lấy pack Drive RGBA isolated-pass tích hợp vào trận thử S+. Atlas lưới đồng nhất 328×320 char / 320×180 VFX, không crop từng frame, không key đen. Portrait đồ giám. Roster 12 đóng. Cược/loot/công thức không đổi.
+RED 6 fail → GREEN 6/6 L139 + npm test 944. Chrome L139-P1 PASS. Safari NOT_RUN. PR REVIEW. Owner gõ live rồi tự `git pull && vercel --prod`.
+
 ## 14/09 — Hướng dẫn Animation / VFX / SFX tướng
 
 Owner khóa quy chuẩn chroma `#00FF00`, isolated pass, 8 template + mẫu Linh Đồng. File [docs/HUONG-DAN-ANIMATION-VFX-SFX.md](./HUONG-DAN-ANIMATION-VFX-SFX.md). Không đổi runtime/cược/loot. LIVE #132 `7d6fb93`.

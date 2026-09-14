@@ -1,0 +1,32 @@
+{
+  "schema": "hon-viet-vfx-atlas/v1",
+  "id": "linh-dong.skill1.vfx",
+  "atlas": "../../skill1_vfx-atlas.webp",
+  "layout": {
+    "type": "grid",
+    "columns": 10,
+    "rows": 12,
+    "frameCount": 120,
+    "cellWidth": 320,
+    "cellHeight": 180
+  },
+  "timeline": {
+    "durationMs": 4000,
+    "loop": false,
+    "playAllFrames": true
+  },
+  "spawn": {
+    "type": "singleTarget",
+    "team": "enemy",
+    "anchor": "hitAnchor"
+  },
+  "display": {
+    "width": 360,
+    "height": 202,
+    "baseline": 101,
+    "scale": 1,
+    "layer": "front",
+    "blendMode": "screen",
+    "alpha": 0.94
+  }
+}

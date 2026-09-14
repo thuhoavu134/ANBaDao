@@ -50,11 +50,11 @@ function splusCombat() {
 function splusHeroConfig(raw, index) {
   const h=normalizeConfiguredHero(raw,index),kit=globalThis.SPLUS42.catalog.find(c=>c.id===h.sourceId);
   if(!kit)return h;
-  return {...h,name:kit.name,title:kit.elementName,initial:String(kit.number),archetype:kit.role,roleClass:kit.role,kitVersion:'splus42-v2',skillKit:null,passive:kit.passive.description,passiveIds:[kit.passive.id],basicId:kit.actions.basic.id,basicName:kit.actions.basic.name,basicDetail:kit.actions.basic.description,basicKind:'damage',skillName:kit.actions.skill.name,skillDetail:kit.actions.skill.description,skillKind:['healer','support'].includes(kit.role)?'heal':'damage',ultimateId:kit.actions.ultimate.id,ultimateName:kit.actions.ultimate.name,ultimateDetail:kit.actions.ultimate.description,ultimateKind:'aoe',visualId:kit.id,visualSource:'splus-pending-art'};
+  return {...h,name:kit.name,title:kit.elementName,initial:String(kit.number),archetype:kit.role,roleClass:kit.role,kitVersion:'splus42-v2',skillKit:null,passive:kit.passive.description,passiveIds:[kit.passive.id],basicId:kit.actions.basic.id,basicName:kit.actions.basic.name,basicDetail:kit.actions.basic.description,basicKind:'damage',skillName:kit.actions.skill.name,skillDetail:kit.actions.skill.description,skillKind:['healer','support'].includes(kit.role)?'heal':'damage',ultimateId:kit.actions.ultimate.id,ultimateName:kit.actions.ultimate.name,ultimateDetail:kit.actions.ultimate.description,ultimateKind:'aoe',visualId:kit.id,visualSource:kit.key==='linh_dong'?'linh-dong-authored':'splus-pending-art'};
 }
 function splusEvent(event) {
   const t=getUnit(event.targetId),a=getUnit(event.sourceId);
-  if(t&&event.type==='damage'){splusFloater(t,event.amount,false,event.critical);t.hpTween=null;const rec=intelUnit(t);if(rec)rec.damageTaken+=event.amount;const ar=intelUnit(a);if(ar)ar.damage+=event.amount;}
+  if(t&&event.type==='damage'){splusFloater(t,event.amount,false,event.critical);t.hpTween=null;const rec=intelUnit(t);if(rec)rec.damageTaken+=event.amount;const ar=intelUnit(a);if(ar)ar.damage+=event.amount;if(typeof isLinhDong==='function'&&isLinhDong(t)&&t.hp>0&&typeof linhDongActionMs==='function')setUnitState(t,'hurt',linhDongActionMs('hurt'));}
   if(t&&event.type==='heal'){splusFloater(t,event.amount,true);t.hpTween=null;const ar=intelUnit(a);if(ar)ar.healing+=event.amount;}
   if(t&&event.type==='death')markDefeated(t);
   if(t&&event.type==='resurrect'){t.defeatedAt=0;t.displayHp=t.hp;setUnitState(t,'idle',800);}
@@ -99,8 +99,13 @@ async function performSplusAction(actor, action, target) {
   const e=splusCombat(),battleId=state.battleId;
   state.locked=true;state.selectedAction=action;clearTargets();updateActorHud(actor);
   const title=globalThis.SPLUS42.catalog.find(h=>h.id===actor.sourceId)?.actions[action]?.name||action;
-  setStatus(`${actor.name} · ${title}`);dom.phaseLabel.textContent=title;setUnitState(actor,'attack',TIMING.windup);
-  if(!await sleep(TIMING.windup,battleId))return;
+  const linh=typeof isLinhDong==='function'&&isLinhDong(actor);
+  const linhState=action==='ultimate'?'ultimate':(action==='skill'?'skill1':'attack');
+  const linhDur=linh&&typeof linhDongActionMs==='function'?linhDongActionMs(linhState):TIMING.windup;
+  setStatus(`${actor.name} · ${title}`);dom.phaseLabel.textContent=title;setUnitState(actor,linh?linhState:'attack',linh?linhDur:TIMING.windup);
+  if(linh&&typeof startLinhDongFx==='function')startLinhDongFx(action,actor,target);
+  if(linh&&typeof playLinhDongSfx==='function')playLinhDongSfx(action);
+  if(!await sleep(linh?linhDur:TIMING.windup,battleId))return;
   const totals=new Map();let result;splusPresentation=totals;
   try{result=e.act(actor.id,action,target?.id);}finally{splusPresentation=null;}
   for(const hit of totals.values())splusFloater(hit.target,hit.amount,hit.healing,hit.critical);
@@ -112,6 +117,13 @@ async function performSplusAction(actor, action, target) {
   void advanceTurn();
 }
 function drawSplusToken(context, unit, time) {
+  if(typeof isLinhDong==='function'&&isLinhDong(unit)&&typeof drawLinhDongHero==='function'){
+    const lift=unit.splusAirborneUntil>time?Math.sin((1-(unit.splusAirborneUntil-time)/1000)*Math.PI)*40:0;
+    context.save();context.translate(unit.x,unit.y-lift);if(unit.team===TEAM_ENEMY)context.scale(-1,1);
+    drawLinhDongHero(context,unit,time);context.restore();
+    if(unit.hp>0)drawUnitHud(context,unit,time,1);
+    return;
+  }
   if(unit.hp<=0)return;
   const lift=unit.splusAirborneUntil>time?Math.sin((1-(unit.splusAirborneUntil-time)/1000)*Math.PI)*40:0;
   context.save();context.translate(unit.x,unit.y-lift);context.fillStyle='#16252d';context.strokeStyle=unit.color;context.lineWidth=3;

@@ -538,10 +538,13 @@ const rows = [
 export const SPLUS_HEROES = Object.freeze(rows.map(([number,key,name,element,role,slots,passiveName,weapon])=>{
   const p=SPLUS_PROFILE_BY_KEY[key];
   const skill=(slot,id,cost,cooldown)=>Object.freeze({...p.skills[slot],id,cost,cooldown});
+  const art=key==='linh_dong'
+    ? Object.freeze({status:'authored-rgba-v1',facing:'three-quarter-right',feet:'flat-clean-floor',portrait:'assets/characters/linh-dong/avatar.webp',atlas:'assets/characters/linh-dong/idle-atlas.webp'})
+    : Object.freeze({status:'awaiting-authored-assets',facing:'three-quarter-right',feet:'flat-clean-floor',portrait:null,atlas:null});
   return Object.freeze({id:`hero_splus_${key}`,key,number,name,rarity:'S+',element,elementName:SPLUS_ELEMENTS[element],role,
     recommendedSlots:Object.freeze(slots.map(slot=>slot-1)),weapon,profileVersion:SPLUS_PROFILE_VERSION,
     gender:p.gender,age:p.age,introduction:p.introduction,voice:Object.freeze(p.voice),
-    art:Object.freeze({status:'awaiting-authored-assets',facing:'three-quarter-right',feet:'flat-clean-floor',portrait:null,atlas:null}),
+    art,
     iconId:`splus.${key}.passive`,passiveName,
     actions:Object.freeze({basic:Object.freeze({id:`${key}.basic`,name:'Đánh thường',description:'Đòn đánh thường kích hoạt nội tại khi trúng.',cost:0}),
       skill:skill('skill',`${key}.skill1`,25,2),ultimate:skill('ultimate',`${key}.ultimate`,60,0)}),

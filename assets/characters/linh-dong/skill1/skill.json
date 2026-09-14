@@ -1,0 +1,46 @@
+{
+  "schema": "hon-viet-skill/v1",
+  "id": "linh-dong.skill1",
+  "heroId": "linh-dong",
+  "kind": "skill1",
+  "name": "Nhiễu Loạn Âm Ty",
+  "movement": {
+    "moveType": 0,
+    "stationary": true
+  },
+  "targeting": {
+    "type": "singleEnemy"
+  },
+  "anchors": {
+    "castAnchor": {
+      "x": 0,
+      "y": -96
+    },
+    "hitAnchor": {
+      "x": 0,
+      "y": -80
+    }
+  },
+  "timing": {
+    "castDelayMs": 420,
+    "vfxDurationMs": 4000
+  },
+  "parts": {
+    "cast": "cast/frames.json",
+    "vfx": "vfx/frames.json"
+  },
+  "audio": {
+    "cast": "assets/audio/sfx/linh-dong/atk.ogg",
+    "impact": null,
+    "profile": "linh-dong-atk-v1"
+  },
+  "runtime": {
+    "speedModes": [
+      1,
+      2,
+      3
+    ],
+    "preserveAllFrames": true,
+    "lockCharacterScale": true
+  }
+}
