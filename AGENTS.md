@@ -1,6 +1,6 @@
 # Hồn Việt / Lục Thần — hướng dẫn bắt đầu
 
-Bản sửa Linh Đồng 14/09 đang kiểm chứng: đọc `docs/HANDOFF-LINH-DONG-CRASH-2026-09-14.md`. Chưa xác nhận iPhone thật hoặc deploy; không coi đây là LIVE.
+Bản sửa Linh Đồng TKT-0144 LIVE #138 `645902f`. Safari/iPhone chưa kiểm; không tuyên bố hết crash trước khi owner xác minh trên máy. Đọc `docs/HANDOFF-LINH-DONG-CRASH-2026-09-14.md`.
 
 Đọc `docs/HANDOFF-2026-09-13.md` rồi `docs/HANDOFF-2026-09-12.md` trước khi sửa game.
 

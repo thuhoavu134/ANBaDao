@@ -1,8 +1,8 @@
 ---
 id: TKT-0144
 title: Sửa tải atlas Linh Đồng gây áp lực bộ nhớ và chân dung trên sân
-status: IN_PROGRESS
-phase: EVIDENCE
+status: LIVE
+phase: LIVE
 priority: P0
 acceptance_ids: [L144-T1, L144-T2, L144-T3, L144-T4, L144-T5, L144-P1]
 required_gates: [vibelab, tdd]
@@ -24,8 +24,8 @@ L144-T4: renderer không báo vẽ thành công khi atlas chưa tải; fallback 
 L144-T5: Chinh chiến/Bày trận dùng idle atlas toàn thân; onload và teardown qua scene owner hiện có.
 L144-P1: kiểm tra browser thật và luồng vào/thoát trận; báo riêng mobile viewport và Safari/iPhone thật.
 
-Ticket Board / claim / lease không khả dụng. Dùng ticket-file fallback đã được owner cho phép (HANDOFF-2026-09-12); không giả claim hoặc lock bên ngoài. Main agent làm trực tiếp trên checkout riêng. Release: PR REVIEW; theo bàn giao mới nhất, owner chọn live và tự deploy PC. Rollback: revert commit sửa, không xóa save.
+## Result
 
-## Kết quả hiện tại
-
-RED 8 fail → GREEN 8/8; focused 46/46. Build PASS, embedded parity PASS. Local npm test 897/970, 73 thiếu asset/ticket/API trong checkout. CI PASS: build + 970/970 tests on runtime f3f071490c072278a9c5e4b52c5b79acd6de69fb, run 34820015965, PR #138. Owner explicitly approved uploading task source/docs/test logs to private bktimmy247/luc-than and creating a PR on 2026-09-14. L144-P1 BLOCKED bởi ERR_BLOCKED_BY_CLIENT; iPhone NOT_RUN; chưa deploy. Bằng chứng trong docs/qa/L144-LINH-DONG-MEMORY/; handoff `docs/HANDOFF-LINH-DONG-CRASH-2026-09-14.md`. Giữ EVIDENCE đến khi browser gate được kiểm chứng.
+LIVE #138 `645902f`. Cache lazy 112 MiB, 2 ảnh tải. Idle toàn thân trên sân. BETS 2/10/50 đóng. Không Hồng Trầu. Không per-frame crop.
+L144-T1…T5 PASS. CI 970/970. L144-P1 Chrome BLOCKED / Safari NOT_RUN. Không tuyên bố hết crash iPhone trước khi anh kiểm trên máy.
+Owner tự `git pull && vercel --prod`.

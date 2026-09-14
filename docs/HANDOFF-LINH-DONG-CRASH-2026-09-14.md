@@ -1,6 +1,6 @@
 # Linh Đồng crash / TKT-0144 — 14/09/2026
 
-Baseline: `3accc0ed82261cba2c8adeb34a6dc9771abbb37e`. Bản sửa đang EVIDENCE/REVIEW, chưa phát hành.
+Baseline: `3accc0ed82261cba2c8adeb34a6dc9771abbb37e`. LIVE #138 `645902f`. Safari/iPhone NOT_RUN; owner tự deploy.
 
 ## Nguyên nhân xác định từ source
 
