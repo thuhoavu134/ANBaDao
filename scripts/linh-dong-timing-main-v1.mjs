@@ -291,12 +291,12 @@ export function patchLinhDongBattle(input) {
     '    if (state.locked || state.mode !== "battle" || actor.id !== state.currentId || !Core.canUseAction(actor, action)) return;'
   ].join('\n');
   html = replaceOnce(html, adapterAnchor, adapterReplacement, 'runtime insertion and action aliases');
-  html = replaceOnce(
-    html,
-    '  async function performAction(actor, action, target) {\n    if(splusCombat()){',
-    '  async function performAction(actor, action, target) {\n    if(isLinhDong(actor)) action=linhDongLegacyAction(action)||action;\n    if(splusCombat()){',
-    'performAction alias'
-  );
+  const performActionMarker = '  async function performAction(actor, action, target) {\n';
+  const performActionAlias = '    if(isLinhDong(actor)) action=linhDongLegacyAction(action)||action;\n';
+  if (!html.includes(performActionMarker)) throw new Error('Linh Đồng battle patch missing performAction alias');
+  if (!html.includes(performActionMarker + performActionAlias)) {
+    html = html.replace(performActionMarker, performActionMarker + performActionAlias);
+  }
   return html;
 }
 
