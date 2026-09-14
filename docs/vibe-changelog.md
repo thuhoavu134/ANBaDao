@@ -1,3 +1,8 @@
+## 14/09 — TKT-0145: Clock animation/VFX/SFX Linh Đồng
+
+ATK và Ultimate dùng một elapsedMs. VFX cắt ở recovery, không chạy 4s. SFX wav HonVietSfx. Không đổi BETS/loot/công thức.
+GREEN presentation + static + npm test 976/976. CI Build and test PASS. LIVE #140 `00a6e2c`. Safari NOT_RUN. Owner tự `git pull && vercel --prod`.
+
 ## 14/09 — TKT-0144: giảm bộ nhớ Linh Đồng và sửa ảnh trên sân
 
 Loại bỏ tải sẵn atlas ở host/trận; cache theo URL tối đa 112 MiB RGBA ước lượng, 2 ảnh tải đồng thời, giải phóng khi rời màn. Bày trận/Chinh chiến dùng idle toàn thân thay bust; fallback khi clip chưa sẵn sàng; hồ sơ giữ tỷ lệ và dừng vẽ khi rời màn. Không đổi art gốc/save/combat/kinh tế.
