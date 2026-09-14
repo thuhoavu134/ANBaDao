@@ -1,7 +1,7 @@
 ## 14/09 — TKT-0139: Bind Linh Đồng authored animation, VFX, SFX
 
 Owner: lấy pack Drive RGBA isolated-pass tích hợp vào trận thử S+. Atlas lưới đồng nhất 328×320 char / 320×180 VFX, không crop từng frame, không key đen. Portrait đồ giám. Roster 12 đóng. Cược/loot/công thức không đổi.
-RED 6 fail → GREEN 6/6 L139 + npm test 944. Chrome L139-P1 PASS. Safari NOT_RUN. PR REVIEW. Owner gõ live rồi tự `git pull && vercel --prod`.
+RED 6 fail → GREEN 6/6 L139 + npm test 944. Chrome L139-P1 PASS. Safari NOT_RUN. LIVE #133 `6215a85`. Owner tự `git pull && vercel --prod`.
 
 ## 14/09 — Hướng dẫn Animation / VFX / SFX tướng
 

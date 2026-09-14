@@ -1,11 +1,11 @@
 ---
 id: TKT-0139
 title: Bind Linh Đồng authored animation, VFX, SFX
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 created: 2026-09-14T03:30:00.000Z
-updated: 2026-09-14T03:50:00.000Z
+updated: 2026-09-14T04:02:00.000Z
 acceptance_ids: ['L139-T1', 'L139-T2', 'L139-T3', 'L139-T4', 'L139-T5', 'L139-T6', 'L139-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths:
@@ -45,5 +45,6 @@ Không đổi BETS 2/10/50, loot. Không đổi splus-mechanics (confusion 50%, 
 
 ## Result
 
-GREEN. Authored RGBA pack 14/09: 8 atlas (idle/run/hit/fall/basic/ultimate + skill1/ult VFX), portrait, ATK/ULT SFX. Battle draw + encyclopedia portrait. Roster 12 đóng. BETS 2/10/50 đóng. Mechanics confusion 50% / silence-all / healDown 0.2 không đổi.
+LIVE #133 `6215a85`. Authored RGBA pack 14/09: 8 atlas (idle/run/hit/fall/basic/ultimate + skill1/ult VFX), portrait, ATK/ULT SFX. Battle draw + encyclopedia portrait. Roster 12 đóng. BETS 2/10/50 đóng. Mechanics confusion 50% / silence-all / healDown 0.2 không đổi.
 L139-T1…T6 PASS. npm test 944. L139-P1 Chrome 390×844 + 1280×720 PASS. Safari NOT_RUN.
+Owner tự `git pull && vercel --prod`.
