@@ -1,7 +1,7 @@
 ## 14/09 — TKT-0146: S+ Linh Đồng dùng cùng clock ATK/Ultimate
 
 Trận thử S+ không còn `sleep(linhDur)` × 0.35 (ATK 524 / Ult 693). `performSplusAction` đi clock chung: release → emit VFX/SFX → impact một lần → recovery. Thanh S+ Linh Đồng chỉ nội tại + tuyệt kỹ. Hurt reset idle. `timingScale` 0.35 của 41 tướng S+ kia không đổi.
-RED L146-T1/T2 fail → GREEN 3/3 + npm test 979/979. Chrome 390×844 ATK wall 1506ms. Safari NOT_RUN. REVIEW, chờ owner gõ `live`.
+RED L146-T1/T2 fail → GREEN 3/3 + npm test 979/979. Chrome 390×844 ATK wall 1506ms. Safari NOT_RUN. LIVE #142 `c517cd8`. Owner tự `git pull && vercel --prod`.
 
 ## 14/09 — TKT-0145: Clock animation/VFX/SFX Linh Đồng
 

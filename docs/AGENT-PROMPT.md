@@ -1,6 +1,6 @@
 # Prompt dán cho agent tiếp theo
 
-Owner 14/09 23:00 +07. Agent mới **dán nguyên khối dưới** vào chat Grok (workspace `/workspace/luc-than`).
+Owner 15/09 07:35 +07. Agent mới **dán nguyên khối dưới** vào chat Grok (workspace `/workspace/luc-than`).
 
 ---
 
@@ -16,17 +16,16 @@ Play đang soi: https://luc-than-neon.vercel.app/
 1. /workspace/luc-than/AGENTS.md
 2. /workspace/luc-than/docs/HANDOFF-LINH-DONG-TIMING-2026-09-14.md
 3. /workspace/luc-than/docs/VIBE-WORKFLOW-RULES.md
-4. /workspace/luc-than/tickets/TKT-0146/ticket.md
+4. đúng tickets/TKT-00xx/ticket.md nếu có ticket
 
 ## Git lúc bàn giao
-- origin/main LIVE: dba09d7 TKT-0145 #141 trên #140
-- TKT-0146 REVIEW: nhánh work/l146-linh-dong-splus-clock-20260914, PR mở, ticket REVIEW
+- origin/main LIVE: docs TKT-0146 LIVE after #142, trên squash `c517cd8`
+- TKT-0146 LIVE #142. PR mở: không
 - Không force-push. Không commit dist/. Không tự MERGED/DONE
 
-## Việc đang mở — TKT-0146
-S+ Linh Đồng dùng cùng clock ATK/Ultimate. Chrome 390×844 ATK wall ~1506ms, không còn ~524ms.
-Ticket giữ REVIEW. Chỉ squash-merge khi owner gõ live. Rồi docs LIVE + changelog. Pattern: docs: TKT-0146 LIVE after #<pr>
-Báo owner tự git pull && vercel --prod
+## Việc
+Owner gửi screenshot + câu = việc. Một việc / một PR.
+Anh đã được bảo tự `git pull && vercel --prod` cho TKT-0146.
 
 ## Cấm
 - BETS [2, 10, 50], loot, Bách Bảo, Hồng Trầu

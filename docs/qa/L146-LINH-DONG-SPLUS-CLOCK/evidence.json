@@ -38,6 +38,8 @@
   },
   "safariIphone": "NOT_RUN",
   "production": "NOT_DEPLOYED",
+  "pullRequest": "https://github.com/bktimmy247/luc-than/pull/142",
+  "mergeSha": "c517cd8b282671385280add504fdff715adf1f34",
   "acceptance": {
     "L146-T1": "PASS",
     "L146-T2": "PASS",

@@ -1,8 +1,8 @@
 ---
 id: TKT-0146
 title: S+ Linh Đồng dùng cùng clock ATK/Ultimate
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 acceptance_ids: [L146-T1, L146-T2, L146-T3, L146-P1]
 required_gates: [vibelab, tdd]
@@ -34,4 +34,6 @@ Không đổi BETS 2/10/50, loot, Bách Bảo, Hồng Trầu. Không mở 42 S+,
 
 ## Result
 
-REVIEW. Chưa LIVE. Chỉ squash-merge khi owner gõ đúng chữ `live`.
+LIVE #142 `c517cd8`. S+ Linh Đồng dùng clock ATK/Ultimate chung với trận thường. Thanh nội tại + tuyệt kỹ. Hurt reset idle. `timingScale` 0.35 của 41 tướng S+ kia không đổi.
+Local npm test 979/979. CI Build and test PASS. Chrome 390×844 ATK wall 1506ms. Safari NOT_RUN.
+Owner tự `git pull && vercel --prod`.

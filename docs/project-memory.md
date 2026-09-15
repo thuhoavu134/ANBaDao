@@ -1,6 +1,6 @@
 ## 14/09 — TKT-0146: S+ Linh Đồng clock ATK/Ultimate
 
-REVIEW. `performSplusAction` dùng `waitLinhDongMarker` wall clock, không `sleep(linhDur)`. Chrome 390×844 ATK 1506ms. Safari NOT_RUN. Chưa deploy. Chỉ squash-merge khi owner gõ `live`.
+LIVE #142 `c517cd8`. `performSplusAction` dùng `waitLinhDongMarker` wall clock, không `sleep(linhDur)`. Chrome 390×844 ATK 1506ms. Safari NOT_RUN. Owner tự `git pull && vercel --prod`.
 
 ## 13/09 — Gộp bản owner đã duyệt live: #111 + #112
 

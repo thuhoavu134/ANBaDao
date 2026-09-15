@@ -107,7 +107,7 @@ Board GitHub không có. File `tickets/TKT-00xx/ticket.md` là nguồn sự th�
 | TKT-0143 | — | Thay pack Linh Đồng Blender rekey | LIVE (#137) |
 | TKT-0144 | — | Giảm bộ nhớ atlas Linh Đồng + thân đủ chân trên sân | LIVE (#138) |
 | TKT-0145 | — | Clock animation/VFX/SFX Linh Đồng | LIVE (#140) |
-| TKT-0146 | — | S+ Linh Đồng dùng cùng clock ATK/Ultimate | REVIEW |
+| TKT-0146 | — | S+ Linh Đồng dùng cùng clock ATK/Ultimate | LIVE (#142) |
 
 
 

@@ -1,6 +1,6 @@
 # Hồn Việt / Lục Thần — hướng dẫn bắt đầu
 
-TKT-0146 S+ Linh Đồng clock ATK/Ultimate đang REVIEW, chưa LIVE. Safari/iPhone NOT_RUN. Đọc `docs/HANDOFF-LINH-DONG-TIMING-2026-09-14.md`. Chỉ squash-merge khi owner gõ đúng chữ `live`.
+TKT-0146 S+ Linh Đồng clock ATK/Ultimate LIVE #142 `c517cd8`. Safari/iPhone NOT_RUN. Đọc `docs/HANDOFF-LINH-DONG-TIMING-2026-09-14.md`. Owner tự `git pull && vercel --prod`.
 
 Bản sửa Linh Đồng TKT-0145 LIVE #141 `dba09d7` trên #140. TKT-0144 LIVE #138 `645902f`. Safari/iPhone chưa kiểm; không tuyên bố hết crash trước khi owner xác minh trên máy. Đọc `docs/HANDOFF-LINH-DONG-CRASH-2026-09-14.md`.
 
