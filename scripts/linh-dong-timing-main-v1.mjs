@@ -56,14 +56,14 @@ const LINH_DONG_TIMELINE=Object.freeze(${timelineJson});
 const buildLinhDongMarkerSequence=${buildLinhDongMarkerSequence.toString()};
 const createLinhDongTimelineController=${controllerSource};
 const LINH_DONG_CLIPS=Object.freeze({
-  idle:{file:"idle-atlas.webp",frames:96,cols:8,w:347,h:320,ms:42,loop:true,durationMs:4032},
-  run:{file:"run-atlas.webp",frames:96,cols:8,w:347,h:320,ms:42,loop:true,durationMs:4032},
-  hit:{file:"hit-atlas.webp",frames:96,cols:8,w:347,h:320,ms:42,loop:false,durationMs:4032},
-  fall:{file:"fall-atlas.webp",frames:96,cols:8,w:347,h:320,ms:42,loop:false,durationMs:4032},
-  attack:{file:"basic-atlas.webp",frames:44,cols:8,w:347,h:320,ms:34,loop:false,durationMs:1496},
-  ultimate:{file:"ultimate-atlas.webp",frames:60,cols:8,w:347,h:320,ms:33,loop:false,durationMs:1980},
-  atkVfx:{file:"skill1_vfx-atlas.webp",frames:120,cols:10,w:320,h:180,ms:33,loop:false,durationMs:3960},
-  ultimateVfx:{file:"ultimate_vfx-atlas.webp",frames:120,cols:10,w:320,h:180,ms:33,loop:false,durationMs:3960}
+  idle:{file:"idle-atlas.webp",frames:96,cols:8,w:480,h:440,ms:42,loop:true,durationMs:4032},
+  run:{file:"run-atlas.webp",frames:96,cols:8,w:480,h:440,ms:42,loop:true,durationMs:4032},
+  hit:{file:"hit-atlas.webp",frames:96,cols:8,w:480,h:440,ms:42,loop:false,durationMs:4032},
+  fall:{file:"fall-atlas.webp",frames:96,cols:8,w:480,h:440,ms:42,loop:false,durationMs:4032},
+  attack:{file:"basic-atlas.webp",frames:44,cols:8,w:480,h:440,ms:34,loop:false,durationMs:1496},
+  ultimate:{file:"ultimate-atlas.webp",frames:60,cols:8,w:480,h:440,ms:33,loop:false,durationMs:1980},
+  atkVfx:{file:"skill1_vfx-atlas.webp",frames:120,cols:10,w:440,h:248,ms:33,loop:false,durationMs:3960},
+  ultimateVfx:{file:"ultimate_vfx-atlas.webp",frames:120,cols:10,w:440,h:248,ms:33,loop:false,durationMs:3960}
 });
 const LINH_DONG_ASSET_BASE="assets/characters/linh-dong/";
 const LINH_DONG_SFX_BASE="assets/audio/sfx/linh-dong/";

@@ -3,30 +3,203 @@
   "source": "Blender 5.1 sharp compositor render v2",
   "encoding": "webp-lossless-rgba",
   "char": {
-    "scale": 0.5,
-    "cellW": 347,
-    "cellH": 320,
+    "scale": 1.0,
+    "cellW": 480,
+    "cellH": 440,
     "cols": 8,
-    "maxSourceW": 694,
-    "maxSourceH": 640,
+    "maxSourceW": 960,
+    "maxSourceH": 880,
     "foot": "bottom-center"
   },
   "vfx": {
-    "scale": 0.3747072599531616,
-    "cellW": 320,
-    "cellH": 180,
+    "scale": 1.0,
+    "cellW": 440,
+    "cellH": 248,
     "cols": 10,
-    "sourceW": 854,
-    "sourceH": 480
+    "sourceW": 1174,
+    "sourceH": 662
   },
+  "uniformScale": true,
+  "perFrameCrop": false,
+  "blackKeyForbidden": true,
+  "packed": [
+    {
+      "file": "idle-atlas.webp",
+      "source": "idle",
+      "frames": 96,
+      "cols": 8,
+      "rows": 12,
+      "cellW": 480,
+      "cellH": 440,
+      "atlasW": 3840,
+      "atlasH": 5280,
+      "cropBox": [
+        480,
+        48,
+        1776,
+        1040
+      ],
+      "bytes": 10909760,
+      "sha256": "0d65f16e804da6591feb00309fb56e34df4ca883301e833e95a1d4747736bfd1",
+      "encoding": "webp-lossless-rgba",
+      "sourceOfTruth": "Blender 5.1 1920x1080 Composite PNG"
+    },
+    {
+      "file": "run-atlas.webp",
+      "source": "run",
+      "frames": 96,
+      "cols": 8,
+      "rows": 12,
+      "cellW": 480,
+      "cellH": 440,
+      "atlasW": 3840,
+      "atlasH": 5280,
+      "cropBox": [
+        504,
+        80,
+        1920,
+        1048
+      ],
+      "bytes": 8278386,
+      "sha256": "a678acf8a79fa5d1f46ea94948002c7accad25c155aa44ce89f9da9d55f770ba",
+      "encoding": "webp-lossless-rgba",
+      "sourceOfTruth": "Blender 5.1 1920x1080 Composite PNG"
+    },
+    {
+      "file": "hit-atlas.webp",
+      "source": "hit",
+      "frames": 96,
+      "cols": 8,
+      "rows": 12,
+      "cellW": 480,
+      "cellH": 440,
+      "atlasW": 3840,
+      "atlasH": 5280,
+      "cropBox": [
+        296,
+        56,
+        1776,
+        1040
+      ],
+      "bytes": 8990298,
+      "sha256": "dd28b9a5e9278160651637766a81b02a2c9232df2cabb2a6cb705f54325f75f2",
+      "encoding": "webp-lossless-rgba",
+      "sourceOfTruth": "Blender 5.1 1920x1080 Composite PNG"
+    },
+    {
+      "file": "fall-atlas.webp",
+      "source": "fall",
+      "frames": 96,
+      "cols": 8,
+      "rows": 12,
+      "cellW": 480,
+      "cellH": 440,
+      "atlasW": 3840,
+      "atlasH": 5280,
+      "cropBox": [
+        16,
+        48,
+        1264,
+        1080
+      ],
+      "bytes": 11921470,
+      "sha256": "4027c129280807c8fec89fffdad5a2947026ebe979a2bb3d67627a1847776461",
+      "encoding": "webp-lossless-rgba",
+      "sourceOfTruth": "Blender 5.1 1920x1080 Composite PNG"
+    },
+    {
+      "file": "basic-atlas.webp",
+      "source": "atk",
+      "frames": 44,
+      "cols": 8,
+      "rows": 6,
+      "cellW": 480,
+      "cellH": 440,
+      "atlasW": 3840,
+      "atlasH": 2640,
+      "cropBox": [
+        432,
+        56,
+        1768,
+        1040
+      ],
+      "bytes": 5046406,
+      "sha256": "ae8ab338d3d07c08c03dccfc265ac4b0a2d91abaf2f080bc871e81af78437109",
+      "encoding": "webp-lossless-rgba",
+      "sourceOfTruth": "Blender 5.1 1920x1080 Composite PNG"
+    },
+    {
+      "file": "ultimate-atlas.webp",
+      "source": "ultimate",
+      "frames": 60,
+      "cols": 8,
+      "rows": 8,
+      "cellW": 480,
+      "cellH": 440,
+      "atlasW": 3840,
+      "atlasH": 3520,
+      "cropBox": [
+        80,
+        0,
+        1776,
+        1040
+      ],
+      "bytes": 4420342,
+      "sha256": "4578455991499f53d90d8f984a69ad2382b27bebcf3c8523f744aa1ef92ea5e7",
+      "encoding": "webp-lossless-rgba",
+      "sourceOfTruth": "Blender 5.1 1920x1080 Composite PNG"
+    },
+    {
+      "file": "skill1_vfx-atlas.webp",
+      "source": "vfx_atk",
+      "frames": 120,
+      "cols": 10,
+      "rows": 12,
+      "cellW": 440,
+      "cellH": 248,
+      "atlasW": 4400,
+      "atlasH": 2976,
+      "cropBox": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "bytes": 7239332,
+      "sha256": "d2f74c4d53299e93daf26874c6b4a0fa49915c4a99ffe9d9234440fb089608cf",
+      "encoding": "webp-lossless-rgba",
+      "sourceOfTruth": "Blender 5.1 1920x1080 Composite PNG"
+    },
+    {
+      "file": "ultimate_vfx-atlas.webp",
+      "source": "vfx_ultimate",
+      "frames": 120,
+      "cols": 10,
+      "rows": 12,
+      "cellW": 440,
+      "cellH": 248,
+      "atlasW": 4400,
+      "atlasH": 2976,
+      "cropBox": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "bytes": 12856778,
+      "sha256": "664f023aa5fd54bed4fa20afec2b6904c10a2e48cf751bcc53bfed782e29e86c",
+      "encoding": "webp-lossless-rgba",
+      "sourceOfTruth": "Blender 5.1 1920x1080 Composite PNG"
+    }
+  ],
   "clips": {
     "idle": {
       "file": "idle-atlas.webp",
       "frames": 96,
       "cols": 8,
       "rows": 12,
-      "w": 347,
-      "h": 320,
+      "w": 480,
+      "h": 440,
       "ms": 42,
       "loop": true,
       "durationMs": 4000
@@ -36,8 +209,8 @@
       "frames": 96,
       "cols": 8,
       "rows": 12,
-      "w": 347,
-      "h": 320,
+      "w": 480,
+      "h": 440,
       "ms": 42,
       "loop": true,
       "durationMs": 4000
@@ -47,8 +220,8 @@
       "frames": 96,
       "cols": 8,
       "rows": 12,
-      "w": 347,
-      "h": 320,
+      "w": 480,
+      "h": 440,
       "ms": 42,
       "loop": false,
       "durationMs": 4000
@@ -58,8 +231,8 @@
       "frames": 96,
       "cols": 8,
       "rows": 12,
-      "w": 347,
-      "h": 320,
+      "w": 480,
+      "h": 440,
       "ms": 42,
       "loop": false,
       "durationMs": 4000
@@ -69,398 +242,55 @@
       "frames": 44,
       "cols": 8,
       "rows": 6,
-      "w": 347,
-      "h": 320,
+      "w": 480,
+      "h": 440,
       "ms": 34,
       "loop": false,
-      "durationMs": 1496
+      "durationMs": 1500
     },
     "skill1": {
       "file": "basic-atlas.webp",
       "frames": 44,
       "cols": 8,
       "rows": 6,
-      "w": 347,
-      "h": 320,
+      "w": 480,
+      "h": 440,
       "ms": 34,
       "loop": false,
-      "durationMs": 1496
+      "durationMs": 1500
     },
     "ultimate": {
       "file": "ultimate-atlas.webp",
       "frames": 60,
       "cols": 8,
       "rows": 8,
-      "w": 347,
-      "h": 320,
+      "w": 480,
+      "h": 440,
       "ms": 33,
       "loop": false,
-      "durationMs": 1980
+      "durationMs": 2000
     },
     "skill1Vfx": {
       "file": "skill1_vfx-atlas.webp",
       "frames": 120,
       "cols": 10,
       "rows": 12,
-      "w": 320,
-      "h": 180,
+      "w": 440,
+      "h": 248,
       "ms": 33,
       "loop": false,
-      "durationMs": 3960
+      "durationMs": 4000
     },
     "ultimateVfx": {
       "file": "ultimate_vfx-atlas.webp",
       "frames": 120,
       "cols": 10,
       "rows": 12,
-      "w": 320,
-      "h": 180,
+      "w": 440,
+      "h": 248,
       "ms": 33,
       "loop": false,
-      "durationMs": 3960
+      "durationMs": 4000
     }
-  },
-  "uniformScale": true,
-  "perFrameCrop": false,
-  "blackKeyForbidden": true,
-  "sourceRecords": [
-    {
-      "file": "idle-atlas.webp",
-      "source": "idle",
-      "frames": 96,
-      "cols": 8,
-      "rows": 12,
-      "cellW": 347,
-      "cellH": 320,
-      "atlasW": 2776,
-      "atlasH": 3840,
-      "cropBox": [
-        480,
-        48,
-        1776,
-        1040
-      ],
-      "bytes": 6224694,
-      "sha256": "bd1c493b601a7e24f35affee32b2ef3f0232113af0195ba17bc68de5ca1fc922",
-      "encoding": "webp-lossless-rgba",
-      "sourceOfTruth": "Blender 5.1 Composite PNG"
-    },
-    {
-      "file": "run-atlas.webp",
-      "source": "run",
-      "frames": 96,
-      "cols": 8,
-      "rows": 12,
-      "cellW": 347,
-      "cellH": 320,
-      "atlasW": 2776,
-      "atlasH": 3840,
-      "cropBox": [
-        504,
-        80,
-        1920,
-        1048
-      ],
-      "bytes": 4932202,
-      "sha256": "ce2e45cd9636803f505385f4d24db3ba151a0a811f0abf3aa9bb39c1249c4119",
-      "encoding": "webp-lossless-rgba",
-      "sourceOfTruth": "Blender 5.1 Composite PNG"
-    },
-    {
-      "file": "hit-atlas.webp",
-      "source": "hit",
-      "frames": 96,
-      "cols": 8,
-      "rows": 12,
-      "cellW": 347,
-      "cellH": 320,
-      "atlasW": 2776,
-      "atlasH": 3840,
-      "cropBox": [
-        296,
-        56,
-        1776,
-        1040
-      ],
-      "bytes": 5157898,
-      "sha256": "672655c12c04da73639c59a4c08f651155143b29267986c1f519ac37f8f114d7",
-      "encoding": "webp-lossless-rgba",
-      "sourceOfTruth": "Blender 5.1 Composite PNG"
-    },
-    {
-      "file": "fall-atlas.webp",
-      "source": "fall",
-      "frames": 96,
-      "cols": 8,
-      "rows": 12,
-      "cellW": 347,
-      "cellH": 320,
-      "atlasW": 2776,
-      "atlasH": 3840,
-      "cropBox": [
-        16,
-        48,
-        1264,
-        1080
-      ],
-      "bytes": 6915368,
-      "sha256": "c5263c0aaa2294e5fac634a742706493208736b0890cb57d00a651075434ffe1",
-      "encoding": "webp-lossless-rgba",
-      "sourceOfTruth": "Blender 5.1 Composite PNG"
-    },
-    {
-      "file": "basic-atlas.webp",
-      "source": "atk",
-      "frames": 44,
-      "cols": 8,
-      "rows": 6,
-      "cellW": 347,
-      "cellH": 320,
-      "atlasW": 2776,
-      "atlasH": 1920,
-      "cropBox": [
-        432,
-        56,
-        1768,
-        1040
-      ],
-      "bytes": 3003722,
-      "sha256": "046e9a83d957ce96c0440b50f252afc2a2e56408d8c6f4ba7f6dbe8146027df6",
-      "encoding": "webp-lossless-rgba",
-      "sourceOfTruth": "Blender 5.1 Composite PNG"
-    },
-    {
-      "file": "ultimate-atlas.webp",
-      "source": "ultimate",
-      "frames": 60,
-      "cols": 8,
-      "rows": 8,
-      "cellW": 347,
-      "cellH": 320,
-      "atlasW": 2776,
-      "atlasH": 2560,
-      "cropBox": [
-        80,
-        0,
-        1776,
-        1040
-      ],
-      "bytes": 2589982,
-      "sha256": "b9c6f0f2b70d3f6cefc432125b9e9e41abd6bafd6b93b519afc1aaf0b3ba153c",
-      "encoding": "webp-lossless-rgba",
-      "sourceOfTruth": "Blender 5.1 Composite PNG"
-    },
-    {
-      "file": "skill1_vfx-atlas.webp",
-      "source": "vfx_atk",
-      "frames": 120,
-      "cols": 10,
-      "rows": 12,
-      "cellW": 320,
-      "cellH": 180,
-      "atlasW": 3200,
-      "atlasH": 2160,
-      "cropBox": [
-        0,
-        0,
-        1920,
-        1080
-      ],
-      "bytes": 4059074,
-      "sha256": "e167abbf881da3a76b20ad2e611d06f7c1e610cab31f2f6c5e36170d32811e30",
-      "encoding": "webp-lossless-rgba",
-      "sourceOfTruth": "Blender 5.1 Composite PNG"
-    },
-    {
-      "file": "ultimate_vfx-atlas.webp",
-      "source": "vfx_ultimate",
-      "frames": 120,
-      "cols": 10,
-      "rows": 12,
-      "cellW": 320,
-      "cellH": 180,
-      "atlasW": 3200,
-      "atlasH": 2160,
-      "cropBox": [
-        0,
-        0,
-        1920,
-        1080
-      ],
-      "bytes": 6947122,
-      "sha256": "7249f60c55d57b8e83468eeb939e46333531a475d59ca1ced4b3c25fbbbf4fc0",
-      "encoding": "webp-lossless-rgba",
-      "sourceOfTruth": "Blender 5.1 Composite PNG"
-    }
-  ],
-  "packed": [
-    {
-      "file": "idle-atlas.webp",
-      "source": "idle",
-      "frames": 96,
-      "cols": 8,
-      "rows": 12,
-      "cellW": 347,
-      "cellH": 320,
-      "atlasW": 2776,
-      "atlasH": 3840,
-      "cropBox": [
-        480,
-        48,
-        1776,
-        1040
-      ],
-      "bytes": 6224694,
-      "sha256": "bd1c493b601a7e24f35affee32b2ef3f0232113af0195ba17bc68de5ca1fc922",
-      "encoding": "webp-lossless-rgba",
-      "sourceOfTruth": "Blender 5.1 Composite PNG"
-    },
-    {
-      "file": "run-atlas.webp",
-      "source": "run",
-      "frames": 96,
-      "cols": 8,
-      "rows": 12,
-      "cellW": 347,
-      "cellH": 320,
-      "atlasW": 2776,
-      "atlasH": 3840,
-      "cropBox": [
-        504,
-        80,
-        1920,
-        1048
-      ],
-      "bytes": 4932202,
-      "sha256": "ce2e45cd9636803f505385f4d24db3ba151a0a811f0abf3aa9bb39c1249c4119",
-      "encoding": "webp-lossless-rgba",
-      "sourceOfTruth": "Blender 5.1 Composite PNG"
-    },
-    {
-      "file": "hit-atlas.webp",
-      "source": "hit",
-      "frames": 96,
-      "cols": 8,
-      "rows": 12,
-      "cellW": 347,
-      "cellH": 320,
-      "atlasW": 2776,
-      "atlasH": 3840,
-      "cropBox": [
-        296,
-        56,
-        1776,
-        1040
-      ],
-      "bytes": 5157898,
-      "sha256": "672655c12c04da73639c59a4c08f651155143b29267986c1f519ac37f8f114d7",
-      "encoding": "webp-lossless-rgba",
-      "sourceOfTruth": "Blender 5.1 Composite PNG"
-    },
-    {
-      "file": "fall-atlas.webp",
-      "source": "fall",
-      "frames": 96,
-      "cols": 8,
-      "rows": 12,
-      "cellW": 347,
-      "cellH": 320,
-      "atlasW": 2776,
-      "atlasH": 3840,
-      "cropBox": [
-        16,
-        48,
-        1264,
-        1080
-      ],
-      "bytes": 6915368,
-      "sha256": "c5263c0aaa2294e5fac634a742706493208736b0890cb57d00a651075434ffe1",
-      "encoding": "webp-lossless-rgba",
-      "sourceOfTruth": "Blender 5.1 Composite PNG"
-    },
-    {
-      "file": "basic-atlas.webp",
-      "source": "atk",
-      "frames": 44,
-      "cols": 8,
-      "rows": 6,
-      "cellW": 347,
-      "cellH": 320,
-      "atlasW": 2776,
-      "atlasH": 1920,
-      "cropBox": [
-        432,
-        56,
-        1768,
-        1040
-      ],
-      "bytes": 3003722,
-      "sha256": "046e9a83d957ce96c0440b50f252afc2a2e56408d8c6f4ba7f6dbe8146027df6",
-      "encoding": "webp-lossless-rgba",
-      "sourceOfTruth": "Blender 5.1 Composite PNG"
-    },
-    {
-      "file": "ultimate-atlas.webp",
-      "source": "ultimate",
-      "frames": 60,
-      "cols": 8,
-      "rows": 8,
-      "cellW": 347,
-      "cellH": 320,
-      "atlasW": 2776,
-      "atlasH": 2560,
-      "cropBox": [
-        80,
-        0,
-        1776,
-        1040
-      ],
-      "bytes": 2589982,
-      "sha256": "b9c6f0f2b70d3f6cefc432125b9e9e41abd6bafd6b93b519afc1aaf0b3ba153c",
-      "encoding": "webp-lossless-rgba",
-      "sourceOfTruth": "Blender 5.1 Composite PNG"
-    },
-    {
-      "file": "skill1_vfx-atlas.webp",
-      "source": "vfx_atk",
-      "frames": 120,
-      "cols": 10,
-      "rows": 12,
-      "cellW": 320,
-      "cellH": 180,
-      "atlasW": 3200,
-      "atlasH": 2160,
-      "cropBox": [
-        0,
-        0,
-        1920,
-        1080
-      ],
-      "bytes": 4059074,
-      "sha256": "e167abbf881da3a76b20ad2e611d06f7c1e610cab31f2f6c5e36170d32811e30",
-      "encoding": "webp-lossless-rgba",
-      "sourceOfTruth": "Blender 5.1 Composite PNG"
-    },
-    {
-      "file": "ultimate_vfx-atlas.webp",
-      "source": "vfx_ultimate",
-      "frames": 120,
-      "cols": 10,
-      "rows": 12,
-      "cellW": 320,
-      "cellH": 180,
-      "atlasW": 3200,
-      "atlasH": 2160,
-      "cropBox": [
-        0,
-        0,
-        1920,
-        1080
-      ],
-      "bytes": 6947122,
-      "sha256": "7249f60c55d57b8e83468eeb939e46333531a475d59ca1ced4b3c25fbbbf4fc0",
-      "encoding": "webp-lossless-rgba",
-      "sourceOfTruth": "Blender 5.1 Composite PNG"
-    }
-  ]
+  }
 }

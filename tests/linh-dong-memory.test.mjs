@@ -43,7 +43,7 @@ test('L144-T2 attack and skill1 share one Image; two in-flight loads maximum', (
   assert.ok(idle);
   assert.equal(h.images.ultimateVfx, null);
   assert.equal(h.requests.length, 2);
-  h.ready(attack, 2776, 1920); h.ready(idle, 2776, 3840);
+  h.ready(attack, 3840, 2640); h.ready(idle, 3840, 5280);
   assert.ok(h.images.ultimateVfx);
   assert.equal(h.requests.length, 3);
 });
@@ -55,7 +55,7 @@ test('L144-T2 long action sequence stays within the decoded RGBA byte budget', (
       const im = h.images[key]; assert.ok(im, key);
       const m = h.cache.inspect().entries.find(e => e.src === im.src);
       h.ready(im, m.width, m.height);
-      assert.ok(h.cache.inspect().bytes <= 112 * 1024 * 1024);
+      assert.ok(h.cache.inspect().bytes <= 128 * 1024 * 1024);
       assert.ok(h.cache.inspect().loading <= 2);
     }
   }
@@ -105,13 +105,13 @@ test('L144-T4 profile keeps atlas aspect ratio and stops when its screen is hidd
   const draws = []; let next;
   const cv = {isConnected:true,style:{},getContext:()=>({setTransform(){},clearRect(){},drawImage(...a){draws.push(a);}})};
   const box = {window:{devicePixelRatio:3},document:{hidden:false,getElementById:()=>cv},ST:{screen:'heroDetail'},
-    LINH_DONG_ANIMS:{idle:{w:347,h:320,cols:8}},LINH_DONG_IMAGES:{idle:{complete:true,naturalWidth:2776}},
+    LINH_DONG_ANIMS:{idle:{w:480,h:440,cols:8}},LINH_DONG_IMAGES:{idle:{complete:true,naturalWidth:3840}},
     performance:{now:()=>0},lucFrame:()=>0,_lucDetailRaf:0,
     cancelAnimationFrame(){},requestAnimationFrame(fn){next=fn;return 1;}};
   vm.createContext(box);vm.runInContext(html.slice(start,end)+';startLinhDongDetailIdle();',box);
   if (draws.length === 0 && next) next(); // First browser animation frame, after showScreen.
   assert.equal(draws.length,1);
-  const a=draws[0];assert.ok(Math.abs(a[7]/a[8]-347/320)<1e-9);
+  const a=draws[0];assert.ok(Math.abs(a[7]/a[8]-480/440)<1e-9);
   box.ST.screen='campaign';next();assert.equal(draws.length,1);
 });
 
@@ -122,6 +122,6 @@ test('L144-T5 campaign and preparation select the full-body idle atlas, not mast
   vm.runInContext(scene.slice(start,end)+';this.spec=spriteSpecs.linh_dong;',box);
   assert.ok(box.spec, 'missing Linh Dong sprite entry sends both screens to portraitSrc(master)');
   const s=box.spec;assert.equal(s.src,'assets/characters/linh-dong/idle-atlas.webp');
-  assert.equal(s.frames,96);assert.equal(s.cellW,347);assert.equal(s.cellH,320);
-  assert.equal(s.pivot,173.5);assert.equal(s.foot,320);assert.equal(s.body,240);
+  assert.equal(s.frames,96);assert.equal(s.cellW,480);assert.equal(s.cellH,440);
+  assert.equal(s.pivot,240);assert.equal(s.foot,440);assert.equal(s.body,330);
 });

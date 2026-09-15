@@ -1,9 +1,11 @@
 # Linh Đồng — authored combat kit
 
-Nguồn: Google Drive pack 14/09/2026 (Blender Compositor Keying RGBA, isolated character vs VFX).
-Pack: `node scripts/pack-linh-dong-rgba.mjs <extracted-pack-dir>`
+Nguồn: Blender 5.1.2 compositor master render từ video nguồn 1920×1080 (isolated character vs VFX).
+Pack: native-size runtime atlas, không lấy Viewer Node 256×256.
 
-- Character: scale 0.5 vào cell 347×320, chân đáy-giữa. Không crop từng frame.
-- VFX: 320×180 lưới 10 cột.
+- Character: cell 480×440, chân đáy-giữa. Không crop từng frame.
+- VFX: cell 440×248, lưới 10 cột.
 - ATK char + VFX/SFX dùng cho đánh thường và kỹ năng 1. ULT char + VFX/SFX cho tuyệt kỹ.
 - Encode: WebP lossless RGBA. Không key màu đen.
+- Kích thước hiển thị gameplay giữ nguyên; runtime downscale nhẹ thay vì upscale cell 347×320.
+- Cache decoded RGBA đã nâng có giới hạn 128 MiB để giữ an toàn mobile.

@@ -3780,15 +3780,16 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
   const LINH_DONG_IDS=Object.freeze(["linh_dong","hero_splus_linh_dong","linh-dong"]);
   const LINH_DONG_ASSET_BASE="assets/characters/linh-dong/";
   const LINH_DONG_META=Object.freeze({
-    idle:{file:"idle-atlas.webp",frames:96,cols:8,w:347,h:320,ms:42,loop:true},
-    run:{file:"run-atlas.webp",frames:96,cols:8,w:347,h:320,ms:42,loop:true},
-    hurt:{file:"hit-atlas.webp",frames:96,cols:8,w:347,h:320,ms:42,loop:false},
-    defeated:{file:"fall-atlas.webp",frames:96,cols:8,w:347,h:320,ms:42,loop:false},
-    attack:{file:"basic-atlas.webp",frames:44,cols:8,w:347,h:320,ms:34,loop:false},
-    skill1:{file:"basic-atlas.webp",frames:44,cols:8,w:347,h:320,ms:34,loop:false},
-    ultimate:{file:"ultimate-atlas.webp",frames:60,cols:8,w:347,h:320,ms:33,loop:false},
-    skill1Vfx:{file:"skill1_vfx-atlas.webp",frames:120,cols:10,w:320,h:180,ms:33,loop:false},
-    ultimateVfx:{file:"ultimate_vfx-atlas.webp",frames:120,cols:10,w:320,h:180,ms:33,loop:false}
+    // v3.27.1: native-size Blender atlas; display size stays 477×440/720×405.
+    idle:{file:"idle-atlas.webp",frames:96,cols:8,w:480,h:440,ms:42,loop:true},
+    run:{file:"run-atlas.webp",frames:96,cols:8,w:480,h:440,ms:42,loop:true},
+    hurt:{file:"hit-atlas.webp",frames:96,cols:8,w:480,h:440,ms:42,loop:false},
+    defeated:{file:"fall-atlas.webp",frames:96,cols:8,w:480,h:440,ms:42,loop:false},
+    attack:{file:"basic-atlas.webp",frames:44,cols:8,w:480,h:440,ms:34,loop:false},
+    skill1:{file:"basic-atlas.webp",frames:44,cols:8,w:480,h:440,ms:34,loop:false},
+    ultimate:{file:"ultimate-atlas.webp",frames:60,cols:8,w:480,h:440,ms:33,loop:false},
+    skill1Vfx:{file:"skill1_vfx-atlas.webp",frames:120,cols:10,w:440,h:248,ms:33,loop:false},
+    ultimateVfx:{file:"ultimate_vfx-atlas.webp",frames:120,cols:10,w:440,h:248,ms:33,loop:false}
   });
   const LINH_DONG_IMAGES=Object.fromEntries(Object.entries(LINH_DONG_META).map(([key,m])=>{const image=new Image();image.decoding="async";image.src=LINH_DONG_ASSET_BASE+m.file;return [key,image];}));
   let linhDongFx=[];

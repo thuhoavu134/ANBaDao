@@ -1,7 +1,10 @@
 // This self-contained factory is embedded in both static runtime documents.
 // Budget is decoded RGBA, not compressed transfer size; reserve before loading.
 export function createAtlasImageCache(meta, options = {}) {
-  const maxBytes = options.maxBytes ?? 112 * 1024 * 1024;
+  // Native-size Blender atlases are ~81 MiB decoded for idle plus ~40 MiB
+  // for Basic; keep the two-atlas cap just above that without allowing an
+  // unbounded mobile-memory spike.
+  const maxBytes = options.maxBytes ?? 128 * 1024 * 1024;
   const maxLoading = options.maxLoading ?? 2;
   const makeImage = options.makeImage || (() => new Image());
   const entries = new Map(), failed = new Set();

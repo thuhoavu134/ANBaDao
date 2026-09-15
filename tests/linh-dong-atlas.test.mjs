@@ -95,11 +95,11 @@ test('L139-T5 catalog art is authored; combat numbers stay frozen', () => {
 });
 
 test('L139-T6 uniform cells, RGBA pack contract, BETS frozen', () => {
-  assert.equal(LINH_DONG_CHAR.cellW, 347);
-  assert.equal(LINH_DONG_CHAR.cellH, 320);
-  assert.equal(LINH_DONG_CHAR.scale, 0.5);
-  assert.equal(LINH_DONG_VFX.cellW, 320);
-  assert.equal(LINH_DONG_VFX.cellH, 180);
+  assert.equal(LINH_DONG_CHAR.cellW, 480);
+  assert.equal(LINH_DONG_CHAR.cellH, 440);
+  assert.equal(LINH_DONG_CHAR.scale, 1);
+  assert.equal(LINH_DONG_VFX.cellW, 440);
+  assert.equal(LINH_DONG_VFX.cellH, 248);
   assert.equal(LINH_DONG_CLIPS.idle.frames, 96);
   assert.equal(LINH_DONG_CLIPS.attack.frames, 44);
   assert.equal(LINH_DONG_CLIPS.ultimate.frames, 60);

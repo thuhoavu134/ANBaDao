@@ -7,8 +7,8 @@
     "columns": 10,
     "rows": 12,
     "frameCount": 120,
-    "cellWidth": 320,
-    "cellHeight": 180
+    "cellWidth": 440,
+    "cellHeight": 248
   },
   "timeline": {
     "durationMs": 4000,
