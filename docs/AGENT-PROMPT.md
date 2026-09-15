@@ -1,6 +1,6 @@
 # Prompt dán cho agent tiếp theo
 
-Owner 15/09 08:00 +07. Agent mới **dán nguyên khối dưới** vào chat Grok (workspace `/workspace/luc-than`).
+Owner 15/09 08:15 +07. Agent mới **dán nguyên khối dưới** vào chat Grok (workspace `/workspace/luc-than`).
 
 ---
 
@@ -19,13 +19,13 @@ Play đang soi: https://luc-than-neon.vercel.app/
 4. đúng tickets/TKT-00xx/ticket.md nếu có ticket
 
 ## Git lúc bàn giao
-- origin/main LIVE: docs TKT-0147 LIVE after #143, trên squash `4e61e58`
-- TKT-0147 LIVE #143. TKT-0146 LIVE #142. PR mở: không
+- origin/main LIVE: docs TKT-0148 LIVE after #144, trên squash `5de296f`
+- TKT-0148 LIVE #144. TKT-0147 LIVE #143. TKT-0146 LIVE #142. PR mở: không
 - Không force-push. Không commit dist/. Không tự MERGED/DONE
 
 ## Việc
 Owner gửi screenshot + câu = việc. Một việc / một PR.
-Anh đã được bảo tự `git pull && vercel --prod` cho TKT-0147.
+Anh đã được bảo tự `git pull && vercel --prod` cho TKT-0148.
 
 ## Cấm
 - BETS [2, 10, 50], loot, Bách Bảo, Hồng Trầu

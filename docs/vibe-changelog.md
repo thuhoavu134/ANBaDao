@@ -1,7 +1,7 @@
 ## 15/09 — TKT-0148: địch Bày trận quay trái + Tướng cuộn được
 
 Bày trận lật mọi địch, kể cả bản trùng. Lưới tướng cuộn; thanh icon không đè thẻ cuối.
-GREEN 984/984. Ảnh owner. REVIEW, chờ `live`.
+GREEN 984/984. Ảnh owner. LIVE #144 `5de296f`. Owner tự `git pull && vercel --prod`.
 
 ## 15/09 — TKT-0147: Ải 1-2 không còn khóa sau thắng ải trước
 

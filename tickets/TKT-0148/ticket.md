@@ -1,8 +1,8 @@
 ---
 id: TKT-0148
 title: Địch Bày trận quay trái + màn Tướng cuộn được
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 acceptance_ids: [L148-T1, L148-T2, L148-T3, L148-P1]
 required_gates: [vibelab, tdd]
@@ -38,6 +38,6 @@ Không đổi BETS 2/10/50, loot, Bách Bảo, Hồng Trầu. Không mở 42 S+,
 
 ## Result
 
-REVIEW. Bày trận lật mọi địch. Lưới Tướng là bề mặt cuộn; thanh dưới không đè thẻ.
-GREEN 984/984. Chrome visual: ảnh owner. Safari/iPhone NOT_RUN.
-Chỉ squash-merge khi owner gõ `live`. Owner tự `git pull && vercel --prod`.
+LIVE #144 `5de296f`. Bày trận lật mọi địch. Lưới Tướng là bề mặt cuộn; thanh dưới không đè thẻ.
+Local npm test 984/984. CI Build and test PASS. Safari NOT_RUN.
+Owner tự `git pull && vercel --prod`.
