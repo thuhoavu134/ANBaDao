@@ -1,6 +1,6 @@
 {
   "ticket": "TKT-0153",
-  "revision": "pending",
+  "revision": "7c70c69",
   "acceptance": {
     "L153-T1": "PASS",
     "L153-T2": "PASS",

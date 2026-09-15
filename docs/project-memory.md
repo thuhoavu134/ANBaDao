@@ -1,6 +1,6 @@
 ## 15/09 — TKT-0153: Chinh chiến Linh Đồng Run
 
-March dùng `run-atlas.webp`. Idle giữ cho Bày trận. Cell/pivot L144 không đổi.
+March dùng `run-atlas.webp`. Idle giữ cho Bày trận. Cell/pivot L144 không đổi. LIVE #149 `7c70c69`. Owner tự `git pull && vercel --prod`.
 
 ## 15/09 — TKT-0151: Canvas Sprite Runtime
 

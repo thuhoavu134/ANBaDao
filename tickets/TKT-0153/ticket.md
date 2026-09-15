@@ -1,11 +1,11 @@
 ---
 id: TKT-0153
 title: Chinh chiến đi đường dùng Linh Đồng Run
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 created: 2026-09-15T11:00:00.000Z
-updated: 2026-09-15T11:00:00.000Z
+updated: 2026-09-15T11:32:00.000Z
 acceptance_ids: [L153-T1, L153-T2, L153-T3, L153-P1]
 required_gates: [vibelab, tdd]
 affected_paths:
@@ -43,4 +43,5 @@ Không đổi BETS 2/10/50, loot, Bách Bảo, Hồng Trầu. Không mở 42 S+,
 
 ## Result
 
-REVIEW. March `run-atlas.webp`. Draft/Bày trận Idle. RED L153-T1 fail idle-vs-run → GREEN 3/3 + npm test 1017/1017. Chrome/Safari NOT_RUN. PR #149. Đợi owner `live`.
+LIVE #149 `7c70c69`. March `run-atlas.webp`. Bày trận Idle. L153-T1…T3 PASS. npm test 1017/1017. Chrome/Safari NOT_RUN.
+Owner tự `git pull && vercel --prod`.

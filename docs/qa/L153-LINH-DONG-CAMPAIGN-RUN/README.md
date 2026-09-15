@@ -8,6 +8,7 @@ Owner 15/09 · ảnh Chinh chiến Ấn Phố đội đang đi đường. Clip p
 - Bày trận / draft → `idle-atlas.webp` (L144 giữ)
 - Cell 480×440, pivot 240, foot 440, body 330, 96 frame, 42ms — cùng Idle
 - npm test 1017/1017
-- Chrome/Safari: NOT_RUN (cần anh xác trên máy sau `live`)
+- LIVE #149 `7c70c69`
+- Chrome/Safari: NOT_RUN. Owner tự `git pull && vercel --prod`.
 
 Safari/iPhone NOT_RUN.
