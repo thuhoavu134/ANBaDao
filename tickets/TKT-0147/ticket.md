@@ -1,8 +1,8 @@
 ---
 id: TKT-0147
 title: Ải 1-2 khóa dù đã thắng ải trước
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 acceptance_ids: [L147-T1, L147-T2, L147-T3, L147-P1]
 required_gates: [vibelab, tdd]
@@ -37,6 +37,6 @@ Không đổi BETS 2/10/50, loot, Bách Bảo, Hồng Trầu. Không mở 42 S+,
 
 ## Result
 
-REVIEW. Con trỏ `campaignStages` sau thắng ải mở ải kế. Settlement ghi clear theo ải đang đánh, không phụ thuộc `battleId` payload.
-GREEN focused + npm test 982/982. Chrome: ảnh owner (Ải 1-2 khóa) là bằng chứng lỗi; bản sửa chưa lên máy anh. Safari NOT_RUN.
-Chỉ squash-merge khi owner gõ `live`. Owner tự `git pull && vercel --prod`.
+LIVE #143 `4e61e58`. Con trỏ `campaignStages` sau thắng ải mở ải kế. Settlement ghi clear theo ải đang đánh, không phụ thuộc `battleId` payload.
+Local npm test 982/982. CI Build and test PASS. Safari NOT_RUN.
+Owner tự `git pull && vercel --prod`.

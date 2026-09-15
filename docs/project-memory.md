@@ -1,6 +1,6 @@
 ## 15/09 — TKT-0147: Ải 1-2 khóa sau thắng ải trước
 
-REVIEW. Con trỏ campaignStages sau thắng mở ải kế. Settlement ghi mốc theo ải đang đánh. Ảnh owner Ải 1-2. Safari NOT_RUN. Chờ `live`.
+LIVE #143 `4e61e58`. Con trỏ campaignStages sau thắng mở ải kế. Settlement ghi mốc theo ải đang đánh. Safari NOT_RUN. Owner tự `git pull && vercel --prod`.
 
 ## 14/09 — TKT-0146: S+ Linh Đồng clock ATK/Ultimate
 

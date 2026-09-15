@@ -7,4 +7,4 @@ Bản đang chơi: luc-than-a2sp (không phải bản chính)
 - Con trỏ đã sang Ải 1-2 sau một lần trừ thể lực, mốc `clears` Ải 1-1 không ghi
 - Vá: `campaignStages` sau thắng = đã vượt ải trước; settlement tin ải đang đánh
 
-Safari/iPhone NOT_RUN. Chưa deploy.
+Safari/iPhone NOT_RUN. LIVE #143 `4e61e58`. Owner tự `git pull && vercel --prod`.

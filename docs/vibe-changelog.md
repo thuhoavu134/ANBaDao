@@ -1,7 +1,7 @@
 ## 15/09 — TKT-0147: Ải 1-2 không còn khóa sau thắng ải trước
 
 Chinh chiến dùng con trỏ ải đã thắng để mở ải kế. Ghi mốc thắng theo ải đang đánh, không phụ thuộc mã trận lệch.
-GREEN 982/982. Ảnh owner Ải 1-2 khóa. REVIEW, chờ `live`.
+GREEN 982/982. Ảnh owner Ải 1-2 khóa. LIVE #143 `4e61e58`. Owner tự `git pull && vercel --prod`.
 
 ## 14/09 — TKT-0146: S+ Linh Đồng dùng cùng clock ATK/Ultimate
 
