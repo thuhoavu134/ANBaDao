@@ -1,7 +1,7 @@
 ## 15/09 — TKT-0149: trận một tướng xong mới đến tướng kia
 
 Trận thường 1×, không nén 0.45. Nghỉ giữa lượt 480ms. Auto chờ hành động xong. Không đổi công thức/tốc/AI.
-GREEN 988/988. REVIEW, chờ `live`.
+GREEN 988/988. LIVE #145 `506a7f8`. Owner tự `git pull && vercel --prod`.
 
 ## 15/09 — TKT-0148: địch Bày trận quay trái + Tướng cuộn được
 

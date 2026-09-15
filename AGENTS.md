@@ -1,6 +1,6 @@
 # Hồn Việt / Lục Thần — hướng dẫn bắt đầu
 
-TKT-0149 trận một tướng xong mới đến tướng kia đang REVIEW. Đọc `tickets/TKT-0149/ticket.md`. Chỉ squash-merge khi owner gõ đúng chữ `live`.
+TKT-0149 trận một tướng xong mới đến tướng kia LIVE #145 `506a7f8`. Safari/iPhone NOT_RUN. Owner tự `git pull && vercel --prod`.
 
 TKT-0148 địch Bày trận quay trái + màn Tướng cuộn LIVE #144 `5de296f`. Safari/iPhone NOT_RUN. Owner tự `git pull && vercel --prod`.
 

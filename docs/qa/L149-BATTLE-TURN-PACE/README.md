@@ -6,4 +6,4 @@ Owner 15/09 · tướng này chưa xong tướng kia đã đánh, diễn hoạt 
 - Sau: live 1×, timingScale 1, nghỉ 480ms, auto await performAction
 - Không đổi damage / initiative / AI chọn mục tiêu
 
-Safari/iPhone NOT_RUN. Chưa deploy.
+Safari/iPhone NOT_RUN. LIVE #145 `506a7f8`. Owner tự `git pull && vercel --prod`.

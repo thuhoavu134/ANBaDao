@@ -1,6 +1,6 @@
 ## 15/09 — TKT-0149: nhịp trận tuần tự
 
-REVIEW. timingScale live 1, speed 1, turnRest 480, await performAction. S+ 0.35. Safari NOT_RUN. Chờ `live`.
+LIVE #145 `506a7f8`. timingScale live 1, speed 1, turnRest 480, await performAction. S+ 0.35. Safari NOT_RUN. Owner tự `git pull && vercel --prod`.
 
 ## 15/09 — TKT-0148: địch Bày trận + cuộn Tướng
 

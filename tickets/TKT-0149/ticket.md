@@ -1,8 +1,8 @@
 ---
 id: TKT-0149
 title: Trận một tướng xong mới đến tướng kia
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 acceptance_ids: [L149-T1, L149-T2, L149-T3, L149-T4, L149-P1]
 required_gates: [vibelab, tdd]
@@ -38,6 +38,6 @@ Không đổi BETS 2/10/50, loot, Bách Bảo, Hồng Trầu. Không mở 42 S+,
 
 ## Result
 
-REVIEW. Trận thường 1×, không nén 0.45. Nghỉ giữa lượt 480ms. Auto await hành động. Thứ tự lượt theo tốc không đổi.
-GREEN 988/988. Safari/iPhone NOT_RUN.
-Chỉ squash-merge khi owner gõ `live`. Owner tự `git pull && vercel --prod`.
+LIVE #145 `506a7f8`. Trận thường 1×, không nén 0.45. Nghỉ giữa lượt 480ms. Auto await hành động. Thứ tự lượt theo tốc không đổi.
+Local npm test 988/988. CI Build and test PASS. Safari NOT_RUN.
+Owner tự `git pull && vercel --prod`.
