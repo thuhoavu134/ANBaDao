@@ -1,0 +1,100 @@
+TAP version 13
+# Subtest: L139-T1 Linh Dong authored atlases, portraits and SFX exist
+ok 1 - L139-T1 Linh Dong authored atlases, portraits and SFX exist
+  ---
+  duration_ms: 1.047068
+  type: 'test'
+  ...
+# Subtest: L139-T2 CHARACTER_MANIFEST binds Linh Dong art; TKT-0141 opens roster identity
+ok 2 - L139-T2 CHARACTER_MANIFEST binds Linh Dong art; TKT-0141 opens roster identity
+  ---
+  duration_ms: 10.329427
+  type: 'test'
+  ...
+# Subtest: L139-T3 battle runtime draws Linh Dong atlas and S+ token delegates
+ok 3 - L139-T3 battle runtime draws Linh Dong atlas and S+ token delegates
+  ---
+  duration_ms: 7.422157
+  type: 'test'
+  ...
+# Subtest: L139-T4 skill manifests register isolated ATK and ULT passes
+ok 4 - L139-T4 skill manifests register isolated ATK and ULT passes
+  ---
+  duration_ms: 0.622551
+  type: 'test'
+  ...
+# Subtest: L139-T5 catalog art is authored; combat numbers stay frozen
+ok 5 - L139-T5 catalog art is authored; combat numbers stay frozen
+  ---
+  duration_ms: 0.484275
+  type: 'test'
+  ...
+# Subtest: L139-T6 uniform cells, RGBA pack contract, BETS frozen
+ok 6 - L139-T6 uniform cells, RGBA pack contract, BETS frozen
+  ---
+  duration_ms: 0.442808
+  type: 'test'
+  ...
+# Subtest: L146-T1 S+ Linh Đồng uses the shared ATK/Ultimate marker clock
+ok 7 - L146-T1 S+ Linh Đồng uses the shared ATK/Ultimate marker clock
+  ---
+  duration_ms: 1.136556
+  type: 'test'
+  ...
+# Subtest: L146-T2 S+ Linh Đồng skill bar is passive+ultimate and hurt returns to idle
+ok 8 - L146-T2 S+ Linh Đồng skill bar is passive+ultimate and hurt returns to idle
+  ---
+  duration_ms: 0.508873
+  type: 'test'
+  ...
+# Subtest: L146-T3 other S+ fixtures keep timingScale 0.35; marker elapsed stays wall clock
+ok 9 - L146-T3 other S+ fixtures keep timingScale 0.35; marker elapsed stays wall clock
+  ---
+  duration_ms: 0.996599
+  type: 'test'
+  ...
+# Subtest: Source runtime patch compiles and does not duplicate scheduler
+ok 10 - Source runtime patch compiles and does not duplicate scheduler
+  ---
+  duration_ms: 104.071127
+  type: 'test'
+  ...
+# Subtest: Every selectable hero reaches a valid 6v6 fixture without duplicate positions
+ok 11 - Every selectable hero reaches a valid 6v6 fixture without duplicate positions
+  ---
+  duration_ms: 5.592892
+  type: 'test'
+  ...
+# Subtest: Dream fixture reserves frontline for Thạch Mộng before support overflow
+ok 12 - Dream fixture reserves frontline for Thạch Mộng before support overflow
+  ---
+  duration_ms: 0.210938
+  type: 'test'
+  ...
+# Subtest: Bundled browser factory has the same damage/status/rage results as source
+ok 13 - Bundled browser factory has the same damage/status/rage results as source
+  ---
+  duration_ms: 75.390531
+  type: 'test'
+  ...
+# Subtest: battle skill options follow the replacement actor when a battle restarts with the same id
+ok 14 - battle skill options follow the replacement actor when a battle restarts with the same id
+  ---
+  duration_ms: 2.694818
+  type: 'test'
+  ...
+# Subtest: orphaned skill options cannot cast after their actor leaves the battle
+ok 15 - orphaned skill options cannot cast after their actor leaves the battle
+  ---
+  duration_ms: 1.830216
+  type: 'test'
+  ...
+1..15
+# tests 15
+# suites 0
+# pass 15
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 470.42024

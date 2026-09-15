@@ -1,0 +1,366 @@
+TAP version 13
+# Subtest: L146-T1 S+ Linh Đồng uses the shared ATK/Ultimate marker clock
+not ok 1 - L146-T1 S+ Linh Đồng uses the shared ATK/Ultimate marker clock
+  ---
+  duration_ms: 3.703076
+  type: 'test'
+  location: '/workspace/luc-than/tests/linh-dong-splus-clock.test.mjs:19:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /beginLinhDongAction\(actor,action,target,battleId\)/. Input:
+    
+    'async function performSplusAction(actor, action, target) {\n' +
+      '  const e=splusCombat(),battleId=state.battleId;\n' +
+      '  state.locked=true;state.selectedAction=action;clearTargets();updateActorHud(actor);\n' +
+      '  const title=globalThis.SPLUS42.catalog.find(h=>h.id===actor.sourceId)?.actions[action]?.name||action;\n' +
+      "  const linh=typeof isLinhDong==='function'&&isLinhDong(actor);\n" +
+      "  const linhState=action==='ultimate'?'ultimate':(action==='skill'?'skill1':'attack');\n" +
+      "  const linhDur=linh&&typeof linhDongActionMs==='function'?linhDongActionMs(linhState):TIMING.windup;\n" +
+      "  setStatus(`${actor.name} · ${title}`);dom.phaseLabel.textContent=title;setUnitState(actor,linh?linhState:'attack',linh?linhDur:TIMING.windup);\n" +
+      "  if(linh&&typeof startLinhDongFx==='function')startLinhDongFx(action,actor,target);\n" +
+      "  if(linh&&typeof playLinhDongSfx==='function')playLinhDongSfx(action);\n" +
+      '  if(!await sleep(linh?linhDur:TIMING.windup,battleId))return;\n' +
+      '  const totals=new Map();let result;splusPresentation=totals;\n' +
+      '  try{result=e.act(actor.id,action,target?.id);}finally{splusPresentation=null;}\n' +
+      '  for(const hit of totals.values())splusFloater(hit.target,hit.amount,hit.healing,hit.critical);\n' +
+      "  if(result.ok){state.actionCount++;state.actionBreakdown[action]=(state.actionBreakdown[action]||0)+1;const rec=intelUnit(actor);if(rec){rec.actions++;if(action==='ultimate')rec.ultimates++;}addLog(`${actor.name} · ${title}`);}\n" +
+      '  updateTeamCounters();splusStateView();updateActorHud(actor);\n' +
+      '  if(!await sleep(TIMING.turnRest,battleId))return;\n' +
+      "  setUnitState(actor,'idle',800);state.currentId=null;state.locked=false;\n" +
+      '  if(battleHasWinner()){if(!await waitForDefeatExit(battleId))return;if(checkBattleEnd()){splusStateView();return;}}\n' +
+      '  void advanceTurn();\n' +
+      '}\n'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    async function performSplusAction(actor, action, target) {
+      const e=splusCombat(),battleId=state.battleId;
+      state.locked=true;state.selectedAction=action;clearTargets();updateActorHud(actor);
+      const title=globalThis.SPLUS42.catalog.find(h=>h.id===actor.sourceId)?.actions[action]?.name||action;
+      const linh=typeof isLinhDong==='function'&&isLinhDong(actor);
+      const linhState=action==='ultimate'?'ultimate':(action==='skill'?'skill1':'attack');
+      const linhDur=linh&&typeof linhDongActionMs==='function'?linhDongActionMs(linhState):TIMING.windup;
+      setStatus(`${actor.name} · ${title}`);dom.phaseLabel.textContent=title;setUnitState(actor,linh?linhState:'attack',linh?linhDur:TIMING.windup);
+      if(linh&&typeof startLinhDongFx==='function')startLinhDongFx(action,actor,target);
+      if(linh&&typeof playLinhDongSfx==='function')playLinhDongSfx(action);
+      if(!await sleep(linh?linhDur:TIMING.windup,battleId))return;
+      const totals=new Map();let result;splusPresentation=totals;
+      try{result=e.act(actor.id,action,target?.id);}finally{splusPresentation=null;}
+      for(const hit of totals.values())splusFloater(hit.target,hit.amount,hit.healing,hit.critical);
+      if(result.ok){state.actionCount++;state.actionBreakdown[action]=(state.actionBreakdown[action]||0)+1;const rec=intelUnit(actor);if(rec){rec.actions++;if(action==='ultimate')rec.ultimates++;}addLog(`${actor.name} · ${title}`);}
+      updateTeamCounters();splusStateView();updateActorHud(actor);
+      if(!await sleep(TIMING.turnRest,battleId))return;
+      setUnitState(actor,'idle',800);state.currentId=null;state.locked=false;
+      if(battleHasWinner()){if(!await waitForDefeatExit(battleId))return;if(checkBattleEnd()){splusStateView();return;}}
+      void advanceTurn();
+    }
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/luc-than/tests/linh-dong-splus-clock.test.mjs:21:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.start (node:internal/test_runner/test:944:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:296:17)
+  ...
+# Subtest: L146-T2 S+ Linh Đồng skill bar is passive+ultimate and hurt returns to idle
+not ok 2 - L146-T2 S+ Linh Đồng skill bar is passive+ultimate and hurt returns to idle
+  ---
+  duration_ms: 1.091539
+  type: 'test'
+  location: '/workspace/luc-than/tests/linh-dong-splus-clock.test.mjs:39:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /\['passive','ultimate'\]/. Input:
+    
+    '// Injected into the existing battle closure by the source build owner.\n' +
+      '// This bridge uses advanceTurn/sleep/render; it does not own a second clock.\n' +
+      'let splusEngine = null;\n' +
+      'let splusPresentation = null;\n' +
+      'let splusSkillUI=null;\n' +
+      'function splusReset(){\n' +
+      '  splusSkillUI?.destroy();splusSkillUI=null;splusEngine=null;splusPresentation=null;\n' +
+      "  document.getElementById('splus-battle-skills')?.remove();\n" +
+      "  document.getElementById('splus-status-panel')?.remove();\n" +
+      "  document.body.classList.remove('splus-battle');\n" +
+      '}\n' +
+      'function splusSkillOptions(actor){\n' +
+      '  const actorId=actor.id;\n' +
+      "  const allowed=(current,combat,action)=>!!current&&!!combat&&state.mode==='battle'&&state.currentId===actorId&&!state.locked&&!state.auto&&combat.canUse(current,action);\n" +
+      '  return {getState:()=>{\n' +
+      '    const current=getUnit(actorId),combat=splusCombat();\n' +
+      "    return {energy:current?.energy||0,cooldowns:Object.fromEntries(['skill','ultimate'].map(a=>[a,Math.max(0,(current?.splus?.cooldowns?.[a]||0)-(combat?.round||0))])),canUse:Object.fromEntries(['skill','ultimate'].map(a=>[a,allowed(current,combat,a)]))};\n" +
+      '  },cast:action=>{if(allowed(getUnit(actorId),splusCombat(),action))chooseAction(action);}};\n' +
+      '}\n' +
+      'function splusInspectAction(action,button){\n' +
+      "  if(!splusCombat()||action==='basic')return chooseAction(action);\n" +
+      '  const actor=getUnit(state.currentId);if(actor)splusSkillUI?.open(actor.sourceId,action,button,splusSkillOptions(actor));\n' +
+      '}\n' +
+      'function splusTargetTeam(actor,candidates,fallback){\n' +
+      '  if(!splusCombat())return fallback;\n' +
+      '  const teams=new Set((candidates||[]).filter(Boolean).map(unit=>unit.team));\n' +
+      '  return teams.size===1?[...teams][0]:fallback;\n' +
+      '}\n' +
+      'function splusSkillBar(){\n' +
+      '  if(!splusSkillUI)splusSkillUI=globalThis.createSplusSkillUI(globalThis.SPLUS42.profiles);\n' +
+      "  const actor=getUnit(state.currentId);let strip=document.getElementById('splus-battle-skills');\n" +
+      "  if(!strip){strip=document.createElement('div');strip.id='splus-battle-skills';strip.className='splus-skill-strip';document.querySelector('.action-zone').prepend(strip);}\n" +
+      "  if(actor&&strip.dataset.actorId!==actor.id){strip.dataset.actorId=actor.id;strip.replaceChildren(...['passive','skill','ultimate'].map(slot=>splusSkillUI.button(actor.sourceId,slot,splusSkillOptions(actor))));}\n" +
+      '  splusSkillUI.refresh();\n' +
+      '}\n' +
+      'function splusFloater(target,amount,healing=false,critical=false) {\n' +
+      '  if(!(amount>0))return;\n' +
+      "  if(splusPresentation){const id=target.id+':'+healing,previous=splusPresentation.get(id);splusPresentation.set(id,{target,amount:amount+(previous?.amount||0),healing,critical:critical||previous?.critical});return;}\n" +
+      "  addFloater(target,`${healing?'+':'−'}${amount}`,healing?'#8fe7bd':critical?'#ffd76f':'#ff9688',critical);\n" +
+      '}\n' +
+      'function splusActive() { return HEROES.some(h => globalThis.SPLUS42.catalog.some(c => c.id === h.sourceId)); }\n' +
+      'function splusCombat() {\n' +
+      '  if (!splusActive() || !units.length) return null;\n' +
+      '  if (!splusEngine) {\n' +
+      '    splusEngine = globalThis.SPLUS42.create({units, mutate:true, rng:site => __hvRuleRandom3qAdapter(site), onEvent:splusEvent});\n' +
+      '    splusEngine.start();\n' +
+      '  }\n' +
+      '  return splusEngine;\n' +
+      '}\n' +
+      'function splusHeroConfig(raw, index) {\n' +
+      '  const h=normalizeConfiguredHero(raw,index),kit=globalThis.SPLUS42.catalog.find(c=>c.id===h.sourceId);\n' +
+      '  if(!kit)return h;\n' +
+      "  return {...h,name:kit.name,title:kit.elementName,initial:String(kit.number),archetype:kit.role,roleClass:kit.role,kitVersion:'splus42-v2',skillKit:null,passive:kit.passive.description,passiveIds:[kit.passive.id],basicId:kit.actions.basic.id,basicName:kit.actions.basic.name,basicDetail:kit.actions.basic.description,basicKind:'damage',skillName:kit.actions.skill.name,skillDetail:kit.actions.skill.description,skillKind:['healer','support'].includes(kit.role)?'heal':'damage',ultimateId:kit.actions.ultimate.id,ultimateName:kit.actions.ultimate.name,ultimateDetail:kit.actions.ultimate.description,ultimateKind:'aoe',visualId:kit.id,visualSource:kit.key==='linh_dong'?'linh-dong-authored':'splus-pending-art'};\n" +
+      '}\n' +
+      'function splusEvent(event) {\n' +
+      '  const t=getUnit(event.targetId),a=getUnit(event.sourceId);\n' +
+      "  if(t&&event.type==='damage'){splusFloater(t,event.amount,false,event.critical);t.hpTween=null;const rec=intelUnit(t);if(rec)rec.damageTaken+=event.amount;const ar=intelUnit(a);if(ar)ar.damage+=event.amount;if(typeof isLinhDong==='function'&&isLinhDong(t)&&t.hp>0&&typeof linhDongActionMs==='function')setUnitState(t,'hurt',linhDongActionMs('hurt'));}\n" +
+      "  if(t&&event.type==='heal'){splusFloater(t,event.amount,true);t.hpTween=null;const ar=intelUnit(a);if(ar)ar.healing+=event.amount;}\n" +
+      "  if(t&&event.type==='death')markDefeated(t);\n" +
+      "  if(t&&event.type==='resurrect'){t.defeatedAt=0;t.displayHp=t.hp;setUnitState(t,'idle',800);}\n" +
+      "  if(event.type==='extraTurn')state.queue.unshift(event.sourceId);\n" +
+      "  if(event.type==='actionDelay'){\n" +
+      '    const at=state.queue.indexOf(event.targetId);\n' +
+      '    if(at>=0){state.queue.splice(at,1);state.queue.splice(Math.min(state.queue.length,at+Math.ceil(state.queue.length*event.fraction)),0,event.targetId);}\n' +
+      '  }\n' +
+      "  if(t&&event.type==='airborne')t.splusAirborneUntil=performance.now()+event.seconds*1000;\n" +
+      "  if(event.type==='displacement'||event.type==='swap'){\n" +
+      '    for(const u of units){const p=(innerWidth<600?MOBILE_POSITIONS:POSITIONS)[u.team][u.slot];u.baseX=p.x;u.baseY=p.y;u.x=p.x;u.y=p.y;u.homeAnchorId=`${u.team}:slot-${u.slot}`;u.homeAnchor={x:p.x,y:p.y};}\n' +
+      '  }\n' +
+      '}\n' +
+      'function splusStateView() {\n' +
+      '  const e=splusCombat();if(!e)return;\n' +
+      '  splusSkillBar();\n' +
+      "  let panel=document.getElementById('splus-status-panel');\n" +
+      "  if(!panel){panel=document.createElement('section');panel.id='splus-status-panel';panel.setAttribute('aria-label','Trạng thái 42 tướng S+');document.body.append(panel);}\n" +
+      "  document.body.classList.add('splus-battle');\n" +
+      "  const heading=document.createElement('h2');heading.textContent=`Ấn ký trận đấu · Hiệp ${state.round||1}`;\n" +
+      "  const grid=document.createElement('div');grid.className='splus-status-grid';\n" +
+      '  for(const u of units){\n' +
+      "    const card=document.createElement('article');card.dataset.heroId=u.sourceId;card.dataset.team=u.team;\n" +
+      "    const name=document.createElement('strong');name.textContent=`${u.name} · ${u.team===TEAM_PLAYER?'Ta':'Địch'} · Ô ${u.slot+1}`;\n" +
+      "    const health=document.createElement('p');health.textContent=`HP ${Math.round(u.hp)}/${u.maxHp} · Nộ ${Math.round(u.energy)} · Khiên ${Math.round(u.shield)}`;\n" +
+      "    const list=document.createElement('ul');\n" +
+      '    for(const s of e.hud(u)){\n' +
+      "      const li=document.createElement('li');li.dataset.iconId=s.iconId||'';li.dataset.effect=s.type;li.dataset.sourceId=s.sourceId||'';li.dataset.polarity=s.polarity;\n" +
+      "      const source=getUnit(s.sourceId);li.textContent=`${s.name} · ${globalThis.SPLUS42.labels[s.type]||s.type}${s.stacks>1?` ×${s.stacks}`:''}${s.charges!=null?` · ${s.charges} lần`:''} · ${s.remainingRounds==null?'Duy trì':`${s.remainingRounds} hiệp`} · ${source?.name||'Nguồn không còn'}`;list.append(li);\n" +
+      '    }\n' +
+      "    if(!list.childElementCount){const li=document.createElement('li');li.textContent=u.hp>0?'Chưa có ấn ký':'Đã gục ngã';list.append(li);}\n" +
+      '    card.append(name,health,list);grid.append(card);\n' +
+      '  }\n' +
+      '  panel.replaceChildren(heading,grid);\n' +
+      "  if(new URLSearchParams(location.search).has('qaSplus42')){\n" +
+      "    const details=document.createElement('details'),summary=document.createElement('summary'),pre=document.createElement('pre');summary.textContent='Evidence trận S+ (QA)';pre.id='splus-evidence';\n" +
+      "    const actions=e.events.filter(x=>x.type==='action');\n" +
+      '    pre.textContent=JSON.stringify({schema:e.schema,mode:state.mode,round:e.round,actionCount:actions.length,eventCount:e.events.length,actionsByHero:actions.reduce((a,x)=>{const id=getUnit(x.sourceId)?.sourceId;a[id]??=[];if(!a[id].includes(x.action))a[id].push(x.action);return a;},{}),uniqueSlots:new Set(units.filter(u=>u.hp>0).map(u=>`${u.team}:${u.slot}`)).size,alive:units.filter(u=>u.hp>0).length,finite:units.every(u=>Number.isFinite(u.hp)&&Number.isFinite(u.energy)),statuses:units.map(u=>({id:u.id,heroId:u.sourceId,hp:u.hp,rage:u.energy,marks:e.hud(u)})),events:e.events.slice(-60)},null,2);details.append(summary,pre);panel.append(details);\n' +
+      '  }\n' +
+      '}\n' +
+      'async function performSplusAction(actor, action, target) {\n' +
+      '  const e=splusCombat(),battleId=state.battleId;\n' +
+      '  state.locked=true;state.selectedAction=action;clearTargets();updateActorHud(actor);\n' +
+      '  const title=globalThis.SPLUS42.catalog.find(h=>h.id===actor.sourceId)?.actions[action]?.name||action;\n' +
+      "  const linh=typeof isLinhDong==='function'&&isLinhDong(actor);\n" +
+      "  const linhState=action==='ultimate'?'ultimate':(action==='skill'?'skill1':'attack');\n" +
+      "  const linhDur=linh&&typeof linhDongActionMs==='function'?linhDongActionMs(linhState):TIMING.windup;\n" +
+      "  setStatus(`${actor.name} · ${title}`);dom.phaseLabel.textContent=title;setUnitState(actor,linh?linhState:'attack',linh?linhDur:TIMING.windup);\n" +
+      "  if(linh&&typeof startLinhDongFx==='function')startLinhDongFx(action,actor,target);\n" +
+      "  if(linh&&typeof playLinhDongSfx==='function')playLinhDongSfx(action);\n" +
+      '  if(!await sleep(linh?linhDur:TIMING.windup,battleId))return;\n' +
+      '  const totals=new Map();let result;splusPresentation=totals;\n' +
+      '  try{result=e.act(actor.id,action,target?.id);}finally{splusPresentation=null;}\n' +
+      '  for(const hit of totals.values())splusFloater(hit.target,hit.amount,hit.healing,hit.critical);\n' +
+      "  if(result.ok){state.actionCount++;state.actionBreakdown[action]=(state.actionBreakdown[action]||0)+1;const rec=intelUnit(actor);if(rec){rec.actions++;if(action==='ultimate')rec.ultimates++;}addLog(`${actor.name} · ${title}`);}\n" +
+      '  updateTeamCounters();splusStateView();updateActorHud(actor);\n' +
+      '  if(!await sleep(TIMING.turnRest,battleId))return;\n' +
+      "  setUnitState(actor,'idle',800);state.currentId=null;state.locked=false;\n" +
+      '  if(battleHasWinner()){if(!await waitForDefeatExit(battleId))return;if(checkBattleEnd()){splusStateView();return;}}\n' +
+      '  void advanceTurn();\n' +
+      '}\n' +
+      'function drawSplusToken(context, unit, time) {\n' +
+      "  if(typeof isLinhDong==='function'&&isLinhDong(unit)&&typeof drawLinhDongHero==='function'){\n" +
+      '    const lift=unit.splusAirborneUntil>time?Math.sin((1-(unit.splusAirborne'... 1184 more characters
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    // Injected into the existing battle closure by the source build owner.
+    // This bridge uses advanceTurn/sleep/render; it does not own a second clock.
+    let splusEngine = null;
+    let splusPresentation = null;
+    let splusSkillUI=null;
+    function splusReset(){
+      splusSkillUI?.destroy();splusSkillUI=null;splusEngine=null;splusPresentation=null;
+      document.getElementById('splus-battle-skills')?.remove();
+      document.getElementById('splus-status-panel')?.remove();
+      document.body.classList.remove('splus-battle');
+    }
+    function splusSkillOptions(actor){
+      const actorId=actor.id;
+      const allowed=(current,combat,action)=>!!current&&!!combat&&state.mode==='battle'&&state.currentId===actorId&&!state.locked&&!state.auto&&combat.canUse(current,action);
+      return {getState:()=>{
+        const current=getUnit(actorId),combat=splusCombat();
+        return {energy:current?.energy||0,cooldowns:Object.fromEntries(['skill','ultimate'].map(a=>[a,Math.max(0,(current?.splus?.cooldowns?.[a]||0)-(combat?.round||0))])),canUse:Object.fromEntries(['skill','ultimate'].map(a=>[a,allowed(current,combat,a)]))};
+      },cast:action=>{if(allowed(getUnit(actorId),splusCombat(),action))chooseAction(action);}};
+    }
+    function splusInspectAction(action,button){
+      if(!splusCombat()||action==='basic')return chooseAction(action);
+      const actor=getUnit(state.currentId);if(actor)splusSkillUI?.open(actor.sourceId,action,button,splusSkillOptions(actor));
+    }
+    function splusTargetTeam(actor,candidates,fallback){
+      if(!splusCombat())return fallback;
+      const teams=new Set((candidates||[]).filter(Boolean).map(unit=>unit.team));
+      return teams.size===1?[...teams][0]:fallback;
+    }
+    function splusSkillBar(){
+      if(!splusSkillUI)splusSkillUI=globalThis.createSplusSkillUI(globalThis.SPLUS42.profiles);
+      const actor=getUnit(state.currentId);let strip=document.getElementById('splus-battle-skills');
+      if(!strip){strip=document.createElement('div');strip.id='splus-battle-skills';strip.className='splus-skill-strip';document.querySelector('.action-zone').prepend(strip);}
+      if(actor&&strip.dataset.actorId!==actor.id){strip.dataset.actorId=actor.id;strip.replaceChildren(...['passive','skill','ultimate'].map(slot=>splusSkillUI.button(actor.sourceId,slot,splusSkillOptions(actor))));}
+      splusSkillUI.refresh();
+    }
+    function splusFloater(target,amount,healing=false,critical=false) {
+      if(!(amount>0))return;
+      if(splusPresentation){const id=target.id+':'+healing,previous=splusPresentation.get(id);splusPresentation.set(id,{target,amount:amount+(previous?.amount||0),healing,critical:critical||previous?.critical});return;}
+      addFloater(target,`${healing?'+':'−'}${amount}`,healing?'#8fe7bd':critical?'#ffd76f':'#ff9688',critical);
+    }
+    function splusActive() { return HEROES.some(h => globalThis.SPLUS42.catalog.some(c => c.id === h.sourceId)); }
+    function splusCombat() {
+      if (!splusActive() || !units.length) return null;
+      if (!splusEngine) {
+        splusEngine = globalThis.SPLUS42.create({units, mutate:true, rng:site => __hvRuleRandom3qAdapter(site), onEvent:splusEvent});
+        splusEngine.start();
+      }
+      return splusEngine;
+    }
+    function splusHeroConfig(raw, index) {
+      const h=normalizeConfiguredHero(raw,index),kit=globalThis.SPLUS42.catalog.find(c=>c.id===h.sourceId);
+      if(!kit)return h;
+      return {...h,name:kit.name,title:kit.elementName,initial:String(kit.number),archetype:kit.role,roleClass:kit.role,kitVersion:'splus42-v2',skillKit:null,passive:kit.passive.description,passiveIds:[kit.passive.id],basicId:kit.actions.basic.id,basicName:kit.actions.basic.name,basicDetail:kit.actions.basic.description,basicKind:'damage',skillName:kit.actions.skill.name,skillDetail:kit.actions.skill.description,skillKind:['healer','support'].includes(kit.role)?'heal':'damage',ultimateId:kit.actions.ultimate.id,ultimateName:kit.actions.ultimate.name,ultimateDetail:kit.actions.ultimate.description,ultimateKind:'aoe',visualId:kit.id,visualSource:kit.key==='linh_dong'?'linh-dong-authored':'splus-pending-art'};
+    }
+    function splusEvent(event) {
+      const t=getUnit(event.targetId),a=getUnit(event.sourceId);
+      if(t&&event.type==='damage'){splusFloater(t,event.amount,false,event.critical);t.hpTween=null;const rec=intelUnit(t);if(rec)rec.damageTaken+=event.amount;const ar=intelUnit(a);if(ar)ar.damage+=event.amount;if(typeof isLinhDong==='function'&&isLinhDong(t)&&t.hp>0&&typeof linhDongActionMs==='function')setUnitState(t,'hurt',linhDongActionMs('hurt'));}
+      if(t&&event.type==='heal'){splusFloater(t,event.amount,true);t.hpTween=null;const ar=intelUnit(a);if(ar)ar.healing+=event.amount;}
+      if(t&&event.type==='death')markDefeated(t);
+      if(t&&event.type==='resurrect'){t.defeatedAt=0;t.displayHp=t.hp;setUnitState(t,'idle',800);}
+      if(event.type==='extraTurn')state.queue.unshift(event.sourceId);
+      if(event.type==='actionDelay'){
+        const at=state.queue.indexOf(event.targetId);
+        if(at>=0){state.queue.splice(at,1);state.queue.splice(Math.min(state.queue.length,at+Math.ceil(state.queue.length*event.fraction)),0,event.targetId);}
+      }
+      if(t&&event.type==='airborne')t.splusAirborneUntil=performance.now()+event.seconds*1000;
+      if(event.type==='displacement'||event.type==='swap'){
+        for(const u of units){const p=(innerWidth<600?MOBILE_POSITIONS:POSITIONS)[u.team][u.slot];u.baseX=p.x;u.baseY=p.y;u.x=p.x;u.y=p.y;u.homeAnchorId=`${u.team}:slot-${u.slot}`;u.homeAnchor={x:p.x,y:p.y};}
+      }
+    }
+    function splusStateView() {
+      const e=splusCombat();if(!e)return;
+      splusSkillBar();
+      let panel=document.getElementById('splus-status-panel');
+      if(!panel){panel=document.createElement('section');panel.id='splus-status-panel';panel.setAttribute('aria-label','Trạng thái 42 tướng S+');document.body.append(panel);}
+      document.body.classList.add('splus-battle');
+      const heading=document.createElement('h2');heading.textContent=`Ấn ký trận đấu · Hiệp ${state.round||1}`;
+      const grid=document.createElement('div');grid.className='splus-status-grid';
+      for(const u of units){
+        const card=document.createElement('article');card.dataset.heroId=u.sourceId;card.dataset.team=u.team;
+        const name=document.createElement('strong');name.textContent=`${u.name} · ${u.team===TEAM_PLAYER?'Ta':'Địch'} · Ô ${u.slot+1}`;
+        const health=document.createElement('p');health.textContent=`HP ${Math.round(u.hp)}/${u.maxHp} · Nộ ${Math.round(u.energy)} · Khiên ${Math.round(u.shield)}`;
+        const list=document.createElement('ul');
+        for(const s of e.hud(u)){
+          const li=document.createElement('li');li.dataset.iconId=s.iconId||'';li.dataset.effect=s.type;li.dataset.sourceId=s.sourceId||'';li.dataset.polarity=s.polarity;
+          const source=getUnit(s.sourceId);li.textContent=`${s.name} · ${globalThis.SPLUS42.labels[s.type]||s.type}${s.stacks>1?` ×${s.stacks}`:''}${s.charges!=null?` · ${s.charges} lần`:''} · ${s.remainingRounds==null?'Duy trì':`${s.remainingRounds} hiệp`} · ${source?.name||'Nguồn không còn'}`;list.append(li);
+        }
+        if(!list.childElementCount){const li=document.createElement('li');li.textContent=u.hp>0?'Chưa có ấn ký':'Đã gục ngã';list.append(li);}
+        card.append(name,health,list);grid.append(card);
+      }
+      panel.replaceChildren(heading,grid);
+      if(new URLSearchParams(location.search).has('qaSplus42')){
+        const details=document.createElement('details'),summary=document.createElement('summary'),pre=document.createElement('pre');summary.textContent='Evidence trận S+ (QA)';pre.id='splus-evidence';
+        const actions=e.events.filter(x=>x.type==='action');
+        pre.textContent=JSON.stringify({schema:e.schema,mode:state.mode,round:e.round,actionCount:actions.length,eventCount:e.events.length,actionsByHero:actions.reduce((a,x)=>{const id=getUnit(x.sourceId)?.sourceId;a[id]??=[];if(!a[id].includes(x.action))a[id].push(x.action);return a;},{}),uniqueSlots:new Set(units.filter(u=>u.hp>0).map(u=>`${u.team}:${u.slot}`)).size,alive:units.filter(u=>u.hp>0).length,finite:units.every(u=>Number.isFinite(u.hp)&&Number.isFinite(u.energy)),statuses:units.map(u=>({id:u.id,heroId:u.sourceId,hp:u.hp,rage:u.energy,marks:e.hud(u)})),events:e.events.slice(-60)},null,2);details.append(summary,pre);panel.append(details);
+      }
+    }
+    async function performSplusAction(actor, action, target) {
+      const e=splusCombat(),battleId=state.battleId;
+      state.locked=true;state.selectedAction=action;clearTargets();updateActorHud(actor);
+      const title=globalThis.SPLUS42.catalog.find(h=>h.id===actor.sourceId)?.actions[action]?.name||action;
+      const linh=typeof isLinhDong==='function'&&isLinhDong(actor);
+      const linhState=action==='ultimate'?'ultimate':(action==='skill'?'skill1':'attack');
+      const linhDur=linh&&typeof linhDongActionMs==='function'?linhDongActionMs(linhState):TIMING.windup;
+      setStatus(`${actor.name} · ${title}`);dom.phaseLabel.textContent=title;setUnitState(actor,linh?linhState:'attack',linh?linhDur:TIMING.windup);
+      if(linh&&typeof startLinhDongFx==='function')startLinhDongFx(action,actor,target);
+      if(linh&&typeof playLinhDongSfx==='function')playLinhDongSfx(action);
+      if(!await sleep(linh?linhDur:TIMING.windup,battleId))return;
+      const totals=new Map();let result;splusPresentation=totals;
+      try{result=e.act(actor.id,action,target?.id);}finally{splusPresentation=null;}
+      for(const hit of totals.values())splusFloater(hit.target,hit.amount,hit.healing,hit.critical);
+      if(result.ok){state.actionCount++;state.actionBreakdown[action]=(state.actionBreakdown[action]||0)+1;const rec=intelUnit(actor);if(rec){rec.actions++;if(action==='ultimate')rec.ultimates++;}addLog(`${actor.name} · ${title}`);}
+      updateTeamCounters();splusStateView();updateActorHud(actor);
+      if(!await sleep(TIMING.turnRest,battleId))return;
+      setUnitState(actor,'idle',800);state.currentId=null;state.locked=false;
+      if(battleHasWinner()){if(!await waitForDefeatExit(battleId))return;if(checkBattleEnd()){splusStateView();return;}}
+      void advanceTurn();
+    }
+    function drawSplusToken(context, unit, time) {
+      if(typeof isLinhDong==='function'&&isLinhDong(unit)&&typeof drawLinhDongHero==='function'){
+        const lift=unit.splusAirborneUntil>time?Math.sin((1-(unit.splusAirborneUntil-time)/1000)*Math.PI)*40:0;
+        const depthScale=0.83+(unit.y-290)/1500;
+        const identityScale=(innerWidth<600?0.52:0.74);
+        context.save();context.translate(unit.x,unit.y-lift);context.scale(depthScale*identityScale,depthScale*identityScale);
+        if(unit.team===TEAM_ENEMY)context.scale(-1,1);
+        drawLinhDongHero(context,unit,time);context.restore();
+        if(unit.hp>0)drawUnitHud(context,unit,time,1);
+        return;
+      }
+      if(unit.hp<=0)return;
+      const lift=unit.splusAirborneUntil>time?Math.sin((1-(unit.splusAirborneUntil-time)/1000)*Math.PI)*40:0;
+      context.save();context.translate(unit.x,unit.y-lift);context.fillStyle='#16252d';context.strokeStyle=unit.color;context.lineWidth=3;
+      context.beginPath();context.roundRect(-57,-130,114,126,16);context.fill();context.stroke();
+      context.textAlign='center';context.fillStyle=unit.color;context.font='bold 32px sans-serif';context.fillText(unit.initial,0,-81);
+      context.fillStyle='#fff1d5';context.font='bold 15px sans-serif';context.fillText(unit.name,0,-48);context.font='11px sans-serif';context.fillStyle='#aec4ce';context.fillText('S+ · Đang thử cơ chế',0,-24);context.restore();
+      drawUnitHud(context,unit,time,1);
+    }
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/luc-than/tests/linh-dong-splus-clock.test.mjs:41:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: L146-T3 other S+ fixtures keep timingScale 0.35; marker elapsed stays wall clock
+ok 3 - L146-T3 other S+ fixtures keep timingScale 0.35; marker elapsed stays wall clock
+  ---
+  duration_ms: 1.217415
+  type: 'test'
+  ...
+1..3
+# tests 3
+# suites 0
+# pass 1
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 93.071775

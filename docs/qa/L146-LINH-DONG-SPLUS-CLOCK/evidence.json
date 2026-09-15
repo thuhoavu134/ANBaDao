@@ -1,0 +1,47 @@
+{
+  "ticket": "TKT-0146",
+  "baseline": "dba09d753624fe14800754417d915895d15c6879",
+  "contract": "tickets/TKT-0146/ticket.md",
+  "red": {
+    "command": "node --test tests/linh-dong-splus-clock.test.mjs",
+    "exit_code": 1,
+    "passed": 1,
+    "failed": 2,
+    "log": "red.tap",
+    "note": "L146-T3 already green on baseline because timingScale 0.35 and wall-clock markers must stay frozen"
+  },
+  "green": {
+    "command": "node --test tests/linh-dong-splus-clock.test.mjs tests/linh-dong-atlas.test.mjs tests/splus-ui-lifetime.test.mjs tests/splus-runtime.test.mjs",
+    "exit_code": 0,
+    "passed": 15,
+    "failed": 0,
+    "log": "green.tap"
+  },
+  "fullSuite": {
+    "command": "npm test",
+    "exit_code": 0,
+    "passed": 979,
+    "failed": 0,
+    "skipped": 0,
+    "log": "npm-test.log"
+  },
+  "browserCandidate": {
+    "status": "PASS",
+    "viewport": "390x844",
+    "url": "/battle.html?qaSplus42=hero_splus_linh_dong",
+    "atkWallMs": 1506,
+    "legacyScaledMs": 524,
+    "qaObjectKeys": ["force", "registry", "snapshot", "timeline"],
+    "linhDongSlots": ["passive", "ultimate"],
+    "log": "browser-390.json",
+    "screenshots": ["idle-390x844.png", "atk-390x844.png"]
+  },
+  "safariIphone": "NOT_RUN",
+  "production": "NOT_DEPLOYED",
+  "acceptance": {
+    "L146-T1": "PASS",
+    "L146-T2": "PASS",
+    "L146-T3": "PASS",
+    "L146-P1": "PASS"
+  }
+}

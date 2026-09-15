@@ -1,0 +1,49 @@
+{
+  "ticket": "TKT-0146",
+  "viewport": "390x844",
+  "url": "/battle.html?qaSplus42=hero_splus_linh_dong",
+  "probe": {
+    "qaKind": "object",
+    "keys": [
+      "force",
+      "registry",
+      "snapshot",
+      "timeline"
+    ],
+    "wallMs": 1506.1999999999534,
+    "sourceHasTwoSlotBar": true,
+    "sourceHasClock": true,
+    "idleStrip": {
+      "actorId": "player:hero_splus_linh_dong",
+      "slots": [
+        "passive",
+        "ultimate"
+      ]
+    },
+    "linhStrip": {
+      "actorId": "player:hero_splus_linh_dong",
+      "slots": [
+        "passive",
+        "ultimate"
+      ]
+    },
+    "afterStrip": {
+      "actorId": "enemy:hero_splus_thuy_co",
+      "slots": [
+        "passive",
+        "skill",
+        "ultimate"
+      ]
+    },
+    "atkRelease": 420,
+    "atkImpact": 1320,
+    "atkRecovery": 1496
+  },
+  "appErrors": [],
+  "atkNotScaled": true,
+  "qaObject": true,
+  "noSkill1": true,
+  "ok": true,
+  "safariIphone": "NOT_RUN",
+  "ts": "2026-09-14T15:56:06.388Z"
+}

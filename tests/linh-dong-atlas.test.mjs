@@ -52,7 +52,8 @@ test('L139-T3 battle runtime draws Linh Dong atlas and S+ token delegates', () =
   assert.match(battle, /drawOngPhoGifHero[\s\S]*drawLinhDongHero/);
   assert.match(bridge, /isLinhDong\(unit\)/);
   assert.match(bridge, /drawLinhDongHero\(context,unit,time\)/);
-  assert.match(bridge, /startLinhDongFx\(/);
+  assert.match(bridge, /emitLinhDongRelease\(/);
+  assert.match(bridge, /waitLinhDongMarker\(/);
   const encyclopedia = read('src/ui/splus-encyclopedia.js');
   assert.match(encyclopedia, /h\.art\?\.portrait/);
   assert.match(encyclopedia, /img\.src=h\.art\.portrait/);

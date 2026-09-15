@@ -1,3 +1,7 @@
+## 14/09 — TKT-0146: S+ Linh Đồng clock ATK/Ultimate
+
+REVIEW. `performSplusAction` dùng `waitLinhDongMarker` wall clock, không `sleep(linhDur)`. Chrome 390×844 ATK 1506ms. Safari NOT_RUN. Chưa deploy. Chỉ squash-merge khi owner gõ `live`.
+
 ## 13/09 — Gộp bản owner đã duyệt live: #111 + #112
 
 #112 cấp người chơi đã merge tại147325b. Ghép #111 huy hiệu hai kiếm vào cùng cây nguồn, giữ đề xuất cấp đã chốt/implementation TKT-0118. Không quay lại trạng thái chờ chốt level. Kiểm tra bản kết hợp trước cập nhật main; Chrome390×844 BLOCKED (preview đăng nhập bị auto-review từ chối), Safari NOT_RUN. Owner tự deploy.

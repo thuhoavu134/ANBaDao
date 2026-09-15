@@ -53,6 +53,18 @@ export function inspectLinhDongStatic(root = process.cwd()) {
   assert(!/impactVfx|impactSfx|projectile/.test(battle.slice(battle.indexOf('const LINH_DONG_REGISTRY'), fxStart)), 'registry contains a forbidden split channel');
 
   assert(index.includes('hero_splus_linh_dong'), 'index does not expose the canonical Linh Đồng identity bridge');
+  const splusStart = battle.indexOf('async function performSplusAction');
+  const splusEnd = battle.indexOf('function drawSplusToken', splusStart);
+  assert(splusStart >= 0 && splusEnd > splusStart, 'S+ action owner is missing from battle');
+  const splusSource = battle.slice(splusStart, splusEnd);
+  assert(splusSource.includes('beginLinhDongAction(actor,action,target,battleId)'), 'S+ Linh Đồng does not start the shared clock');
+  assert(/waitLinhDongMarker\([^,]+,\s*['"]release['"]/.test(splusSource), 'S+ Linh Đồng does not wait for release');
+  assert(splusSource.includes('emitLinhDongRelease'), 'S+ Linh Đồng does not emit release on the shared clock');
+  assert(/waitLinhDongMarker\([^,]+,\s*['"]impact['"]/.test(splusSource), 'S+ Linh Đồng does not wait for impact');
+  assert(/waitLinhDongMarker\([^,]+,\s*['"]recovery:end['"]/.test(splusSource), 'S+ Linh Đồng does not wait for recovery');
+  assert(splusSource.split('e.act(').length === 2, 'S+ Linh Đồng damage is not resolved once');
+  assert(!/sleep\(linh\?linhDur/.test(splusSource) && !splusSource.includes('sleep(linhDur'), 'S+ Linh Đồng still sleeps the scaled clip duration');
+  assert(battle.includes("['passive','ultimate']"), 'S+ Linh Đồng skill bar still exposes Skill 1');
   const embedded = index.match(/const BATTLE_HTML_BASE64 = "([A-Za-z0-9+/=]+)";/);
   assert(embedded, 'embedded battle payload marker is missing');
   const embeddedBattle = Buffer.from(embedded[1], 'base64').toString('utf8');

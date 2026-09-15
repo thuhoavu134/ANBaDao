@@ -1,6 +1,8 @@
 # Hồn Việt / Lục Thần — hướng dẫn bắt đầu
 
-Bản sửa Linh Đồng TKT-0144 LIVE #138 `645902f`. Safari/iPhone chưa kiểm; không tuyên bố hết crash trước khi owner xác minh trên máy. Đọc `docs/HANDOFF-LINH-DONG-CRASH-2026-09-14.md`.
+TKT-0146 S+ Linh Đồng clock ATK/Ultimate đang REVIEW, chưa LIVE. Safari/iPhone NOT_RUN. Đọc `docs/HANDOFF-LINH-DONG-TIMING-2026-09-14.md`. Chỉ squash-merge khi owner gõ đúng chữ `live`.
+
+Bản sửa Linh Đồng TKT-0145 LIVE #141 `dba09d7` trên #140. TKT-0144 LIVE #138 `645902f`. Safari/iPhone chưa kiểm; không tuyên bố hết crash trước khi owner xác minh trên máy. Đọc `docs/HANDOFF-LINH-DONG-CRASH-2026-09-14.md`.
 
 Đọc `docs/HANDOFF-2026-09-13.md` rồi `docs/HANDOFF-2026-09-12.md` trước khi sửa game.
 
