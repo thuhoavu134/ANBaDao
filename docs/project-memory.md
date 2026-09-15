@@ -1,6 +1,6 @@
 ## 15/09 — TKT-0151: Canvas Sprite Runtime
 
-REVIEW. Catalog `src/assets/asset-catalog.mjs` resolve Linh Đồng + Lục Ảnh + Đình Lôi, không Image. Loader lazy, decoded LRU 128 MiB / maxLoading 2. Renderer metadata, trận 477×440. Timing-main bỏ eager forEach TKT-0150. L150-T2 đổi thành load VFX lúc ra chiêu. Safari NOT_RUN. Chờ `live`.
+LIVE #147 `e8cd581`. Catalog resolve Linh Đồng + Lục Ảnh + Đình Lôi, không Image. Loader lazy, decoded LRU 128 MiB / maxLoading 2. Renderer metadata, trận 477×440. Timing-main bỏ eager forEach TKT-0150. L150-T2 đổi thành load VFX lúc ra chiêu. Safari NOT_RUN. Owner tự `git pull && vercel --prod`.
 
 ## 15/09 — TKT-0150: VFX/SFX trận
 

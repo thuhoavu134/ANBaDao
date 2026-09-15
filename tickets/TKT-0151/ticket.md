@@ -1,8 +1,8 @@
 ---
 id: TKT-0151
 title: Canvas Sprite Runtime — catalog, lazy loader, decoded LRU, renderer
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 acceptance_ids: [L151-T1, L151-T2, L151-T3, L151-T4, L151-T5, L151-T6, L151-P1]
 required_gates: [vibelab, tdd]
@@ -50,7 +50,7 @@ Không đổi BETS 2/10/50, loot, Bách Bảo, Hồng Trầu. Không mở 42 S+,
 
 ## Result
 
-REVIEW. RED 22 fail (module missing) → GREEN 25/25 L151 + npm test 1014/1014.
-Chrome desktop + 390×844: boot idle-only, ATK tải basic+VFX, cache ≤ 128 MiB. Safari/iPhone NOT_RUN.
-Không Spine. Không đổi BETS/loot/công thức. Chờ anh gõ `live` mới squash-merge.
+LIVE #147 `e8cd581`. Catalog + lazy loader + LRU 128 MiB + renderer metadata. Linh Đồng boot idle-only; ATK/VFX khi ra chiêu. Không Spine. Không đổi BETS/loot/công thức.
+RED 22 fail → GREEN 25/25 L151 + npm test 1014/1014. CI Build and test PASS. Chrome desktop + 390×844 PASS. Safari/iPhone NOT_RUN.
+Owner tự `git pull && vercel --prod`.
 

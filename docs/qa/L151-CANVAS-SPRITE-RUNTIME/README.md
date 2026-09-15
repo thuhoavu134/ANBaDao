@@ -10,7 +10,7 @@ Owner 15/09 · không Spine, không rewrite gameplay. Catalog + lazy loader + de
 - ATK mới tải `basic-atlas.webp` + `skill1_vfx-atlas.webp`
 - `__HV_SPRITE_RUNTIME.inspect()` boot: 81,100,800 decoded (idle)
 - Sau ATK+Ult: 133,478,400 decoded ≤ 128 MiB
-- Không lỗi console app. Safari/iPhone NOT_RUN
+- Không lỗi console app. Safari/iPhone NOT_RUN. LIVE #147 `e8cd581`. Owner tự `git pull && vercel --prod`.
 
 ## RAM vs file
 
