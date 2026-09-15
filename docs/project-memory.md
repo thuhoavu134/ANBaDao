@@ -1,4 +1,9 @@
+## 15/09 — TKT-0153: Chinh chiến Linh Đồng Run
+
+March dùng `run-atlas.webp`. Idle giữ cho Bày trận. Cell/pivot L144 không đổi.
+
 ## 15/09 — TKT-0151: Canvas Sprite Runtime
+
 
 LIVE #147 `e8cd581`. Catalog resolve Linh Đồng + Lục Ảnh + Đình Lôi, không Image. Loader lazy, decoded LRU 128 MiB / maxLoading 2. Renderer metadata, trận 477×440. Timing-main bỏ eager forEach TKT-0150. L150-T2 đổi thành load VFX lúc ra chiêu. Safari NOT_RUN. Owner tự `git pull && vercel --prod`.
 

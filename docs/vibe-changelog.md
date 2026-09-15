@@ -1,4 +1,9 @@
+## 15/09 — TKT-0153: Chinh chiến đi đường Linh Đồng Run
+
+Owner gửi ảnh Ấn Phố đội đang đi. `specForAfk` nối `run-atlas.webp`. Bày trận vẫn Idle. Safari NOT_RUN. REVIEW, đợi `live`.
+
 ## 15/09 — TKT-0151: Canvas Sprite Runtime
+
 
 Catalog + lazy loader + LRU decoded 128 MiB + renderer metadata. Linh Đồng native 480×440, trận 477×440. Boot chỉ idle; ATK/VFX khi ra chiêu. Không Spine, không đổi công thức.
 GREEN 1014/1014. LIVE #147 `e8cd581`. Owner tự `git pull && vercel --prod`.

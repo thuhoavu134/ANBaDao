@@ -113,6 +113,7 @@ Board GitHub không có. File `tickets/TKT-00xx/ticket.md` là nguồn sự th�
 | TKT-0149 | — | Trận một tướng xong mới đến tướng kia | LIVE (#145) |
 | TKT-0150 | — | Trận hiện VFX và SFX | LIVE (#146) |
 | TKT-0151 | — | Canvas Sprite Runtime (Linh Đồng trước) | LIVE (#147) |
+| TKT-0153 | — | Chinh chiến đi đường dùng Linh Đồng Run | REVIEW |
 
 
 

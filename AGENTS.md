@@ -1,6 +1,9 @@
 # Hồn Việt / Lục Thần — hướng dẫn bắt đầu
 
+TKT-0153 Chinh chiến đi đường Linh Đồng Run REVIEW. Idle Bày trận không đổi. Safari/iPhone NOT_RUN. Không `live` thì không merge.
+
 TKT-0151 Canvas Sprite Runtime LIVE #147 `e8cd581`. Catalog + lazy + LRU 128 MiB. Linh Đồng trước. Safari/iPhone NOT_RUN. Owner tự `git pull && vercel --prod`.
+
 
 TKT-0150 trận hiện VFX và SFX LIVE #146 `7baca81`. Safari/iPhone NOT_RUN. Owner tự `git pull && vercel --prod`.
 

@@ -79,6 +79,10 @@ const farmAttackSpecs = {
   dinh_loi: { src:'assets/characters/dinh-loi/basic-cast-atlas.png', frames:64, cols:8, cellW:480, cellH:270, ms:62.5, pivot:265, foot:255, body:235 }
 };
 
+const runSpecs = {
+  linh_dong: { src: 'assets/characters/linh-dong/run-atlas.webp', frames: 96, cols: 8, cellW: 480, cellH: 440, ms: 42, pivot: 240, foot: 440, body: 330 }
+};
+
 function currentCheckpoint() { return campaignCheckpoint(P, DATA.chapters, chapterBattleSequence); }
 function ownedSceneHeroIds() { return OFFICIAL_ROSTER_12_IDS.filter(id => DATA.heroes[id] && P.heroes[id]?.owned); }
 function savedSceneSquad() {
@@ -120,7 +124,7 @@ function frameAt(spec, time) {
 }
 function specForAfk(pick) {
   if (sceneState.draft) return spriteSpecs[pick.id];
-  const run = window.HonVietCampaignRunSpecs?.[pick.id];
+  const run = runSpecs[pick.id] || window.HonVietCampaignRunSpecs?.[pick.id];
   if (run && run.src && Number(run.frames) > 0 && run.cellW && run.cellH && run.pivot && run.foot && run.body) return run;
   return spriteSpecs[pick.id];
 }
@@ -133,7 +137,7 @@ const HOME_SLOT = [
   { x: 0.58, y: 0.455, s: 0.88 }
 ];
 // Authored map coordinates, independent of chapter progress and reward time.
-// Owner permits Idle travel temporarily; authored Run replaces it when available.
+// Linh Đồng Run on the road; Idle stays for Bày trận and standing farm hits.
 function campaignMapView(w, h, focus = null) {
   const width = Math.max(w, Math.min(Math.max(w, h * 9 / 16) * (focus ? 2.3 : 1.8), h * (focus ? 3.1 : 2.4) * 9 / 16));
   const height = width * 16 / 9;

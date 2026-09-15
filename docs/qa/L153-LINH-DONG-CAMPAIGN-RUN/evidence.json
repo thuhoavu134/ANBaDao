@@ -1,0 +1,13 @@
+{
+  "ticket": "TKT-0153",
+  "revision": "pending",
+  "acceptance": {
+    "L153-T1": "PASS",
+    "L153-T2": "PASS",
+    "L153-T3": "PASS",
+    "L153-P1": "NOT_RUN"
+  },
+  "npmTest": "1017/1017",
+  "chrome": "NOT_RUN",
+  "safari": "NOT_RUN"
+}
