@@ -40,11 +40,20 @@ test('L24-T2: active roster must not hide #heroesScreen', () => {
 test('L24-T3: roster is a body overlay with overflow auto and cards that cannot collapse', () => {
   const css = read('../scripts/hero-roster-phase-a-v4.mjs');
   assert.match(css, /#hvHeroRosterV4\.is-open\{display:flex/);
-  assert.match(css, /#hvHeroRosterV4\{[^}]*overflow:auto/);
-  assert.doesNotMatch(css, /#hvHeroRosterV4\{[^}]*overflow:hidden/);
+  assert.match(css, /#hvHeroRosterV4\{[^}]*overflow:hidden/);
+  assert.match(css, /#hvHeroRosterV4 \.v4-grid\{[^}]*overflow(?:-y)?:auto/);
+  assert.doesNotMatch(css, /#hvHeroRosterV4 \.v4-grid\{[^}]*overflow:visible/);
   assert.doesNotMatch(css, /#hvHeroRosterV4\{[^}]*height:auto!important/);
-  assert.match(css, /#hvHeroRosterV4 \.v4-grid\{[^}]*min-height:420px/);
   assert.match(css, /#hvHeroRosterV4 \.v4-card\{[^}]*min-height:150px/);
+});
+test('L148-T2: grid is the only scroll surface; dock stays below the cards', () => {
+  const css = read('../scripts/hero-roster-phase-a-v4.mjs');
+  const runtime = read('../src/ui/hero-roster-runtime.js');
+  assert.match(css, /#hvHeroRosterV4 \.v4-grid\{[^}]*overflow(?:-y)?:auto/);
+  assert.match(css, /#hvHeroRosterV4 \.v4-dock\{[^}]*flex:0 0 auto/);
+  assert.match(css, /#hvHeroRosterV4 \.v4-dock\{[^}]*position:relative/);
+  assert.match(runtime, /scrollSurface = \(\) => root\.querySelector\('\.v4-grid'\)/);
+  assert.doesNotMatch(runtime, /document\.addEventListener\(['"](?:click|pointerdown|pointerup)/);
 });
 
 test('L24-T4: one route owner still wraps showScreen without a second document listener', () => {

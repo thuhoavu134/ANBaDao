@@ -49,7 +49,7 @@ function preparationEnemyArt(pick, enemies) {
     cols: 4, rows: 2, column: 0, row: 1, mirror: true
   };
   return { src: 'assets/battle-runtime/embedded-04.webp', cols: 3, rows: 2,
-    column: pick.slot % 3, row: Math.floor(pick.slot / 3), mirror: false };
+    column: pick.slot % 3, row: Math.floor(pick.slot / 3), mirror: true };
 }
 const escapeScene = value => String(value ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const sceneNumber = value => new Intl.NumberFormat('vi-VN').format(Math.max(0, Number(value) || 0));
@@ -337,7 +337,7 @@ function drawScene(time) {
         const lean = Math.sin(actor.attackTime / actor.duration * Math.PI) * .08;
         ctx.translate(x,y); ctx.rotate(lean); ctx.translate(-x,-y);
       }
-      if ((farm && farm.direction.x < 0) || (pick.enemy && (!enemyArt || enemyArt.mirror))) { ctx.translate(2 * x, 0); ctx.scale(-1, 1); }
+      if ((farm && farm.direction.x < 0) || pick.enemy) { ctx.translate(2 * x, 0); ctx.scale(-1, 1); }
       if (spec) {
         const frame = frameAt(spec, readyAttack ? actor.attackTime : time), scale = bodyH / spec.body;
         const sx = frame % spec.cols * (spec.strideW || spec.cellW) + (spec.pad || 0);

@@ -1,3 +1,7 @@
+## 15/09 — TKT-0148: địch Bày trận + cuộn Tướng
+
+REVIEW. Foe prep luôn mirror. `.v4-grid` overflow auto. Safari NOT_RUN. Chờ `live`.
+
 ## 15/09 — TKT-0147: Ải 1-2 khóa sau thắng ải trước
 
 LIVE #143 `4e61e58`. Con trỏ campaignStages sau thắng mở ải kế. Settlement ghi mốc theo ải đang đánh. Safari NOT_RUN. Owner tự `git pull && vercel --prod`.

@@ -5,7 +5,7 @@ const p = join(process.cwd(), 'dist', 'index.html');
 let html = readFileSync(p, 'utf8');
 
 const css = `<style id="hero-roster-phase-a-v4-css">
-#hvHeroRosterV4{position:fixed;inset:0;z-index:99999;display:none;flex-direction:column;background:linear-gradient(180deg,#bddce7 0 110px,#f7edd8 110px 100%);color:#2d251f;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;overflow:auto;-webkit-overflow-scrolling:touch;padding:env(safe-area-inset-top) 0 0;box-sizing:border-box}
+#hvHeroRosterV4{position:fixed;inset:0;z-index:99999;display:none;flex-direction:column;background:linear-gradient(180deg,#bddce7 0 110px,#f7edd8 110px 100%);color:#2d251f;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;overflow:hidden;-webkit-overflow-scrolling:touch;padding:env(safe-area-inset-top) 0 0;box-sizing:border-box}
 #hvHeroRosterV4.is-open{display:flex}
 #hvHeroRosterV4[hidden]{display:none!important}
 #hvHeroRosterV4 .v4-top{position:relative;top:0;z-index:5;flex:0 0 auto;background:linear-gradient(180deg,rgba(188,220,231,.985),rgba(236,231,208,.985));border-bottom:1px solid #d7b883;box-shadow:0 2px 8px rgba(79,58,27,.14)}
@@ -16,7 +16,7 @@ const css = `<style id="hero-roster-phase-a-v4-css">
 #hvHeroRosterV4 .v4-tabs{height:40px;display:grid;grid-template-columns:repeat(5,1fr);gap:3px;padding:0 7px;align-items:end}
 #hvHeroRosterV4 .v4-tab{height:33px;border:1px solid #b8844d;border-bottom:0;border-radius:7px 7px 0 0;background:linear-gradient(180deg,#956240,#75492f);color:#f5e1c5;font-size:9.5px;font-weight:900;display:flex;align-items:center;justify-content:center}
 #hvHeroRosterV4 .v4-tab.active{height:39px;background:linear-gradient(180deg,#ffe8be,#f0c692);color:#9f5b35;box-shadow:inset 0 1px 0 #fff8e9}
-#hvHeroRosterV4 .v4-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;padding:8px 7px 16px;flex:1 1 auto;min-height:420px;min-width:0}
+#hvHeroRosterV4 .v4-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;padding:8px 7px 16px;flex:1 1 auto;min-height:0;min-width:0;overflow:auto;-webkit-overflow-scrolling:touch}
 #hvHeroRosterV4 .v4-card{position:relative;aspect-ratio:.68;min-height:150px;border:2px solid #e8c56a;border-radius:10px;background:#c9a050;box-shadow:0 0 0 2px #7a4a14,inset 0 0 0 2px #fff4d0,0 4px 10px rgba(70,40,8,.3);overflow:hidden;padding:0;margin:0;color:inherit;min-width:0;touch-action:manipulation}
 #hvHeroRosterV4 .v4-art{position:absolute;left:3px;right:3px;top:3px;bottom:3px;border-radius:7px;overflow:hidden;background:linear-gradient(180deg,#cde9df,#acd2c1);border:0}
 #hvHeroRosterV4 .v4-art img{width:168%;max-width:none;height:130%;object-fit:cover;object-position:50% 8%;margin-left:-34%;margin-top:-2%;display:block}
@@ -54,7 +54,7 @@ body.hero-roster-active #heroesScreen:before,body.hero-roster-active #heroesScre
 #hvHeroRosterV4 select{max-width:104px;background:#fff4df;border:1px solid #b8844d;border-radius:5px;font:inherit;padding:5px}
 #hvHeroRosterV4 .v4-filter{position:static;height:46px;gap:8px;box-shadow:none}
 #hvHeroRosterV4 .v4-filter button{min-width:32px;min-height:34px;cursor:pointer}
-#hvHeroRosterV4 .v4-grid{flex:1 1 auto;min-height:420px;min-width:0;overflow:visible;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:minmax(150px,auto);padding:10px 7px 16px;align-content:start}
+#hvHeroRosterV4 .v4-grid{flex:1 1 auto;min-height:0;min-width:0;overflow:auto;-webkit-overflow-scrolling:touch;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:minmax(150px,auto);padding:10px 7px 16px;align-content:start}
 #hvHeroRosterV4 .v4-card{aspect-ratio:.68;min-height:150px;height:auto;cursor:pointer}
 #hvHeroRosterV4 .v4-art{bottom:3px}
 #hvHeroRosterV4 .v4-level{font-size:11px}

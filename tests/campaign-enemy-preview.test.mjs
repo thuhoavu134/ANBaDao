@@ -27,3 +27,12 @@ test('EP-2 generic enemy selects enemy pose row then team atlas by slot',()=>{
  assert.equal(art[0].src,'assets/battle-runtime/embedded-08.webp');assert.equal(art[0].row,1);assert.equal(art[0].cols,4);
  assert.equal(art[1].src,'assets/battle-runtime/embedded-04.webp');assert.equal(art[1].column,1);assert.equal(art[3].column,0);assert.equal(art[3].row,1);
 });
+test('L148-T1: every prep foe faces left, including duplicate fallback art',()=>{
+ const c=context();
+ const art=vm.runInContext('preparationEnemies().map((p,i,all)=>preparationEnemyArt(p,all))',c);
+ assert.ok(art.length>=2);
+ assert.ok(art.every(item=>item.mirror===true),'all enemy poses including duplicates face the player');
+ const source=readFileSync(new URL('../src/ui/campaign-scene.js',import.meta.url),'utf8');
+ assert.match(source,/\|\| pick\.enemy\) \{ ctx\.translate\(2 \* x, 0\); ctx\.scale\(-1, 1\); \}/);
+ assert.doesNotMatch(source,/pick\.enemy && \(!enemyArt \|\| enemyArt\.mirror\)/);
+});

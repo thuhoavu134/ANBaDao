@@ -1,3 +1,8 @@
+## 15/09 — TKT-0148: địch Bày trận quay trái + Tướng cuộn được
+
+Bày trận lật mọi địch, kể cả bản trùng. Lưới tướng cuộn; thanh icon không đè thẻ cuối.
+GREEN 984/984. Ảnh owner. REVIEW, chờ `live`.
+
 ## 15/09 — TKT-0147: Ải 1-2 không còn khóa sau thắng ải trước
 
 Chinh chiến dùng con trỏ ải đã thắng để mở ải kế. Ghi mốc thắng theo ải đang đánh, không phụ thuộc mã trận lệch.
