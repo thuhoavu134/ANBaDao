@@ -34,12 +34,20 @@ test('AC4: daily EXP is transaction-bound; duplicates and save failures do not g
 test('AC4: campaign XP checks active battle identity, win and first clear',()=>{
  const c=context();c.hvEnsurePlayerProgress();c.ST={mode:'campaign',chapterIdx:0,campaignBattleIndex:0};
  assert.equal(c.hvCampaignSettlementXp(c.P,{win:false,battleId:'lt_seal_0_0'}),0);
- assert.equal(c.hvCampaignSettlementXp(c.P,{win:true,battleId:'lt_seal_1_0'}),0);
- assert.equal(c.hvCampaignSettlementXp(c.P,{win:true,battleId:'lt_seal_0_0'}),80);
+ assert.equal(c.hvCampaignSettlementXp(c.P,{win:true,battleId:'lt_seal_1_0'}),80);
  assert.equal(c.hvCampaignSettlementXp(c.P,{win:true,battleId:'lt_seal_0_0'}),0);
+});
+test('L147-T3: campaign win records the ST stage even when payload battleId drifted',()=>{
+ const c=context();c.hvEnsurePlayerProgress();c.ST={mode:'campaign',chapterIdx:0,campaignBattleIndex:0};
+ assert.equal(c.hvCampaignSettlementXp(c.P,{win:true,battleId:'battle'}),80);
+ assert.ok(c.P.hvPlayerProgress.clears.includes('0:0'));
+ c.ST.campaignBattleIndex=1;c.P.campaignStages[0]=1;
+ assert.equal(c.hvCampaignSettlementXp(c.P,{win:true,battleId:'hon-viet'}),88);
+ assert.ok(c.P.hvPlayerProgress.clears.includes('0:1'));
 });
 test('AC3/4: built UI and AFK grant are inside existing handlers',()=>{
  assert.match(html,/data-player-level/);assert.match(html,/data-player-gate/);assert.match(html,/data-afk-player-xp/);
+ assert.match(html,/cursor < stage/);
  const claim=between('function grantSceneClaim()', 'function sceneClick(');
  assert.match(claim,/playerXp = hvGrantAfkXp/);assert.ok(claim.indexOf('playerXp = hvGrantAfkXp')>claim.indexOf('mutate: draft'));
  assert.match(html,/if \(!hvCheckCampaignEntry\(idx\)\) return/);

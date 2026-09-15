@@ -1,3 +1,7 @@
+## 15/09 — TKT-0147: Ải 1-2 khóa sau thắng ải trước
+
+REVIEW. Con trỏ campaignStages sau thắng mở ải kế. Settlement ghi mốc theo ải đang đánh. Ảnh owner Ải 1-2. Safari NOT_RUN. Chờ `live`.
+
 ## 14/09 — TKT-0146: S+ Linh Đồng clock ATK/Ultimate
 
 LIVE #142 `c517cd8`. `performSplusAction` dùng `waitLinhDongMarker` wall clock, không `sleep(linhDur)`. Chrome 390×844 ATK 1506ms. Safari NOT_RUN. Owner tự `git pull && vercel --prod`.

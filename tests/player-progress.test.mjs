@@ -31,6 +31,25 @@ test('AC3: level and previous win both required; changing heroes cannot change a
  assert.equal(p.hvCampaignGate(low,0,2).code,'PLAYER_LEVEL');
  low.heroes={z:{level:1}};assert.equal(p.hvCampaignGate(low,0,2).code,'PLAYER_LEVEL');
 });
+test('L147-T1: campaign cursor after a win unlocks the next stage even if clears lagged',()=>{
+ const s=fresh();p.hvMigratePlayerProgress(s);
+ assert.equal(p.hvCampaignGate(s,0,0).ok,true);
+ assert.equal(p.hvCampaignGate(s,0,1).code,'PREVIOUS_STAGE');
+ s.campaignStages[0]=1;
+ assert.equal(p.hvCampaignGate(s,0,1).ok,true,'Ải 1-2 opens when cursor already advanced past Ải 1-1');
+ assert.equal(p.hvCampaignGate(s,0,2).code,'PREVIOUS_STAGE');
+ const stuck=fresh();p.hvMigratePlayerProgress(stuck);
+ assert.equal(p.hvCampaignGate(stuck,0,1).code,'PREVIOUS_STAGE');
+});
+test('L147-T2: first stage stays open; later chapters still need the previous chapter',()=>{
+ const s=fresh();p.hvMigratePlayerProgress(s);
+ assert.equal(p.hvCampaignGate(s,0,0).ok,true);
+ s.campaignStages[0]=1;
+ assert.equal(p.hvCampaignGate(s,1,0).code,'PREVIOUS_CHAPTER');
+ s.clearedChapters.push(0);s.unlockedChapters.push(1);
+ s.hvPlayerProgress.xp=p.hvLevelXp(11);
+ assert.equal(p.hvCampaignGate(s,1,0).ok,true);
+});
 test('AC4: first clear once, AFK fractional/cap and non-reward sources',()=>{
  const s=fresh();p.hvMigratePlayerProgress(s);
  assert.equal(p.hvRecordCampaignXp(s,0,0),80);assert.equal(p.hvRecordCampaignXp(s,0,0),0);

@@ -63,6 +63,7 @@ export function hvCampaignGate(player, chapter, stage) {
   const clears = player.hvPlayerProgress?.clears || [];
   if ((player.clearedChapters || []).includes(chapter) || clears.includes(chapter + ':' + stage)) return result('OPEN');
   if (!(player.unlockedChapters || []).includes(chapter) || (chapter > 0 && !(player.clearedChapters || []).includes(chapter - 1))) return result('PREVIOUS_CHAPTER');
-  if (stage > 0 && !clears.includes(chapter + ':' + (stage - 1))) return result('PREVIOUS_STAGE');
+  const cursor = hvProgressInt(player.campaignStages?.[chapter]);
+  if (stage > 0 && !clears.includes(chapter + ':' + (stage - 1)) && cursor < stage) return result('PREVIOUS_STAGE');
   return result(level < requiredLevel ? 'PLAYER_LEVEL' : 'OPEN');
 }

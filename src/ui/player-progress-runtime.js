@@ -18,7 +18,7 @@ function hvCheckCampaignEntry(idx) {
 function hvCampaignSettlementXp(player, payload) {
   if (ST.mode !== 'campaign' || !payload.win) return 0;
   const chapter = ST.chapterIdx, stage = ST.campaignBattleIndex;
-  if (payload.battleId !== chapterBattleSequence(chapter)[stage]) return 0;
+  if (hvStageLevel(chapter, stage) === null) return 0;
   return hvRecordCampaignXp(player, chapter, stage);
 }
 window.HonVietPlayerProgress = Object.freeze({ ensure: hvEnsurePlayerProgress, gate: hvCampaignGate,

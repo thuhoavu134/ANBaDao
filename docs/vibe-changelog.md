@@ -1,3 +1,8 @@
+## 15/09 — TKT-0147: Ải 1-2 không còn khóa sau thắng ải trước
+
+Chinh chiến dùng con trỏ ải đã thắng để mở ải kế. Ghi mốc thắng theo ải đang đánh, không phụ thuộc mã trận lệch.
+GREEN 982/982. Ảnh owner Ải 1-2 khóa. REVIEW, chờ `live`.
+
 ## 14/09 — TKT-0146: S+ Linh Đồng dùng cùng clock ATK/Ultimate
 
 Trận thử S+ không còn `sleep(linhDur)` × 0.35 (ATK 524 / Ult 693). `performSplusAction` đi clock chung: release → emit VFX/SFX → impact một lần → recovery. Thanh S+ Linh Đồng chỉ nội tại + tuyệt kỹ. Hurt reset idle. `timingScale` 0.35 của 41 tướng S+ kia không đổi.
