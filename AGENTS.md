@@ -1,5 +1,7 @@
 # Hồn Việt / Lục Thần — hướng dẫn bắt đầu
 
+TKT-0151 Canvas Sprite Runtime REVIEW trên `work/l151-canvas-sprite-runtime-20260915`. Không Spine. Catalog + lazy + LRU 128 MiB. Linh Đồng trước. Chờ owner gõ `live`. Safari/iPhone NOT_RUN.
+
 TKT-0150 trận hiện VFX và SFX LIVE #146 `7baca81`. Safari/iPhone NOT_RUN. Owner tự `git pull && vercel --prod`.
 
 TKT-0149 trận một tướng xong mới đến tướng kia LIVE #145 `506a7f8`. Safari/iPhone NOT_RUN. Owner tự `git pull && vercel --prod`.

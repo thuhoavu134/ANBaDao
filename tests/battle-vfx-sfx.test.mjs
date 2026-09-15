@@ -14,10 +14,11 @@ test('L150-T1: combat waits and VFX keep authored duration even if the OS asks t
   assert.match(battle, /cameraShake > 0\.2 && !REDUCED_MOTION/);
 });
 
-test('L150-T2: Linh Đồng VFX atlases start loading before the first ATK', () => {
+test('L150-T2: Linh Đồng VFX atlases load when the action starts, not at boot', () => {
   const patch = read('scripts/linh-dong-timing-main-v1.mjs');
   assert.match(patch, /atkVfx:\{file:"skill1_vfx-atlas\.webp"/);
-  assert.match(patch, /Object\.keys\(LINH_DONG_CLIPS\)\.forEach\(linhDongImage\)/);
+  assert.doesNotMatch(patch, /Object\.keys\(LINH_DONG_CLIPS\)\.forEach\(linhDongImage\)/);
+  assert.match(patch, /linhDongImage\(normalized==='ultimate'\?'ultimateVfx':'atkVfx'\)/);
 });
 
 test('L150-T4: a new battle never starts with skip-animations armed', () => {

@@ -20,12 +20,12 @@ Play đang soi: https://luc-than-neon.vercel.app/
 
 ## Git lúc bàn giao
 - origin/main LIVE: docs TKT-0150 LIVE after #146, trên squash `7baca81`
-- TKT-0150 LIVE #146. TKT-0149 LIVE #145. TKT-0148 LIVE #144. PR mở: không
+- TKT-0150 LIVE #146. TKT-0149 LIVE #145. TKT-0148 LIVE #144. PR mở: TKT-0151 REVIEW
 - Không force-push. Không commit dist/. Không tự MERGED/DONE
 
 ## Việc
 Owner gửi screenshot + câu = việc. Một việc / một PR.
-Anh đã được bảo tự `git pull && vercel --prod` cho TKT-0150.
+TKT-0151 Canvas Sprite Runtime đang REVIEW. Anh gõ `live` mới squash-merge.
 
 ## Cấm
 - BETS [2, 10, 50], loot, Bách Bảo, Hồng Trầu

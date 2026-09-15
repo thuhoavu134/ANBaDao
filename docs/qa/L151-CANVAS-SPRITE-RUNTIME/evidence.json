@@ -1,0 +1,255 @@
+{
+  "ok": true,
+  "report": {
+    "ticket": "TKT-0151",
+    "ts": "2026-09-15T09:16:12.908Z",
+    "decoded": {
+      "idle": 81100800,
+      "attack": 40550400,
+      "ultimate": 54067200,
+      "skill1Vfx": 52377600,
+      "ultimateVfx": 52377600,
+      "cap": 134217728
+    },
+    "compressed": {
+      "idle": 10909760,
+      "attack": 5046406,
+      "ultimate": 4420342,
+      "skill1Vfx": 7239332,
+      "ultimateVfx": 12856778
+    },
+    "desktop": {
+      "name": "desktop-dpr1",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "dpr": 1,
+      "boot": {
+        "canvasW": 1280,
+        "canvasH": 696,
+        "painted": 222121,
+        "hasHero": true,
+        "hasRuntime": true,
+        "inspect": {
+          "bytes": 81100800,
+          "maxBytes": 134217728,
+          "maxLoading": 2,
+          "loading": 0,
+          "failed": 0,
+          "entries": [
+            {
+              "src": "assets/characters/linh-dong/idle-atlas.webp",
+              "bytes": 81100800,
+              "width": 3840,
+              "height": 5280,
+              "loading": false,
+              "state": "ready",
+              "scope": "battle"
+            }
+          ]
+        },
+        "sourceOver": true,
+        "drawSize": true,
+        "eagerForEach": false
+      },
+      "bootRequests": [
+        "assets/characters/linh-dong/idle-atlas.webp"
+      ],
+      "atkRequests": [
+        "assets/characters/linh-dong/idle-atlas.webp",
+        "assets/characters/linh-dong/basic-atlas.webp",
+        "assets/characters/linh-dong/skill1_vfx-atlas.webp"
+      ],
+      "requests": [
+        "assets/characters/linh-dong/idle-atlas.webp",
+        "assets/characters/linh-dong/basic-atlas.webp",
+        "assets/characters/linh-dong/skill1_vfx-atlas.webp"
+      ],
+      "inspectAfter": {
+        "bytes": 133478400,
+        "maxBytes": 134217728,
+        "maxLoading": 2,
+        "loading": 0,
+        "failed": 0,
+        "entries": [
+          {
+            "src": "assets/characters/linh-dong/skill1_vfx-atlas.webp",
+            "bytes": 52377600,
+            "width": 4400,
+            "height": 2976,
+            "loading": false,
+            "state": "ready",
+            "scope": "battle"
+          },
+          {
+            "src": "assets/characters/linh-dong/idle-atlas.webp",
+            "bytes": 81100800,
+            "width": 3840,
+            "height": 5280,
+            "loading": false,
+            "state": "ready",
+            "scope": "battle"
+          }
+        ]
+      },
+      "appErrors": []
+    },
+    "desktop2": {
+      "name": "desktop-dpr2",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "dpr": 2,
+      "boot": {
+        "canvasW": 2560,
+        "canvasH": 1392,
+        "painted": 888203,
+        "hasHero": true,
+        "hasRuntime": true,
+        "inspect": {
+          "bytes": 81100800,
+          "maxBytes": 134217728,
+          "maxLoading": 2,
+          "loading": 0,
+          "failed": 0,
+          "entries": [
+            {
+              "src": "assets/characters/linh-dong/idle-atlas.webp",
+              "bytes": 81100800,
+              "width": 3840,
+              "height": 5280,
+              "loading": false,
+              "state": "ready",
+              "scope": "battle"
+            }
+          ]
+        },
+        "sourceOver": true,
+        "drawSize": true,
+        "eagerForEach": false
+      },
+      "bootRequests": [
+        "assets/characters/linh-dong/idle-atlas.webp"
+      ],
+      "atkRequests": [
+        "assets/characters/linh-dong/idle-atlas.webp",
+        "assets/characters/linh-dong/basic-atlas.webp",
+        "assets/characters/linh-dong/skill1_vfx-atlas.webp",
+        "assets/characters/linh-dong/idle-atlas.webp"
+      ],
+      "requests": [
+        "assets/characters/linh-dong/idle-atlas.webp",
+        "assets/characters/linh-dong/basic-atlas.webp",
+        "assets/characters/linh-dong/skill1_vfx-atlas.webp",
+        "assets/characters/linh-dong/idle-atlas.webp"
+      ],
+      "inspectAfter": {
+        "bytes": 121651200,
+        "maxBytes": 134217728,
+        "maxLoading": 2,
+        "loading": 0,
+        "failed": 0,
+        "entries": [
+          {
+            "src": "assets/characters/linh-dong/basic-atlas.webp",
+            "bytes": 40550400,
+            "width": 3840,
+            "height": 2640,
+            "loading": false,
+            "state": "ready",
+            "scope": "battle"
+          },
+          {
+            "src": "assets/characters/linh-dong/idle-atlas.webp",
+            "bytes": 81100800,
+            "width": 3840,
+            "height": 5280,
+            "loading": false,
+            "state": "ready",
+            "scope": "battle"
+          }
+        ]
+      },
+      "appErrors": []
+    },
+    "mobile": {
+      "name": "mobile-390",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "dpr": 2,
+      "boot": {
+        "canvasW": 780,
+        "canvasH": 1478,
+        "painted": 286271,
+        "hasHero": true,
+        "hasRuntime": true,
+        "inspect": {
+          "bytes": 81100800,
+          "maxBytes": 134217728,
+          "maxLoading": 2,
+          "loading": 0,
+          "failed": 0,
+          "entries": [
+            {
+              "src": "assets/characters/linh-dong/idle-atlas.webp",
+              "bytes": 81100800,
+              "width": 3840,
+              "height": 5280,
+              "loading": false,
+              "state": "ready",
+              "scope": "battle"
+            }
+          ]
+        },
+        "sourceOver": true,
+        "drawSize": true,
+        "eagerForEach": false
+      },
+      "bootRequests": [
+        "assets/characters/linh-dong/idle-atlas.webp"
+      ],
+      "atkRequests": [
+        "assets/characters/linh-dong/idle-atlas.webp",
+        "assets/characters/linh-dong/basic-atlas.webp",
+        "assets/characters/linh-dong/skill1_vfx-atlas.webp"
+      ],
+      "requests": [
+        "assets/characters/linh-dong/idle-atlas.webp",
+        "assets/characters/linh-dong/basic-atlas.webp",
+        "assets/characters/linh-dong/skill1_vfx-atlas.webp"
+      ],
+      "inspectAfter": {
+        "bytes": 121651200,
+        "maxBytes": 134217728,
+        "maxLoading": 2,
+        "loading": 0,
+        "failed": 0,
+        "entries": [
+          {
+            "src": "assets/characters/linh-dong/basic-atlas.webp",
+            "bytes": 40550400,
+            "width": 3840,
+            "height": 2640,
+            "loading": false,
+            "state": "ready",
+            "scope": "battle"
+          },
+          {
+            "src": "assets/characters/linh-dong/idle-atlas.webp",
+            "bytes": 81100800,
+            "width": 3840,
+            "height": 5280,
+            "loading": false,
+            "state": "ready",
+            "scope": "battle"
+          }
+        ]
+      },
+      "appErrors": []
+    }
+  }
+}

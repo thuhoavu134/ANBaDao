@@ -8,6 +8,10 @@ import {
   buildLinhDongMarkerSequence,
   createLinhDongTimelineController
 } from '../src/combat-domain/linh-dong-presentation.mjs';
+import { atlasDecodedBytes, clipSource, createDecodedAtlasCache } from '../src/assets/decoded-atlas-cache.mjs';
+import { createAssetLoader } from '../src/assets/asset-loader.mjs';
+import { createFrameClock, frameAt, frameDurationMs } from '../src/assets/frame-clock.mjs';
+import { drawCanvasSprite, sourceRectForFrame } from '../src/render/canvas-sprite-renderer.mjs';
 
 const root = process.cwd();
 const path = process.env.HV_LINH_DONG_BATTLE_PATH
@@ -67,7 +71,17 @@ const LINH_DONG_CLIPS=Object.freeze({
 });
 const LINH_DONG_ASSET_BASE="assets/characters/linh-dong/";
 const LINH_DONG_SFX_BASE="assets/audio/sfx/linh-dong/";
-const LINH_DONG_IMAGES=new Map();
+const atlasDecodedBytes=${atlasDecodedBytes.toString()};
+const clipSource=${clipSource.toString()};
+const createDecodedAtlasCache=${createDecodedAtlasCache.toString()};
+const createAssetLoader=${createAssetLoader.toString()};
+const frameDurationMs=${frameDurationMs.toString()};
+const frameAt=${frameAt.toString()};
+const createFrameClock=${createFrameClock.toString()};
+const sourceRectForFrame=${sourceRectForFrame.toString()};
+const drawCanvasSprite=${drawCanvasSprite.toString()};
+const LINH_DONG_LOADER=createAssetLoader({maxBytes:128*1024*1024,maxLoading:2});
+const LINH_DONG_CLOCK=createFrameClock({now:()=>performance.now()});
 const LINH_DONG_AUDIO=new Map();
 function normalizeLinhDongHeroId(value){
   const raw=String(value??'').trim();
@@ -90,26 +104,26 @@ function setLinhDongState(unit,nextState,duration=800,startedAt=performance.now(
   const stateName=nextState==='skill1'?'attack':nextState==='hurt'?'hurt':nextState||'idle';
   unit.state=stateName;unit.stateStarted=startedAt;unit.stateDuration=Math.max(1,Number(duration)||800);
 }
-function linhDongImage(key){
-  if(LINH_DONG_IMAGES.has(key))return LINH_DONG_IMAGES.get(key);
+function clipFor(key){
   const clip=LINH_DONG_CLIPS[key];
   if(!clip)return null;
-  const image=new Image();image.decoding='async';image.src=LINH_DONG_ASSET_BASE+clip.file;LINH_DONG_IMAGES.set(key,image);return image;
+  const cellW=clip.cellW||clip.w,cellH=clip.cellH||clip.h,cols=clip.cols,frames=clip.frames;
+  const rows=clip.rows||Math.ceil(frames/cols);
+  return {file:clip.file,src:LINH_DONG_ASSET_BASE+clip.file,frames,cols,rows,cellW,cellH,w:cellW,h:cellH,ms:clip.ms,loop:!!clip.loop,durationMs:clip.durationMs,pivot:clip.pivot||{x:cellW/2,y:cellH},decodedBytes:cols*cellW*rows*cellH*4,atlasWidth:cols*cellW,atlasHeight:rows*cellH};
 }
-Object.keys(LINH_DONG_CLIPS).forEach(linhDongImage);
+function linhDongImage(key){
+  const clip=clipFor(key);
+  if(!clip)return null;
+  return LINH_DONG_LOADER.ensure(clip,{priority:'visible',scope:'battle'}).image;
+}
 function linhDongFrame(key,elapsed,loop=false){
   const clip=LINH_DONG_CLIPS[key]||LINH_DONG_CLIPS.idle;
-  const raw=Math.max(0,Math.floor((Number(elapsed)||0)/Math.max(1,clip.ms)));
-  return loop?raw%clip.frames:Math.min(clip.frames-1,raw);
+  return frameAt({frames:clip.frames,ms:clip.ms,loop:!!loop},elapsed);
 }
 function drawLinhDongAtlas(context,key,frame,x,y,width,height,options={}){
-  const clip=LINH_DONG_CLIPS[key],image=linhDongImage(key);
+  const clip=clipFor(key),image=linhDongImage(key);
   if(!clip||!image?.complete||image.naturalWidth<2)return false;
-  const sx=(frame%clip.cols)*clip.w,sy=Math.floor(frame/clip.cols)*clip.h;
-  context.save();context.imageSmoothingEnabled=true;context.imageSmoothingQuality='high';context.translate(x,y);
-  if(options.flip)context.scale(-1,1);context.globalAlpha=options.alpha??1;
-  if(options.blend)context.globalCompositeOperation=options.blend;
-  context.drawImage(image,sx,sy,clip.w,clip.h,-width*.5,-height+(options.baseline??48),width,height);context.restore();return true;
+  return drawCanvasSprite(context,{image,clip,frame,x,y,width,height,flip:!!options.flip,alpha:options.alpha??1,blendMode:options.blend||'source-over',baseline:options.baseline??64});
 }
 function drawLinhDongHero(context,unit,time){
   if(!isLinhDong(unit))return false;
@@ -129,6 +143,8 @@ let linhDongFx=null;
 function beginLinhDongAction(actor,action,target,battleId){
   const normalized=normalizeLinhDongAction(action),timeline=LINH_DONG_TIMELINE[normalized];
   if(!normalized||!timeline)throw new Error('Missing Linh Đồng timeline for '+action);
+  linhDongImage(normalized==='ultimate'?'ultimate':'attack');
+  linhDongImage(normalized==='ultimate'?'ultimateVfx':'atkVfx');
   const info={action:normalized,actorId:actor.id,targetId:target?.id||null,battleId,startedAt:performance.now(),releasePlayed:false,impactResolved:false,clock:null};
   info.clock=createLinhDongTimelineController(normalized,{timeline,onMarker:marker=>{info.lastMarker=marker.type;}});
   info.clock.advance(0);actor._linhDongAction=info;setLinhDongState(actor,normalized==='ultimate'?'ultimate':'attack',timeline.character.durationMs,info.startedAt);return info;
@@ -200,6 +216,7 @@ function applyLinhDongUltimateStatus(actor,foes){
   for(const foe of foes){if(foe?.hp>0)addStatus(foe,{type:'silence',turns:1,sourceId:actor.id,sourceHeroId:LINH_DONG_CANONICAL_ID});}
 }
 window.drawLinhDongHero=drawLinhDongHero;window.drawLinhDongFx=drawLinhDongFx;window.isLinhDong=isLinhDong;window.startLinhDongFx=startLinhDongFx;window.playLinhDongSfx=playLinhDongSfx;
+window.__HV_SPRITE_RUNTIME={inspect:()=>LINH_DONG_LOADER.inspect(),ensure:key=>linhDongImage(key),clear:()=>LINH_DONG_LOADER.clearScope('battle')};
 window.__HV_LINH_DONG_QA={
   registry:LINH_DONG_REGISTRY,
   timeline:action=>LINH_DONG_TIMELINE[normalizeLinhDongAction(action)],

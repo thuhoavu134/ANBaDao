@@ -1,5 +1,8 @@
 {
   "schema": "hon-viet-linh-dong-atlas/v1",
+  "runtimeSchema": "canvas-sprite-runtime/v2",
+  "heroId": "hero_splus_linh_dong",
+  "aliases": ["linh_dong", "linh-dong"],
   "source": "Blender 5.1 sharp compositor render v2",
   "encoding": "webp-lossless-rgba",
   "char": {

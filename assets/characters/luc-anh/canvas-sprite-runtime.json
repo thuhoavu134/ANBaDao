@@ -1,0 +1,33 @@
+{
+  "schema": "canvas-sprite-runtime/v2",
+  "heroId": "luc_anh",
+  "aliases": ["luc-anh"],
+  "quality": {
+    "desktop": "native",
+    "mobile": "native"
+  },
+  "clips": {
+    "idle": {
+      "file": "idle-rgba-v1-atlas.webp",
+      "src": "assets/characters/luc-anh/idle-rgba-v1-atlas.webp",
+      "kind": "character",
+      "frames": 96,
+      "cols": 8,
+      "rows": 12,
+      "cellW": 480,
+      "cellH": 480,
+      "fps": 24,
+      "ms": 42,
+      "durationMs": 4032,
+      "loop": true,
+      "pivot": { "x": 240, "y": 480 },
+      "logicalSize": { "w": 480, "h": 480 },
+      "trimMode": "stable-union",
+      "atlasWidth": 3840,
+      "atlasHeight": 5760,
+      "decodedBytes": 88473600,
+      "compressedBytes": 21682860,
+      "sha256": "9fc7ba71a302b232068b3ac54c2c9c0e72e5cd183cd1c04fcfeae42e12a0fa8a"
+    }
+  }
+}

@@ -1,3 +1,8 @@
+## 15/09 — TKT-0151: Canvas Sprite Runtime
+
+Catalog + lazy loader + LRU decoded 128 MiB + renderer metadata. Linh Đồng native 480×440, trận 477×440. Boot chỉ idle; ATK/VFX khi ra chiêu. Không Spine, không đổi công thức.
+RED 22 → GREEN 25/25 + npm test 1014/1014. Chrome 390×844 PASS. Safari NOT_RUN. REVIEW, chờ `live`.
+
 ## 15/09 — TKT-0150: trận hiện VFX và SFX
 
 Không nén diễn hoạt 80ms. Atlas Linh Đồng load sẵn. SFX lần đầu không bị bỏ vì tải chậm.

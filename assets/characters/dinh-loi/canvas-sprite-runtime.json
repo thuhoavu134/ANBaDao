@@ -1,0 +1,33 @@
+{
+  "schema": "canvas-sprite-runtime/v2",
+  "heroId": "dinh_loi",
+  "aliases": ["dinh-loi"],
+  "quality": {
+    "desktop": "native",
+    "mobile": "native"
+  },
+  "clips": {
+    "idle": {
+      "file": "idle-atlas.png",
+      "src": "assets/characters/dinh-loi/idle-atlas.png",
+      "kind": "character",
+      "frames": 64,
+      "cols": 8,
+      "rows": 8,
+      "cellW": 480,
+      "cellH": 270,
+      "fps": 16,
+      "ms": 62.5,
+      "durationMs": 4000,
+      "loop": true,
+      "pivot": { "x": 265, "y": 258 },
+      "logicalSize": { "w": 480, "h": 270 },
+      "trimMode": "stable-union",
+      "atlasWidth": 3840,
+      "atlasHeight": 2160,
+      "decodedBytes": 33177600,
+      "compressedBytes": 2055471,
+      "sha256": "71f61878311246e3f3930f0031011132f89f91b0acbe1cad8ca820b4c9a93606"
+    }
+  }
+}
