@@ -1588,7 +1588,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
                battlefield.  It stays lightweight during combat so the six
                silhouettes and damage effects remain the focal point. -->
           <div class="reference-battle-dock" id="referenceBattleDock" aria-label="Điều hướng trận đấu">
-            <span class="reference-battle-speed" id="embeddedSpeedBadge" aria-label="Tốc độ hiện tại">×3</span>
+            <span class="reference-battle-speed" id="embeddedSpeedBadge" aria-label="Tốc độ hiện tại">×1</span>
             <nav class="reference-battle-nav" aria-label="Điều hướng nhanh">
               <button type="button" data-ref-nav="hub"><img src="assets/ui/menu-v3233/icons/hub.png" alt=""><span>Thành Chính</span></button>
               <button type="button" data-ref-nav="heroes"><img src="assets/ui/menu-v3233/icons/heroes.png" alt=""><span>Tướng</span></button>
@@ -3170,7 +3170,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     meleeRelease: 300,
     impactHold: 320,
     return: 500,
-    turnRest: 220
+    turnRest: 480
   });
   // v3.24.8 — shared presentation contract for every current and future hero.
   const COMBAT_PRESENTATION_STANDARD = Object.freeze({
@@ -6544,7 +6544,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     const intent = decideAi(actor);
     if (!intent || !intent.target) return;
     state.locked = false;
-    void performAction(actor, intent.action, intent.target);
+    await performAction(actor, intent.action, intent.target);
   }
 
   function applyStatusIconQaFixtures() {
@@ -6599,7 +6599,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
        watch the six-versus-six exchange, then adjust speed or reclaim manual
        control only when needed. QA/status-icon fixtures still opt out below. */
     state.auto = Boolean(EMBEDDED && !STATUS_ICON_QA);
-    state.speed = EMBEDDED ? 3 : 1;
+    state.speed = 1;
     if (dom.autoButton) dom.autoButton.setAttribute("aria-pressed", String(state.auto));
     if (dom.speedLabel) dom.speedLabel.textContent = `${state.speed}×`;
     if (dom.speedButton) dom.speedButton.setAttribute("aria-label", `Tốc độ trận đấu ${state.speed} lần`);
@@ -6995,11 +6995,11 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
       if (state.auto && !state.locked) {
         state.locked = true;
         updateActorHud(actor);
-        sleep(650).then((active) => {
+        sleep(650).then(async (active) => {
           if (!active || state.currentId !== actor.id) return;
           const intent = decideAi(actor);
           state.locked = false;
-          if (intent && intent.target) void performAction(actor, intent.action, intent.target);
+          if (intent && intent.target) await performAction(actor, intent.action, intent.target);
         });
       }
     }

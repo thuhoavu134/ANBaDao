@@ -1,3 +1,8 @@
+## 15/09 — TKT-0149: trận một tướng xong mới đến tướng kia
+
+Trận thường 1×, không nén 0.45. Nghỉ giữa lượt 480ms. Auto chờ hành động xong. Không đổi công thức/tốc/AI.
+GREEN 988/988. REVIEW, chờ `live`.
+
 ## 15/09 — TKT-0148: địch Bày trận quay trái + Tướng cuộn được
 
 Bày trận lật mọi địch, kể cả bản trùng. Lưới tướng cuộn; thanh icon không đè thẻ cuối.

@@ -5501,9 +5501,9 @@ renderCampaign = function(){
       defeatTitle: "BẠI TRẬN",
       defeatCopy: "Thử lại ải để vượt qua.",
       openingLog: roster12Mode ? "12 tướng Hồn Việt chia thành hai đội 6v6 để kiểm thử combat tới màn kết quả." : `Đội hình Mộng Giới nhập trận bằng engine Hồn Việt — ${title}.`,
-      /* Embedded map battles should resolve in the same short watchable
-         window as the reference client (not a slow desktop tactical sim). */
-      timingScale: qaMode ? 0.035 : 0.45,
+      /* Embedded battles keep authored timing so one actor finishes before the next.
+         QA fixtures may compress the clock; live play does not. */
+      timingScale: qaMode ? 0.035 : 1,
       /* Campaign is intentionally the same low-friction reference loop:
          one stage tap, one 6v6 auto encounter, then the result screen. */
       referenceSimple: ST.mode === 'campaign',
