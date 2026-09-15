@@ -1,7 +1,7 @@
 ## 15/09 — TKT-0150: trận hiện VFX và SFX
 
 Không nén diễn hoạt 80ms. Atlas Linh Đồng load sẵn. SFX lần đầu không bị bỏ vì tải chậm.
-GREEN 992/992. REVIEW, chờ `live`.
+GREEN 992/992. LIVE #146 `7baca81`. Owner tự `git pull && vercel --prod`.
 
 ## 15/09 — TKT-0149: trận một tướng xong mới đến tướng kia
 

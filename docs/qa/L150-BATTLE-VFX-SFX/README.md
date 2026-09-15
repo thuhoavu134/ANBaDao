@@ -6,4 +6,4 @@ Owner 15/09 · vào trận không thấy VFX, không nghe SFX.
 - Sau: giữ duration chiêu; load atlas sẵn; SFX vẫn phát nếu trận còn chạy
 - Camera vẫn không giật khi máy bật giảm chuyển động
 
-Safari/iPhone NOT_RUN. Chưa deploy.
+Safari/iPhone NOT_RUN. LIVE #146 `7baca81`. Owner tự `git pull && vercel --prod`.

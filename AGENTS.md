@@ -1,6 +1,6 @@
 # Hồn Việt / Lục Thần — hướng dẫn bắt đầu
 
-TKT-0150 trận hiện VFX và SFX đang REVIEW. Đọc `tickets/TKT-0150/ticket.md`. Chỉ squash-merge khi owner gõ đúng chữ `live`.
+TKT-0150 trận hiện VFX và SFX LIVE #146 `7baca81`. Safari/iPhone NOT_RUN. Owner tự `git pull && vercel --prod`.
 
 TKT-0149 trận một tướng xong mới đến tướng kia LIVE #145 `506a7f8`. Safari/iPhone NOT_RUN. Owner tự `git pull && vercel --prod`.
 

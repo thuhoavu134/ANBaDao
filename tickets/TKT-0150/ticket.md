@@ -1,8 +1,8 @@
 ---
 id: TKT-0150
 title: Trận hiện VFX và SFX
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 acceptance_ids: [L150-T1, L150-T2, L150-T3, L150-T4, L150-P1]
 required_gates: [vibelab, tdd]
@@ -39,6 +39,6 @@ Không đổi BETS 2/10/50, loot, Bách Bảo, Hồng Trầu. Không mở 42 S+,
 
 ## Result
 
-REVIEW. VFX không còn nén 80ms. Atlas Linh Đồng load sẵn. SFX lần đầu không bị cắt vì tải chậm. Trận mới không bỏ diễn hoạt.
-GREEN 992/992. Safari/iPhone NOT_RUN.
-Chỉ squash-merge khi owner gõ `live`. Owner tự `git pull && vercel --prod`.
+LIVE #146 `7baca81`. VFX không còn nén 80ms. Atlas Linh Đồng load sẵn. SFX lần đầu không bị cắt vì tải chậm. Trận mới không bỏ diễn hoạt.
+Local npm test 992/992. CI Build and test PASS. Safari NOT_RUN.
+Owner tự `git pull && vercel --prod`.
