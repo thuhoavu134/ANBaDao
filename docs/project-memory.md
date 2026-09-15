@@ -1,3 +1,7 @@
+## 15/09 — TKT-0150: VFX/SFX trận
+
+REVIEW. motionDuration không min 80. Eager Linh Đồng atlas. SFX decode chậm vẫn phát. skipAnimations=false lúc vào trận. Safari NOT_RUN. Chờ `live`.
+
 ## 15/09 — TKT-0149: nhịp trận tuần tự
 
 LIVE #145 `506a7f8`. timingScale live 1, speed 1, turnRest 480, await performAction. S+ 0.35. Safari NOT_RUN. Owner tự `git pull && vercel --prod`.

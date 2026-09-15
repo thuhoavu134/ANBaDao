@@ -1,3 +1,8 @@
+## 15/09 — TKT-0150: trận hiện VFX và SFX
+
+Không nén diễn hoạt 80ms. Atlas Linh Đồng load sẵn. SFX lần đầu không bị bỏ vì tải chậm.
+GREEN 992/992. REVIEW, chờ `live`.
+
 ## 15/09 — TKT-0149: trận một tướng xong mới đến tướng kia
 
 Trận thường 1×, không nén 0.45. Nghỉ giữa lượt 480ms. Auto chờ hành động xong. Không đổi công thức/tốc/AI.

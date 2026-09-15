@@ -125,7 +125,8 @@
     if (group === 'combat' && !combatEnabled) return false;
     const c = context();
     stamp('sfxState', c?.state || 'unsupported');
-    // Do not queue stale auto-battle effects behind an iOS autoplay lock.
+    // Do not play into a locked iOS context. Slow first decode may still
+    // emit if this battle session is alive.
     if (!c || c.state !== 'running') return false;
     const now = performance.now(), key = group + ':' + event;
     if (now - (last.get(key) ?? -Infinity) < (event === 'forge-reveal' ? 120 : 70)) return false;
@@ -134,7 +135,7 @@
     try {
       const buffer = await load(event);
       if (disposed || (options.battleSession !== undefined && options.battleSession !== battleSession)) return false;
-      if (c.state !== 'running' || performance.now() - now > 1200) return false;
+      if (c.state !== 'running') return false;
       if (group === 'combat' && (!combatEnabled || ticket !== combatEpoch)) return false;
       while (active.size >= 6) {
         const oldest = active.values().next().value;

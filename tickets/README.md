@@ -111,6 +111,7 @@ Board GitHub không có. File `tickets/TKT-00xx/ticket.md` là nguồn sự th�
 | TKT-0147 | — | Ải 1-2 khóa dù đã thắng ải trước | LIVE (#143) |
 | TKT-0148 | — | Địch Bày trận quay trái + màn Tướng cuộn được | LIVE (#144) |
 | TKT-0149 | — | Trận một tướng xong mới đến tướng kia | LIVE (#145) |
+| TKT-0150 | — | Trận hiện VFX và SFX | REVIEW |
 
 
 

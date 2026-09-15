@@ -4570,7 +4570,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
   function motionDuration(milliseconds) {
     const playbackRate = QA_SLOW_MOTION ? 0.05 : state.speed;
     const scaled = milliseconds * EMBED_TIMING_SCALE;
-    return REDUCED_MOTION && !QA_SLOW_MOTION ? Math.min(80, scaled) : scaled / playbackRate;
+    return scaled / playbackRate;
   }
 
   function defeatDuration(milliseconds) {
@@ -6600,6 +6600,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
        control only when needed. QA/status-icon fixtures still opt out below. */
     state.auto = Boolean(EMBEDDED && !STATUS_ICON_QA);
     state.speed = 1;
+    state.skipAnimations = false;
     if (dom.autoButton) dom.autoButton.setAttribute("aria-pressed", String(state.auto));
     if (dom.speedLabel) dom.speedLabel.textContent = `${state.speed}×`;
     if (dom.speedButton) dom.speedButton.setAttribute("aria-label", `Tốc độ trận đấu ${state.speed} lần`);

@@ -96,6 +96,7 @@ function linhDongImage(key){
   if(!clip)return null;
   const image=new Image();image.decoding='async';image.src=LINH_DONG_ASSET_BASE+clip.file;LINH_DONG_IMAGES.set(key,image);return image;
 }
+Object.keys(LINH_DONG_CLIPS).forEach(linhDongImage);
 function linhDongFrame(key,elapsed,loop=false){
   const clip=LINH_DONG_CLIPS[key]||LINH_DONG_CLIPS.idle;
   const raw=Math.max(0,Math.floor((Number(elapsed)||0)/Math.max(1,clip.ms)));

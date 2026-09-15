@@ -68,6 +68,14 @@ test('audio starts only after real gesture unlock; iframe reuses parent bus', as
   let event; const g = audioFixture({ parentBus: { play: async key => { event = key; return true; } } });
   assert.equal(await g.bus.play('ultimate'), true); assert.equal(event, 'ultimate'); assert.equal(g.requests.length, 0);
 });
+test('L150-T3: a slow first decode still plays if combat is still active', async () => {
+  const f = audioFixture({ hold: true });
+  const pending = f.bus.play('linh-dong-atk');
+  f.advance();
+  f.release();
+  assert.equal(await pending, true);
+  assert.equal(f.sources[0].started, true);
+});
 test('polyphony is bounded to six source nodes', async () => {
   const f = audioFixture();
   for (let i = 0; i < 10; i++) { f.advance(); await f.bus.play('basic'); }
