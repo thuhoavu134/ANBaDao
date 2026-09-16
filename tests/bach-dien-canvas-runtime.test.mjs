@@ -124,8 +124,8 @@ test('L154-T2 Ultra v5 pack metadata keeps explicit frame counts and native cell
 
 test('L159-T1 campaign Bày trận uses Ultra v5 idle/run atlas geometry', () => {
   const scene = read('src/ui/campaign-scene.js');
-  assert.match(scene, /bach_dien: \{ src: 'assets\/characters\/bach-dien\/idle-atlas\.webp', frames: 32, cols: 6/);
-  assert.match(scene, /bach_dien: \{ src: 'assets\/characters\/bach-dien\/run-atlas\.webp', frames: 45, cols: 6/);
+  assert.match(scene, /bach_dien: \{ src: 'assets\/characters\/bach-dien\/campaign-lite\/idle-atlas\.webp', frames: 32, cols: 6, cellW: 240, cellH: 220/);
+  assert.match(scene, /bach_dien: \{ src: 'assets\/characters\/bach-dien\/campaign-lite\/run-atlas\.webp', frames: 45, cols: 6, cellW: 240, cellH: 220/);
 });
 
 test('L154-T3 FrameClock replay and renderer source rect use clip metadata', async () => {
@@ -187,10 +187,10 @@ test('L154-T5 wav SFX on HonVietSfx; 42 catalog stays 42; roster 12 closed', () 
   const index = read('index.html');
   assert.match(index, /OFFICIAL_ROSTER_12_IDS=Object\.freeze\(\[[^\]]*bach_dien/);
   const campaign = read('src/ui/campaign-scene.js');
-  assert.match(campaign, /bach_dien: \{ src: 'assets\/characters\/bach-dien\/idle-atlas\.webp'/);
-  assert.match(campaign, /bach_dien: \{ src: 'assets\/characters\/bach-dien\/run-atlas\.webp'/);
-  assert.match(campaign, /idle-atlas\.webp', frames: 32, cols: 6, cellW: 480, cellH: 440/);
-  assert.match(campaign, /run-atlas\.webp', frames: 45, cols: 6, cellW: 480, cellH: 440/);
+  assert.match(campaign, /bach_dien: \{ src: 'assets\/characters\/bach-dien\/campaign-lite\/idle-atlas\.webp'/);
+  assert.match(campaign, /bach_dien: \{ src: 'assets\/characters\/bach-dien\/campaign-lite\/run-atlas\.webp'/);
+  assert.match(campaign, /campaign-lite\/idle-atlas\.webp', frames: 32, cols: 6, cellW: 240, cellH: 220/);
+  assert.match(campaign, /campaign-lite\/run-atlas\.webp', frames: 45, cols: 6, cellW: 240, cellH: 220/);
 });
 
 test('L154-T6 battle adapter uses catalog metadata and shared cache, not a 4×2 guess', () => {

@@ -1,3 +1,10 @@
+## 17/09 — TKT-0160: 3Q-derived campaign resource lifecycle (branch only)
+
+- Studied the static 3Q Laya H5 source: replay-driven preload, model/effect dedupe, queued pack loading, caller ownership/ref-count and delayed cleanup.
+- Added a clean-room `campaign-resource-pack-cache` with bounded decoded bytes, max loading, shared keys and delayed scope release.
+- Bày trận now uses generated `campaign-lite` atlases for the preview surface and reserves the native Ultra v5 assets for Battle. This tier is a Lục Thần adaptation, not a claimed 3Q feature.
+- Six managed campaign-lite assets total ~84.6 MiB decoded under a 96 MiB campaign budget. Local focused/full verification is being run before PR. Main has not been changed.
+
 ## 17/09 — Fix Bạch Diện Ultra v5 Bày trận flicker
 
 - Root cause: `src/ui/campaign-scene.js` still read the old 94-frame/8-column contract after the Ultra v5 atlas replacement. This sent Canvas source rectangles outside the 32-frame idle and 45-frame run atlases, making Bạch Diện appear/disappear.

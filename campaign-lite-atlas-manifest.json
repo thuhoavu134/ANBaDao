@@ -1,0 +1,90 @@
+{
+  "schema": "campaign-lite-atlas/v1",
+  "source": "existing canonical atlases downscaled for campaign preview only",
+  "records": [
+    {
+      "hero": "bach-dien",
+      "file": "campaign-lite/idle-atlas.webp",
+      "frames": 32,
+      "cols": 6,
+      "rows": 6,
+      "cellW": 240,
+      "cellH": 220,
+      "atlasWidth": 1440,
+      "atlasHeight": 1320,
+      "decodedBytes": 7603200,
+      "compressedBytes": 523566,
+      "sha256": "e6b695add74f47d009807ad43463a2a4fa9441b4355d1f2461fb98ecf009eac0"
+    },
+    {
+      "hero": "bach-dien",
+      "file": "campaign-lite/run-atlas.webp",
+      "frames": 45,
+      "cols": 6,
+      "rows": 8,
+      "cellW": 240,
+      "cellH": 220,
+      "atlasWidth": 1440,
+      "atlasHeight": 1760,
+      "decodedBytes": 10137600,
+      "compressedBytes": 726524,
+      "sha256": "acac29f28164841803f9730a16965632f0570aaf6156473cf1a47a8ff90a5c66"
+    },
+    {
+      "hero": "linh-dong",
+      "file": "campaign-lite/idle-atlas.webp",
+      "frames": 96,
+      "cols": 8,
+      "rows": 12,
+      "cellW": 240,
+      "cellH": 220,
+      "atlasWidth": 1920,
+      "atlasHeight": 2640,
+      "decodedBytes": 20275200,
+      "compressedBytes": 1292742,
+      "sha256": "5a4b56104b08ce8f45ca4658e48eab5ece1854c1a2df8a178fbcee4a2c4e1e90"
+    },
+    {
+      "hero": "linh-dong",
+      "file": "campaign-lite/run-atlas.webp",
+      "frames": 96,
+      "cols": 8,
+      "rows": 12,
+      "cellW": 240,
+      "cellH": 220,
+      "atlasWidth": 1920,
+      "atlasHeight": 2640,
+      "decodedBytes": 20275200,
+      "compressedBytes": 1107264,
+      "sha256": "c258c53aa7576afcd80703c9d77f9fb572dbb82ea34baca131d449bcc92394d1"
+    },
+    {
+      "hero": "luc-anh",
+      "file": "campaign-lite/idle-atlas.webp",
+      "frames": 96,
+      "cols": 8,
+      "rows": 12,
+      "cellW": 240,
+      "cellH": 240,
+      "atlasWidth": 1920,
+      "atlasHeight": 2880,
+      "decodedBytes": 22118400,
+      "compressedBytes": 2619314,
+      "sha256": "869b7879cdc1b0094e31da03653410b8afd2328485a1c23d50834ef2e7ba3314"
+    },
+    {
+      "hero": "dinh-loi",
+      "file": "campaign-lite/idle-atlas.webp",
+      "frames": 64,
+      "cols": 8,
+      "rows": 8,
+      "cellW": 240,
+      "cellH": 135,
+      "atlasWidth": 1920,
+      "atlasHeight": 1080,
+      "decodedBytes": 8294400,
+      "compressedBytes": 472158,
+      "sha256": "bd4a68face2c84fbbe03e9e592312a2c3ab5fd1ba1ad28b8677359ccb4a95a4d"
+    }
+  ]
+}

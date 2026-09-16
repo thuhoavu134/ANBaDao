@@ -58,7 +58,7 @@ function runtimeHarness() {
     startChapter: () => runInContext('starts++; sceneState.active = false;', context)
   });
   const strip = path => readFileSync(new URL(path, import.meta.url), 'utf8').replace(/^export\s+/gm, '');
-  runInContext(strip('../src/domain/afk/afk-chest.mjs') + '\n' + strip('../src/domain/campaign/campaign-view.mjs') + '\n' + strip('../src/domain/character/luc-anh-idle.mjs') + '\nconst AFK_THAY_MO_IDLE_DURATIONS = [60,70];\n' + strip('../src/ui/campaign-scene.js'), context);
+  runInContext(strip('../src/domain/afk/afk-chest.mjs') + '\n' + strip('../src/domain/campaign/campaign-view.mjs') + '\n' + strip('../src/domain/character/luc-anh-idle.mjs') + '\n' + strip('../src/assets/campaign-resource-pack-cache.mjs') + '\nconst AFK_THAY_MO_IDLE_DURATIONS = [60,70];\n' + strip('../src/ui/campaign-scene.js'), context);
   runInContext('updateLaunchState = () => {}; sceneState.active = true; sceneState.draft = P.squad.map(p => ({...p})); sceneState.checkpoint = currentCheckpoint();', context);
   return context;
 }
@@ -88,6 +88,15 @@ test('changing row swaps the paired slots and keeps the exact three-by-three bat
   assert.equal(draft.filter(pick => pick.row === 'front').length, 3);
   assert.equal(draft.filter(pick => pick.row === 'back').length, 3);
   assert.deepEqual(swapCampaignRows(draft, 5), squad);
+});
+
+test('3Q-derived campaign resource owner uses campaign-lite packs and a shared bounded cache', () => {
+  const source = readFileSync(new URL('../src/ui/campaign-scene.js', import.meta.url), 'utf8');
+  assert.match(source, /createCampaignResourcePackCache/);
+  assert.match(source, /maxDecodedBytes: 96 \* 1024 \* 1024/);
+  assert.match(source, /tier: 'campaign-lite'/);
+  assert.match(source, /sceneResourceCache\.release/);
+  assert.match(source, /campaign-lite\/idle-atlas\.webp/);
 });
 
 test('legacy chapter reward heroes do not enter the official preparation bench', () => {

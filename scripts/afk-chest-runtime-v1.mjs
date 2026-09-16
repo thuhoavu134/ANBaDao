@@ -10,11 +10,12 @@ const campaignSource = read('src/domain/campaign/campaign-view.mjs').replace(/^e
 const backgroundSource = read('src/domain/battle/background-registry.mjs').replace(/^export\s+/gm, '');
 const idleSource = read('src/domain/character/luc-anh-idle.mjs').replace(/^export\s+/gm, '');
 const lifetimeSource = read('src/ui/scene-lifetime.js').replace(/^export\s+/gm, '');
+const resourcePackCacheSource = read('src/assets/campaign-resource-pack-cache.mjs').replace(/^export\s+/gm, '');
 const thayMoTiming = read('battle.html').match(/const THAY_MO_IDLE_DURATIONS = (\[[^;]+\]);/);
 if (!thayMoTiming) throw new Error('Campaign scene: authored Thầy Mo timing missing');
 const runtime = 'const AFK_THAY_MO_IDLE_DURATIONS = ' + thayMoTiming[1] + ';\n' + read('src/ui/campaign-scene.js');
 const css = read('src/ui/campaign-scene.css');
-const script = `(function(){'use strict';\n${moduleSource}\n${campaignSource}\n${backgroundSource}\n${idleSource}\n${lifetimeSource}\n${runtime}\n})();`;
+const script = `(function(){'use strict';\n${moduleSource}\n${campaignSource}\n${backgroundSource}\n${idleSource}\n${lifetimeSource}\n${resourcePackCacheSource}\n${runtime}\n})();`;
 new Function(script);
 
 // Let the existing router own entry/exit. No screen polling or second router.

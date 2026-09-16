@@ -30,9 +30,9 @@ function afkBox() {
 
 test('L153-T1 march uses Linh Dong Run; preparation stays Idle', () => {
   const box = afkBox();
-  assert.equal(box.march.src, 'assets/characters/linh-dong/run-atlas.webp');
-  assert.equal(box.prep.src, 'assets/characters/linh-dong/idle-atlas.webp');
-  assert.equal(box.idle.src, 'assets/characters/linh-dong/idle-atlas.webp');
+  assert.equal(box.march.src, 'assets/characters/linh-dong/campaign-lite/run-atlas.webp');
+  assert.equal(box.prep.src, 'assets/characters/linh-dong/campaign-lite/idle-atlas.webp');
+  assert.equal(box.idle.src, 'assets/characters/linh-dong/campaign-lite/idle-atlas.webp');
   const scene = read('src/ui/campaign-scene.js');
   assert.match(scene, /HonVietCampaignRunSpecs/);
   assert.match(scene, /runSpecs\[pick\.id\]|runSpecs\.linh_dong/);
@@ -40,15 +40,15 @@ test('L153-T1 march uses Linh Dong Run; preparation stays Idle', () => {
 
 test('L153-T2 Run shares Idle cell and pivot; no invented fps', () => {
   const box = afkBox();
-  assert.equal(box.march.src, 'assets/characters/linh-dong/run-atlas.webp');
+  assert.equal(box.march.src, 'assets/characters/linh-dong/campaign-lite/run-atlas.webp');
   assert.equal(box.march.frames, 96);
   assert.equal(box.march.cols, 8);
-  assert.equal(box.march.cellW, 480);
-  assert.equal(box.march.cellH, 440);
+  assert.equal(box.march.cellW, 240);
+  assert.equal(box.march.cellH, 220);
   assert.equal(box.march.ms, 42);
-  assert.equal(box.march.pivot, 240);
-  assert.equal(box.march.foot, 440);
-  assert.equal(box.march.body, 330);
+  assert.equal(box.march.pivot, 120);
+  assert.equal(box.march.foot, 220);
+  assert.equal(box.march.body, 165);
   assert.equal(box.march.frames, box.idle.frames);
   assert.equal(box.march.cellW, box.idle.cellW);
   assert.equal(box.march.cellH, box.idle.cellH);
@@ -57,13 +57,13 @@ test('L153-T2 Run shares Idle cell and pivot; no invented fps', () => {
 });
 
 test('L153-T3 authored run atlas exists; L144 idle spec unchanged', () => {
-  assert.equal(exists('assets/characters/linh-dong/run-atlas.webp'), true);
-  assert.equal(exists('assets/characters/linh-dong/idle-atlas.webp'), true);
+  assert.equal(exists('assets/characters/linh-dong/campaign-lite/run-atlas.webp'), true);
+  assert.equal(exists('assets/characters/linh-dong/campaign-lite/idle-atlas.webp'), true);
   const box = afkBox();
-  assert.equal(box.idle.src, 'assets/characters/linh-dong/idle-atlas.webp');
+  assert.equal(box.idle.src, 'assets/characters/linh-dong/campaign-lite/idle-atlas.webp');
   assert.equal(box.idle.frames, 96);
-  assert.equal(box.idle.cellW, 480);
-  assert.equal(box.idle.cellH, 440);
+  assert.equal(box.idle.cellW, 240);
+  assert.equal(box.idle.cellH, 220);
   const index = read('index.html');
   assert.doesNotMatch(index, /BETS\s*=\s*\[[^\]]*[^2, 10, 50]/);
 });

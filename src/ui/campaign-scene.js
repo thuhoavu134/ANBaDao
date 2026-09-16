@@ -3,6 +3,22 @@ const sceneState = { root: null, canvas: null, active: false, scope: null, resiz
   raf: 0, rafRelease: null, timer: 0, timerRelease: null, booted: false,
   lastFrame: 0, farmTime: 0, width: 390, height: 300, draft: null, slot: 0, checkpoint: null, launching: false,
   claiming: false, activationGeneration: 0 };
+const sceneResourceCache = typeof createCampaignResourcePackCache === 'function'
+  ? createCampaignResourcePackCache({
+      maxDecodedBytes: 96 * 1024 * 1024,
+      maxLoading: 2,
+      clearDelayMs: 10_000,
+      makeImage: () => { const image = new Image(); image.decoding = 'async'; return image; },
+      load: (pack, image) => new Promise((resolve, reject) => {
+        if (!image) { reject(new Error('campaign image unavailable')); return; }
+        image.onload = () => resolve({ image, decodedBytes: pack.decodedBytes });
+        image.onerror = () => reject(new Error('campaign asset failed: ' + pack.src));
+        image.src = pack.src;
+      })
+    })
+  // Legacy VM-only fallback: production always injects the 3Q-derived cache
+  // source before this file. It keeps old isolated scene tests self-contained.
+  : { ensure: pack => { const image = new Image(); image.src = pack.src; return { key: pack.src, image, promise: Promise.resolve({ image, bytes: pack.decodedBytes }) }; }, release() {}, inspect: () => ({ bytes: 0, entries: [] }) };
 const sceneImages = new Map();
 const sceneDiagnosticsEnabled = (() => {
   try {
@@ -64,12 +80,12 @@ const spriteSpecs = {
   // Same fixed cell and bottom-center pivot as the authored combat pack.
   // Idle occupies 240px of the 320px cell; portrait/master is a bust, not a body.
   // Native-size Blender atlas: render down to the same body footprint instead of upscaling a 347×320 cell.
-  linh_dong: { src: 'assets/characters/linh-dong/idle-atlas.webp', frames: 96, cols: 8, cellW: 480, cellH: 440, ms: 42, pivot: 240, foot: 440, body: 330 },
-  bach_dien: { src: 'assets/characters/bach-dien/idle-atlas.webp', frames: 32, cols: 6, cellW: 480, cellH: 440, ms: 1000 / 30, pivot: 240, foot: 440, body: 330 },
+  linh_dong: { src: 'assets/characters/linh-dong/campaign-lite/idle-atlas.webp', frames: 96, cols: 8, cellW: 240, cellH: 220, ms: 42, pivot: 120, foot: 220, body: 165 },
+  bach_dien: { src: 'assets/characters/bach-dien/campaign-lite/idle-atlas.webp', frames: 32, cols: 6, cellW: 240, cellH: 220, ms: 1000 / 30, pivot: 120, foot: 220, body: 165 },
   ong_hang_pho: { src: 'assets/battle-runtime/embedded-12.png', frames: 48, cols: 8, cellW: 240, cellH: 135, ms: 120, pivot: 100, foot: 128, body: 124 },
-  luc_anh: { ...LUC_ANH_IDLE_1080, pivot: 240, foot: 427, body: 398 },
+  luc_anh: { ...LUC_ANH_IDLE_1080, src: 'assets/characters/luc-anh/campaign-lite/idle-atlas.webp', cellW: 240, cellH: 240, pivot: 120, foot: 213.5, body: 199, atlasWidth: 1920, atlasHeight: 2880 },
   thay_mo: { src: 'assets/characters/thay-mo/idle-v3193-atlas.png', frames: 96, cols: 12, cellW: 235, cellH: 264, strideW: 241, strideH: 270, pad: 3, durations: AFK_THAY_MO_IDLE_DURATIONS, pivot: 117.5, foot: 260, body: 250 },
-  dinh_loi: { src: 'assets/characters/dinh-loi/idle-atlas.png', frames: 64, cols: 8, cellW: 480, cellH: 270, ms: 62.5, pivot: 265, foot: 258, body: 233 }
+  dinh_loi: { src: 'assets/characters/dinh-loi/campaign-lite/idle-atlas.webp', frames: 64, cols: 8, cellW: 240, cellH: 135, ms: 62.5, pivot: 132.5, foot: 129, body: 116.5 }
 };
 
 // Authored Basic atlases. Fixed pivots measured once, never recentered per frame.
@@ -81,8 +97,8 @@ const farmAttackSpecs = {
 };
 
 const runSpecs = {
-  linh_dong: { src: 'assets/characters/linh-dong/run-atlas.webp', frames: 96, cols: 8, cellW: 480, cellH: 440, ms: 42, pivot: 240, foot: 440, body: 330 },
-  bach_dien: { src: 'assets/characters/bach-dien/run-atlas.webp', frames: 45, cols: 6, cellW: 480, cellH: 440, ms: 1000 / 30, pivot: 240, foot: 440, body: 330 }
+  linh_dong: { src: 'assets/characters/linh-dong/campaign-lite/run-atlas.webp', frames: 96, cols: 8, cellW: 240, cellH: 220, ms: 42, pivot: 120, foot: 220, body: 165 },
+  bach_dien: { src: 'assets/characters/bach-dien/campaign-lite/run-atlas.webp', frames: 45, cols: 6, cellW: 240, cellH: 220, ms: 1000 / 30, pivot: 120, foot: 220, body: 165 }
 };
 
 function currentCheckpoint() { return campaignCheckpoint(P, DATA.chapters, chapterBattleSequence); }
@@ -95,21 +111,40 @@ function savedSceneSquad() {
 }
 function scenePower(squad) { return squad.reduce((sum, pick) => sum + heroPower(pick.id), 0); }
 function setSceneText(selector, value) { const el = sceneState.root?.querySelector(selector); if (el && el.textContent !== String(value)) el.textContent = value; }
-function imageForScene(src) {
-  let image = sceneImages.get(src);
-  if (!image) {
-    image = new Image(); image.decoding = 'async';
-    const onload = () => { if (sceneState.active && reducedMotion.matches) drawScene(0); };
-    image.onload = onload;
-    image.src = src; sceneImages.set(src, image);
+function campaignPackFor(src, spec) {
+  if (!spec || !src.startsWith('assets/characters/')) return null;
+  const rows = spec.rows || Math.ceil(spec.frames / spec.cols);
+  return {
+    heroId: src,
+    clip: src.includes('/run-') ? 'run' : 'idle',
+    tier: 'campaign-lite',
+    src,
+    decodedBytes: (spec.atlasWidth || spec.cols * spec.cellW) * (spec.atlasHeight || rows * spec.cellH) * 4
+  };
+}
+function imageForScene(src, spec = null) {
+  const existing = sceneImages.get(src);
+  if (existing) return existing.image || existing;
+  const pack = campaignPackFor(src, spec);
+  if (pack) {
+    const handle = sceneResourceCache.ensure(pack, 'campaign');
+    sceneImages.set(src, handle);
+    handle.promise.then(() => { if (sceneState.active) drawScene(performance.now()); }).catch(() => {});
     sceneState.scope?.add(() => {
-      if (image.onload === onload) image.onload = null;
-      if (!image.complete || src.startsWith('assets/characters/linh-dong/') || src.startsWith('assets/characters/bach-dien/')) {
-        if (image.removeAttribute) image.removeAttribute('src'); else image.src = '';
-      }
-      if (sceneImages.get(src) === image) sceneImages.delete(src);
+      sceneResourceCache.release(handle.key, 'campaign', Date.now());
+      if (sceneImages.get(src) === handle) sceneImages.delete(src);
     });
+    return handle.image;
   }
+  let image = new Image(); image.decoding = 'async';
+  const onload = () => { if (sceneState.active && reducedMotion.matches) drawScene(0); };
+  image.onload = onload;
+  image.src = src; sceneImages.set(src, image);
+  sceneState.scope?.add(() => {
+    if (image.onload === onload) image.onload = null;
+    if (image.removeAttribute) image.removeAttribute('src'); else image.src = '';
+    if (sceneImages.get(src) === image) sceneImages.delete(src);
+  });
   return image;
 }
 function frameAt(spec, time) {
@@ -333,11 +368,11 @@ function drawScene(time) {
       ctx.fillStyle = 'rgba(15,30,23,.24)'; ctx.beginPath(); ctx.ellipse(x, y, bodyH * .31, bodyH * .075, 0, 0, Math.PI * 2); ctx.fill();
       const actor = farm?.actors.find(a=>a.id===pick.id);
       const attack = actor && actor.attackTime >= 0 && farmAttackSpecs[pick.id];
-      const attackImage = attack ? imageForScene(farmAttackSpecs[pick.id].src) : null;
+      const attackImage = attack ? imageForScene(farmAttackSpecs[pick.id].src, farmAttackSpecs[pick.id]) : null;
       const readyAttack = attackImage?.complete && attackImage.naturalWidth > 0;
       const spec = readyAttack ? farmAttackSpecs[pick.id] : farm && farm.phase !== 'march' ? spriteSpecs[pick.id] : specForAfk(pick);
       const enemyArt = pick.enemy && !spec ? preparationEnemyArt(pick, enemies) : null;
-      const image = imageForScene(spec?.src || enemyArt?.src || portraitSrc(pick.id, 'master'));
+      const image = imageForScene(spec?.src || enemyArt?.src || portraitSrc(pick.id, 'master'), spec);
       if (!image.complete || image.naturalWidth < 1) return;
       ctx.save();
       if (actor && !farmAttackSpecs[pick.id] && actor.attackTime >= 0) {

@@ -121,7 +121,7 @@ test('L144-T5 campaign and preparation select the full-body idle atlas, not mast
   const box={LUC_ANH_IDLE_1080:{},AFK_THAY_MO_IDLE_DURATIONS:[]};vm.createContext(box);
   vm.runInContext(scene.slice(start,end)+';this.spec=spriteSpecs.linh_dong;',box);
   assert.ok(box.spec, 'missing Linh Dong sprite entry sends both screens to portraitSrc(master)');
-  const s=box.spec;assert.equal(s.src,'assets/characters/linh-dong/idle-atlas.webp');
-  assert.equal(s.frames,96);assert.equal(s.cellW,480);assert.equal(s.cellH,440);
-  assert.equal(s.pivot,240);assert.equal(s.foot,440);assert.equal(s.body,330);
+  const s=box.spec;assert.equal(s.src,'assets/characters/linh-dong/campaign-lite/idle-atlas.webp');
+  assert.equal(s.frames,96);assert.equal(s.cellW,240);assert.equal(s.cellH,220);
+  assert.equal(s.pivot,120);assert.equal(s.foot,220);assert.equal(s.body,165);
 });
