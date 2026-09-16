@@ -1,3 +1,10 @@
+## 17/09 — Fix Bạch Diện Ultra v5 Bày trận flicker
+
+- Root cause: `src/ui/campaign-scene.js` still read the old 94-frame/8-column contract after the Ultra v5 atlas replacement. This sent Canvas source rectangles outside the 32-frame idle and 45-frame run atlases, making Bạch Diện appear/disappear.
+- Fix: Bày trận metadata now uses idle `32 frames / 6 cols` and run `45 frames / 6 cols`; pivot/foot/body remain unchanged.
+- Evidence: all Ultra v5 atlas frames have non-empty alpha; focused runtime suite and full `npm test` pass.
+- Main commit pending this verification: direct-main fix after `a68701b`; no combat numbers changed.
+
 ## 17/09 — Direct main rollback to Bạch Diện Ultra v5
 
 - Extreme v6 was rejected in the actual game visual review because aggressive frame thinning caused visibly poor motion. Replaced the 8 Bạch Diện runtime atlases on `main` with the preserved Ultra v5 sampling: **269 frames**, native 480×440 character / 440×248 VFX cells.

@@ -122,6 +122,12 @@ test('L154-T2 Ultra v5 pack metadata keeps explicit frame counts and native cell
   }
 });
 
+test('L159-T1 campaign Bày trận uses Ultra v5 idle/run atlas geometry', () => {
+  const scene = read('src/ui/campaign-scene.js');
+  assert.match(scene, /bach_dien: \{ src: 'assets\/characters\/bach-dien\/idle-atlas\.webp', frames: 32, cols: 6/);
+  assert.match(scene, /bach_dien: \{ src: 'assets\/characters\/bach-dien\/run-atlas\.webp', frames: 45, cols: 6/);
+});
+
 test('L154-T3 FrameClock replay and renderer source rect use clip metadata', async () => {
   const catalog = await import('../src/assets/asset-catalog.mjs');
   const idle = catalog.getClip('bach_dien', 'idle');
@@ -183,7 +189,8 @@ test('L154-T5 wav SFX on HonVietSfx; 42 catalog stays 42; roster 12 closed', () 
   const campaign = read('src/ui/campaign-scene.js');
   assert.match(campaign, /bach_dien: \{ src: 'assets\/characters\/bach-dien\/idle-atlas\.webp'/);
   assert.match(campaign, /bach_dien: \{ src: 'assets\/characters\/bach-dien\/run-atlas\.webp'/);
-  assert.match(campaign, /frames: 94, cols: 8, cellW: 480, cellH: 440/);
+  assert.match(campaign, /idle-atlas\.webp', frames: 32, cols: 6, cellW: 480, cellH: 440/);
+  assert.match(campaign, /run-atlas\.webp', frames: 45, cols: 6, cellW: 480, cellH: 440/);
 });
 
 test('L154-T6 battle adapter uses catalog metadata and shared cache, not a 4×2 guess', () => {
