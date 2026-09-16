@@ -1,0 +1,154 @@
+{
+  "schema": "bach-dien-runtime-assets/v1",
+  "source": "Blender 5.1 RGBA master",
+  "clips": [
+    {
+      "key": "idle",
+      "kind": "character",
+      "sourceFrames": 94,
+      "outputFrames": 94,
+      "canvas": [
+        480,
+        440
+      ],
+      "stableUnionCrop": null,
+      "alphaThreshold": 32,
+      "paddingPx": 0,
+      "firstFrameSha256": "5514e32700022cd5dc5a5912fb6266b03acb031297f4d0117689dc05f5fa1d47"
+    },
+    {
+      "key": "run",
+      "kind": "character",
+      "sourceFrames": 94,
+      "outputFrames": 94,
+      "canvas": [
+        480,
+        440
+      ],
+      "stableUnionCrop": [
+        130,
+        6,
+        642,
+        464
+      ],
+      "alphaThreshold": 32,
+      "paddingPx": 10,
+      "firstFrameSha256": "2d791c6d75d25438f7e6041ed0ca37919d1036c7103acfac22ea02866ded858c"
+    },
+    {
+      "key": "hit",
+      "kind": "character",
+      "sourceFrames": 94,
+      "outputFrames": 94,
+      "canvas": [
+        480,
+        440
+      ],
+      "stableUnionCrop": [
+        198,
+        10,
+        582,
+        462
+      ],
+      "alphaThreshold": 32,
+      "paddingPx": 10,
+      "firstFrameSha256": "58ff9a73a5d8e7b3739fc773ceb69f45752ee781ccc901bd4245a78659305da3"
+    },
+    {
+      "key": "fall",
+      "kind": "character",
+      "sourceFrames": 94,
+      "outputFrames": 94,
+      "canvas": [
+        480,
+        440
+      ],
+      "stableUnionCrop": [
+        54,
+        22,
+        554,
+        464
+      ],
+      "alphaThreshold": 32,
+      "paddingPx": 10,
+      "firstFrameSha256": "1b77819b538985c18870288587ea2323feac7f0ca3c7a0b864c784203a302fe2"
+    },
+    {
+      "key": "atk",
+      "kind": "character",
+      "sourceFrames": 94,
+      "outputFrames": 94,
+      "canvas": [
+        480,
+        440
+      ],
+      "stableUnionCrop": [
+        158,
+        6,
+        722,
+        464
+      ],
+      "alphaThreshold": 32,
+      "paddingPx": 10,
+      "firstFrameSha256": "1bceabf3679b93f0ee38fd6c905c4fac4b96bc318a84663f8caa09218bad9c27"
+    },
+    {
+      "key": "ultimate",
+      "kind": "character",
+      "sourceFrames": 94,
+      "outputFrames": 94,
+      "canvas": [
+        480,
+        440
+      ],
+      "stableUnionCrop": [
+        186,
+        10,
+        626,
+        462
+      ],
+      "alphaThreshold": 32,
+      "paddingPx": 10,
+      "firstFrameSha256": "32859317f909116fecbfe790e7197af9e41f93d4b4316fd2ed0edcb0c422f38d"
+    },
+    {
+      "key": "vfx_atk",
+      "kind": "vfx",
+      "sourceFrames": 94,
+      "outputFrames": 94,
+      "canvas": [
+        440,
+        248
+      ],
+      "stableUnionCrop": null,
+      "alphaThreshold": 32,
+      "paddingPx": 0,
+      "firstFrameSha256": "10459fb392cb38ee4915b08460822427256e54852a2ff57efb3895c56a97b367"
+    },
+    {
+      "key": "vfx_ultimate",
+      "kind": "vfx",
+      "sourceFrames": 94,
+      "outputFrames": 94,
+      "canvas": [
+        440,
+        248
+      ],
+      "stableUnionCrop": null,
+      "alphaThreshold": 32,
+      "paddingPx": 0,
+      "firstFrameSha256": "95a332494fbf19f226701c4e1d20ae6a5e2563c4a5570224fad1d1d9a183e4de"
+    }
+  ],
+  "avatar": {
+    "file": "avatar-bach-dien.webp",
+    "size": [
+      1169,
+      1280
+    ],
+    "bytes": 286506,
+    "sha256": "ba2eaa664d947e9068bd8cdede60d2beb192d2c217d6eb8cb20de12a19913d7d"
+  },
+  "status": "PASS",
+  "totalFrames": 752
+}

@@ -171,3 +171,10 @@ B('Mực tím loang trên lụa thành ấn phong.',`Mobile game passive icon. A
 B('Bút tre quét nét mực tím ngang.',`Mobile game skill button icon. The tip of a large bamboo calligraphy brush sweeping a bold horizontal stroke of glowing violet ink, octagonal bamboo-lacquer frame.`),
 B('Cuộn tranh hóa địch thành họa đen trắng.',`Mobile game ultimate icon. A colossal silk scroll unrolling to engulf the arena, freezing all enemies into a monochrome ink-wash painting in suspended animation, ornate golden scroll frame.`)]
 };
+
+export const SPLUS_EXTRA_BUTTON_BRIEFS={
+bach_dien:[
+B('Mặt nạ sứ tách Hỷ Nộ, quạt sắt lơ lửng.',`Mobile game passive skill icon. A split antique porcelain Vietnamese opera mask, one half smiling with red cinnabar makeup, the other furious with black ink brows, three tiny wooden masks orbiting, circular dark lacquer frame, cel-shaded HUD.`),
+B('Quạt sắt mở, mặt quỷ trắng xé gió.',`Mobile game skill button icon. A snapping black iron folding fan launching a shrieking white porcelain demon-mask projectile trailing black calligraphy ink, octagonal ink-stone frame, high contrast.`),
+B('Mặt nạ khổng lồ ghim mặt, hút hồn đen.',`Mobile game ultimate icon. A gigantic glowing porcelain phantom mask clamping forward while swirling pitch-black curse calligraphy ribbons detonate into shattered ceramic and soul shockwaves, ornate dragon-theatre frame.`)]
+};

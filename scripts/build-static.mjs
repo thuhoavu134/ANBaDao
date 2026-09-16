@@ -153,6 +153,7 @@ installLinhDongMemory(root);
 // TKT-0145: patch the current main battle/index after memory binding so the
 // canonical Linh Đồng bridge owns the final rendered payload.
 await import('./linh-dong-timing-main-v1.mjs');
+await import('./bach-dien-canvas-runtime-v1.mjs');
 
 // The integrated battle is loaded from this embedded payload in production.
 // Keep it byte-identical to the patched battle.html; otherwise the visible

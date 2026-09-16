@@ -65,6 +65,7 @@ const spriteSpecs = {
   // Idle occupies 240px of the 320px cell; portrait/master is a bust, not a body.
   // Native-size Blender atlas: render down to the same body footprint instead of upscaling a 347×320 cell.
   linh_dong: { src: 'assets/characters/linh-dong/idle-atlas.webp', frames: 96, cols: 8, cellW: 480, cellH: 440, ms: 42, pivot: 240, foot: 440, body: 330 },
+  bach_dien: { src: 'assets/characters/bach-dien/idle-atlas.webp', frames: 94, cols: 8, cellW: 480, cellH: 440, ms: 1000 / 30, pivot: 240, foot: 440, body: 330 },
   ong_hang_pho: { src: 'assets/battle-runtime/embedded-12.png', frames: 48, cols: 8, cellW: 240, cellH: 135, ms: 120, pivot: 100, foot: 128, body: 124 },
   luc_anh: { ...LUC_ANH_IDLE_1080, pivot: 240, foot: 427, body: 398 },
   thay_mo: { src: 'assets/characters/thay-mo/idle-v3193-atlas.png', frames: 96, cols: 12, cellW: 235, cellH: 264, strideW: 241, strideH: 270, pad: 3, durations: AFK_THAY_MO_IDLE_DURATIONS, pivot: 117.5, foot: 260, body: 250 },
@@ -80,7 +81,8 @@ const farmAttackSpecs = {
 };
 
 const runSpecs = {
-  linh_dong: { src: 'assets/characters/linh-dong/run-atlas.webp', frames: 96, cols: 8, cellW: 480, cellH: 440, ms: 42, pivot: 240, foot: 440, body: 330 }
+  linh_dong: { src: 'assets/characters/linh-dong/run-atlas.webp', frames: 96, cols: 8, cellW: 480, cellH: 440, ms: 42, pivot: 240, foot: 440, body: 330 },
+  bach_dien: { src: 'assets/characters/bach-dien/run-atlas.webp', frames: 94, cols: 8, cellW: 480, cellH: 440, ms: 1000 / 30, pivot: 240, foot: 440, body: 330 }
 };
 
 function currentCheckpoint() { return campaignCheckpoint(P, DATA.chapters, chapterBattleSequence); }
@@ -102,7 +104,7 @@ function imageForScene(src) {
     image.src = src; sceneImages.set(src, image);
     sceneState.scope?.add(() => {
       if (image.onload === onload) image.onload = null;
-      if (!image.complete || src.startsWith('assets/characters/linh-dong/')) {
+      if (!image.complete || src.startsWith('assets/characters/linh-dong/') || src.startsWith('assets/characters/bach-dien/')) {
         if (image.removeAttribute) image.removeAttribute('src'); else image.src = '';
       }
       if (sceneImages.get(src) === image) sceneImages.delete(src);

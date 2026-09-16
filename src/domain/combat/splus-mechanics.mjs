@@ -1,7 +1,7 @@
-import { SPLUS_HEROES, SPLUS_REVIEW_DEFAULTS } from '../hero/splus-catalog.mjs';
+import { SPLUS_HEROES, SPLUS_EXTRA_HEROES, SPLUS_REVIEW_DEFAULTS } from '../hero/splus-catalog.mjs';
 
 export function createSplusCombat(options={}) {
-  return createSplusMechanics({...options,catalog:SPLUS_HEROES,defaults:SPLUS_REVIEW_DEFAULTS});
+  return createSplusMechanics({...options,catalog:options.catalog||[...SPLUS_HEROES,...SPLUS_EXTRA_HEROES],defaults:SPLUS_REVIEW_DEFAULTS});
 }
 
 /** S+ effect owner. No DOM, storage, timers, audio or action scheduler.
@@ -106,6 +106,9 @@ export function createSplusMechanics(options={}) {
     m.speed=power(u,'speedUp')-power(u,'speedDown')-power(u,'actionSlow');m.crit=power(u,'critUp')-power(u,'critDown');m.resist=power(u,'resistUp')-power(u,'resistDown');
     m.lifesteal=power(u,'lifesteal');m.mitigation=power(u,'mitigation');
     m.magicDefense=power(u,'magicArmorUp')-power(u,'magicArmorDown');m.speed-=power(u,'coldSteel');m.crit-=statuses(u).filter(s=>s.type==='coldSteel').reduce((v,s)=>v+s.stacks*.04,0);
+    m.critDamage+=power(u,'critDamage');
+    if(has(u,'joyMask'))m.crit+=n(status(u,'joyMask').power,.25);
+    if(has(u,'rageMask')){const rage=status(u,'rageMask');m.critDamage+=n(rage.power,.3);m.lifesteal+=n(rage.lifesteal,.15);}
     if(has(u,'resinPoison'))m.defense-=0.3;
     if(has(u,'ink'))m.resist-=0.2;
     for(const source of holders(u,'co_trong'))m.defense+=Math.min(10,n(source.splus.memory.gears))*rules(source).armorPerStack;
@@ -190,7 +193,7 @@ export function createSplusMechanics(options={}) {
       if(!specifiedRaw){
         const blind=status(source,'blind');const accuracy=clamp(n(source.accuracy,100)/100-power(source,'blind')-n(target.evasion)/100,0,1);
         if(blind?.charges!=null)blind.charges--;
-        if(!options.forceHit&&rng('splus.hit')>=accuracy){emit('miss',source,target,{action});return 0;}
+        if(!options.forceHit&&rng('splus.hit')>=accuracy){emit('miss',source,target,{action});if(key(target)==='bach_dien')swapBachDienMask(target);return 0;}
         let critChance=n(source.crit)/100+sm.crit-n(target.critRes)/100;
         let critBonus=sm.critDamage+power(target,'bloodDebt');
         if(key(source)==='tieu_hon'&&source.splus.memory.rageCritReady){critBonus+=.3;source.splus.memory.rageCritReady=false;}
@@ -206,6 +209,7 @@ export function createSplusMechanics(options={}) {
         if(critical)amount*=Math.max(1,n(source.critDamage,1.5)+critBonus);
       }
       if(has(target,'bubble'))critical=false;
+      if(critical&&!options.dot&&!options.secondary&&!options.reflection&&tryWorldSubstitute(target,source))return 0;
       if(action==='ultimate'&&key(source)==='cuu_trieu'&&targetRatio<.4)amount*=1.4;
       // A successful mirror proc replaces the incoming hit entirely. Reflections
       // carry provenance and never re-enter on-hit/reflect dispatch.
@@ -319,6 +323,31 @@ export function createSplusMechanics(options={}) {
       }
     }
   }
+  function actionCost(u,action) {
+    if(action==='basic')return 0;
+    if(action==='skill')return n(def(u)?.actions?.skill?.cost,defaults.skillCost);
+    return n(def(u)?.actions?.ultimate?.cost,defaults.ultimateCost);
+  }
+  function swapBachDienMask(actor) {
+    if(key(actor)!=='bach_dien'||!passive(actor))return;
+    const mem=actor.splus.memory;if(n(mem.masks,0)<=0)return;
+    const next=mem.maskFace==='joy'?'rage':'joy';mem.maskFace=next;
+    remove(actor,s=>s.type==='joyMask'||s.type==='rageMask','mask-swap');
+    const r=rules(actor,'passive');
+    if(next==='joy')buff(actor,actor,'joyMask',n(r.joyCrit,.25),n(r.maskTurns,2));
+    else buff(actor,actor,'rageMask',n(r.rageCritDamage,.3),n(r.maskTurns,2),{lifesteal:n(r.rageLifesteal,.15)});
+    emit('maskSwap',actor,actor,{face:next,masks:mem.masks});
+  }
+  function tryWorldSubstitute(target,source) {
+    if(key(target)!=='bach_dien'||!passive(target))return false;
+    const mem=target.splus.memory;if(n(mem.masks,0)<=0&&!mem.maskFace)return false;
+    mem.masks=0;mem.maskFace=null;
+    remove(target,s=>s.type==='joyMask'||s.type==='rageMask','world-substitute');
+    buff(target,target,'stealth',0,n(rules(target,'passive').vanishTurns,1));
+    emit('worldSubstitute',target,source,{attackerId:source?.id||null});
+    emit('immune',source,target,{effect:'critical'});
+    return true;
+  }
   function canMove(targetId) {const u=unit(targetId);return alive(u)&&!statuses(u).some(s=>hardCC.has(s.type)||s.type==='root'||s.type==='entangle');}
   function canUse(targetId,action) {
     const u=unit(targetId);if(!alive(u)||!['basic','skill','ultimate'].includes(action))return false;
@@ -327,7 +356,7 @@ export function createSplusMechanics(options={}) {
     if(action!=='basic'&&['guardian','striker','duelist','ranger'].includes(def(u)?.role)&&statuses(u).some(s=>s.type==='disarm'&&s.weaponSkills))return false;
     if(melee(u)&&statuses(u).some(s=>s.type==='root'&&s.blocksMelee))return false;
     if(action!=='basic'&&(has(u,'silence')||has(u,'hardSilence')))return false;
-    const cost=action==='basic'?0:action==='skill'?defaults.skillCost:defaults.ultimateCost;
+    const cost=actionCost(u,action);
     return u.energy>=cost&&n(u.splus.cooldowns[action])<=round;
   }
   function displace(source,target,mode='push') {
@@ -365,6 +394,7 @@ export function createSplusMechanics(options={}) {
     if(key(actor)==='cuu_trieu'){
       if(actor.splus.memory.cadence>=8){const amount=Math.min(actor.hp-1,Math.round(actor.hp*.06));actor.hp-=Math.max(0,amount);emit('selfCost',actor,actor,{amount:Math.max(0,amount)});}
     }
+    if(key(actor)==='bach_dien'&&action!=='basic')swapBachDienMask(actor);
   }
   function act(actorId,action,targetId,settings={}) {
     start();const actor=unit(actorId);if(!canUse(actor,action)&&!settings.alreadyPaid)return {ok:false,reason:'ACTION_UNAVAILABLE',events:[]};
@@ -377,7 +407,7 @@ export function createSplusMechanics(options={}) {
     if(confusion&&rng('splus.confusion')<n(confusion.chance,.5)){target=random(friends(actor).filter(u=>u!==actor))[0]||target;action='basic';}
     const previous=currentAction;currentAction={id:`splus:r${round}:a${++actionSerial}`,actorId:actor.id,action};
     try{
-      if(!settings.alreadyPaid)energy(actor,actor,-(action==='skill'?defaults.skillCost:action==='ultimate'?defaults.ultimateCost:0),'cost');
+      if(!settings.alreadyPaid)energy(actor,actor,-(action==='basic'?0:actionCost(actor,action)),'cost');
       emit('action',actor,target,{action});
       const killsBefore=n(actor.kills);
       if(action==='basic'){damage(actor,target,{multiplier:1,action});energy(actor,actor,defaults.basicRage,'basic');}
@@ -396,6 +426,7 @@ export function createSplusMechanics(options={}) {
         for(const t of [actor,other].filter(Boolean)){buff(actor,t,'cocoon',0,2,{charges:2});buff(actor,t,'armorUp',0.3,2);}
       }
       if(key(actor)==='vong_co'){const t=strongest(foes(actor))[0];if(t)buff(actor,t,'cooldownDelay',1,1);}
+      if(key(actor)==='bach_dien'){actor.splus.memory.masks=n(rules(actor).masks,3);actor.splus.memory.maskFace=null;}
     }
     emit('battleStart',null,null);
   }
@@ -457,6 +488,7 @@ export function createSplusMechanics(options={}) {
       case 'co_trong':return allyFront.slice(0,r.count||2);
       case 'cuong_dong':case 'thiet_lanh':case 'minh_toa':case 'linh_dong':case 'ha_lang':case 'giang_quan':case 'hac_dao':case 'hac_hoa':case 'nung':return one(oppositeTarget);
       case 'lac_an':case 'da_xoa':return one(weakestEnemyBack);
+      case 'bach_dien':return one(weakest(enemies)[0]);
       case 'hac_pha':case 'thach_kinh':case 'co_nuong':case 'hoa_bai':case 'thach_mong':case 'to_linh':return enemyFront;
       case 'tieu_hon':return one(enragedBack(enemies));
       case 'han_nuong':return enemyFront.slice(0,r.count||2);
@@ -483,6 +515,7 @@ export function createSplusMechanics(options={}) {
       case 'lac_an':return enemies;
       case 'minh_toa':return one(enragedBack(enemies));
       case 'tieu_hon':return one(strongestEnemy);
+      case 'bach_dien':return one(strongestEnemy);
       case 'da_xoa':return one(weakestEnemyBack);
       case 'hac_pha':case 'thiet_lanh':case 'thach_kinh':case 'giang_quan':case 'hac_hoa':return enemyFront;
       case 'nung':return enemyFront;
@@ -580,6 +613,7 @@ export function createSplusMechanics(options={}) {
         case 'cuu_trieu':{const list=[...ff,...back(all).filter(t=>t.slot%3===actor.slot%3).slice(0,1)];D(list,base,{type:'true'});strip(list,1);energy(actor,actor,25,'drum');return;}
         case 'thach_mong':D(ff);B(ff,'taunted',0,2,{polarity:'debuff'});for(const t of ff)siphon(actor,t,15);return;
         case 'to_linh':D(ff);for(const t of ff)displace(actor,t,'half');B(ff,'speedDown',0.3);return;
+        case 'bach_dien':{const t=target||weakest(all)[0],r=rules(actor,action);const execute=t&&ratio(t)<n(r.executeRatio,.4);D(t,n(r.multiplier,2.4),{type:'elemental',forceCrit:execute,critical:execute});if(execute)B(t,'magicArmorDown',n(r.magicArmorDown,.5),n(r.turns,2));return;}
         default:D(target);return; // Legacy test opponent; no invented S+ kit.
       }
     }
@@ -657,6 +691,7 @@ export function createSplusMechanics(options={}) {
       case 'cuu_trieu':hits(all,9,1.8);return;
       case 'thach_mong':{S(ours,0.35);const stored=n(actor.splus.memory.intercepted);for(const t of all)D(t,0,{raw:stored*0.3,type:'true',secondary:true});actor.splus.memory.intercepted=0;return;}
       case 'to_linh':B(all,'timeFreeze',0,1);return;
+      case 'bach_dien':{const t=target||strongestEnemy,r=rules(actor,action);D(t,n(r.multiplier,4.2),{type:'elemental'});if(t&&alive(t)){const stolen=n(t.atk)*n(r.stealAtk,.25);B(t,'attackDown',n(r.stealAtk,.25),n(r.turns,2));B(actor,'attackUp',stolen/Math.max(1,n(actor.atk)),n(r.turns,2));B(t,'stun',0,n(r.lockTurns,1));B(t,'antiHeal',1,n(r.lockTurns,1));B(t,'buffBan',0,n(r.lockTurns,1));}return;}
       default:D(target,defaults.singleUltimateMultiplier);return;
     }
   }

@@ -1,0 +1,33 @@
+{
+  "schema": "hon-viet-skill/v1",
+  "id": "bach-dien.ultimate",
+  "heroId": "bach-dien",
+  "kind": "ultimate",
+  "name": "Ly Hồn Đoạt Phách",
+  "status": "authored-pack-v1",
+  "movement": {
+    "moveType": 0,
+    "stationary": true
+  },
+  "targeting": {
+    "type": "highestAtkEnemy"
+  },
+  "audio": {
+    "cast": "assets/audio/sfx/bach-dien/ult.wav",
+    "impact": null,
+    "profile": "bach-dien-ult-v1"
+  },
+  "chroma": "#00FF00",
+  "runtime": {
+    "speedModes": [1, 2, 3],
+    "preserveAllFrames": true,
+    "lockCharacterScale": true,
+    "awaitingAtlas": false,
+    "character": "assets/characters/bach-dien/ultimate-atlas.webp",
+    "combinedVfx": "assets/characters/bach-dien/ultimate_vfx-atlas.webp",
+    "frames": 94,
+    "fps": 30,
+    "cellW": 480,
+    "cellH": 440
+  }
+}

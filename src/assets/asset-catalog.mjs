@@ -1,12 +1,16 @@
 import linhDongMeta from '../../assets/characters/linh-dong/runtime-meta.json' with { type: 'json' };
 import lucAnhRuntime from '../../assets/characters/luc-anh/canvas-sprite-runtime.json' with { type: 'json' };
 import dinhLoiRuntime from '../../assets/characters/dinh-loi/canvas-sprite-runtime.json' with { type: 'json' };
+import bachDienRuntime from '../../assets/characters/bach-dien/runtime-meta.json' with { type: 'json' };
 import { atlasDecodedBytes } from './decoded-atlas-cache.mjs';
 
 const HERO_ALIASES = Object.freeze({
   linh_dong: 'hero_splus_linh_dong',
   'linh-dong': 'hero_splus_linh_dong',
   hero_splus_linh_dong: 'hero_splus_linh_dong',
+  bach_dien: 'hero_splus_bach_dien',
+  'bach-dien': 'hero_splus_bach_dien',
+  hero_splus_bach_dien: 'hero_splus_bach_dien',
   luc_anh: 'luc_anh',
   'luc-anh': 'luc_anh',
   dinh_loi: 'dinh_loi',
@@ -50,6 +54,7 @@ export function normalizeHeroId(value) {
   }
   if (HERO_ALIASES[lower]) return HERO_ALIASES[lower];
   if (raw.toLowerCase() === 'hero_splus_linh_dong') return 'hero_splus_linh_dong';
+  if (raw.toLowerCase() === 'hero_splus_bach_dien') return 'hero_splus_bach_dien';
   return lower;
 }
 
@@ -220,3 +225,4 @@ function hydrateLinhDong(meta) {
 registerHeroManifest(hydrateLinhDong(linhDongMeta));
 registerHeroManifest(lucAnhRuntime);
 registerHeroManifest(dinhLoiRuntime);
+registerHeroManifest(bachDienRuntime);

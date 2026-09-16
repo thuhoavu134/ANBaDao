@@ -1,0 +1,248 @@
+{
+  "ok": true,
+  "report": {
+    "ticket": "TKT-0154",
+    "ts": "2026-09-15T12:17:58.363Z",
+    "decoded": {
+      "idle": 81100800,
+      "attack": 81100800,
+      "ultimate": 81100800,
+      "skill1Vfx": 43648000,
+      "ultimateVfx": 43648000,
+      "cap": 134217728
+    },
+    "desktop": {
+      "name": "desktop-dpr1",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "dpr": 1,
+      "path": "/battle.html?bachDienQa=1",
+      "boot": {
+        "canvasW": 1280,
+        "canvasH": 696,
+        "painted": 222069,
+        "hasHero": true,
+        "hasRuntime": true,
+        "snapshot": [
+          {
+            "id": "ong-pho-gif-test",
+            "sourceId": "hero_splus_bach_dien",
+            "state": "idle",
+            "action": null,
+            "elapsedMs": 0
+          }
+        ],
+        "inspect": {
+          "bytes": 0,
+          "maxBytes": 134217728,
+          "maxLoading": 2,
+          "loading": 0,
+          "failed": 0,
+          "entries": []
+        },
+        "drawSize": true,
+        "colsFromClip": true,
+        "notFourByTwo": true,
+        "eagerForEach": false,
+        "spine": false
+      },
+      "bootRequests": [],
+      "atkRequests": [
+        "assets/characters/bach-dien/basic-atlas.webp",
+        "assets/characters/bach-dien/skill1_vfx-atlas.webp"
+      ],
+      "requests": [
+        "assets/characters/bach-dien/basic-atlas.webp",
+        "assets/characters/bach-dien/skill1_vfx-atlas.webp"
+      ],
+      "inspectAfter": {
+        "bytes": 124748800,
+        "maxBytes": 134217728,
+        "maxLoading": 2,
+        "loading": 0,
+        "failed": 0,
+        "entries": [
+          {
+            "src": "assets/characters/bach-dien/basic-atlas.webp",
+            "bytes": 81100800,
+            "width": 3840,
+            "height": 5280,
+            "loading": false,
+            "state": "ready",
+            "scope": "battle"
+          },
+          {
+            "src": "assets/characters/bach-dien/skill1_vfx-atlas.webp",
+            "bytes": 43648000,
+            "width": 4400,
+            "height": 2480,
+            "loading": false,
+            "state": "ready",
+            "scope": "battle"
+          }
+        ]
+      },
+      "appErrors": []
+    },
+    "splus": {
+      "name": "splus-390",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "dpr": 2,
+      "path": "/battle.html?qaSplus42=hero_splus_bach_dien&bachDienQa=1",
+      "boot": {
+        "canvasW": 780,
+        "canvasH": 1478,
+        "painted": 285349,
+        "hasHero": true,
+        "hasRuntime": true,
+        "snapshot": [
+          {
+            "id": "player:hero_splus_bach_dien",
+            "sourceId": "hero_splus_bach_dien",
+            "state": "idle",
+            "action": null,
+            "elapsedMs": 0
+          }
+        ],
+        "inspect": {
+          "bytes": 81100800,
+          "maxBytes": 134217728,
+          "maxLoading": 2,
+          "loading": 1,
+          "failed": 0,
+          "entries": [
+            {
+              "src": "assets/characters/bach-dien/idle-atlas.webp",
+              "bytes": 81100800,
+              "width": 3840,
+              "height": 5280,
+              "loading": true,
+              "state": "loading",
+              "scope": "battle"
+            }
+          ]
+        },
+        "drawSize": true,
+        "colsFromClip": true,
+        "notFourByTwo": true,
+        "eagerForEach": false,
+        "spine": false
+      },
+      "bootRequests": [
+        "assets/characters/bach-dien/idle-atlas.webp"
+      ],
+      "atkRequests": [
+        "assets/characters/bach-dien/idle-atlas.webp",
+        "assets/characters/bach-dien/basic-atlas.webp",
+        "assets/characters/bach-dien/skill1_vfx-atlas.webp",
+        "assets/characters/bach-dien/idle-atlas.webp"
+      ],
+      "requests": [
+        "assets/characters/bach-dien/idle-atlas.webp",
+        "assets/characters/bach-dien/basic-atlas.webp",
+        "assets/characters/bach-dien/skill1_vfx-atlas.webp",
+        "assets/characters/bach-dien/idle-atlas.webp",
+        "assets/characters/bach-dien/idle-atlas.webp"
+      ],
+      "inspectAfter": {
+        "bytes": 81100800,
+        "maxBytes": 134217728,
+        "maxLoading": 2,
+        "loading": 0,
+        "failed": 0,
+        "entries": [
+          {
+            "src": "assets/characters/linh-dong/idle-atlas.webp",
+            "bytes": 81100800,
+            "width": 3840,
+            "height": 5280,
+            "loading": false,
+            "state": "ready",
+            "scope": "battle"
+          }
+        ]
+      },
+      "appErrors": []
+    },
+    "mobile": {
+      "name": "mobile-390",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "dpr": 2,
+      "path": "/battle.html?bachDienQa=1",
+      "boot": {
+        "canvasW": 780,
+        "canvasH": 1478,
+        "painted": 285983,
+        "hasHero": true,
+        "hasRuntime": true,
+        "snapshot": [
+          {
+            "id": "ong-pho-gif-test",
+            "sourceId": "hero_splus_bach_dien",
+            "state": "idle",
+            "action": null,
+            "elapsedMs": 0
+          }
+        ],
+        "inspect": {
+          "bytes": 0,
+          "maxBytes": 134217728,
+          "maxLoading": 2,
+          "loading": 0,
+          "failed": 0,
+          "entries": []
+        },
+        "drawSize": true,
+        "colsFromClip": true,
+        "notFourByTwo": true,
+        "eagerForEach": false,
+        "spine": false
+      },
+      "bootRequests": [],
+      "atkRequests": [
+        "assets/characters/bach-dien/basic-atlas.webp",
+        "assets/characters/bach-dien/skill1_vfx-atlas.webp"
+      ],
+      "requests": [
+        "assets/characters/bach-dien/basic-atlas.webp",
+        "assets/characters/bach-dien/skill1_vfx-atlas.webp"
+      ],
+      "inspectAfter": {
+        "bytes": 124748800,
+        "maxBytes": 134217728,
+        "maxLoading": 2,
+        "loading": 0,
+        "failed": 0,
+        "entries": [
+          {
+            "src": "assets/characters/bach-dien/basic-atlas.webp",
+            "bytes": 81100800,
+            "width": 3840,
+            "height": 5280,
+            "loading": false,
+            "state": "ready",
+            "scope": "battle"
+          },
+          {
+            "src": "assets/characters/bach-dien/skill1_vfx-atlas.webp",
+            "bytes": 43648000,
+            "width": 4400,
+            "height": 2480,
+            "loading": false,
+            "state": "ready",
+            "scope": "battle"
+          }
+        ]
+      },
+      "appErrors": []
+    }
+  }
+}

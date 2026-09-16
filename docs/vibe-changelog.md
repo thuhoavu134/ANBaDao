@@ -1,6 +1,17 @@
+## 15/09 — TKT-0154: Bạch Diện Canvas Sprite Runtime
+
+Bind pack q90-480. Catalog alias, atlas native, SFX wav, trận 477×440, S+ token. Không Spine, không mở roster 12, không đổi lưới 42.
+GREEN L152 7/7 + L154 6/6 + npm test 1030/1030. Chrome idle/ATK/Ultimate desktop + 390×844. Safari/iPhone NOT_RUN.
+Đợi `live`. Owner tự `git pull && vercel --prod`. #148 TKT-0152 stale, mechanics đã cherry-pick vào nhánh này.
+
 ## 15/09 — TKT-0153: Chinh chiến đi đường Linh Đồng Run
 
 Owner gửi ảnh Ấn Phố đội đang đi. `specForAfk` nối `run-atlas.webp`. Bày trận vẫn Idle. Safari NOT_RUN. LIVE #149 `7c70c69`. Owner tự `git pull && vercel --prod`.
+
+## 15/09 — TKT-0152: Bạch Diện extra S+ (cơ chế)
+
+Khóa bible Bạch Diện Thần Quân. Extra ngoài lưới 42. Hỷ/Nộ, Thế Thân, S1 máu thấp 240%, Ult 100 Nộ cắp Công. Ảnh tham chiếu + 8 prompt chroma. Roster 12 đóng. Pack atlas TKT-0154.
+
 
 ## 15/09 — TKT-0151: Canvas Sprite Runtime
 

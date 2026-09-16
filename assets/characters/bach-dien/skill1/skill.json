@@ -1,0 +1,33 @@
+{
+  "schema": "hon-viet-skill/v1",
+  "id": "bach-dien.skill1",
+  "heroId": "bach-dien",
+  "kind": "skill1",
+  "name": "Huyễn Diện Trảm",
+  "status": "authored-pack-v1",
+  "movement": {
+    "moveType": 0,
+    "stationary": true
+  },
+  "targeting": {
+    "type": "lowestHpEnemy"
+  },
+  "audio": {
+    "cast": "assets/audio/sfx/bach-dien/atk.wav",
+    "impact": null,
+    "profile": "bach-dien-atk-v1"
+  },
+  "chroma": "#00FF00",
+  "runtime": {
+    "speedModes": [1, 2, 3],
+    "preserveAllFrames": true,
+    "lockCharacterScale": true,
+    "awaitingAtlas": false,
+    "character": "assets/characters/bach-dien/basic-atlas.webp",
+    "combinedVfx": "assets/characters/bach-dien/skill1_vfx-atlas.webp",
+    "frames": 94,
+    "fps": 30,
+    "cellW": 480,
+    "cellH": 440
+  }
+}

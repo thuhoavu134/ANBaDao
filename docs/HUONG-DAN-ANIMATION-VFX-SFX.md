@@ -161,3 +161,41 @@ Isolated fullscreen magical game VFX asset. Side-view 3/4 perspective. A colossa
 Negative Prompt / Bổ trợ loại trừ: character, boy, person, monk, enemies, crowd, human body, floor, ground, architecture, background environment.
 SFX Tích hợp: Hệ thống âm thanh đồng bộ: tiếng rung lắc chuông dồn dập rợn người "FRANTIC DUAL-BELL RATTLING", tiếng ngàn bóng ma rít gào như bão táp càn quét "DEAFENING GHOST SCREAM SWARM", kết thúc bằng tiếng bùa chú phong ấn nổ dội chấn động sub-bass "SEALING SUB-BASS SHUTDOWN".
 ```
+
+---
+
+## IV. Ví dụ mẫu hoàn chỉnh — tướng Bạch Diện (hệ Âm hồn, extra)
+
+ID `hero_splus_bach_dien`. Prompt đầy đủ trong `assets/characters/bach-dien/PROMPTS.md`. Pack atlas chờ owner.
+
+### 1. IDLE / 2. RUN / 3. HIT / 4. FALL
+
+Dùng đúng template mục II.1–II.4 (chroma `#00FF00`, spine 2D chỉ là phong cách).
+
+### 5. ATK — Huyễn Diện Trảm
+
+```
+Isolated character animation pass. Full body 3/4 side view facing right. Elegant androgynous opera performer in white robes snaps open an iron fan with sharp flick of the right wrist, thrusts it forward horizontally in a swift lunging strike, then gracefully spins the fan closed and retreats to composed combat stance. Flowing sleeve physics. Pure solid chroma key green screen background (#00FF00), strictly character only, no floor, no ground, no floor cast shadows, no spell VFX, clean cel-shaded anime character action keyframes, 4k 60fps.
+```
+
+### 6. VFX + SFX ATK
+
+```
+Isolated game VFX animation pass. Side-view 3/4 perspective moving from left to right. A sharp sweeping crescent slash of pure pitch-black ink energy combined with a shrieking white porcelain mask projectile shoots horizontally forward, trailing splashing black calligraphy ink droplets and red cinnabar sparks, violently exploding into a burst of shattered white ceramic shards and violent black ink shockwaves on the right side. Pure solid chroma key green screen background (#00FF00), completely isolated magic VFX element, no characters, no human figures, no ground, no floor, crisp cel-shaded anime game particle effects, 4k assets
+Negative Prompt / Bổ trợ loại trừ: character, human, person, opera performer, assassin, enemy, silhouette, body, face, floor, ground, stones, scenery, 3d model.
+SFX tích hợp: (Hệ thống âm thanh đồng bộ: tiếng mở quạt nan sắt đanh thép "SHARP IRON FAN SNAP", tiếp nối tiếng mặt nạ ma quái rít gió xé toạc không gian "EERIE HIGH-PITCHED WHISTLING WHOOSH", kết thúc bằng tiếng gốm sứ vỡ nát hòa cùng xung kích mực đen dội màng nhĩ "SHATTERING PORCELAIN & HEAVY INK IMPACT BOOM").
+```
+
+### 7. ULT — Ly Hồn Đoạt Phách
+
+```
+Sử dụng giữ nguyên hình ảnh tham chiếu Isolated character animation pass. Full body 3/4 side view facing right. Opera performer character dramatically reaches up with left hand to rip off the white porcelain mask, thrusts the mask forcefully forward with both arms outstretched toward the right in an explosive casting surge, flowing sleeve ribbons fluttering violently. Pure solid chroma key green screen background (#00FF00), strictly character model only, no floor, no ground, no floor shadow, no ghost VFX, clean cel-shaded anime ultimate action, 4k 60fps.
+```
+
+### 8. VFX + SFX ULT
+
+```
+Isolated fullscreen magical game VFX asset. Side-view 3/4 perspective. A gigantic glowing porcelain phantom mask weeping black ink tears erupts on the left, rocketing across the entire screen from left to right, violently clamping onto the right side while releasing massive swirling vortexes of pure pitch-black curse calligraphy ribbons, detonating into a catastrophic burst of flying porcelain fragments and violent dark soul shockwaves. Solid chroma key green screen background (#00FF00), strictly VFX elements only, no characters, no opera actor, no enemies, no crowd, no human body, no floor, no environment, dynamic cel-shaded anime particle FX pass, high contrast, 4k.
+Negative Prompt / Bổ trợ loại trừ: character, opera actor, performer, person, enemies, crowd, human body, floor, ground, architecture, background environment.
+SFX Tích hợp: Hệ thống âm thanh đồng bộ: tiếng cười ré ma mị rợn người của đào hát "CREEPY OPERA CHUCKLE ECHO", tiếng mặt nạ khổng lồ lao vút xé gió "MASSIVE ROARING GHOST PROJECTILE", kết thúc bằng tiếng phong ấn linh hồn nát vụn dội tiếng bass cực trầm "SOUL-SHATTERING DETONATION SUB-BASS".
+```

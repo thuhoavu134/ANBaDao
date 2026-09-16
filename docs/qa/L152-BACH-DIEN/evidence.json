@@ -1,0 +1,16 @@
+{
+  "ticket": "TKT-0152",
+  "revision": "REVIEW",
+  "red": "ERR_MODULE_NOT_FOUND splus-extras.mjs",
+  "green": {
+    "l152": "7/7",
+    "npmTest": "1021/1021"
+  },
+  "catalog": {
+    "SPLUS_HEROES": 42,
+    "soul": 7,
+    "extra": ["hero_splus_bach_dien"]
+  },
+  "safari": "NOT_RUN",
+  "officialRoster12": "closed"
+}

@@ -1,0 +1,31 @@
+{
+  "schema": "hon-viet-asset-meta/v1",
+  "heroId": "hero_splus_bach_dien",
+  "aliases": ["bach_dien", "bach-dien"],
+  "ticket": "TKT-0154",
+  "status": "canvas-sprite-runtime-v2",
+  "encoding": "webp-lossless-rgba-atlas-from-animated-q90",
+  "chroma": "#00FF00",
+  "runtime": "canvas-sprite-runtime/v2",
+  "pack": "artifacts/bach-dien/bach-dien-agent-assets-q90-480.zip",
+  "character": { "cellW": 480, "cellH": 440, "cols": 8, "rows": 12, "frames": 94, "fps": 30 },
+  "vfx": { "cellW": 440, "cellH": 248, "cols": 10, "rows": 10, "frames": 94, "fps": 30 },
+  "sources": {
+    "card": {
+      "file": "card.webp",
+      "prompt": "Full-body 3/4 opera assassin porcelain mask, white silk robe, iron fan, three wooden masks, cel-shaded",
+      "generator": "imagine_text_to_image",
+      "sourceJpg": "artifacts/imagine_images/f3c3cee2-9d90-4c3b-a720-af2fdb8f2119.jpg"
+    },
+    "avatar": {
+      "file": "avatar.webp",
+      "source": "agent-pack-q90-480"
+    },
+    "hudIcon": {
+      "file": "hud-icon.webp",
+      "prompt": "3D game HUD status icon. A split antique porcelain drama mask, one half smiling with red cinnabar makeup, the other crying with black ink tears, surrounded by sharp floating iron fan blades. Dark cel-shaded anime interface element, high contrast, transparent background.",
+      "generator": "imagine_text_to_image",
+      "sourceJpg": "artifacts/imagine_images/9b30d251-cc57-4a42-8580-29cf09474af0.jpg"
+    }
+  }
+}

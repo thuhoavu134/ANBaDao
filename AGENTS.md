@@ -1,5 +1,7 @@
 # Hồn Việt / Lục Thần — hướng dẫn bắt đầu
 
+TKT-0154 Bạch Diện Canvas Sprite Runtime REVIEW. ID `hero_splus_bach_dien`. Pack q90-480 → atlas 8×12 / VFX 10×10. Lưới 42 giữ. Roster 12 đóng. Không `live` thì không merge.
+
 TKT-0153 Chinh chiến đi đường Linh Đồng Run LIVE #149 `7c70c69`. Idle Bày trận không đổi. Safari/iPhone NOT_RUN. Owner tự `git pull && vercel --prod`.
 
 TKT-0151 Canvas Sprite Runtime LIVE #147 `e8cd581`. Catalog + lazy + LRU 128 MiB. Linh Đồng trước. Safari/iPhone NOT_RUN. Owner tự `git pull && vercel --prod`.

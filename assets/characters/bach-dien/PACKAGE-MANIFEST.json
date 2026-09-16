@@ -1,0 +1,257 @@
+{
+  "schema": "bach-dien-agent-assets/v1",
+  "heroId": "hero_splus_bach_dien",
+  "heroName": "Bạch Diện",
+  "element": "Âm Hồn",
+  "source": "Blender 5.1.2 compositor from user-supplied MP4 passes",
+  "clips": [
+    {
+      "key": "idle",
+      "kind": "character",
+      "file": "assets/characters/bach-dien/idle.webp",
+      "frames": 94,
+      "fps": 30,
+      "canvas": [
+        480,
+        440
+      ],
+      "durationMs": 3133.333,
+      "pivot": {
+        "x": 240,
+        "y": 440
+      }
+    },
+    {
+      "key": "run",
+      "kind": "character",
+      "file": "assets/characters/bach-dien/run.webp",
+      "frames": 94,
+      "fps": 30,
+      "canvas": [
+        480,
+        440
+      ],
+      "durationMs": 3133.333,
+      "pivot": {
+        "x": 240,
+        "y": 440
+      }
+    },
+    {
+      "key": "hit",
+      "kind": "character",
+      "file": "assets/characters/bach-dien/hit.webp",
+      "frames": 94,
+      "fps": 30,
+      "canvas": [
+        480,
+        440
+      ],
+      "durationMs": 3133.333,
+      "pivot": {
+        "x": 240,
+        "y": 440
+      }
+    },
+    {
+      "key": "fall",
+      "kind": "character",
+      "file": "assets/characters/bach-dien/fall.webp",
+      "frames": 94,
+      "fps": 30,
+      "canvas": [
+        480,
+        440
+      ],
+      "durationMs": 3133.333,
+      "pivot": {
+        "x": 240,
+        "y": 440
+      }
+    },
+    {
+      "key": "atk",
+      "kind": "character",
+      "file": "assets/characters/bach-dien/atk.webp",
+      "frames": 94,
+      "fps": 30,
+      "canvas": [
+        480,
+        440
+      ],
+      "durationMs": 3133.333,
+      "pivot": {
+        "x": 240,
+        "y": 440
+      }
+    },
+    {
+      "key": "ultimate",
+      "kind": "character",
+      "file": "assets/characters/bach-dien/ultimate.webp",
+      "frames": 94,
+      "fps": 30,
+      "canvas": [
+        480,
+        440
+      ],
+      "durationMs": 3133.333,
+      "pivot": {
+        "x": 240,
+        "y": 440
+      }
+    },
+    {
+      "key": "vfx_atk",
+      "kind": "vfx",
+      "file": "assets/vfx/bach-dien/atk.webp",
+      "frames": 94,
+      "fps": 30,
+      "canvas": [
+        440,
+        248
+      ],
+      "durationMs": 3133.333,
+      "pivot": {
+        "x": 220,
+        "y": 248
+      }
+    },
+    {
+      "key": "vfx_ultimate",
+      "kind": "vfx",
+      "file": "assets/vfx/bach-dien/ultimate.webp",
+      "frames": 94,
+      "fps": 30,
+      "canvas": [
+        440,
+        248
+      ],
+      "durationMs": 3133.333,
+      "pivot": {
+        "x": 220,
+        "y": 248
+      }
+    }
+  ],
+  "avatar": "assets/characters/bach-dien/avatar.webp",
+  "sfx": {
+    "atk": "assets/audio/bach-dien/atk.m4a",
+    "ultimate": "assets/audio/bach-dien/ultimate.m4a"
+  },
+  "deliveryEncoding": "animated-webp-q90-rgba",
+  "files": [
+    {
+      "path": "assets/audio/bach-dien/atk.m4a",
+      "bytes": 34471,
+      "sha256": "11e93d6c2dcc0edcbe46418791a293a569a14c3b4ca664cee4461f09e07b2ca8"
+    },
+    {
+      "path": "assets/audio/bach-dien/ultimate.m4a",
+      "bytes": 33291,
+      "sha256": "6b3919792f0a01a719b16b41361703e72838a8baca31cfc71c05897dd58a8f10"
+    },
+    {
+      "path": "assets/characters/bach-dien/atk.webp",
+      "bytes": 6049060,
+      "sha256": "37c581cf476f9de13ca50a1d1c8a3a6998bd5bce97eab7418b7bf5f45f1b1028"
+    },
+    {
+      "path": "assets/characters/bach-dien/avatar.webp",
+      "bytes": 286506,
+      "sha256": "ba2eaa664d947e9068bd8cdede60d2beb192d2c217d6eb8cb20de12a19913d7d"
+    },
+    {
+      "path": "assets/characters/bach-dien/fall.webp",
+      "bytes": 6587974,
+      "sha256": "8982c138e1fc6945364c2a07bff19d5c524b2b9b972659f642bde3545c7492fb"
+    },
+    {
+      "path": "assets/characters/bach-dien/hit.webp",
+      "bytes": 6973648,
+      "sha256": "35aeffa67b978e3540784d6b81da468ece98571ec41d4d119d596a59ba82da49"
+    },
+    {
+      "path": "assets/characters/bach-dien/idle.webp",
+      "bytes": 6565588,
+      "sha256": "84b23d54f99af3a26d6145c42a16ea33da8c6571dab78d28cc3db86c5d63fc37"
+    },
+    {
+      "path": "assets/characters/bach-dien/run.webp",
+      "bytes": 6402052,
+      "sha256": "18d711064ab8b0ee4dd1e76491a89c4d13e4fe036c03c50fbdc930a9e21efa4d"
+    },
+    {
+      "path": "assets/characters/bach-dien/ultimate.webp",
+      "bytes": 6456866,
+      "sha256": "efe45962c1e280be9b474900765488a2a3b1244293dc8eb2d8614b4bfa7e6e44"
+    },
+    {
+      "path": "assets/vfx/bach-dien/atk.webp",
+      "bytes": 4132826,
+      "sha256": "14498a699ac544358a353d72670a40e7fc85e385cb4d279ffa4fd0c4a6fd9898"
+    },
+    {
+      "path": "assets/vfx/bach-dien/ultimate.webp",
+      "bytes": 4768270,
+      "sha256": "5875def6b89bf8ebda0590def4e498767b5800699fd692724df373caf939dbe6"
+    },
+    {
+      "path": "INTEGRATION-HANDOFF.md",
+      "bytes": 3949,
+      "sha256": "0c95bf2eed188dfc36de80d375e69e89d14d2ae406b37b744c2b2ad010529852"
+    },
+    {
+      "path": "previews/atk-contact.jpg",
+      "bytes": 92292,
+      "sha256": "69ab902c86531f8981d0bb005fd92ead77bd495d0fe57ba755165f96c46280fd"
+    },
+    {
+      "path": "previews/fall-contact.jpg",
+      "bytes": 96901,
+      "sha256": "a473873ed6e13bfa93cf4df97502e1845f3bac03420d42073f75dca66cdc0f95"
+    },
+    {
+      "path": "previews/hit-contact.jpg",
+      "bytes": 104355,
+      "sha256": "6e424a421c78464b6652890bcfb53a8dae8acd985e61ec4b730e3d5df7603bf8"
+    },
+    {
+      "path": "previews/idle-contact.jpg",
+      "bytes": 104193,
+      "sha256": "3cdafc4395492786443fcb6b7cfcfe09795dbf2d255afd4ded7e5dfdd6ca04ef"
+    },
+    {
+      "path": "previews/run-contact.jpg",
+      "bytes": 100634,
+      "sha256": "097eb5f0b5de41fd3ae3f466252268d3062633ffc3fd66c5a3f546636378f864"
+    },
+    {
+      "path": "previews/ultimate-contact.jpg",
+      "bytes": 106479,
+      "sha256": "afc48ae7c49032a6856595a070b585674d5730f0c9a565571c0be8c566eef7d2"
+    },
+    {
+      "path": "previews/vfx_atk-contact.jpg",
+      "bytes": 72996,
+      "sha256": "93937e1beef49a4cace17dab254ca323980bf5902c416ff8c1b5a680e640401b"
+    },
+    {
+      "path": "previews/vfx_ultimate-contact.jpg",
+      "bytes": 77688,
+      "sha256": "12c0a13f3e85db8a06857169d5672faf2ec45589431dc64cb948cd886c7a33df"
+    },
+    {
+      "path": "QA-REPORT.json",
+      "bytes": 3487,
+      "sha256": "6591cfa47b67c973b468febacfac040ac0816c878004a3d3566f2263bf36b01b"
+    }
+  ],
+  "qa": "QA-REPORT.json",
+  "status": "QA-PASS",
+  "notes": [
+    "Character passes use stable largest-component crop; VFX preserves full source composition.",
+    "Do not treat animated WebP as a 4x2 atlas.",
+    "Do not change game mechanics while wiring this package."
+  ]
+}

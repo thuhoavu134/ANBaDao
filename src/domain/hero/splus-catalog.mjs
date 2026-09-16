@@ -1,3 +1,4 @@
+import { SPLUS_EXTRA_BY_ID, SPLUS_EXTRA_HEROES, resolveSplusExtraId } from './splus-extras.mjs';
 import { SPLUS_PROFILE_BY_KEY, SPLUS_PROFILE_VERSION } from './splus-profile-data.mjs';
 export const SPLUS_SCHEMA = 'luc-than-splus42/v2';
 export const SPLUS_ELEMENTS = Object.freeze({metal:'Kim Khí',soul:'Âm Hồn',water:'Thương Thủy',fire:'Viêm Hỏa',wood:'Mộc Tinh',dream:'Hư Mộng'});
@@ -551,7 +552,14 @@ export const SPLUS_HEROES = Object.freeze(rows.map(([number,key,name,element,rol
     passive:skill('passive',`${key}.passive`,0,0),reviewDefaults:SPLUS_REVIEW_DEFAULTS});
 }));
 export const SPLUS_HERO_BY_ID = Object.freeze(Object.fromEntries(SPLUS_HEROES.map(hero=>[hero.id,hero])));
-export function getSplusHero(id) { return Object.hasOwn(SPLUS_HERO_BY_ID,String(id)) ? SPLUS_HERO_BY_ID[String(id)] : null; }
+export { SPLUS_EXTRA_HEROES, SPLUS_EXTRA_BY_ID };
+export function getSplusHero(id) {
+  const raw=String(id||'');
+  if(Object.hasOwn(SPLUS_HERO_BY_ID,raw))return SPLUS_HERO_BY_ID[raw];
+  const extraId=resolveSplusExtraId(raw);
+  if(Object.hasOwn(SPLUS_EXTRA_BY_ID,extraId))return SPLUS_EXTRA_BY_ID[extraId];
+  return null;
+}
 
 export function validateSplusCatalog(heroes=SPLUS_HEROES) {
   const errors=[];const ids=new Set();const numbers=new Set();
