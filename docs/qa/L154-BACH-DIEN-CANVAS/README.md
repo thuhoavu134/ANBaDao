@@ -25,4 +25,4 @@ Pack `artifacts/bach-dien/bach-dien-agent-assets-q90-480.zip` → atlas 8×12 / 
 
 Trần cache chung với Linh Đồng 128 MiB. Roster 12 đóng. Lưới 42 giữ.
 
-npm test 1030/1030. Đợi `live`. Owner tự `git pull && vercel --prod`.
+npm test 1030/1030. LIVE #150 `aedd4cb`. Safari/iPhone NOT_RUN. Owner tự `git pull && vercel --prod`.

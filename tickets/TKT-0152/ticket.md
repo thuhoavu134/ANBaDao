@@ -1,11 +1,11 @@
 ---
 id: TKT-0152
 title: Bạch Diện — khóa bible, mechanics extra, ảnh tham chiếu
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 created: 2026-09-15T10:00:00.000Z
-updated: 2026-09-15T10:00:00.000Z
+updated: 2026-09-16T02:10:00.000Z
 acceptance_ids: ['L152-T1', 'L152-T2', 'L152-T3', 'L152-T4', 'L152-T5', 'L152-T6', 'L152-T7', 'L152-P1']
 required_gates: ["vibelab","tdd"]
 affected_paths:
@@ -56,6 +56,4 @@ Không đổi BETS 2/10/50, loot, Bách Bảo, Hồng Trầu. Không mở 42 S+ 
 
 ## Result
 
-REVIEW. Extra `hero_splus_bach_dien` ngoài lưới 42. Mechanics Hỷ/Nộ, Thế Thân, S1/Ult theo bible. Ảnh tham chiếu + prompt chroma. Không atlas giả, không roster 12.
-RED `ERR_MODULE_NOT_FOUND` → GREEN L152 7/7 + npm test 1021/1021. Chrome chân dung tham chiếu. Safari/iPhone NOT_RUN.
-Đợi owner `live` rồi squash-merge. Owner tự `git pull && vercel --prod`. Pack atlas là ticket sau.
+LIVE #150 `aedd4cb` (gộp TKT-0154). Extra `hero_splus_bach_dien` ngoài lưới 42. #148 closed. Owner tự `git pull && vercel --prod`.

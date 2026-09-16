@@ -1,11 +1,11 @@
 ---
 id: TKT-0154
 title: Bạch Diện Canvas Sprite Runtime — bind pack q90-480
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 created: 2026-09-15T18:50:00.000Z
-updated: 2026-09-15T18:50:00.000Z
+updated: 2026-09-16T02:10:00.000Z
 acceptance_ids: [L154-T1, L154-T2, L154-T3, L154-T4, L154-T5, L154-T6, L154-P1]
 required_gates: [vibelab, tdd]
 affected_paths:
@@ -52,4 +52,4 @@ Không đổi BETS 2/10/50, loot, Bách Bảo, Hồng Trầu. Không mở 42 S+,
 
 ## Review
 
-Đợi `live` rồi squash-merge. Owner tự `git pull && vercel --prod`.
+LIVE #150 `aedd4cb`. Safari/iPhone NOT_RUN. Owner tự `git pull && vercel --prod`.

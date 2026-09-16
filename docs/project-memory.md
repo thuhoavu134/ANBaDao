@@ -1,6 +1,6 @@
 ## 15/09 — TKT-0154: Bạch Diện Canvas Sprite Runtime
 
-Pack animated WebP 94@30fps đóng atlas 8×12 (480×440) / 10×10 (440×248), không 4×2. Catalog + lazy idle + LRU 128 MiB dùng chung. Extra S+ giữ mechanics TKT-0152. Roster 12 đóng.
+Pack animated WebP 94@30fps đóng atlas 8×12 (480×440) / 10×10 (440×248), không 4×2. Catalog + lazy idle + LRU 128 MiB dùng chung. Extra S+ giữ mechanics TKT-0152. Roster 12 đóng. LIVE #150 `aedd4cb`. Owner tự `git pull && vercel --prod`.
 
 ## 15/09 — TKT-0153: Chinh chiến Linh Đồng Run
 
@@ -8,7 +8,7 @@ March dùng `run-atlas.webp`. Idle giữ cho Bày trận. Cell/pivot L144 không
 
 ## 15/09 — TKT-0152: Bạch Diện extra S+ (cơ chế)
 
-`hero_splus_bach_dien` aliases bach_dien / bach-dien. Không phải hàng 43. Passive Diện Khúc Luân Hồi, S1 Huyễn Diện Trảm, Ult Ly Hồn Đoạt Phách 100 Nộ. Roster 12 đóng. Pack atlas TKT-0154.
+`hero_splus_bach_dien` aliases bach_dien / bach-dien. Không phải hàng 43. Passive Diện Khúc Luân Hồi, S1 Huyễn Diện Trảm, Ult Ly Hồn Đoạt Phách 100 Nộ. Roster 12 đóng. LIVE cùng #150.
 
 
 ## 15/09 — TKT-0151: Canvas Sprite Runtime
