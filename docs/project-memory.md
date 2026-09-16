@@ -1,6 +1,6 @@
 ## 16/09 — TKT-0156: Bạch Diện tướng đầy đủ
 
-`DATA.heroes.bach_dien` + `OFFICIAL_ROSTER_12_IDS` + kit v2 + hồ sơ idle. Linh Đồng giữ. TKT-0155 extras SUPERSEDED.
+`DATA.heroes.bach_dien` + `OFFICIAL_ROSTER_12_IDS` + kit v2 + hồ sơ idle. Linh Đồng giữ. TKT-0155 extras SUPERSEDED. LIVE #152 `85a35d5`. Owner tự `git pull && vercel --prod`.
 
 ## 16/09 — TKT-0155: thẻ Bạch Diện Tướng/Đồ Giám
 

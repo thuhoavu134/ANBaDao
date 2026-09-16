@@ -1,11 +1,11 @@
 ---
 id: TKT-0156
 title: Bạch Diện tướng đầy đủ như Linh Đồng
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 created: 2026-09-16T05:55:00.000Z
-updated: 2026-09-16T06:05:00.000Z
+updated: 2026-09-16T07:15:00.000Z
 acceptance_ids: [L156-T1, L156-T2, L156-T3, L156-T4, L156-T5, L156-P1]
 required_gates: [vibelab, tdd]
 affected_paths:
@@ -45,5 +45,9 @@ Không đổi BETS 2/10/50, loot, công thức combat của 12 tướng cũ. Kh�
 
 RED L156-T1…T5 → GREEN 6/6. npm test 1040/1040. Chrome 390×844 `tuong-390x844.png` + `detail-390x844.png` PASS. TKT-0155 extras/trận thử SUPERSEDED. Safari/iPhone NOT_RUN.
 
-Đợi `live` rồi squash-merge. Owner tự `git pull && vercel --prod`.
+## Result
+
+LIVE #152 `85a35d5`. DATA.heroes + roster chính thức + kit v2 + hồ sơ idle. Linh Đồng ô 2. TKT-0155 extras SUPERSEDED. Encyclopedia 42 giữ. BETS đóng. Không Spine.
+L156-T1…T5 PASS. npm test 1040. L156-P1 Chrome 390×844 PASS. Safari NOT_RUN.
+Owner tự `git pull && vercel --prod`.
 
