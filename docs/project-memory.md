@@ -1,3 +1,11 @@
+## 17/09 — Direct main rollback to Bạch Diện Ultra v5
+
+- Extreme v6 was rejected in the actual game visual review because aggressive frame thinning caused visibly poor motion. Replaced the 8 Bạch Diện runtime atlases on `main` with the preserved Ultra v5 sampling: **269 frames**, native 480×440 character / 440×248 VFX cells.
+- Canonical Canvas Sprite Runtime and hero/roster contracts remain unchanged; only asset atlas content, runtime metadata version, and matching regression expectations changed.
+- Focused Bạch Diện runtime tests: 10/10 PASS. Full `npm test`: EXIT 0.
+- Rollback checkpoint before this direct-main change: `226e99b` (`backup/main-pre-ultra-v5-20260917` local).
+- Production deploy: not run.
+
 ## 16/09 — TKT-0156: Bạch Diện tướng đầy đủ
 
 `DATA.heroes.bach_dien` + `OFFICIAL_ROSTER_12_IDS` + kit v2 + hồ sơ idle. Linh Đồng giữ. TKT-0155 extras SUPERSEDED. LIVE #152 `85a35d5`. Owner tự `git pull && vercel --prod`.

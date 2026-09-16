@@ -22,21 +22,21 @@ const atlasFiles = [
   'assets/audio/sfx/bach-dien/ult.wav'
 ];
 
-test('BACH-V6-0 Extreme v6 assets and runtime metadata are complete', () => {
+test('BACH-V5-0 Ultra v5 assets and runtime metadata are complete', () => {
   for (const rel of atlasFiles) assert.ok(exists(rel), rel);
   const meta = JSON.parse(read('assets/characters/bach-dien/runtime-meta.json'));
   assert.equal(meta.schema, 'canvas-sprite-runtime/v2');
   assert.equal(meta.heroId, 'hero_splus_bach_dien');
-  assert.equal(meta.version, 'extreme-v6');
-  assert.equal(meta.deliveryEncoding, 'webp-lossy-rgba-atlas-extreme-v6');
-  assert.equal(Object.keys(meta.clips).length, 9);
+  assert.equal(meta.version, 'ultra-v5');
+  assert.equal(meta.deliveryEncoding, 'webp-lossy-rgba-atlas-ultra-v5');
+  assert.equal(Object.keys(meta.clips).length, 8);
   assert.deepEqual(Object.fromEntries(Object.entries(meta.clips).map(([key, clip]) => [key, clip.frames])), {
-    idle: 22, run: 30, hurt: 12, defeated: 16, attack: 20,
-    skill1: 20, ultimate: 24, skill1Vfx: 22, ultimateVfx: 32
+    idle: 32, run: 45, hurt: 18, defeated: 24, attack: 30,
+    ultimate: 36, skill1Vfx: 36, ultimateVfx: 48
   });
 });
 
-test('BACH-V6-1 battle runtime binds Bạch Diện through the canonical Canvas Sprite owner', () => {
+test('BACH-V5-1 battle runtime binds Bạch Diện through the canonical Canvas Sprite owner', () => {
   const battle = read('battle.html');
   const runtime = read('scripts/bach-dien-canvas-runtime-v1.mjs');
   const roster = read('src/domain/hero/roster-view.mjs');
@@ -50,7 +50,7 @@ test('BACH-V6-1 battle runtime binds Bạch Diện through the canonical Canvas 
   assert.match(runtime, /BACH_DIEN_CANONICAL_ID/);
 });
 
-test('BACH-V6-2 build owner keeps the canonical runtime and avoids duplicate declarations', () => {
+test('BACH-V5-2 build owner keeps the canonical runtime and avoids duplicate declarations', () => {
   const build = read('scripts/build-static.mjs');
   const owner = read('scripts/bach-dien-runtime-v6.mjs');
   assert.match(build, /await import\('\.\/bach-dien-canvas-runtime-v1\.mjs'\)/);
@@ -59,9 +59,10 @@ test('BACH-V6-2 build owner keeps the canonical runtime and avoids duplicate dec
   assert.doesNotMatch(owner, /const BACH_DIEN_META/);
 });
 
-test('BACH-V6-3 v6 package stays self-contained and does not depend on Ultra v5', () => {
+test('BACH-V5-3 Ultra v5 package stays self-contained and uses the canonical runtime', () => {
   const meta = JSON.parse(read('assets/characters/bach-dien/runtime-meta.json'));
-  assert.equal(meta.version, 'extreme-v6');
+  assert.equal(meta.version, 'ultra-v5');
+  assert.equal(meta.totalFrames, 269);
   assert.ok(Object.values(meta.clips).every(clip => clip.src.startsWith('assets/characters/bach-dien/')));
-  assert.equal(read('scripts/bach-dien-runtime-v6.mjs').includes('Ultra v5'), false);
+  assert.match(read('scripts/bach-dien-runtime-v6.mjs'), /canonical Canvas Sprite Runtime owner/);
 });

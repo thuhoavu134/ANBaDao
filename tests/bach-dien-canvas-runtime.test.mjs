@@ -70,7 +70,7 @@ test('L154-T1 catalog resolves Bạch Diện aliases without Image or Spine', as
   }
 });
 
-test('L154-T2 Extreme v6 pack metadata keeps explicit frame counts and native cells', async () => {
+test('L154-T2 Ultra v5 pack metadata keeps explicit frame counts and native cells', async () => {
   const catalog = await import('../src/assets/asset-catalog.mjs');
   const report = catalog.validateManifest(catalog.getHeroManifest('hero_splus_bach_dien'));
   assert.equal(report.ok, true, report.errors.join('; '));
@@ -80,7 +80,7 @@ test('L154-T2 Extreme v6 pack metadata keeps explicit frame counts and native ce
   const vfx = catalog.getClip('bach-dien', 'atkVfx');
   const ultVfx = catalog.getClip('bach-dien', 'ultimateVfx');
   const expectedCharacter = {
-    idle: [22, 6, 4], run: [30, 6, 5], attack: [20, 5, 4]
+    idle: [32, 6, 6], run: [45, 6, 8], attack: [30, 6, 5]
   };
   for (const [key, clip] of [['idle', idle], ['run', run], ['attack', attack]]) {
     const [frames, cols, rows] = expectedCharacter[key];
@@ -96,7 +96,7 @@ test('L154-T2 Extreme v6 pack metadata keeps explicit frame counts and native ce
     assert.equal(clip.atlasHeight, rows * 440);
     assert.equal(clip.fps, 30);
   }
-  for (const [clip, frames, cols, rows] of [[vfx, 22, 6, 4], [ultVfx, 32, 8, 4]]) {
+  for (const [clip, frames, cols, rows] of [[vfx, 36, 6, 6], [ultVfx, 48, 8, 6]]) {
     assert.equal(clip.frames, frames);
     assert.equal(clip.cellW, 440);
     assert.equal(clip.cellH, 248);
@@ -110,7 +110,7 @@ test('L154-T2 Extreme v6 pack metadata keeps explicit frame counts and native ce
   }
   const meta = JSON.parse(read('assets/characters/bach-dien/runtime-meta.json'));
   assert.equal(meta.schema, 'canvas-sprite-runtime/v2');
-  assert.match(meta.source, /Extreme v6/i);
+  assert.match(meta.source, /Ultra v5/i);
   for (const file of ATLASES) {
     const rel = 'assets/characters/bach-dien/' + file;
     assert.ok(exists(rel), rel);
@@ -128,12 +128,12 @@ test('L154-T3 FrameClock replay and renderer source rect use clip metadata', asy
   const attack = catalog.getClip('bach_dien', 'attack');
   assert.equal(frameAt(idle, 0), 0);
   assert.equal(frameAt(idle, 1000 / 30), 1);
-  assert.equal(frameAt({ ...idle, loop: true }, 22 * (1000 / 30)), 0);
-  assert.equal(frameAt({ ...attack, loop: false }, 10_000), 19);
+  assert.equal(frameAt({ ...idle, loop: true }, 32 * (1000 / 30)), 0);
+  assert.equal(frameAt({ ...attack, loop: false }, 10_000), 29);
   assert.equal(frameAt(idle, 1000), frameAt(idle, 1000));
-  const last = sourceRectForFrame(idle, 21);
-  assert.equal(last.sx, (21 % 6) * 480);
-  assert.equal(last.sy, Math.floor(21 / 6) * 440);
+  const last = sourceRectForFrame(idle, 31);
+  assert.equal(last.sx, (31 % 6) * 480);
+  assert.equal(last.sy, Math.floor(31 / 6) * 440);
   assert.equal(last.sw, 480);
   assert.equal(last.sh, 440);
   const renderer = read('src/render/canvas-sprite-renderer.mjs');
