@@ -25,7 +25,8 @@
       ids: ['linh_dong', ...OFFICIAL_ROSTER_12_IDS.filter(id => id !== 'linh_dong')],
       heroes: DATA.heroes, player: P,
       powerFor: heroPower, portraitFor: id => portraitSrc(id, 'card'),
-      ...state });
+      ...state,
+      extras: [BACH_DIEN_ROSTER_PREVIEW] });
     root.innerHTML = `<header class="v4-top"><div class="v4-profile">
       <button class="v4-avatar" data-roster-nav="hub" aria-label="Về Thành Chính">‹</button>
       <div><div class="v4-name">Hồn Việt</div><div class="v4-sub">Sở hữu ${view.owned}/${view.total} tướng</div>
@@ -51,7 +52,7 @@
         <div class="v4-art"><img src="${esc(card.portrait)}" alt="" loading="lazy" decoding="async"></div>
         <div class="v4-grade"><img src="assets/ui/heroes/grade-${gradeFile}.png" alt="${grade}"></div><div class="v4-level">${card.owned ? 'Lv.' + card.level : '🔒'}</div>
         <div class="v4-veil">
-          <div class="v4-element">${HE[card.element]?.ic || ''}</div>
+          <div class="v4-element">${card.element === 'soul' ? '🎭' : (HE[card.element]?.ic || '')}</div>
           <div class="v4-stars">${stars}</div>
           <div class="v4-cardname" title="${esc(card.name)}">${esc(card.shortName)}</div>
         </div></button>`;
@@ -76,6 +77,11 @@
       state.scrollTop = 0; renderHeroes(); return;
     }
     const id = button.dataset.heroId;
+    if (id === 'bach_dien') {
+      rememberScroll();
+      location.assign('battle.html?qaSplus42=hero_splus_bach_dien');
+      return;
+    }
     if (!OFFICIAL_ROSTER_12_IDS.includes(id)) return;
     if (!P.heroes[id]?.owned) { toast('Chưa sở hữu tướng này.'); return; }
     state.selectedId = id; rememberScroll();

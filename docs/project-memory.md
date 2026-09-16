@@ -1,3 +1,7 @@
+## 16/09 — TKT-0155: thẻ Bạch Diện Tướng/Đồ Giám
+
+Extra `bach_dien` trên roster, portrait card.webp, chạm `qaSplus42=hero_splus_bach_dien`. Roster 12 đóng.
+
 ## 15/09 — TKT-0154: Bạch Diện Canvas Sprite Runtime
 
 Pack animated WebP 94@30fps đóng atlas 8×12 (480×440) / 10×10 (440×248), không 4×2. Catalog + lazy idle + LRU 128 MiB dùng chung. Extra S+ giữ mechanics TKT-0152. Roster 12 đóng. LIVE #150 `aedd4cb`. Owner tự `git pull && vercel --prod`.

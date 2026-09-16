@@ -16,6 +16,22 @@ export const LINH_DONG_ROSTER_PREVIEW = Object.freeze({
   preview: true
 });
 
+export const BACH_DIEN_ROSTER_PREVIEW = Object.freeze({
+  id: 'bach_dien',
+  name: 'Bạch Diện',
+  shortName: 'Bạch Diện',
+  element: 'soul',
+  role: 'Sát thủ phép',
+  rarity: 'S+',
+  owned: true,
+  level: 1,
+  stars: 1,
+  power: 0,
+  portrait: 'assets/characters/bach-dien/card.webp',
+  inSquad: false,
+  preview: true
+});
+
 function normalizeExtra(card, portraitFor) {
   if (!card || !card.id) return null;
   const portrait = card.portrait || (portraitFor ? portraitFor(card.id) : '');

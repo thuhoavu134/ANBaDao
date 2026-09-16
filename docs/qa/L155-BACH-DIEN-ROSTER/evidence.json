@@ -1,0 +1,14 @@
+{
+  "ok": true,
+  "owned": {
+    "count": 1,
+    "name": "Bạch Diện",
+    "portrait": "assets/characters/bach-dien/card.webp",
+    "officialHas": false
+  },
+  "all": {
+    "count": 1,
+    "name": "Bạch Diện"
+  },
+  "appErrors": []
+}

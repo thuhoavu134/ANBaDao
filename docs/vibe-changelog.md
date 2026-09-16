@@ -1,3 +1,8 @@
+## 16/09 — TKT-0155: Hiện thẻ Bạch Diện trên Tướng
+
+Owner chưa thấy tướng mới. Extra card portrait trên Tướng/Đồ Giám, chạm mở trận S+ authored. Không vào roster 12, không DATA.heroes, lưới 42 giữ.
+Đợi `live`.
+
 ## 15/09 — TKT-0154: Bạch Diện Canvas Sprite Runtime
 
 Bind pack q90-480. Catalog alias, atlas native, SFX wav, trận 477×440, S+ token. Không Spine, không mở roster 12, không đổi lưới 42.
