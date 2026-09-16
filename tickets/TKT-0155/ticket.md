@@ -1,11 +1,11 @@
 ---
 id: TKT-0155
 title: Hiện thẻ Bạch Diện trên Tướng và Đồ Giám
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 created: 2026-09-16T05:30:00.000Z
-updated: 2026-09-16T05:40:00.000Z
+updated: 2026-09-16T05:50:00.000Z
 acceptance_ids: [L155-T1, L155-T2, L155-T3, L155-T4, L155-P1]
 required_gates: [vibelab, tdd]
 affected_paths:
@@ -38,6 +38,4 @@ Không sửa `OFFICIAL_ROSTER_12_IDS`. Không thêm `bach_dien` vào `DATA.heroe
 
 ## Review
 
-RED L155-T1…T4 (thiếu `BACH_DIEN_ROSTER_PREVIEW`) → GREEN 4/4. Chrome 390×844 `owned-390.png` + `all-390.png` PASS. Safari/iPhone NOT_RUN.
-
-Đợi `live` rồi squash-merge. Owner tự `git pull && vercel --prod`. Bản chơi hiện tại chưa có pack #150 lẫn thẻ này.
+LIVE #151 `7a700e9`. Safari/iPhone NOT_RUN. Owner tự `git pull && vercel --prod`.

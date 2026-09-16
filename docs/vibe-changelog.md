@@ -1,7 +1,7 @@
 ## 16/09 — TKT-0155: Hiện thẻ Bạch Diện trên Tướng
 
 Owner chưa thấy tướng mới. Extra card portrait trên Tướng/Đồ Giám, chạm mở trận S+ authored. Không vào roster 12, không DATA.heroes, lưới 42 giữ.
-Đợi `live`.
+LIVE #151 `7a700e9`. Safari/iPhone NOT_RUN. Owner tự `git pull && vercel --prod`.
 
 ## 15/09 — TKT-0154: Bạch Diện Canvas Sprite Runtime
 

@@ -9,4 +9,4 @@ Owner 16/09 chưa thấy tướng mới. Extra card, không vào roster 12.
 - `evidence.json` L155-P1 PASS (`count:1`, `officialHas:false`)
 - Chạm thẻ mở trận S+ authored `qaSplus42=hero_splus_bach_dien`
 
-Safari/iPhone NOT_RUN. Đợi `live`.
+Safari/iPhone NOT_RUN. LIVE #151 `7a700e9`. Owner tự `git pull && vercel --prod`.
