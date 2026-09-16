@@ -70,7 +70,7 @@ test('L154-T1 catalog resolves Bạch Diện aliases without Image or Spine', as
   }
 });
 
-test('L154-T2 pack metadata is 94 frames, 480×440 / 440×248, cols 8/10 not 4×2', async () => {
+test('L154-T2 Extreme v6 pack metadata keeps explicit frame counts and native cells', async () => {
   const catalog = await import('../src/assets/asset-catalog.mjs');
   const report = catalog.validateManifest(catalog.getHeroManifest('hero_splus_bach_dien'));
   assert.equal(report.ok, true, report.errors.join('; '));
@@ -79,36 +79,38 @@ test('L154-T2 pack metadata is 94 frames, 480×440 / 440×248, cols 8/10 not 4×
   const attack = catalog.getClip('hero_splus_bach_dien', 'skill1');
   const vfx = catalog.getClip('bach-dien', 'atkVfx');
   const ultVfx = catalog.getClip('bach-dien', 'ultimateVfx');
-  for (const clip of [idle, run, attack]) {
-    assert.equal(clip.frames, 94);
+  const expectedCharacter = {
+    idle: [22, 6, 4], run: [30, 6, 5], attack: [20, 5, 4]
+  };
+  for (const [key, clip] of [['idle', idle], ['run', run], ['attack', attack]]) {
+    const [frames, cols, rows] = expectedCharacter[key];
+    assert.equal(clip.frames, frames);
     assert.equal(clip.cellW, 480);
     assert.equal(clip.cellH, 440);
-    assert.equal(clip.cols, 8);
-    assert.equal(clip.rows, 12);
-    assert.notEqual(clip.cols, 4);
-    assert.notEqual(clip.rows, 2);
+    assert.equal(clip.cols, cols);
+    assert.equal(clip.rows, rows);
     assert.equal(clip.pivot.x, 240);
     assert.equal(clip.pivot.y, 440);
-    assert.equal(clip.decodedBytes, 3840 * 5280 * 4);
-    assert.equal(clip.atlasWidth, 8 * 480);
-    assert.equal(clip.atlasHeight, 12 * 440);
+    assert.equal(clip.decodedBytes, cols * 480 * rows * 440 * 4);
+    assert.equal(clip.atlasWidth, cols * 480);
+    assert.equal(clip.atlasHeight, rows * 440);
     assert.equal(clip.fps, 30);
   }
-  for (const clip of [vfx, ultVfx]) {
-    assert.equal(clip.frames, 94);
+  for (const [clip, frames, cols, rows] of [[vfx, 22, 6, 4], [ultVfx, 32, 8, 4]]) {
+    assert.equal(clip.frames, frames);
     assert.equal(clip.cellW, 440);
     assert.equal(clip.cellH, 248);
-    assert.equal(clip.cols, 10);
-    assert.equal(clip.rows, 10);
+    assert.equal(clip.cols, cols);
+    assert.equal(clip.rows, rows);
     assert.equal(clip.kind, 'vfx');
     assert.equal(clip.blendMode, 'source-over');
-    assert.equal(clip.decodedBytes, 4400 * 2480 * 4);
+    assert.equal(clip.decodedBytes, cols * 440 * rows * 248 * 4);
     assert.equal(clip.pivot.x, 220);
     assert.equal(clip.pivot.y, 248);
   }
   const meta = JSON.parse(read('assets/characters/bach-dien/runtime-meta.json'));
   assert.equal(meta.schema, 'canvas-sprite-runtime/v2');
-  assert.match(meta.source, /not 4x2/i);
+  assert.match(meta.source, /Extreme v6/i);
   for (const file of ATLASES) {
     const rel = 'assets/characters/bach-dien/' + file;
     assert.ok(exists(rel), rel);
@@ -126,12 +128,12 @@ test('L154-T3 FrameClock replay and renderer source rect use clip metadata', asy
   const attack = catalog.getClip('bach_dien', 'attack');
   assert.equal(frameAt(idle, 0), 0);
   assert.equal(frameAt(idle, 1000 / 30), 1);
-  assert.equal(frameAt({ ...idle, loop: true }, 94 * (1000 / 30)), 0);
-  assert.equal(frameAt({ ...attack, loop: false }, 10_000), 93);
+  assert.equal(frameAt({ ...idle, loop: true }, 22 * (1000 / 30)), 0);
+  assert.equal(frameAt({ ...attack, loop: false }, 10_000), 19);
   assert.equal(frameAt(idle, 1000), frameAt(idle, 1000));
-  const last = sourceRectForFrame(idle, 93);
-  assert.equal(last.sx, (93 % 8) * 480);
-  assert.equal(last.sy, Math.floor(93 / 8) * 440);
+  const last = sourceRectForFrame(idle, 21);
+  assert.equal(last.sx, (21 % 6) * 480);
+  assert.equal(last.sy, Math.floor(21 / 6) * 440);
   assert.equal(last.sw, 480);
   assert.equal(last.sh, 440);
   const renderer = read('src/render/canvas-sprite-renderer.mjs');

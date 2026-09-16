@@ -4,9 +4,14 @@ import { join } from 'node:path';
 const out = join(process.cwd(), 'dist');
 function patchFile(name, edits) {
   const p = join(out, name);
-  let s = readFileSync(p, 'utf8');
+  let s = readFileSync(p, 'utf8').replace(/\r\n/g, '\n');
   for (const [from,to,label] of edits) {
-    if (!s.includes(from)) throw new Error(`Luc Anh patch missing ${label} in ${name}`);
+    // The source may already contain this patch after a previous release.
+    // Treat an already-applied replacement as a no-op so build-static is repeatable.
+    if (!s.includes(from)) {
+      if (s.includes(to)) continue;
+      throw new Error(`Luc Anh patch missing ${label} in ${name}`);
+    }
     s = s.replace(from,to);
   }
   writeFileSync(p,s);

@@ -24,7 +24,7 @@ export function createSplusFixture(catalog, selectedId) {
 }
 
 export function patchSplusBattleHtml(input) {
-  let html=input;
+  let html=input.replace(/\r\n/g,'\n');
   const once=(from,to)=>{const count=html.split(from).length-1;if(count!==1)throw new Error(`SPLUS_BUILD_ANCHOR:${from.slice(0,80)}:${count}`);html=html.replace(from,to);};
   if(html.includes('id="splus42-runtime-v1"'))throw new Error('SPLUS_ALREADY_PATCHED');
   const bridge=readFileSync(new URL('../src/runtime/splus-battle-bridge.js',import.meta.url),'utf8');

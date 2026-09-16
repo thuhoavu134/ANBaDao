@@ -29,5 +29,9 @@
       "productionBuild": "blocked locally: npm install/vite unavailable in current container; Vercel build/deploy still required for hosted preview",
       "browserRuntime": "blocked locally by Chromium ERR_BLOCKED_BY_ADMINISTRATOR on localhost/file URLs; hosted preview must be verified after deploy"
     }
-  }
+  },
+  "required_gates": [
+    "vibelab",
+    "tdd"
+  ]
 }

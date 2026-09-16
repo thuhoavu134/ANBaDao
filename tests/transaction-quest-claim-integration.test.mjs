@@ -10,11 +10,11 @@ import {
 const transactionPatch = fs.readFileSync(
   new URL('../scripts/transaction-contract-v1.mjs', import.meta.url),
   'utf8'
-);
+).replace(/\r\n/g, '\n');
 const activeRuntime = fs.readFileSync(
   new URL('../index.html', import.meta.url),
   'utf8'
-);
+).replace(/\r\n/g, '\n');
 
 function baseState() {
   return {

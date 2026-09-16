@@ -1,3 +1,43 @@
+# TKT-0155 — Baseline build/test cleanup
+
+Date: 2026-09-16T17:08:25.913342+00:00
+
+- Root causes fixed: CRLF-sensitive stale patch boundaries in `luc-anh-runtime-patch.mjs`, `player-progress-v1.mjs`, `linh-dong-timing-main-v1.mjs`, and `splus-runtime-v1.mjs`; already-integrated replacement handling added where needed.
+- Restored repo-local dependencies with `npm ci`; `sharp@0.34.3` now resolves from the lockfile.
+- Corrected Windows `file:///C:/...` path handling in `mobile-render-sfx.test.mjs` using `fileURLToPath`.
+- Refreshed the captured source hash assertion and normalized transaction integration test fixtures to compare LF text.
+- Added build-owner injection for Bạch Diện v6 after legacy patch owners so the generated `dist/battle.html` retains the v6 renderer.
+- Focused regression: **34/34 PASS**. Full `npm test`: **EXIT 0**. Static build: **PASS**, embedded battle synced and Bạch Diện definitions/assets present in `dist`.
+- Browser visual gate remains NOT_RUN/BLOCKED because the local AICoworker browser profile is attach-only and not running.
+
+# TKT-0154 — Bạch Diện Extreme v6 verification
+
+Date: 2026-09-16T16:24:25.341048+00:00
+Revision under test: a297c6c + working-tree v6 metadata/test updates
+
+## RED → GREEN
+
+- RED: `node --test tests/bach-dien-v6.test.mjs` — 2 contract failures (metadata schema/encoding missing; fallback path assertion) after test path resolution was corrected.
+- GREEN: `node --test tests/bach-dien-v6.test.mjs` — **3/3 PASS**.
+
+## Runtime evidence
+
+- UTF-8 HTTP smoke: `battle.html` served and contains `drawBachDienHero`.
+- Asset HTTP smoke: all 8 Bạch Diện v6 atlas URLs returned HTTP 200.
+- Local browser tool: **BLOCKED** because the AICoworker browser profile is attach-only and not running; no visual claim made.
+
+## Broader pipeline
+
+- `npm run build`: **BLOCKED by pre-existing baseline** `scripts/luc-anh-runtime-patch.mjs` missing faster Luc Anh FPS marker in `battle.html`.
+- Full `node --test --test-concurrency=1 tests/*.test.mjs`: **not green** due pre-existing unrelated failures (missing `sharp`, stale embedded parity/transaction tests, and other baseline regressions); the focused Bạch Diện suite is green.
+
+## Scope
+
+- Extreme v6: 178 frames / 8.09 MB atlas package.
+- Ultra v5 fallback remains outside the repo and was not deleted or overwritten.
+
+---
+
 # 2026-09-14 — TKT-0144 / EVIDENCE
 
 Baseline `3accc0ed82261cba2c8adeb34a6dc9771abbb37e`. Linh Đồng lazy atlas cache and full-body scene binding.

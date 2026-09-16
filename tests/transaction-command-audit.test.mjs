@@ -8,7 +8,7 @@ import {
   auditCommandInventory
 } from '../src/domain/transaction/command-audit.mjs';
 
-const source = fs.readFileSync('index.html', 'utf8');
+const source = fs.readFileSync('index.html', 'utf8').replace(/\r\n/g, '\n');
 
 test('L03a source audit verifies the mutation inventory and opening sequence', () => {
   const report = auditCommandInventory({ source });

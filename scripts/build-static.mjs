@@ -155,6 +155,10 @@ installLinhDongMemory(root);
 await import('./linh-dong-timing-main-v1.mjs');
 await import('./bach-dien-canvas-runtime-v1.mjs');
 
+// Bạch Diện Extreme v6 must be injected after legacy battle patch owners so
+// a later Linh Đồng/S+ patch cannot silently remove its closure-local helpers.
+await import('./bach-dien-runtime-v6.mjs');
+
 // The integrated battle is loaded from this embedded payload in production.
 // Keep it byte-identical to the patched battle.html; otherwise the visible
 // preview and the iframe can silently run different engines.

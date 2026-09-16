@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 import vm from 'node:vm';
 import sharp from 'sharp';
@@ -8,6 +9,7 @@ import { LUC_ANH_BASIC_GEOMETRY as BASIC, LUC_ANH_IDLE_REFERENCE as IDLE } from 
 
 const read = path => readFileSync(new URL('../' + path, import.meta.url), 'utf8');
 const audioSource = read('src/ui/audio-sfx-runtime.js');
+const assetPath = rel => fileURLToPath(new URL('../' + rel, import.meta.url));
 function audioFixture({ suspended = false, hold = false, parentBus = null } = {}) {
   const listeners = {}, dataset = {}, requests = [], sources = [];
   let release, now = 100;
@@ -83,7 +85,7 @@ test('polyphony is bounded to six source nodes', async () => {
 });
 
 async function frameBounds(file, cell) {
-  const { data, info } = await sharp(new URL('../assets/characters/luc-anh/' + file, import.meta.url).pathname)
+  const { data, info } = await sharp(assetPath('assets/characters/luc-anh/' + file))
     .extract({ left: 0, top: 0, width: cell, height: cell }).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
   let minY = cell, maxY = -1;
   for (let y = 0; y < cell; y++) for (let x = 0; x < cell; x++) {
@@ -108,11 +110,11 @@ test('Đình Lôi retina atlases use the committed 2x source cells', async () =>
   assert.match(builtBattle, /DINH_LOI_CELL_W=480, DINH_LOI_CELL_H=270/);
   assert.equal((builtBattle.match(/image\.naturalWidth\/8/g)||[]).length, 2, 'vertical VFX use full retina cells');
   for (const file of ['idle-atlas.png','run-atlas.png','hit-atlas.png','fall-atlas.png','basic-cast-atlas.png','skill1-cast-atlas.png','ultimate-cast-atlas.png','basic-projectile-atlas.png','basic-impact-atlas.png','skill1-wave-atlas.png','skill1-impact-atlas.png','skill1-shield-atlas.png']) {
-    const meta = await sharp(new URL('../assets/characters/dinh-loi/' + file, import.meta.url).pathname).metadata();
+    const meta = await sharp(assetPath('assets/characters/dinh-loi/' + file)).metadata();
     assert.deepEqual([meta.width, meta.height], [3840, 2160], file + ' keeps 2x landscape atlas dimensions');
   }
   for (const file of ['ultimate-vfx-atlas.png','ultimate-impact-atlas.png']) {
-    const meta = await sharp(new URL('../assets/characters/dinh-loi/' + file, import.meta.url).pathname).metadata();
+    const meta = await sharp(assetPath('assets/characters/dinh-loi/' + file)).metadata();
     assert.deepEqual([meta.width, meta.height], [2160, 3840], file + ' keeps 2x portrait atlas dimensions');
   }
 });

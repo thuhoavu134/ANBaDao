@@ -39,9 +39,12 @@ const REQUIRED_ASSETS = Object.freeze([
 ]);
 
 function replaceOnce(source, from, to, label) {
+  source = source.replace(/\r\n/g, '\n');
   if (!source.includes(from)) {
     // Main already carries this domain branch in a slightly newer basic-action
     // shape; the main-specific insertion below has already installed it.
+    if (source.includes(to)) return source;
+    if (label === 'fall state' && source.includes('isBachDien(unit)')) return source;
     if (OPTIONAL_PATCHES.has(label)) return source;
     if (label === 'ultimate domain status' && source.includes('isLinhDong(actor) && action === "ultimate"')) return source;
     throw new Error(`Linh Đồng battle patch missing ${label}`);

@@ -1,5 +1,5 @@
 import {readFileSync,writeFileSync} from 'node:fs';
-const read=p=>readFileSync(p,'utf8');
+const read=p=>readFileSync(p,'utf8').replace(/\r\n/g,'\n');
 let html=read('dist/index.html');
 function patch(from,to){if(html.split(from).length!==2)throw new Error('Player progression boundary: '+from.slice(0,100));html=html.replace(from,to);}
 const domain=read('src/domain/campaign/player-progress.mjs').replace(/^export\s+/gm,'');
