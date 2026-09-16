@@ -24,7 +24,7 @@ test('L141-T1 DATA.heroes.linh_dong and CHARACTER_MANIFEST surfaces match Lục 
 test('L141-T2 official ids, default owned, stars include Linh Đồng', () => {
   const index = read('index.html');
   assert.match(index, /OFFICIAL_ROSTER_12_IDS=Object\.freeze\(\[[^\]]*linh_dong/);
-  assert.match(index, /\["ong_hang_pho","thay_mo"[^\]]+"linh_dong"\]\.forEach\(id=>\{ if\(heroes\[id\]\) heroes\[id\]\.owned=true; \}\);/);
+  assert.match(index, /\["ong_hang_pho","thay_mo"[^\]]+"linh_dong"[^\]]*\]\.forEach\(id=>\{ if\(heroes\[id\]\) heroes\[id\]\.owned=true; \}\);/);
   assert.match(index, /officialRoster12=\[.*linh_dong/);
   assert.equal(STAR_ROSTER_IDS.includes('linh_dong'), true);
   assert.equal(STAR_ROSTER_IDS.includes('luc_anh'), true);

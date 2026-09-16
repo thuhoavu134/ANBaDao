@@ -171,11 +171,10 @@ test('L152-T6 reference art exists; TKT-0154 binds authored atlases', () => {
   assert.doesNotMatch(prompts, /Spine runtime|spine runtime/i);
 });
 
-test('L152-T7 official 12 and encyclopedia stay closed to Bạch Diện', () => {
+test('L152-T7 encyclopedia 42 stays closed; playable roster now includes Bạch Diện', () => {
   const index = read('index.html');
-  assert.match(index, /OFFICIAL_ROSTER_12_IDS=Object\.freeze\(\[/);
-  assert.doesNotMatch(index, /OFFICIAL_ROSTER_12_IDS=Object\.freeze\(\[[^\]]*bach_dien/);
-  assert.doesNotMatch(index, /bach_dien:\{slug:'bach-dien'/);
+  assert.match(index, /OFFICIAL_ROSTER_12_IDS=Object\.freeze\(\[[^\]]*bach_dien/);
+  assert.match(index, /bach_dien:\{slug:'bach-dien'/);
   const encyclopedia = read('src/ui/splus-encyclopedia.js');
   assert.match(encyclopedia, /data\.profiles\?\.length!==42/);
   assert.match(encyclopedia, /data\.skillIcons\?\.length!==126/);

@@ -58,7 +58,7 @@ test('Lục Ảnh kit uses existing Basic/Ultimate assets and keeps six effigies
 });
 
 test('L35-T1 registry covers the live 12 plus Linh Đồng and freezes Ông Phở + Lục Ảnh', () => {
-  const ids = ['ong_hang_pho', 'luc_anh', 'thay_mo', 'lac_yen', 'cung_thu_tre', 'co_dao_ganh_hoi', 'phong_tu', 'thuy_nuong_roi_nuoc', 'hong_lien_dao_nuong', 'thach_quyen', 'dinh_loi', 'to_diep', 'linh_dong'];
+  const ids = ['ong_hang_pho', 'luc_anh', 'thay_mo', 'lac_yen', 'cung_thu_tre', 'co_dao_ganh_hoi', 'phong_tu', 'thuy_nuong_roi_nuoc', 'hong_lien_dao_nuong', 'thach_quyen', 'dinh_loi', 'to_diep', 'linh_dong', 'bach_dien'];
   assert.deepEqual(Object.keys(HERO_SKILL_KIT_REGISTRY).sort(), [...ids].sort());
   assert.equal(getHeroSkillKit('ong_hang_pho').basicId, 'ong_hang_pho.basic.thiet-va');
   assert.equal(getHeroSkillKit('luc_anh').ultimateId, 'luc_anh.ultimate.doc-van-phu-the');
@@ -68,7 +68,7 @@ test('L35-T1 registry covers the live 12 plus Linh Đồng and freezes Ông Ph�
 });
 
 test('L35-T2/T3 every official kit has basic, ultimate, passive and legacySkillMap', () => {
-  const ids = ['ong_hang_pho', 'luc_anh', 'thay_mo', 'lac_yen', 'cung_thu_tre', 'co_dao_ganh_hoi', 'phong_tu', 'thuy_nuong_roi_nuoc', 'hong_lien_dao_nuong', 'thach_quyen', 'dinh_loi', 'to_diep', 'linh_dong'];
+  const ids = ['ong_hang_pho', 'luc_anh', 'thay_mo', 'lac_yen', 'cung_thu_tre', 'co_dao_ganh_hoi', 'phong_tu', 'thuy_nuong_roi_nuoc', 'hong_lien_dao_nuong', 'thach_quyen', 'dinh_loi', 'to_diep', 'linh_dong', 'bach_dien'];
   for (const id of ids) {
     const kit = getHeroSkillKit(id);
     assert.notEqual(kit, null, id);

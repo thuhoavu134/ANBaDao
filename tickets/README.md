@@ -116,7 +116,8 @@ Board GitHub không có. File `tickets/TKT-00xx/ticket.md` là nguồn sự th�
 | TKT-0152 | — | Bạch Diện extra S+ mechanics + ảnh tham chiếu | LIVE (#150) |
 | TKT-0153 | — | Chinh chiến đi đường dùng Linh Đồng Run | LIVE (#149) |
 | TKT-0154 | — | Bạch Diện Canvas Sprite Runtime pack bind | LIVE (#150) |
-| TKT-0155 | — | Hiện thẻ Bạch Diện trên Tướng và Đồ Giám | LIVE (#151) |
+| TKT-0155 | — | Hiện thẻ Bạch Diện trên Tướng và Đồ Giám | SUPERSEDED (#151 → TKT-0156) |
+| TKT-0156 | — | Bạch Diện tướng đầy đủ như Linh Đồng | REVIEW |
 
 
 

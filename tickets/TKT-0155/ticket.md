@@ -1,8 +1,8 @@
 ---
 id: TKT-0155
 title: Hiện thẻ Bạch Diện trên Tướng và Đồ Giám
-status: LIVE
-phase: LIVE
+status: SUPERSEDED
+phase: SUPERSEDED
 priority: P0
 created: 2026-09-16T05:30:00.000Z
 updated: 2026-09-16T05:50:00.000Z

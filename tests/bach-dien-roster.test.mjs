@@ -50,30 +50,29 @@ test('L155-T1 Bạch Diện preview card shows on owned and all, soul filter, no
   assert.equal(fire.cards.some(c => c.id === 'bach_dien'), false);
 });
 
-test('L155-T2 roster runtime paints Bạch Diện extra; official 12 stays closed; BETS frozen', () => {
+test('L155-T2 roster runtime paints Bạch Diện official; BETS frozen', () => {
   const runtime = read('src/ui/hero-roster-runtime.js');
   const index = read('index.html');
-  assert.match(runtime, /BACH_DIEN_ROSTER_PREVIEW/);
+  assert.match(runtime, /'bach_dien', 'linh_dong'/);
   assert.match(runtime, /data-hero-id="\$\{esc\(card\.id\)\}"/);
-  assert.match(index, /OFFICIAL_ROSTER_12_IDS=Object\.freeze\(\[/);
-  assert.doesNotMatch(index, /OFFICIAL_ROSTER_12_IDS=Object\.freeze\(\[[^\]]*bach_dien/);
+  assert.match(index, /OFFICIAL_ROSTER_12_IDS=Object\.freeze\(\[[^\]]*bach_dien/);
   const ui = read('src/ui/bach-bao-ruong-runtime.js');
   assert.match(ui, /const BETS = \[2, 10, 50\]/);
 });
 
-test('L155-T3 tap Bạch Diện opens authored S+ trial; official 12 still open hero detail', () => {
+test('L155-T3 tap Bạch Diện opens hero detail like official heroes', () => {
   const runtime = read('src/ui/hero-roster-runtime.js');
-  assert.match(runtime, /qaSplus42=hero_splus_bach_dien/);
+  assert.doesNotMatch(runtime, /qaSplus42=hero_splus_bach_dien/);
   assert.doesNotMatch(runtime, /qaSplus42=hero_splus_linh_dong/);
   assert.match(runtime, /renderHeroDetail\(id\); showScreen\('heroDetail'\)/);
   assert.match(runtime, /if \(!OFFICIAL_ROSTER_12_IDS\.includes\(id\)\) return;/);
 });
 
-test('L155-T4 encyclopedia 42 stays; DATA.heroes has no bach-dien slug', () => {
+test('L155-T4 encyclopedia 42 stays; DATA.heroes has bach-dien slug', () => {
   const encyclopedia = read('src/ui/splus-encyclopedia.js');
   assert.match(encyclopedia, /data\.profiles\?\.length!==42/);
   assert.match(encyclopedia, /data\.skillIcons\?\.length!==126/);
   const index = read('index.html');
-  assert.doesNotMatch(index, /bach_dien:\{slug:'bach-dien'/);
-  assert.doesNotMatch(index, /bach_dien:\{he:'soul'/);
+  assert.match(index, /bach_dien:\{slug:'bach-dien'/);
+  assert.match(index, /bach_dien:\{he:'soul'/);
 });

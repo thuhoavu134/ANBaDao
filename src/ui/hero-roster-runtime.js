@@ -22,11 +22,10 @@
 
   renderHeroes = function renderPlayerRoster() {
     const view = buildRosterView({
-      ids: ['linh_dong', ...OFFICIAL_ROSTER_12_IDS.filter(id => id !== 'linh_dong')],
+      ids: ['bach_dien', 'linh_dong', ...OFFICIAL_ROSTER_12_IDS.filter(id => id !== 'linh_dong' && id !== 'bach_dien')],
       heroes: DATA.heroes, player: P,
       powerFor: heroPower, portraitFor: id => portraitSrc(id, 'card'),
-      ...state,
-      extras: [BACH_DIEN_ROSTER_PREVIEW] });
+      ...state });
     root.innerHTML = `<header class="v4-top"><div class="v4-profile">
       <button class="v4-avatar" data-roster-nav="hub" aria-label="Về Thành Chính">‹</button>
       <div><div class="v4-name">Hồn Việt</div><div class="v4-sub">Sở hữu ${view.owned}/${view.total} tướng</div>
@@ -40,7 +39,7 @@
       ${[['default', 'Mặc định'], ['power', 'Lực chiến'], ['level', 'Cấp độ'], ['name', 'Tên']].map(([key, label]) =>
         `<option value="${key}" ${state.sort === key ? 'selected' : ''}>${label}</option>`).join('')}</select></label></div>
       <div class="v4-filter" role="group" aria-label="Lọc hệ">
-      ${['all', 'hoa', 'kim', 'moc', 'phong', 'thuy', 'tho', 'mong'].map(key =>
+      ${['all', 'hoa', 'kim', 'moc', 'phong', 'thuy', 'tho', 'mong', 'soul'].map(key =>
         `<button data-roster-element="${key}" class="${state.element === key ? 'active' : ''}" aria-label="${key === 'all' ? 'Tất cả hệ' : 'Hệ ' + HE[key].nm}" aria-pressed="${state.element === key}">${key === 'all' ? '▦' : HE[key].ic}</button>`).join('')}</div></header>
       <div class="v4-grid" aria-label="Thẻ tướng">
       ${view.cards.map(card => {
@@ -77,11 +76,6 @@
       state.scrollTop = 0; renderHeroes(); return;
     }
     const id = button.dataset.heroId;
-    if (id === 'bach_dien') {
-      rememberScroll();
-      location.assign('battle.html?qaSplus42=hero_splus_bach_dien');
-      return;
-    }
     if (!OFFICIAL_ROSTER_12_IDS.includes(id)) return;
     if (!P.heroes[id]?.owned) { toast('Chưa sở hữu tướng này.'); return; }
     state.selectedId = id; rememberScroll();
@@ -127,18 +121,21 @@
   const baseDetail = renderHeroDetail;
   renderHeroDetail = function renderDetailWithoutIdleRestart(id) {
     const canvas = ST.screen === 'heroDetail' && ST._heroDetailId === id
-      ? (document.getElementById('lucAnhDetailIdle') || document.getElementById('linhDongDetailIdle')) : null;
+      ? (document.getElementById('lucAnhDetailIdle') || document.getElementById('linhDongDetailIdle') || document.getElementById('bachDienDetailIdle')) : null;
     const raf = canvas ? _lucDetailRaf : 0;
     const startLucIdle = startLucAnhDetailIdle;
     const startLinhIdle = typeof startLinhDongDetailIdle === 'function' ? startLinhDongDetailIdle : null;
+    const startBachIdle = typeof startBachDienDetailIdle === 'function' ? startBachDienDetailIdle : null;
     if (canvas) {
       startLucAnhDetailIdle = () => {};
       if (startLinhIdle) startLinhDongDetailIdle = () => {};
+      if (startBachIdle) startBachDienDetailIdle = () => {};
     }
     try { baseDetail(id); }
     finally {
       startLucAnhDetailIdle = startLucIdle;
       if (startLinhIdle) startLinhDongDetailIdle = startLinhIdle;
+      if (startBachIdle) startBachDienDetailIdle = startBachIdle;
     }
     if (canvas) {
       const next = document.getElementById(canvas.id);

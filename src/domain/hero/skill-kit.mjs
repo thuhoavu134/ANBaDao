@@ -313,6 +313,18 @@ const LINH_DONG_KIT = makeKit({
   passiveEffect: 'Basic đặt giảm hồi máu; Skill gây Nhiễu Loạn; Ultimate Câm lặng toàn địch.',
   counterplay: 'Giải khống hoặc miễn CC trước Bách Quỷ Dạ Hành.'
 });
+const BACH_DIEN_KIT = makeKit({
+  heroId: 'bach_dien', basicSlug: 'nhat-quat-doan-tran-duyen', ultSlug: 'ly-hon-doat-phach', passiveSlug: 'dien-khuc',
+  basicName: 'Nhát quạt đoạn trần duyên', basicKind: 'damage', basicMult: 1.05, basicTarget: 'single_enemy',
+  ultName: 'Ly Hồn Đoạt Phách', ultKind: 'execute', ultMult: 4.2, ultTarget: 'single_enemy', ultCost: 100,
+  animation: 'bach-dien.skill', basicVfx: 'bach-dien.skill1-vfx', ultVfx: 'bach-dien.ultimate-vfx', sfx: 'bach-dien-atk-v1',
+  basicDesc: 'Nhát quạt đoạn trần duyên. Đòn đánh thường của Bạch Diện.',
+  ultDesc: 'Ném mặt nạ chính diện, gây 420% Công, cắp 25% Công và khóa hành động.',
+  passiveName: 'Diện Khúc Luân Hồi', passiveTrigger: 'on_skill_or_dodge',
+  passiveEffect: 'Đổi mặt Hỷ/Nộ khi tung chiêu hoặc né. Thế Thân Chi Diện khi bị chí mạng.',
+  counterplay: 'Không dồn chí mạng khi còn mặt nạ; giải Mê Loạn trước khi máu thấp.',
+  maxStacks: 3, durationTurns: 2
+});
 
 export const HERO_SKILL_KIT_REGISTRY = Object.freeze({
   ong_hang_pho: ONG_HANG_PHO_KIT,
@@ -327,7 +339,8 @@ export const HERO_SKILL_KIT_REGISTRY = Object.freeze({
   thach_quyen: THACH_QUYEN_KIT,
   dinh_loi: DINH_LOI_KIT,
   to_diep: TO_DIEP_KIT,
-  linh_dong: LINH_DONG_KIT
+  linh_dong: LINH_DONG_KIT,
+  bach_dien: BACH_DIEN_KIT
 });
 
 

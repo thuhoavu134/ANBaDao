@@ -1,6 +1,8 @@
 # Hồn Việt / Lục Thần — hướng dẫn bắt đầu
 
-TKT-0155 hiện thẻ Bạch Diện trên Tướng/Đồ Giám LIVE #151 `7a700e9`. Extra S+, không vào roster 12. Chạm thẻ mở trận authored. Safari/iPhone NOT_RUN. Owner tự `git pull && vercel --prod`.
+TKT-0156 Bạch Diện tướng đầy đủ như Linh Đồng REVIEW. DATA.heroes + roster + hồ sơ idle. Linh Đồng giữ ô 2. Không `live` thì không merge.
+
+TKT-0155 extras Tướng/Đồ Giám SUPERSEDED bởi TKT-0156. LIVE #151 `7a700e9` đã nới extras; TKT-0156 thay bằng tướng chính thức.
 
 TKT-0154 Bạch Diện Canvas Sprite Runtime LIVE #150 `aedd4cb`. ID `hero_splus_bach_dien`. Pack q90-480 → atlas 8×12 / VFX 10×10. Extra S+ TKT-0152 cùng PR. Lưới 42 giữ. Roster 12 đóng. Safari/iPhone NOT_RUN. Owner tự `git pull && vercel --prod`.
 

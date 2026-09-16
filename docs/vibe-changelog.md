@@ -1,3 +1,8 @@
+## 16/09 — TKT-0156: Bạch Diện tướng đầy đủ
+
+Owner: extras TKT-0155 làm mất Linh Đồng, Bạch Diện không vào hồ sơ. DATA.heroes + roster chính thức + kit v2 + idle canvas. Ô 1 Bạch Diện, ô 2 Linh Đồng. Chạm mở hồ sơ, không trận QA.
+Đợi `live`.
+
 ## 16/09 — TKT-0155: Hiện thẻ Bạch Diện trên Tướng
 
 Owner chưa thấy tướng mới. Extra card portrait trên Tướng/Đồ Giám, chạm mở trận S+ authored. Không vào roster 12, không DATA.heroes, lưới 42 giữ.

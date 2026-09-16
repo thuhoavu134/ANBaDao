@@ -177,7 +177,7 @@ test('L154-T5 wav SFX on HonVietSfx; 42 catalog stays 42; roster 12 closed', () 
   assert.equal(SPLUS_HEROES.length, 42);
   assert.equal(SPLUS_HEROES.filter(h => h.element === 'soul').length, 7);
   const index = read('index.html');
-  assert.doesNotMatch(index, /OFFICIAL_ROSTER_12_IDS=Object\.freeze\(\[[^\]]*bach_dien/);
+  assert.match(index, /OFFICIAL_ROSTER_12_IDS=Object\.freeze\(\[[^\]]*bach_dien/);
   const campaign = read('src/ui/campaign-scene.js');
   assert.match(campaign, /bach_dien: \{ src: 'assets\/characters\/bach-dien\/idle-atlas\.webp'/);
   assert.match(campaign, /bach_dien: \{ src: 'assets\/characters\/bach-dien\/run-atlas\.webp'/);

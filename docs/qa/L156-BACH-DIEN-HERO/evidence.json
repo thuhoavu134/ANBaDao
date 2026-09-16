@@ -1,0 +1,60 @@
+{
+  "ticket": "TKT-0156",
+  "roster": {
+    "count": 14,
+    "firstId": "bach_dien",
+    "secondId": "linh_dong",
+    "ids": [
+      "bach_dien",
+      "linh_dong",
+      "ong_hang_pho",
+      "thay_mo",
+      "lac_yen",
+      "cung_thu_tre",
+      "co_dao_ganh_hoi",
+      "phong_tu",
+      "thuy_nuong_roi_nuoc",
+      "hong_lien_dao_nuong",
+      "thach_quyen",
+      "dinh_loi",
+      "luc_anh",
+      "to_diep"
+    ],
+    "names": [
+      "Bạch Diện",
+      "Linh Đồng",
+      "Ông Phở",
+      "Thầy Mo",
+      "Thần Nỏ Sơn Nữ",
+      "Nữ Cung Thủ Tre",
+      "Cô Đào Gánh Hội",
+      "Phong Tử",
+      "Thủy Nương Rối Nước",
+      "Hồng Liên Đao Nương",
+      "Thạch Quyền",
+      "Đình Lôi",
+      "Lục Ảnh",
+      "Tố Điệp"
+    ],
+    "sub": "Sở hữu 14/14 tướng",
+    "hasBach": true,
+    "hasLinh": true,
+    "bachPortrait": "assets/characters/bach-dien/card.webp",
+    "officialHas": true
+  },
+  "detail": {
+    "screen": "heroDetail",
+    "name": "Bạch Diện",
+    "hasCanvas": true,
+    "canvasW": 270,
+    "hasStage": true,
+    "basic": "⚔ Basic — Nhát quạt đoạn trần duyênNhát quạt đoạn trần duyên. Đòn đánh thường của Bạch Diện.Kit samkok-v2.1 · Legacy Skill 1 → Basic · Basic Lv.1 · giữ đầu tư cũ Lv.1",
+    "ult": "★ Ultimate — Ly Hồn Đoạt Phách · 100 MPNém mặt nạ chính diện, gây 420% Công, cắp 25% Công và khóa hành động.Ultimate Lv.1 · animation bach-dien.skill",
+    "lv": "Nâng cấp — 🪙 60",
+    "star": "Thăng sao — 20 mảnh",
+    "href": "http://127.0.0.1:8080/?qa=unlock-all"
+  },
+  "appErrors": [],
+  "ok": true,
+  "ts": "2026-09-16T05:59:38.069Z"
+}
