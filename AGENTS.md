@@ -1,5 +1,7 @@
 # Hồn Việt / Lục Thần — hướng dẫn bắt đầu
 
+TKT-0158 audio trận phát cùng game REVIEW. Host unlock + `playBgm('combat')` lúc Xuất chiến; iframe không autoplay BGM khi parent sở hữu; bỏ `location.assign` 1.8s. Safari/iPhone NOT_RUN. Chờ owner `live`.
+
 TKT-0157 iOS trận chết tab vì atlas S+ LIVE #156 `ef2af5e`. Downsample 0.5 atlas >32 MiB + purge Chinh chiến khi iframe trận mở. Safari/iPhone NOT_RUN. Owner tự `git pull && vercel --prod`.
 
 TKT-0156 Bạch Diện tướng đầy đủ như Linh Đồng LIVE #152 `85a35d5`. DATA.heroes + roster + hồ sơ idle. Linh Đồng ô 2. Safari/iPhone NOT_RUN. Owner tự `git pull && vercel --prod`.

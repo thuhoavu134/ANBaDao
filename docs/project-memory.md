@@ -1,3 +1,7 @@
+## 17/09 — TKT-0158: battle enter audio
+
+Một chủ quản audio: host. Xuất chiến unlock SFX + BGM combat trước iframe. Không `location.assign` 1.8s. Hunt overlay không pause loa vừa mở. iframe chỉ `new Audio` khi không có parent.playBgm. Safari NOT_RUN.
+
 ## 17/09 — TKT-0157: iOS atlas budget
 
 Hai idle S+ không đứng cùng 128 MiB trên iPhone Chrome (video Hiệp 01 jetsam). Downsample atlas >32 MiB (Linh Đồng 77→20), overlay trận `purge` campaign-lite ngay, ATK/VFX nhả hết chiêu. Ultra v5 / campaign-lite / Dinh-Luc lazy giữ. LIVE #156 `ef2af5e`. Safari NOT_RUN. Owner tự `git pull && vercel --prod`.

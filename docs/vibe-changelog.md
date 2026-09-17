@@ -1,3 +1,9 @@
+## 17/09 — TKT-0158: audio trận phát cùng game
+
+Owner: tab iPhone sống sau TKT-0157 nhưng Hiệp 01 câm. Host không mở loa combat trong cử chỉ Xuất chiến; iframe `HTMLAudio` autoplay bị chặn; fallback 1.8s `location.assign` phá AudioContext.
+Patch dist: unlock + `playBgm('combat')` trên host, iframe nhờ parent, `enterFallback` chỉ đổi chữ, `hushParentBgm` không pause.
+Safari/iPhone NOT_RUN. Chờ owner `live` rồi `git pull && vercel --prod`.
+
 ## 17/09 — TKT-0157: iOS trận chết tab vì atlas S+
 
 Owner gửi video Hiệp 01: tướng ra sân, Bạch Diện chiêu, màn đen, Chrome «Không thể mở trang này».

@@ -1,0 +1,24 @@
+{
+  "schema": "hon-viet-l158-battle-enter-audio/v1",
+  "origin": "http://127.0.0.1:8080",
+  "viewport": "390x844",
+  "errors": [],
+  "snap": {
+    "title": "Lục Thần",
+    "audioUnlocked": "1",
+    "sfxState": "running",
+    "sfxCombat": "true",
+    "hasSfx": true,
+    "hasPlayBgm": true,
+    "bgmSrc": "http://127.0.0.1:8080/assets/audio/bgm-combat-new.mp3",
+    "bgmPaused": false,
+    "ctxState": "running"
+  },
+  "dist": {
+    "hostUnlockBeforeSrc": true,
+    "enterFallbackAssign": false,
+    "beginParentBgm": true,
+    "hushPauses": false
+  },
+  "pass": true
+}
