@@ -119,7 +119,7 @@ Board GitHub không có. File `tickets/TKT-00xx/ticket.md` là nguồn sự th�
 | TKT-0155 | — | Hiện thẻ Bạch Diện trên Tướng và Đồ Giám | SUPERSEDED (#151 → TKT-0156) |
 | TKT-0156 | — | Bạch Diện tướng đầy đủ như Linh Đồng | LIVE (#152) |
 | TKT-0157 | — | iOS trận chết tab vì atlas S+ quá nặng | LIVE (#156) |
-| TKT-0158 | — | Audio trận phát cùng game trên iOS Chrome | REVIEW |
+| TKT-0158 | — | Audio trận phát cùng game trên iOS Chrome | LIVE (#157) |
 
 
 

@@ -1,11 +1,11 @@
 ---
 id: TKT-0158
 title: Audio trận phát cùng game trên iOS Chrome
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 created: 2026-09-17T20:10:00.000Z
-updated: 2026-09-17T20:40:00.000Z
+updated: 2026-09-17T21:00:00.000Z
 acceptance_ids: [L158-T1, L158-T2, L158-T3, L158-T4, L158-T5, L158-P1]
 required_gates: [vibelab, tdd]
 affected_paths:
@@ -29,7 +29,7 @@ Một chủ quản audio: host phát BGM combat + unlock SFX trong cử chỉ Xu
 
 ## Non-goals
 
-Không đổi BETS/loot/công thức combat. Không Spine. Không pack lại master. Không đổi footprint 477×440. Không mở encyclopedia 42. Không sửa `index.html` / `battle.html` nguồn (L03a hash). Không thêm nút Bật tiếng. Không merge cho đến khi owner gõ `live`.
+Không đổi BETS/loot/công thức combat. Không Spine. Không pack lại master. Không đổi footprint 477×440. Không mở encyclopedia 42. Không sửa `index.html` / `battle.html` nguồn (L03a hash). Không thêm nút Bật tiếng.
 
 ## Acceptance
 
@@ -44,5 +44,4 @@ Không đổi BETS/loot/công thức combat. Không Spine. Không pack lại mas
 
 RED L158-T1…T5 → GREEN 5/5. npm test 1067/1067. Chrome 390×844 `host-combat-bgm-390x844.png` PASS: `bgm-combat-new.mp3` playing, AudioContext running. Safari/iPhone NOT_RUN.
 
-Builder dừng REVIEW. Chờ owner `live` squash-merge. Owner tự `git pull && vercel --prod`.
-
+LIVE #157 `343fe39`. Owner tự `git pull && vercel --prod`.

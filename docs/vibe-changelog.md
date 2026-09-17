@@ -2,7 +2,7 @@
 
 Owner: tab iPhone sống sau TKT-0157 nhưng Hiệp 01 câm. Host không mở loa combat trong cử chỉ Xuất chiến; iframe `HTMLAudio` autoplay bị chặn; fallback 1.8s `location.assign` phá AudioContext.
 Patch dist: unlock + `playBgm('combat')` trên host, iframe nhờ parent, `enterFallback` chỉ đổi chữ, `hushParentBgm` không pause.
-Safari/iPhone NOT_RUN. Chờ owner `live` rồi `git pull && vercel --prod`.
+LIVE #157 `343fe39`. Safari/iPhone NOT_RUN. Owner tự `git pull && vercel --prod`.
 
 ## 17/09 — TKT-0157: iOS trận chết tab vì atlas S+
 
