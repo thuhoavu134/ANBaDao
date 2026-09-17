@@ -75,3 +75,17 @@ test('3Q-derived cache refuses a pack when all existing bytes are owned, instead
   assert.equal(state.bytes, 60);
   assert.equal(state.entries.length, 1);
 });
+
+test('purge drops owned campaign packs immediately without the delayed sweep', async () => {
+  const cache = createCampaignResourcePackCache({
+    maxDecodedBytes: 100,
+    maxLoading: 2,
+    clearDelayMs: 10_000,
+    load: async pack => ({ image: { id: pack.src }, decodedBytes: pack.decodedBytes })
+  });
+  await cache.acquire({ heroId: 'a', clip: 'idle', tier: 'campaign', src: 'a', decodedBytes: 40 }, 'campaign');
+  assert.equal(cache.inspect().bytes, 40);
+  cache.purge();
+  assert.equal(cache.inspect().bytes, 0);
+  assert.equal(cache.inspect().entries.length, 0);
+});

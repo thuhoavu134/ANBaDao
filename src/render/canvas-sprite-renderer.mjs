@@ -27,6 +27,7 @@ export function drawCanvasSprite(ctx, opts = {}) {
   const destH = Number(height);
   if (!(destW > 0) || !(destH > 0)) return false;
   const { sx, sy, sw, sh } = sourceRectForFrame(clip, frame);
+  const atlasScale = Number(image.__hvAtlasScale) > 0 ? Number(image.__hvAtlasScale) : 1;
   const baseline = opts.baseline ?? clip.pivot?.y ?? cellH;
   const alpha = opts.alpha ?? 1;
   const blendMode = opts.blendMode || clip.blendMode || 'source-over';
@@ -39,7 +40,7 @@ export function drawCanvasSprite(ctx, opts = {}) {
   ctx.globalCompositeOperation = blendMode;
   ctx.drawImage(
     image,
-    sx, sy, sw, sh,
+    sx * atlasScale, sy * atlasScale, sw * atlasScale, sh * atlasScale,
     -destW / 2, -destH + baseline,
     destW, destH
   );

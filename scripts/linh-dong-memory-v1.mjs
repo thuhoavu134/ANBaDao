@@ -38,8 +38,9 @@ export function patchLinhDongMemory(input, surface) {
     c.setTransform(dpr,0,0,dpr,0,0);c.clearRect(0,0,css,css);
     const im=LINH_DONG_IMAGES.idle;
     if(im?.complete&&im.naturalWidth>1){
-      const f=lucFrame(a,start,true),sx=(f%a.cols)*a.w,sy=Math.floor(f/a.cols)*a.h;
-      c.drawImage(im,sx,sy,a.w,a.h,(css-dw)/2,css-dh,dw,dh);
+      const atlasScale=Number(im.__hvAtlasScale)>0?Number(im.__hvAtlasScale):1;
+      const f=lucFrame(a,start,true),sx=(f%a.cols)*a.w*atlasScale,sy=Math.floor(f/a.cols)*a.h*atlasScale;
+      c.drawImage(im,sx,sy,a.w*atlasScale,a.h*atlasScale,(css-dw)/2,css-dh,dw,dh);
     }
     _lucDetailRaf=requestAnimationFrame(tick);
   }
@@ -48,7 +49,7 @@ export function patchLinhDongMemory(input, surface) {
 }
 ` + html.slice(end);
     replace('function showScreen(name){', "function showScreen(name){ if(name!=='heroDetail')window.__HV_LINH_DONG_CACHE?.clear();", 'profile route teardown');
-    replace('    frame.src = url;', '    window.__HV_LINH_DONG_CACHE?.clear();\n    frame.src = url;', 'battle entry teardown');
+    replace('    frame.src = url;', '    window.__HV_LINH_DONG_CACHE?.clear();\n    try { if (typeof _bachDienIdleIm !== "undefined" && _bachDienIdleIm) { _bachDienIdleIm.onload = null; if (_bachDienIdleIm.removeAttribute) _bachDienIdleIm.removeAttribute("src"); else _bachDienIdleIm.src = ""; _bachDienIdleIm = null; } } catch (_) {}\n    try { window.__HV_CAMPAIGN_RELEASE_ATLASES?.(); } catch (_) {}\n    frame.src = url;', 'battle entry teardown');
     replace('    frame.src = "about:blank";', '    try { frame.contentWindow?.__HV_LINH_DONG_CACHE?.clear(); } catch (_) {}\n    frame.src = "about:blank";', 'battle exit teardown');
   }
   return html;

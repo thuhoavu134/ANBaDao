@@ -144,6 +144,16 @@ export function createCampaignResourcePackCache(options = {}) {
     startNext(now);
   }
 
+  const purge = () => {
+    queue.length = 0;
+    for (const entry of [...entries.values()]) {
+      entry.owners.clear();
+      entry.pendingClearAt = null;
+      clearEntry(entry);
+    }
+    loading = 0;
+  };
+
   const inspect = () => ({
     bytes,
     maxDecodedBytes,
@@ -160,5 +170,5 @@ export function createCampaignResourcePackCache(options = {}) {
     }))
   });
 
-  return { ensure, acquire, release, clearScope, sweep, inspect };
+  return { ensure, acquire, release, clearScope, sweep, purge, inspect };
 }

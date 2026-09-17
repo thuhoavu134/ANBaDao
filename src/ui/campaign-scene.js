@@ -18,7 +18,7 @@ const sceneResourceCache = typeof createCampaignResourcePackCache === 'function'
     })
   // Legacy VM-only fallback: production always injects the 3Q-derived cache
   // source before this file. It keeps old isolated scene tests self-contained.
-  : { ensure: pack => { const image = new Image(); image.src = pack.src; return { key: pack.src, image, promise: Promise.resolve({ image, bytes: pack.decodedBytes }) }; }, release() {}, inspect: () => ({ bytes: 0, entries: [] }) };
+  : { ensure: pack => { const image = new Image(); image.src = pack.src; return { key: pack.src, image, promise: Promise.resolve({ image, bytes: pack.decodedBytes }) }; }, release() {}, purge() {}, inspect: () => ({ bytes: 0, entries: [] }) };
 const sceneImages = new Map();
 const sceneDiagnosticsEnabled = (() => {
   try {
@@ -122,7 +122,27 @@ function campaignPackFor(src, spec) {
     decodedBytes: (spec.atlasWidth || spec.cols * spec.cellW) * (spec.atlasHeight || rows * spec.cellH) * 4
   };
 }
+function campaignBattleOpen() {
+  try { return !!document.getElementById('hvBattleOverlay')?.classList.contains('is-open'); }
+  catch (_) { return false; }
+}
+function dropSceneStored(stored) {
+  const image = stored?.image || stored;
+  if (!image) return;
+  try { image.onload = null; image.onerror = null; } catch (_) {}
+  try { if (image.removeAttribute) image.removeAttribute('src'); else if ('src' in image) image.src = ''; } catch (_) {}
+}
+function releaseSceneAtlases() {
+  for (const [, stored] of Array.from(sceneImages)) dropSceneStored(stored);
+  sceneImages.clear();
+  try { sceneResourceCache.purge(); } catch (_) {}
+}
+try { window.__HV_CAMPAIGN_RELEASE_ATLASES = releaseSceneAtlases; } catch (_) {}
+function emptySceneImage() {
+  return { complete: false, naturalWidth: 0, naturalHeight: 0 };
+}
 function imageForScene(src, spec = null) {
+  if (campaignBattleOpen()) return emptySceneImage();
   const existing = sceneImages.get(src);
   if (existing) return existing.image || existing;
   const pack = campaignPackFor(src, spec);
@@ -333,6 +353,7 @@ function tEase(t) { return t*(3-2*t); }
 function drawScene(time) {
   const canvas = sceneState.canvas;
   if (!canvas || !sceneState.active) return;
+  if (campaignBattleOpen()) { if (sceneImages.size) releaseSceneAtlases(); return; }
   const ctx = canvas.getContext('2d'); if (!ctx) return;
   const w = sceneState.width, h = sceneState.height, dpr = canvas.width / w;
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, w, h);
@@ -402,6 +423,11 @@ function sceneTick(time) {
   sceneState.rafRelease?.(); sceneState.rafRelease = null;
   sceneState.raf = 0;
   if (!sceneState.active || document.hidden) return;
+  if (campaignBattleOpen()) {
+    if (sceneImages.size) releaseSceneAtlases();
+    sceneState.raf = scheduleSceneFrame();
+    return;
+  }
   if (time - sceneState.lastFrame >= 32) {
     if (!sceneState.draft && !reducedMotion.matches) sceneState.farmTime += Math.min(100, time - sceneState.lastFrame);
     drawScene(time); sceneState.lastFrame = time;

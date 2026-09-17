@@ -8,7 +8,7 @@ import {
   buildLinhDongMarkerSequence,
   createLinhDongTimelineController
 } from '../src/combat-domain/linh-dong-presentation.mjs';
-import { atlasDecodedBytes, clipSource, createDecodedAtlasCache } from '../src/assets/decoded-atlas-cache.mjs';
+import { atlasDecodedBytes, atlasDecodeScale, clipSource, createDecodedAtlasCache, downsampleDecodedAtlas } from '../src/assets/decoded-atlas-cache.mjs';
 import { createAssetLoader } from '../src/assets/asset-loader.mjs';
 import { createFrameClock, frameAt, frameDurationMs } from '../src/assets/frame-clock.mjs';
 import { drawCanvasSprite, sourceRectForFrame } from '../src/render/canvas-sprite-renderer.mjs';
@@ -75,6 +75,8 @@ const LINH_DONG_CLIPS=Object.freeze({
 const LINH_DONG_ASSET_BASE="assets/characters/linh-dong/";
 const LINH_DONG_SFX_BASE="assets/audio/sfx/linh-dong/";
 const atlasDecodedBytes=${atlasDecodedBytes.toString()};
+const atlasDecodeScale=${atlasDecodeScale.toString()};
+const downsampleDecodedAtlas=${downsampleDecodedAtlas.toString()};
 const clipSource=${clipSource.toString()};
 const createDecodedAtlasCache=${createDecodedAtlasCache.toString()};
 const createAssetLoader=${createAssetLoader.toString()};
@@ -173,6 +175,10 @@ function finishLinhDongAction(info){
   info.clock.advance(LINH_DONG_TIMELINE[info.action].recoveryEndMs);
   if(linhDongFx?.actorId===info.actorId)linhDongFx=null;
   const actor=getUnit(info.actorId);if(actor?._linhDongAction===info)delete actor._linhDongAction;
+  const atk=clipFor(info.action==='ultimate'?'ultimate':'attack');
+  const vfx=clipFor(info.action==='ultimate'?'ultimateVfx':'atkVfx');
+  if(atk?.src)LINH_DONG_LOADER.release(atk.src);
+  if(vfx?.src)LINH_DONG_LOADER.release(vfx.src);
 }
 function playLinhDongSfx(action,info){
   const normalized=normalizeLinhDongAction(action);if(!normalized||info?.sfxPlayed||!state.sound)return false;

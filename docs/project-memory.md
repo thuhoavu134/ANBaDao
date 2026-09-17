@@ -1,3 +1,7 @@
+## 17/09 — TKT-0157: iOS atlas budget
+
+Hai idle S+ không đứng cùng 128 MiB trên iPhone Chrome (video Hiệp 01 jetsam). Downsample atlas >32 MiB (Linh Đồng 77→20), overlay trận `purge` campaign-lite ngay, ATK/VFX nhả hết chiêu. Ultra v5 / campaign-lite / Dinh-Luc lazy giữ. Safari NOT_RUN.
+
 ## 17/09 — TKT-0160: 3Q-derived campaign resource lifecycle (branch only)
 
 - Studied the static 3Q Laya H5 source: replay-driven preload, model/effect dedupe, queued pack loading, caller ownership/ref-count and delayed cleanup.

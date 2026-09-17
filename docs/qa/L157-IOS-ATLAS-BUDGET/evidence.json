@@ -1,0 +1,23 @@
+{
+  "schema": "hon-viet-l157-ios-atlas-budget/v1",
+  "origin": "http://127.0.0.1:8080",
+  "viewport": "390x844",
+  "errors": [],
+  "snap": {
+    "canvasW": 390,
+    "canvasH": 739,
+    "painted": 71598,
+    "title": "Mộng Giới: Trận Chiến Lục Vị",
+    "hasLinhDong": true,
+    "hasBachDien": true,
+    "hasDecodeScale": true,
+    "hasDownsample": true,
+    "cacheBytes": 20275200,
+    "cacheMax": 134217728,
+    "cacheEntries": 1,
+    "scales": [
+      0.5
+    ]
+  },
+  "pass": true
+}

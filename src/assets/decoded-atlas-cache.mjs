@@ -12,6 +12,17 @@ export function atlasDecodedBytes(clip) {
   return atlasWidth * atlasHeight * 4;
 }
 
+export function atlasDecodeScale(cost, maxBytes) {
+  if (!(cost > 0) || !(maxBytes > 0)) return 1;
+  if (cost <= 8 * 1024 * 1024) return 1;
+  const room = maxBytes / 4;
+  if (cost <= room) return 1;
+  const raw = Math.sqrt(room / cost);
+  if (raw >= 0.75) return 0.75;
+  if (raw >= 0.5) return 0.5;
+  return 0.25;
+}
+
 export function clipSource(clip) {
   if (!clip) return '';
   if (clip.src) return clip.src;
@@ -19,10 +30,44 @@ export function clipSource(clip) {
   return String(clip.base || '') + String(clip.file || '');
 }
 
+export function downsampleDecodedAtlas(image, scale, makeCanvas) {
+  if (!(scale > 0) || scale >= 1 || !image) return image;
+  const sourceW = Number(image.naturalWidth || image.width || 0);
+  const sourceH = Number(image.naturalHeight || image.height || 0);
+  if (!(sourceW > 0) || !(sourceH > 0)) return image;
+  const canvas = makeCanvas ? makeCanvas() : null;
+  if (!canvas || typeof canvas.getContext !== 'function') return image;
+  const width = Math.max(1, Math.round(sourceW * scale));
+  const height = Math.max(1, Math.round(sourceH * scale));
+  canvas.width = width;
+  canvas.height = height;
+  const ctx = canvas.getContext('2d');
+  if (!ctx || typeof ctx.drawImage !== 'function') return image;
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
+  ctx.drawImage(image, 0, 0, width, height);
+  canvas.__hvAtlasScale = scale;
+  canvas.complete = true;
+  try {
+    Object.defineProperty(canvas, 'naturalWidth', { value: width, configurable: true });
+    Object.defineProperty(canvas, 'naturalHeight', { value: height, configurable: true });
+  } catch (_) {
+    canvas.naturalWidth = width;
+    canvas.naturalHeight = height;
+  }
+  return canvas;
+}
+
 export function createDecodedAtlasCache(options = {}) {
   const maxBytes = options.maxBytes ?? 128 * 1024 * 1024;
   const maxLoading = options.maxLoading ?? 2;
   const makeImage = options.makeImage || (() => new Image());
+  const makeCanvas = options.makeCanvas || (() => {
+    try {
+      if (typeof document !== 'undefined' && document.createElement) return document.createElement('canvas');
+    } catch (_) {}
+    return null;
+  });
   const log = options.log || (message => { try { console.warn(message); } catch (_) {} });
   const entries = new Map();
   const failed = new Map();
@@ -53,6 +98,7 @@ export function createDecodedAtlasCache(options = {}) {
         bytes: entry.bytes,
         width: entry.width,
         height: entry.height,
+        scale: entry.scale || 1,
         loading: entry.loading,
         state: entry.state,
         scope: Array.from(entry.scopes).join(',')
@@ -70,7 +116,7 @@ export function createDecodedAtlasCache(options = {}) {
       image.onload = null;
       image.onerror = null;
       if (image.removeAttribute) image.removeAttribute('src');
-      else image.src = '';
+      else if ('src' in image) image.src = '';
     }
   }
 
@@ -146,6 +192,7 @@ export function createDecodedAtlasCache(options = {}) {
       bytes: cost,
       width,
       height,
+      scale: 1,
       loading: true,
       state: 'loading',
       scopes: new Set([scope]),
@@ -173,6 +220,21 @@ export function createDecodedAtlasCache(options = {}) {
       if (image.naturalWidth !== width || image.naturalHeight !== height) {
         fail(`dimension ${image.naturalWidth}x${image.naturalHeight} != ${width}x${height}`);
         return;
+      }
+      const scale = atlasDecodeScale(cost, maxBytes);
+      const drawable = downsampleDecodedAtlas(image, scale, makeCanvas);
+      if (drawable !== image) {
+        bytes -= entry.bytes;
+        entry.bytes = Math.max(1, Math.round(cost * scale * scale));
+        bytes += entry.bytes;
+        entry.scale = scale;
+        entry.width = drawable.width || Math.round(width * scale);
+        entry.height = drawable.height || Math.round(height * scale);
+        image.onload = null;
+        image.onerror = null;
+        if (image.removeAttribute) image.removeAttribute('src');
+        else image.src = '';
+        entry.image = drawable;
       }
       entry.loading = false;
       entry.state = 'ready';
@@ -203,5 +265,5 @@ export function createDecodedAtlasCache(options = {}) {
     failed.clear();
   }
 
-  return { reserve, release, clearScope, clear, allowRetry, inspect, atlasDecodedBytes };
+  return { reserve, release, clearScope, clear, allowRetry, inspect, atlasDecodedBytes, atlasDecodeScale };
 }

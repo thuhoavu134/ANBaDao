@@ -154,6 +154,10 @@ function finishBachDienAction(info){
   info.clock.advance(BACH_DIEN_TIMELINE[info.action].recoveryEndMs);
   if(bachDienFx?.actorId===info.actorId)bachDienFx=null;
   const actor=getUnit(info.actorId);if(actor?._bachDienAction===info)delete actor._bachDienAction;
+  const atk=clipForBachDien(info.action==='ultimate'?'ultimate':'attack');
+  const vfx=clipForBachDien(info.action==='ultimate'?'ultimateVfx':'atkVfx');
+  if(atk?.src)BACH_DIEN_LOADER.release(atk.src);
+  if(vfx?.src)BACH_DIEN_LOADER.release(vfx.src);
 }
 function playBachDienSfx(action,info){
   const normalized=normalizeBachDienAction(action);if(!normalized||info?.sfxPlayed||!state.sound)return false;

@@ -1,3 +1,10 @@
+## 17/09 — TKT-0157: iOS trận chết tab vì atlas S+
+
+Owner gửi video Hiệp 01: tướng ra sân, Bạch Diện chiêu, màn đen, Chrome «Không thể mở trang này».
+Linh Đồng idle vẫn 77 MiB; Bạch Diện Ultra v5 ~29 MiB; campaign-lite ~84 MiB còn giữ dưới iframe trận.
+Downsample atlas >32 MiB về 0.5, nhả ATK/VFX hết chiêu, `purge` Chinh chiến ngay khi overlay mở.
+Safari/iPhone NOT_RUN.
+
 ## 17/09 — TKT-0160: 3Q-derived campaign resource lifecycle (branch only)
 
 - Studied the static 3Q Laya H5 source: replay-driven preload, model/effect dedupe, queued pack loading, caller ownership/ref-count and delayed cleanup.
