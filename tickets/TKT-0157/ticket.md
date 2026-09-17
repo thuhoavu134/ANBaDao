@@ -1,11 +1,11 @@
 ---
 id: TKT-0157
 title: iOS trận chết tab vì atlas S+ quá nặng
-status: REVIEW
-phase: REVIEW
+status: LIVE
+phase: LIVE
 priority: P0
 created: 2026-09-17T12:00:00.000Z
-updated: 2026-09-17T19:10:00.000Z
+updated: 2026-09-17T19:45:00.000Z
 acceptance_ids: [L157-T1, L157-T2, L157-T3, L157-T4, L157-T5, L157-P1]
 required_gates: [vibelab, tdd]
 affected_paths:
@@ -49,4 +49,4 @@ Không đổi BETS/loot/công thức combat. Không Spine. Không pack lại mas
 
 RED L157-T1…T5 → GREEN 5/5. npm test 1062/1062. Chrome 390×844 `battle-both-390x844.png` PASS, Linh Đồng idle 20 MiB @ scale 0.5. Safari/iPhone NOT_RUN.
 
-Đợi `live` rồi squash-merge. Owner tự `git pull && vercel --prod`.
+LIVE #156 `ef2af5e`. Owner tự `git pull && vercel --prod`.

@@ -1,6 +1,6 @@
 # Hồn Việt / Lục Thần — hướng dẫn bắt đầu
 
-TKT-0157 iOS trận chết tab vì atlas S+ REVIEW trên main `cb9136c`. Downsample 0.5 atlas >32 MiB + purge Chinh chiến khi iframe trận mở. Không `live` thì không merge.
+TKT-0157 iOS trận chết tab vì atlas S+ LIVE #156 `ef2af5e`. Downsample 0.5 atlas >32 MiB + purge Chinh chiến khi iframe trận mở. Safari/iPhone NOT_RUN. Owner tự `git pull && vercel --prod`.
 
 TKT-0156 Bạch Diện tướng đầy đủ như Linh Đồng LIVE #152 `85a35d5`. DATA.heroes + roster + hồ sơ idle. Linh Đồng ô 2. Safari/iPhone NOT_RUN. Owner tự `git pull && vercel --prod`.
 
