@@ -3700,6 +3700,22 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     context.save(); context.translate(target.x,target.y-72); context.drawImage(THAY_MO_IMPACT_QA_IMAGE,sx,sy,THAY_MO_IMPACT_QA_CELL_W,THAY_MO_IMPACT_QA_CELL_H,-drawW*.5,-drawH*.5,drawW,drawH); context.restore();
   }
 
+  // Shared lazy atlas owner for legacy Battle heroes. Unlike the old eager maps,
+  // this reserves only the clip currently requested and evicts old unowned packs.
+  const BATTLE_NATIVE_ATLAS_CACHE=(()=>{
+    const entries=new Map();let bytes=0,loading=0;const maxBytes=128*1024*1024,maxLoading=2;
+    const cost=clip=>(clip.atlasWidth||clip.cols*clip.cellW)*(clip.atlasHeight||clip.rows*clip.cellH)*4;
+    const drop=key=>{const e=entries.get(key);if(!e)return;entries.delete(key);bytes-=e.bytes;try{e.image.removeAttribute('src')}catch(_){}};
+    const evict=need=>{while(bytes+need>maxBytes){const old=[...entries.values()].filter(e=>!e.loading&&!e.active).sort((a,b)=>a.used-b.used)[0];if(!old)return false;drop(old.key)}return true};
+    const ensure=(key,clip)=>{let e=entries.get(key);if(e){e.used=performance.now();e.active=true;return e.image}const need=cost(clip);if(!Number.isFinite(need)||need>maxBytes||loading>=maxLoading||!evict(need))return null;const image=new Image();image.decoding='async';e={key,image,bytes:need,loading:true,active:true,used:performance.now()};entries.set(key,e);bytes+=need;loading++;image.onload=()=>{e.loading=false;loading--};image.onerror=()=>{loading--;drop(key)};image.src=clip.src;return image};
+    const release=key=>{const e=entries.get(key);if(e)e.active=false};
+    const clear=()=>{for(const e of entries.values())drop(e.key)};
+    const inspect=()=>({bytes,maxBytes,loading,entries:[...entries.values()].map(e=>({key:e.key,bytes:e.bytes,loading:e.loading,active:e.active}))});
+    return {ensure,release,clear,inspect};
+  })();
+  window.__HV_NATIVE_ATLAS_CACHE=BATTLE_NATIVE_ATLAS_CACHE;
+  window.addEventListener('pagehide',()=>BATTLE_NATIVE_ATLAS_CACHE.clear(),{once:true});
+
   // v3.25.5 — Đình Lôi Golden Character runtime. All supplied 64-frame GIFs are
   // converted to deterministic 8x8 alpha atlases so canvas playback, release and
   // impact timing do not depend on the browser's animated-image clock.
@@ -3707,7 +3723,9 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
   const DINH_LOI_FRAME_MS=62.5, DINH_LOI_ACTION_MS=4000, DINH_LOI_HIT_MS=1000, DINH_LOI_FALL_MS=4000;
   const DINH_LOI_ASSET_BASE="assets/characters/dinh-loi/";
   const DINH_LOI_ASSET_NAMES=Object.freeze({idle:"idle-atlas.png",run:"run-atlas.png",hurt:"hit-atlas.png",defeated:"fall-atlas.png",attack:"basic-cast-atlas.png",skill1:"skill1-cast-atlas.png",ultimate:"ultimate-cast-atlas.png",basicProjectile:"basic-projectile-atlas.png",basicImpact:"basic-impact-atlas.png",skill1Wave:"skill1-wave-atlas.png",skill1Impact:"skill1-impact-atlas.png",skill1Shield:"skill1-shield-atlas.png",ultimateVfx:"ultimate-vfx-atlas.png",ultimateImpact:"ultimate-impact-atlas.png"});
-  const DINH_LOI_IMAGES=Object.fromEntries(Object.entries(DINH_LOI_ASSET_NAMES).map(([key,file])=>{const image=new Image();image.decoding="async";image.src=DINH_LOI_ASSET_BASE+file;return [key,image];}));
+  const DINH_LOI_CLIPS=Object.fromEntries(Object.entries(DINH_LOI_ASSET_NAMES).map(([key,file])=>{const portrait=key==='ultimateVfx'||key==='ultimateImpact';const cellW=portrait?270:480,cellH=portrait?480:270;return [key,{src:DINH_LOI_ASSET_BASE+file,cols:8,rows:8,cellW,cellH,atlasWidth:cellW*8,atlasHeight:cellH*8}]}));
+  function dinhLoiImage(key){const clip=DINH_LOI_CLIPS[key];return clip?BATTLE_NATIVE_ATLAS_CACHE.ensure('dinh-loi:'+key,clip):null;}
+  const DINH_LOI_IMAGES=new Proxy({}, {get(_target,key){return dinhLoiImage(key);}});
   function isDinhLoi(unit){return !!unit&&String(unit.sourceId||unit.sourceHeroId||unit.id)===DINH_LOI_ID;}
   function dinhLoiFrame(elapsed,loop=false){const raw=Math.max(0,Math.floor(elapsed/DINH_LOI_FRAME_MS));return loop?raw%DINH_LOI_FRAMES:Math.min(DINH_LOI_FRAMES-1,raw);}
   function drawDinhLoiAtlasFrame(context,image,frame,x,y,width,height,options={}){
@@ -3759,7 +3777,8 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     attack:{file:"basic-atlas.webp",frames:64,w:240,h:240,ms:38},skill1:{file:"skill1-atlas.webp",frames:59,w:240,h:240,ms:42},ultimate:{file:"ultimate-atlas.webp",frames:64,w:240,h:240,ms:44},
     basicProjectile:{file:"basic_projectile-atlas.webp",frames:64,w:320,h:220,ms:28},basicImpact:{file:"basic_impact-atlas.webp",frames:62,w:320,h:220,ms:28},skill1Vfx:{file:"skill1_vfx-atlas.webp",frames:64,w:320,h:220,ms:30},ultimateVfx:{file:"ultimate_vfx-atlas.webp",frames:64,w:320,h:220,ms:34}
   });
-  const LUC_ANH_IMAGES=Object.fromEntries(Object.entries(LUC_ANH_META).map(([key,m])=>{const image=new Image();image.decoding="async";image.src=LUC_ANH_ASSET_BASE+m.file;return [key,image];}));
+  function lucAnhImage(key){const m=LUC_ANH_META[key];if(!m)return null;const rows=Math.ceil(m.frames/LUC_ANH_COLS);const clip={src:LUC_ANH_ASSET_BASE+m.file,cols:LUC_ANH_COLS,rows,cellW:m.w,cellH:m.h,atlasWidth:LUC_ANH_COLS*m.w,atlasHeight:rows*m.h};return BATTLE_NATIVE_ATLAS_CACHE.ensure('luc-anh:'+key,clip)}
+  const LUC_ANH_IMAGES=new Proxy({}, {get(_target,key){return lucAnhImage(key);}});
   const LUC_ANH_ULTI_VOICE="assets/audio/voice-luc-anh-ultimate.mp3";
   let lucAnhVoice=null,lucAnhFx=[];
   function isLucAnh(unit){return !!unit&&String(unit.sourceId||unit.sourceHeroId||unit.id)===LUC_ANH_ID;}
