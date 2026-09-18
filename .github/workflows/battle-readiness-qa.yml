@@ -23,21 +23,15 @@ jobs:
       - run: npm ci
       - name: Build exact branch head
         run: npm run build
-      - name: Package diagnostic source and built battle
+      - name: Browser readiness checks
+        run: node scripts/qa-battle-readiness-browser.mjs
+      - name: Record revision and final payload
         if: always()
         run: |
           mkdir -p evidence
           git rev-parse HEAD > evidence/revision.txt
-          tar -czf evidence/readiness-source.tar.gz src scripts tests docs AGENTS.md vibelab.json package.json package-lock.json battle.html index.html .github
-          if test -d dist; then
-            tar -czf evidence/readiness-build.tar.gz dist/battle.html dist/index.html dist/assets/characters/linh-dong dist/assets/characters/bach-dien dist/assets/audio/sfx
-          fi
-      - name: Browser readiness checks
-        if: success()
-        run: |
-          if test -f scripts/qa-battle-readiness-browser.mjs; then
-            node scripts/qa-battle-readiness-browser.mjs
-          fi
+          if test -f dist/battle-readiness-assets.json; then cp dist/battle-readiness-assets.json evidence/; fi
+          if test -f dist/battle.html; then tar -czf evidence/battle-html.tar.gz dist/battle.html dist/index.html; fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:
