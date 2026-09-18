@@ -3714,6 +3714,11 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     return {ensure,release,clear,inspect};
   })();
   window.__HV_NATIVE_ATLAS_CACHE=BATTLE_NATIVE_ATLAS_CACHE;
+  const PHASE01_QA_ENABLED=new URLSearchParams(location.search).has('qaPhase01');
+  const PHASE01_QA_EVENTS=[];
+  function phase01Snapshot(){return {enabled:PHASE01_QA_ENABLED,cache:BATTLE_NATIVE_ATLAS_CACHE.inspect(),units:Array.isArray(units)?units.map(unit=>({id:unit.id,sourceId:unit.sourceId||unit.sourceHeroId||null,team:unit.team,state:unit.state,hp:unit.hp,x:unit.x,y:unit.y})):[],battleId:state?.battleId??null,locked:state?.locked??false,currentId:state?.currentId??null};}
+  function phase01Record(type,payload={}){if(!PHASE01_QA_ENABLED)return;PHASE01_QA_EVENTS.push({at:performance.now(),type,...payload});if(PHASE01_QA_EVENTS.length>300)PHASE01_QA_EVENTS.shift();}
+  window.__HV_BATTLE_PHASE01={enabled:PHASE01_QA_ENABLED,snapshot:phase01Snapshot,events:()=>PHASE01_QA_EVENTS.slice()};
   window.addEventListener('pagehide',()=>BATTLE_NATIVE_ATLAS_CACHE.clear(),{once:true});
 
   // v3.25.5 — Đình Lôi Golden Character runtime. All supplied 64-frame GIFs are
@@ -6132,6 +6137,9 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     actor.energy = Math.max(0, actor.energy - cost);
     state.actionCount += 1;
     const actionRec=intelUnit(actor);if(actionRec){actionRec.actions+=1;if(action==="ultimate")actionRec.ultimates+=1;}
+    const phase1Trace=window.__HV_BATTLE_PHASE1_TRACE;
+    const phase1ActionId=`${battleId}:action:${state.actionCount}:${actor.id}:${action}`;
+    phase1Trace?.begin({actionId:phase1ActionId,roundId:state.round,actorId:actor.id,targetIds:target?.id?[target.id]:[],skillId:action,position:{x:actor.x,y:actor.y}});
     const actionTotalsBefore={damage:Number(actionRec?.damage)||0,healing:Number(actionRec?.healing)||0};
     state.actionBreakdown[action] = (state.actionBreakdown[action] || 0) + 1;
     if (actor.team === TEAM_PLAYER && action !== "basic") state.playerSignatureActions += 1;
@@ -6286,8 +6294,10 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     }
 
     dom.phaseLabel.textContent = "Va chạm";
+    phase1Trace?.marker('release',{actionId:phase1ActionId,position:{x:actor.x,y:actor.y}});
     actor.slotComboReady=REFERENCE_SIMPLE?false:slotComboReady(actor,target);
     if(actor.slotComboReady) addLog(`Liên kết slot ${Core.linkedSlot(actor.slot)+1}↔${actor.slot+1}: ${actor.name} nối đòn!`);
+    phase1Trace?.marker('impact',{actionId:phase1ActionId,targetId:target?.id||null,position:{x:target?.x??actor.x,y:target?.y??actor.y}});
     resolveAction(actor, action, target);
     if(!usesLucAnh) triggerImpactPresentation(actor, target, action);
     if(usesOngPhoGif && action === "basic" && actor._ongPhoBasicSecondHitPlan){
@@ -6430,7 +6440,9 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
       }
     }
 
+    phase1Trace?.marker('recovery',{actionId:phase1ActionId,position:{x:actor.x,y:actor.y}});
     if(actionRec)showActionTotal((Number(actionRec.damage)||0)-actionTotalsBefore.damage,(Number(actionRec.healing)||0)-actionTotalsBefore.healing);
+    phase1Trace?.complete({actionId:phase1ActionId,position:{x:actor.x,y:actor.y}});
     actor._talentSkillActive=false;
     state.currentId = null;
     state.selectedAction = null;

@@ -66,6 +66,7 @@ await import('./hub-responsive-visibility-v1.mjs');
 await import('./hub-icon-alpha-hotfix-v1.mjs');
 await import('./battle-responsive-luc-anh-audio-v1.mjs');
 await import('./battle-audio-lifecycle-v1.mjs');
+await import('./battle-phase1-trace-v1.mjs');
 const { buildSplusRuntime } = await import('./splus-runtime-v1.mjs');
 buildSplusRuntime(root);
 await import('./campaign-reference-flow-v1.mjs');
