@@ -27,7 +27,11 @@ jobs:
         run: |
           export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
           "$CHROME_PATH" --version
-          dbus-run-session -- node scripts/qa-battle-readiness-browser.mjs
+          GITHUB_SHA="$(git rev-parse HEAD)" dbus-run-session -- node scripts/qa-battle-readiness-browser.mjs
+      - name: Campaign shell and repeated iframe checks
+        run: |
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
+          dbus-run-session -- node scripts/qa-battle-readiness-host.mjs
       - name: Record revision and final payload
         if: always()
         run: |
