@@ -1,0 +1,47 @@
+name: Battle readiness QA
+on:
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+concurrency:
+  group: battle-readiness-qa-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  readiness:
+    if: github.head_ref == 'fix/battle-asset-readiness-20260918'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci
+      - name: Build exact branch head
+        run: npm run build
+      - name: Package diagnostic source and built battle
+        if: always()
+        run: |
+          mkdir -p evidence
+          git rev-parse HEAD > evidence/revision.txt
+          tar -czf evidence/readiness-source.tar.gz src scripts tests docs AGENTS.md vibelab.json package.json package-lock.json battle.html index.html .github
+          if test -d dist; then
+            tar -czf evidence/readiness-build.tar.gz dist/battle.html dist/index.html dist/assets/characters/linh-dong dist/assets/characters/bach-dien dist/assets/audio/sfx
+          fi
+      - name: Browser readiness checks
+        if: success()
+        run: |
+          if test -f scripts/qa-battle-readiness-browser.mjs; then
+            node scripts/qa-battle-readiness-browser.mjs
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: battle-readiness-evidence
+          path: evidence/
+          retention-days: 7
+          compression-level: 0
