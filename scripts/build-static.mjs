@@ -166,6 +166,10 @@ await import('./battle-enter-audio-v1.mjs');
 // Per-skill movement must follow canonical hero branches and precede iframe sync.
 await import('./battle-skill-movement-v1.mjs');
 
+// Readiness and build-sized atlases must precede the single iframe synchronization.
+const { buildBattleReadiness } = await import('./battle-asset-readiness-v1.mjs');
+await buildBattleReadiness(root);
+
 // The integrated battle is loaded from this embedded payload in production.
 // Keep it byte-identical to the patched battle.html; otherwise the visible
 // preview and the iframe can silently run different engines.
