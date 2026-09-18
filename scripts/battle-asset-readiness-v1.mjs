@@ -84,6 +84,12 @@ export function patchBattleReadiness(input, variants = {}) {
   if (input.includes(MARKER)) return input;
   if (!input.includes('HV_SFX_READINESS_V1')) throw new Error('Updated shared SFX source must be built before readiness');
   let html = input;
+  // QA replacements must not inherit a legacy first-match renderer identity.
+  for(const hero of ['linh-dong','bach-dien']){
+    const sourceId='hero_splus_'+hero.replace('-','_');
+    const from="Object.assign(qaHero,{sourceId:'"+sourceId+"',";
+    html=replaceOne(html,from,"Object.assign(qaHero,{id:'qa-"+hero+"',sourceId:'"+sourceId+"',",hero+' QA identity');
+  }
   html = replaceOne(html, 'function clipFor(key){', 'function __hvOriginalClipFor(key){', 'Linh Dong clip mapper');
   html = replaceOne(html, 'function clipForBachDien(key){', 'function __hvOriginalClipForBachDien(key){', 'Bach Dien clip mapper');
   for (const [hero, cap, title] of [['linh-dong','LINH_DONG','LinhDong'],['bach-dien','BACH_DIEN','BachDien']]) {
@@ -133,8 +139,6 @@ export async function buildBattleReadiness(root) {
   const { atlasDecodeScale } = await import('../src/assets/decoded-atlas-cache.mjs');
   const { default: sharp } = await import('sharp');
   const variants = {}, report = [];
-  // Retain all frames, alpha, timing and relative pivots. Match the scale the
-  // existing cache selected, but resize at build time, not during an action.
   for(const hero of ['linh-dong','bach-dien']){
     const relative='assets/characters/'+hero+'/',directory=join(out,relative);
     if(!existsSync(directory))throw new Error('Missing hero assets: '+relative);

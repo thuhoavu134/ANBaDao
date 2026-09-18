@@ -12,8 +12,10 @@ export function createSkillCastMovement(env) {
   const normalizeAction = action => ['atk', 'normal'].includes(action) ? 'basic' : ['skill1'].includes(action) ? 'skill' : action === 'ult' ? 'ultimate' : action;
   const same = (a, b) => Math.hypot(a.x - b.x, a.y - b.y) < 0.01;
   const direction = actor => actor.team === env.teamPlayer ? 1 : -1;
-  const actionSequence = () => finite(env.getState().actionCount);
-  const ownsAction = (actor, value) => plans.get(actor) === value && value.actionSequence === actionSequence();
+  // A presentation lease is stable across impact; S+ increments actionCount
+  // at impact, while legacy combat increments it before approach.
+  const actionSequence = actor => env.actionSequenceFor?.(actor) ?? finite(env.getState().actionCount);
+  const ownsAction = (actor, value) => plans.get(actor) === value && value.actionSequence === actionSequence(actor);
   // Distances below are LUC THAN formation-spacing units, NOT 3Q source pixels.
   // Each action has an independent policy, even for the same ranged character.
   const registry = {
@@ -48,18 +50,16 @@ export function createSkillCastMovement(env) {
     const key = normalizeAction(action);
     const explicit = actor?.skillMovement?.[key];
     const policy = explicit ?? registry[env.heroKeyFor(actor)]?.[key];
-    if (!policy) return null; // Unmapped heroes retain their authored movement.
+    if (!policy) return null;
     if (!['home', 'target', 'formation', 'column'].includes(policy.mode)) {
       throw new Error('Unsupported skill movement mode: ' + policy.mode);
     }
     return { ...policy };
   }
-
   function geometry(actor) {
     const world = env.getWorld();
     const width = Math.max(1, finite(world?.width, 1600));
     const height = Math.max(1, finite(world?.height, 900));
-    // Include defeated units: formation anchors must not drift after a kill.
     const allies = env.getUnits().filter(unit => unit.team === actor.team);
     const anchors = allies.length ? allies.map(home) : [home(actor)];
     const xs = [...new Set(anchors.map(p => p.x))].sort((a, b) => a - b);
@@ -70,7 +70,6 @@ export function createSkillCastMovement(env) {
       center: { x: anchors.reduce((sum, p) => sum + p.x, 0) / anchors.length, y: anchors.reduce((sum, p) => sum + p.y, 0) / anchors.length }
     };
   }
-
   function plan(actor, action, target) {
     const policy = policyFor(actor, action);
     const origin = home(actor);
@@ -78,24 +77,20 @@ export function createSkillCastMovement(env) {
     const g = geometry(actor), dir = direction(actor);
     let destination;
     if (policy.mode === 'formation') {
-      // A fixed cast point is relative to the FORMATION CENTER, not actor.home.
       destination = {
         x: g.center.x + dir * finite(policy.advance, 1) * g.spacing,
         y: g.center.y + finite(policy.offsetY) * g.spacing
       };
     } else {
-      // Do not pick a different gameplay target or change target selection.
       if (!target || target.hp <= 0) return { mode: policy.mode, home: origin, destination: origin, moved: false };
       let targetPoint = point(target);
       if (policy.mode === 'column') {
-        // Current roster is interleaved front/back: slot 0/1, 2/3, 4/5.
         const lane = Math.floor(finite(target.slot) / 2);
         const column = env.getUnits().filter(unit => unit.team === target.team && Math.floor(finite(unit.slot) / 2) === lane);
         const front = column.sort((a, b) => dir * (home(a).x - home(b).x))[0];
         if (front) targetPoint = home(front);
       }
       const available = Math.max(0, dir * (targetPoint.x - origin.x));
-      // Preserve a visible standoff while still advancing on compact layouts.
       const gap = Math.min(Math.max(0, finite(policy.distance, 1.5)) * g.spacing, available * 0.65);
       destination = { x: targetPoint.x - dir * gap, y: targetPoint.y + finite(policy.offsetY) * g.spacing };
     }
@@ -104,7 +99,6 @@ export function createSkillCastMovement(env) {
     destination.y = Math.max(0, Math.min(g.height, destination.y));
     return { mode: policy.mode, home: origin, destination, moved: !same(origin, destination) };
   }
-
   function valid(actor, battleId) {
     const state = env.getState();
     return !!actor && actor.hp > 0 && state.battleId === battleId && state.mode === 'battle' && state.currentId === actor.id;
@@ -114,14 +108,11 @@ export function createSkillCastMovement(env) {
     events.push({ type, actorId: actor.id, battleId, actionSequence: planValue.actionSequence, mode: planValue.mode, position: point(actor), home: { ...planValue.home }, destination: { ...planValue.destination } });
     if (events.length > 240) events.splice(0, events.length - 240);
   }
-
   async function approach(actor, action, target, battleId) {
     if (!valid(actor, battleId)) return false;
     const previous = plans.get(actor);
-    // Reject duplicate entry for THIS action, not a future action after death
-    // or cancellation. The existing scheduler increments actionCount first.
-    if (previous && previous.battleId === battleId && previous.actionSequence === actionSequence()) return false;
-    const value = { ...plan(actor, action, target), battleId, actionSequence: actionSequence() };
+    if (previous && previous.battleId === battleId && previous.actionSequence === actionSequence(actor)) return false;
+    const value = { ...plan(actor, action, target), battleId, actionSequence: actionSequence(actor) };
     plans.set(actor, value);
     let accepted = false;
     try {
@@ -134,7 +125,6 @@ export function createSkillCastMovement(env) {
         if (!await env.tweenUnit(actor, value.destination.x, value.destination.y, duration, battleId)) return false;
       }
       if (!valid(actor, battleId) || !ownsAction(actor, value)) return false;
-      // Stop run before voice lead-in or any authored animation begins.
       env.setUnitState(actor, 'idle', 800);
       record('cast:ready', actor, battleId, value);
       accepted = true;
@@ -143,14 +133,13 @@ export function createSkillCastMovement(env) {
       if (!accepted && plans.get(actor) === value) plans.delete(actor);
     }
   }
-
   async function returnHome(actor, battleId) {
     const value = plans.get(actor);
     if (!valid(actor, battleId) || (value && (value.battleId !== battleId || !ownsAction(actor, value)))) {
       if (value?.battleId === battleId && plans.get(actor) === value) plans.delete(actor);
       return false;
     }
-    const original = value || { mode: 'home', home: home(actor), destination: point(actor), actionSequence: actionSequence() };
+    const original = value || { mode: 'home', home: home(actor), destination: point(actor), actionSequence: actionSequence(actor) };
     try {
       record('return:start', actor, battleId, original);
       if (!same(point(actor), original.home)) {
@@ -160,8 +149,7 @@ export function createSkillCastMovement(env) {
         env.setUnitState(actor, 'run', duration);
         if (!await env.tweenUnit(actor, original.home.x, original.home.y, duration, battleId)) return false;
       }
-      if (!valid(actor, battleId) || original.actionSequence !== actionSequence() || (value && !ownsAction(actor, value))) return false;
-      // Correct only numerical tween residue AFTER completion, never teleport.
+      if (!valid(actor, battleId) || original.actionSequence !== actionSequence(actor) || (value && !ownsAction(actor, value))) return false;
       actor.x = original.home.x; actor.y = original.home.y;
       env.setUnitState(actor, 'idle', 800);
       record('return:complete', actor, battleId, original);
@@ -170,6 +158,5 @@ export function createSkillCastMovement(env) {
       if (plans.get(actor) === value) plans.delete(actor);
     }
   }
-
   return Object.freeze({ policyFor, plan, approach, returnHome, registry, events: () => events.map(event => ({ ...event, position: { ...event.position }, home: { ...event.home }, destination: { ...event.destination } })) });
 }
