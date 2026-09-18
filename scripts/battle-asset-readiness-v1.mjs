@@ -56,6 +56,30 @@ window.__HV_BATTLE_ASSET_QA={events:()=>__hvBattleAssets.events(),inspect:()=>LI
 window.addEventListener('pagehide',()=>__hvBattleAssets.dispose(),{once:true});
 `;
 }
+function patchSplusReadiness(html) {
+  const start=html.indexOf('async function performSplusAction(actor, action, target) {');
+  const end=html.indexOf('\nfunction drawSplusToken(',start);
+  if(start<0||end<start)throw new Error('S+ action owner boundary missing');
+  let body=html.slice(start,end);
+  body=replaceOne(body,'  state.locked=true;state.selectedAction=action;clearTargets();updateActorHud(actor);',`  state.locked=true;
+  let __hvSplusAssets;
+  try{__hvSplusAssets=await __hvBattleAssets.prepare(actor,action,target,battleId);}
+  catch(error){__hvBattleAssetError(error,actor,action,target,battleId);return;}
+  actor._hvAssetLease=__hvSplusAssets;
+  try{
+  state.selectedAction=action;clearTargets();updateActorHud(actor);`, 'S+ pre-cast readiness');
+  body=replaceOne(body,"  const linhAction=linh&&typeof beginLinhDongAction==='function'?beginLinhDongAction(actor,action,target,battleId):null;",`  if((linh||bach)&&!await __hvSkillMovement.approach(actor,action,target,battleId))return;
+  const linhAction=linh&&typeof beginLinhDongAction==='function'?beginLinhDongAction(actor,action,target,battleId):null;`, 'S+ per-skill approach');
+  body=replaceOne(body,"  setUnitState(actor,'idle',800);state.currentId=null;state.locked=false;",`  if((linh||bach)&&actor.hp>0&&!await __hvSkillMovement.returnHome(actor,battleId))return;
+  setUnitState(actor,'idle',800);state.currentId=null;state.locked=false;`, 'S+ return after recovery');
+  const close=body.lastIndexOf('}');
+  body=body.slice(0,close)+`  }finally{
+    if(actor._hvAssetLease===__hvSplusAssets)delete actor._hvAssetLease;
+    __hvSplusAssets.release();
+  }
+`+body.slice(close);
+  return html.slice(0,start)+body+html.slice(end);
+}
 export function patchBattleReadiness(input, variants = {}) {
   if (input.includes(MARKER)) return input;
   if (!input.includes('HV_SFX_READINESS_V1')) throw new Error('Updated shared SFX source must be built before readiness');
@@ -102,7 +126,7 @@ export function patchBattleReadiness(input, variants = {}) {
       __hvActionAssets.release();
     }
 ` + body.slice(close);
-  return html.slice(0,start)+body+html.slice(end);
+  return patchSplusReadiness(html.slice(0,start)+body+html.slice(end));
 }
 export async function buildBattleReadiness(root) {
   const out = join(root,'dist');

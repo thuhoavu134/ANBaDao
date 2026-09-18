@@ -24,7 +24,10 @@ jobs:
       - name: Build exact branch head
         run: npm run build
       - name: Browser readiness checks
-        run: node scripts/qa-battle-readiness-browser.mjs
+        run: |
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
+          "$CHROME_PATH" --version
+          dbus-run-session -- node scripts/qa-battle-readiness-browser.mjs
       - name: Record revision and final payload
         if: always()
         run: |

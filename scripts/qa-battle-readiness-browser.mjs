@@ -24,11 +24,11 @@ export async function startBrowser() {
   const executable=process.env.CHROME_PATH||['/usr/bin/chromium','/usr/bin/google-chrome','/opt/google/chrome/chrome'].find(existsSync);
   if(!executable){server.close();throw new Error('Chromium/Chrome not installed');}
   const profile=mkdtempSync(join(tmpdir(),'hv-browser-'));
-  const chrome=spawn(executable,['--headless=new','--no-sandbox','--disable-dev-shm-usage','--remote-debugging-port=0','--user-data-dir='+profile,'--no-first-run','--no-default-browser-check','about:blank'],{stdio:['ignore','ignore','pipe']});
+  const chrome=spawn(executable,['--headless=new','--no-sandbox','--disable-gpu','--disable-background-networking','--disable-dev-shm-usage','--remote-debugging-port=0','--user-data-dir='+profile,'--no-first-run','--no-default-browser-check','about:blank'],{stdio:['ignore','ignore','pipe']});
   let errors='';chrome.stderr.on('data',chunk=>{errors+=chunk;});
   const active=join(profile,'DevToolsActivePort');
-  for(let n=0;n<100&&!existsSync(active);n++){if(chrome.exitCode!==null)break;await sleep(100);}
-  if(!existsSync(active)){chrome.kill();server.close();throw new Error('Chromium startup: '+errors.slice(-1000));}
+  for(let n=0;n<450&&!existsSync(active);n++){if(chrome.exitCode!==null)break;await sleep(100);}
+  if(!existsSync(active)){mkdirSync('evidence/browser',{recursive:true});writeFileSync('evidence/browser/chrome-startup.log',errors);chrome.kill();server.close();throw new Error('Chromium startup failed; see evidence/browser/chrome-startup.log');}
   const port=readFileSync(active,'utf8').split('\n')[0];
   async function page(width=1280,height=800,dpr=1) {
     const target=await fetch('http://127.0.0.1:'+port+'/json/new?about:blank',{method:'PUT'}).then(r=>r.json());
