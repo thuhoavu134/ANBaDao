@@ -12,6 +12,8 @@ export function createSkillCastMovement(env) {
   const normalizeAction = action => ['atk', 'normal'].includes(action) ? 'basic' : ['skill1'].includes(action) ? 'skill' : action === 'ult' ? 'ultimate' : action;
   const same = (a, b) => Math.hypot(a.x - b.x, a.y - b.y) < 0.01;
   const direction = actor => actor.team === env.teamPlayer ? 1 : -1;
+  const actionSequence = () => finite(env.getState().actionCount);
+  const ownsAction = (actor, value) => plans.get(actor) === value && value.actionSequence === actionSequence();
   // Distances below are LUC THAN formation-spacing units, NOT 3Q source pixels.
   // Each action has an independent policy, even for the same ranged character.
   const registry = {
@@ -65,8 +67,7 @@ export function createSkillCastMovement(env) {
     const spacing = gaps.length ? Math.min(...gaps) : width * 0.10;
     return {
       width, height, spacing,
-      center: { x: anchors.reduce((sum, p) => sum + p.x, 0) / anchors.length, y: anchors.reduce((sum, p) => sum + p.y, 0) / anchors.length },
-      frontX: direction(actor) > 0 ? Math.max(...xs) : Math.min(...xs)
+      center: { x: anchors.reduce((sum, p) => sum + p.x, 0) / anchors.length, y: anchors.reduce((sum, p) => sum + p.y, 0) / anchors.length }
     };
   }
 
@@ -110,16 +111,17 @@ export function createSkillCastMovement(env) {
   }
   function record(type, actor, battleId, planValue) {
     if (!env.traceEnabled) return;
-    events.push({ type, actorId: actor.id, battleId, mode: planValue.mode, position: point(actor), home: { ...planValue.home }, destination: { ...planValue.destination } });
+    events.push({ type, actorId: actor.id, battleId, actionSequence: planValue.actionSequence, mode: planValue.mode, position: point(actor), home: { ...planValue.home }, destination: { ...planValue.destination } });
     if (events.length > 240) events.splice(0, events.length - 240);
   }
 
   async function approach(actor, action, target, battleId) {
     if (!valid(actor, battleId)) return false;
     const previous = plans.get(actor);
-    // No second approach owner for an action that is still in progress.
-    if (previous && previous.battleId === battleId) return false;
-    const value = { ...plan(actor, action, target), battleId };
+    // Reject duplicate entry for THIS action, not a future action after death
+    // or cancellation. The existing scheduler increments actionCount first.
+    if (previous && previous.battleId === battleId && previous.actionSequence === actionSequence()) return false;
+    const value = { ...plan(actor, action, target), battleId, actionSequence: actionSequence() };
     plans.set(actor, value);
     let accepted = false;
     try {
@@ -131,7 +133,7 @@ export function createSkillCastMovement(env) {
         env.setUnitState(actor, 'run', duration);
         if (!await env.tweenUnit(actor, value.destination.x, value.destination.y, duration, battleId)) return false;
       }
-      if (!valid(actor, battleId) || plans.get(actor) !== value) return false;
+      if (!valid(actor, battleId) || !ownsAction(actor, value)) return false;
       // Stop run before voice lead-in or any authored animation begins.
       env.setUnitState(actor, 'idle', 800);
       record('cast:ready', actor, battleId, value);
@@ -144,11 +146,11 @@ export function createSkillCastMovement(env) {
 
   async function returnHome(actor, battleId) {
     const value = plans.get(actor);
-    if (!valid(actor, battleId) || (value && value.battleId !== battleId)) {
-      if (value?.battleId === battleId) plans.delete(actor);
+    if (!valid(actor, battleId) || (value && (value.battleId !== battleId || !ownsAction(actor, value)))) {
+      if (value?.battleId === battleId && plans.get(actor) === value) plans.delete(actor);
       return false;
     }
-    const original = value || { mode: 'home', home: home(actor), destination: point(actor) };
+    const original = value || { mode: 'home', home: home(actor), destination: point(actor), actionSequence: actionSequence() };
     try {
       record('return:start', actor, battleId, original);
       if (!same(point(actor), original.home)) {
@@ -158,7 +160,7 @@ export function createSkillCastMovement(env) {
         env.setUnitState(actor, 'run', duration);
         if (!await env.tweenUnit(actor, original.home.x, original.home.y, duration, battleId)) return false;
       }
-      if (!valid(actor, battleId)) return false;
+      if (!valid(actor, battleId) || original.actionSequence !== actionSequence() || (value && !ownsAction(actor, value))) return false;
       // Correct only numerical tween residue AFTER completion, never teleport.
       actor.x = original.home.x; actor.y = original.home.y;
       env.setUnitState(actor, 'idle', 800);
