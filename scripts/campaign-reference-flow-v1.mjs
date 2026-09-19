@@ -19,6 +19,27 @@ chapter = patch(chapter,'setTimeout(()=>startChapter(idx,{continuing:true}),360)
 chapter = patch(chapter,'endChapter({referenceLoop:true,autoContinue:true});','endChapter({referenceLoop:true,autoContinue:resultAction==="next"});');
 chapter = chapter.replace('đang tới nhiệm vụ kế tiếp.', 'đã mở nhiệm vụ kế tiếp.');
 html = html.slice(0,start)+chapter+html.slice(end);
+
+// The top-level/mobile fallback consumes the same battle-result payload outside
+// the iframe callback. PR #162 left this path hard-coded to auto-continue.
+// Respect the visible Victory choice here as well: Confirm returns to Campaign,
+// while only Ải sau starts the next encounter.
+const returnStart = html.indexOf('(function consumeBattleReturn()');
+const returnEnd = html.indexOf('})();\n})();', returnStart);
+if (returnStart < 0 || returnEnd <= returnStart) throw new Error('Top-level battle-return bridge missing');
+let battleReturn = html.slice(returnStart, returnEnd);
+battleReturn = patch(
+  battleReturn,
+  '            setTimeout(() => startChapter(idx, { continuing: true }), 360);',
+  '            if (payload.resultAction === "next") setTimeout(() => startChapter(idx, { continuing: true }), 360);\n            else navTo("campaign");'
+);
+battleReturn = patch(
+  battleReturn,
+  '            endChapter({ referenceLoop: true, autoContinue: true });',
+  '            endChapter({ referenceLoop: true, autoContinue: payload.resultAction === "next" });'
+);
+battleReturn = battleReturn.replace('đang tới nhiệm vụ kế tiếp.', 'đã mở nhiệm vụ kế tiếp.');
+html = html.slice(0, returnStart) + battleReturn + html.slice(returnEnd);
 writeFileSync('dist/index.html',html);
 
 let battle = readFileSync('dist/battle.html','utf8');
