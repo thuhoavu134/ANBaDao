@@ -45,3 +45,17 @@ test('authored result animator owns its RAF and guards legacy painters', () => {
   assert.ok(patch.includes('stopRun()'));
   assert.ok(patch.includes('animationStops'));
 });
+
+test('default roster gets full-body generic Run Idle and one-shot Fall fallback', () => {
+  for (const id of ['dong_quan','lam_vu','moc_an','hoa_ho','van_chi']) assert.ok(patch.includes(id), id);
+  for (const asset of [
+    'assets/battle-runtime/embedded-05.webp',
+    'assets/battle-runtime/embedded-06.webp',
+    'assets/battle-runtime/embedded-07.webp',
+    'assets/battle-runtime/embedded-08.webp',
+    'assets/battle-runtime/embedded-10.webp'
+  ]) assert.ok(patch.includes(asset), asset);
+  assert.ok(patch.includes('drawGenericPose'));
+  assert.ok(patch.includes('animateGeneric'));
+  assert.ok(patch.includes('hvResultGenericFall'));
+});
