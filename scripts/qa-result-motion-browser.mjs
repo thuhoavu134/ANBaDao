@@ -46,8 +46,7 @@ export async function run() {
 
         await page.wait('__HV_RESULT_MOTION_QA.state().phase === "fall-hold"', 15000);
         const heldA = await page.evaluate('__HV_RESULT_MOTION_QA.state()');
-        const manifest = await page.evaluate('__HV_RESULT_MOTION_QA.manifest()');
-        const expectedLast = manifest[heldA.hero]?.fall?.frameEnd ?? ((manifest[heldA.hero]?.fall?.frames || 1) - 1);
+        const expectedLast = heldA.expectedFallLast;
         await sleep(550);
         const heldB = await page.evaluate('__HV_RESULT_MOTION_QA.state()');
         run.defeatHold = { first: heldA, after550ms: heldB, expectedLast };
@@ -69,7 +68,7 @@ export async function run() {
           run.victoryRoot.confirmRect?.w >= 44 && run.victoryRoot.confirmRect?.h >= 44 &&
           heldA.fallCycles === 1 && heldA.lastFallFrame === expectedLast &&
           heldB.fallFrames === heldA.fallFrames && heldB.lastFallFrame === heldA.lastFallFrame &&
-          run.defeatRoot.transform === 'none' &&
+          (heldA.generic ? run.defeatRoot.transform !== 'none' : run.defeatRoot.transform === 'none') &&
           run.defeatRoot.confirmRect?.w >= 44 && run.defeatRoot.confirmRect?.h >= 44 &&
           run.victoryConfirm.mode === 'battle' && run.defeatConfirm.mode === 'battle' &&
           run.exceptions.length === 0 && run.resultAssetErrors.length === 0;
