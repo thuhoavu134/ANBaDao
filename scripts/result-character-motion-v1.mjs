@@ -71,7 +71,7 @@ const css = [
   '#integratedResultV6.irv-authored-motion.irv-victory.irv-motion-idle .irv-hero.run{opacity:0}',
   '#integratedResultV6.irv-authored-motion.irv-victory .irv-hero.idle{opacity:0!important;animation:none!important;transform:translateX(0)!important}',
   '#integratedResultV6.irv-authored-motion.irv-victory.irv-motion-idle .irv-hero.idle{opacity:1!important}',
-  '#integratedResultV6.irv-authored-motion.irv-defeat .irv-hero.fall{animation:none!important;transform:none!important;opacity:1!important;transform-origin:50% 86%}',
+  '#integratedResultV6.irv-authored-motion.irv-defeat .irv-hero.fall:not(.irv-generic-fall){animation:none!important;transform:none!important;opacity:1!important;transform-origin:50% 86%}',
   '#integratedResultV6.irv-authored-motion.irv-defeat .irv-hero.fall.irv-generic-fall{animation:hvResultGenericFall .76s cubic-bezier(.22,.72,.24,1) forwards!important;transform-origin:50% 84%}',
   '@keyframes hvResultRunIn{0%{transform:translateX(-118%) translateY(1.5%)}38%{transform:translateX(-68%) translateY(-2%)}74%{transform:translateX(-22%) translateY(.6%)}100%{transform:translateX(0) translateY(0)}}',
   '@keyframes hvResultGenericFall{0%{transform:translateY(0) rotate(0deg) scale(1)}28%{transform:translateY(-3%) rotate(-16deg) scale(.99)}72%{transform:translateY(9%) rotate(-72deg) scale(.95)}100%{transform:translateY(12%) rotate(-82deg) scale(.94)}}',
