@@ -4,8 +4,12 @@ import { join } from 'node:path';
 const root = process.cwd();
 const target = join(root, 'dist', 'battle.html');
 let html = readFileSync(target, 'utf8');
-const source = readFileSync(join(root, 'src/domain/combat/battle-presentation-trace.mjs'), 'utf8')
+const controller = readFileSync(join(root, 'src/domain/combat/presentation-action-controller.mjs'), 'utf8')
   .replace(/^export\s+/gm, '');
+const trace = readFileSync(join(root, 'src/domain/combat/battle-presentation-trace.mjs'), 'utf8')
+  .replace(/^import.*$/gm, '')
+  .replace(/^export\s+/gm, '');
+const source = controller + '\n' + trace;
 
 // Battle action hooks also mention __HV_BATTLE_PHASE1_TRACE. Only this owned
 // script identifies an installed initializer; a global-name search skips it.

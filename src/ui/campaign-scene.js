@@ -142,14 +142,20 @@ function emptySceneImage() {
   return { complete: false, naturalWidth: 0, naturalHeight: 0 };
 }
 function imageForScene(src, spec = null) {
-  if (campaignBattleOpen()) return emptySceneImage();
+  // Rendering itself pauses while a battle overlay is genuinely open. Do not
+  // turn a stale overlay class into a permanent empty image for a hero.
   const existing = sceneImages.get(src);
   if (existing) return existing.image || existing;
   const pack = campaignPackFor(src, spec);
   if (pack) {
     const handle = sceneResourceCache.ensure(pack, 'campaign');
     sceneImages.set(src, handle);
-    handle.promise.then(() => { if (sceneState.active) drawScene(performance.now()); }).catch(() => {});
+    handle.promise.then(() => { if (sceneState.active) drawScene(performance.now()); }).catch(() => {
+      // Failed admission is retryable after another asset releases. Never cache
+      // a dead handle forever and silently erase this actor.
+      if (sceneImages.get(src) === handle) sceneImages.delete(src);
+      if (sceneState.active) drawScene(performance.now());
+    });
     sceneState.scope?.add(() => {
       sceneResourceCache.release(handle.key, 'campaign', Date.now());
       if (sceneImages.get(src) === handle) sceneImages.delete(src);
@@ -393,7 +399,14 @@ function drawScene(time) {
       const readyAttack = attackImage?.complete && attackImage.naturalWidth > 0;
       const spec = readyAttack ? farmAttackSpecs[pick.id] : farm && farm.phase !== 'march' ? spriteSpecs[pick.id] : specForAfk(pick);
       const enemyArt = pick.enemy && !spec ? preparationEnemyArt(pick, enemies) : null;
-      const image = imageForScene(spec?.src || enemyArt?.src || portraitSrc(pick.id, 'master'), spec);
+      let drawSpec = spec;
+      let image = imageForScene(spec?.src || enemyArt?.src || portraitSrc(pick.id, 'master'), spec);
+      if ((!image.complete || image.naturalWidth < 1) && spec && !pick.enemy) {
+        // A hero must not disappear while its atlas is loading or was denied by
+        // budget. Use a small authored portrait as a temporary visual fallback.
+        const fallback = imageForScene(portraitSrc(pick.id, 'master'));
+        if (fallback.complete && fallback.naturalWidth > 0) { image = fallback; drawSpec = null; }
+      }
       if (!image.complete || image.naturalWidth < 1) return;
       ctx.save();
       if (actor && !farmAttackSpecs[pick.id] && actor.attackTime >= 0) {
@@ -401,11 +414,11 @@ function drawScene(time) {
         ctx.translate(x,y); ctx.rotate(lean); ctx.translate(-x,-y);
       }
       if ((farm && farm.direction.x < 0) || pick.enemy) { ctx.translate(2 * x, 0); ctx.scale(-1, 1); }
-      if (spec) {
-        const frame = frameAt(spec, readyAttack ? actor.attackTime : time), scale = bodyH / spec.body;
-        const sx = frame % spec.cols * (spec.strideW || spec.cellW) + (spec.pad || 0);
-        const sy = Math.floor(frame / spec.cols) * (spec.strideH || spec.cellH) + (spec.pad || 0);
-        ctx.drawImage(image, sx, sy, spec.cellW, spec.cellH, x - spec.pivot * scale, y - spec.foot * scale, spec.cellW * scale, spec.cellH * scale);
+      if (drawSpec) {
+        const frame = frameAt(drawSpec, readyAttack ? actor.attackTime : time), scale = bodyH / drawSpec.body;
+        const sx = frame % drawSpec.cols * (drawSpec.strideW || drawSpec.cellW) + (drawSpec.pad || 0);
+        const sy = Math.floor(frame / drawSpec.cols) * (drawSpec.strideH || drawSpec.cellH) + (drawSpec.pad || 0);
+        ctx.drawImage(image, sx, sy, drawSpec.cellW, drawSpec.cellH, x - drawSpec.pivot * scale, y - drawSpec.foot * scale, drawSpec.cellW * scale, drawSpec.cellH * scale);
       } else if (enemyArt) {
         const cw = image.naturalWidth / enemyArt.cols, ch = image.naturalHeight / enemyArt.rows;
         const drawW = bodyH * cw / ch;

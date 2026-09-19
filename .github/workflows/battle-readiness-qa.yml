@@ -9,7 +9,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   readiness:
-    if: github.head_ref == 'fix/battle-asset-readiness-20260918'
+    if: github.head_ref == 'fix/battle-asset-readiness-20260918' || github.head_ref == 'work/tkt-0165-battle-architecture-20260918'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:

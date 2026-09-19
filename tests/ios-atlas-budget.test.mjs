@@ -118,7 +118,7 @@ test('L157-T4 campaign releases every atlas when the battle overlay is open', ()
   assert.match(scene, /releaseSceneAtlases/);
   assert.match(scene, /__HV_CAMPAIGN_RELEASE_ATLASES/);
   assert.match(scene, /sceneResourceCache\.purge/);
-  assert.match(cache, /const purge = /);
+  assert.match(cache, /(?:const purge|function purge)/);
 });
 
 test('L157-T5 battle releases ATK/VFX after the action; host drops Bạch Diện idle on iframe open', () => {
