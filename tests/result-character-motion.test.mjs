@@ -68,3 +68,16 @@ test('large authored fall poses reserve copy clearance on desktop', () => {
   assert.ok(patch.includes('translateY(-14%) scale(.90)'));
   assert.ok(patch.includes('delete current.dataset.irvMotionHero'));
 });
+
+
+test('Victory Run waits for its atlas before starting the visible entry timer', () => {
+  assert.ok(patch.includes('irv-motion-run-active'));
+  assert.ok(patch.includes('const runSource=entry?entry.run.src:generic.src'));
+  assert.ok(patch.includes('imageFor(runSource,beginRun)'));
+  assert.ok(patch.includes('later(finishRunWhenVisible,1370)'));
+  assert.ok(patch.includes('MIN_RUN_FRAMES=8'));
+  assert.ok(patch.includes('qa.runFrames>=MIN_RUN_FRAMES'));
+  assert.ok(patch.includes('later(finishRun,5000)'));
+  assert.ok(patch.includes('if(!runStarted)finishRun()'));
+  assert.ok(patch.includes('current.classList.remove("irv-motion-run-active")'));
+});

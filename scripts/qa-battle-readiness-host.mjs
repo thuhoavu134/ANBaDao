@@ -67,14 +67,15 @@ try{
 
   // Exercise the top-level return transport used when a nested iframe cannot host
   // battle.html (notably the Safari/Grok fallback). This is a synthetic handoff
-  // event only; the two combat sessions above remain real browser battles.
-  const fallbackSeed=await page.evaluate(`(()=>{const idx=0,stageIndex=Math.max(0,Math.floor(Number(P.campaignStages?.[idx]||0)));const sessionId='qa-top-return-'+Date.now().toString(36);sessionStorage.setItem('hvBattleHostLease',JSON.stringify({sessionId,battleId:'qa-fallback',mode:'campaign',chapterIdx:idx,campaignBattleIndex:stageIndex}));sessionStorage.setItem('hvBattleHostEvent',JSON.stringify({source:'hon-viet-battle',type:'battle-result',payload:{sessionId,battleId:'qa-fallback',win:true,winner:'player',round:3,actionCount:6,units:[],rewards:[]}}));return {idx,stageIndex,sessionId};})()`);
+  // for the explicit "Ải sau" choice; Confirm must not auto-advance after PR #165.
+  // The two combat sessions above remain real browser battles.
+  const fallbackSeed=await page.evaluate(`(()=>{const idx=0,stageIndex=Math.max(0,Math.floor(Number(P.campaignStages?.[idx]||0)));const sessionId='qa-top-return-'+Date.now().toString(36);sessionStorage.setItem('hvBattleHostLease',JSON.stringify({sessionId,battleId:'qa-fallback',mode:'campaign',chapterIdx:idx,campaignBattleIndex:stageIndex}));sessionStorage.setItem('hvBattleHostEvent',JSON.stringify({source:'hon-viet-battle',type:'battle-result',payload:{sessionId,battleId:'qa-fallback',resultAction:'next',win:true,winner:'player',round:3,actionCount:6,units:[],rewards:[]}}));return {idx,stageIndex,sessionId};})()`);
   await page.send('Page.navigate',{url:browser.origin+'/?hvBattleReturn=1'});
   await page.wait(`typeof P!=='undefined'&&Number(P.campaignStages?.[${fallbackSeed.idx}]||0)===${fallbackSeed.stageIndex+1}&&typeof ST!=='undefined'&&ST.mode==='campaign'`,30000);
-  await take('top-return-auto-next');
+  await take('top-return-explicit-next');
   report.fallback=await page.evaluate(`(()=>({stage:Number(P.campaignStages?.[${fallbackSeed.idx}]||0),mode:ST.mode,screen:document.querySelector('.screen.active')?.id||'',battleActive:Boolean(window.HonVietMetaBridge?.isActive?.()),url:location.href}))()`);
   report.fallback={...fallbackSeed,...report.fallback,ok:report.fallback.stage===fallbackSeed.stageIndex+1&&report.fallback.mode==='campaign'};
-  if(!report.fallback.ok)throw new Error('Top-level battle return did not resume the next campaign encounter');
+  if(!report.fallback.ok)throw new Error('Top-level explicit-next battle return did not resume the next campaign encounter');
 
   report.exceptions=page.events.filter(e=>e.method==='Runtime.exceptionThrown');
   report.httpErrors=page.events.filter(e=>e.method==='Network.responseReceived'&&e.params.response.status>=400).map(e=>({url:e.params.response.url,status:e.params.response.status}));
