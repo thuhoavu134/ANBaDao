@@ -9,6 +9,7 @@ import vm from 'node:vm';
 
 const patchPath = fileURLToPath(new URL('../scripts/battle-phase1-trace-v1.mjs', import.meta.url));
 const tracePath = fileURLToPath(new URL('../src/domain/combat/battle-presentation-trace.mjs', import.meta.url));
+const controllerPath = fileURLToPath(new URL('../src/domain/combat/presentation-action-controller.mjs', import.meta.url));
 const marker = 'id="hv-battle-phase1-trace"';
 // These references already exist in battle.html after PR #159. They are not
 // evidence that the trace initializer has been injected.
@@ -27,6 +28,7 @@ function fixture(t, html = htmlWithHooks) {
   t.after(() => rmSync(root, { recursive: true, force: true }));
   mkdirSync(join(root, 'dist'), { recursive: true });
   mkdirSync(join(root, 'src/domain/combat'), { recursive: true });
+  copyFileSync(controllerPath, join(root, 'src/domain/combat/presentation-action-controller.mjs'));
   copyFileSync(tracePath, join(root, 'src/domain/combat/battle-presentation-trace.mjs'));
   const target = join(root, 'dist/battle.html');
   writeFileSync(target, html);
