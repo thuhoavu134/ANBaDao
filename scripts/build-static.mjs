@@ -170,6 +170,10 @@ await import('./battle-skill-movement-v1.mjs');
 const { buildBattleReadiness } = await import('./battle-asset-readiness-v1.mjs');
 await buildBattleReadiness(root);
 
+// Result-screen motion runs after readiness so large authored atlases can reuse
+// any build-sized variants before the final iframe payload is synchronized.
+await import('./result-character-motion-v1.mjs');
+
 // The integrated battle is loaded from this embedded payload in production.
 // Keep it byte-identical to the patched battle.html; otherwise the visible
 // preview and the iframe can silently run different engines.
