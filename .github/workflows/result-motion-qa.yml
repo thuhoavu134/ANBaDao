@@ -1,0 +1,37 @@
+name: Result motion QA
+on:
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+concurrency:
+  group: result-motion-qa-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  result-motion:
+    if: github.head_ref == 'qa/result-motion-main-20260919'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci
+      - name: Build exact branch head
+        run: npm run build
+      - name: Victory and Defeat browser QA
+        run: |
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
+          "$CHROME_PATH" --version
+          dbus-run-session -- node scripts/qa-result-motion-browser.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: result-motion-evidence
+          path: evidence/result-motion/
+          retention-days: 7
+          compression-level: 0
