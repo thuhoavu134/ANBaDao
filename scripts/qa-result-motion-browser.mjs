@@ -26,7 +26,7 @@ export async function run() {
         await page.screenshot(resolve(out, name + '-victory-run.png'));
         run.screenshots.push(name + '-victory-run.png');
 
-        await page.wait('__HV_RESULT_MOTION_QA.state().phase === "idle" && __HV_RESULT_MOTION_QA.state().idleFrames >= 3', 10000);
+        await page.wait('__HV_RESULT_MOTION_QA.state().phase === "idle" && __HV_RESULT_MOTION_QA.state().idleFrames >= 3 && Number(getComputedStyle(document.querySelector("#integratedResultV6 .irv-hero.idle")).opacity) > 0.9', 10000);
         run.victoryIdle = await page.evaluate('__HV_RESULT_MOTION_QA.state()');
         run.victoryRoot = await page.evaluate(`(()=>{const r=document.getElementById('integratedResultV6');const c=r?.querySelector('.irv-hero.idle');const b=r?.querySelector('[data-result-action="confirm"]');return {classes:r?.className||'',idleOpacity:c?getComputedStyle(c).opacity:null,confirmText:b?.textContent?.trim()||'',confirmRect:b?(()=>{const x=b.getBoundingClientRect();return {w:x.width,h:x.height}})():null};})()`);
         await page.screenshot(resolve(out, name + '-victory-idle.png'));
