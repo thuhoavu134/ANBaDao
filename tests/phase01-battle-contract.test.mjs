@@ -10,6 +10,8 @@ test('PHASE01 action contract has explicit id/parent/target/completion concepts'
   assert.match(battle, /battleId/);
   assert.match(battle, /target/);
   assert.match(battle, /resolveAction/);
+  assert.match(battle, /resolvedActionIds/);
+  assert.match(battle, /arguments\[3\]/);
   assert.match(battle, /state\.locked/);
 });
 
