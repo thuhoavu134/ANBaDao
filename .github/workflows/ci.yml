@@ -42,6 +42,18 @@ jobs:
           path: evidence/result-motion/
           retention-days: 7
           compression-level: 0
+      - name: Round 15 result flow browser QA
+        run: |
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
+          node scripts/qa-round15-result-flow.mjs
+      - name: Upload round 15 result evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: round15-result-evidence
+          path: evidence/round15-result/
+          retention-days: 7
+          compression-level: 0
 
   production:
     name: Live check
