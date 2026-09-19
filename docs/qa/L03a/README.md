@@ -31,8 +31,8 @@ Source hash của runtime được audit:
 
 ~~~text
 index.html
-sha256: e4f79d41e3bf7bb225ff878729d71e72be9ad94bac962f5e41cffc98148680b9
-chars: 1890471
+sha256: 99d24a2e91828f3df2bd946c0dfc1aafd76300223b1f3e667a469f469f2007b0
+chars: 1930737
 ~~~
 
 Trình tự hiện hành:
