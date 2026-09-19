@@ -95,8 +95,11 @@ export async function run(){
           if(!actor||!opponents.length)return false;
           const enemyCenterX=opponents.reduce((sum,unit)=>sum+(unit.baseX??unit.x),0)/opponents.length;
           const dir=Math.sign(enemyCenterX-e.home.x)||1;
-          const enemyFrontX=opponents.reduce((front,unit)=>dir>0?Math.min(front,unit.baseX??unit.x):Math.max(front,unit.baseX??unit.x),opponents[0].baseX??opponents[0].x);
-          return dir*(e.destination.x-e.home.x)>=-1&&dir*(enemyFrontX-e.destination.x)>0;
+          // Event snapshots do not carry event-time HP. A dead former frontline
+          // must not make a later legal advance look like a penetration failure.
+          // Unit tests lock the live-frontline rule; browser QA only verifies
+          // that real movement advances toward, but not through, enemy formation.
+          return dir*(e.destination.x-e.home.x)>=-1&&dir*(enemyCenterX-e.destination.x)>0;
         });
         run.movement={movedStarts:movementStarts.length,targetTeamStarts:targetTeamStarts.length,insideCombatCorridor:movementInsideCorridor};
         run.ok=Object.keys(run.coverage).length===wanted.length&&run.exceptions.length===0&&run.final.audio.some(a=>a.state==='running'&&a.peak>0)&&run.samples.some(s=>s.events.some(e=>e.type==='sfx:played'))&&movementStarts.length>0&&targetTeamStarts.length>0&&movementInsideCorridor;
