@@ -17,27 +17,29 @@ export function createSkillCastMovement(env) {
   const actionSequence = actor => env.actionSequenceFor?.(actor) ?? finite(env.getState().actionCount);
   const ownsAction = (actor, value) => plans.get(actor) === value && value.actionSequence === actionSequence(actor);
   // Distances below are LUC THAN formation-spacing units, NOT 3Q source pixels.
-  // Each action has an independent policy, even for the same ranged character.
+  // Each action has an independent policy. Ranged units may advance close;
+  // destination is driven by the live target/enemy formation rather than a
+  // fixed caster line on the actor's own side.
   const registry = {
     'luc-anh': {
       basic: { mode: 'target', distance: 1.45 },
-      skill: { mode: 'formation', advance: 0.75 },
-      ultimate: { mode: 'formation', advance: 1.05 }
+      skill: { mode: 'target-team', distance: 1.20, alignY: 'target' },
+      ultimate: { mode: 'target-team', distance: 0.95, alignY: 'center' }
     },
     'linh-dong': {
       basic: { mode: 'target', distance: 1.35 },
-      skill: { mode: 'target', distance: 1.35 },
-      ultimate: { mode: 'formation', advance: 0.95 }
+      skill: { mode: 'target', distance: 1.15 },
+      ultimate: { mode: 'target-team', distance: 0.90, alignY: 'center' }
     },
     'bach-dien': {
       basic: { mode: 'target', distance: 1.20 },
-      skill: { mode: 'target', distance: 1.20 },
+      skill: { mode: 'target', distance: 1.05 },
       ultimate: { mode: 'target', distance: 0.90 }
     },
     'thay-mo': {
       basic: { mode: 'target', distance: 1.50 },
-      skill: { mode: 'formation', advance: 0.80 },
-      ultimate: { mode: 'formation', advance: 1.00 }
+      skill: { mode: 'target-team', distance: 1.25, alignY: 'target' },
+      ultimate: { mode: 'target-team', distance: 1.00, alignY: 'center' }
     }
   };
   for (const skills of Object.values(registry)) {
@@ -51,48 +53,85 @@ export function createSkillCastMovement(env) {
     const explicit = actor?.skillMovement?.[key];
     const policy = explicit ?? registry[env.heroKeyFor(actor)]?.[key];
     if (!policy) return null;
-    if (!['home', 'target', 'formation', 'column'].includes(policy.mode)) {
+    if (!['home', 'target', 'target-team', 'formation', 'column'].includes(policy.mode)) {
       throw new Error('Unsupported skill movement mode: ' + policy.mode);
     }
     return { ...policy };
   }
-  function geometry(actor) {
+  function summarizeAnchors(anchors, width) {
+    const safe = anchors.length ? anchors : [{ x: width * 0.5, y: 0 }];
+    const xs = [...new Set(safe.map(p => p.x))].sort((a, b) => a - b);
+    const xGaps = xs.slice(1).map((x, i) => x - xs[i]).filter(gap => gap > 1);
+    return {
+      spacing: xGaps.length ? Math.min(...xGaps) : width * 0.10,
+      center: {
+        x: safe.reduce((sum, p) => sum + p.x, 0) / safe.length,
+        y: safe.reduce((sum, p) => sum + p.y, 0) / safe.length
+      }
+    };
+  }
+  function geometry(actor, target) {
     const world = env.getWorld();
     const width = Math.max(1, finite(world?.width, 1600));
     const height = Math.max(1, finite(world?.height, 900));
-    const allies = env.getUnits().filter(unit => unit.team === actor.team);
-    const anchors = allies.length ? allies.map(home) : [home(actor)];
-    const xs = [...new Set(anchors.map(p => p.x))].sort((a, b) => a - b);
-    const gaps = xs.slice(1).map((x, i) => x - xs[i]).filter(gap => gap > 1);
-    const spacing = gaps.length ? Math.min(...gaps) : width * 0.10;
-    return {
-      width, height, spacing,
-      center: { x: anchors.reduce((sum, p) => sum + p.x, 0) / anchors.length, y: anchors.reduce((sum, p) => sum + p.y, 0) / anchors.length }
-    };
+    const units = env.getUnits();
+    const ownUnits = units.filter(unit => unit.team === actor.team);
+    const targetTeam = target?.team ?? units.find(unit => unit.team !== actor.team && unit.hp > 0)?.team;
+    const enemyUnits = units.filter(unit => unit.team === targetTeam && unit.hp > 0);
+    const ownAnchors = ownUnits.length ? ownUnits.map(home) : [home(actor)];
+    const enemyAnchors = enemyUnits.length ? enemyUnits.map(home) : (target ? [home(target)] : []);
+    const own = summarizeAnchors(ownAnchors, width);
+    const enemy = summarizeAnchors(enemyAnchors, width);
+    const spacing = Math.max(1, Math.min(own.spacing, enemy.spacing));
+    const dir = direction(actor);
+    const frontX = enemyAnchors.length
+      ? enemyAnchors.reduce((front, p) => dir > 0 ? Math.min(front, p.x) : Math.max(front, p.x), enemyAnchors[0].x)
+      : null;
+    return { width, height, spacing, ownCenter: own.center, enemyCenter: enemy.center, enemyFrontX: frontX };
+  }
+  function standoffDestination(origin, targetPoint, actor, policy, g, { respectFrontline = true } = {}) {
+    const dir = direction(actor);
+    const available = Math.max(0, dir * (targetPoint.x - origin.x));
+    if (available <= 0) return { ...origin };
+    const desiredGap = Math.max(0, finite(policy.distance, 1.5)) * g.spacing;
+    const targetGap = Math.min(desiredGap, available * 0.70);
+    let x = targetPoint.x - dir * targetGap;
+    if (respectFrontline && policy.penetrate !== true && g.enemyFrontX != null) {
+      const frontAvailable = Math.max(0, dir * (g.enemyFrontX - origin.x));
+      if (frontAvailable > 0) {
+        const frontlineGap = Math.min(Math.max(g.spacing * finite(policy.frontlineGap, 0.55), 1), frontAvailable * 0.70);
+        const frontlineStop = g.enemyFrontX - dir * frontlineGap;
+        x = dir > 0 ? Math.min(x, frontlineStop) : Math.max(x, frontlineStop);
+      }
+    }
+    return { x, y: targetPoint.y + finite(policy.offsetY) * g.spacing };
   }
   function plan(actor, action, target) {
     const policy = policyFor(actor, action);
     const origin = home(actor);
     if (!policy || policy.mode === 'home') return { mode: policy?.mode || 'legacy', home: origin, destination: origin, moved: false };
-    const g = geometry(actor), dir = direction(actor);
+    const g = geometry(actor, target), dir = direction(actor);
     let destination;
     if (policy.mode === 'formation') {
+      // Backward-compatible escape hatch for explicit legacy/custom profiles.
       destination = {
-        x: g.center.x + dir * finite(policy.advance, 1) * g.spacing,
-        y: g.center.y + finite(policy.offsetY) * g.spacing
+        x: g.ownCenter.x + dir * finite(policy.advance, 1) * g.spacing,
+        y: g.ownCenter.y + finite(policy.offsetY) * g.spacing
       };
+    } else if (policy.mode === 'target-team') {
+      if (g.enemyFrontX == null) return { mode: policy.mode, home: origin, destination: origin, moved: false };
+      const y = policy.alignY === 'target' && target && target.hp > 0 ? home(target).y : g.enemyCenter.y;
+      destination = standoffDestination(origin, { x: g.enemyFrontX, y }, actor, policy, g, { respectFrontline: false });
     } else {
       if (!target || target.hp <= 0) return { mode: policy.mode, home: origin, destination: origin, moved: false };
-      let targetPoint = point(target);
+      let targetPoint = home(target);
       if (policy.mode === 'column') {
         const lane = Math.floor(finite(target.slot) / 2);
-        const column = env.getUnits().filter(unit => unit.team === target.team && Math.floor(finite(unit.slot) / 2) === lane);
+        const column = env.getUnits().filter(unit => unit.team === target.team && unit.hp > 0 && Math.floor(finite(unit.slot) / 2) === lane);
         const front = column.sort((a, b) => dir * (home(a).x - home(b).x))[0];
         if (front) targetPoint = home(front);
       }
-      const available = Math.max(0, dir * (targetPoint.x - origin.x));
-      const gap = Math.min(Math.max(0, finite(policy.distance, 1.5)) * g.spacing, available * 0.65);
-      destination = { x: targetPoint.x - dir * gap, y: targetPoint.y + finite(policy.offsetY) * g.spacing };
+      destination = standoffDestination(origin, targetPoint, actor, policy, g);
     }
     const margin = Math.min(g.spacing * 0.25, g.width * 0.03);
     destination.x = Math.max(margin, Math.min(g.width - margin, destination.x));
