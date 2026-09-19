@@ -59,3 +59,12 @@ test('default roster gets full-body generic Run Idle and one-shot Fall fallback'
   assert.ok(patch.includes('animateGeneric'));
   assert.ok(patch.includes('hvResultGenericFall'));
 });
+
+
+test('large authored fall poses reserve copy clearance on desktop', () => {
+  assert.ok(patch.includes('data-irv-motion-hero'));
+  assert.ok(patch.includes('linh_dong'));
+  assert.ok(patch.includes('bach_dien'));
+  assert.ok(patch.includes('translateY(-14%) scale(.90)'));
+  assert.ok(patch.includes('delete current.dataset.irvMotionHero'));
+});
