@@ -75,7 +75,10 @@ const css = [
   '#integratedResultV6.irv-authored-motion.irv-defeat .irv-hero.fall.irv-generic-fall{animation:hvResultGenericFall .76s cubic-bezier(.22,.72,.24,1) forwards!important;transform-origin:50% 84%}',
   '@keyframes hvResultRunIn{0%{transform:translateX(-118%) translateY(1.5%)}38%{transform:translateX(-68%) translateY(-2%)}74%{transform:translateX(-22%) translateY(.6%)}100%{transform:translateX(0) translateY(0)}}',
   '@keyframes hvResultGenericFall{0%{transform:translateY(0) rotate(0deg) scale(1)}28%{transform:translateY(-3%) rotate(-16deg) scale(.98)}72%{transform:translateY(2%) rotate(-70deg) scale(.86)}100%{transform:translateY(3%) rotate(-82deg) scale(.80)}}',
+  '@keyframes hvResultGenericFallDesktop{0%{transform:translateY(0) rotate(0deg) scale(.94)}28%{transform:translateY(-4%) rotate(-16deg) scale(.90)}72%{transform:translateY(-4%) rotate(-70deg) scale(.72)}100%{transform:translateY(-4%) rotate(-82deg) scale(.66)}}',
+  '@media (min-width:700px){#integratedResultV6.irv-authored-motion.irv-defeat .irv-hero.fall.irv-generic-fall{animation:hvResultGenericFallDesktop .76s cubic-bezier(.22,.72,.24,1) forwards!important}}',
   '@media (prefers-reduced-motion:reduce){#integratedResultV6.irv-authored-motion.irv-victory .irv-hero.run{animation:none!important;transform:none!important;opacity:0!important}#integratedResultV6.irv-authored-motion.irv-victory .irv-hero.idle{opacity:1!important}#integratedResultV6.irv-authored-motion.irv-defeat .irv-hero.fall.irv-generic-fall{animation:none!important;transform:translateY(3%) rotate(-82deg) scale(.80)!important}}',
+  '@media (min-width:700px) and (prefers-reduced-motion:reduce){#integratedResultV6.irv-authored-motion.irv-defeat .irv-hero.fall.irv-generic-fall{transform:translateY(-4%) rotate(-82deg) scale(.66)!important}}',
   '</style>'
 ].join('\n');
 if (!battle.includes('</head>')) throw new Error('Result motion: head boundary missing');
