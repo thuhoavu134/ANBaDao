@@ -5800,11 +5800,12 @@ renderCampaign = function(){
             P.campaignStages = P.campaignStages || {};
             P.campaignStages[idx] = stageIndex + 1;
             persist();
-            navTo("campaign");
-            toast("Đã qua nhiệm vụ. Mở Chinh chiến để khiêu chiến ải tiếp.");
+            if (typeof refreshResbar === "function") refreshResbar();
+            toast(`Đã qua nhiệm vụ ${stageIndex+1}/${sequence.length} · đang tới nhiệm vụ kế tiếp.`);
+            setTimeout(() => startChapter(idx, { continuing: true }), 360);
           } else if (Number.isInteger(idx) && typeof endChapter === "function") {
             delete P.campaignStages[idx]; persist();
-            endChapter({ referenceLoop: true, autoContinue: false });
+            endChapter({ referenceLoop: true, autoContinue: true });
           } else navTo("campaign");
         };
       }
