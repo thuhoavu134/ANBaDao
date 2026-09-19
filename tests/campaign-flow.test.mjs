@@ -28,3 +28,14 @@ test('loss stops the chain and exposes recovery routes', () => {
   assert.match(html, /Đổi đội hình/);
   assert.match(html, /Tăng lực chiến/);
 });
+
+
+test('top-level mobile battle return preserves the continuous campaign loop', () => {
+  const start = html.indexOf('(function consumeBattleReturn()');
+  const end = html.indexOf('})();\n})();', start);
+  assert.ok(start >= 0 && end > start, 'battle-return bridge must exist');
+  const bridge = html.slice(start, end);
+  assert.match(bridge, /setTimeout\(\(\) => startChapter\(idx, \{ continuing: true \}\), 360\)/);
+  assert.match(bridge, /endChapter\(\{ referenceLoop: true, autoContinue: true \}\)/);
+  assert.doesNotMatch(bridge, /Mở Chinh chiến để khiêu chiến ải tiếp/);
+});
