@@ -34,11 +34,12 @@ const xy = unit => ({ x: unit.x, y: unit.y });
 const home = unit => ({ x: unit.baseX, y: unit.baseY });
 
 // These test presentation policy, not art, combat damage or browser rendering.
-test('one ranged hero has independent basic, skill and ultimate positioning', () => {
+test('one ranged hero has independent target-driven basic, skill and ultimate positioning', () => {
   const f = fixture();
   f.actor.weapon = 'staff';
   assert.equal(f.movement.plan(f.actor, 'basic', f.target).mode, 'target');
-  assert.equal(f.movement.plan(f.actor, 'skill', f.target).mode, 'formation');
+  assert.equal(f.movement.plan(f.actor, 'skill', f.target).mode, 'target-team');
+  assert.equal(f.movement.plan(f.actor, 'ultimate', f.target).mode, 'target-team');
   assert.notDeepEqual(f.movement.plan(f.actor, 'skill', f.target).destination, f.movement.plan(f.actor, 'ultimate', f.target).destination);
   f.actor.weapon = 'sword';
   assert.equal(f.movement.plan(f.actor, 'basic', f.target).mode, 'target', 'weapon does not override the per-skill policy');
@@ -73,9 +74,9 @@ test('target-relative approach mirrors between teams with a nonzero standoff', (
   assert.ok(b.destination.x < b.home.x && b.destination.x > right.target.x);
 });
 
-test('formation casting uses stable formation center, not each actor home or live sprite positions', () => {
+test('target-team casting uses stable enemy anchors, not caster home or live sprite positions', () => {
   const f = fixture();
-  const expected = { x: 500, y: 440 }; // center 380,440 + 0.75 * spacing 160
+  const expected = { x: 948, y: 440 }; // enemy front 1140 - 1.20 * spacing 160
   assert.deepEqual(f.movement.plan(f.actor, 'skill', f.target).destination, expected);
   for (const unit of f.units.filter(unit => unit.team === 1)) {
     assert.deepEqual(f.movement.plan(unit, 'skill', f.target).destination, expected);
@@ -83,6 +84,9 @@ test('formation casting uses stable formation center, not each actor home or liv
     if (unit !== f.actor) unit.hp = 0;
   }
   assert.deepEqual(f.movement.plan(f.actor, 'skill', f.target).destination, expected);
+  const frontEnemies=f.units.filter(unit=>unit.team===2&&unit.baseX===1140);
+  frontEnemies.forEach(unit=>{unit.hp=0;});
+  assert.deepEqual(f.movement.plan(f.actor, 'skill', f.target).destination, { x: 1108, y: 440 }, 'dead front row releases the cast point toward the next living enemy line');
 });
 
 test('target or target death does not cause implicit retargeting', () => {
