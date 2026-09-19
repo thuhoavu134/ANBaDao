@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 
 const html = await readFile(new URL('../index.html', import.meta.url), 'utf8');
+const builtHtml = await readFile(new URL('../dist/index.html', import.meta.url), 'utf8');
 
 test('campaign exposes one current mission instead of a chapter selector', () => {
   const activeOverride = html.slice(html.indexOf('<script id="v3238-reference-campaign-render">'));
@@ -11,10 +12,10 @@ test('campaign exposes one current mission instead of a chapter selector', () =>
   assert.doesNotMatch(activeOverride, /DATA\.chapters\.forEach\(ch=>\{/);
 });
 
-test('winning an encounter automatically starts the next mission', () => {
-  assert.match(html, /P\.campaignStages\[idx\]=stageIndex\+1/);
-  assert.match(html, /setTimeout\(\(\)=>startChapter\(idx,\{continuing:true\}\),360\)/);
-  assert.match(html, /endChapter\(\{referenceLoop:true,autoContinue:true\}\)/);
+test('Victory choice gates campaign continuation after a win', () => {
+  assert.match(builtHtml, /P\.campaignStages\[idx\]=stageIndex\+1/);
+  assert.match(builtHtml, /if\(resultAction==="next"\) setTimeout\(\(\)=>startChapter\(idx,\{continuing:true\}\),360\); else navTo\("campaign"\);/);
+  assert.match(builtHtml, /endChapter\(\{referenceLoop:true,autoContinue:resultAction==="next"\}\)/);
 });
 
 test('campaign retains independent battles and the 15-round rule', () => {
@@ -30,12 +31,13 @@ test('loss stops the chain and exposes recovery routes', () => {
 });
 
 
-test('top-level mobile battle return preserves the continuous campaign loop', () => {
-  const start = html.indexOf('(function consumeBattleReturn()');
-  const end = html.indexOf('})();\n})();', start);
+test('top-level mobile battle return follows Xác nhận versus Ải sau', () => {
+  const start = builtHtml.indexOf('(function consumeBattleReturn()');
+  const end = builtHtml.indexOf('})();\n})();', start);
   assert.ok(start >= 0 && end > start, 'battle-return bridge must exist');
-  const bridge = html.slice(start, end);
-  assert.match(bridge, /setTimeout\(\(\) => startChapter\(idx, \{ continuing: true \}\), 360\)/);
-  assert.match(bridge, /endChapter\(\{ referenceLoop: true, autoContinue: true \}\)/);
-  assert.doesNotMatch(bridge, /Mở Chinh chiến để khiêu chiến ải tiếp/);
+  const bridge = builtHtml.slice(start, end);
+  assert.match(bridge, /if \(payload\.resultAction === "next"\) setTimeout\(\(\) => startChapter\(idx, \{ continuing: true \}\), 360\);/);
+  assert.match(bridge, /else navTo\("campaign"\);/);
+  assert.match(bridge, /endChapter\(\{ referenceLoop: true, autoContinue: payload\.resultAction === "next" \}\)/);
+  assert.doesNotMatch(bridge, /đang tới nhiệm vụ kế tiếp/);
 });
