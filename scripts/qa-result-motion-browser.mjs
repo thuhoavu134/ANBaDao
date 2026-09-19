@@ -74,7 +74,7 @@ export async function run() {
 
           await page.evaluate('window.__hideIntegratedResultV6?.()');
           await page.evaluate('window.__showIntegratedResultV6(true,' + encoded + ')');
-          await page.wait(`(()=>{const q=__HV_RESULT_MOTION_QA.state(),c=document.querySelector("#integratedResultV6 .irv-hero.run");if(q.hero!==${JSON.stringify(expectedHero)}||q.generic||q.phase!=="run"||q.runFrames<8||!c)return false;const r=c.getBoundingClientRect();return r.right>0&&r.left<innerWidth&&r.bottom>0&&r.top<innerHeight;})()`, 12000);
+          await page.wait(`(()=>{const q=__HV_RESULT_MOTION_QA.state(),c=document.querySelector("#integratedResultV6 .irv-hero.run"),root=document.querySelector("#integratedResultV6 .irv-viewport");if(q.hero!==${JSON.stringify(expectedHero)}||q.generic||q.phase!=="run"||q.runFrames<8||!c||!root)return false;const r=c.getBoundingClientRect(),rr=root.getBoundingClientRect(),overlap=Math.max(0,Math.min(r.right,rr.right)-Math.max(r.left,rr.left))/Math.max(1,r.width);return overlap>=.65&&r.bottom>rr.top&&r.top<rr.bottom;})()`, 12000);
           item.victoryRun = await page.evaluate('__HV_RESULT_MOTION_QA.state()');
           item.runRect = await page.evaluate(`(()=>{const c=document.querySelector("#integratedResultV6 .irv-hero.run"),r=c.getBoundingClientRect();return {left:r.left,right:r.right,top:r.top,bottom:r.bottom,opacity:getComputedStyle(c).opacity,viewport:[innerWidth,innerHeight]};})()`);
           await page.screenshot(resolve(out, name + '-' + caseName + '-victory-run.png'));
@@ -97,6 +97,7 @@ export async function run() {
           await sleep(550);
           const authoredHeldB = await page.evaluate('__HV_RESULT_MOTION_QA.state()');
           item.defeatHold = { first:authoredHeldA, after550ms:authoredHeldB };
+          item.defeatLayout = await page.evaluate(`(()=>{const hero=document.querySelector("#integratedResultV6 .irv-hero.fall"),copy=document.querySelector("#integratedResultV6 .irv-result");if(!hero||!copy)return null;const h=hero.getBoundingClientRect(),r=copy.getBoundingClientRect();return {heroBottom:h.bottom,resultTop:r.top,gap:r.top-h.bottom,heroTop:h.top};})()`);
           await page.screenshot(resolve(out, name + '-' + caseName + '-defeat-hold.png'));
           item.screenshots.push(name + '-' + caseName + '-defeat-hold.png');
           await page.evaluate('window.__hideIntegratedResultV6?.()');
@@ -110,7 +111,8 @@ export async function run() {
             authoredHeldA.fallCycles === 1 &&
             authoredHeldA.lastFallFrame === authoredHeldA.expectedFallLast &&
             authoredHeldB.fallFrames === authoredHeldA.fallFrames &&
-            authoredHeldB.lastFallFrame === authoredHeldA.lastFallFrame;
+            authoredHeldB.lastFallFrame === authoredHeldA.lastFallFrame &&
+            item.defeatLayout?.gap >= 4;
         }
 
         run.exceptions = page.events.filter(event => event.method === 'Runtime.exceptionThrown');
