@@ -3302,6 +3302,10 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
   // v3.17.3: Liên kích means a second COMPLETE attack, not a two-hit combo.
   // Strike 1 finishes and Ông Phở returns fully to his original slot; only then does
   // strike 2 start again from idle/origin and travel through the authored attack timeline.
+  const BATTLE_LEGACY_LAZY_IMAGES=new Map();
+  function battleLegacyImage(src){let image=BATTLE_LEGACY_LAZY_IMAGES.get(src);if(image)return image;image=new Image();image.decoding='async';image.src=src;BATTLE_LEGACY_LAZY_IMAGES.set(src,image);return image;}
+  window.__HV_BATTLE_LEGACY_CLEAR=()=>{for(const image of BATTLE_LEGACY_LAZY_IMAGES.values()){try{image.onload=null;image.onerror=null;image.removeAttribute('src')}catch(_){}}BATTLE_LEGACY_LAZY_IMAGES.clear()};
+  window.addEventListener('pagehide',()=>window.__HV_BATTLE_LEGACY_CLEAR?.(),{once:true});
   const ONG_PHO_IMPACT_FRAME = 42;
   const ONG_PHO_BASIC_CHAIN_SETTLE_MS = 0;
   const ONG_PHO_RETURN_FRAME = 57;
@@ -3310,24 +3314,12 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
   // v2.90: preload one persistent sprite-sheet instance. Never replace it with a fresh,
   // temporarily-unloaded Image at attack start; doing so exposed the generic hero fallback
   // for 1-2 frames and visually inserted the previous/procedural character into this slot.
-  const ONG_PHO_IDLE_IMAGE = new Image();
-  ONG_PHO_IDLE_IMAGE.decoding = "async";
-  ONG_PHO_IDLE_IMAGE.src = ONG_PHO_IDLE_SOURCE;
-  const ONG_PHO_SKILL1_IMAGE = new Image();
-  ONG_PHO_SKILL1_IMAGE.decoding = "async";
-  ONG_PHO_SKILL1_IMAGE.src = ONG_PHO_SKILL1_SOURCE;
-  const ONG_PHO_ULTIMATE_IMAGE = new Image();
-  ONG_PHO_ULTIMATE_IMAGE.decoding = "async";
-  ONG_PHO_ULTIMATE_IMAGE.src = ONG_PHO_ULTIMATE_SOURCE;
-  const ONG_PHO_ATTACK_IMAGE = new Image();
-  ONG_PHO_ATTACK_IMAGE.decoding = "async";
-  ONG_PHO_ATTACK_IMAGE.src = ONG_PHO_ATTACK_SOURCE;
-  const ONG_PHO_HIT_IMAGE = new Image();
-  ONG_PHO_HIT_IMAGE.decoding = "async";
-  ONG_PHO_HIT_IMAGE.src = ONG_PHO_HIT_SOURCE;
-  const ONG_PHO_FALL_IMAGE = new Image();
-  ONG_PHO_FALL_IMAGE.decoding = "async";
-  ONG_PHO_FALL_IMAGE.src = ONG_PHO_FALL_SOURCE;
+  const ONG_PHO_IDLE_IMAGE = () => battleLegacyImage(ONG_PHO_IDLE_SOURCE);
+  const ONG_PHO_SKILL1_IMAGE = () => battleLegacyImage(ONG_PHO_SKILL1_SOURCE);
+  const ONG_PHO_ULTIMATE_IMAGE = () => battleLegacyImage(ONG_PHO_ULTIMATE_SOURCE);
+  const ONG_PHO_ATTACK_IMAGE = () => battleLegacyImage(ONG_PHO_ATTACK_SOURCE);
+  const ONG_PHO_HIT_IMAGE = () => battleLegacyImage(ONG_PHO_HIT_SOURCE);
+  const ONG_PHO_FALL_IMAGE = () => battleLegacyImage(ONG_PHO_FALL_SOURCE);
 
   // v3.18.2 — Thầy Mo Idle Master QA. Test-only visual binding; not in production roster yet.
   const THAY_MO_IDLE_QA = new URLSearchParams(location.search).get("qaThayMoIdle") === "1";
@@ -3344,9 +3336,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
   const THAY_MO_IDLE_STRIDE_H = 270;
   const THAY_MO_IDLE_DURATIONS = [60, 70, 60, 60, 60, 70, 60, 60, 60, 70, 60, 60, 60, 70, 60, 60, 60, 70, 60, 60, 60, 70, 60, 60, 60, 70, 60, 60, 60, 70, 60, 60, 60, 70, 60, 60, 60, 70, 60, 60, 60, 70, 60, 60, 60, 70, 60, 60, 60, 70, 60, 60, 60, 70, 60, 60, 60, 70, 60, 60, 60, 70, 60, 60, 60, 70, 60, 60, 60, 70, 60, 60, 60, 70, 60, 60, 60, 70, 60, 60, 60, 70, 60, 60, 60, 70, 60, 60, 60, 70, 60, 60, 60, 70, 60, 60];
   const THAY_MO_IDLE_TOTAL_MS = 6000;
-  const THAY_MO_IDLE_IMAGE = new Image();
-  THAY_MO_IDLE_IMAGE.decoding = "async";
-  THAY_MO_IDLE_IMAGE.src = THAY_MO_IDLE_SOURCE;
+  const THAY_MO_IDLE_IMAGE = () => battleLegacyImage(THAY_MO_IDLE_SOURCE);
   function thayMoIdleFrameAt(timeMs){
     let t=((timeMs%THAY_MO_IDLE_TOTAL_MS)+THAY_MO_IDLE_TOTAL_MS)%THAY_MO_IDLE_TOTAL_MS;
     for(let i=0;i<THAY_MO_IDLE_DURATIONS.length;i++){
@@ -3360,7 +3350,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
   // v3.21.8 — authored Thầy Mo HIT reaction QA. HIT is contact, not dodge: no root translation.
   const THAY_MO_HIT_QA = new URLSearchParams(location.search).get("qaThayMoHit") === "1";
   const THAY_MO_HIT_SOURCE = "assets/characters/thay-mo/hit-v3218-atlas.png";
-  const THAY_MO_HIT_IMAGE = new Image(); THAY_MO_HIT_IMAGE.decoding="async"; THAY_MO_HIT_IMAGE.src=THAY_MO_HIT_SOURCE;
+  const THAY_MO_HIT_IMAGE = () => battleLegacyImage(THAY_MO_HIT_SOURCE);
   const THAY_MO_HIT_FRAMES=33, THAY_MO_HIT_COLS=6, THAY_MO_HIT_CELL_W=480, THAY_MO_HIT_CELL_H=270, THAY_MO_HIT_PAD=4, THAY_MO_HIT_STRIDE_W=488, THAY_MO_HIT_STRIDE_H=278;
   const THAY_MO_HIT_FRAME_MS=36, THAY_MO_HIT_MS=THAY_MO_HIT_FRAMES*THAY_MO_HIT_FRAME_MS, THAY_MO_HIT_IDLE_LEAD_MS=1600, THAY_MO_HIT_RECOVER_MS=1800, THAY_MO_HIT_TOTAL_MS=THAY_MO_HIT_IDLE_LEAD_MS+THAY_MO_HIT_MS+THAY_MO_HIT_RECOVER_MS;
   let thayMoHitQaEpoch=performance.now(), thayMoHitQaFixedTime=null;
@@ -3370,7 +3360,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
   const THAY_MO_BASIC_QA = new URLSearchParams(location.search).get("qaThayMoBasic") === "1";
   const THAY_MO_SKILL1_CAST_QA = new URLSearchParams(location.search).get("qaThayMoSkill1Cast") === "1";
   const THAY_MO_SKILL1_CAST_SOURCE = "assets/characters/thay-mo/skill1-cast-v3204-atlas.png";
-  const THAY_MO_SKILL1_CAST_IMAGE = new Image(); THAY_MO_SKILL1_CAST_IMAGE.decoding="async"; THAY_MO_SKILL1_CAST_IMAGE.src=THAY_MO_SKILL1_CAST_SOURCE;
+  const THAY_MO_SKILL1_CAST_IMAGE = () => battleLegacyImage(THAY_MO_SKILL1_CAST_SOURCE);
   const THAY_MO_SKILL1_CAST_FRAMES=56, THAY_MO_SKILL1_CAST_COLS=11, THAY_MO_SKILL1_CAST_CELL_W=340, THAY_MO_SKILL1_CAST_CELL_H=270, THAY_MO_SKILL1_CAST_PAD=4, THAY_MO_SKILL1_CAST_STRIDE_W=348, THAY_MO_SKILL1_CAST_STRIDE_H=278;
   const THAY_MO_SKILL1_CAST_FRAME_MS=17, THAY_MO_SKILL1_CAST_TOTAL_MS=952, THAY_MO_SKILL1_RELEASE_FRAME=30;
   let thayMoSkill1CastQaEpoch=performance.now();
@@ -3383,13 +3373,13 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
   const THAY_MO_ULTIMATE_CAST_QA = new URLSearchParams(location.search).get("qaThayMoUltimateCast") === "1" || THAY_MO_ULTIMATE_VFX_QA;
   const THAY_MO_ULTIMATE_SOURCE_SLOT = Math.max(0,Math.min(5,(Number(new URLSearchParams(location.search).get("qaThayMoSourceSlot"))||1)-1));
   const THAY_MO_ULTIMATE_CAST_SOURCE = "assets/characters/thay-mo/ultimate-cast-v3210-atlas.png";
-  const THAY_MO_ULTIMATE_CAST_IMAGE = new Image(); THAY_MO_ULTIMATE_CAST_IMAGE.decoding="async"; THAY_MO_ULTIMATE_CAST_IMAGE.src=THAY_MO_ULTIMATE_CAST_SOURCE;
+  const THAY_MO_ULTIMATE_CAST_IMAGE = () => battleLegacyImage(THAY_MO_ULTIMATE_CAST_SOURCE);
   const THAY_MO_ULTIMATE_CAST_FRAMES=64, THAY_MO_ULTIMATE_CAST_COLS=8, THAY_MO_ULTIMATE_CAST_CELL_W=370, THAY_MO_ULTIMATE_CAST_CELL_H=270, THAY_MO_ULTIMATE_CAST_PAD=4, THAY_MO_ULTIMATE_CAST_STRIDE_W=378, THAY_MO_ULTIMATE_CAST_STRIDE_H=278;
   const THAY_MO_ULTIMATE_CAST_FRAME_MS=22, THAY_MO_ULTIMATE_CAST_MS=1408, THAY_MO_ULTIMATE_RELEASE_FRAME=44;
   const THAY_MO_ULTIMATE_IDLE_MS=450, THAY_MO_ULTIMATE_RECOVER_MS=550;
   const THAY_MO_ULTIMATE_RELEASE_AT_MS=THAY_MO_ULTIMATE_IDLE_MS+THAY_MO_ULTIMATE_RELEASE_FRAME*THAY_MO_ULTIMATE_CAST_FRAME_MS;
   const THAY_MO_ULTIMATE_VFX_SOURCE="assets/characters/thay-mo/ultimate-vfx-v3212-atlas.png";
-  const THAY_MO_ULTIMATE_VFX_IMAGE=new Image(); THAY_MO_ULTIMATE_VFX_IMAGE.decoding="async"; THAY_MO_ULTIMATE_VFX_IMAGE.src=THAY_MO_ULTIMATE_VFX_SOURCE;
+  const THAY_MO_ULTIMATE_VFX_IMAGE = () => battleLegacyImage(THAY_MO_ULTIMATE_VFX_SOURCE);
   const THAY_MO_ULTIMATE_VFX_FRAMES=64, THAY_MO_ULTIMATE_VFX_COLS=8, THAY_MO_ULTIMATE_VFX_CELL_W=480, THAY_MO_ULTIMATE_VFX_CELL_H=270, THAY_MO_ULTIMATE_VFX_PAD=4, THAY_MO_ULTIMATE_VFX_STRIDE_W=488, THAY_MO_ULTIMATE_VFX_STRIDE_H=278;
   const THAY_MO_ULTIMATE_VFX_FRAME_MS=24, THAY_MO_ULTIMATE_VFX_MS=THAY_MO_ULTIMATE_VFX_FRAMES*THAY_MO_ULTIMATE_VFX_FRAME_MS, THAY_MO_ULTIMATE_MAIN_IMPACT_FRAME=40;
   const THAY_MO_ULTIMATE_VFX_END_MS=THAY_MO_ULTIMATE_RELEASE_AT_MS+THAY_MO_ULTIMATE_VFX_MS;
@@ -3487,7 +3477,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
   }
 
   function drawThayMoUltimateVfx(context,time){
-    if(!THAY_MO_ULTIMATE_VFX_QA||!THAY_MO_ULTIMATE_VFX_IMAGE.complete||THAY_MO_ULTIMATE_VFX_IMAGE.naturalWidth<2)return;
+    if(!THAY_MO_ULTIMATE_VFX_QA||!THAY_MO_ULTIMATE_VFX_IMAGE().complete||THAY_MO_ULTIMATE_VFX_IMAGE().naturalWidth<2)return;
     const e=thayMoUltimateCastElapsed(time), t=e-THAY_MO_ULTIMATE_RELEASE_AT_MS; if(t<0||t>=THAY_MO_ULTIMATE_VFX_MS)return;
     const frame=Math.min(THAY_MO_ULTIMATE_VFX_FRAMES-1,Math.floor(t/THAY_MO_ULTIMATE_VFX_FRAME_MS));
     const sx=(frame%THAY_MO_ULTIMATE_VFX_COLS)*THAY_MO_ULTIMATE_VFX_STRIDE_W+THAY_MO_ULTIMATE_VFX_PAD, sy=Math.floor(frame/THAY_MO_ULTIMATE_VFX_COLS)*THAY_MO_ULTIMATE_VFX_STRIDE_H+THAY_MO_ULTIMATE_VFX_PAD;
@@ -3496,13 +3486,13 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     const drawW=Math.min(790,Math.max(710,bounds.w+padX));
     const drawH=Math.min(430,Math.max(390,bounds.h+padY));
     context.save(); context.translate(bounds.cx,bounds.cy); context.globalCompositeOperation="screen"; context.globalAlpha=.96;
-    context.drawImage(THAY_MO_ULTIMATE_VFX_IMAGE,sx,sy,THAY_MO_ULTIMATE_VFX_CELL_W,THAY_MO_ULTIMATE_VFX_CELL_H,-drawW*.5,-drawH*.5,drawW,drawH); context.restore();
+    context.drawImage(THAY_MO_ULTIMATE_VFX_IMAGE(),sx,sy,THAY_MO_ULTIMATE_VFX_CELL_W,THAY_MO_ULTIMATE_VFX_CELL_H,-drawW*.5,-drawH*.5,drawW,drawH); context.restore();
   }
   // v3.20.5 — Skill 1 Cast + Wave QA. Wave is a separate target-aware travel layer spawned at the locked release frame.
   const THAY_MO_SKILL1_WAVE_QA = new URLSearchParams(location.search).get("qaThayMoSkill1Wave") === "1";
   const THAY_MO_SKILL1_WAVE_TARGET_SLOT = Math.max(0,Math.min(5,(Number(new URLSearchParams(location.search).get("qaThayMoTargetSlot"))||3)-1));
   const THAY_MO_SKILL1_WAVE_SOURCE = "assets/characters/thay-mo/skill1-wave-v3205-atlas.png";
-  const THAY_MO_SKILL1_WAVE_IMAGE = new Image(); THAY_MO_SKILL1_WAVE_IMAGE.decoding="async"; THAY_MO_SKILL1_WAVE_IMAGE.src=THAY_MO_SKILL1_WAVE_SOURCE;
+  const THAY_MO_SKILL1_WAVE_IMAGE = () => battleLegacyImage(THAY_MO_SKILL1_WAVE_SOURCE);
   const THAY_MO_SKILL1_WAVE_FRAMES=26, THAY_MO_SKILL1_WAVE_COLS=7, THAY_MO_SKILL1_WAVE_CELL_W=380, THAY_MO_SKILL1_WAVE_CELL_H=256, THAY_MO_SKILL1_WAVE_PAD=4, THAY_MO_SKILL1_WAVE_STRIDE_W=388, THAY_MO_SKILL1_WAVE_STRIDE_H=264;
   const THAY_MO_SKILL1_WAVE_MS=430, THAY_MO_SKILL1_COMBO_IDLE_MS=500, THAY_MO_SKILL1_COMBO_RECOVER_MS=620;
   const THAY_MO_SKILL1_COMBO_CAST_START_MS=THAY_MO_SKILL1_COMBO_IDLE_MS;
@@ -3518,7 +3508,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
   function drawThayMoSkill1WaveFx(context,time){
     if(!(THAY_MO_SKILL1_WAVE_QA||THAY_MO_SKILL1_FULL_QA))return; const target=thayMoSkill1WaveQaTarget(); const actor=units.find(u=>u.team===TEAM_PLAYER&&u.id==="van-chi"); if(!target||!actor)return;
     const e=THAY_MO_SKILL1_FULL_QA?thayMoSkill1FullElapsed(time):thayMoSkill1WaveElapsed(time), waveT=e-THAY_MO_SKILL1_COMBO_RELEASE_AT_MS;
-    if(waveT<0||waveT>=THAY_MO_SKILL1_WAVE_MS||!THAY_MO_SKILL1_WAVE_IMAGE.complete||THAY_MO_SKILL1_WAVE_IMAGE.naturalWidth<2)return;
+    if(waveT<0||waveT>=THAY_MO_SKILL1_WAVE_MS||!THAY_MO_SKILL1_WAVE_IMAGE().complete||THAY_MO_SKILL1_WAVE_IMAGE().naturalWidth<2)return;
     const p=Math.max(0,Math.min(1,waveT/THAY_MO_SKILL1_WAVE_MS)), travel=p;
     const fromX=actor.x+64, fromY=actor.y-86;
     const frame=Math.min(THAY_MO_SKILL1_WAVE_FRAMES-1,Math.floor(p*THAY_MO_SKILL1_WAVE_FRAMES));
@@ -3527,7 +3517,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
       const toX=rowTarget.x-16, toY=rowTarget.y-72, dx=toX-fromX, dy=toY-fromY, angle=Math.atan2(dy,dx);
       const x=fromX+dx*travel, y=fromY+dy*travel;
       const drawW=rowTarget===target?300:270, drawH=THAY_MO_SKILL1_WAVE_CELL_H/THAY_MO_SKILL1_WAVE_CELL_W*drawW;
-      context.save(); context.translate(x,y); context.rotate(angle); context.globalCompositeOperation="source-over"; context.drawImage(THAY_MO_SKILL1_WAVE_IMAGE,sx,sy,THAY_MO_SKILL1_WAVE_CELL_W,THAY_MO_SKILL1_WAVE_CELL_H,-drawW*.28,-drawH*.5,drawW,drawH); context.restore();
+      context.save(); context.translate(x,y); context.rotate(angle); context.globalCompositeOperation="source-over"; context.drawImage(THAY_MO_SKILL1_WAVE_IMAGE(),sx,sy,THAY_MO_SKILL1_WAVE_CELL_W,THAY_MO_SKILL1_WAVE_CELL_H,-drawW*.28,-drawH*.5,drawW,drawH); context.restore();
     }
   }
   // v3.20.7 — Skill 1 motion sync fix. Remove pre-impact micro-pulse and tighten one-shot contact timing.
@@ -3536,7 +3526,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
   const THAY_MO_SKILL1_SOURCE_SLOT = Math.max(0,Math.min(5,(Number(new URLSearchParams(location.search).get("qaThayMoSourceSlot"))||1)-1));
   const THAY_MO_SKILL1_IMPACT_TARGET_SLOT = Math.max(0,Math.min(5,(Number(new URLSearchParams(location.search).get("qaThayMoTargetSlot"))||3)-1));
   const THAY_MO_SKILL1_IMPACT_SOURCE = "assets/characters/thay-mo/skill1-impact-v3206-atlas.png";
-  const THAY_MO_SKILL1_IMPACT_IMAGE = new Image(); THAY_MO_SKILL1_IMPACT_IMAGE.decoding="async"; THAY_MO_SKILL1_IMPACT_IMAGE.src=THAY_MO_SKILL1_IMPACT_SOURCE;
+  const THAY_MO_SKILL1_IMPACT_IMAGE = () => battleLegacyImage(THAY_MO_SKILL1_IMPACT_SOURCE);
   const THAY_MO_SKILL1_IMPACT_FRAMES=25, THAY_MO_SKILL1_IMPACT_COLS=5, THAY_MO_SKILL1_IMPACT_CELL_W=348, THAY_MO_SKILL1_IMPACT_CELL_H=290, THAY_MO_SKILL1_IMPACT_PAD=4, THAY_MO_SKILL1_IMPACT_STRIDE_W=356, THAY_MO_SKILL1_IMPACT_STRIDE_H=298;
   const THAY_MO_SKILL1_IMPACT_START_FRAME=2, THAY_MO_SKILL1_IMPACT_FRAME_MS=20, THAY_MO_SKILL1_IMPACT_PLAY_FRAMES=THAY_MO_SKILL1_IMPACT_FRAMES-THAY_MO_SKILL1_IMPACT_START_FRAME, THAY_MO_SKILL1_IMPACT_MS=THAY_MO_SKILL1_IMPACT_PLAY_FRAMES*THAY_MO_SKILL1_IMPACT_FRAME_MS, THAY_MO_SKILL1_MAIN_IMPACT_FRAME=4;
   const THAY_MO_SKILL1_IMPACT_ONLY_IDLE_MS=450, THAY_MO_SKILL1_IMPACT_ONLY_RECOVER_MS=650;
@@ -3590,11 +3580,11 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
   function thayMoSkill1ImpactOnlyElapsed(time){return ((time-thayMoSkill1ImpactQaEpoch)%THAY_MO_SKILL1_IMPACT_ONLY_TOTAL_MS+THAY_MO_SKILL1_IMPACT_ONLY_TOTAL_MS)%THAY_MO_SKILL1_IMPACT_ONLY_TOTAL_MS;}
   function thayMoSkill1FullElapsed(time){if(Number.isFinite(thayMoSkill1FullQaFixedTime))return Math.max(0,Math.min(THAY_MO_SKILL1_FULL_TOTAL_MS-1,thayMoSkill1FullQaFixedTime));return ((time-thayMoSkill1FullQaEpoch)%THAY_MO_SKILL1_FULL_TOTAL_MS+THAY_MO_SKILL1_FULL_TOTAL_MS)%THAY_MO_SKILL1_FULL_TOTAL_MS;}
   function drawThayMoSkill1ImpactFrame(context,target,frame,scale=1){
-    if(!target||!THAY_MO_SKILL1_IMPACT_IMAGE.complete||THAY_MO_SKILL1_IMPACT_IMAGE.naturalWidth<2)return;
+    if(!target||!THAY_MO_SKILL1_IMPACT_IMAGE().complete||THAY_MO_SKILL1_IMPACT_IMAGE().naturalWidth<2)return;
     frame=Math.max(0,Math.min(THAY_MO_SKILL1_IMPACT_FRAMES-1,frame));
     const sx=(frame%THAY_MO_SKILL1_IMPACT_COLS)*THAY_MO_SKILL1_IMPACT_STRIDE_W+THAY_MO_SKILL1_IMPACT_PAD, sy=Math.floor(frame/THAY_MO_SKILL1_IMPACT_COLS)*THAY_MO_SKILL1_IMPACT_STRIDE_H+THAY_MO_SKILL1_IMPACT_PAD;
     const drawW=235*scale, drawH=THAY_MO_SKILL1_IMPACT_CELL_H/THAY_MO_SKILL1_IMPACT_CELL_W*drawW;
-    const x=target.x-16,y=target.y-72; context.save(); context.translate(x,y); context.globalCompositeOperation="screen"; context.drawImage(THAY_MO_SKILL1_IMPACT_IMAGE,sx,sy,THAY_MO_SKILL1_IMPACT_CELL_W,THAY_MO_SKILL1_IMPACT_CELL_H,-drawW*.5,-drawH*.5,drawW,drawH); context.restore();
+    const x=target.x-16,y=target.y-72; context.save(); context.translate(x,y); context.globalCompositeOperation="screen"; context.drawImage(THAY_MO_SKILL1_IMPACT_IMAGE(),sx,sy,THAY_MO_SKILL1_IMPACT_CELL_W,THAY_MO_SKILL1_IMPACT_CELL_H,-drawW*.5,-drawH*.5,drawW,drawH); context.restore();
   }
   function drawThayMoSkill1ImpactFx(context,time){
     const target=thayMoSkill1ImpactQaTarget(); if(!target)return;
@@ -3604,17 +3594,17 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
   // v3.19.4 — Basic Cast isolated QA. Character animation only; projectile/impact stay separate.
   const THAY_MO_BASIC_CAST_ONLY_QA = new URLSearchParams(location.search).get("qaThayMoBasicCast") === "1";
   const THAY_MO_BASIC_CAST_SOURCE = "assets/characters/thay-mo/basic-cast-v3198-atlas.png";
-  const THAY_MO_BASIC_CAST_IMAGE = new Image(); THAY_MO_BASIC_CAST_IMAGE.decoding="async"; THAY_MO_BASIC_CAST_IMAGE.src=THAY_MO_BASIC_CAST_SOURCE;
+  const THAY_MO_BASIC_CAST_IMAGE = () => battleLegacyImage(THAY_MO_BASIC_CAST_SOURCE);
   const THAY_MO_BASIC_CAST_FRAMES=96, THAY_MO_BASIC_CAST_COLS=12, THAY_MO_BASIC_CAST_CELL_W=307, THAY_MO_BASIC_CAST_CELL_H=270, THAY_MO_BASIC_CAST_PAD=3, THAY_MO_BASIC_CAST_STRIDE_W=313, THAY_MO_BASIC_CAST_STRIDE_H=276;
   const THAY_MO_BASIC_CAST_DURATIONS=[60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60];
   const THAY_MO_BASIC_CAST_TOTAL_MS=6000;
   let thayMoBasicCastQaEpoch=performance.now();
   function thayMoBasicCastFrameAt(timeMs){let t=((timeMs%THAY_MO_BASIC_CAST_TOTAL_MS)+THAY_MO_BASIC_CAST_TOTAL_MS)%THAY_MO_BASIC_CAST_TOTAL_MS;for(let i=0;i<THAY_MO_BASIC_CAST_DURATIONS.length;i++){const d=THAY_MO_BASIC_CAST_DURATIONS[i];if(t<d)return i;t-=d;}return 0;}
   function isThayMoBasicCastOnlyQa(unit){return THAY_MO_BASIC_CAST_ONLY_QA&&unit&&unit.team===TEAM_PLAYER&&unit.id==="van-chi";}
-  const THAY_MO_CAST_IMAGE = new Image(); THAY_MO_CAST_IMAGE.src = "assets/characters/thay-mo/cast-v3184.webp";
-  const THAY_MO_PROJECTILE_IMAGE = new Image(); THAY_MO_PROJECTILE_IMAGE.src = "assets/characters/thay-mo/projectile-v3184.webp";
-  const THAY_MO_IMPACT_IMAGE = new Image(); THAY_MO_IMPACT_IMAGE.src = "assets/characters/thay-mo/impact-v3184.webp";
-  const THAY_MO_IDLE_GIF_IMAGE = THAY_MO_IDLE_IMAGE;
+  const THAY_MO_CAST_IMAGE = () => battleLegacyImage("assets/characters/thay-mo/cast-v3184.webp");
+  const THAY_MO_PROJECTILE_IMAGE = () => battleLegacyImage("assets/characters/thay-mo/projectile-v3184.webp");
+  const THAY_MO_IMPACT_IMAGE = () => battleLegacyImage("assets/characters/thay-mo/impact-v3184.webp");
+  const THAY_MO_IDLE_GIF_IMAGE = THAY_MO_IDLE_IMAGE();
   const THAY_MO_CAST_MS = 1728, THAY_MO_RELEASE_MS = 950, THAY_MO_PROJECTILE_MS = 520, THAY_MO_IMPACT_MS = 620;
   let thayMoRangedFx = null;
   function isThayMoBasicQa(unit){ return THAY_MO_BASIC_QA && unit && unit.team === TEAM_PLAYER && unit.id === "van-chi"; }
@@ -3625,9 +3615,9 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     if(fx.kind==="projectile"){
       const t=Math.max(0,Math.min(1,elapsed/THAY_MO_PROJECTILE_MS));
       const x=fx.fromX+(fx.toX-fx.fromX)*t, y=fx.fromY+(fx.toY-fx.fromY)*t;
-      if(THAY_MO_PROJECTILE_IMAGE.complete){context.translate(x,y);context.drawImage(THAY_MO_PROJECTILE_IMAGE,-95,-54,190,107);}
+      if(THAY_MO_PROJECTILE_IMAGE().complete){context.translate(x,y);context.drawImage(THAY_MO_PROJECTILE_IMAGE(),-95,-54,190,107);}
     }else if(fx.kind==="impact"){
-      if(THAY_MO_IMPACT_IMAGE.complete){context.translate(fx.toX,fx.toY);context.drawImage(THAY_MO_IMPACT_IMAGE,-130,-73,260,146);}
+      if(THAY_MO_IMPACT_IMAGE().complete){context.translate(fx.toX,fx.toY);context.drawImage(THAY_MO_IMPACT_IMAGE(),-130,-73,260,146);}
     }
     context.restore();
   }
@@ -3644,7 +3634,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
   const THAY_MO_FULL_TOTAL_MS=THAY_MO_FULL_IMPACT_END_MS+THAY_MO_FULL_RECOVER_MS;
   let thayMoFullBasicQaEpoch=performance.now();
   const THAY_MO_PROJECTILE_QA_SOURCE="assets/characters/thay-mo/projectile-v3201-atlas.png";
-  const THAY_MO_PROJECTILE_QA_IMAGE=new Image(); THAY_MO_PROJECTILE_QA_IMAGE.decoding="async"; THAY_MO_PROJECTILE_QA_IMAGE.src=THAY_MO_PROJECTILE_QA_SOURCE;
+  const THAY_MO_PROJECTILE_QA_IMAGE = () => battleLegacyImage(THAY_MO_PROJECTILE_QA_SOURCE);
   const THAY_MO_PROJECTILE_QA_FRAMES=24, THAY_MO_PROJECTILE_QA_COLS=6, THAY_MO_PROJECTILE_QA_CELL_W=480, THAY_MO_PROJECTILE_QA_CELL_H=90, THAY_MO_PROJECTILE_QA_PAD=4, THAY_MO_PROJECTILE_QA_STRIDE_W=488, THAY_MO_PROJECTILE_QA_STRIDE_H=98;
   function thayMoFullBasicElapsed(time){return ((time-thayMoFullBasicQaEpoch)%THAY_MO_FULL_TOTAL_MS+THAY_MO_FULL_TOTAL_MS)%THAY_MO_FULL_TOTAL_MS;}
   function thayMoFullBasicPhase(time){
@@ -3667,14 +3657,14 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     const impactT=e-THAY_MO_FULL_IMPACT_AT_MS;
     const fromX=actor.x+58, fromY=actor.y-83, toX=target.x-10, toY=target.y-72;
     const dx=toX-fromX, dy=toY-fromY, angle=Math.atan2(dy,dx), distance=Math.hypot(dx,dy);
-    if(projectileT>=0&&projectileT<THAY_MO_FULL_PROJECTILE_MS&&THAY_MO_PROJECTILE_QA_IMAGE.complete&&THAY_MO_PROJECTILE_QA_IMAGE.naturalWidth>1){
+    if(projectileT>=0&&projectileT<THAY_MO_FULL_PROJECTILE_MS&&THAY_MO_PROJECTILE_QA_IMAGE().complete&&THAY_MO_PROJECTILE_QA_IMAGE().naturalWidth>1){
       const frame=Math.min(THAY_MO_PROJECTILE_QA_FRAMES-1,Math.floor(projectileT/THAY_MO_FULL_PROJECTILE_MS*THAY_MO_PROJECTILE_QA_FRAMES));
       const sx=(frame%THAY_MO_PROJECTILE_QA_COLS)*THAY_MO_PROJECTILE_QA_STRIDE_W+THAY_MO_PROJECTILE_QA_PAD; const sy=Math.floor(frame/THAY_MO_PROJECTILE_QA_COLS)*THAY_MO_PROJECTILE_QA_STRIDE_H+THAY_MO_PROJECTILE_QA_PAD;
       const drawW=Math.max(300,distance+95), drawH=THAY_MO_PROJECTILE_QA_CELL_H/THAY_MO_PROJECTILE_QA_CELL_W*drawW;
-      context.save(); context.translate(fromX-28*Math.cos(angle),fromY-28*Math.sin(angle)); context.rotate(angle); context.drawImage(THAY_MO_PROJECTILE_QA_IMAGE,sx,sy,THAY_MO_PROJECTILE_QA_CELL_W,THAY_MO_PROJECTILE_QA_CELL_H,0,-drawH*.5,drawW,drawH); context.restore();
-    } else if(impactT>=0&&impactT<THAY_MO_FULL_IMPACT_MS&&THAY_MO_IMPACT_QA_IMAGE.complete&&THAY_MO_IMPACT_QA_IMAGE.naturalWidth>1){
+      context.save(); context.translate(fromX-28*Math.cos(angle),fromY-28*Math.sin(angle)); context.rotate(angle); context.drawImage(THAY_MO_PROJECTILE_QA_IMAGE(),sx,sy,THAY_MO_PROJECTILE_QA_CELL_W,THAY_MO_PROJECTILE_QA_CELL_H,0,-drawH*.5,drawW,drawH); context.restore();
+    } else if(impactT>=0&&impactT<THAY_MO_FULL_IMPACT_MS&&THAY_MO_IMPACT_QA_IMAGE().complete&&THAY_MO_IMPACT_QA_IMAGE().naturalWidth>1){
       const t=impactT; const frame=thayMoImpactQaFrameAt(t); const sx=(frame%THAY_MO_IMPACT_QA_COLS)*THAY_MO_IMPACT_QA_STRIDE_W+THAY_MO_IMPACT_QA_PAD; const sy=Math.floor(frame/THAY_MO_IMPACT_QA_COLS)*THAY_MO_IMPACT_QA_STRIDE_H+THAY_MO_IMPACT_QA_PAD; const drawW=280, drawH=THAY_MO_IMPACT_QA_CELL_H/THAY_MO_IMPACT_QA_CELL_W*drawW;
-      context.save(); context.translate(toX+10,toY); context.drawImage(THAY_MO_IMPACT_QA_IMAGE,sx,sy,THAY_MO_IMPACT_QA_CELL_W,THAY_MO_IMPACT_QA_CELL_H,-drawW*.5,-drawH*.5,drawW,drawH);
+      context.save(); context.translate(toX+10,toY); context.drawImage(THAY_MO_IMPACT_QA_IMAGE(),sx,sy,THAY_MO_IMPACT_QA_CELL_W,THAY_MO_IMPACT_QA_CELL_H,-drawW*.5,-drawH*.5,drawW,drawH);
       if(t<180){context.globalAlpha=1-t/180;context.fillStyle="rgba(255,238,180,.42)";context.beginPath();context.arc(0,0,86,0,Math.PI*2);context.fill();}
       if(t>70&&t<720){const p=(t-70)/650;context.globalAlpha=Math.max(0,1-p);context.font="700 24px system-ui";context.textAlign="center";context.fillStyle="#ffd3a1";context.strokeStyle="rgba(40,9,0,.85)";context.lineWidth=4;context.strokeText("-428",0,-46-p*34);context.fillText("-428",0,-46-p*34);}
       context.restore();
@@ -3684,20 +3674,20 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
   // v3.20.0 — Thầy Mo Basic Impact isolated QA. No cast/projectile/damage.
   const THAY_MO_IMPACT_ONLY_QA = new URLSearchParams(location.search).get("qaThayMoImpact") === "1";
   const THAY_MO_IMPACT_QA_SOURCE = "assets/characters/thay-mo/impact-v3200-atlas.png";
-  const THAY_MO_IMPACT_QA_IMAGE = new Image(); THAY_MO_IMPACT_QA_IMAGE.decoding="async"; THAY_MO_IMPACT_QA_IMAGE.src=THAY_MO_IMPACT_QA_SOURCE;
+  const THAY_MO_IMPACT_QA_IMAGE = () => battleLegacyImage(THAY_MO_IMPACT_QA_SOURCE);
   const THAY_MO_IMPACT_QA_FRAMES=16, THAY_MO_IMPACT_QA_COLS=4, THAY_MO_IMPACT_QA_CELL_W=260, THAY_MO_IMPACT_QA_CELL_H=214, THAY_MO_IMPACT_QA_PAD=4, THAY_MO_IMPACT_QA_STRIDE_W=268, THAY_MO_IMPACT_QA_STRIDE_H=222;
   const THAY_MO_IMPACT_QA_DURATIONS=[60, 60, 70, 60, 60, 60, 70, 60, 60, 60, 70, 60, 60, 60, 70, 60];
   const THAY_MO_IMPACT_QA_TOTAL_MS=1000;
   let thayMoImpactQaEpoch=performance.now();
   function thayMoImpactQaFrameAt(timeMs){let t=((timeMs%THAY_MO_IMPACT_QA_TOTAL_MS)+THAY_MO_IMPACT_QA_TOTAL_MS)%THAY_MO_IMPACT_QA_TOTAL_MS;for(let i=0;i<THAY_MO_IMPACT_QA_DURATIONS.length;i++){const d=THAY_MO_IMPACT_QA_DURATIONS[i];if(t<d)return i;t-=d;}return 0;}
   function drawThayMoImpactQa(context,time){
-    if(!THAY_MO_IMPACT_ONLY_QA||!THAY_MO_IMPACT_QA_IMAGE.complete||THAY_MO_IMPACT_QA_IMAGE.naturalWidth<2)return;
+    if(!THAY_MO_IMPACT_ONLY_QA||!THAY_MO_IMPACT_QA_IMAGE().complete||THAY_MO_IMPACT_QA_IMAGE().naturalWidth<2)return;
     const target=units.find(u=>u.team===TEAM_ENEMY&&u.hp>0); if(!target)return;
     const frame=thayMoImpactQaFrameAt(time-thayMoImpactQaEpoch);
     const sx=(frame%THAY_MO_IMPACT_QA_COLS)*THAY_MO_IMPACT_QA_STRIDE_W+THAY_MO_IMPACT_QA_PAD;
     const sy=Math.floor(frame/THAY_MO_IMPACT_QA_COLS)*THAY_MO_IMPACT_QA_STRIDE_H+THAY_MO_IMPACT_QA_PAD;
     const drawW=280, drawH=THAY_MO_IMPACT_QA_CELL_H/THAY_MO_IMPACT_QA_CELL_W*drawW;
-    context.save(); context.translate(target.x,target.y-72); context.drawImage(THAY_MO_IMPACT_QA_IMAGE,sx,sy,THAY_MO_IMPACT_QA_CELL_W,THAY_MO_IMPACT_QA_CELL_H,-drawW*.5,-drawH*.5,drawW,drawH); context.restore();
+    context.save(); context.translate(target.x,target.y-72); context.drawImage(THAY_MO_IMPACT_QA_IMAGE(),sx,sy,THAY_MO_IMPACT_QA_CELL_W,THAY_MO_IMPACT_QA_CELL_H,-drawW*.5,-drawH*.5,drawW,drawH); context.restore();
   }
 
   // Shared lazy atlas owner for legacy Battle heroes. Unlike the old eager maps,
@@ -3899,7 +3889,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
   function restartOngPhoAttackImage() {
     // Sprite sheets have no playback cursor to restart. State time selects the frame.
     // Keeping this as a no-op preserves the action call-site without invalidating the loaded asset.
-    return ONG_PHO_ATTACK_IMAGE;
+    return ONG_PHO_ATTACK_IMAGE();
   }
 
   const DEFAULT_HEROES = Object.freeze([
@@ -4383,6 +4373,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     speed: 1,
     sound: true,
     actionCount: 0,
+    resolvedActionIds: new Set(),
     actionBreakdown: { basic: 0, skill: 0, ultimate: 0 },
     playerSignatureActions: 0,
     objective: null,
@@ -4654,6 +4645,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     state.selectedAction = null;
     state.locked = true;
     state.actionCount = 0;
+    state.resolvedActionIds.clear();
     state.actionBreakdown = { basic: 0, skill: 0, ultimate: 0 };
     state.playerSignatureActions = 0;
     state.battleOrders = Core.createBattleOrderState();
@@ -5869,6 +5861,8 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
   }
 
   function resolveAction(actor, action, target) {
+    const actionId = arguments[3] || null;
+    if (actionId) { if (state.resolvedActionIds.has(actionId)) return false; state.resolvedActionIds.add(actionId); }
     const kind = actionKind(actor, action);
     actor._tacticalAction=action;
     actor._tacticalKind=kind;
@@ -6298,7 +6292,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     actor.slotComboReady=REFERENCE_SIMPLE?false:slotComboReady(actor,target);
     if(actor.slotComboReady) addLog(`Liên kết slot ${Core.linkedSlot(actor.slot)+1}↔${actor.slot+1}: ${actor.name} nối đòn!`);
     phase1Trace?.marker('impact',{actionId:phase1ActionId,targetId:target?.id||null,position:{x:target?.x??actor.x,y:target?.y??actor.y}});
-    resolveAction(actor, action, target);
+    resolveAction(actor, action, target, phase1ActionId);
     if(!usesLucAnh) triggerImpactPresentation(actor, target, action);
     if(usesOngPhoGif && action === "basic" && actor._ongPhoBasicSecondHitPlan){
       const plan=actor._ongPhoBasicSecondHitPlan; delete actor._ongPhoBasicSecondHitPlan;
@@ -7440,7 +7434,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     if (defeated) {
       // v2.95: authored fall animation. The source GIF is trimmed to start exactly
       // where the body begins losing balance; no projectile/lead-in frames are used.
-      const image = ONG_PHO_FALL_IMAGE;
+      const image = ONG_PHO_FALL_IMAGE();
       if (image?.complete && image.naturalWidth > 1) {
         const cellW=240, cellH=135, cols=8;
         const elapsed=Math.max(0, performance.now()-(unit.defeatedAt||unit.stateStarted));
@@ -7454,7 +7448,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     if (hurt) {
       // v2.95: authored hit reaction. Start at the impact frame and play the real
       // recoil frames; skip the broken incoming-effect lead-in entirely.
-      const image = ONG_PHO_HIT_IMAGE;
+      const image = ONG_PHO_HIT_IMAGE();
       if (image?.complete && image.naturalWidth > 1) {
         const cellW=240, cellH=135, cols=5;
         const elapsed=Math.max(0, performance.now()-unit.stateStarted);
@@ -7466,19 +7460,19 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
       return true;
     }
     const cellW=240, cellH=135;
-    let image = ONG_PHO_IDLE_IMAGE;
+    let image = ONG_PHO_IDLE_IMAGE();
     let cols = 8;
     let frame = 0;
     if (skill1) {
-      image = ONG_PHO_SKILL1_IMAGE; cols = 8;
+      image = ONG_PHO_SKILL1_IMAGE(); cols = 8;
       const elapsed = Math.max(0, performance.now() - unit.stateStarted);
       frame = ongPhoSkill1FrameAtElapsed(elapsed);
     } else if (ultimate) {
-      image = ONG_PHO_ULTIMATE_IMAGE; cols = 8;
+      image = ONG_PHO_ULTIMATE_IMAGE(); cols = 8;
       const elapsed = Math.max(0, performance.now() - unit.stateStarted);
       frame = Math.min(ONG_PHO_ULTIMATE_FRAMES - 1, Math.floor(elapsed / ONG_PHO_ULTIMATE_FRAME_MS));
     } else if (attacking) {
-      image = ONG_PHO_ATTACK_IMAGE; cols = 10;
+      image = ONG_PHO_ATTACK_IMAGE(); cols = 10;
       const elapsed = Math.max(0, performance.now() - unit.stateStarted);
       const entryTotal = ONG_PHO_ENTRY_HOLD_MS;
       const attackElapsed = Math.max(0, elapsed - entryTotal);
@@ -7486,7 +7480,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     } else {
       // v3.00 canonical default: Idle is the authored standing stance, never attack frame 0. Use global time so short
       // state refreshes do not visibly restart the breathing motion.
-      image = ONG_PHO_IDLE_IMAGE; cols = 8;
+      image = ONG_PHO_IDLE_IMAGE(); cols = 8;
       frame = Math.floor(performance.now() / ONG_PHO_IDLE_FRAME_MS) % ONG_PHO_IDLE_FRAMES;
     }
     if (!image?.complete || image.naturalWidth < 1) { context.restore(); return true; }
@@ -7512,63 +7506,63 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     context.shadowColor="rgba(239,190,90,.20)"; context.shadowBlur=4;
     if(hitOnly){
       const e=thayMoHitElapsed(performance.now());
-      if(e>=THAY_MO_HIT_IDLE_LEAD_MS && e<THAY_MO_HIT_IDLE_LEAD_MS+THAY_MO_HIT_MS && THAY_MO_HIT_IMAGE?.complete&&THAY_MO_HIT_IMAGE.naturalWidth>1){
+      if(e>=THAY_MO_HIT_IDLE_LEAD_MS && e<THAY_MO_HIT_IDLE_LEAD_MS+THAY_MO_HIT_MS && THAY_MO_HIT_IMAGE()?.complete&&THAY_MO_HIT_IMAGE().naturalWidth>1){
         const he=e-THAY_MO_HIT_IDLE_LEAD_MS;
         const frame=Math.min(THAY_MO_HIT_FRAMES-1,Math.floor(he/THAY_MO_HIT_FRAME_MS));
         const sx=(frame%THAY_MO_HIT_COLS)*THAY_MO_HIT_STRIDE_W+THAY_MO_HIT_PAD;
         const sy=Math.floor(frame/THAY_MO_HIT_COLS)*THAY_MO_HIT_STRIDE_H+THAY_MO_HIT_PAD;
         const drawH=348, drawW=THAY_MO_HIT_CELL_W/THAY_MO_HIT_CELL_H*drawH;
-        context.drawImage(THAY_MO_HIT_IMAGE,sx,sy,THAY_MO_HIT_CELL_W,THAY_MO_HIT_CELL_H,-drawW*.5,-drawH+28,drawW,drawH);
-      }else if(THAY_MO_IDLE_IMAGE?.complete&&THAY_MO_IDLE_IMAGE.naturalWidth>1){
+        context.drawImage(THAY_MO_HIT_IMAGE(),sx,sy,THAY_MO_HIT_CELL_W,THAY_MO_HIT_CELL_H,-drawW*.5,-drawH+28,drawW,drawH);
+      }else if(THAY_MO_IDLE_IMAGE()?.complete&&THAY_MO_IDLE_IMAGE().naturalWidth>1){
         const frame=thayMoIdleFrameAt(performance.now()), sx=(frame%THAY_MO_IDLE_COLS)*THAY_MO_IDLE_STRIDE_W+THAY_MO_IDLE_PAD, sy=Math.floor(frame/THAY_MO_IDLE_COLS)*THAY_MO_IDLE_STRIDE_H+THAY_MO_IDLE_PAD;
-        const drawH=348, drawW=THAY_MO_IDLE_CELL_W/THAY_MO_IDLE_CELL_H*drawH; context.drawImage(THAY_MO_IDLE_IMAGE,sx,sy,THAY_MO_IDLE_CELL_W,THAY_MO_IDLE_CELL_H,-drawW*.5,-drawH+28,drawW,drawH);
+        const drawH=348, drawW=THAY_MO_IDLE_CELL_W/THAY_MO_IDLE_CELL_H*drawH; context.drawImage(THAY_MO_IDLE_IMAGE(),sx,sy,THAY_MO_IDLE_CELL_W,THAY_MO_IDLE_CELL_H,-drawW*.5,-drawH+28,drawW,drawH);
       }
     }else if(ultimateCastOnly){
       const e=thayMoUltimateCastElapsed(performance.now());
-      if(e>=THAY_MO_ULTIMATE_IDLE_MS && e<THAY_MO_ULTIMATE_IDLE_MS+THAY_MO_ULTIMATE_CAST_MS && THAY_MO_ULTIMATE_CAST_IMAGE?.complete&&THAY_MO_ULTIMATE_CAST_IMAGE.naturalWidth>1){
+      if(e>=THAY_MO_ULTIMATE_IDLE_MS && e<THAY_MO_ULTIMATE_IDLE_MS+THAY_MO_ULTIMATE_CAST_MS && THAY_MO_ULTIMATE_CAST_IMAGE()?.complete&&THAY_MO_ULTIMATE_CAST_IMAGE().naturalWidth>1){
         const ce=e-THAY_MO_ULTIMATE_IDLE_MS;
         const frame=Math.min(THAY_MO_ULTIMATE_CAST_FRAMES-1,Math.floor(ce/THAY_MO_ULTIMATE_CAST_FRAME_MS));
         const sx=(frame%THAY_MO_ULTIMATE_CAST_COLS)*THAY_MO_ULTIMATE_CAST_STRIDE_W+THAY_MO_ULTIMATE_CAST_PAD;
         const sy=Math.floor(frame/THAY_MO_ULTIMATE_CAST_COLS)*THAY_MO_ULTIMATE_CAST_STRIDE_H+THAY_MO_ULTIMATE_CAST_PAD;
         const drawH=348, drawW=THAY_MO_ULTIMATE_CAST_CELL_W/THAY_MO_ULTIMATE_CAST_CELL_H*drawH;
-        context.drawImage(THAY_MO_ULTIMATE_CAST_IMAGE,sx,sy,THAY_MO_ULTIMATE_CAST_CELL_W,THAY_MO_ULTIMATE_CAST_CELL_H,-drawW*.5,-drawH+28,drawW,drawH);
-      }else if(THAY_MO_IDLE_IMAGE?.complete&&THAY_MO_IDLE_IMAGE.naturalWidth>1){
+        context.drawImage(THAY_MO_ULTIMATE_CAST_IMAGE(),sx,sy,THAY_MO_ULTIMATE_CAST_CELL_W,THAY_MO_ULTIMATE_CAST_CELL_H,-drawW*.5,-drawH+28,drawW,drawH);
+      }else if(THAY_MO_IDLE_IMAGE()?.complete&&THAY_MO_IDLE_IMAGE().naturalWidth>1){
         const frame=thayMoIdleFrameAt(performance.now()), sx=(frame%THAY_MO_IDLE_COLS)*THAY_MO_IDLE_STRIDE_W+THAY_MO_IDLE_PAD, sy=Math.floor(frame/THAY_MO_IDLE_COLS)*THAY_MO_IDLE_STRIDE_H+THAY_MO_IDLE_PAD;
-        const drawH=348, drawW=THAY_MO_IDLE_CELL_W/THAY_MO_IDLE_CELL_H*drawH; context.drawImage(THAY_MO_IDLE_IMAGE,sx,sy,THAY_MO_IDLE_CELL_W,THAY_MO_IDLE_CELL_H,-drawW*.5,-drawH+28,drawW,drawH);
+        const drawH=348, drawW=THAY_MO_IDLE_CELL_W/THAY_MO_IDLE_CELL_H*drawH; context.drawImage(THAY_MO_IDLE_IMAGE(),sx,sy,THAY_MO_IDLE_CELL_W,THAY_MO_IDLE_CELL_H,-drawW*.5,-drawH+28,drawW,drawH);
       }
     }else if(skill1WaveCombo||skill1Full){
       const e=skill1Full?thayMoSkill1FullElapsed(performance.now()):thayMoSkill1WaveElapsed(performance.now());
-      if(e>=THAY_MO_SKILL1_COMBO_CAST_START_MS && e<THAY_MO_SKILL1_COMBO_CAST_END_MS && THAY_MO_SKILL1_CAST_IMAGE?.complete && THAY_MO_SKILL1_CAST_IMAGE.naturalWidth>1){
+      if(e>=THAY_MO_SKILL1_COMBO_CAST_START_MS && e<THAY_MO_SKILL1_COMBO_CAST_END_MS && THAY_MO_SKILL1_CAST_IMAGE()?.complete && THAY_MO_SKILL1_CAST_IMAGE().naturalWidth>1){
         const frame=Math.min(THAY_MO_SKILL1_CAST_FRAMES-1,Math.floor((e-THAY_MO_SKILL1_COMBO_CAST_START_MS)/THAY_MO_SKILL1_CAST_FRAME_MS));
         const sx=(frame%THAY_MO_SKILL1_CAST_COLS)*THAY_MO_SKILL1_CAST_STRIDE_W+THAY_MO_SKILL1_CAST_PAD;
         const sy=Math.floor(frame/THAY_MO_SKILL1_CAST_COLS)*THAY_MO_SKILL1_CAST_STRIDE_H+THAY_MO_SKILL1_CAST_PAD;
         const drawH=348, drawW=THAY_MO_SKILL1_CAST_CELL_W/THAY_MO_SKILL1_CAST_CELL_H*drawH;
-        context.drawImage(THAY_MO_SKILL1_CAST_IMAGE,sx,sy,THAY_MO_SKILL1_CAST_CELL_W,THAY_MO_SKILL1_CAST_CELL_H,-drawW*.5,-drawH+28,drawW,drawH);
-      }else if(THAY_MO_IDLE_IMAGE?.complete&&THAY_MO_IDLE_IMAGE.naturalWidth>1){
+        context.drawImage(THAY_MO_SKILL1_CAST_IMAGE(),sx,sy,THAY_MO_SKILL1_CAST_CELL_W,THAY_MO_SKILL1_CAST_CELL_H,-drawW*.5,-drawH+28,drawW,drawH);
+      }else if(THAY_MO_IDLE_IMAGE()?.complete&&THAY_MO_IDLE_IMAGE().naturalWidth>1){
         const frame=thayMoIdleFrameAt(performance.now()), sx=(frame%THAY_MO_IDLE_COLS)*THAY_MO_IDLE_STRIDE_W+THAY_MO_IDLE_PAD, sy=Math.floor(frame/THAY_MO_IDLE_COLS)*THAY_MO_IDLE_STRIDE_H+THAY_MO_IDLE_PAD;
-        const drawH=348, drawW=THAY_MO_IDLE_CELL_W/THAY_MO_IDLE_CELL_H*drawH; context.drawImage(THAY_MO_IDLE_IMAGE,sx,sy,THAY_MO_IDLE_CELL_W,THAY_MO_IDLE_CELL_H,-drawW*.5,-drawH+28,drawW,drawH);
+        const drawH=348, drawW=THAY_MO_IDLE_CELL_W/THAY_MO_IDLE_CELL_H*drawH; context.drawImage(THAY_MO_IDLE_IMAGE(),sx,sy,THAY_MO_IDLE_CELL_W,THAY_MO_IDLE_CELL_H,-drawW*.5,-drawH+28,drawW,drawH);
       }
-    }else if(skill1ImpactOnly && THAY_MO_IDLE_IMAGE?.complete&&THAY_MO_IDLE_IMAGE.naturalWidth>1){
+    }else if(skill1ImpactOnly && THAY_MO_IDLE_IMAGE()?.complete&&THAY_MO_IDLE_IMAGE().naturalWidth>1){
       const frame=thayMoIdleFrameAt(performance.now()), sx=(frame%THAY_MO_IDLE_COLS)*THAY_MO_IDLE_STRIDE_W+THAY_MO_IDLE_PAD, sy=Math.floor(frame/THAY_MO_IDLE_COLS)*THAY_MO_IDLE_STRIDE_H+THAY_MO_IDLE_PAD;
-      const drawH=348, drawW=THAY_MO_IDLE_CELL_W/THAY_MO_IDLE_CELL_H*drawH; context.drawImage(THAY_MO_IDLE_IMAGE,sx,sy,THAY_MO_IDLE_CELL_W,THAY_MO_IDLE_CELL_H,-drawW*.5,-drawH+28,drawW,drawH);
-    }else if(skill1CastOnly && THAY_MO_SKILL1_CAST_IMAGE?.complete && THAY_MO_SKILL1_CAST_IMAGE.naturalWidth>1){
+      const drawH=348, drawW=THAY_MO_IDLE_CELL_W/THAY_MO_IDLE_CELL_H*drawH; context.drawImage(THAY_MO_IDLE_IMAGE(),sx,sy,THAY_MO_IDLE_CELL_W,THAY_MO_IDLE_CELL_H,-drawW*.5,-drawH+28,drawW,drawH);
+    }else if(skill1CastOnly && THAY_MO_SKILL1_CAST_IMAGE()?.complete && THAY_MO_SKILL1_CAST_IMAGE().naturalWidth>1){
       const frame=thayMoSkill1CastFrameAt(performance.now()-thayMoSkill1CastQaEpoch);
       const sx=(frame%THAY_MO_SKILL1_CAST_COLS)*THAY_MO_SKILL1_CAST_STRIDE_W+THAY_MO_SKILL1_CAST_PAD;
       const sy=Math.floor(frame/THAY_MO_SKILL1_CAST_COLS)*THAY_MO_SKILL1_CAST_STRIDE_H+THAY_MO_SKILL1_CAST_PAD;
       const drawH=348; const drawW=THAY_MO_SKILL1_CAST_CELL_W/THAY_MO_SKILL1_CAST_CELL_H*drawH;
-      context.drawImage(THAY_MO_SKILL1_CAST_IMAGE,sx,sy,THAY_MO_SKILL1_CAST_CELL_W,THAY_MO_SKILL1_CAST_CELL_H,-drawW*.5,-drawH+28,drawW,drawH);
-    }else if((castOnly || (full&&fullPhase[0]==="cast")) && THAY_MO_BASIC_CAST_IMAGE?.complete && THAY_MO_BASIC_CAST_IMAGE.naturalWidth>1){
+      context.drawImage(THAY_MO_SKILL1_CAST_IMAGE(),sx,sy,THAY_MO_SKILL1_CAST_CELL_W,THAY_MO_SKILL1_CAST_CELL_H,-drawW*.5,-drawH+28,drawW,drawH);
+    }else if((castOnly || (full&&fullPhase[0]==="cast")) && THAY_MO_BASIC_CAST_IMAGE()?.complete && THAY_MO_BASIC_CAST_IMAGE().naturalWidth>1){
       const frame=castOnly?thayMoBasicCastFrameAt(performance.now()-thayMoBasicCastQaEpoch):Math.min(THAY_MO_BASIC_CAST_FRAMES-1,Math.floor(fullPhase[1]/THAY_MO_FULL_CAST_MS*THAY_MO_BASIC_CAST_FRAMES));
       const sx=(frame%THAY_MO_BASIC_CAST_COLS)*THAY_MO_BASIC_CAST_STRIDE_W+THAY_MO_BASIC_CAST_PAD;
       const sy=Math.floor(frame/THAY_MO_BASIC_CAST_COLS)*THAY_MO_BASIC_CAST_STRIDE_H+THAY_MO_BASIC_CAST_PAD;
       const drawH=348; const drawW=THAY_MO_BASIC_CAST_CELL_W/THAY_MO_BASIC_CAST_CELL_H*drawH;
-      context.drawImage(THAY_MO_BASIC_CAST_IMAGE,sx,sy,THAY_MO_BASIC_CAST_CELL_W,THAY_MO_BASIC_CAST_CELL_H,-drawW*.5,-drawH+28,drawW,drawH);
+      context.drawImage(THAY_MO_BASIC_CAST_IMAGE(),sx,sy,THAY_MO_BASIC_CAST_CELL_W,THAY_MO_BASIC_CAST_CELL_H,-drawW*.5,-drawH+28,drawW,drawH);
     }else if(attacking){
-      if(THAY_MO_CAST_IMAGE?.complete&&THAY_MO_CAST_IMAGE.naturalWidth>1){
+      if(THAY_MO_CAST_IMAGE()?.complete&&THAY_MO_CAST_IMAGE().naturalWidth>1){
         const drawW=300, drawH=169;
-        context.drawImage(THAY_MO_CAST_IMAGE,-drawW*.5,-drawH+28,drawW,drawH);
+        context.drawImage(THAY_MO_CAST_IMAGE(),-drawW*.5,-drawH+28,drawW,drawH);
       }
-    }else if(THAY_MO_IDLE_IMAGE?.complete&&THAY_MO_IDLE_IMAGE.naturalWidth>1){
+    }else if(THAY_MO_IDLE_IMAGE()?.complete&&THAY_MO_IDLE_IMAGE().naturalWidth>1){
       const frame=thayMoIdleFrameAt(performance.now());
       const sx=(frame%THAY_MO_IDLE_COLS)*THAY_MO_IDLE_STRIDE_W+THAY_MO_IDLE_PAD;
       const sy=Math.floor(frame/THAY_MO_IDLE_COLS)*THAY_MO_IDLE_STRIDE_H+THAY_MO_IDLE_PAD;
@@ -7576,7 +7570,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
       // shrinking the old 480x270 background rectangle into the slot.
       const drawH=348;
       const drawW=THAY_MO_IDLE_CELL_W/THAY_MO_IDLE_CELL_H*drawH;
-      context.drawImage(THAY_MO_IDLE_IMAGE,sx,sy,THAY_MO_IDLE_CELL_W,THAY_MO_IDLE_CELL_H,-drawW*.5,-drawH+28,drawW,drawH);
+      context.drawImage(THAY_MO_IDLE_IMAGE(),sx,sy,THAY_MO_IDLE_CELL_W,THAY_MO_IDLE_CELL_H,-drawW*.5,-drawH+28,drawW,drawH);
     }
     context.restore(); return true;
   }
@@ -8438,7 +8432,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     },
     qaSetThayMoHitTime: (ms) => { thayMoHitQaFixedTime=Math.max(0,Math.min(THAY_MO_HIT_TOTAL_MS-1,Number(ms)||0)); return true; },
     qaPlayThayMoHitRealtime: () => { thayMoHitQaFixedTime=null; thayMoHitQaEpoch=performance.now(); return true; },
-    qaGetThayMoHit: () => { const actor=getUnit("van-chi"), e=thayMoHitElapsed(performance.now()); return {elapsed:e,hitStart:THAY_MO_HIT_IDLE_LEAD_MS,hitEnd:THAY_MO_HIT_IDLE_LEAD_MS+THAY_MO_HIT_MS,total:THAY_MO_HIT_TOTAL_MS,actor:actor?{slot:actor.slot,x:actor.x,y:actor.y,baseX:actor.baseX,baseY:actor.baseY}:null,asset:Boolean(THAY_MO_HIT_IMAGE.complete&&THAY_MO_HIT_IMAGE.naturalWidth>1),rootTranslation:false}; },
+    qaGetThayMoHit: () => { const actor=getUnit("van-chi"), e=thayMoHitElapsed(performance.now()); return {elapsed:e,hitStart:THAY_MO_HIT_IDLE_LEAD_MS,hitEnd:THAY_MO_HIT_IDLE_LEAD_MS+THAY_MO_HIT_MS,total:THAY_MO_HIT_TOTAL_MS,actor:actor?{slot:actor.slot,x:actor.x,y:actor.y,baseX:actor.baseX,baseY:actor.baseY}:null,asset:Boolean(THAY_MO_HIT_IMAGE().complete&&THAY_MO_HIT_IMAGE().naturalWidth>1),rootTranslation:false}; },
     qaFreezeThayMoImpact: () => {
       const actor=getUnit("van-chi"); if(!actor||state.mode!=="battle")return false;
       state.battleId+=1; state.locked=true; state.currentId=null; actor.hp=actor.maxHp; actor.x=actor.baseX; actor.y=actor.baseY;
@@ -8449,15 +8443,15 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
       state.battleId+=1; state.locked=true; state.currentId=null; actor.hp=actor.maxHp; actor.x=actor.baseX; actor.y=actor.baseY;
       setUnitState(actor,"idle",600000); thayMoFullBasicQaEpoch=performance.now(); updateActorHud(null); return true;
     },
-    qaGetThayMoFullBasic: () => { const target=thayMoFullBasicQaTarget(); return { phase: thayMoFullBasicPhase(performance.now()), target:target?{id:target.id,slot:target.slot,x:target.x,y:target.y}:null, assets:{idle:Boolean(THAY_MO_IDLE_IMAGE.complete&&THAY_MO_IDLE_IMAGE.naturalWidth>1),cast:Boolean(THAY_MO_BASIC_CAST_IMAGE.complete&&THAY_MO_BASIC_CAST_IMAGE.naturalWidth>1),projectile:Boolean(THAY_MO_PROJECTILE_QA_IMAGE.complete&&THAY_MO_PROJECTILE_QA_IMAGE.naturalWidth>1),impact:Boolean(THAY_MO_IMPACT_QA_IMAGE.complete&&THAY_MO_IMPACT_QA_IMAGE.naturalWidth>1)} }; },
+    qaGetThayMoFullBasic: () => { const target=thayMoFullBasicQaTarget(); return { phase: thayMoFullBasicPhase(performance.now()), target:target?{id:target.id,slot:target.slot,x:target.x,y:target.y}:null, assets:{idle:Boolean(THAY_MO_IDLE_IMAGE().complete&&THAY_MO_IDLE_IMAGE().naturalWidth>1),cast:Boolean(THAY_MO_BASIC_CAST_IMAGE().complete&&THAY_MO_BASIC_CAST_IMAGE().naturalWidth>1),projectile:Boolean(THAY_MO_PROJECTILE_QA_IMAGE().complete&&THAY_MO_PROJECTILE_QA_IMAGE().naturalWidth>1),impact:Boolean(THAY_MO_IMPACT_QA_IMAGE().complete&&THAY_MO_IMPACT_QA_IMAGE().naturalWidth>1)} }; },
     qaFreezeThayMoSkill1Impact: () => {
       const actor=getUnit("van-chi"); if(!actor||state.mode!=="battle")return false; state.battleId+=1; state.locked=true; state.currentId=null; actor.hp=actor.maxHp; actor.x=actor.baseX; actor.y=actor.baseY; setUnitState(actor,"idle",600000); thayMoSkill1ImpactQaEpoch=performance.now(); updateActorHud(null); return true;
     },
-    qaGetThayMoSkill1Impact: () => { const target=thayMoSkill1ImpactQaTarget(), e=thayMoSkill1ImpactOnlyElapsed(performance.now()); return {elapsed:e,mainImpactFrame:THAY_MO_SKILL1_MAIN_IMPACT_FRAME,target:target?{id:target.id,slot:target.slot,x:target.x,y:target.y}:null,asset:Boolean(THAY_MO_SKILL1_IMPACT_IMAGE.complete&&THAY_MO_SKILL1_IMPACT_IMAGE.naturalWidth>1)}; },
+    qaGetThayMoSkill1Impact: () => { const target=thayMoSkill1ImpactQaTarget(), e=thayMoSkill1ImpactOnlyElapsed(performance.now()); return {elapsed:e,mainImpactFrame:THAY_MO_SKILL1_MAIN_IMPACT_FRAME,target:target?{id:target.id,slot:target.slot,x:target.x,y:target.y}:null,asset:Boolean(THAY_MO_SKILL1_IMPACT_IMAGE().complete&&THAY_MO_SKILL1_IMPACT_IMAGE().naturalWidth>1)}; },
     qaFreezeThayMoSkill1Full: () => {
       const actor=getUnit("van-chi"); if(!actor||state.mode!=="battle")return false; state.battleId+=1; state.locked=true; state.currentId=null; actor.hp=actor.maxHp; actor.x=actor.baseX; actor.y=actor.baseY; setUnitState(actor,"idle",600000); thayMoSkill1FullQaFixedTime=null; thayMoSkill1FullQaEpoch=performance.now(); const fixture=prepareThayMoSkill1FullFixture(); updateActorHud(null); return Boolean(fixture);
     },
-    qaGetThayMoSkill1Full: () => { const actor=getUnit("van-chi"), target=thayMoSkill1ImpactQaTarget(), e=thayMoSkill1FullElapsed(performance.now()), row=thayMoSkill1RowTargets(target); return {elapsed:e,source:actor?{slot:actor.slot,x:actor.x,y:actor.y}:null,target:target?{id:target.id,slot:target.slot,x:target.x,y:target.y}:null,row:row.map(u=>({id:u.id,slot:u.slot,hp:u.hp,maxHp:u.maxHp,seals:thayMoSealStacks(u),speedDown:(u.statuses||[]).find(s=>s.type==="speedDown")||null,actionDelayPct:Number(u._actionDelayPct)||0})),releaseAt:THAY_MO_SKILL1_COMBO_RELEASE_AT_MS,contactAt:THAY_MO_SKILL1_FULL_CONTACT_AT_MS,mainImpactAt:THAY_MO_SKILL1_FULL_MAIN_IMPACT_AT_MS,resolved:thayMoSkill1FullResolved,result:thayMoSkill1FullResult,assets:{cast:Boolean(THAY_MO_SKILL1_CAST_IMAGE.complete&&THAY_MO_SKILL1_CAST_IMAGE.naturalWidth>1),wave:Boolean(THAY_MO_SKILL1_WAVE_IMAGE.complete&&THAY_MO_SKILL1_WAVE_IMAGE.naturalWidth>1),impact:Boolean(THAY_MO_SKILL1_IMPACT_IMAGE.complete&&THAY_MO_SKILL1_IMPACT_IMAGE.naturalWidth>1)}}; },
+    qaGetThayMoSkill1Full: () => { const actor=getUnit("van-chi"), target=thayMoSkill1ImpactQaTarget(), e=thayMoSkill1FullElapsed(performance.now()), row=thayMoSkill1RowTargets(target); return {elapsed:e,source:actor?{slot:actor.slot,x:actor.x,y:actor.y}:null,target:target?{id:target.id,slot:target.slot,x:target.x,y:target.y}:null,row:row.map(u=>({id:u.id,slot:u.slot,hp:u.hp,maxHp:u.maxHp,seals:thayMoSealStacks(u),speedDown:(u.statuses||[]).find(s=>s.type==="speedDown")||null,actionDelayPct:Number(u._actionDelayPct)||0})),releaseAt:THAY_MO_SKILL1_COMBO_RELEASE_AT_MS,contactAt:THAY_MO_SKILL1_FULL_CONTACT_AT_MS,mainImpactAt:THAY_MO_SKILL1_FULL_MAIN_IMPACT_AT_MS,resolved:thayMoSkill1FullResolved,result:thayMoSkill1FullResult,assets:{cast:Boolean(THAY_MO_SKILL1_CAST_IMAGE().complete&&THAY_MO_SKILL1_CAST_IMAGE().naturalWidth>1),wave:Boolean(THAY_MO_SKILL1_WAVE_IMAGE().complete&&THAY_MO_SKILL1_WAVE_IMAGE().naturalWidth>1),impact:Boolean(THAY_MO_SKILL1_IMPACT_IMAGE().complete&&THAY_MO_SKILL1_IMPACT_IMAGE().naturalWidth>1)}}; },
     qaSetThayMoSkill1FullTime: (ms) => { ms=Math.max(0,Number(ms)||0); if(ms<THAY_MO_SKILL1_FULL_MAIN_IMPACT_AT_MS)prepareThayMoSkill1FullFixture(); thayMoSkill1FullQaFixedTime=ms; return true; },
     qaPlayThayMoSkill1FullRealtime: () => { prepareThayMoSkill1FullFixture(); thayMoSkill1FullQaFixedTime=null; thayMoSkill1FullQaEpoch=performance.now(); return true; },
     qaSetThayMoSkill1ImpactTime: (ms) => { thayMoSkill1ImpactQaEpoch=performance.now()-Math.max(0,Number(ms)||0); return true; },
@@ -8472,19 +8466,19 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
       state.battleId+=1; state.locked=true; state.currentId=null; actor.hp=actor.maxHp; actor.x=actor.baseX; actor.y=actor.baseY;
       setUnitState(actor,"idle",600000); thayMoSkill1WaveQaEpoch=performance.now(); updateActorHud(null); return true;
     },
-    qaGetThayMoSkill1Wave: () => { const target=thayMoSkill1WaveQaTarget(); const e=thayMoSkill1WaveElapsed(performance.now()); return {elapsed:e,releaseAt:THAY_MO_SKILL1_COMBO_RELEASE_AT_MS,waveMs:THAY_MO_SKILL1_WAVE_MS,target:target?{id:target.id,slot:target.slot,x:target.x,y:target.y}:null,assets:{cast:Boolean(THAY_MO_SKILL1_CAST_IMAGE.complete&&THAY_MO_SKILL1_CAST_IMAGE.naturalWidth>1),wave:Boolean(THAY_MO_SKILL1_WAVE_IMAGE.complete&&THAY_MO_SKILL1_WAVE_IMAGE.naturalWidth>1)}}; },
+    qaGetThayMoSkill1Wave: () => { const target=thayMoSkill1WaveQaTarget(); const e=thayMoSkill1WaveElapsed(performance.now()); return {elapsed:e,releaseAt:THAY_MO_SKILL1_COMBO_RELEASE_AT_MS,waveMs:THAY_MO_SKILL1_WAVE_MS,target:target?{id:target.id,slot:target.slot,x:target.x,y:target.y}:null,assets:{cast:Boolean(THAY_MO_SKILL1_CAST_IMAGE().complete&&THAY_MO_SKILL1_CAST_IMAGE().naturalWidth>1),wave:Boolean(THAY_MO_SKILL1_WAVE_IMAGE().complete&&THAY_MO_SKILL1_WAVE_IMAGE().naturalWidth>1)}}; },
     qaFreezeThayMoUltimateCast: () => {
       const actor=getUnit("van-chi"); if(!actor||state.mode!=="battle")return false; state.battleId+=1; state.locked=true; state.currentId=null; actor.hp=actor.maxHp; actor.x=actor.baseX; actor.y=actor.baseY; setUnitState(actor,"idle",600000); if(THAY_MO_ULTIMATE_FULL_QA)prepareThayMoUltimateFullFixture(); thayMoUltimateCastQaFixedTime=null; thayMoUltimateCastQaEpoch=performance.now(); updateActorHud(null); return true;
     },
     qaSetThayMoUltimateCastTime: (ms) => { ms=Math.max(0,Math.min(THAY_MO_ULTIMATE_TOTAL_MS-1,Number(ms)||0)); if(THAY_MO_ULTIMATE_FULL_QA&&ms<THAY_MO_ULTIMATE_MAIN_IMPACT_AT_MS)prepareThayMoUltimateFullFixture(); thayMoUltimateCastQaFixedTime=ms; return true; },
     qaPlayThayMoUltimateCastRealtime: () => { if(THAY_MO_ULTIMATE_FULL_QA)prepareThayMoUltimateFullFixture(); thayMoUltimateCastQaFixedTime=null; thayMoUltimateCastQaEpoch=performance.now(); return true; },
-    qaGetThayMoUltimateCast: () => { const actor=getUnit("van-chi"), e=thayMoUltimateCastElapsed(performance.now()); return {elapsed:e,source:actor?{slot:actor.slot,x:actor.x,y:actor.y}:null,castStart:THAY_MO_ULTIMATE_IDLE_MS,releaseAt:THAY_MO_ULTIMATE_RELEASE_AT_MS,castEnd:THAY_MO_ULTIMATE_IDLE_MS+THAY_MO_ULTIMATE_CAST_MS,vfxEnd:THAY_MO_ULTIMATE_VFX_END_MS,mainImpactAt:THAY_MO_ULTIMATE_MAIN_IMPACT_AT_MS,total:THAY_MO_ULTIMATE_TOTAL_MS,resolved:thayMoUltimateFullResolved,result:thayMoUltimateFullResult,enemies:units.filter(u=>u.team===TEAM_ENEMY).map(u=>({id:u.id,slot:u.slot,hp:u.hp,maxHp:u.maxHp,seals:thayMoSealStacks(u),speedDown:(u.statuses||[]).find(st=>st.type==="speedDown")||null,silence:(u.statuses||[]).find(st=>st.type==="silence")||null,actionDelayPct:Number(u._actionDelayPct)||0})),assets:{idle:Boolean(THAY_MO_IDLE_IMAGE.complete&&THAY_MO_IDLE_IMAGE.naturalWidth>1),cast:Boolean(THAY_MO_ULTIMATE_CAST_IMAGE.complete&&THAY_MO_ULTIMATE_CAST_IMAGE.naturalWidth>1),vfx:Boolean(THAY_MO_ULTIMATE_VFX_IMAGE.complete&&THAY_MO_ULTIMATE_VFX_IMAGE.naturalWidth>1)}}; },
+    qaGetThayMoUltimateCast: () => { const actor=getUnit("van-chi"), e=thayMoUltimateCastElapsed(performance.now()); return {elapsed:e,source:actor?{slot:actor.slot,x:actor.x,y:actor.y}:null,castStart:THAY_MO_ULTIMATE_IDLE_MS,releaseAt:THAY_MO_ULTIMATE_RELEASE_AT_MS,castEnd:THAY_MO_ULTIMATE_IDLE_MS+THAY_MO_ULTIMATE_CAST_MS,vfxEnd:THAY_MO_ULTIMATE_VFX_END_MS,mainImpactAt:THAY_MO_ULTIMATE_MAIN_IMPACT_AT_MS,total:THAY_MO_ULTIMATE_TOTAL_MS,resolved:thayMoUltimateFullResolved,result:thayMoUltimateFullResult,enemies:units.filter(u=>u.team===TEAM_ENEMY).map(u=>({id:u.id,slot:u.slot,hp:u.hp,maxHp:u.maxHp,seals:thayMoSealStacks(u),speedDown:(u.statuses||[]).find(st=>st.type==="speedDown")||null,silence:(u.statuses||[]).find(st=>st.type==="silence")||null,actionDelayPct:Number(u._actionDelayPct)||0})),assets:{idle:Boolean(THAY_MO_IDLE_IMAGE().complete&&THAY_MO_IDLE_IMAGE().naturalWidth>1),cast:Boolean(THAY_MO_ULTIMATE_CAST_IMAGE().complete&&THAY_MO_ULTIMATE_CAST_IMAGE().naturalWidth>1),vfx:Boolean(THAY_MO_ULTIMATE_VFX_IMAGE().complete&&THAY_MO_ULTIMATE_VFX_IMAGE().naturalWidth>1)}}; },
     qaFreezeThayMoSkill1Cast: () => {
       const actor=getUnit("van-chi"); if(!actor||state.mode!=="battle")return false;
       state.battleId+=1; state.locked=true; state.currentId=null; actor.hp=actor.maxHp; actor.x=actor.baseX; actor.y=actor.baseY;
       setUnitState(actor,"idle",600000); thayMoSkill1CastQaEpoch=performance.now(); updateActorHud(null); return true;
     },
-    qaGetThayMoSkill1Cast: () => ({frame:thayMoSkill1CastFrameAt(performance.now()-thayMoSkill1CastQaEpoch),releaseFrame:THAY_MO_SKILL1_RELEASE_FRAME,asset:Boolean(THAY_MO_SKILL1_CAST_IMAGE.complete&&THAY_MO_SKILL1_CAST_IMAGE.naturalWidth>1)}),
+    qaGetThayMoSkill1Cast: () => ({frame:thayMoSkill1CastFrameAt(performance.now()-thayMoSkill1CastQaEpoch),releaseFrame:THAY_MO_SKILL1_RELEASE_FRAME,asset:Boolean(THAY_MO_SKILL1_CAST_IMAGE().complete&&THAY_MO_SKILL1_CAST_IMAGE().naturalWidth>1)}),
     qaFreezeThayMoBasicCast: () => {
       const actor=getUnit("van-chi"); if(!actor||state.mode!=="battle")return false;
       state.battleId+=1; state.locked=true; state.currentId=null; actor.hp=actor.maxHp; actor.x=actor.baseX; actor.y=actor.baseY;
@@ -8497,14 +8491,14 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
       state.selectedAction="basic"; updateActorHud(actor); void performAction(actor,"basic",target); return true;
     },
     getOngPhoAuthoredAssets: () => ({
-      idle:Boolean(ONG_PHO_IDLE_IMAGE.complete&&ONG_PHO_IDLE_IMAGE.naturalWidth>1),
-      skill1:Boolean(ONG_PHO_SKILL1_IMAGE.complete&&ONG_PHO_SKILL1_IMAGE.naturalWidth>1),
-      ultimate:Boolean(ONG_PHO_ULTIMATE_IMAGE.complete&&ONG_PHO_ULTIMATE_IMAGE.naturalWidth>1),
+      idle:Boolean(ONG_PHO_IDLE_IMAGE().complete&&ONG_PHO_IDLE_IMAGE().naturalWidth>1),
+      skill1:Boolean(ONG_PHO_SKILL1_IMAGE().complete&&ONG_PHO_SKILL1_IMAGE().naturalWidth>1),
+      ultimate:Boolean(ONG_PHO_ULTIMATE_IMAGE().complete&&ONG_PHO_ULTIMATE_IMAGE().naturalWidth>1),
       walk:false,
       run:false,
-      attack:Boolean(ONG_PHO_ATTACK_IMAGE.complete&&ONG_PHO_ATTACK_IMAGE.naturalWidth>1),
-      hit:Boolean(ONG_PHO_HIT_IMAGE.complete&&ONG_PHO_HIT_IMAGE.naturalWidth>1),
-      fall:Boolean(ONG_PHO_FALL_IMAGE.complete&&ONG_PHO_FALL_IMAGE.naturalWidth>1)
+      attack:Boolean(ONG_PHO_ATTACK_IMAGE().complete&&ONG_PHO_ATTACK_IMAGE().naturalWidth>1),
+      hit:Boolean(ONG_PHO_HIT_IMAGE().complete&&ONG_PHO_HIT_IMAGE().naturalWidth>1),
+      fall:Boolean(ONG_PHO_FALL_IMAGE().complete&&ONG_PHO_FALL_IMAGE().naturalWidth>1)
     }),
     qaForceOngPhoAction: (action="basic") => {
       const actor=getUnit(ONG_PHO_GIF_HERO_ID);
