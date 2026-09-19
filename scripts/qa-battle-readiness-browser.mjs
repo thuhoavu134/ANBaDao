@@ -46,7 +46,7 @@ export async function startBrowser() {
   }
   return {origin,page,requestLog,close:async()=>{chrome.kill();server.close();await sleep(200);rmSync(profile,{recursive:true,force:true});}};
 }
-const snapshotExpression=`(()=>{const s=__HON_VIET__.getState();return {state:{mode:s.mode,battleId:s.battleId,round:s.round,actionCount:s.actionCount,currentId:s.currentId,auto:s.auto,speed:s.speed,sound:s.sound},units:__HON_VIET__.getUnits(),dataset:{...document.documentElement.dataset},paints:__HV_BATTLE_ASSET_QA.paints(),cache:__HV_BATTLE_ASSET_QA.inspect(),events:__HV_BATTLE_ASSET_QA.events(),audio:window.__qaAudio||[]};})()`;
+const snapshotExpression=`(()=>{const s=__HON_VIET__.getState();return {state:{mode:s.mode,battleId:s.battleId,round:s.round,actionCount:s.actionCount,currentId:s.currentId,auto:s.auto,speed:s.speed,sound:s.sound},units:__HON_VIET__.getUnits(),dataset:{...document.documentElement.dataset},paints:__HV_BATTLE_ASSET_QA.paints(),cache:__HV_BATTLE_ASSET_QA.inspect(),events:__HV_BATTLE_ASSET_QA.events(),movement:window.__HV_SKILL_MOVEMENT_QA?.events?.()||[],audio:window.__qaAudio||[]};})()`;
 export async function run(){
   const out=resolve('evidence/browser');mkdirSync(out,{recursive:true});
   const browser=await startBrowser();
@@ -87,8 +87,20 @@ export async function run(){
         run.exceptions=page.events.filter(e=>e.method==='Runtime.exceptionThrown');
         run.httpErrors=page.events.filter(e=>e.method==='Network.responseReceived'&&e.params.response.status>=400).map(e=>({url:e.params.response.url,status:e.params.response.status}));
         run.networkFailures=page.events.filter(e=>e.method==='Network.loadingFailed').map(e=>e.params);
-        run.ok=Object.keys(run.coverage).length===wanted.length&&run.exceptions.length===0&&run.final.audio.some(a=>a.state==='running'&&a.peak>0)&&run.samples.some(s=>s.events.some(e=>e.type==='sfx:played'));
-        if(!run.ok)run.errors.push('Coverage incomplete or runtime/audio check failed; inspect captured evidence.');
+        const movementStarts=(run.final.movement||[]).filter(e=>e.type==='approach:start'&&Math.hypot(e.destination.x-e.home.x,e.destination.y-e.home.y)>1);
+        const targetTeamStarts=movementStarts.filter(e=>e.mode==='target-team');
+        const movementInsideCorridor=movementStarts.every(e=>{
+          const actor=run.final.units.find(unit=>unit.id===e.actorId);
+          const opponents=actor?run.final.units.filter(unit=>unit.team!==actor.team):[];
+          if(!actor||!opponents.length)return false;
+          const enemyCenterX=opponents.reduce((sum,unit)=>sum+(unit.baseX??unit.x),0)/opponents.length;
+          const dir=Math.sign(enemyCenterX-e.home.x)||1;
+          const enemyFrontX=opponents.reduce((front,unit)=>dir>0?Math.min(front,unit.baseX??unit.x):Math.max(front,unit.baseX??unit.x),opponents[0].baseX??opponents[0].x);
+          return dir*(e.destination.x-e.home.x)>=-1&&dir*(enemyFrontX-e.destination.x)>0;
+        });
+        run.movement={movedStarts:movementStarts.length,targetTeamStarts:targetTeamStarts.length,insideCombatCorridor:movementInsideCorridor};
+        run.ok=Object.keys(run.coverage).length===wanted.length&&run.exceptions.length===0&&run.final.audio.some(a=>a.state==='running'&&a.peak>0)&&run.samples.some(s=>s.events.some(e=>e.type==='sfx:played'))&&movementStarts.length>0&&targetTeamStarts.length>0&&movementInsideCorridor;
+        if(!run.ok)run.errors.push('Coverage, runtime/audio, or target-driven movement check failed; inspect captured evidence.');
       }catch(error){run.ok=false;run.errors.push(String(error.stack||error));try{await page.screenshot(join(out,name+'-failure.png'));run.failure=await page.evaluate('({url:location.href,title:document.title,text:document.body.innerText.slice(0,1000)})');}catch{}run.exceptions=page.events.filter(e=>e.method==='Runtime.exceptionThrown');}
       finally{await page.close();writeFileSync(join(out,'report.json'),JSON.stringify(report,null,2));}
     }
