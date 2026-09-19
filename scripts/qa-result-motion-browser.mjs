@@ -58,6 +58,61 @@ export async function run() {
         await page.wait('__HON_VIET__.getState().mode === "battle" && !document.getElementById("integratedResultV6").classList.contains("show")', 10000);
         run.defeatConfirm = await page.evaluate('({mode:__HON_VIET__.getState().mode,visible:document.getElementById("integratedResultV6").classList.contains("show")})');
 
+        // Prove the real authored Run/Idle/Fall atlases, not only the generic
+        // default-roster fallback. Lục Ảnh covers the compact atlas path;
+        // Linh Đồng covers the large-atlas readiness/resized path.
+        run.authored = {};
+        const authoredCases = [
+          ['luc-anh', { id:'luc_anh', sourceId:'luc_anh', name:'Lục Ảnh', damage:9999, kills:3, hp:100, maxHp:100, alive:true, slot:0 }, 'luc_anh'],
+          ['linh-dong', { id:'linh_dong', sourceId:'hero_splus_linh_dong', name:'Linh Đồng', damage:9999, kills:3, hp:100, maxHp:100, alive:true, slot:0 }, 'linh_dong']
+        ];
+        for (const [caseName, hero, expectedHero] of authoredCases) {
+          const snapshot = { player:[hero], enemy:[], rewards:[] };
+          const encoded = JSON.stringify(snapshot);
+          const item = { screenshots:[] };
+          run.authored[caseName] = item;
+
+          await page.evaluate('window.__hideIntegratedResultV6?.()');
+          await page.evaluate('window.__showIntegratedResultV6(true,' + encoded + ')');
+          await page.wait(`(()=>{const q=__HV_RESULT_MOTION_QA.state(),c=document.querySelector("#integratedResultV6 .irv-hero.run");if(q.hero!==${JSON.stringify(expectedHero)}||q.generic||q.phase!=="run"||q.runFrames<8||!c)return false;const r=c.getBoundingClientRect();return r.right>0&&r.left<innerWidth&&r.bottom>0&&r.top<innerHeight;})()`, 12000);
+          item.victoryRun = await page.evaluate('__HV_RESULT_MOTION_QA.state()');
+          item.runRect = await page.evaluate(`(()=>{const c=document.querySelector("#integratedResultV6 .irv-hero.run"),r=c.getBoundingClientRect();return {left:r.left,right:r.right,top:r.top,bottom:r.bottom,opacity:getComputedStyle(c).opacity,viewport:[innerWidth,innerHeight]};})()`);
+          await page.screenshot(resolve(out, name + '-' + caseName + '-victory-run.png'));
+          item.screenshots.push(name + '-' + caseName + '-victory-run.png');
+
+          await page.wait(`__HV_RESULT_MOTION_QA.state().hero===${JSON.stringify(expectedHero)} && __HV_RESULT_MOTION_QA.state().phase==="idle" && __HV_RESULT_MOTION_QA.state().idleFrames>=4`, 12000);
+          item.victoryIdle = await page.evaluate('__HV_RESULT_MOTION_QA.state()');
+          await page.screenshot(resolve(out, name + '-' + caseName + '-victory-idle.png'));
+          item.screenshots.push(name + '-' + caseName + '-victory-idle.png');
+
+          await page.evaluate('window.__hideIntegratedResultV6?.()');
+          await page.evaluate('window.__showIntegratedResultV6(false,' + encoded + ')');
+          await page.wait(`__HV_RESULT_MOTION_QA.state().hero===${JSON.stringify(expectedHero)} && !__HV_RESULT_MOTION_QA.state().generic && __HV_RESULT_MOTION_QA.state().phase==="fall" && __HV_RESULT_MOTION_QA.state().fallFrames>=5`, 12000);
+          item.defeatFall = await page.evaluate('__HV_RESULT_MOTION_QA.state()');
+          await page.screenshot(resolve(out, name + '-' + caseName + '-defeat-fall.png'));
+          item.screenshots.push(name + '-' + caseName + '-defeat-fall.png');
+
+          await page.wait(`__HV_RESULT_MOTION_QA.state().hero===${JSON.stringify(expectedHero)} && __HV_RESULT_MOTION_QA.state().phase==="fall-hold"`, 15000);
+          const authoredHeldA = await page.evaluate('__HV_RESULT_MOTION_QA.state()');
+          await sleep(550);
+          const authoredHeldB = await page.evaluate('__HV_RESULT_MOTION_QA.state()');
+          item.defeatHold = { first:authoredHeldA, after550ms:authoredHeldB };
+          await page.screenshot(resolve(out, name + '-' + caseName + '-defeat-hold.png'));
+          item.screenshots.push(name + '-' + caseName + '-defeat-hold.png');
+          await page.evaluate('window.__hideIntegratedResultV6?.()');
+
+          item.ok =
+            item.victoryRun.generic === false &&
+            item.victoryRun.runFrames >= 8 &&
+            item.runRect.right > 0 && item.runRect.left < item.runRect.viewport[0] &&
+            item.victoryIdle.phase === 'idle' && item.victoryIdle.idleFrames >= 4 &&
+            authoredHeldA.generic === false &&
+            authoredHeldA.fallCycles === 1 &&
+            authoredHeldA.lastFallFrame === authoredHeldA.expectedFallLast &&
+            authoredHeldB.fallFrames === authoredHeldA.fallFrames &&
+            authoredHeldB.lastFallFrame === authoredHeldA.lastFallFrame;
+        }
+
         run.exceptions = page.events.filter(event => event.method === 'Runtime.exceptionThrown');
         run.httpErrors = page.events.filter(event => event.method === 'Network.responseReceived' && event.params.response.status >= 400).map(event => ({ url: event.params.response.url, status: event.params.response.status }));
         run.resultAssetErrors = run.httpErrors.filter(item => /result-|characters|battle-runtime/.test(item.url));
@@ -71,6 +126,7 @@ export async function run() {
           (heldA.generic ? run.defeatRoot.transform !== 'none' : run.defeatRoot.transform === 'none') &&
           run.defeatRoot.confirmRect?.w >= 44 && run.defeatRoot.confirmRect?.h >= 44 &&
           run.victoryConfirm.mode === 'battle' && run.defeatConfirm.mode === 'battle' &&
+          Object.values(run.authored).every(item => item.ok) &&
           run.exceptions.length === 0 && run.resultAssetErrors.length === 0;
         if (!run.ok) run.errors.push('Result motion or interaction acceptance failed; inspect report and screenshots.');
       } catch (error) {
