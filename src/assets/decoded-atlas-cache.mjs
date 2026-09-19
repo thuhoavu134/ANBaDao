@@ -61,6 +61,9 @@ export function downsampleDecodedAtlas(image, scale, makeCanvas) {
 export function createDecodedAtlasCache(options = {}) {
   const maxBytes = options.maxBytes ?? 128 * 1024 * 1024;
   const maxLoading = options.maxLoading ?? 2;
+  if (!(maxBytes > 0) || !Number.isInteger(maxLoading) || maxLoading < 1) {
+    throw new RangeError('Atlas cache requires a positive budget and loading limit');
+  }
   const makeImage = options.makeImage || (() => new Image());
   const makeCanvas = options.makeCanvas || (() => {
     try {
@@ -69,80 +72,77 @@ export function createDecodedAtlasCache(options = {}) {
     return null;
   });
   const log = options.log || (message => { try { console.warn(message); } catch (_) {} });
-  const entries = new Map();
-  const failed = new Map();
-  const logged = new Set();
-  let bytes = 0;
+  const entries = new Map(), queued = new Map(), failed = new Map(), logged = new Set();
+  const rank = priority => ({ critical: 0, visible: 1, prefetch: 2, background: 3 }[priority] ?? 1);
+  let bytes = 0, draining = false, drainScheduled = false;
 
   function logOnce(key, message) {
     if (logged.has(key)) return;
     logged.add(key);
     log(message);
   }
-
   function loadingCount() {
     let count = 0;
     for (const entry of entries.values()) if (entry.loading) count += 1;
     return count;
   }
-
+  function lookup(src) { return entries.get(src) || queued.get(src); }
   function inspect() {
     return {
-      bytes,
-      maxBytes,
-      maxLoading,
-      loading: loadingCount(),
+      bytes, maxBytes, maxLoading, loading: loadingCount(), queued: queued.size,
       failed: failed.size,
-      entries: Array.from(entries, ([src, entry]) => ({
-        src,
-        bytes: entry.bytes,
-        width: entry.width,
-        height: entry.height,
-        scale: entry.scale || 1,
-        loading: entry.loading,
-        state: entry.state,
+      entries: Array.from([...entries, ...queued], ([src, entry]) => ({
+        src, bytes: entry.bytes, width: entry.width, height: entry.height,
+        scale: entry.scale || 1, loading: entry.loading, state: entry.state,
+        queued: queued.has(src), pins: entry.pins.size,
         scope: Array.from(entry.scopes).join(',')
       }))
     };
   }
-
-  function releaseSrc(src) {
-    const entry = entries.get(src);
-    if (!entry) return;
-    entries.delete(src);
-    bytes -= entry.bytes;
+  function scheduleDrain() {
+    if (drainScheduled) return;
+    drainScheduled = true;
+    queueMicrotask(() => { drainScheduled = false; drain(); });
+  }
+  function releaseSrc(src, reason = new Error('Atlas request cancelled'), force = false) {
+    const entry = lookup(src);
+    if (!entry || (!force && entry.pins.size)) return false;
+    queued.delete(src);
+    if (entries.delete(src)) bytes -= entry.bytes;
+    if (!entry.settled) {
+      entry.settled = true;
+      entry.reject(reason);
+    }
     const image = entry.image;
     if (image) {
-      image.onload = null;
-      image.onerror = null;
+      image.onload = null; image.onerror = null;
       if (image.removeAttribute) image.removeAttribute('src');
       else if ('src' in image) image.src = '';
+      // Downsampled canvases otherwise retain their backing stores until GC.
+      else if (image.__hvAtlasScale) { image.width = 0; image.height = 0; }
     }
+    scheduleDrain();
+    return true;
   }
-
   function evictUntil(need) {
-    while (bytes + need > maxBytes) {
-      const oldest = Array.from(entries).find(([, entry]) => !entry.loading);
-      if (!oldest) return false;
-      releaseSrc(oldest[0]);
+    if (bytes + need <= maxBytes) return true;
+    const candidates = Array.from(entries).filter(([, entry]) => !entry.loading && !entry.pins.size)
+      .sort((a, b) => rank(b[1].priority) - rank(a[1].priority));
+    // Do not discard useful images if protected/in-flight images still prevent admission.
+    if (candidates.reduce((sum, [, entry]) => sum + entry.bytes, 0) < bytes + need - maxBytes) return false;
+    for (const [src] of candidates) {
+      releaseSrc(src);
+      if (bytes + need <= maxBytes) return true;
     }
-    return bytes + need <= maxBytes;
+    return false;
   }
-
   function liveHandle(src) {
     return {
-      get state() {
-        if (failed.has(src)) return 'failed';
-        const entry = entries.get(src);
-        return entry ? entry.state : 'idle';
-      },
-      get image() {
-        if (failed.has(src)) return null;
-        return entries.get(src)?.image || null;
-      },
+      get state() { return failed.has(src) ? 'failed' : lookup(src)?.state || 'idle'; },
+      get image() { return failed.has(src) ? null : lookup(src)?.image || null; },
       get error() { return failed.get(src); },
       get promise() {
-        const entry = entries.get(src);
+        const entry = lookup(src);
         if (entry?.promise) return entry.promise;
         if (failed.has(src)) return Promise.reject(failed.get(src));
         return Promise.resolve(null);
@@ -150,25 +150,75 @@ export function createDecodedAtlasCache(options = {}) {
       key: src
     };
   }
-
+  function start(entry) {
+    const { src, cost, width, height } = entry;
+    queued.delete(src); entries.set(src, entry);
+    entry.bytes = cost; entry.loading = true; entry.state = 'loading'; bytes += cost;
+    function fail(reason) {
+      if (entries.get(src) !== entry) return;
+      const error = String(reason || 'load failed');
+      failed.set(src, error); logOnce(src, error);
+      releaseSrc(src, new Error(error), true);
+    }
+    try {
+      const image = makeImage();
+      entry.image = image; image.decoding = 'async';
+      image.onerror = () => fail('network');
+      image.onload = () => {
+        if (entries.get(src) !== entry) return;
+        if (image.naturalWidth !== width || image.naturalHeight !== height) {
+          fail(`dimension ${image.naturalWidth}x${image.naturalHeight} != ${width}x${height}`);
+          return;
+        }
+        try {
+          const scale = atlasDecodeScale(cost, maxBytes);
+          const drawable = downsampleDecodedAtlas(image, scale, makeCanvas);
+          if (drawable !== image) {
+            bytes -= entry.bytes;
+            entry.bytes = Math.max(1, Math.round(cost * scale * scale));
+            bytes += entry.bytes; entry.scale = scale;
+            entry.width = drawable.width || Math.round(width * scale);
+            entry.height = drawable.height || Math.round(height * scale);
+            image.onload = null; image.onerror = null;
+            if (image.removeAttribute) image.removeAttribute('src');
+            else image.src = '';
+            entry.image = drawable;
+          }
+          entry.loading = false; entry.state = 'ready'; entry.settled = true;
+          entry.resolve(liveHandle(src));
+          // Promise consumers get a chance to observe readiness before queue admission.
+          scheduleDrain();
+        } catch (error) { fail(error?.message || error); }
+      };
+      image.src = src;
+    } catch (error) { fail(error?.message || error); }
+  }
+  function drain() {
+    if (draining) return;
+    draining = true;
+    try {
+      const waiting = Array.from(queued.values()).sort((a, b) => rank(a.priority) - rank(b.priority));
+      for (const entry of waiting) {
+        if (loadingCount() >= maxLoading) break;
+        if (queued.get(entry.src) !== entry || !evictUntil(entry.cost)) continue;
+        start(entry);
+      }
+    } finally { draining = false; }
+  }
   function reserve(clip, opts = {}) {
-    const scope = opts.scope || 'default';
-    const priority = opts.priority || 'visible';
+    const scope = opts.scope || 'default', priority = opts.priority || 'visible';
     const src = clipSource(clip);
     if (!src) return { state: 'failed', image: null, error: 'missing src', key: src };
-    if (failed.has(src)) {
-      return liveHandle(src);
-    }
-    let entry = entries.get(src);
+    if (failed.has(src)) return liveHandle(src);
+    let entry = lookup(src);
     if (entry) {
-      entries.delete(src);
-      entries.set(src, entry);
+      if (entries.has(src)) { entries.delete(src); entries.set(src, entry); }
       entry.scopes.add(scope);
-      entry.priority = priority;
+      if (rank(priority) < rank(entry.priority)) entry.priority = priority;
+      if (opts.pin != null) entry.pins.set(opts.pin, scope);
       return liveHandle(src);
     }
-    const cellW = Number(clip.cellW ?? clip.w);
-    const cellH = Number(clip.cellH ?? clip.h);
+    const cellW = Number(clip.cellW ?? clip.w), cellH = Number(clip.cellH ?? clip.h);
     const cols = Number(clip.cols);
     const rows = Number(clip.rows > 0 ? clip.rows : Math.ceil(Number(clip.frames) / cols));
     const width = Number(clip.atlasWidth > 0 ? clip.atlasWidth : cols * cellW);
@@ -176,94 +226,42 @@ export function createDecodedAtlasCache(options = {}) {
     const cost = atlasDecodedBytes({ ...clip, cellW, cellH, cols, rows, atlasWidth: width, atlasHeight: height });
     if (!Number.isSafeInteger(cost) || cost <= 0 || cost > maxBytes) {
       const error = `decodedBytes ${cost} exceeds budget maxBytes ${maxBytes}`;
-      failed.set(src, error);
-      logOnce(src, error);
+      failed.set(src, error); logOnce(src, error);
       return liveHandle(src);
     }
-    if (loadingCount() >= maxLoading) return liveHandle(src);
-    if (!evictUntil(cost)) return liveHandle(src);
-    const image = makeImage();
-    let resolve;
-    let reject;
+    let resolve, reject;
     const promise = new Promise((ok, err) => { resolve = ok; reject = err; });
     promise.catch(() => {});
-    entry = {
-      image,
-      bytes: cost,
-      width,
-      height,
-      scale: 1,
-      loading: true,
-      state: 'loading',
-      scopes: new Set([scope]),
-      priority,
-      src,
-      promise,
-      resolve,
-      reject
-    };
-    entries.set(src, entry);
-    bytes += cost;
-    function fail(reason) {
-      if (entries.get(src) !== entry) return;
-      const error = String(reason || 'load failed');
-      failed.set(src, error);
-      logOnce(src, error);
-      entry.state = 'failed';
-      releaseSrc(src);
-      entry.reject?.(error);
-    }
-    image.decoding = 'async';
-    image.onerror = () => fail('network');
-    image.onload = () => {
-      if (entries.get(src) !== entry) return;
-      if (image.naturalWidth !== width || image.naturalHeight !== height) {
-        fail(`dimension ${image.naturalWidth}x${image.naturalHeight} != ${width}x${height}`);
-        return;
-      }
-      const scale = atlasDecodeScale(cost, maxBytes);
-      const drawable = downsampleDecodedAtlas(image, scale, makeCanvas);
-      if (drawable !== image) {
-        bytes -= entry.bytes;
-        entry.bytes = Math.max(1, Math.round(cost * scale * scale));
-        bytes += entry.bytes;
-        entry.scale = scale;
-        entry.width = drawable.width || Math.round(width * scale);
-        entry.height = drawable.height || Math.round(height * scale);
-        image.onload = null;
-        image.onerror = null;
-        if (image.removeAttribute) image.removeAttribute('src');
-        else image.src = '';
-        entry.image = drawable;
-      }
-      entry.loading = false;
-      entry.state = 'ready';
-      entry.resolve?.(liveHandle(src));
-    };
-    image.src = src;
+    entry = { src, cost, width, height, bytes: 0, scale: 1, image: null,
+      loading: false, state: 'idle', settled: false, scopes: new Set([scope]),
+      pins: new Map(), priority, promise, resolve, reject };
+    if (opts.pin != null) entry.pins.set(opts.pin, scope);
+    // Keep the legacy idle/null handle while queued, but its promise stays pending.
+    queued.set(src, entry);
+    drain();
     return liveHandle(src);
   }
-
-  function release(key) {
-    releaseSrc(key);
+  function unpin(key, owner) {
+    const entry = lookup(key);
+    if (!entry) return false;
+    const removed = entry.pins.delete(owner);
+    if (removed) scheduleDrain();
+    return removed;
   }
-
+  function release(key) { return releaseSrc(key); }
   function clearScope(scope) {
-    for (const [src, entry] of Array.from(entries)) {
+    // Do not pump the queue mid-clear: all queued work in this scope is cancelled first.
+    for (const [src, entry] of [...entries, ...queued]) {
       entry.scopes.delete(scope);
-      if (entry.scopes.size === 0) releaseSrc(src);
+      for (const [owner, pinScope] of entry.pins) if (pinScope === scope) entry.pins.delete(owner);
+      if (entry.scopes.size === 0) releaseSrc(src, new Error('Atlas scope cancelled: ' + scope), true);
     }
+    scheduleDrain();
   }
-
-  function allowRetry(src) {
-    failed.delete(src);
-    logged.delete(src);
-  }
-
+  function allowRetry(src) { failed.delete(src); logged.delete(src); }
   function clear() {
-    for (const src of Array.from(entries.keys())) releaseSrc(src);
-    failed.clear();
+    for (const src of [...entries.keys(), ...queued.keys()]) releaseSrc(src, new Error('Atlas cache cleared'), true);
+    failed.clear(); logged.clear();
   }
-
-  return { reserve, release, clearScope, clear, allowRetry, inspect, atlasDecodedBytes, atlasDecodeScale };
+  return { reserve, release, unpin, clearScope, clear, allowRetry, inspect, atlasDecodedBytes, atlasDecodeScale };
 }

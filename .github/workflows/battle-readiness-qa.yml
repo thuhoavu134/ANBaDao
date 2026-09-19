@@ -1,0 +1,48 @@
+name: Battle readiness QA
+on:
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+concurrency:
+  group: battle-readiness-qa-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  readiness:
+    if: github.head_ref == 'fix/battle-asset-readiness-20260918'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci
+      - name: Build exact branch head
+        run: npm run build
+      - name: Browser readiness checks
+        run: |
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
+          "$CHROME_PATH" --version
+          GITHUB_SHA="$(git rev-parse HEAD)" dbus-run-session -- node scripts/qa-battle-readiness-browser.mjs
+      - name: Campaign shell and repeated iframe checks
+        run: |
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
+          dbus-run-session -- node scripts/qa-battle-readiness-host.mjs
+      - name: Record revision and final payload
+        if: always()
+        run: |
+          mkdir -p evidence
+          git rev-parse HEAD > evidence/revision.txt
+          if test -f dist/battle-readiness-assets.json; then cp dist/battle-readiness-assets.json evidence/; fi
+          if test -f dist/battle.html; then tar -czf evidence/battle-html.tar.gz dist/battle.html dist/index.html; fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: battle-readiness-evidence
+          path: evidence/
+          retention-days: 7
+          compression-level: 0

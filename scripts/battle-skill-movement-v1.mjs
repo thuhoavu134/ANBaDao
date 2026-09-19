@@ -10,6 +10,7 @@ const __hvSkillMovement = (${createSkillCastMovement.toString()})({
   getUnits: () => units,
   getWorld: () => WORLD,
   getState: () => state,
+  actionSequenceFor: actor => actor._hvAssetLease?.taskId ?? state.actionCount,
   heroKeyFor: actor => isLucAnh(actor) ? 'luc-anh' : isLinhDong(actor) ? 'linh-dong' : isBachDien(actor) ? 'bach-dien' : isThayMoBasicQa(actor) ? 'thay-mo' : '',
   approachMs: () => TIMING.approach,
   returnMs: () => TIMING.return,
@@ -50,9 +51,6 @@ export function patchBattleSkillMovement(input) {
       (_match, opening) => opening + '\n      if(!await __hvSkillMovement.approach(actor,action,target,battleId))return;',
       flag + ' cast entry');
   }
-
-  // Generic presentation may also carry an explicit per-skill policy. Preserve
-  // the legacy path for all unmapped heroes (including authored melee dashes).
   const genericStartText = '      const profileName=combatPresentationProfileFor(actor,action);';
   const genericEndText = '      const releaseDuration = weaponFlightDuration(actor);';
   const genericStart = html.indexOf(genericStartText);
@@ -66,14 +64,10 @@ export function patchBattleSkillMovement(input) {
     '      } else {', legacyMovement, '      }', ''
   ].join('\n');
   html = html.slice(0, genericStart) + replacement + html.slice(genericEnd);
-
-  // Thay Mo used to teleport home during impact recovery, before the shared
-  // return section. Leave him at the cast point until recovery has finished.
   html = replaceRequired(html,
     'thayMoRangedFx=null; actor.x=origin.x; actor.y=origin.y; setUnitState(actor,"idle",800);',
     'thayMoRangedFx=null; // Movement owner returns only after impact recovery.',
     'Thay Mo premature home reset');
-
   const recovery = html.indexOf("    phase1Trace?.marker('recovery',");
   const returnStart = html.lastIndexOf('    if (actor.hp > 0) {', recovery);
   if (recovery < 0 || returnStart < 0) throw new Error('Skill movement patch: shared return boundary missing');
@@ -91,7 +85,6 @@ export function patchBattleSkillMovement(input) {
   return html;
 }
 
-// Run late in build-static, after canonical hero bridges, BEFORE iframe sync.
 const target = join(process.cwd(), 'dist', 'battle.html');
 if (process.env.HV_SKIP_SKILL_MOVEMENT_BUILD_PATCH !== '1' && existsSync(target)) {
   const patched = patchBattleSkillMovement(readFileSync(target, 'utf8'));

@@ -1,0 +1,33 @@
+{
+  "schema": "luc-than-battle-readiness-evidence/v1",
+  "tested_revision": "ac5fe07f2fa057e63ec78075429e92bd137d9488",
+  "gameplay_revision": "93767b916c5f4c26033a2be4932a0badd2a9b2c8",
+  "ci": {"run":35379332544,"build":"success","test":"success"},
+  "browser": {"run":35379332514,"artifact":10561462672,"result":"success"},
+  "focused_tests": {"passed":85,"failed":0,"cancelled":0,"skipped":0},
+  "standalone": [
+    {"viewport":[1280,800],"dpr":1,"players":6,"enemies":6,"actions":24,"round":3,"observed_speeds":[1,2,3],"vfx":["linh-dong:atkVfx","linh-dong:ultimateVfx","bach-dien:atkVfx","bach-dien:ultimateVfx"],"confirmed_sfx":["linh-dong-atk","linh-dong-ult","bach-dien-atk","bach-dien-ult"],"javascript_exceptions":0,"gameplay_asset_http_errors":0,"favicon_404":2},
+    {"viewport":[390,844],"dpr":2,"players":6,"enemies":6,"actions":23,"round":3,"observed_speeds":[1,2,3],"vfx":["linh-dong:atkVfx","linh-dong:ultimateVfx","bach-dien:atkVfx","bach-dien:ultimateVfx"],"confirmed_sfx":["linh-dong-atk","linh-dong-ult","bach-dien-atk","bach-dien-ult"],"javascript_exceptions":0,"gameplay_asset_http_errors":0,"favicon_404":1}
+  ],
+  "host": {
+    "viewport":[390,844],"dpr":2,"guest_save":"isolated local browser",
+    "steps":["guest login","hub","campaign","formation via visible controls","launch iframe","return hub","launch second iframe","return hub"],
+    "iterations_passed":2,"players":6,"enemies":4,"actions_observed_per_iteration":4,
+    "confirmed_sfx_each_iteration":["linh-dong-atk","bach-dien-atk"],
+    "vfx_each_iteration":["linh-dong:atkVfx","bach-dien:atkVfx"],
+    "javascript_exceptions":0,"gameplay_asset_http_errors":0,
+    "non_gameplay_http_observations":["static preview /api/health returned 404"]
+  },
+  "cache_peak_reserved_bytes":130838400,
+  "cache_budget_bytes":134217728,
+  "total_browser_ram":"not measured",
+  "fps":"not measured",
+  "physical_iPhone_Safari":"not run",
+  "full_15_round_result_loop":"not verified",
+  "all_other_heroes_full_kits":"not verified",
+  "production":"not deployed by this task",
+  "screenshots_reviewed":["browser/mobile-linh-dong-ultimateVfx.png","browser/desktop-bach-dien-ultimateVfx.png","host/battle-1-start.png","host/battle-2-effects.png"],
+  "visual_limit":"Functional asset presence only; not a complete layout, scale or animation-accuracy sign-off.",
+  "artifact_archive":"LucThan-PR162-verified-evidence.zip",
+  "artifact_sha256":"e73459d77198114ea2060c3b28caecd939d5aa82dbdb2ba7e2ec426b1adb60f1"
+}

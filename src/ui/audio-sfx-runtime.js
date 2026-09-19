@@ -46,6 +46,28 @@
     loads.set(event, task);
     return task;
   }
+  // HV_SFX_READINESS_V1: decoding is not playback and is safe before release.
+  async function prepare(event, options = {}) {
+    if (disposed || options.signal?.aborted || !files[event]) return false;
+    if (parentBus) return parentBus.prepare ? parentBus.prepare(event, options) : false;
+    let timer, onAbort;
+    try {
+      await new Promise((resolve, reject) => {
+        onAbort = () => reject(new Error('SFX preparation cancelled'));
+        options.signal?.addEventListener('abort', onAbort, { once: true });
+        if (options.signal?.aborted) { onAbort(); return; }
+        timer = setTimeout(() => reject(new Error('SFX preparation timeout')), Math.max(1, Number(options.timeoutMs) || 2000));
+        load(event).then(resolve, reject);
+      });
+      return !disposed && !options.signal?.aborted;
+    } catch (error) {
+      stamp('sfxPrepareError', error.message || error);
+      return false;
+    } finally {
+      clearTimeout(timer);
+      if (onAbort) options.signal?.removeEventListener('abort', onAbort);
+    }
+  }
   function report(error) {
     stamp('sfxError', error.message || error);
     console.warn('[HonViet SFX]', error);
@@ -97,6 +119,7 @@
       play: (event, options = {}) => ownsSession() && event !== 'forge-reveal'
         ? play(event, { ...options, group: ['ui', 'select'].includes(event) ? 'ui' : 'combat', battleSession: session })
         : Promise.resolve(false),
+      prepare: (event, options = {}) => ownsSession() ? prepare(event, options) : Promise.resolve(false),
       unlock: () => ownsSession() ? unlock() : Promise.resolve(false),
       stopCombat: () => { if (ownsSession()) stopCombat(); },
       setCombatEnabled: enabled => { if (ownsSession()) setCombatEnabled(enabled); },
@@ -116,6 +139,8 @@
     }
   }
   async function play(event, options = {}) {
+    const requestedAt = Date.now();
+    if (options.signal?.aborted) return false;
     if (!isBattleActive()) return false;
     if (parentBus) return parentBus.play(event, options);
     if (!files[event]) return false;
@@ -135,6 +160,9 @@
     const ticket = combatEpoch;
     try {
       const buffer = await load(event);
+      if (options.signal?.aborted || (Number.isFinite(options.maxDelayMs) && Date.now() - requestedAt > options.maxDelayMs)) {
+        stamp('sfxLastResult', 'expired'); return false;
+      }
       if (disposed || (options.battleSession !== undefined && options.battleSession !== battleSession)) return false;
       if (c.state !== 'running') return false;
       if (group === 'combat' && (!combatEnabled || ticket !== combatEpoch)) return false;
@@ -157,7 +185,7 @@
       return true;
     } catch (error) { report(error); return false; }
   }
-  window.HonVietSfx = { play, unlock, stopCombat, setCombatEnabled, createBattleChannel, endBattle, dispose, isBattleActive };
+  window.HonVietSfx = { play, prepare, unlock, stopCombat, setCombatEnabled, createBattleChannel, endBattle, dispose, isBattleActive };
   for (const event of ['pointerdown', 'touchend', 'keydown']) {
     document.addEventListener(event, () => { void unlock(); }, { capture: true, passive: true });
   }
