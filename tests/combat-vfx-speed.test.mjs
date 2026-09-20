@@ -20,21 +20,21 @@ test('legacy authored VFX owners use the shared VFX clock', () => {
   assert.match(source, /sourceElapsed=elapsed\/COMBAT_VFX_TIME_SCALE,frame=linhDongFrame/);
 });
 
-test('canonical Linh Dong compresses full VFX frames around impact instead of crawling through the source atlas', () => {
-  assert.match(linh, /impactOffset\+120,combatVfxMs\(recoveryWindow\)/);
+test('canonical Linh Dong Skill 1 has a dedicated 620ms VFX window', () => {
+  assert.match(linh, /fx\.kind==='atkVfx'[\s\S]*Math\.min\(recoveryWindow,620\)/);
   assert.match(linh, /sourceElapsed=\(vfxElapsed\/vfxDuration\)\*sourceDuration/);
   assert.match(linh, /if\(vfxElapsed>=vfxDuration\)\{linhDongFx=null;return;\}/);
 });
 
-test('Bach Dien VFX ends on its accelerated authored duration instead of holding the last frame', () => {
-  assert.match(bach, /const vfxDuration=combatVfxMs\(sourceVfxDuration\)/);
-  assert.match(bach, /sourceElapsed=vfxElapsed\/COMBAT_VFX_TIME_SCALE/);
+test('Bach Dien Skill 1 has a dedicated 560ms VFX window', () => {
+  assert.match(bach, /fx\.kind==='atkVfx'\?Math\.min\(560,/);
+  assert.match(bach, /sourceElapsed=\(vfxElapsed\/vfxDuration\)\*sourceVfxDuration/);
   assert.match(bach, /if\(vfxElapsed>=vfxDuration\)\{bachDienFx=null;return;\}/);
 });
 
 test('generated battle keeps the VFX speed contract after all build patches', () => {
   const dist = readFileSync('dist/battle.html','utf8');
   assert.match(dist, /const COMBAT_VFX_TIME_SCALE = 0\.74;/);
-  assert.match(dist, /impactOffset\+120,combatVfxMs\(recoveryWindow\)/);
-  assert.match(dist, /sourceElapsed=vfxElapsed\/COMBAT_VFX_TIME_SCALE/);
+  assert.match(dist, /fx\.kind==='atkVfx'[\s\S]*Math\.min\(recoveryWindow,620\)/);
+  assert.match(dist, /fx\.kind==='atkVfx'\?Math\.min\(560,/);
 });
