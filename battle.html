@@ -3172,6 +3172,10 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     return: 500,
     turnRest: 480
   });
+  // VFX-only pacing: keep movement/character states unchanged, but make authored
+  // projectile/impact/field atlases read faster and stop lingering into the next turn.
+  const COMBAT_VFX_TIME_SCALE = 0.74;
+  const combatVfxMs = milliseconds => Math.max(1, Math.round((Number(milliseconds) || 0) * COMBAT_VFX_TIME_SCALE));
   // v3.24.8 — shared presentation contract for every current and future hero.
   const COMBAT_PRESENTATION_STANDARD = Object.freeze({
     version: "1.0.0", hpTweenMs: 220,
@@ -3745,7 +3749,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     drawDinhLoiAtlasFrame(context,DINH_LOI_IMAGES[key],frame,0,0,620,348,{baseline:42});context.restore();return true;
   }
   let dinhLoiFx=null;
-  function startDinhLoiFx(kind,actor,target,duration=1000){dinhLoiFx={kind,actorId:actor?.id,targetId:target?.id||null,started:performance.now(),duration};}
+  function startDinhLoiFx(kind,actor,target,duration=1000){dinhLoiFx={kind,actorId:actor?.id,targetId:target?.id||null,started:performance.now(),duration:combatVfxMs(duration)};}
   function drawDinhLoiFx(context,time){
     const fx=dinhLoiFx;if(!fx)return;const elapsed=time-fx.started;if(elapsed<0||elapsed>=fx.duration){dinhLoiFx=null;return;}
     const actor=getUnit(fx.actorId),target=getUnit(fx.targetId);if(!actor)return;
@@ -3781,7 +3785,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
   function lucAnhFrame(key,elapsed,loop=false){const m=LUC_ANH_META[key],raw=Math.max(0,Math.floor(elapsed/Math.max(1,m.ms)));return loop?raw%m.frames:Math.min(m.frames-1,raw);}
   function drawLucAnhAtlas(context,key,frame,x,y,width,height,options={}){const m=LUC_ANH_META[key],image=LUC_ANH_IMAGES[key];if(!m||!image?.complete||image.naturalWidth<2)return false;const sx=(frame%LUC_ANH_COLS)*m.w,sy=Math.floor(frame/LUC_ANH_COLS)*m.h;context.save();context.translate(x,y);if(options.flip)context.scale(-1,1);context.globalAlpha=options.alpha??1;if(options.screen)context.globalCompositeOperation="screen";context.drawImage(image,sx,sy,m.w,m.h,-width*.5,-height+(options.baseline??46),width,height);context.restore();return true;}
   function drawLucAnhHero(context,unit,time){if(!isLucAnh(unit))return false;let key="idle",loop=true;if(unit.hp<=0){key="defeated";loop=false;}else if(unit.state==="hurt"){key="hurt";loop=false;}else if(unit.state==="run"){key="run";loop=true;}else if(unit.state==="attack"){key="attack";loop=false;}else if(unit.state==="skill1"){key="skill1";loop=false;}else if(unit.state==="ultimate"){key="ultimate";loop=false;}const meta=LUC_ANH_META[key],elapsed=key==="idle"?time:Math.max(0,time-(unit.stateStarted||time)),frame=lucAnhFrame(key,elapsed,loop);context.save();context.shadowColor="rgba(133,103,55,.34)";context.shadowBlur=["attack","skill1","ultimate"].includes(key)?15:5;drawLucAnhAtlas(context,key,frame,0,0,330,330,{baseline:48});context.restore();return true;}
-  function startLucAnhFx(kind,actor,target=null,duration=1000){lucAnhFx.push({kind,actorId:actor?.id,targetId:target?.id||null,team:actor?.team,started:performance.now(),duration});}
+  function startLucAnhFx(kind,actor,target=null,duration=1000){lucAnhFx.push({kind,actorId:actor?.id,targetId:target?.id||null,team:actor?.team,started:performance.now(),duration:combatVfxMs(duration)});}
   function drawLucAnhFx(context,time){lucAnhFx=lucAnhFx.filter(fx=>{const elapsed=time-fx.started;if(elapsed<0||elapsed>=fx.duration)return false;const actor=getUnit(fx.actorId);if(!actor)return false;const target=getUnit(fx.targetId),key=fx.kind,m=LUC_ANH_META[key],frame=lucAnhFrame(key,elapsed/fx.duration*(m.frames*m.ms),false),p=Math.max(0,Math.min(1,elapsed/fx.duration));
     if(key==="basicProjectile"&&target){const x=actor.x+(target.x-actor.x)*p,y=actor.y-78+(target.y-actor.y)*p;drawLucAnhAtlas(context,key,frame,x,y,300,206,{baseline:103,flip:actor.team===TEAM_ENEMY,alpha:.98});}
     else if(key==="basicImpact"&&target){drawLucAnhAtlas(context,key,frame,target.x,target.y,350,241,{baseline:120,screen:true,alpha:.96});}
@@ -3836,14 +3840,15 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
   }
   function startLinhDongFx(action,actor,target=null){
     const kind=action==='ultimate'?'ultimateVfx':'skill1Vfx';
-    const duration=LINH_DONG_META[kind].frames*LINH_DONG_META[kind].ms;
-    linhDongFx.push({kind,actorId:actor?.id,targetId:target?.id||null,started:performance.now(),duration});
+    const sourceDuration=LINH_DONG_META[kind].frames*LINH_DONG_META[kind].ms;
+    const duration=combatVfxMs(sourceDuration);
+    linhDongFx.push({kind,actorId:actor?.id,targetId:target?.id||null,started:performance.now(),duration,sourceDuration});
   }
   function drawLinhDongFx(context,time){
     linhDongFx=linhDongFx.filter(fx=>{
       const elapsed=time-fx.started;if(elapsed<0||elapsed>=fx.duration)return false;
       const actor=getUnit(fx.actorId);if(!actor)return false;
-      const target=getUnit(fx.targetId),frame=linhDongFrame(fx.kind,elapsed,false),p=Math.max(0,Math.min(1,elapsed/fx.duration));
+      const target=getUnit(fx.targetId),sourceElapsed=elapsed/COMBAT_VFX_TIME_SCALE,frame=linhDongFrame(fx.kind,sourceElapsed,false),p=Math.max(0,Math.min(1,elapsed/fx.duration));
       if(fx.kind==="skill1Vfx"){
         const foe=target||units.find(u=>u.team!==actor.team&&u.hp>0);
         if(!foe)return true;
@@ -6160,7 +6165,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
         const basicLabel=isVersionedBasic(actor)?"Basic":"Đánh thường";
         setStatus(`${actor.name} giữ vị trí phóng ảnh đăng`);dom.phaseLabel.textContent=`${basicLabel} • Tụ ảnh`;setUnitState(actor,"attack",LUC_ANH_META.attack.frames*LUC_ANH_META.attack.ms);playActionSound(actor,action);
         if(!await sleepVisualMilliseconds(900,battleId))return;startLucAnhFx("basicProjectile",actor,target,760);dom.phaseLabel.textContent=`${basicLabel} • Ảnh bay`;
-        if(!await sleepVisualMilliseconds(760,battleId))return;startLucAnhFx("basicImpact",actor,target,720);dom.phaseLabel.textContent="Va chạm • Ảnh đăng";
+        if(!await sleepVisualMilliseconds(combatVfxMs(760),battleId))return;startLucAnhFx("basicImpact",actor,target,720);dom.phaseLabel.textContent="Va chạm • Ảnh đăng";
       }else if(action==="skill"){
         setStatus(`${actor.name} xoay Đèn Kéo Quân`);dom.phaseLabel.textContent="Kỹ năng 1 • Kéo đèn";setUnitState(actor,"skill1",LUC_ANH_META.skill1.frames*LUC_ANH_META.skill1.ms);playActionSound(actor,action);
         if(!await sleepVisualMilliseconds(900,battleId))return;startLucAnhFx("skill1Vfx",actor,null,1650);dom.phaseLabel.textContent="Kỹ năng 1 • Sáu hình nhân nhập vị";
@@ -6194,7 +6199,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
         setStatus(`${actor.name} gióng Khiên Đồng Trấn Kích`);dom.phaseLabel.textContent="Đánh thường • Gióng khiên";setUnitState(actor,"attack",DINH_LOI_ACTION_MS);playActionSound(actor,action);
         if(!await sleepVisualMilliseconds(1550,battleId))return;
         startDinhLoiFx("basicProjectile",actor,target,650);dom.phaseLabel.textContent="Đánh thường • Hồi văn bay";
-        if(!await sleepVisualMilliseconds(650,battleId))return;
+        if(!await sleepVisualMilliseconds(combatVfxMs(650),battleId))return;
         startDinhLoiFx("basicImpact",actor,target,800);dom.phaseLabel.textContent="Va chạm • Trấn kích";
       }else if(action==="skill"){
         const castPoint=referenceCombatAnchor(actor,target,action);
@@ -6203,7 +6208,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
         setStatus(`${actor.name} khai mở Hồi Văn Hộ Trận`);dom.phaseLabel.textContent="Kỹ năng nâng cấp • Tụ lực";setUnitState(actor,"skill1",DINH_LOI_ACTION_MS);playActionSound(actor,action);
         if(!await sleepVisualMilliseconds(1500,battleId))return;
         startDinhLoiFx("skill1Wave",actor,target,700);dom.phaseLabel.textContent="Kỹ năng nâng cấp • Hồi văn truyền khiên";
-        if(!await sleepVisualMilliseconds(700,battleId))return;
+        if(!await sleepVisualMilliseconds(combatVfxMs(700),battleId))return;
         startDinhLoiFx("skill1Impact",actor,target,900);dom.phaseLabel.textContent="Va chạm • Hộ trận";
       }else{
         const castPoint=referenceCombatAnchor(actor,target,action);
@@ -6212,7 +6217,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
         setStatus(`${actor.name} gióng Đông Sơn Lôi Trận`);dom.phaseLabel.textContent="Tuyệt kỹ • Gióng trống";setUnitState(actor,"ultimate",DINH_LOI_ACTION_MS);playActionSound(actor,action);
         if(!await sleepVisualMilliseconds(1250,battleId))return;
         startDinhLoiFx("ultimateVfx",actor,null,1900);dom.phaseLabel.textContent="Tuyệt kỹ • Lôi trận phủ sân";
-        if(!await sleepVisualMilliseconds(1900,battleId))return;
+        if(!await sleepVisualMilliseconds(combatVfxMs(1900),battleId))return;
         startDinhLoiFx("ultimateImpact",actor,null,850);dom.phaseLabel.textContent="Va chạm • Đông Sơn chấn trận";
       }
     } else if (usesThayMoBasicQa) {
