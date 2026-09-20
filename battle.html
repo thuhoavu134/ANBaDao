@@ -8541,7 +8541,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
       state.currentId=actor.id; state.selectedAction="basic"; updateActorHud(actor);
       void performAction(actor,"basic",target); return true;
     },
-    getDinhLoiAssets:()=>Object.fromEntries(Object.entries(DINH_LOI_IMAGES).map(([key,image])=>[key,Boolean(image.complete&&image.naturalWidth>1)])),
+    getDinhLoiAssets:()=>Object.fromEntries(Object.keys(DINH_LOI_ASSET_NAMES).map((key)=>{const image=DINH_LOI_IMAGES[key];return [key,Boolean(image?.complete&&image.naturalWidth>1)];})),
     qaForceDinhLoiAction:async(action="basic")=>{
       const actor=units.find(isDinhLoi);if(!actor||actor.hp<=0||state.mode!=="battle")return false;
       const foes=living(actor.team===TEAM_PLAYER?TEAM_ENEMY:TEAM_PLAYER),friends=living(actor.team);if(!foes.length||!friends.length)return false;
