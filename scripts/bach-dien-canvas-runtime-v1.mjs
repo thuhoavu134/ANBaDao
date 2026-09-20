@@ -57,6 +57,7 @@ const clips = Object.fromEntries(Object.entries(bachDienMeta.clips).map(([key, c
 clips.hit = clips.hurt;
 clips.fall = clips.defeated;
 clips.atkVfx = clips.skill1Vfx;
+clips.attack = { ...clips.attack, ms: 22.667, fps: 44.1176470588, durationMs: 680 };
 
 const runtime = `${marker}
 const BACH_DIEN_CANONICAL_ID=${JSON.stringify(BACH_DIEN_CANONICAL_ID)};
