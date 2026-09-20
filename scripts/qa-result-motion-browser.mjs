@@ -82,6 +82,7 @@ export async function run() {
 
           await page.wait(`__HV_RESULT_MOTION_QA.state().hero===${JSON.stringify(expectedHero)} && __HV_RESULT_MOTION_QA.state().phase==="idle" && __HV_RESULT_MOTION_QA.state().idleFrames>=4`, 12000);
           item.victoryIdle = await page.evaluate('__HV_RESULT_MOTION_QA.state()');
+          item.victoryLayout = await page.evaluate(`(()=>{const hero=document.querySelector("#integratedResultV6 .irv-hero.idle"),card=document.querySelector("#integratedResultV6 .irv-card"),copy=document.querySelector("#integratedResultV6 .irv-result");if(!hero||!card||!copy)return null;const h=hero.getBoundingClientRect(),cr=card.getBoundingClientRect(),r=copy.getBoundingClientRect(),ctx=hero.getContext("2d"),data=ctx.getImageData(0,0,hero.width,hero.height).data;let minY=hero.height,maxY=-1,opaque=0;for(let y=0;y<hero.height;y++){for(let x=0;x<hero.width;x+=2){if(data[(y*hero.width+x)*4+3]>16){minY=Math.min(minY,y);maxY=Math.max(maxY,y);opaque++;}}}const opaqueTop=maxY>=0?h.top+(minY/hero.height)*h.height:h.top,opaqueBottom=maxY>=0?h.top+((maxY+1)/hero.height)*h.height:h.bottom;return {cardTop:cr.top,opaqueTop,opaqueBottom,wingOverlap:cr.top-opaqueTop,copyGap:r.top-opaqueBottom,opaqueSamples:opaque};})()`);
           await page.screenshot(resolve(out, name + '-' + caseName + '-victory-idle.png'));
           item.screenshots.push(name + '-' + caseName + '-victory-idle.png');
 
@@ -97,7 +98,7 @@ export async function run() {
           await sleep(550);
           const authoredHeldB = await page.evaluate('__HV_RESULT_MOTION_QA.state()');
           item.defeatHold = { first:authoredHeldA, after550ms:authoredHeldB };
-          item.defeatLayout = await page.evaluate(`(()=>{const hero=document.querySelector("#integratedResultV6 .irv-hero.fall"),copy=document.querySelector("#integratedResultV6 .irv-result");if(!hero||!copy)return null;const h=hero.getBoundingClientRect(),r=copy.getBoundingClientRect(),ctx=hero.getContext("2d"),data=ctx.getImageData(0,0,hero.width,hero.height).data;let minY=hero.height,maxY=-1,opaque=0;for(let y=0;y<hero.height;y++){for(let x=0;x<hero.width;x+=2){if(data[(y*hero.width+x)*4+3]>16){minY=Math.min(minY,y);maxY=Math.max(maxY,y);opaque++;}}}const opaqueTop=maxY>=0?h.top+(minY/hero.height)*h.height:h.top,opaqueBottom=maxY>=0?h.top+((maxY+1)/hero.height)*h.height:h.bottom;return {canvasBottom:h.bottom,resultTop:r.top,gap:r.top-opaqueBottom,opaqueTop,opaqueBottom,opaqueSamples:opaque};})()`);
+          item.defeatLayout = await page.evaluate(`(()=>{const hero=document.querySelector("#integratedResultV6 .irv-hero.fall"),card=document.querySelector("#integratedResultV6 .irv-card"),copy=document.querySelector("#integratedResultV6 .irv-result");if(!hero||!card||!copy)return null;const h=hero.getBoundingClientRect(),cr=card.getBoundingClientRect(),r=copy.getBoundingClientRect(),ctx=hero.getContext("2d"),data=ctx.getImageData(0,0,hero.width,hero.height).data;let minY=hero.height,maxY=-1,opaque=0;for(let y=0;y<hero.height;y++){for(let x=0;x<hero.width;x+=2){if(data[(y*hero.width+x)*4+3]>16){minY=Math.min(minY,y);maxY=Math.max(maxY,y);opaque++;}}}const opaqueTop=maxY>=0?h.top+(minY/hero.height)*h.height:h.top,opaqueBottom=maxY>=0?h.top+((maxY+1)/hero.height)*h.height:h.bottom;return {canvasBottom:h.bottom,cardTop:cr.top,resultTop:r.top,gap:r.top-opaqueBottom,wingOverlap:cr.top-opaqueTop,opaqueTop,opaqueBottom,opaqueSamples:opaque};})()`);
           await page.screenshot(resolve(out, name + '-' + caseName + '-defeat-hold.png'));
           item.screenshots.push(name + '-' + caseName + '-defeat-hold.png');
           await page.evaluate('window.__hideIntegratedResultV6?.()');
@@ -107,11 +108,14 @@ export async function run() {
             item.victoryRun.runFrames >= 8 &&
             item.runRect.right > 0 && item.runRect.left < item.runRect.viewport[0] &&
             item.victoryIdle.phase === 'idle' && item.victoryIdle.idleFrames >= 4 &&
+            item.victoryLayout?.wingOverlap >= 4 && item.victoryLayout?.copyGap >= 12 &&
             authoredHeldA.generic === false &&
             authoredHeldA.fallCycles === 1 &&
             authoredHeldA.lastFallFrame === authoredHeldA.expectedFallLast &&
             authoredHeldB.fallFrames === authoredHeldA.fallFrames &&
             authoredHeldB.lastFallFrame === authoredHeldA.lastFallFrame &&
+            item.defeatLayout?.opaqueTop <= item.defeatLayout?.cardTop + 12 &&
+            item.defeatLayout?.opaqueBottom >= item.defeatLayout?.cardTop + 16 &&
             item.defeatLayout?.gap >= 4;
         }
 

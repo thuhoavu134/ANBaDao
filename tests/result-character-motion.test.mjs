@@ -81,3 +81,9 @@ test('Victory Run waits for its atlas before starting the visible entry timer', 
   assert.ok(patch.includes('if(!runStarted)finishRun()'));
   assert.ok(patch.includes('current.classList.remove("irv-motion-run-active")'));
 });
+
+
+test('result heroes stay in the wing focus across victory and mobile defeat', () => {
+  assert.ok(patch.includes('irv-authored-motion.irv-victory .irv-hero-wrap{top:13.5%}'));
+  assert.ok(patch.includes('irv-authored-motion.irv-defeat .irv-hero-wrap{top:11.5%}'));
+});
