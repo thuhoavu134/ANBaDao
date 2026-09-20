@@ -28,7 +28,7 @@ export const LINH_DONG_TIMELINE = Object.freeze({
       file: 'basic-atlas.webp',
       frames: 44,
       frameMs: 34,
-      durationMs: 1496
+      durationMs: 720
     }),
     combinedVfx: Object.freeze({
       file: 'skill1_vfx-atlas.webp',
@@ -37,9 +37,9 @@ export const LINH_DONG_TIMELINE = Object.freeze({
       sourceDurationMs: 4000
     }),
     sfx: 'assets/audio/sfx/linh-dong/atk.wav',
-    releaseMs: 420,
-    impactMs: 1320,
-    recoveryEndMs: 1496
+    releaseMs: 160,
+    impactMs: 500,
+    recoveryEndMs: 720
   }),
   ultimate: Object.freeze({
     character: Object.freeze({
