@@ -178,7 +178,12 @@ function drawBachDienFx(context,time){
   const elapsed=fx.clock.advance(Math.max(0,performance.now()-fx.startedAt));
   if(elapsed>=fx.recoveryEndMs){bachDienFx=null;return;}
   const actor=getUnit(fx.actorId);if(!actor)return;
-  const target=getUnit(fx.targetId),vfxElapsed=Math.max(0,elapsed-fx.releaseMs),vfxDuration=Math.max(1,fx.recoveryEndMs-fx.releaseMs),frame=bachDienFrame(fx.kind,vfxElapsed,false),p=Math.max(0,Math.min(1,vfxElapsed/vfxDuration));
+  const clip=BACH_DIEN_CLIPS[fx.kind];
+  const sourceVfxDuration=Math.max(1,Number(clip?.durationMs)||Math.max(1,fx.recoveryEndMs-fx.releaseMs));
+  const vfxDuration=combatVfxMs(sourceVfxDuration);
+  const vfxElapsed=Math.max(0,elapsed-fx.releaseMs);
+  if(vfxElapsed>=vfxDuration){bachDienFx=null;return;}
+  const target=getUnit(fx.targetId),sourceElapsed=vfxElapsed/COMBAT_VFX_TIME_SCALE,frame=bachDienFrame(fx.kind,sourceElapsed,false),p=Math.max(0,Math.min(1,vfxElapsed/vfxDuration));
   if(fx.kind==='atkVfx'){
     const foe=target||units.find(unit=>unit.team!==actor.team&&unit.hp>0);if(!foe)return;
     const travel=Math.min(1,p*1.35),x=actor.x+(foe.x-actor.x)*travel,y=actor.y-70+(foe.y-actor.y)*travel;
