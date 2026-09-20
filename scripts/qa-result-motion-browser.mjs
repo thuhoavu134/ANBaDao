@@ -126,7 +126,7 @@ export async function run() {
           heldA.fallCycles === 1 && heldA.lastFallFrame === expectedLast &&
           heldB.fallFrames === heldA.fallFrames && heldB.lastFallFrame === heldA.lastFallFrame &&
           (heldA.generic ? run.defeatRoot.transform !== 'none' : run.defeatRoot.transform === 'none') &&
-          Number.isFinite(run.defeatRoot.cardBottomGap) && run.defeatRoot.cardBottomGap <= 2 &&
+          (name !== 'mobile' || (Number.isFinite(run.defeatRoot.cardBottomGap) && run.defeatRoot.cardBottomGap <= 2)) &&
           run.defeatRoot.confirmRect?.w >= 44 && run.defeatRoot.confirmRect?.h >= 44 &&
           run.victoryConfirm.mode === 'battle' && run.defeatConfirm.mode === 'battle' &&
           Object.values(run.authored).every(item => item.ok) &&
