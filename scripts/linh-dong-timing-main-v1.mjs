@@ -201,8 +201,12 @@ function drawLinhDongFx(context,time){
   const actor=getUnit(fx.actorId);if(!actor)return;
   const timeline=LINH_DONG_TIMELINE[fx.action],clip=LINH_DONG_CLIPS[fx.kind];
   const recoveryWindow=Math.max(1,fx.recoveryEndMs-fx.releaseMs);
-  const impactOffset=Math.max(0,(Number(timeline?.impactMs)||fx.releaseMs)-fx.releaseMs);
-  const vfxDuration=Math.min(recoveryWindow,Math.max(impactOffset+120,combatVfxMs(recoveryWindow)));
+  // Skill 1 needs a much snappier visual pass than the shared combat clock.
+  // Keep gameplay/impact markers owned by the canonical action timeline; only
+  // compress the authored atlas playback.
+  const vfxDuration=fx.kind==='atkVfx'
+    ? Math.min(recoveryWindow,620)
+    : Math.min(recoveryWindow,combatVfxMs(recoveryWindow));
   const vfxElapsed=Math.max(0,elapsed-fx.releaseMs);
   if(vfxElapsed>=vfxDuration){linhDongFx=null;return;}
   const sourceDuration=Math.max(1,Number(clip?.durationMs)||Number(timeline?.combinedVfx?.sourceDurationMs)||4000);
