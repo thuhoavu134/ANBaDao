@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 
 const battle = readFileSync(new URL('../battle.html', import.meta.url), 'utf8');
 const qa = readFileSync(new URL('../scripts/qa-authored-legacy-browser.mjs', import.meta.url), 'utf8');
+const linhTiming = readFileSync(new URL('../scripts/linh-dong-timing-main-v1.mjs', import.meta.url), 'utf8');
 
 test('legacy authored QA exposes deterministic Lục Ảnh actions and real Đình Lôi asset enumeration', () => {
   assert.ok(battle.includes('qaForceLucAnhAction: async(action="basic")'));
@@ -28,4 +29,16 @@ test('legacy authored browser QA requires action assets and both desktop/mobile 
   assert.ok(qa.includes("['mobile',390,844,2]"));
   assert.ok(qa.includes("assetHttpErrors.length===0"));
   assert.ok(qa.includes("networkFailures.length===0"));
+});
+
+
+test('Linh Đồng build patch preserves the shared Phase-1 impact marker', () => {
+  assert.ok(linhTiming.includes("if(resolveAtImpact){phase1Trace?.marker('impact'"));
+  assert.ok(linhTiming.includes('resolveAction(actor, action, target, phase1ActionId);'));
+});
+
+test('legacy authored browser QA proves gameplay effect resolution, not trace markers alone', () => {
+  assert.ok(qa.includes("row.enemyHpAfter < row.enemyHpBefore"));
+  assert.ok(qa.includes("row.playerShieldAfter > row.playerShieldBefore"));
+  assert.ok(qa.includes("row.effectResolved"));
 });
