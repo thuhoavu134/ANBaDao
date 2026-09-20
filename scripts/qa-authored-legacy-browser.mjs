@@ -104,6 +104,9 @@ async function runViewport(browser, out, name, width, height, dpr) {
         const beforeCount = await page.evaluate('__HV_BATTLE_PHASE1_TRACE.events().length');
         const before = await page.evaluate(unitExpr(spec.id));
         row.before = before;
+        row.beforeUnits = await page.evaluate('__HON_VIET__.getUnits()');
+        row.enemyHpBefore = row.beforeUnits.filter(u=>u.team==='enemy').reduce((sum,u)=>sum+Number(u.hp||0),0);
+        row.playerShieldBefore = row.beforeUnits.filter(u=>u.team==='player').reduce((sum,u)=>sum+Number(u.shield||0),0);
 
         const triggered = await page.evaluate(spec.force(action));
         if (!triggered) throw new Error(spec.name+' '+action+' QA trigger returned false');
@@ -121,12 +124,19 @@ async function runViewport(browser, out, name, width, height, dpr) {
         await page.wait(`__HV_BATTLE_PHASE1_TRACE.events().some(e=>e.type==="action:complete"&&e.actionId===${JSON.stringify(row.actionId)})`,25000);
         await page.wait(`(()=>{const u=${unitExpr(spec.id)};return !!u && u.hp>0 && Math.hypot(u.x-u.baseX,u.y-u.baseY)<=2;})()`,12000);
         row.after = await page.evaluate(unitExpr(spec.id));
+        row.afterUnits = await page.evaluate('__HON_VIET__.getUnits()');
+        row.enemyHpAfter = row.afterUnits.filter(u=>u.team==='enemy').reduce((sum,u)=>sum+Number(u.hp||0),0);
+        row.playerShieldAfter = row.afterUnits.filter(u=>u.team==='player').reduce((sum,u)=>sum+Number(u.shield||0),0);
         row.trace = await page.evaluate(`__HV_BATTLE_PHASE1_TRACE.events().filter(e=>e.actionId===${JSON.stringify(row.actionId)})`);
+        row.effectResolved = spec.key==='dinh-loi' && action==='skill'
+          ? row.playerShieldAfter > row.playerShieldBefore
+          : row.enemyHpAfter < row.enemyHpBefore;
         row.ok =
           row.actionId.length>0 &&
           row.trace.some(e=>e.type==='action:start') &&
           row.trace.some(e=>e.type==='marker:impact') &&
           row.trace.some(e=>e.type==='action:complete') &&
+          row.effectResolved &&
           Math.hypot(row.after.x-row.after.baseX,row.after.y-row.after.baseY)<=2 &&
           row.after.hp>0;
         if (!row.ok) throw new Error(spec.name+' '+action+' action/impact/return acceptance failed');
@@ -188,7 +198,7 @@ export async function run() {
       ok:report.ok,
       runs:report.runs.map(run=>({
         name:run.name,ok:run.ok,
-        heroes:Object.fromEntries(Object.entries(run.heroes).map(([key,item])=>[key,{ok:item.ok,assets:item.assets,actions:Object.fromEntries(Object.entries(item.actions).map(([action,row])=>[action,{ok:row.ok,actionId:row.actionId}]))}])),
+        heroes:Object.fromEntries(Object.entries(run.heroes).map(([key,item])=>[key,{ok:item.ok,assets:item.assets,actions:Object.fromEntries(Object.entries(item.actions).map(([action,row])=>[action,{ok:row.ok,actionId:row.actionId,effectResolved:row.effectResolved,enemyHpDelta:Number(row.enemyHpAfter)-Number(row.enemyHpBefore),playerShieldDelta:Number(row.playerShieldAfter)-Number(row.playerShieldBefore)}]))}])),
         errors:run.errors,
         exceptions:run.exceptions?.length,
         assetHttpErrors:run.assetHttpErrors?.length
