@@ -38,7 +38,7 @@ test('legacy action aliases expose only ATK and Ultimate at runtime', () => {
 });
 
 test('authored durations and VFX recovery boundaries are preserved', () => {
-  assert.equal(LINH_DONG_TIMELINE.atk.character.durationMs, 1496);
+  assert.equal(LINH_DONG_TIMELINE.atk.character.durationMs, 720);
   assert.equal(LINH_DONG_TIMELINE.ultimate.character.durationMs, 1980);
   for (const action of ['atk', 'ultimate']) {
     const timeline = LINH_DONG_TIMELINE[action];
@@ -57,7 +57,7 @@ test('one monotonic elapsed clock dedupes all markers', () => {
   controller.advance(0);
   controller.advance(900);
   controller.advance(500);
-  controller.advance(1496);
+  controller.advance(720);
   controller.advance(5000);
   assert.deepEqual(seen, ['animation:start', 'release', 'impact', 'recovery:end']);
   assert.equal(controller.elapsedMs(), 5000);
@@ -66,7 +66,7 @@ test('one monotonic elapsed clock dedupes all markers', () => {
 });
 
 test('replay with the same clock samples yields the same marker sequence', () => {
-  const samples = [0, 120, 420, 760, 1320, 1496];
+  const samples = [0, 120, 160, 360, 500, 720];
   const replay = () => {
     const events = [];
     const controller = createLinhDongTimelineController('atk', { onMarker: marker => events.push([marker.type, marker.elapsedMs]) });
@@ -74,5 +74,5 @@ test('replay with the same clock samples yields the same marker sequence', () =>
     return events;
   };
   assert.deepEqual(replay(), replay());
-  assert.deepEqual(replay(), [['animation:start', 0], ['release', 420], ['impact', 1320], ['recovery:end', 1496]]);
+  assert.deepEqual(replay(), [['animation:start', 0], ['release', 160], ['impact', 500], ['recovery:end', 720]]);
 });

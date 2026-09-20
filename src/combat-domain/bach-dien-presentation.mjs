@@ -28,20 +28,20 @@ export const BACH_DIEN_TIMELINE = Object.freeze({
   atk: Object.freeze({
     character: Object.freeze({
       file: 'basic-atlas.webp',
-      frames: PACK_FRAMES,
-      frameMs: PACK_MS,
-      durationMs: PACK_DURATION_MS
+      frames: 30,
+      frameMs: 22.667,
+      durationMs: 680
     }),
     combinedVfx: Object.freeze({
       file: 'skill1_vfx-atlas.webp',
-      frames: PACK_FRAMES,
-      frameMs: PACK_MS,
-      sourceDurationMs: PACK_DURATION_MS
+      frames: 36,
+      frameMs: 33.333333333333336,
+      sourceDurationMs: 1200
     }),
     sfx: 'assets/audio/sfx/bach-dien/atk.wav',
-    releaseMs: 800,
-    impactMs: 1600,
-    recoveryEndMs: PACK_DURATION_MS
+    releaseMs: 140,
+    impactMs: 430,
+    recoveryEndMs: 680
   }),
   ultimate: Object.freeze({
     character: Object.freeze({

@@ -67,7 +67,7 @@ const LINH_DONG_CLIPS=Object.freeze({
   run:{file:"run-atlas.webp",frames:96,cols:8,w:480,h:440,ms:42,loop:true,durationMs:4032},
   hit:{file:"hit-atlas.webp",frames:96,cols:8,w:480,h:440,ms:42,loop:false,durationMs:4032},
   fall:{file:"fall-atlas.webp",frames:96,cols:8,w:480,h:440,ms:42,loop:false,durationMs:4032},
-  attack:{file:"basic-atlas.webp",frames:44,cols:8,w:480,h:440,ms:34,loop:false,durationMs:1496},
+  attack:{file:"basic-atlas.webp",frames:44,cols:8,w:480,h:440,ms:16.364,loop:false,durationMs:720},
   ultimate:{file:"ultimate-atlas.webp",frames:60,cols:8,w:480,h:440,ms:33,loop:false,durationMs:1980},
   atkVfx:{file:"skill1_vfx-atlas.webp",frames:120,cols:10,w:440,h:248,ms:33,loop:false,durationMs:3960},
   ultimateVfx:{file:"ultimate_vfx-atlas.webp",frames:120,cols:10,w:440,h:248,ms:33,loop:false,durationMs:3960}
@@ -199,7 +199,19 @@ function drawLinhDongFx(context,time){
   const elapsed=fx.clock.advance(Math.max(0,performance.now()-fx.startedAt));
   if(elapsed>=fx.recoveryEndMs){linhDongFx=null;return;}
   const actor=getUnit(fx.actorId);if(!actor)return;
-  const target=getUnit(fx.targetId),vfxElapsed=Math.max(0,elapsed-fx.releaseMs),vfxDuration=Math.max(1,fx.recoveryEndMs-fx.releaseMs),frame=linhDongFrame(fx.kind,vfxElapsed,false),p=Math.max(0,Math.min(1,vfxElapsed/vfxDuration));
+  const timeline=LINH_DONG_TIMELINE[fx.action],clip=LINH_DONG_CLIPS[fx.kind];
+  const recoveryWindow=Math.max(1,fx.recoveryEndMs-fx.releaseMs);
+  // Skill 1 needs a much snappier visual pass than the shared combat clock.
+  // Keep gameplay/impact markers owned by the canonical action timeline; only
+  // compress the authored atlas playback.
+  const vfxDuration=fx.kind==='atkVfx'
+    ? Math.min(recoveryWindow,620)
+    : Math.min(recoveryWindow,combatVfxMs(recoveryWindow));
+  const vfxElapsed=Math.max(0,elapsed-fx.releaseMs);
+  if(vfxElapsed>=vfxDuration){linhDongFx=null;return;}
+  const sourceDuration=Math.max(1,Number(clip?.durationMs)||Number(timeline?.combinedVfx?.sourceDurationMs)||4000);
+  const sourceElapsed=(vfxElapsed/vfxDuration)*sourceDuration;
+  const target=getUnit(fx.targetId),frame=linhDongFrame(fx.kind,sourceElapsed,false),p=Math.max(0,Math.min(1,vfxElapsed/vfxDuration));
   if(fx.kind==='atkVfx'){
     const foe=target||units.find(unit=>unit.team!==actor.team&&unit.hp>0);if(!foe)return;
     const travel=Math.min(1,p*1.35),x=actor.x+(foe.x-actor.x)*travel,y=actor.y-70+(foe.y-actor.y)*travel;

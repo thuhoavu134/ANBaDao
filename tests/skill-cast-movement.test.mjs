@@ -218,3 +218,14 @@ test('final generated living-actor return awaits the movement owner for all four
     assert.equal(await result, 'after-return');
   }
 });
+
+
+test('generated Dinh Loi recovery has one return owner and no second hard reset', () => {
+  const html = readFileSync('dist/battle.html', 'utf8');
+  const recovery = html.indexOf("    phase1Trace?.marker('recovery',");
+  assert.ok(recovery > 0, 'recovery marker exists');
+  const tail = html.slice(Math.max(0, recovery - 9000), recovery);
+  const hardReset = 'actor.x=origin.x;actor.y=origin.y;setUnitState(actor,"idle",800);';
+  assert.equal(tail.split(hardReset).length - 1, 1, 'Dinh Loi x/y hard reset occurs only in its awaited return branch');
+  assert.match(tail, /if \(usesDinhLoi\) \{\s*\/\/ Dinh Loi already completed its awaited return/);
+});
