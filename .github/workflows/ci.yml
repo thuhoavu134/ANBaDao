@@ -29,6 +29,19 @@ jobs:
         run: npm run build
       - name: Test
         run: node --test --test-concurrency=1 tests/*.test.mjs
+      - name: Battle VFX browser QA
+        run: |
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
+          "$CHROME_PATH" --version
+          node scripts/qa-battle-readiness-browser.mjs
+      - name: Upload battle VFX evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: battle-vfx-evidence
+          path: evidence/browser/
+          retention-days: 7
+          compression-level: 0
       - name: Result motion browser QA
         run: |
           export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
