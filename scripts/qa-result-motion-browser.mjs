@@ -50,7 +50,7 @@ export async function run() {
         await sleep(550);
         const heldB = await page.evaluate('__HV_RESULT_MOTION_QA.state()');
         run.defeatHold = { first: heldA, after550ms: heldB, expectedLast };
-        run.defeatRoot = await page.evaluate(`(()=>{const r=document.getElementById('integratedResultV6');const c=r?.querySelector('.irv-hero.fall');const b=r?.querySelector('[data-result-action="confirm"]');return {classes:r?.className||'',transform:c?getComputedStyle(c).transform:null,confirmText:b?.textContent?.trim()||'',confirmRect:b?(()=>{const x=b.getBoundingClientRect();return {w:x.width,h:x.height}})():null};})()`);
+        run.defeatRoot = await page.evaluate(`(()=>{const r=document.getElementById('integratedResultV6');const v=r?.querySelector('.irv-viewport');const card=r?.querySelector('.irv-card');const c=r?.querySelector('.irv-hero.fall');const b=r?.querySelector('[data-result-action="confirm"]');const vr=v?.getBoundingClientRect(),cr=card?.getBoundingClientRect();return {classes:r?.className||'',transform:c?getComputedStyle(c).transform:null,cardBottomGap:vr&&cr?Math.max(0,vr.bottom-cr.bottom):null,cardTop:cr?.top??null,cardBottom:cr?.bottom??null,viewportBottom:vr?.bottom??null,confirmText:b?.textContent?.trim()||'',confirmRect:b?(()=>{const x=b.getBoundingClientRect();return {w:x.width,h:x.height}})():null};})()`);
         await page.screenshot(resolve(out, name + '-defeat-hold.png'));
         run.screenshots.push(name + '-defeat-hold.png');
 
@@ -126,6 +126,7 @@ export async function run() {
           heldA.fallCycles === 1 && heldA.lastFallFrame === expectedLast &&
           heldB.fallFrames === heldA.fallFrames && heldB.lastFallFrame === heldA.lastFallFrame &&
           (heldA.generic ? run.defeatRoot.transform !== 'none' : run.defeatRoot.transform === 'none') &&
+          (name !== 'mobile' || (Number.isFinite(run.defeatRoot.cardBottomGap) && run.defeatRoot.cardBottomGap <= 2)) &&
           run.defeatRoot.confirmRect?.w >= 44 && run.defeatRoot.confirmRect?.h >= 44 &&
           run.victoryConfirm.mode === 'battle' && run.defeatConfirm.mode === 'battle' &&
           Object.values(run.authored).every(item => item.ok) &&
