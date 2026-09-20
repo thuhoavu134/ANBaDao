@@ -6165,7 +6165,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
         const basicLabel=isVersionedBasic(actor)?"Basic":"Đánh thường";
         setStatus(`${actor.name} giữ vị trí phóng ảnh đăng`);dom.phaseLabel.textContent=`${basicLabel} • Tụ ảnh`;setUnitState(actor,"attack",LUC_ANH_META.attack.frames*LUC_ANH_META.attack.ms);playActionSound(actor,action);
         if(!await sleepVisualMilliseconds(900,battleId))return;startLucAnhFx("basicProjectile",actor,target,760);dom.phaseLabel.textContent=`${basicLabel} • Ảnh bay`;
-        if(!await sleepVisualMilliseconds(combatVfxMs(760),battleId))return;startLucAnhFx("basicImpact",actor,target,720);dom.phaseLabel.textContent="Va chạm • Ảnh đăng";
+        if(!await sleepVisualMilliseconds(760,battleId))return;startLucAnhFx("basicImpact",actor,target,720);dom.phaseLabel.textContent="Va chạm • Ảnh đăng";
       }else if(action==="skill"){
         setStatus(`${actor.name} xoay Đèn Kéo Quân`);dom.phaseLabel.textContent="Kỹ năng 1 • Kéo đèn";setUnitState(actor,"skill1",LUC_ANH_META.skill1.frames*LUC_ANH_META.skill1.ms);playActionSound(actor,action);
         if(!await sleepVisualMilliseconds(900,battleId))return;startLucAnhFx("skill1Vfx",actor,null,1650);dom.phaseLabel.textContent="Kỹ năng 1 • Sáu hình nhân nhập vị";
