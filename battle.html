@@ -8497,6 +8497,20 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
       state.battleId+=1; state.locked=false; state.currentId=actor.id; actor.accuracy=10000;
       state.selectedAction="basic"; updateActorHud(actor); void performAction(actor,"basic",target); return true;
     },
+    getLucAnhAuthoredAssets: () => Object.fromEntries(Object.keys(LUC_ANH_META).map((key) => {
+      const image=LUC_ANH_IMAGES[key];
+      return [key,Boolean(image?.complete&&image.naturalWidth>1)];
+    })),
+    qaForceLucAnhAction: async(action="basic") => {
+      const actor=units.find(isLucAnh);
+      const target=living(TEAM_ENEMY)[0];
+      if(!actor||actor.hp<=0||!target||state.mode!=="battle")return false;
+      state.battleId+=1;state.locked=false;state.currentId=actor.id;state.auto=false;
+      actor.energy=100;actor.accuracy=10000;
+      state.selectedAction=action;updateActorHud(actor);
+      await performAction(actor,action,target);
+      return true;
+    },
     getOngPhoAuthoredAssets: () => ({
       idle:Boolean(ONG_PHO_IDLE_IMAGE().complete&&ONG_PHO_IDLE_IMAGE().naturalWidth>1),
       skill1:Boolean(ONG_PHO_SKILL1_IMAGE().complete&&ONG_PHO_SKILL1_IMAGE().naturalWidth>1),
