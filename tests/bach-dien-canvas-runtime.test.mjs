@@ -145,8 +145,8 @@ test('L154-T3 FrameClock replay and renderer source rect use clip metadata', asy
   const renderer = read('src/render/canvas-sprite-renderer.mjs');
   assert.doesNotMatch(renderer, /\b347\b/);
   assert.doesNotMatch(renderer, /\bnaturalWidth\s*\/\s*4/);
-  assert.equal(BACH_DIEN_TIMELINE.atk.character.frames, 94);
-  assert.equal(BACH_DIEN_TIMELINE.atk.recoveryEndMs, 3133.333);
+  assert.equal(BACH_DIEN_TIMELINE.atk.character.frames, 30);
+  assert.equal(BACH_DIEN_TIMELINE.atk.recoveryEndMs, 680);
   assert.equal(BACH_DIEN_TIMELINE.ultimate.sfx, 'assets/audio/sfx/bach-dien/ult.wav');
 });
 
