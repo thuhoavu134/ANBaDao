@@ -28,9 +28,9 @@ test('L146-T1 S+ Linh Đồng uses the shared ATK/Ultimate marker clock', () => 
   assert.doesNotMatch(fn, /sleep\(linh\?linhDur/);
   assert.doesNotMatch(fn, /sleep\(linhDur/);
   assert.doesNotMatch(fn, /startLinhDongFx\(action,actor,target\)/);
-  assert.equal(LINH_DONG_TIMELINE.atk.releaseMs, 420);
-  assert.equal(LINH_DONG_TIMELINE.atk.impactMs, 1320);
-  assert.equal(LINH_DONG_TIMELINE.atk.recoveryEndMs, 1496);
+  assert.equal(LINH_DONG_TIMELINE.atk.releaseMs, 160);
+  assert.equal(LINH_DONG_TIMELINE.atk.impactMs, 500);
+  assert.equal(LINH_DONG_TIMELINE.atk.recoveryEndMs, 720);
   assert.equal(LINH_DONG_TIMELINE.ultimate.releaseMs, 400);
   assert.equal(LINH_DONG_TIMELINE.ultimate.impactMs, 1600);
   assert.equal(LINH_DONG_TIMELINE.ultimate.recoveryEndMs, 1980);
