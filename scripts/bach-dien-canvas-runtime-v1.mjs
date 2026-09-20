@@ -180,10 +180,12 @@ function drawBachDienFx(context,time){
   const actor=getUnit(fx.actorId);if(!actor)return;
   const clip=BACH_DIEN_CLIPS[fx.kind];
   const sourceVfxDuration=Math.max(1,Number(clip?.durationMs)||Math.max(1,fx.recoveryEndMs-fx.releaseMs));
-  const vfxDuration=combatVfxMs(sourceVfxDuration);
+  // Skill 1 uses a dedicated short visual window. Ultimate keeps the shared
+  // VFX clock. Gameplay impact/recovery markers remain unchanged.
+  const vfxDuration=fx.kind==='atkVfx'?Math.min(560,Math.max(1,fx.recoveryEndMs-fx.releaseMs)):combatVfxMs(sourceVfxDuration);
   const vfxElapsed=Math.max(0,elapsed-fx.releaseMs);
   if(vfxElapsed>=vfxDuration){bachDienFx=null;return;}
-  const target=getUnit(fx.targetId),sourceElapsed=vfxElapsed/COMBAT_VFX_TIME_SCALE,frame=bachDienFrame(fx.kind,sourceElapsed,false),p=Math.max(0,Math.min(1,vfxElapsed/vfxDuration));
+  const target=getUnit(fx.targetId),sourceElapsed=(vfxElapsed/vfxDuration)*sourceVfxDuration,frame=bachDienFrame(fx.kind,sourceElapsed,false),p=Math.max(0,Math.min(1,vfxElapsed/vfxDuration));
   if(fx.kind==='atkVfx'){
     const foe=target||units.find(unit=>unit.team!==actor.team&&unit.hp>0);if(!foe)return;
     const travel=Math.min(1,p*1.35),x=actor.x+(foe.x-actor.x)*travel,y=actor.y-70+(foe.y-actor.y)*travel;
