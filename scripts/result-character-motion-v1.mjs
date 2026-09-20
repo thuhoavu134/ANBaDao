@@ -66,6 +66,7 @@ const manifest = {
 
 const css = [
   '<style id="hv-result-character-motion-v1">',
+  '#integratedResultV6.irv-defeat .irv-card{height:calc(100% - min(56.25vw,31.640625vh));object-fit:fill;object-position:center top}',
   '#integratedResultV6.irv-authored-motion .irv-hero{image-rendering:auto;will-change:transform,opacity;transition:opacity 180ms ease}',
   '#integratedResultV6.irv-authored-motion.irv-victory .irv-hero.run{opacity:1;transform:translateX(-118%);animation:none}',
   '#integratedResultV6.irv-authored-motion.irv-victory.irv-motion-run-active .irv-hero.run{animation:hvResultRunIn 1.2s .12s cubic-bezier(.2,.72,.2,1) forwards}',
