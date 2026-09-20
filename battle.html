@@ -6415,7 +6415,9 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
 
     if (actor.hp > 0) {
       if (usesDinhLoi) {
-        actor.x=origin.x;actor.y=origin.y;setUnitState(actor,"idle",800);
+        // Dinh Loi already completed its awaited return in the authored branch above.
+        // Do not reset x/y or restart Idle here: a second owner can visibly snap the
+        // character on slow frames and makes recovery ownership ambiguous.
       } else if (usesThayMoBasicQa) {
         actor.x=origin.x; actor.y=origin.y; setUnitState(actor,"idle",800);
       } else if (usesOngPhoGif) {
