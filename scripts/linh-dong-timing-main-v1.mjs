@@ -67,7 +67,7 @@ const LINH_DONG_CLIPS=Object.freeze({
   run:{file:"run-atlas.webp",frames:96,cols:8,w:480,h:440,ms:42,loop:true,durationMs:4032},
   hit:{file:"hit-atlas.webp",frames:96,cols:8,w:480,h:440,ms:42,loop:false,durationMs:4032},
   fall:{file:"fall-atlas.webp",frames:96,cols:8,w:480,h:440,ms:42,loop:false,durationMs:4032},
-  attack:{file:"basic-atlas.webp",frames:44,cols:8,w:480,h:440,ms:34,loop:false,durationMs:1496},
+  attack:{file:"basic-atlas.webp",frames:44,cols:8,w:480,h:440,ms:16.364,loop:false,durationMs:720},
   ultimate:{file:"ultimate-atlas.webp",frames:60,cols:8,w:480,h:440,ms:33,loop:false,durationMs:1980},
   atkVfx:{file:"skill1_vfx-atlas.webp",frames:120,cols:10,w:440,h:248,ms:33,loop:false,durationMs:3960},
   ultimateVfx:{file:"ultimate_vfx-atlas.webp",frames:120,cols:10,w:440,h:248,ms:33,loop:false,durationMs:3960}
