@@ -38,3 +38,12 @@ test('generated battle keeps the VFX speed contract after all build patches', ()
   assert.match(dist, /fx\.kind==='atkVfx'[\s\S]*Math\.min\(recoveryWindow,620\)/);
   assert.match(dist, /fx\.kind==='atkVfx'\?Math\.min\(560,/);
 });
+
+test('Skill 1 action clocks keep damage inside the faster visual beat', () => {
+  const linhPresentation = readFileSync('src/combat-domain/linh-dong-presentation.mjs','utf8');
+  const bachPresentation = readFileSync('src/combat-domain/bach-dien-presentation.mjs','utf8');
+  assert.match(linhPresentation, /releaseMs: 160,[\s\S]*impactMs: 500,[\s\S]*recoveryEndMs: 720/);
+  assert.match(bachPresentation, /releaseMs: 140,[\s\S]*impactMs: 430,[\s\S]*recoveryEndMs: 680/);
+  assert.match(linh, /attack:\{file:"basic-atlas\.webp",frames:44,cols:8,w:480,h:440,ms:16\.364,loop:false,durationMs:720\}/);
+  assert.match(bach, /clips\.attack = \{ \.\.\.clips\.attack, ms: 22\.667, fps: 44\.1176470588, durationMs: 680 \}/);
+});
