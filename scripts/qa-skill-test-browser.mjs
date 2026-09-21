@@ -61,7 +61,7 @@ async function runViewport(browser,out,name,width,height,dpr) {
 
     run.exceptions = page.events.filter(event=>event.method==='Runtime.exceptionThrown');
     run.httpErrors = page.events.filter(event=>event.method==='Network.responseReceived'&&event.params.response.status>=400).map(event=>({url:event.params.response.url,status:event.params.response.status}));
-    run.criticalHttpErrors = run.httpErrors.filter(item=>!/\\/favicon\\.ico(?:\\?|$)/.test(item.url));
+    run.criticalHttpErrors = run.httpErrors.filter(item=>!item.url.includes('/favicon.ico'));
     run.networkFailures = page.events.filter(event=>event.method==='Network.loadingFailed').map(event=>event.params);
     run.criticalNetworkFailures = run.networkFailures.filter(item=>!(item.canceled===true && item.type==='Media'));
     run.qaErrors = await page.evaluate('window.__SKILL_TEST_QA__.errors');
