@@ -29,9 +29,8 @@ test('direct skill test exposes movement feel controls for Lục Ảnh', () => {
   assert.ok(page.includes('selectedMovement'));
   assert.ok(page.includes('skillMovement'));
   assert.ok(qa.includes("const MOVEMENTS = ['snap','dash','run','stationary']"));
-  assert.ok(qa.includes("approach:dash"));
-  assert.ok(qa.includes("approach:run"));
-  assert.ok(qa.includes("approach:stationary"));
+  assert.ok(qa.includes("const expectedType='approach:'+movement;"));
+  assert.ok(qa.includes("movementChecks"));
 });
 
 test('direct skill test reports real trace progression and return home', () => {
