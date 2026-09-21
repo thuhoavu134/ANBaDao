@@ -21,10 +21,15 @@ test('legacy authored browser QA covers Basic Skill Ultimate for all three autho
   assert.ok(qa.includes('Math.hypot(row.after.x-row.after.baseX,row.after.y-row.after.baseY)<=2'));
 });
 
-test('legacy authored browser QA requires action assets and both desktop/mobile viewports', () => {
+test('legacy authored browser QA requires action-scoped assets and both desktop/mobile viewports', () => {
   for (const asset of ['basicProjectile','basicImpact','skill1Vfx','ultimateVfx','skill1Wave','skill1Impact','skill1Shield','ultimateImpact']) {
     assert.ok(qa.includes(asset), asset);
   }
+  assert.ok(qa.includes('actionAssets: {'));
+  assert.ok(qa.includes('row.requiredAssets = spec.actionAssets[action]'));
+  assert.ok(qa.includes('row.assetReady = row.requiredAssets.every'));
+  assert.ok(qa.includes('action-scoped leases'));
+  assert.ok(!qa.includes('const a=${spec.assets}'));
   assert.ok(qa.includes("['desktop',1280,800,1]"));
   assert.ok(qa.includes("['mobile',390,844,2]"));
   assert.ok(qa.includes("assetHttpErrors.length===0"));
