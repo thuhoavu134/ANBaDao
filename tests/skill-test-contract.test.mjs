@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 
 const page = readFileSync(new URL('../skill-test.html', import.meta.url), 'utf8');
 const qa = readFileSync(new URL('../scripts/qa-skill-test-browser.mjs', import.meta.url), 'utf8');
@@ -45,4 +47,10 @@ test('CI runs and uploads direct skill-test evidence', () => {
   assert.ok(ci.includes('node scripts/qa-skill-test-browser.mjs'));
   assert.ok(ci.includes('name: skill-test-evidence'));
   assert.ok(ci.includes('path: evidence/skill-test/'));
+});
+
+test('direct skill-test browser QA script parses in Node before browser execution', () => {
+  const script = fileURLToPath(new URL('../scripts/qa-skill-test-browser.mjs', import.meta.url));
+  const checked = spawnSync(process.execPath, ['--check', script], { encoding:'utf8' });
+  assert.equal(checked.status, 0, checked.stderr || checked.stdout);
 });
