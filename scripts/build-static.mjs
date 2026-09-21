@@ -13,6 +13,7 @@ const entries = [
   'battle.html',
   'qa-dinh-loi-spacing.html',
   'qa-runtime.html',
+  'skill-test.html',
   'splus-lab.html',
   'assets'
 ];
