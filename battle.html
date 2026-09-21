@@ -5912,7 +5912,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
       let total=0;foes.forEach(foe=>{if(foe.hp<=0)return;total+=applyDamage(actor,foe,multiplier*.72,{color:"#75684f",forceHit:true});if(foe.hp>0){addStatus(foe,{type:"speedDown",turns:2,power:.20,sourceId:actor.id,sourceHeroId:LUC_ANH_ID});addFloater(foe,"HÌNH NHÂN · TỐC ▼","#b8a56d",true);}});addLog(`◈ ${actor.name} Kéo Đèn Lục Ảnh: sáu hình nhân nhập vị, gây ${total} sát thương và giảm Tốc 2 lượt.`);return;
     }
     if(isLucAnh(actor)&&action==="ultimate"){
-      let total=0;let markedTargets=0;foes.forEach(foe=>{if(foe.hp<=0)return;const marks=isVersionedLucAnh(actor)?lucAnhMarkStacks(foe):0;const markBonus=1+marks*.08;const dealt=applyDamage(actor,foe,multiplier*.44*markBonus,{color:"#536044",forceHit:true});total+=dealt;if(isVersionedLucAnh(actor)&&marks>0){markedTargets+=1;consumeLucAnhMark(foe);addFloater(foe,"ẢNH TAN · "+marks,"#c9b27b",true);}if(foe.hp>0){const dot=Math.max(1,Math.round(foe.maxHp*.06));addStatus(foe,{type:"poison",turns:3,power:dot,sourceId:actor.id,sourceHeroId:LUC_ANH_ID,percentMaxHp:.06});addFloater(foe,"ĐỘC VÂN · 6% HP","#98a86d",true);}});addLog(`☠ ${actor.name} khai Độc Vân Phủ Thế: độc khí phủ toàn đội, gây ${total} sát thương và Độc 3 lượt (6% HP tối đa/lượt)${markedTargets?`; giải ${markedTargets} dấu Ảnh Dẫn`:""}.`);return;
+      let total=0;let markedTargets=0;foes.forEach(foe=>{if(foe.hp<=0)return;const marks=isVersionedLucAnh(actor)?lucAnhMarkStacks(foe):0;const markBonus=1+marks*.08;const dealt=applyDamage(actor,foe,multiplier*.44*markBonus,{color:"#536044",forceHit:true});total+=dealt;if(isVersionedLucAnh(actor)&&marks>0){markedTargets+=1;consumeLucAnhMark(foe);addFloater(foe,"ẢNH TAN · "+marks,"#c9b27b",false);}if(foe.hp>0){const dot=Math.max(1,Math.round(foe.maxHp*.06));addStatus(foe,{type:"poison",turns:3,power:dot,sourceId:actor.id,sourceHeroId:LUC_ANH_ID,percentMaxHp:.06});addFloater(foe,"ĐỘC VÂN · 6% HP","#98a86d",false);}});addLog(`☠ ${actor.name} khai Độc Vân Phủ Thế: độc khí phủ toàn đội, gây ${total} sát thương và Độc 3 lượt (6% HP tối đa/lượt)${markedTargets?`; giải ${markedTargets} dấu Ảnh Dẫn`:""}.`);return;
     }
     if(isLinhDong(actor)&&action==="skill"){
       const hit=target&&target.team!==actor.team&&target.hp>0?target:foes.find(f=>f.hp>0);
@@ -8230,12 +8230,31 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
       context.globalAlpha = Core.clamp(floater.life * 1.7, 0, 1);
       context.textAlign = "center";
       context.textBaseline = "middle";
-      context.font = `${floater.large ? 900 : 800} ${floater.large ? 25 : 18}px system-ui, sans-serif`;
+      const floaterWeight = floater.large ? 900 : 800;
+      const floaterBaseSize = floater.large ? 25 : 18;
+      context.font = `${floaterWeight} ${floaterBaseSize}px system-ui, sans-serif`;
+      const transform = context.getTransform();
+      const transformScaleX = Math.max(0.0001, Math.abs(transform.a));
+      const visibleLeft = (0 - transform.e) / transformScaleX;
+      const visibleRight = (context.canvas.width - transform.e) / transformScaleX;
+      const edgePadding = 18;
+      const maxTextWidth = Math.max(1, visibleRight - visibleLeft - edgePadding * 2);
+      let textWidth = context.measureText(floater.text).width;
+      if (textWidth > maxTextWidth) {
+        const fittedSize = Math.max(12, floaterBaseSize * (maxTextWidth / textWidth));
+        context.font = `${floaterWeight} ${fittedSize}px system-ui, sans-serif`;
+        textWidth = context.measureText(floater.text).width;
+      }
+      const minX = visibleLeft + edgePadding + textWidth / 2;
+      const maxX = visibleRight - edgePadding - textWidth / 2;
+      const safeX = minX <= maxX
+        ? Core.clamp(floater.x, minX, maxX)
+        : (visibleLeft + visibleRight) / 2;
       context.lineWidth = 5;
       context.strokeStyle = "rgba(5,18,16,.85)";
-      context.strokeText(floater.text, floater.x, floater.y);
+      context.strokeText(floater.text, safeX, floater.y);
       context.fillStyle = floater.color;
-      context.fillText(floater.text, floater.x, floater.y);
+      context.fillText(floater.text, safeX, floater.y);
       context.restore();
     }
   }
