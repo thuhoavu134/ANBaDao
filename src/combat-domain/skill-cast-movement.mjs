@@ -112,7 +112,7 @@ export function createSkillCastMovement(env) {
   function plan(actor, action, target) {
     const policy = policyFor(actor, action);
     const origin = home(actor);
-    if (!policy || policy.mode === 'home') return { mode: policy?.mode || 'legacy', home: origin, destination: origin, moved: false };
+    if (!policy || policy.mode === 'home') return { mode: policy?.mode || 'legacy', travel: policy?.travel || 'tween', home: origin, destination: origin, moved: false };
     const g = geometry(actor, target), dir = direction(actor);
     let destination;
     if (policy.mode === 'formation') {
@@ -122,11 +122,11 @@ export function createSkillCastMovement(env) {
         y: g.ownCenter.y + finite(policy.offsetY) * g.spacing
       };
     } else if (policy.mode === 'target-team') {
-      if (g.enemyFrontX == null) return { mode: policy.mode, home: origin, destination: origin, moved: false };
+      if (g.enemyFrontX == null) return { mode: policy.mode, travel: policy.travel || 'tween', home: origin, destination: origin, moved: false };
       const y = policy.alignY === 'target' && target && target.hp > 0 ? home(target).y : g.enemyCenter.y;
       destination = standoffDestination(origin, { x: g.enemyFrontX, y }, actor, policy, g, { respectFrontline: false });
     } else {
-      if (!target || target.hp <= 0) return { mode: policy.mode, home: origin, destination: origin, moved: false };
+      if (!target || target.hp <= 0) return { mode: policy.mode, travel: policy.travel || 'tween', home: origin, destination: origin, moved: false };
       let targetPoint = home(target);
       if (policy.mode === 'column') {
         const lane = Math.floor(finite(target.slot) / 2);
@@ -139,7 +139,7 @@ export function createSkillCastMovement(env) {
     const margin = Math.min(g.spacing * 0.25, g.width * 0.03);
     destination.x = Math.max(margin, Math.min(g.width - margin, destination.x));
     destination.y = Math.max(0, Math.min(g.height, destination.y));
-    return { mode: policy.mode, home: origin, destination, moved: !same(origin, destination) };
+    return { mode: policy.mode, travel: policy.travel || 'tween', home: origin, destination, moved: !same(origin, destination) };
   }
   function valid(actor, battleId) {
     const state = env.getState();
