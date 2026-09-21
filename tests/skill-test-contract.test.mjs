@@ -22,6 +22,18 @@ test('direct skill test exposes all authored heroes and actions plus reset', () 
   for (const hook of ['qaForceLucAnhAction','qaForceDinhLoiAction','qaForceOngPhoAction']) assert.ok(page.includes(hook), hook);
 });
 
+test('direct skill test exposes movement feel controls for Lục Ảnh', () => {
+  for (const movement of ['snap','dash','run','stationary']) {
+    assert.ok(page.includes(`data-movement="${movement}"`), movement);
+  }
+  assert.ok(page.includes('selectedMovement'));
+  assert.ok(page.includes('skillMovement'));
+  assert.ok(qa.includes("const MOVEMENTS = ['snap','dash','run','stationary']"));
+  assert.ok(qa.includes("approach:dash"));
+  assert.ok(qa.includes("approach:run"));
+  assert.ok(qa.includes("approach:stationary"));
+});
+
 test('direct skill test reports real trace progression and return home', () => {
   assert.ok(page.includes("e.type==='action:start'"));
   assert.ok(page.includes("e.type==='marker:impact'"));
