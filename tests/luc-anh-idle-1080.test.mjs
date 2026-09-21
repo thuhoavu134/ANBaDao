@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import sharp from 'sharp';
-import { LUC_ANH_IDLE_1080 as IDLE, LUC_ANH_IDLE_1080_ATLAS as ATLAS } from '../src/domain/character/luc-anh-idle.mjs';
+import { LUC_ANH_IDLE_1080 as IDLE, LUC_ANH_IDLE_1080_ATLAS as ATLAS, LUC_ANH_IDLE_BATTLE as BATTLE_IDLE, LUC_ANH_IDLE_BATTLE_ATLAS as BATTLE_ATLAS } from '../src/domain/character/luc-anh-idle.mjs';
 import { normalizeRgbaFrame } from '../scripts/pack-luc-anh-idle-rgba.mjs';
 import { assembleLucAnhIdle } from '../scripts/luc-anh-idle-asset.mjs';
 
@@ -38,10 +38,12 @@ test('fixed crop retains identical pixel coordinates as frame contents change', 
 });
 
 test('shipped atlas matches the RGBA source provenance and all 96 frame cells', async () => {
-  await assembleLucAnhIdle();
+  const assembled = await assembleLucAnhIdle();
   const asset = await readFile(new URL(`../${IDLE.src}`, import.meta.url));
+  const battleAsset = await readFile(new URL(`../${BATTLE_IDLE.src}`, import.meta.url));
   const report = JSON.parse(await readFile(new URL(`../${IDLE.src}.json`, import.meta.url), 'utf8'));
   const metadata = await sharp(asset).metadata();
+  const battleMetadata = await sharp(battleAsset).metadata();
   assert.equal(metadata.hasAlpha, true);
   assert.deepEqual({ width: metadata.width, height: metadata.height }, ATLAS);
   assert.equal(report.outputSha256, createHash('sha256').update(asset).digest('hex'));
@@ -50,4 +52,25 @@ test('shipped atlas matches the RGBA source provenance and all 96 frame cells', 
   assert.equal(report.losslessVisibleRgbaVerified, true);
   assert.equal(IDLE.cols * IDLE.rows, 96);
   assert.equal(IDLE.cellW, IDLE.cellH);
+
+  assert.equal(battleMetadata.hasAlpha, true);
+  assert.deepEqual({ width: battleMetadata.width, height: battleMetadata.height }, BATTLE_ATLAS);
+  assert.equal(BATTLE_IDLE.frames, IDLE.frames);
+  assert.equal(BATTLE_IDLE.cols, IDLE.cols);
+  assert.equal(BATTLE_IDLE.rows, IDLE.rows);
+  assert.equal(BATTLE_IDLE.cellW, 240);
+  assert.equal(BATTLE_IDLE.cellH, 240);
+  assert.equal(BATTLE_ATLAS.width * BATTLE_ATLAS.height * 4, 22118400);
+  assert.equal(assembled.battle.path, BATTLE_IDLE.src);
+  assert.equal(assembled.battle.sha256, createHash('sha256').update(battleAsset).digest('hex'));
+});
+
+
+test('battle runtime uses the lightweight clean idle while detail keeps the full RGBA source', async () => {
+  const source = await readFile(new URL('../scripts/m0-p0-runtime-repair-v1.mjs', import.meta.url), 'utf8');
+  assert.ok(source.includes('LUC_ANH_IDLE_BATTLE as BATTLE_IDLE'));
+  assert.ok(source.includes('battleIdle.file'));
+  assert.ok(source.includes('battleIdle.w'));
+  assert.ok(source.includes('detailIdle=${idle.src}'));
+  assert.ok(!source.includes('idle:{file:"${idle.file}",frames:${idle.frames},w:${idle.w},h:${idle.h}'));
 });
