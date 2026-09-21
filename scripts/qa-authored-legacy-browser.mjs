@@ -124,10 +124,14 @@ async function runViewport(browser, out, name, width, height, dpr) {
         row.playerShieldBefore = row.beforeUnits.filter(u=>u.team==='player').reduce((sum,u)=>sum+Number(u.shield||0),0);
 
         row.requiredAssets = spec.actionAssets[action];
-        const assetExpr = spec.assets(row.requiredAssets);
-        await page.wait(`(()=>{const a=${assetExpr};return ${JSON.stringify(row.requiredAssets)}.every(k=>a[k]===true);})()`,15000);
-        row.assets = await page.evaluate(assetExpr);
-        Object.assign(item.assets,row.assets);
+        row.assets = {};
+        for (const assetKey of row.requiredAssets) {
+          const assetExpr = spec.assets([assetKey]);
+          await page.wait(`(()=>{const a=${assetExpr};return a[${JSON.stringify(assetKey)}]===true;})()`,15000);
+          const sampled = await page.evaluate(assetExpr);
+          row.assets[assetKey] = sampled[assetKey]===true;
+          item.assets[assetKey] = row.assets[assetKey];
+        }
         row.assetReady = row.requiredAssets.every(key=>row.assets[key]===true);
 
         const triggered = await page.evaluate(spec.force(action));
