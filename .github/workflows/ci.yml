@@ -81,6 +81,15 @@ jobs:
           retention-days: 7
           compression-level: 0
 
+      - name: Upload playable build
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playable-dist
+          path: dist/
+          retention-days: 3
+          compression-level: 0
+
   production:
     name: Live check
     needs: ci
