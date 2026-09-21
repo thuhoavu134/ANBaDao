@@ -3697,14 +3697,14 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
   // Shared lazy atlas owner for legacy Battle heroes. Unlike the old eager maps,
   // this reserves only the clip currently requested and evicts old unowned packs.
   const BATTLE_NATIVE_ATLAS_CACHE=(()=>{
-    const entries=new Map();let bytes=0,loading=0;const maxBytes=128*1024*1024,maxLoading=2;
+    const entries=new Map();let bytes=0,loading=0;const maxBytes=128*1024*1024,maxLoading=2,warmMs=96;
     const cost=clip=>(clip.atlasWidth||clip.cols*clip.cellW)*(clip.atlasHeight||clip.rows*clip.cellH)*4;
-    const drop=key=>{const e=entries.get(key);if(!e)return;entries.delete(key);bytes-=e.bytes;try{e.image.removeAttribute('src')}catch(_){}};
-    const evict=need=>{while(bytes+need>maxBytes){const old=[...entries.values()].filter(e=>!e.loading&&!e.active).sort((a,b)=>a.used-b.used)[0];if(!old)return false;drop(old.key)}return true};
-    const ensure=(key,clip)=>{let e=entries.get(key);if(e){e.used=performance.now();e.active=true;return e.image}const need=cost(clip);if(!Number.isFinite(need)||need>maxBytes||loading>=maxLoading||!evict(need))return null;const image=new Image();image.decoding='async';e={key,image,bytes:need,loading:true,active:true,used:performance.now()};entries.set(key,e);bytes+=need;loading++;image.onload=()=>{e.loading=false;loading--};image.onerror=()=>{loading--;drop(key)};image.src=clip.src;return image};
-    const release=key=>{const e=entries.get(key);if(e)e.active=false};
-    const clear=()=>{for(const e of entries.values())drop(e.key)};
-    const inspect=()=>({bytes,maxBytes,loading,entries:[...entries.values()].map(e=>({key:e.key,bytes:e.bytes,loading:e.loading,active:e.active}))});
+    const drop=key=>{const e=entries.get(key);if(!e)return;entries.delete(key);bytes-=e.bytes;try{e.image.onload=null;e.image.onerror=null;e.image.removeAttribute('src')}catch(_){}};
+    const evict=need=>{while(bytes+need>maxBytes){const ready=[...entries.values()].filter(e=>!e.loading).sort((a,b)=>a.used-b.used);if(!ready.length)return false;const now=performance.now(),cold=ready.filter(e=>now-e.used>warmMs),old=(cold.length?cold:ready)[0];drop(old.key)}return true};
+    const ensure=(key,clip)=>{let e=entries.get(key);if(e){e.used=performance.now();return e.image}const need=cost(clip);if(!Number.isFinite(need)||need>maxBytes||loading>=maxLoading||!evict(need))return null;const image=new Image();image.decoding='async';e={key,image,bytes:need,loading:true,used:performance.now()};entries.set(key,e);bytes+=need;loading++;image.onload=()=>{if(entries.get(key)!==e)return;e.loading=false;loading=Math.max(0,loading-1)};image.onerror=()=>{if(entries.get(key)!==e)return;loading=Math.max(0,loading-1);drop(key)};image.src=clip.src;return image};
+    const release=key=>{const e=entries.get(key);if(e)e.used=0};
+    const clear=()=>{for(const e of [...entries.values()])drop(e.key);loading=0};
+    const inspect=()=>{const now=performance.now();return {bytes,maxBytes,loading,entries:[...entries.values()].map(e=>({key:e.key,bytes:e.bytes,loading:e.loading,active:now-e.used<=warmMs,used:e.used}))}};
     return {ensure,release,clear,inspect};
   })();
   window.__HV_NATIVE_ATLAS_CACHE=BATTLE_NATIVE_ATLAS_CACHE;
@@ -8497,16 +8497,33 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
       state.battleId+=1; state.locked=false; state.currentId=actor.id; actor.accuracy=10000;
       state.selectedAction="basic"; updateActorHud(actor); void performAction(actor,"basic",target); return true;
     },
-    getOngPhoAuthoredAssets: () => ({
-      idle:Boolean(ONG_PHO_IDLE_IMAGE().complete&&ONG_PHO_IDLE_IMAGE().naturalWidth>1),
-      skill1:Boolean(ONG_PHO_SKILL1_IMAGE().complete&&ONG_PHO_SKILL1_IMAGE().naturalWidth>1),
-      ultimate:Boolean(ONG_PHO_ULTIMATE_IMAGE().complete&&ONG_PHO_ULTIMATE_IMAGE().naturalWidth>1),
-      walk:false,
-      run:false,
-      attack:Boolean(ONG_PHO_ATTACK_IMAGE().complete&&ONG_PHO_ATTACK_IMAGE().naturalWidth>1),
-      hit:Boolean(ONG_PHO_HIT_IMAGE().complete&&ONG_PHO_HIT_IMAGE().naturalWidth>1),
-      fall:Boolean(ONG_PHO_FALL_IMAGE().complete&&ONG_PHO_FALL_IMAGE().naturalWidth>1)
-    }),
+    getLucAnhAuthoredAssets: (keys=Object.keys(LUC_ANH_META)) => Object.fromEntries((Array.isArray(keys)?keys:Object.keys(LUC_ANH_META)).filter((key)=>LUC_ANH_META[key]).map((key) => {
+      const image=LUC_ANH_IMAGES[key];
+      return [key,Boolean(image?.complete&&image.naturalWidth>1)];
+    })),
+    qaForceLucAnhAction: async(action="basic") => {
+      const actor=units.find(isLucAnh);
+      const target=living(TEAM_ENEMY)[0];
+      if(!actor||actor.hp<=0||!target||state.mode!=="battle")return false;
+      state.battleId+=1;state.locked=false;state.currentId=actor.id;state.auto=false;
+      actor.energy=100;actor.accuracy=10000;
+      state.selectedAction=action;updateActorHud(actor);
+      await performAction(actor,action,target);
+      return true;
+    },
+    getOngPhoAuthoredAssets: (keys=["idle","skill1","ultimate","attack","hit","fall"]) => {
+      const checks={
+        idle:()=>Boolean(ONG_PHO_IDLE_IMAGE().complete&&ONG_PHO_IDLE_IMAGE().naturalWidth>1),
+        skill1:()=>Boolean(ONG_PHO_SKILL1_IMAGE().complete&&ONG_PHO_SKILL1_IMAGE().naturalWidth>1),
+        ultimate:()=>Boolean(ONG_PHO_ULTIMATE_IMAGE().complete&&ONG_PHO_ULTIMATE_IMAGE().naturalWidth>1),
+        attack:()=>Boolean(ONG_PHO_ATTACK_IMAGE().complete&&ONG_PHO_ATTACK_IMAGE().naturalWidth>1),
+        hit:()=>Boolean(ONG_PHO_HIT_IMAGE().complete&&ONG_PHO_HIT_IMAGE().naturalWidth>1),
+        fall:()=>Boolean(ONG_PHO_FALL_IMAGE().complete&&ONG_PHO_FALL_IMAGE().naturalWidth>1),
+        walk:()=>false,run:()=>false
+      };
+      const requested=Array.isArray(keys)?keys:Object.keys(checks);
+      return Object.fromEntries(requested.map((key)=>[key,Boolean(checks[key]?.())]));
+    },
     qaForceOngPhoAction: (action="basic") => {
       const actor=getUnit(ONG_PHO_GIF_HERO_ID);
       const target=living(TEAM_ENEMY)[0];
@@ -8527,7 +8544,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
       state.currentId=actor.id; state.selectedAction="basic"; updateActorHud(actor);
       void performAction(actor,"basic",target); return true;
     },
-    getDinhLoiAssets:()=>Object.fromEntries(Object.entries(DINH_LOI_IMAGES).map(([key,image])=>[key,Boolean(image.complete&&image.naturalWidth>1)])),
+    getDinhLoiAssets:(keys=Object.keys(DINH_LOI_ASSET_NAMES))=>Object.fromEntries((Array.isArray(keys)?keys:Object.keys(DINH_LOI_ASSET_NAMES)).filter((key)=>DINH_LOI_ASSET_NAMES[key]).map((key)=>{const image=DINH_LOI_IMAGES[key];return [key,Boolean(image?.complete&&image.naturalWidth>1)];})),
     qaForceDinhLoiAction:async(action="basic")=>{
       const actor=units.find(isDinhLoi);if(!actor||actor.hp<=0||state.mode!=="battle")return false;
       const foes=living(actor.team===TEAM_PLAYER?TEAM_ENEMY:TEAM_PLAYER),friends=living(actor.team);if(!foes.length||!friends.length)return false;

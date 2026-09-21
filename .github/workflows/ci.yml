@@ -42,6 +42,19 @@ jobs:
           path: evidence/browser/
           retention-days: 7
           compression-level: 0
+      - name: Authored legacy hero browser QA
+        run: |
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
+          "$CHROME_PATH" --version
+          node scripts/qa-authored-legacy-browser.mjs
+      - name: Upload authored legacy hero evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: authored-legacy-evidence
+          path: evidence/authored-legacy/
+          retention-days: 7
+          compression-level: 0
       - name: Result motion browser QA
         run: |
           export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
@@ -66,6 +79,15 @@ jobs:
           name: round15-result-evidence
           path: evidence/round15-result/
           retention-days: 7
+          compression-level: 0
+
+      - name: Upload playable build
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playable-dist
+          path: dist/
+          retention-days: 3
           compression-level: 0
 
   production:

@@ -15,11 +15,14 @@ test('PHASE01 action contract has explicit id/parent/target/completion concepts'
   assert.match(battle, /state\.locked/);
 });
 
-test('PHASE01 resource contract has a shared native atlas cache with owner release', () => {
+test('PHASE01 resource contract has a shared native atlas cache with bounded LRU release', () => {
   const battle = read('battle.html');
   assert.match(battle, /BATTLE_NATIVE_ATLAS_CACHE/);
   assert.match(battle, /maxBytes=128\*1024\*1024/);
-  assert.match(battle, /function release|const release/);
+  assert.match(battle, /warmMs=96/);
+  assert.match(battle, /now-e\.used>warmMs/);
+  assert.match(battle, /const release=key=>\{const e=entries\.get\(key\);if\(e\)e\.used=0\}/);
+  assert.doesNotMatch(battle, /e\.active=true/);
   assert.match(battle, /function clear|const clear/);
 });
 
