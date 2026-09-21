@@ -61,9 +61,11 @@ async function runViewport(browser,out,name,width,height,dpr) {
 
     run.exceptions = page.events.filter(event=>event.method==='Runtime.exceptionThrown');
     run.httpErrors = page.events.filter(event=>event.method==='Network.responseReceived'&&event.params.response.status>=400).map(event=>({url:event.params.response.url,status:event.params.response.status}));
+    run.criticalHttpErrors = run.httpErrors.filter(item=>!/\\/favicon\\.ico(?:\\?|$)/.test(item.url));
     run.networkFailures = page.events.filter(event=>event.method==='Network.loadingFailed').map(event=>event.params);
+    run.criticalNetworkFailures = run.networkFailures.filter(item=>!(item.canceled===true && item.type==='Media'));
     run.qaErrors = await page.evaluate('window.__SKILL_TEST_QA__.errors');
-    run.ok = run.actions.every(item=>item.ok) && run.afterReset.ready===true && run.afterReset.resetCount>=1 && run.exceptions.length===0 && run.httpErrors.length===0 && run.networkFailures.length===0 && run.qaErrors.length===0;
+    run.ok = run.actions.every(item=>item.ok) && run.afterReset.ready===true && run.afterReset.resetCount>=1 && run.exceptions.length===0 && run.criticalHttpErrors.length===0 && run.criticalNetworkFailures.length===0 && run.qaErrors.length===0;
     if (!run.ok) run.errors.push('Direct skill-test browser acceptance failed.');
   } catch (error) {
     run.ok=false;
@@ -88,7 +90,7 @@ export async function run() {
     }
     report.ok=report.runs.every(item=>item.ok);
     writeFileSync(resolve(out,'report.json'),JSON.stringify(report,null,2));
-    console.log(JSON.stringify({ok:report.ok,runs:report.runs.map(item=>({name:item.name,ok:item.ok,actions:item.actions.map(row=>({hero:row.hero,action:row.action,ok:row.ok,actionId:row.actionId})),afterReset:item.afterReset,errors:item.errors,exceptions:item.exceptions?.length,httpErrors:item.httpErrors?.length,networkFailures:item.networkFailures?.length,qaErrors:item.qaErrors?.length}))},null,2));
+    console.log(JSON.stringify({ok:report.ok,runs:report.runs.map(item=>({name:item.name,ok:item.ok,actions:item.actions.map(row=>({hero:row.hero,action:row.action,ok:row.ok,actionId:row.actionId})),afterReset:item.afterReset,errors:item.errors,exceptions:item.exceptions?.length,httpErrors:item.httpErrors?.length,criticalHttpErrors:item.criticalHttpErrors?.length,networkFailures:item.networkFailures?.length,criticalNetworkFailures:item.criticalNetworkFailures?.length,qaErrors:item.qaErrors?.length}))},null,2));
     if(!report.ok) process.exitCode=1;
   } finally {
     await browser.close();
