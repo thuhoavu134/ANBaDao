@@ -32,6 +32,7 @@ async function runViewport(browser,out,name,width,height,dpr) {
       for (const action of ACTIONS) {
         const row = { hero:heroKey,heroName,action };
         run.actions.push(row);
+        await page.wait(`!document.querySelector('[data-action="${action}"]').disabled`);
         await page.click(`[data-action="${action}"]`);
         await page.wait(`window.__SKILL_TEST_QA__.lastRun?.hero===${JSON.stringify(heroKey)}&&window.__SKILL_TEST_QA__.lastRun?.action===${JSON.stringify(action)}&&window.__SKILL_TEST_QA__.lastRun?.started===true`,15000);
         row.actionId = await page.evaluate('window.__SKILL_TEST_QA__.lastRun.actionId');
