@@ -10,6 +10,7 @@ const HEROES = [
   ['ong-pho','Ông Phở','ong-pho-gif-test']
 ];
 const ACTIONS = ['basic','skill','ultimate'];
+const MOVEMENTS = ['snap','dash','run','stationary'];
 
 async function runViewport(browser,out,name,width,height,dpr,targetBase) {
   const page = await browser.page(width,height,dpr);
@@ -61,6 +62,40 @@ async function runViewport(browser,out,name,width,height,dpr,targetBase) {
       }
     }
 
+    await page.click('[data-hero-tab="luc-anh"]');
+    await page.wait('window.__SKILL_TEST_QA__.selectedHero==="luc-anh"');
+    run.movementChecks = [];
+    for (const movement of MOVEMENTS) {
+      const row = { movement, action:'basic' };
+      run.movementChecks.push(row);
+      await page.wait(`!document.querySelector('[data-movement="${movement}"]').disabled`);
+      await page.click(`[data-movement="${movement}"]`);
+      await page.wait(`window.__SKILL_TEST_QA__.selectedMovement===${JSON.stringify(movement)}`);
+      row.movementStart = await page.evaluate(`document.querySelector('#battleFrame').contentWindow.__HV_SKILL_MOVEMENT_QA?.events().length ?? 0`);
+      await page.wait('!document.querySelector(\'[data-action="basic"]\').disabled');
+      await page.click('[data-action="basic"]');
+      await page.wait(`window.__SKILL_TEST_QA__.lastRun?.hero==="luc-anh"&&window.__SKILL_TEST_QA__.lastRun?.action==="basic"&&window.__SKILL_TEST_QA__.lastRun?.movement===${JSON.stringify(movement)}&&window.__SKILL_TEST_QA__.lastRun?.started===true`,15000);
+      await page.wait('window.__SKILL_TEST_QA__.lastRun?.impact===true',20000);
+      const shot = name+'-movement-'+movement+'-impact.png';
+      await page.screenshot(resolve(out,shot));
+      run.screenshots.push(shot);
+      await page.wait('window.__SKILL_TEST_QA__.lastRun?.complete===true',30000);
+      row.result = await page.evaluate(`(()=>{
+        const w=document.querySelector('#battleFrame').contentWindow;
+        const u=w.__HON_VIET__.getUnits().find(item=>item.id==='qa-luc-anh');
+        const movementEvents=w.__HV_SKILL_MOVEMENT_QA?.events().slice(${row.movementStart})||[];
+        return {home:u?Math.hypot(u.x-u.baseX,u.y-u.baseY):9999,movementEvents,lastRun:window.__SKILL_TEST_QA__.lastRun};
+      })()`);
+      const expectedType='approach:'+movement;
+      const event=row.result.movementEvents.find(item=>item.type===expectedType&&item.actorId==='qa-luc-anh');
+      row.event=event||null;
+      row.ok=!!event && row.result.home<=2 && row.result.lastRun.complete===true;
+      if (movement==='snap') row.ok = row.ok && JSON.stringify(event?.position)===JSON.stringify(event?.destination);
+      if (movement==='stationary') row.ok = row.ok && JSON.stringify(event?.position)===JSON.stringify(event?.home);
+      if (!row.ok) throw new Error('Lục Ảnh movement '+movement+' failed direct feel contract');
+      await sleep(180);
+    }
+
     const beforeReset = await page.evaluate('window.__SKILL_TEST_QA__.sessionIndex');
     await page.click('#resetBattle');
     await page.wait(`window.__SKILL_TEST_QA__.ready===true&&window.__SKILL_TEST_QA__.sessionIndex>${beforeReset}`,30000);
@@ -74,7 +109,7 @@ async function runViewport(browser,out,name,width,height,dpr,targetBase) {
     run.networkFailures = page.events.filter(event=>event.method==='Network.loadingFailed').map(event=>event.params);
     run.criticalNetworkFailures = run.networkFailures.filter(item=>!(item.canceled===true && item.type==='Media'));
     run.qaErrors = await page.evaluate('window.__SKILL_TEST_QA__.errors');
-    run.ok = run.actions.every(item=>item.ok) && run.afterReset.ready===true && run.afterReset.resetCount>=1 && run.exceptions.length===0 && run.criticalHttpErrors.length===0 && run.criticalNetworkFailures.length===0 && run.qaErrors.length===0;
+    run.ok = run.actions.every(item=>item.ok) && run.movementChecks.every(item=>item.ok) && run.afterReset.ready===true && run.afterReset.resetCount>=1 && run.exceptions.length===0 && run.criticalHttpErrors.length===0 && run.criticalNetworkFailures.length===0 && run.qaErrors.length===0;
     if (!run.ok) run.errors.push('Direct skill-test browser acceptance failed.');
   } catch (error) {
     run.ok=false;
@@ -100,7 +135,7 @@ export async function run() {
     }
     report.ok=report.runs.every(item=>item.ok);
     writeFileSync(resolve(out,'report.json'),JSON.stringify(report,null,2));
-    console.log(JSON.stringify({ok:report.ok,runs:report.runs.map(item=>({name:item.name,ok:item.ok,actions:item.actions.map(row=>({hero:row.hero,action:row.action,ok:row.ok,actionId:row.actionId,snapApproach:row.snapApproach})),afterReset:item.afterReset,errors:item.errors,exceptions:item.exceptions?.length,httpErrors:item.httpErrors?.length,criticalHttpErrors:item.criticalHttpErrors?.length,networkFailures:item.networkFailures?.length,criticalNetworkFailures:item.criticalNetworkFailures?.length,qaErrors:item.qaErrors?.length}))},null,2));
+    console.log(JSON.stringify({ok:report.ok,runs:report.runs.map(item=>({name:item.name,ok:item.ok,actions:item.actions.map(row=>({hero:row.hero,action:row.action,ok:row.ok,actionId:row.actionId,snapApproach:row.snapApproach})),movementChecks:item.movementChecks?.map(row=>({movement:row.movement,ok:row.ok,type:row.event?.type})),afterReset:item.afterReset,errors:item.errors,exceptions:item.exceptions?.length,httpErrors:item.httpErrors?.length,criticalHttpErrors:item.criticalHttpErrors?.length,networkFailures:item.networkFailures?.length,criticalNetworkFailures:item.criticalNetworkFailures?.length,qaErrors:item.qaErrors?.length}))},null,2));
     if(!report.ok) process.exitCode=1;
   } finally {
     await browser.close();
