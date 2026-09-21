@@ -113,49 +113,46 @@ test('compact formation geometry scales cast points without copying source pixel
   assert.ok(bounded.x >= 0 && bounded.x <= 640 && bounded.y >= 0 && bounded.y <= 360);
 });
 
-test('approach waits for movement, rejects duplicate ownership and preserves home', async () => {
+test('Luc Anh snaps to cast position without run/tween and rejects duplicate ownership', async () => {
   const f = fixture(), original = home(f.actor);
-  let complete;
-  f.setTween((unit, x, y) => new Promise(resolve => { complete = () => { unit.x = x; unit.y = y; resolve(true); }; }));
+  const destination = f.movement.plan(f.actor, 'basic', f.target).destination;
   const pending = f.movement.approach(f.actor, 'basic', f.target, 'battle:1');
-  assert.equal(f.actor.state, 'run');
-  assert.deepEqual(xy(f.actor), original);
-  assert.equal(await f.movement.approach(f.actor, 'basic', f.target, 'battle:1'), false);
-  assert.equal(f.moves.length, 1);
-  assert.equal(f.movement.events().some(event => event.type === 'cast:ready'), false);
-  complete();
   assert.equal(await pending, true);
-  assert.equal(f.actor.state, 'idle');
-  assert.deepEqual(home(f.actor), original);
+  assert.equal(f.moves.length, 0, 'snap approach must not call tweenUnit');
+  assert.equal(f.states.includes('run'), false, 'snap approach must not enter run state');
+  assert.deepEqual(xy(f.actor), destination);
+  assert.deepEqual(home(f.actor), original, 'home anchor remains immutable');
+  assert.equal(await f.movement.approach(f.actor, 'basic', f.target, 'battle:1'), false);
+  assert.deepEqual(f.movement.events().map(event => event.type), ['approach:start', 'approach:snap', 'cast:ready']);
 });
 
-test('return waits instead of teleporting and completes before ownership is reusable', async () => {
+test('Luc Anh return still waits for the existing return tween after snap cast', async () => {
   const f = fixture();
   await f.movement.approach(f.actor, 'basic', f.target, 'battle:1');
   const cast = xy(f.actor), original = home(f.actor);
   let complete;
   f.setTween((unit, x, y) => new Promise(resolve => { complete = () => { unit.x = x; unit.y = y; resolve(true); }; }));
   const pending = f.movement.returnHome(f.actor, 'battle:1');
-  assert.deepEqual(xy(f.actor), cast, 'not returned before the tween completes');
+  assert.deepEqual(xy(f.actor), cast, 'return behavior is unchanged and remains awaited');
   assert.equal(f.actor.state, 'run');
   assert.equal(f.moves.at(-1).duration, 320);
   complete();
   assert.equal(await pending, true);
   assert.deepEqual(xy(f.actor), original);
   assert.deepEqual(home(f.actor), original);
-  assert.deepEqual(f.movement.events().map(event => event.type), ['approach:start', 'cast:ready', 'return:start', 'return:complete']);
+  assert.deepEqual(f.movement.events().map(event => event.type), ['approach:start', 'approach:snap', 'cast:ready', 'return:start', 'return:complete']);
 });
 
-test('failed approach releases ownership and permits a retry', async () => {
-  const f = fixture();
+test('failed tween approach releases ownership and permits a retry for non-snap hero', async () => {
+  const f = fixture({ hero: 'linh-dong' });
   f.setTween(async () => false);
   assert.equal(await f.movement.approach(f.actor, 'basic', f.target, 'battle:1'), false);
   f.setTween(async (unit, x, y) => { unit.x = x; unit.y = y; return true; });
   assert.equal(await f.movement.approach(f.actor, 'basic', f.target, 'battle:1'), true);
 });
 
-test('battle cancellation during approach cannot emit cast-ready', async () => {
-  const f = fixture();
+test('battle cancellation during tween approach cannot emit cast-ready', async () => {
+  const f = fixture({ hero: 'linh-dong' });
   f.setTween(async () => { f.state.battleId = 'battle:2'; return true; });
   assert.equal(await f.movement.approach(f.actor, 'basic', f.target, 'battle:1'), false);
   assert.equal(f.movement.events().some(event => event.type === 'cast:ready'), false);
