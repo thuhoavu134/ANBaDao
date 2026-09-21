@@ -1,7 +1,8 @@
 import { createHash } from 'node:crypto';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { basename, dirname, join } from 'node:path';
-import { LUC_ANH_IDLE_1080 as IDLE } from '../src/domain/character/luc-anh-idle.mjs';
+import sharp from 'sharp';
+import { LUC_ANH_IDLE_1080 as IDLE, LUC_ANH_IDLE_BATTLE as BATTLE_IDLE, LUC_ANH_IDLE_BATTLE_ATLAS as BATTLE_ATLAS } from '../src/domain/character/luc-anh-idle.mjs';
 
 const digest = bytes => createHash('sha256').update(bytes).digest('hex');
 
@@ -38,5 +39,25 @@ export async function assembleLucAnhIdle(root = process.cwd()) {
   }
   await mkdir(dirname(output), { recursive: true });
   await writeFile(output, atlas);
-  return { path: IDLE.src, bytes: atlas.length, sha256: report.outputSha256 };
+
+  const battleOutput = join(root, BATTLE_IDLE.src);
+  const battleAtlas = await sharp(atlas)
+    .resize(BATTLE_ATLAS.width, BATTLE_ATLAS.height, { fit: 'fill', kernel: 'lanczos3' })
+    .webp({ lossless: true, effort: 4 })
+    .toBuffer();
+  await mkdir(dirname(battleOutput), { recursive: true });
+  await writeFile(battleOutput, battleAtlas);
+
+  return {
+    path: IDLE.src,
+    bytes: atlas.length,
+    sha256: report.outputSha256,
+    battle: {
+      path: BATTLE_IDLE.src,
+      bytes: battleAtlas.length,
+      sha256: digest(battleAtlas),
+      width: BATTLE_ATLAS.width,
+      height: BATTLE_ATLAS.height
+    }
+  };
 }
