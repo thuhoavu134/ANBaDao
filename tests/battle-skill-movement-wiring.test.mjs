@@ -64,7 +64,7 @@ function fixture(hero, team) {
   });
   return { context, actor, target, moves };
 }
-for (const [hero, flag, boundary] of branches) for (const team of [1, 2]) {
+for (const [hero, flag, boundary] of branches.filter(([hero]) => hero !== 'luc-anh')) for (const team of [1, 2]) {
   test(`${hero} team ${team}: cast entry approaches before animation rather than remaining home`, async () => {
     const f = fixture(hero, team);
     const before = { x: f.actor.baseX, y: f.actor.baseY };
@@ -76,6 +76,22 @@ for (const [hero, flag, boundary] of branches) for (const team of [1, 2]) {
     assert.ok(team === 1 ? f.actor.x > before.x : f.actor.x < before.x, 'movement mirrors for the enemy team');
     assert.deepEqual({ x: f.actor.baseX, y: f.actor.baseY }, before, 'home anchor is immutable');
     assert.ok(Number.isFinite(f.actor.x) && Number.isFinite(f.actor.y));
+  });
+}
+
+for (const team of [1, 2]) for (const action of ['basic', 'skill', 'ultimate']) {
+  test(`luc-anh team ${team} ${action}: cast entry snaps to the cast point without run/tween`, async () => {
+    const [, flag, boundary] = branches.find(([hero]) => hero === 'luc-anh');
+    const f = fixture('luc-anh', team);
+    const before = { x: f.actor.baseX, y: f.actor.baseY };
+    f.context.action = action;
+    vm.runInContext(runtimeSource(), f.context, { timeout: 1000 });
+    await vm.runInContext('(async()=>{' + entryFor(flag, boundary) + '})()', f.context, { timeout: 1000 });
+    assert.equal(f.moves.length, 0, 'Luc Anh cast approach must not tween');
+    assert.notEqual(f.actor.state, 'run', 'Luc Anh cast approach must not enter run state');
+    assert.ok(Math.abs(f.target.x - f.actor.x) < Math.abs(f.target.x - before.x), 'snap destination is closer to target');
+    assert.ok(team === 1 ? f.actor.x > before.x : f.actor.x < before.x, 'snap mirrors between teams');
+    assert.deepEqual({ x: f.actor.baseX, y: f.actor.baseY }, before, 'home anchor is immutable');
   });
 }
 
