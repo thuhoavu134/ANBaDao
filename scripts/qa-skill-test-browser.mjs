@@ -11,11 +11,11 @@ const HEROES = [
 ];
 const ACTIONS = ['basic','skill','ultimate'];
 
-async function runViewport(browser,out,name,width,height,dpr) {
+async function runViewport(browser,out,name,width,height,dpr,targetBase) {
   const page = await browser.page(width,height,dpr);
   const run = { name,width,height,dpr,actions:[],screenshots:[],errors:[] };
   try {
-    await page.send('Page.navigate',{url:browser.origin+'/skill-test.html'});
+    await page.send('Page.navigate',{url:targetBase+'/skill-test.html'});
     await page.wait('window.__SKILL_TEST_QA__?.ready===true',30000);
     await page.screenshot(resolve(out,name+'-initial.png'));
     run.screenshots.push(name+'-initial.png');
@@ -82,10 +82,11 @@ export async function run() {
   const out=resolve('evidence/skill-test');
   mkdirSync(out,{recursive:true});
   const browser=await startBrowser();
-  const report={scope:'Direct skill-test.html controller over real generated 6v6 battle runtime; all 3 authored heroes Basic/Skill/Ultimate plus Reset. Chromium only; not physical iPhone.',revision:process.env.GITHUB_SHA||'local',runs:[],ok:false};
+  const targetBase=(process.env.SKILL_TEST_BASE_URL||browser.origin).replace(/\/+$/,'');
+  const report={targetBase,scope:'Direct skill-test.html controller over real generated 6v6 battle runtime; all 3 authored heroes Basic/Skill/Ultimate plus Reset. Chromium only; not physical iPhone.',revision:process.env.GITHUB_SHA||'local',runs:[],ok:false};
   try {
     for (const viewport of [['desktop',1280,800,1],['mobile',390,844,2]]) {
-      report.runs.push(await runViewport(browser,out,...viewport));
+      report.runs.push(await runViewport(browser,out,...viewport,targetBase));
       writeFileSync(resolve(out,'report.json'),JSON.stringify(report,null,2));
     }
     report.ok=report.runs.every(item=>item.ok);
