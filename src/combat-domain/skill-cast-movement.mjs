@@ -22,9 +22,9 @@ export function createSkillCastMovement(env) {
   // fixed caster line on the actor's own side.
   const registry = {
     'luc-anh': {
-      basic: { mode: 'target', distance: 1.45 },
-      skill: { mode: 'target-team', distance: 1.20, alignY: 'target' },
-      ultimate: { mode: 'target-team', distance: 0.95, alignY: 'center' }
+      basic: { mode: 'target', distance: 1.45, travel: 'snap' },
+      skill: { mode: 'target-team', distance: 1.20, alignY: 'target', travel: 'snap' },
+      ultimate: { mode: 'target-team', distance: 0.95, alignY: 'center', travel: 'snap' }
     },
     'linh-dong': {
       basic: { mode: 'target', distance: 1.35 },
@@ -55,6 +55,9 @@ export function createSkillCastMovement(env) {
     if (!policy) return null;
     if (!['home', 'target', 'target-team', 'formation', 'column'].includes(policy.mode)) {
       throw new Error('Unsupported skill movement mode: ' + policy.mode);
+    }
+    if (policy.travel != null && !['tween', 'snap'].includes(policy.travel)) {
+      throw new Error('Unsupported skill movement travel: ' + policy.travel);
     }
     return { ...policy };
   }
@@ -157,11 +160,19 @@ export function createSkillCastMovement(env) {
     try {
       record('approach:start', actor, battleId, value);
       if (!same(point(actor), value.destination)) {
-        const duration = Math.max(1, finite(env.approachMs(), 380));
-        env.setStatus(actor.name + ' tiến đến điểm thi triển');
-        env.setPhase('Di chuyển • Vào vị trí');
-        env.setUnitState(actor, 'run', duration);
-        if (!await env.tweenUnit(actor, value.destination.x, value.destination.y, duration, battleId)) return false;
+        if (value.travel === 'snap') {
+          env.setStatus(actor.name + ' dịch chuyển đến điểm thi triển');
+          env.setPhase('Dịch chuyển • Vào vị trí');
+          actor.x = value.destination.x;
+          actor.y = value.destination.y;
+          record('approach:snap', actor, battleId, value);
+        } else {
+          const duration = Math.max(1, finite(env.approachMs(), 380));
+          env.setStatus(actor.name + ' tiến đến điểm thi triển');
+          env.setPhase('Di chuyển • Vào vị trí');
+          env.setUnitState(actor, 'run', duration);
+          if (!await env.tweenUnit(actor, value.destination.x, value.destination.y, duration, battleId)) return false;
+        }
       }
       if (!valid(actor, battleId) || !ownsAction(actor, value)) return false;
       env.setUnitState(actor, 'idle', 800);
