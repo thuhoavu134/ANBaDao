@@ -3697,14 +3697,14 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
   // Shared lazy atlas owner for legacy Battle heroes. Unlike the old eager maps,
   // this reserves only the clip currently requested and evicts old unowned packs.
   const BATTLE_NATIVE_ATLAS_CACHE=(()=>{
-    const entries=new Map();let bytes=0,loading=0;const maxBytes=128*1024*1024,maxLoading=2;
+    const entries=new Map();let bytes=0,loading=0;const maxBytes=128*1024*1024,maxLoading=2,warmMs=96;
     const cost=clip=>(clip.atlasWidth||clip.cols*clip.cellW)*(clip.atlasHeight||clip.rows*clip.cellH)*4;
-    const drop=key=>{const e=entries.get(key);if(!e)return;entries.delete(key);bytes-=e.bytes;try{e.image.removeAttribute('src')}catch(_){}};
-    const evict=need=>{while(bytes+need>maxBytes){const old=[...entries.values()].filter(e=>!e.loading&&!e.active).sort((a,b)=>a.used-b.used)[0];if(!old)return false;drop(old.key)}return true};
-    const ensure=(key,clip)=>{let e=entries.get(key);if(e){e.used=performance.now();e.active=true;return e.image}const need=cost(clip);if(!Number.isFinite(need)||need>maxBytes||loading>=maxLoading||!evict(need))return null;const image=new Image();image.decoding='async';e={key,image,bytes:need,loading:true,active:true,used:performance.now()};entries.set(key,e);bytes+=need;loading++;image.onload=()=>{e.loading=false;loading--};image.onerror=()=>{loading--;drop(key)};image.src=clip.src;return image};
-    const release=key=>{const e=entries.get(key);if(e)e.active=false};
-    const clear=()=>{for(const e of entries.values())drop(e.key)};
-    const inspect=()=>({bytes,maxBytes,loading,entries:[...entries.values()].map(e=>({key:e.key,bytes:e.bytes,loading:e.loading,active:e.active}))});
+    const drop=key=>{const e=entries.get(key);if(!e)return;entries.delete(key);bytes-=e.bytes;try{e.image.onload=null;e.image.onerror=null;e.image.removeAttribute('src')}catch(_){}};
+    const evict=need=>{while(bytes+need>maxBytes){const ready=[...entries.values()].filter(e=>!e.loading).sort((a,b)=>a.used-b.used);if(!ready.length)return false;const now=performance.now(),cold=ready.filter(e=>now-e.used>warmMs),old=(cold.length?cold:ready)[0];drop(old.key)}return true};
+    const ensure=(key,clip)=>{let e=entries.get(key);if(e){e.used=performance.now();return e.image}const need=cost(clip);if(!Number.isFinite(need)||need>maxBytes||loading>=maxLoading||!evict(need))return null;const image=new Image();image.decoding='async';e={key,image,bytes:need,loading:true,used:performance.now()};entries.set(key,e);bytes+=need;loading++;image.onload=()=>{if(entries.get(key)!==e)return;e.loading=false;loading=Math.max(0,loading-1)};image.onerror=()=>{if(entries.get(key)!==e)return;loading=Math.max(0,loading-1);drop(key)};image.src=clip.src;return image};
+    const release=key=>{const e=entries.get(key);if(e)e.used=0};
+    const clear=()=>{for(const e of [...entries.values()])drop(e.key);loading=0};
+    const inspect=()=>{const now=performance.now();return {bytes,maxBytes,loading,entries:[...entries.values()].map(e=>({key:e.key,bytes:e.bytes,loading:e.loading,active:now-e.used<=warmMs,used:e.used}))}};
     return {ensure,release,clear,inspect};
   })();
   window.__HV_NATIVE_ATLAS_CACHE=BATTLE_NATIVE_ATLAS_CACHE;
