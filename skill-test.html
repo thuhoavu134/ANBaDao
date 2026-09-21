@@ -179,7 +179,8 @@
     const unitBefore = a.getUnits().find(unit => unit.id===spec.id);
     if (!unitBefore || unitBefore.hp<=0) throw new Error(spec.name+' không còn sống trong trận test');
     if (selectedHero === 'luc-anh') {
-      unitBefore.skillMovement = { ...(unitBefore.skillMovement || {}), [action]: { ...(unitBefore.skillMovement?.[action] || {}), travel:selectedMovement } };
+      const movementQa = frame.contentWindow?.__HV_SKILL_MOVEMENT_QA;
+      if (!movementQa?.setTravel?.(spec.id, action, selectedMovement)) throw new Error('Không áp dụng được movement '+selectedMovement+' cho '+action);
     }
     const row = qa.lastRun = { hero:selectedHero, heroName:spec.name, action, movement:selectedHero==='luc-anh'?selectedMovement:null, phase:'starting', started:false, impact:false, complete:false, actionId:'', beforeEvents, startedAt:Date.now() };
     setDisabled(true);
