@@ -2,7 +2,7 @@
 
 Cập nhật: 2026-09-21  
 Source-of-truth: GitHub repo `bktimmy247/luc-than`  
-Baseline khi tài liệu này được tạo: main `f535494fac8b791df7f731759b09a2f1e60786a8` (merge PR #174)
+Baseline hiện tại: main `2a75e2b1e53fc755f2ee9616e6134c405d6cf9d1` (merge PR #178)
 
 ## 1. Mục đích
 Tài liệu này mô tả **cách đang phát triển game**, không chỉ trạng thái một PR. Agent mới phải đọc tài liệu này trước khi sửa để tiếp tục đúng quy trình, không làm lại phần đã hoàn thành, không bỏ qua QA hình ảnh và không nhầm deploy với source.
@@ -46,6 +46,8 @@ CI hiện chạy:
 - Build
 - full Node test suite
 - `scripts/qa-battle-readiness-browser.mjs`
+- `scripts/qa-authored-legacy-browser.mjs`
+- `scripts/qa-skill-test-browser.mjs`
 - `scripts/qa-result-motion-browser.mjs`
 - `scripts/qa-round15-result-flow.mjs`
 
@@ -138,19 +140,38 @@ Task nào ảnh hưởng result/campaign phải giữ gate này xanh.
 ### Battle VFX QA
 Dùng cho asset readiness, VFX/SFX, action path và host iframe flow. Không dùng một screenshot VFX để suy ra toàn bộ layout/game đã hoàn hảo.
 
-## 7. Checkpoint gần nhất đã xác minh
-PR #174 — `fix: center result heroes in wing focus`
-- merge commit: `f535494fac8b791df7f731759b09a2f1e60786a8`
-- CI run #540: SUCCESS
-- desktop/mobile Chromium screenshots đã được review
-- Victory hero overlap đúng wing focus
-- Defeat authored pose cắt qua wing/card seam nhưng không đè result copy
-- result card bottom gap: 0px trong evidence
-- exceptions: 0
-- result asset errors: 0
-- physical iPhone/Safari: **NOT RUN**
+### Direct Skill Test QA
+Màn `/skill-test.html` là bề mặt test trực tiếp đã merge ở PR #178:
+- chọn Lục Ảnh / Đình Lôi / Ông Phở;
+- bấm Basic / Skill / Ultimate để ép production action hook trên trận 6v6 thật;
+- status dựa trên trace thật: action:start → marker:impact → action:complete;
+- Reset tạo battle session mới;
+- build phải copy màn này vào `dist`;
+- `scripts/qa-skill-test-browser.mjs` phải click đủ 9 action + Reset ở desktop/mobile.
+Favicon 404 và Media request bị hủy do Reset iframe được giữ trong raw audit nhưng không tính là critical; mọi HTTP/network failure khác vẫn phải làm gate đỏ.
 
-Các PR trước liên quan:
+
+## 7. Checkpoint gần nhất đã xác minh
+PR #178 — `feat: add direct skill test surface`
+- merge commit: `2a75e2b1e53fc755f2ee9616e6134c405d6cf9d1`
+- tested head: `d420486da0f7105750b7fc34561123eb74a79002`
+- CI run #566: **SUCCESS**
+- Build + full Node tests PASS
+- Battle VFX browser QA PASS
+- Authored legacy hero browser QA PASS
+- Direct skill-test browser QA PASS desktop 1280×800 + mobile 390×844
+- Lục Ảnh / Đình Lôi / Ông Phở: Basic / Skill / Ultimate đều có start → impact → complete và về home 0px trong report
+- Reset tạo session mới và trở lại ready
+- direct report: exceptions=0; criticalHttpErrors=0; criticalNetworkFailures=0; qaErrors=0
+- Result Motion QA PASS
+- Round-15 result-flow QA PASS
+- screenshot đã review: controller không che đội hình desktop; mobile không overflow ngang; IMPACT/action state đọc được; VFX authored vẫn hiển thị
+- physical iPhone/Safari: **NOT RUN**
+- production/Vercel của route `/skill-test.html`: phải kiểm riêng; GitHub source PASS không đồng nghĩa đã live
+
+PR gần trước liên quan:
+- #175: certify Lục Ảnh / Đình Lôi / Ông Phở Basic/Skill/Ultimate trên runtime thật
+- #174: result hero wing alignment
 - #171: gate card bottom coverage
 - #170: remove mobile Defeat bottom gap
 - #169: faster VFX + Linh Đồng/Bạch Diện readiness + Đình Lôi return stabilization
@@ -218,6 +239,7 @@ Nếu workflow không đổi, chỉ cần cập nhật checkpoint ngắn; không
 Khi được yêu cầu “tiếp game”, trước tiên:
 - refresh main HEAD
 - rà open PR/backlog/docs
+- dùng `/skill-test.html` khi cần xem trực tiếp authored skill của Lục Ảnh / Đình Lôi / Ông Phở
 - chọn blocker gameplay/UI cao nhất còn đỏ
-- **không đụng lại Victory/Defeat chỉ vì đó là phần gần nhất vừa làm**
+- **không đụng lại Victory/Defeat hoặc direct skill-test đã PASS nếu chưa có regression evidence**
 - thực hiện theo quy trình ở trên và lưu evidence trước merge.

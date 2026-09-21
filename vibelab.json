@@ -25,13 +25,14 @@
     "browserRender": "required-per-screen",
     "aestheticApproval": "user-final",
     "latest": {
-      "scope": "PR174 result hero wing alignment plus existing battle/result regression gates; not blanket product acceptance",
-      "tested_revision": "d20e79a470852381b1a89790528c4527838f6da5",
-      "merged_main": "f535494fac8b791df7f731759b09a2f1e60786a8",
-      "ci": "CI/CD run #540 SUCCESS",
-      "tests": "Build, full repository Node tests, Battle VFX browser QA, Result Motion browser QA, Round-15 result flow browser QA all passed in CI #540",
-      "browserRuntime": "Desktop/mobile Chromium evidence reviewed; Victory Run->Idle and Defeat Fall-once result flow retained, wing focus aligned, result card bottom gap 0 in evidence, exceptions=0, result asset errors=0",
+      "scope": "PR178 direct skill-test surface plus existing battle/result regression gates; not blanket product acceptance",
+      "tested_revision": "d420486da0f7105750b7fc34561123eb74a79002",
+      "merged_main": "2a75e2b1e53fc755f2ee9616e6134c405d6cf9d1",
+      "ci": "CI/CD run #566 SUCCESS",
+      "tests": "Build, full repository Node tests, Battle VFX browser QA, Authored legacy hero browser QA, Direct skill-test browser QA, Result Motion browser QA, Round-15 result flow browser QA all passed in CI #566",
+      "browserRuntime": "Direct /skill-test.html reviewed on desktop 1280x800 and mobile 390x844; 9/9 authored actions plus Reset pass; no horizontal overflow; exceptions=0; critical HTTP/network errors=0",
       "physical_iPhone_Safari": "NOT_RUN",
+      "production_skill_test_route": "UNVERIFIED",
       "total_RAM_FPS": "NOT_MEASURED"
     }
   },
@@ -45,7 +46,7 @@
     "mandatory": true,
     "entrypoint": "AGENTS.md",
     "workflow": "docs/AGENT-WORKFLOW-HANDOFF-2026-09-21.md",
-    "baseline_main": "f535494fac8b791df7f731759b09a2f1e60786a8",
+    "baseline_main": "2a75e2b1e53fc755f2ee9616e6134c405d6cf9d1",
     "rule": "Refresh main first; do not resume stale branches or redo merged PASS work without regression evidence.",
     "loop": "main baseline -> smallest owner patch -> build/tests -> desktop/mobile browser evidence -> read screenshots/interactions/errors -> PR -> green CI -> evidence review -> merge -> update handoff when contract/owner/workflow changes"
   },
@@ -115,30 +116,35 @@
     "historical": true
   },
   "current_checkpoint": {
-    "id": "result-flow-174",
+    "id": "direct-skill-test-178",
     "status": "MERGED_MAIN",
-    "pr": 174,
-    "merge_commit": "f535494fac8b791df7f731759b09a2f1e60786a8",
-    "tested_revision": "d20e79a470852381b1a89790528c4527838f6da5",
+    "pr": 178,
+    "merge_commit": "2a75e2b1e53fc755f2ee9616e6134c405d6cf9d1",
+    "tested_revision": "d420486da0f7105750b7fc34561123eb74a79002",
     "owner_files": [
-      "scripts/result-character-motion-v1.mjs",
-      "scripts/qa-result-motion-browser.mjs",
-      "scripts/qa-round15-result-flow.mjs"
+      "skill-test.html",
+      "scripts/qa-skill-test-browser.mjs",
+      "scripts/build-static.mjs",
+      ".github/workflows/ci.yml",
+      "tests/skill-test-contract.test.mjs"
     ],
     "contract": [
-      "Victory uses Run -> Idle and does not auto-advance.",
-      "Victory keeps Xác nhận and Ải sau actions.",
-      "Defeat plays Fall once then holds final frame.",
-      "Result card reaches viewport bottom without black gap.",
-      "Authored result hero remains in wing focus without overlapping result copy.",
-      "15-round campaign result flow remains green."
+      "Direct /skill-test.html selects Lục Ảnh, Đình Lôi, or Ông Phở.",
+      "Basic, Skill, and Ultimate force the existing production action hooks in a real 6v6 battle.",
+      "Status follows real action:start -> marker:impact -> action:complete trace.",
+      "Each actor returns home after completion and remains alive.",
+      "Reset creates a fresh battle session and returns to ready.",
+      "Desktop and mobile browser QA click all nine actions plus Reset.",
+      "Expected favicon 404 and canceled Media during iframe reset remain raw-audited but are non-critical; all other HTTP/network failures stay gated."
     ],
     "evidence": {
-      "ci": "run #540 SUCCESS",
-      "browser": "desktop + mobile Chromium screenshots manually reviewed",
-      "runtime_errors": "0 exceptions; 0 result asset errors",
-      "physical_device": "iPhone/Safari NOT_RUN"
+      "ci": "run #566 SUCCESS",
+      "browser": "desktop 1280x800 + mobile 390x844 screenshots manually reviewed",
+      "direct_report": "ok=true; 9/9 actions per viewport; Reset PASS; home=0px; exceptions=0; criticalHttpErrors=0; criticalNetworkFailures=0; qaErrors=0",
+      "regression": "Battle VFX, Authored legacy, Result Motion, Round-15 all PASS",
+      "physical_device": "iPhone/Safari NOT_RUN",
+      "production": "/skill-test.html UNVERIFIED on Vercel"
     },
-    "next_agent": "Read AGENTS.md and docs/AGENT-WORKFLOW-HANDOFF-2026-09-21.md, refresh main, then choose the highest remaining open gameplay/UI blocker rather than reopening result screens without regression evidence."
+    "next_agent": "Refresh main first. Use /skill-test.html for direct authored-skill inspection; do not redo PR178/175/174 PASS work without regression evidence. Choose the highest remaining gameplay/UI blocker."
   }
 }
