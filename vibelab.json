@@ -25,19 +25,31 @@
     "browserRender": "required-per-screen",
     "aestheticApproval": "user-final",
     "latest": {
-      "scope": "PR162 battle readiness repair; not all product acceptance",
-      "tested_revision": "ac5fe07f2fa057e63ec78075429e92bd137d9488",
-      "tests": "85 focused tests pass; full repository Build/Test succeeds in CI run 35379332544",
-      "productionBuild": "CI build succeeds; no production deployment in this task",
-      "browserRuntime": "Chromium standalone desktop/mobile and real campaign host/iframe entry twice pass, run 35379332514",
+      "scope": "PR174 result hero wing alignment plus existing battle/result regression gates; not blanket product acceptance",
+      "tested_revision": "d20e79a470852381b1a89790528c4527838f6da5",
+      "merged_main": "f535494fac8b791df7f731759b09a2f1e60786a8",
+      "ci": "CI/CD run #540 SUCCESS",
+      "tests": "Build, full repository Node tests, Battle VFX browser QA, Result Motion browser QA, Round-15 result flow browser QA all passed in CI #540",
+      "browserRuntime": "Desktop/mobile Chromium evidence reviewed; Victory Run->Idle and Defeat Fall-once result flow retained, wing focus aligned, result card bottom gap 0 in evidence, exceptions=0, result asset errors=0",
       "physical_iPhone_Safari": "NOT_RUN",
       "total_RAM_FPS": "NOT_MEASURED"
     }
   },
-  "required_gates": ["vibelab", "tdd"],
+  "required_gates": [
+    "vibelab",
+    "tdd"
+  ],
   "mode": "repair",
-  "updated_at": "2026-09-19",
-  "active_repair": {
+  "updated_at": "2026-09-21",
+  "agent_handoff": {
+    "mandatory": true,
+    "entrypoint": "AGENTS.md",
+    "workflow": "docs/AGENT-WORKFLOW-HANDOFF-2026-09-21.md",
+    "baseline_main": "f535494fac8b791df7f731759b09a2f1e60786a8",
+    "rule": "Refresh main first; do not resume stale branches or redo merged PASS work without regression evidence.",
+    "loop": "main baseline -> smallest owner patch -> build/tests -> desktop/mobile browser evidence -> read screenshots/interactions/errors -> PR -> green CI -> evidence review -> merge -> update handoff when contract/owner/workflow changes"
+  },
+  "historical_repair_162": {
     "id": "battle-readiness-162",
     "branch": "fix/battle-asset-readiness-20260918",
     "baseline": "7f53dd74c086d8dcef36eb883f07dc9cee60d513",
@@ -48,15 +60,85 @@
     "evidence": "docs/qa/battle-readiness-20260919-summary.json",
     "goal_user_said": "Game loads heavily, loses images and lacks complete battle SFX/VFX.",
     "goal_agent_understood": "Prepare and lease Linh Dong/Bach Dien assets before both actual action routes; preserve shared audio lifecycle and confirm playback. Broader kit/device acceptance remains open.",
-    "delivery": {"mode":"deployed-url","entrypoint":"existing host -> Chinh Chien -> battle.html iframe","verified_mode":"CI static release build, fresh local guest save, real Chromium controls"},
+    "delivery": {
+      "mode": "deployed-url",
+      "entrypoint": "existing host -> Chinh Chien -> battle.html iframe",
+      "verified_mode": "CI static release build, fresh local guest save, real Chromium controls"
+    },
     "acceptance": [
-      {"id":"R1","description":"Both canonical and active S+ action owners wait before clocks/cost; failure permits retry without spending energy.","status":"PASS","evidence":"generated owner tests and actual browser runs"},
-      {"id":"R2","description":"Idle/run/cast/VFX leases protect resources through recovery/return; build variants retain all frames and timing.","status":"PASS","evidence":"cache tests, atlas report and real draw counters; cap is not total RAM"},
-      {"id":"R3","description":"Existing parent bus prepares without emitting; async playback result, stale/cancelled audio and mute are handled.","status":"PASS","evidence":"audio tests and nonzero PCM on running context; both host sessions confirm playback"},
-      {"id":"R4","description":"Actual 6v6 cast/VFX/audio, repeated host iframe entry and physical iPhone acceptance.","status":"PARTIAL","evidence":"desktop/mobile Chromium and repeated host path pass","unverified":["physical iPhone/Safari","full per-skill speed matrix","full 15-round result loop"]}
+      {
+        "id": "R1",
+        "description": "Both canonical and active S+ action owners wait before clocks/cost; failure permits retry without spending energy.",
+        "status": "PASS",
+        "evidence": "generated owner tests and actual browser runs"
+      },
+      {
+        "id": "R2",
+        "description": "Idle/run/cast/VFX leases protect resources through recovery/return; build variants retain all frames and timing.",
+        "status": "PASS",
+        "evidence": "cache tests, atlas report and real draw counters; cap is not total RAM"
+      },
+      {
+        "id": "R3",
+        "description": "Existing parent bus prepares without emitting; async playback result, stale/cancelled audio and mute are handled.",
+        "status": "PASS",
+        "evidence": "audio tests and nonzero PCM on running context; both host sessions confirm playback"
+      },
+      {
+        "id": "R4",
+        "description": "Actual 6v6 cast/VFX/audio, repeated host iframe entry and physical iPhone acceptance.",
+        "status": "PARTIAL",
+        "evidence": "desktop/mobile Chromium and repeated host path pass",
+        "unverified": [
+          "physical iPhone/Safari",
+          "full per-skill speed matrix",
+          "full 15-round result loop"
+        ]
+      }
     ],
-    "non_goals": ["No combat math, reward, save or auth changes.","No new roster, Combat V2 rollout, new source art or frame/timing redesign.","No automatic main merge or production deployment."],
-    "environment": {"container":"Node22.16.0; direct GitHub DNS and Chromium localhost blocked; policies not bypassed","verification":"authorized GitHub Actions source/build artifact plus local component tests; actual Chrome runs in GitHub Actions","physical_device":"NOT_AVAILABLE"},
-    "risks": ["Decoded cache cap does not measure total device memory.","Legacy noncanonical hero kits and existing timeline trims are not certified.","Screenshot/functional acceptance is not blanket scale/layout approval.","Physical iOS and production acceptance remain open."]
+    "non_goals": [
+      "No combat math, reward, save or auth changes.",
+      "No new roster, Combat V2 rollout, new source art or frame/timing redesign.",
+      "No automatic main merge or production deployment."
+    ],
+    "environment": {
+      "container": "Node22.16.0; direct GitHub DNS and Chromium localhost blocked; policies not bypassed",
+      "verification": "authorized GitHub Actions source/build artifact plus local component tests; actual Chrome runs in GitHub Actions",
+      "physical_device": "NOT_AVAILABLE"
+    },
+    "risks": [
+      "Decoded cache cap does not measure total device memory.",
+      "Legacy noncanonical hero kits and existing timeline trims are not certified.",
+      "Screenshot/functional acceptance is not blanket scale/layout approval.",
+      "Physical iOS and production acceptance remain open."
+    ],
+    "historical": true
+  },
+  "current_checkpoint": {
+    "id": "result-flow-174",
+    "status": "MERGED_MAIN",
+    "pr": 174,
+    "merge_commit": "f535494fac8b791df7f731759b09a2f1e60786a8",
+    "tested_revision": "d20e79a470852381b1a89790528c4527838f6da5",
+    "owner_files": [
+      "scripts/result-character-motion-v1.mjs",
+      "scripts/qa-result-motion-browser.mjs",
+      "scripts/qa-round15-result-flow.mjs"
+    ],
+    "contract": [
+      "Victory uses Run -> Idle and does not auto-advance.",
+      "Victory keeps Xác nhận and Ải sau actions.",
+      "Defeat plays Fall once then holds final frame.",
+      "Result card reaches viewport bottom without black gap.",
+      "Authored result hero remains in wing focus without overlapping result copy.",
+      "15-round campaign result flow remains green."
+    ],
+    "evidence": {
+      "ci": "run #540 SUCCESS",
+      "browser": "desktop + mobile Chromium screenshots manually reviewed",
+      "runtime_errors": "0 exceptions; 0 result asset errors",
+      "physical_device": "iPhone/Safari NOT_RUN"
+    },
+    "next_agent": "Read AGENTS.md and docs/AGENT-WORKFLOW-HANDOFF-2026-09-21.md, refresh main, then choose the highest remaining open gameplay/UI blocker rather than reopening result screens without regression evidence."
   }
 }
