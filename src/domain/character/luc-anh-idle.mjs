@@ -30,3 +30,25 @@ export const LUC_ANH_IDLE_1080_ATLAS = Object.freeze({
   width: LUC_ANH_IDLE_1080.cols * LUC_ANH_IDLE_1080.cellW,
   height: LUC_ANH_IDLE_1080.rows * LUC_ANH_IDLE_1080.cellH
 });
+
+
+/**
+ * Combat-only derivative of the verified RGBA idle atlas.
+ *
+ * The source stays 480 px per cell for hero detail/result presentation.
+ * Battle uses 240 px per cell so the native atlas cache can keep movement/VFX
+ * resident without falling back to the older RGB/black-keyed source.
+ */
+export const LUC_ANH_IDLE_BATTLE = Object.freeze({
+  ...LUC_ANH_IDLE_1080,
+  src: 'assets/characters/luc-anh/idle-rgba-v1-battle-atlas.webp',
+  cellW: 240,
+  cellH: 240,
+  encoding: 'webp-lossless-derived-0.5',
+  derivedFrom: LUC_ANH_IDLE_1080.src
+});
+
+export const LUC_ANH_IDLE_BATTLE_ATLAS = Object.freeze({
+  width: LUC_ANH_IDLE_BATTLE.cols * LUC_ANH_IDLE_BATTLE.cellW,
+  height: LUC_ANH_IDLE_BATTLE.rows * LUC_ANH_IDLE_BATTLE.cellH
+});
