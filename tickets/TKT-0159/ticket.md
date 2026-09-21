@@ -1,6 +1,6 @@
 # TKT-0159 — Action Movement Profiles + owner preview gate
 
-Status: REVIEW_PREP
+Status: PREVIEW_GATE
 Date: 2026-09-21
 Branch: `work/tkt-0159-action-movement-profiles-20260921`
 Base: latest `main`
@@ -40,3 +40,11 @@ Chuẩn hóa cách một skill đi tới điểm thi triển theo profile rõ r�
 ## Gate
 
 Branch only → RED/GREEN → CI/browser evidence → preview owner test → owner nói merge/live thì mới merge.
+
+
+## 2026-09-21 preview checkpoint
+
+- Movement selector now mutates the real internal battle actor through `__HV_SKILL_MOVEMENT_QA.setTravel`; `__HON_VIET__.getUnits()` is snapshot-only and is not used for mutation.
+- Labels for owner feel test: Dịch chuyển / Lướt nhanh / Chạy / Đứng tại chỗ.
+- PR remains Draft and MUST NOT merge before owner hands-on approval.
+- If hosted CI/preview infrastructure does not allocate a runner, status remains blocked at preview gate rather than treating infrastructure failure as code failure.
