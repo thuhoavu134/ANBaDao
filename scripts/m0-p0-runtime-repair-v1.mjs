@@ -1,14 +1,19 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { LUC_ANH_IDLE_1080 as IDLE } from '../src/domain/character/luc-anh-idle.mjs';
+import { LUC_ANH_IDLE_1080 as IDLE, LUC_ANH_IDLE_BATTLE as BATTLE_IDLE } from '../src/domain/character/luc-anh-idle.mjs';
 
 const root = process.cwd();
 const out = join(root, 'dist');
 const idle = Object.freeze({ src: IDLE.src, file: IDLE.src.split('/').pop(), frames: IDLE.frames,
   cols: IDLE.cols, rows: IDLE.rows, w: IDLE.cellW, h: IDLE.cellH, ms: IDLE.ms });
+const battleIdle = Object.freeze({ src: BATTLE_IDLE.src, file: BATTLE_IDLE.src.split('/').pop(), frames: BATTLE_IDLE.frames,
+  cols: BATTLE_IDLE.cols, rows: BATTLE_IDLE.rows, w: BATTLE_IDLE.cellW, h: BATTLE_IDLE.cellH, ms: BATTLE_IDLE.ms });
 
 if (!existsSync(join(root, idle.src))) {
   throw new Error(`Lục Ảnh idle asset is missing: ${idle.src}`);
+}
+if (!existsSync(join(root, battleIdle.src))) {
+  throw new Error(`Lục Ảnh battle idle asset is missing: ${battleIdle.src}`);
 }
 
 function replaceOnce(source, expression, replacement, label) {
@@ -29,7 +34,7 @@ function patchBattleIdle(source) {
   source = replaceOnce(
     source,
     /idle:\{file:"[^"\n]+\.webp",frames:\d+,w:\d+,h:\d+,ms:\d+,loop:true(?:,trimmed:true)?\}/g,
-    `idle:{file:"${idle.file}",frames:${idle.frames},w:${idle.w},h:${idle.h},ms:${idle.ms},loop:true}`,
+    `idle:{file:"${battleIdle.file}",frames:${battleIdle.frames},w:${battleIdle.w},h:${battleIdle.h},ms:${battleIdle.ms},loop:true}`,
     'battle idle metadata'
   );
   source = removeGeneratedDeclaration(source, /^\s*const LUC_ANH_IDLE_TRIMMED_FRAMES=.*;\n/m, 'battle idle trim table');
@@ -217,4 +222,4 @@ let index = readFileSync(indexPath, 'utf8');
 index = patchIndex(index);
 writeFileSync(indexPath, index);
 
-console.log(`M0/P0 runtime repair applied: idle=${idle.src} (${idle.frames} frames, full-cell) · single background owner · result CTA owner`);
+console.log(`M0/P0 runtime repair applied: battleIdle=${battleIdle.src} (${battleIdle.frames} frames, ${battleIdle.w}px cells) · detailIdle=${idle.src} · single background owner · result CTA owner`);
