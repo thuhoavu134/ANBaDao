@@ -1,0 +1,124 @@
+name: Skill Test Live Preview
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: skill-test-live-preview
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[skill-test-preview]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 65
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Assert skill test build
+        run: |
+          test -f dist/skill-test.html
+          test -f dist/battle.html
+
+      - name: Start static server
+        run: |
+          nohup python3 -m http.server 4173 --bind 127.0.0.1 --directory dist >/tmp/skill-server.log 2>&1 &
+          echo $! >/tmp/skill-server.pid
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:4173/skill-test.html >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/skill-server.log
+          exit 1
+
+      - name: Install cloudflared
+        run: |
+          curl -fL --retry 3 --retry-delay 2             https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64             -o cloudflared
+          chmod +x cloudflared
+          ./cloudflared --version
+
+      - name: Start quick tunnel
+        id: tunnel
+        run: |
+          nohup ./cloudflared tunnel --no-autoupdate --url http://127.0.0.1:4173 >/tmp/cloudflared.log 2>&1 &
+          echo $! >/tmp/cloudflared.pid
+          url=""
+          for i in $(seq 1 60); do
+            url=$(grep -Eo 'https://[a-z0-9-]+\.trycloudflare\.com' /tmp/cloudflared.log | head -n 1 || true)
+            if [ -n "$url" ]; then
+              break
+            fi
+            sleep 2
+          done
+          if [ -z "$url" ]; then
+            cat /tmp/cloudflared.log
+            exit 1
+          fi
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+          echo "SKILL_TEST_PREVIEW_URL=$url" >> "$GITHUB_ENV"
+          {
+            echo "### Skill Test Live Preview"
+            echo ""
+            echo "$url/skill-test.html"
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "PREVIEW_URL=$url/skill-test.html"
+
+      - name: Verify public tunnel
+        run: |
+          for i in $(seq 1 45); do
+            if curl -fsS "$SKILL_TEST_PREVIEW_URL/skill-test.html" >/dev/null; then
+              echo "Public skill-test HTTP check PASS"
+              exit 0
+            fi
+            sleep 2
+          done
+          cat /tmp/cloudflared.log
+          exit 1
+
+      - name: Live browser skill QA
+        env:
+          SKILL_TEST_BASE_URL: ${{ steps.tunnel.outputs.url }}
+        run: |
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
+          "$CHROME_PATH" --version
+          node scripts/qa-skill-test-browser.mjs
+
+      - name: Upload live skill evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: live-skill-test-evidence
+          path: evidence/skill-test/
+          retention-days: 3
+          compression-level: 0
+
+      - name: Keep preview open
+        if: success()
+        run: |
+          echo "PREVIEW_READY=$SKILL_TEST_PREVIEW_URL/skill-test.html"
+          for i in $(seq 1 45); do
+            if ! kill -0 "$(cat /tmp/cloudflared.pid)" 2>/dev/null; then
+              cat /tmp/cloudflared.log
+              exit 1
+            fi
+            sleep 60
+          done
