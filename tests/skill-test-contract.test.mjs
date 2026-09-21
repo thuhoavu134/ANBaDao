@@ -34,8 +34,10 @@ test('browser QA clicks all nine action controls on desktop and mobile', () => {
   assert.ok(qa.includes("['mobile',390,844,2]"));
   assert.ok(qa.includes("await page.click('#resetBattle')"));
   assert.ok(qa.includes("run.exceptions.length===0"));
-  assert.ok(qa.includes("run.httpErrors.length===0"));
-  assert.ok(qa.includes("run.networkFailures.length===0"));
+  assert.ok(qa.includes("run.criticalHttpErrors.length===0"));
+  assert.ok(qa.includes("run.criticalNetworkFailures.length===0"));
+  assert.ok(qa.includes("favicon"));
+  assert.ok(qa.includes("item.canceled===true && item.type==='Media'"));
 });
 
 test('CI runs and uploads direct skill-test evidence', () => {
