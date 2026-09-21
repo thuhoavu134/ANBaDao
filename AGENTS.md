@@ -1,5 +1,15 @@
 # Hồn Việt / Lục Thần — hướng dẫn bắt đầu
 
+> **LATEST ENTRYPOINT — 21/09/2026**
+>
+> Trước mọi thay đổi runtime, đọc **`docs/AGENT-WORKFLOW-HANDOFF-2026-09-21.md`**.
+> Main checkpoint khi handoff được tạo: **`f535494fac8b791df7f731759b09a2f1e60786a8`** (PR #174).
+> Nếu main mới hơn, luôn lấy main mới nhất làm baseline; không tiếp tục từ branch/PR cũ chỉ vì lịch sử chat nhắc tới.
+>
+> Quy tắc hiện hành: branch nhỏ từ main → patch owner thật → build/test → browser evidence desktop/mobile → đọc screenshot + interaction + runtime/asset errors → PR → CI xanh → review evidence → merge → cập nhật handoff nếu contract/owner/workflow đổi.
+>
+> Victory/Defeat hiện đã khóa bởi PR #174; không làm lại nếu không có regression evidence. Responsive Chromium không phải physical iPhone/Safari. GitHub/source pass và Vercel/deploy là hai lớp độc lập.
+
 TKT-0158 audio trận phát cùng game LIVE #157 `343fe39`. Host unlock + `playBgm('combat')` lúc Xuất chiến; iframe không autoplay BGM khi parent sở hữu; bỏ `location.assign` 1.8s. Safari/iPhone NOT_RUN. Owner tự `git pull && vercel --prod`.
 
 TKT-0157 iOS trận chết tab vì atlas S+ LIVE #156 `ef2af5e`. Downsample 0.5 atlas >32 MiB + purge Chinh chiến khi iframe trận mở. Safari/iPhone NOT_RUN. Owner tự `git pull && vercel --prod`.
