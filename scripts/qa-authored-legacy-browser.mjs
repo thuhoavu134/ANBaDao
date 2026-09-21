@@ -12,7 +12,12 @@ const HERO_SPECS = [
     sourceId: 'luc_anh',
     name: 'Lục Ảnh',
     force: action => `void __HON_VIET__.qaForceLucAnhAction(${JSON.stringify(action)});true`,
-    assets: '__HON_VIET__.getLucAnhAuthoredAssets()',
+    assets: keys => `__HON_VIET__.getLucAnhAuthoredAssets(${JSON.stringify(keys)})`,
+    actionAssets: {
+      basic: ['idle','run','attack','basicProjectile','basicImpact'],
+      skill: ['idle','skill1','skill1Vfx'],
+      ultimate: ['idle','ultimate','ultimateVfx']
+    },
     required: ['idle','run','attack','skill1','ultimate','basicProjectile','basicImpact','skill1Vfx','ultimateVfx']
   },
   {
@@ -21,7 +26,12 @@ const HERO_SPECS = [
     sourceId: 'dinh_loi',
     name: 'Đình Lôi',
     force: action => `void __HON_VIET__.qaForceDinhLoiAction(${JSON.stringify(action)});true`,
-    assets: '__HON_VIET__.getDinhLoiAssets()',
+    assets: keys => `__HON_VIET__.getDinhLoiAssets(${JSON.stringify(keys)})`,
+    actionAssets: {
+      basic: ['idle','run','attack','basicProjectile','basicImpact'],
+      skill: ['idle','skill1','skill1Wave','skill1Impact','skill1Shield'],
+      ultimate: ['idle','ultimate','ultimateVfx','ultimateImpact']
+    },
     required: ['idle','run','attack','skill1','ultimate','basicProjectile','basicImpact','skill1Wave','skill1Impact','skill1Shield','ultimateVfx','ultimateImpact']
   },
   {
@@ -30,7 +40,12 @@ const HERO_SPECS = [
     sourceId: 'ong_hang_pho',
     name: 'Ông Phở',
     force: action => `__HON_VIET__.qaForceOngPhoAction(${JSON.stringify(action)})`,
-    assets: '__HON_VIET__.getOngPhoAuthoredAssets()',
+    assets: keys => `__HON_VIET__.getOngPhoAuthoredAssets(${JSON.stringify(keys)})`,
+    actionAssets: {
+      basic: ['idle','attack'],
+      skill: ['idle','skill1'],
+      ultimate: ['idle','ultimate']
+    },
     required: ['idle','attack','skill1','ultimate']
   }
 ];
@@ -94,7 +109,7 @@ async function runViewport(browser, out, name, width, height, dpr) {
     run.screenshots.push(name+'-initial.png');
 
     for (const spec of HERO_SPECS) {
-      const item = { actions:{}, screenshots:[], requiredAssets:spec.required };
+      const item = { actions:{}, screenshots:[], requiredAssets:spec.required, assets:{} };
       run.heroes[spec.key] = item;
       await page.wait(`!!${unitExpr(spec.id)} && ${unitExpr(spec.id)}.hp>0`);
 
@@ -107,6 +122,13 @@ async function runViewport(browser, out, name, width, height, dpr) {
         row.beforeUnits = await page.evaluate('__HON_VIET__.getUnits()');
         row.enemyHpBefore = row.beforeUnits.filter(u=>u.team==='enemy').reduce((sum,u)=>sum+Number(u.hp||0),0);
         row.playerShieldBefore = row.beforeUnits.filter(u=>u.team==='player').reduce((sum,u)=>sum+Number(u.shield||0),0);
+
+        row.requiredAssets = spec.actionAssets[action];
+        const assetExpr = spec.assets(row.requiredAssets);
+        await page.wait(`(()=>{const a=${assetExpr};return ${JSON.stringify(row.requiredAssets)}.every(k=>a[k]===true);})()`,15000);
+        row.assets = await page.evaluate(assetExpr);
+        Object.assign(item.assets,row.assets);
+        row.assetReady = row.requiredAssets.every(key=>row.assets[key]===true);
 
         const triggered = await page.evaluate(spec.force(action));
         if (!triggered) throw new Error(spec.name+' '+action+' QA trigger returned false');
@@ -136,6 +158,7 @@ async function runViewport(browser, out, name, width, height, dpr) {
           row.trace.some(e=>e.type==='action:start') &&
           row.trace.some(e=>e.type==='marker:impact') &&
           row.trace.some(e=>e.type==='action:complete') &&
+          row.assetReady &&
           row.effectResolved &&
           Math.hypot(row.after.x-row.after.baseX,row.after.y-row.after.baseY)<=2 &&
           row.after.hp>0;
@@ -143,10 +166,8 @@ async function runViewport(browser, out, name, width, height, dpr) {
         await sleep(120);
       }
 
-      await page.wait(`(()=>{const a=${spec.assets};return ${JSON.stringify(spec.required)}.every(k=>a[k]===true);})()`,15000);
-      item.assets = await page.evaluate(spec.assets);
       item.ok = Object.values(item.actions).every(row=>row.ok) && spec.required.every(key=>item.assets[key]===true);
-      if (!item.ok) throw new Error(spec.name+' authored asset acceptance failed: '+JSON.stringify(item.assets));
+      if (!item.ok) throw new Error(spec.name+' authored asset acceptance failed across action-scoped leases: '+JSON.stringify(item.assets));
     }
 
     run.exceptions = page.events.filter(event => event.method==='Runtime.exceptionThrown');
@@ -198,7 +219,7 @@ export async function run() {
       ok:report.ok,
       runs:report.runs.map(run=>({
         name:run.name,ok:run.ok,
-        heroes:Object.fromEntries(Object.entries(run.heroes).map(([key,item])=>[key,{ok:item.ok,assets:item.assets,actions:Object.fromEntries(Object.entries(item.actions).map(([action,row])=>[action,{ok:row.ok,actionId:row.actionId,effectResolved:row.effectResolved,enemyHpDelta:Number(row.enemyHpAfter)-Number(row.enemyHpBefore),playerShieldDelta:Number(row.playerShieldAfter)-Number(row.playerShieldBefore)}]))}])),
+        heroes:Object.fromEntries(Object.entries(run.heroes).map(([key,item])=>[key,{ok:item.ok,assets:item.assets,actions:Object.fromEntries(Object.entries(item.actions).map(([action,row])=>[action,{ok:row.ok,assetReady:row.assetReady,assets:row.assets,actionId:row.actionId,effectResolved:row.effectResolved,enemyHpDelta:Number(row.enemyHpAfter)-Number(row.enemyHpBefore),playerShieldDelta:Number(row.playerShieldAfter)-Number(row.playerShieldBefore)}]))}])),
         errors:run.errors,
         exceptions:run.exceptions?.length,
         assetHttpErrors:run.assetHttpErrors?.length
