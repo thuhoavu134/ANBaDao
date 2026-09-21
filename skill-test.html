@@ -180,6 +180,7 @@
       row.complete=true; row.completedAt=Date.now(); row.phase='complete';
       row.trace=t.events().filter(e=>e.actionId===row.actionId).map(e=>({type:e.type,marker:e.marker||null,at:e.at||null}));
       setStatus('complete','Hoàn tất',spec.name+' đã về vị trí');
+      setDisabled(false);
       await sleep(500);
       if (qa.lastRun===row) setStatus('ready','Sẵn sàng',spec.name);
       return true;
