@@ -32,6 +32,7 @@ async function runViewport(browser,out,name,width,height,dpr) {
       for (const action of ACTIONS) {
         const row = { hero:heroKey,heroName,action };
         run.actions.push(row);
+        row.movementStart = await page.evaluate(`document.querySelector('#battleFrame').contentWindow.__HV_SKILL_MOVEMENT_QA?.events().length ?? 0`);
         await page.wait(`!document.querySelector('[data-action="${action}"]').disabled`);
         await page.click(`[data-action="${action}"]`);
         await page.wait(`window.__SKILL_TEST_QA__.lastRun?.hero===${JSON.stringify(heroKey)}&&window.__SKILL_TEST_QA__.lastRun?.action===${JSON.stringify(action)}&&window.__SKILL_TEST_QA__.lastRun?.started===true`,15000);
@@ -44,9 +45,17 @@ async function runViewport(browser,out,name,width,height,dpr) {
         row.result = await page.evaluate(`(()=>{
           const q=window.__SKILL_TEST_QA__, w=document.querySelector('#battleFrame').contentWindow;
           const u=w.__HON_VIET__.getUnits().find(item=>item.id===${JSON.stringify(heroId)});
-          return {lastRun:q.lastRun,status:document.querySelector('#status').dataset.phase,home:u?Math.hypot(u.x-u.baseX,u.y-u.baseY):9999,hp:u?.hp||0};
+          const movement=w.__HV_SKILL_MOVEMENT_QA?.events().slice(${row.movementStart})||[];
+          return {lastRun:q.lastRun,status:document.querySelector('#status').dataset.phase,home:u?Math.hypot(u.x-u.baseX,u.y-u.baseY):9999,hp:u?.hp||0,movement};
         })()`);
         row.ok = row.result.lastRun.started===true && row.result.lastRun.impact===true && row.result.lastRun.complete===true && row.result.home<=2 && row.result.hp>0;
+        if (heroKey==='luc-anh') {
+          const snap=row.result.movement.find(event=>event.type==='approach:snap'&&event.actorId===heroId);
+          row.snapApproach=!!snap;
+          row.snapPosition=snap?.position||null;
+          row.snapDestination=snap?.destination||null;
+          row.ok = row.ok && row.snapApproach && JSON.stringify(row.snapPosition)===JSON.stringify(row.snapDestination);
+        }
         if (!row.ok) throw new Error(heroName+' '+action+' failed direct skill-test interaction contract');
         await sleep(180);
       }
@@ -90,7 +99,7 @@ export async function run() {
     }
     report.ok=report.runs.every(item=>item.ok);
     writeFileSync(resolve(out,'report.json'),JSON.stringify(report,null,2));
-    console.log(JSON.stringify({ok:report.ok,runs:report.runs.map(item=>({name:item.name,ok:item.ok,actions:item.actions.map(row=>({hero:row.hero,action:row.action,ok:row.ok,actionId:row.actionId})),afterReset:item.afterReset,errors:item.errors,exceptions:item.exceptions?.length,httpErrors:item.httpErrors?.length,criticalHttpErrors:item.criticalHttpErrors?.length,networkFailures:item.networkFailures?.length,criticalNetworkFailures:item.criticalNetworkFailures?.length,qaErrors:item.qaErrors?.length}))},null,2));
+    console.log(JSON.stringify({ok:report.ok,runs:report.runs.map(item=>({name:item.name,ok:item.ok,actions:item.actions.map(row=>({hero:row.hero,action:row.action,ok:row.ok,actionId:row.actionId,snapApproach:row.snapApproach})),afterReset:item.afterReset,errors:item.errors,exceptions:item.exceptions?.length,httpErrors:item.httpErrors?.length,criticalHttpErrors:item.criticalHttpErrors?.length,networkFailures:item.networkFailures?.length,criticalNetworkFailures:item.criticalNetworkFailures?.length,qaErrors:item.qaErrors?.length}))},null,2));
     if(!report.ok) process.exitCode=1;
   } finally {
     await browser.close();
