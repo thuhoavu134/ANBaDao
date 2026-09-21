@@ -55,6 +55,38 @@ test('explicit home policy remains stationary and overrides a ranged approach', 
   assert.equal(f.moves.length, 0);
 });
 
+test('travel-only override inherits canonical cast geometry', () => {
+  const f = fixture();
+  f.actor.skillMovement = { basic: { travel: 'dash' } };
+  const policy = f.movement.policyFor(f.actor, 'basic');
+  assert.equal(policy.mode, 'target');
+  assert.equal(policy.distance, 1.45);
+  assert.equal(policy.travel, 'dash');
+});
+
+test('run dash and stationary profiles have distinct approach behavior', async () => {
+  const run = fixture();
+  run.actor.skillMovement = { basic: { travel: 'run' } };
+  assert.equal(await run.movement.approach(run.actor, 'basic', run.target, 'battle:1'), true);
+  assert.equal(run.moves.length, 1);
+  assert.equal(run.moves[0].duration, 380);
+  assert.ok(run.movement.events().some(event => event.type === 'approach:run'));
+
+  const dash = fixture();
+  dash.actor.skillMovement = { basic: { travel: 'dash' } };
+  assert.equal(await dash.movement.approach(dash.actor, 'basic', dash.target, 'battle:1'), true);
+  assert.equal(dash.moves.length, 1);
+  assert.ok(dash.moves[0].duration > 0 && dash.moves[0].duration < 380);
+  assert.ok(dash.movement.events().some(event => event.type === 'approach:dash'));
+
+  const stationary = fixture();
+  stationary.actor.skillMovement = { basic: { travel: 'stationary' } };
+  assert.equal(await stationary.movement.approach(stationary.actor, 'basic', stationary.target, 'battle:1'), true);
+  assert.equal(stationary.moves.length, 0);
+  assert.deepEqual(xy(stationary.actor), home(stationary.actor));
+  assert.ok(stationary.movement.events().some(event => event.type === 'approach:stationary'));
+});
+
 test('unmapped heroes retain legacy movement and aliases resolve explicitly', () => {
   const f = fixture({ hero: 'unmapped' });
   assert.equal(f.movement.policyFor(f.actor, 'basic'), null);
