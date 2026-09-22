@@ -12,8 +12,10 @@
     "ci": "npm run build && node --test --test-concurrency=1 tests/*.test.mjs",
     "check": "npm test"
   },
-  "dependencies": {
-    "@neondatabase/serverless": "^1.1.0",
+  "devDependencies": {
     "sharp": "0.34.3"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.1.0"
   }
 }

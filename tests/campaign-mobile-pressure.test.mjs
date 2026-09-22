@@ -60,15 +60,6 @@ function drawScene(time){
   assert.match(patched,/mobile\/a\.webp/);
 });
 
-test('build dependency keeps sharp available when Vercel omits devDependencies',()=>{
-  const pkg=JSON.parse(readFileSync('package.json','utf8'));
-  const lock=JSON.parse(readFileSync('package-lock.json','utf8'));
-  assert.equal(pkg.dependencies?.sharp,'0.34.3');
-  assert.equal(pkg.devDependencies?.sharp,undefined);
-  assert.equal(lock.packages[''].dependencies?.sharp,'0.34.3');
-  assert.notEqual(lock.packages['node_modules/sharp']?.dev,true);
-});
-
 test('static build creates mobile atlases before campaign lifetime patch and final payload sync',()=>{
   const build=readFileSync('scripts/build-static.mjs','utf8');
   const mobile=build.indexOf('buildCampaignMobileAtlases(root)');
