@@ -152,6 +152,33 @@ export function patchBattleMobilePressure(input,variants={}){
     'const count = REDUCED_MOTION ? Math.ceil(amount / 4) : amount;',
     'const requested=REDUCED_MOTION?Math.ceil(amount/4):__HV_BATTLE_LOW_MEMORY?Math.max(1,Math.min(12,Math.ceil(amount*.45))):amount; const count=__HV_BATTLE_LOW_MEMORY?Math.min(requested,Math.max(0,72-particles.length)):requested;',
     'mobile particle budget');
+  const bgOwner=`const __HV_BATTLE_BG_SCALE=__HV_BATTLE_LOW_MEMORY?.75:1;
+  const __HV_BATTLE_BG_REFRESH_MS=__HV_BATTLE_LOW_MEMORY?250:0;
+  let __hvBattleBgCanvas=null,__hvBattleBgContext=null,__hvBattleBgAt=-Infinity;
+  function __hvDrawBattleBackground(context,time){
+    if(!__HV_BATTLE_LOW_MEMORY){drawBackground(context,time);return;}
+    if(!__hvBattleBgCanvas){
+      __hvBattleBgCanvas=document.createElement("canvas");
+      __hvBattleBgCanvas.width=Math.max(1,Math.round(WORLD.width*__HV_BATTLE_BG_SCALE));
+      __hvBattleBgCanvas.height=Math.max(1,Math.round(WORLD.height*__HV_BATTLE_BG_SCALE));
+      __hvBattleBgContext=__hvBattleBgCanvas.getContext("2d",{alpha:false});
+    }
+    if(__hvBattleBgContext&&(!Number.isFinite(__hvBattleBgAt)||time-__hvBattleBgAt>=__HV_BATTLE_BG_REFRESH_MS)){
+      __hvBattleBgContext.setTransform(1,0,0,1,0,0);
+      __hvBattleBgContext.clearRect(0,0,__hvBattleBgCanvas.width,__hvBattleBgCanvas.height);
+      __hvBattleBgContext.setTransform(__HV_BATTLE_BG_SCALE,0,0,__HV_BATTLE_BG_SCALE,0,0);
+      drawBackground(__hvBattleBgContext,time);
+      __hvBattleBgAt=time;
+    }
+    if(__hvBattleBgCanvas)context.drawImage(__hvBattleBgCanvas,0,0,__hvBattleBgCanvas.width,__hvBattleBgCanvas.height,0,0,WORLD.width,WORLD.height);
+    else drawBackground(context,time);
+  }
+  window.addEventListener("pagehide",()=>{if(__hvBattleBgCanvas){__hvBattleBgCanvas.width=0;__hvBattleBgCanvas.height=0;}__hvBattleBgCanvas=null;__hvBattleBgContext=null;},{once:true});
+  `;
+  html=replaceOne(html,'function render(time) {',bgOwner+'function render(time) {','mobile background cache owner');
+  const bgCall=html.includes('drawBackground(ctx, time);')?'drawBackground(ctx, time);':html.includes('drawBackground(ctx,time);')?'drawBackground(ctx,time);':null;
+  if(!bgCall)throw new Error('Battle mobile patch missing background render call');
+  html=html.replace(bgCall,'__hvDrawBattleBackground(ctx,time);');
   html=replaceOne(html,'const poseAtlas = sameAppearanceBefore ? null : POSE_ATLASES[unit.archetype];','const poseAtlas = sameAppearanceBefore || (__HV_BATTLE_LOW_MEMORY&&unit.state!=="run"&&unit.state!=="attack") ? null : POSE_ATLASES[unit.archetype];','mobile generic pose admission');
   html=replaceOne(html,
     'dom.canvas.dataset.poseAtlases = Object.values(POSE_ATLASES).filter((image) => image.complete && image.naturalWidth > 1).length.toString();',
