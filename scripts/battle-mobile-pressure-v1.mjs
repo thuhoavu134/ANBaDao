@@ -148,6 +148,10 @@ export function patchBattleMobilePressure(input,variants={}){
     for(const unit of guarded)drawDinhLoiAtlasFrame(context,image,frame,unit.x,unit.y,330,186,{baseline:93,screen:true,alpha:.82});
   }`;
   html=replaceOne(html,oldShield,newShield,'lazy Dinh Loi shield');
+  html=replaceOne(html,
+    'const count = REDUCED_MOTION ? Math.ceil(amount / 4) : amount;',
+    'const requested=REDUCED_MOTION?Math.ceil(amount/4):__HV_BATTLE_LOW_MEMORY?Math.max(1,Math.min(12,Math.ceil(amount*.45))):amount; const count=__HV_BATTLE_LOW_MEMORY?Math.min(requested,Math.max(0,72-particles.length)):requested;',
+    'mobile particle budget');
   html=replaceOne(html,'const poseAtlas = sameAppearanceBefore ? null : POSE_ATLASES[unit.archetype];','const poseAtlas = sameAppearanceBefore || (__HV_BATTLE_LOW_MEMORY&&unit.state!=="run"&&unit.state!=="attack") ? null : POSE_ATLASES[unit.archetype];','mobile generic pose admission');
   html=replaceOne(html,
     'dom.canvas.dataset.poseAtlases = Object.values(POSE_ATLASES).filter((image) => image.complete && image.naturalWidth > 1).length.toString();',
