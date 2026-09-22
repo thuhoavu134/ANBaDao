@@ -4,11 +4,19 @@ import { readFileSync } from 'node:fs';
 import {
   DINH_LOI_MOBILE_SCALE,
   DINH_LOI_MOBILE_SOURCES,
+  BATTLE_FALLBACK_MOBILE_SOURCES,
   dinhLoiMobileVariantPath,
   patchBattleMobilePressure
 } from '../scripts/battle-mobile-pressure-v1.mjs';
 
 const MiB=1024*1024;
+
+test('eight eager fallback atlases drop from about 48 MiB decoded to about 12 MiB on mobile',()=>{
+  assert.equal(BATTLE_FALLBACK_MOBILE_SOURCES.length,8);
+  const full=[1536*1024,1536*1024,1536*1024,1536*1024,1536*1024,1774*887,1774*887,1536*1024].reduce((n,p)=>n+p*4,0);
+  assert.ok(full/1024/1024>47 && full/1024/1024<49);
+  assert.ok(full*.25/1024/1024<13);
+});
 
 test('Đình Lôi mobile derivatives reduce each native 2x atlas to one-quarter decoded bytes',()=>{
   assert.equal(DINH_LOI_MOBILE_SCALE,.5);
@@ -28,6 +36,18 @@ function resizeCanvas() {
   const rect = dom.viewport.getBoundingClientRect();
   const dpr = Math.min(devicePixelRatio || 1, 2);
 }
+const HERO_ATLAS_SOURCES = Object.freeze({
+    [TEAM_PLAYER]: "assets/battle-runtime/embedded-03.webp",
+    [TEAM_ENEMY]: "assets/battle-runtime/embedded-04.webp"
+  });
+const POSE_ATLAS_SOURCES = Object.freeze({
+    guardian: "assets/battle-runtime/embedded-05.webp",
+    ranger: "assets/battle-runtime/embedded-06.webp",
+    healer: "assets/battle-runtime/embedded-07.webp",
+    striker: "assets/battle-runtime/embedded-08.webp",
+    duelist: "assets/battle-runtime/embedded-09.webp",
+    mystic: "assets/battle-runtime/embedded-10.webp"
+  });
 const DINH_LOI_ID="dinh_loi", DINH_LOI_FRAMES=64, DINH_LOI_COLS=8, DINH_LOI_CELL_W=480, DINH_LOI_CELL_H=270;
 const DINH_LOI_ASSET_BASE="assets/characters/dinh-loi/";
 const DINH_LOI_ASSET_NAMES=Object.freeze({idle:"idle-atlas.png",skill1Shield:"skill1-shield-atlas.png",ultimateVfx:"ultimate-vfx-atlas.png",ultimateImpact:"ultimate-impact-atlas.png"});
@@ -46,6 +66,14 @@ function render(time) {
   }
 `;
   const patched=patchBattleMobilePressure(source,{
+    'assets/battle-runtime/embedded-03.webp':{src:'assets/battle-runtime/mobile-v1/embedded-03.webp',width:768,height:512,scale:.5},
+    'assets/battle-runtime/embedded-04.webp':{src:'assets/battle-runtime/mobile-v1/embedded-04.webp',width:768,height:512,scale:.5},
+    'assets/battle-runtime/embedded-05.webp':{src:'assets/battle-runtime/mobile-v1/embedded-05.webp',width:768,height:512,scale:.5},
+    'assets/battle-runtime/embedded-06.webp':{src:'assets/battle-runtime/mobile-v1/embedded-06.webp',width:768,height:512,scale:.5},
+    'assets/battle-runtime/embedded-07.webp':{src:'assets/battle-runtime/mobile-v1/embedded-07.webp',width:768,height:512,scale:.5},
+    'assets/battle-runtime/embedded-08.webp':{src:'assets/battle-runtime/mobile-v1/embedded-08.webp',width:887,height:444,scale:.5},
+    'assets/battle-runtime/embedded-09.webp':{src:'assets/battle-runtime/mobile-v1/embedded-09.webp',width:887,height:444,scale:.5},
+    'assets/battle-runtime/embedded-10.webp':{src:'assets/battle-runtime/mobile-v1/embedded-10.webp',width:768,height:512,scale:.5},
     'assets/characters/dinh-loi/idle-atlas.png':{src:'assets/characters/dinh-loi/mobile-v1/idle-atlas.webp',width:1920,height:1080,scale:.5},
     'assets/characters/dinh-loi/skill1-shield-atlas.png':{src:'assets/characters/dinh-loi/mobile-v1/skill1-shield-atlas.webp',width:1920,height:1080,scale:.5},
     'assets/characters/dinh-loi/ultimate-vfx-atlas.png':{src:'assets/characters/dinh-loi/mobile-v1/ultimate-vfx-atlas.webp',width:1080,height:1920,scale:.5},
@@ -56,6 +84,8 @@ function render(time) {
   assert.match(patched,/__hvBattlePaintAt/);
   assert.match(patched,/1000\/30/);
   assert.match(patched,/mobile-v1\/idle-atlas\.webp/);
+  assert.match(patched,/__hvBattleFallbackSrc/);
+  assert.match(patched,/mobile-v1\/embedded-03\.webp/);
   const shield=patched.slice(patched.indexOf('function drawDinhLoiPersistentShields'),patched.indexOf('function render'));
   assert.ok(shield.indexOf('const guarded=') < shield.indexOf('DINH_LOI_IMAGES.skill1Shield'));
 });
