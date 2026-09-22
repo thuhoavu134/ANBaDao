@@ -8,6 +8,11 @@ export const BATTLE_FALLBACK_MOBILE_SOURCES=Object.freeze([
   'assets/battle-runtime/embedded-07.webp','assets/battle-runtime/embedded-08.webp',
   'assets/battle-runtime/embedded-09.webp','assets/battle-runtime/embedded-10.webp'
 ]);
+export const ONG_PHO_MOBILE_SOURCES=Object.freeze([
+  'assets/battle-runtime/embedded-11.png','assets/battle-runtime/embedded-12.png',
+  'assets/battle-runtime/embedded-13.png','assets/battle-runtime/embedded-14.png',
+  'assets/battle-runtime/embedded-15.png','assets/characters/ong-pho/ultimate-sheet-64-alpha-clean-v310.png'
+]);
 export const DINH_LOI_MOBILE_SOURCES=Object.freeze([
   'assets/characters/dinh-loi/idle-atlas.png','assets/characters/dinh-loi/run-atlas.png',
   'assets/characters/dinh-loi/hit-atlas.png','assets/characters/dinh-loi/fall-atlas.png',
@@ -69,6 +74,25 @@ export function patchBattleMobilePressure(input,variants={}){
     mystic: __hvBattleFallbackSrc("assets/battle-runtime/embedded-10.webp")
   });`;
   html=replaceOne(html,fallbackPoseOld,fallbackPoseNew,'fallback pose atlases');
+  const ongSourcesOld=`const ONG_PHO_ATTACK_SOURCE = "assets/battle-runtime/embedded-11.png";
+  const ONG_PHO_IDLE_SOURCE = "assets/battle-runtime/embedded-12.png";
+  const ONG_PHO_HIT_SOURCE = "assets/battle-runtime/embedded-13.png";
+  const ONG_PHO_FALL_SOURCE = "assets/battle-runtime/embedded-14.png";
+  const ONG_PHO_SKILL1_SOURCE = "assets/battle-runtime/embedded-15.png";
+  const ONG_PHO_ULTIMATE_SOURCE = "assets/characters/ong-pho/ultimate-sheet-64-alpha-clean-v310.png";
+  `;
+  const ongSourcesNew=`const __HV_ONG_PHO_CELL_SCALE=__HV_BATTLE_LOW_MEMORY?.5:1;
+  const ONG_PHO_ATTACK_SOURCE = __hvBattleFallbackSrc("assets/battle-runtime/embedded-11.png");
+  const ONG_PHO_IDLE_SOURCE = __hvBattleFallbackSrc("assets/battle-runtime/embedded-12.png");
+  const ONG_PHO_HIT_SOURCE = __hvBattleFallbackSrc("assets/battle-runtime/embedded-13.png");
+  const ONG_PHO_FALL_SOURCE = __hvBattleFallbackSrc("assets/battle-runtime/embedded-14.png");
+  const ONG_PHO_SKILL1_SOURCE = __hvBattleFallbackSrc("assets/battle-runtime/embedded-15.png");
+  const ONG_PHO_ULTIMATE_SOURCE = __hvBattleFallbackSrc("assets/characters/ong-pho/ultimate-sheet-64-alpha-clean-v310.png");
+  `;
+  html=replaceOne(html,ongSourcesOld,ongSourcesNew,'Ong Pho mobile sources');
+  const ongCell='const cellW=240, cellH=135';
+  if(html.split(ongCell).length!==4)throw new Error('Battle mobile patch expected three Ong Pho cell declarations');
+  html=html.replaceAll(ongCell,'const cellW=240*__HV_ONG_PHO_CELL_SCALE, cellH=135*__HV_ONG_PHO_CELL_SCALE');
   html=replaceOne(html,'const DINH_LOI_ID="dinh_loi", DINH_LOI_FRAMES=64, DINH_LOI_COLS=8, DINH_LOI_CELL_W=480, DINH_LOI_CELL_H=270;',`const __HV_DINH_LOI_MOBILE_ATLASES=${mapping};
   const DINH_LOI_ID="dinh_loi", DINH_LOI_FRAMES=64, DINH_LOI_COLS=8, DINH_LOI_CELL_W=__HV_BATTLE_LOW_MEMORY?240:480, DINH_LOI_CELL_H=__HV_BATTLE_LOW_MEMORY?135:270;`,'Dinh Loi cells');
   html=replaceOne(html,"const DINH_LOI_CLIPS=Object.fromEntries(Object.entries(DINH_LOI_ASSET_NAMES).map(([key,file])=>{const portrait=key==='ultimateVfx'||key==='ultimateImpact';const cellW=portrait?270:480,cellH=portrait?480:270;return [key,{src:DINH_LOI_ASSET_BASE+file,cols:8,rows:8,cellW,cellH,atlasWidth:cellW*8,atlasHeight:cellH*8}]}));",`const DINH_LOI_CLIPS=Object.fromEntries(Object.entries(DINH_LOI_ASSET_NAMES).map(([key,file])=>{const portrait=key==='ultimateVfx'||key==='ultimateImpact';const source=DINH_LOI_ASSET_BASE+file,mobile=__HV_BATTLE_LOW_MEMORY?__HV_DINH_LOI_MOBILE_ATLASES[source]:null;const cellW=mobile?(portrait?135:240):(portrait?270:480),cellH=mobile?(portrait?240:135):(portrait?480:270);return [key,{src:mobile?.src||source,cols:8,rows:8,cellW,cellH,atlasWidth:mobile?.width||cellW*8,atlasHeight:mobile?.height||cellH*8}]}));`,'Dinh Loi clips');
@@ -89,7 +113,7 @@ export function patchBattleMobilePressure(input,variants={}){
 export async function buildBattleMobilePressure(root=process.cwd()){
   const {default:sharp}=await import('sharp');
   const out=join(root,'dist'),variants={};
-  for(const src of [...BATTLE_FALLBACK_MOBILE_SOURCES,...DINH_LOI_MOBILE_SOURCES]){
+  for(const src of [...BATTLE_FALLBACK_MOBILE_SOURCES,...ONG_PHO_MOBILE_SOURCES,...DINH_LOI_MOBILE_SOURCES]){
     const source=join(out,src);if(!existsSync(source))throw new Error('Missing mobile battle atlas: '+src);
     const meta=await sharp(source).metadata();
     const width=Math.max(1,Math.round(Number(meta.width)*DINH_LOI_MOBILE_SCALE));
