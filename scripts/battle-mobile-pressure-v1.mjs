@@ -74,6 +74,31 @@ export function patchBattleMobilePressure(input,variants={}){
     mystic: __hvBattleFallbackSrc("assets/battle-runtime/embedded-10.webp")
   });`;
   html=replaceOne(html,fallbackPoseOld,fallbackPoseNew,'fallback pose atlases');
+  const eagerHeroAtlases=`const HERO_ATLASES = Object.fromEntries(Object.entries(HERO_ATLAS_SOURCES).map(([team, source]) => {
+    const image = new Image();
+    image.decoding = "async";
+    image.src = source;
+    return [team, image];
+  }));`;
+  const lazyHeroAtlases=`const __HV_FALLBACK_IMAGES=new Map();
+  function __hvFallbackImage(source){let image=__HV_FALLBACK_IMAGES.get(source);if(image)return image;image=new Image();image.decoding="async";image.src=source;__HV_FALLBACK_IMAGES.set(source,image);return image;}
+  function __hvFallbackProxy(sources){return new Proxy({},{
+    get(_target,key){const source=sources[key];return source?__hvFallbackImage(source):undefined;},
+    ownKeys(){return Reflect.ownKeys(sources);},
+    getOwnPropertyDescriptor(){return {enumerable:true,configurable:true};}
+  });}
+  const HERO_ATLASES=__hvFallbackProxy(HERO_ATLAS_SOURCES);`;
+  html=replaceOne(html,eagerHeroAtlases,lazyHeroAtlases,'lazy fallback hero images');
+  const eagerPoseAtlases=`const POSE_ATLASES = Object.fromEntries(Object.entries(POSE_ATLAS_SOURCES).map(([archetype, source]) => {
+    const image = new Image();
+    image.decoding = "async";
+    image.src = source;
+    return [archetype, image];
+  }));`;
+  const lazyPoseAtlases=`const POSE_ATLASES=__hvFallbackProxy(POSE_ATLAS_SOURCES);
+  window.__HV_FALLBACK_CLEAR=()=>{for(const image of __HV_FALLBACK_IMAGES.values()){try{image.onload=null;image.onerror=null;image.removeAttribute("src")}catch(_){}}__HV_FALLBACK_IMAGES.clear();};
+  window.addEventListener("pagehide",()=>window.__HV_FALLBACK_CLEAR?.(),{once:true});`;
+  html=replaceOne(html,eagerPoseAtlases,lazyPoseAtlases,'lazy fallback pose images');
   const ongSourcesOld=`const ONG_PHO_ATTACK_SOURCE = "assets/battle-runtime/embedded-11.png";
   const ONG_PHO_IDLE_SOURCE = "assets/battle-runtime/embedded-12.png";
   const ONG_PHO_HIT_SOURCE = "assets/battle-runtime/embedded-13.png";
@@ -107,6 +132,15 @@ export function patchBattleMobilePressure(input,variants={}){
     for(const unit of guarded)drawDinhLoiAtlasFrame(context,image,frame,unit.x,unit.y,330,186,{baseline:93,screen:true,alpha:.82});
   }`;
   html=replaceOne(html,oldShield,newShield,'lazy Dinh Loi shield');
+  html=replaceOne(html,'const poseAtlas = sameAppearanceBefore ? null : POSE_ATLASES[unit.archetype];','const poseAtlas = sameAppearanceBefore || (__HV_BATTLE_LOW_MEMORY&&unit.state!=="run"&&unit.state!=="attack") ? null : POSE_ATLASES[unit.archetype];','mobile generic pose admission');
+  html=replaceOne(html,
+    'dom.canvas.dataset.poseAtlases = Object.values(POSE_ATLASES).filter((image) => image.complete && image.naturalWidth > 1).length.toString();',
+    'dom.canvas.dataset.poseAtlases = Object.values(POSE_ATLAS_SOURCES).filter((source) => { const image=__HV_FALLBACK_IMAGES.get(source); return image?.complete && image.naturalWidth > 1; }).length.toString();',
+    'non-loading pose telemetry');
+  html=replaceOne(html,
+    'getPoseAtlasStatus: () => Object.fromEntries(Object.entries(POSE_ATLASES).map(([key, image]) => [key, Boolean(image.complete && image.naturalWidth > 1)])),',
+    'getPoseAtlasStatus: () => Object.fromEntries(Object.entries(POSE_ATLAS_SOURCES).map(([key, source]) => { const image=__HV_FALLBACK_IMAGES.get(source); return [key, Boolean(image?.complete && image.naturalWidth > 1)]; })),',
+    'non-loading pose QA');
   return html;
 }
 
