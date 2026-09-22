@@ -47,7 +47,7 @@ export function patchBattleMobilePressure(input,variants={}){
   const view = { width: 1, height: 1, scale: 1, offsetX: 0, offsetY: 0, dpr: 1 };`,'low-memory profile');
   html=replaceOne(html,'const ambientFireflies = Array.from({ length: 24 }, (_, index) => ({','const ambientFireflies = Array.from({ length: __HV_BATTLE_LOW_MEMORY ? 10 : 24 }, (_, index) => ({','ambient particles');
   html=replaceOne(html,'const dpr = Math.min(devicePixelRatio || 1, 2);','const dpr = Math.min(devicePixelRatio || 1, __HV_BATTLE_LOW_MEMORY ? 1.5 : 2);','canvas dpr');
-  html=replaceOne(html,'let lastFrame = performance.now();','let lastFrame = performance.now();\n  let __hvBattlePaintAt = lastFrame;','battle paint clock');
+  html=replaceOne(html,'let lastFrame = performance.now();','let lastFrame = performance.now();\n  let __hvBattlePaintAt = lastFrame;\n  let __hvZoneHudAt=-Infinity,__hvTelemetryAt=-Infinity;','battle paint clock');
   html=replaceOne(html,'function render(time) {\n    resizeCanvas();',`function render(time) {
     if(__HV_BATTLE_LOW_MEMORY&&time-__hvBattlePaintAt<1000/30){requestAnimationFrame(render);return;}
     __hvBattlePaintAt=time;
@@ -179,6 +179,12 @@ export function patchBattleMobilePressure(input,variants={}){
   const bgCall=html.includes('drawBackground(ctx, time);')?'drawBackground(ctx, time);':html.includes('drawBackground(ctx,time);')?'drawBackground(ctx,time);':null;
   if(!bgCall)throw new Error('Battle mobile patch missing background render call');
   html=html.replace(bgCall,'__hvDrawBattleBackground(ctx,time);');
+  html=replaceOne(html,'renderBattlefieldZone();','if(!__HV_BATTLE_LOW_MEMORY||time-__hvZoneHudAt>=250){__hvZoneHudAt=time;renderBattlefieldZone();}','mobile zone HUD throttle');
+  const telemetryFirst='dom.canvas.dataset.projectiles = projectiles.map((effect) => effect.kind).join(",");';
+  const telemetryLast='dom.canvas.dataset.cameraFlash = cameraFlash.toFixed(3);';
+  if(!html.includes(telemetryFirst)||!html.includes(telemetryLast))throw new Error('Battle mobile patch missing telemetry block');
+  html=html.replace(telemetryFirst,'if(!__HV_BATTLE_LOW_MEMORY||time-__hvTelemetryAt>=250){__hvTelemetryAt=time;\n    '+telemetryFirst);
+  html=html.replace(telemetryLast,telemetryLast+'\n    }');
   html=replaceOne(html,'const poseAtlas = sameAppearanceBefore ? null : POSE_ATLASES[unit.archetype];','const poseAtlas = sameAppearanceBefore || (__HV_BATTLE_LOW_MEMORY&&unit.state!=="run"&&unit.state!=="attack") ? null : POSE_ATLASES[unit.archetype];','mobile generic pose admission');
   html=replaceOne(html,
     'dom.canvas.dataset.poseAtlases = Object.values(POSE_ATLASES).filter((image) => image.complete && image.naturalWidth > 1).length.toString();',
