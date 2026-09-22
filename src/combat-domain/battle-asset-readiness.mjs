@@ -14,13 +14,7 @@ export function createBattleAssetReadiness(options) {
     return state.battleId === battleId && state.mode === 'battle' &&
       state.currentId === actor.id && actor.hp > 0;
   };
-  const constrainedLoader = loader => {
-    const info = loader?.inspect?.();
-    return Boolean(info && (
-      (Number(info.maxBytes) > 0 && Number(info.maxBytes) <= 64 * 1024 * 1024) ||
-      Number(info.maxLoading) === 1
-    ));
-  };
+  const constrainedLoader = loader => loader?.cache?.constrainedMobile === true;
   function resetVisible() {
     for (const [loader, pins] of visible) for (const [src, pin] of pins) loader.cache.unpin(src, pin);
     visible.clear();

@@ -274,5 +274,6 @@ export function createDecodedAtlasCache(options = {}) {
     for (const src of [...entries.keys(), ...queued.keys()]) releaseSrc(src, new Error('Atlas cache cleared'), true);
     failed.clear(); logged.clear();
   }
-  return { reserve, release, unpin, clearScope, clear, allowRetry, inspect, atlasDecodedBytes, atlasDecodeScale };
+  return { reserve, release, unpin, clearScope, clear, allowRetry, inspect, atlasDecodedBytes, atlasDecodeScale,
+    constrainedMobile, maxBytes, maxLoading };
 }

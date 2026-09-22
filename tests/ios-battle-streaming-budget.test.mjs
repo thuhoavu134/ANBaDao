@@ -61,8 +61,8 @@ function readinessFixture() {
   const acquired = [];
   const pins = [];
   const loader = {
-    cache: { unpin() {} },
-    inspect: () => ({ maxBytes: 64 * MiB, maxLoading: 1 }),
+    cache: { unpin() {}, constrainedMobile: true },
+    inspect: () => ({ maxBytes: 64 * MiB, maxLoading: 1, constrainedMobile: true }),
     ensure(clip, opts = {}) {
       if (opts.pin) pins.push({ src: clip.src, pin: opts.pin });
       return { state: 'ready', image: { complete: true }, promise: Promise.resolve() };
