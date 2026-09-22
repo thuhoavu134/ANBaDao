@@ -53,6 +53,10 @@ function resizeCanvas() {
   const rect = dom.viewport.getBoundingClientRect();
   const dpr = Math.min(devicePixelRatio || 1, 2);
 }
+function burst(x, y, color, amount = 15, type = "spark") {
+  const count = REDUCED_MOTION ? Math.ceil(amount / 4) : amount;
+  for (let index = 0; index < count; index += 1) particles.push({x,y,color,type});
+}
 const HERO_ATLAS_SOURCES = Object.freeze({
     [TEAM_PLAYER]: "assets/battle-runtime/embedded-03.webp",
     [TEAM_ENEMY]: "assets/battle-runtime/embedded-04.webp"
@@ -138,6 +142,8 @@ function render(time) {
   assert.match(patched,/mobile-v1\/idle-atlas\.webp/);
   assert.match(patched,/const scale=mobile\?\.scale\|\|1/);
   assert.match(patched,/m\.w\*scale/);
+  assert.match(patched,/Math\.min\(12,Math\.ceil\(amount\*\.45\)\)/);
+  assert.match(patched,/72-particles\.length/);
 
   const shield=patched.slice(patched.indexOf('function drawDinhLoiPersistentShields'),patched.indexOf('function render'));
   assert.ok(shield.indexOf('const guarded=') < shield.indexOf('DINH_LOI_IMAGES.skill1Shield'));
@@ -148,6 +154,7 @@ test('low-memory generic roster keeps pose atlases lazy until movement or attack
 const ambientFireflies = Array.from({ length: 24 }, (_, index) => ({}));
 let lastFrame = performance.now();
 function resizeCanvas() { const rect=dom.viewport.getBoundingClientRect(); const dpr = Math.min(devicePixelRatio || 1, 2); }
+function burst(x,y,color,amount=15,type="spark"){ const count = REDUCED_MOTION ? Math.ceil(amount / 4) : amount; for(let index=0;index<count;index+=1)particles.push({x,y,color,type}); }
 const HERO_ATLAS_SOURCES = Object.freeze({[TEAM_PLAYER]:"p.webp",[TEAM_ENEMY]:"e.webp"});
 const HERO_ATLASES = Object.fromEntries(Object.entries(HERO_ATLAS_SOURCES).map(([team, source]) => { const image = new Image(); image.decoding="async"; image.src=source; return [team,image]; }));
 const POSE_ATLAS_SOURCES = Object.freeze({guardian:"g.webp",ranger:"r.webp",healer:"h.webp",striker:"s.webp",duelist:"d.webp",mystic:"m.webp"});
