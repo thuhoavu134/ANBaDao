@@ -5,6 +5,7 @@ import {
   DINH_LOI_MOBILE_SCALE,
   DINH_LOI_MOBILE_SOURCES,
   BATTLE_FALLBACK_MOBILE_SOURCES,
+  ONG_PHO_MOBILE_SOURCES,
   dinhLoiMobileVariantPath,
   patchBattleMobilePressure
 } from '../scripts/battle-mobile-pressure-v1.mjs';
@@ -16,6 +17,13 @@ test('eight eager fallback atlases drop from about 48 MiB decoded to about 12 Mi
   const full=[1536*1024,1536*1024,1536*1024,1536*1024,1536*1024,1774*887,1774*887,1536*1024].reduce((n,p)=>n+p*4,0);
   assert.ok(full/1024/1024>47 && full/1024/1024<49);
   assert.ok(full*.25/1024/1024<13);
+});
+
+test('Ong Pho authored battle sheets fall below 10 MiB decoded after mobile half-scale',()=>{
+  assert.equal(ONG_PHO_MOBILE_SOURCES.length,6);
+  const full=[2400*945,1920*810,1200*270,1920*675,1920*1350,1920*1080].reduce((n,p)=>n+p*4,0);
+  assert.ok(full/1024/1024>38 && full/1024/1024<39);
+  assert.ok(full*.25/1024/1024<10);
 });
 
 test('Đình Lôi mobile derivatives reduce each native 2x atlas to one-quarter decoded bytes',()=>{
@@ -48,6 +56,17 @@ const POSE_ATLAS_SOURCES = Object.freeze({
     duelist: "assets/battle-runtime/embedded-09.webp",
     mystic: "assets/battle-runtime/embedded-10.webp"
   });
+const ONG_PHO_ATTACK_SOURCE = "assets/battle-runtime/embedded-11.png";
+  const ONG_PHO_IDLE_SOURCE = "assets/battle-runtime/embedded-12.png";
+  const ONG_PHO_HIT_SOURCE = "assets/battle-runtime/embedded-13.png";
+  const ONG_PHO_FALL_SOURCE = "assets/battle-runtime/embedded-14.png";
+  const ONG_PHO_SKILL1_SOURCE = "assets/battle-runtime/embedded-15.png";
+  const ONG_PHO_ULTIMATE_SOURCE = "assets/characters/ong-pho/ultimate-sheet-64-alpha-clean-v310.png";
+  function drawOngPhoGifHero(){
+    { const cellW=240, cellH=135; }
+    { const cellW=240, cellH=135; }
+    const cellW=240, cellH=135;
+  }
 const DINH_LOI_ID="dinh_loi", DINH_LOI_FRAMES=64, DINH_LOI_COLS=8, DINH_LOI_CELL_W=480, DINH_LOI_CELL_H=270;
 const DINH_LOI_ASSET_BASE="assets/characters/dinh-loi/";
 const DINH_LOI_ASSET_NAMES=Object.freeze({idle:"idle-atlas.png",skill1Shield:"skill1-shield-atlas.png",ultimateVfx:"ultimate-vfx-atlas.png",ultimateImpact:"ultimate-impact-atlas.png"});
@@ -74,6 +93,12 @@ function render(time) {
     'assets/battle-runtime/embedded-08.webp':{src:'assets/battle-runtime/mobile-v1/embedded-08.webp',width:887,height:444,scale:.5},
     'assets/battle-runtime/embedded-09.webp':{src:'assets/battle-runtime/mobile-v1/embedded-09.webp',width:887,height:444,scale:.5},
     'assets/battle-runtime/embedded-10.webp':{src:'assets/battle-runtime/mobile-v1/embedded-10.webp',width:768,height:512,scale:.5},
+    'assets/battle-runtime/embedded-11.png':{src:'assets/battle-runtime/mobile-v1/embedded-11.webp',width:1200,height:473,scale:.5},
+    'assets/battle-runtime/embedded-12.png':{src:'assets/battle-runtime/mobile-v1/embedded-12.webp',width:960,height:405,scale:.5},
+    'assets/battle-runtime/embedded-13.png':{src:'assets/battle-runtime/mobile-v1/embedded-13.webp',width:600,height:135,scale:.5},
+    'assets/battle-runtime/embedded-14.png':{src:'assets/battle-runtime/mobile-v1/embedded-14.webp',width:960,height:338,scale:.5},
+    'assets/battle-runtime/embedded-15.png':{src:'assets/battle-runtime/mobile-v1/embedded-15.webp',width:960,height:675,scale:.5},
+    'assets/characters/ong-pho/ultimate-sheet-64-alpha-clean-v310.png':{src:'assets/characters/ong-pho/mobile-v1/ultimate-sheet-64-alpha-clean-v310.webp',width:960,height:540,scale:.5},
     'assets/characters/dinh-loi/idle-atlas.png':{src:'assets/characters/dinh-loi/mobile-v1/idle-atlas.webp',width:1920,height:1080,scale:.5},
     'assets/characters/dinh-loi/skill1-shield-atlas.png':{src:'assets/characters/dinh-loi/mobile-v1/skill1-shield-atlas.webp',width:1920,height:1080,scale:.5},
     'assets/characters/dinh-loi/ultimate-vfx-atlas.png':{src:'assets/characters/dinh-loi/mobile-v1/ultimate-vfx-atlas.webp',width:1080,height:1920,scale:.5},
@@ -86,6 +111,8 @@ function render(time) {
   assert.match(patched,/mobile-v1\/idle-atlas\.webp/);
   assert.match(patched,/__hvBattleFallbackSrc/);
   assert.match(patched,/mobile-v1\/embedded-03\.webp/);
+  assert.match(patched,/mobile-v1\/embedded-11\.webp/);
+  assert.match(patched,/__HV_ONG_PHO_CELL_SCALE/);
   const shield=patched.slice(patched.indexOf('function drawDinhLoiPersistentShields'),patched.indexOf('function render'));
   assert.ok(shield.indexOf('const guarded=') < shield.indexOf('DINH_LOI_IMAGES.skill1Shield'));
 });
