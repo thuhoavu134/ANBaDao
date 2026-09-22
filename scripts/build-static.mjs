@@ -175,6 +175,18 @@ await buildBattleReadiness(root);
 // any build-sized variants before the final iframe payload is synchronized.
 await import('./result-character-motion-v1.mjs');
 
+// Final battle visual profile: keep authored clocks, but lower iOS canvas/atlas pressure.
+const { buildBattleMobilePressure } = await import('./battle-mobile-pressure-v1.mjs');
+await buildBattleMobilePressure(root);
+
+// Low-memory campaign derivatives are generated before lifetime ownership is finalized.
+const { installCampaignMobileAtlases } = await import('./campaign-mobile-atlas-v1.mjs');
+await installCampaignMobileAtlases(root);
+
+// Repair campaign image ownership after all late host patch owners.
+const { installCampaignResourceLifecycle } = await import('./campaign-resource-lifecycle-v1.mjs');
+installCampaignResourceLifecycle(root);
+
 // The integrated battle is loaded from this embedded payload in production.
 // Keep it byte-identical to the patched battle.html; otherwise the visible
 // preview and the iframe can silently run different engines.
