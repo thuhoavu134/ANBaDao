@@ -136,7 +136,7 @@ function render(time) {
     dom.canvas.dataset.cameraFlash = cameraFlash.toFixed(3);
     requestAnimationFrame(render);
   }
-const qaApi={getPoseAtlasStatus: () => Object.fromEntries(Object.entries(POSE_ATLASES).map(([key, image]) => [key, Boolean(image.complete && image.naturalWidth > 1)]))};
+const qaApi={getPoseAtlasStatus: () => Object.fromEntries(Object.entries(POSE_ATLASES).map(([key, image]) => [key, Boolean(image.complete && image.naturalWidth > 1)])), other:true};
 `;
   const patched=patchBattleMobilePressure(source,{
     'assets/battle-runtime/embedded-03.webp':{src:'assets/battle-runtime/mobile-v1/embedded-03.webp',width:768,height:512,scale:.5},
