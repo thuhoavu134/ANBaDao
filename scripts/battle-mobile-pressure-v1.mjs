@@ -13,6 +13,14 @@ export const ONG_PHO_MOBILE_SOURCES=Object.freeze([
   'assets/battle-runtime/embedded-13.png','assets/battle-runtime/embedded-14.png',
   'assets/battle-runtime/embedded-15.png','assets/characters/ong-pho/ultimate-sheet-64-alpha-clean-v310.png'
 ]);
+export const LUC_ANH_MOBILE_SOURCES=Object.freeze([
+  'assets/characters/luc-anh/idle-atlas.webp','assets/characters/luc-anh/run-atlas.webp',
+  'assets/characters/luc-anh/hit-atlas.webp','assets/characters/luc-anh/fall-atlas.webp',
+  'assets/characters/luc-anh/basic-atlas.webp','assets/characters/luc-anh/skill1-atlas.webp',
+  'assets/characters/luc-anh/ultimate-atlas.webp','assets/characters/luc-anh/basic_projectile-atlas.webp',
+  'assets/characters/luc-anh/basic_impact-atlas.webp','assets/characters/luc-anh/skill1_vfx-atlas.webp',
+  'assets/characters/luc-anh/ultimate_vfx-atlas.webp'
+]);
 export const DINH_LOI_MOBILE_SOURCES=Object.freeze([
   'assets/characters/dinh-loi/idle-atlas.png','assets/characters/dinh-loi/run-atlas.png',
   'assets/characters/dinh-loi/hit-atlas.png','assets/characters/dinh-loi/fall-atlas.png',
@@ -115,6 +123,14 @@ export function patchBattleMobilePressure(input,variants={}){
   const ONG_PHO_ULTIMATE_SOURCE = __hvBattleFallbackSrc("assets/characters/ong-pho/ultimate-sheet-64-alpha-clean-v310.png");
   `;
   html=replaceOne(html,ongSourcesOld,ongSourcesNew,'Ong Pho mobile sources');
+  const lucImageOld="function lucAnhImage(key){const m=LUC_ANH_META[key];if(!m)return null;const rows=Math.ceil(m.frames/LUC_ANH_COLS);const clip={src:LUC_ANH_ASSET_BASE+m.file,cols:LUC_ANH_COLS,rows,cellW:m.w,cellH:m.h,atlasWidth:LUC_ANH_COLS*m.w,atlasHeight:rows*m.h};return BATTLE_NATIVE_ATLAS_CACHE.ensure('luc-anh:'+key,clip)}";
+  const lucImageNew=`const __HV_LUC_ANH_MOBILE_ATLASES=${mapping};
+  function __hvLucAnhAsset(key){const m=LUC_ANH_META[key];if(!m)return null;const source=LUC_ANH_ASSET_BASE+m.file,mobile=__HV_BATTLE_LOW_MEMORY?__HV_LUC_ANH_MOBILE_ATLASES[source]:null;const scale=mobile?.scale||1;return {m,source,mobile,scale};}
+  function lucAnhImage(key){const asset=__hvLucAnhAsset(key);if(!asset)return null;const {m,source,mobile,scale}=asset,rows=Math.ceil(m.frames/LUC_ANH_COLS);const clip={src:mobile?.src||source,cols:LUC_ANH_COLS,rows,cellW:m.w*scale,cellH:m.h*scale,atlasWidth:mobile?.width||LUC_ANH_COLS*m.w*scale,atlasHeight:mobile?.height||rows*m.h*scale};return BATTLE_NATIVE_ATLAS_CACHE.ensure('luc-anh:'+key,clip)}`;
+  html=replaceOne(html,lucImageOld,lucImageNew,'Luc Anh mobile clip');
+  const lucDrawOld="function drawLucAnhAtlas(context,key,frame,x,y,width,height,options={}){const m=LUC_ANH_META[key],image=LUC_ANH_IMAGES[key];if(!m||!image?.complete||image.naturalWidth<2)return false;const sx=(frame%LUC_ANH_COLS)*m.w,sy=Math.floor(frame/LUC_ANH_COLS)*m.h;context.save();context.translate(x,y);if(options.flip)context.scale(-1,1);context.globalAlpha=options.alpha??1;if(options.screen)context.globalCompositeOperation=\"screen\";context.drawImage(image,sx,sy,m.w,m.h,-width*.5,-height+(options.baseline??46),width,height);context.restore();return true;}";
+  const lucDrawNew="function drawLucAnhAtlas(context,key,frame,x,y,width,height,options={}){const asset=__hvLucAnhAsset(key),m=asset?.m,scale=asset?.scale||1,image=LUC_ANH_IMAGES[key];if(!m||!image?.complete||image.naturalWidth<2)return false;const cellW=m.w*scale,cellH=m.h*scale,sx=(frame%LUC_ANH_COLS)*cellW,sy=Math.floor(frame/LUC_ANH_COLS)*cellH;context.save();context.translate(x,y);if(options.flip)context.scale(-1,1);context.globalAlpha=options.alpha??1;if(options.screen)context.globalCompositeOperation=\"screen\";context.drawImage(image,sx,sy,cellW,cellH,-width*.5,-height+(options.baseline??46),width,height);context.restore();return true;}";
+  html=replaceOne(html,lucDrawOld,lucDrawNew,'Luc Anh scaled source rect');
   const ongCell='const cellW=240, cellH=135';
   if(html.split(ongCell).length!==4)throw new Error('Battle mobile patch expected three Ong Pho cell declarations');
   html=html.replaceAll(ongCell,'const cellW=240*__HV_ONG_PHO_CELL_SCALE, cellH=135*__HV_ONG_PHO_CELL_SCALE');
@@ -147,7 +163,7 @@ export function patchBattleMobilePressure(input,variants={}){
 export async function buildBattleMobilePressure(root=process.cwd()){
   const {default:sharp}=await import('sharp');
   const out=join(root,'dist'),variants={};
-  for(const src of [...BATTLE_FALLBACK_MOBILE_SOURCES,...ONG_PHO_MOBILE_SOURCES,...DINH_LOI_MOBILE_SOURCES]){
+  for(const src of [...BATTLE_FALLBACK_MOBILE_SOURCES,...ONG_PHO_MOBILE_SOURCES,...LUC_ANH_MOBILE_SOURCES,...DINH_LOI_MOBILE_SOURCES]){
     const source=join(out,src);if(!existsSync(source))throw new Error('Missing mobile battle atlas: '+src);
     const meta=await sharp(source).metadata();
     const width=Math.max(1,Math.round(Number(meta.width)*DINH_LOI_MOBILE_SCALE));
