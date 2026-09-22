@@ -175,6 +175,10 @@ await buildBattleReadiness(root);
 // any build-sized variants before the final iframe payload is synchronized.
 await import('./result-character-motion-v1.mjs');
 
+// Repair campaign image ownership after all late host patch owners.
+const { installCampaignResourceLifecycle } = await import('./campaign-resource-lifecycle-v1.mjs');
+installCampaignResourceLifecycle(root);
+
 // The integrated battle is loaded from this embedded payload in production.
 // Keep it byte-identical to the patched battle.html; otherwise the visible
 // preview and the iframe can silently run different engines.

@@ -23,9 +23,18 @@ export function createCampaignResourcePackCache(options = {}) {
     entry[method](value);
     return true;
   };
+  const finishLoading = entry => {
+    if (!entry.loadingCounted) return;
+    entry.loadingCounted = false;
+    loading = Math.max(0, loading - 1);
+    reservedBytes = Math.max(0, reservedBytes - entry.reservation);
+  };
   const remove = entry => {
-    if (entries.get(entry.key) === entry) entries.delete(entry.key);
+    if (entries.get(entry.key) !== entry) return;
+    entries.delete(entry.key);
+    finishLoading(entry);
     if (entry.bytes) bytes = Math.max(0, bytes - entry.bytes);
+    entry.bytes = 0;
     releaseImage(entry.image);
   };
   const evict = need => {
@@ -57,15 +66,20 @@ export function createCampaignResourcePackCache(options = {}) {
       }
       queue.shift(); loading += 1; reservedBytes += reservation; entry.state = 'loading'; entry.loadingCounted = true;
       const generation = entry.generation;
-      Promise.resolve().then(() => load(entry.pack, entry.image)).then(result => {
-        reservedBytes = Math.max(0, reservedBytes - reservation);
+      Promise.resolve().then(() => {
+        if (entry.cancelled || entries.get(entry.key) !== entry || entry.generation !== generation) {
+          throw new Error(`cancelled ${entry.key}`);
+        }
+        return load(entry.pack, entry.image);
+      }).then(result => {
+        finishLoading(entry);
         if (entry.cancelled || entries.get(entry.key) !== entry || entry.generation !== generation) {
           releaseImage(result?.image);
           settle(entry, 'reject', new Error(`cancelled ${entry.key}`));
           return;
         }
         const actual = Number(result?.decodedBytes ?? reservation);
-        if (!Number.isFinite(actual) || actual <= 0 || actual > maxDecodedBytes || bytes + actual > maxDecodedBytes) {
+        if (!Number.isFinite(actual) || actual <= 0 || actual > maxDecodedBytes || bytes + reservedBytes + actual > maxDecodedBytes) {
           entry.state = 'failed'; remove(entry);
           settle(entry, 'reject', new Error(`decoded budget exceeded for ${entry.key}`));
           return;
@@ -74,12 +88,14 @@ export function createCampaignResourcePackCache(options = {}) {
         entry.bytes = actual; entry.state = 'ready'; entry.lastUsedAt = now; bytes += actual;
         // Free the loading slot before resolving callers: the queued asset may
         // begin on the same lifecycle turn, matching the bounded preload plan.
-        if (entry.loadingCounted) { loading = Math.max(0, loading - 1); entry.loadingCounted = false; pump(Date.now()); }
+        pump(Date.now());
         settle(entry, 'resolve', { key: entry.key, image: entry.image, bytes: actual });
       }).catch(error => {
-        reservedBytes = Math.max(0, reservedBytes - reservation);
-        entry.state = 'failed'; remove(entry);
-        if (entry.loadingCounted) { loading = Math.max(0, loading - 1); entry.loadingCounted = false; pump(Date.now()); }
+        finishLoading(entry);
+        if (entries.get(entry.key) === entry && !entry.cancelled) {
+          entry.state = 'failed'; remove(entry);
+        }
+        pump(Date.now());
         settle(entry, 'reject', error instanceof Error ? error : new Error(String(error)));
       }).finally(() => { pump(Date.now()); });
     }
@@ -126,7 +142,7 @@ export function createCampaignResourcePackCache(options = {}) {
   function purge() {
     for (const entry of [...entries.values()]) {
       entry.cancelled = true; entry.generation += 1;
-      if (entry.loadingCounted) { loading = Math.max(0, loading - 1); reservedBytes = Math.max(0, reservedBytes - entry.reservation); entry.loadingCounted = false; }
+      finishLoading(entry);
       remove(entry); settle(entry, 'reject', new Error(`purged ${entry.key}`));
     }
     queue.length = 0;
