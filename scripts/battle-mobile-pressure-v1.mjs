@@ -44,9 +44,19 @@ export function patchBattleMobilePressure(input,variants={}){
   let html=input;
   html=replaceOne(html,'const view = { width: 1, height: 1, scale: 1, offsetX: 0, offsetY: 0, dpr: 1 };',`/* HV_BATTLE_MOBILE_PRESSURE_V1 */
   const __HV_BATTLE_LOW_MEMORY=(()=>{try{const n=navigator,ua=String(n?.userAgent||''),platform=String(n?.platform||''),touch=Number(n?.maxTouchPoints||0),memory=Number(n?.deviceMemory||0);return /iPad|iPhone|iPod/i.test(ua)||(platform==='MacIntel'&&touch>1)||(memory>0&&memory<=4);}catch(_){return false;}})();
+  const __HV_BATTLE_MAX_BACKING_PIXELS=1600000;
   const view = { width: 1, height: 1, scale: 1, offsetX: 0, offsetY: 0, dpr: 1 };`,'low-memory profile');
   html=replaceOne(html,'const ambientFireflies = Array.from({ length: 24 }, (_, index) => ({','const ambientFireflies = Array.from({ length: __HV_BATTLE_LOW_MEMORY ? 10 : 24 }, (_, index) => ({','ambient particles');
-  html=replaceOne(html,'const dpr = Math.min(devicePixelRatio || 1, 2);','const dpr = Math.min(devicePixelRatio || 1, __HV_BATTLE_LOW_MEMORY ? 1.5 : 2);','canvas dpr');
+  const resizeOld=`const rect = dom.viewport.getBoundingClientRect();
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    const width = Math.max(1, Math.round(rect.width));
+    const height = Math.max(1, Math.round(rect.height));`;
+  const resizeNew=`const rect = dom.viewport.getBoundingClientRect();
+    const width = Math.max(1, Math.round(rect.width));
+    const height = Math.max(1, Math.round(rect.height));
+    const __hvPixelDpr=Math.sqrt(__HV_BATTLE_MAX_BACKING_PIXELS/Math.max(1,width*height));
+    const dpr=Math.min(devicePixelRatio || 1,__HV_BATTLE_LOW_MEMORY?Math.min(1.5,__hvPixelDpr):2);`;
+  html=replaceOne(html,resizeOld,resizeNew,'canvas DPR/backing-store budget');
   html=replaceOne(html,'let lastFrame = performance.now();','let lastFrame = performance.now();\n  let __hvBattlePaintAt = lastFrame;\n  let __hvZoneHudAt=-Infinity,__hvTelemetryAt=-Infinity;','battle paint clock');
   html=replaceOne(html,'function render(time) {\n    resizeCanvas();',`function render(time) {
     if(__HV_BATTLE_LOW_MEMORY&&time-__hvBattlePaintAt<1000/30){requestAnimationFrame(render);return;}
