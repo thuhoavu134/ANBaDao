@@ -57,6 +57,7 @@ function burst(x, y, color, amount = 15, type = "spark") {
   const count = REDUCED_MOTION ? Math.ceil(amount / 4) : amount;
   for (let index = 0; index < count; index += 1) particles.push({x,y,color,type});
 }
+function drawBackground(context,time){ context.fillRect(0,0,WORLD.width,WORLD.height); }
 const HERO_ATLAS_SOURCES = Object.freeze({
     [TEAM_PLAYER]: "assets/battle-runtime/embedded-03.webp",
     [TEAM_ENEMY]: "assets/battle-runtime/embedded-04.webp"
@@ -102,6 +103,7 @@ function render(time) {
     const delta = Math.min(0.05, Math.max(0, (time - lastFrame) / 1000));
     lastFrame = time;
     updateEffects(delta);
+    drawBackground(ctx,time);
     units.forEach(unit=>drawUnit(ctx,unit,time));
     requestAnimationFrame(render);
   }
@@ -144,6 +146,10 @@ function render(time) {
   assert.match(patched,/m\.w\*scale/);
   assert.match(patched,/Math\.min\(12,Math\.ceil\(amount\*\.45\)\)/);
   assert.match(patched,/72-particles\.length/);
+  assert.match(patched,/function __hvDrawBattleBackground/);
+  assert.match(patched,/__HV_BATTLE_BG_SCALE=__HV_BATTLE_LOW_MEMORY\?\.75:1/);
+  assert.match(patched,/__HV_BATTLE_BG_REFRESH_MS=__HV_BATTLE_LOW_MEMORY\?250:0/);
+  assert.match(patched,/__hvDrawBattleBackground\(ctx,time\)/);
 
   const shield=patched.slice(patched.indexOf('function drawDinhLoiPersistentShields'),patched.indexOf('function render'));
   assert.ok(shield.indexOf('const guarded=') < shield.indexOf('DINH_LOI_IMAGES.skill1Shield'));
@@ -155,6 +161,7 @@ const ambientFireflies = Array.from({ length: 24 }, (_, index) => ({}));
 let lastFrame = performance.now();
 function resizeCanvas() { const rect=dom.viewport.getBoundingClientRect(); const dpr = Math.min(devicePixelRatio || 1, 2); }
 function burst(x,y,color,amount=15,type="spark"){ const count = REDUCED_MOTION ? Math.ceil(amount / 4) : amount; for(let index=0;index<count;index+=1)particles.push({x,y,color,type}); }
+function drawBackground(context,time){context.fillRect(0,0,WORLD.width,WORLD.height);}
 const HERO_ATLAS_SOURCES = Object.freeze({[TEAM_PLAYER]:"p.webp",[TEAM_ENEMY]:"e.webp"});
 const HERO_ATLASES = Object.fromEntries(Object.entries(HERO_ATLAS_SOURCES).map(([team, source]) => { const image = new Image(); image.decoding="async"; image.src=source; return [team,image]; }));
 const POSE_ATLAS_SOURCES = Object.freeze({guardian:"g.webp",ranger:"r.webp",healer:"h.webp",striker:"s.webp",duelist:"d.webp",mystic:"m.webp"});
@@ -178,7 +185,7 @@ function drawGeneratedHero(context,unit,time,progress){
   const atlas = usePoseAtlas ? poseAtlas : HERO_ATLASES[unit.team];
   return !!atlas;
 }
-function render(time){resizeCanvas();const delta=Math.min(.05,Math.max(0,(time-lastFrame)/1000));lastFrame=time;updateEffects(delta);dom.canvas.dataset.poseAtlases=Object.values(POSE_ATLASES).filter((image)=>image.complete&&image.naturalWidth>1).length.toString();requestAnimationFrame(render);}
+function render(time){resizeCanvas();const delta=Math.min(.05,Math.max(0,(time-lastFrame)/1000));lastFrame=time;updateEffects(delta);drawBackground(ctx,time);dom.canvas.dataset.poseAtlases=Object.values(POSE_ATLASES).filter((image)=>image.complete&&image.naturalWidth>1).length.toString();requestAnimationFrame(render);}
 const api={getPoseAtlasStatus:()=>Object.fromEntries(Object.entries(POSE_ATLASES).map(([key,image])=>[key,Boolean(image.complete&&image.naturalWidth>1)]))};
 `;
   const variants={
