@@ -16,8 +16,11 @@ function replaceFunction(text, startName, nextName, edit) {
 function runtimeSource(variants) {
   return `${MARKER}
 const __HV_READY_ATLASES = ${JSON.stringify(variants)};
+const __HV_LOW_MEMORY_IOS=(()=>{try{const n=navigator;return /iPad|iPhone|iPod/i.test(String(n?.userAgent||''))||(n?.platform==='MacIntel'&&Number(n?.maxTouchPoints||0)>1);}catch(_){return false;}})();
 function __hvReadyClip(clip){
-  const asset=clip&&__HV_READY_ATLASES[clip.src];
+  const entry=clip&&__HV_READY_ATLASES[clip.src];
+  if(!entry)return clip;
+  const asset=__HV_LOW_MEMORY_IOS?(entry.mobile||entry.desktop):entry.desktop;
   if(!asset)return clip;
   const scale=asset.scale;
   return {...clip,src:asset.src,cellW:clip.cellW*scale,cellH:clip.cellH*scale,w:clip.w*scale,h:clip.h*scale,
@@ -139,20 +142,27 @@ export async function buildBattleReadiness(root) {
   const { atlasDecodeScale } = await import('../src/assets/decoded-atlas-cache.mjs');
   const { default: sharp } = await import('sharp');
   const variants = {}, report = [];
+  const writeVariant = async ({source,relative,directory,file,meta,scale,profile,folder}) => {
+    if(scale===1)return null;
+    const width=Math.round(meta.width*scale),height=Math.round(meta.height*scale);
+    const src=relative+folder+'/'+file,target=join(out,src);
+    mkdirSync(join(directory,folder),{recursive:true});
+    await sharp(source).resize(width,height,{fit:'fill'}).webp({lossless:true,effort:2}).toFile(target);
+    report.push({profile,source:relative+file,src,width,height,scale,sourceBytes:statSync(source).size,bytes:statSync(target).size,
+      decodedBefore:meta.width*meta.height*4,decodedAfter:width*height*4});
+    return {src,width,height,scale};
+  };
   for(const hero of ['linh-dong','bach-dien']){
     const relative='assets/characters/'+hero+'/',directory=join(out,relative);
     if(!existsSync(directory))throw new Error('Missing hero assets: '+relative);
     for(const file of readdirSync(directory).filter(file=>file.endsWith('-atlas.webp')).sort()){
       const source=join(directory,file),meta=await sharp(source).metadata();
-      const scale=atlasDecodeScale(meta.width*meta.height*4,128*1024*1024);
-      if(scale===1)continue;
-      const width=Math.round(meta.width*scale),height=Math.round(meta.height*scale);
-      const src=relative+'ready-v1/'+file,target=join(out,src);
-      mkdirSync(join(directory,'ready-v1'),{recursive:true});
-      await sharp(source).resize(width,height,{fit:'fill'}).webp({lossless:true,effort:2}).toFile(target);
-      variants[relative+file]={src,width,height,scale};
-      report.push({source:relative+file,src,width,height,scale,sourceBytes:statSync(source).size,bytes:statSync(target).size,
-        decodedBefore:meta.width*meta.height*4,decodedAfter:width*height*4});
+      const decodedBytes=meta.width*meta.height*4;
+      const desktopScale=atlasDecodeScale(decodedBytes,128*1024*1024);
+      const mobileScale=atlasDecodeScale(decodedBytes,64*1024*1024);
+      const desktop=await writeVariant({source,relative,directory,file,meta,scale:desktopScale,profile:'desktop',folder:'ready-v1'});
+      const mobile=await writeVariant({source,relative,directory,file,meta,scale:mobileScale,profile:'mobile',folder:'ready-mobile-v1'});
+      if(desktop||mobile)variants[relative+file]={desktop,mobile};
     }
   }
   const battlePath=join(out,'battle.html');

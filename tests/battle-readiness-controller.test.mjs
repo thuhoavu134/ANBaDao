@@ -22,11 +22,11 @@ function setup() {
     describe:u=>({hero:u.hero,loader,clip:key=>({src:u.hero+'/'+key}),sfx:a=>u.hero+(a==='ultimate'?'-ult':'-atk')})});
   return {api,state,actor,target,loader,gate,audio,calls,pins,bus,get releases(){return releases;},get soundCalls(){return soundCalls;}};
 }
-test('action readiness waits for pictures and includes visible idle, run, cast and VFX',async()=>{
+test('action readiness waits only for the active actor run, cast and VFX',async()=>{
   const f=setup();let done=false;
   const p=f.api.prepare(f.actor,'basic',f.target,1).then(x=>{done=true;return x;});
   await tick();assert.equal(done,false);
-  assert.deepEqual(f.calls[0].clips.map(c=>c.src),['linh-dong/idle','bach-dien/idle','linh-dong/run','linh-dong/attack','linh-dong/atkVfx']);
+  assert.deepEqual(f.calls[0].clips.map(c=>c.src),['linh-dong/run','linh-dong/attack','linh-dong/atkVfx']);
   f.gate.resolve();const lease=await p;assert.equal(done,true);assert.equal(lease.active(),true);
   assert.equal(f.releases,0);lease.release();lease.release();assert.equal(f.releases,1);f.api.dispose();
 });

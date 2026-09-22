@@ -14,6 +14,13 @@ export function createBattleAssetReadiness(options) {
     return state.battleId === battleId && state.mode === 'battle' &&
       state.currentId === actor.id && actor.hp > 0;
   };
+  const constrainedLoader = loader => {
+    const info = loader?.inspect?.();
+    return Boolean(info && (
+      (Number(info.maxBytes) > 0 && Number(info.maxBytes) <= 64 * 1024 * 1024) ||
+      Number(info.maxLoading) === 1
+    ));
+  };
   function resetVisible() {
     for (const [loader, pins] of visible) for (const [src, pin] of pins) loader.cache.unpin(src, pin);
     visible.clear();
@@ -23,7 +30,7 @@ export function createBattleAssetReadiness(options) {
     const id = getState().battleId;
     if (id !== visibleBattleId) { resetVisible(); visibleBattleId = id; }
     let pin;
-    if (key === 'idle') {
+    if (key === 'idle' && !constrainedLoader(loader)) {
       if (!visible.has(loader)) visible.set(loader, new Map());
       const pins = visible.get(loader);
       if (!pins.has(clip.src)) pins.set(clip.src, Symbol('battle-visible-idle'));
@@ -57,7 +64,10 @@ export function createBattleAssetReadiness(options) {
     try {
       if (!active()) throw abortError();
       const actorDescription = describe(actor);
-      for (const unit of getUnits()) add(describe(unit), 'idle');
+      // Visible idle atlases are requested lazily by the renderer. Blocking an
+      // action on every unit's idle caused iOS Safari to decode multiple large
+      // atlases before the first move. Readiness now owns only the active
+      // actor's movement/cast/VFX working set.
       if (actorDescription) {
         add(actorDescription, 'run');
         add(actorDescription, action === 'ultimate' ? 'ultimate' : 'attack');
