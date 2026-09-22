@@ -6,6 +6,7 @@ import {
   DINH_LOI_MOBILE_SOURCES,
   BATTLE_FALLBACK_MOBILE_SOURCES,
   ONG_PHO_MOBILE_SOURCES,
+  LUC_ANH_MOBILE_SOURCES,
   dinhLoiMobileVariantPath,
   patchBattleMobilePressure
 } from '../scripts/battle-mobile-pressure-v1.mjs';
@@ -24,6 +25,14 @@ test('Ong Pho authored battle sheets fall below 10 MiB decoded after mobile half
   const full=[2400*945,1920*810,1200*270,1920*675,1920*1350,1920*1080].reduce((n,p)=>n+p*4,0);
   assert.ok(full/1024/1024>38 && full/1024/1024<39);
   assert.ok(full*.25/1024/1024<10);
+});
+
+test('Luc Anh mobile derivatives quarter decoded character/VFX residency',()=>{
+  assert.equal(LUC_ANH_MOBILE_SOURCES.length,11);
+  const character=1920*1920*4;
+  const vfx=2560*1760*4;
+  assert.ok(character/4<4*MiB);
+  assert.ok(vfx/4<5*MiB);
 });
 
 test('Đình Lôi mobile derivatives reduce each native 2x atlas to one-quarter decoded bytes',()=>{
@@ -67,6 +76,15 @@ const ONG_PHO_ATTACK_SOURCE = "assets/battle-runtime/embedded-11.png";
     { const cellW=240, cellH=135; }
     const cellW=240, cellH=135;
   }
+const LUC_ANH_ID="luc_anh", LUC_ANH_COLS=8, LUC_ANH_CELL_W=240, LUC_ANH_CELL_H=240;
+const LUC_ANH_ASSET_BASE="assets/characters/luc-anh/";
+const LUC_ANH_META=Object.freeze({
+ idle:{file:"idle-atlas.webp",frames:64,w:240,h:240,ms:72,loop:true},
+ attack:{file:"basic-atlas.webp",frames:64,w:240,h:240,ms:38},
+ basicProjectile:{file:"basic_projectile-atlas.webp",frames:64,w:320,h:220,ms:28}
+});
+function lucAnhImage(key){const m=LUC_ANH_META[key];if(!m)return null;const rows=Math.ceil(m.frames/LUC_ANH_COLS);const clip={src:LUC_ANH_ASSET_BASE+m.file,cols:LUC_ANH_COLS,rows,cellW:m.w,cellH:m.h,atlasWidth:LUC_ANH_COLS*m.w,atlasHeight:rows*m.h};return BATTLE_NATIVE_ATLAS_CACHE.ensure('luc-anh:'+key,clip)}
+function drawLucAnhAtlas(context,key,frame,x,y,width,height,options={}){const m=LUC_ANH_META[key],image=LUC_ANH_IMAGES[key];if(!m||!image?.complete||image.naturalWidth<2)return false;const sx=(frame%LUC_ANH_COLS)*m.w,sy=Math.floor(frame/LUC_ANH_COLS)*m.h;context.save();context.drawImage(image,sx,sy,m.w,m.h,-width*.5,-height+(options.baseline??46),width,height);context.restore();return true;}
 const DINH_LOI_ID="dinh_loi", DINH_LOI_FRAMES=64, DINH_LOI_COLS=8, DINH_LOI_CELL_W=480, DINH_LOI_CELL_H=270;
 const DINH_LOI_ASSET_BASE="assets/characters/dinh-loi/";
 const DINH_LOI_ASSET_NAMES=Object.freeze({idle:"idle-atlas.png",skill1Shield:"skill1-shield-atlas.png",ultimateVfx:"ultimate-vfx-atlas.png",ultimateImpact:"ultimate-impact-atlas.png"});
@@ -99,6 +117,9 @@ function render(time) {
     'assets/battle-runtime/embedded-14.png':{src:'assets/battle-runtime/mobile-v1/embedded-14.webp',width:960,height:338,scale:.5},
     'assets/battle-runtime/embedded-15.png':{src:'assets/battle-runtime/mobile-v1/embedded-15.webp',width:960,height:675,scale:.5},
     'assets/characters/ong-pho/ultimate-sheet-64-alpha-clean-v310.png':{src:'assets/characters/ong-pho/mobile-v1/ultimate-sheet-64-alpha-clean-v310.webp',width:960,height:540,scale:.5},
+    'assets/characters/luc-anh/idle-atlas.webp':{src:'assets/characters/luc-anh/mobile-v1/idle-atlas.webp',width:960,height:960,scale:.5},
+    'assets/characters/luc-anh/basic-atlas.webp':{src:'assets/characters/luc-anh/mobile-v1/basic-atlas.webp',width:960,height:960,scale:.5},
+    'assets/characters/luc-anh/basic_projectile-atlas.webp':{src:'assets/characters/luc-anh/mobile-v1/basic_projectile-atlas.webp',width:1280,height:880,scale:.5},
     'assets/characters/dinh-loi/idle-atlas.png':{src:'assets/characters/dinh-loi/mobile-v1/idle-atlas.webp',width:1920,height:1080,scale:.5},
     'assets/characters/dinh-loi/skill1-shield-atlas.png':{src:'assets/characters/dinh-loi/mobile-v1/skill1-shield-atlas.webp',width:1920,height:1080,scale:.5},
     'assets/characters/dinh-loi/ultimate-vfx-atlas.png':{src:'assets/characters/dinh-loi/mobile-v1/ultimate-vfx-atlas.webp',width:1080,height:1920,scale:.5},
@@ -113,6 +134,11 @@ function render(time) {
   assert.match(patched,/mobile-v1\/embedded-03\.webp/);
   assert.match(patched,/mobile-v1\/embedded-11\.webp/);
   assert.match(patched,/__HV_ONG_PHO_CELL_SCALE/);
+  assert.match(patched,/__HV_LUC_ANH_MOBILE_ATLASES/);
+  assert.match(patched,/mobile-v1\/idle-atlas\.webp/);
+  assert.match(patched,/const scale=mobile\?\.scale\|\|1/);
+  assert.match(patched,/m\.w\*scale/);
+
   const shield=patched.slice(patched.indexOf('function drawDinhLoiPersistentShields'),patched.indexOf('function render'));
   assert.ok(shield.indexOf('const guarded=') < shield.indexOf('DINH_LOI_IMAGES.skill1Shield'));
 });
