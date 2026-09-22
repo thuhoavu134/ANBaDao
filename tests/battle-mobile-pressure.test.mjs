@@ -50,10 +50,10 @@ test('battle low-memory patch lowers canvas pressure, caps visual FPS and defers
 const ambientFireflies = Array.from({ length: 24 }, (_, index) => ({}));
 let lastFrame = performance.now();
 function resizeCanvas() {
-  const rect = dom.viewport.getBoundingClientRect();
-  const dpr = Math.min(devicePixelRatio || 1, 2);
-  const width = Math.max(1, Math.round(rect.width));
-  const height = Math.max(1, Math.round(rect.height));
+    const rect = dom.viewport.getBoundingClientRect();
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    const width = Math.max(1, Math.round(rect.width));
+    const height = Math.max(1, Math.round(rect.height));
 }
 function burst(x, y, color, amount = 15, type = "spark") {
   const count = REDUCED_MOTION ? Math.ceil(amount / 4) : amount;
