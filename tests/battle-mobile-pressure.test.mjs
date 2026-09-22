@@ -93,6 +93,15 @@ const ONG_PHO_ATTACK_SOURCE = "assets/battle-runtime/embedded-11.png";
     { const cellW=240, cellH=135; }
     const cellW=240, cellH=135;
   }
+  function actorShadowOwners(){
+    let key="idle",attacking=false,skill1=false,ultimate=false,strike=0;const context={};
+    context.shadowBlur = (attacking || skill1 || ultimate) ? 12 : 5;
+    context.shadowBlur=["attack","skill1","ultimate"].includes(key)?14:5;
+    context.shadowBlur=["attack","skill1","ultimate"].includes(key)?15:5;
+    context.shadowBlur=['attack','ultimate'].includes(key)?14:5;
+    context.shadowBlur=['attack','ultimate'].includes(key)?14:5;
+    context.shadowBlur = 8 + strike * 16;
+  }
 const LUC_ANH_ID="luc_anh", LUC_ANH_COLS=8, LUC_ANH_CELL_W=240, LUC_ANH_CELL_H=240;
 const LUC_ANH_ASSET_BASE="assets/characters/luc-anh/";
 const LUC_ANH_META=Object.freeze({
@@ -188,6 +197,9 @@ const qaApi={getPoseAtlasStatus: () => Object.fromEntries(Object.entries(POSE_AT
   assert.match(patched,/time-__hvZoneHudAt>=250/);
   assert.match(patched,/__hvTelemetryAt/);
   assert.match(patched,/time-__hvTelemetryAt>=250/);
+  assert.match(patched,/context\.shadowBlur = __HV_BATTLE_LOW_MEMORY \? 0 : \(\(attacking \|\| skill1 \|\| ultimate\) \? 12 : 5\)/);
+  assert.match(patched,/context\.shadowBlur=__HV_BATTLE_LOW_MEMORY\?0:\(\["attack","skill1","ultimate"\]\.includes\(key\)\?14:5\)/);
+  assert.match(patched,/context\.shadowBlur = __HV_BATTLE_LOW_MEMORY \? 0 : 8 \+ strike \* 16/);
 
   const shield=patched.slice(patched.indexOf('function drawDinhLoiPersistentShields'),patched.indexOf('function render'));
   assert.ok(shield.indexOf('const guarded=') < shield.indexOf('DINH_LOI_IMAGES.skill1Shield'));
