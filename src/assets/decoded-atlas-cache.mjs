@@ -59,8 +59,19 @@ export function downsampleDecodedAtlas(image, scale, makeCanvas) {
 }
 
 export function createDecodedAtlasCache(options = {}) {
-  const maxBytes = options.maxBytes ?? 128 * 1024 * 1024;
-  const maxLoading = options.maxLoading ?? 2;
+  const deviceProfile = options.deviceProfile || {};
+  const runtimeNavigator = typeof navigator !== 'undefined' ? navigator : null;
+  const userAgent = String(deviceProfile.userAgent ?? runtimeNavigator?.userAgent ?? '');
+  const platform = String(deviceProfile.platform ?? runtimeNavigator?.platform ?? '');
+  const maxTouchPoints = Number(deviceProfile.maxTouchPoints ?? runtimeNavigator?.maxTouchPoints ?? 0);
+  const constrainedMobile = options.constrainedMobile ?? (
+    /iPad|iPhone|iPod/i.test(userAgent) ||
+    (platform === 'MacIntel' && maxTouchPoints > 1)
+  );
+  const requestedMaxBytes = options.maxBytes ?? 128 * 1024 * 1024;
+  const requestedMaxLoading = options.maxLoading ?? 2;
+  const maxBytes = constrainedMobile ? Math.min(requestedMaxBytes, 64 * 1024 * 1024) : requestedMaxBytes;
+  const maxLoading = constrainedMobile ? Math.min(requestedMaxLoading, 1) : requestedMaxLoading;
   if (!(maxBytes > 0) || !Number.isInteger(maxLoading) || maxLoading < 1) {
     throw new RangeError('Atlas cache requires a positive budget and loading limit');
   }
@@ -89,7 +100,7 @@ export function createDecodedAtlasCache(options = {}) {
   function lookup(src) { return entries.get(src) || queued.get(src); }
   function inspect() {
     return {
-      bytes, maxBytes, maxLoading, loading: loadingCount(), queued: queued.size,
+      bytes, maxBytes, maxLoading, constrainedMobile, loading: loadingCount(), queued: queued.size,
       failed: failed.size,
       entries: Array.from([...entries, ...queued], ([src, entry]) => ({
         src, bytes: entry.bytes, width: entry.width, height: entry.height,
@@ -263,5 +274,6 @@ export function createDecodedAtlasCache(options = {}) {
     for (const src of [...entries.keys(), ...queued.keys()]) releaseSrc(src, new Error('Atlas cache cleared'), true);
     failed.clear(); logged.clear();
   }
-  return { reserve, release, unpin, clearScope, clear, allowRetry, inspect, atlasDecodedBytes, atlasDecodeScale };
+  return { reserve, release, unpin, clearScope, clear, allowRetry, inspect, atlasDecodedBytes, atlasDecodeScale,
+    constrainedMobile, maxBytes, maxLoading };
 }
