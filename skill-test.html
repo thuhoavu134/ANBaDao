@@ -110,45 +110,62 @@
     movementButtons.forEach(button => button.disabled = value || !qa.ready || selectedHero !== 'luc-anh');
     resetButton.disabled = value;
   }
-  async function waitFor(predicate, timeout=20000, interval=45) {
+  async function waitFor(predicate, timeout=20000, interval=45, check=()=>{}) {
     const end = performance.now()+timeout;
     while (performance.now()<end) {
+      // Cancellation/runtime failure must not be swallowed as a missing marker.
+      check();
       try { if (predicate()) return true; } catch {}
       await sleep(interval);
     }
+    check();
     throw new Error('Hết thời gian chờ runtime');
   }
-  async function ensureBattleStarted() {
+  async function ensureBattleStarted(check) {
+    check();
     const a = api();
     if (!a) return;
     if (a.getState?.().mode === 'battle') return;
     const start = frame.contentDocument?.querySelector('#startBattle');
     if (start) start.click();
-    await waitFor(() => api()?.getState?.().mode === 'battle', 12000);
+    await waitFor(() => api()?.getState?.().mode === 'battle', 12000, 45, check);
+    check();
   }
   async function loadBattle() {
     const token = ++loadToken;
+    const check = () => {
+      if (token!==loadToken) throw new Error('Phiên thử đã thay đổi');
+    };
     qa.ready = false;
+    qa.lastRun = null;
     qa.sessionIndex = ++sessionIndex;
     setDisabled(true);
     setStatus('loading','Đang tải','Khởi tạo battle...');
-    const sessionId = 'skill-test-'+Date.now()+'-'+sessionIndex;
-    const cfg = battleConfig(sessionId);
-    frame.name = 'skill-test';
-    frame.dataset.config = JSON.stringify(cfg);
-    sessionStorage.setItem('honVietBattleConfig:'+sessionId, JSON.stringify(cfg));
-    frame.src = 'battle.html?embedded=1&qaPhase01=1&session='+encodeURIComponent(sessionId)+'&skillTest='+sessionIndex;
     try {
-      await waitFor(() => token===loadToken && api() && trace() && api().getUnits?.().length===12, 30000);
-      await ensureBattleStarted();
-      await waitFor(() => ['qa-luc-anh','qa-dinh-loi','ong-pho-gif-test'].every(id => api().getUnits().some(unit => unit.id===id && unit.hp>0)), 12000);
-      if (token!==loadToken) return;
+      // Storage and iframe setup can throw too; Reset must remain recoverable.
+      const sessionId = 'skill-test-'+Date.now()+'-'+sessionIndex;
+      const cfg = battleConfig(sessionId);
+      frame.name = 'skill-test';
+      frame.dataset.config = JSON.stringify(cfg);
+      sessionStorage.setItem('honVietBattleConfig:'+sessionId, JSON.stringify(cfg));
+      frame.src = 'battle.html?embedded=1&qaPhase01=1&session='+encodeURIComponent(sessionId)+'&skillTest='+sessionIndex;
+      await waitFor(() => {
+        // Setting src does not replace contentWindow synchronously. Never
+        // accept the previous battle's API as readiness for this new session.
+        const loadedSession = new URL(frame.contentWindow.location.href).searchParams.get('session');
+        return loadedSession===sessionId && api() && trace() && api().getUnits?.().length===12;
+      }, 30000, 45, check);
+      check();
+      await ensureBattleStarted(check);
+      check();
+      await waitFor(() => ['qa-luc-anh','qa-dinh-loi','ong-pho-gif-test'].every(id => api().getUnits().some(unit => unit.id===id && unit.hp>0)), 12000, 45, check);
+      check();
       qa.ready = true;
       setDisabled(false);
       setStatus('ready','Sẵn sàng',HEROES[selectedHero].name);
     } catch (error) {
       if (token!==loadToken) return;
-      qa.errors.push(String(error.stack||error));
+      qa.errors.push(String(error?.stack||error));
       qa.ready = false;
       setDisabled(false);
       actionButtons.forEach(button => button.disabled = true);
@@ -172,50 +189,71 @@
     setStatus('ready','Sẵn sàng','Lục Ảnh · '+value.toUpperCase());
   }
   async function runAction(action) {
-    if (!qa.ready || busy) return false;
+    if (!qa.ready || busy || !['basic','skill','ultimate'].includes(action)) return false;
+    const token = loadToken;
     const spec = HEROES[selectedHero];
-    const a = api(); const t = trace();
-    const beforeEvents = t.events().length;
-    const unitBefore = a.getUnits().find(unit => unit.id===spec.id);
-    if (!unitBefore || unitBefore.hp<=0) throw new Error(spec.name+' không còn sống trong trận test');
-    if (selectedHero === 'luc-anh') {
-      const movementQa = frame.contentWindow?.__HV_SKILL_MOVEMENT_QA;
-      if (!movementQa?.setTravel?.(spec.id, action, selectedMovement)) throw new Error('Không áp dụng được movement '+selectedMovement+' cho '+action);
-    }
-    const row = qa.lastRun = { hero:selectedHero, heroName:spec.name, action, movement:selectedHero==='luc-anh'?selectedMovement:null, phase:'starting', started:false, impact:false, complete:false, actionId:'', beforeEvents, startedAt:Date.now() };
+    const row = qa.lastRun = { hero:selectedHero, heroName:spec.name, action, movement:selectedHero==='luc-anh'?selectedMovement:null, phase:'starting', started:false, impact:false, complete:false, actionId:'', beforeEvents:0, startedAt:Date.now() };
+    const ownsRun = () => token===loadToken && qa.lastRun===row;
+    let actionFailed = false, actionError;
+    const check = () => {
+      if (!ownsRun()) throw new Error('Phiên thử đã thay đổi');
+      if (actionFailed) throw actionError;
+    };
     setDisabled(true);
     setStatus('starting','Bắt đầu',spec.name+' · '+action.toUpperCase());
     try {
+      // All preflight work belongs to the same recoverable error boundary.
+      const a = api(); const t = trace();
+      const beforeEvents = row.beforeEvents = t.events().length;
+      const unitBefore = a.getUnits().find(unit => unit.id===spec.id);
+      if (!unitBefore || unitBefore.hp<=0) throw new Error(spec.name+' không còn sống trong trận test');
+      if (selectedHero === 'luc-anh') {
+        const movementQa = frame.contentWindow?.__HV_SKILL_MOVEMENT_QA;
+        if (!movementQa?.setTravel?.(spec.id, action, selectedMovement)) throw new Error('Không áp dụng được movement '+selectedMovement+' cho '+action);
+      }
       const force = a[spec.force];
       if (typeof force !== 'function') throw new Error('Thiếu runtime hook '+spec.force);
-      Promise.resolve(force.call(a, action)).catch(error => qa.errors.push(String(error.stack||error)));
+      Promise.resolve(force.call(a, action)).catch(error => {
+        actionFailed = true;
+        actionError = error ?? new Error('Runtime từ chối action');
+      });
       await waitFor(() => {
         const events=t.events().slice(beforeEvents).filter(e=>e.type==='action:start'&&e.actorId===spec.id);
         if (!events.length) return false;
         row.actionId=events.at(-1).actionId||''; row.started=true; row.phase='active'; return !!row.actionId;
-      },12000);
+      },12000,45,check);
+      check();
       setStatus('active','Đang ra chiêu',spec.name+' · '+action.toUpperCase());
-      await waitFor(() => t.events().some(e=>e.actionId===row.actionId&&e.type==='marker:impact'),18000);
+      await waitFor(() => t.events().some(e=>e.actionId===row.actionId&&e.type==='marker:impact'),18000,45,check);
+      check();
       row.impact=true; row.impactAt=Date.now();
       setStatus('impact','IMPACT',spec.name+' · '+action.toUpperCase());
-      await waitFor(() => t.events().some(e=>e.actionId===row.actionId&&e.type==='action:complete'),26000);
+      await waitFor(() => t.events().some(e=>e.actionId===row.actionId&&e.type==='action:complete'),26000,45,check);
+      check();
       await waitFor(() => {
         const unit=a.getUnits().find(item=>item.id===spec.id);
         return unit && unit.hp>0 && Math.hypot(unit.x-unit.baseX,unit.y-unit.baseY)<=2;
-      },12000);
+      },12000,45,check);
+      check();
       row.complete=true; row.completedAt=Date.now(); row.phase='complete';
       row.trace=t.events().filter(e=>e.actionId===row.actionId).map(e=>({type:e.type,marker:e.marker||null,at:e.at||null}));
       setStatus('complete','Hoàn tất',spec.name+' đã về vị trí');
-      setDisabled(false);
-      await sleep(500);
-      if (qa.lastRun===row) setStatus('ready','Sẵn sàng',spec.name);
+      // This cosmetic delay must not keep an old finally block alive. Only
+      // the current run/load owns controls; newer selections own their label.
+      setTimeout(() => {
+        if (ownsRun() && !busy && selectedHero===row.hero &&
+            (row.hero!=='luc-anh' || selectedMovement===row.movement)) {
+          setStatus('ready','Sẵn sàng',spec.name);
+        }
+      },500);
       return true;
     } catch (error) {
-      row.phase='error'; row.error=String(error.stack||error); qa.errors.push(row.error);
+      if (!ownsRun()) return false;
+      row.phase='error'; row.error=String(error?.stack||error); qa.errors.push(row.error);
       setStatus('error','Lỗi action',spec.name+' · '+action.toUpperCase());
       return false;
     } finally {
-      setDisabled(false);
+      if (ownsRun()) setDisabled(false);
     }
   }
   tabButtons.forEach(button => button.addEventListener('click', () => selectHero(button.dataset.heroTab)));

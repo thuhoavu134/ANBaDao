@@ -1,0 +1,76 @@
+{
+  "ticket": "TKT-0159",
+  "date": "2026-09-22",
+  "scope": "skill-test controller lifecycle only",
+  "baseline_revision": "1127485f8deec1126c356d19dcecc2b2d572e904",
+  "tested_tree": "547103c3b6947c151f22f544e1b3ae9ffc2f52a5",
+  "source_blobs": {
+    "baseline_skill_test": "0eba49ca28c27550ae3d542e119f5d0e3987b0b9",
+    "candidate_skill_test": "d2524bfb666eddf123ffe471523bc6bb5cc19563",
+    "test": "a787b7bc708c77add0ba91603e394a6049754316"
+  },
+  "environment": {
+    "node": "22.16.0",
+    "mode": "Node VM executes exact source inline controller with deterministic iframe/API/timer fixtures",
+    "not_production_battle": true
+  },
+  "command": "node --test --test-concurrency=1 tests/skill-test-lifecycle.test.mjs",
+  "red": {
+    "exit_code": 1,
+    "tests": 21,
+    "pass": 10,
+    "fail": 11,
+    "sha256": "893d2ab5e22f7e42b860c709e0389f8b16733bf9aeb49dc32a8f48deb8eaae25",
+    "failures": [
+      "R1: prior completion cannot unlock the next in-flight action",
+      "R1: delayed ready label cannot overwrite a later hero selection",
+      "R1: delayed ready label preserves a later movement selection",
+      "R2: movement preflight failure is caught and can be retried",
+      "R2: actor preflight failure is caught and can be retried",
+      "R2: rejected runtime promise reports once without waiting for a trace timeout",
+      "R2: unknown action is rejected without invoking the runtime",
+      "R3: storage failure enables Reset and a subsequent retry recovers",
+      "R4: Reset waits for its new iframe rather than reusing the old runtime",
+      "R4: reset during an action prevents stale timeout/error and control writes",
+      "R4: old completion does not unlock or relabel a replacement still loading"
+    ]
+  },
+  "green": {
+    "exit_code": 0,
+    "tests": 21,
+    "pass": 21,
+    "fail": 0,
+    "sha256": "68bcfc1619afe35a8d8b482f9686539398cb840cdd010fe78b95357b18dbd757"
+  },
+  "final_after_diff_review": {
+    "exit_code": 0,
+    "tests": 21,
+    "pass": 21,
+    "fail": 0,
+    "sha256": "5650fd779de77b9b9fa119c05ebef917c5bc197074205cc37642dda60ae00394"
+  },
+  "syntax": {
+    "controller": 0,
+    "test_file": 0
+  },
+  "html_css_before_script_unchanged": true,
+  "acceptance": {
+    "R1": "PASS component: old completion cannot unlock newer action or relabel later hero/movement selection",
+    "R2": "PASS component: preflight, invalid action, runtime rejection are recoverable",
+    "R3": "PASS component: storage failure and retry",
+    "R4": "PASS component: new iframe session identity, stale action/load ownership"
+  },
+  "limitations": {
+    "full_build": "NOT_RUN - complete checkout/assets unavailable",
+    "full_node_suite": "NOT_RUN locally",
+    "production_browser_desktop_mobile": "NOT_RUN on candidate",
+    "physical_iPhone_Safari": "NOT_RUN",
+    "owner_preview_approval": "PENDING",
+    "deployment": "NOT_RUN",
+    "ticket_board_claim_lease": "UNAVAILABLE - no claim fabricated; recorded source/test-only exception used",
+    "strict_test_first_order": "NOT_MET - candidate tree was drafted before local RED; reproducible before/after evidence is not a strict TDD claim"
+  },
+  "vibelab_run": "20260922-022235-euygbmsh",
+  "vibelab_gate": "BLOCKED at ticket-guard; not complete",
+  "status": "DRAFT_PREVIEW_GATE - not merged"
+}
