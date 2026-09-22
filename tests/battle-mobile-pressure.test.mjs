@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import {
   DINH_LOI_MOBILE_SCALE,
   DINH_LOI_MOBILE_SOURCES,
@@ -57,4 +58,13 @@ function render(time) {
   assert.match(patched,/mobile-v1\/idle-atlas\.webp/);
   const shield=patched.slice(patched.indexOf('function drawDinhLoiPersistentShields'),patched.indexOf('function render'));
   assert.ok(shield.indexOf('const guarded=') < shield.indexOf('DINH_LOI_IMAGES.skill1Shield'));
+});
+
+test('static pipeline applies battle mobile after final battle owners and before iframe sync',()=>{
+  const build=readFileSync(new URL('../scripts/build-static.mjs',import.meta.url),'utf8');
+  const result=build.indexOf("await import('./result-character-motion-v1.mjs');");
+  const mobile=build.indexOf('await buildBattleMobilePressure(root);');
+  const campaign=build.indexOf('await installCampaignMobileAtlases(root);');
+  const sync=build.indexOf('let embeddedIndex = readFileSync');
+  assert.ok(result>=0 && result<mobile && mobile<campaign && campaign<sync,{result,mobile,campaign,sync});
 });
