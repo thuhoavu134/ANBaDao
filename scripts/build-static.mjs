@@ -175,6 +175,10 @@ await buildBattleReadiness(root);
 // any build-sized variants before the final iframe payload is synchronized.
 await import('./result-character-motion-v1.mjs');
 
+// Low-memory campaign derivatives are generated before lifetime ownership is finalized.
+const { installCampaignMobileAtlases } = await import('./campaign-mobile-atlas-v1.mjs');
+await installCampaignMobileAtlases(root);
+
 // Repair campaign image ownership after all late host patch owners.
 const { installCampaignResourceLifecycle } = await import('./campaign-resource-lifecycle-v1.mjs');
 installCampaignResourceLifecycle(root);
