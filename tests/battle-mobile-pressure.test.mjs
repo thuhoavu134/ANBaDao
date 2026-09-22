@@ -104,7 +104,15 @@ function render(time) {
     lastFrame = time;
     updateEffects(delta);
     drawBackground(ctx,time);
+    renderBattlefieldZone();
     units.forEach(unit=>drawUnit(ctx,unit,time));
+    dom.canvas.dataset.projectiles = projectiles.map((effect) => effect.kind).join(",");
+    dom.canvas.dataset.combatEffects = combatEffects.map((effect) => effect.kind).join(",");
+    dom.canvas.dataset.activeStates = units.filter((unit)=>unit.state!=="idle").map((unit)=>unit.id+":"+unit.state).join(",");
+    dom.canvas.dataset.poseAtlases = Object.values(POSE_ATLASES).filter((image) => image.complete && image.naturalWidth > 1).length.toString();
+    dom.canvas.dataset.playbackRate = state.speed.toString();
+    dom.canvas.dataset.cameraZoom = cameraZoom.toFixed(3);
+    dom.canvas.dataset.cameraFlash = cameraFlash.toFixed(3);
     requestAnimationFrame(render);
   }
 `;
@@ -150,6 +158,10 @@ function render(time) {
   assert.match(patched,/__HV_BATTLE_BG_SCALE=__HV_BATTLE_LOW_MEMORY\?\.75:1/);
   assert.match(patched,/__HV_BATTLE_BG_REFRESH_MS=__HV_BATTLE_LOW_MEMORY\?250:0/);
   assert.match(patched,/__hvDrawBattleBackground\(ctx,time\)/);
+  assert.match(patched,/__hvZoneHudAt/);
+  assert.match(patched,/time-__hvZoneHudAt>=250/);
+  assert.match(patched,/__hvTelemetryAt/);
+  assert.match(patched,/time-__hvTelemetryAt>=250/);
 
   const shield=patched.slice(patched.indexOf('function drawDinhLoiPersistentShields'),patched.indexOf('function render'));
   assert.ok(shield.indexOf('const guarded=') < shield.indexOf('DINH_LOI_IMAGES.skill1Shield'));
@@ -185,7 +197,7 @@ function drawGeneratedHero(context,unit,time,progress){
   const atlas = usePoseAtlas ? poseAtlas : HERO_ATLASES[unit.team];
   return !!atlas;
 }
-function render(time){resizeCanvas();const delta=Math.min(.05,Math.max(0,(time-lastFrame)/1000));lastFrame=time;updateEffects(delta);drawBackground(ctx,time);dom.canvas.dataset.poseAtlases=Object.values(POSE_ATLASES).filter((image)=>image.complete&&image.naturalWidth>1).length.toString();requestAnimationFrame(render);}
+function render(time){resizeCanvas();const delta=Math.min(.05,Math.max(0,(time-lastFrame)/1000));lastFrame=time;updateEffects(delta);drawBackground(ctx,time);renderBattlefieldZone();dom.canvas.dataset.projectiles=projectiles.map((effect)=>effect.kind).join(",");dom.canvas.dataset.combatEffects=combatEffects.map((effect)=>effect.kind).join(",");dom.canvas.dataset.activeStates=units.filter((unit)=>unit.state!=="idle").map((unit)=>unit.id+":"+unit.state).join(",");dom.canvas.dataset.poseAtlases=Object.values(POSE_ATLASES).filter((image)=>image.complete&&image.naturalWidth>1).length.toString();dom.canvas.dataset.playbackRate=state.speed.toString();dom.canvas.dataset.cameraZoom=cameraZoom.toFixed(3);dom.canvas.dataset.cameraFlash=cameraFlash.toFixed(3);requestAnimationFrame(render);}
 const api={getPoseAtlasStatus:()=>Object.fromEntries(Object.entries(POSE_ATLASES).map(([key,image])=>[key,Boolean(image.complete&&image.naturalWidth>1)]))};
 `;
   const variants={
