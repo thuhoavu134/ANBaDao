@@ -171,7 +171,9 @@ const qaApi={getPoseAtlasStatus: () => Object.fromEntries(Object.entries(POSE_AT
     'assets/characters/dinh-loi/ultimate-impact-atlas.png':{src:'assets/characters/dinh-loi/mobile-v1/ultimate-impact-atlas.webp',width:1080,height:1920,scale:.5}
   });
   assert.match(patched,/__HV_BATTLE_LOW_MEMORY/);
-  assert.match(patched,/Math\.min\(devicePixelRatio \|\| 1, __HV_BATTLE_LOW_MEMORY \? 1\.5 : 2\)/);
+  assert.match(patched,/__HV_BATTLE_MAX_BACKING_PIXELS=1600000/);
+  assert.match(patched,/Math\.sqrt\(__HV_BATTLE_MAX_BACKING_PIXELS\/Math\.max\(1,width\*height\)\)/);
+  assert.match(patched,/Math\.min\(devicePixelRatio \|\| 1,__HV_BATTLE_LOW_MEMORY\?Math\.min\(1\.5,__hvPixelDpr\):2\)/);
   assert.match(patched,/__hvBattlePaintAt/);
   assert.match(patched,/1000\/30/);
   assert.match(patched,/mobile-v1\/idle-atlas\.webp/);
