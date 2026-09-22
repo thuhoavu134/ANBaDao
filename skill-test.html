@@ -11,16 +11,15 @@
     .controller{position:relative;z-index:5;padding:max(10px,env(safe-area-inset-top)) 12px 10px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#0b2421 0%,#071917 100%);box-shadow:0 6px 22px rgba(0,0,0,.25)}
     .topline{display:flex;align-items:center;gap:10px;justify-content:space-between;margin-bottom:8px}.title{min-width:0}.title b{display:block;font:700 15px/1.15 Georgia,serif;letter-spacing:.04em}.title small{display:block;margin-top:3px;color:#b9c9c2;font-size:11px}.status{min-width:118px;text-align:right;font-size:11px;color:#b9c9c2}.status strong{display:block;color:var(--gold);font-size:12px}.status[data-phase="impact"] strong{color:#fff1a9}.status[data-phase="complete"] strong{color:#9ff0cd}.status[data-phase="error"] strong{color:#ff9d8e}
     .toolbar{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:end}.hero-tabs,.skill-buttons{display:flex;gap:7px;flex-wrap:wrap}.hero-tabs{min-width:0}.hero-tab,.skill-button,.reset-button{min-height:42px;border:1px solid rgba(230,189,103,.35);border-radius:10px;background:#102c28;color:#f8efd8;font-weight:700;cursor:pointer;box-shadow:inset 0 1px rgba(255,255,255,.05)}
-    .hero-tab{padding:8px 12px;color:#c9d8d1}.hero-tab[aria-pressed="true"]{border-color:var(--gold);background:#342d1b;color:#ffe7a2}.skill-button{min-width:88px;padding:8px 13px;border-color:rgba(85,215,189,.42);background:#113b35}.skill-button:hover{border-color:var(--teal)}.skill-button[data-action="ultimate"]{border-color:rgba(230,189,103,.62);background:#3a2f18;color:#ffe6a0}.skill-button:disabled,.hero-tab:disabled,.reset-button:disabled,.movement-button:disabled{opacity:.48;cursor:wait}.reset-button{padding:8px 12px;border-color:rgba(255,132,114,.4);background:#35201d;color:#ffd1c8}
-    .movement-row{display:flex;align-items:center;gap:7px;margin-top:8px;padding-top:8px;border-top:1px solid rgba(231,194,105,.12)}.movement-label{font-size:10px;color:#9fb4ac;white-space:nowrap}.movement-buttons{display:flex;gap:6px;flex-wrap:wrap}.movement-button{min-height:32px;padding:5px 10px;border:1px solid rgba(159,180,172,.25);border-radius:8px;background:#0b211f;color:#bcd0c8;font-size:11px;font-weight:700;cursor:pointer}.movement-button[aria-pressed="true"]{border-color:#69e4c6;background:#133c35;color:#b9ffe9}
+    .hero-tab{padding:8px 12px;color:#c9d8d1}.hero-tab[aria-pressed="true"]{border-color:var(--gold);background:#342d1b;color:#ffe7a2}.skill-button{min-width:88px;padding:8px 13px;border-color:rgba(85,215,189,.42);background:#113b35}.skill-button:hover{border-color:var(--teal)}.skill-button[data-action="ultimate"]{border-color:rgba(230,189,103,.62);background:#3a2f18;color:#ffe6a0}.skill-button:disabled,.hero-tab:disabled,.reset-button:disabled{opacity:.48;cursor:wait}.reset-button{padding:8px 12px;border-color:rgba(255,132,114,.4);background:#35201d;color:#ffd1c8}
     .battle-wrap{position:relative;min-height:0;background:#091817}.battle-wrap iframe{display:block;width:100%;height:100%;border:0;background:#0e2522}.hint{position:absolute;right:10px;bottom:max(8px,env(safe-area-inset-bottom));z-index:4;pointer-events:none;padding:5px 8px;border-radius:999px;background:rgba(5,18,17,.74);color:#c8d3ce;font-size:10px;backdrop-filter:blur(5px)}
-    @media(max-width:720px){.controller{padding-left:9px;padding-right:9px}.topline{margin-bottom:7px}.title b{font-size:14px}.title small{font-size:10px}.toolbar{grid-template-columns:1fr}.hero-tabs{display:grid;grid-template-columns:repeat(3,1fr)}.hero-tab{padding:7px 5px;min-width:0}.skill-buttons{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.skill-button,.reset-button{min-width:0;padding:7px 4px;font-size:12px;min-height:40px}.movement-row{display:grid;grid-template-columns:auto 1fr;gap:6px}.movement-buttons{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}.movement-button{min-width:0;padding:5px 3px;font-size:10px}.hint{display:none}}
+    @media(max-width:720px){.controller{padding-left:9px;padding-right:9px}.topline{margin-bottom:7px}.title b{font-size:14px}.title small{font-size:10px}.toolbar{grid-template-columns:1fr}.hero-tabs{display:grid;grid-template-columns:repeat(3,1fr)}.hero-tab{padding:7px 5px;min-width:0}.skill-buttons{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.skill-button,.reset-button{min-width:0;padding:7px 4px;font-size:12px;min-height:40px}.hint{display:none}}
   </style>
 </head>
 <body>
   <section class="controller" aria-label="Bảng test skill">
     <div class="topline">
-      <div class="title"><b>Test Skill Trực Tiếp · Lục Thần</b><small>Runtime trận thật 6v6 · không chờ lượt</small></div>
+      <div class="title"><b>Test Skill Trực Tiếp · Lục Thần</b><small data-movement-policy="snap">Trận thật 6v6 · Lục Ảnh dịch chuyển tức thời</small></div>
       <div class="status" id="status" data-phase="loading"><strong>Đang tải</strong><span id="statusDetail">Khởi tạo battle...</span></div>
     </div>
     <div class="toolbar">
@@ -34,15 +33,6 @@
         <button class="skill-button" type="button" data-action="skill">Skill</button>
         <button class="skill-button" type="button" data-action="ultimate">Ultimate</button>
         <button class="reset-button" id="resetBattle" type="button">Reset trận</button>
-      </div>
-    </div>
-    <div class="movement-row">
-      <span class="movement-label">Cảm giác di chuyển · Lục Ảnh</span>
-      <div class="movement-buttons" role="group" aria-label="Chọn kiểu di chuyển">
-        <button class="movement-button" type="button" data-movement="snap" aria-pressed="true" title="Dịch chuyển tức thời đến điểm ra đòn">Dịch chuyển</button>
-        <button class="movement-button" type="button" data-movement="dash" aria-pressed="false" title="Lướt nhanh đến điểm ra đòn">Lướt nhanh</button>
-        <button class="movement-button" type="button" data-movement="run" aria-pressed="false" title="Chạy đến điểm ra đòn">Chạy</button>
-        <button class="movement-button" type="button" data-movement="stationary" aria-pressed="false" title="Không rời vị trí đội hình">Đứng tại chỗ</button>
       </div>
     </div>
   </section>
@@ -63,14 +53,12 @@
   const resetButton = document.getElementById('resetBattle');
   const tabButtons = [...document.querySelectorAll('[data-hero-tab]')];
   const actionButtons = [...document.querySelectorAll('[data-action]')];
-  const movementButtons = [...document.querySelectorAll('[data-movement]')];
   const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
   let selectedHero = 'luc-anh';
-  let selectedMovement = 'snap';
   let sessionIndex = 0;
   let busy = false;
   let loadToken = 0;
-  const qa = window.__SKILL_TEST_QA__ = { ready:false, selectedHero, selectedMovement, sessionIndex:0, lastRun:null, errors:[], resetCount:0 };
+  const qa = window.__SKILL_TEST_QA__ = { ready:false, selectedHero, sessionIndex:0, lastRun:null, errors:[], resetCount:0 };
 
   function hero(id,sourceId,name,team,slot,extra={}) {
     return { id,sourceId,name,team,slot,hp:extra.hp||500000,atk:extra.atk||220,def:extra.def||80,speed:extra.speed||120,accuracy:10000,evasion:0,crit:0,energy:100,level:30,stars:6,rarity:5 };
@@ -107,7 +95,6 @@
     busy = value;
     actionButtons.forEach(button => button.disabled = value || !qa.ready);
     tabButtons.forEach(button => button.disabled = value);
-    movementButtons.forEach(button => button.disabled = value || !qa.ready || selectedHero !== 'luc-anh');
     resetButton.disabled = value;
   }
   async function waitFor(predicate, timeout=20000, interval=45, check=()=>{}) {
@@ -177,22 +164,13 @@
     selectedHero = key;
     qa.selectedHero = key;
     tabButtons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.heroTab===key)));
-    movementButtons.forEach(button => button.disabled = busy || !qa.ready || selectedHero !== 'luc-anh');
     if (qa.ready) setStatus('ready','Sẵn sàng',HEROES[key].name);
-  }
-  function selectMovement(value) {
-    if (busy || !qa.ready || selectedHero !== 'luc-anh') return;
-    if (!['snap','dash','run','stationary'].includes(value)) return;
-    selectedMovement = value;
-    qa.selectedMovement = value;
-    movementButtons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.movement===value)));
-    setStatus('ready','Sẵn sàng','Lục Ảnh · '+value.toUpperCase());
   }
   async function runAction(action) {
     if (!qa.ready || busy || !['basic','skill','ultimate'].includes(action)) return false;
     const token = loadToken;
     const spec = HEROES[selectedHero];
-    const row = qa.lastRun = { hero:selectedHero, heroName:spec.name, action, movement:selectedHero==='luc-anh'?selectedMovement:null, phase:'starting', started:false, impact:false, complete:false, actionId:'', beforeEvents:0, startedAt:Date.now() };
+    const row = qa.lastRun = { hero:selectedHero, heroName:spec.name, action, movement:selectedHero==='luc-anh'?'snap':null, phase:'starting', started:false, impact:false, complete:false, actionId:'', beforeEvents:0, startedAt:Date.now() };
     const ownsRun = () => token===loadToken && qa.lastRun===row;
     let actionFailed = false, actionError;
     const check = () => {
@@ -207,10 +185,6 @@
       const beforeEvents = row.beforeEvents = t.events().length;
       const unitBefore = a.getUnits().find(unit => unit.id===spec.id);
       if (!unitBefore || unitBefore.hp<=0) throw new Error(spec.name+' không còn sống trong trận test');
-      if (selectedHero === 'luc-anh') {
-        const movementQa = frame.contentWindow?.__HV_SKILL_MOVEMENT_QA;
-        if (!movementQa?.setTravel?.(spec.id, action, selectedMovement)) throw new Error('Không áp dụng được movement '+selectedMovement+' cho '+action);
-      }
       const force = a[spec.force];
       if (typeof force !== 'function') throw new Error('Thiếu runtime hook '+spec.force);
       Promise.resolve(force.call(a, action)).catch(error => {
@@ -239,10 +213,9 @@
       row.trace=t.events().filter(e=>e.actionId===row.actionId).map(e=>({type:e.type,marker:e.marker||null,at:e.at||null}));
       setStatus('complete','Hoàn tất',spec.name+' đã về vị trí');
       // This cosmetic delay must not keep an old finally block alive. Only
-      // the current run/load owns controls; newer selections own their label.
+      // the current run/load owns controls; the currently selected hero owns its label.
       setTimeout(() => {
-        if (ownsRun() && !busy && selectedHero===row.hero &&
-            (row.hero!=='luc-anh' || selectedMovement===row.movement)) {
+        if (ownsRun() && !busy && selectedHero===row.hero) {
           setStatus('ready','Sẵn sàng',spec.name);
         }
       },500);
@@ -257,7 +230,6 @@
     }
   }
   tabButtons.forEach(button => button.addEventListener('click', () => selectHero(button.dataset.heroTab)));
-  movementButtons.forEach(button => button.addEventListener('click', () => selectMovement(button.dataset.movement)));
   actionButtons.forEach(button => button.addEventListener('click', () => void runAction(button.dataset.action)));
   resetButton.addEventListener('click', () => { qa.resetCount++; qa.lastRun=null; void loadBattle(); });
   qa.runAction = runAction;

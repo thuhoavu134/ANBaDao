@@ -13,8 +13,8 @@ const flush = async () => { for (let i=0;i<40;i++) await Promise.resolve(); };
 
 function fixture() {
   let now=0, nextTimer=0, pendingUrl='', runtime=null;
-  const timers=new Map(), storage=new Map(), forced=[], movements=[];
-  const state={ autoNavigate:true, completeActions:true, storageFails:false, movementFails:false, forceError:null };
+  const timers=new Map(), storage=new Map(), forced=[];
+  const state={ autoNavigate:true, completeActions:true, storageFails:false, forceError:null };
   const element=(dataset={})=>({
     dataset, disabled:false, textContent:'', attributes:{}, listeners:{},
     setAttribute(name,value){this.attributes[name]=value;},
@@ -23,7 +23,6 @@ function fixture() {
   });
   const tabs=['luc-anh','dinh-loi','ong-pho'].map(heroTab=>element({heroTab}));
   const actions=['basic','skill','ultimate'].map(action=>element({action}));
-  const moves=['snap','dash','run','stationary'].map(movement=>element({movement}));
   const status=element(), strong=element(), detail=element(), reset=element(), frame=element();
   status.querySelector=()=>strong;
   function navigate() {
@@ -45,8 +44,7 @@ function fixture() {
     frame.contentWindow={
       location:{href:new URL(pendingUrl,'https://fixture.invalid/').href},
       __HON_VIET__:api,
-      __HV_BATTLE_PHASE1_TRACE:{events:()=>events.slice()},
-      __HV_SKILL_MOVEMENT_QA:{setTravel:(...args)=>{movements.push(args);return !state.movementFails;}}
+      __HV_BATTLE_PHASE1_TRACE:{events:()=>events.slice()}
     };
     frame.contentDocument={URL:frame.contentWindow.location.href,querySelector:()=>null};
   }
@@ -54,7 +52,7 @@ function fixture() {
   const elements={battleFrame:frame,status,statusDetail:detail,resetBattle:reset};
   const document={
     getElementById:id=>elements[id],
-    querySelectorAll:selector=>({'[data-hero-tab]':tabs,'[data-action]':actions,'[data-movement]':moves})[selector]||[]
+    querySelectorAll:selector=>({'[data-hero-tab]':tabs,'[data-action]':actions})[selector]||[]
   };
   const window={};
   const context=vm.createContext({window,document,URL,URLSearchParams,console,
@@ -77,7 +75,7 @@ function fixture() {
     }
     throw new Error('Timer fixture exceeded bound');
   }
-  return {state,window,frame,status,strong,detail,reset,tabs,actions,moves,forced,movements,storage,tick,navigate,
+  return {state,window,frame,status,strong,detail,reset,tabs,actions,forced,storage,tick,navigate,
     get qa(){return window.__SKILL_TEST_QA__;},get runtime(){return runtime;},
     finish(){const call=forced.at(-1);runtime.emit('marker:impact',call.id,call.actorId);runtime.emit('action:complete',call.id,call.actorId);}
   };
@@ -118,25 +116,27 @@ test('R1: delayed ready label cannot overwrite a later hero selection',async()=>
   assert.equal(h.qa.selectedHero,'dinh-loi');assert.equal(h.detail.textContent,selectedDetail);
 });
 
-test('R1: delayed ready label preserves a later movement selection',async()=>{
-  const h=await ready();observe(h.qa.runAction('basic'));await flush();
-  h.moves[1].click();const selectedDetail=h.detail.textContent;
-  await h.tick(600);
-  assert.equal(h.qa.selectedMovement,'dash');assert.equal(h.detail.textContent,selectedDetail);
+test('snap-only action needs no movement override hook',async()=>{
+  const h=await ready();
+  assert.equal(h.frame.contentWindow.__HV_SKILL_MOVEMENT_QA,undefined);
+  const result=observe(h.qa.runAction('basic'));await h.tick(600);
+  assert.equal(result.error,undefined);assert.equal(result.value,true);
+  assert.equal(h.qa.lastRun.movement,'snap');assert.equal(h.qa.errors.length,0);
 });
 
-for(const failure of ['movement','actor','hook']){
+for(const failure of ['trace','actor','hook']){
   test(`R2: ${failure} preflight failure is caught and can be retried`,async()=>{
     const h=await ready();const actor=h.runtime.units.find(unit=>unit.id==='qa-luc-anh');
     const hook=h.runtime.api.qaForceLucAnhAction;
-    if(failure==='movement')h.state.movementFails=true;
+    const trace=h.frame.contentWindow.__HV_BATTLE_PHASE1_TRACE;
+    if(failure==='trace')h.frame.contentWindow.__HV_BATTLE_PHASE1_TRACE=null;
     if(failure==='actor')actor.hp=0;
     if(failure==='hook')delete h.runtime.api.qaForceLucAnhAction;
     const failed=observe(h.qa.runAction('basic'));await h.tick(90);
     assert.equal(failed.error,undefined,'UI handler must not reject outside its error boundary');
     assert.equal(failed.value,false);assert.equal(h.status.dataset.phase,'error');
     assert.equal(h.qa.errors.length,1);assert.equal(h.reset.disabled,false);
-    h.state.movementFails=false;actor.hp=500000;h.runtime.api.qaForceLucAnhAction=hook;
+    h.frame.contentWindow.__HV_BATTLE_PHASE1_TRACE=trace;actor.hp=500000;h.runtime.api.qaForceLucAnhAction=hook;
     const retry=observe(h.qa.runAction('basic'));await h.tick(600);
     assert.equal(retry.value,true);
   });

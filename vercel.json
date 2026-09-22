@@ -1,6 +1,6 @@
 {
   "buildCommand": "npm run build",
-  "installCommand": "npm install --omit=dev --no-audit --no-fund",
+  "installCommand": "npm install --include=dev --no-audit --no-fund",
   "outputDirectory": "dist",
   "rewrites": [
     { "source": "/api/auth/:path*", "destination": "/api/oauth?orig=/api/auth/:path*" },

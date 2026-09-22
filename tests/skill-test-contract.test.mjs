@@ -7,7 +7,6 @@ import { fileURLToPath } from 'node:url';
 const page = readFileSync(new URL('../skill-test.html', import.meta.url), 'utf8');
 const qa = readFileSync(new URL('../scripts/qa-skill-test-browser.mjs', import.meta.url), 'utf8');
 const build = readFileSync(new URL('../scripts/build-static.mjs', import.meta.url), 'utf8');
-const movementPatch = readFileSync(new URL('../scripts/battle-skill-movement-v1.mjs', import.meta.url), 'utf8');
 const ci = readFileSync(new URL('../.github/workflows/ci.yml', import.meta.url), 'utf8');
 
 test('direct skill test is part of the distributable build', () => {
@@ -21,19 +20,6 @@ test('direct skill test exposes all authored heroes and actions plus reset', () 
   for (const action of ['basic','skill','ultimate']) assert.ok(page.includes(`data-action="${action}"`), action);
   assert.ok(page.includes('id="resetBattle"'));
   for (const hook of ['qaForceLucAnhAction','qaForceDinhLoiAction','qaForceOngPhoAction']) assert.ok(page.includes(hook), hook);
-});
-
-test('direct skill test exposes movement feel controls for Lục Ảnh', () => {
-  for (const movement of ['snap','dash','run','stationary']) {
-    assert.ok(page.includes(`data-movement="${movement}"`), movement);
-  }
-  assert.ok(page.includes('selectedMovement'));
-  assert.ok(page.includes('__HV_SKILL_MOVEMENT_QA'));
-  assert.ok(page.includes('setTravel?.(spec.id, action, selectedMovement)'));
-  assert.ok(movementPatch.includes('setTravel: (actorId,action,travel)'));
-  assert.ok(qa.includes("const MOVEMENTS = ['snap','dash','run','stationary']"));
-  assert.ok(qa.includes("const expectedType='approach:'+movement;"));
-  assert.ok(qa.includes("movementChecks"));
 });
 
 test('direct skill test reports real trace progression and return home', () => {

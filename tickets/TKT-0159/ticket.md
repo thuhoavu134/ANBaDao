@@ -1,50 +1,42 @@
-# TKT-0159 — Action Movement Profiles + owner preview gate
+# TKT-0159 — Lục Ảnh: dịch chuyển tức thời, không thử nhiều kiểu
 
-Status: PREVIEW_GATE
-Date: 2026-09-21
+Updated: 2026-09-22
+Contract: snap-only-20260922
+Status: SOURCE_REVIEW / runtime verification still open (not a Ticket Board transition).
 Branch: `work/tkt-0159-action-movement-profiles-20260921`
-Base: latest `main`
+Main baseline incorporated: `e44ddbf500447753be32355c845cdbabee1a964a`.
+Previous branch checkpoint: `40f72120de0de33c8ad60d49e0e8550834c1d243`.
 
-## Goal
+## Owner decision — authoritative
 
-Chuẩn hóa cách một skill đi tới điểm thi triển theo profile rõ ràng thay vì chỉ có tween/snap. Trước khi merge, owner phải được test cảm giác trực tiếp trên runtime 6v6 thật.
+Owner: “dịch chuyển tức thời còn gì nữa phải làm hướng đó!”
+
+Lục Ảnh uses instantaneous approach for Basic, Skill and Ultimate. Do not ask the owner to choose between snap/dash/run/stationary again. The earlier four-profile comparison scope is superseded, not an unresolved design decision.
 
 ## Scope
 
-- Mở rộng owner `src/combat-domain/skill-cast-movement.mjs` với 4 travel profile:
-  - `snap`: dịch chuyển tức thời tới cast point.
-  - `dash`: lướt/tween nhanh tới cast point.
-  - `run`: chạy/tween theo timing hiện tại.
-  - `stationary`: giữ nguyên home và cast tại chỗ.
-- Giữ mapping production hiện tại của Lục Ảnh = snap; không tự đổi Đình Lôi/Ông Phở.
-- Thêm bộ chọn movement trong `/skill-test.html` để owner đổi Snap/Dash/Run/Đứng yên cho Lục Ảnh trên cùng trận 6v6 và cùng skill.
-- Browser QA phải ép và xác nhận đủ 4 profile bằng trace thật.
-- Preview PR phải có URL test trực tiếp trước merge.
-
-## Non-goals
-
-- Không đổi combat math, damage, crit, energy, targeting, reward, save, auth.
-- Không đổi asset/VFX/SFX/timing authored của skill.
-- Không đổi movement production của Đình Lôi/Ông Phở.
-- Không merge main hoặc deploy production trước khi owner test và chấp thuận.
+- Keep the exact movement owner already on main: all three Lục Ảnh policies have `travel: 'snap'` and snap sets x/y directly rather than tweening the approach.
+- Remove the four-way chooser, selectedMovement state and action-time setTravel override from skill-test.html. Display only a fixed snap note.
+- Remove the mutable movement QA setter and the unapproved dash/run/stationary profile extension by restoring their exact main blobs.
+- Retain the existing main browser QA that requires actual approach:snap and destination equality for each Lục Ảnh action, plus all nine authored actions and Reset on desktop/mobile.
+- Preserve the controller lifecycle fixes: no stale unlocks, recoverable preflight/runtime/setup errors, correct iframe session after Reset.
+- Bring in main's merged sharp install fix without changing it.
 
 ## Acceptance
 
-- A1: policy validation hỗ trợ snap/dash/run/stationary; tween cũ tương thích như run.
-- A2: snap không tween; dash tween nhanh hơn run; stationary không di chuyển; run giữ timing approach hiện tại.
-- A3: home/baseX/baseY bất biến; return-home vẫn await owner hiện tại.
-- A4: /skill-test.html cho đổi movement Lục Ảnh và ép Basic/Skill/Ultimate trên runtime 6v6 thật.
-- A5: browser QA desktop/mobile xác nhận 4 movement profile, action start→impact→complete, actor về home, không runtime/asset critical error.
-- A6: owner nhận URL preview branch/PR để test cảm giác trước merge.
+A1: no movement selector or controller-side movement policy mutation.
+A2: all three hero hooks, all actions, action markers and return-home checks retained; controller/reset protections pass focused tests.
+A3: production movement owner, integration patch and domain/browser regression tests match main exactly; other heroes and return-home unchanged.
+A4: full build/full suite and real 6v6 browser verification before technical acceptance. Owner's design choice is settled; this is not a request to compare alternative movements.
 
-## Gate
+## Non-goals
 
-Branch only → RED/GREEN → CI/browser evidence → preview owner test → owner nói merge/live thì mới merge.
+No damage, energy, crit, targeting, reward, save, auth, authored animation/VFX/SFX/timing, other-hero movement or Victory/Defeat change. This decision covers approach to the cast point; return-home behavior is not redesigned.
 
+## Evidence and limitations
 
-## 2026-09-21 preview checkpoint
+See `evidence/snap-only-20260922.json`. New selector/override tests were written and run before changing the page: baseline 3 tests, 1 PASS / 2 FAIL. Candidate controller fixture: 24 PASS / 0 FAIL, repeated after diff review. Inline controller and test syntax PASS. These are controller tests with controlled iframe/DOM/timers, not real battle/render tests.
 
-- Movement selector now mutates the real internal battle actor through `__HV_SKILL_MOVEMENT_QA.setTravel`; `__HON_VIET__.getUnits()` is snapshot-only and is not used for mutation.
-- Labels for owner feel test: Dịch chuyển / Lướt nhanh / Chạy / Đứng tại chỗ.
-- PR remains Draft and MUST NOT merge before owner hands-on approval.
-- If hosted CI/preview infrastructure does not allocate a runner, status remains blocked at preview gate rather than treating infrastructure failure as code failure.
+Full local checkout was blocked by GitHub DNS resolution; game build/assets/browser/device validation remains unverified. The VibeLab run `20260922-145935-ft5m200a` reached ticket-guard; Ticket Board claim/lease/lock is unavailable. Existing documented source/test-only exception is used; no complete gate, fake claim or deployment PASS is asserted.
+
+Historical lifecycle evidence remains in this ticket directory and applies only to its recorded revision. No main merge or production success is claimed for the current source follow-up. Do not reintroduce the comparison selector in a later session.

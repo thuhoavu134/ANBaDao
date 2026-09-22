@@ -25,14 +25,7 @@ if(new URLSearchParams(location.search).has('qaPhase01')){
     schema: 'luc-than-skill-movement/v1',
     events: () => __hvSkillMovement.events(),
     snapshot: () => units.map(unit => ({id:unit.id,team:unit.team,slot:unit.slot,state:unit.state,hp:unit.hp,x:unit.x,y:unit.y,baseX:unit.baseX,baseY:unit.baseY})),
-    plan: (actorId,action,targetId) => __hvSkillMovement.plan(units.find(unit=>unit.id===actorId),action,units.find(unit=>unit.id===targetId)),
-    setTravel: (actorId,action,travel) => {
-      const actor=units.find(unit=>unit.id===actorId);
-      const key=['atk','normal'].includes(action)?'basic':action==='skill1'?'skill':action==='ult'?'ultimate':action;
-      if(!actor||!['basic','skill','ultimate'].includes(key)||!['snap','dash','run','stationary'].includes(travel))return false;
-      actor.skillMovement={...(actor.skillMovement||{}),[key]:{...(actor.skillMovement?.[key]||{}),travel}};
-      return __hvSkillMovement.policyFor(actor,key)?.travel===travel;
-    }
+    plan: (actorId,action,targetId) => __hvSkillMovement.plan(units.find(unit=>unit.id===actorId),action,units.find(unit=>unit.id===targetId))
   };
 }
 ${END}

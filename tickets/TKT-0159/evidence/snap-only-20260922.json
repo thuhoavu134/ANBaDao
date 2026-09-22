@@ -1,0 +1,27 @@
+{
+  "ticket": "TKT-0159",
+  "contract": "snap-only-20260922",
+  "baseline_main": "e44ddbf500447753be32355c845cdbabee1a964a",
+  "baseline_pr": "40f72120de0de33c8ad60d49e0e8550834c1d243",
+  "red": { "command": "node --test tests/skill-test-snap-only.test.mjs", "total": 3, "pass": 1, "fail": 2, "exit_code": 1 },
+  "green": {
+    "command": "node --test --test-concurrency=1 tests/skill-test-lifecycle.test.mjs tests/skill-test-snap-only.test.mjs",
+    "scope": "Controller-only local fixture; not full repository or real 6v6",
+    "total": 24, "pass": 24, "fail": 0, "exit_code": 0
+  },
+  "final_rerun": { "total": 24, "pass": 24, "fail": 0, "exit_code": 0 },
+  "syntax": "PASS",
+  "blob_sha1": {
+    "skill-test.html": "29e66d54a65474fc89704cedd8e188a5406bd2ff",
+    "tests/skill-test-lifecycle.test.mjs": "52f3c25bc7e9b45fedaf92dbf63412d39f744054",
+    "tests/skill-test-snap-only.test.mjs": "2a9e84a09c8f85f59e277057f06b2acac36f3a42"
+  },
+  "runtime_owner": "Exact main movement, integration patch and domain/browser regression blobs retained; main already has snap for all three Luc Anh actions",
+  "unverified": ["full asset build", "full repository Node suite", "real desktop/mobile 6v6 browser QA", "physical iPhone/Safari", "deployment"],
+  "gate": {
+    "run": "20260922-145935-ft5m200a",
+    "status": "ticket-guard blocked; existing source/test-only exception, not complete",
+    "board_claim": "NOT_AVAILABLE"
+  },
+  "non_goals": ["other hero movement", "return-home behavior", "skill VFX/SFX/timing", "damage/energy/save/auth", "Victory/Defeat"]
+}
