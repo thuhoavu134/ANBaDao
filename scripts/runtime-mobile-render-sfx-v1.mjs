@@ -37,6 +37,15 @@ for (const name of ['index.html', 'battle.html']) {
     replace('if (state.sound) tone(440, 0.08, "sine", 0.025);',
       'window.HonVietSfx?.setCombatEnabled(state.sound);\n    if (state.sound) { window.HonVietSfx?.unlock(); window.HonVietSfx?.play("ui", {group:"ui"}); }', 'SFX mute');
 
+    // iOS/iPadOS: keep the legacy/native atlas owner lazy, but bound its
+    // residency and decode concurrency so Lục Ảnh/Đình Lôi cannot compete with
+    // the S+ cache for two large decodes at once.
+    replace(
+      'const entries=new Map();let bytes=0,loading=0;const maxBytes=128*1024*1024,maxLoading=2,warmMs=96;',
+      "const entries=new Map();let bytes=0,loading=0;const __hvNativeLowMemoryIOS=/iPad|iPhone|iPod/i.test(String(navigator?.userAgent||''))||(navigator?.platform==='MacIntel'&&Number(navigator?.maxTouchPoints||0)>1),maxBytes=__hvNativeLowMemoryIOS?64*1024*1024:128*1024*1024,maxLoading=__hvNativeLowMemoryIOS?1:2,warmMs=96;",
+      'iOS native atlas budget'
+    );
+
     // Keep source animation motion; do not add a second bob/rotation to Lục Ảnh.
     replace('const idleBob = REDUCED_MOTION ? 0 :', 'const idleBob = REDUCED_MOTION || isLucAnh(unit) || isLinhDong(unit) ? 0 :', 'authored idle motion');
     replace('if (!isOngPho(unit)) context.rotate(lean', 'if (!isOngPho(unit) && !isLucAnh(unit) && !isLinhDong(unit)) context.rotate(lean', 'authored attack baseline');
