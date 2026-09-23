@@ -56,8 +56,7 @@ test('both documents expose preparation on the original shared audio bus',()=>{
     assert.match(source,/sfxLastResult', 'expired'/);
   }
 });
-test('build-time resized atlases report real smaller decoded footprints',()=>{
+test('current S+ readiness build keeps native atlas dimensions on the 96 MiB iOS budget',()=>{
   const report=JSON.parse(readFileSync('dist/battle-readiness-assets.json','utf8'));
-  assert.ok(report.length>0);
-  for(const row of report){assert.ok(row.decodedAfter<row.decodedBefore);assert.equal(row.decodedAfter,row.width*row.height*4);assert.ok(row.bytes>0);}
+  assert.deepEqual(report,[]);
 });
