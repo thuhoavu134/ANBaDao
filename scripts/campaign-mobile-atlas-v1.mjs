@@ -32,8 +32,12 @@ const __HV_CAMPAIGN_LOW_MEMORY=(()=>{try{const n=navigator,ua=String(n?.userAgen
 const sceneState =`, 'scene state');
   html = replaceOne(html, '      maxDecodedBytes: 96 * 1024 * 1024,', '      maxDecodedBytes: __HV_CAMPAIGN_LOW_MEMORY ? 64 * 1024 * 1024 : 96 * 1024 * 1024,', 'campaign cache bytes');
   html = replaceOne(html, '      maxLoading: 2,', '      maxLoading: __HV_CAMPAIGN_LOW_MEMORY ? 1 : 2,', 'campaign cache loading');
-  html = replaceOne(html, "  ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';", "  ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = __HV_CAMPAIGN_LOW_MEMORY ? 'medium' : 'high';", 'smoothing quality');
-  html = replaceOne(html, '  if (time - sceneState.lastFrame >= 32) {', '  if (time - sceneState.lastFrame >= (__HV_CAMPAIGN_LOW_MEMORY ? 50 : 32)) {', 'frame pacing');
+  html = replaceOne(
+    html,
+    "  ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';\n  if (time - sceneState.lastFrame >= 32) {",
+    "  ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = __HV_CAMPAIGN_LOW_MEMORY ? 'medium' : 'high';\n  if (time - sceneState.lastFrame >= (__HV_CAMPAIGN_LOW_MEMORY ? 50 : 32)) {",
+    'campaign draw smoothing/frame pacing'
+  );
   html = replaceOne(html, '  const dpr = Math.min(2, window.devicePixelRatio || 1);', '  const dpr = __HV_CAMPAIGN_LOW_MEMORY ? Math.min(1.5, window.devicePixelRatio || 1) : Math.min(2, window.devicePixelRatio || 1);', 'canvas dpr');
   const anchor = 'function currentCheckpoint() {';
   const runtime = `const __HV_CAMPAIGN_MOBILE_ATLASES=${JSON.stringify(variants)};
