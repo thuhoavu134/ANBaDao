@@ -27,3 +27,37 @@ test('L12-C2: iOS unlock does not inject a floating Bật tiếng control', () =
   assert.match(unlock, /pointerdown/);
   assert.match(unlock, /ctx\.resume/);
 });
+
+
+test('an outstanding muted-audio unlock cannot pause the new combat BGM', async () => {
+  const manager = unlock.match(/const manager = String.raw`([\\s\\S]*?)`;/)?.[1];
+  assert.ok(manager, 'iOS audio manager is present');
+  let resolvePriming;
+  const priming = new Promise(resolve => { resolvePriming = resolve; });
+  const music = {
+    muted: false, paused: false, currentTime: 2, currentSrc: 'hub.mp3',
+    play() { this.paused = false; return priming; },
+    pause() { this.paused = true; },
+  };
+  const context = {
+    state: 'running', destination: {}, createBuffer: () => ({}),
+    createBufferSource: () => ({ connect() {}, start() {} }),
+  };
+  const window = { __HV_EARLY_CTX: context, addEventListener() {} };
+  const document = {
+    documentElement: { dataset: {} }, visibilityState: 'visible',
+    querySelectorAll: () => [music], addEventListener() {},
+  };
+  vm.runInNewContext(manager.replace(/^<script[^>]*>\\s*/, '').replace(/\\s*<\\/script>\\s*$/, ''), {
+    window, document, Audio: class {}, fetch: async () => { throw new Error('not needed'); },
+    setTimeout, clearTimeout, AbortController, Promise, Map, Set, String, Number, Math,
+  });
+  await window.HonVietAudio.unlock();
+  music.currentSrc = 'combat.mp3';
+  music.paused = false;
+  resolvePriming();
+  await Promise.resolve();
+  await Promise.resolve();
+  assert.equal(music.paused, false, 'late unlock cleanup must not pause the active combat track');
+  assert.equal(music.currentTime, 2, 'late unlock cleanup must not rewind the active combat track');
+});
