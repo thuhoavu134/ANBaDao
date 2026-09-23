@@ -190,15 +190,16 @@ await installCampaignMobileAtlases(root);
 const { installCampaignResourceLifecycle } = await import('./campaign-resource-lifecycle-v1.mjs');
 installCampaignResourceLifecycle(root);
 
-// The integrated battle is loaded from this embedded payload in production.
-// Keep it byte-identical to the patched battle.html; otherwise the visible
-// preview and the iframe can silently run different engines.
-const embeddedBattle = readFileSync(join(out, 'battle.html'));
+// P0 iOS entry: battle state must start even when AudioContext fails.
+await import('./battle-entry-fail-open-v1.mjs');
+
+// battle.html is now the single runtime source for iframe and iOS full-page combat.
+// Do not duplicate ~1.5 MB of battle markup as base64 inside index.html; on mobile
+// that keeps two copies alive exactly when the battle document starts parsing.
 let embeddedIndex = readFileSync(join(out, 'index.html'), 'utf8');
-const encodedBattle = Buffer.from(embeddedBattle, 'utf8').toString('base64');
-const embeddedExpression = /const BATTLE_HTML_BASE64 = "[A-Za-z0-9+/=]+";/;
+const embeddedExpression = /const BATTLE_HTML_BASE64 = "[A-Za-z0-9+/=]*";/;
 if (!embeddedExpression.test(embeddedIndex)) throw new Error('Embedded battle payload marker not found');
-embeddedIndex = embeddedIndex.replace(embeddedExpression, `const BATTLE_HTML_BASE64 = "${encodedBattle}";`);
+embeddedIndex = embeddedIndex.replace(embeddedExpression, 'const BATTLE_HTML_BASE64 = "";');
 writeFileSync(join(out, 'index.html'), embeddedIndex);
-console.log(`Embedded battle payload synced: ${embeddedBattle.length} bytes`);
+console.log('Battle runtime served from battle.html; embedded base64 payload disabled.');
 console.log(`Static preview written to ${out}`);
