@@ -63,7 +63,7 @@ export function patchBattleMobilePressure(input,variants={}){
     __hvBattlePaintAt=time;
     resizeCanvas();`,'render throttle');
 
-  const mapping=JSON.stringify(variants);
+  const mapping='{}'; // P0: canonical authored sources only; never remap to reduced derivatives.
   const fallbackHeroOld=`const HERO_ATLAS_SOURCES = Object.freeze({
     [TEAM_PLAYER]: "assets/battle-runtime/embedded-03.webp",
     [TEAM_ENEMY]: "assets/battle-runtime/embedded-04.webp"
