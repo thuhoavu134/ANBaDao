@@ -25,7 +25,7 @@ index = replaceOnce(
   index,
   `      activeBattle.enterFallback = setTimeout(() => {
         if (!activeBattle || activeBattle.sessionId !== sessionId || loading.hidden) return;
-        window.name = \`hvBattleConfig:\${encodeURIComponent(serializedBattleConfig)}\`;
+        window.name = \`hvBattleConfig:\\${encodeURIComponent(serializedBattleConfig)}\`;
         location.assign(url);
       }, 1800);`,
   `      activeBattle.enterFallback = setTimeout(() => {
@@ -35,20 +35,9 @@ index = replaceOnce(
   'enterFallback location.assign'
 );
 
-index = replaceOnce(
-  index,
-  `    window.HonVietSfx?.endBattle();
-    window.__HV_RESULT_AUDIO?.stop();
-    try { frame.contentWindow?.HonVietSfx?.dispose(); } catch (_) {}
-`,
-  `    window.HonVietSfx?.endBattle();
-    window.__HV_RESULT_AUDIO?.stop();
-    try { frame.contentWindow?.HonVietSfx?.dispose(); } catch (_) {}
-    try { if (typeof playBgm === 'function' && typeof desiredBgm === 'function') playBgm(desiredBgm(typeof ST !== 'undefined' && ST.screen ? ST.screen : 'hub')); } catch (_) {}
-`,
-  'closeOverlay restore BGM'
-);
-
+// Audio cleanup belongs to battle-audio-lifecycle-v1.mjs. It ends battle SFX
+// and preserves the active shared BGM through the result/route handoff. Do not
+// restore or stop music here: that would interrupt the shared crossfade owner.
 index = replaceOnce(
   index,
   `  function hushParentBgm() {
