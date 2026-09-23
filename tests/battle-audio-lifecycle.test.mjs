@@ -144,6 +144,10 @@ test('result music cannot resume after stop while waiting for audio unlock', asy
   assert.equal(window.__HV_RESULT_AUDIO.current(), '', 'stale frame cannot reopen result music');
 });
 
+test('battle close preserves result BGM through the parent route handoff', () => {
+  assert.match(read('scripts/battle-audio-lifecycle-v1.mjs'), /__HV_RESULT_AUDIO\?\.stop\(\{keepCurrent:true\}\)/);
+});
+
 test('built close owner stops both parent buses and the child before blanking the iframe', () => {
   const index = read('dist/index.html');
   const start = index.indexOf('  function closeOverlay() {');

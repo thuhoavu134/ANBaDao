@@ -211,7 +211,7 @@
     const p = profile();
     p.vol = p.vol || {};
     p.vol[kind] = n;
-    if (kind === 'bgm' && typeof bgmPlayer !== 'undefined' && bgmPlayer) bgmPlayer.volume = n;
+    if (kind === 'bgm') { if (typeof bgmPlayer !== 'undefined' && bgmPlayer) bgmPlayer.volume = n; window.HonVietAudio?.setMusicVolume?.(n); }
     saveP();
   }
   function open() {

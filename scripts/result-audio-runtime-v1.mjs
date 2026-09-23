@@ -11,22 +11,32 @@ const parentScript=String.raw`<script id="honviet-result-audio-v1">
   if(window.__HV_RESULT_AUDIO_V1)return;
   window.__HV_RESULT_AUDIO_V1=true;
   const tracks={victory:'assets/audio/bgm-victory.mp3',defeat:'assets/audio/bgm-defeat.mp3'};
-  const player=new Audio();player.preload='auto';player.loop=false;player.volume=.9;
-  let active='',epoch=0;
-  function stop(){epoch++;try{player.pause();player.currentTime=0;}catch(_e){} active='';}
+  let active='',epoch=0,fallbackPlayer=null;
+  function stop(options={}){
+    epoch++;
+    try{window.HonVietAudio?.stopMusic?.(options);}catch(_e){}
+    if(!options.keepCurrent&&fallbackPlayer){try{fallbackPlayer.pause();fallbackPlayer.currentTime=0;}catch(_e){}fallbackPlayer=null;}
+    active='';
+  }
   async function play(kind){
     const src=tracks[kind];if(!src)return false;
     try{
-      stop();
+      stop({keepCurrent:true});
       const ticket=epoch;
-      if(typeof bgmPlayer!=='undefined'){try{bgmPlayer.pause();}catch(_e){}}
-      active=kind;player.src=src;player.currentTime=0;
-      if(window.HonVietAudio)try{await window.HonVietAudio.unlock();}catch(_e){}
+      active=kind;
+      const bus=window.HonVietAudio;
+      if(bus?.playMusic){
+        const played=await bus.playMusic(src,{loop:false,volume:.9,category:'result',fadeMs:260});
+        return ticket===epoch&&played;
+      }
+      fallbackPlayer=new Audio();fallbackPlayer.preload='auto';fallbackPlayer.loop=false;fallbackPlayer.volume=.9;fallbackPlayer.src=src;
+      if(bus)try{await bus.unlock();}catch(_e){}
       if(ticket!==epoch)return false;
-      await player.play();return true;
+      await fallbackPlayer.play();
+      return true;
     }catch(_e){return false;}
   }
-  window.__HV_RESULT_AUDIO={player,play,stop,current:()=>active};
+  window.__HV_RESULT_AUDIO={play,stop,current:()=>active};
   window.addEventListener('message',event=>{
     const m=event.data;if(!m||m.source!=='hon-viet-battle'||m.type!=='battle-result-audio')return;
     const frame=document.getElementById('hvBattleFrame'),session=window.HonVietMetaBridge?.active?.();
@@ -35,10 +45,11 @@ const parentScript=String.raw`<script id="honviet-result-audio-v1">
   });
   try{
     const originalShowScreen=showScreen;
-    showScreen=function(name){if(active)stop();return originalShowScreen(name);};
+    showScreen=function(name){if(active)stop({keepCurrent:true});return originalShowScreen(name);};
   }catch(_e){}
 })();
 </script>`;
+
 if(!index.includes('honviet-result-audio-v1')) index=index.replace('</body>',parentScript+'\n</body>');
 writeFileSync(indexPath,index);
 

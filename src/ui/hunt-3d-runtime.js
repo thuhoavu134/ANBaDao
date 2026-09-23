@@ -53,7 +53,7 @@
 
   function hushParentBgm() {
     try {
-      if (typeof bgmPlayer !== 'undefined' && bgmPlayer) bgmPlayer.pause();
+      if (typeof bgmPlayer !== 'undefined' && bgmPlayer) bgmPlayer.pause(); window.HonVietAudio?.stopMusic?.();
     } catch {}
     try { window.HonVietAudio?.stopCombat?.(); } catch {}
   }

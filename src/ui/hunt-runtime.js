@@ -107,7 +107,7 @@
       ST.mode = 'hunt';
       ST.huntTurns = 0;
     }
-    try { if (typeof bgmPlayer !== 'undefined' && bgmPlayer) bgmPlayer.pause(); } catch {}
+    try { if (typeof bgmPlayer !== 'undefined' && bgmPlayer) bgmPlayer.pause(); window.HonVietAudio?.stopMusic?.(); } catch {}
     runBattle?.('__hunt', () => {
       huntSettle();
       if (typeof ST === 'object') ST.mode = null;

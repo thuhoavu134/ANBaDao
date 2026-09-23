@@ -1,3 +1,7 @@
+## 2026-09-23 — Seamless audio transition repair · PR #208 REVIEW
+
+Use the host shared Web Audio context for hub/combat/result tracks. Crossfade after the next track decodes; keep the active track alive through result-frame close and route handoff. Preserve profile BGM volume and hunt pause. Focused audio/lifecycle tests 15/15 PASS; local full build BLOCKED by missing partial-checkout module. CI #694 + retry fail before steps; logs return BlobNotFound, exact cause UNVERIFIED. No merge; physical iPhone/Safari NOT RUN. Evidence: [audio transition QA](qa/audio-transition-20260923/contract.md).
+
 ## 17/09 — TKT-0158: audio trận phát cùng game
 
 Owner: tab iPhone sống sau TKT-0157 nhưng Hiệp 01 câm. Host không mở loa combat trong cử chỉ Xuất chiến; iframe `HTMLAudio` autoplay bị chặn; fallback 1.8s `location.assign` phá AudioContext.
