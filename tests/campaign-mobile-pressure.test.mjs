@@ -46,8 +46,13 @@ function drawOtherSurface(){
 function currentCheckpoint() {}
 function drawScene(time){
   ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
+  const preparing = Boolean(sceneState.draft);
+}
+function sceneTick(time){
   if (time - sceneState.lastFrame >= 32) {
   }
+}
+function resizeScene(){
   const dpr = Math.min(2, window.devicePixelRatio || 1);
 }
 `;
