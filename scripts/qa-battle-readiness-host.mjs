@@ -16,7 +16,7 @@ async function click(selector,inFrame=false){
   await page.send('Input.dispatchMouseEvent',{type:'mouseReleased',x:p.x,y:p.y,button:'left',clickCount:1});
   await sleep(180);
 }
-const stateExpression=`(()=>{const w=document.getElementById('hvBattleFrame')?.contentWindow;if(!w?.__HON_VIET__)return null;const s=w.__HON_VIET__.getState();return {state:{mode:s.mode,battleId:s.battleId,round:s.round,actionCount:s.actionCount,currentId:s.currentId,auto:s.auto,speed:s.speed,sound:s.sound},units:w.__HON_VIET__.getUnits(),paints:w.__HV_BATTLE_ASSET_QA?.paints(),cache:w.__HV_BATTLE_ASSET_QA?.inspect(),events:w.__HV_BATTLE_ASSET_QA?.events(),parentDataset:{...document.documentElement.dataset},parentAudio:window.__qaAudio||[],frameAudio:w.__qaAudio||[],frameUrl:w.location.href};})()`;
+const stateExpression=`(()=>{const w=document.getElementById('hvBattleFrame')?.contentWindow;if(!w?.__HON_VIET__)return null;const s=w.__HON_VIET__.getState();return {state:{mode:s.mode,battleId:s.battleId,round:s.round,actionCount:s.actionCount,currentId:s.currentId,auto:s.auto,speed:s.speed,sound:s.sound},units:w.__HON_VIET__.getUnits(),paints:w.__HV_BATTLE_ASSET_QA?.paints(),cache:w.__HV_BATTLE_ASSET_QA?.inspect(),events:w.__HV_BATTLE_ASSET_QA?.events(),hostBgm:(()=>{const a=typeof bgmPlayer!=='undefined'?bgmPlayer:null;return a?{src:a.currentSrc||a.src||'',paused:a.paused,currentTime:a.currentTime}:null;})(),parentDataset:{...document.documentElement.dataset},parentAudio:window.__qaAudio||[],frameAudio:w.__qaAudio||[],frameUrl:w.location.href};})()`;
 try{
   await page.send('Page.addScriptToEvaluateOnNewDocument',{source:`window.__qaAudio=[];const original=AudioBufferSourceNode.prototype.start;AudioBufferSourceNode.prototype.start=function(...args){const result=original.apply(this,args);let peak=0;const data=this.buffer?.getChannelData(0);if(data)for(let i=0;i<data.length;i+=Math.max(1,Math.floor(data.length/3000)))peak=Math.max(peak,Math.abs(data[i]));__qaAudio.push({at:Date.now(),state:this.context.state,duration:this.buffer?.duration,peak});return result;};`});
   await page.send('Page.navigate',{url:browser.origin+'/'});
@@ -58,7 +58,7 @@ try{
       await sleep(300);
     }
     battle.final=await page.evaluate(stateExpression);await take('battle-'+pass+'-effects');
-    battle.ok=wanted.every(key=>(battle.final.paints?.[key]||0)>0)&&battle.final.state.actionCount>=3&&battle.final.parentAudio.some(e=>e.state==='running'&&e.peak>0)&&battle.final.events?.some(e=>e.type==='sfx:played');
+    battle.ok=wanted.every(key=>(battle.final.paints?.[key]||0)>0)&&battle.final.state.actionCount>=3&&battle.final.parentAudio.some(e=>e.state==='running'&&e.peak>0)&&battle.final.events?.some(e=>e.type==='sfx:played')&&battle.final.hostBgm&&!battle.final.hostBgm.paused&&battle.final.cache?.entries?.some(e=>e.src.includes('linh-dong')&&e.src.endsWith('idle-atlas.webp')&&e.state==='ready'&&e.pins>0);
     if(!battle.ok)throw new Error('Host battle '+pass+' missing action/VFX/shared-audio coverage');
     await click('[data-ref-nav="hub"]',true);
     await page.wait('!document.getElementById("hvBattleOverlay")?.classList.contains("is-open")',10000);
