@@ -231,15 +231,20 @@ export function patchBattleMobilePressure(input,variants={}){
 
 export async function buildBattleMobilePressure(root=process.cwd()){
   const {default:sharp}=await import('sharp');
+  sharp.cache(false);sharp.concurrency(1);
   const out=join(root,'dist'),variants={};
   for(const src of [...BATTLE_FALLBACK_MOBILE_SOURCES,...ONG_PHO_MOBILE_SOURCES,...LUC_ANH_MOBILE_SOURCES,...DINH_LOI_MOBILE_SOURCES]){
     const source=join(out,src);if(!existsSync(source))throw new Error('Missing mobile battle atlas: '+src);
-    const meta=await sharp(source).metadata();
-    const width=Math.max(1,Math.round(Number(meta.width)*DINH_LOI_MOBILE_SCALE));
-    const height=Math.max(1,Math.round(Number(meta.height)*DINH_LOI_MOBILE_SCALE));
     const targetSrc=dinhLoiMobileVariantPath(src),target=join(out,targetSrc);mkdirSync(dirname(target),{recursive:true});
-    await sharp(source).resize(width,height,{fit:'fill',kernel:'lanczos3'}).webp({quality:86,alphaQuality:92,effort:2}).toFile(target);
-    variants[src]={src:targetSrc,width,height,scale:DINH_LOI_MOBILE_SCALE};
+    try{
+      const meta=await sharp(source).metadata();
+      const width=Math.max(1,Math.round(Number(meta.width)*DINH_LOI_MOBILE_SCALE));
+      const height=Math.max(1,Math.round(Number(meta.height)*DINH_LOI_MOBILE_SCALE));
+      await sharp(source).resize(width,height,{fit:'fill',kernel:'lanczos3'}).webp({quality:86,alphaQuality:92,effort:2}).toFile(target);
+      variants[src]={src:targetSrc,width,height,scale:DINH_LOI_MOBILE_SCALE};
+    }catch(error){
+      console.warn('Battle mobile derivative skipped:',src,error?.message||error);
+    }
   }
   const battle=join(out,'battle.html');writeFileSync(battle,patchBattleMobilePressure(readFileSync(battle,'utf8'),variants));
   return variants;
