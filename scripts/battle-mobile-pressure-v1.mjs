@@ -173,13 +173,13 @@ export function patchBattleMobilePressure(input,variants={}){
     for(const unit of guarded)drawDinhLoiAtlasFrame(context,image,frame,unit.x,unit.y,330,186,{baseline:93,screen:true,alpha:.82});
   }`;
   html=replaceOne(html,oldShield,newShield,'lazy Dinh Loi shield');
-  html=replaceOne(html,"context.shadowBlur = (attacking || skill1 || ultimate) ? 12 : 5;","context.shadowBlur = __HV_BATTLE_LOW_MEMORY ? 0 : ((attacking || skill1 || ultimate) ? 12 : 5);","Ong Pho actor shadow");
-  html=replaceOne(html,"context.shadowBlur=[\"attack\",\"skill1\",\"ultimate\"].includes(key)?14:5;","context.shadowBlur=__HV_BATTLE_LOW_MEMORY?0:([\"attack\",\"skill1\",\"ultimate\"].includes(key)?14:5);","Dinh Loi actor shadow");
-  html=replaceOne(html,"context.shadowBlur=[\"attack\",\"skill1\",\"ultimate\"].includes(key)?15:5;","context.shadowBlur=__HV_BATTLE_LOW_MEMORY?0:([\"attack\",\"skill1\",\"ultimate\"].includes(key)?15:5);","Luc Anh actor shadow");
-  html=replaceOne(html,"context.shadowBlur = 8 + strike * 16;","context.shadowBlur = __HV_BATTLE_LOW_MEMORY ? 0 : 8 + strike * 16;","generic actor shadow");
+  html=replaceOne(html,"context.shadowBlur = (attacking || skill1 || ultimate) ? 12 : 5;","context.shadowBlur = (attacking || skill1 || ultimate) ? 12 : 5;","Ong Pho actor shadow");
+  html=replaceOne(html,"context.shadowBlur=[\"attack\",\"skill1\",\"ultimate\"].includes(key)?14:5;","context.shadowBlur=[\"attack\",\"skill1\",\"ultimate\"].includes(key)?14:5;","Dinh Loi actor shadow");
+  html=replaceOne(html,"context.shadowBlur=[\"attack\",\"skill1\",\"ultimate\"].includes(key)?15:5;","context.shadowBlur=[\"attack\",\"skill1\",\"ultimate\"].includes(key)?15:5;","Luc Anh actor shadow");
+  html=replaceOne(html,"context.shadowBlur = 8 + strike * 16;","context.shadowBlur = 8 + strike * 16;","generic actor shadow");
   const sharedActorShadow="context.shadowBlur=['attack','ultimate'].includes(key)?14:5;";
   if(html.split(sharedActorShadow).length!==3)throw new Error('Battle mobile patch expected Linh Dong and Bach Dien actor shadows');
-  html=html.replaceAll(sharedActorShadow,"context.shadowBlur=__HV_BATTLE_LOW_MEMORY?0:(['attack','ultimate'].includes(key)?14:5);");
+  html=html.replaceAll(sharedActorShadow,"context.shadowBlur=['attack','ultimate'].includes(key)?14:5;");
   html=replaceOne(html,
     'const count = REDUCED_MOTION ? Math.ceil(amount / 4) : amount;',
     'const requested=REDUCED_MOTION?Math.ceil(amount/4):__HV_BATTLE_LOW_MEMORY?Math.max(1,Math.min(12,Math.ceil(amount*.45))):amount; const count=__HV_BATTLE_LOW_MEMORY?Math.min(requested,Math.max(0,72-particles.length)):requested;',
