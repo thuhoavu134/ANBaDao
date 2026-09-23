@@ -55,7 +55,7 @@ export function patchBattleMobilePressure(input,variants={}){
     const width = Math.max(1, Math.round(rect.width));
     const height = Math.max(1, Math.round(rect.height));
     const __hvPixelDpr=Math.sqrt(__HV_BATTLE_MAX_BACKING_PIXELS/Math.max(1,width*height));
-    const dpr=Math.min(devicePixelRatio || 1,__HV_BATTLE_LOW_MEMORY?Math.min(1.5,__hvPixelDpr):2);`;
+    const dpr=Math.min(devicePixelRatio || 1,__HV_BATTLE_LOW_MEMORY?Math.min(1.5,__hvPixelDpr):3);`;
   html=replaceOne(html,resizeOld,resizeNew,'canvas DPR/backing-store budget');
   html=replaceOne(html,'let lastFrame = performance.now();','let lastFrame = performance.now();\n  let __hvBattlePaintAt = lastFrame;\n  let __hvZoneHudAt=-Infinity,__hvTelemetryAt=-Infinity;','battle paint clock');
   html=replaceOne(html,'function render(time) {\n    resizeCanvas();',`function render(time) {
