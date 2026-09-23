@@ -1,3 +1,11 @@
+## 2026-09-23 — Giữ nhạc/SFX liền mạch sau lần chạm đầu · PR #208 REVIEW / IN_PROGRESS
+
+Từ main `a536b194`. BGM sảnh, trận và kết quả dùng chung host-owned `HonVietAudio` Web Audio context. Bài cũ tiếp tục phát khi track mới decode; sau đó crossfade. Message kết quả/đóng iframe không khởi tạo player HTML mới hoặc dừng track trước khi route tiếp theo đổi nhạc. Volume hồ sơ và pause ở Săn Boss vẫn nối shared owner.
+
+RED: 3 kiểm tra transition mới fail trước sửa. GREEN: audio lifecycle + transition **15/15 PASS**, syntax PASS. Local full build **BLOCKED** do checkout thiếu `scripts/battle-phase1-trace-v1.mjs`. GitHub CI #694 và retry fail trước job steps; log endpoint trả `BlobNotFound`, nguyên nhân chính xác **UNVERIFIED**. Không merge. Browser evidence theo PR còn chờ; physical iPhone/Safari **NOT RUN**.
+
+Ticket board/claim/path-lock connector không khả dụng; không khai claim hoặc khóa. Contract/evidence: [audio transition QA](qa/audio-transition-20260923/contract.md).
+
 ## 13/09 — Gộp bản owner đã duyệt live: #111 + #112
 
 #112 cấp người chơi đã merge tại147325b. Ghép #111 huy hiệu hai kiếm vào cùng cây nguồn, giữ đề xuất cấp đã chốt/implementation TKT-0118. Không quay lại trạng thái chờ chốt level. Kiểm tra bản kết hợp trước cập nhật main; Chrome390×844 BLOCKED (preview đăng nhập bị auto-review từ chối), Safari NOT_RUN. Owner tự deploy.
