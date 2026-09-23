@@ -57,19 +57,31 @@ if(__HV_CAMPAIGN_LOW_MEMORY){
 
 export async function buildCampaignMobileAtlases(root = process.cwd()) {
   const { default: sharp } = await import('sharp');
+  sharp.cache(false); sharp.concurrency(1);
   const out = join(root, 'dist');
   const variants = {};
   for (const src of CAMPAIGN_MOBILE_SOURCES) {
     const source = join(out, src);
     if (!existsSync(source)) throw new Error('Missing campaign atlas: ' + src);
-    const meta = await sharp(source).metadata();
-    const width = Math.max(1, Math.round(Number(meta.width) * CAMPAIGN_MOBILE_SCALE));
-    const height = Math.max(1, Math.round(Number(meta.height) * CAMPAIGN_MOBILE_SCALE));
     const targetSrc = mobileVariantPath(src), target = join(out, targetSrc);
     mkdirSync(dirname(target), { recursive: true });
-    await sharp(source).resize(width, height, { fit: 'fill', kernel: 'lanczos3' })
-      .webp({ quality: 84, alphaQuality: 90, effort: 2 }).toFile(target);
-    variants[src] = { src: targetSrc, width, height, scale: CAMPAIGN_MOBILE_SCALE };
+    try {
+      if (existsSync(target)) {
+        const existing = await sharp(target).metadata();
+        if (Number(existing.width) > 0 && Number(existing.height) > 0) {
+          variants[src] = { src: targetSrc, width: Number(existing.width), height: Number(existing.height), scale: CAMPAIGN_MOBILE_SCALE };
+          continue;
+        }
+      }
+      const meta = await sharp(source).metadata();
+      const width = Math.max(1, Math.round(Number(meta.width) * CAMPAIGN_MOBILE_SCALE));
+      const height = Math.max(1, Math.round(Number(meta.height) * CAMPAIGN_MOBILE_SCALE));
+      await sharp(source).resize(width, height, { fit: 'fill', kernel: 'lanczos3' })
+        .webp({ quality: 84, alphaQuality: 90, effort: 2 }).toFile(target);
+      variants[src] = { src: targetSrc, width, height, scale: CAMPAIGN_MOBILE_SCALE };
+    } catch (error) {
+      console.warn('Campaign mobile derivative skipped:', src, error?.message || error);
+    }
   }
   return variants;
 }
