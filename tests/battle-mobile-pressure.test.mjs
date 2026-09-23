@@ -176,6 +176,10 @@ const qaApi={getPoseAtlasStatus: () => Object.fromEntries(Object.entries(POSE_AT
   assert.match(patched,/1000\/30/);
   assert.doesNotMatch(patched,/mobile-v1\//);
   assert.match(patched,/__hvBattleFallbackSrc/);
+  const lowMemoryDeclaration=patched.indexOf('const __HV_BATTLE_LOW_MEMORY=');
+  const firstLowMemoryCall=patched.indexOf('__hvBattleFallbackSrc("assets/battle-runtime/embedded-03.webp")');
+  assert.ok(lowMemoryDeclaration>=0 && lowMemoryDeclaration<firstLowMemoryCall,{lowMemoryDeclaration,firstLowMemoryCall});
+  assert.equal((patched.match(/const __HV_BATTLE_LOW_MEMORY=/g)||[]).length,1);
   assert.match(patched,/assets\/battle-runtime\/embedded-03\.webp/);
   assert.match(patched,/assets\/battle-runtime\/embedded-11\.png/);
   assert.match(patched,/__HV_ONG_PHO_CELL_SCALE=1/);

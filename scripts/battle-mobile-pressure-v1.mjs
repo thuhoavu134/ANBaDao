@@ -43,7 +43,6 @@ export function patchBattleMobilePressure(input,variants={}){
   if(input.includes('/* HV_BATTLE_MOBILE_PRESSURE_V1 */'))return input;
   let html=input;
   html=replaceOne(html,'const view = { width: 1, height: 1, scale: 1, offsetX: 0, offsetY: 0, dpr: 1 };',`/* HV_BATTLE_MOBILE_PRESSURE_V1 */
-  const __HV_BATTLE_LOW_MEMORY=(()=>{try{const n=navigator,ua=String(n?.userAgent||''),platform=String(n?.platform||''),touch=Number(n?.maxTouchPoints||0),memory=Number(n?.deviceMemory||0);return /iPad|iPhone|iPod/i.test(ua)||(platform==='MacIntel'&&touch>1)||(memory>0&&memory<=4);}catch(_){return false;}})();
   const __HV_BATTLE_MAX_BACKING_PIXELS=3200000;
   const view = { width: 1, height: 1, scale: 1, offsetX: 0, offsetY: 0, dpr: 1 };`,'low-memory profile');
   html=replaceOne(html,'const ambientFireflies = Array.from({ length: 24 }, (_, index) => ({','const ambientFireflies = Array.from({ length: __HV_BATTLE_LOW_MEMORY ? 10 : 24 }, (_, index) => ({','ambient particles');
@@ -68,7 +67,8 @@ export function patchBattleMobilePressure(input,variants={}){
     [TEAM_PLAYER]: "assets/battle-runtime/embedded-03.webp",
     [TEAM_ENEMY]: "assets/battle-runtime/embedded-04.webp"
   });`;
-  const fallbackHeroNew=`const __HV_BATTLE_MOBILE_ATLASES=${mapping};
+  const fallbackHeroNew=`const __HV_BATTLE_LOW_MEMORY=(()=>{try{const n=navigator,ua=String(n?.userAgent||''),platform=String(n?.platform||''),touch=Number(n?.maxTouchPoints||0),memory=Number(n?.deviceMemory||0);return /iPad|iPhone|iPod/i.test(ua)||(platform==='MacIntel'&&touch>1)||(memory>0&&memory<=4);}catch(_){return false;}})();
+  const __HV_BATTLE_MOBILE_ATLASES=${mapping};
   const __hvBattleFallbackSrc=src=>__HV_BATTLE_LOW_MEMORY?(__HV_BATTLE_MOBILE_ATLASES[src]?.src||src):src;
   const HERO_ATLAS_SOURCES = Object.freeze({
     [TEAM_PLAYER]: __hvBattleFallbackSrc("assets/battle-runtime/embedded-03.webp"),
