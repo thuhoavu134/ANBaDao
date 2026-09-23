@@ -18,11 +18,9 @@ const sourceBytes={
   'assets/battle-runtime/embedded-12.png':8*240*6*135*4
 };
 
-test('mobile campaign profile covers all six idle atlases and quarters decoded residency',()=>{
-  assert.equal(CAMPAIGN_MOBILE_SCALE,.5);
+test('mobile campaign profile preserves authored atlas scale',()=>{
+  assert.equal(CAMPAIGN_MOBILE_SCALE,1);
   for(const src of Object.keys(sourceBytes))assert.ok(CAMPAIGN_MOBILE_SOURCES.includes(src),src);
-  const decoded=Object.values(sourceBytes).reduce((n,v)=>n+v*CAMPAIGN_MOBILE_SCALE**2,0);
-  assert.ok(decoded<24*MiB,`six idle mobile set ${decoded/MiB} MiB`);
 });
 
 test('mobile derivative paths never overwrite canonical atlases',()=>{
@@ -30,7 +28,7 @@ test('mobile derivative paths never overwrite canonical atlases',()=>{
   assert.equal(mobileVariantPath('assets/characters/linh-dong/campaign-lite/idle-atlas.webp'),'assets/characters/linh-dong/campaign-lite/mobile-v1/idle-atlas.webp');
 });
 
-test('runtime patch applies low-memory cache, DPR, frame pacing and spec remap',()=>{
+test('runtime patch constrains cache without reducing visual fidelity or remapping sources',()=>{
   const source=`const sceneState = {};
 const sceneResourceCache = createCampaignResourcePackCache({
       maxDecodedBytes: 96 * 1024 * 1024,
@@ -63,17 +61,18 @@ function resizeScene(){
   assert.match(patched,/__HV_CAMPAIGN_LOW_MEMORY/);
   assert.match(patched,/64 \* 1024 \* 1024 : 96 \* 1024 \* 1024/);
   assert.match(patched,/__HV_CAMPAIGN_LOW_MEMORY \? 1 : 2/);
-  assert.match(patched,/Math\.min\(1\.5, window\.devicePixelRatio/);
-  assert.match(patched,/__HV_CAMPAIGN_LOW_MEMORY \? 50 : 32/);
-  assert.match(patched,/ctx\.imageSmoothingQuality = __HV_CAMPAIGN_LOW_MEMORY \? 'medium' : 'high'/);
+  assert.match(patched,/const dpr = Math\.min\(2, window\.devicePixelRatio \|\| 1\)/);
+  assert.match(patched,/time - sceneState\.lastFrame >= 32/);
+  assert.match(patched,/ctx\.imageSmoothingQuality = 'high'/);
   assert.match(patched,/function drawOtherSurface\(\)\{[\s\S]*?ctx\.imageSmoothingQuality = 'high';/);
-  assert.match(patched,/mobile\/a\.webp/);
+  assert.doesNotMatch(patched,/mobile\/a\.webp/);
 });
 
 test('static build creates mobile atlases before campaign lifetime patch and final payload sync',()=>{
   const build=readFileSync('scripts/build-static.mjs','utf8');
   const mobile=build.indexOf('installCampaignMobileAtlases(root)');
   const lifecycle=build.indexOf('installCampaignResourceLifecycle(root)');
+  const entry=build.indexOf("await import('./battle-entry-fail-open-v1.mjs');");
   const sync=build.indexOf('let embeddedIndex = readFileSync');
-  assert.ok(mobile>0&&mobile<lifecycle&&lifecycle<sync);
+  assert.ok(mobile>0&&mobile<lifecycle&&lifecycle<entry&&entry<sync);
 });
