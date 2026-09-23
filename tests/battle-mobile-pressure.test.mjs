@@ -13,35 +13,21 @@ import {
 
 const MiB=1024*1024;
 
-test('eight eager fallback atlases drop from about 48 MiB decoded to about 12 MiB on mobile',()=>{
+test('fallback catalog stays complete while runtime keeps canonical sources',()=>{
   assert.equal(BATTLE_FALLBACK_MOBILE_SOURCES.length,8);
-  const full=[1536*1024,1536*1024,1536*1024,1536*1024,1536*1024,1774*887,1774*887,1536*1024].reduce((n,p)=>n+p*4,0);
-  assert.ok(full/1024/1024>47 && full/1024/1024<49);
-  assert.ok(full*.25/1024/1024<13);
 });
 
-test('Ong Pho authored battle sheets fall below 10 MiB decoded after mobile half-scale',()=>{
+test('Ong Pho authored battle sheet catalog stays intact at native resolution',()=>{
   assert.equal(ONG_PHO_MOBILE_SOURCES.length,6);
-  const full=[2400*945,1920*810,1200*270,1920*675,1920*1350,1920*1080].reduce((n,p)=>n+p*4,0);
-  assert.ok(full/1024/1024>38 && full/1024/1024<39);
-  assert.ok(full*.25/1024/1024<10);
 });
 
-test('Luc Anh mobile derivatives quarter decoded character/VFX residency',()=>{
+test('Luc Anh authored source catalog remains available without runtime derivative remap',()=>{
   assert.equal(LUC_ANH_MOBILE_SOURCES.length,11);
-  const character=1920*1920*4;
-  const vfx=2560*1760*4;
-  assert.ok(character/4<4*MiB);
-  assert.ok(vfx/4<5*MiB);
 });
 
-test('Đình Lôi mobile derivatives reduce each native 2x atlas to one-quarter decoded bytes',()=>{
-  assert.equal(DINH_LOI_MOBILE_SCALE,.5);
+test('Đình Lôi mobile policy preserves native scale',()=>{
+  assert.equal(DINH_LOI_MOBILE_SCALE,1);
   assert.equal(DINH_LOI_MOBILE_SOURCES.length,14);
-  const desktop=3840*2160*4;
-  const mobile=1920*1080*4;
-  assert.equal(mobile,desktop/4);
-  assert.ok(mobile<8*MiB);
   assert.equal(dinhLoiMobileVariantPath('assets/characters/dinh-loi/idle-atlas.png'),'assets/characters/dinh-loi/mobile-v1/idle-atlas.webp');
 });
 
@@ -183,37 +169,37 @@ const qaApi={getPoseAtlasStatus: () => Object.fromEntries(Object.entries(POSE_AT
     'assets/characters/dinh-loi/ultimate-impact-atlas.png':{src:'assets/characters/dinh-loi/mobile-v1/ultimate-impact-atlas.webp',width:1080,height:1920,scale:.5}
   });
   assert.match(patched,/__HV_BATTLE_LOW_MEMORY/);
-  assert.match(patched,/__HV_BATTLE_MAX_BACKING_PIXELS=1600000/);
+  assert.match(patched,/__HV_BATTLE_MAX_BACKING_PIXELS=3200000/);
   assert.match(patched,/Math\.sqrt\(__HV_BATTLE_MAX_BACKING_PIXELS\/Math\.max\(1,width\*height\)\)/);
-  assert.match(patched,/Math\.min\(devicePixelRatio \|\| 1,__HV_BATTLE_LOW_MEMORY\?Math\.min\(1\.5,__hvPixelDpr\):3\)/);
+  assert.match(patched,/Math\.min\(devicePixelRatio \|\| 1,__HV_BATTLE_LOW_MEMORY\?Math\.min\(3,__hvPixelDpr\):3\)/);
   assert.match(patched,/__hvBattlePaintAt/);
   assert.match(patched,/1000\/30/);
-  assert.match(patched,/mobile-v1\/idle-atlas\.webp/);
+  assert.doesNotMatch(patched,/mobile-v1\//);
   assert.match(patched,/__hvBattleFallbackSrc/);
-  assert.match(patched,/mobile-v1\/embedded-03\.webp/);
-  assert.match(patched,/mobile-v1\/embedded-11\.webp/);
-  assert.match(patched,/__HV_ONG_PHO_CELL_SCALE/);
+  assert.match(patched,/assets\/battle-runtime\/embedded-03\.webp/);
+  assert.match(patched,/assets\/battle-runtime\/embedded-11\.png/);
+  assert.match(patched,/__HV_ONG_PHO_CELL_SCALE=1/);
   assert.match(patched,/__HV_LUC_ANH_MOBILE_ATLASES/);
-  assert.match(patched,/mobile-v1\/idle-atlas\.webp/);
+  assert.doesNotMatch(patched,/mobile-v1\//);
   assert.match(patched,/const scale=mobile\?\.scale\|\|1/);
   assert.match(patched,/m\.w\*scale/);
   assert.match(patched,/__hvFallbackImage/);
   assert.doesNotMatch(patched,/Object\.fromEntries\(Object\.entries\(HERO_ATLAS_SOURCES\).*new Image/s);
-  assert.match(patched,/__HV_BATTLE_LOW_MEMORY&&unit\.state!=="run"&&unit\.state!=="attack"/);
+  assert.doesNotMatch(patched,/__HV_BATTLE_LOW_MEMORY&&unit\.state!=="run"&&unit\.state!=="attack"/);
   assert.match(patched,/__HV_FALLBACK_IMAGES\.get\(source\)/);
   assert.match(patched,/Math\.min\(12,Math\.ceil\(amount\*\.45\)\)/);
   assert.match(patched,/72-particles\.length/);
   assert.match(patched,/function __hvDrawBattleBackground/);
-  assert.match(patched,/__HV_BATTLE_BG_SCALE=__HV_BATTLE_LOW_MEMORY\?\.75:1/);
+  assert.match(patched,/__HV_BATTLE_BG_SCALE=1/);
   assert.match(patched,/__HV_BATTLE_BG_REFRESH_MS=__HV_BATTLE_LOW_MEMORY\?250:0/);
   assert.match(patched,/__hvDrawBattleBackground\(ctx,time\)/);
   assert.match(patched,/__hvZoneHudAt/);
   assert.match(patched,/time-__hvZoneHudAt>=250/);
   assert.match(patched,/__hvTelemetryAt/);
   assert.match(patched,/time-__hvTelemetryAt>=250/);
-  assert.match(patched,/context\.shadowBlur = __HV_BATTLE_LOW_MEMORY \? 0 : \(\(attacking \|\| skill1 \|\| ultimate\) \? 12 : 5\)/);
-  assert.match(patched,/context\.shadowBlur=__HV_BATTLE_LOW_MEMORY\?0:\(\["attack","skill1","ultimate"\]\.includes\(key\)\?14:5\)/);
-  assert.match(patched,/context\.shadowBlur = __HV_BATTLE_LOW_MEMORY \? 0 : 8 \+ strike \* 16/);
+  assert.doesNotMatch(patched,/shadowBlur\s*=\s*__HV_BATTLE_LOW_MEMORY\s*\?\s*0/);
+  assert.match(patched,/context\.shadowBlur=\["attack","skill1","ultimate"\]\.includes\(key\)\?14:5/);
+  assert.match(patched,/context\.shadowBlur = 8 \+ strike \* 16/);
 
   const shield=patched.slice(patched.indexOf('function drawDinhLoiPersistentShields'),patched.indexOf('function render'));
   assert.ok(shield.indexOf('const guarded=') < shield.indexOf('DINH_LOI_IMAGES.skill1Shield'));
@@ -224,6 +210,7 @@ test('static pipeline applies battle mobile after final battle owners and before
   const result=build.indexOf("await import('./result-character-motion-v1.mjs');");
   const mobile=build.indexOf('await buildBattleMobilePressure(root);');
   const campaign=build.indexOf('await installCampaignMobileAtlases(root);');
+  const entry=build.indexOf("await import('./battle-entry-fail-open-v1.mjs');");
   const sync=build.indexOf('let embeddedIndex = readFileSync');
-  assert.ok(result>=0 && result<mobile && mobile<campaign && campaign<sync,{result,mobile,campaign,sync});
+  assert.ok(result>=0 && result<mobile && mobile<campaign && campaign<entry && entry<sync,{result,mobile,campaign,entry,sync});
 });
