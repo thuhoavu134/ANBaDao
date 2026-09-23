@@ -185,7 +185,7 @@ const qaApi={getPoseAtlasStatus: () => Object.fromEntries(Object.entries(POSE_AT
   assert.match(patched,/__HV_BATTLE_LOW_MEMORY/);
   assert.match(patched,/__HV_BATTLE_MAX_BACKING_PIXELS=1600000/);
   assert.match(patched,/Math\.sqrt\(__HV_BATTLE_MAX_BACKING_PIXELS\/Math\.max\(1,width\*height\)\)/);
-  assert.match(patched,/Math\.min\(devicePixelRatio \|\| 1,__HV_BATTLE_LOW_MEMORY\?Math\.min\(1\.5,__hvPixelDpr\):2\)/);
+  assert.match(patched,/Math\.min\(devicePixelRatio \|\| 1,__HV_BATTLE_LOW_MEMORY\?Math\.min\(1\.5,__hvPixelDpr\):3\)/);
   assert.match(patched,/__hvBattlePaintAt/);
   assert.match(patched,/1000\/30/);
   assert.match(patched,/mobile-v1\/idle-atlas\.webp/);
