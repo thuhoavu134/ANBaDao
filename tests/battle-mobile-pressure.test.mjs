@@ -51,7 +51,7 @@ const ambientFireflies = Array.from({ length: 24 }, (_, index) => ({}));
 let lastFrame = performance.now();
 function resizeCanvas() {
     const rect = dom.viewport.getBoundingClientRect();
-    const dpr = Math.min(devicePixelRatio || 1, 2);
+    const dpr = Math.min(devicePixelRatio || 1, 3);
     const width = Math.max(1, Math.round(rect.width));
     const height = Math.max(1, Math.round(rect.height));
 }
@@ -112,7 +112,17 @@ const LUC_ANH_META=Object.freeze({
  basicProjectile:{file:"basic_projectile-atlas.webp",frames:64,w:320,h:220,ms:28}
 });
 function lucAnhImage(key){const m=LUC_ANH_META[key];if(!m)return null;const rows=Math.ceil(m.frames/LUC_ANH_COLS);const clip={src:LUC_ANH_ASSET_BASE+m.file,cols:LUC_ANH_COLS,rows,cellW:m.w,cellH:m.h,atlasWidth:LUC_ANH_COLS*m.w,atlasHeight:rows*m.h};return BATTLE_NATIVE_ATLAS_CACHE.ensure('luc-anh:'+key,clip)}
-function drawLucAnhAtlas(context,key,frame,x,y,width,height,options={}){const m=LUC_ANH_META[key],image=LUC_ANH_IMAGES[key];if(!m||!image?.complete||image.naturalWidth<2)return false;const sx=(frame%LUC_ANH_COLS)*m.w,sy=Math.floor(frame/LUC_ANH_COLS)*m.h;context.save();context.translate(x,y);if(options.flip)context.scale(-1,1);context.globalAlpha=options.alpha??1;if(options.screen)context.globalCompositeOperation="screen";context.drawImage(image,sx,sy,m.w,m.h,-width*.5,-height+(options.baseline??46),width,height);context.restore();return true;}
+function drawLucAnhAtlas(context,key,frame,x,y,width,height,options={}){
+    const m=LUC_ANH_META[key],image=LUC_ANH_IMAGES[key];
+    if(!m||!image?.complete||image.naturalWidth<2)return false;
+    const safeFrame=Math.max(0,Math.min(m.frames-1,Math.floor(Number(frame)||0)));
+    const sx=(safeFrame%LUC_ANH_COLS)*m.w,sy=Math.floor(safeFrame/LUC_ANH_COLS)*m.h;
+    const baseline=Number.isFinite(Number(options.baseline))?Number(options.baseline):46;
+    const drawW=Number(width)||m.w,drawH=Number(height)||m.h;
+    context.save();context.imageSmoothingEnabled=true;context.imageSmoothingQuality="high";context.translate(Math.round(x),Math.round(y));
+    if(options.flip)context.scale(-1,1);context.globalAlpha=options.alpha??1;if(options.screen)context.globalCompositeOperation="screen";
+    context.drawImage(image,sx,sy,m.w,m.h,Math.round(-drawW*.5),Math.round(-drawH+baseline),Math.round(drawW),Math.round(drawH));
+    context.restore();return true;}
 const DINH_LOI_ID="dinh_loi", DINH_LOI_FRAMES=64, DINH_LOI_COLS=8, DINH_LOI_CELL_W=480, DINH_LOI_CELL_H=270;
 const DINH_LOI_ASSET_BASE="assets/characters/dinh-loi/";
 const DINH_LOI_ASSET_NAMES=Object.freeze({idle:"idle-atlas.png",skill1Shield:"skill1-shield-atlas.png",ultimateVfx:"ultimate-vfx-atlas.png",ultimateImpact:"ultimate-impact-atlas.png"});
@@ -175,7 +185,7 @@ const qaApi={getPoseAtlasStatus: () => Object.fromEntries(Object.entries(POSE_AT
   assert.match(patched,/__HV_BATTLE_LOW_MEMORY/);
   assert.match(patched,/__HV_BATTLE_MAX_BACKING_PIXELS=1600000/);
   assert.match(patched,/Math\.sqrt\(__HV_BATTLE_MAX_BACKING_PIXELS\/Math\.max\(1,width\*height\)\)/);
-  assert.match(patched,/Math\.min\(devicePixelRatio \|\| 1,__HV_BATTLE_LOW_MEMORY\?Math\.min\(1\.5,__hvPixelDpr\):2\)/);
+  assert.match(patched,/Math\.min\(devicePixelRatio \|\| 1,__HV_BATTLE_LOW_MEMORY\?Math\.min\(1\.5,__hvPixelDpr\):3\)/);
   assert.match(patched,/__hvBattlePaintAt/);
   assert.match(patched,/1000\/30/);
   assert.match(patched,/mobile-v1\/idle-atlas\.webp/);

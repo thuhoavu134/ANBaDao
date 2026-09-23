@@ -48,14 +48,14 @@ export function patchBattleMobilePressure(input,variants={}){
   const view = { width: 1, height: 1, scale: 1, offsetX: 0, offsetY: 0, dpr: 1 };`,'low-memory profile');
   html=replaceOne(html,'const ambientFireflies = Array.from({ length: 24 }, (_, index) => ({','const ambientFireflies = Array.from({ length: __HV_BATTLE_LOW_MEMORY ? 10 : 24 }, (_, index) => ({','ambient particles');
   const resizeOld=`const rect = dom.viewport.getBoundingClientRect();
-    const dpr = Math.min(devicePixelRatio || 1, 2);
+    const dpr = Math.min(devicePixelRatio || 1, 3);
     const width = Math.max(1, Math.round(rect.width));
     const height = Math.max(1, Math.round(rect.height));`;
   const resizeNew=`const rect = dom.viewport.getBoundingClientRect();
     const width = Math.max(1, Math.round(rect.width));
     const height = Math.max(1, Math.round(rect.height));
     const __hvPixelDpr=Math.sqrt(__HV_BATTLE_MAX_BACKING_PIXELS/Math.max(1,width*height));
-    const dpr=Math.min(devicePixelRatio || 1,__HV_BATTLE_LOW_MEMORY?Math.min(1.5,__hvPixelDpr):2);`;
+    const dpr=Math.min(devicePixelRatio || 1,__HV_BATTLE_LOW_MEMORY?Math.min(1.5,__hvPixelDpr):3);`;
   html=replaceOne(html,resizeOld,resizeNew,'canvas DPR/backing-store budget');
   html=replaceOne(html,'let lastFrame = performance.now();','let lastFrame = performance.now();\n  let __hvBattlePaintAt = lastFrame;\n  let __hvZoneHudAt=-Infinity,__hvTelemetryAt=-Infinity;','battle paint clock');
   html=replaceOne(html,'function render(time) {\n    resizeCanvas();',`function render(time) {
@@ -138,9 +138,24 @@ export function patchBattleMobilePressure(input,variants={}){
   function __hvLucAnhAsset(key){const m=LUC_ANH_META[key];if(!m)return null;const source=LUC_ANH_ASSET_BASE+m.file,mobile=__HV_BATTLE_LOW_MEMORY?__HV_LUC_ANH_MOBILE_ATLASES[source]:null;const scale=mobile?.scale||1;return {m,source,mobile,scale};}
   function lucAnhImage(key){const asset=__hvLucAnhAsset(key);if(!asset)return null;const {m,source,mobile,scale}=asset,rows=Math.ceil(m.frames/LUC_ANH_COLS);const clip={src:mobile?.src||source,cols:LUC_ANH_COLS,rows,cellW:m.w*scale,cellH:m.h*scale,atlasWidth:mobile?.width||LUC_ANH_COLS*m.w*scale,atlasHeight:mobile?.height||rows*m.h*scale};return BATTLE_NATIVE_ATLAS_CACHE.ensure('luc-anh:'+key,clip)}`;
   html=replaceOne(html,lucImageOld,lucImageNew,'Luc Anh mobile clip');
-  const lucDrawOld="function drawLucAnhAtlas(context,key,frame,x,y,width,height,options={}){const m=LUC_ANH_META[key],image=LUC_ANH_IMAGES[key];if(!m||!image?.complete||image.naturalWidth<2)return false;const sx=(frame%LUC_ANH_COLS)*m.w,sy=Math.floor(frame/LUC_ANH_COLS)*m.h;context.save();context.translate(x,y);if(options.flip)context.scale(-1,1);context.globalAlpha=options.alpha??1;if(options.screen)context.globalCompositeOperation=\"screen\";context.drawImage(image,sx,sy,m.w,m.h,-width*.5,-height+(options.baseline??46),width,height);context.restore();return true;}";
-  const lucDrawNew="function drawLucAnhAtlas(context,key,frame,x,y,width,height,options={}){const asset=__hvLucAnhAsset(key),m=asset?.m,scale=asset?.scale||1,image=LUC_ANH_IMAGES[key];if(!m||!image?.complete||image.naturalWidth<2)return false;const cellW=m.w*scale,cellH=m.h*scale,sx=(frame%LUC_ANH_COLS)*cellW,sy=Math.floor(frame/LUC_ANH_COLS)*cellH;context.save();context.translate(x,y);if(options.flip)context.scale(-1,1);context.globalAlpha=options.alpha??1;if(options.screen)context.globalCompositeOperation=\"screen\";context.drawImage(image,sx,sy,cellW,cellH,-width*.5,-height+(options.baseline??46),width,height);context.restore();return true;}";
-  html=replaceOne(html,lucDrawOld,lucDrawNew,'Luc Anh scaled source rect');
+  html=replaceOne(
+    html,
+    "function drawLucAnhAtlas(context,key,frame,x,y,width,height,options={}){\n    const m=LUC_ANH_META[key],image=LUC_ANH_IMAGES[key];",
+    "function drawLucAnhAtlas(context,key,frame,x,y,width,height,options={}){\n    const asset=__hvLucAnhAsset(key),m=asset?.m,scale=asset?.scale||1,image=LUC_ANH_IMAGES[key];",
+    'Luc Anh draw owner'
+  );
+  html=replaceOne(
+    html,
+    "    const sx=(safeFrame%LUC_ANH_COLS)*m.w,sy=Math.floor(safeFrame/LUC_ANH_COLS)*m.h;",
+    "    const cellW=m.w*scale,cellH=m.h*scale,sx=(safeFrame%LUC_ANH_COLS)*cellW,sy=Math.floor(safeFrame/LUC_ANH_COLS)*cellH;",
+    'Luc Anh scaled source rect'
+  );
+  html=replaceOne(
+    html,
+    "    context.drawImage(image,sx,sy,m.w,m.h,Math.round(-drawW*.5),Math.round(-drawH+baseline),Math.round(drawW),Math.round(drawH));",
+    "    context.drawImage(image,sx,sy,cellW,cellH,Math.round(-drawW*.5),Math.round(-drawH+baseline),Math.round(drawW),Math.round(drawH));",
+    'Luc Anh scaled draw source'
+  );
   const ongCell='const cellW=240, cellH=135';
   if(html.split(ongCell).length!==4)throw new Error('Battle mobile patch expected three Ong Pho cell declarations');
   html=html.replaceAll(ongCell,'const cellW=240*__HV_ONG_PHO_CELL_SCALE, cellH=135*__HV_ONG_PHO_CELL_SCALE');
@@ -216,15 +231,20 @@ export function patchBattleMobilePressure(input,variants={}){
 
 export async function buildBattleMobilePressure(root=process.cwd()){
   const {default:sharp}=await import('sharp');
+  sharp.cache(false);sharp.concurrency(1);
   const out=join(root,'dist'),variants={};
   for(const src of [...BATTLE_FALLBACK_MOBILE_SOURCES,...ONG_PHO_MOBILE_SOURCES,...LUC_ANH_MOBILE_SOURCES,...DINH_LOI_MOBILE_SOURCES]){
     const source=join(out,src);if(!existsSync(source))throw new Error('Missing mobile battle atlas: '+src);
-    const meta=await sharp(source).metadata();
-    const width=Math.max(1,Math.round(Number(meta.width)*DINH_LOI_MOBILE_SCALE));
-    const height=Math.max(1,Math.round(Number(meta.height)*DINH_LOI_MOBILE_SCALE));
     const targetSrc=dinhLoiMobileVariantPath(src),target=join(out,targetSrc);mkdirSync(dirname(target),{recursive:true});
-    await sharp(source).resize(width,height,{fit:'fill',kernel:'lanczos3'}).webp({quality:86,alphaQuality:92,effort:2}).toFile(target);
-    variants[src]={src:targetSrc,width,height,scale:DINH_LOI_MOBILE_SCALE};
+    try{
+      const meta=await sharp(source).metadata();
+      const width=Math.max(1,Math.round(Number(meta.width)*DINH_LOI_MOBILE_SCALE));
+      const height=Math.max(1,Math.round(Number(meta.height)*DINH_LOI_MOBILE_SCALE));
+      await sharp(source).resize(width,height,{fit:'fill',kernel:'lanczos3'}).webp({quality:86,alphaQuality:92,effort:2}).toFile(target);
+      variants[src]={src:targetSrc,width,height,scale:DINH_LOI_MOBILE_SCALE};
+    }catch(error){
+      console.warn('Battle mobile derivative skipped:',src,error?.message||error);
+    }
   }
   const battle=join(out,'battle.html');writeFileSync(battle,patchBattleMobilePressure(readFileSync(battle,'utf8'),variants));
   return variants;

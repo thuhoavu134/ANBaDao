@@ -32,7 +32,12 @@ const __HV_CAMPAIGN_LOW_MEMORY=(()=>{try{const n=navigator,ua=String(n?.userAgen
 const sceneState =`, 'scene state');
   html = replaceOne(html, '      maxDecodedBytes: 96 * 1024 * 1024,', '      maxDecodedBytes: __HV_CAMPAIGN_LOW_MEMORY ? 64 * 1024 * 1024 : 96 * 1024 * 1024,', 'campaign cache bytes');
   html = replaceOne(html, '      maxLoading: 2,', '      maxLoading: __HV_CAMPAIGN_LOW_MEMORY ? 1 : 2,', 'campaign cache loading');
-  html = replaceOne(html, "  ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';", "  ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = __HV_CAMPAIGN_LOW_MEMORY ? 'medium' : 'high';", 'smoothing quality');
+  html = replaceOne(
+    html,
+    "  ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';\n  const preparing = Boolean(sceneState.draft);",
+    "  ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = __HV_CAMPAIGN_LOW_MEMORY ? 'medium' : 'high';\n  const preparing = Boolean(sceneState.draft);",
+    'campaign draw smoothing'
+  );
   html = replaceOne(html, '  if (time - sceneState.lastFrame >= 32) {', '  if (time - sceneState.lastFrame >= (__HV_CAMPAIGN_LOW_MEMORY ? 50 : 32)) {', 'frame pacing');
   html = replaceOne(html, '  const dpr = Math.min(2, window.devicePixelRatio || 1);', '  const dpr = __HV_CAMPAIGN_LOW_MEMORY ? Math.min(1.5, window.devicePixelRatio || 1) : Math.min(2, window.devicePixelRatio || 1);', 'canvas dpr');
   const anchor = 'function currentCheckpoint() {';
@@ -52,19 +57,31 @@ if(__HV_CAMPAIGN_LOW_MEMORY){
 
 export async function buildCampaignMobileAtlases(root = process.cwd()) {
   const { default: sharp } = await import('sharp');
+  sharp.cache(false); sharp.concurrency(1);
   const out = join(root, 'dist');
   const variants = {};
   for (const src of CAMPAIGN_MOBILE_SOURCES) {
     const source = join(out, src);
     if (!existsSync(source)) throw new Error('Missing campaign atlas: ' + src);
-    const meta = await sharp(source).metadata();
-    const width = Math.max(1, Math.round(Number(meta.width) * CAMPAIGN_MOBILE_SCALE));
-    const height = Math.max(1, Math.round(Number(meta.height) * CAMPAIGN_MOBILE_SCALE));
     const targetSrc = mobileVariantPath(src), target = join(out, targetSrc);
     mkdirSync(dirname(target), { recursive: true });
-    await sharp(source).resize(width, height, { fit: 'fill', kernel: 'lanczos3' })
-      .webp({ quality: 84, alphaQuality: 90, effort: 2 }).toFile(target);
-    variants[src] = { src: targetSrc, width, height, scale: CAMPAIGN_MOBILE_SCALE };
+    try {
+      if (existsSync(target)) {
+        const existing = await sharp(target).metadata();
+        if (Number(existing.width) > 0 && Number(existing.height) > 0) {
+          variants[src] = { src: targetSrc, width: Number(existing.width), height: Number(existing.height), scale: CAMPAIGN_MOBILE_SCALE };
+          continue;
+        }
+      }
+      const meta = await sharp(source).metadata();
+      const width = Math.max(1, Math.round(Number(meta.width) * CAMPAIGN_MOBILE_SCALE));
+      const height = Math.max(1, Math.round(Number(meta.height) * CAMPAIGN_MOBILE_SCALE));
+      await sharp(source).resize(width, height, { fit: 'fill', kernel: 'lanczos3' })
+        .webp({ quality: 84, alphaQuality: 90, effort: 2 }).toFile(target);
+      variants[src] = { src: targetSrc, width, height, scale: CAMPAIGN_MOBILE_SCALE };
+    } catch (error) {
+      console.warn('Campaign mobile derivative skipped:', src, error?.message || error);
+    }
   }
   return variants;
 }

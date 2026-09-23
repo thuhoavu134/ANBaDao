@@ -40,11 +40,19 @@ const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const spriteSpecs = { a:{src:'a.webp',cellW:240,cellH:220,pivot:120,foot:220,body:165} };
 const farmAttackSpecs = {};
 const runSpecs = { b:{src:'b.webp',cellW:240,cellH:220,pivot:120,foot:220,body:165} };
+function drawOtherSurface(){
+  ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
+}
 function currentCheckpoint() {}
 function drawScene(time){
   ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
+  const preparing = Boolean(sceneState.draft);
+}
+function sceneTick(time){
   if (time - sceneState.lastFrame >= 32) {
   }
+}
+function resizeScene(){
   const dpr = Math.min(2, window.devicePixelRatio || 1);
 }
 `;
@@ -57,12 +65,14 @@ function drawScene(time){
   assert.match(patched,/__HV_CAMPAIGN_LOW_MEMORY \? 1 : 2/);
   assert.match(patched,/Math\.min\(1\.5, window\.devicePixelRatio/);
   assert.match(patched,/__HV_CAMPAIGN_LOW_MEMORY \? 50 : 32/);
+  assert.match(patched,/ctx\.imageSmoothingQuality = __HV_CAMPAIGN_LOW_MEMORY \? 'medium' : 'high'/);
+  assert.match(patched,/function drawOtherSurface\(\)\{[\s\S]*?ctx\.imageSmoothingQuality = 'high';/);
   assert.match(patched,/mobile\/a\.webp/);
 });
 
 test('static build creates mobile atlases before campaign lifetime patch and final payload sync',()=>{
   const build=readFileSync('scripts/build-static.mjs','utf8');
-  const mobile=build.indexOf('buildCampaignMobileAtlases(root)');
+  const mobile=build.indexOf('installCampaignMobileAtlases(root)');
   const lifecycle=build.indexOf('installCampaignResourceLifecycle(root)');
   const sync=build.indexOf('let embeddedIndex = readFileSync');
   assert.ok(mobile>0&&mobile<lifecycle&&lifecycle<sync);
