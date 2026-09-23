@@ -13,6 +13,18 @@ function replaceFunction(text, startName, nextName, edit) {
   if (start < 0 || end <= start) throw new Error('Readiness function boundary: ' + startName);
   return text.slice(0, start) + edit(text.slice(start, end)) + '\n' + text.slice(end);
 }
+export function battleActionWorkingSetBytes(atlases) {
+  const sets = [
+    ['run-atlas.webp', 'basic-atlas.webp', 'skill1_vfx-atlas.webp'],
+    ['run-atlas.webp', 'ultimate-atlas.webp', 'ultimate_vfx-atlas.webp']
+  ];
+  const bytes = file => {
+    const atlas = atlases[file];
+    if (!atlas) throw new Error('Missing battle working-set atlas: ' + file);
+    return Number(atlas.width) * Number(atlas.height) * 4;
+  };
+  return Math.max(...sets.map(files => files.reduce((sum, file) => sum + bytes(file), 0)));
+}
 function runtimeSource(variants) {
   return `${MARKER}
 const __HV_READY_ATLASES = ${JSON.stringify(variants)};
@@ -155,11 +167,16 @@ export async function buildBattleReadiness(root) {
   for(const hero of ['linh-dong','bach-dien']){
     const relative='assets/characters/'+hero+'/',directory=join(out,relative);
     if(!existsSync(directory))throw new Error('Missing hero assets: '+relative);
-    for(const file of readdirSync(directory).filter(file=>file.endsWith('-atlas.webp')).sort()){
-      const source=join(directory,file),meta=await sharp(source).metadata();
-      const decodedBytes=meta.width*meta.height*4;
-      const desktopScale=atlasDecodeScale(decodedBytes,128*1024*1024);
-      const mobileScale=atlasDecodeScale(decodedBytes,96*1024*1024);
+    const files=readdirSync(directory).filter(file=>file.endsWith('-atlas.webp')).sort();
+    const metas={};
+    for(const file of files)metas[file]=await sharp(join(directory,file)).metadata();
+    // The action lease pins movement + cast + VFX together. Size every atlas
+    // against that peak so the complete working set fits the decoded cache.
+    const workingSetBytes=battleActionWorkingSetBytes(metas);
+    const desktopScale=atlasDecodeScale(workingSetBytes,128*1024*1024);
+    const mobileScale=atlasDecodeScale(workingSetBytes,96*1024*1024);
+    for(const file of files){
+      const source=join(directory,file),meta=metas[file];
       const desktop=await writeVariant({source,relative,directory,file,meta,scale:desktopScale,profile:'desktop',folder:'ready-v1'});
       const mobile=await writeVariant({source,relative,directory,file,meta,scale:mobileScale,profile:'mobile',folder:'ready-mobile-v1'});
       if(desktop||mobile)variants[relative+file]={desktop,mobile};

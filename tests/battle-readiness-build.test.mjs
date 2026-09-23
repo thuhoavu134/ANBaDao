@@ -56,7 +56,19 @@ test('both documents expose preparation on the original shared audio bus',()=>{
     assert.match(source,/sfxLastResult', 'expired'/);
   }
 });
-test('current S+ readiness build keeps native atlas dimensions on the 96 MiB iOS budget',()=>{
+test('generated S+ action atlas variants fit the complete decoded working set',()=>{
   const report=JSON.parse(readFileSync('dist/battle-readiness-assets.json','utf8'));
-  assert.deepEqual(report,[]);
+  const sets=[
+    ['run-atlas.webp','basic-atlas.webp','skill1_vfx-atlas.webp'],
+    ['run-atlas.webp','ultimate-atlas.webp','ultimate_vfx-atlas.webp']
+  ];
+  for(const profile of ['desktop','mobile']){
+    const files=new Map(report.filter(item=>item.source.startsWith('assets/characters/linh-dong/')&&item.profile===profile).map(item=>[item.source.split('/').at(-1),item.decodedAfter]));
+    assert.ok(files.size>0,`${profile} working-set variants are generated`);
+    for(const set of sets){
+      const bytes=set.reduce((sum,file)=>sum+(files.get(file)||0),0);
+      assert.ok(bytes>0);
+      assert.ok(bytes<=(profile==='mobile'?96:128)*1024*1024,`${profile} ${set.join('+')} = ${bytes} bytes`);
+    }
+  }
 });

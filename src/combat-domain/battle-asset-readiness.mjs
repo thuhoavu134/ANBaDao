@@ -2,8 +2,8 @@
 export function createBattleAssetReadiness(options) {
   const { getState, getUnits, describe, sound } = options;
   const timeoutMs = options.timeoutMs ?? 15000;
-  const events = [], visible = new Map(), tasks = new Set(), paints = {};
-  let visibleBattleId, sequence = 0;
+  const events = [], tasks = new Set(), paints = {};
+  let sequence = 0;
   const record = (type, detail = {}) => {
     events.push({ type, at: Date.now(), ...detail });
     if (events.length > 120) events.splice(0, events.length - 120);
@@ -14,23 +14,10 @@ export function createBattleAssetReadiness(options) {
     return state.battleId === battleId && state.mode === 'battle' &&
       state.currentId === actor.id && actor.hp > 0;
   };
-  const constrainedLoader = loader => loader?.cache?.constrainedMobile === true;
-  function resetVisible() {
-    for (const [loader, pins] of visible) for (const [src, pin] of pins) loader.cache.unpin(src, pin);
-    visible.clear();
-  }
-  function image(loader, clip, key) {
+  function image(loader, clip) {
     if (!clip) return null;
-    const id = getState().battleId;
-    if (id !== visibleBattleId) { resetVisible(); visibleBattleId = id; }
-    let pin;
-    if (key === 'idle' && !constrainedLoader(loader)) {
-      if (!visible.has(loader)) visible.set(loader, new Map());
-      const pins = visible.get(loader);
-      if (!pins.has(clip.src)) pins.set(clip.src, Symbol('battle-visible-idle'));
-      pin = pins.get(clip.src);
-    }
-    return loader.ensure(clip, { scope: 'battle', priority: 'visible', pin }).image;
+    // Idle images stay evictable so they cannot block an action's pinned working set.
+    return loader.ensure(clip, { scope: 'battle', priority: 'visible' }).image;
   }
   async function prepare(actor, action, target, battleId) {
     const controller = new AbortController(), leases = [];
@@ -129,7 +116,7 @@ export function createBattleAssetReadiness(options) {
     return pending;
   }
   function painted(hero, key) { const name = hero + ':' + key; paints[name] = (paints[name] || 0) + 1; }
-  function dispose() { for (const release of [...tasks]) release(); resetVisible(); }
+  function dispose() { for (const release of [...tasks]) release(); }
   return { image, prepare, playSfx, painted, dispose, paintCounts: () => ({ ...paints }),
     events: () => events.map(event => ({ ...event })) };
 }
