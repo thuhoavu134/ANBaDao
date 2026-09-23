@@ -48,20 +48,20 @@ function splusClip(name) {
   };
 }
 
-test('L157-T3 atlasDecodeScale halves 77 MiB S+ and leaves small atlases native', async () => {
+test('L157-T3 atlasDecodeScale preserves authored pixels whenever one atlas fits the budget', async () => {
   const { atlasDecodeScale } = await import('../src/assets/decoded-atlas-cache.mjs');
-  assert.equal(atlasDecodeScale(3840 * 5280 * 4, 128 * 1024 * 1024), 0.5);
-  assert.equal(atlasDecodeScale(3840 * 5760 * 4, 128 * 1024 * 1024), 0.5);
+  assert.equal(atlasDecodeScale(3840 * 5280 * 4, 128 * 1024 * 1024), 1);
+  assert.equal(atlasDecodeScale(3840 * 5760 * 4, 128 * 1024 * 1024), 1);
   assert.equal(atlasDecodeScale(8 * 1024 * 1024, 128 * 1024 * 1024), 1);
   assert.equal(atlasDecodeScale(32, 48), 1);
 });
 
-test('L157-T1 two S+ idle atlases stay ready together under 128 MiB', async () => {
+test('L157-T1 native S+ atlases are evicted between uses instead of downsampled', async () => {
   const { createDecodedAtlasCache } = await import('../src/assets/decoded-atlas-cache.mjs');
   const Image = mockImage();
   const cache = createDecodedAtlasCache({
     maxBytes: 128 * 1024 * 1024,
-    maxLoading: 2,
+    maxLoading: 1,
     makeImage: () => new Image(),
     makeCanvas: fakeCanvas
   });
@@ -70,18 +70,17 @@ test('L157-T1 two S+ idle atlases stay ready together under 128 MiB', async () =
   a.image.naturalHeight = 5280;
   a.image.complete = true;
   a.image.onload();
+  const firstImage = a.image;
   const b = cache.reserve(splusClip('bach-dien'), { scope: 'battle' });
   b.image.naturalWidth = 3840;
   b.image.naturalHeight = 5280;
   b.image.complete = true;
   b.image.onload();
   const inspect = cache.inspect();
-  assert.equal(inspect.entries.length, 2, inspect.entries.map(e => e.src).join(','));
+  assert.equal(inspect.entries.length, 1, inspect.entries.map(e => e.src).join(','));
   assert.ok(inspect.bytes <= 128 * 1024 * 1024, String(inspect.bytes));
-  assert.ok(inspect.bytes < 50 * 1024 * 1024, 'downsampled pair must be well under 50 MiB, got ' + inspect.bytes);
-  assert.equal(a.image.__hvAtlasScale, 0.5);
-  assert.equal(b.image.__hvAtlasScale, 0.5);
-  assert.equal(a.state, 'ready');
+  assert.equal(firstImage.src, '', 'previous native atlas should be evicted, not downsampled');
+  assert.equal(b.image.__hvAtlasScale, undefined);
   assert.equal(b.state, 'ready');
 });
 
