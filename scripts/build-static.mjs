@@ -164,6 +164,9 @@ await import('./bach-dien-runtime-v6.mjs');
 // TKT-0158 — host owns combat BGM on Xuất chiến; do not autoplay iframe HTMLAudio.
 await import('./battle-enter-audio-v1.mjs');
 
+// iPhone/iPadOS: avoid the large nested battle iframe and use the existing full-page return flow.
+await import('./ios-battle-direct-enter-v1.mjs');
+
 // Per-skill movement must follow canonical hero branches and precede iframe sync.
 await import('./battle-skill-movement-v1.mjs');
 
