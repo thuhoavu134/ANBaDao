@@ -15,8 +15,8 @@ function replaceFunction(text, startName, nextName, edit) {
 }
 export function battleActionWorkingSetBytes(atlases) {
   const sets = [
-    ['run-atlas.webp', 'basic-atlas.webp', 'skill1_vfx-atlas.webp'],
-    ['run-atlas.webp', 'ultimate-atlas.webp', 'ultimate_vfx-atlas.webp']
+    ['idle-atlas.webp', 'run-atlas.webp', 'basic-atlas.webp', 'skill1_vfx-atlas.webp'],
+    ['idle-atlas.webp', 'run-atlas.webp', 'ultimate-atlas.webp', 'ultimate_vfx-atlas.webp']
   ];
   const bytes = file => {
     const atlas = atlases[file];
