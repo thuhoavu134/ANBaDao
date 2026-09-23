@@ -65,3 +65,16 @@ test('L158-T5: hunt overlay observer does not pause the unlocked host combat pla
   assert.doesNotMatch(chunk, /stopCombat/);
   assert.match(read('src/ui/hunt-3d-runtime.js'), /bgmPlayer\.pause/);
 });
+
+
+test('L158-T6: iPhone and iPadOS bypass the host battle iframe and use the full-page return flow', () => {
+  const index = read('dist/index.html');
+  const open = sliceFn(index, 'openIntegratedBattle', 'function syncResultIntoMongGioi');
+  assert.match(open, /__HV_IOS_DIRECT_BATTLE/);
+  assert.match(open, /\/iPad\|iPhone\|iPod\/i\.test\(ua\)/);
+  assert.match(open, /platform==='MacIntel'&&touch>1/);
+  const direct = open.slice(open.indexOf('const __HV_IOS_DIRECT_BATTLE'), open.indexOf('frame.src = url;'));
+  assert.match(direct, /location\.assign\(url\)/);
+  assert.match(direct, /window\.name = `hvBattleConfig:/);
+  assert.match(read('scripts/build-static.mjs'), /ios-battle-direct-enter-v1\.mjs/);
+});
