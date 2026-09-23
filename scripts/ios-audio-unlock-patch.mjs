@@ -107,12 +107,78 @@ const manager = String.raw`<script id="honviet-ios-audio-unlock">
       }catch(_e2){return false;}
     }
   }
-  window.HonVietAudio={unlock,playVoice,beginCombat,stopCombat,preload:(u)=>decode(u),isUnlocked:()=>unlocked,context:()=>getCtx()};
+  let musicEpoch=0,musicCurrent=null,musicVolume=0.34;
+  const clampVolume=value=>Math.max(0,Math.min(1,Number(value)||0));
+  function setMusicVolume(value){
+    musicVolume=clampVolume(value);
+    const track=musicCurrent;
+    if(track&&track.category==='bgm')try{track.gain.gain.value=musicVolume;}catch(_e){}
+    return musicVolume;
+  }
+  function fadeTrack(track,fadeMs,now){
+    if(!track)return;
+    const seconds=Math.max(0,Number(fadeMs)||0)/1000;
+    try{
+      track.gain.gain.cancelScheduledValues?.(now);
+      track.gain.gain.setValueAtTime?.(track.gain.gain.value,now);
+      if(seconds)track.gain.gain.linearRampToValueAtTime?.(0,now+seconds);
+      else track.gain.gain.value=0;
+      track.source.stop(now+seconds+0.02);
+    }catch(_e){try{track.source.stop();}catch(_e2){}}
+  }
+  async function playMusic(url,options={}){
+    const src=String(url||'');
+    if(!src)return false;
+    const loop=options.loop!==false,category=options.category||'bgm';
+    const volume=category==='bgm'?(options.volume==null?musicVolume:clampVolume(options.volume)):clampVolume(options.volume==null?1:options.volume);
+    const fadeMs=Math.max(0,Math.min(1500,Number(options.fadeMs??260)||0));
+    if(musicCurrent?.url===src&&musicCurrent.loop===loop){
+      if(category==='bgm')setMusicVolume(volume);
+      return true;
+    }
+    const ticket=++musicEpoch,c=getCtx();
+    if(!c||!unlocked)return false;
+    let buffer;
+    try{buffer=await decode(src);}catch(_e){return false;}
+    if(ticket!==musicEpoch||c.state!=='running')return false;
+    const source=c.createBufferSource(),gain=c.createGain(),old=musicCurrent;
+    const now=Number(c.currentTime)||0,seconds=fadeMs/1000;
+    source.buffer=buffer;source.loop=loop;gain.gain.value=0;
+    source.connect(gain);gain.connect(c.destination);
+    try{
+      gain.gain.setValueAtTime?.(0,now);
+      if(seconds)gain.gain.linearRampToValueAtTime?.(volume,now+seconds);
+      else gain.gain.value=volume;
+    }catch(_e){gain.gain.value=volume;}
+    const track={source,gain,url:src,loop,category,volume};
+    source.onended=()=>{
+      try{source.disconnect();gain.disconnect();}catch(_e){}
+      if(musicCurrent===track)musicCurrent=null;
+    };
+    musicCurrent=track;
+    try{source.start(0);}catch(_e){musicCurrent=old;return false;}
+    if(old)fadeTrack(old,fadeMs,now);
+    document.documentElement.dataset.musicTrack=src;
+    document.documentElement.dataset.musicActive='1';
+    return true;
+  }
+  function stopMusic(options={}){
+    musicEpoch++;
+    if(options.keepCurrent)return;
+    const track=musicCurrent;if(!track)return;
+    musicCurrent=null;
+    fadeTrack(track,options.fadeMs??120,Number(getCtx()?.currentTime)||0);
+    document.documentElement.dataset.musicActive='0';
+    document.documentElement.dataset.musicTrack='';
+  }
+  const getMusic=()=>musicCurrent;
+  window.HonVietAudio={unlock,playVoice,beginCombat,stopCombat,playMusic,stopMusic,setMusicVolume,music:getMusic,preload:(u)=>decode(u),isUnlocked:()=>unlocked,context:()=>getCtx()};
 
   // Keep unlocking on every gesture until the context is running. Full-page
   // battle.html on iOS often misses the original Xuất chiến tap.
   const firstGesture=()=>{
     unlock().then(()=>{
+      try{window.__HV_BGM_RETRY?.();}catch(_e){}
       try{window.__HV_BATTLE_BGM?.play?.();}catch(_e){}
     }).catch(()=>{});
   };
