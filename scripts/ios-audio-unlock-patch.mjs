@@ -66,16 +66,10 @@ const manager = String.raw`<script id="honviet-ios-audio-unlock">
           s.buffer=b;s.connect(c.destination);s.start(0);
         }catch(_e){}
       }
-      // Prime existing HTML media during the user's first real game interaction.
-      document.querySelectorAll('audio,video').forEach(el=>{
-        try{
-          const wasMuted=el.muted;
-          el.muted=true;
-          const p=el.play();
-          if(p&&p.then)p.then(()=>{el.pause();el.currentTime=0;el.muted=wasMuted;}).catch(()=>{el.muted=wasMuted;});
-          else {el.pause();el.currentTime=0;el.muted=wasMuted;}
-        }catch(_e){}
-      });
+      // Unlock only Web Audio here. A pending muted play() on an app-owned
+      // HTMLMediaElement can settle after its source changes to combat BGM,
+      // then pause and rewind the live track. Each media owner starts its own
+      // track synchronously from the user's interaction instead.
       unlocked=true;
       document.documentElement.dataset.audioUnlocked='1';
       voiceUrls.forEach(u=>decode(u).catch(()=>{}));

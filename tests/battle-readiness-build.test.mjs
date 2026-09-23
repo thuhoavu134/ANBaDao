@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
+import { battleActionWorkingSetBytes } from '../scripts/battle-asset-readiness-v1.mjs';
 const html=readFileSync('dist/battle.html','utf8');
 const owner='  async function __hvPerformAction3qAdapter(actor, action, target) {';
 const begin=html.indexOf(owner),end=html.indexOf('\n  function statusLabel(',begin);
@@ -71,4 +72,16 @@ test('generated S+ action atlas variants fit the complete decoded working set',(
       assert.ok(bytes<=(profile==='mobile'?96:128)*1024*1024,`${profile} ${set.join('+')} = ${bytes} bytes`);
     }
   }
+});
+
+
+test('generated atlas size accounts for pinned idle art plus the complete action working set', () => {
+  const files = ['idle-atlas.webp', 'run-atlas.webp', 'basic-atlas.webp', 'skill1_vfx-atlas.webp',
+    'ultimate-atlas.webp', 'ultimate_vfx-atlas.webp'];
+  const atlases = Object.fromEntries(files.map((file, index) => [file, { width: (index + 2) * 100, height: 100 }]));
+  const expected = Math.max(
+    ['idle-atlas.webp', 'run-atlas.webp', 'basic-atlas.webp', 'skill1_vfx-atlas.webp'].reduce((sum, file) => sum + atlases[file].width * atlases[file].height * 4, 0),
+    ['idle-atlas.webp', 'run-atlas.webp', 'ultimate-atlas.webp', 'ultimate_vfx-atlas.webp'].reduce((sum, file) => sum + atlases[file].width * atlases[file].height * 4, 0),
+  );
+  assert.equal(battleActionWorkingSetBytes(atlases), expected);
 });
