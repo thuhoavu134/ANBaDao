@@ -14,10 +14,11 @@ export function atlasDecodedBytes(clip) {
 
 export function atlasDecodeScale(cost, maxBytes) {
   if (!(cost > 0) || !(maxBytes > 0)) return 1;
-  if (cost <= 8 * 1024 * 1024) return 1;
-  const room = maxBytes / 4;
-  if (cost <= room) return 1;
-  const raw = Math.sqrt(room / cost);
+  // Preserve authored pixels whenever a single atlas fits the cache budget.
+  // Memory pressure is handled by one-at-a-time decoding + eviction, not by
+  // silently shrinking a drawable that the renderer later scales back up.
+  if (cost <= maxBytes) return 1;
+  const raw = Math.sqrt(maxBytes / cost);
   if (raw >= 0.75) return 0.75;
   if (raw >= 0.5) return 0.5;
   return 0.25;
@@ -70,7 +71,7 @@ export function createDecodedAtlasCache(options = {}) {
   );
   const requestedMaxBytes = options.maxBytes ?? 128 * 1024 * 1024;
   const requestedMaxLoading = options.maxLoading ?? 2;
-  const maxBytes = constrainedMobile ? Math.min(requestedMaxBytes, 64 * 1024 * 1024) : requestedMaxBytes;
+  const maxBytes = constrainedMobile ? Math.min(requestedMaxBytes, 96 * 1024 * 1024) : requestedMaxBytes;
   const maxLoading = constrainedMobile ? Math.min(requestedMaxLoading, 1) : requestedMaxLoading;
   if (!(maxBytes > 0) || !Number.isInteger(maxLoading) || maxLoading < 1) {
     throw new RangeError('Atlas cache requires a positive budget and loading limit');
