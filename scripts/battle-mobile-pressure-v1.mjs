@@ -1,7 +1,7 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { basename, dirname, extname, join } from 'node:path';
 
-export const DINH_LOI_MOBILE_SCALE=0.5;
+export const DINH_LOI_MOBILE_SCALE=1;
 export const BATTLE_FALLBACK_MOBILE_SOURCES=Object.freeze([
   'assets/battle-runtime/embedded-03.webp','assets/battle-runtime/embedded-04.webp',
   'assets/battle-runtime/embedded-05.webp','assets/battle-runtime/embedded-06.webp',
@@ -44,7 +44,7 @@ export function patchBattleMobilePressure(input,variants={}){
   let html=input;
   html=replaceOne(html,'const view = { width: 1, height: 1, scale: 1, offsetX: 0, offsetY: 0, dpr: 1 };',`/* HV_BATTLE_MOBILE_PRESSURE_V1 */
   const __HV_BATTLE_LOW_MEMORY=(()=>{try{const n=navigator,ua=String(n?.userAgent||''),platform=String(n?.platform||''),touch=Number(n?.maxTouchPoints||0),memory=Number(n?.deviceMemory||0);return /iPad|iPhone|iPod/i.test(ua)||(platform==='MacIntel'&&touch>1)||(memory>0&&memory<=4);}catch(_){return false;}})();
-  const __HV_BATTLE_MAX_BACKING_PIXELS=1600000;
+  const __HV_BATTLE_MAX_BACKING_PIXELS=3200000;
   const view = { width: 1, height: 1, scale: 1, offsetX: 0, offsetY: 0, dpr: 1 };`,'low-memory profile');
   html=replaceOne(html,'const ambientFireflies = Array.from({ length: 24 }, (_, index) => ({','const ambientFireflies = Array.from({ length: __HV_BATTLE_LOW_MEMORY ? 10 : 24 }, (_, index) => ({','ambient particles');
   const resizeOld=`const rect = dom.viewport.getBoundingClientRect();
@@ -55,7 +55,7 @@ export function patchBattleMobilePressure(input,variants={}){
     const width = Math.max(1, Math.round(rect.width));
     const height = Math.max(1, Math.round(rect.height));
     const __hvPixelDpr=Math.sqrt(__HV_BATTLE_MAX_BACKING_PIXELS/Math.max(1,width*height));
-    const dpr=Math.min(devicePixelRatio || 1,__HV_BATTLE_LOW_MEMORY?Math.min(1.5,__hvPixelDpr):3);`;
+    const dpr=Math.min(devicePixelRatio || 1,__HV_BATTLE_LOW_MEMORY?Math.min(3,__hvPixelDpr):3);`;
   html=replaceOne(html,resizeOld,resizeNew,'canvas DPR/backing-store budget');
   html=replaceOne(html,'let lastFrame = performance.now();','let lastFrame = performance.now();\n  let __hvBattlePaintAt = lastFrame;\n  let __hvZoneHudAt=-Infinity,__hvTelemetryAt=-Infinity;','battle paint clock');
   html=replaceOne(html,'function render(time) {\n    resizeCanvas();',`function render(time) {
@@ -63,7 +63,7 @@ export function patchBattleMobilePressure(input,variants={}){
     __hvBattlePaintAt=time;
     resizeCanvas();`,'render throttle');
 
-  const mapping=JSON.stringify(variants);
+  const mapping='{}'; // P0: canonical authored sources only; never remap to reduced derivatives.
   const fallbackHeroOld=`const HERO_ATLAS_SOURCES = Object.freeze({
     [TEAM_PLAYER]: "assets/battle-runtime/embedded-03.webp",
     [TEAM_ENEMY]: "assets/battle-runtime/embedded-04.webp"
@@ -124,7 +124,7 @@ export function patchBattleMobilePressure(input,variants={}){
   const ONG_PHO_SKILL1_SOURCE = "assets/battle-runtime/embedded-15.png";
   const ONG_PHO_ULTIMATE_SOURCE = "assets/characters/ong-pho/ultimate-sheet-64-alpha-clean-v310.png";
   `;
-  const ongSourcesNew=`const __HV_ONG_PHO_CELL_SCALE=__HV_BATTLE_LOW_MEMORY?.5:1;
+  const ongSourcesNew=`const __HV_ONG_PHO_CELL_SCALE=1;
   const ONG_PHO_ATTACK_SOURCE = __hvBattleFallbackSrc("assets/battle-runtime/embedded-11.png");
   const ONG_PHO_IDLE_SOURCE = __hvBattleFallbackSrc("assets/battle-runtime/embedded-12.png");
   const ONG_PHO_HIT_SOURCE = __hvBattleFallbackSrc("assets/battle-runtime/embedded-13.png");
@@ -160,7 +160,7 @@ export function patchBattleMobilePressure(input,variants={}){
   if(html.split(ongCell).length!==4)throw new Error('Battle mobile patch expected three Ong Pho cell declarations');
   html=html.replaceAll(ongCell,'const cellW=240*__HV_ONG_PHO_CELL_SCALE, cellH=135*__HV_ONG_PHO_CELL_SCALE');
   html=replaceOne(html,'const DINH_LOI_ID="dinh_loi", DINH_LOI_FRAMES=64, DINH_LOI_COLS=8, DINH_LOI_CELL_W=480, DINH_LOI_CELL_H=270;',`const __HV_DINH_LOI_MOBILE_ATLASES=${mapping};
-  const DINH_LOI_ID="dinh_loi", DINH_LOI_FRAMES=64, DINH_LOI_COLS=8, DINH_LOI_CELL_W=__HV_BATTLE_LOW_MEMORY?240:480, DINH_LOI_CELL_H=__HV_BATTLE_LOW_MEMORY?135:270;`,'Dinh Loi cells');
+  const DINH_LOI_ID="dinh_loi", DINH_LOI_FRAMES=64, DINH_LOI_COLS=8, DINH_LOI_CELL_W=480, DINH_LOI_CELL_H=270;`,'Dinh Loi cells');
   html=replaceOne(html,"const DINH_LOI_CLIPS=Object.fromEntries(Object.entries(DINH_LOI_ASSET_NAMES).map(([key,file])=>{const portrait=key==='ultimateVfx'||key==='ultimateImpact';const cellW=portrait?270:480,cellH=portrait?480:270;return [key,{src:DINH_LOI_ASSET_BASE+file,cols:8,rows:8,cellW,cellH,atlasWidth:cellW*8,atlasHeight:cellH*8}]}));",`const DINH_LOI_CLIPS=Object.fromEntries(Object.entries(DINH_LOI_ASSET_NAMES).map(([key,file])=>{const portrait=key==='ultimateVfx'||key==='ultimateImpact';const source=DINH_LOI_ASSET_BASE+file,mobile=__HV_BATTLE_LOW_MEMORY?__HV_DINH_LOI_MOBILE_ATLASES[source]:null;const cellW=mobile?(portrait?135:240):(portrait?270:480),cellH=mobile?(portrait?240:135):(portrait?480:270);return [key,{src:mobile?.src||source,cols:8,rows:8,cellW,cellH,atlasWidth:mobile?.width||cellW*8,atlasHeight:mobile?.height||cellH*8}]}));`,'Dinh Loi clips');
   const oldShield=`function drawDinhLoiPersistentShields(context,time){
     const image=DINH_LOI_IMAGES.skill1Shield;if(!image?.complete||image.naturalWidth<2)return;const frame=dinhLoiFrame(time,true);
@@ -173,18 +173,18 @@ export function patchBattleMobilePressure(input,variants={}){
     for(const unit of guarded)drawDinhLoiAtlasFrame(context,image,frame,unit.x,unit.y,330,186,{baseline:93,screen:true,alpha:.82});
   }`;
   html=replaceOne(html,oldShield,newShield,'lazy Dinh Loi shield');
-  html=replaceOne(html,"context.shadowBlur = (attacking || skill1 || ultimate) ? 12 : 5;","context.shadowBlur = __HV_BATTLE_LOW_MEMORY ? 0 : ((attacking || skill1 || ultimate) ? 12 : 5);","Ong Pho actor shadow");
-  html=replaceOne(html,"context.shadowBlur=[\"attack\",\"skill1\",\"ultimate\"].includes(key)?14:5;","context.shadowBlur=__HV_BATTLE_LOW_MEMORY?0:([\"attack\",\"skill1\",\"ultimate\"].includes(key)?14:5);","Dinh Loi actor shadow");
-  html=replaceOne(html,"context.shadowBlur=[\"attack\",\"skill1\",\"ultimate\"].includes(key)?15:5;","context.shadowBlur=__HV_BATTLE_LOW_MEMORY?0:([\"attack\",\"skill1\",\"ultimate\"].includes(key)?15:5);","Luc Anh actor shadow");
-  html=replaceOne(html,"context.shadowBlur = 8 + strike * 16;","context.shadowBlur = __HV_BATTLE_LOW_MEMORY ? 0 : 8 + strike * 16;","generic actor shadow");
+  html=replaceOne(html,"context.shadowBlur = (attacking || skill1 || ultimate) ? 12 : 5;","context.shadowBlur = (attacking || skill1 || ultimate) ? 12 : 5;","Ong Pho actor shadow");
+  html=replaceOne(html,"context.shadowBlur=[\"attack\",\"skill1\",\"ultimate\"].includes(key)?14:5;","context.shadowBlur=[\"attack\",\"skill1\",\"ultimate\"].includes(key)?14:5;","Dinh Loi actor shadow");
+  html=replaceOne(html,"context.shadowBlur=[\"attack\",\"skill1\",\"ultimate\"].includes(key)?15:5;","context.shadowBlur=[\"attack\",\"skill1\",\"ultimate\"].includes(key)?15:5;","Luc Anh actor shadow");
+  html=replaceOne(html,"context.shadowBlur = 8 + strike * 16;","context.shadowBlur = 8 + strike * 16;","generic actor shadow");
   const sharedActorShadow="context.shadowBlur=['attack','ultimate'].includes(key)?14:5;";
   if(html.split(sharedActorShadow).length!==3)throw new Error('Battle mobile patch expected Linh Dong and Bach Dien actor shadows');
-  html=html.replaceAll(sharedActorShadow,"context.shadowBlur=__HV_BATTLE_LOW_MEMORY?0:(['attack','ultimate'].includes(key)?14:5);");
+  html=html.replaceAll(sharedActorShadow,"context.shadowBlur=['attack','ultimate'].includes(key)?14:5;");
   html=replaceOne(html,
     'const count = REDUCED_MOTION ? Math.ceil(amount / 4) : amount;',
     'const requested=REDUCED_MOTION?Math.ceil(amount/4):__HV_BATTLE_LOW_MEMORY?Math.max(1,Math.min(12,Math.ceil(amount*.45))):amount; const count=__HV_BATTLE_LOW_MEMORY?Math.min(requested,Math.max(0,72-particles.length)):requested;',
     'mobile particle budget');
-  const bgOwner=`const __HV_BATTLE_BG_SCALE=__HV_BATTLE_LOW_MEMORY?.75:1;
+  const bgOwner=`const __HV_BATTLE_BG_SCALE=1;
   const __HV_BATTLE_BG_REFRESH_MS=__HV_BATTLE_LOW_MEMORY?250:0;
   let __hvBattleBgCanvas=null,__hvBattleBgContext=null,__hvBattleBgAt=-Infinity;
   function __hvDrawBattleBackground(context,time){
@@ -217,7 +217,7 @@ export function patchBattleMobilePressure(input,variants={}){
   if(!html.includes(telemetryFirst)||!html.includes(telemetryLast))throw new Error('Battle mobile patch missing telemetry block');
   html=html.replace(telemetryFirst,'if(!__HV_BATTLE_LOW_MEMORY||time-__hvTelemetryAt>=250){__hvTelemetryAt=time;\n    '+telemetryFirst);
   html=html.replace(telemetryLast,telemetryLast+'\n    }');
-  html=replaceOne(html,'const poseAtlas = sameAppearanceBefore ? null : POSE_ATLASES[unit.archetype];','const poseAtlas = sameAppearanceBefore || (__HV_BATTLE_LOW_MEMORY&&unit.state!=="run"&&unit.state!=="attack") ? null : POSE_ATLASES[unit.archetype];','mobile generic pose admission');
+  html=replaceOne(html,'const poseAtlas = sameAppearanceBefore ? null : POSE_ATLASES[unit.archetype];','const poseAtlas = sameAppearanceBefore ? null : POSE_ATLASES[unit.archetype];','mobile generic pose admission');
   html=replaceOne(html,
     'dom.canvas.dataset.poseAtlases = Object.values(POSE_ATLASES).filter((image) => image.complete && image.naturalWidth > 1).length.toString();',
     'dom.canvas.dataset.poseAtlases = Object.values(POSE_ATLAS_SOURCES).filter((source) => { const image=__HV_FALLBACK_IMAGES.get(source); return image?.complete && image.naturalWidth > 1; }).length.toString();',
@@ -230,22 +230,10 @@ export function patchBattleMobilePressure(input,variants={}){
 }
 
 export async function buildBattleMobilePressure(root=process.cwd()){
-  const {default:sharp}=await import('sharp');
-  sharp.cache(false);sharp.concurrency(1);
   const out=join(root,'dist'),variants={};
-  for(const src of [...BATTLE_FALLBACK_MOBILE_SOURCES,...ONG_PHO_MOBILE_SOURCES,...LUC_ANH_MOBILE_SOURCES,...DINH_LOI_MOBILE_SOURCES]){
-    const source=join(out,src);if(!existsSync(source))throw new Error('Missing mobile battle atlas: '+src);
-    const targetSrc=dinhLoiMobileVariantPath(src),target=join(out,targetSrc);mkdirSync(dirname(target),{recursive:true});
-    try{
-      const meta=await sharp(source).metadata();
-      const width=Math.max(1,Math.round(Number(meta.width)*DINH_LOI_MOBILE_SCALE));
-      const height=Math.max(1,Math.round(Number(meta.height)*DINH_LOI_MOBILE_SCALE));
-      await sharp(source).resize(width,height,{fit:'fill',kernel:'lanczos3'}).webp({quality:86,alphaQuality:92,effort:2}).toFile(target);
-      variants[src]={src:targetSrc,width,height,scale:DINH_LOI_MOBILE_SCALE};
-    }catch(error){
-      console.warn('Battle mobile derivative skipped:',src,error?.message||error);
-    }
-  }
-  const battle=join(out,'battle.html');writeFileSync(battle,patchBattleMobilePressure(readFileSync(battle,'utf8'),variants));
+  // Preserve authored atlas resolution. Low-memory pressure is handled by
+  // lazy image admission, cache eviction, one-at-a-time decode and 30fps paint.
+  const battle=join(out,'battle.html');
+  writeFileSync(battle,patchBattleMobilePressure(readFileSync(battle,'utf8'),variants));
   return variants;
 }

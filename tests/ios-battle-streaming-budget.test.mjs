@@ -5,7 +5,7 @@ import { createBattleAssetReadiness } from '../src/combat-domain/battle-asset-re
 
 const MiB = 1024 * 1024;
 
-test('iPhone/iPad clamps decoded atlas budget and decode concurrency', () => {
+test('iPhone/iPad keeps a native-quality decoded atlas budget and one-at-a-time decode', () => {
   const cache = createDecodedAtlasCache({
     maxBytes: 128 * MiB,
     maxLoading: 2,
@@ -17,12 +17,12 @@ test('iPhone/iPad clamps decoded atlas budget and decode concurrency', () => {
     makeImage: () => ({ removeAttribute() {} })
   });
   const state = cache.inspect();
-  assert.equal(state.maxBytes, 64 * MiB);
+  assert.equal(state.maxBytes, 96 * MiB);
   assert.equal(state.maxLoading, 1);
   assert.equal(state.constrainedMobile, true);
 });
 
-test('iPadOS desktop user agent is still treated as constrained mobile', () => {
+test('iPadOS desktop user agent keeps native-quality budget with constrained decode concurrency', () => {
   const cache = createDecodedAtlasCache({
     maxBytes: 128 * MiB,
     maxLoading: 2,
@@ -62,7 +62,7 @@ function readinessFixture() {
   const pins = [];
   const loader = {
     cache: { unpin() {}, constrainedMobile: true },
-    inspect: () => ({ maxBytes: 64 * MiB, maxLoading: 1, constrainedMobile: true }),
+    inspect: () => ({ maxBytes: 96 * MiB, maxLoading: 1, constrainedMobile: true }),
     ensure(clip, opts = {}) {
       if (opts.pin) pins.push({ src: clip.src, pin: opts.pin });
       return { state: 'ready', image: { complete: true }, promise: Promise.resolve() };

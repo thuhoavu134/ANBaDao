@@ -159,7 +159,7 @@ export async function buildBattleReadiness(root) {
       const source=join(directory,file),meta=await sharp(source).metadata();
       const decodedBytes=meta.width*meta.height*4;
       const desktopScale=atlasDecodeScale(decodedBytes,128*1024*1024);
-      const mobileScale=atlasDecodeScale(decodedBytes,64*1024*1024);
+      const mobileScale=atlasDecodeScale(decodedBytes,96*1024*1024);
       const desktop=await writeVariant({source,relative,directory,file,meta,scale:desktopScale,profile:'desktop',folder:'ready-v1'});
       const mobile=await writeVariant({source,relative,directory,file,meta,scale:mobileScale,profile:'mobile',folder:'ready-mobile-v1'});
       if(desktop||mobile)variants[relative+file]={desktop,mobile};

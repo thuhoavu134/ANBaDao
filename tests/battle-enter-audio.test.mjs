@@ -78,3 +78,13 @@ test('L158-T6: iPhone and iPadOS bypass the host battle iframe and use the full-
   assert.match(direct, /window\.name = `hvBattleConfig:/);
   assert.match(read('scripts/build-static.mjs'), /ios-battle-direct-enter-v1\.mjs/);
 });
+
+test('P0: battle autostart is fail-open when iOS audio initialization throws', () => {
+  const battle = read('dist/battle.html');
+  const fn = sliceFn(battle, 'beginBattle()', '\n  function ');
+  assert.match(fn, /Battle audio init skipped; combat continues/);
+  assert.match(fn, /try \{[\s\S]*?initAudio\(\)/);
+  assert.match(battle, /const __hvAutoStartBattle=/);
+  for (const delay of [50, 400, 1200, 2500]) assert.match(battle, new RegExp('\\b' + delay + '\\b'));
+  assert.match(read('scripts/build-static.mjs'), /battle-entry-fail-open-v1\.mjs/);
+});
