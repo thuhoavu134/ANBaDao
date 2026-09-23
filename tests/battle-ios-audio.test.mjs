@@ -31,8 +31,11 @@ test('L12-C2: iOS unlock does not inject a floating Bật tiếng control', () =
 
 
 test('an outstanding muted-audio unlock cannot pause the new combat BGM', async () => {
-  const manager = unlock.match(/const manager = String.raw`([\\s\\S]*?)`;/)?.[1];
-  assert.ok(manager, 'iOS audio manager is present');
+  const marker = 'const manager = String.raw' + String.fromCharCode(96);
+  const managerStart = unlock.indexOf(marker) + marker.length;
+  const managerEnd = unlock.indexOf(String.fromCharCode(96) + ';', managerStart);
+  const manager = unlock.slice(managerStart, managerEnd);
+  assert.ok(manager.length > 1000, 'iOS audio manager is present');
   let resolvePriming;
   const priming = new Promise(resolve => { resolvePriming = resolve; });
   const music = {
@@ -49,7 +52,9 @@ test('an outstanding muted-audio unlock cannot pause the new combat BGM', async 
     documentElement: { dataset: {} }, visibilityState: 'visible',
     querySelectorAll: () => [music], addEventListener() {},
   };
-  vm.runInNewContext(manager.replace(/^<script[^>]*>\\s*/, '').replace(/\\s*<\\/script>\\s*$/, ''), {
+  const scriptStart = manager.indexOf('>') + 1;
+  const scriptEnd = manager.lastIndexOf('</script>');
+  vm.runInNewContext(manager.slice(scriptStart, scriptEnd), {
     window, document, Audio: class {}, fetch: async () => { throw new Error('not needed'); },
     setTimeout, clearTimeout, AbortController, Promise, Map, Set, String, Number, Math,
   });
