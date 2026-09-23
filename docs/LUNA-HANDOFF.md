@@ -995,3 +995,18 @@ Khi device backend hoặc Ticket Board khả dụng, chạy device matrix và cl
 evidence cho L04b/L04a/L05b. Nếu chưa khả dụng, chọn lát cắt source/test tiếp
 theo của L04a/L05b; không đổi seed, reward, balance, save migration, roster,
 art, audio hoặc gameplay rule và giữ `REVIEW / IN_PROGRESS`.
+
+
+## 1.10 TKT-0206 — battle audio and mobile character visibility (2026-09-23)
+
+**Trạng thái:** `REVIEW / IN_PROGRESS`; PR #206 is a draft. Do not mark merged or done.
+
+- Baseline main: `37d5cc21f9142b7959ecd5b1d585234866af7fcd` (PR #205). User's screen recording shows battle audio becoming silent after about 6.66s, intermittent/missing character art, and the battle asset retry dialog.
+- Regression evidence in source: PR #205 removed persistent pins for visible idle atlases and scaled variants against run/cast/VFX without counting idle. On mobile the renderer can request an evicted idle atlas again while drawing. The iOS audio unlock also plays and later pauses/rewinds existing app-owned media; a delayed `play()` completion can affect the combat BGM after its source changes.
+- Owner patch on `fix/battle-audio-character-visibility-20260923`, current head `0954d3c81219ddd9b3b0c753c89ab21f75668001`: visible idle atlases are pinned for the battle lifetime; desktop/mobile variants are sized with idle + movement + cast + VFX; iOS unlock no longer mutates app-owned HTML media. Host QA now requires active BGM, nonzero shared SFX PCM, and a ready pinned idle atlas.
+- Tests added for delayed audio unlock, idle pin lifetime, and full decoded working-set sizing. Test-only RED commit was `4d0d408f73cae960e0652c408aef42590b4978f0`; code and host-QA patch are at `0954d3c81219ddd9b3b0c753c89ab21f75668001`.
+- GitHub CI run #689 concluded `failure`, but the job reported zero steps and the logs endpoint returned `BlobNotFound`; exact cause is **UNVERIFIED**. Do not claim the failure came from these tests. The #205 red check/log limitation remains relevant; do not merge while CI is red.
+- Vercel preview for head `0954d3c` was still `BUILDING` at handoff; no production deployment or browser run is claimed. Physical Safari/iPhone is `NOT_RUN`.
+- Ticket Board, claim/lease, and path-lock tooling are unavailable in this workspace (`TICKET_BOARD_NOT_AVAILABLE`). PR #206 carries contract C1–C5; no board claim or lock is asserted.
+
+**Next:** resolve why GitHub CI completes without steps/logs; once available, run RED→GREEN plus `npm run build`, full serial Node tests, and the host browser QA on desktop/mobile. Inspect screenshots, console/network failures, BGM playback, SFX PCM and idle atlas pins before moving the PR beyond REVIEW.
