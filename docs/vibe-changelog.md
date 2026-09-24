@@ -1,3 +1,7 @@
+## 2026-09-24 — Sửa nút xác nhận kết quả trận
+
+`settlement-navigation-v1` nay gắn schema, origin và sequence cho cả helper dùng chung `postToHonVietHost`, để `battle-ready` và `battle-result` qua được protocol guard. Thêm regression test cho metadata của message trong battle iframe. Nguyên nhân đã xác nhận từ source: helper gửi object `message` không qua bước patch chỉ bắt literal `parent.postMessage({`; host chặn message thiếu metadata.
+
 ## 2026-09-24 — Đội hình trận dọc và khung Ultimate theo ảnh mẫu · PR #210
 
 PR #210 mở từ `3b2add0`. Dùng ảnh 710 × 1536 để giãn hai cột mobile mỗi bên, tăng nhẹ scale tướng portrait và giới hạn khoảng áp sát cận chiến. Trong Ultimate, chỉ caster và nhóm mục tiêu theo presentation resolver còn được vẽ; mọi tướng trở lại sau recovery/reset. Combat math, luật target và desktop không đổi. Focused suite 4/4 PASS; patch idempotence + generated JS syntax PASS. CI/CD ban đầu và lần chạy lại đều dừng trước steps, log BlobNotFound; Battle Readiness QA bị skip. Full browser screenshot/interaction evidence chưa có.
