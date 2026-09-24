@@ -11,6 +11,9 @@ if (battle.includes('schema:"hon-viet-battle/v1"')) {
   throw new Error('Battle protocol already installed');
 }
 battle = battle.split(messageMarker).join(protocolPrefix);
+const hostMessageMarker = 'const message = { source: "hon-viet-battle", type, payload };';
+if (battle.split(hostMessageMarker).length !== 2) throw new Error('Canonical battle message helper not found/ambiguous');
+battle = battle.replace(hostMessageMarker, 'const message = {schema:"hon-viet-battle/v1",schemaVersion:1,sequence:(window.__HV_MESSAGE_SEQUENCE=(window.__HV_MESSAGE_SEQUENCE||0)+1),origin:location.origin,source:"hon-viet-battle",type,payload};');
 writeFileSync(battlePath, battle);
 
 const indexPath = join(process.cwd(), 'dist', 'index.html');
