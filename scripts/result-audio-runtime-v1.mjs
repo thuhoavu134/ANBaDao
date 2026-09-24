@@ -27,12 +27,17 @@ const parentScript=String.raw`<script id="honviet-result-audio-v1">
       const bus=window.HonVietAudio;
       if(bus?.playMusic){
         const played=await bus.playMusic(src,{loop:false,volume:.9,category:'result',fadeMs:260});
-        return ticket===epoch&&played;
+        if(ticket!==epoch)return false;
+        if(played)return true;
       }
-      fallbackPlayer=new Audio();fallbackPlayer.preload='auto';fallbackPlayer.loop=false;fallbackPlayer.volume=.9;fallbackPlayer.src=src;
       if(bus)try{await bus.unlock();}catch(_e){}
       if(ticket!==epoch)return false;
-      await fallbackPlayer.play();
+      const previous=fallbackPlayer;
+      const next=new Audio();next.preload='auto';next.loop=false;next.volume=.9;next.src=src;
+      await next.play();
+      if(ticket!==epoch){try{next.pause();next.currentTime=0;}catch(_e){}return false;}
+      fallbackPlayer=next;
+      if(previous&&previous!==next){try{previous.pause();previous.currentTime=0;}catch(_e){}}
       return true;
     }catch(_e){return false;}
   }
