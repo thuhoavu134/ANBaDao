@@ -15,7 +15,7 @@ html=replaceOne(
     initAudio();
     window.HonVietAudio?.unlock?.();
     window.HonVietSfx?.unlock?.();
-    if (EMBEDDED) {`,
+`,
   `  function beginBattle() {
     if (state.mode === "battle" && dom.introPanel?.hidden) return;
     try {
