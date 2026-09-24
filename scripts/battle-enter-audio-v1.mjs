@@ -35,22 +35,21 @@ index = replaceOnce(
   'enterFallback location.assign'
 );
 
-// Audio cleanup belongs to battle-audio-lifecycle-v1.mjs. It ends battle SFX
-// and preserves the active shared BGM through the result/route handoff. Do not
-// restore or stop music here: that would interrupt the shared crossfade owner.
-index = replaceOnce(
-  index,
-  `  function hushParentBgm() {
+// Audio cleanup belongs to battle-audio-lifecycle-v1.mjs. It preserves shared
+// BGM through the result/route handoff; there is no separate host BGM to hush.
+// Older index variants may still contain this legacy helper, so adapt it only
+// when present instead of failing the production build when it has been removed.
+const legacyHush = `  function hushParentBgm() {
     try {
       if (typeof bgmPlayer !== 'undefined' && bgmPlayer) bgmPlayer.pause();
     } catch {}
     try { window.HonVietAudio?.stopCombat?.(); } catch {}
-  }`,
-  `  function hushParentBgm() {
-    // TKT-0158: host combat BGM is the audio owner during overlay battle.
-  }`,
-  'hushParentBgm pause'
-);
+  }`;
+if (index.includes(legacyHush)) {
+  index = index.replace(legacyHush, `  function hushParentBgm() {
+    // TKT-0158: shared audio bus owns music during overlay battle.
+  }`);
+}
 
 writeFileSync(indexPath, index);
 
