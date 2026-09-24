@@ -4,6 +4,11 @@ import { join } from 'node:path';
 const target = join(process.cwd(), 'dist', 'index.html');
 let html = readFileSync(target, 'utf8');
 
+function replaceOnce(source, from, to, label) {
+  if (source.split(from).length !== 2) throw new Error('iOS battle memory patch anchor missing or ambiguous: ' + label);
+  return source.replace(from, to);
+}
+
 const from = `    // Grok/iOS preview is itself an iframe; a nested battle iframe stays blank.
     // Open combat as the preview document so the player actually sees the fight.
     if (window.parent !== window) {
@@ -117,8 +122,8 @@ html = replaceOnce(
 
 html = replaceOnce(
   html,
-  '  function closeOverlay() {\\n    // Stop combat SFX; preserve the current BGM until the next screen crossfades to its track.\\n',
-  '  function closeOverlay() {\\n    // Stop combat SFX; preserve the current BGM until the next screen crossfades to its track.\\n    window.__HV_BATTLE_HOST_MEMORY_RESTORE?.();\\n',
+  '  function closeOverlay() {\n    // Stop combat SFX; preserve the current BGM until the next screen crossfades to its track.\n',
+  '  function closeOverlay() {\n    // Stop combat SFX; preserve the current BGM until the next screen crossfades to its track.\n    window.__HV_BATTLE_HOST_MEMORY_RESTORE?.();\n',
   'restore host images after battle'
 );
 
