@@ -1,5 +1,6 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { patchHostBattleResources } from './host-battle-resources-v1.mjs';
 
 const target = join(process.cwd(), 'dist', 'index.html');
 let html = readFileSync(target, 'utf8');
@@ -127,5 +128,6 @@ html = replaceOnce(
   'restore host images after battle'
 );
 
+html = patchHostBattleResources(html);
 writeFileSync(target, html);
 console.log('iOS battle stays in host frame for continuous audio; delayed direct fallback protects stalled entry');
