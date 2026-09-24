@@ -11,6 +11,14 @@ Nguồn tham chiếu: các video combat game mẫu do anh cung cấp ngày 30/08
 - Trạng thái quan trọng hiện chữ ngắn khi được áp dụng; trạng thái còn hiệu lực được giữ bằng icon trên một hàng. Khống chế ưu tiên trước, sau đó buff, rồi debuff/DOT.
 - Kết quả trận chỉ mở sau khi hit cuối, HP cuối và animation gục đã resolve.
 
+## Chuẩn theo ảnh trận dọc 24/09/2026
+
+- Trên portrait, hai cột mỗi bên giữ đội hình ba lane: tuyến trước hướng vào giữa sân, tuyến sau lùi ra mép màn hình. Bố cục dùng các anchor mobile riêng; desktop không đổi.
+- Tăng scale portrait nhẹ để thân tướng đọc rõ trên ảnh dọc 710 × 1536; giữ pivot/chân và depth sorting hiện tại.
+- Cận chiến dùng khoảng dừng có min/max thay vì chỉ lấy một tỷ lệ nhỏ của khoảng cách ban đầu; sau chiêu luôn quay về home anchor.
+- Khi Ultimate diễn ra, chỉ render caster cùng nhóm presentationTargets hiện hành. Đòn đơn giữ một mục tiêu; đòn đa mục tiêu giữ toàn bộ mục tiêu được resolver trả về. Focus được gỡ sau recovery và khi reset trận.
+- Đây là thay đổi presentation. Không sửa damage resolver, luật chọn mục tiêu, asset, nhịp animation hay owner VFX/SFX.
+
 ## Profile chuyển động
 
 | Profile | Di chuyển | Dùng cho |

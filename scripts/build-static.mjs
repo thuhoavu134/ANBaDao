@@ -193,6 +193,9 @@ installCampaignResourceLifecycle(root);
 // P0 iOS entry: battle state must start even when AudioContext fails.
 await import('./battle-entry-fail-open-v1.mjs');
 
+// Final battle-only presentation patch. Keep after every owner that rewrites battle.html.
+await import('./combat-reference-presentation-v1.mjs');
+
 // battle.html is now the single runtime source for iframe and iOS full-page combat.
 // Do not duplicate ~1.5 MB of battle markup as base64 inside index.html; on mobile
 // that keeps two copies alive exactly when the battle document starts parsing.
