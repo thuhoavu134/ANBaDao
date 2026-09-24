@@ -42,6 +42,18 @@ jobs:
           path: evidence/browser/
           retention-days: 7
           compression-level: 0
+      - name: Host battle entry lifecycle QA
+        run: |
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
+          node scripts/qa-host-battle-entry.mjs
+      - name: Upload host entry evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: host-entry-evidence
+          path: evidence/host-entry/
+          retention-days: 7
+          compression-level: 0
       - name: Authored legacy hero browser QA
         run: |
           export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
