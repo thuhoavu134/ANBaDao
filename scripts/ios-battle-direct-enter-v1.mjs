@@ -12,10 +12,8 @@ const from = `    // Grok/iOS preview is itself an iframe; a nested battle ifram
       return;
     }`;
 
-const to = `    // iPhone/iPad WebKit can stall the large battle document inside the host
-    // iframe under six-hero memory pressure. Reuse the already-supported full-page
-    // transport on constrained Apple mobile devices so combat no longer depends on
-    // the iframe battle-ready handshake. Desktop keeps the iframe path.
+const to = `    // Keep iPhone/iPad combat in the host document so its unlocked audio context survives.
+    // Only a nested preview uses full-page transport because another iframe stays blank.
     const __HV_IOS_DIRECT_BATTLE=(()=>{try{
       const n=navigator,ua=String(n?.userAgent||''),platform=String(n?.platform||''),touch=Number(n?.maxTouchPoints||0);
       return /iPad|iPhone|iPod/i.test(ua)||(platform==='MacIntel'&&touch>1);
@@ -47,7 +45,7 @@ const watchdogTo = [
   "        }",
   "        loading.firstChild.textContent = \"Chiến trường đang khởi tạo — vui lòng chờ thêm…\";",
   "      }, 12000);"
-].join("\\n");
+].join("\n");
 if (html.split(watchdogFrom).length !== 2) {
   throw new Error('iOS direct battle fallback watchdog owner missing or ambiguous');
 }
