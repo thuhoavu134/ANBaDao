@@ -25,7 +25,7 @@ index = replaceOnce(
   index,
   `      activeBattle.enterFallback = setTimeout(() => {
         if (!activeBattle || activeBattle.sessionId !== sessionId || loading.hidden) return;
-        window.name = \`hvBattleConfig:\\${encodeURIComponent(serializedBattleConfig)}\`;
+        window.name = \`hvBattleConfig:\${encodeURIComponent(serializedBattleConfig)}\`;
         location.assign(url);
       }, 1800);`,
   `      activeBattle.enterFallback = setTimeout(() => {
