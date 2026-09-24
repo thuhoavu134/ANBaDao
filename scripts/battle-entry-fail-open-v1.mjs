@@ -12,14 +12,9 @@ function replaceOne(source,from,to,label){
 html=replaceOne(
   html,
   `  function beginBattle() {
-    if (state.mode === "battle" && dom.introPanel?.hidden) return;
-    try {
-      initAudio();
-      window.HonVietAudio?.unlock?.();
-      window.HonVietSfx?.unlock?.();
-    } catch (error) {
-      console.warn("Battle audio init skipped; combat continues.", error);
-    }
+    initAudio();
+    window.HonVietAudio?.unlock?.();
+    window.HonVietSfx?.unlock?.();
 `,
   `  function beginBattle() {
     if (state.mode === "battle" && dom.introPanel?.hidden) return;
@@ -30,7 +25,7 @@ html=replaceOne(
     } catch (error) {
       console.warn("Battle audio init skipped; combat continues.", error);
     }
-    if (EMBEDDED) {`,
+`,
   'audio fail-open'
 );
 
