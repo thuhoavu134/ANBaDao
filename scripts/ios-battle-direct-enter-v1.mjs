@@ -110,8 +110,8 @@ if (!html.includes('id="hv-ios-battle-host-memory-v1"')) {
 
 html = replaceOnce(
   html,
-  '    frame.src = url;\\n',
-  '    if (__HV_IOS_DIRECT_BATTLE) window.__HV_BATTLE_HOST_MEMORY_RELEASE?.(overlay);\\n    frame.src = url;\\n',
+  '    frame.src = url;\n',
+  '    if (__HV_IOS_DIRECT_BATTLE) window.__HV_BATTLE_HOST_MEMORY_RELEASE?.(overlay);\n    frame.src = url;\n',
   'iOS host image release before battle iframe'
 );
 
