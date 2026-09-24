@@ -72,8 +72,7 @@ battle = replaceOnce(
       window.__HV_BATTLE_BGM = bgm;
       bgm.play().catch(() => {});
     }`,
-  `    if (EMBEDDED) {
-      const parentBgm = window.parent !== window && typeof window.parent.playBgm === 'function' ? window.parent.playBgm : null;
+  `    const parentBgm = window.parent !== window && typeof window.parent.playBgm === 'function' ? window.parent.playBgm : null;
       if (parentBgm) {
         try { parentBgm('combat'); } catch (_) {}
       } else {
@@ -90,8 +89,7 @@ battle = replaceOnce(
         };
         window.__HV_BATTLE_BGM = bgm;
         bgm.play().catch(() => {});
-      }
-    }`,
+      }`,
   'beginBattle embedded BGM'
 );
 writeFileSync(battlePath, battle);
