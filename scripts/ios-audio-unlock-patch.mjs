@@ -177,6 +177,8 @@ const manager = String.raw`<script id="honviet-ios-audio-unlock">
   // Keep unlocking on every gesture until the context is running. Full-page
   // battle.html on iOS often misses the original Xuất chiến tap.
   const firstGesture=()=>{
+    // Start a direct-battle HTMLMediaElement synchronously in the gesture before awaiting AudioContext.resume().
+    try{window.__HV_BATTLE_BGM?.play?.();}catch(_e){}
     unlock().then(()=>{
       try{window.__HV_BGM_RETRY?.();}catch(_e){}
       try{window.__HV_BATTLE_BGM?.play?.();}catch(_e){}
