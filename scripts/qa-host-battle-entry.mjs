@@ -28,9 +28,9 @@ try {
       await page.wait('document.getElementById("hvLoginRoot").hidden');
       await page.evaluate('window.__qaHostDraws=0;const __qaDraw=drawBattle;drawBattle=function(...args){window.__qaHostDraws++;return __qaDraw.apply(this,args)}');
       for (let cycle = 1; cycle <= 2; cycle++) {
-        await page.evaluate('navTo("campaign")');
+        await page.click('#hubScreen [data-art-go="campaign"]');
         await page.wait('document.querySelector("[data-scene-action=prepare]") && !document.getElementById("hvCampaignScene").hidden');
-        await page.click('[data-scene-action="prepare"]');
+        await page.click('#hvCampaignScene [data-hv-afk-challenge]');
         await page.wait('!document.querySelector(".cs-prepare").hidden');
         await page.screenshot(join(out, name + '-' + cycle + '-prepare.png'));
         const began = Date.now();

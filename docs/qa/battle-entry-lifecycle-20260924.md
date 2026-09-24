@@ -45,3 +45,27 @@ CI full source build, all Node tests, host entry QA desktop + iPhone UA/DPR path
 Physical iPhone/WebKit, total device RAM and frame-rate: NOT_RUN.
 Ticket Board CLI/connector unavailable; previous owner permission to continue source/test without board is recorded in docs/vibe-brief.md. No lease or board transition is fabricated.
 Rollback: revert the task commit/PR; no save migration.
+
+## Observed verification and blockers
+
+Code commit: 919e5c2a85af925d78cb35e39fade0f32bce820c; PR #209.
+Vercel preview deployment dpl_BFhYEGmbtgiz4wiseCCVJ7BWM3aZ built successfully (READY).
+The targeted lifecycle/cache tests pass 10/10 against the actual downloaded preview index.html.
+Expanded local regression sample: 31/35 pass. Four failures reproduce on baseline:
+- battle-audio-transitions: built BGM route expects WebAudio, whereas current owner is HTMLAudioElement.
+- battle-enter-audio L158-T4: expects immediate desiredBgm call after close.
+- battle-enter-audio L158-T5: hunt helper still contains legacy pause.
+- ios-battle-streaming-budget: idle atlas remains pinned on constrained mobile.
+These are not waived or fixed by this host-lifetime change. Full suite is not declared green.
+
+GitHub Actions run 35977367339 failed on two attempts before any job steps (steps=[]).
+Log retrieval returned BlobNotFound. Check output has two annotations, but the connector rejects
+the annotations endpoint and the browser is not signed in to GitHub. Exact runner failure is unknown.
+No CI configuration was weakened. Repository AGENTS.md requires green CI before merge.
+
+Browser smoke: preview skill-test.html initialized 6v6, progressed from round 5 to 6,
+and accepted Lục Ảnh Ultimate. Reset then hit Vercel authentication in the iframe
+(vercel.com refused to connect). This is NOT a successful entry/exit/reentry acceptance run.
+Host desktop/mobile end-to-end, physical iPhone, peak device RAM and audio continuity remain NOT_RUN.
+The new QA uses actual hub campaign and challenge controls; its execution remains pending CI.
+Status: BLOCKED verification, not DONE, not merged, not production.
