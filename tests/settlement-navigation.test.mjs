@@ -37,6 +37,19 @@ test('battle bridge protocol annotates every parent message and remains syntacti
   for (const body of scriptBodies) new Function(body);
 });
 
+test('the shared battle host message helper satisfies the settlement protocol', () => {
+  const battle = read('../dist/battle.html');
+  const start = battle.indexOf('function postToHonVietHost(type, payload)');
+  const end = battle.indexOf('window.postToHonVietHost = postToHonVietHost;', start);
+  assert.ok(start >= 0 && end > start, 'shared host bridge exists');
+  const bridge = battle.slice(start, end);
+  assert.match(bridge, /schema:"hon-viet-battle\/v1"/);
+  assert.match(bridge, /schemaVersion:1/);
+  assert.match(bridge, /sequence:\(window\.__HV_MESSAGE_SEQUENCE=/);
+  assert.match(bridge, /origin:location\.origin/);
+  assert.match(bridge, /parent\.postMessage\(message, "\*"\)/);
+});
+
 test('settlement hook keeps existing reward values but commits before progress/navigation', () => {
   const patch = read('../scripts/settlement-navigation-v1.mjs');
   const hookStart = patch.indexOf('const newHooks = [');
