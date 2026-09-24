@@ -1,3 +1,9 @@
+## 2026-09-24 — Battle entry lifecycle optimized (PR #209)
+
+PR #209 merged to main at `9102b874f08966a3873c1cf3718c3c98aa586a2d`; Vercel production deployment `dpl_3dRP7nNQiM6oxNCWFcMNGCCwU8Rh` is READY and `luc-than-amber.vercel.app` serves the patched root (HTTP 200). Host battle atlases now load lazily, are released during integrated battle, and hidden legacy rendering pauses. Authored source resolution is preserved.
+
+Targeted lifecycle/cache tests: 10/10 on preview output. Broader sample: 31/35; four pre-existing failures reproduced on baseline. GitHub Actions failed before steps on two attempts. Real host entry/exit/re-entry and physical iPhone audio/crash checks remain open. Full detail and next-agent actions: [handoff](HANDOFF-BATTLE-ENTRY-2026-09-24.md), [audit](qa/battle-entry-lifecycle-20260924.md).
+
 ## 2026-09-23 — Seamless audio transition repair · PR #208 REVIEW
 
 Use the host shared Web Audio context for hub/combat/result tracks. Crossfade after the next track decodes; keep the active track alive through result-frame close and route handoff. Preserve profile BGM volume and hunt pause. Focused audio/lifecycle tests 15/15 PASS; local full build BLOCKED by missing partial-checkout module. CI #694 + retry fail before steps; logs return BlobNotFound, exact cause UNVERIFIED. No merge; physical iPhone/Safari NOT RUN. Evidence: [audio transition QA](qa/audio-transition-20260923/contract.md).
