@@ -36,3 +36,40 @@ test('orphaned skill options cannot cast after their actor leaves the battle', (
   const options = loadOptions(actor, () => null, state, engine)(actor);
   assert.equal(options.getState().canUse.skill, false);
 });
+
+
+test('S+ mechanics failure fails open instead of aborting battle bootstrap', () => {
+  const source = readFileSync(new URL('../src/runtime/splus-battle-bridge.js', import.meta.url), 'utf8');
+  const actor = { id:'p', sourceId:'hero_splus_test', hp:100, maxHp:100, energy:35, statuses:[] };
+  const warnings = [];
+  const context = vm.createContext({
+    HEROES:[actor], units:[actor],
+    __hvRuleRandom3qAdapter:()=>0.5,
+    console:{ warn:(...args)=>warnings.push(args) },
+    SPLUS42:{
+      catalog:[{id:'hero_splus_test'}],
+      create(){ throw new Error('synthetic S+ bootstrap failure'); }
+    }
+  });
+  vm.runInContext(`${source}\nglobalThis.__combat = splusCombat;`, context);
+  assert.doesNotThrow(() => assert.equal(context.__combat(), null));
+  assert.equal(context.__combat(), null, 'failed S+ owner must stay disabled for the current battle');
+  assert.equal(warnings.length, 1, 'failure should be reported once without killing battle boot');
+});
+
+test('missing optional S+ action-zone UI cannot block battle bootstrap', () => {
+  const source = readFileSync(new URL('../src/runtime/splus-battle-bridge.js', import.meta.url), 'utf8');
+  const context = vm.createContext({
+    state:{currentId:null},
+    getUnit:()=>null,
+    document:{
+      querySelector:()=>null,
+      getElementById:()=>null,
+      createElement(){ throw new Error('optional HUD should not allocate without a host'); }
+    },
+    SPLUS42:{profiles:{}},
+    createSplusSkillUI(){ throw new Error('optional UI factory should not run without a host'); }
+  });
+  vm.runInContext(`${source}\nglobalThis.__skillBar = splusSkillBar;`, context);
+  assert.doesNotThrow(() => context.__skillBar());
+});
