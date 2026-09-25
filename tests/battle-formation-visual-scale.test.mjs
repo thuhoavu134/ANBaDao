@@ -60,12 +60,37 @@ test('portrait formation has six unique slots per side, compact rows and mirrore
   // Keep the reference-fit vertical spread, add 6 world px between columns and 10 world px
   // of rear-edge clearance while mobile character scale is normalized from live alpha bounds.
   assert.equal(PORTRAIT_FORMATION.edgeInset,63);
+  assert.equal(PORTRAIT_FORMATION.frontlineYOffset,22);
   assert.equal(PORTRAIT_FORMATION.edgeInset+PORTRAIT_FORMATION.columnGap,177);
   assert.equal(PORTRAIT_FORMATION.rows[1]-PORTRAIT_FORMATION.rows[0],195);
   assert.equal(PORTRAIT_FORMATION.rows[2]-PORTRAIT_FORMATION.rows[1],195);
   for(let i=0;i<6;i++){
     approx(formation.player[i].x+formation.enemy[i].x,BATTLE_WORLD.width);
-    assert.equal(formation.player[i].y,formation.enemy[i].y);
+    if(i<3){
+      const baseY=PORTRAIT_FORMATION.rows[i];
+      approx((formation.player[i].y+formation.enemy[i].y)/2,baseY);
+      approx(baseY-formation.player[i].y,PORTRAIT_FORMATION.frontlineYOffset);
+      approx(formation.enemy[i].y-baseY,PORTRAIT_FORMATION.frontlineYOffset);
+    }else{
+      assert.equal(formation.player[i].y,formation.enemy[i].y);
+    }
+  }
+});
+
+test('portrait opposing frontline gains symmetric combat-lane separation without changing locked horizontal geometry',()=>{
+  for(const viewport of mobileStages){
+    const formation=battleFormationForViewport(viewport.width,viewport.height);
+    for(let row=0;row<3;row++){
+      const playerFront=formation.player[row],enemyFront=formation.enemy[row];
+      const baselineDistance=Math.abs(enemyFront.x-playerFront.x);
+      const currentDistance=Math.hypot(enemyFront.x-playerFront.x,enemyFront.y-playerFront.y);
+      assert.equal(Math.abs(enemyFront.y-playerFront.y),PORTRAIT_FORMATION.frontlineYOffset*2);
+      assert.ok(currentDistance>baselineDistance,viewport.screen+` row ${row+1} opposing frontline distance must increase over the vertically-coincident baseline`);
+      approx(Math.abs(formation.player[row].x-formation.player[row+3].x),PORTRAIT_FORMATION.columnGap);
+      approx(Math.abs(formation.enemy[row].x-formation.enemy[row+3].x),PORTRAIT_FORMATION.columnGap);
+      assert.equal(formation.player[row+3].y,PORTRAIT_FORMATION.rows[row]);
+      assert.equal(formation.enemy[row+3].y,PORTRAIT_FORMATION.rows[row]);
+    }
   }
 });
 
@@ -168,6 +193,7 @@ context.scale(depthScale * identityScale, depthScale * identityScale);`;
   const patched=applyBattleFormationScale(fixture);
   assert.match(patched,/function battleFormationForViewport\(/);
   assert.match(patched,/function battleCharacterScale\(/);
+  assert.match(patched,/frontlineYOffset:22/);
   assert.match(patched,/const HERO_VISUAL_SCALE=Object\.freeze\(\{default:1,hero_splus_linh_dong:0\.57,hero_splus_bach_dien:0\.61\}\)/);
   assert.match(patched,/hero_splus_linh_dong:0\.9210526316/);
   assert.match(patched,/battleCharacterVisualOffsetX\(unit\)/);
