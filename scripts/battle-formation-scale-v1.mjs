@@ -17,6 +17,7 @@ export const PORTRAIT_FORMATION = Object.freeze({
   rows: Object.freeze([285,480,675]),
   columnGap: 114,
   edgeInset: 63,
+  frontlineYOffset: 22,
   compactCropWidth: 1200
 });
 export const BATTLE_CHARACTER_SCALE = Object.freeze({ portrait:0.52, desktop:0.74 });
@@ -56,13 +57,14 @@ export function battleFormationForViewport(width,height){
   const leftFront=leftBack+PORTRAIT_FORMATION.columnGap;
   const rightBack=crop.right-PORTRAIT_FORMATION.edgeInset;
   const rightFront=rightBack-PORTRAIT_FORMATION.columnGap;
+  const frontlineYOffset=PORTRAIT_FORMATION.frontlineYOffset;
   return {
     player:[
-      {x:leftFront,y:row1},{x:leftFront,y:row2},{x:leftFront,y:row3},
+      {x:leftFront,y:row1-frontlineYOffset},{x:leftFront,y:row2-frontlineYOffset},{x:leftFront,y:row3-frontlineYOffset},
       {x:leftBack,y:row1},{x:leftBack,y:row2},{x:leftBack,y:row3}
     ],
     enemy:[
-      {x:rightFront,y:row1},{x:rightFront,y:row2},{x:rightFront,y:row3},
+      {x:rightFront,y:row1+frontlineYOffset},{x:rightFront,y:row2+frontlineYOffset},{x:rightFront,y:row3+frontlineYOffset},
       {x:rightBack,y:row1},{x:rightBack,y:row2},{x:rightBack,y:row3}
     ]
   };
@@ -99,7 +101,7 @@ export function battleCharacterVisualOffsetXForViewport(unitOrId,team,width,heig
   return team==='enemy'?-amount:amount;
 }
 
-const RUNTIME_LAYOUT=`const PORTRAIT_FORMATION=Object.freeze({rows:Object.freeze([285,480,675]),columnGap:114,edgeInset:63,compactCropWidth:1200});
+const RUNTIME_LAYOUT=`const PORTRAIT_FORMATION=Object.freeze({rows:Object.freeze([285,480,675]),columnGap:114,edgeInset:63,frontlineYOffset:22,compactCropWidth:1200});
   const BATTLE_CHARACTER_SCALE=Object.freeze({portrait:0.52,desktop:0.74});
   const HERO_VISUAL_SCALE=Object.freeze({default:1,hero_splus_linh_dong:0.57,hero_splus_bach_dien:0.61});
   const HERO_VISUAL_HORIZONTAL_SCALE=Object.freeze({default:1,hero_splus_linh_dong:0.9210526316});
@@ -120,9 +122,10 @@ const RUNTIME_LAYOUT=`const PORTRAIT_FORMATION=Object.freeze({rows:Object.freeze
     const crop=battleWorldCropForViewport(width,height),rows=PORTRAIT_FORMATION.rows;
     const leftBack=crop.left+PORTRAIT_FORMATION.edgeInset,leftFront=leftBack+PORTRAIT_FORMATION.columnGap;
     const rightBack=crop.right-PORTRAIT_FORMATION.edgeInset,rightFront=rightBack-PORTRAIT_FORMATION.columnGap;
+    const frontlineYOffset=PORTRAIT_FORMATION.frontlineYOffset;
     return {
-      player:[{x:leftFront,y:rows[0]},{x:leftFront,y:rows[1]},{x:leftFront,y:rows[2]},{x:leftBack,y:rows[0]},{x:leftBack,y:rows[1]},{x:leftBack,y:rows[2]}],
-      enemy:[{x:rightFront,y:rows[0]},{x:rightFront,y:rows[1]},{x:rightFront,y:rows[2]},{x:rightBack,y:rows[0]},{x:rightBack,y:rows[1]},{x:rightBack,y:rows[2]}]
+      player:[{x:leftFront,y:rows[0]-frontlineYOffset},{x:leftFront,y:rows[1]-frontlineYOffset},{x:leftFront,y:rows[2]-frontlineYOffset},{x:leftBack,y:rows[0]},{x:leftBack,y:rows[1]},{x:leftBack,y:rows[2]}],
+      enemy:[{x:rightFront,y:rows[0]+frontlineYOffset},{x:rightFront,y:rows[1]+frontlineYOffset},{x:rightFront,y:rows[2]+frontlineYOffset},{x:rightBack,y:rows[0]},{x:rightBack,y:rows[1]},{x:rightBack,y:rows[2]}]
     };
   }
   function canonicalBattleHeroId(value){
