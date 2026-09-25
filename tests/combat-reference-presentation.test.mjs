@@ -9,12 +9,20 @@ import {
 
 const battle = fs.readFileSync(new URL('../battle.html', import.meta.url), 'utf8');
 const build = fs.readFileSync(new URL('../scripts/build-static.mjs', import.meta.url), 'utf8');
+const presentationPatch = fs.readFileSync(new URL('../scripts/combat-reference-presentation-v1.mjs', import.meta.url), 'utf8');
 
-test('portrait formation matches the reference spread and keeps sprites readable', () => {
+test('reference presentation does not own portrait formation or character scale', () => {
+  assert.doesNotMatch(presentationPatch, /MOBILE_POSITIONS/, 'formation belongs only to battle-formation-scale-v1');
+  assert.doesNotMatch(presentationPatch, /portrait hero scale|innerWidth < 600 \? 0\.57 : 0\.74/, 'character scale belongs only to battle-formation-scale-v1');
+
   const patched = applyCombatReferencePresentation(battle);
-  assert.match(patched, /player:\s*\[\s*\{ x: 650, y: 340 \}, \{ x: 650, y: 520 \}, \{ x: 650, y: 700 \},\s*\{ x: 470, y: 340 \}/);
-  assert.match(patched, /enemy:\s*\[\s*\{ x: 950, y: 340 \}, \{ x: 950, y: 520 \}, \{ x: 950, y: 700 \},\s*\{ x: 1130, y: 340 \}/);
-  assert.match(patched, /innerWidth < 600 \? 0\.57 : 0\.74/);
+  const mobileBlock = source => source.match(/  const MOBILE_POSITIONS = Object\.freeze\(\{[\s\S]*?\n  \}\);/)?.[0];
+  assert.equal(mobileBlock(patched), mobileBlock(battle), 'reference presentation must preserve the baseline formation block');
+  assert.equal(
+    (patched.match(/innerWidth < 600 \? 0\.52 : 0\.74/g) || []).length,
+    (battle.match(/innerWidth < 600 \? 0\.52 : 0\.74/g) || []).length,
+    'reference presentation must preserve baseline portrait scale literals'
+  );
 });
 
 test('contact movement clamps the approach distance to avoid crowding the target', () => {
