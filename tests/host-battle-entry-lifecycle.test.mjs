@@ -28,7 +28,7 @@ test('browser QA matches direct-iPhone P0 transport and requires two successful 
   assert.doesNotMatch(hostQa, /iphone-path/, 'host iframe lifecycle QA must not pretend direct iPhone still owns an iframe');
   assert.match(reentryQa, /for\s*\(let cycle\s*=\s*1;\s*cycle\s*<=\s*2;\s*cycle\+\+\)/, 'P0 QA must enter battle twice');
   assert.match(reentryQa, /actionCount\s*>=\s*2/, 'each entry must prove real action progression');
-  assert.match(reentryQa, /battle-abort|exitBattleButton|hvBattleReturn/, 'P0 QA must exercise a real return path between entries');
+  assert.match(reentryQa, /data-ref-nav=.*hub|battle-nav|hvBattleReturn/, 'P0 QA must exercise the visible direct-battle navigation return path between entries');
   assert.match(ciWorkflow, /node scripts\/qa-formation-entry-p0\.mjs/, 'two-entry P0 QA must be part of CI');
 });
 
