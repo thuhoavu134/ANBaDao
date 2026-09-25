@@ -1,6 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
 import { patchBachDienImpactOwner } from '../src/combat-domain/bach-dien-impact-owner.mjs';
+
+const runtimePatch = fs.readFileSync(new URL('../scripts/bach-dien-canvas-runtime-v1.mjs', import.meta.url), 'utf8');
 
 const POST_LINH_DONG_TRACED = `    const linhImpact=usesLinhDong?actor._linhDongAction:null;
     const resolveAtImpact=!linhImpact||!linhImpact.impactResolved;
@@ -31,4 +34,10 @@ test('Bạch Diện impact owner refuses an unknown impact shape instead of sile
     () => patchBachDienImpactOwner('    resolveSomethingElse(actor);'),
     /Bạch Diện impact owner anchor missing/
   );
+});
+
+
+test('Bạch Diện runtime delegates impact ownership to the canonical helper and never silently warns', () => {
+  assert.match(runtimePatch, /patchBachDienImpactOwner\(html\)/);
+  assert.doesNotMatch(runtimePatch, /impact\/trace anchor missing|keeping existing canonical trace owner/);
 });
