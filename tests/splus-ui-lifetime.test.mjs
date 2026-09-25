@@ -73,3 +73,13 @@ test('missing optional S+ action-zone UI cannot block battle bootstrap', () => {
   vm.runInContext(`${source}\nglobalThis.__skillBar = splusSkillBar;`, context);
   assert.doesNotThrow(() => context.__skillBar());
 });
+
+
+test('S+ displacement reuses the current crop-aware formation owner after P0 recovery', () => {
+  const source = readFileSync(new URL('../src/runtime/splus-battle-bridge.js', import.meta.url), 'utf8');
+  const block = source.slice(source.indexOf("if(event.type==='displacement'||event.type==='swap')"), source.indexOf('function splusStateView'));
+  assert.match(block, /typeof battleFormationForViewport==='function'/);
+  assert.match(block, /battleFormationForViewport\(rect\.width,rect\.height\)/);
+  assert.match(block, /typeof mobileFormationForViewport==='function'/, 'legacy formation remains fallback-only for older builds');
+  assert.doesNotMatch(block, /innerWidth<600\?MOBILE_POSITIONS:POSITIONS/, 'stale direct MOBILE_POSITIONS owner must not return');
+});
