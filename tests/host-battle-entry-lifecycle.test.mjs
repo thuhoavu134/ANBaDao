@@ -4,6 +4,9 @@ import { readFileSync, existsSync } from 'node:fs';
 import vm from 'node:vm';
 
 const html = readFileSync(existsSync('dist/index.html') ? 'dist/index.html' : 'baseline/index.html', 'utf8');
+const hostQa = readFileSync('scripts/qa-host-battle-entry.mjs', 'utf8');
+const reentryQa = readFileSync('scripts/qa-formation-entry-p0.mjs', 'utf8');
+const ciWorkflow = readFileSync('.github/workflows/ci.yml', 'utf8');
 function hostAssets() {
   const requests = [], images = [];
   class Image {
@@ -20,6 +23,14 @@ function hostAssets() {
   vm.runInNewContext(html.slice(start, end) + '\nwindow.testImages=LUC_ANH_IMAGES;', context);
   return { context, requests, images, owner: context.window.__HV_HOST_ATLASES };
 }
+
+test('browser QA matches direct-iPhone P0 transport and requires two successful entries', () => {
+  assert.doesNotMatch(hostQa, /iphone-path/, 'host iframe lifecycle QA must not pretend direct iPhone still owns an iframe');
+  assert.match(reentryQa, /for\s*\(let cycle\s*=\s*1;\s*cycle\s*<=\s*2;\s*cycle\+\+\)/, 'P0 QA must enter battle twice');
+  assert.match(reentryQa, /actionCount\s*>=\s*2/, 'each entry must prove real action progression');
+  assert.match(reentryQa, /battle-abort|exitBattleButton|hvBattleReturn/, 'P0 QA must exercise a real return path between entries');
+  assert.match(ciWorkflow, /node scripts\/qa-formation-entry-p0\.mjs/, 'two-entry P0 QA must be part of CI');
+});
 
 test('host does not request combat atlas sets at boot', () => {
   const { requests } = hostAssets();
