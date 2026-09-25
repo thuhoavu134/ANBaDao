@@ -16,6 +16,27 @@ export function isCombatFocusUnitVisible(focus, unitId) {
     (Array.isArray(focus.targetIds) && focus.targetIds.some((targetId) => String(targetId) === id));
 }
 
+export function calculateMobileFormation({ width, height, worldWidth = 1600, worldHeight = 870 }) {
+  const safeWidth = Math.max(1, Number(width) || 1);
+  const safeHeight = Math.max(1, Number(height) || 1);
+  const scale = Math.max(safeWidth / worldWidth, safeHeight / worldHeight);
+  const visibleWorldWidth = Math.min(worldWidth, safeWidth / scale);
+  // The reference keeps the outer columns near the screen edges and leaves a\n  // wider lane between front and rear heroes. Express the edge inset as a\n  // world-space margin so it remains stable across portrait viewport sizes.\n  const rearOffset = Math.max(0, visibleWorldWidth / 2 - Math.max(68, visibleWorldWidth * 0.13));
+  const frontOffset = Math.min(92, rearOffset * 0.55);
+  const center = worldWidth / 2;
+  const lanes = [340, 528, 688];
+  return {
+    player: [
+      ...lanes.map((y) => ({ x: center - frontOffset, y })),
+      ...lanes.map((y) => ({ x: center - rearOffset, y })),
+    ],
+    enemy: [
+      ...lanes.map((y) => ({ x: center + frontOffset, y })),
+      ...lanes.map((y) => ({ x: center + rearOffset, y })),
+    ],
+  };
+}
+
 function replaceRequired(source, expression, replacement, label) {
   if (!expression.test(source)) throw new Error(`combat-reference-presentation missing ${label}`);
   return source.replace(expression, replacement);
@@ -27,8 +48,16 @@ export function applyCombatReferencePresentation(source) {
 
   html = replaceRequired(html,
     /  const MOBILE_POSITIONS = Object\.freeze\(\{[\s\S]*?\n  \}\);/,
-    `  // Reference portrait formation: outer/backline heroes stay near the screen edges; frontliners frame the center lane.\n  const MOBILE_POSITIONS = Object.freeze({\n    player: [\n      { x: 650, y: 340 }, { x: 650, y: 520 }, { x: 650, y: 700 },\n      { x: 470, y: 340 }, { x: 470, y: 520 }, { x: 470, y: 700 }\n    ],\n    enemy: [\n      { x: 950, y: 340 }, { x: 950, y: 520 }, { x: 950, y: 700 },\n      { x: 1130, y: 340 }, { x: 1130, y: 520 }, { x: 1130, y: 700 }\n    ]\n  });`,
+    `  // Fit both mobile columns inside the portrait camera's actual world-space crop.\n  const calculateMobileFormation = ${calculateMobileFormation.toString()};\n  function mobileFormationForViewport() {\n    const rect = dom.viewport.getBoundingClientRect();\n    return calculateMobileFormation({ width: rect.width || innerWidth, height: rect.height || innerHeight });\n  }`,
     'portrait formation');
+  html = replaceRequired(html,
+    /(function createUnits\(\) \{\n    const synergies=currentTeamSynergies\(\);)/,
+    '$1\n    const mobilePositions = (innerWidth < 600 || (innerHeight > innerWidth && innerWidth <= 1180)) ? mobileFormationForViewport() : null;',
+    'viewport-aware formation selection');
+  html = replaceRequired(html,
+    /(?:const position = \(innerWidth < 600 \? MOBILE_POSITIONS : POSITIONS\)\[hero\.team\]\[hero\.slot\];|const battleCompactViewport = innerWidth < 600 \|\| \(innerHeight > innerWidth && innerWidth <= 1180\);\s*const position = \(battleCompactViewport \? MOBILE_POSITIONS : POSITIONS\)\[hero\.team\]\[hero\.slot\];)/,
+    'const position = (mobilePositions || POSITIONS)[hero.team][hero.slot];',
+    'mobile formation lookup');
 
   html = replaceRequired(html,
     /contact: Object\.freeze\(\{ movesToTarget: true, standoff: 96, laneOffset: 8 \}\),/,
@@ -48,7 +77,7 @@ export function applyCombatReferencePresentation(source) {
     'Đình Lôi reference standoff');
   html = replaceRequired(html,
     /innerWidth < 600 \? 0\.52 : 0\.74/,
-    'innerWidth < 600 ? 0.57 : 0.74',
+    'innerWidth < 600 ? 0.40 : 0.74',
     'portrait hero scale');
 
   const helperSource = `\n  // HV_REFERENCE_COMBAT_PRESENTATION_V1\n  ${createCombatUltimateFocus.toString()}\n  ${isCombatFocusUnitVisible.toString()}\n`;
