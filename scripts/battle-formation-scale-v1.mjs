@@ -187,7 +187,7 @@ export function applyBattleFormationScale(source){
   );
   s=replaceOnce(
     s,
-    /    const identityScale = \(innerWidth < 600 \? 0\.57 : 0\.74\) \* \(importedIdentity \? \(0\.94 \+ \(sourceSeed % 13\) \/ 100\) : 1\);/,
+    /    const identityScale = \(innerWidth < 600 \? 0\.(?:52|57) : 0\.74\) \* \(importedIdentity \? \(0\.94 \+ \(sourceSeed % 13\) \/ 100\) : 1\);/,
     '    const identityScale = battleCharacterScale(unit);',
     'generic character scale'
   );
