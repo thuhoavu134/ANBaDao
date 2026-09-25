@@ -195,6 +195,7 @@ await import('./battle-entry-fail-open-v1.mjs');
 
 // Final battle-only presentation patch. Keep after every owner that rewrites battle.html.
 await import('./combat-reference-presentation-v1.mjs');
+await import('./battle-formation-scale-v1.mjs');
 
 // battle.html is now the single runtime source for iframe and iOS full-page combat.
 // Do not duplicate ~1.5 MB of battle markup as base64 inside index.html; on mobile
@@ -206,3 +207,4 @@ embeddedIndex = embeddedIndex.replace(embeddedExpression, 'const BATTLE_HTML_BAS
 writeFileSync(join(out, 'index.html'), embeddedIndex);
 console.log('Battle runtime served from battle.html; embedded base64 payload disabled.');
 console.log(`Static preview written to ${out}`);
+
