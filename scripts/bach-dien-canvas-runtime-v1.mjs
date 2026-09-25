@@ -122,7 +122,7 @@ function drawBachDienHero(context,unit,time){
   const elapsed=actionClock&&['attack','ultimate'].includes(key)?actionClock.elapsedMs():key==='idle'?time:Math.max(0,time-(unit.stateStarted||time));
   const frame=bachDienFrame(key,elapsed,loop);
   context.save();context.shadowColor='rgba(180,40,50,.28)';context.shadowBlur=['attack','ultimate'].includes(key)?14:5;
-  const drawn=drawBachDienAtlas(context,key,frame,0,0,240,220,{baseline:32,flip:unit.team===TEAM_ENEMY}) || (key!=='idle' && drawBachDienAtlas(context,'idle',bachDienFrame('idle',time,true),0,0,240,220,{baseline:32,flip:unit.team===TEAM_ENEMY}));context.restore();return !!drawn;
+  const drawn=drawBachDienAtlas(context,key,frame,0,0,477,440,{baseline:64,flip:unit.team===TEAM_ENEMY}) || (key!=='idle' && drawBachDienAtlas(context,'idle',bachDienFrame('idle',time,true),0,0,477,440,{baseline:64,flip:unit.team===TEAM_ENEMY}));context.restore();return !!drawn;
 }
 let bachDienFx=null;
 function beginBachDienAction(actor,action,target,battleId){
