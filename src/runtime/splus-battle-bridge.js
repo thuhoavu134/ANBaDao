@@ -3,8 +3,10 @@
 let splusEngine = null;
 let splusPresentation = null;
 let splusSkillUI=null;
+let splusRuntimeDisabled=false;
 function splusReset(){
-  splusSkillUI?.destroy();splusSkillUI=null;splusEngine=null;splusPresentation=null;
+  try{splusSkillUI?.destroy();}catch(error){console.warn('S+ optional UI cleanup skipped; battle continues.',error);}
+  splusSkillUI=null;splusEngine=null;splusPresentation=null;splusRuntimeDisabled=false;
   document.getElementById('splus-battle-skills')?.remove();
   document.getElementById('splus-status-panel')?.remove();
   document.body.classList.remove('splus-battle');
@@ -27,23 +29,40 @@ function splusTargetTeam(actor,candidates,fallback){
   return teams.size===1?[...teams][0]:fallback;
 }
 function splusSkillBar(){
+  const host=document.querySelector('.action-zone');
+  if(!host||typeof globalThis.createSplusSkillUI!=='function'||!globalThis.SPLUS42?.profiles)return false;
   if(!splusSkillUI)splusSkillUI=globalThis.createSplusSkillUI(globalThis.SPLUS42.profiles);
   const actor=getUnit(state.currentId);let strip=document.getElementById('splus-battle-skills');
-  if(!strip){strip=document.createElement('div');strip.id='splus-battle-skills';strip.className='splus-skill-strip';document.querySelector('.action-zone').prepend(strip);}
-  if(actor&&strip.dataset.actorId!==actor.id){strip.dataset.actorId=actor.id;const slots=typeof isLinhDong==='function'&&isLinhDong(actor)?['passive','ultimate']:['passive','skill','ultimate'];strip.replaceChildren(...slots.map(slot=>splusSkillUI.button(actor.sourceId,slot,splusSkillOptions(actor))));}
-  splusSkillUI.refresh();
+  if(!strip){strip=document.createElement('div');strip.id='splus-battle-skills';strip.className='splus-skill-strip';host.prepend(strip);}
+  if(actor&&strip.dataset.actorId!==actor.id){
+    strip.dataset.actorId=actor.id;
+    const slots=typeof isLinhDong==='function'&&isLinhDong(actor)?['passive','ultimate']:['passive','skill','ultimate'];
+    strip.replaceChildren(...slots.map(slot=>splusSkillUI.button(actor.sourceId,slot,splusSkillOptions(actor))).filter(Boolean));
+  }
+  splusSkillUI.refresh();return true;
 }
 function splusFloater(target,amount,healing=false,critical=false) {
   if(!(amount>0))return;
   if(splusPresentation){const id=target.id+':'+healing,previous=splusPresentation.get(id);splusPresentation.set(id,{target,amount:amount+(previous?.amount||0),healing,critical:critical||previous?.critical});return;}
   addFloater(target,`${healing?'+':'−'}${amount}`,healing?'#8fe7bd':critical?'#ffd76f':'#ff9688',critical);
 }
-function splusActive() { return HEROES.some(h => globalThis.SPLUS42.catalog.some(c => c.id === h.sourceId)); }
+function splusActive() {
+  const catalog=globalThis.SPLUS42?.catalog;
+  return !splusRuntimeDisabled&&Array.isArray(catalog)&&HEROES.some(h=>catalog.some(c=>c.id===h.sourceId));
+}
 function splusCombat() {
   if (!splusActive() || !units.length) return null;
   if (!splusEngine) {
-    splusEngine = globalThis.SPLUS42.create({units, mutate:true, rng:site => __hvRuleRandom3qAdapter(site), onEvent:splusEvent});
-    splusEngine.start();
+    try{
+      const engine=globalThis.SPLUS42.create({units, mutate:true, rng:site => __hvRuleRandom3qAdapter(site), onEvent:splusEvent});
+      engine.start();
+      splusEngine=engine;
+    }catch(error){
+      splusRuntimeDisabled=true;
+      splusEngine=null;
+      console.warn('S+ runtime bootstrap failed; falling back to core combat for this battle.',error);
+      return null;
+    }
   }
   return splusEngine;
 }
@@ -65,34 +84,42 @@ function splusEvent(event) {
   }
   if(t&&event.type==='airborne')t.splusAirborneUntil=performance.now()+event.seconds*1000;
   if(event.type==='displacement'||event.type==='swap'){
-    for(const u of units){const p=(innerWidth<600?MOBILE_POSITIONS:POSITIONS)[u.team][u.slot];u.baseX=p.x;u.baseY=p.y;u.x=p.x;u.y=p.y;u.homeAnchorId=`${u.team}:slot-${u.slot}`;u.homeAnchor={x:p.x,y:p.y};}
+    const compact=innerWidth<600||(innerHeight>innerWidth&&innerWidth<=1180);
+    const positions=compact&&typeof mobileFormationForViewport==='function'?mobileFormationForViewport():POSITIONS;
+    for(const u of units){const p=positions[u.team][u.slot];u.baseX=p.x;u.baseY=p.y;u.x=p.x;u.y=p.y;u.homeAnchorId=`${u.team}:slot-${u.slot}`;u.homeAnchor={x:p.x,y:p.y};}
   }
 }
 function splusStateView() {
-  const e=splusCombat();if(!e)return;
-  splusSkillBar();
-  let panel=document.getElementById('splus-status-panel');
-  if(!panel){panel=document.createElement('section');panel.id='splus-status-panel';panel.setAttribute('aria-label','Trạng thái 42 tướng S+');document.body.append(panel);}
-  document.body.classList.add('splus-battle');
-  const heading=document.createElement('h2');heading.textContent=`Ấn ký trận đấu · Hiệp ${state.round||1}`;
-  const grid=document.createElement('div');grid.className='splus-status-grid';
-  for(const u of units){
-    const card=document.createElement('article');card.dataset.heroId=u.sourceId;card.dataset.team=u.team;
-    const name=document.createElement('strong');name.textContent=`${u.name} · ${u.team===TEAM_PLAYER?'Ta':'Địch'} · Ô ${u.slot+1}`;
-    const health=document.createElement('p');health.textContent=`HP ${Math.round(u.hp)}/${u.maxHp} · Nộ ${Math.round(u.energy)} · Khiên ${Math.round(u.shield)}`;
-    const list=document.createElement('ul');
-    for(const s of e.hud(u)){
-      const li=document.createElement('li');li.dataset.iconId=s.iconId||'';li.dataset.effect=s.type;li.dataset.sourceId=s.sourceId||'';li.dataset.polarity=s.polarity;
-      const source=getUnit(s.sourceId);li.textContent=`${s.name} · ${globalThis.SPLUS42.labels[s.type]||s.type}${s.stacks>1?` ×${s.stacks}`:''}${s.charges!=null?` · ${s.charges} lần`:''} · ${s.remainingRounds==null?'Duy trì':`${s.remainingRounds} hiệp`} · ${source?.name||'Nguồn không còn'}`;list.append(li);
+  try{
+    const e=splusCombat();if(!e)return false;
+    splusSkillBar();
+    let panel=document.getElementById('splus-status-panel');
+    if(!panel){panel=document.createElement('section');panel.id='splus-status-panel';panel.setAttribute('aria-label','Trạng thái 42 tướng S+');document.body.append(panel);}
+    document.body.classList.add('splus-battle');
+    const heading=document.createElement('h2');heading.textContent=`Ấn ký trận đấu · Hiệp ${state.round||1}`;
+    const grid=document.createElement('div');grid.className='splus-status-grid';
+    for(const u of units){
+      const card=document.createElement('article');card.dataset.heroId=u.sourceId;card.dataset.team=u.team;
+      const name=document.createElement('strong');name.textContent=`${u.name} · ${u.team===TEAM_PLAYER?'Ta':'Địch'} · Ô ${u.slot+1}`;
+      const health=document.createElement('p');health.textContent=`HP ${Math.round(u.hp)}/${u.maxHp} · Nộ ${Math.round(u.energy)} · Khiên ${Math.round(u.shield)}`;
+      const list=document.createElement('ul');
+      for(const status of e.hud(u)){
+        const li=document.createElement('li');li.dataset.iconId=status.iconId||'';li.dataset.effect=status.type;li.dataset.sourceId=status.sourceId||'';li.dataset.polarity=status.polarity;
+        const source=getUnit(status.sourceId);li.textContent=`${status.name} · ${globalThis.SPLUS42.labels[status.type]||status.type}${status.stacks>1?` ×${status.stacks}`:''}${status.charges!=null?` · ${status.charges} lần`:''} · ${status.remainingRounds==null?'Duy trì':`${status.remainingRounds} hiệp`} · ${source?.name||'Nguồn không còn'}`;list.append(li);
+      }
+      if(!list.childElementCount){const li=document.createElement('li');li.textContent=u.hp>0?'Chưa có ấn ký':'Đã gục ngã';list.append(li);}
+      card.append(name,health,list);grid.append(card);
     }
-    if(!list.childElementCount){const li=document.createElement('li');li.textContent=u.hp>0?'Chưa có ấn ký':'Đã gục ngã';list.append(li);}
-    card.append(name,health,list);grid.append(card);
-  }
-  panel.replaceChildren(heading,grid);
-  if(new URLSearchParams(location.search).has('qaSplus42')){
-    const details=document.createElement('details'),summary=document.createElement('summary'),pre=document.createElement('pre');summary.textContent='Evidence trận S+ (QA)';pre.id='splus-evidence';
-    const actions=e.events.filter(x=>x.type==='action');
-    pre.textContent=JSON.stringify({schema:e.schema,mode:state.mode,round:e.round,actionCount:actions.length,eventCount:e.events.length,actionsByHero:actions.reduce((a,x)=>{const id=getUnit(x.sourceId)?.sourceId;a[id]??=[];if(!a[id].includes(x.action))a[id].push(x.action);return a;},{}),uniqueSlots:new Set(units.filter(u=>u.hp>0).map(u=>`${u.team}:${u.slot}`)).size,alive:units.filter(u=>u.hp>0).length,finite:units.every(u=>Number.isFinite(u.hp)&&Number.isFinite(u.energy)),statuses:units.map(u=>({id:u.id,heroId:u.sourceId,hp:u.hp,rage:u.energy,marks:e.hud(u)})),events:e.events.slice(-60)},null,2);details.append(summary,pre);panel.append(details);
+    panel.replaceChildren(heading,grid);
+    if(new URLSearchParams(location.search).has('qaSplus42')){
+      const details=document.createElement('details'),summary=document.createElement('summary'),pre=document.createElement('pre');summary.textContent='Evidence trận S+ (QA)';pre.id='splus-evidence';
+      const actions=e.events.filter(x=>x.type==='action');
+      pre.textContent=JSON.stringify({schema:e.schema,mode:state.mode,round:e.round,actionCount:actions.length,eventCount:e.events.length,actionsByHero:actions.reduce((a,x)=>{const id=getUnit(x.sourceId)?.sourceId;a[id]??=[];if(!a[id].includes(x.action))a[id].push(x.action);return a;},{}),uniqueSlots:new Set(units.filter(u=>u.hp>0).map(u=>`${u.team}:${u.slot}`)).size,alive:units.filter(u=>u.hp>0).length,finite:units.every(u=>Number.isFinite(u.hp)&&Number.isFinite(u.energy)),statuses:units.map(u=>({id:u.id,heroId:u.sourceId,hp:u.hp,rage:u.energy,marks:e.hud(u)})),events:e.events.slice(-60)},null,2);details.append(summary,pre);panel.append(details);
+    }
+    return true;
+  }catch(error){
+    console.warn('S+ optional HUD failed; battle bootstrap continues without it.',error);
+    return false;
   }
 }
 async function performSplusAction(actor, action, target) {
