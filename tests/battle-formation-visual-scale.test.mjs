@@ -170,6 +170,36 @@ context.scale(depthScale * identityScale, depthScale * identityScale);`;
   assert.equal(applyBattleFormationScale(patched),patched,'patch must be idempotent');
 });
 
+test('formation owner accepts the unmodified baseline 0.52 generic scale without a pre-patch scale rewrite',()=>{
+  const fixture=`  const POSITIONS = Object.freeze({
+    player: [ { x: 535, y: 340 } ],
+    enemy: [ { x: 1065, y: 340 } ],
+  });
+  const MOBILE_POSITIONS = Object.freeze({
+    player: [
+      { x: 720, y: 340 }, { x: 720, y: 520 }, { x: 720, y: 700 },
+      { x: 630, y: 340 }, { x: 630, y: 520 }, { x: 630, y: 700 },
+    ],
+    enemy: [
+      { x: 880, y: 340 }, { x: 880, y: 520 }, { x: 880, y: 700 },
+      { x: 970, y: 340 }, { x: 970, y: 520 }, { x: 970, y: 700 },
+    ],
+  });
+    const battleCompactViewport = innerWidth < 600 || (innerHeight > innerWidth && innerWidth <= 1180);
+    const position = (battleCompactViewport ? MOBILE_POSITIONS : POSITIONS)[hero.team][hero.slot];
+    const sourceSeed = Array.from(String(unit.sourceId || unit.id || "")).reduce((acc, ch) => ((acc * 33) ^ ch.charCodeAt(0)) >>> 0, 5381);
+    const importedIdentity = Boolean(unit.visualSource && unit.visualSource !== "hon-viet");
+    const identityScale = (innerWidth < 600 ? 0.52 : 0.74) * (importedIdentity ? (0.94 + (sourceSeed % 13) / 100) : 1);
+const identityScale=(innerWidth<600?0.52:0.74);
+const identityScale=(innerWidth<600?0.52:0.74);
+context.translate(unit.x + hurtJitter + dodgeRecoilX, unit.y + idleBob + runBob);
+context.scale(depthScale * identityScale, depthScale * identityScale);`;
+  const patched=applyBattleFormationScale(fixture);
+  assert.equal((patched.match(/identityScale\s*=\s*battleCharacterScale\(unit\)/g)||[]).length,3);
+  assert.doesNotMatch(patched,/sourceSeed|importedIdentity/);
+  assert.doesNotMatch(patched,/innerWidth\s*<\s*600\s*\?\s*0\.(?:52|57)\s*:\s*0\.74/);
+});
+
 test('build applies the scoped layout owner after reference presentation but before battle payload sync',()=>{
   const refIndex=build.indexOf("await import('./combat-reference-presentation-v1.mjs');");
   const layoutIndex=build.indexOf("await import('./battle-formation-scale-v1.mjs');");
