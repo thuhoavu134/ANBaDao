@@ -142,7 +142,7 @@ function drawLinhDongHero(context,unit,time){
   const elapsed=actionClock&&['attack','ultimate'].includes(key)?actionClock.elapsedMs():key==='idle'?time:Math.max(0,time-(unit.stateStarted||time));
   const frame=linhDongFrame(key,elapsed,loop);
   context.save();context.shadowColor='rgba(120,150,210,.32)';context.shadowBlur=['attack','ultimate'].includes(key)?14:5;
-  const drawn=drawLinhDongAtlas(context,key,frame,0,0,477,440,{baseline:64,flip:unit.team===TEAM_ENEMY}) || (key!=='idle' && drawLinhDongAtlas(context,'idle',linhDongFrame('idle',time,true),0,0,477,440,{baseline:64,flip:unit.team===TEAM_ENEMY}));context.restore();return !!drawn;
+  const drawn=drawLinhDongAtlas(context,key,frame,0,0,240,220,{baseline:32,flip:unit.team===TEAM_ENEMY}) || (key!=='idle' && drawLinhDongAtlas(context,'idle',linhDongFrame('idle',time,true),0,0,240,220,{baseline:32,flip:unit.team===TEAM_ENEMY}));context.restore();return !!drawn;
 }
 let linhDongFx=null;
 function beginLinhDongAction(actor,action,target,battleId){
