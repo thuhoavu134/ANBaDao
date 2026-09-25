@@ -37,7 +37,7 @@ async function launchBattle(page,run,name,cycle){
 
 async function returnFromBattle(page,snapshot){
   if(snapshot?.transport==='top-level'){
-    await page.evaluate('document.getElementById("exitBattleButton")?.click()');
+    await page.click('button[data-ref-nav="hub"]');
     await page.wait("location.pathname.endsWith('/index.html') || location.pathname==='/'",30000);
     await ensureHost(page);
     return;
