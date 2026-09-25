@@ -85,7 +85,13 @@ function splusEvent(event) {
   if(t&&event.type==='airborne')t.splusAirborneUntil=performance.now()+event.seconds*1000;
   if(event.type==='displacement'||event.type==='swap'){
     const compact=innerWidth<600||(innerHeight>innerWidth&&innerWidth<=1180);
-    const positions=compact&&typeof mobileFormationForViewport==='function'?mobileFormationForViewport():POSITIONS;
+    let positions=POSITIONS;
+    if(compact&&typeof battleFormationForViewport==='function'){
+      const rect=typeof battleViewportSize==='function'?battleViewportSize():{width:innerWidth,height:innerHeight};
+      positions=battleFormationForViewport(rect.width,rect.height);
+    }else if(compact&&typeof mobileFormationForViewport==='function'){
+      positions=mobileFormationForViewport();
+    }
     for(const u of units){const p=positions[u.team][u.slot];u.baseX=p.x;u.baseY=p.y;u.x=p.x;u.y=p.y;u.homeAnchorId=`${u.team}:slot-${u.slot}`;u.homeAnchor={x:p.x,y:p.y};}
   }
 }
