@@ -151,8 +151,8 @@ async function performSplusAction(actor, action, target) {
   const presentationTrace=window.__HV_BATTLE_PHASE1_TRACE;
   const presentationId=`${battleId}:splus:${state.actionCount+1}:${actor.id}:${action}`;
   presentationTrace?.begin({actionId:presentationId,roundId:state.round,actorId:actor.id,targetIds:target?[target.id]:[],skillId:action,position:{x:actor.x,y:actor.y}});
-  const linhAction=linh&&typeof beginLinhDongAction==='function'?beginLinhDongAction(actor,action,target,battleId,presentationId):null;
-  const bachAction=!linhAction&&bach&&typeof beginBachDienAction==='function'?beginBachDienAction(actor,action,target,battleId,presentationId):null;
+  const linhAction=linh&&typeof beginLinhDongAction==='function'?beginLinhDongAction(actor,action,target,battleId):null;
+  const bachAction=!linhAction&&bach&&typeof beginBachDienAction==='function'?beginBachDienAction(actor,action,target,battleId):null;
   let fallbackPresentation=null;
   if(linhAction){
     if(!await waitLinhDongMarker(linhAction,'release',battleId))return;

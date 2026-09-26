@@ -145,16 +145,14 @@ function drawLinhDongHero(context,unit,time){
   const drawn=drawLinhDongAtlas(context,key,frame,0,0,477,440,{baseline:64,flip:unit.team===TEAM_ENEMY}) || (key!=='idle' && drawLinhDongAtlas(context,'idle',linhDongFrame('idle',time,true),0,0,477,440,{baseline:64,flip:unit.team===TEAM_ENEMY}));context.restore();return !!drawn;
 }
 let linhDongFx=null;
-function beginLinhDongAction(actor,action,target,battleId,actionId=null){
+function beginLinhDongAction(actor,action,target,battleId){
   const normalized=normalizeLinhDongAction(action),timeline=LINH_DONG_TIMELINE[normalized];
   if(!normalized||!timeline)throw new Error('Missing Linh Đồng timeline for '+action);
   linhDongImage(normalized==='ultimate'?'ultimate':'attack');
   linhDongImage(normalized==='ultimate'?'ultimateVfx':'atkVfx');
-  const info={action:normalized,actionId:actionId||null,actorId:actor.id,targetId:target?.id||null,battleId,startedAt:performance.now(),releasePlayed:false,impactResolved:false,clock:null};
+  const info={action:normalized,actorId:actor.id,targetId:target?.id||null,battleId,startedAt:performance.now(),releasePlayed:false,impactResolved:false,clock:null};
   info.clock=createLinhDongTimelineController(normalized,{timeline,onMarker:marker=>{info.lastMarker=marker.type;}});
-  info.clock.advance(0);actor._linhDongAction=info;setLinhDongState(actor,normalized==='ultimate'?'ultimate':'attack',timeline.character.durationMs,info.startedAt);
-  void playLinhDongSfx(normalized,info);
-  return info;
+  info.clock.advance(0);actor._linhDongAction=info;setLinhDongState(actor,normalized==='ultimate'?'ultimate':'attack',timeline.character.durationMs,info.startedAt);return info;
 }
 async function waitLinhDongMarker(info,markerType,battleId){
   if(!info)return false;
@@ -290,7 +288,7 @@ export function patchLinhDongBattle(input) {
   if (html.includes('    const usesLucAnh = isLucAnh(actor);\n    const usesThayMoBasicQa')) {
     html = replaceOnce(html, '    const usesLucAnh = isLucAnh(actor);\n    const usesThayMoBasicQa', '    const usesLucAnh = isLucAnh(actor);\n    const usesLinhDong = isLinhDong(actor);\n    const usesThayMoBasicQa', 'action identity');
   }
-  html = replaceOnce(html, '    } else if (usesThayMoBasicQa) {', `    } else if (usesLinhDong) {\n      actor.x=actor.baseX;actor.y=actor.baseY;\n      const linhAction=beginLinhDongAction(actor,action,target,battleId,phase1ActionId);\n      setStatus(actor.name+' '+(action==='ultimate'?'khai Bách Quỷ Dạ Hành':'rung chuông Oan Linh Tỏa'));\n      dom.phaseLabel.textContent=action==='ultimate'?'Tuyệt kỹ • Bách Quỷ Dạ Hành':'ATK • Oan Linh Tỏa';\n      if(!await waitLinhDongMarker(linhAction,'release',battleId))return;\n      emitLinhDongRelease(linhAction);\n      dom.phaseLabel.textContent=action==='ultimate'?'Tuyệt kỹ • Linh quỷ xuất thế':'ATK • Âm ty';\n      if(!await waitLinhDongMarker(linhAction,'impact',battleId))return;\n      dom.phaseLabel.textContent='Va chạm • Linh Đồng';\n    } else if (usesThayMoBasicQa) {`, 'Linh Đồng action bridge');
+  html = replaceOnce(html, '    } else if (usesThayMoBasicQa) {', `    } else if (usesLinhDong) {\n      actor.x=actor.baseX;actor.y=actor.baseY;\n      const linhAction=beginLinhDongAction(actor,action,target,battleId);\n      setStatus(actor.name+' '+(action==='ultimate'?'khai Bách Quỷ Dạ Hành':'rung chuông Oan Linh Tỏa'));\n      dom.phaseLabel.textContent=action==='ultimate'?'Tuyệt kỹ • Bách Quỷ Dạ Hành':'ATK • Oan Linh Tỏa';\n      if(!await waitLinhDongMarker(linhAction,'release',battleId))return;\n      emitLinhDongRelease(linhAction);\n      dom.phaseLabel.textContent=action==='ultimate'?'Tuyệt kỹ • Linh quỷ xuất thế':'ATK • Âm ty';\n      if(!await waitLinhDongMarker(linhAction,'impact',battleId))return;\n      dom.phaseLabel.textContent='Va chạm • Linh Đồng';\n    } else if (usesThayMoBasicQa) {`, 'Linh Đồng action bridge');
   const resolveAnchor='    resolveAction(actor, action, target);\n    if(!usesLucAnh) triggerImpactPresentation(actor, target, action);';
   const tracedResolveAnchor="    phase1Trace?.marker('impact',{actionId:phase1ActionId,targetId:target?.id||null,position:{x:target?.x??actor.x,y:target?.y??actor.y}});\n    resolveAction(actor, action, target, phase1ActionId);\n    if(!usesLucAnh) triggerImpactPresentation(actor, target, action);";
   const resolveReplacement='    const linhImpact=usesLinhDong?actor._linhDongAction:null;\n    const resolveAtImpact=!linhImpact||!linhImpact.impactResolved;\n    if(linhImpact){linhImpact.clock.advance(LINH_DONG_TIMELINE[linhImpact.action].impactMs);linhImpact.impactResolved=true;}\n    if(resolveAtImpact) resolveAction(actor, action, target);\n    if(!usesLucAnh && !usesLinhDong) triggerImpactPresentation(actor, target, action);';
