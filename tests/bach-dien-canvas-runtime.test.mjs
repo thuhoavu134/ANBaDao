@@ -193,6 +193,12 @@ test('L154-T5 wav SFX on HonVietSfx; 42 catalog stays 42; roster 12 closed', () 
   assert.match(campaign, /campaign-lite\/run-atlas\.webp', frames: 45, cols: 6, cellW: 240, cellH: 220/);
 });
 
+test('Bạch Diện patch follows actor-scoped S+ performAction routing', () => {
+  const patch = read('scripts/bach-dien-canvas-runtime-v1.mjs');
+  assert.match(patch, /if\(actor\?\.kitVersion===\\'splus42-v2\\'&&splusCombat\(\)\)/);
+  assert.doesNotMatch(patch, /if\(isLinhDong\(actor\)\) action=linhDongLegacyAction\(action\)\|\|action;\\n    if\(splusCombat\(\)\)\{/);
+});
+
 test('L154-T6 battle adapter uses catalog metadata and shared cache, not a 4×2 guess', () => {
   const patch = read('scripts/bach-dien-canvas-runtime-v1.mjs');
   const bridge = read('src/runtime/splus-battle-bridge.js');
