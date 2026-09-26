@@ -26,11 +26,6 @@ export function applyCombatReferencePresentation(source) {
   let html = source;
 
   html = replaceRequired(html,
-    /  const MOBILE_POSITIONS = Object\.freeze\(\{[\s\S]*?\n  \}\);/,
-    `  // Reference portrait formation: outer/backline heroes stay near the screen edges; frontliners frame the center lane.\n  const MOBILE_POSITIONS = Object.freeze({\n    player: [\n      { x: 650, y: 340 }, { x: 650, y: 520 }, { x: 650, y: 700 },\n      { x: 470, y: 340 }, { x: 470, y: 520 }, { x: 470, y: 700 }\n    ],\n    enemy: [\n      { x: 950, y: 340 }, { x: 950, y: 520 }, { x: 950, y: 700 },\n      { x: 1130, y: 340 }, { x: 1130, y: 520 }, { x: 1130, y: 700 }\n    ]\n  });`,
-    'portrait formation');
-
-  html = replaceRequired(html,
     /contact: Object\.freeze\(\{ movesToTarget: true, standoff: 96, laneOffset: 8 \}\),/,
     'contact: Object.freeze({ movesToTarget: true, standoff: 96, minimumStandoff: 80, laneOffset: 8 }),',
     'contact profile');
@@ -46,11 +41,6 @@ export function applyCombatReferencePresentation(source) {
     /basicMinStandoff:76,\s*basicStandoff:112,\s*basicDistanceRatio:\.22,/,
     'basicMinStandoff:84,\n    basicStandoff:108,\n    basicDistanceRatio:.30,',
     'Đình Lôi reference standoff');
-  html = replaceRequired(html,
-    /innerWidth < 600 \? 0\.52 : 0\.74/,
-    'innerWidth < 600 ? 0.57 : 0.74',
-    'portrait hero scale');
-
   const helperSource = `\n  // HV_REFERENCE_COMBAT_PRESENTATION_V1\n  ${createCombatUltimateFocus.toString()}\n  ${isCombatFocusUnitVisible.toString()}\n`;
   html = replaceRequired(html,
     /(function presentationTargets\(actor, target, action\) \{[\s\S]*?\n  \})/,
@@ -80,5 +70,5 @@ if (existsSync(outputPath)) {
   const current = readFileSync(outputPath, 'utf8');
   const patched = applyCombatReferencePresentation(current);
   writeFileSync(outputPath, patched);
-  console.log('Reference formation, contact spacing and ultimate target focus applied.');
+  console.log('Reference contact spacing and ultimate target focus applied; formation/scale remain single-owner.');
 }

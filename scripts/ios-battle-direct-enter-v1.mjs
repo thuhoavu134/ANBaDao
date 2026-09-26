@@ -18,13 +18,14 @@ const from = `    // Grok/iOS preview is itself an iframe; a nested battle ifram
       return;
     }`;
 
-const to = `    // Keep iPhone/iPad combat in the host document so its unlocked audio context survives.
-    // Only a nested preview uses full-page transport because another iframe stays blank.
+const to = `    // iPhone/iPad open battle.html as the top-level document so Safari can release the heavy host page
+    // before parsing combat. The battle document now owns WebKit-safe Canvas creation and deferred autostart,
+    // so direct entry no longer depends on the older synchronous bootstrap.
     const __HV_IOS_DIRECT_BATTLE=(()=>{try{
       const n=navigator,ua=String(n?.userAgent||''),platform=String(n?.platform||''),touch=Number(n?.maxTouchPoints||0);
       return /iPad|iPhone|iPod/i.test(ua)||(platform==='MacIntel'&&touch>1);
     }catch(_){return false;}})();
-    if (window.parent !== window) {
+    if (window.parent !== window || __HV_IOS_DIRECT_BATTLE) {
       window.name = \`hvBattleConfig:\${encodeURIComponent(serializedBattleConfig)}\`;
       location.assign(url);
       return;
@@ -34,6 +35,13 @@ if (html.split(from).length !== 2) {
   throw new Error('iOS direct battle enter owner missing or ambiguous');
 }
 html = html.replace(from, to);
+
+html = replaceOnce(
+  html,
+  '&v=3175${qaSuffix}',
+  '&v=20260924-entry4${qaSuffix}',
+  'battle document cache token'
+);
 
 const watchdogFrom = `      activeBattle.loadWatchdog = setTimeout(() => {
         if (!activeBattle || activeBattle.sessionId !== sessionId || loading.hidden) return;
@@ -56,6 +64,21 @@ if (html.split(watchdogFrom).length !== 2) {
   throw new Error('iOS direct battle fallback watchdog owner missing or ambiguous');
 }
 html = html.replace(watchdogFrom, watchdogTo);
+const fallbackFrom = [
+  "      activeBattle.enterFallback = setTimeout(() => {",
+  "        if (!activeBattle || activeBattle.sessionId !== sessionId || loading.hidden) return;",
+  "        loading.firstChild.textContent = \"Chiến trường đang khởi tạo — loa trận giữ trên màn hình này.\";",
+  "      }, 1800);"
+].join("\n");
+const fallbackTo = [
+  "      activeBattle.enterFallback = setTimeout(() => {",
+  "        if (!activeBattle || activeBattle.sessionId !== sessionId || loading.hidden) return;",
+  "        loading.firstChild.textContent = __HV_IOS_DIRECT_BATTLE",
+  "          ? \"Safari đang giữ nhạc trận — nếu iframe chưa sẵn sàng, trận sẽ tự mở trực tiếp.\"",
+  "          : \"Chiến trường đang khởi tạo — loa trận giữ trên màn hình này.\";",
+  "      }, 1800);"
+].join("\n");
+html = replaceOnce(html, fallbackFrom, fallbackTo, 'iOS loading handoff copy');
 const memoryOwner = `<script id="hv-ios-battle-host-memory-v1">
 (()=>{
   let released=false,images=[],videos=[];

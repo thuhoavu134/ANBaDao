@@ -11,6 +11,27 @@ function replaceOne(source,from,to,label){
 
 html=replaceOne(
   html,
+  '  const ctx = dom.canvas.getContext("2d", { alpha: false, desynchronized: true });',
+  `  function __hvCreateBattleContext(canvas) {
+    const attempts = __HV_BATTLE_LOW_MEMORY
+      ? [{ alpha: false }, null]
+      : [{ alpha: false, desynchronized: true }, { alpha: false }, null];
+    for (const options of attempts) {
+      try {
+        const context = options ? canvas.getContext("2d", options) : canvas.getContext("2d");
+        if (context) return context;
+      } catch (error) {
+        console.warn("Canvas 2D option rejected; retrying with a safer profile.", error);
+      }
+    }
+    return null;
+  }
+  const ctx = __hvCreateBattleContext(dom.canvas);`,
+  'WebKit-safe Canvas 2D startup'
+);
+
+html=replaceOne(
+  html,
   `  function beginBattle() {
     initAudio();
     window.HonVietAudio?.unlock?.();
@@ -45,4 +66,4 @@ html=replaceOne(
 );
 
 writeFileSync(target,html);
-console.log('P0 battle entry: audio fail-open + autostart retries installed');
+console.log('P0 battle entry: WebKit-safe canvas + deferred fail-open autostart installed');

@@ -12,11 +12,12 @@ export const DESKTOP_FORMATION = Object.freeze({
     Object.freeze({ x:1235,y:340 }),Object.freeze({ x:1235,y:520 }),Object.freeze({ x:1235,y:700 })
   ])
 });
-// Final mobile calibration uses live 390/393/430 Canvas alpha bounds.
+// Approved legacy portrait anchors from the stable iPhone layout.
+// Keep this geometry under the current viewport-aware owner; do not revive MOBILE_POSITIONS.
 export const PORTRAIT_FORMATION = Object.freeze({
-  rows: Object.freeze([285,480,675]),
-  columnGap: 114,
-  edgeInset: 63,
+  rows: Object.freeze([340,520,700]),
+  frontOffsetX: 80,
+  backOffsetX: 170,
   compactCropWidth: 1200
 });
 export const BATTLE_CHARACTER_SCALE = Object.freeze({ portrait:0.52, desktop:0.74 });
@@ -50,12 +51,12 @@ export function battleUsesCompactFormation(width,height){
 }
 export function battleFormationForViewport(width,height){
   if(!battleUsesCompactFormation(width,height)) return DESKTOP_FORMATION;
-  const crop=battleWorldCropForViewport(width,height);
   const [row1,row2,row3]=PORTRAIT_FORMATION.rows;
-  const leftBack=crop.left+PORTRAIT_FORMATION.edgeInset;
-  const leftFront=leftBack+PORTRAIT_FORMATION.columnGap;
-  const rightBack=crop.right-PORTRAIT_FORMATION.edgeInset;
-  const rightFront=rightBack-PORTRAIT_FORMATION.columnGap;
+  const centerX=BATTLE_WORLD.width/2;
+  const leftFront=centerX-PORTRAIT_FORMATION.frontOffsetX;
+  const leftBack=centerX-PORTRAIT_FORMATION.backOffsetX;
+  const rightFront=centerX+PORTRAIT_FORMATION.frontOffsetX;
+  const rightBack=centerX+PORTRAIT_FORMATION.backOffsetX;
   return {
     player:[
       {x:leftFront,y:row1},{x:leftFront,y:row2},{x:leftFront,y:row3},
@@ -99,7 +100,7 @@ export function battleCharacterVisualOffsetXForViewport(unitOrId,team,width,heig
   return team==='enemy'?-amount:amount;
 }
 
-const RUNTIME_LAYOUT=`const PORTRAIT_FORMATION=Object.freeze({rows:Object.freeze([285,480,675]),columnGap:114,edgeInset:63,compactCropWidth:1200});
+const RUNTIME_LAYOUT=`const PORTRAIT_FORMATION=Object.freeze({rows:Object.freeze([340,520,700]),frontOffsetX:80,backOffsetX:170,compactCropWidth:1200});
   const BATTLE_CHARACTER_SCALE=Object.freeze({portrait:0.52,desktop:0.74});
   const HERO_VISUAL_SCALE=Object.freeze({default:1,hero_splus_linh_dong:0.57,hero_splus_bach_dien:0.61});
   const HERO_VISUAL_HORIZONTAL_SCALE=Object.freeze({default:1,hero_splus_linh_dong:0.9210526316});
@@ -117,9 +118,9 @@ const RUNTIME_LAYOUT=`const PORTRAIT_FORMATION=Object.freeze({rows:Object.freeze
   }
   function battleFormationForViewport(width,height){
     if(!battleUsesCompactFormation(width,height))return POSITIONS;
-    const crop=battleWorldCropForViewport(width,height),rows=PORTRAIT_FORMATION.rows;
-    const leftBack=crop.left+PORTRAIT_FORMATION.edgeInset,leftFront=leftBack+PORTRAIT_FORMATION.columnGap;
-    const rightBack=crop.right-PORTRAIT_FORMATION.edgeInset,rightFront=rightBack-PORTRAIT_FORMATION.columnGap;
+    const rows=PORTRAIT_FORMATION.rows,centerX=WORLD.width/2;
+    const leftFront=centerX-PORTRAIT_FORMATION.frontOffsetX,leftBack=centerX-PORTRAIT_FORMATION.backOffsetX;
+    const rightFront=centerX+PORTRAIT_FORMATION.frontOffsetX,rightBack=centerX+PORTRAIT_FORMATION.backOffsetX;
     return {
       player:[{x:leftFront,y:rows[0]},{x:leftFront,y:rows[1]},{x:leftFront,y:rows[2]},{x:leftBack,y:rows[0]},{x:leftBack,y:rows[1]},{x:leftBack,y:rows[2]}],
       enemy:[{x:rightFront,y:rows[0]},{x:rightFront,y:rows[1]},{x:rightFront,y:rows[2]},{x:rightBack,y:rows[0]},{x:rightBack,y:rows[1]},{x:rightBack,y:rows[2]}]
@@ -186,7 +187,7 @@ export function applyBattleFormationScale(source){
   );
   s=replaceOnce(
     s,
-    /    const identityScale = \(innerWidth < 600 \? 0\.57 : 0\.74\) \* \(importedIdentity \? \(0\.94 \+ \(sourceSeed % 13\) \/ 100\) : 1\);/,
+    /    const identityScale = \(innerWidth < 600 \? 0\.(?:52|57) : 0\.74\) \* \(importedIdentity \? \(0\.94 \+ \(sourceSeed % 13\) \/ 100\) : 1\);/,
     '    const identityScale = battleCharacterScale(unit);',
     'generic character scale'
   );
@@ -212,5 +213,5 @@ if(process.env.HV_SKIP_BATTLE_FORMATION_SCALE_PATCH!=='1'&&existsSync(path)){
   const source=readFileSync(path,'utf8');
   const patched=applyBattleFormationScale(source);
   writeFileSync(path,patched);
-  console.log('Battle formation + visual scale v1 applied: crop-aware portrait slots, single scale owner');
+  console.log('Battle formation + visual scale v1 applied: approved legacy portrait anchors, single scale owner');
 }

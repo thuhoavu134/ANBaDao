@@ -31,41 +31,47 @@ function approx(actual,expected,tolerance=1e-6,message=''){
   assert.ok(Math.abs(actual-expected)<=tolerance,message||`${actual} ~= ${expected}`);
 }
 
-test('portrait formation stays inside the actual cover-cropped world at all target phones',()=>{
+test('portrait formation restores the approved legacy mobile anchors and stays inside every target crop',()=>{
+  const expected={
+    player:[
+      {x:720,y:340},{x:720,y:520},{x:720,y:700},
+      {x:630,y:340},{x:630,y:520},{x:630,y:700}
+    ],
+    enemy:[
+      {x:880,y:340},{x:880,y:520},{x:880,y:700},
+      {x:970,y:340},{x:970,y:520},{x:970,y:700}
+    ]
+  };
   for(const viewport of mobileStages){
     const crop=battleWorldCropForViewport(viewport.width,viewport.height);
     const formation=battleFormationForViewport(viewport.width,viewport.height);
     assert.ok(crop.width<PORTRAIT_FORMATION.compactCropWidth,`${viewport.screen} must select compact formation from world crop`);
+    assert.deepEqual(formation,expected,`${viewport.screen} must keep the approved old mobile formation`);
     for(const [index,point] of flatten(formation).entries()){
       assert.ok(point.x>=crop.left&&point.x<=crop.right,`${viewport.screen} slot ${index+1} x must stay in crop`);
       assert.ok(point.y>=crop.top&&point.y<=crop.bottom,`${viewport.screen} slot ${index+1} y must stay in crop`);
     }
-    approx(formation.player[3].x-crop.left,PORTRAIT_FORMATION.edgeInset);
-    approx(crop.right-formation.enemy[3].x,PORTRAIT_FORMATION.edgeInset);
   }
 });
 
-test('portrait formation has six unique slots per side, compact rows and mirrored columns',()=>{
+test('portrait formation keeps old 90px team columns, 160px opposing frontline lane and mirrored rows',()=>{
   const formation=battleFormationForViewport(390,739);
+  assert.deepEqual(PORTRAIT_FORMATION.rows,[340,520,700]);
+  assert.equal(PORTRAIT_FORMATION.frontOffsetX,80);
+  assert.equal(PORTRAIT_FORMATION.backOffsetX,170);
   for(const team of ['player','enemy']){
-    assert.equal(new Set(formation[team].map(p=>`${p.x.toFixed(3)}:${p.y}`)).size,6);
+    assert.equal(new Set(formation[team].map(p=>`${p.x}:${p.y}`)).size,6);
     const front=formation[team].slice(0,3),back=formation[team].slice(3);
-    assert.deepEqual(front.map((p,i)=>p.y-(i?front[i-1].y:front[0].y)),[0,195,195]);
-    assert.deepEqual(back.map((p,i)=>p.y-(i?back[i-1].y:back[0].y)),[0,195,195]);
-    for(let row=0;row<3;row++)approx(Math.abs(front[row].x-back[row].x),PORTRAIT_FORMATION.columnGap);
+    assert.deepEqual(front.map(p=>p.y),[340,520,700]);
+    assert.deepEqual(back.map(p=>p.y),[340,520,700]);
+    for(let row=0;row<3;row++)assert.equal(Math.abs(front[row].x-back[row].x),90);
   }
-  assert.deepEqual(PORTRAIT_FORMATION.rows,[285,480,675]);
-  assert.equal(PORTRAIT_FORMATION.columnGap,114);
-  // Final live 430x932 bounds showed 0-6px same-row clearance and Linh Dong clipping.
-  // Keep the reference-fit vertical spread, add 6 world px between columns and 10 world px
-  // of rear-edge clearance while mobile character scale is normalized from live alpha bounds.
-  assert.equal(PORTRAIT_FORMATION.edgeInset,63);
-  assert.equal(PORTRAIT_FORMATION.edgeInset+PORTRAIT_FORMATION.columnGap,177);
-  assert.equal(PORTRAIT_FORMATION.rows[1]-PORTRAIT_FORMATION.rows[0],195);
-  assert.equal(PORTRAIT_FORMATION.rows[2]-PORTRAIT_FORMATION.rows[1],195);
-  for(let i=0;i<6;i++){
-    approx(formation.player[i].x+formation.enemy[i].x,BATTLE_WORLD.width);
-    assert.equal(formation.player[i].y,formation.enemy[i].y);
+  for(let row=0;row<3;row++){
+    assert.equal(formation.enemy[row].x-formation.player[row].x,160);
+    assert.equal(formation.player[row].y,formation.enemy[row].y);
+    assert.equal(formation.player[row+3].y,formation.enemy[row+3].y);
+    approx(formation.player[row].x+formation.enemy[row].x,BATTLE_WORLD.width);
+    approx(formation.player[row+3].x+formation.enemy[row+3].x,BATTLE_WORLD.width);
   }
 });
 
@@ -99,30 +105,7 @@ test('measured special-hero corrections use rendered visible bounds, not atlas c
   assert.ok(predictedLinh/normalTarget>1.00&&predictedLinh/normalTarget<1.06,'Linh Dong should keep adult-scale visual presence without the wide-idle crop');
   assert.ok(predictedBach/normalTarget>1.10&&predictedBach/normalTarget<1.16,'Bach Dien should recover visual presence without returning to the oversized baseline');
 
-  // Project the exact previously measured 390/393/430 alpha bounds through the
-  // final mobile geometry. This preserves the requested 0.57 height, uses a
-  // 0.525-equivalent horizontal scale, and nudges only Linh Dong 4.25 world px inward.
-  const measured=[
-    {screen:'390x844',width:390,height:739,linhLeft:-14.126339030687177,linhRightClear:291.191662755533,frontLeft:93.65046310923367},
-    {screen:'393x852',width:393,height:747,linhLeft:-14.279283833107314,linhRightClear:292.5935362982068,frontLeft:94.66424765425349},
-    {screen:'430x932',width:430,height:827,linhLeft:-19.3192016530831,linhRightClear:319.42565244536473,frontLeft:104.8022748992665}
-  ];
-  const oldEdge=48,oldGap=108,oldGlobal=0.57,oldLinh=0.50;
-  const xRatio=(BATTLE_CHARACTER_SCALE.portrait*HERO_VISUAL_SCALE.hero_splus_linh_dong*HERO_VISUAL_HORIZONTAL_SCALE.hero_splus_linh_dong)/(oldGlobal*oldLinh);
-  const normalRatio=BATTLE_CHARACTER_SCALE.portrait/oldGlobal;
-  for(const row of measured){
-    const worldScale=row.height/BATTLE_WORLD.height;
-    const oldBack=oldEdge*worldScale,newBack=PORTRAIT_FORMATION.edgeInset*worldScale;
-    const oldFront=(oldEdge+oldGap)*worldScale,newFront=(PORTRAIT_FORMATION.edgeInset+PORTRAIT_FORMATION.columnGap)*worldScale;
-    const inward=battleCharacterVisualOffsetXForViewport('hero_splus_linh_dong','player',row.width,row.height)*worldScale;
-    const currentLeft=newBack+inward+(row.linhLeft-oldBack)*xRatio;
-    const oldRight=row.width-row.linhRightClear;
-    const currentRight=newBack+inward+(oldRight-oldBack)*xRatio;
-    const currentFrontLeft=newFront+(row.frontLeft-oldFront)*normalRatio;
-    assert.ok(currentLeft>1.5,`${row.screen} Linh Dong visible alpha must clear the left crop with safety margin, got ${currentLeft}`);
-    assert.ok(currentFrontLeft-currentRight>1.5,`${row.screen} Linh Dong must keep >1.5px alpha-box clearance from the front-column hero`);
-  }
-
+  // Position-only restore: retain every approved character-scale correction unchanged.
   assert.deepEqual(Object.keys(HERO_VISUAL_SCALE).sort(),['default','hero_splus_bach_dien','hero_splus_linh_dong']);
   assert.equal(heroVisualScale('linh_dong'),0.57);
   assert.equal(heroVisualScale('hero_splus_bach_dien'),0.61);
@@ -168,6 +151,10 @@ context.scale(depthScale * identityScale, depthScale * identityScale);`;
   const patched=applyBattleFormationScale(fixture);
   assert.match(patched,/function battleFormationForViewport\(/);
   assert.match(patched,/function battleCharacterScale\(/);
+  assert.match(patched,/rows:Object\.freeze\(\[340,520,700\]\)/);
+  assert.match(patched,/frontOffsetX:80/);
+  assert.match(patched,/backOffsetX:170/);
+  assert.doesNotMatch(patched,/frontlineYOffset/);
   assert.match(patched,/const HERO_VISUAL_SCALE=Object\.freeze\(\{default:1,hero_splus_linh_dong:0\.57,hero_splus_bach_dien:0\.61\}\)/);
   assert.match(patched,/hero_splus_linh_dong:0\.9210526316/);
   assert.match(patched,/battleCharacterVisualOffsetX\(unit\)/);
@@ -181,6 +168,36 @@ context.scale(depthScale * identityScale, depthScale * identityScale);`;
   assert.doesNotMatch(patched,/sourceSeed|importedIdentity/);
   assert.doesNotMatch(patched,/innerWidth\s*<\s*600\s*\?\s*0\.(?:52|57)\s*:\s*0\.74/);
   assert.equal(applyBattleFormationScale(patched),patched,'patch must be idempotent');
+});
+
+test('formation owner accepts the unmodified baseline 0.52 generic scale without a pre-patch scale rewrite',()=>{
+  const fixture=`  const POSITIONS = Object.freeze({
+    player: [ { x: 535, y: 340 } ],
+    enemy: [ { x: 1065, y: 340 } ],
+  });
+  const MOBILE_POSITIONS = Object.freeze({
+    player: [
+      { x: 720, y: 340 }, { x: 720, y: 520 }, { x: 720, y: 700 },
+      { x: 630, y: 340 }, { x: 630, y: 520 }, { x: 630, y: 700 },
+    ],
+    enemy: [
+      { x: 880, y: 340 }, { x: 880, y: 520 }, { x: 880, y: 700 },
+      { x: 970, y: 340 }, { x: 970, y: 520 }, { x: 970, y: 700 },
+    ],
+  });
+    const battleCompactViewport = innerWidth < 600 || (innerHeight > innerWidth && innerWidth <= 1180);
+    const position = (battleCompactViewport ? MOBILE_POSITIONS : POSITIONS)[hero.team][hero.slot];
+    const sourceSeed = Array.from(String(unit.sourceId || unit.id || "")).reduce((acc, ch) => ((acc * 33) ^ ch.charCodeAt(0)) >>> 0, 5381);
+    const importedIdentity = Boolean(unit.visualSource && unit.visualSource !== "hon-viet");
+    const identityScale = (innerWidth < 600 ? 0.52 : 0.74) * (importedIdentity ? (0.94 + (sourceSeed % 13) / 100) : 1);
+const identityScale=(innerWidth<600?0.52:0.74);
+const identityScale=(innerWidth<600?0.52:0.74);
+context.translate(unit.x + hurtJitter + dodgeRecoilX, unit.y + idleBob + runBob);
+context.scale(depthScale * identityScale, depthScale * identityScale);`;
+  const patched=applyBattleFormationScale(fixture);
+  assert.equal((patched.match(/identityScale\s*=\s*battleCharacterScale\(unit\)/g)||[]).length,3);
+  assert.doesNotMatch(patched,/sourceSeed|importedIdentity/);
+  assert.doesNotMatch(patched,/innerWidth\s*<\s*600\s*\?\s*0\.(?:52|57)\s*:\s*0\.74/);
 });
 
 test('build applies the scoped layout owner after reference presentation but before battle payload sync',()=>{

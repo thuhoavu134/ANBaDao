@@ -7,18 +7,15 @@ const browser = await startBrowser();
 const out = resolve('evidence/host-entry');
 mkdirSync(out, { recursive: true });
 const report = { revision: process.env.GITHUB_SHA || 'local',
-  scope: 'Chromium desktop and emulated iPhone code path; not physical WebKit or total RAM', runs: [] };
+  scope: 'Host/iframe lifetime only. Direct iPhone top-level entry is covered by qa-formation-entry-p0.mjs; not physical WebKit or total RAM.', runs: [] };
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 const owner = 'window.__HV_HOST_ATLASES';
 const frame = 'document.getElementById("hvBattleFrame").contentWindow';
 try {
-  for (const [name, width, height, dpr] of [['desktop', 1280, 800, 1], ['iphone-path', 390, 844, 3]]) {
+  for (const [name, width, height, dpr] of [['desktop', 1280, 800, 1]]) {
     const page = await browser.page(width, height, dpr);
     const run = { name, entries: [], errors: [] }; report.runs.push(run);
     try {
-      if (name === 'iphone-path') await page.send('Emulation.setUserAgentOverride', {
-        userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.5 Mobile/15E148 Safari/604.1', platform: 'iPhone'
-      });
       await page.send('Page.navigate', { url: browser.origin + '/' });
       await page.wait('!!window.__HV_HOST_ATLASES && !!document.getElementById("hvLoginContinue")');
       run.boot = await page.evaluate(owner + '.inspect()');
@@ -45,7 +42,6 @@ try {
         await sleep(500);
         const laterDraws = await page.evaluate('window.__qaHostDraws');
         if (entry.cache.entries !== 0 || laterDraws !== entry.draws) throw new Error('Host atlas or legacy render active behind battle');
-        if (name === 'iphone-path' && !(Number(entry.releasedImages) > 0)) throw new Error('iPhone DOM release hook did not run');
         if (entry.audio.paused || !(entry.audio.time > 0)) throw new Error('Combat BGM not playing');
         await page.screenshot(join(out, name + '-' + cycle + '-battle.png'));
         run.entries.push(entry);
@@ -67,7 +63,7 @@ try {
     } finally { await page.close(); }
   }
 } finally {
-  report.ok = report.runs.length === 2 && report.runs.every(run => run.ok);
+  report.ok = report.runs.length === 1 && report.runs.every(run => run.ok);
   writeFileSync(join(out, 'report.json'), JSON.stringify(report, null, 2));
   console.log(JSON.stringify(report, null, 2));
   await browser.close();

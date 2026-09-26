@@ -72,9 +72,10 @@ battle = replaceOnce(
       window.__HV_BATTLE_BGM = bgm;
       bgm.play().catch(() => {});
     }`,
-  `    const parentBgm = window.parent !== window && typeof window.parent.playBgm === 'function' ? window.parent.playBgm : null;
+  `    try {
+      const parentBgm = window.parent !== window && typeof window.parent.playBgm === 'function' ? window.parent.playBgm : null;
       if (parentBgm) {
-        try { parentBgm('combat'); } catch (_) {}
+        parentBgm('combat');
       } else {
         const bgm = window.__HV_BATTLE_BGM || new Audio("assets/audio/bgm-combat-new.mp3");
         bgm.loop = true;
@@ -84,12 +85,16 @@ battle = replaceOnce(
           if (!bgm.dataset.fallback) {
             bgm.dataset.fallback = "1";
             bgm.src = "assets/audio/bgm-combat.mp3";
-            bgm.play().catch(() => {});
+            try { const fallbackPlay = bgm.play?.(); fallbackPlay?.catch?.(() => {}); } catch (_) {}
           }
         };
         window.__HV_BATTLE_BGM = bgm;
-        bgm.play().catch(() => {});
-      }`,
+        const playPromise = bgm.play?.();
+        playPromise?.catch?.(() => {});
+      }
+    } catch (error) {
+      console.warn("Combat BGM startup skipped; battle continues.", error);
+    }`,
   'beginBattle embedded BGM'
 );
 writeFileSync(battlePath, battle);

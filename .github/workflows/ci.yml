@@ -54,6 +54,20 @@ jobs:
           path: evidence/host-entry/
           retention-days: 7
           compression-level: 0
+      - name: Battle entry and re-entry P0 QA
+        run: |
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
+          "$CHROME_PATH" --version
+          node scripts/qa-formation-entry-p0.mjs
+      - name: Upload battle re-entry evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: battle-reentry-evidence
+          path: evidence/formation-entry/
+          retention-days: 7
+          compression-level: 0
+
       - name: Authored legacy hero browser QA
         run: |
           export CHROME_PATH="$(command -v google-chrome || command -v chromium)"

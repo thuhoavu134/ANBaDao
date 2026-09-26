@@ -88,6 +88,16 @@ const runtime = String.raw`<style id="hv-qa-full-access-v1-style">
     featLocked=()=>false;
   }
 
+  const baseCampaignGate=typeof hvCampaignGate==='function'?hvCampaignGate:null;
+  if(baseCampaignGate){
+    hvCampaignGate=function qaCampaignGate(player,chapter,stage){
+      const base=baseCampaignGate(player,chapter,stage);
+      if(!active||!baseCampaignGate)return baseCampaignGate?baseCampaignGate.apply(this,arguments):{ok:false,code:'QA_GATE_UNAVAILABLE'};
+      if(base?.code==='INVALID_STAGE')return base;
+      return {...base,ok:true,code:'OPEN',qaBypass:true};
+    };
+  }
+
   // QA actions are fully sandboxed: chapter/quest, roster/equipment, forge
   // inventory, currencies and every other player field return to the saved
   // state for the real write, then the test-session state is restored.
@@ -200,4 +210,15 @@ const runtime = String.raw`<style id="hv-qa-full-access-v1-style">
 
 index = index.replace('</body>', runtime + '\n</body>');
 writeFileSync(indexPath, index);
+
+const battlePath = join(process.cwd(), 'dist', 'battle.html');
+let battle = readFileSync(battlePath, 'utf8');
+const directReturn = '      location.replace("index.html?hvBattleReturn=1");';
+const qaDirectReturn = `      const qaReturnToken=new URLSearchParams(location.search).get("qa")||"";
+      const qaReturnSuffix=qaReturnToken==="unlock-all"?"&qa=unlock-all":"";
+      location.replace("index.html?hvBattleReturn=1"+qaReturnSuffix);`;
+if (battle.split(directReturn).length !== 2) throw new Error('QA full access direct battle return owner missing or ambiguous');
+battle = battle.replace(directReturn, qaDirectReturn);
+writeFileSync(battlePath, battle);
+
 console.log('QA full access v1 installed: opt-in feature/chapter unlock with save-safe progression sandbox');
