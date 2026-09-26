@@ -53,7 +53,7 @@ export function patchSplusBattleHtml(input) {
   once("    if(action==='skill')return;","    if(action==='skill'&&!splusCombat())return;");
   once("    if(action==='basic'){\n      const talent=talentSkillIntent(actor);","    if(action==='basic'&&!splusCombat()){\n      const talent=talentSkillIntent(actor);");
   once('  async function performAction(actor, action, target) {',`  async function performAction(actor, action, target) {
-    if(splusCombat()){
+    if(actor?.kitVersion==='splus42-v2'&&splusCombat()){
       if(state.locked||state.mode!=='battle'||actor.id!==state.currentId||!splusCombat().canUse(actor,action))return;
       return performSplusAction(actor,action,target);
     }`);
