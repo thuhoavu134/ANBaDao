@@ -148,16 +148,21 @@ async function performSplusAction(actor, action, target) {
   state.locked=true;state.selectedAction=action;clearTargets();updateActorHud(actor);
   const title=globalThis.SPLUS42.catalog.find(h=>h.id===actor.sourceId)?.actions[action]?.name||action;
   setStatus(`${actor.name} · ${title}`);dom.phaseLabel.textContent=title;
+  const presentationTrace=window.__HV_BATTLE_PHASE1_TRACE;
+  const presentationId=`${battleId}:splus:${state.actionCount+1}:${actor.id}:${action}`;
+  presentationTrace?.begin({actionId:presentationId,roundId:state.round,actorId:actor.id,targetIds:target?[target.id]:[],skillId:action,position:{x:actor.x,y:actor.y}});
   const linhAction=linh&&typeof beginLinhDongAction==='function'?beginLinhDongAction(actor,action,target,battleId):null;
   const bachAction=!linhAction&&bach&&typeof beginBachDienAction==='function'?beginBachDienAction(actor,action,target,battleId):null;
   let fallbackPresentation=null;
   if(linhAction){
     if(!await waitLinhDongMarker(linhAction,'release',battleId))return;
     emitLinhDongRelease(linhAction);
+    presentationTrace?.marker('release',{actionId:presentationId});
     if(!await waitLinhDongMarker(linhAction,'impact',battleId))return;
   } else if(bachAction){
     if(!await waitBachDienMarker(bachAction,'release',battleId))return;
     emitBachDienRelease(bachAction);
+    presentationTrace?.marker('release',{actionId:presentationId});
     if(!await waitBachDienMarker(bachAction,'impact',battleId))return;
   } else {
     const origin={x:actor.baseX,y:actor.baseY};
@@ -180,10 +185,12 @@ async function performSplusAction(actor, action, target) {
     queueWeaponAnticipation(actor,action);
     playActionSound(actor,action);
     if(!await sleep(TIMING.windup,battleId))return;
+    presentationTrace?.marker('release',{actionId:presentationId});
     if(!await launchWeaponEffect(actor,target||actor,action,battleId))return;
     fallbackPresentation={origin};
   }
   const totals=new Map();let result;splusPresentation=totals;
+  presentationTrace?.marker('impact',{actionId:presentationId,targetId:target?.id||null});
   try{result=e.act(actor.id,action,target?.id);}finally{splusPresentation=null;}
   if(linhAction)linhAction.impactResolved=true;
   if(bachAction)bachAction.impactResolved=true;
@@ -211,6 +218,8 @@ async function performSplusAction(actor, action, target) {
     if(!await sleep(TIMING.turnRest,battleId))return;
   }
   setUnitState(actor,'idle',800);state.currentId=null;state.locked=false;
+  presentationTrace?.marker('recovery',{actionId:presentationId,position:{x:actor.x,y:actor.y}});
+  presentationTrace?.complete({actionId:presentationId,position:{x:actor.x,y:actor.y}});
   if(battleHasWinner()){if(!await waitForDefeatExit(battleId))return;if(checkBattleEnd()){splusStateView();return;}}
   void advanceTurn();
 }

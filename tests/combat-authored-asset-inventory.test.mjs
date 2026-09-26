@@ -81,7 +81,8 @@ test('all authored production VFX/animation packs physically exist', () => {
     'assets/characters/bach-dien/ultimate-atlas.webp',
     'assets/characters/bach-dien/ultimate_vfx-atlas.webp',
     // Ông Phở legacy authored owner
-    'assets/characters/ong-pho/ultimate-sheet-64-alpha-clean-v310.png'
+    'assets/characters/ong-pho/ultimate-sheet-64-alpha-clean-v310.png',
+    ...[11,12,13,14,15].map(n=>`assets/battle-runtime/embedded-${n}.png`)
   ];
   for (const path of required) assert.ok(exists(path), path);
 });
@@ -132,6 +133,7 @@ test('Thầy Mo authored production owner is applied after final battle rewrite 
     'THAY_MO_ULTIMATE_CAST_IMAGE()',
     'THAY_MO_ULTIMATE_VFX_IMAGE()',
     'drawThayMoAuthoredFx(ctx,time)',
-    'if(!usesLucAnh&&!usesThayMoAuthored) triggerImpactPresentation'
+    'THAY_MO_PRODUCTION_ANCHOR:impact-owner:',
+    "if(!usesThayMoAuthored && "
   ]) assert.ok(patch.includes(token), token);
 });

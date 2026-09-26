@@ -14,6 +14,7 @@ const entries = [
   'qa-dinh-loi-spacing.html',
   'qa-runtime.html',
   'skill-test.html',
+  'skill-test-evidence.js',
   'splus-lab.html',
   'assets'
 ];
@@ -27,6 +28,8 @@ for (const entry of entries) {
   else { mkdirSync(join(dest, '..'), { recursive: true }); copyFileSync(src, dest); }
 }
 
+const { buildOngPhoPngRecovery } = await import('./ong-pho-original-png-recovery.mjs');
+buildOngPhoPngRecovery(out);
 await import('./luc-anh-runtime-patch.mjs');
 await import('./lanes/tkt-0088-skip.mjs');
 await import('./runtime-safety-hotfix.mjs');
@@ -197,6 +200,7 @@ await import('./battle-entry-fail-open-v1.mjs');
 await import('./combat-reference-presentation-v1.mjs');
 await import('./battle-formation-scale-v1.mjs');
 await import('./thay-mo-authored-production-v1.mjs');
+await import('./combat-authored-qa-v1.mjs');
 
 // battle.html is now the single runtime source for iframe and iOS full-page combat.
 // Do not duplicate ~1.5 MB of battle markup as base64 inside index.html; on mobile
@@ -208,4 +212,3 @@ embeddedIndex = embeddedIndex.replace(embeddedExpression, 'const BATTLE_HTML_BAS
 writeFileSync(join(out, 'index.html'), embeddedIndex);
 console.log('Battle runtime served from battle.html; embedded base64 payload disabled.');
 console.log(`Static preview written to ${out}`);
-

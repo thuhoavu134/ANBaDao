@@ -30,6 +30,42 @@ const runtime = `
   function isThayMoAuthored(unit){
     return !!unit&&THAY_MO_PRODUCTION_IDS.has(String(unit.sourceId||unit.sourceHeroId||unit.id));
   }
+  async function prepareThayMoAuthoredAssets(action,signal){
+    const aborted=()=>Object.assign(new Error('Thay Mo asset preparation cancelled'),{name:'AbortError'});
+    const getters=action==='ultimate'
+      ?[THAY_MO_IDLE_IMAGE,THAY_MO_ULTIMATE_CAST_IMAGE,THAY_MO_ULTIMATE_VFX_IMAGE]
+      :[THAY_MO_IDLE_IMAGE,THAY_MO_SKILL1_CAST_IMAGE,THAY_MO_SKILL1_WAVE_IMAGE,THAY_MO_SKILL1_IMPACT_IMAGE];
+    // Reuse original lazy atlas images. Decode sequentially before the action
+    // clock/cost, so the first cold cast cannot run past an unloaded VFX.
+    for(const getImage of getters){
+      if(signal?.aborted)throw aborted();
+      const image=getImage();
+      try{
+        await new Promise((resolve,reject)=>{
+          let timer;
+          const finish=error=>{clearTimeout(timer);signal?.removeEventListener('abort',cancel);error?reject(error):resolve();};
+          const cancel=()=>finish(aborted());
+          signal?.addEventListener('abort',cancel,{once:true});
+          timer=setTimeout(()=>finish(new Error('Thay Mo atlas decode timeout: '+image.src)),15000);
+          Promise.resolve().then(()=>image.decode()).then(()=>{
+            if(!image.complete||image.naturalWidth<2)throw new Error('Thay Mo atlas unavailable: '+image.src);
+            finish();
+          }).catch(finish);
+        });
+      }catch(error){
+        if(error?.name!=='AbortError')for(const [src,cached] of BATTLE_LEGACY_LAZY_IMAGES)if(cached===image)BATTLE_LEGACY_LAZY_IMAGES.delete(src);
+        throw error;
+      }
+    }
+    if(state.sound&&window.HonVietSfx?.prepare){
+      await window.HonVietSfx.prepare(action==='ultimate'?'ultimate':action==='skill'?'skill':'basic',{signal,timeoutMs:2000}).catch(()=>false);
+    }
+    if(signal?.aborted)throw aborted();
+  }
+  function waitThayMoAuthoredMarker(item,marker,battleId){
+    const at=marker==='release'?item.releaseAt:marker==='impact'?item.impactAt:item.totalMs;
+    return sleepVisualMilliseconds(Math.max(0,at-(performance.now()-item.started)),battleId);
+  }
   function thayMoAuthoredTargetIds(actor,target,visualAction){
     if(visualAction==="ultimate")return units.filter(u=>u.team!==actor.team&&u.hp>0).map(u=>u.id);
     const row=target?thayMoSkill1RowTargets(target):[];
@@ -46,7 +82,8 @@ const runtime = `
     const targetIds=thayMoAuthoredTargetIds(actor,target,visualAction);
     const impactAt=visualAction==="ultimate"?THAY_MO_ULTIMATE_MAIN_IMPACT_AT_MS:THAY_MO_SKILL1_FULL_MAIN_IMPACT_AT_MS;
     const totalMs=visualAction==="ultimate"?THAY_MO_ULTIMATE_TOTAL_MS:THAY_MO_SKILL1_FULL_TOTAL_MS;
-    const item={visualAction,action,targetId:target?.id||null,targetIds,bounds:thayMoAuthoredBounds(targetIds),started:performance.now(),impactAt,totalMs};
+    const releaseAt=visualAction==="ultimate"?THAY_MO_ULTIMATE_RELEASE_AT_MS:THAY_MO_SKILL1_COMBO_RELEASE_AT_MS;
+    const item={visualAction,action,targetId:target?.id||null,targetIds,bounds:thayMoAuthoredBounds(targetIds),started:performance.now(),releaseAt,impactAt,totalMs};
     actor._thayMoAuthoredAction=item;
     // Request only this action's authored assets; the shared legacy atlas owner
     // remains responsible for decode pressure and reuse.
@@ -171,6 +208,14 @@ const performEnd = html.indexOf('\n  function statusLabel(status)', performStart
 if (performStart < 0 || performEnd < 0) throw new Error('THAY_MO_PRODUCTION performAction boundary missing');
 let perform = html.slice(performStart, performEnd);
 
+perform = replaceOnce(perform,
+  '__hvActionAssets=await __hvBattleAssets.prepare(actor,action,target,battleId);',
+  `__hvActionAssets=await __hvBattleAssets.prepare(actor,action,target,battleId);
+      if(isThayMoAuthored(actor)){
+        try{await prepareThayMoAuthoredAssets(action,__hvActionAssets.signal);}
+        catch(error){__hvActionAssets.release();throw error;}
+      }`, 'pre-cast-readiness');
+
 perform = replaceOnce(
   perform,
   '    const usesThayMoBasicQa = isThayMoBasicQa(actor) && action === "basic";',
@@ -180,7 +225,7 @@ perform = replaceOnce(
 
 const qaBranch = '    } else if (usesThayMoBasicQa) {';
 const qCount = perform.split(qaBranch).length - 1;
-if (qCount !== 3) throw new Error(`THAY_MO_PRODUCTION expected 3 QA branches, found ${qCount}`);
+if (qCount !== 2) throw new Error(`THAY_MO_PRODUCTION expected 2 final QA branches, found ${qCount}`);
 
 perform = replaceNth(perform, qaBranch,
 `    } else if (usesThayMoAuthored) {
@@ -189,8 +234,10 @@ perform = replaceNth(perform, qaBranch,
       setStatus(actor.name+' '+(action==='ultimate'?'khai Trận Ảnh Phong Môn':'rung Chuông Chấn Phách'));
       dom.phaseLabel.textContent=action==='ultimate'?'Tuyệt kỹ • Trận Ảnh Phong Môn':'Basic • Chuông Chấn Phách';
       setUnitState(actor,action==='ultimate'?'ultimate':'skill1',thayMoAction.totalMs);
+      if(!await waitThayMoAuthoredMarker(thayMoAction,'release',battleId))return;
+      phase1Trace?.marker('release',{actionId:phase1ActionId,position:{x:actor.x,y:actor.y}});
       playActionSound(actor,action);
-      if(!await sleepVisualMilliseconds(thayMoAction.impactAt,battleId))return;
+      if(!await waitThayMoAuthoredMarker(thayMoAction,'impact',battleId))return;
 ` + qaBranch, 1, 'cast-branch');
 
 perform = replaceNth(perform, qaBranch,
@@ -202,15 +249,22 @@ perform = replaceNth(perform, qaBranch,
       actor.x=origin.x;actor.y=origin.y;setUnitState(actor,'idle',800);
 ` + qaBranch, 2, 'recovery-branch');
 
-perform = replaceNth(perform, qaBranch,
-`      } else if (usesThayMoAuthored) {
-        actor.x=origin.x;actor.y=origin.y;setUnitState(actor,'idle',800);
-` + qaBranch.replace('    }','      }'), 3, 'final-recovery-branch');
+// The final movement owner already consolidates return-home into one branch.
+// Thay Mo stays at its existing origin; do not reinsert a removed QA return arm.
 
-perform = perform.replace(
-  '    if(!usesLucAnh) triggerImpactPresentation(actor, target, action);',
-  '    if(!usesLucAnh&&!usesThayMoAuthored) triggerImpactPresentation(actor, target, action);'
-);
+// The final Linh Dong/Bach Dien owners extend this guard. Match that final
+// shape too; a silent string replacement used to leave the generic overlay on.
+const impactGuard=perform.match(/    if\((!usesLucAnh[^\n]*)\) triggerImpactPresentation\(actor, target, action\);/g)||[];
+if(impactGuard.length!==1)throw new Error('THAY_MO_PRODUCTION_ANCHOR:impact-owner:'+impactGuard.length);
+perform=perform.replace(impactGuard[0],impactGuard[0].replace('if(', 'if(!usesThayMoAuthored && '));
+const release="    phase1Trace?.marker('release',{actionId:phase1ActionId,position:{x:actor.x,y:actor.y}});";
+// Only the common impact-time marker has four spaces; the authored marker
+// above has six. Keep exactly one release event at the authored release time.
+perform=replaceOnce(perform,'\n'+release,'\n    if(!usesThayMoAuthored)'+release.trim(),'release-marker-owner');
+perform=replaceOnce(perform,
+  '      if(actor._hvAssetLease===__hvActionAssets)delete actor._hvAssetLease;',
+  '      if(isThayMoAuthored(actor))finishThayMoAuthoredAction(actor);\n      if(actor._hvAssetLease===__hvActionAssets)delete actor._hvAssetLease;',
+  'cancel-cleanup');
 
 html = html.slice(0, performStart) + perform + html.slice(performEnd);
 writeFileSync(path, html);
