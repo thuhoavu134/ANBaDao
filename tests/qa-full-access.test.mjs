@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
 const index = readFileSync(new URL('../dist/index.html', import.meta.url), 'utf8');
+const battle = readFileSync(new URL('../dist/battle.html', import.meta.url), 'utf8');
 
 test('QA full access bypasses campaign progression gates without changing the normal-route gate owner', () => {
   assert.match(index, /const baseCampaignGate=typeof hvCampaignGate==='function'\?hvCampaignGate:null/);
@@ -10,6 +11,12 @@ test('QA full access bypasses campaign progression gates without changing the no
   assert.match(index, /if\(!active\|\|!baseCampaignGate\)return baseCampaignGate\?baseCampaignGate\.apply\(this,arguments\):\{ok:false,code:'QA_GATE_UNAVAILABLE'/);
   assert.match(index, /return \{\.\.base,ok:true,code:'OPEN',qaBypass:true\}/);
   assert.match(index, /sandbox không lưu/);
+});
+
+test('QA token survives top-level battle return for repeat iPhone testing', () => {
+  assert.match(battle, /const qaReturnToken=new URLSearchParams\(location\.search\)\.get\("qa"\)\|\|""/);
+  assert.match(battle, /qaReturnToken==="unlock-all"\?["']&qa=unlock-all["']/);
+  assert.match(battle, /index\.html\?hvBattleReturn=1/);
 });
 
 test('QA full access is present but opt-in', () => {
