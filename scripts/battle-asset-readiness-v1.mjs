@@ -114,7 +114,11 @@ export function patchBattleReadiness(input, variants = {}) {
       `function play${title}Sfx(action,info){
   const normalized=normalize${title}Action(action);
   if(!normalized)return Promise.resolve(false);
-  return __hvBattleAssets.playSfx(info||{battleId:state.battleId},normalized==='ultimate'?'${hero}-ult':'${hero}-atk');
+  const timeline=${cap}_TIMELINE[normalized];
+  const cuePerformanceMs=(info?.startedAt||performance.now())+(Number(timeline?.releaseMs)||0);
+  return __hvBattleAssets.playSfx(info||{battleId:state.battleId},normalized==='ultimate'?'${hero}-ult':'${hero}-atk',{
+    actionId:info?.actionId||null,cue:'release:authored-marker',cuePerformanceMs,sampleCue:'onset'
+  });
 }`);
     html = replaceOne(html, `info.clock=create${title}TimelineController(normalized,`,
       `info.assetSignal=actor._hvAssetLease?.signal;\n  info.clock=create${title}TimelineController(normalized,`, hero + ' action cancellation signal');
