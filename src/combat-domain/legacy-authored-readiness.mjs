@@ -1,10 +1,9 @@
 // Readiness only: original images, existing cache, existing combat audio bus.
 export function createLegacyAuthoredReadiness({cache,describe,sound,enabled,timeoutMs=15000}) {
   async function prepare(actor,action,signal) {
-    const assets=describe(actor,action);
-    if(!assets?.length)return {release(){}};
+    const assets=describe(actor,action)||[];
     const native=assets.filter(a=>a.key);
-    const releaseCache=cache.retain(native.map(a=>a.key),native.reduce((n,a)=>n+a.bytes,0));
+    const releaseCache=native.length?cache.retain(native.map(a=>a.key),native.reduce((n,a)=>n+a.bytes,0)):()=>{};
     let released=false;
     const release=()=>{if(released)return;released=true;releaseCache();signal?.removeEventListener('abort',release);};
     signal?.addEventListener('abort',release,{once:true});
