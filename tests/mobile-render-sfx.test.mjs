@@ -188,7 +188,7 @@ test('built battle keeps opaque canvas and stable camera; all inline JS parses',
   assert.match(battle, /fillRect\(0, 0, dom\.canvas\.width, dom\.canvas\.height\)/);
   assert.doesNotMatch(battle, /ctx\.clearRect\(-100/);
   assert.match(battle, /AUTHORED_COMBAT_AUDIO_SYNC_V1/);
-  assert.match(battle, /__hvScheduleAuthoredSfx\(actor,action,performance\.now\(\)\+980,'release:first-vfx'/);
+  assert.match(battle, /__hvScheduleAuthoredSfx\(actor,action,performance\.now\(\)\+lucAnhDelayMs\(LUC_ANH_SPATIAL\.timing\.basic\.projectileTravel\),\"release:first-vfx\"/);
   assert.doesNotMatch(battle, /window\.__playLucAnhUltimateVoiceGuaranteed\?\.\(\);playActionSound\(actor,"ultimate"\)/);
   assert.match(battle, /if \(state\.sound\) window\.HonVietSfx\?\.play\(action === 'ultimate' \? 'ultimate' : action === 'skill' \? 'skill' : 'basic'\)/);
   assert.doesNotMatch(battle, /tone\(critical \?/);
