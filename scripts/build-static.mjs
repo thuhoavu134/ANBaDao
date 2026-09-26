@@ -200,6 +200,7 @@ await import('./battle-entry-fail-open-v1.mjs');
 await import('./combat-reference-presentation-v1.mjs');
 await import('./battle-formation-scale-v1.mjs');
 await import('./thay-mo-authored-production-v1.mjs');
+await import('./authored-vfx-clock-v1.mjs');
 await import('./combat-authored-qa-v1.mjs');
 
 // battle.html is now the single runtime source for iframe and iOS full-page combat.

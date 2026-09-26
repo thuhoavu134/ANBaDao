@@ -7,6 +7,12 @@
   function install(frame){
     const w=frame.contentWindow;if(w.__authoredEvidenceInstalled)return;
     w.__authoredEvidenceInstalled=true;
+    // The original Lục Ảnh voice bridge first uses a real HTMLAudioElement.
+    // Observe its playing event as well as the Web Audio fallback bus.
+    for(const audio of frame.contentDocument.querySelectorAll('audio'))audio.addEventListener('playing',()=>{
+      const src=audio.currentSrc||audio.src;
+      if(current&&src.includes('voice-'))current.audio.push({kind:'voice-element',key:new URL(src).pathname,played:!audio.muted&&audio.volume>0,playingMs:at(),currentTime:audio.currentTime,volume:audio.volume,muted:audio.muted});
+    });
     const draw=w.CanvasRenderingContext2D.prototype.drawImage;
     w.CanvasRenderingContext2D.prototype.drawImage=function(image,...args){
       const result=draw.call(this,image,...args);

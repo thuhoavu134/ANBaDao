@@ -9,7 +9,7 @@ const source=html.slice(from,to);
 function fixture(){
   let resolve,reject;const pending=new Promise((a,b)=>{resolve=a;reject=b;});
   const calls=[];const state={mode:'battle',battleId:1,currentId:'a',locked:false};
-  const context=vm.createContext({state,splusCombat:()=>({}),isLinhDong:()=>true,isBachDien:()=>false,
+  const context=vm.createContext({state,window:{},splusCombat:()=>({}),isLinhDong:()=>true,isBachDien:()=>false,
     normalizeLinhDongAction:()=> 'atk',__hvBattleAssets:{prepare:()=>{calls.push('prepare');return pending;}},
     __hvBattleAssetError:()=>{state.locked=false;calls.push('failure');},
     __hvSkillMovement:{approach:async()=>{calls.push('approach');return true;}},
