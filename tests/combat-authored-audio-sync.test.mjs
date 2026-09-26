@@ -96,4 +96,10 @@ test('RED: final generated battle has one authored SFX cue scheduler instead of 
   assert.match(battle, /AUTHORED_COMBAT_AUDIO_SYNC_V1/);
   assert.match(battle, /__hvScheduleAuthoredSfx/);
   assert.match(battle, /cuePerformanceMs/);
+  assert.match(battle, /performance\.now\(\)\+460,"release:first-projectile"/, 'Lục Ảnh Basic must follow the generated 460 ms projectile release');
+  assert.match(battle, /performance\.now\(\)\+520,"release:first-vfx"/, 'Lục Ảnh Skill must follow the generated 520 ms VFX release');
+  assert.match(battle, /performance\.now\(\)\+lucAnhDelayMs\(LUC_ANH_SPATIAL\.timing\.basic\.projectileTravel\),"release:first-vfx"/,
+    'Lục Ảnh Ultimate SFX must follow the same speed-aware delay as its generated VFX');
+  assert.doesNotMatch(battle, /LUC_ANH_META\.(?:attack|skill1)\.frames\*LUC_ANH_META\.(?:attack|skill1)\.ms\)\);playActionSound\(actor,action\)/,
+    'Lục Ảnh Basic/Skill must not retain owner-local immediate playback');
 });
