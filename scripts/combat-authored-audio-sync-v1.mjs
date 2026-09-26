@@ -14,16 +14,20 @@ function replaceOne(from,to,label){
   if(count===1)html=html.replace(from,to);
 }
 
-// Lục Ảnh: audible onset follows the actual release/VFX start; Ultimate voice stays independent.
-replaceOne('setUnitState(actor,"attack",LUC_ANH_META.attack.frames*LUC_ANH_META.attack.ms);playActionSound(actor,action);',
-  'setUnitState(actor,"attack",LUC_ANH_META.attack.frames*LUC_ANH_META.attack.ms);void __hvScheduleAuthoredSfx(actor,action,performance.now()+900,"release:first-projectile",phase1ActionId,__hvActionAssets?.signal||null,"onset");',
+// Lục Ảnh: bind to the final generated owner. Basic/Skill release clocks are
+// absolute in the current visual runtime; Ultimate follows its speed-aware VFX delay.
+// The Ultimate voice remains an independent owner and intentionally starts earlier.
+replaceOne('setUnitState(actor,"attack",lucAnhDelayMs(LUC_ANH_META.attack.frames*LUC_ANH_META.attack.ms));playActionSound(actor,action);',
+  'setUnitState(actor,"attack",lucAnhDelayMs(LUC_ANH_META.attack.frames*LUC_ANH_META.attack.ms));void __hvScheduleAuthoredSfx(actor,action,performance.now()+460,"release:first-projectile",phase1ActionId,__hvActionAssets?.signal||null,"onset");',
   'luc-anh-basic');
-replaceOne('setUnitState(actor,"skill1",LUC_ANH_META.skill1.frames*LUC_ANH_META.skill1.ms);playActionSound(actor,action);',
-  'setUnitState(actor,"skill1",LUC_ANH_META.skill1.frames*LUC_ANH_META.skill1.ms);void __hvScheduleAuthoredSfx(actor,action,performance.now()+900,"release:first-vfx",phase1ActionId,__hvActionAssets?.signal||null,"onset");',
+replaceOne('setUnitState(actor,"skill1",lucAnhDelayMs(LUC_ANH_META.skill1.frames*LUC_ANH_META.skill1.ms));playActionSound(actor,action);',
+  'setUnitState(actor,"skill1",lucAnhDelayMs(LUC_ANH_META.skill1.frames*LUC_ANH_META.skill1.ms));void __hvScheduleAuthoredSfx(actor,action,performance.now()+520,"release:first-vfx",phase1ActionId,__hvActionAssets?.signal||null,"onset");',
   'luc-anh-skill');
-replaceOne('setUnitState(actor,"ultimate",LUC_ANH_META.ultimate.frames*LUC_ANH_META.ultimate.ms);playLucAnhUltimateVoice();',
-  'setUnitState(actor,"ultimate",LUC_ANH_META.ultimate.frames*LUC_ANH_META.ultimate.ms);playLucAnhUltimateVoice();void __hvScheduleAuthoredSfx(actor,action,performance.now()+980,"release:first-vfx",phase1ActionId,__hvActionAssets?.signal||null,"onset");',
-  'luc-anh-ultimate');
+replaceOne(
+  'setUnitState(actor,"ultimate",lucAnhDelayMs(LUC_ANH_META.ultimate.frames*LUC_ANH_META.ultimate.ms));\n        if(!await sleepVisualMilliseconds(lucAnhDelayMs(LUC_ANH_SPATIAL.timing.basic.projectileTravel),battleId))return;',
+  'setUnitState(actor,"ultimate",lucAnhDelayMs(LUC_ANH_META.ultimate.frames*LUC_ANH_META.ultimate.ms));\n        void __hvScheduleAuthoredSfx(actor,action,performance.now()+lucAnhDelayMs(LUC_ANH_SPATIAL.timing.basic.projectileTravel),"release:first-vfx",phase1ActionId,__hvActionAssets?.signal||null,"onset");\n        if(!await sleepVisualMilliseconds(lucAnhDelayMs(LUC_ANH_SPATIAL.timing.basic.projectileTravel),battleId))return;',
+  'luc-anh-ultimate'
+);
 
 // Đình Lôi: first authored projectile/wave/VFX frame is the release cue.
 replaceOne('setUnitState(actor,"attack",DINH_LOI_ACTION_MS);playActionSound(actor,action);',
@@ -129,7 +133,8 @@ replaceOne(
 html=html.replace('window.__playLucAnhUltimateVoiceGuaranteed?.();playActionSound(actor,"ultimate");','window.__playLucAnhUltimateVoiceGuaranteed?.();');
 
 const validation={
-  lucImmediate:/LUC_ANH_META\.attack\.frames\*LUC_ANH_META\.attack\.ms\);playActionSound/.test(html),
+  lucImmediate:html.includes('LUC_ANH_META.attack.frames*LUC_ANH_META.attack.ms));playActionSound(actor,action);')||
+    html.includes('LUC_ANH_META.skill1.frames*LUC_ANH_META.skill1.ms));playActionSound(actor,action);'),
   dinhImmediate:/DINH_LOI_ACTION_MS\);playActionSound/.test(html),
   ongImmediate:/ONG_PHO_SKILL1_MS\); playActionSound/.test(html),
   splusReleaseReplay:/start(?:LinhDong|BachDien)Fx\([^;]+;play(?:LinhDong|BachDien)Sfx/.test(html),
@@ -152,6 +157,9 @@ const diagnosticPayload={diagnostics,validation,anchorFailures,ok:anchorFailures
 console.log('HV_AUDIO_SYNC_ANCHORS '+JSON.stringify(diagnosticPayload));
 mkdirSync(join(process.cwd(),'dist','assets','qa'),{recursive:true});
 writeFileSync(join(process.cwd(),'dist','assets','qa','audio-sync-diagnostics.json'),JSON.stringify(diagnosticPayload,null,2));
+if(anchorFailures.length||finalValidation?.count!==1){
+  throw new Error('Authored audio sync anchor validation failed: '+JSON.stringify({anchorFailures,validation}));
+}
 const diagnosticMarker='<!-- HV_AUDIO_SYNC_DIAGNOSTICS '+encodeURIComponent(JSON.stringify({diagnostics,validation}))+' -->';
 html=html.replace('</body>',MARKER+'\n'+diagnosticMarker+'\n</body>');
 writeFileSync(path,html);
