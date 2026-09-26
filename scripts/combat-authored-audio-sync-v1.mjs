@@ -70,17 +70,14 @@ function bindSplusAudioClock({title,hero,cap}){
     hero+'-begin-signature'
   );
   replaceOne(
-    'const info={action:normalized,actorId:actor.id,targetId:target?.id||null,battleId,startedAt:performance.now(),releasePlayed:false,impactResolved:false,clock:null};',
-    'const info={action:normalized,actorId:actor.id,targetId:target?.id||null,battleId,actionId,startedAt:performance.now(),releasePlayed:false,impactResolved:false,clock:null};',
-    hero+'-action-id'
-  );
-  replaceOne(
-    `info.assetSignal=actor._hvAssetLease?.signal;
+    `const info={action:normalized,actorId:actor.id,targetId:target?.id||null,battleId,startedAt:performance.now(),releasePlayed:false,impactResolved:false,clock:null};
+  info.assetSignal=actor._hvAssetLease?.signal;
   info.clock=create${title}TimelineController(normalized,`,
-    `info.assetSignal=actor._hvAssetLease?.signal;
+    `const info={action:normalized,actorId:actor.id,targetId:target?.id||null,battleId,actionId,startedAt:performance.now(),releasePlayed:false,impactResolved:false,clock:null};
+  info.assetSignal=actor._hvAssetLease?.signal;
   void play${title}Sfx(normalized,info);
   info.clock=create${title}TimelineController(normalized,`,
-    hero+'-pre-schedule'
+    hero+'-action-clock'
   );
   replaceOne(
     `function play${title}Sfx(action,info){
