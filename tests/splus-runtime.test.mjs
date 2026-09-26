@@ -28,3 +28,27 @@ test('Bundled browser factory has the same damage/status/rage results as source'
   const options={units:fixture.heroes.map(h=>({...h,maxHp:h.hp})),rng:()=>0.45};
   const a=createSplusCombat(options),b=context.SPLUS42.create(options);a.start();b.start();a.act(options.units[0].id,'skill');b.act(options.units[0].id,'skill');assert.equal(JSON.stringify(a.events),JSON.stringify(b.events));assert.equal(JSON.stringify(a.units),JSON.stringify(b.units));
 });
+
+
+test('mixed roster routes only S+ owned actors through S+ action resolver',()=>{
+  const raw=readFileSync(new URL('../battle.html',import.meta.url),'utf8');
+  const html=patchSplusBattleHtml(raw);
+  assert.match(html,/if\(actor\?\.kitVersion==='splus42-v2'&&splusCombat\(\)\)\{/);
+  assert.doesNotMatch(html,/async function performAction\(actor, action, target\) \{\n\s*if\(splusCombat\(\)\)\{/);
+});
+
+test('non-authored S+ actions retain generic presentation while S+ engine owns mechanics',()=>{
+  const bridge=readFileSync(new URL('../src/runtime/splus-battle-bridge.js',import.meta.url),'utf8');
+  const start=bridge.indexOf('async function performSplusAction');
+  const end=bridge.indexOf('function drawSplusToken',start);
+  assert.ok(start>=0&&end>start);
+  const action=bridge.slice(start,end);
+  for(const call of [
+    'queueChargeEffect(actor,action)',
+    'queueWeaponAnticipation(actor,action)',
+    'playActionSound(actor,action)',
+    'launchWeaponEffect(actor,target||actor,action,battleId)',
+    'triggerImpactPresentation(actor,target,action)'
+  ]) assert.ok(action.includes(call),call);
+  assert.match(action,/if\(!linhAction&&!bachAction\)/);
+});
