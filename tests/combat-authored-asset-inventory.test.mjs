@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 
 const root = new URL('../', import.meta.url);
 const exists = path => existsSync(new URL(path, root));
@@ -20,6 +20,16 @@ test('combat authored inventory is explicit: 15 manifests across five heroes', (
     manifests.push(path);
   }
   assert.equal(manifests.length, 15);
+  const found=[];
+  const visit=path=>{
+    for(const e of readdirSync(new URL(path,root),{withFileTypes:true})){
+      const child=path+e.name;
+      if(e.isDirectory())visit(child+'/');
+      else if(e.name==='skill.json'&&JSON.parse(read(child)).schema==='hon-viet-skill/v1')found.push(child);
+    }
+  };
+  visit('assets/');
+  assert.deepEqual(found.sort(),manifests.sort(),'new authored packs require inventory and runtime review');
 });
 
 test('all authored production VFX/animation packs physically exist', () => {

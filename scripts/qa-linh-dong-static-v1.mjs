@@ -40,7 +40,7 @@ export function inspectLinhDongStatic(root = process.cwd()) {
   assert(battle.includes('hero_splus_linh_dong'), 'battle does not contain the canonical hero id');
   assert(battle.includes('combinedVfx'), 'battle registry does not expose combined VFX');
   assert(battle.includes('waitLinhDongMarker'), 'battle does not use the shared Linh Đồng marker clock');
-  assert(/if\(!usesLucAnh && !usesLinhDong(?: && !usesBachDien)?\) triggerImpactPresentation/.test(battle), 'separate impact VFX is still wired to Linh Đồng');
+  assert(/if\((?:!usesThayMoAuthored && )?!usesLucAnh && !usesLinhDong(?: && !usesBachDien)?\) triggerImpactPresentation/.test(battle), 'separate impact VFX is still wired to Linh Đồng');
   assert(!battle.includes('tone(critical ? 105 : 135, critical ? 0.16 : 0.09, "square", 0.035);') || /if\(!isLinhDong\(actor\)(?:&&!isBachDien\(actor\))?\) tone/.test(battle), 'separate impact SFX is still wired to Linh Đồng damage');
   assert(/if\(!isLinhDong\(actor\)(?:&&!isBachDien\(actor\))?\) burst/.test(battle), 'separate impact VFX burst is still wired to Linh Đồng damage');
   assert(!battle.includes('if(isLinhDong(actor)&&action==="skill")'), 'Skill 1 still has a Linh Đồng runtime resolve branch');
@@ -65,10 +65,11 @@ export function inspectLinhDongStatic(root = process.cwd()) {
   assert(splusSource.split('e.act(').length === 2, 'S+ Linh Đồng damage is not resolved once');
   assert(!/sleep\(linh\?linhDur/.test(splusSource) && !splusSource.includes('sleep(linhDur'), 'S+ Linh Đồng still sleeps the scaled clip duration');
   assert(battle.includes("['passive','ultimate']"), 'S+ Linh Đồng skill bar still exposes Skill 1');
-  const embedded = index.match(/const BATTLE_HTML_BASE64 = "([A-Za-z0-9+/=]+)";/);
-  assert(embedded, 'embedded battle payload marker is missing');
-  const embeddedBattle = Buffer.from(embedded[1], 'base64').toString('utf8');
-  assert(embeddedBattle.includes('TKT-0145 canonical Linh Dong combat bridge'), 'embedded battle is stale and misses the Linh Đồng bridge');
+  // The final build deliberately serves one battle.html instead of a second
+  // base64 document. Assert that route and inspect its actual authored owner.
+  assert(index.includes('const BATTLE_HTML_BASE64 = "";'), 'unexpected duplicate battle payload');
+  assert(/const url = `battle\.html\?embedded=1&session=/.test(index) && /frame\.src = url;/.test(index), 'host no longer loads the audited battle document');
+  assert(battle.includes('TKT-0145 canonical Linh Dong combat bridge'), 'battle document misses the Linh Đồng bridge');
   return { schema: 'hon-viet-linh-dong-static-qa/v1', ok: true, required: REQUIRED.length, files };
 }
 

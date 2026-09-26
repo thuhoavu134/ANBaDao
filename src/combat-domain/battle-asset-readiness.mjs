@@ -25,7 +25,7 @@ export function createBattleAssetReadiness(options) {
     const battleId = getState().battleId;
     if (battleId !== visibleBattleId) { resetVisible(); visibleBattleId = battleId; }
     let pin;
-    if (key === 'idle' && tasks.size === 0) {
+    if (key === 'idle' && tasks.size === 0 && !loader.cache.constrainedMobile) {
       if (!visible.has(loader)) visible.set(loader, new Map());
       const pins = visible.get(loader);
       if (!pins.has(clip.src)) pins.set(clip.src, Symbol('battle-visible-idle'));
