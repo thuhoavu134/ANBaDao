@@ -141,7 +141,14 @@ const validation={
 diagnostics.push({label:'final-validation',count:(validation.lucImmediate||validation.dinhImmediate||validation.ongImmediate||validation.splusReleaseReplay||!validation.splusTimedOwners||!validation.contactCue||!validation.releaseCue)?0:1,validation});
 const anchorFailures=diagnostics.filter(item=>item.label!=='final-validation'&&item.count!==1);
 const finalValidation=diagnostics.find(item=>item.label==='final-validation');
-const diagnosticPayload={diagnostics,validation,anchorFailures,ok:anchorFailures.length===0&&finalValidation?.count===1};
+const __hvAudioSnippet=(needle,radius=900)=>{const at=html.indexOf(needle);return at<0?null:html.slice(Math.max(0,at-radius),Math.min(html.length,at+radius));};
+const diagnosticPayload={diagnostics,validation,anchorFailures,ok:anchorFailures.length===0&&finalValidation?.count===1,
+  lucGenerated:{
+    basic:__hvAudioSnippet('startLucAnhFx("basicProjectile"',1100),
+    skill:__hvAudioSnippet('startLucAnhFx("skill1Vfx"',1100),
+    ultimate:__hvAudioSnippet('startLucAnhFx("ultimateVfx"',1400)
+  }
+};
 console.log('HV_AUDIO_SYNC_ANCHORS '+JSON.stringify(diagnosticPayload));
 mkdirSync(join(process.cwd(),'dist','assets','qa'),{recursive:true});
 writeFileSync(join(process.cwd(),'dist','assets','qa','audio-sync-diagnostics.json'),JSON.stringify(diagnosticPayload,null,2));
