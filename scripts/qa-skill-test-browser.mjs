@@ -98,6 +98,7 @@ async function runViewport(browser,out,name,width,height,dpr,targetBase) {
           const movement=w.__HV_SKILL_MOVEMENT_QA?.events().slice(${row.movementStart})||[];
           return {lastRun:q.lastRun,status:document.querySelector('#status').dataset.phase,home:u?Math.hypot(u.x-u.baseX,u.y-u.baseY):9999,hp:u?.hp||0,movement,evidence:window.SkillTestEvidence?.last?.()||null};
         })()`);
+        row.canonicalAction = row.result.lastRun?.canonicalAction || action;
         row.ok = row.result.lastRun.started===true && row.result.lastRun.impact===true && row.result.lastRun.complete===true && row.result.home<=2 && row.result.hp>0;
         row.timing = timingContract(row);
         row.timingOk = row.timing.ok;
