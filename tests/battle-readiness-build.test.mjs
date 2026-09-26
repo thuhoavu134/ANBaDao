@@ -15,6 +15,7 @@ function fixture(){
   const context=vm.createContext({state,Core:{canUseAction:()=>true},isLinhDong:()=>false,isBachDien:()=>false,isThayMoAuthored:()=>false,
     document:{getElementById:()=>null},clearTargets:()=>{entered++;throw new Error('ACTION_BODY_REACHED');},
     __hvBattleAssets:{prepare:()=>{prepared++;return gate.promise;}},
+    __hvLegacyAuthored:{prepare:async()=>({release(){}})},
     __hvBattleAssetError:()=>{failures++;state.locked=false;},
   });
   const run=vm.runInContext(actionSource+';__hvPerformAction3qAdapter',context);
