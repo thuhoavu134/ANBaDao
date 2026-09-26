@@ -17,7 +17,58 @@
       parentBus = shared?.createBattleChannel ? shared.createBattleChannel() : shared;
     }
   } catch (_) {}
-  const active = new Set(), buffers = new Map(), loads = new Map(), last = new Map();
+  const active = new Set(), buffers = new Map(), loads = new Map(), analyses = new Map(), last = new Map();
+  const timing = [];
+  const recordTiming = detail => {
+    const item = { atPerformanceMs: performance.now(), ...detail };
+    timing.push(item);
+    if (timing.length > 160) timing.splice(0, timing.length - 160);
+    return item;
+  };
+  function analyseBuffer(event, buffer) {
+    if (analyses.has(event)) return analyses.get(event);
+    const fallback = { audibleLeadInMs: 0, dominantCueMs: 0, method: 'unavailable' };
+    if (!buffer || typeof buffer.getChannelData !== 'function' || !Number.isFinite(buffer.sampleRate) || buffer.sampleRate <= 0 || !buffer.numberOfChannels) {
+      analyses.set(event, fallback); return fallback;
+    }
+    const sampleRate = buffer.sampleRate, channels = Math.max(1, buffer.numberOfChannels | 0);
+    const first = buffer.getChannelData(0), length = first?.length || 0;
+    if (!length) { analyses.set(event, fallback); return fallback; }
+    const channelData = [first];
+    for (let channel = 1; channel < channels; channel += 1) channelData.push(buffer.getChannelData(channel));
+    const onsetWindow = Math.max(1, Math.round(sampleRate * 0.005));
+    const peakWindow = Math.max(1, Math.round(sampleRate * 0.010));
+    const onsetThreshold = Math.pow(10, -50 / 20);
+    const onsetRing = new Float64Array(onsetWindow), peakRing = new Float64Array(peakWindow);
+    let onsetSum = 0, peakSum = 0, onsetFrame = null, dominantFrame = 0, dominantRms = -1;
+    for (let frame = 0; frame < length; frame += 1) {
+      let power = 0;
+      for (let channel = 0; channel < channels; channel += 1) {
+        const value = Number(channelData[channel]?.[frame]) || 0;
+        power += value * value;
+      }
+      power /= channels;
+      const oi = frame % onsetWindow; onsetSum += power - onsetRing[oi]; onsetRing[oi] = power;
+      const pi = frame % peakWindow; peakSum += power - peakRing[pi]; peakRing[pi] = power;
+      if (onsetFrame === null && frame >= onsetWindow - 1 && Math.sqrt(onsetSum / onsetWindow) >= onsetThreshold) {
+        onsetFrame = Math.max(0, frame - onsetWindow + 1);
+      }
+      if (frame >= peakWindow - 1) {
+        const rms = Math.sqrt(peakSum / peakWindow);
+        if (rms > dominantRms) { dominantRms = rms; dominantFrame = Math.max(0, frame - peakWindow + 1); }
+      }
+    }
+    const result = {
+      audibleLeadInMs: ((onsetFrame ?? 0) * 1000) / sampleRate,
+      dominantCueMs: (dominantFrame * 1000) / sampleRate,
+      method: 'decoded-buffer:rms-5ms--50db/onset;rms-10ms-max/dominant'
+    };
+    analyses.set(event, result);
+    return result;
+  }
+  function timingEvents() {
+    return parentBus?.timingEvents?.() || timing.map(item => ({ ...item }));
+  }
   let ownContext = null, combatEnabled = true, combatEpoch = 0, played = 0;
   let battleSession = 0, disposed = false;
   const stamp = (key, value) => { document.documentElement.dataset[key] = String(value); };
@@ -52,13 +103,14 @@
     if (parentBus) return parentBus.prepare ? parentBus.prepare(event, options) : false;
     let timer, onAbort;
     try {
-      await new Promise((resolve, reject) => {
+      const buffer = await new Promise((resolve, reject) => {
         onAbort = () => reject(new Error('SFX preparation cancelled'));
         options.signal?.addEventListener('abort', onAbort, { once: true });
         if (options.signal?.aborted) { onAbort(); return; }
         timer = setTimeout(() => reject(new Error('SFX preparation timeout')), Math.max(1, Number(options.timeoutMs) || 2000));
         load(event).then(resolve, reject);
       });
+      if (buffer) analyseBuffer(event, buffer);
       return !disposed && !options.signal?.aborted;
     } catch (error) {
       stamp('sfxPrepareError', error.message || error);
@@ -124,6 +176,7 @@
       stopCombat: () => { if (ownsSession()) stopCombat(); },
       setCombatEnabled: enabled => { if (ownsSession()) setCombatEnabled(enabled); },
       isBattleActive: ownsSession,
+      timingEvents: () => ownsSession() ? timingEvents() : [],
       dispose: () => { if (ownsSession()) endBattle(); }
     };
   }
@@ -139,7 +192,7 @@
     }
   }
   async function play(event, options = {}) {
-    const requestedAt = Date.now();
+    const requestedAt = Date.now(), requestedPerformanceMs = performance.now();
     if (options.signal?.aborted) return false;
     if (!isBattleActive()) return false;
     if (parentBus) return parentBus.play(event, options);
@@ -151,8 +204,6 @@
     if (group === 'combat' && !combatEnabled) return false;
     const c = context();
     stamp('sfxState', c?.state || 'unsupported');
-    // Do not play into a locked iOS context. Slow first decode may still
-    // emit if this battle session is alive.
     if (!c || c.state !== 'running') return false;
     const now = performance.now(), key = group + ':' + event;
     if (now - (last.get(key) ?? -Infinity) < (event === 'forge-reveal' ? 120 : 70)) return false;
@@ -160,6 +211,7 @@
     const ticket = combatEpoch;
     try {
       const buffer = await load(event);
+      const decodedReadyPerformanceMs = performance.now();
       if (options.signal?.aborted || (Number.isFinite(options.maxDelayMs) && Date.now() - requestedAt > options.maxDelayMs)) {
         stamp('sfxLastResult', 'expired'); return false;
       }
@@ -171,21 +223,65 @@
         try { oldest.source.stop(); } catch (_) {}
         oldest.cleanup();
       }
+      const analysis = analyseBuffer(event, buffer);
+      const cuePerformanceMs = Number.isFinite(Number(options.cuePerformanceMs))
+        ? Number(options.cuePerformanceMs)
+        : Number.isFinite(Number(options.audibleAtPerformanceMs)) ? Number(options.audibleAtPerformanceMs) : null;
+      const sampleCue = options.sampleCue === 'dominant' ? 'dominant' : 'onset';
+      const sampleCueOffsetMs = sampleCue === 'dominant' ? analysis.dominantCueMs : analysis.audibleLeadInMs;
       const source = c.createBufferSource(), gain = c.createGain();
       source.buffer = buffer;
       gain.gain.value = event === 'forge-reveal' ? 0.4 : group === 'ui' ? 0.3 : 0.38;
       source.connect(gain); gain.connect(c.destination);
-      const voice = { source, group, cleanup() {
-        if (!active.delete(voice)) return;
-        source.disconnect(); gain.disconnect(); stamp('sfxActive', active.size);
-      } };
-      source.onended = voice.cleanup;
-      active.add(voice); source.start(0);
-      stamp('sfxPlayed', ++played); stamp('sfxLast', event); stamp('sfxActive', active.size);
+      const voice = { source, group, cleanup: null, cancelled: false, timingEvent: null };
+      let cancel = null;
+      voice.cleanup = () => {
+        if (active.delete(voice)) stamp('sfxActive', active.size);
+        if (cancel && options.signal) options.signal.removeEventListener('abort', cancel);
+        try { source.disconnect(); gain.disconnect(); } catch (_) {}
+      };
+      cancel = () => {
+        voice.cancelled = true;
+        try { source.stop(); } catch (_) {}
+        voice.cleanup();
+      };
+      if (options.signal) options.signal.addEventListener('abort', cancel, { once: true });
+      source.onended = () => {
+        if (voice.timingEvent) {
+          voice.timingEvent.endedPerformanceMs = performance.now();
+          voice.timingEvent.completed = !voice.cancelled;
+        }
+        voice.cleanup();
+      };
+      active.add(voice);
+      const sourceRequestPerformanceMs = performance.now();
+      const desiredSourcePerformanceMs = cuePerformanceMs === null ? null : cuePerformanceMs - sampleCueOffsetMs;
+      const sourceScheduledPerformanceMs = desiredSourcePerformanceMs === null
+        ? sourceRequestPerformanceMs : Math.max(sourceRequestPerformanceMs, desiredSourcePerformanceMs);
+      const contextNow = Number(c.currentTime);
+      const sourceStartContextTime = desiredSourcePerformanceMs === null || !Number.isFinite(contextNow)
+        ? 0 : contextNow + Math.max(0, sourceScheduledPerformanceMs - sourceRequestPerformanceMs) / 1000;
+      const expectedAudiblePerformanceMs = sourceScheduledPerformanceMs + analysis.audibleLeadInMs;
+      const expectedCuePerformanceMs = sourceScheduledPerformanceMs + sampleCueOffsetMs;
+      voice.timingEvent = recordTiming({
+        type: 'sfx:scheduled', event, group,
+        battleSession: options.battleSession ?? battleSession,
+        actionId: options.actionId || null, cue: options.cue || null, sampleCue,
+        requestedPerformanceMs, decodedReadyPerformanceMs,
+        cuePerformanceMs, audibleLeadInMs: analysis.audibleLeadInMs,
+        dominantCueMs: analysis.dominantCueMs, sampleCueOffsetMs,
+        sourceScheduledPerformanceMs, sourceStartContextTime,
+        expectedAudiblePerformanceMs, expectedCuePerformanceMs,
+        signedCueOffsetMs: cuePerformanceMs === null ? null : expectedCuePerformanceMs - cuePerformanceMs,
+        analysisMethod: analysis.method
+      });
+      if (options.signal?.aborted) { cancel(); return false; }
+      source.start(sourceStartContextTime);
+      stamp('sfxPlayed', ++played); stamp('sfxLast', event); stamp('sfxActive', active.size); stamp('sfxLastResult', 'played');
       return true;
     } catch (error) { report(error); return false; }
   }
-  window.HonVietSfx = { play, prepare, unlock, stopCombat, setCombatEnabled, createBattleChannel, endBattle, dispose, isBattleActive };
+  window.HonVietSfx = { play, prepare, unlock, stopCombat, setCombatEnabled, createBattleChannel, endBattle, dispose, isBattleActive, timingEvents };
   for (const event of ['pointerdown', 'touchend', 'keydown']) {
     document.addEventListener(event, () => { void unlock(); }, { capture: true, passive: true });
   }
