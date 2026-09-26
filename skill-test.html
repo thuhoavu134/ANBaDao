@@ -58,7 +58,10 @@
     'bach-dien': { id:'qa-bach-dien', sourceId:'hero_splus_bach_dien', name:'Bạch Diện', force:'qaForceAuthoredAction', skillAlias:true }
   };
   const frame = document.getElementById('battleFrame');
-  document.getElementById('qaViewport').addEventListener('change',event=>document.body.classList.toggle('qa-mobile',event.target.value==='mobile'));
+  document.getElementById('qaViewport').addEventListener('change',event=>{
+    document.body.classList.toggle('qa-mobile',event.target.value==='mobile');
+    qa.resetCount++;qa.lastRun=null;void loadBattle();
+  });
   const status = document.getElementById('status');
   const statusDetail = document.getElementById('statusDetail');
   const resetButton = document.getElementById('resetBattle');
