@@ -6177,18 +6177,15 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
       actor.x=actor.baseX;actor.y=actor.baseY;
       if(action==="basic"){
         const basicLabel=isVersionedBasic(actor)?"Basic":"Đánh thường";
-        setStatus(`${actor.name} giữ vị trí phóng ảnh đăng`);dom.phaseLabel.textContent=`${basicLabel} • Tụ ảnh`;setUnitState(actor,"attack",LUC_ANH_META.attack.frames*LUC_ANH_META.attack.ms);
-        void __hvScheduleAuthoredSfx(actor,action,performance.now()+900,'release:first-projectile',phase1ActionId,typeof __hvActionAssets!=='undefined'?__hvActionAssets?.signal:null,'onset');
+        setStatus(`${actor.name} giữ vị trí phóng ảnh đăng`);dom.phaseLabel.textContent=`${basicLabel} • Tụ ảnh`;setUnitState(actor,"attack",LUC_ANH_META.attack.frames*LUC_ANH_META.attack.ms);playActionSound(actor,action);
         if(!await sleepVisualMilliseconds(900,battleId))return;startLucAnhFx("basicProjectile",actor,target,760);dom.phaseLabel.textContent=`${basicLabel} • Ảnh bay`;
         if(!await sleepVisualMilliseconds(760,battleId))return;startLucAnhFx("basicImpact",actor,target,720);dom.phaseLabel.textContent="Va chạm • Ảnh đăng";
       }else if(action==="skill"){
-        setStatus(`${actor.name} xoay Đèn Kéo Quân`);dom.phaseLabel.textContent="Kỹ năng 1 • Kéo đèn";setUnitState(actor,"skill1",LUC_ANH_META.skill1.frames*LUC_ANH_META.skill1.ms);
-        void __hvScheduleAuthoredSfx(actor,action,performance.now()+900,'release:first-vfx',phase1ActionId,typeof __hvActionAssets!=='undefined'?__hvActionAssets?.signal:null,'onset');
+        setStatus(`${actor.name} xoay Đèn Kéo Quân`);dom.phaseLabel.textContent="Kỹ năng 1 • Kéo đèn";setUnitState(actor,"skill1",LUC_ANH_META.skill1.frames*LUC_ANH_META.skill1.ms);playActionSound(actor,action);
         if(!await sleepVisualMilliseconds(900,battleId))return;startLucAnhFx("skill1Vfx",actor,null,1650);dom.phaseLabel.textContent="Kỹ năng 1 • Sáu hình nhân nhập vị";
         if(!await sleepVisualMilliseconds(700,battleId))return;
       }else{
         setStatus(`${actor.name} khai Độc Vân Phủ Thế`);dom.phaseLabel.textContent="Tuyệt kỹ • Đèn xoay cực đại";setUnitState(actor,"ultimate",LUC_ANH_META.ultimate.frames*LUC_ANH_META.ultimate.ms);playLucAnhUltimateVoice();
-        void __hvScheduleAuthoredSfx(actor,action,performance.now()+980,'release:first-vfx',phase1ActionId,typeof __hvActionAssets!=='undefined'?__hvActionAssets?.signal:null,'onset');
         if(!await sleepVisualMilliseconds(980,battleId))return;startLucAnhFx("ultimateVfx",actor,null,2200);dom.phaseLabel.textContent="Tuyệt kỹ • Độc vân phủ toàn trận";
         if(!await sleepVisualMilliseconds(1050,battleId))return;
       }
@@ -6213,8 +6210,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
         const releasePoint=referenceCombatAnchor(actor,target,action);
         setStatus(`${actor.name} tiến lên tuyến phát kích`);dom.phaseLabel.textContent="Đánh thường • Vào tuyến";setUnitState(actor,"run",TIMING.approach);
         if(!await tweenUnit(actor,releasePoint.x,releasePoint.y,TIMING.approach,battleId))return;
-        setStatus(`${actor.name} gióng Khiên Đồng Trấn Kích`);dom.phaseLabel.textContent="Đánh thường • Gióng khiên";setUnitState(actor,"attack",DINH_LOI_ACTION_MS);
-        void __hvScheduleAuthoredSfx(actor,action,performance.now()+1550,'release:first-projectile',phase1ActionId,typeof __hvActionAssets!=='undefined'?__hvActionAssets?.signal:null,'onset');
+        setStatus(`${actor.name} gióng Khiên Đồng Trấn Kích`);dom.phaseLabel.textContent="Đánh thường • Gióng khiên";setUnitState(actor,"attack",DINH_LOI_ACTION_MS);playActionSound(actor,action);
         if(!await sleepVisualMilliseconds(1550,battleId))return;
         startDinhLoiFx("basicProjectile",actor,target,650);dom.phaseLabel.textContent="Đánh thường • Hồi văn bay";
         if(!await sleepVisualMilliseconds(combatVfxMs(650),battleId))return;
@@ -6223,8 +6219,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
         const castPoint=referenceCombatAnchor(actor,target,action);
         setStatus(`${actor.name} tiến vào tuyến hộ trận`);dom.phaseLabel.textContent="Kỹ năng nâng cấp • Vào tuyến";setUnitState(actor,"run",dinhLoiCastMoveMs);
         if(!await tweenUnit(actor,castPoint.x,castPoint.y,dinhLoiCastMoveMs,battleId))return;
-        setStatus(`${actor.name} khai mở Hồi Văn Hộ Trận`);dom.phaseLabel.textContent="Kỹ năng nâng cấp • Tụ lực";setUnitState(actor,"skill1",DINH_LOI_ACTION_MS);
-        void __hvScheduleAuthoredSfx(actor,action,performance.now()+1500,'release:first-wave',phase1ActionId,typeof __hvActionAssets!=='undefined'?__hvActionAssets?.signal:null,'onset');
+        setStatus(`${actor.name} khai mở Hồi Văn Hộ Trận`);dom.phaseLabel.textContent="Kỹ năng nâng cấp • Tụ lực";setUnitState(actor,"skill1",DINH_LOI_ACTION_MS);playActionSound(actor,action);
         if(!await sleepVisualMilliseconds(1500,battleId))return;
         startDinhLoiFx("skill1Wave",actor,target,700);dom.phaseLabel.textContent="Kỹ năng nâng cấp • Hồi văn truyền khiên";
         if(!await sleepVisualMilliseconds(combatVfxMs(700),battleId))return;
@@ -6233,8 +6228,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
         const castPoint=referenceCombatAnchor(actor,target,action);
         setStatus(`${actor.name} tiến vào tuyến lôi trận`);dom.phaseLabel.textContent="Tuyệt kỹ • Vào tuyến";setUnitState(actor,"run",dinhLoiCastMoveMs);
         if(!await tweenUnit(actor,castPoint.x,castPoint.y,dinhLoiCastMoveMs,battleId))return;
-        setStatus(`${actor.name} gióng Đông Sơn Lôi Trận`);dom.phaseLabel.textContent="Tuyệt kỹ • Gióng trống";setUnitState(actor,"ultimate",DINH_LOI_ACTION_MS);
-        void __hvScheduleAuthoredSfx(actor,action,performance.now()+1250,'release:first-vfx',phase1ActionId,typeof __hvActionAssets!=='undefined'?__hvActionAssets?.signal:null,'onset');
+        setStatus(`${actor.name} gióng Đông Sơn Lôi Trận`);dom.phaseLabel.textContent="Tuyệt kỹ • Gióng trống";setUnitState(actor,"ultimate",DINH_LOI_ACTION_MS);playActionSound(actor,action);
         if(!await sleepVisualMilliseconds(1250,battleId))return;
         startDinhLoiFx("ultimateVfx",actor,null,1900);dom.phaseLabel.textContent="Tuyệt kỹ • Lôi trận phủ sân";
         if(!await sleepVisualMilliseconds(combatVfxMs(1900),battleId))return;
@@ -6258,12 +6252,10 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
       const strikePoint = target ? { x: target.x + strikeSide * 88, y: target.y + (actor.slot % 2 === 0 ? 4 : -4) } : { x: actor.baseX, y: actor.baseY };
       if (usesOngPhoSkill1) {
         setStatus(`${actor.name} ${isVersionedBasic(actor)?'vận lực Basic':'vận lực Thiết Vá Chấn Kình'}`); dom.phaseLabel.textContent = isVersionedBasic(actor) ? "Basic • Vận lực" : "Kỹ năng • Vận lực";
-        setUnitState(actor, "skill1", ONG_PHO_SKILL1_MS);
+        setUnitState(actor, "skill1", ONG_PHO_SKILL1_MS); playActionSound(actor, action);
         const dashDelay=ongPhoSkill1FrameTime(ONG_PHO_SKILL1_DASH_START_FRAME);
         const dashMs=ongPhoSkill1FrameTime(ONG_PHO_SKILL1_DASH_END_FRAME)-dashDelay;
         const impactAt=ongPhoSkill1FrameTime(ONG_PHO_SKILL1_IMPACT_FRAME);
-        const __hvOngPhoSkillAudioStart=performance.now();
-        void __hvScheduleAuthoredSfx(actor,action,__hvOngPhoSkillAudioStart+dashDelay+motionDuration(dashMs)+Math.max(0,impactAt-dashDelay-dashMs),'contact:sheet-frame-'+ONG_PHO_SKILL1_IMPACT_FRAME,phase1ActionId,typeof __hvActionAssets!=='undefined'?__hvActionAssets?.signal:null,'dominant');
         if(!await sleepVisualMilliseconds(dashDelay,battleId))return; dom.phaseLabel.textContent=isVersionedBasic(actor)?"Basic • Bùng tốc":"Kỹ năng • Bùng tốc";
         if(!await tweenUnit(actor,strikePoint.x,strikePoint.y,dashMs,battleId))return;
         if(!await sleepVisualMilliseconds(Math.max(0,impactAt-dashDelay-dashMs),battleId))return;
@@ -6271,12 +6263,10 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
         actor._ongPhoUltimateLastChaseCount=0;
         actor._ongPhoUltimateAftermathElapsed=0;
         setStatus(`${actor.name} khai mở Thiết Vá Long Triều`); dom.phaseLabel.textContent = "Tuyệt kỹ • Tụ lực";
-        setUnitState(actor, "ultimate", ONG_PHO_ULTIMATE_MS);
+        setUnitState(actor, "ultimate", ONG_PHO_ULTIMATE_MS); playActionSound(actor, action);
         const dashStartAt = ongPhoUltimateFrameTime(ONG_PHO_ULTIMATE_DASH_START_FRAME);
         const dashEndAt = ongPhoUltimateFrameTime(ONG_PHO_ULTIMATE_DASH_END_FRAME);
         const impactAt = ongPhoUltimateFrameTime(ONG_PHO_ULTIMATE_IMPACT_FRAME);
-        const __hvOngPhoUltAudioStart=performance.now();
-        void __hvScheduleAuthoredSfx(actor,action,__hvOngPhoUltAudioStart+dashStartAt+motionDuration(dashEndAt-dashStartAt)+Math.max(0,impactAt-dashEndAt),'contact:sheet-frame-'+ONG_PHO_ULTIMATE_IMPACT_FRAME,phase1ActionId,typeof __hvActionAssets!=='undefined'?__hvActionAssets?.signal:null,'dominant');
         if(!await sleepVisualMilliseconds(dashStartAt,battleId))return;
         dom.phaseLabel.textContent = "Tuyệt kỹ • Áp sát";
         setStatus(`${actor.name} lao vào tuyến địch`);
@@ -6285,10 +6275,8 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
         dom.phaseLabel.textContent = "Tuyệt kỹ • Long Triều";
       } else {
         restartOngPhoAttackImage(); setStatus(`${actor.name} tốc kích`); dom.phaseLabel.textContent=action==="ultimate"?"Tuyệt kỹ • Tốc kích":"Tốc kích";
-        setUnitState(actor,"attack",ONG_PHO_ATTACK_MS+ONG_PHO_ENTRY_BLEND_MS+ONG_PHO_ENTRY_HOLD_MS);
+        setUnitState(actor,"attack",ONG_PHO_ATTACK_MS+ONG_PHO_ENTRY_BLEND_MS+ONG_PHO_ENTRY_HOLD_MS); playActionSound(actor,action);
         const dashDelay=ongPhoFrameTime(ONG_PHO_DASH_START_FRAME); const dashMs=ongPhoFrameTime(ONG_PHO_DASH_END_FRAME)-dashDelay;
-        const __hvOngPhoBasicAudioStart=performance.now();
-        void __hvScheduleAuthoredSfx(actor,action,__hvOngPhoBasicAudioStart+dashDelay+motionDuration(dashMs)+Math.max(0,ONG_PHO_IMPACT_MS-dashDelay-dashMs),'contact:sheet-frame-'+ONG_PHO_IMPACT_FRAME,phase1ActionId,typeof __hvActionAssets!=='undefined'?__hvActionAssets?.signal:null,'dominant');
         if(!await sleepVisualMilliseconds(dashDelay,battleId))return; if(!await tweenUnit(actor,strikePoint.x,strikePoint.y,dashMs,battleId))return;
         if(!await sleepVisualMilliseconds(Math.max(0,ONG_PHO_IMPACT_MS-dashDelay-dashMs),battleId))return;
       }
@@ -6347,10 +6335,9 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
         setStatus(`${actor.name} tiếp tục ra đòn`);
         dom.phaseLabel.textContent="Tốc kích";
         setUnitState(actor,"attack",ONG_PHO_ATTACK_MS+ONG_PHO_ENTRY_BLEND_MS+ONG_PHO_ENTRY_HOLD_MS);
+        playActionSound(actor,"basic");
         const dashDelay=ongPhoFrameTime(ONG_PHO_DASH_START_FRAME);
         const dashMs=ongPhoFrameTime(ONG_PHO_DASH_END_FRAME)-dashDelay;
-        const __hvOngPhoSecondAudioStart=performance.now();
-        void __hvScheduleAuthoredSfx(actor,'basic',__hvOngPhoSecondAudioStart+dashDelay+motionDuration(dashMs)+Math.max(0,ONG_PHO_IMPACT_MS-dashDelay-dashMs),'contact:sheet-frame-'+ONG_PHO_IMPACT_FRAME,phase1ActionId+':chain2',typeof __hvActionAssets!=='undefined'?__hvActionAssets?.signal:null,'dominant');
         if(!await sleepVisualMilliseconds(dashDelay,battleId))return;
         if(!await tweenUnit(actor,secondStrikePoint.x,secondStrikePoint.y,dashMs,battleId))return;
         if(!await sleepVisualMilliseconds(Math.max(0,ONG_PHO_IMPACT_MS-dashDelay-dashMs),battleId))return;
