@@ -13,6 +13,53 @@ const HEROES = [
   ['bach-dien','Bạch Diện','qa-bach-dien']
 ];
 const ACTIONS = ['basic','skill','ultimate'];
+const TIMING_LIMIT_MS = 50;
+const EXPECTED_EVENT = {
+  'linh-dong': action => action === 'ultimate' ? 'linh-dong-ult' : 'linh-dong-atk',
+  'bach-dien': action => action === 'ultimate' ? 'bach-dien-ult' : 'bach-dien-atk'
+};
+function timingContract(row) {
+  const evidence = row.result?.evidence;
+  const all = Array.isArray(evidence?.audioTiming) ? evidence.audioTiming : [];
+  const scoped = all.filter(item => item?.group === 'combat' && (
+    item.actionId === row.actionId || String(item.actionId || '').startsWith(row.actionId + ':')
+  ));
+  const keys = scoped.map(item => [item.actionId,item.event,item.cue].join('|'));
+  const duplicates = keys.filter((key,index) => keys.indexOf(key) !== index);
+  const expectedEvent = EXPECTED_EVENT[row.hero]?.(row.canonicalAction) || (row.canonicalAction === 'ultimate' ? 'ultimate' : row.canonicalAction === 'skill' ? 'skill' : 'basic');
+  const expectedCuePrefix = row.hero === 'ong-pho' ? 'contact:' : 'release:';
+  const bad = scoped.filter(item =>
+    item.event !== expectedEvent ||
+    !String(item.cue || '').startsWith(expectedCuePrefix) ||
+    !Number.isFinite(Number(item.cuePerformanceMs)) ||
+    !Number.isFinite(Number(item.decodedReadyPerformanceMs)) ||
+    !Number.isFinite(Number(item.signedCueOffsetMs)) ||
+    Math.abs(Number(item.signedCueOffsetMs)) > TIMING_LIMIT_MS ||
+    (row.hero === 'ong-pho' ? item.sampleCue !== 'dominant' : item.sampleCue !== 'onset')
+  );
+  const voice = Array.isArray(evidence?.audio) ? evidence.audio.filter(item => String(item.kind || '').startsWith('voice') && item.played === true) : [];
+  const voiceOk = row.hero !== 'luc-anh' || row.canonicalAction !== 'ultimate' || voice.length > 0;
+  return {
+    ok: scoped.length > 0 && duplicates.length === 0 && bad.length === 0 && voiceOk,
+    limitMs: TIMING_LIMIT_MS,
+    expectedEvent,
+    expectedCuePrefix,
+    count: scoped.length,
+    duplicates,
+    bad,
+    voiceOk,
+    voice,
+    cues: scoped.map(item => ({
+      actionId:item.actionId,event:item.event,cue:item.cue,sampleCue:item.sampleCue,
+      cuePerformanceMs:item.cuePerformanceMs,decodedReadyPerformanceMs:item.decodedReadyPerformanceMs,
+      audibleLeadInMs:item.audibleLeadInMs,dominantCueMs:item.dominantCueMs,
+      sourceScheduledPerformanceMs:item.sourceScheduledPerformanceMs,
+      expectedAudiblePerformanceMs:item.expectedAudiblePerformanceMs,
+      expectedCuePerformanceMs:item.expectedCuePerformanceMs,
+      signedCueOffsetMs:item.signedCueOffsetMs
+    }))
+  };
+}
 
 async function runViewport(browser,out,name,width,height,dpr,targetBase) {
   const page = await browser.page(width,height,dpr);
@@ -52,6 +99,9 @@ async function runViewport(browser,out,name,width,height,dpr,targetBase) {
           return {lastRun:q.lastRun,status:document.querySelector('#status').dataset.phase,home:u?Math.hypot(u.x-u.baseX,u.y-u.baseY):9999,hp:u?.hp||0,movement,evidence:window.SkillTestEvidence?.last?.()||null};
         })()`);
         row.ok = row.result.lastRun.started===true && row.result.lastRun.impact===true && row.result.lastRun.complete===true && row.result.home<=2 && row.result.hp>0;
+        row.timing = timingContract(row);
+        row.timingOk = row.timing.ok;
+        row.ok = row.ok && row.timingOk;
         if (heroKey==='luc-anh') {
           const snap=row.result.movement.find(event=>event.type==='approach:snap'&&event.actorId===heroId);
           row.snapApproach=!!snap;
@@ -59,7 +109,9 @@ async function runViewport(browser,out,name,width,height,dpr,targetBase) {
           row.snapDestination=snap?.destination||null;
           row.ok = row.ok && row.snapApproach && JSON.stringify(row.snapPosition)===JSON.stringify(row.snapDestination);
         }
-        if (!row.ok) throw new Error(heroName+' '+action+' failed direct skill-test interaction contract');
+        if (!(row.result.lastRun.started===true && row.result.lastRun.impact===true && row.result.lastRun.complete===true && row.result.home<=2 && row.result.hp>0)) {
+          throw new Error(heroName+' '+action+' failed direct skill-test interaction contract');
+        }
         await sleep(180);
       }
     }
@@ -103,7 +155,7 @@ export async function run() {
     }
     report.ok=report.runs.every(item=>item.ok);
     writeFileSync(resolve(out,'report.json'),JSON.stringify(report,null,2));
-    console.log(JSON.stringify({ok:report.ok,runs:report.runs.map(item=>({name:item.name,ok:item.ok,actions:item.actions.map(row=>({hero:row.hero,action:row.action,ok:row.ok,actionId:row.actionId,snapApproach:row.snapApproach})),afterReset:item.afterReset,errors:item.errors,exceptions:item.exceptions?.length,httpErrors:item.httpErrors?.length,criticalHttpErrors:item.criticalHttpErrors?.length,networkFailures:item.networkFailures?.length,criticalNetworkFailures:item.criticalNetworkFailures?.length,qaErrors:item.qaErrors?.length}))},null,2));
+    console.log(JSON.stringify({ok:report.ok,runs:report.runs.map(item=>({name:item.name,ok:item.ok,actions:item.actions.map(row=>({hero:row.hero,action:row.action,ok:row.ok,timingOk:row.timingOk,actionId:row.actionId,snapApproach:row.snapApproach,maxOffsetMs:row.timing?.cues?.length?Math.max(...row.timing.cues.map(c=>Math.abs(Number(c.signedCueOffsetMs)||0))):null,timingCount:row.timing?.count||0})),afterReset:item.afterReset,errors:item.errors,exceptions:item.exceptions?.length,httpErrors:item.httpErrors?.length,criticalHttpErrors:item.criticalHttpErrors?.length,networkFailures:item.networkFailures?.length,criticalNetworkFailures:item.criticalNetworkFailures?.length,qaErrors:item.qaErrors?.length}))},null,2));
     if(!report.ok) process.exitCode=1;
   } finally {
     await browser.close();
