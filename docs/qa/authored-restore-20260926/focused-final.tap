@@ -1,0 +1,39 @@
+✔ Lục Ảnh keeps a newly released VFX when RAF still refers to the preceding instant (2.893353ms)
+✔ Đình Lôi keeps a newly released VFX when RAF still refers to the preceding instant (1.291738ms)
+✔ action readiness waits only for the active actor run, cast and VFX (5.737472ms)
+✔ changing battle while loading cancels the old action (41.069226ms)
+✔ image failure rejects readiness rather than running an invisible action (0.688598ms)
+✔ muting does not wait for audio preparation (0.303989ms)
+✔ SFX success is not marked until asynchronous playback confirms it (0.644171ms)
+✔ declined sound is not marked played and permits a live-action retry (0.539243ms)
+✔ late sound cannot mark success in a new battle or after completion/cancellation (0.363197ms)
+✔ idle fallback retains one pin and releases it on teardown (0.263437ms)
+✔ mixed authored idle pins yield to the action working set until recovery (3.118934ms)
+✔ audio exceptions are observed rather than unhandled or reported successful (0.467825ms)
+✔ combat authored inventory is explicit: 15 manifests across five heroes (7.426809ms)
+✔ all authored production VFX/animation packs physically exist (0.873958ms)
+✔ real combat audio inventory is not confused with design-only SFX ids (1.564349ms)
+✔ eight remaining official identities have no authored skill manifest pack to restore (0.407625ms)
+✔ Thầy Mo authored production owner is applied after final battle rewrite owners (0.348626ms)
+✔ iPhone/iPad keeps a native-quality decoded atlas budget and one-at-a-time decode (1.685562ms)
+✔ iPadOS desktop user agent keeps native-quality budget with constrained decode concurrency (0.297449ms)
+✔ desktop keeps the existing decoded atlas budget (0.212641ms)
+✔ action readiness blocks only on the current actor working set (2.1481ms)
+✔ low-memory visible idle stays lazy and evictable instead of pinned (0.282015ms)
+✔ legacy cast waits for decoded original bytes and holds its cache lease through recovery (3.095637ms)
+✔ cancelled legacy preparation cannot start the action and releases its pins (0.844664ms)
+✔ static smoke validates Linh Đồng URLs by bytes and content fingerprint (109.551213ms)
+✔ original Ông Phở embedded-14.png recovers without changing authored pixels/timing (79.739799ms)
+✔ original Ông Phở embedded-15.png recovers without changing authored pixels/timing (114.580407ms)
+✔ Thầy Mo production patch emits syntactically valid character and action owners (88.164923ms)
+✔ cold authored Thầy Mo assets finish decoding before the clock/energy gate (86.837533ms)
+✔ leaving the battle cancels the pending Thầy Mo decode (82.792807ms)
+✔ authored Thầy Mo dispatches sound at release before waiting for impact (74.331129ms)
+ℹ tests 31
+ℹ suites 0
+ℹ pass 31
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 538.657331

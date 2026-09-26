@@ -1,0 +1,12 @@
+✔ Thầy Mo production patch emits syntactically valid character and action owners (91.092582ms)
+✔ cold authored Thầy Mo assets finish decoding before the clock/energy gate (79.763882ms)
+✔ leaving the battle cancels the pending Thầy Mo decode (76.5842ms)
+✔ authored Thầy Mo dispatches sound at release before waiting for impact (77.231155ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 407.635136

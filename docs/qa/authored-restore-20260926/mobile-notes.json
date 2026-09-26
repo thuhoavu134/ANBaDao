@@ -1,0 +1,9 @@
+{
+  "initial_resized_fixture": "FAIL_VISUAL: browser draw calls occurred but all actors were outside the visible 390x844 frame because battle positions were initialized at desktop width. Do not count these as mobile PASS.",
+  "correction": "Reset the actual battle after selecting mobile size; QA selector now resets automatically. No formation owner changes.",
+  "physical_iPhone_Safari": "NOT_RUN",
+  "after_reset": "Six Ultimate actions completed, authored atlas draws and SFX observed. Lục Ảnh voice observed.",
+  "edge_clipping": "Some outer sprites clip left/right in the existing 390px formation. Not changed in this presentation restoration task.",
+  "browser_revision": "1c10ecf258f942b48dde8601520c79d373077a25",
+  "qa_auto_reset_fix": "49d5e3c5f3a672ca8b8321aa6cc852b48b3a4cf4"
+}

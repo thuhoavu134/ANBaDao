@@ -1,0 +1,18 @@
+✔ action readiness waits only for the active actor run, cast and VFX (5.290722ms)
+✔ changing battle while loading cancels the old action (42.061309ms)
+✔ image failure rejects readiness rather than running an invisible action (0.618643ms)
+✔ muting does not wait for audio preparation (0.280544ms)
+✔ SFX success is not marked until asynchronous playback confirms it (0.864104ms)
+✔ declined sound is not marked played and permits a live-action retry (0.352151ms)
+✔ late sound cannot mark success in a new battle or after completion/cancellation (0.32468ms)
+✔ idle fallback retains one pin and releases it on teardown (0.219431ms)
+✔ mixed authored idle pins yield to the action working set until recovery (2.327152ms)
+✔ audio exceptions are observed rather than unhandled or reported successful (0.388907ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 148.938789

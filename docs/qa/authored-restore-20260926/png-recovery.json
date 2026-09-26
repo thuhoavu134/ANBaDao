@@ -1,0 +1,18 @@
+[
+  {
+    "path": "assets/battle-runtime/embedded-14.png",
+    "offset": 359966,
+    "xor": 1,
+    "before": "a5525eefe82e7385887ea0bffbc4d897223ccf61e4dc05d61ba7941abc4a3c62",
+    "after": "089126dd6c01b5dc75f49863627412cec3928c09b1a980833f4ed1f56bd314ef",
+    "decodedScanlineBytes": 5184675
+  },
+  {
+    "path": "assets/battle-runtime/embedded-15.png",
+    "offset": 857050,
+    "xor": 112,
+    "before": "ac2e9c970993f5b98cf4fb494da8fa32eef081aab420a41afe7e7ba1d136bf8b",
+    "after": "a843bae6a43884a9e60e645172353c908b97a1cbaf365e79ada78a737d5f4025",
+    "decodedScanlineBytes": 10369350
+  }
+]

@@ -1,0 +1,34 @@
+✖ mixed authored idle pins yield to the action working set until recovery (4.015828ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 81.588225
+
+✖ failing tests:
+
+test at ../mixed-idle-regression.test.mjs:66:1
+✖ mixed authored idle pins yield to the action working set until recovery (4.015828ms)
+  AssertionError [ERR_ASSERTION]: idle pins must be released before the action lease is admitted
+  
+  2 !== 0
+  
+      at f.loader.acquire (file:///workspace/scratch/b5f6a75b3ba7/mixed-idle-regression.test.mjs:73:12)
+      at file:///workspace/scratch/b5f6a75b3ba7/battle-asset-readiness-before-mixed-fix.mjs:92:36
+      at Array.map (<anonymous>)
+      at Object.prepare (file:///workspace/scratch/b5f6a75b3ba7/battle-asset-readiness-before-mixed-fix.mjs:87:38)
+      at TestContext.<anonymous> (file:///workspace/scratch/b5f6a75b3ba7/mixed-idle-regression.test.mjs:76:23)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

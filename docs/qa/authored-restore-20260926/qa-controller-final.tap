@@ -1,0 +1,40 @@
+✔ direct skill test is part of the distributable build (0.765496ms)
+✔ direct skill test exposes all authored heroes and actions plus reset (0.157197ms)
+✔ direct skill test reports real trace progression and return home (0.142074ms)
+✔ browser QA clicks all nine action controls on desktop and mobile (0.195195ms)
+✔ CI runs and uploads direct skill-test evidence (0.113942ms)
+✔ direct skill-test browser QA script parses in Node before browser execution (65.420265ms)
+✔ controller preserves luc-anh basic start/impact/complete flow (6.561983ms)
+✔ controller preserves luc-anh skill start/impact/complete flow (2.917092ms)
+✔ controller preserves luc-anh ultimate start/impact/complete flow (2.056974ms)
+✔ controller preserves dinh-loi basic start/impact/complete flow (1.683251ms)
+✔ controller preserves dinh-loi skill start/impact/complete flow (1.719926ms)
+✔ controller preserves dinh-loi ultimate start/impact/complete flow (2.340953ms)
+✔ controller preserves ong-pho basic start/impact/complete flow (1.045828ms)
+✔ controller preserves ong-pho skill start/impact/complete flow (0.927099ms)
+✔ controller preserves ong-pho ultimate start/impact/complete flow (0.967309ms)
+✔ R1: prior completion cannot unlock the next in-flight action (2.239901ms)
+✔ R1: delayed ready label cannot overwrite a later hero selection (1.120531ms)
+✔ snap-only action needs no movement override hook (1.052599ms)
+✔ R2: trace preflight failure is caught and can be retried (1.592152ms)
+✔ R2: actor preflight failure is caught and can be retried (1.236486ms)
+✔ R2: hook preflight failure is caught and can be retried (1.297237ms)
+✔ R2: rejected runtime promise reports once without waiting for a trace timeout (1.334675ms)
+✔ R2: unknown action is rejected without invoking the runtime (2.885434ms)
+✔ R3: storage failure enables Reset and a subsequent retry recovers (1.226451ms)
+✔ R4: Reset waits for its new iframe rather than reusing the old runtime (0.943033ms)
+✔ R4: reset during an action prevents stale timeout/error and control writes (1.117967ms)
+✔ R4: old completion does not unlock or relabel a replacement still loading (2.155183ms)
+✔ direct skill QA accepts an external delivery URL without changing local default (0.902992ms)
+✔ live preview builds dist, exposes it through a test-only quick tunnel and runs browser QA on that URL (0.175565ms)
+✔ owner-selected snap is fixed: the controller has no movement selector (1.162254ms)
+✔ the skill controller observes the production movement policy without overriding it (0.299953ms)
+✔ snap-only controller retains all three heroes, nine action paths, Reset and real markers (0.309097ms)
+ℹ tests 32
+ℹ suites 0
+ℹ pass 32
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 152.456561

@@ -1,3 +1,12 @@
+## 26/09/2026 — Khôi phục authored combat, REVIEW / chưa merge
+
+Branch `fix/restore-mixed-roster-vfx-sfx-voice-20260926`, PR #231. Xem [audit đầy đủ từng tướng/action](COMBAT-AUTHORED-AUDIT-2026-09-26.md). Runtime checkpoint `5c009474ae8be7b36c1cd308cae61623df6ff16b`; QA viewport `1c10ecf258f942b48dde8601520c79d373077a25`.
+
+- Xác minh 718/718 asset blob; 113 commit lịch sử assets. Có 6 owner authored; 15 manifest thuộc 5 owner; Ông Phở dùng embedded legacy. Tám tướng chính thức còn lại và 41 S+ lab dùng generic; design IDs không phải file.
+- Sửa build anchor Thầy Mo, chờ decode/giữ atlas legacy qua recovery, RAF pending VFX, mixed S+ idle-pin deadlock. Khôi phục checksum gốc hai PNG Ông Phở trong output build; nguồn asset giữ nguyên. Không đổi math/targeting/formation/scale/save/reward.
+- 18 nút action của 6 owner đã có draw/audio/trace/return evidence desktop; gồm 2 Skill alias ATK. Voice Ultimate Lục Ảnh đã có HTMLAudio playing. 31/31 focused restore +32/32 QA controller PASS; full suite 1300 PASS /15 FAIL /1315, chưa đủ merge gate.
+- iPhone/iPad/Safari thật NOT_RUN; mobile Chromium iframe phải ghi riêng. Không gọi toàn bộ VFX/SFX/voice đã hoàn tất. Không merge main. Ticket board không khả dụng; không giả claim/DONE.
+
 ## 17/09 — TKT-0158: battle enter audio
 
 Một chủ quản audio: host. Xuất chiến unlock SFX + BGM combat trước iframe. Không `location.assign` 1.8s. Hunt overlay không pause loa vừa mở. iframe chỉ `new Audio` khi không có parent.playBgm. LIVE #157 `343fe39`. Safari NOT_RUN. Owner tự `git pull && vercel --prod`.

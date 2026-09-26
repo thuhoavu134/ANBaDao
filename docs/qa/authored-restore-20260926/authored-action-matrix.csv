@@ -1,0 +1,19 @@
+hero,requested_action,canonical_action,browser_status,drawn_files,sfx_events,voice_played,revision
+Lục Ảnh,basic,basic,PASS,/assets/characters/luc-anh/basic-atlas.webp;/assets/characters/luc-anh/basic_projectile-atlas.webp;/assets/characters/luc-anh/basic_impact-atlas.webp,basic,False,2793ea4b9fcfbadadac0dd83ea6831b96eec04cc
+Lục Ảnh,skill,skill,PASS,/assets/characters/luc-anh/skill1-atlas.webp;/assets/characters/luc-anh/skill1_vfx-atlas.webp,skill,False,2793ea4b9fcfbadadac0dd83ea6831b96eec04cc
+Lục Ảnh,ultimate,ultimate,PASS,/assets/characters/luc-anh/ultimate-atlas.webp;/assets/characters/luc-anh/ultimate_vfx-atlas.webp,ultimate,True,aca94ad2d783ed2fbbfb64eab39f04ec8045a060
+Đình Lôi,basic,basic,PASS,/assets/characters/dinh-loi/basic-cast-atlas.png;/assets/characters/dinh-loi/basic-projectile-atlas.png;/assets/characters/dinh-loi/basic-impact-atlas.png,basic,False,2793ea4b9fcfbadadac0dd83ea6831b96eec04cc
+Đình Lôi,skill,skill,PASS,/assets/characters/dinh-loi/skill1-cast-atlas.png;/assets/characters/dinh-loi/skill1-wave-atlas.png;/assets/characters/dinh-loi/skill1-impact-atlas.png,skill,False,2793ea4b9fcfbadadac0dd83ea6831b96eec04cc
+Đình Lôi,ultimate,ultimate,PASS,/assets/characters/dinh-loi/ultimate-cast-atlas.png;/assets/characters/dinh-loi/ultimate-vfx-atlas.png;/assets/characters/dinh-loi/ultimate-impact-atlas.png,ultimate,False,2793ea4b9fcfbadadac0dd83ea6831b96eec04cc
+Ông Phở,basic,basic,PASS,/assets/battle-runtime/embedded-11.png,basic,False,2793ea4b9fcfbadadac0dd83ea6831b96eec04cc
+Ông Phở,skill,skill,PASS,/assets/battle-runtime/embedded-15.png,skill,False,2793ea4b9fcfbadadac0dd83ea6831b96eec04cc
+Ông Phở,ultimate,ultimate,PASS,/assets/characters/ong-pho/ultimate-sheet-64-alpha-clean-v310.png,ultimate,False,2793ea4b9fcfbadadac0dd83ea6831b96eec04cc
+Bạch Diện,ultimate,ultimate,PASS,/assets/characters/bach-dien/ultimate-atlas.webp;/assets/characters/bach-dien/ultimate_vfx-atlas.webp,bach-dien-ult,False,aca94ad2d783ed2fbbfb64eab39f04ec8045a060
+Bạch Diện,basic,basic,PASS,/assets/characters/bach-dien/basic-atlas.webp;/assets/characters/bach-dien/skill1_vfx-atlas.webp,bach-dien-atk,False,aca94ad2d783ed2fbbfb64eab39f04ec8045a060
+Bạch Diện,skill,basic,PASS,/assets/characters/bach-dien/basic-atlas.webp;/assets/characters/bach-dien/skill1_vfx-atlas.webp,bach-dien-atk,False,aca94ad2d783ed2fbbfb64eab39f04ec8045a060
+Linh Đồng,basic,basic,PASS,/assets/characters/linh-dong/ready-v1/basic-atlas.webp;/assets/characters/linh-dong/ready-v1/skill1_vfx-atlas.webp,linh-dong-atk,False,aca94ad2d783ed2fbbfb64eab39f04ec8045a060
+Linh Đồng,ultimate,ultimate,PASS,/assets/characters/linh-dong/ready-v1/ultimate-atlas.webp;/assets/characters/linh-dong/ready-v1/ultimate_vfx-atlas.webp,linh-dong-ult,False,aca94ad2d783ed2fbbfb64eab39f04ec8045a060
+Linh Đồng,skill,basic,PASS,/assets/characters/linh-dong/ready-v1/basic-atlas.webp;/assets/characters/linh-dong/ready-v1/skill1_vfx-atlas.webp,linh-dong-atk,False,aca94ad2d783ed2fbbfb64eab39f04ec8045a060
+Thầy Mo,basic,basic,PASS,/assets/characters/thay-mo/skill1-cast-v3204-atlas.png;/assets/characters/thay-mo/skill1-wave-v3205-atlas.png;/assets/characters/thay-mo/skill1-impact-v3206-atlas.png,basic,False,aca94ad2d783ed2fbbfb64eab39f04ec8045a060
+Thầy Mo,skill,skill,PASS,/assets/characters/thay-mo/skill1-cast-v3204-atlas.png;/assets/characters/thay-mo/skill1-wave-v3205-atlas.png;/assets/characters/thay-mo/skill1-impact-v3206-atlas.png,skill,False,aca94ad2d783ed2fbbfb64eab39f04ec8045a060
+Thầy Mo,ultimate,ultimate,PASS,/assets/characters/thay-mo/ultimate-cast-v3210-atlas.png;/assets/characters/thay-mo/ultimate-vfx-v3212-atlas.png,ultimate,False,aca94ad2d783ed2fbbfb64eab39f04ec8045a060

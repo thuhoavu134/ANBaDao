@@ -1,0 +1,35 @@
+{
+  "command": "VIPS_CONCURRENCY=1 npm test",
+  "revision": "1c10ecf258f942b48dde8601520c79d373077a25",
+  "build": "PASS",
+  "tests": 1315,
+  "pass": 1300,
+  "fail": 15,
+  "failures": [
+    "result music cannot resume after stop while waiting for audio unlock",
+    "built close owner stops both parent buses and the child before blanking the iframe",
+    "built BGM route uses the shared music bus for screen transitions",
+    "L158-T4: closeOverlay restores host BGM after ending the battle bus",
+    "L158-T5: hunt overlay observer does not pause the unlocked host combat player",
+    "final battle gates the real action before energy debit and keeps the same iframe payload",
+    "campaign iframe and standalone battle contain exactly one identical movement owner",
+    "L24-D3: sharp stays off the production install",
+    "L24-D2: embedded battle payload still matches the built battle file",
+    "built battle keeps opaque canvas and stable camera; all inline JS parses",
+    "QA full access bypasses campaign progression gates without changing the normal-route gate owner",
+    "result motion is installed after readiness and before iframe sync",
+    "the embedded battle engine is byte-identical to battle.html",
+    "battle bridge protocol annotates every parent message and remains syntactically valid",
+    "final generated living-actor return awaits the movement owner for all four branches"
+  ],
+  "focused_restore": {
+    "pass": 31,
+    "fail": 0
+  },
+  "qa_controller": {
+    "pass": 32,
+    "fail": 0
+  },
+  "inline_scripts_parsed": 85,
+  "physical_iPhone_Safari": "NOT_RUN"
+}

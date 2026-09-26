@@ -1,0 +1,2196 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> hon-viet-mong-gioi-visual-qa@3.26.0 test
+> npm run build && node --test --test-concurrency=1 tests/*.test.mjs
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> hon-viet-mong-gioi-visual-qa@3.26.0 build
+> node scripts/build-static.mjs
+
+Ông Phở original fall/skill1 PNGs recovered: two known bytes; original CRC + Adler32 verified.
+Luc Anh runtime patch applied
+Runtime safety hotfix applied
+BGM routing patch applied: hub / hero / combat / challenge
+iOS audio unlock on first real interaction applied; no blocking gate
+Victory/defeat result audio integrated
+Luc Anh safe Retina draw patch applied: DPR3 + high-quality sampling, runtime atlas cache disabled
+[QA polish] skip Luc Anh 330 scale -> state-aware compensation
+[QA polish] skip Luc Anh deployed ultimate -> guaranteed voice
+[QA polish] skip Luc Anh deployed ultimate impact hold
+Runtime QA polish v3 applied: manifest-timed Luc Anh Ultimate and local iOS-safe voice bridge
+Runtime QA polish v4 applied: center-reaching triple ultimate, reliable victory taps, production QA disabled, sharper Luc Anh detail idle
+Runtime QA polish v5 applied safely: full-strength original black-smoke Ultimate, SOURCE-OVER preserves authored pixels
+Luc Anh migrated to anchor-based spatial pipeline with authored timing metadata
+Lục Ảnh IDLE 1080 wired: 96 frames · 480×480 cells
+Skill Atlas Runtime v1: Luc Anh Basic + Skill1 + Ultimate manifests wired to proven battle flow
+Skill Atlas Registry v1: 15 skills / 5 heroes
+[Luc Anh local speed] skip VFX duration
+Luc Anh local x1/x2/x3 + authored timing metadata applied with stable block boundary
+Battle visual polish v1 applied: image chapter map + stacked bouncing damage font
+Battle backgrounds v2 applied: 20 authored stages · single full-bleed layer
+3Q combat domain adapter v1 wired: round → move → action → typed result replay
+3Q-style main quest v1 wired: sequential ải → auto-battle → reward → next quest
+Result actions v5 applied: embedded confirm publishes the result and the visible Ải sau label always follows the next-stage path
+M0/P0 runtime repair applied: battleIdle=assets/characters/luc-anh/idle-rgba-v1-battle-atlas.webp (96 frames, 240px cells) · detailIdle=assets/characters/luc-anh/idle-rgba-v1-atlas.webp · single background owner · result CTA owner
+Summon pool guard installed before paid/free debit; no economy changes
+State-backed roster installed: official identities, live stats, one route owner
+Hero detail tabs installed: existing panels and commands, stable idle layout
+Supplied audio SFX, stable canvas/camera and authored Luc Anh motion applied
+Dinh Lôi retina source cells and result portrait cache patched
+Versioned hero skill kit runtime installed: Basic / Ultimate / passive mapping
+Save contract v1 installed: versioned state, revision, backup and recovery guards
+Transaction contract installed: receipts, loadout and forge commits with local ledger
+Campaign scene: live squad, preparation, capped AFK claim, router-owned lifecycle
+Forge item assets installed: 4 slots, 20 equipment icons, 3 material icons
+R08 settlement/navigation installed: protocol guard, one-result controller and reward commit
+R04 return context installed: hero detail back route, session context and stale fallback
+R10 opening loop retained atomic hero upgrade hook
+R10 opening loop installed: event/route/prerequisite contract and safe journey CTA
+QA full access v1 installed: opt-in feature/chapter unlock with save-safe progression sandbox
+Hub dock tray installed: tray begins at button midpoints and buttons stay above it
+Hub mobile side actions stabilized and main quest hub card removed
+Hub icon alpha hotfix installed: removed legacy disc background and stacked dark filters
+iPad formation, Lục Ảnh anchor/camera and combat audio fixes applied
+Battle close now cancels parent SFX, voices, pending result audio and stale iframe channels
+Battle Phase 1 opt-in trace initializer injected
+SPLUS42: source factory, existing scheduler bridge, 42 HUD identities
+Campaign reference flow: intentional partial squad, confirm to AFK, explicit next battle
+Campaign fixed slots: unique saved slots kept through formation layout and save
+Account gear board installed: Trợ trận wheel complete
+Tower lacquer screen installed
+Expedition lacquer screen installed
+Shop lacquer screen installed
+Summon lacquer screen installed
+Arena lacquer screen installed
+Hunt lacquer screen installed
+Hunt battle beast visual installed
+Festival lacquer screen installed
+Daily lacquer screen installed
+Forge hall overlay installed
+Preview journey unlock installed (off luc-than.vercel.app)
+Túi đồ hall overlay installed
+Hòm thư hall overlay installed
+Giao việc hall overlay installed
+Bang Hội hall overlay installed
+Bạn bè hall overlay installed
+Trò chuyện hall overlay installed
+Gia Tộc hall overlay installed
+Kho lưu hall overlay installed
+Tháp Trắng Đêm 3D overlay installed
+Mộng Lộ 3D overlay installed
+Chợ Mộng 3D overlay installed
+Gọi Mộng 3D overlay installed
+Đấu Trường 3D overlay installed
+Săn Boss 3D overlay installed
+Lễ Hội 3D overlay installed
+Hồ sơ tướng 3D overlay installed
+Nhật Ký Mơ 3D overlay installed
+Chinh chiến 3D overlay installed
+Hành trình 3D overlay installed
+Kết quả 3D overlay installed
+Cốt truyện 3D overlay installed
+Trực Tuyến 3D overlay installed
+Trận Hình 3D overlay installed
+Skill seals A installed
+Skill seals B installed
+Skill seals C installed
+Safari overlay pin installed
+Tháp trận NPC installed
+Hub back chip installed
+Giáo Trường 3D overlay installed
+Skill seals D installed
+Thử Thách 3D overlay installed
+Trực Tuyến auth (same-origin + Google) installed
+Login gate (video + register/login) installed
+Hồ sơ avatar overlay installed
+Lục Thần lore overlay installed
+Bách Bảo Rương overlay installed
+Economy balance overlay installed
+Player level1–60: existing108 encounters, entry gate, atomic XP and additive migration
+TKT-0144: lazy Linh Dong atlas cache, fallback and screen cleanup installed
+Linh Đồng runtime bridge, shared clock and canonical action registry installed; 10 asset fingerprints recorded
+Bạch Diện Canvas Sprite Runtime installed; 10 asset fingerprints recorded
+Bạch Diện Extreme v6 uses canonical Canvas Sprite Runtime owner
+TKT-0158: host combat BGM on Xuất chiến; iframe skips HTMLAudio when parent owns it
+iOS battle stays in host frame for continuous audio; delayed direct fallback protects stalled entry
+Per-skill cast approach and return installed in final battle payload
+Battle readiness: cast resources leased through recovery/return; shared SFX results checked.
+BATTLE_READY_ASSET_REPORT [{"profile":"desktop","source":"assets/characters/linh-dong/basic-atlas.webp","src":"assets/characters/linh-dong/ready-v1/basic-atlas.webp","width":1920,"height":1320,"scale":0.5,"sourceBytes":5046406,"bytes":1480002,"decodedBefore":40550400,"decodedAfter":10137600},{"profile":"mobile","source":"assets/characters/linh-dong/basic-atlas.webp","src":"assets/characters/linh-dong/ready-mobile-v1/basic-atlas.webp","width":1920,"height":1320,"scale":0.5,"sourceBytes":5046406,"bytes":1480002,"decodedBefore":40550400,"decodedAfter":10137600},{"profile":"desktop","source":"assets/characters/linh-dong/fall-atlas.webp","src":"assets/characters/linh-dong/ready-v1/fall-atlas.webp","width":1920,"height":2640,"scale":0.5,"sourceBytes":11921470,"bytes":3418464,"decodedBefore":81100800,"decodedAfter":20275200},{"profile":"mobile","source":"assets/characters/linh-dong/fall-atlas.webp","src":"assets/characters/linh-dong/ready-mobile-v1/fall-atlas.webp","width":1920,"height":2640,"scale":0.5,"sourceBytes":11921470,"bytes":3418464,"decodedBefore":81100800,"decodedAfter":20275200},{"profile":"desktop","source":"assets/characters/linh-dong/hit-atlas.webp","src":"assets/characters/linh-dong/ready-v1/hit-atlas.webp","width":1920,"height":2640,"scale":0.5,"sourceBytes":8990298,"bytes":2551646,"decodedBefore":81100800,"decodedAfter":20275200},{"profile":"mobile","source":"assets/characters/linh-dong/hit-atlas.webp","src":"assets/characters/linh-dong/ready-mobile-v1/hit-atlas.webp","width":1920,"height":2640,"scale":0.5,"sourceBytes":8990298,"bytes":2551646,"decodedBefore":81100800,"decodedAfter":20275200},{"profile":"desktop","source":"assets/characters/linh-dong/idle-atlas.webp","src":"assets/characters/linh-dong/ready-v1/idle-atlas.webp","width":1920,"height":2640,"scale":0.5,"sourceBytes":10909760,"bytes":3066574,"decodedBefore":81100800,"decodedAfter":20275200},{"profile":"mobile","source":"assets/characters/linh-dong/idle-atlas.webp","src":"assets/characters/linh-dong/ready-mobile-v1/idle-atlas.webp","width":1920,"height":2640,"scale":0.5,"sourceBytes":10909760,"bytes":3066574,"decodedBefore":81100800,"decodedAfter":20275200},{"profile":"desktop","source":"assets/characters/linh-dong/run-atlas.webp","src":"assets/characters/linh-dong/ready-v1/run-atlas.webp","width":1920,"height":2640,"scale":0.5,"sourceBytes":8278386,"bytes":2453486,"decodedBefore":81100800,"decodedAfter":20275200},{"profile":"mobile","source":"assets/characters/linh-dong/run-atlas.webp","src":"assets/characters/linh-dong/ready-mobile-v1/run-atlas.webp","width":1920,"height":2640,"scale":0.5,"sourceBytes":8278386,"bytes":2453486,"decodedBefore":81100800,"decodedAfter":20275200},{"profile":"desktop","source":"assets/characters/linh-dong/skill1_vfx-atlas.webp","src":"assets/characters/linh-dong/ready-v1/skill1_vfx-atlas.webp","width":2200,"height":1488,"scale":0.5,"sourceBytes":7239332,"bytes":2245294,"decodedBefore":52377600,"decodedAfter":13094400},{"profile":"mobile","source":"assets/characters/linh-dong/skill1_vfx-atlas.webp","src":"assets/characters/linh-dong/ready-mobile-v1/skill1_vfx-atlas.webp","width":2200,"height":1488,"scale":0.5,"sourceBytes":7239332,"bytes":2245294,"decodedBefore":52377600,"decodedAfter":13094400},{"profile":"desktop","source":"assets/characters/linh-dong/ultimate-atlas.webp","src":"assets/characters/linh-dong/ready-v1/ultimate-atlas.webp","width":1920,"height":1760,"scale":0.5,"sourceBytes":4420342,"bytes":1303374,"decodedBefore":54067200,"decodedAfter":13516800},{"profile":"mobile","source":"assets/characters/linh-dong/ultimate-atlas.webp","src":"assets/characters/linh-dong/ready-mobile-v1/ultimate-atlas.webp","width":1920,"height":1760,"scale":0.5,"sourceBytes":4420342,"bytes":1303374,"decodedBefore":54067200,"decodedAfter":13516800},{"profile":"desktop","source":"assets/characters/linh-dong/ultimate_vfx-atlas.webp","src":"assets/characters/linh-dong/ready-v1/ultimate_vfx-atlas.webp","width":2200,"height":1488,"scale":0.5,"sourceBytes":12856778,"bytes":3984664,"decodedBefore":52377600,"decodedAfter":13094400},{"profile":"mobile","source":"assets/characters/linh-dong/ultimate_vfx-atlas.webp","src":"assets/characters/linh-dong/ready-mobile-v1/ultimate_vfx-atlas.webp","width":2200,"height":1488,"scale":0.5,"sourceBytes":12856778,"bytes":3984664,"decodedBefore":52377600,"decodedAfter":13094400},{"profile":"mobile","source":"assets/characters/bach-dien/basic-atlas.webp","src":"assets/characters/bach-dien/ready-mobile-v1/basic-atlas.webp","width":2160,"height":1650,"scale":0.75,"sourceBytes":1399418,"bytes":1974418,"decodedBefore":25344000,"decodedAfter":14256000},{"profile":"mobile","source":"assets/characters/bach-dien/fall-atlas.webp","src":"assets/characters/bach-dien/ready-mobile-v1/fall-atlas.webp","width":2160,"height":1650,"scale":0.75,"sourceBytes":1194914,"bytes":1755572,"decodedBefore":25344000,"decodedAfter":14256000},{"profile":"mobile","source":"assets/characters/bach-dien/hit-atlas.webp","src":"assets/characters/bach-dien/ready-mobile-v1/hit-atlas.webp","width":1800,"height":1320,"scale":0.75,"sourceBytes":1074546,"bytes":1517342,"decodedBefore":16896000,"decodedAfter":9504000},{"profile":"mobile","source":"assets/characters/bach-dien/idle-atlas.webp","src":"assets/characters/bach-dien/ready-mobile-v1/idle-atlas.webp","width":2160,"height":1980,"scale":0.75,"sourceBytes":1811722,"bytes":2653680,"decodedBefore":30412800,"decodedAfter":17107200},{"profile":"mobile","source":"assets/characters/bach-dien/run-atlas.webp","src":"assets/characters/bach-dien/ready-mobile-v1/run-atlas.webp","width":2160,"height":2640,"scale":0.75,"sourceBytes":2446254,"bytes":3539164,"decodedBefore":40550400,"decodedAfter":22809600},{"profile":"mobile","source":"assets/characters/bach-dien/skill1_vfx-atlas.webp","src":"assets/characters/bach-dien/ready-mobile-v1/skill1_vfx-atlas.webp","width":1980,"height":1116,"scale":0.75,"sourceBytes":1087208,"bytes":1279696,"decodedBefore":15713280,"decodedAfter":8838720},{"profile":"mobile","source":"assets/characters/bach-dien/ultimate-atlas.webp","src":"assets/characters/bach-dien/ready-mobile-v1/ultimate-atlas.webp","width":2160,"height":1980,"scale":0.75,"sourceBytes":2020280,"bytes":2975314,"decodedBefore":30412800,"decodedAfter":17107200},{"profile":"mobile","source":"assets/characters/bach-dien/ultimate_vfx-atlas.webp","src":"assets/characters/bach-dien/ready-mobile-v1/ultimate_vfx-atlas.webp","width":2640,"height":1116,"scale":0.75,"sourceBytes":1982204,"bytes":2510706,"decodedBefore":20951040,"decodedAfter":11784960}]
+Result character motion v1 applied: authored Victory entry -> Idle and one-shot Defeat Fall -> final-frame hold
+P0 battle entry: WebKit-safe canvas + deferred fail-open autostart installed
+Reference contact spacing and ultimate target focus applied; formation/scale remain single-owner.
+Battle formation + visual scale v1 applied: approved legacy portrait anchors, single scale owner
+Thay Mo authored production VFX restored: v2 Basic uses Skill1 cast/wave/impact; Ultimate uses cast/full-team VFX.
+Battle runtime served from battle.html; embedded base64 payload disabled.
+Static preview written to /workspace/scratch/b5f6a75b3ba7/luc-than/dist
+✔ L79-T1: capture AbortError, sweep __mgErrs, remove abort-only banner (1.070315ms)
+✔ L79-T2: login video play catch, no autoplay (0.317719ms)
+✔ L79-T3: inject filter in head; index.html source frozen (10.423897ms)
+✔ L79-T4: no second document click listener (0.311019ms)
+✔ L18-A1: six antiques cover combat stats and empty board grants nothing (1.317027ms)
+✔ L18-A2: enhance spends gold and hoat, stays immutable, and rejects max or missing funds (0.39811ms)
+✔ L18-A3: only the equipped antique counts, An vị swaps the one slot, Bậc Thầy needs all six (0.263787ms)
+✔ L18-A4: wheel opens Cổ Vật as a 2x3 An vị board (2.052366ms)
+✔ L23-T1: 11 nan Trợ trận giữ key / nhãn / góc / open (1.951094ms)
+✔ L23-T2: nan dùng ảnh sơn, không còn spokeGlyph SVG (0.250928ms)
+✔ L23-T3: 11 file sơn unique + hall giữ + heroStats không đổi công thức (0.541487ms)
+✔ L23-P1: clip tròn + pointer-events badge-only (1.916651ms)
+✔ L23-P2: không thêm data-art-go; inject account-gear giữ chỗ (7.241595ms)
+✔ L16-D1: four troop banners cover percent stats and empty board grants nothing (1.298859ms)
+✔ L16-D2: enhance spends gold and hoat, stays immutable, and rejects max or missing funds (0.388336ms)
+✔ L16-D3: troop percent stacks, Bậc Thầy needs all four (0.180733ms)
+✔ L16-D4: wheel opens Thần Binh as 2x2 percent banners (1.939817ms)
+✔ L21-F1: eight fish cover combat stats and empty board grants nothing (1.72969ms)
+✔ L21-F2: Câu spends gold and hoat, stays immutable, rng picks the fish, and rejects missing funds or a full dex (0.430249ms)
+✔ L21-F3: every leveled fish counts and Bậc Thầy needs all eight (0.226511ms)
+✔ L21-F4: wheel opens Đồ Giám Cẩu Cá as a catch catalog (2.994057ms)
+✔ board keeps twelve roman slots, three of each forge kind (1.331429ms)
+✔ empty board stays at master 0 and grants no combat bonus (0.383879ms)
+✔ matching kind equips, wrong kind is rejected, and a uid only occupies one slot (0.292802ms)
+✔ unequip clears the worn slot and rejects items the board is not wearing (0.329427ms)
+✔ picker lists unused matching pieces and skips the piece already in that slot (0.300774ms)
+✔ quick equip fills empty slots with the best leftover of each kind (0.471111ms)
+✔ quick unequip returns every board link to the bag (0.176606ms)
+✔ worn pieces add their stats to the whole roster and master level is the lowest shared enhance (0.425252ms)
+✔ master bonus stays off at +0 and grants a team table once all twelve share enhance (0.534817ms)
+✔ unequipping one slot drops master rank and removes the master addend (0.394185ms)
+✔ ssr outranks a higher-level common piece when ranking bag items (0.201524ms)
+✔ smelt rejects empty picks, worn board pieces and locked bag items (0.36493ms)
+✔ smelt quotes tinh for unused extras and sums a batch without touching worn uids (0.972968ms)
+✔ assist wheel and 12-slot board are the Trợ trận equipment surface (2.167931ms)
+✔ L20-I1: six illusions cover combat stats and empty board grants nothing (1.753175ms)
+✔ L20-I2: enhance spends gold and hoat, stays immutable, and rejects max or missing funds (0.600766ms)
+✔ L20-I3: chính is full, phụ is half, An vị toggles, Bậc Thầy needs all six (0.364861ms)
+✔ L20-I4: wheel opens Ảo Hình as a 2x3 chính/phụ board (2.285858ms)
+✔ L19-L1: five seals cover combat stats and empty board grants nothing (1.676299ms)
+✔ L19-L2: enhance spends gold and hoat, stays immutable, and rejects max or missing funds (0.37141ms)
+✔ L19-L3: only the chosen seal counts, Ninh grants all stats, Bậc Thầy needs all five (0.340424ms)
+✔ L19-L4: wheel opens Tuệ Vận as five fortune seals (2.408454ms)
+✔ L14-P1: six Vietnamese pets cover the four combat stats and empty board grants nothing (1.404449ms)
+✔ L14-P2: enhance spends gold and hoat, stays immutable, and rejects max or missing funds (0.375386ms)
+✔ L14-P3: deployed pet is full power, others are support, Bậc Thầy needs all six (0.33781ms)
+✔ L14-P4: wheel opens Linh Thú as a flanking pet board with deploy (1.934147ms)
+✔ L13-R1: eight relics sit in two sets of four and empty board grants nothing (1.647646ms)
+✔ L13-R2: enhance spends gold and hoat, stays immutable, and rejects max or missing funds (0.366252ms)
+✔ L13-R3: combat bonus adds per-level primary stat, 2/4-set and Bậc Thầy (0.400445ms)
+✔ normalize fills missing relics at level 0 and clamps junk (0.138649ms)
+✔ L13-R4: wheel opens Bảo Vật as a flanking relic board (2.448364ms)
+✔ L15-S1: nine spirits sit in three triads and empty board grants nothing (1.503668ms)
+✔ L15-S2: enhance spends gold and hoat, stays immutable, and rejects max or missing funds (0.394225ms)
+✔ L15-S3: only slotted spirits count, triad bonus needs three matching slots, Bậc Thầy needs all nine (0.489379ms)
+✔ L15-S4: wheel opens Cửu Ứ Chiến Linh as a 3x3 an vị board (2.017744ms)
+✔ L17-T1: star cost matches live 20x current stars and caps at 6 (0.759246ms)
+✔ L17-T2: prepare spends shards, stays immutable, and rejects max/unowned/missing shards (0.661337ms)
+✔ L17-T3: Bậc Thầy is the min star of all twelve, unowned counts as zero (0.227082ms)
+✔ L17-T4: wheel opens Tướng Tinh as a 12-hero star board (2.062181ms)
+✔ starts empty and accrues elapsed time into the chest (1.682278ms)
+✔ caps at exactly 15 hours and discards time beyond the cap (0.281324ms)
+✔ claim returns the reward atomically and opens a fresh accumulation cycle (0.37151ms)
+✔ does not accrue when the device clock moves backwards (0.211479ms)
+✔ allows a partial claim and keeps sub-unit reward progress (0.329387ms)
+✔ normalization cannot exceed the cap or carry invalid values (0.203016ms)
+✔ a new chest without a clock does not start at Unix epoch (0.153392ms)
+✔ L40-T1: live domain and lacquer runtime stay frozen (0.838135ms)
+✔ L40-T2: #hvArenaRoot is a body overlay with overflow auto (0.258871ms)
+✔ L40-T3: hall mounts on body and wraps showScreen without a second document listener (0.329157ms)
+✔ L40-T4: stub lane loads runtime and build-static keeps the reserved import (0.295005ms)
+✔ L40-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (0.737252ms)
+✔ L100: đấu trường city 3 ô + FAB ‹, không document click (0.998076ms)
+✔ L18-T1: live catalog frozen — cost 5, 8 võ đài, mốc LP/hạng/vinh ấn (1.276766ms)
+✔ L18-T2: rivalPower / rankCandidates / LP delta keep live formulas (0.378912ms)
+✔ L18-T3: rank win takes rival rank +220g; lose does not drop; player not mutated (0.725695ms)
+✔ L18-P1: rank gem milestones fire once; net kèo rejected (0.318771ms)
+✔ L18-P2: rivalry first/leap/revenge; day rollover clears deeds; marks are not combat stats (0.272201ms)
+✔ L18-P3: season LP claim, defense snapshot, PvE first vs rematch, lock (0.790262ms)
+✔ L18-P4: lacquer screen is wired and does not add a second hub landmark (1.154151ms)
+✔ L151-T1 catalog module does not create Image or touch the DOM (1.01391ms)
+✔ L151-T1 alias normalization and unknown lookup (3.238216ms)
+✔ L151-T1 resolves Linh Đồng plus two older heroes without creating Image (0.339662ms)
+✔ L151-T1 manifest validator rejects broken layout and wrong decodedBytes (0.304689ms)
+✔ L151-T1 Linh Đồng v1 runtime-meta hydrates to v2 without losing hashes (0.433363ms)
+dimension 1x1 != 16x8
+network
+✔ L151-T3 loader dedupes the same URL and does not construct Image in a draw loop helper (2.721546ms)
+✔ L151-T3 validate natural size after load; wrong size fails without retry (1.268214ms)
+✔ L151-T3 concurrent loads stay at maxLoading=2 (0.45748ms)
+✔ L151-T3 explicit retry is required after failure (0.72871ms)
+✔ L151-T3 battle patch no longer eager-loads every Linh Đồng clip (0.600095ms)
+✔ L151-T3 loader source does not construct Image during draw (0.39718ms)
+✔ L74-T2: register then login issues a token; duplicate user is rejected (11.714439ms)
+✔ L74-T2b: username and password are validated (0.501376ms)
+✔ L74-T2c: email register then login (5.664085ms)
+✔ L74-T3: cloud save round-trips behind bearer token (3.180789ms)
+✔ L74-T4: Google OAuth start redirects and callback exchanges to a token (1.581797ms)
+✔ L74-T4b: OAuth is disabled when Google env is missing (0.216216ms)
+✔ L74-T4c: Facebook token login and public client ids on health (0.639945ms)
+✔ L74-T5: profile, rivals, chat, leaderboard, arena swap match live client (5.923727ms)
+✔ L76A health reports store kind (0.386232ms)
+✔ legacy authored QA exposes deterministic Lục Ảnh actions and real Đình Lôi asset enumeration (1.156385ms)
+✔ legacy authored browser QA covers Basic Skill Ultimate for all three authored heroes (0.148584ms)
+✔ legacy authored browser QA requires action-scoped assets and both desktop/mobile viewports (0.140272ms)
+✔ Linh Đồng build patch preserves the shared Phase-1 impact marker (0.145099ms)
+✔ legacy authored browser QA proves gameplay effect resolution, not trace markers alone (0.215755ms)
+✔ Lục Ảnh keeps a newly released VFX when RAF still refers to the preceding instant (1.95508ms)
+✔ Đình Lôi keeps a newly released VFX when RAF still refers to the preceding instant (0.937164ms)
+✔ L109: cược 2/10/50, sao nhân, chế sò Tinh/Hoạt, shop điểm (3.239768ms)
+✔ L154-T1 catalog resolves Bạch Diện aliases without Image or Spine (3.952222ms)
+✔ L154-T2 Ultra v5 pack metadata keeps explicit frame counts and native cells (14.301567ms)
+✔ L159-T1 campaign Bày trận uses Ultra v5 idle/run atlas geometry (0.471702ms)
+✔ L154-T3 FrameClock replay and renderer source rect use clip metadata (0.51025ms)
+✔ L154-T4 lazy loader boots idle only; ATK+VFX on action; shared 128 MiB LRU (1.628417ms)
+✔ L154-T5 wav SFX on HonVietSfx; 42 catalog stays 42; roster 12 closed (6.893159ms)
+✔ Bạch Diện patch follows actor-scoped S+ performAction routing (0.302397ms)
+✔ L154-T6 battle adapter uses catalog metadata and shared cache, not a 4×2 guess (0.441045ms)
+✔ L156-T1 DATA.heroes.bach_dien and CHARACTER_MANIFEST surfaces match Linh Đồng (10.949038ms)
+✔ L156-T2 official ids, default owned, stars include Bạch Diện and keep Linh Đồng (8.534015ms)
+✔ L156-T3 skill kit v2 is valid and names match authored skill.json (0.58991ms)
+✔ L156-T4 roster tap opens hero detail with idle canvas, not trial battle (7.722481ms)
+✔ L156-T4 dist keeps startBachDienDetailIdle after luc-anh idle patches (6.354747ms)
+✔ L156-T5 encyclopedia 42 and 6v6 slices stay; BETS frozen (7.983835ms)
+✔ Bạch Diện attaches impact ownership after the canonical Linh Đồng traced block (1.101181ms)
+✔ Bạch Diện impact owner patch is idempotent (0.251209ms)
+✔ Bạch Diện impact owner refuses an unknown impact shape instead of silently skipping (0.380284ms)
+✔ Bạch Diện runtime delegates impact ownership to the canonical helper and never silently warns (0.218419ms)
+✔ L155-T1 Bạch Diện preview card shows on owned and all, soul filter, not fire (2.099848ms)
+✔ L155-T2 roster runtime paints Bạch Diện official; BETS frozen (6.548389ms)
+✔ L155-T3 tap Bạch Diện opens hero detail like official heroes (0.274174ms)
+✔ L155-T4 encyclopedia 42 stays; DATA.heroes has bach-dien slug (6.616863ms)
+✔ BACH-V5-0 Ultra v5 assets and runtime metadata are complete (1.523549ms)
+✔ BACH-V5-1 battle runtime binds Bạch Diện through the canonical Canvas Sprite owner (2.901878ms)
+✔ BACH-V5-2 build owner keeps the canonical runtime and avoids duplicate declarations (0.242666ms)
+✔ BACH-V5-3 Ultra v5 package stays self-contained and uses the canonical runtime (0.217247ms)
+✔ L152-T1 aliases resolve extra Bạch Diện; 42 catalog and 7 soul stay locked (1.418119ms)
+✔ L152-T2 mask swaps Joy then Rage on skill; incoming miss also swaps (5.005912ms)
+✔ L152-T3 World-Substitute eats incoming crit then spends all masks (1.547334ms)
+✔ L152-T4 S1 hits lowest HP, execute crit and Mê Loạn under 40% (1.21953ms)
+✔ L152-T5 Ult costs 100, hits highest ATK, steals and locks (0.714678ms)
+✔ L152-T6 reference art exists; TKT-0154 binds authored atlases (0.595008ms)
+✔ L152-T7 encyclopedia 42 stays closed; playable roster now includes Bạch Diện (5.897528ms)
+✔ L121-T1: túi Đạo cụ dùng PNG chung, không lửa Hoạt lực (0.949032ms)
+✔ L121-T2: Hoạt lực là bình đỏ cùng dáng Tinh, không đống lửa (7.721339ms)
+✔ L121-T3: ô túi icon to; Chợ Tinh/Hoạt local path (0.349458ms)
+✔ L121-T4: không document click; giá shop điểm đóng băng (0.328876ms)
+✔ L27-T1: live commands stay frozen (6.716523ms)
+✔ L27-T2: #hvBagRoot is a body overlay with overflow auto (0.260132ms)
+✔ L27-T3: hall mounts on body and wraps showScreen without a second document listener (0.283548ms)
+✔ L27-T4: stub lane loads runtime and build-static keeps the reserved import (0.302156ms)
+✔ L27-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (0.456719ms)
+✔ queued requests start without another render-loop ensure call (4.821143ms)
+✔ a queued promise does not report ready before its image loads (0.87507ms)
+✔ a pinned visible atlas survives pressure while an unpinned atlas is evicted (0.670412ms)
+✔ clearing a scope rejects outstanding readiness rather than hanging (0.29194ms)
+✔ a released action lease retains decoded data for the next turn (0.556209ms)
+✔ two leases sharing an atlas cannot release each others protection (0.451361ms)
+✔ lease acquisition times out and removes only its own pins (15.673536ms)
+✔ aborting a lease rejects it and clears its pins (0.773938ms)
+✔ clearing a scope cancels queued work without starting it (0.763031ms)
+✔ network failure frees a slot and automatically starts queued work (0.560786ms)
+✔ existing handle state and explicit retry remain compatible (0.3378ms)
+✔ the cache never exceeds maxLoading or its decoded reservation budget (1.777351ms)
+✔ leaving battle stops shared attack and result SFX but keeps normal UI usable (3.427161ms)
+✔ pending decode and queued iframe click cannot restart sound after close (1.759425ms)
+✔ old iframe pagehide cannot mute the next battle; repeated exits stay safe (1.737512ms)
+✔ disposing the child pauses its HTML voice player and invalidates its fallback (1.200902ms)
+✔ ultimate voice pending decode is cancelled even if a new battle starts before it resolves (2.343916ms)
+✔ stop combat cancels active ultimate voice while leaving hero-detail voice alone (1.114121ms)
+✔ HTML fallback voice is owned and stopped on exit too (1.103034ms)
+✖ result music cannot resume after stop while waiting for audio unlock (1.099089ms)
+✔ battle close preserves result BGM through the parent route handoff (0.193331ms)
+✖ built close owner stops both parent buses and the child before blanking the iframe (7.924215ms)
+✔ one unlock carries hub music through battle and result without another HTML-media gesture (2.955579ms)
+✔ newer music request wins if an older track finishes decoding later (0.900979ms)
+✔ result audio delegates to the host shared bus and close can preserve music during route handoff (1.160691ms)
+✔ profile volume and audio-only hunt screens control the shared BGM owner (0.456579ms)
+✖ built BGM route uses the shared music bus for screen transitions (0.748649ms)
+✔ 20 battle-stage entries are unique and ordered (1.140811ms)
+✔ campaign IDs select their authored stage and reserve fallback themes (0.132379ms)
+✔ unknown battle IDs receive a deterministic stage (0.142054ms)
+✔ mobile idle atlas stays pinned while visible and unpins at battle change/disposal (1.359601ms)
+✔ L158-T1: Xuất chiến unlocks host SFX and plays combat BGM before the iframe src (15.532764ms)
+✔ L158-T2: enterFallback keeps the overlay; it does not location.assign battle.html (7.624372ms)
+✔ L158-T3: embedded beginBattle uses parent combat BGM instead of iframe HTMLAudio (6.321137ms)
+✖ L158-T4: closeOverlay restores host BGM after ending the battle bus (7.751885ms)
+✖ L158-T5: hunt overlay observer does not pause the unlocked host combat player (7.710933ms)
+✔ L158-T6: iPhone and iPadOS bypass the host battle iframe and use the full-page return flow (6.703314ms)
+✔ P0: battle autostart is fail-open when iOS audio initialization throws (7.294865ms)
+✔ L12-B1: loading copy tells the player combat is starting, not a formation/engine lab (2.070523ms)
+✔ L12-B2: iframe load does not hide the veil; only battle-ready does (1.462526ms)
+✔ L12-B3: embedded battle URL forces autostart without overlay retreat chrome (0.530199ms)
+✔ L12-B4: embedded battle.html starts combat and reports the URL session even if config parse fails (0.334284ms)
+✔ L12-B5: a nested preview (Grok/iOS webview) opens battle.html as a full page instead of a child iframe (1.480423ms)
+✔ L12-B6: same-window embedded battle returns through sessionStorage, not a missing parent iframe (1.03407ms)
+✔ L12-C1: overlay markup has no Rút lui chrome button (1.719644ms)
+✔ L12-C3: in-combat HUD Rút lui stays hidden even when the fight is embedded (0.580636ms)
+✔ embedded battle starts even when iPhone combat audio fails synchronously (2.297566ms)
+✔ iPhone battle boot owns a WebKit-safe Canvas 2D fallback (1.807206ms)
+✔ embedded battle lets the render loop start before deferred autostart retries (0.193031ms)
+✔ iPhone direct recovery uses a fresh battle document cache token (0.142214ms)
+✔ battle floaters clamp to the actual visible canvas world after camera transform (1.489848ms)
+✔ long floater labels can shrink to fit and Lục Ảnh status copy is not rendered as oversized damage text (0.595889ms)
+✔ final visual polish build patch preserves viewport clamp for damage and status floaters (0.11956ms)
+Battle formation + visual scale v1 applied: approved legacy portrait anchors, single scale owner
+✔ portrait formation restores the approved legacy mobile anchors and stays inside every target crop (1.761277ms)
+✔ portrait formation keeps old 90px team columns, 160px opposing frontline lane and mirrored rows (0.286783ms)
+✔ desktop formation and global desktop scale are unchanged (0.473915ms)
+✔ measured special-hero corrections use rendered visible bounds, not atlas canvas size (0.354675ms)
+✔ final runtime patch removes stale formation breakpoints and all stacked scale owners (0.573034ms)
+✔ formation owner accepts the unmodified baseline 0.52 generic scale without a pre-patch scale rewrite (0.19158ms)
+✔ build applies the scoped layout owner after reference presentation but before battle payload sync (0.113251ms)
+✔ L12-H1: embedded campaign HUD hides the brand topbar (0.843803ms)
+✔ L12-H2: campaign ribbon is compact lacquer, not mint pastel (0.27186ms)
+✔ L12-H3: dock speed and skip are 44px circular chips (0.283648ms)
+✔ L12-A1: battle reuses the early AudioContext instead of creating a locked one after navigation (0.856883ms)
+✔ L12-A2: embedded battle starts combat BGM and unlocks audio on gesture without a Bật tiếng button (0.468267ms)
+✔ L12-C2: iOS unlock does not inject a floating Bật tiếng control (0.16604ms)
+✔ an outstanding muted-audio unlock cannot pause the new combat BGM (1.872745ms)
+✔ legacy battle image handles are callable lazy loaders, not Image objects invoked as functions (6.874692ms)
+✔ every direct Image declaration remains an object and is never called as a function (0.562729ms)
+✔ fallback catalog stays complete while runtime keeps canonical sources (1.091427ms)
+✔ Ong Pho authored battle sheet catalog stays intact at native resolution (0.16538ms)
+✔ Luc Anh authored source catalog remains available without runtime derivative remap (0.095054ms)
+✔ Đình Lôi mobile policy preserves native scale (0.165359ms)
+✔ battle low-memory patch lowers canvas pressure, caps visual FPS and defers shield atlas until needed (1.439352ms)
+✔ static pipeline applies battle mobile after final battle owners and before iframe sync (0.582909ms)
+✔ trace initializer is injected even when existing battle hooks reference its global (59.916143ms)
+✔ trace is ready before the first body action and does not leak helper bindings (55.59179ms)
+✔ normal production URLs leave tracing disabled and still execute battle hooks (53.303097ms)
+✔ reapplying the patch is byte-idempotent and refreshes only its owned script (169.940574ms)
+✔ missing head anchor fails loudly without overwriting the build (59.370545ms)
+✔ source replacement preserves JavaScript dollar sequences literally (60.877444ms)
+✔ Phase 1 build keeps the opt-in trace patch in the build pipeline (0.831785ms)
+✔ final generated battle installs tracing before its first action hook (17.007153ms)
+✔ final generated battle creates no trace or global helpers without the QA flag (10.743989ms)
+✔ PHASE1 runtime wiring has opt-in trace access and action lifecycle hooks (0.729ms)
+✔ PHASE1 trace wiring is guarded and cannot alter disabled production flow (0.121804ms)
+✔ PHASE1 trace records action lifecycle with stable actionId and snapshots (1.495586ms)
+✔ PHASE1 trace rejects duplicate action start and duplicate completion (0.186481ms)
+✔ PHASE1 trace is inert when QA flag is disabled (0.167152ms)
+✔ preparation decodes a real bus entry without playing it, then playback reuses that buffer (2.774426ms)
+✔ aborting during decode prevents starting a late sound (0.75516ms)
+✔ a decoded sound arriving outside its marker deadline is discarded (0.702199ms)
+✔ locked context cannot be reported as audible playback (0.668759ms)
+✔ child preparation uses the existing parent channel and never a second decoder (1.299861ms)
+✔ preparation timeout is bounded and does not convert into delayed playback (10.878277ms)
+✖ final battle gates the real action before energy debit and keeps the same iframe payload (15.007411ms)
+✔ actual generated action does not begin or spend energy while pictures are loading (3.476585ms)
+✔ actual generated action rejects duplicate clicks while waiting (0.819777ms)
+✔ actual generated action leaves energy untouched and unlocks retry on asset failure (0.716821ms)
+✔ hero finish no longer drops decoded cast/VFX images before return (0.751544ms)
+✔ both documents expose preparation on the original shared audio bus (7.545033ms)
+✔ generated S+ action atlas variants fit the complete decoded working set (0.447475ms)
+✔ generated atlas size accounts for pinned idle art plus the complete action working set (0.259261ms)
+✔ action readiness waits only for the active actor run, cast and VFX (4.850457ms)
+✔ changing battle while loading cancels the old action (40.720715ms)
+✔ image failure rejects readiness rather than running an invisible action (0.624823ms)
+✔ muting does not wait for audio preparation (0.362747ms)
+✔ SFX success is not marked until asynchronous playback confirms it (0.673837ms)
+✔ declined sound is not marked played and permits a live-action retry (0.23137ms)
+✔ late sound cannot mark success in a new battle or after completion/cancellation (0.280844ms)
+✔ idle fallback retains one pin and releases it on teardown (0.272471ms)
+✔ mixed authored idle pins yield to the action working set until recovery (1.820256ms)
+✔ audio exceptions are observed rather than unhandled or reported successful (0.441095ms)
+✔ S+ movement keeps ownership when actionCount advances at impact (1.63104ms)
+✔ a new action lease still rejects a stale return (0.203257ms)
+✔ AoE cast position follows live enemy frontline instead of a fixed own-team caster line (0.591853ms)
+✔ target-aligned team skill changes row with the actual target (0.274124ms)
+✔ ranged basic advances toward its target but does not walk through the living enemy frontline (0.190277ms)
+✔ explicit penetrate policy may cross the frontline for a dash-style skill (0.217728ms)
+✔ enemy-side movement mirrors toward the player formation (0.204248ms)
+✔ real S+ path waits for resources before movement/cast/domain act (3.109091ms)
+✔ S+ asset failure leaves a retryable turn without casting or spending energy (0.714457ms)
+✔ S+ path returns to its per-skill home before releasing the action lease (0.194233ms)
+✔ linh-dong team 1: cast entry approaches before animation rather than remaining home (6.199123ms)
+✔ linh-dong team 2: cast entry approaches before animation rather than remaining home (2.772638ms)
+✔ bach-dien team 1: cast entry approaches before animation rather than remaining home (2.591109ms)
+✔ bach-dien team 2: cast entry approaches before animation rather than remaining home (2.593643ms)
+✔ thay-mo team 1: cast entry approaches before animation rather than remaining home (3.676057ms)
+✔ thay-mo team 2: cast entry approaches before animation rather than remaining home (2.522345ms)
+✔ luc-anh team 1 basic: cast entry snaps to the cast point without run/tween (2.681024ms)
+✔ luc-anh team 1 skill: cast entry snaps to the cast point without run/tween (2.552651ms)
+✔ luc-anh team 1 ultimate: cast entry snaps to the cast point without run/tween (2.693344ms)
+✔ luc-anh team 2 basic: cast entry snaps to the cast point without run/tween (2.549186ms)
+✔ luc-anh team 2 skill: cast entry snaps to the cast point without run/tween (2.461695ms)
+✔ luc-anh team 2 ultimate: cast entry snaps to the cast point without run/tween (2.961538ms)
+✖ campaign iframe and standalone battle contain exactly one identical movement owner (11.271936ms)
+✔ L149-T1: live battles play at full timing; QA and S+ fixtures stay compressed (8.048423ms)
+✔ L149-T2: embedded battles start at 1× so one action can finish (4.077612ms)
+✔ L149-T3: rest between actors is readable and auto waits for the action (2.638571ms)
+✔ L149-T4: initiative owner is unchanged (2.427973ms)
+✔ L150-T1: combat waits and VFX keep authored duration even if the OS asks to reduce motion (3.701224ms)
+✔ L150-T2: Linh Đồng VFX atlases load when the action starts, not at boot (0.250418ms)
+✔ L150-T4: a new battle never starts with skip-animations armed (3.498598ms)
+✔ L128-T1: trúng rương không đổi sò (1.342706ms)
+✔ L128-T2: điểm tự cộng theo sò tiêu, bỏ nút Nhận điểm (0.665003ms)
+✔ L128-T3: Quay to, Thưởng + Đổi sò; shop điểm ở Chợ (0.39767ms)
+✔ L131-T1: spotlight khoá đúng lastIdx, không tô mọi ô cùng loại (0.860818ms)
+✔ L131-T2: Thưởng/Đổi sò tắt lastIdx; quay tiếp đi từ đó (0.324861ms)
+✔ L131-T3: CSS is-hold; reduced-motion; BETS đóng băng; không document click (0.427796ms)
+✔ L133-T1: hold sheen chéo góc TL→BR, lặp (0.937344ms)
+✔ L133-T2: sheen không freeze, không pulse cả ô (0.250388ms)
+✔ L133-T3: reduced-motion tắt sheen; BETS đóng băng; không document click (0.873558ms)
+✔ L124-T1: Hoạt lực túi và vành cùng materials/hoat-luc.png (1.039968ms)
+✔ L124-T2: ô sự kiện ghi Bách Bảo Rương (0.23218ms)
+✔ L124-T3: tâm vành hoa văn chìm; cược đóng băng (0.424371ms)
+✔ L124-T4: không document click (0.300594ms)
+✔ L123-T1: stack n1/n2/n3 gần full ô, contain không crop (1.031546ms)
+✔ L123-T2: PNG vành cạnh vẽ ≥82% canvas (27.318194ms)
+✔ L123-T3: cược/pay đóng băng; không document click (0.539134ms)
+✔ L123-T4: ART.tinh cùng bình túi (0.301494ms)
+✔ L135-T1: sheen 1.5s/lần trên ô trúng (0.935641ms)
+✔ L135-T2: lúc quay không vệt (0.313032ms)
+✔ L135-T3: không pulse cả ô; BETS đóng băng; không document click (0.389127ms)
+✔ L137-T1: vệt sáng trắng, không đường vàng (1.04717ms)
+✔ L137-T2: lúc quay không vệt (0.226161ms)
+✔ L137-T3: không pulse cả ô; BETS đóng băng; không document click (0.326202ms)
+✔ L136-T1: vệt là thanh chéo translate, không wash background-position (0.942101ms)
+✔ L136-T2: lúc quay không vệt (0.226221ms)
+✔ L136-T3: không pulse cả ô; BETS đóng băng; không document click (0.386103ms)
+✔ L138-T1: sheen 0→100% liên tục, fade hai đầu, không hold 78% (0.988481ms)
+✔ L138-T2: lúc quay không vệt (0.221515ms)
+✔ L138-T3: không pulse cả ô; BETS đóng băng; không document click (0.326974ms)
+✔ L130-T1: SO_IC là sò cowrie, không ốc so-icon.jpg (1.511861ms)
+✔ L130-T2: Đổi sò hiện khung so.png, không 🐚 (0.24523ms)
+✔ L130-T3: không document click; BETS đóng băng (0.379282ms)
+✔ L132-T1: đổi sò pop nhỏ tự tắt, không nút Nhận (0.903924ms)
+✔ L132-T2: icon sò ≤56px, overlay không chặn tay (0.25824ms)
+✔ L132-T3: spotlight steady, không bập bùng; BETS đóng băng (0.372702ms)
+✔ L134-T1: lúc quay không vệt loáng (0.863623ms)
+✔ L134-T2: ô trúng hold mới sheen chéo góc (0.27876ms)
+✔ L134-T3: không pulse cả ô; BETS đóng băng; không document click (0.400394ms)
+✔ BASELINE-0 Luc Anh runtime patch is idempotent after source already contains a replacement (0.778374ms)
+✔ BASELINE-1 Linh Dong timing patch tolerates already-integrated v6 fall state and CRLF (0.237368ms)
+✔ BASELINE-2 SPLUS build patch accepts CRLF source input (0.142946ms)
+✔ BASELINE-3 package declares the locked sharp image dependency (0.559244ms)
+✔ transaction and opening-loop build owners accept the atomic level-up hook (0.719215ms)
+✔ L45-T1: live campaign scene and Bày trận stay frozen (1.041441ms)
+✔ L45-T2: #hvCampaignScene home is a 3D overlay with overflow auto (0.223608ms)
+✔ L45-T3: hall mounts on body and wraps showScreen without a second document listener (0.24499ms)
+✔ L45-T4: stub lane loads runtime and build-static keeps the reserved import (0.283187ms)
+✔ L45-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (0.60297ms)
+✔ campaign never returns an empty hero image merely because a battle overlay state is stale (0.712305ms)
+✔ campaign drops failed resource handle and falls back to authored portrait instead of skipping actor (0.16615ms)
+✔ AC01: cảnh chiếm chiều cao chính, rương fab gọn, không bảng lớn luôn hiện (1.407744ms)
+✔ AC04: popup rương có thời gian, cap 15 giờ, nhận, đóng (0.380885ms)
+✔ AC05: nhận thưởng khóa nhấn nhanh, chỉ commit một lần (0.884654ms)
+✔ AC07: Khiêu chiến và Đổi đội hình giữ luồng prepare (0.493565ms)
+✔ AC08: rời màn dừng clock, đóng dialog, một scope (0.449277ms)
+✔ AC09: điểm nối Run theo ID, thiếu thì Idle, không bịa FPS (0.488016ms)
+✔ AC03: đường giữa màn, chân theo slot, prepare không đổi (1.043174ms)
+✔ AC10: domain AFK và board không bị ticket này sửa công thức (0.162786ms)
+✔ AC02: canvas aria-label theo đội đang chọn, art theo pick.id (0.935011ms)
+✔ late old decode after purge cannot subtract a new scene reservation (2.130624ms)
+✔ invalid decode frees its loading slot and queued hero proceeds (0.700868ms)
+✔ purge before scheduled load prevents stale request from starting (0.346192ms)
+✔ campaign cache reserves decoded bytes before concurrent decode begins (1.605382ms)
+✔ purge of pending loader settles promise once without negative loading (0.368466ms)
+✔ AC01 decorative sword children retain the single challenge button and preparation handler (2.300521ms)
+✔ AC02-03 swords have mirrored motion, collision flash and accessible static fallback (0.223207ms)
+✔ AC01-03 six chapters have distinct real maps, routes and monster silhouettes (2.355113ms)
+✔ AC02 all chapter paths loop continuously, keep presentation and preserve squad (28.7649ms)
+✔ AC02 changing chapter updates both maps and resets travel; same chapter preserves travel (2.287632ms)
+✔ EP-1 enemy power is 2966 from encounter, independent of player upgrades (3.366048ms)
+✔ EP-1 preview copies rows and uses combat formation slots (1.180261ms)
+✔ EP-1 dynamic factory is not invoked or reported as zero strength (1.223175ms)
+✔ EP-2 generic enemy selects enemy pose row then team atlas by slot (1.210557ms)
+✔ L148-T1: every prep foe faces left, including duplicate fallback art (1.82301ms)
+✔ farm keeps sparse squad identities and authored fractional frame durations (2.105036ms)
+✔ farm remains presentation-only and shares scene lifetime, no reward or combat owner (0.303107ms)
+✔ L12-R1: one tap on an occupied field hero undocks that hero and keeps the hole (3.993225ms)
+✔ L12-R2: a tap on an empty field slot still selects it for a reserve (1.110946ms)
+✔ L12-R3: a leftover drag click does not undock or select (1.539983ms)
+✔ L12-R1: occupied field copy tells the player a tap will undock (0.358752ms)
+✔ L12-S1: a six-cell board keeps authored holes instead of packing remaining heroes (1.484439ms)
+✔ L12-S2: reserve fill occupies the first hole and leaves other slots in place (0.218369ms)
+✔ L12-S3: drag onto an empty slot moves without compacting (0.20531ms)
+✔ L12-S4: placing a reserve onto a selected empty slot keeps existing holes (0.208655ms)
+✔ L12-S5: unique slots survive formation save; missing slots stay legacy-safe (0.348105ms)
+✔ L12-S6: compacting the board never invents extra heroes or duplicate slots (0.13242ms)
+✔ L12-S7: source normalizeSquad keeps unique slots and still recovers empty saves (7.272282ms)
+✔ L12-S8: source assignFormationSlots honors unique saved slots before packing leftovers (7.493406ms)
+✔ L12-S11: occupied field units keep authored position and pointer hit targets (0.384159ms)
+✔ campaign exposes one current mission instead of a chapter selector (3.498719ms)
+✔ Victory choice gates campaign continuation after a win (1.96847ms)
+✔ campaign retains independent battles and the 15-round rule (0.684092ms)
+✔ loss stops the chain and exposes recovery routes (0.713206ms)
+✔ top-level mobile battle return follows Xác nhận versus Ải sau (0.455147ms)
+✔ AC03 feet stay on the open road and clear of controls at 390x696 (1.441835ms)
+✔ AC03 feet stay on the open road and clear of controls at 375x520 (0.214674ms)
+✔ AC03 feet stay on the open road and clear of controls at 620x850 (0.158899ms)
+✔ six completion notifications coalesce to one redraw (2.239569ms)
+✔ budget failure is not retried per paint/microtask (9.419402ms)
+✔ network failure retries after backoff and recovers (0.718324ms)
+✔ one scene cleanup registration survives repeated failed loads (1.401905ms)
+✔ expired pose ownership becomes evictable (0.453834ms)
+✔ inactive campaign starts no image work and exit clears resources (0.230507ms)
+✔ patch is idempotent and removes eager attack preload (0.737372ms)
+✔ AC11 minimap viewport is the inverse of the actual world projection (2.285519ms)
+✔ AC11 map and scene share art; map opens and closes through the existing scene handler (0.353824ms)
+✔ mobile campaign profile preserves authored atlas scale (0.912477ms)
+✔ mobile derivative paths never overwrite canonical atlases (0.17856ms)
+✔ runtime patch constrains cache without reducing visual fidelity or remapping sources (0.436829ms)
+✔ static build creates mobile atlases before campaign lifetime patch and final payload sync (0.209085ms)
+✔ AC01 party travels continuously, pauses to fight, and reverses without teleporting (4.535132ms)
+✔ AC02-04 all squad attack multiple monsters, hits kill before loot drops and flies (10.14014ms)
+✔ AC05 cosmetic sampler cannot access state or create clocks (1.052238ms)
+✔ AC01 moving camera keeps squad and encounters inside mobile viewport and minimap projection (22.995391ms)
+✔ L12-P1: foreign pointerup does not end the active drag (4.080366ms)
+✔ L12-P1: foreign pointercancel does not end the active drag (0.945867ms)
+✔ L12-P1: a second pointer cannot replace the drag owner (1.688267ms)
+✔ L12-P2: pointercancel restores a displaced sprite without committing a move (0.904305ms)
+✔ L12-P2: lostpointercapture restores a displaced sprite without committing a move (0.825846ms)
+✔ L12-P2: pointerup restores a displaced sprite without committing a move (1.715358ms)
+✔ L12-P3: cancelPreparation() releases capture and permits the next drag (0.953038ms)
+✔ L12-P3: onSceneRoute('hub') releases capture and permits the next drag (1.535016ms)
+✔ L12-P1: primary drag swaps once, releases capture, and ignores late capture loss (1.210737ms)
+✔ L12-S9: occupied drag onto an empty slot moves without compacting (1.223987ms)
+✔ L12-S9: empty slots cannot start a drag (0.763422ms)
+✔ L12-D1: a completed drag does not swallow the next empty-slot tap (0.883944ms)
+✔ L12-D2: a moved drop clears the selected slot so the vacated hole is not still armed (0.889332ms)
+✔ green tick removes, reserve fills a vacancy, full bench refuses replacement (1.889892ms)
+✔ campaign can launch one to six owned heroes, but never empty or duplicate (0.450169ms)
+✔ drag swap preserves destination rows and never mutates saved records (0.2983ms)
+✔ shipped confirm advances the checkpoint then returns to AFK without launching again (2.4658ms)
+✔ shipped next starts the next independent encounter, defeat keeps the checkpoint (2.20046ms)
+✔ normalization preserves an intentional single hero through load and combat snapshots (1.025667ms)
+✔ static pipeline installs campaign repair before final payload sync (0.907689ms)
+✔ final built campaign contains repair and parses (11.203604ms)
+✔ 3Q-derived cache deduplicates one hero/clip/tier pack across owners (1.430128ms)
+✔ 3Q-derived cache bounds concurrent pack loading and queues the third pack (0.902432ms)
+✔ campaign-lite six-hero pack stays under the explicit decoded memory budget (0.394215ms)
+✔ 3Q-derived cache refuses a pack when all existing bytes are owned, instead of exceeding budget (0.54382ms)
+✔ purge drops owned campaign packs immediately without the delayed sweep (0.478061ms)
+✔ opening AFK and preparation retains the saved checkpoint and does not advance the player (1.865003ms)
+✔ no unlocked chapter cannot launch; completed campaign replays latest unlocked chapter (0.183437ms)
+✔ invalid or stale stage cursors stay inside authored encounters (0.360975ms)
+✔ replacing an occupied hero swaps identities and preserves slot rows without duplicating a hero (0.504852ms)
+✔ reserve replacement and row edits remain a draft until confirmed; invalid selections are ignored (0.478963ms)
+✔ two launch taps reach the existing battle owner once (3.580042ms)
+✔ insufficient stamina or failed formation save never reaches battle (3.343845ms)
+✔ a changed campaign cursor cancels preparation before any save or stamina command (1.457779ms)
+✔ changing row swaps the paired slots and keeps the exact three-by-three battle layout (0.39135ms)
+✔ 3Q-derived campaign resource owner uses campaign-lite packs and a shared bounded cache (0.491953ms)
+✔ legacy chapter reward heroes do not enter the official preparation bench (1.53131ms)
+✔ six over-budget packs do not starve the UI timer (84.419972ms)
+✔ late rejected load after clear cannot redraw a replacement scene (1.983743ms)
+✔ padded atlases reserve their stride grid and battle-runtime atlases are budgeted (0.60968ms)
+✔ L151-T4 source rects for first, middle and last frame come from metadata (1.924193ms)
+✔ L151-T4 enemy flip, source-over blend, destination aspect (0.356067ms)
+✔ L151-T4 renderer never hard-codes old cell sizes or naturalWidth/4 (0.46399ms)
+✔ L151-T5 FrameClock loops, clamps, and replays the same elapsedMs (0.885036ms)
+✔ L151-T6 battle adapter keeps 477×440 destination and combined VFX source-over (0.569109ms)
+✔ active index catalog is classified without silently hiding known legacy issues (29.134778ms)
+✔ L02b proposal covers every active legacy chapter reward without changing reward values (1.608367ms)
+✔ L02b proposal rejects legacy or non-playable replacement targets (0.315046ms)
+✔ valid catalog passes without changing the input data (2.256765ms)
+✔ catalog report separates legacy reward, unknown reward, cycle and unreachable data (0.510921ms)
+✔ extractor reads only the active catalog bindings and resolves role fallback assets (5.101908ms)
+✔ L69-T1: #hvChallengeRoot is a body overlay with overflow auto and wrap showScreen/startChallenge (1.081462ms)
+✔ L69-T2: hall jpg is dedicated and larger than 50KB (0.766136ms)
+✔ L69-T3: back navTo hub; fight calls baseStart; settleChallenge untouched (0.210748ms)
+✔ L69-T4: stub lane loads runtime; build-static keeps reserved import; no expedition-3d or battle.html (0.52345ms)
+✔ preview separates an already-cleared legacy chapter from an unclaimed proposal (1.274804ms)
+✔ receipt backfill preserves existing ownership, shards, currencies and progress (1.667476ms)
+✔ explicit unclaimed claim applies proposed reward once and preserves legacy data (0.372142ms)
+✔ cleared chapter cannot be regranted even when it has no receipt yet (0.156176ms)
+✔ explicit unclaimed claim requires a stable command id (0.128935ms)
+✔ L32-T1: live commands stay frozen (7.231041ms)
+✔ L32-T2: #hvChatRoot is a body overlay with overflow auto (0.30513ms)
+✔ L32-T3: hall mounts on body and wraps showScreen without a second document listener (0.239922ms)
+✔ L32-T4: stub lane loads runtime and build-static keeps the reserved import (0.270638ms)
+✔ L32-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (0.447705ms)
+✔ L25-C1: CI workflow fires on PR, main, and manual run (0.857674ms)
+✔ L25-C2: CI installs devDependencies, builds, and runs node tests (0.231549ms)
+✔ L25-C3: main push checks live after CI (0.213813ms)
+✔ L98: nhật ký city 6 ô, không document click (1.149304ms)
+✔ L99: lễ hội city Hoa Đăng / Bách Bảo / Rương (0.366543ms)
+✔ L33-T1: live commands stay frozen (7.83415ms)
+✔ L33-T2: #hvClanRoot is a body overlay with overflow auto (0.267103ms)
+✔ L33-T3: hall mounts on body and wraps showScreen without a second document listener (0.240343ms)
+✔ L33-T4: stub lane loads runtime and build-static keeps the reserved import (0.392533ms)
+✔ L33-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (1.015493ms)
+✔ combat authored inventory is explicit: 15 manifests across five heroes (4.736267ms)
+✔ all authored production VFX/animation packs physically exist (0.512634ms)
+✔ real combat audio inventory is not confused with design-only SFX ids (1.055333ms)
+✔ eight remaining official identities have no authored skill manifest pack to restore (0.306372ms)
+✔ Thầy Mo authored production owner is applied after final battle rewrite owners (0.251169ms)
+✔ 3Q-derived fighter lifecycle stays compositional and resettable (1.432251ms)
+✔ round → move → action produces typed deterministic results and stable IDs (6.864587ms)
+✔ target selection is deterministic and supports front, back, health and seeded modes (0.461737ms)
+✔ cooldown availability follows a round-ready record with rewrite config (0.244048ms)
+✔ browser injection factory has no Node-only closure dependencies (1.452712ms)
+✔ Fighter module keeps 3Q composition and blocked-action semantics (1.300292ms)
+✔ TargetSelector has deterministic slot, priority and seeded ordering (0.558473ms)
+✔ Cooldown module preserves ready-round and rewrite semantics (0.251319ms)
+✔ Fighter module is parity-compatible with core normalization/reset/action gate (1.522477ms)
+✔ TargetSelector module matches core across every supported mode (0.738143ms)
+✔ Cooldown module matches core ready-round and offset behavior (0.413153ms)
+✔ module snapshot and result derivation stay byte-compatible with the 3Q core (8.930004ms)
+✔ module round/action lifecycle matches core IDs, counters and ordered result stream (1.143525ms)
+✔ module round manager preserves core round rollover and battle finish behavior (0.53671ms)
+✔ module result contract keeps miss/noop fallback aligned with core (0.291359ms)
+✔ BattleSession store owns identity and finishing is idempotent (0.855851ms)
+✔ RoundManager creates stable round and move ownership (0.319772ms)
+✔ CombatResult derives the same typed damage/status/death sequence deterministically (7.309869ms)
+✔ recordCombatAction attaches ordered results to a session replay stream (0.452403ms)
+✔ module surface is browser-safe and has no DOM/Node dependency (1.129034ms)
+✔ L05c report closes final-action and per-impact snapshot gaps (10.75706ms)
+✔ L05c report keeps final-action snapshot gap open when any action omits the explicit capture (0.831995ms)
+✔ L05c build owner injects action-cost and tick-status boundaries at source runtime (1.122644ms)
+✔ L05c round-cap report records terminal round 15 without allowing round 16 (14.236349ms)
+✔ L05c full replay parity ignores session identity but catches deterministic outcome drift (8.802641ms)
+✔ L05c parity includes explicit final-action snapshot drift (4.689585ms)
+✔ L05c build owner exposes round-cap fixture and terminal replay metadata (0.6958ms)
+✔ L05a fixture recorder keeps ordered before/after evidence for basic, combo, AOE, heal and status cases (10.77021ms)
+✔ L05a can attach an explicit sub-impact without mutating the captured snapshots (1.454445ms)
+✔ L05a build owner exposes opt-in fixture capture at resolveAction boundary and records the known gap (7.863745ms)
+✔ every runtime unit receives a stable team-and-slot home anchor (0.870003ms)
+✔ movement profiles distinguish contact actions from stationary ranged actions (0.779697ms)
+✔ damage, critical, healing and HP presentation follow impact-readable rules (0.772516ms)
+✔ future hero tooling exposes resolved profiles and home anchor (0.365762ms)
+Reference contact spacing and ultimate target focus applied; formation/scale remain single-owner.
+✔ reference presentation does not own portrait formation or character scale (12.704489ms)
+✔ contact movement clamps the approach distance to avoid crowding the target (10.036373ms)
+✔ ultimate focus renders only the caster and resolved target set (10.855629ms)
+✔ presentation patch is idempotent and leaves combat resolution untouched (12.59942ms)
+✔ same combat seed keeps rule values stable when presentation calls are interleaved (0.978116ms)
+✔ session RNG is cached per battle object without changing the session shape (0.707317ms)
+✔ observation report closes only when every expected rule call is captured (7.879328ms)
+✔ core replay preserves captured RNG calls and cursor without changing existing fields (1.121632ms)
+✔ 3Q build owner wires seeded rule and presentation streams through source patching (1.255875ms)
+✔ combat VFX uses a dedicated faster clock without changing movement timing (1.208884ms)
+✔ legacy authored VFX owners use the shared VFX clock (1.858434ms)
+✔ canonical Linh Dong Skill 1 has a dedicated 620ms VFX window (0.268956ms)
+✔ Bach Dien Skill 1 has a dedicated 560ms VFX window (0.131508ms)
+✔ generated battle keeps the VFX speed contract after all build patches (7.242047ms)
+✔ Skill 1 action clocks keep damage inside the faster visual beat (0.28519ms)
+✔ L103: hall chức năng nền kem, jpg chỉ dải trên; không đụng login/hub (1.117135ms)
+✔ L44-T1: live daily domain and lacquer runtime stay frozen (1.012958ms)
+✔ L44-T2: #hvDailyRoot is a body overlay with overflow auto (0.255656ms)
+✔ L44-T3: hall mounts on body and wraps showScreen without a second document listener (0.24539ms)
+✔ L44-T4: stub lane loads runtime and build-static keeps the reserved import (0.411841ms)
+✔ L44-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (0.740607ms)
+✔ L21-T1: frozen catalog — 14 quests, mốc ngày/tuần, sign-in 28/14/7, idle 12h/60g, nap 50 (1.344368ms)
+✔ L21-T2: first sign-in 🪙120 +1🐚; day 7/14/28 gems; already claimed; meo_mun +2⚡; input not mutated (1.225929ms)
+✔ L21-T3: nap noon/eve +50 cap 120; idle formula + pet ×1.15; min 0.02h (0.956914ms)
+✔ L21-P1: claim quest pts+reward; act 20→🪙200; weekly quest+mốc; input not mutated (4.131784ms)
+✔ L21-P2: day rollover resets quests/naps/signInClaimed, keeps streak; weekly weekIndex; chapters untouched (1.043104ms)
+✔ L21-P3: rollQuests maps all 14; journal max 40; idle uses chapterMult only (0.428857ms)
+✔ L21-P4: lacquer journal + Lịch Luyện wheel; no second hub landmark; inject after festival (1.085257ms)
+✔ L21-P5: 11 ải spokes; night-1 opens Qua Ải + Luyện; Tháp after ch.1; locked stay locked (0.581778ms)
+✔ L76-T2: nan lock is CSS overlay; spoke JPG has no baked padlock (0.507366ms)
+network
+✔ L151-T2 decoded byte formula is atlas width × height × 4 (1.540515ms)
+✔ L151-T2 LRU evicts ready atlases under 128 MiB and never evicts loading (1.476869ms)
+✔ L151-T2 failed and malformed atlases do not retry every frame (0.955291ms)
+✔ L151-T2 release clears handlers and stale onload is harmless (0.460145ms)
+✔ L151-T2 atlas larger than the budget fails with a clear error instead of crashing (0.539074ms)
+✔ L151-T2 cache source stays self-contained for battle injection (0.314314ms)
+✖ L24-D3: sharp stays off the production install (1.342926ms)
+✔ L24-D1: production copy list ships the game, not QA docs (0.37802ms)
+✖ L24-D2: embedded battle payload still matches the built battle file (0.959127ms)
+✔ Đình Lôi binds all fourteen authored asset layers (3.16777ms)
+✔ Đình Lôi runtime uses native 2x atlases (13.201308ms)
+✔ Đình Lôi uses deterministic authored character states and separate VFX layers (1.795959ms)
+✔ Đình Lôi reference adapter keeps attack distance readable and support casts on-screen (1.733295ms)
+✔ Đình Lôi action choreography resolves at authored impact and returns home (0.597382ms)
+✔ Đình Lôi gameplay grants targeted shield, team shield, counter and enemy shock damage (1.410468ms)
+✔ one-battle QA sequence covers Basic, Talent Skill and Ultimate (0.786126ms)
+✔ Dinh Loi and Luc Anh do not eagerly construct every battle atlas Image (3.886544ms)
+✔ Dinh Loi and Luc Anh source declares shared loader ownership hooks (3.90996ms)
+✔ L111: Tinh/Hoạt nhỏ giọt + nhãn B/A/S/S+ + mở tướng (0.931155ms)
+✔ L47-T1: live end screen and reward veil stay frozen in index (7.42354ms)
+✔ L47-T2: #hvEndRoot is a body overlay with overflow auto (0.265541ms)
+✔ L47-T3: hall mounts on body and wraps showScreen without a second document listener (0.241595ms)
+✔ L47-T4: stub lane loads runtime and build-static keeps the reserved import (0.27155ms)
+✔ L47-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (0.521757ms)
+✔ L37-T1: live domain and lacquer runtime stay frozen (0.925086ms)
+✔ L37-T2: #hvExpeditionRoot is a body overlay with overflow auto (0.273272ms)
+✔ L37-T3: hall mounts on body and wraps showScreen without a second document listener (0.248716ms)
+✔ L37-T4: stub lane loads runtime and build-static keeps the reserved import (0.259081ms)
+✔ L37-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (0.831745ms)
+✔ L15-T1: empty run is inactive, five floors, three routes (0.864705ms)
+✔ L15-T2: fight needs a route except the dream lord; gold and sigils keep the live formula (1.237987ms)
+✔ L15-T3: blessing offer, pick advances the floor, reroll costs two sigils once (0.378482ms)
+✔ L15-P1: resume keeps the run; abandon keeps the record; lose does not drop best (0.224349ms)
+✔ L15-P2: clearing floor 5 pays gems, does not touch campaign, and a stale floor is rejected (0.211959ms)
+✔ L15-P3: encounter scale is immutable and boss is four units (0.199922ms)
+✔ L15-P4: lacquer screen is wired and does not add a second hub landmark (0.794299ms)
+✔ L127-T1: mở rương xong mới hiện loot (0.940599ms)
+✔ L127-T2: nút ‹ đóng ô rồi về Thành Chính (0.230898ms)
+✔ L127-T3: không document click; BETS đóng băng (0.28495ms)
+✔ L126-T1: Hoa Đăng sáng hơn (0.833017ms)
+✔ L126-T2: Blender chroma PNG + webp 60fps, rương rung (0.508187ms)
+✔ L126-T3: rương nhỏ, icon có khung to (0.306482ms)
+✔ L126-T4: PNG alpha sạch, webp 60fps, không document click (5.605478ms)
+✔ L125-T1: chữ banner Lễ Hội màu đỏ (0.885837ms)
+✔ L125-T2: Hoa Đăng sông đêm + đèn nổi (0.426824ms)
+✔ L125-T3: video mở rương + icon loot; tỉ lệ đóng băng (0.506635ms)
+✔ L125-T4: không document click; giữ ô sự kiện khi render (0.261384ms)
+✔ L119-T1: 3 ô Lễ Hội là icon hoạt động lantern / wheel / chest (1.280873ms)
+✔ L119-T2: Shop điểm là popup lưới thẻ có icon (0.340985ms)
+✔ L119-T3: panel quay giữ nút Quay; shop không nuốt side (0.265ms)
+✔ L119-T4: không document click; giá shop đóng băng (1.150456ms)
+✔ L42-T1: live domain and lacquer runtime stay frozen (0.922752ms)
+✔ L42-T2: #hvFestivalRoot is a body overlay with overflow auto (0.245641ms)
+✔ L42-T3: hall mounts on body and wraps showScreen without a second document listener (0.293924ms)
+✔ L42-T4: stub lane loads runtime and build-static keeps the reserved import (0.270318ms)
+✔ L42-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (0.646685ms)
+✔ L20-T1: live catalog frozen — 5 đèn, 🪙100, 3 hướng, mốc 3/7/12, 20 ô, bảng rương (1.736209ms)
+✔ L20-T2: đèn đầu miễn phí, sau đó 🪙100, trần 5/ngày; không mutate input (1.287512ms)
+✔ L20-T3: Tam Nguyện đủ 3 hướng +1 Lễ Ấn · +🪙150 · +💎5 một lần/ngày (0.663421ms)
+✔ L20-P1: mốc ấn 3/7/12; rollover ngày reset đèn/hướng, giữ ấn (0.343569ms)
+✔ L20-P2: Bách Bảo Luân 20 ô, 1🐚 / lượt; thiếu sò fail; không mutate input (0.402097ms)
+✔ L20-P3: Rương Báu 35/33/22/10 và Chí Bảo 45/40/15 (0.96764ms)
+✔ L20-P4: lacquer #hvFestivalRoot; no second hub landmark; inject after hunt (1.012988ms)
+✔ SFX-1 legacy impact cannot play the forge sound in standalone battle (2.189995ms)
+✔ SFX-1 battle channel rejects forge sound even with UI group override; casts still play (1.84861ms)
+✔ SFX-2 shell forge event plays original sound only with explicit UI group (0.747298ms)
+✔ SFX-2 actual forge reveal dispatches dedicated event once per item UID (0.929342ms)
+✔ SFX-2 forge reveal unlocks iOS audio then plays (5.096099ms)
+✔ SFX-3 build owner removes shared impact dispatch without replacing VFX or damage (0.403679ms)
+✔ L25-T1: forge costs, pity and +15 stay frozen (7.962203ms)
+✔ L25-T2: #hvForgeRoot is a body overlay with overflow auto (0.257418ms)
+✔ L25-T3: hall mounts on body and wraps showScreen without a second document listener (0.370459ms)
+✔ L25-T4: forge hall injects after daily and keeps one forgeCommand owner (0.30504ms)
+✔ L25-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (0.511712ms)
+✔ craft debits once and commits item, pity, quest and receipt together across reload/retry (15.226754ms)
+✔ invalid slot, locked forge, missing funds and invalid sequence reject before rolling or mutation (115.459535ms)
+✔ every forge mutation rolls back all state on storage failure and can retry (66.454606ms)
+✔ craft allocates beyond existing UIDs when an old itemSeq is behind inventory (9.114762ms)
+✔ existing pity boundaries and two sequential dual rolls are preserved (37.313138ms)
+✔ dual pending survives reload, failed choice keeps both, competing choices grant one item (13.000669ms)
+✔ old dual pending without an ID is preserved and can be selected without another charge or roll (10.488324ms)
+✔ enhancement updates the equipped stat once, preserves links and stops at cost/cap (42.547285ms)
+✔ salvage protects worn/locked items, rejects missing/stale confirmation and credits exactly once (10.813005ms)
+✔ lock toggles survive reload and block salvage while allowing enhancement (11.450456ms)
+✔ salvage dialog previews exact gain, cancel keeps gear, failed write stays open and retry consumes once (12.661904ms)
+✔ rendered action handler rejects double click and reuses its command after a storage retry (22.714742ms)
+✔ nontransactional quest callers retain default persistence (10.855238ms)
+✔ L31-T1: live commands stay frozen (7.435959ms)
+✔ L31-T2: #hvFriendsRoot is a body overlay with overflow auto (0.259201ms)
+✔ L31-T3: hall mounts on body and wraps showScreen without a second document listener (0.282766ms)
+✔ L31-T4: stub lane loads runtime and build-static keeps the reserved import (0.588889ms)
+✔ L31-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (0.614917ms)
+✔ L101: API bạn bè người thật, không NPC (10.400632ms)
+✔ L102: lưới chức năng nền kem, jpg chỉ hero; không đụng login/hub (0.505182ms)
+✔ L84-T2: POST /api/gift trả quà, mã lạ 400 (2.515696ms)
+✔ L84-T3: env GIFT_CODES đè file (0.661518ms)
+✔ L85-T2: POST /api/gift trả shards (0.256647ms)
+✔ L83-T1: mã LUCTHAN nhận một lần, nhập lại bị chặn (1.019628ms)
+✔ L83-T1b: nick 4-14, normalize mã (0.174974ms)
+✔ L83-T2: runtime gọi redeemCode + mã thêm + /api/gift (0.236317ms)
+✔ L85-T1: mã event cộng mảnh tướng + tinh (0.214173ms)
+✔ L86-T1: tướng/vật phẩm mới tự vào danh sách thưởng (1.018457ms)
+✔ L86-T2: mã tặng item + pet ghi bag/owned (0.539083ms)
+✔ L86-T3: GET /api/gift trả index (1.255625ms)
+✔ L122-T1: BBR / túi / Chợ cùng materials/gold.png (1.164867ms)
+✔ L122-T2: Thành chính chip vàng dùng materials/gold.png (0.17903ms)
+✔ L122-T3: file vàng Chinh chiến + Bách Bảo cùng bytes túi (0.785966ms)
+✔ L122-T4: chip Chợ img vàng; không document click (0.314054ms)
+✔ L97: bang hội city 3 cột + dock + 8 tile art (1.436618ms)
+✔ L30-T1: live commands stay frozen (7.249308ms)
+✔ L30-T2: #hvGuildRoot is a body overlay with overflow auto (0.317889ms)
+✔ L30-T3: hall mounts on body and wraps showScreen without a second document listener (0.272962ms)
+✔ L30-T4: stub lane loads runtime and build-static keeps the reserved import (0.269617ms)
+✔ L30-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (0.555989ms)
+✔ L43-T1: live hero-detail tabs and three authored showcases stay frozen (7.807731ms)
+✔ L43-T2: #hvHeroDetailRoot is a body overlay with overflow auto (0.244149ms)
+✔ L43-T3: hall mounts on body and wraps showScreen without a second document listener (0.302367ms)
+✔ L43-T4: stub lane loads runtime and build-static keeps the reserved import (0.272972ms)
+✔ L43-T5: nine remaining showcases are dedicated 3D files, not menu-v3233 (4.36826ms)
+✔ showcase keeps live stats and existing upgrade nodes outside tab panels (0.866197ms)
+✔ skill shortcuts disclose authored descriptions through the existing tabs (0.473083ms)
+✔ portrait showcase is bounded on desktop with mobile-safe sizing (0.125149ms)
+✔ L04a roster route owns a full viewport surface for card hit targets (1.15281ms)
+✔ L24-T1: roster mounts on document.body like Trợ trận, not inside .wrap (1.110716ms)
+✔ L24-T2: active roster must not hide #heroesScreen (0.189366ms)
+✔ L24-T3: roster is a body overlay with overflow auto and cards that cannot collapse (0.356658ms)
+✔ L148-T2: grid is the only scroll surface; dock stays below the cards (0.330409ms)
+✔ L24-T4: one route owner still wraps showScreen without a second document listener (0.256687ms)
+✔ upgraded heroes remain visible with current level, stars and exact power below 1000 (1.569789ms)
+✔ element filters use stable IDs and collection exposes locked heroes without fake levels (0.234794ms)
+✔ only official unique identities are displayed, even with extra heroes in DATA (0.213622ms)
+✔ sorting changes presentation, never the player save or official order (0.329547ms)
+✔ returning after a level change recomputes all card data, not cached DOM labels (0.255836ms)
+✔ roster build excludes DOM scraping, duplicate pointer commands and offscreen parking (1.00698ms)
+✔ all-SSR official roster rejects the old mixed-rarity banner before spending anything (0.371561ms)
+✔ guaranteed tiers and rate total are validated, not only random pools (0.190968ms)
+✔ valid banner dispatches once and invalid pull counts never dispatch (0.255446ms)
+✔ browser QA matches direct-iPhone P0 transport and requires two successful entries (0.860448ms)
+✔ host does not request combat atlas sets at boot (1.629989ms)
+✔ host releases detached Image instances and blocks reloads until resume (1.044296ms)
+✔ hidden legacy host battle does no rendering while integrated battle is open (0.907169ms)
+✔ close clears child before restoring host images (0.639104ms)
+✔ iPhone entry keeps the iframe first and hands off only after twelve seconds (1.269435ms)
+✔ iPhone Xuất chiến enters battle.html directly while desktop keeps the iframe (0.558613ms)
+✔ L66-T1: wrap showScreen; chip data-hv-hub goes hub on battle/result/gear (0.938346ms)
+✔ L66-T2: does not touch prepare visual, journey-3d, end-3d, campaign-scene (0.477531ms)
+✔ L66-T3: does not add a second listener on existing hall close-hub buttons (0.187313ms)
+✔ L66-T4: stub lane loads runtime; build-static keeps reserved import; no battle.html (0.328406ms)
+✔ L66-T5: Lịch Luyện hides chip; keeps existing ‹ back arrow (0.273303ms)
+✔ L107: Chợ Đấu Gọi Tháp = pill chữ trắng + icon trên nền đen (0.687347ms)
+✔ L41-T1: live domain and lacquer runtime stay frozen (0.820799ms)
+✔ L41-T2: #hvHuntRoot is a body overlay with overflow auto (0.226282ms)
+✔ L41-T3: hall mounts on body and wraps showScreen without a second document listener (0.240152ms)
+✔ L41-T4: stub lane loads runtime and build-static keeps the reserved import (0.261394ms)
+✔ L41-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (0.74866ms)
+✔ L19-T1: live catalog frozen — 6⚡, 2 lượt, 60 hiệp, 3 boss, 3 khế, mốc 3/7/12 (1.26594ms)
+✔ L19-T2: todayBoss / HP / encounter keep live formulas (0.33104ms)
+✔ L19-T3: settle vàng/mảnh theo ST; hạ gục +💎40; không mutate input (0.59019ms)
+✔ L19-P1: start trừ 6⚡ + 1 lượt; thiếu khế / hết lượt / thiếu ⚡ fail (0.325922ms)
+✔ L19-P2: Săn Khế Phá Lõi / Quét / Đoạt Mệnh; khóa khế sau lần đầu (0.374055ms)
+✔ L19-P3: mốc 3 Săn Ấn; rollover ngày reset lượt/khế, giữ ấn (0.342416ms)
+✔ L19-P4: lacquer screen is wired and does not add a second hub landmark (0.884905ms)
+✔ L19-P5: hunt battle draws beasts in-engine and keeps 60-round HUD (7.49593ms)
+✔ L157-T3 atlasDecodeScale preserves authored pixels whenever one atlas fits the budget (1.473864ms)
+✔ L157-T1 native S+ atlases are evicted between uses instead of downsampled (1.824293ms)
+✔ L157-T2 drawCanvasSprite samples scaled atlas with matching source rect (0.781148ms)
+✔ L157-T4 campaign releases every atlas when the battle overlay is open (0.785795ms)
+✔ L157-T5 battle releases ATK/VFX after the action; host drops Bạch Diện idle on iframe open (8.172771ms)
+✔ iPhone/iPad keeps a native-quality decoded atlas budget and one-at-a-time decode (1.047811ms)
+✔ iPadOS desktop user agent keeps native-quality budget with constrained decode concurrency (0.183937ms)
+✔ desktop keeps the existing decoded atlas budget (0.255415ms)
+✔ action readiness blocks only on the current actor working set (1.643891ms)
+✔ low-memory visible idle stays lazy and evictable instead of pinned (0.351941ms)
+✔ L120-T1: tip card không dùng id hvShopInfo — tránh CSS Bách Bảo đệm rỗng (1.356306ms)
+✔ L120-T2: thẻ popup ôm nội dung, không kéo 100dvh (0.47064ms)
+✔ L120-T3: một thẻ — icon / sao / số lượng / Cách nhận / nút đóng (0.29143ms)
+✔ L120-T4: Sách Tinh Thông có icon + nguồn Bách Bảo / Chinh chiến (0.292492ms)
+✔ L29-T1: live commands stay frozen (6.934091ms)
+✔ L29-T2: #hvJobsRoot is a body overlay with overflow auto (0.293583ms)
+✔ L29-T3: hall mounts on body and wraps showScreen without a second document listener (0.323307ms)
+✔ L29-T4: stub lane loads runtime and build-static keeps the reserved import (0.322887ms)
+✔ L29-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (0.505603ms)
+✔ L105: Giao việc slot trống, chat chữ thuần, túi 3/4 màn (1.061872ms)
+✔ L46-T1: live journey screen and render stay frozen (7.215185ms)
+✔ L46-T2: #hvJourneyRoot is a body overlay with overflow auto (0.321175ms)
+✔ L46-T3: hall mounts on body and wraps showScreen without a second document listener (0.40404ms)
+✔ L46-T4: stub lane loads runtime and build-static keeps the reserved import (0.407255ms)
+✔ L46-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (0.571292ms)
+✔ legacy cast waits for decoded original bytes and holds its cache lease through recovery (1.592593ms)
+✔ cancelled legacy preparation cannot start the action and releases its pins (0.551432ms)
+✔ L139-T1 Linh Dong authored atlases, portraits and SFX exist (0.842071ms)
+✔ L139-T2 CHARACTER_MANIFEST binds Linh Dong art; TKT-0141 opens roster identity (6.862343ms)
+✔ L139-T3 battle runtime draws Linh Dong atlas and S+ token delegates (4.690786ms)
+✔ L139-T4 skill manifests register isolated ATK and ULT passes (0.451552ms)
+✔ L139-T5 catalog art is authored; combat numbers stay frozen (0.486975ms)
+✔ L139-T6 uniform cells, RGBA pack contract, BETS frozen (0.360634ms)
+✔ L142-T1 battle draws Linh Dong at authored cell aspect and Luc Anh idle multiplier (3.602796ms)
+✔ L142-T2 VFX uses frames.json display size and source-over, not screen (4.224063ms)
+✔ L142-T3 authored SFX ride HonVietSfx wav, not new Audio ogg (20.694131ms)
+✔ L142-T4 hurt/fall timing matches pack; S+ token uses campaign identityScale (3.330215ms)
+✔ L142-T5 dist patch skips idle bob and lean on Linh Dong like Luc Anh (0.259181ms)
+✔ L153-T1 march uses Linh Dong Run; preparation stays Idle (2.570728ms)
+✔ L153-T2 Run shares Idle cell and pivot; no invented fps (1.870603ms)
+✔ L153-T3 authored run atlas exists; L144 idle spec unchanged (8.288735ms)
+✔ L141-T1 DATA.heroes.linh_dong and CHARACTER_MANIFEST surfaces match Lục Ảnh (7.863995ms)
+✔ L141-T2 official ids, default owned, stars include Linh Đồng (7.45098ms)
+✔ L141-T3 skill kit v2 is valid and names match authored skill.json (0.461767ms)
+✔ L141-T4 roster tap opens hero detail with idle canvas, not trial battle (7.116467ms)
+✔ L141-T4 dist keeps startLinhDongDetailIdle after luc-anh idle patches (6.038079ms)
+✔ L141-T5 campaign battle draws atlas and authored skills; 6v6 slices stay (10.759843ms)
+✔ L144-T1 host and battle boot without requesting Linh Dong atlases (23.015273ms)
+✔ L144-T2 attack and skill1 share one Image; two in-flight loads maximum (5.503292ms)
+✔ L144-T2 long action sequence stays within the decoded RGBA byte budget (4.70639ms)
+✔ L144-T3 failed and malformed atlases do not retry on every animation frame (4.226657ms)
+✔ L144-T3 clear cancels outstanding sources and makes stale load callbacks harmless (4.196461ms)
+✔ L144-T4 battle renderer returns false before loading and uses idle during action loading (5.876916ms)
+✔ L144-T4 profile keeps atlas aspect ratio and stops when its screen is hidden (20.894068ms)
+✔ L144-T5 campaign and preparation select the full-body idle atlas, not master portrait (0.88773ms)
+✔ Linh Đồng aliases normalize before registry and policy lookup (0.713827ms)
+✔ legacy action aliases expose only ATK and Ultimate at runtime (0.727818ms)
+✔ authored durations and VFX recovery boundaries are preserved (0.259903ms)
+✔ one monotonic elapsed clock dedupes all markers (0.264569ms)
+✔ replay with the same clock samples yields the same marker sequence (0.353083ms)
+✔ L143-T1 Blender native-size clips pack into 480×440 runtime cells (0.741509ms)
+✔ L143-T2 atlases are blender-rekeyed; idle sha leaves ffmpeg colorkey pack (13.128907ms)
+✔ L143-T3 battle draw uses 477×440; VFX source-over; SFX wav (4.108188ms)
+✔ L143-T4 hero-detail high-resolution atlas uses 480×440 cells (7.723022ms)
+✔ L140-T1 Linh Dong preview card shows on owned and all, moon filter, not fire (1.828819ms)
+✔ L140-T2 roster runtime paints Linh Dong as official identity; BETS frozen (6.564284ms)
+✔ L140-T3 tap Linh Dong opens hero detail like official heroes (0.223087ms)
+✔ L146-T1 S+ Linh Đồng uses the shared ATK/Ultimate marker clock (1.088603ms)
+✔ L146-T2 S+ Linh Đồng skill bar is passive+ultimate and hurt returns to idle (0.328055ms)
+✔ L146-T3 other S+ fixtures keep timingScale 0.35; marker elapsed stays wall clock (0.751494ms)
+✔ static smoke validates Linh Đồng URLs by bytes and content fingerprint (91.734698ms)
+✔ formation keeps six unique owned identities, rows and order without aliasing the draft (1.594816ms)
+✔ moving and replacing equipment moves links while preserving every inventory instance (0.426743ms)
+✔ invalid ownership, item instances and unequip requests leave the loadout untouched (0.213782ms)
+✔ formation save and opening progress commit once, survive reload, and retry reuses receipt (16.591972ms)
+✔ formation storage failure rolls back squad, receipt and opening progress, then can retry (10.754465ms)
+✔ equipment transfer, duplicate and removal preserve inventory and reload ownership (10.706633ms)
+✔ failed equipment transfer and removal keep old links and never report success (19.833502ms)
+✔ final opening equip event shares the item commit and stays pending if storage fails (11.780303ms)
+✔ built formation button stays open on failure, blocks duplicate click and retries (16.536778ms)
+✔ L75-T1: login gate wraps navTo, mounts overlay, no document click (1.225188ms)
+✔ L75-T2: video + poster exist and CSS covers the viewport (0.626806ms)
+✔ L75-T3: frozen shells stay frozen; stub loads gate after auth (11.369562ms)
+✔ L76-T1: điều khoản là một câu nối liền, không bọc ngoặc kép (0.350259ms)
+✔ L76-T3: frozen shells stay frozen after terms polish (9.57087ms)
+✔ L108: Lục Thần lore overlay — sáu ấn, không sửa index.html (7.096566ms)
+✔ Lục Ảnh golden runtime binds every authored visual and requested audio surface (1.429997ms)
+✔ Lục Ảnh Skill 1 uses six-slot effigy VFX and Ultimate uses exact 3x full-team poison cloud (1.218539ms)
+✔ BGM routes hub/features, battles, and traversal modes to the three supplied tracks (0.481927ms)
+✔ reject flattened RGB sources instead of silently keying black into alpha (4.153866ms)
+✔ preserve opaque black clothing, transparent holes, and partial edge alpha (4.7789ms)
+✔ fixed crop retains identical pixel coordinates as frame contents change (3.064453ms)
+✔ shipped atlas matches the RGBA source provenance and all 96 frame cells (3230.288181ms)
+✔ battle runtime uses the lightweight clean idle while detail keeps the full RGBA source (3.640873ms)
+✔ Lục Ảnh Ultimate VFX keeps authored aspect and source-cell scale (0.880148ms)
+✔ Lục Ảnh Ultimate voice uses local iOS-safe unlock bridge (0.217428ms)
+✔ L28-T1: live commands stay frozen (6.627139ms)
+✔ L28-T2: #hvMailRoot is a body overlay with overflow auto (0.237238ms)
+✔ L28-T3: hall mounts on body and wraps showScreen without a second document listener (0.237208ms)
+✔ L28-T4: stub lane loads runtime and build-static keeps the reserved import (0.348556ms)
+✔ L28-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (0.501006ms)
+✔ main quest state follows chapter and stage bounds (1.665653ms)
+✔ bootstrap follows an existing campaign cursor instead of restarting (0.262856ms)
+✔ matching victory completes the current quest exactly once (0.306202ms)
+✔ claim advances to the next stage and keeps a reward payload (0.336177ms)
+✔ mobile quality policy does not generate reduced battle or campaign derivatives (0.738635ms)
+✔ supplied SFX preserve source hashes and serve MP3 bytes with MP3 extensions (2.491028ms)
+✔ SFX plays decoded assets and debounces an AOE hit into one voice/load (2.377888ms)
+✔ mute stops active combat and prevents pending decode from playing later (0.859737ms)
+✔ audio starts only after real gesture unlock; iframe reuses parent bus (1.72309ms)
+✔ L150-T3: a slow first decode still plays if combat is still active (0.72907ms)
+✔ polyphony is bounded to six source nodes (0.875991ms)
+✔ actual first-frame pixels preserve Idle-to-Basic body height and foot baseline (601.18684ms)
+✔ Đình Lôi retina atlases use the committed 2x source cells (12.267302ms)
+✔ result MVP portrait cache resolves authored Ông Phở art without a text placeholder (11.287659ms)
+✔ integrated victory result paints authored Ông Phở MVP art (6.236088ms)
+✔ other MVP heroes reuse the loaded battle portrait renderer (9.325078ms)
+✔ roster portal has one grid scroll owner and explicit visibility on route changes (0.310889ms)
+✖ built battle keeps opaque canvas and stable camera; all inline JS parses (74.73445ms)
+✔ L49-T1: live net commands stay frozen (8.036555ms)
+✔ L49-T2: #hvNetRoot is a body overlay with overflow auto and 100vh filter fix (0.266763ms)
+✔ L49-T3: hall mounts on body and wraps showScreen without a second document listener (0.232411ms)
+✔ L49-T4: stub lane loads runtime and build-static keeps the reserved import (0.320484ms)
+✔ L49-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (0.576509ms)
+✔ L74-T1: wrap renderNet + netAuth, hide server field, add Google button (0.90132ms)
+✔ L74-T6: do not edit frozen shells (12.682554ms)
+✔ L74-T7: one Vercel project gateway + lane stub (0.395146ms)
+✔ L82-T1: nested /api/auth rewrite restores original path + oauth query (0.836612ms)
+✔ L82-T2: vercel rewrites nested auth onto one-segment /api/oauth (0.209236ms)
+✔ L82-T3: login gate Google+Facebook chuyển trang, không FB.login async (0.322627ms)
+✔ official production roster contains the locked 12 plus Linh Đồng (4.274309ms)
+✔ every official hero has Basic runtime, Skill 1 and Ultimate contracts (1.1529ms)
+✔ six-slot starter team and twelve-hero reserve pool remain 6v6-safe (2.66461ms)
+✔ L80-T1: drawUnit flips every enemy body toward the left (0.789922ms)
+✔ L80-T2: authored body drawers do not double-flip (0.260243ms)
+✔ L80-T3: isOngPho matches tower NPC sourceHeroId (0.399463ms)
+✔ original Ông Phở embedded-14.png recovers without changing authored pixels/timing (65.155163ms)
+✔ original Ông Phở embedded-15.png recovers without changing authored pixels/timing (96.551516ms)
+✔ opening contract exposes stable schema and validates a linear graph (2.016842ms)
+✔ step validator requires route, target, event and explicit terminal shape (0.171269ms)
+✔ graph rejects missing links, cycles, and prerequisite deadlocks (0.498191ms)
+✔ event key and transaction guard prevent double counting (0.922061ms)
+✔ opening events advance only through the current route and do not consume future events (0.389367ms)
+✔ resume view reports progress and terminal state safely (0.969382ms)
+✔ reward steps distinguish completed from claimed and keep reward IDs only (0.410589ms)
+✔ skip and route validators are explicit and recoverable (1.01361ms)
+✔ R10 build wires runtime instrumentation without touching seed or economy values (0.773878ms)
+✔ L51-T1: live night filter, overflow-x and Bày trận stay frozen (6.79375ms)
+✔ L51-T2: Safari overlay CSS pins viewport and drops the night containing-block (0.216647ms)
+✔ L51-T3: pin uses visualViewport, wraps showScreen, no second document click (0.247634ms)
+✔ L51-T4: hotfix injects after Wave G stubs without touching hall lanes (0.250648ms)
+✔ lane stubs exist and are imported once from build-static (2.753854ms)
+✔ wave A tickets are exclusive and freeze hub wiring (1.274463ms)
+✔ wave H tickets are exclusive and freeze combat visual (1.02086ms)
+✔ wave H waiting-asset tickets are plug-only (0.346412ms)
+✔ wave I auth ticket is exclusive and freezes combat shells (0.704082ms)
+✔ forbidden work is not ticketed as READY hall (2.384617ms)
+✔ PHASE01 action contract has explicit id/parent/target/completion concepts (4.781334ms)
+✔ PHASE01 resource contract has a shared native atlas cache with bounded LRU release (5.035087ms)
+✔ PHASE01 opt-in diagnostics are not enabled by default (3.069751ms)
+✔ AC3: built start owner checks level before stamina and blocks Next at threshold (4.850508ms)
+✔ AC4: daily EXP is transaction-bound; duplicates and save failures do not grant (1.434284ms)
+✔ AC4: campaign XP checks active battle identity, win and first clear (1.265228ms)
+✔ L147-T3: campaign win records the ST stage even when payload battleId drifted (1.053409ms)
+✔ AC3/4: built UI and AFK grant are inside existing handlers (2.913525ms)
+✔ AC1: production lore produces 6×18 stable encounters and forwards Next (2.081651ms)
+✔ AC4: real AFK claim credits EXP together with chest reset, including save rollback (4.070331ms)
+✔ AC4: actual settlement commit rolls first-clear XP back on save failure (2.161731ms)
+✔ AC1: 108 ordered gates, cap60, monotonic XP and invalid coordinates fail closed (1.914048ms)
+✔ AC2: migration preserves three legacy histories and only runs once (0.763812ms)
+✔ AC3: level and previous win both required; changing heroes cannot change access (0.240102ms)
+✔ L147-T1: campaign cursor after a win unlocks the next stage even if clears lagged (0.154273ms)
+✔ L147-T2: first stage stays open; later chapters still need the previous chapter (0.149446ms)
+✔ AC4: first clear once, AFK fractional/cap and non-reward sources (0.228164ms)
+✔ AC1/3: all108 stages reachable with claimed EXP and previous wins; final cap60 (0.836181ms)
+✔ L26-T1: journey unlock table stays frozen (10.144685ms)
+✔ L26-T2: preview unlock wraps featLocked off production and does not add a document click (0.371991ms)
+✔ L26-T3: preview unlock injects after forge hall (0.279632ms)
+✔ L83-T3: overlay hồ sơ, gift, cài đặt; không đụng shell đóng băng (1.18656ms)
+✔ L83-P1: inject lane + build-static sau auth (0.319332ms)
+✖ QA full access bypasses campaign progression gates without changing the normal-route gate owner (2.6248ms)
+✔ QA token survives top-level battle return for repeat iPhone testing (0.932116ms)
+✔ QA full access is present but opt-in (2.16113ms)
+✔ L03c QA bridge exposes an opt-in one-shot persist failure and retry control (0.937375ms)
+✔ L03c transaction build owner restores the candidate state after save failure (0.214053ms)
+✔ L04b campaign exposes lifecycle diagnostics only behind the opt-in QA query (1.264738ms)
+✔ L04b diagnostic snapshot proves one reusable root and active resource ownership (0.473835ms)
+✖ result motion is installed after readiness and before iframe sync (4.803577ms)
+✔ built result screen has authored Victory Run to Idle and one-shot Defeat Fall (2.461834ms)
+✔ result manifest references real authored motion assets and readiness variants (0.149456ms)
+✔ authored result animator owns its RAF and guards legacy painters (0.150637ms)
+✔ default roster gets full-body generic Run Idle and one-shot Fall fallback (0.215555ms)
+✔ large authored fall poses reserve copy clearance on desktop (0.115975ms)
+✔ Victory Run waits for its atlas before starting the visible entry timer (0.195435ms)
+✔ result heroes stay in the wing focus across victory and mobile defeat (0.13264ms)
+✔ v3.26.0 package and every inline battle script are syntax-valid (27.28876ms)
+✔ result flow keeps dynamic MVP and Victory Run -> Idle plus Defeat Fall (1.342655ms)
+✔ result actions and all result assets are present (1.570529ms)
+✖ the embedded battle engine is byte-identical to battle.html (7.941361ms)
+✔ return context captures route, hero, tab, scroll and draft revision immutably (1.601315ms)
+✔ return context rejects malformed routes and uses a safe fallback for unavailable or stale sources (0.292752ms)
+✔ R04 build owner wires return context after settlement and before opening-loop patches (0.685083ms)
+✔ R04 runtime propagates the live draft revision and checks it before restoring (0.234714ms)
+✔ Samkok v2 roster capacity is explicit and totals 72 slots (1.18633ms)
+✔ the current 12-hero production roster leaves future capacity without placeholders (0.378311ms)
+✔ future tiers can be counted from authored data before art is attached (0.201374ms)
+✔ invalid, unknown and over-capacity entries fail validation with actionable codes (0.410289ms)
+✔ roster read-model carries the capacity summary without changing visible cards (0.335557ms)
+✔ the build embeds the plan module and exposes capacity metadata without fake cards (1.005858ms)
+✔ save contract keeps the existing storage key and adds explicit version/revision (0.677552ms)
+✔ legacy v1 fixture migrates without mutating the source object (0.340454ms)
+✔ versioned fixture increments revision and stamps save time (0.204879ms)
+✔ parser rejects corrupt JSON and future schemas without falling back silently (0.448907ms)
+✔ empty storage is distinguishable from invalid storage (0.642129ms)
+✔ recovery marker is non-enumerable and survives migration (0.16511ms)
+✔ scene lifetime disposes resources once in reverse order and rejects stale callbacks (1.413613ms)
+✔ scene lifetime unregisters listeners, tracks cancel handles and releases late registrations immediately (0.431942ms)
+✔ scene lifetime releases one-shot timers after they fire so completed callbacks cannot accumulate (0.248004ms)
+✔ scene lifetime reports disposal errors without preventing other owners from cleaning up (0.288545ms)
+✔ L04b source/build owner keeps campaign activation scope separate from the reusable DOM root (0.760097ms)
+✔ L04b preparation timer is registered with the campaign activation scope (0.501577ms)
+✔ R08 build installs the battle protocol after the transaction contract (1.189895ms)
+✖ battle bridge protocol annotates every parent message and remains syntactically valid (7.062695ms)
+✔ the shared battle host message helper satisfies the settlement protocol (7.13172ms)
+✔ settlement hook keeps existing reward values but commits before progress/navigation (0.251049ms)
+✔ navigation controller has one active session and blocks stale/duplicate messages (0.223217ms)
+✔ L38-T1: live domain and lacquer runtime stay frozen (0.857363ms)
+✔ L38-T2: #hvShopRoot is a body overlay with overflow auto (0.241544ms)
+✔ L38-T3: hall mounts on body and wraps showScreen without a second document listener (0.272461ms)
+✔ L38-T4: stub lane loads runtime and build-static keeps the reserved import (0.267664ms)
+✔ L38-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (0.80877ms)
+✔ L129-T1: Chợ Mộng 2 ô, bỏ shop icon trên BBR (1.025527ms)
+✔ L129-T2: sprite chroma 60fps, loot sau khi bung sáng (208.148698ms)
+✔ L129-T3: không document click; BETS đóng băng (0.684823ms)
+✔ L08-T1: five stalls, no combat goods, day index matches live formula (1.295675ms)
+✔ L08-T2: same day keeps stock; new day resets bought and rolls heroes (3.216272ms)
+✔ L08-T3: prices keep the live catalog; second buy is sold out (0.615289ms)
+✔ L08-P1: rolling the day is independent of campaign chapters (0.321996ms)
+✔ L08-P2: shop catalog never sells combat power (0.194213ms)
+✔ L08-P3: funds check and grants match live; input player is not mutated (0.375997ms)
+✔ L08-P4: lacquer screen is wired and does not add a second hub landmark (3.238966ms)
+✔ one ranged hero has independent target-driven basic, skill and ultimate positioning (2.412489ms)
+✔ explicit home policy remains stationary and overrides a ranged approach (0.594928ms)
+✔ unmapped heroes retain legacy movement and aliases resolve explicitly (0.224028ms)
+✔ target-relative approach mirrors between teams with a nonzero standoff (0.299932ms)
+✔ target-team casting uses stable enemy anchors, not caster home or live sprite positions (0.588037ms)
+✔ target or target death does not cause implicit retargeting (0.178579ms)
+✔ column policy uses the frontmost anchor of the selected lane (0.237659ms)
+✔ compact formation geometry scales cast points without copying source pixels (0.280673ms)
+✔ Luc Anh snaps to cast position without run/tween and rejects duplicate ownership (0.335856ms)
+✔ Luc Anh return still waits for the existing return tween after snap cast (1.123405ms)
+✔ failed tween approach releases ownership and permits a retry for non-snap hero (0.316107ms)
+✔ battle cancellation during tween approach cannot emit cast-ready (0.169155ms)
+✔ cancelled return does not teleport or emit return-complete (0.228064ms)
+✔ a defeated then revived actor can approach again on a later action in the same battle (0.19922ms)
+✔ normal URLs allocate no trace events and QA snapshots cannot mutate history (0.260432ms)
+✖ final generated living-actor return awaits the movement owner for all four branches (7.189506ms)
+✔ generated Dinh Loi recovery has one return owner and no second hard reset (7.144879ms)
+ℹ Error: Test "final generated living-actor return awaits the movement owner for all four branches" at tests/skill-cast-movement.test.mjs:192:1 generated asynchronous activity after the test ended. This activity created the error "ReferenceError: state is not defined" and would have caused the test to fail, but instead triggered an unhandledRejection event.
+✔ Ông Phở kit v2 has exactly Basic, Ultimate and a bounded passive (2.027408ms)
+✔ legacy Skill 1 investment maps into Basic without losing the source levels (0.319652ms)
+✔ unknown heroes remain legacy and retain all three saved levels (0.157677ms)
+✔ Lục Ảnh kit uses existing Basic/Ultimate assets and keeps six effigies legacy (0.240904ms)
+✔ L35-T1 registry covers the live 12 plus Linh Đồng and freezes Ông Phở + Lục Ảnh (0.182115ms)
+✔ L35-T2/T3 every official kit has basic, ultimate, passive and legacySkillMap (0.279471ms)
+✔ Rèn Mộng asset registry covers every item model and material deterministically (1.673424ms)
+✔ hero detail background and skill kit runtime are shipped together (47.946023ms)
+✔ L51-T1: wrap renderHeroDetail calls base; hero-detail-tabs stays frozen (12.459517ms)
+✔ L51-T2: nine exclusive jpgs exist and are larger than 8KB (5.537137ms)
+✔ L51-T3: CSS is scoped to the three A ids and does not paint others (0.577341ms)
+✔ L51-T4: stub lane loads runtime; build-static keeps the reserved import; no battle.html (0.482417ms)
+✔ L52-T1: wrap renderHeroDetail calls base; hero-detail-tabs stays frozen (12.394419ms)
+✔ L52-T2: nine exclusive jpgs exist and are larger than 8KB (5.206084ms)
+✔ L52-T3: CSS is scoped to the three B ids and does not paint others (0.506254ms)
+✔ L52-T4: stub lane loads runtime; build-static keeps the reserved import; no battle.html (0.485152ms)
+✔ L53-T1: wrap renderHeroDetail calls base; hero-detail-tabs stays frozen (7.611944ms)
+✔ L53-T2: nine exclusive jpgs exist and are larger than 8KB (4.395176ms)
+✔ L53-T3: CSS is scoped to the three C ids and does not paint others (0.392162ms)
+✔ L53-T4: stub lane loads runtime; no battle.html; Đình Lôi combat atlas stays frozen (0.376818ms)
+✔ L68-T1: wrap renderHeroDetail calls base; hero-detail-tabs stays frozen (1.063635ms)
+✔ L68-T2: nine exclusive jpgs exist and are larger than 8KB (5.091542ms)
+✔ L68-T3: CSS is scoped to the three D ids and does not paint others (0.288335ms)
+✔ L68-T4: stub lane loads runtime; build-static keeps the reserved import; no battle.html (0.474476ms)
+✔ direct skill test is part of the distributable build (0.748128ms)
+✔ direct skill test exposes all authored heroes and actions plus reset (0.15936ms)
+✔ direct skill test reports real trace progression and return home (0.147702ms)
+✔ browser QA clicks all nine action controls on desktop and mobile (0.144838ms)
+✔ CI runs and uploads direct skill-test evidence (0.103947ms)
+✔ direct skill-test browser QA script parses in Node before browser execution (54.273203ms)
+✔ controller preserves luc-anh basic start/impact/complete flow (4.907233ms)
+✔ controller preserves luc-anh skill start/impact/complete flow (2.070354ms)
+✔ controller preserves luc-anh ultimate start/impact/complete flow (1.257798ms)
+✔ controller preserves dinh-loi basic start/impact/complete flow (1.085167ms)
+✔ controller preserves dinh-loi skill start/impact/complete flow (1.190506ms)
+✔ controller preserves dinh-loi ultimate start/impact/complete flow (2.157474ms)
+✔ controller preserves ong-pho basic start/impact/complete flow (0.880719ms)
+✔ controller preserves ong-pho skill start/impact/complete flow (0.839887ms)
+✔ controller preserves ong-pho ultimate start/impact/complete flow (0.961902ms)
+✔ R1: prior completion cannot unlock the next in-flight action (2.089232ms)
+✔ R1: delayed ready label cannot overwrite a later hero selection (1.1203ms)
+✔ snap-only action needs no movement override hook (1.031937ms)
+✔ R2: trace preflight failure is caught and can be retried (1.445741ms)
+✔ R2: actor preflight failure is caught and can be retried (1.117506ms)
+✔ R2: hook preflight failure is caught and can be retried (1.403387ms)
+✔ R2: rejected runtime promise reports once without waiting for a trace timeout (1.212068ms)
+✔ R2: unknown action is rejected without invoking the runtime (2.770589ms)
+✔ R3: storage failure enables Reset and a subsequent retry recovers (0.959027ms)
+✔ R4: Reset waits for its new iframe rather than reusing the old runtime (0.866998ms)
+✔ R4: reset during an action prevents stale timeout/error and control writes (1.012938ms)
+✔ R4: old completion does not unlock or relabel a replacement still loading (1.795048ms)
+✔ direct skill QA accepts an external delivery URL without changing local default (0.670311ms)
+✔ live preview builds dist, exposes it through a test-only quick tunnel and runs browser QA on that URL (0.303668ms)
+✔ owner-selected snap is fixed: the controller has no movement selector (1.018487ms)
+✔ the skill controller observes the production movement policy without overriding it (0.190988ms)
+✔ snap-only controller retains all three heroes, nine action paths, Reset and real markers (0.228695ms)
+✔ S42-A1: 42 authored S+ heroes expose executable combat contract (0.92095ms)
+✔ S42-A2: gear adds 3% team defense after ally action and resets per battle (3.124283ms)
+✔ S42-A4: Cường Đồng mitigation and reflection cannot ping-pong (0.399653ms)
+✔ S42-A2: Lạc An accumulates 4 percentage points per arrow up to 40 (1.024852ms)
+✔ S42-A4: Hắc Đao passive is 80% anti-heal; Ultimate is 100% (2.475505ms)
+✔ S42-A4: cocoon consumes two incoming hits and third reaches HP (0.65601ms)
+✔ S42-A4: Mục Chiêu rescues once per battle, not per damage recursion (0.935572ms)
+✔ S42-A4: root, disarm and silence have different action restrictions (0.466604ms)
+✔ S42-A5: dispelled and expired statuses disappear from HUD with source provenance (1.508325ms)
+✔ queued close cannot clear reopened selection (2.79018ms)
+✔ destroy restores opener focus once (0.666736ms)
+✔ Escape clears selection and destroyed UI refuses to reopen (0.656621ms)
+✔ Nung ultimate armor is personal and burn uses caster HP (3.849166ms)
+✔ Hoa Tieu targets back carry and detonates remaining burn with 20 percent bonus (2.693444ms)
+✔ Hoa Khieu buffs two same-row allies and calls exactly two assists (4.271204ms)
+✔ Hoa Bai no longer breaks armor and consumed ground zones cannot reappear (1.079779ms)
+✔ Hac Dao ultimate splash damages nearby enemies; Hoa Duc preserves source-based remaining burn (1.025858ms)
+✔ Mien Nuong heals two fronts, cleanses one each and delivers both authored regeneration ticks (1.923522ms)
+✔ Tram Tue sleep applies without damage; action slow persists two rounds (0.334826ms)
+✔ Hac Hoa uses disarm; Tam Nuong ultimate damages all enemies and only paralyzes front (0.763021ms)
+✔ Son Cuong detonates remaining bleed; Mang Xa miss debuff affects one attack (0.847118ms)
+✔ 42 unique identities, seven per element, no replacement art (2.277085ms)
+✔ Cơ Trọng: skill resolves authored target/effect (4.743516ms)
+✔ Cơ Trọng: ultimate resolves authored target/effect (0.661458ms)
+✔ Cường Đồng: skill resolves authored target/effect (1.333141ms)
+✔ Cường Đồng: ultimate resolves authored target/effect (0.467015ms)
+✔ Lạc An: skill resolves authored target/effect (0.554717ms)
+✔ Lạc An: ultimate resolves authored target/effect (2.215303ms)
+✔ Hạc Phá: skill resolves authored target/effect (0.633185ms)
+✔ Hạc Phá: ultimate resolves authored target/effect (0.940068ms)
+✔ Thiết Lãnh: skill resolves authored target/effect (1.299851ms)
+✔ Thiết Lãnh: ultimate resolves authored target/effect (1.472352ms)
+✔ Minh Tỏa: skill resolves authored target/effect (0.288876ms)
+✔ Minh Tỏa: ultimate resolves authored target/effect (0.57659ms)
+✔ Thiềm Ngân: skill resolves authored target/effect (0.674458ms)
+✔ Thiềm Ngân: ultimate resolves authored target/effect (0.461376ms)
+✔ Linh Đồng: skill resolves authored target/effect (0.62291ms)
+✔ Linh Đồng: ultimate resolves authored target/effect (0.762981ms)
+✔ Tiêu Hồn: skill resolves authored target/effect (0.583441ms)
+✔ Tiêu Hồn: ultimate resolves authored target/effect (0.843332ms)
+✔ Thạch Kinh: skill resolves authored target/effect (0.730021ms)
+✔ Thạch Kinh: ultimate resolves authored target/effect (0.561126ms)
+✔ Hàn Nương: skill resolves authored target/effect (0.995693ms)
+✔ Hàn Nương: ultimate resolves authored target/effect (1.187402ms)
+✔ Vọng Cơ: skill resolves authored target/effect (0.394355ms)
+✔ Vọng Cơ: ultimate resolves authored target/effect (0.520495ms)
+✔ Cổ Nương: skill resolves authored target/effect (0.382777ms)
+✔ Cổ Nương: ultimate resolves authored target/effect (0.863523ms)
+✔ Mục Chiêu: skill resolves authored target/effect (0.602018ms)
+✔ Mục Chiêu: ultimate resolves authored target/effect (1.069814ms)
+✔ Thủy Cơ: skill resolves authored target/effect (0.549459ms)
+✔ Thủy Cơ: ultimate resolves authored target/effect (0.389959ms)
+✔ Hà Lãng: skill resolves authored target/effect (0.507936ms)
+✔ Hà Lãng: ultimate resolves authored target/effect (0.658834ms)
+✔ Giang Quân: skill resolves authored target/effect (0.294374ms)
+✔ Giang Quân: ultimate resolves authored target/effect (0.628979ms)
+✔ Thủy Ngọc: skill resolves authored target/effect (0.363288ms)
+✔ Thủy Ngọc: ultimate resolves authored target/effect (0.453184ms)
+✔ Hải Phong: skill resolves authored target/effect (0.279722ms)
+✔ Hải Phong: ultimate resolves authored target/effect (1.138968ms)
+✔ Trầm Châu: skill resolves authored target/effect (0.405041ms)
+✔ Trầm Châu: ultimate resolves authored target/effect (0.498332ms)
+✔ Dạ Xoa: skill resolves authored target/effect (0.353223ms)
+✔ Dạ Xoa: ultimate resolves authored target/effect (0.23851ms)
+✔ Nung: skill resolves authored target/effect (0.387915ms)
+✔ Nung: ultimate resolves authored target/effect (0.315686ms)
+✔ Hỏa Tiêu: skill resolves authored target/effect (0.251269ms)
+✔ Hỏa Tiêu: ultimate resolves authored target/effect (0.860719ms)
+✔ Hỏa Khiêu: skill resolves authored target/effect (0.900749ms)
+✔ Hỏa Khiêu: ultimate resolves authored target/effect (0.448907ms)
+✔ Cửu Tính: skill resolves authored target/effect (0.421435ms)
+✔ Cửu Tính: ultimate resolves authored target/effect (0.706586ms)
+✔ Hỏa Bài: skill resolves authored target/effect (1.126649ms)
+✔ Hỏa Bài: ultimate resolves authored target/effect (1.149464ms)
+✔ Hắc Đao: skill resolves authored target/effect (0.640046ms)
+✔ Hắc Đao: ultimate resolves authored target/effect (0.489489ms)
+✔ Hỏa Dực: skill resolves authored target/effect (0.259021ms)
+✔ Hỏa Dực: ultimate resolves authored target/effect (0.282937ms)
+✔ Miên Nương: skill resolves authored target/effect (0.365451ms)
+✔ Miên Nương: ultimate resolves authored target/effect (0.255656ms)
+✔ Trầm Tuệ: skill resolves authored target/effect (0.361014ms)
+✔ Trầm Tuệ: ultimate resolves authored target/effect (0.398351ms)
+✔ Hạc Hoa: skill resolves authored target/effect (0.20508ms)
+✔ Hạc Hoa: ultimate resolves authored target/effect (0.348275ms)
+✔ Tằm Nương: skill resolves authored target/effect (0.849401ms)
+✔ Tằm Nương: ultimate resolves authored target/effect (0.42387ms)
+✔ Sơn Cương: skill resolves authored target/effect (0.366493ms)
+✔ Sơn Cương: ultimate resolves authored target/effect (0.68296ms)
+✔ Tuệ Y: skill resolves authored target/effect (0.345912ms)
+✔ Tuệ Y: ultimate resolves authored target/effect (0.310028ms)
+✔ Mãng Xà: skill resolves authored target/effect (0.355096ms)
+✔ Mãng Xà: ultimate resolves authored target/effect (0.462989ms)
+✔ Khaos: skill resolves authored target/effect (0.275606ms)
+✔ Khaos: ultimate resolves authored target/effect (1.791573ms)
+✔ Kính Nương: skill resolves authored target/effect (0.276136ms)
+✔ Kính Nương: ultimate resolves authored target/effect (0.632705ms)
+✔ Hồi Ảnh: skill resolves authored target/effect (0.535999ms)
+✔ Hồi Ảnh: ultimate resolves authored target/effect (0.505272ms)
+✔ Vân Pháp: skill resolves authored target/effect (0.607827ms)
+✔ Vân Pháp: ultimate resolves authored target/effect (0.270458ms)
+✔ Cửu Triều: skill resolves authored target/effect (0.43724ms)
+✔ Cửu Triều: ultimate resolves authored target/effect (3.689246ms)
+✔ Thạch Mộng: skill resolves authored target/effect (0.4241ms)
+✔ Thạch Mộng: ultimate resolves authored target/effect (0.301905ms)
+✔ Tố Linh: skill resolves authored target/effect (0.351921ms)
+✔ Tố Linh: ultimate resolves authored target/effect (0.289878ms)
+✔ Cửu Triều prevents her own fatal hit once; silence disables it (0.688579ms)
+✔ Tằm Nương armor persists after both cocoon hit charges (0.242235ms)
+✔ Hỏa Tiêu splash still hits adjacent enemies when primary dies (0.229316ms)
+✔ Vân Pháp reflects only one control, with no reflection loop (0.317419ms)
+✔ Vọng Cơ extends only skill cooldown, and expiration is round based (1.019849ms)
+✔ Tuệ Y revive costs once per battle and restores 50 HP percent / 50 rage (1.088122ms)
+✔ Mãng Xà uses three distinct seeded targets; replay is identical (1.228013ms)
+✔ Dạ Xoa execution respects individual shield; kill grants stealth (0.885697ms)
+✔ Zero damage does not consume cocoon or attach attack marks (0.373494ms)
+✔ Taunt redirects forced single-target ultimate to the taunter (0.571502ms)
+✔ linh_dong passive records authored mark value and provenance (0.275025ms)
+✔ han_nuong passive records authored mark value and provenance (0.140181ms)
+✔ hoa_bai passive records authored mark value and provenance (0.138349ms)
+✔ hac_dao passive records authored mark value and provenance (0.168885ms)
+✔ hac_hoa passive records authored mark value and provenance (0.221574ms)
+✔ cuu_tinh passive records authored mark value and provenance (0.141734ms)
+✔ son_cuong passive records authored mark value and provenance (0.651042ms)
+✔ mang_xa passive records authored mark value and provenance (0.115694ms)
+✔ to_linh passive records authored mark value and provenance (0.123156ms)
+✔ thiet_lanh retaliatory passive attaches to attacker (0.164378ms)
+✔ nung retaliatory passive attaches to attacker (0.124077ms)
+✔ tram_tue retaliatory passive attaches to attacker (0.133431ms)
+✔ Tiêu Hồn cannot siphon more rage than the target owns (0.164018ms)
+✔ Hạc Phá berserk and Hải Phong heavy-hit cap use HP thresholds (0.263317ms)
+✔ Thạch Kinh consumes five resentment stacks to heal 15% missing HP (0.204008ms)
+✔ Thiềm Ngân overheal becomes shield and respects shield ban (0.244078ms)
+✔ Thủy Cơ buffs only other same-row slots after her action (0.209937ms)
+✔ Thủy Ngọc skill supplies 15 rage to strongest ally and explosive shield (0.494896ms)
+✔ Cổ Nương converts reflection to health; parasite ticks once per round (0.23257ms)
+✔ Giang Quân mitigation is melee only; Trầm Châu protects two back allies (0.342236ms)
+✔ Miên Nương HoT and Hỏa Dực burn conversion heal weakest ally (0.830173ms)
+✔ Thạch Mộng intercepts 30%, then reduces shared damage by 35% (0.228965ms)
+✔ Khaos clone absorbs half damage until its finite pool is exhausted (0.144448ms)
+✔ Hồi Ảnh swaps rows after two rounds without duplicate slots (0.224369ms)
+✔ Mục Chiêu equalization cannot bypass absolute anti-heal (0.343929ms)
+✔ 42 authored profiles resolve all 126 skill descriptions with separate HUD/button identities (1.959886ms)
+✔ full skill names, owner-HP wording and new passive numbers are preserved (0.376377ms)
+✔ skill UI keeps cooldown and rage live, and text lookup drives one popup owner (0.469859ms)
+✔ Source runtime patch compiles and does not duplicate scheduler (77.44774ms)
+✔ Every selectable hero reaches a valid 6v6 fixture without duplicate positions (1.799405ms)
+✔ Dream fixture reserves frontline for Thạch Mộng before support overflow (0.230177ms)
+✔ Bundled browser factory has the same damage/status/rage results as source (60.097785ms)
+✔ mixed roster routes only S+ owned actors through S+ action resolver (42.907791ms)
+✔ non-authored S+ actions retain generic presentation while S+ engine owns mechanics (0.826827ms)
+✔ battle skill options follow the replacement actor when a battle restarts with the same id (2.96272ms)
+✔ orphaned skill options cannot cast after their actor leaves the battle (0.800568ms)
+✔ S+ mechanics failure fails open instead of aborting battle bootstrap (1.201713ms)
+✔ missing optional S+ action-zone UI cannot block battle bootstrap (0.988701ms)
+✔ S+ displacement reuses the current crop-aware formation owner after P0 recovery (0.336608ms)
+✔ S+ atlas rects keep a source-pixel gutter on every side of each cell (2.069482ms)
+✔ Nung Skill 1 exposes only the opposing front target, not every enemy slot (2.53932ms)
+✔ row-scoped S+ skills keep the picker inside the authored row while targeted ultimates remain selectable (2.377286ms)
+✔ action slow affects ordering speed for both authored rounds and emits current queue delay (4.756976ms)
+✔ poison detonation consumes the authored raw tick amount once (1.913868ms)
+✔ burn-to-healing consumes the zone source so it cannot return next turn (0.993409ms)
+✔ catalog identifies V2 (0.866447ms)
+✔ Cuong shield strike uses caster HP against only opposing front; ultimate grants hard CC immunity (5.571345ms)
+✔ Lac An skill finds weakest back and prevents stealth; seven arrows grow and retarget (1.59113ms)
+✔ Hac Pha destroys front shields and preserves fractional stun metadata (1.802569ms)
+✔ Thiet Lanh disarms weapon skills and Minh Toa locks the highest rage back (0.904635ms)
+✔ Thiem Ngan healing is caster based and armor lasts three rounds (0.471301ms)
+✔ Linh Dong confusion replaces old root; Han Nuong strips exactly one front buff and bans new buffs (1.452842ms)
+✔ Vong Co drains two highest rage enemies; Co Nuong strike uses current HP (1.02789ms)
+✔ Thach Kinh ultimate grants caster HP shields and Muc Chieu skill heals from caster HP (0.732335ms)
+✔ Thuy Co cleanses one burn on skill and heals team on ultimate (0.419443ms)
+✔ Ha Lang pushes only opposing front; Giang Quan root blocks melee attacks (0.620836ms)
+✔ Thuy Ngoc shield selects back carry and ultimate boosts rage rate (0.327444ms)
+✔ Da Xoa bypasses shared guard but retains individual shield absorption (0.376759ms)
+✔ Khaos swaps front/back, Kinh Nuong blinds one attack and Hoi Anh ultimate damages (0.626215ms)
+✔ Van Phap strikes fronts, steals buffs and Thach Mong shields from caster HP (0.555749ms)
+✔ begin-round regeneration receives two ticks including expiry boundary (0.523469ms)
+✔ V2 metal: gear cap, 3% aura, caster HP shields and expiry (7.475984ms)
+✔ V2 Cuong: mitigation applies to ranged attacks and reflection never loops (0.47738ms)
+✔ V2 Lac An: eight focus stacks affect rate and crit damage, controlled targets guarantee crit (0.627236ms)
+✔ V2 Linh/Tieu: third basic mark drains rage; soul siphon is 15 and rage lock blocks gain (1.663289ms)
+✔ V2 Thach Kinh accumulates damage in 10% HP units, not one layer per hit (0.386783ms)
+✔ V2 Vong marks only highest attack and delays its skill cooldown (0.485592ms)
+✔ V2 Co Nuong parasite drains tankiest on hit and returns actual lost HP (0.47763ms)
+✔ V2 water: same-row haste, caster HP healing, critical-only cap (0.482828ms)
+✔ V2 Tram Chau bubble blocks crit/bleed only while shield remains and damage conversion prevents HP loss (0.841249ms)
+✔ V2 Nung burns only melee attackers using Nung HP; Deep Wound bleeds using source ATK (0.492122ms)
+✔ V2 Hoa Bai ground zone ticks on victim turn and follows the slot after displacement (0.431972ms)
+✔ V2 Mien heals at each ally turn start once when host prepares before act (0.222175ms)
+✔ V2 Tue Y emergency has a shared two-round cooldown and resurrects most recent death (0.655439ms)
+✔ V2 sleep survives DoT; Tằm Nương renews a two-hit cocoon after two rounds (0.409799ms)
+✔ V2 Mang poison spreads on each victim action, next-hit blindness consumes one charge (0.759005ms)
+✔ V2 Kinh Nuong successful basic reflection negates damage and cannot bounce (0.242436ms)
+✔ V2 Khaos clone explodes and respawns after 3 rounds; ultimate bypasses shield (0.760888ms)
+✔ V2 Hoi Anh forces an immediate friendly strike; Van ward rolls 35% after action (0.473745ms)
+✔ V2 Cuu Trieu stacks on all actors, burns current HP, loses half stacks to silence (0.64999ms)
+✔ V2 Time Freeze suppresses rage gain and passive reflection (0.286983ms)
+✔ L76A-T1: createStoreFromEnv with DATABASE_URL uses postgres (1.446302ms)
+✔ L76A-T2: no DATABASE_URL + VERCEL=1 is memory; local is file (0.628598ms)
+✔ L76A-T3: createUser + findUserByName roundtrip (0.313974ms)
+✔ L76A-T4: putSave / getSave JSONB keeps nested fields (0.812135ms)
+✔ L48-T1: live story markup and startStory stay frozen (7.150508ms)
+✔ L48-T2: #hvStoryRoot is a body overlay with overflow auto and 100vh filter fix (0.30462ms)
+✔ L48-T3: hall mounts on body and wraps showScreen without a second document listener (0.227854ms)
+✔ L48-T4: stub lane loads runtime and build-static keeps the reserved import (0.298411ms)
+✔ L48-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (0.615058ms)
+✔ L39-T1: live domain and lacquer runtime stay frozen (0.930764ms)
+✔ L39-T2: #hvSummonRoot is a body overlay with overflow auto (0.250958ms)
+✔ L39-T3: hall mounts on body and wraps showScreen without a second document listener (0.244809ms)
+✔ L39-T4: stub lane loads runtime and build-static keeps the reserved import (0.303919ms)
+✔ L39-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (0.640075ms)
+✔ L07-T1: live catalog frozen — rates sum 100, costs and pity unchanged (1.28621ms)
+✔ L07-T2: pity 60 forces SSR; rate SSR resets; player is not mutated (0.822571ms)
+✔ L07-T3: ×10 floor to S+; free is once per day and only ×1 (0.455887ms)
+✔ L07-P1: funds check, campaign untouched, empty official-12 pool does not debit (0.565854ms)
+✔ L07-P2: new own vs duplicate shards and essence; spark increases by n (0.324399ms)
+✔ L07-P3: Hồi Ức 120 picks SSR; owned converts to 30 shards + 8 essence (0.322496ms)
+✔ L07-P4: lacquer screen is wired and does not add a second hub landmark (0.761629ms)
+✔ all 12 official heroes have an automatic talent rule (2.32665ms)
+✔ Skill 1 cannot be manually selected and remains animation-backed (0.398351ms)
+✔ talent activation is star-gated, conditional, free and cooldown-limited (0.467886ms)
+✔ ordinary AI only chooses Basic or Ultimate unless talent trigger arms Skill 1 (0.276878ms)
+✔ L50-T1: live team screen and Bày trận stay frozen (8.037185ms)
+✔ L50-T2: #hvTeamRoot is a body overlay with overflow auto and 100vh filter fix (0.321014ms)
+✔ L50-T3: hall mounts on body and wraps showScreen without a second document listener (0.282336ms)
+✔ L50-T4: stub lane loads runtime and build-static keeps the reserved import (0.266552ms)
+✔ L50-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (0.6634ms)
+✔ Thầy Mo production patch emits syntactically valid character and action owners (89.574695ms)
+✔ cold authored Thầy Mo assets finish decoding before the clock/energy gate (86.119963ms)
+✔ leaving the battle cancels the pending Thầy Mo decode (79.473896ms)
+✔ authored Thầy Mo dispatches sound at release before waiting for impact (75.044795ms)
+✔ L36-T1: live domain and lacquer runtime stay frozen (0.918676ms)
+✔ L36-T2: #hvTowerRoot is a body overlay with overflow auto (0.283167ms)
+✔ L36-T3: hall mounts on body and wraps showScreen without a second document listener (0.301605ms)
+✔ L36-T4: stub lane loads runtime and build-static keeps the reserved import (0.283277ms)
+✔ L36-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (0.691493ms)
+✔ L65-T1: wrap startTower calls runBattle __tower and never auto-wins (1.00066ms)
+✔ L65-T2: factory returns 6 unique roster clones, 3 front / 3 back (0.651723ms)
+✔ L65-T3: win/lose settle uses real report, stamina 5, gold formula (0.711884ms)
+✔ L65-T4: stub lane loads runtime; no battle.html; no tower-3d rewrite (0.396338ms)
+✔ L22-T1: empty tower starts at floor 1 and encounters stay four units (0.951575ms)
+✔ L22-T2: clear is immutable, keeps campaign, and rejects a stale floor (1.145969ms)
+✔ L22-T3: rotating trials, bonus on success, milestone claim rejects duplicates (0.383198ms)
+✔ L22-P1: required power rises with the floor and floor 1 sits under a 6-hero start (0.134423ms)
+✔ L22-P2: under-power attempt spends stamina, keeps the floor, and records the stuck clock (0.426793ms)
+✔ L22-P3: a near-miss can pass after a few catch-up days and the bonus caps (0.302356ms)
+✔ L22-T4: hub landmark and lacquer climb screen are wired (0.461136ms)
+✔ L22-P4: climb screen shows the power gate and auto-resolves attempts (0.47078ms)
+✔ L67-T1: #hvTrainRoot is a body overlay with overflow auto and wrap showScreen/startTraining (1.084906ms)
+✔ L67-T2: hall jpg is dedicated and larger than 50KB (0.720547ms)
+✔ L67-T3: Luyện spends stamina + runBattle luyen_tap; back navTo hub; after battle openHall (6.15807ms)
+✔ L67-T4: stub lane loads runtime; build-static keeps reserved import; no battle.html (0.388706ms)
+✔ L67-T5: does not unlock the five locked lich spokes (0.225791ms)
+✔ L03a source audit verifies the mutation inventory and opening sequence (33.118083ms)
+✔ L03a records receipt absence instead of treating direct persist as atomic (26.802385ms)
+✔ L03a audit source hash is stable for the captured active runtime (5.142458ms)
+✔ successful transaction debits and records one receipt plus a ledger delta (1.9689ms)
+✔ reward settlement applies reward once and records positive ledger delta (0.488347ms)
+✔ duplicate command returns the original receipt without running mutation twice (0.42431ms)
+✔ stale revision and insufficient funds reject before mutation (0.270969ms)
+✔ rejected and thrown mutations roll back every in-memory change (0.426794ms)
+✔ request validation rejects invalid cost and transaction history stays bounded (8.71643ms)
+✔ static build wires the contract after the save contract and patches both safe mutation paths (0.435067ms)
+✔ L03b build owner keeps quest progress inside the level-up transaction (1.139019ms)
+✔ L03b failed persist restores gold, hero, quest, weekly state and history (0.796411ms)
+✔ L03b success commits one debit, progress and receipt; retry after reload is duplicate (0.854609ms)
+✔ L03c build owner makes quest command id stable and keeps clan XP inside the transaction (1.255604ms)
+✔ L03c failed persist restores reward, quest, activity, clan XP and receipt (1.92249ms)
+✔ L03c success commits reward, quest, activity and clan XP once; retry is duplicate (0.546695ms)
+✔ L34-T1: live commands stay frozen (7.000951ms)
+✔ L34-T2: #hvVaultRoot is a body overlay with overflow auto (0.279461ms)
+✔ L34-T3: hall mounts on body and wraps showScreen without a second document listener (0.322396ms)
+✔ L34-T4: stub lane loads runtime and build-static keeps the reserved import (0.308025ms)
+✔ L34-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse (1.011731ms)
+✔ Vercel installs development build tools even with NODE_ENV=production (0.793727ms)
+✔ installed sharp can resize and encode/decode a WebP atlas sample (43.131199ms)
+✔ L86: Mộng Lộ hoisted root có ‹ Thành Chính (1.016995ms)
+✔ L87: Săn Boss ‹ + pause BGM trước trận (0.347274ms)
+✔ L88: skip không cần EMBEDDED; chip trận là ‹ (0.32451ms)
+✔ L89: chat là panel trên dock (0.229416ms)
+✔ L90: túi là khung ô thu/mở (0.29173ms)
+✔ L91: rèn 2 cột, nền mới (0.206161ms)
+✔ L92: chat sheet trên hub, ẩn gợi ý và Giao Lưu (0.811244ms)
+✔ L93: săn FAB ‹ cố định, không document click (0.2514ms)
+✔ L94: túi lưới ô + tab (0.229156ms)
+✔ L95: rèn đập búa + màu phẩm chất, asset pending (0.222185ms)
+✔ L96: Giao Lưu Phố trong giao việc (0.168454ms)
+ℹ tests 1315
+ℹ suites 0
+ℹ pass 1300
+ℹ fail 15
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 26438.123631
+
+✖ failing tests:
+
+test at tests/battle-audio-lifecycle.test.mjs:134:1
+✖ result music cannot resume after stop while waiting for audio unlock (1.099089ms)
+  TypeError: Cannot read properties of undefined (reading 'played')
+      at TestContext.<anonymous> (file:///workspace/scratch/b5f6a75b3ba7/luc-than/tests/battle-audio-lifecycle.test.mjs:142:60)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/battle-audio-lifecycle.test.mjs:151:1
+✖ built close owner stops both parent buses and the child before blanking the iframe (7.924215ms)
+  evalmachine.<anonymous>:15
+      window.__HV_HOST_ATLASES.resume();
+                               ^
+  
+  TypeError: Cannot read properties of undefined (reading 'resume')
+      at closeOverlay (evalmachine.<anonymous>:15:30)
+      at evalmachine.<anonymous>:21:1
+      at Script.runInContext (node:vm:149:12)
+      at Object.runInContext (node:vm:301:6)
+      at TestContext.<anonymous> (file:///workspace/scratch/b5f6a75b3ba7/luc-than/tests/battle-audio-lifecycle.test.mjs:162:6)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+
+test at tests/battle-audio-transitions.test.mjs:96:1
+✖ built BGM route uses the shared music bus for screen transitions (0.748649ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /HonVietAudio/. Input:
+  
+  `const newPlay = "function playBgm(track){\\n  const key=BGM_TRACKS[track]?track:'maincity';\\n  const src=BGM_TRACKS[key];\\n  const fallback=BGM_FALLBACKS[key]||BGM_FALLBACKS.maincity;\\n  window.__HV_BGM_TRACK_KEY=key;\\n  // Keep one HTMLAudioElement as the music owner. play() is called directly\\n  // by the original tap/navigation handler, preserving iOS Safari activation\\n  // and the same player across the battle iframe and result screen.\\n  if(bgmTrack!==src){bgmTrack=src;bgmPlayer.src=src;bgmPlayer.currentTime=0;}\\n  bgmPlayer.onerror=()=>{\\n    if(bgmPlayer.src.includes(src)&&fallback&&fallback!==src){\\n      bgmTrack=fallback;\\n      bgmPlayer.src=fallback;\\n      bgmPlayer.currentTime=0;\\n      bgmPlayer.play().then(()=>{bgmUnlocked=true;}).catch(()=>{});\\n    }\\n  };\\n  bgmPlayer.play().then(()=>{bgmUnlocked=true;}).catch(()=>{});\\n}";\n`
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/b5f6a75b3ba7/luc-than/tests/battle-audio-transitions.test.mjs:99:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: `const newPlay = "function playBgm(track){\\n  const key=BGM_TRACKS[track]?track:'maincity';\\n  const src=BGM_TRACKS[key];\\n  const fallback=BGM_FALLBACKS[key]||BGM_FALLBACKS.maincity;\\n  window.__HV_BGM_TRACK_KEY=key;\\n  // Keep one HTMLAudioElement as the music owner. play() is called directly\\n  // by the original tap/navigation handler, preserving iOS Safari activation\\n  // and the same player across the battle iframe and result screen.\\n  if(bgmTrack!==src){bgmTrack=src;bgmPlayer.src=src;bgmPlayer.currentTime=0;}\\n  bgmPlayer.onerror=()=>{\\n    if(bgmPlayer.src.includes(src)&&fallback&&fallback!==src){\\n      bgmTrack=fallback;\\n      bgmPlayer.src=fallback;\\n      bgmPlayer.currentTime=0;\\n      bgmPlayer.play().then(()=>{bgmUnlocked=true;}).catch(()=>{});\\n    }\\n  };\\n  bgmPlayer.play().then(()=>{bgmUnlocked=true;}).catch(()=>{});\\n}";\n`,
+    expected: /HonVietAudio/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/battle-enter-audio.test.mjs:51:1
+✖ L158-T4: closeOverlay restores host BGM after ending the battle bus (7.751885ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /playBgm\(desiredBgm/. Input:
+  
+  'HonVietSfx?.endBattle();\n' +
+    '    window.__HV_RESULT_AUDIO?.stop({keepCurrent:true});\n' +
+    '    try { frame.contentWindow?.HonVietSfx?.dispose(); } catch (_) {}\n' +
+    '    if (activeBattle?.loadWatchdog) { clearTimeout(activeBattle.loadWatchdog); activeBattle.loadWatchdog = null; }\n' +
+    '    if (activeBattle?.hardLoadNotice) { clearTimeout(activeBattle.hardLoadNotice); activeBattle.hardLoadNotice = null; }\n' +
+    '    if (activeBattle?.enterFallback) { clearTimeout(activeBattle.enterFallback); activeBattle.enterFallback = null; }\n' +
+    '    overlay.classList.remove("is-open", "is-loading");\n' +
+    '    document.documentElement.style.overflow = "";\n' +
+    '    loading.hidden = false;\n' +
+    '    frame.removeAttribute("srcdoc");\n' +
+    '    try { frame.contentWindow?.__HV_LINH_DONG_CACHE?.clear(); } catch (_) {}\n' +
+    '    frame.src = "about:blank";\n' +
+    '    window.__HV_HOST_ATLASES.resume();\n' +
+    '    window.__HV_BATTLE_HOST_MEMORY_RESTORE?.();\n' +
+    '    delete frame.dataset.config;\n' +
+    '    frame.name = "";\n' +
+    '  }\n' +
+    '\n' +
+    '  '
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/b5f6a75b3ba7/luc-than/tests/battle-enter-audio.test.mjs:56:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'HonVietSfx?.endBattle();\n    window.__HV_RESULT_AUDIO?.stop({keepCurrent:true});\n    try { frame.contentWindow?.HonVietSfx?.dispose(); } catch (_) {}\n    if (activeBattle?.loadWatchdog) { clearTimeout(activeBattle.loadWatchdog); activeBattle.loadWatchdog = null; }\n    if (activeBattle?.hardLoadNotice) { clearTimeout(activeBattle.hardLoadNotice); activeBattle.hardLoadNotice = null; }\n    if (activeBattle?.enterFallback) { clearTimeout(activeBattle.enterFallback); activeBattle.enterFallback = null; }\n    overlay.classList.remove("is-open", "is-loading");\n    document.documentElement.style.overflow = "";\n    loading.hidden = false;\n    frame.removeAttribute("srcdoc");\n    try { frame.contentWindow?.__HV_LINH_DONG_CACHE?.clear(); } catch (_) {}\n    frame.src = "about:blank";\n    window.__HV_HOST_ATLASES.resume();\n    window.__HV_BATTLE_HOST_MEMORY_RESTORE?.();\n    delete frame.dataset.config;\n    frame.name = "";\n  }\n\n  ',
+    expected: /playBgm\(desiredBgm/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/battle-enter-audio.test.mjs:59:1
+✖ L158-T5: hunt overlay observer does not pause the unlocked host combat player (7.710933ms)
+  AssertionError [ERR_ASSERTION]: The input was expected to not match the regular expression /bgmPlayer\.pause/. Input:
+  
+  'function hushParentBgm() {\n' +
+    '    try {\n' +
+    "      if (typeof bgmPlayer !== 'undefined' && bgmPlayer) bgmPlayer.pause(); window.HonVietAudio?.stopMusic?.();\n" +
+    '    } catch {}\n' +
+    '    try { window.HonVietAudio?.stopCombat?.(); } catch {}\n' +
+    '  }\n' +
+    '\n' +
+    '  const syncOpen = name => {\n' +
+    '    const root = hoist()'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/b5f6a75b3ba7/luc-than/tests/battle-enter-audio.test.mjs:64:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: "function hushParentBgm() {\n    try {\n      if (typeof bgmPlayer !== 'undefined' && bgmPlayer) bgmPlayer.pause(); window.HonVietAudio?.stopMusic?.();\n    } catch {}\n    try { window.HonVietAudio?.stopCombat?.(); } catch {}\n  }\n\n  const syncOpen = name => {\n    const root = hoist()",
+    expected: /bgmPlayer\.pause/,
+    operator: 'doesNotMatch',
+    diff: 'simple'
+  }
+
+test at tests/battle-readiness-build.test.mjs:25:1
+✖ final battle gates the real action before energy debit and keeps the same iframe payload (15.007411ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(encoded)
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/b5f6a75b3ba7/luc-than/tests/battle-readiness-build.test.mjs:30:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/battle-skill-movement-wiring.test.mjs:98:1
+✖ campaign iframe and standalone battle contain exactly one identical movement owner (11.271936ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(encoded)
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/b5f6a75b3ba7/luc-than/tests/battle-skill-movement-wiring.test.mjs:101:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/deploy-artifact.test.mjs:10:1
+✖ L24-D3: sharp stays off the production install (1.342926ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /omit=dev/. Input:
+  
+  'npm install --include=dev --no-audit --no-fund'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/b5f6a75b3ba7/luc-than/tests/deploy-artifact.test.mjs:15:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'npm install --include=dev --no-audit --no-fund',
+    expected: /omit=dev/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/deploy-artifact.test.mjs:35:1
+✖ L24-D2: embedded battle payload still matches the built battle file (0.959127ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /embeddedBattle/. Input:
+  
+  "import { cpSync, mkdirSync, rmSync, existsSync, copyFileSync, statSync, readFileSync, writeFileSync } from 'node:fs';\n" +
+    "import { join } from 'node:path';\n" +
+    "import { assembleLucAnhIdle } from './luc-anh-idle-asset.mjs';\n" +
+    '\n' +
+    'const root = process.cwd();\n' +
+    'await assembleLucAnhIdle(root);\n' +
+    "const out = join(root, 'dist');\n" +
+    'rmSync(out, { recursive: true, force: true });\n' +
+    'mkdirSync(out, { recursive: true });\n' +
+    '\n' +
+    'const entries = [\n' +
+    "  'index.html',\n" +
+    "  'battle.html',\n" +
+    "  'qa-dinh-loi-spacing.html',\n" +
+    "  'qa-runtime.html',\n" +
+    "  'skill-test.html',\n" +
+    "  'skill-test-evidence.js',\n" +
+    "  'splus-lab.html',\n" +
+    "  'assets'\n" +
+    '];\n' +
+    '\n' +
+    'for (const entry of entries) {\n' +
+    '  const src = join(root, entry);\n' +
+    '  if (!existsSync(src)) continue;\n' +
+    '  const dest = join(out, entry);\n' +
+    '  const stats = statSync(src);\n' +
+    '  if (stats.isDirectory()) cpSync(src, dest, { recursive: true });\n' +
+    "  else { mkdirSync(join(dest, '..'), { recursive: true }); copyFileSync(src, dest); }\n" +
+    '}\n' +
+    '\n' +
+    "const { buildOngPhoPngRecovery } = await import('./ong-pho-original-png-recovery.mjs');\n" +
+    'buildOngPhoPngRecovery(out);\n' +
+    "await import('./luc-anh-runtime-patch.mjs');\n" +
+    "await import('./lanes/tkt-0088-skip.mjs');\n" +
+    "await import('./runtime-safety-hotfix.mjs');\n" +
+    "await import('./bgm-runtime-patch.mjs');\n" +
+    "await import('./ios-audio-unlock-patch.mjs');\n" +
+    "await import('./result-audio-runtime-v1.mjs');\n" +
+    "await import('./luc-anh-retina-sharpness-patch.mjs');\n" +
+    "await import('./runtime-qa-polish-v2.mjs');\n" +
+    "await import('./runtime-qa-polish-v4.mjs');\n" +
+    "await import('./runtime-qa-polish-v5.mjs');\n" +
+    "await import('./luc-anh-spatial-pipeline-v1.mjs');\n" +
+    "await import('./luc-anh-idle-1080-v1.mjs');\n" +
+    "await import('./skill-atlas-runtime-v1.mjs');\n" +
+    "await import('./skill-atlas-registry-v1.mjs');\n" +
+    "await import('./luc-anh-local-speed-v1.mjs');\n" +
+    "await import('./battle-visual-polish-v1.mjs');\n" +
+    "await import('./battle-backgrounds-20-v1.mjs');\n" +
+    "await import('./combat-domain-3q-adapter-v1.mjs');\n" +
+    "await import('./quest-system-3q-v1.mjs');\n" +
+    "await import('./runtime-result-actions-v5.mjs');\n" +
+    "await import('./m0-p0-runtime-repair-v1.mjs');\n" +
+    "await import('./summon-pool-guard-v1.mjs');\n" +
+    "await import('./hero-roster-phase-a-v4.mjs');\n" +
+    "await import('./hero-detail-tabs.mjs');\n" +
+    "await import('./runtime-mobile-render-sfx-v1.mjs');\n" +
+    "await import('./dinh-loi-retina-portrait-v1.mjs');\n" +
+    "await import('./skill-kit-runtime-v1.mjs');\n" +
+    "await import('./save-contract-v1.mjs');\n" +
+    "await import('./transaction-contract-v1.mjs');\n" +
+    "await import('./afk-chest-runtime-v1.mjs');\n" +
+    "await import('./forge-item-assets-v1.mjs');\n" +
+    "await import('./settlement-navigation-v1.mjs');\n" +
+    "await import('./return-context-v1.mjs');\n" +
+    "await import('./opening-loop-v1.mjs');\n" +
+    "await import('./qa-full-access-v1.mjs');\n" +
+    "await import('./hub-dock-tray-v1.mjs');\n" +
+    "await import('./hub-responsive-visibility-v1.mjs');\n" +
+    "await import('./hub-icon-alpha-hotfix-v1.mjs');\n" +
+    "await import('./battle-responsive-luc-anh-audio-v1.mjs');\n" +
+    "await import('./battle-audio-lifecycle-v1.mjs');\n" +
+    "await import('./battle-phase1-trace-v1.mjs');\n" +
+    "const { buildSplusRuntime } = await import('./splus-runtime-v1.mjs');\n" +
+    'buildSplusRuntime(root);\n' +
+    "await import('./campaign-reference-flow-v1.mjs');\n" +
+    "await import('./campaign-fixed-slots-v1.mjs');\n" +
+    "await import('./account-gear-v1.mjs');\n" +
+    "await import('./tower-runtime-v1.mjs');\n" +
+    "await import('./expedition-runtime-v1.mjs');\n" +
+    "await import('./shop-runtime-v1.mjs');\n" +
+    "await import('./summon-runtime-v1.mjs');\n" +
+    "await import('./arena-runtime-v1.mjs');\n" +
+    "await import('./hunt-runtime-v1.mjs');\n" +
+    "await import('./festival-runtime-v1.mjs');\n" +
+    "await import('./daily-runtime-v1.mjs');\n" +
+    "await import('./forge-hall-v1.mjs');\n" +
+    "await import('./preview-journey-unlock-v1.mjs');\n" +
+    "await import('./lanes/tkt-0037-bag.mjs');\n" +
+    "await import('./lanes/tkt-0038-mail.mjs');\n" +
+    "await import('./lanes/tkt-0039-jobs.mjs');\n" +
+    "await import('./lanes/tkt-0040-guild.mjs');\n" +
+    "await import('./lanes/tkt-0041-friends.mjs');\n" +
+    "await import('./lanes/tkt-0042-chat.mjs');\n" +
+    "await import('./lanes/tkt-0043-clan.mjs');\n" +
+    "await import('./lanes/tkt-0044-vault.mjs');\n" +
+    "await import('./lanes/tkt-0046-tower.mjs');\n" +
+    "await import('./lanes/tkt-0047-expedition.mjs');\n" +
+    "await import('./lanes/tkt-0048-shop.mjs');\n" +
+    "await import('./lanes/tkt-0049-summon.mjs');\n" +
+    "await import('./lanes/tkt-0050-arena.mjs');\n" +
+    "await import('./lanes/tkt-0051-hunt.mjs');\n" +
+    "await import('./lanes/tkt-0052-festival.mjs');\n" +
+    "await import('./lanes/tkt-0053-hero-detail.mjs');\n" +
+    "await import('./lanes/tkt-0054-daily.mjs');\n" +
+    "await import('./lanes/tkt-0055-campaign.mjs');\n" +
+    "await import('./lanes/tkt-0056-journey.mjs');\n" +
+    "await import('./lanes/tkt-0057-end.mjs');\n" +
+    '// WAVE-G 2026-09-12 TKT-0058…0063 — fill stubs; do not add imports.\n' +
+    '// Keep AFTER tkt-0057-end.mjs.\n' +
+    "await import('./lanes/tkt-0058-story.mjs');\n" +
+    "await import('./lanes/tkt-0059-net.mjs');\n" +
+    "await import('./lanes/tkt-0060-team.mjs');\n" +
+    "await import('./lanes/tkt-0061-skill-seals-a.mjs');\n" +
+    "await import('./lanes/tkt-0062-skill-seals-b.mjs');\n" +
+    "await import('./lanes/tkt-0063-skill-seals-c.mjs');\n" +
+    '\n' +
+    '// SAFARI 2026-09-12 overlay pin — visualViewport + drop body.night containing-block.\n' +
+    '// Keep AFTER Wave G stubs. Do not restyle .cs-prepare.\n' +
+    "await import('./overlay-safari-hotfix-v1.mjs');\n" +
+    '\n' +
+    '// WAVE-H 2026-09-12 TKT-0065…0073 — fill stubs; do not add imports.\n' +
+    '// Keep AFTER overlay-safari-hotfix-v1.mjs. Do not touch journey-3d / end-3d.\n' +
+    "await import('./lanes/tkt-0065-tower-battle.mjs');\n" +
+    "await import('./lanes/tkt-0066-hub-back.mjs');\n" +
+    "await import('./lanes/tkt-0067-train.mjs');\n" +
+    "await import('./lanes/tkt-0068-skill-seals-d.mjs');\n" +
+    "await import('./lanes/tkt-0069-challenge.mjs');\n" +
+    "await import('./lanes/tkt-0070-campaign-foes-a.mjs');\n" +
+    "await import('./lanes/tkt-0071-campaign-foes-b.mjs');\n" +
+    "await import('./lanes/tkt-0072-campaign-foes-c.mjs');\n" +
+    "await import('./lanes/tkt-0073-npc-busts.mjs');\n" +
+    '\n' +
+    '// WAVE-I 2026-09-12 TKT-0074 Auth API — fill stub; do not add imports.\n' +
+    '// Same-origin /api on this Vercel project. Keep AFTER safari. Do not edit index.html.\n' +
+    "await import('./lanes/tkt-0074-auth.mjs');\n" +
+    '\n' +
+    '// WAVE-K 2026-09-12 TKT-0083 hồ sơ avatar / giftcode / cài đặt.\n' +
+    '// Keep AFTER auth. Capture #hubScreen .art-avatar. Do not edit index.html.\n' +
+    "await import('./lanes/tkt-0083-profile.mjs');\n" +
+    '\n' +
+    '// WAVE-S 2026-09-13 TKT-0108 Lục Thần lore — Chinh chiến sáu ấn. Keep AFTER profile.\n' +
+    "await import('./lanes/tkt-0108-lore.mjs');\n" +
+    '\n' +
+    '// WAVE-S 2026-09-13 TKT-0109 Bách Bảo Rương Kiếm Thế. Keep AFTER lore.\n' +
+    "await import('./lanes/tkt-0109-bbr.mjs');\n" +
+    '\n' +
+    '// WAVE-S 2026-09-13 TKT-0111 economy drip Tinh/Hoạt + nhãn B/A/S/S+.\n' +
+    "await import('./lanes/tkt-0111-econ.mjs');\n" +
+    '\n' +
+    '// TKT-0118 — player EXP and level gates; after all campaign/reward owners.\n' +
+    "await import('./player-progress-v1.mjs');\n" +
+    '\n' +
+    '// Bound Linh Đồng texture memory in both documents before syncing the iframe payload.\n' +
+    "const { installLinhDongMemory } = await import('./linh-dong-memory-v1.mjs');\n" +
+    'installLinhDongMemory(root);\n' +
+    '\n' +
+    '// TKT-0145: patch the current main battle/index after memory binding so the\n' +
+    '// canonical Linh Đồng bridge owns the final rendered payload.\n' +
+    "await import('./linh-dong-timing-main-v1.mjs');\n" +
+    "await import('./bach-dien-canvas-runtime-v1.mjs');\n" +
+    '\n' +
+    '// Bạch Diện Extreme v6 must be injected after legacy battle patch owners so\n' +
+    '// a later Linh Đồng/S+ patch cannot silently remove its closure-local helpers.\n' +
+    "await import('./bach-dien-runtime-v6.mjs');\n" +
+    '\n' +
+    '// TKT-0158 — host owns combat BGM on Xuất chiến; do not autoplay iframe HTMLAudio.\n' +
+    "await import('./battle-enter-audio-v1.mjs');\n" +
+    '\n' +
+    '// iPhone/iPadOS: avoid the large nested battle iframe and use the existing full-page return flow.\n' +
+    "await import('./ios-battle-direct-enter-v1.mjs');\n" +
+    '\n' +
+    '// Per-skill movement must follow canonical hero branches and precede iframe sync.\n' +
+    "await import('./battle-skill-movement-v1.mjs');\n" +
+    '\n' +
+    '// Readiness and build-sized atlases must precede the single iframe synchronization.\n' +
+    "const { buildBattleReadiness } = await import('./battle-asset-readiness-v1.mjs');\n" +
+    'await buildBattleReadiness(root);\n' +
+    '\n' +
+    '// Result-screen motion runs after readiness so large authored atlases can reuse\n' +
+    '// any build-sized variants before the final iframe payload is synchronized.\n' +
+    "await import('./result-character-motion-v1.mjs');\n" +
+    '\n' +
+    '// Final battle visual profile: keep authored clocks, but lower iOS canvas/atlas pressure.\n' +
+    "const { buildBattleMobilePressure } = await import('./battle-mobile-pressure-v1.mjs');\n" +
+    'await buildBattleMobilePressure(root);\n' +
+    '\n' +
+    '// Low-memory campaign derivatives are generated before lifetime ownership is finalized.\n' +
+    "const { installCampaignMobileAtlases } = await import('./campaign-mobile-atlas-v1.mjs');\n" +
+    'await installCampaignMobileAtlases(root);\n' +
+    '\n' +
+    '// Repair campaign image ownership after all late host patch owners.\n' +
+    "const { installCampaignResourceLifecycle } = await import('./campaign-resource-lifecycle-v1.mjs');\n" +
+    'installCampaignResourceLifecycle(root);\n' +
+    '\n' +
+    '// P0 iOS entry: battle state must start even when AudioContext fails.\n' +
+    "await import('./battle-entry-fail-open-v1.mjs');\n" +
+    '\n' +
+    '// Final battle-only presentation patch. Keep after every owner that rewrites battle.html.\n' +
+    "await import('./combat-reference-presentation-v1.mjs');\n" +
+    "await import('./battle-formation-scale-v1.mjs');\n" +
+    "await import('./thay-mo-authored-production-v1.mjs');\n" +
+    "await import('./authored-vfx-clock-v1.mjs');\n" +
+    "await import('./legacy-authored-readiness-v1.mjs');\n" +
+    "await import('./combat-authored-qa-v1.mjs');\n" +
+    '\n' +
+    '// battle.html is now the single runtime source for iframe and iOS full-page combat.\n' +
+    '// Do not duplicate ~1.5 MB of battle markup as base64 inside index.html; on mobile\n' +
+    '// that keeps two copies alive exactly when the battle document starts parsing.\n' +
+    "let embeddedIndex = readFileSync(join(out, 'index.html'), 'utf8');\n" +
+    'const embeddedExpression = /const BATTLE_HTML_BASE64 = "[A-Za-z0-9+/=]*";/;\n' +
+    "if (!embeddedExpression.test(embeddedIndex)) throw new Error('Embedded battle payload marker not found');\n" +
+    `embeddedIndex = embeddedIndex.replace(embeddedExpression, 'const BATTLE_HTML_BASE64 = "";');\n` +
+    "writeFileSync(join(out, 'index.html'), embeddedIndex);\n" +
+    "console.log('Battle runtime served from battle.html; embedded base64 payload disabled.');\n" +
+    'console.log(`Static preview written to ${out}`);\n'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/b5f6a75b3ba7/luc-than/tests/deploy-artifact.test.mjs:38:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'import { cpSync, mkdirSync, rmSync, existsSync, copyFileSync, statSync, readFileSync, writeFileSync } from \'node:fs\';\nimport { join } from \'node:path\';\nimport { assembleLucAnhIdle } from \'./luc-anh-idle-asset.mjs\';\n\nconst root = process.cwd();\nawait assembleLucAnhIdle(root);\nconst out = join(root, \'dist\');\nrmSync(out, { recursive: true, force: true });\nmkdirSync(out, { recursive: true });\n\nconst entries = [\n  \'index.html\',\n  \'battle.html\',\n  \'qa-dinh-loi-spacing.html\',\n  \'qa-runtime.html\',\n  \'skill-test.html\',\n  \'skill-test-evidence.js\',\n  \'splus-lab.html\',\n  \'assets\'\n];\n\nfor (const entry of entries) {\n  const src = join(root, entry);\n  if (!existsSync(src)) continue;\n  const dest = join(out, entry);\n  const stats = statSync(src);\n  if (stats.isDirectory()) cpSync(src, dest, { recursive: true });\n  else { mkdirSync(join(dest, \'..\'), { recursive: true }); copyFileSync(src, dest); }\n}\n\nconst { buildOngPhoPngRecovery } = await import(\'./ong-pho-original-png-recovery.mjs\');\nbuildOngPhoPngRecovery(out);\nawait import(\'./luc-anh-runtime-patch.mjs\');\nawait import(\'./lanes/tkt-0088-skip.mjs\');\nawait import(\'./runtime-safety-hotfix.mjs\');\nawait import(\'./bgm-runtime-patch.mjs\');\nawait import(\'./ios-audio-unlock-patch.mjs\');\nawait import(\'./result-audio-runtime-v1.mjs\');\nawait import(\'./luc-anh-retina-sharpness-patch.mjs\');\nawait import(\'./runtime-qa-polish-v2.mjs\');\nawait import(\'./runtime-qa-polish-v4.mjs\');\nawait import(\'./runtime-qa-polish-v5.mjs\');\nawait import(\'./luc-anh-spatial-pipeline-v1.mjs\');\nawait import(\'./luc-anh-idle-1080-v1.mjs\');\nawait import(\'./skill-atlas-runtime-v1.mjs\');\nawait import(\'./skill-atlas-registry-v1.mjs\');\nawait import(\'./luc-anh-local-speed-v1.mjs\');\nawait import(\'./battle-visual-polish-v1.mjs\');\nawait import(\'./battle-backgrounds-20-v1.mjs\');\nawait import(\'./combat-domain-3q-adapter-v1.mjs\');\nawait import(\'./quest-system-3q-v1.mjs\');\nawait import(\'./runtime-result-actions-v5.mjs\');\nawait import(\'./m0-p0-runtime-repair-v1.mjs\');\nawait import(\'./summon-pool-guard-v1.mjs\');\nawait import(\'./hero-roster-phase-a-v4.mjs\');\nawait import(\'./hero-detail-tabs.mjs\');\nawait import(\'./runtime-mobile-render-sfx-v1.mjs\');\nawait import(\'./dinh-loi-retina-portrait-v1.mjs\');\nawait import(\'./skill-kit-runtime-v1.mjs\');\nawait import(\'./save-contract-v1.mjs\');\nawait import(\'./transaction-contract-v1.mjs\');\nawait import(\'./afk-chest-runtime-v1.mjs\');\nawait import(\'./forge-item-assets-v1.mjs\');\nawait import(\'./settlement-navigation-v1.mjs\');\nawait import(\'./return-context-v1.mjs\');\nawait import(\'./opening-loop-v1.mjs\');\nawait import(\'./qa-full-access-v1.mjs\');\nawait import(\'./hub-dock-tray-v1.mjs\');\nawait import(\'./hub-responsive-visibility-v1.mjs\');\nawait import(\'./hub-icon-alpha-hotfix-v1.mjs\');\nawait import(\'./battle-responsive-luc-anh-audio-v1.mjs\');\nawait import(\'./battle-audio-lifecycle-v1.mjs\');\nawait import(\'./battle-phase1-trace-v1.mjs\');\nconst { buildSplusRuntime } = await import(\'./splus-runtime-v1.mjs\');\nbuildSplusRuntime(root);\nawait import(\'./campaign-reference-flow-v1.mjs\');\nawait import(\'./campaign-fixed-slots-v1.mjs\');\nawait import(\'./account-gear-v1.mjs\');\nawait import(\'./tower-runtime-v1.mjs\');\nawait import(\'./expedition-runtime-v1.mjs\');\nawait import(\'./shop-runtime-v1.mjs\');\nawait import(\'./summon-runtime-v1.mjs\');\nawait import(\'./arena-runtime-v1.mjs\');\nawait import(\'./hunt-runtime-v1.mjs\');\nawait import(\'./festival-runtime-v1.mjs\');\nawait import(\'./daily-runtime-v1.mjs\');\nawait import(\'./forge-hall-v1.mjs\');\nawait import(\'./preview-journey-unlock-v1.mjs\');\nawait import(\'./lanes/tkt-0037-bag.mjs\');\nawait import(\'./lanes/tkt-0038-mail.mjs\');\nawait import(\'./lanes/tkt-0039-jobs.mjs\');\nawait import(\'./lanes/tkt-0040-guild.mjs\');\nawait import(\'./lanes/tkt-0041-friends.mjs\');\nawait import(\'./lanes/tkt-0042-chat.mjs\');\nawait import(\'./lanes/tkt-0043-clan.mjs\');\nawait import(\'./lanes/tkt-0044-vault.mjs\');\nawait import(\'./lanes/tkt-0046-tower.mjs\');\nawait import(\'./lanes/tkt-0047-expedition.mjs\');\nawait import(\'./lanes/tkt-0048-shop.mjs\');\nawait import(\'./lanes/tkt-0049-summon.mjs\');\nawait import(\'./lanes/tkt-0050-arena.mjs\');\nawait import(\'./lanes/tkt-0051-hunt.mjs\');\nawait import(\'./lanes/tkt-0052-festival.mjs\');\nawait import(\'./lanes/tkt-0053-hero-detail.mjs\');\nawait import(\'./lanes/tkt-0054-daily.mjs\');\nawait import(\'./lanes/tkt-0055-campaign.mjs\');\nawait import(\'./lanes/tkt-0056-journey.mjs\');\nawait import(\'./lanes/tkt-0057-end.mjs\');\n// WAVE-G 2026-09-12 TKT-0058…0063 — fill stubs; do not add imports.\n// Keep AFTER tkt-0057-end.mjs.\nawait import(\'./lanes/tkt-0058-story.mjs\');\nawait import(\'./lanes/tkt-0059-net.mjs\');\nawait import(\'./lanes/tkt-0060-team.mjs\');\nawait import(\'./lanes/tkt-0061-skill-seals-a.mjs\');\nawait import(\'./lanes/tkt-0062-skill-seals-b.mjs\');\nawait import(\'./lanes/tkt-0063-skill-seals-c.mjs\');\n\n// SAFARI 2026-09-12 overlay pin — visualViewport + drop body.night containing-block.\n// Keep AFTER Wave G stubs. Do not restyle .cs-prepare.\nawait import(\'./overlay-safari-hotfix-v1.mjs\');\n\n// WAVE-H 2026-09-12 TKT-0065…0073 — fill stubs; do not add imports.\n// Keep AFTER overlay-safari-hotfix-v1.mjs. Do not touch journey-3d / end-3d.\nawait import(\'./lanes/tkt-0065-tower-battle.mjs\');\nawait import(\'./lanes/tkt-0066-hub-back.mjs\');\nawait import(\'./lanes/tkt-0067-train.mjs\');\nawait import(\'./lanes/tkt-0068-skill-seals-d.mjs\');\nawait import(\'./lanes/tkt-0069-challenge.mjs\');\nawait import(\'./lanes/tkt-0070-campaign-foes-a.mjs\');\nawait import(\'./lanes/tkt-0071-campaign-foes-b.mjs\');\nawait import(\'./lanes/tkt-0072-campaign-foes-c.mjs\');\nawait import(\'./lanes/tkt-0073-npc-busts.mjs\');\n\n// WAVE-I 2026-09-12 TKT-0074 Auth API — fill stub; do not add imports.\n// Same-origin /api on this Vercel project. Keep AFTER safari. Do not edit index.html.\nawait import(\'./lanes/tkt-0074-auth.mjs\');\n\n// WAVE-K 2026-09-12 TKT-0083 hồ sơ avatar / giftcode / cài đặt.\n// Keep AFTER auth. Capture #hubScreen .art-avatar. Do not edit index.html.\nawait import(\'./lanes/tkt-0083-profile.mjs\');\n\n// WAVE-S 2026-09-13 TKT-0108 Lục Thần lore — Chinh chiến sáu ấn. Keep AFTER profile.\nawait import(\'./lanes/tkt-0108-lore.mjs\');\n\n// WAVE-S 2026-09-13 TKT-0109 Bách Bảo Rương Kiếm Thế. Keep AFTER lore.\nawait import(\'./lanes/tkt-0109-bbr.mjs\');\n\n// WAVE-S 2026-09-13 TKT-0111 economy drip Tinh/Hoạt + nhãn B/A/S/S+.\nawait import(\'./lanes/tkt-0111-econ.mjs\');\n\n// TKT-0118 — player EXP and level gates; after all campaign/reward owners.\nawait import(\'./player-progress-v1.mjs\');\n\n// Bound Linh Đồng texture memory in both documents before syncing the iframe payload.\nconst { installLinhDongMemory } = await import(\'./linh-dong-memory-v1.mjs\');\ninstallLinhDongMemory(root);\n\n// TKT-0145: patch the current main battle/index after memory binding so the\n// canonical Linh Đồng bridge owns the final rendered payload.\nawait import(\'./linh-dong-timing-main-v1.mjs\');\nawait import(\'./bach-dien-canvas-runtime-v1.mjs\');\n\n// Bạch Diện Extreme v6 must be injected after legacy battle patch owners so\n// a later Linh Đồng/S+ patch cannot silently remove its closure-local helpers.\nawait import(\'./bach-dien-runtime-v6.mjs\');\n\n// TKT-0158 — host owns combat BGM on Xuất chiến; do not autoplay iframe HTMLAudio.\nawait import(\'./battle-enter-audio-v1.mjs\');\n\n// iPhone/iPadOS: avoid the large nested battle iframe and use the existing full-page return flow.\nawait import(\'./ios-battle-direct-enter-v1.mjs\');\n\n// Per-skill movement must follow canonical hero branches and precede iframe sync.\nawait import(\'./battle-skill-movement-v1.mjs\');\n\n// Readiness and build-sized atlases must precede the single iframe synchronization.\nconst { buildBattleReadiness } = await import(\'./battle-asset-readiness-v1.mjs\');\nawait buildBattleReadiness(root);\n\n// Result-screen motion runs after readiness so large authored atlases can reuse\n// any build-sized variants before the final iframe payload is synchronized.\nawait import(\'./result-character-motion-v1.mjs\');\n\n// Final battle visual profile: keep authored clocks, but lower iOS canvas/atlas pressure.\nconst { buildBattleMobilePressure } = await import(\'./battle-mobile-pressure-v1.mjs\');\nawait buildBattleMobilePressure(root);\n\n// Low-memory campaign derivatives are generated before lifetime ownership is finalized.\nconst { installCampaignMobileAtlases } = await import(\'./campaign-mobile-atlas-v1.mjs\');\nawait installCampaignMobileAtlases(root);\n\n// Repair campaign image ownership after all late host patch owners.\nconst { installCampaignResourceLifecycle } = await import(\'./campaign-resource-lifecycle-v1.mjs\');\ninstallCampaignResourceLifecycle(root);\n\n// P0 iOS entry: battle state must start even when AudioContext fails.\nawait import(\'./battle-entry-fail-open-v1.mjs\');\n\n// Final battle-only presentation patch. Keep after every owner that rewrites battle.html.\nawait import(\'./combat-reference-presentation-v1.mjs\');\nawait import(\'./battle-formation-scale-v1.mjs\');\nawait import(\'./thay-mo-authored-production-v1.mjs\');\nawait import(\'./authored-vfx-clock-v1.mjs\');\nawait import(\'./legacy-authored-readiness-v1.mjs\');\nawait import(\'./combat-authored-qa-v1.mjs\');\n\n// battle.html is now the single runtime source for iframe and iOS full-page combat.\n// Do not duplicate ~1.5 MB of battle markup as base64 inside index.html; on mobile\n// that keeps two copies alive exactly when the battle document starts parsing.\nlet embeddedIndex = readFileSync(join(out, \'index.html\'), \'utf8\');\nconst embeddedExpression = /const BATTLE_HTML_BASE64 = "[A-Za-z0-9+/=]*";/;\nif (!embeddedExpression.test(embeddedIndex)) throw new Error(\'Embedded battle payload marker not found\');\nembeddedIndex = embeddedIndex.replace(embeddedExpression, \'const BATTLE_HTML_BASE64 = "";\');\nwriteFileSync(join(out, \'index.html\'), embeddedIndex);\nconsole.log(\'Battle runtime served from battle.html; embedded base64 payload disabled.\');\nconsole.log(`Static preview written to ${out}`);\n',
+    expected: /embeddedBattle/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/mobile-render-sfx.test.mjs:177:1
+✖ built battle keeps opaque canvas and stable camera; all inline JS parses (74.73445ms)
+  TypeError: Cannot read properties of null (reading '1')
+      at TestContext.<anonymous> (file:///workspace/scratch/b5f6a75b3ba7/luc-than/tests/mobile-render-sfx.test.mjs:186:76)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/qa-full-access.test.mjs:8:1
+✖ QA full access bypasses campaign progression gates without changing the normal-route gate owner (2.6248ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /return \{\.\.base,ok:true,code:'OPEN',qaBypass:true\}/. Input:
+  
+  '<!DOCTYPE html>\n' +
+    '<!-- Hồn Việt: Mộng Giới 1.0.2 — offline static-folder build --><html lang="vi"><head>\n' +
+    '<script id="honviet-ios-audio-unlock">\n' +
+    '(()=>{\n' +
+    '  if(window.HonVietAudio)return;\n' +
+    '  const AC=window.AudioContext||window.webkitAudioContext;\n' +
+    '  let ctx=window.__HV_EARLY_CTX||null, unlocked=false, unlockPromise=null;\n' +
+    '  try{\n' +
+    '    if(!ctx&&AC)ctx=new AC();\n' +
+    '    window.__HV_EARLY_CTX=ctx;\n' +
+    "    if(ctx&&ctx.state==='suspended')ctx.resume();\n" +
+    '    if(ctx){\n' +
+    '      const b=ctx.createBuffer(1,1,22050),s=ctx.createBufferSource();\n' +
+    '      s.buffer=b;s.connect(ctx.destination);s.start(0);\n' +
+    '    }\n' +
+    '  }catch(_e){}\n' +
+    '  const buffers=new Map();\n' +
+    '  const loads=new Map();\n' +
+    '  const activeVoices=new Set();\n' +
+    '  let combatEpoch=0,combatEnabled=true;\n' +
+    '  function beginCombat(){combatEnabled=true;}\n' +
+    '  function stopCombat(){\n' +
+    '    combatEnabled=false;combatEpoch++;\n' +
+    '    for(const voice of activeVoices)if(voice.combat){voice.stop();voice.cleanup();}\n' +
+    '    document.documentElement.dataset.voiceCombatActive=String([...activeVoices].filter(v=>v.combat).length);\n' +
+    '  }\n' +
+    '  const voiceUrls=[\n' +
+    "    'assets/audio/voice-luc-anh-hero.mp3',\n" +
+    "    'assets/audio/voice-luc-anh-ultimate.mp3'\n" +
+    '  ];\n' +
+    '  function getCtx(){\n' +
+    '    if(!ctx) ctx=window.__HV_EARLY_CTX||(AC?new AC():null);\n' +
+    '    if(ctx) window.__HV_EARLY_CTX=ctx;\n' +
+    '    return ctx;\n' +
+    '  }\n' +
+    '  async function decode(url){\n' +
+    '    if(buffers.has(url))return buffers.get(url);\n' +
+    '    if(loads.has(url))return loads.get(url);\n' +
+    '    const c=getCtx();\n' +
+    "    if(!c)throw new Error('AudioContext unavailable');\n" +
+    "    const p=fetch(url,{cache:'force-cache'})\n" +
+    "      .then(r=>{if(!r.ok)throw new Error('audio '+r.status);return r.arrayBuffer();})\n" +
+    '      .then(b=>c.decodeAudioData(b))\n' +
+    '      .then(buf=>{buffers.set(url,buf);loads.delete(url);return buf;})\n' +
+    '      .catch(e=>{loads.delete(url);throw e;});\n' +
+    '    loads.set(url,p);return p;\n' +
+    '  }\n' +
+    '  async function unlock(){\n' +
+    '    if(unlocked){\n' +
+    '      const c=getCtx();\n' +
+    "      if(c&&c.state==='suspended')try{await c.resume();}catch(_e){}\n" +
+    '      return true;\n' +
+    '    }\n' +
+    '    if(unlockPromise)return unlockPromise;\n' +
+    '    unlockPromise=(async()=>{\n' +
+    '      const c=getCtx();\n' +
+    '      if(c){\n' +
+    "        try{if(c.state==='suspended')await c.resume();}catch(_e){}\n" +
+    '        try{\n' +
+    '          const b=c.createBuffer(1,1,22050),s=c.createBufferSource();\n' +
+    '          s.buffer=b;s.connect(c.destination);s.start(0);\n' +
+    '        }catch(_e){}\n' +
+    '      }\n' +
+    '      // Unlock only Web Audio here. A pending muted play() on an app-owned\n' +
+    '      // HTMLMediaElement can settle after its source changes to combat BGM,\n' +
+    '      // then pause and rewind the live track. Each media owner starts its own\n' +
+    "      // track synchronously from the user's interaction instead.\n" +
+    '      unlocked=true;\n' +
+    "      document.documentElement.dataset.audioUnlocked='1';\n" +
+    '      voiceUrls.forEach(u=>decode(u).catch(()=>{}));\n' +
+    '      return true;\n' +
+    '    })().finally(()=>{unlockPromise=null;});\n' +
+    '    return unlockPromise;\n' +
+    '  }\n' +
+    '  async function playVoice(url,gainValue=1){\n' +
+    "    const combat=String(url).includes('voice-luc-anh-ultimate.mp3'),ticket=combatEpoch;\n" +
+    '    const current=()=>!combat||(combatEnabled&&ticket===combatEpoch);\n' +
+    '    if(!current())return false;\n' +
+    '    await unlock();\n' +
+    '    if(!current())return false;\n' +
+    '    const c=getCtx();\n' +
+    '    if(!c)return false;\n' +
+    '    try{\n' +
+    '      const buf=await decode(url);\n' +
+    '      if(!current())return false;\n' +
+    "      if(c.state==='suspended')await c.resume();\n" +
+    '      if(!current())return false;\n' +
+    '      const src=c.createBufferSource(),gain=c.createGain();\n' +
+    '      src.buffer=buf;gain.gain.value=Math.max(0,Number(gainValue)||1);\n' +
+    '      src.connect(gain);gain.connect(c.destination);\n' +
+    '      const voice={combat,stop(){try{src.stop();}catch(_e){}},cleanup(){if(!activeVoices.delete(voice))return;src.disconnect();gain.disconnect();document.documentElement.dataset.voiceCombatActive=String([...activeVoices].filter(v=>v.combat).length);}};\n' +
+    '      src.onended=voice.cleanup;activeVoices.add(voice);src.start(0);\n' +
+    '      document.documentElement.dataset.voiceCombatActive=String([...activeVoices].filter(v=>v.combat).length);\n' +
+    '      return true;\n' +
+    '    }catch(_e){\n' +
+    '      if(!current())return false;\n' +
+    '      try{\n' +
+    "        const a=new Audio(url);a.preload='auto';a.volume=1;\n" +
+    '        const voice={combat,stop(){a.pause();a.currentTime=0;},cleanup(){activeVoices.delete(voice);}};\n' +
+    '        a.onended=voice.cleanup;activeVoices.add(voice);\n' +
+    '        try{await a.play();return current();}catch(_e2){voice.cleanup();return false;}\n' +
+    '      }catch(_e2){return false;}\n' +
+    '    }\n' +
+    '  }\n' +
+    '  let musicEpoch=0,musicCurrent=null,musicVolume=0.34;\n' +
+    '  const clampVolume=value=>Math.max(0,Math.min(1,Number(value)||0));\n' +
+    '  function setMusicVolume(value){\n' +
+    '    musicVolume=clampVolume(value);\n' +
+    '    const track=musicCurrent;\n' +
+    "    if(track&&track.category==='bgm')try{track.gain.gain.value=musicVolume;}catch(_e){}\n" +
+    '    return musicVolume;\n' +
+    '  }\n' +
+    '  function fadeTrack(track,fadeMs,now){\n' +
+    '    if(!track)return;\n' +
+    '    const seconds=Math.max(0,Number(fadeMs)||0)/1000;\n' +
+    '    try{\n' +
+    '      track.gain.gain.cancelScheduledValues?.(now);\n' +
+    '      track.gain.gain.setValueAtTime?.(track.gain.gain.value,now);\n' +
+    '      if(seconds)track.gain.gain.linearRampToValueAtTime?.(0,now+seconds);\n' +
+    '      else track.gain.gain.value=0;\n' +
+    '      track.source.stop(now+seconds+0.02);\n' +
+    '    }catch(_e){try{track.source.stop();}catch(_e2){}}\n' +
+    '  }\n' +
+    '  async function playMusic(url,options={}){\n' +
+    "    const src=String(url||'');\n" +
+    '    if(!src)return false;\n' +
+    "    const loop=options.loop!==false,category=options.category||'bgm';\n" +
+    "    const volume=category==='bgm'?(options.volume==null?musicVolume:clampVolume(options.volume)):clampVolume(options.volume==null?1:options.volume);\n" +
+    '    const fadeMs=Math.max(0,Math.min(1500,Number(options.fadeMs??260)||0));\n' +
+    '    if(musicCurrent?.url===src&&musicCurrent.loop===loop){\n' +
+    "      if(category==='bgm')setMusicVolume(volume);\n" +
+    '      return true;\n' +
+    '    }\n' +
+    '    const ticket=++musicEpoch,c=getCtx();\n' +
+    '    if(!c||!unlocked)return false;\n' +
+    '    let buffer;\n' +
+    '    try{buffer=await decode(src);}catch(_e){return false;}\n' +
+    "    if(ticket!==musicEpoch||c.state!=='running')return false;\n" +
+    '    const source=c.createBufferSource(),gain=c.createGain(),old=musicCurrent;\n' +
+    '    const now=Number(c.currentTime)||0,seconds=fadeMs/1000;\n' +
+    '    source.buffer=buffer;source.loop=loop;gain.gain.value=0;\n' +
+    '    source.connect(gain);gain.connect(c.destination);\n' +
+    '    try{\n' +
+    '      gain.gain.setValueAtTime?.(0,now);\n' +
+    '      if(seconds)gain.gain.linearRampToValueAtTime?.(volume,now+seconds);\n' +
+    '      else gain.gain.value=volume;\n' +
+    '    }catch(_e){gain.gain.value=volume;}\n' +
+    '    const track={source,gain,url:src,loop,category,volume};\n' +
+    '    source.onended=()=>{\n' +
+    '      try{source.disconnect();gain.disconnect();}catch(_e){}\n' +
+    '      if(musicCurrent===track)musicCurrent=null;\n' +
+    '    };\n' +
+    '    musicCurrent=track;\n' +
+    '    try{source.start(0);}catch(_e){musicCurrent=old;return false;}\n' +
+    '    if(old)fadeTrack(old,fadeMs,now);\n' +
+    '    document.documentElement.dataset.musicTrack=src;\n' +
+    "    document.documentElement.dataset.musicActive='1';\n" +
+    '    return true;\n' +
+    '  }\n' +
+    '  function stopMusic(options={}){\n' +
+    '    musicEpoch++;\n' +
+    '    if(options.keepCurrent)return;\n' +
+    '    const track=musicCurrent;if(!track)return;\n' +
+    '    musicCurrent=null;\n' +
+    '    fadeTrack(track,options.fadeMs??120,Number(getCtx()?.currentTime)||0);\n' +
+    "    document.documentElement.dataset.musicActive='0';\n" +
+    "    document.documentElement.dataset.musicTrack='';\n" +
+    '  }\n' +
+    '  const getMusic=()=>musicCurrent;\n' +
+    '  window.HonVietAudio={unlock,playVoice,beginCombat,stopCombat,playMusic,stopMusic,setMusicVolume,music:getMusic,preload:(u)=>decode(u),isUnlocked:()=>unlocked,context:()=>getCtx()};\n' +
+    '\n' +
+    '  // Keep unlocking on every gesture until the context is running. Full-page\n' +
+    '  // battle.html on iOS often misses the original Xuất chiến tap.\n' +
+    '  const firstGesture=()=>{\n' +
+    '    // Start a direct-battle HTMLMediaElement synchronously in the gesture before awaiting AudioContext.resume().\n' +
+    '    try{const p=window.__HV_BATTLE_BGM?.play?.();p?.catch?.(()=>{});}catch(_e){}\n' +
+    '    unlock().then(()=>{\n' +
+    '      try{window.__HV_BGM_RETRY?.();}catch(_e){}\n' +
+    '      try{window.__HV_BATTLE_BGM?.play?.();}catch(_e){}\n' +
+    '    }).catch(()=>{});\n' +
+    '  };\n' +
+    "  ['pointerdown','touchstart','touchend','click','keydown'].forEach(t=>\n" +
+    '    document.addEventListener(t,firstGesture,{capture:true,passive:true})\n' +
+    '  );\n' +
+    '\n' +
+    '  // Resume again after iOS returns from background / tab switch.\n' +
+    "  document.addEventListener('visibilitychange',()=>{\n" +
+    "    if(document.visibilityState==='visible'){\n" +
+    '      const c=getCtx();\n' +
+    "      if(c&&c.state==='suspended')c.resume().catch(()=>{});\n" +
+    '      try{window.__HV_BATTLE_BGM?.play?.();}catch(_e){}\n' +
+    '    }\n' +
+    '  });\n' +
+    '})();\n' +
+    '/* hv-main-quest-v1-runtime */\n' +
+    '(()=> {\n' +
+    '  const __hvMainQuestModule = (()=> {\n' +
+    "const MAIN_QUEST_SCHEMA = 'hon-viet-main-quest/v1';\n" +
+    '\n' +
+    'function integer(value, fallback = 0) {\n' +
+    '  const n = Number(value);\n' +
+    '  return Number.isFinite(n) ? Math.round(n) : fallback;\n' +
+    '}\n' +
+    '\n' +
+    'function clamp(value, min, max) {\n' +
+    '  return Math.max(min, Math.min(max, value));\n' +
+    '}\n' +
+    '\n' +
+    'function uniqueStrings(value) {\n' +
+    '  return [...new Set((Array.isArray(value) ? value : []).map((item) => String(item)).filter(Boolean))];\n' +
+    '}\n' +
+    '\n' +
+    'function mainQuestId(chapterIndex, stageIndex) {\n' +
+    '  return `main:${Math.max(0, integer(chapterIndex))}:${Math.max(0, integer(stageIndex))}`;\n' +
+    '}\n' +
+    '\n' +
+    'function createMainQuestState(options = {}) {\n' +
+    '  return {\n' +
+    '    schema: MAIN_QUEST_SCHEMA,\n' +
+    '    chapterIndex: Math.max(0, integer(options.chapterIndex, 0)),\n' +
+    '    stageIndex: Math.max(0, integer(options.stageIndex, 0)),\n' +
+    '    progress: clamp(integer(options.progress, 0), 0, 1),\n' +
+    '    allComplete: options.allComplete === true,\n' +
+    '    campaignCycle: Math.max(1, integer(options.campaignCycle, 1)),\n' +
+    '    claimed: uniqueStrings(options.claimed),\n' +
+    '    history: Array.isArray(options.history) ? options.history.slice(-20) : []\n' +
+    '  };\n' +
+    '}\n' +
+    '\n' +
+    'function normalizeMainQuestState(input = {}, options = {}) {\n' +
+    '  const chapterCount = Math.max(0, integer(options.chapterCount, 0));\n' +
+    '  const state = createMainQuestState(input);\n' +
+    '  if (chapterCount > 0) {\n' +
+    '    state.chapterIndex = clamp(state.chapterIndex, 0, chapterCount - 1);\n' +
+    "    const stageCount = typeof options.stageCount === 'function'\n" +
+    '      ? Math.max(1, integer(options.stageCount(state.chapterIndex), 1))\n' +
+    '      : Math.max(1, integer(options.stageCount, 1));\n' +
+    '    state.stag'... 1950797 more characters
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/b5f6a75b3ba7/luc-than/tests/qa-full-access.test.mjs:12:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '<!DOCTYPE html>\n<!-- Hồn Việt: Mộng Giới 1.0.2 — offline static-folder build --><html lang="vi"><head>\n<script id="honviet-ios-audio-unlock">\n(()=>{\n  if(window.HonVietAudio)return;\n  const AC=window.AudioContext||window.webkitAudioContext;\n  let ctx=window.__HV_EARLY_CTX||null, unlocked=false, unlockPromise=null;\n  try{\n    if(!ctx&&AC)ctx=new AC();\n    window.__HV_EARLY_CTX=ctx;\n    if(ctx&&ctx.state===\'suspended\')ctx.resume();\n    if(ctx){\n      const b=ctx.createBuffer(1,1,22050),s=ctx.createBufferSource();\n      s.buffer=b;s.connect(ctx.destination);s.start(0);\n    }\n  }catch(_e){}\n  const buffers=new Map();\n  const loads=new Map();\n  const activeVoices=new Set();\n  let combatEpoch=0,combatEnabled=true;\n  function beginCombat(){combatEnabled=true;}\n  function stopCombat(){\n    combatEnabled=false;combatEpoch++;\n    for(const voice of activeVoices)if(voice.combat){voice.stop();voice.cleanup();}\n    document.documentElement.dataset.voiceCombatActive=String([...activeVoices].filter(v=>v.combat).length);\n  }\n  const voiceUrls=[\n    \'assets/audio/voice-luc-anh-hero.mp3\',\n    \'assets/audio/voice-luc-anh-ultimate.mp3\'\n  ];\n  function getCtx(){\n    if(!ctx) ctx=window.__HV_EARLY_CTX||(AC?new AC():null);\n    if(ctx) window.__HV_EARLY_CTX=ctx;\n    return ctx;\n  }\n  async function decode(url){\n    if(buffers.has(url))return buffers.get(url);\n    if(loads.has(url))return loads.get(url);\n    const c=getCtx();\n    if(!c)throw new Error(\'AudioContext unavailable\');\n    const p=fetch(url,{cache:\'force-cache\'})\n      .then(r=>{if(!r.ok)throw new Error(\'audio \'+r.status);return r.arrayBuffer();})\n      .then(b=>c.decodeAudioData(b))\n      .then(buf=>{buffers.set(url,buf);loads.delete(url);return buf;})\n      .catch(e=>{loads.delete(url);throw e;});\n    loads.set(url,p);return p;\n  }\n  async function unlock(){\n    if(unlocked){\n      const c=getCtx();\n      if(c&&c.state===\'suspended\')try{await c.resume();}catch(_e){}\n      return true;\n    }\n    if(unlockPromise)return unlockPromise;\n    unlockPromise=(async()=>{\n      const c=getCtx();\n      if(c){\n        try{if(c.state===\'suspended\')await c.resume();}catch(_e){}\n        try{\n          const b=c.createBuffer(1,1,22050),s=c.createBufferSource();\n          s.buffer=b;s.connect(c.destination);s.start(0);\n        }catch(_e){}\n      }\n      // Unlock only Web Audio here. A pending muted play() on an app-owned\n      // HTMLMediaElement can settle after its source changes to combat BGM,\n      // then pause and rewind the live track. Each media owner starts its own\n      // track synchronously from the user\'s interaction instead.\n      unlocked=true;\n      document.documentElement.dataset.audioUnlocked=\'1\';\n      voiceUrls.forEach(u=>decode(u).catch(()=>{}));\n      return true;\n    })().finally(()=>{unlockPromise=null;});\n    return unlockPromise;\n  }\n  async function playVoice(url,gainValue=1){\n    const combat=String(url).includes(\'voice-luc-anh-ultimate.mp3\'),ticket=combatEpoch;\n    const current=()=>!combat||(combatEnabled&&ticket===combatEpoch);\n    if(!current())return false;\n    await unlock();\n    if(!current())return false;\n    const c=getCtx();\n    if(!c)return false;\n    try{\n      const buf=await decode(url);\n      if(!current())return false;\n      if(c.state===\'suspended\')await c.resume();\n      if(!current())return false;\n      const src=c.createBufferSource(),gain=c.createGain();\n      src.buffer=buf;gain.gain.value=Math.max(0,Number(gainValue)||1);\n      src.connect(gain);gain.connect(c.destination);\n      const voice={combat,stop(){try{src.stop();}catch(_e){}},cleanup(){if(!activeVoices.delete(voice))return;src.disconnect();gain.disconnect();document.documentElement.dataset.voiceCombatActive=String([...activeVoices].filter(v=>v.combat).length);}};\n      src.onended=voice.cleanup;activeVoices.add(voice);src.start(0);\n      document.documentElement.dataset.voiceCombatActive=String([...activeVoices].filter(v=>v.combat).length);\n      return true;\n    }catch(_e){\n      if(!current())return false;\n      try{\n        const a=new Audio(url);a.preload=\'auto\';a.volume=1;\n        const voice={combat,stop(){a.pause();a.currentTime=0;},cleanup(){activeVoices.delete(voice);}};\n        a.onended=voice.cleanup;activeVoices.add(voice);\n        try{await a.play();return current();}catch(_e2){voice.cleanup();return false;}\n      }catch(_e2){return false;}\n    }\n  }\n  let musicEpoch=0,musicCurrent=null,musicVolume=0.34;\n  const clampVolume=value=>Math.max(0,Math.min(1,Number(value)||0));\n  function setMusicVolume(value){\n    musicVolume=clampVolume(value);\n    const track=musicCurrent;\n    if(track&&track.category===\'bgm\')try{track.gain.gain.value=musicVolume;}catch(_e){}\n    return musicVolume;\n  }\n  function fadeTrack(track,fadeMs,now){\n    if(!track)return;\n    const seconds=Math.max(0,Number(fadeMs)||0)/1000;\n    try{\n      track.gain.gain.cancelScheduledValues?.(now);\n      track.gain.gain.setValueAtTime?.(track.gain.gain.value,now);\n      if(seconds)track.gain.gain.linearRampToValueAtTime?.(0,now+seconds);\n      else track.gain.gain.value=0;\n      track.source.stop(now+seconds+0.02);\n    }catch(_e){try{track.source.stop();}catch(_e2){}}\n  }\n  async function playMusic(url,options={}){\n    const src=String(url||\'\');\n    if(!src)return false;\n    const loop=options.loop!==false,category=options.category||\'bgm\';\n    const volume=category===\'bgm\'?(options.volume==null?musicVolume:clampVolume(options.volume)):clampVolume(options.volume==null?1:options.volume);\n    const fadeMs=Math.max(0,Math.min(1500,Number(options.fadeMs??260)||0));\n    if(musicCurrent?.url===src&&musicCurrent.loop===loop){\n      if(category===\'bgm\')setMusicVolume(volume);\n      return true;\n    }\n    const ticket=++musicEpoch,c=getCtx();\n    if(!c||!unlocked)return false;\n    let buffer;\n    try{buffer=await decode(src);}catch(_e){return false;}\n    if(ticket!==musicEpoch||c.state!==\'running\')return false;\n    const source=c.createBufferSource(),gain=c.createGain(),old=musicCurrent;\n    const now=Number(c.currentTime)||0,seconds=fadeMs/1000;\n    source.buffer=buffer;source.loop=loop;gain.gain.value=0;\n    source.connect(gain);gain.connect(c.destination);\n    try{\n      gain.gain.setValueAtTime?.(0,now);\n      if(seconds)gain.gain.linearRampToValueAtTime?.(volume,now+seconds);\n      else gain.gain.value=volume;\n    }catch(_e){gain.gain.value=volume;}\n    const track={source,gain,url:src,loop,category,volume};\n    source.onended=()=>{\n      try{source.disconnect();gain.disconnect();}catch(_e){}\n      if(musicCurrent===track)musicCurrent=null;\n    };\n    musicCurrent=track;\n    try{source.start(0);}catch(_e){musicCurrent=old;return false;}\n    if(old)fadeTrack(old,fadeMs,now);\n    document.documentElement.dataset.musicTrack=src;\n    document.documentElement.dataset.musicActive=\'1\';\n    return true;\n  }\n  function stopMusic(options={}){\n    musicEpoch++;\n    if(options.keepCurrent)return;\n    const track=musicCurrent;if(!track)return;\n    musicCurrent=null;\n    fadeTrack(track,options.fadeMs??120,Number(getCtx()?.currentTime)||0);\n    document.documentElement.dataset.musicActive=\'0\';\n    document.documentElement.dataset.musicTrack=\'\';\n  }\n  const getMusic=()=>musicCurrent;\n  window.HonVietAudio={unlock,playVoice,beginCombat,stopCombat,playMusic,stopMusic,setMusicVolume,music:getMusic,preload:(u)=>decode(u),isUnlocked:()=>unlocked,context:()=>getCtx()};\n\n  // Keep unlocking on every gesture until the context is running. Full-page\n  // battle.html on iOS often misses the original Xuất chiến tap.\n  const firstGesture=()=>{\n    // Start a direct-battle HTMLMediaElement synchronously in the gesture before awaiting AudioContext.resume().\n    try{const p=window.__HV_BATTLE_BGM?.play?.();p?.catch?.(()=>{});}catch(_e){}\n    unlock().then(()=>{\n      try{window.__HV_BGM_RETRY?.();}catch(_e){}\n      try{window.__HV_BATTLE_BGM?.play?.();}catch(_e){}\n    }).catch(()=>{});\n  };\n  [\'pointerdown\',\'touchstart\',\'touchend\',\'click\',\'keydown\'].forEach(t=>\n    document.addEventListener(t,firstGesture,{capture:true,passive:true})\n  );\n\n  // Resume again after iOS returns from background / tab switch.\n  document.addEventListener(\'visibilitychange\',()=>{\n    if(document.visibilityState===\'visible\'){\n      const c=getCtx();\n      if(c&&c.state===\'suspended\')c.resume().catch(()=>{});\n      try{window.__HV_BATTLE_BGM?.play?.();}catch(_e){}\n    }\n  });\n})();\n/* hv-main-quest-v1-runtime */\n(()=> {\n  const __hvMainQuestModule = (()=> {\nconst MAIN_QUEST_SCHEMA = \'hon-viet-main-quest/v1\';\n\nfunction integer(value, fallback = 0) {\n  const n = Number(value);\n  return Number.isFinite(n) ? Math.round(n) : fallback;\n}\n\nfunction clamp(value, min, max) {\n  return Math.max(min, Math.min(max, value));\n}\n\nfunction uniqueStrings(value) {\n  return [...new Set((Array.isArray(value) ? value : []).map((item) => String(item)).filter(Boolean))];\n}\n\nfunction mainQuestId(chapterIndex, stageIndex) {\n  return `main:${Math.max(0, integer(chapterIndex))}:${Math.max(0, integer(stageIndex))}`;\n}\n\nfunction createMainQuestState(options = {}) {\n  return {\n    schema: MAIN_QUEST_SCHEMA,\n    chapterIndex: Math.max(0, integer(options.chapterIndex, 0)),\n    stageIndex: Math.max(0, integer(options.stageIndex, 0)),\n    progress: clamp(integer(options.progress, 0), 0, 1),\n    allComplete: options.allComplete === true,\n    campaignCycle: Math.max(1, integer(options.campaignCycle, 1)),\n    claimed: uniqueStrings(options.claimed),\n    history: Array.isArray(options.history) ? options.history.slice(-20) : []\n  };\n}\n\nfunction normalizeMainQuestState(input = {}, options = {}) {\n  const chapterCount = Math.max(0, integer(options.chapterCount, 0));\n  const state = createMainQuestState(input);\n  if (chapterCount > 0) {\n    state.chapterIndex = clamp(state.chapterIndex, 0, chapterCount - 1);\n    const stageCount = typeof options.stageCount === \'function\'\n      ? Math.max(1, integer(options.stageCount(state.chapterIndex), 1))\n      : Math.max(1, integer(options.stageCount, 1));\n    state.stag'... 1950797 more characters,
+    expected: /return \{\.\.base,ok:true,code:'OPEN',qaBypass:true\}/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/result-character-motion.test.mjs:9:1
+✖ result motion is installed after readiness and before iframe sync (4.803577ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(readiness >= 0 && motion > readiness && sync > motion)
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/b5f6a75b3ba7/luc-than/tests/result-character-motion.test.mjs:13:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/result-flow-integration.test.mjs:53:1
+✖ the embedded battle engine is byte-identical to battle.html (7.941361ms)
+  AssertionError [ERR_ASSERTION]: embedded battle payload
+      at TestContext.<anonymous> (file:///workspace/scratch/b5f6a75b3ba7/luc-than/tests/result-flow-integration.test.mjs:59:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/settlement-navigation.test.mjs:24:1
+✖ battle bridge protocol annotates every parent message and remains syntactically valid (7.062695ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  10 !== 9
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/b5f6a75b3ba7/luc-than/tests/settlement-navigation.test.mjs:28:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 10,
+    expected: 9,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/skill-cast-movement.test.mjs:192:1
+✖ final generated living-actor return awaits the movement owner for all four branches (7.189506ms)
+  ReferenceError: state is not defined
+      at evalmachine.<anonymous>:24:5
