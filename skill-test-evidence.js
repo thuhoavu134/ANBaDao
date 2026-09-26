@@ -7,6 +7,16 @@
   function install(frame){
     const w=frame.contentWindow;if(w.__authoredEvidenceInstalled)return;
     w.__authoredEvidenceInstalled=true;
+    // Also observe detached/lazily created HTMLAudioElement instances.
+    const mediaPlay=w.HTMLMediaElement.prototype.play;
+    w.HTMLMediaElement.prototype.play=function(...args){
+      const capture=current,src=this.currentSrc||this.src;
+      const entry=capture&&src.includes('voice-')?{kind:'voice-media',key:new URL(src).pathname,requestedMs:at(),played:null}:null;
+      if(entry){capture.audio.push(entry);this.addEventListener('playing',()=>{entry.played=!this.muted&&this.volume>0;entry.playingMs=Math.round(performance.now()-capture.t0);},{once:true});}
+      const result=mediaPlay.apply(this,args);
+      if(entry)Promise.resolve(result).catch(error=>{entry.played=false;entry.error=String(error);});
+      return result;
+    };
     // The original Lục Ảnh voice bridge first uses a real HTMLAudioElement.
     // Observe its playing event as well as the Web Audio fallback bus.
     for(const audio of frame.contentDocument.querySelectorAll('audio'))audio.addEventListener('playing',()=>{
@@ -44,7 +54,8 @@
   function finish(frame,row){
     if(!current)return;
     const w=frame.contentWindow;
-    const report={...current,durationMs:at(),complete:row.complete,error:row.error||null,trace:row.trace||[],after:w.__HON_VIET__.getUnits(),audioState:{...frame.contentDocument.documentElement.dataset},readiness:w.__HV_BATTLE_ASSET_QA?.events?.()||[]};
+    const voice=w.__HV_LUC_ANH_ULTIMATE_AUDIO_V2?.audio;
+    const report={...current,durationMs:at(),complete:row.complete,error:row.error||null,trace:row.trace||[],after:w.__HON_VIET__.getUnits(),audioState:{...frame.contentDocument.documentElement.dataset},readiness:w.__HV_BATTLE_ASSET_QA?.events?.()||[],voiceState:{bridgeAvailable:typeof w.__playLucAnhUltimateVoiceGuaranteed==='function',src:voice?.currentSrc||voice?.src,paused:voice?.paused,currentTime:voice?.currentTime,error:voice?.error?.code}};
     delete report.t0;current=null;runs.push(report);
     const el=document.getElementById('authoredEvidence');
     el.textContent=JSON.stringify({url:location.href,viewport:{width:innerWidth,height:innerHeight},runs},null,2);
