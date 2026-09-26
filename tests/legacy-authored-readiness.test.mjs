@@ -15,3 +15,16 @@ test('legacy cast waits for decoded original bytes and holds its cache lease thr
 test('cancelled legacy preparation cannot start the action and releases its pins',async()=>{
   const f=fixture(),abort=new AbortController();const p=f.gate.prepare({},'ultimate',abort.signal);abort.abort();await assert.rejects(p,{name:'AbortError'});assert.equal(f.released(),1);
 });
+
+test('RED: legacy audio is decoded before the action clock even when the owner has no atlas lease',async()=>{
+  const prepared=[];
+  const gate=createLegacyAuthoredReadiness({
+    cache:{retain:()=>()=>{}},
+    describe:()=>null,
+    sound:()=>({prepare:async(event)=>{prepared.push(event);return true;}}),
+    enabled:()=>true
+  });
+  const lease=await gate.prepare({},'skill',new AbortController().signal);
+  assert.deepEqual(prepared,['skill']);
+  lease.release();
+});
