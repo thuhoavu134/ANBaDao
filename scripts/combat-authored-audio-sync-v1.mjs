@@ -11,7 +11,8 @@ const diagnostics=[];
 function replaceOne(from,to,label){
   const count=html.split(from).length-1;
   diagnostics.push({label,count});
-  if(count===1)html=html.replace(from,to);
+  if(count!==1)throw new Error('AUTHORED_AUDIO_SYNC_ANCHOR:'+label+':'+count);
+  html=html.replace(from,to);
 }
 
 // Lục Ảnh: audible onset follows the actual release/VFX start; Ultimate voice stays independent.
@@ -60,6 +61,60 @@ replaceOne(
   "      setUnitState(actor,action==='ultimate'?'ultimate':'skill1',thayMoAction.totalMs);\n      void __hvScheduleAuthoredSfx(actor,action,thayMoAction.started+thayMoAction.releaseAt,'release:authored-marker',phase1ActionId,__hvActionAssets?.signal||null,'onset');\n      if(!await waitThayMoAuthoredMarker(thayMoAction,'release',battleId))return;\n      phase1Trace?.marker('release',{actionId:phase1ActionId,position:{x:actor.x,y:actor.y}});\n      if(!await waitThayMoAuthoredMarker(thayMoAction,'impact',battleId))return;",
   'thay-mo-release');
 
+
+
+function bindSplusAudioClock({title,hero,cap}){
+  replaceOne(
+    'function begin'+title+'Action(actor,action,target,battleId){',
+    'function begin'+title+'Action(actor,action,target,battleId,actionId=null){',
+    hero+'-begin-signature'
+  );
+  replaceOne(
+    'const info={action:normalized,actorId:actor.id,targetId:target?.id||null,battleId,startedAt:performance.now(),releasePlayed:false,impactResolved:false,clock:null};',
+    'const info={action:normalized,actorId:actor.id,targetId:target?.id||null,battleId,actionId,startedAt:performance.now(),releasePlayed:false,impactResolved:false,clock:null};',
+    hero+'-action-id'
+  );
+  replaceOne(
+    'info.assetSignal=actor._hvAssetLease?.signal;\\n  info.clock=create'+title+'TimelineController(normalized,',
+    'info.assetSignal=actor._hvAssetLease?.signal;\\n  void play'+title+'Sfx(normalized,info);\\n  info.clock=create'+title+'TimelineController(normalized,',
+    hero+'-pre-schedule'
+  );
+  replaceOne(
+    "function play"+title+"Sfx(action,info){\\n  const normalized=normalize"+title+"Action(action);\\n  if(!normalized)return Promise.resolve(false);\\n  return __hvBattleAssets.playSfx(info||{battleId:state.battleId},normalized==='ultimate'?'"+hero+"-ult':'"+hero+"-atk');\\n}",
+    "function play"+title+"Sfx(action,info){\\n  const normalized=normalize"+title+"Action(action);\\n  if(!normalized)return Promise.resolve(false);\\n  const timeline="+cap+"_TIMELINE[normalized];\\n  const item=info||{battleId:state.battleId,startedAt:performance.now(),actionId:null};\\n  const cuePerformanceMs=(Number(item.startedAt)||performance.now())+(Number(timeline?.releaseMs)||0);\\n  return __hvBattleAssets.playSfx(item,normalized==='ultimate'?'"+hero+"-ult':'"+hero+"-atk',{actionId:item.actionId||null,cue:'release:authored-marker',cuePerformanceMs,sampleCue:'onset'});\\n}",
+    hero+'-timed-play-owner'
+  );
+  replaceOne(
+    "info.releasePlayed=true;info.clock.advance("+cap+"_TIMELINE[info.action].releaseMs);start"+title+"Fx(info.action,getUnit(info.actorId),getUnit(info.targetId),info);play"+title+"Sfx(info.action,info);return true;",
+    "info.releasePlayed=true;info.clock.advance("+cap+"_TIMELINE[info.action].releaseMs);start"+title+"Fx(info.action,getUnit(info.actorId),getUnit(info.targetId),info);return true;",
+    hero+'-release-no-replay'
+  );
+}
+
+bindSplusAudioClock({title:'LinhDong',hero:'linh-dong',cap:'LINH_DONG'});
+bindSplusAudioClock({title:'BachDien',hero:'bach-dien',cap:'BACH_DIEN'});
+
+replaceOne(
+  'const linhAction=beginLinhDongAction(actor,action,target,battleId);',
+  'const linhAction=beginLinhDongAction(actor,action,target,battleId,phase1ActionId);',
+  'linh-dong-canonical-action-id'
+);
+replaceOne(
+  "const linhAction=linh&&typeof beginLinhDongAction==='function'?beginLinhDongAction(actor,action,target,battleId):null;",
+  "const linhAction=linh&&typeof beginLinhDongAction==='function'?beginLinhDongAction(actor,action,target,battleId,presentationId):null;",
+  'linh-dong-splus-action-id'
+);
+replaceOne(
+  'const bachAction=beginBachDienAction(actor,action,target,battleId);',
+  'const bachAction=beginBachDienAction(actor,action,target,battleId,phase1ActionId);',
+  'bach-dien-canonical-action-id'
+);
+replaceOne(
+  "const bachAction=!linhAction&&bach&&typeof beginBachDienAction==='function'?beginBachDienAction(actor,action,target,battleId):null;",
+  "const bachAction=!linhAction&&bach&&typeof beginBachDienAction==='function'?beginBachDienAction(actor,action,target,battleId,presentationId):null;",
+  'bach-dien-splus-action-id'
+);
+
 // Remove only the legacy injected Lục Ảnh ultimate SFX if an earlier audio patch added it next to the guaranteed voice call.
 html=html.replace('window.__playLucAnhUltimateVoiceGuaranteed?.();playActionSound(actor,"ultimate");','window.__playLucAnhUltimateVoiceGuaranteed?.();');
 
@@ -67,9 +122,15 @@ const validation={
   lucImmediate:/LUC_ANH_META\.attack\.frames\*LUC_ANH_META\.attack\.ms\);playActionSound/.test(html),
   dinhImmediate:/DINH_LOI_ACTION_MS\);playActionSound/.test(html),
   ongImmediate:/ONG_PHO_SKILL1_MS\); playActionSound/.test(html),
+  splusReleaseReplay:/start(?:LinhDong|BachDien)Fx\([^;]+;play(?:LinhDong|BachDien)Sfx/.test(html),
+  splusTimedOwners:['linh-dong-atk','linh-dong-ult','bach-dien-atk','bach-dien-ult'].every(event=>html.includes(event)) &&
+    html.includes("cue:'release:authored-marker'"),
   contactCue:html.includes('contact:sheet-frame-'),
   releaseCue:html.includes('release:authored-marker')
 };
+if(validation.lucImmediate||validation.dinhImmediate||validation.ongImmediate||validation.splusReleaseReplay||!validation.splusTimedOwners||!validation.contactCue||!validation.releaseCue){
+  throw new Error('AUTHORED_AUDIO_SYNC_VALIDATION:'+JSON.stringify(validation));
+}
 const diagnosticMarker='<!-- HV_AUDIO_SYNC_DIAGNOSTICS '+encodeURIComponent(JSON.stringify({diagnostics,validation}))+' -->';
 html=html.replace('</body>',MARKER+'\n'+diagnosticMarker+'\n</body>');
 writeFileSync(path,html);

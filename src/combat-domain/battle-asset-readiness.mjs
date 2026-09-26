@@ -108,7 +108,7 @@ export function createBattleAssetReadiness(options) {
       throw error;
     }
   }
-  function playSfx(info, event) {
+  function playSfx(info, event, options = {}) {
     if (!info || info.finished || info.sfxPlayed) return Promise.resolve(!!info?.sfxPlayed);
     if (info.sfxPending) return info.sfxPending;
     const live = () => {
@@ -119,17 +119,29 @@ export function createBattleAssetReadiness(options) {
     if (!live()) return Promise.resolve(false);
     const bus = sound();
     if (!bus?.play) { record('sfx:unavailable', { event }); return Promise.resolve(false); }
-    record('sfx:requested', { event, battleId: info.battleId });
+    const timing = {
+      actionId: options.actionId || null,
+      cue: options.cue || null,
+      cuePerformanceMs: Number.isFinite(Number(options.cuePerformanceMs)) ? Number(options.cuePerformanceMs) : null,
+      sampleCue: options.sampleCue === 'dominant' ? 'dominant' : 'onset'
+    };
+    record('sfx:requested', { event, battleId: info.battleId, ...timing });
+    const playback = {
+      ...options,
+      group: 'combat',
+      signal: info.assetSignal,
+      maxDelayMs: Number.isFinite(Number(options.maxDelayMs)) ? Number(options.maxDelayMs) : 250
+    };
     let result;
-    try { result = bus.play(event, { group: 'combat', signal: info.assetSignal, maxDelayMs: 250 }); }
+    try { result = bus.play(event, playback); }
     catch (error) { result = Promise.reject(error); }
     const pending = Promise.resolve(result).then(ok => {
       const played = ok === true && live();
       info.sfxPlayed = played;
-      record(played ? 'sfx:played' : 'sfx:declined', { event, battleId: info.battleId });
+      record(played ? 'sfx:played' : 'sfx:declined', { event, battleId: info.battleId, ...timing });
       return played;
     }, error => {
-      record('sfx:failed', { event, error: String(error?.message || error), battleId: info.battleId });
+      record('sfx:failed', { event, error: String(error?.message || error), battleId: info.battleId, ...timing });
       return false;
     }).finally(() => { if (info.sfxPending === pending) info.sfxPending = null; });
     info.sfxPending = pending;
