@@ -139,6 +139,12 @@ const validation={
   releaseCue:html.includes('release:authored-marker')
 };
 diagnostics.push({label:'final-validation',count:(validation.lucImmediate||validation.dinhImmediate||validation.ongImmediate||validation.splusReleaseReplay||!validation.splusTimedOwners||!validation.contactCue||!validation.releaseCue)?0:1,validation});
+const anchorFailures=diagnostics.filter(item=>item.label!=='final-validation'&&item.count!==1);
+const finalValidation=diagnostics.find(item=>item.label==='final-validation');
+console.log('HV_AUDIO_SYNC_ANCHORS '+JSON.stringify(diagnostics));
+if(anchorFailures.length||finalValidation?.count!==1){
+  throw new Error('Authored audio sync anchor validation failed: '+JSON.stringify({anchorFailures,validation}));
+}
 const diagnosticMarker='<!-- HV_AUDIO_SYNC_DIAGNOSTICS '+encodeURIComponent(JSON.stringify({diagnostics,validation}))+' -->';
 html=html.replace('</body>',MARKER+'\n'+diagnosticMarker+'\n</body>');
 writeFileSync(path,html);
