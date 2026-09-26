@@ -13,6 +13,7 @@
     .toolbar{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:end}.hero-tabs,.skill-buttons{display:flex;gap:7px;flex-wrap:wrap}.hero-tabs{min-width:0}.hero-tab,.skill-button,.reset-button{min-height:42px;border:1px solid rgba(230,189,103,.35);border-radius:10px;background:#102c28;color:#f8efd8;font-weight:700;cursor:pointer;box-shadow:inset 0 1px rgba(255,255,255,.05)}
     .hero-tab{padding:8px 12px;color:#c9d8d1}.hero-tab[aria-pressed="true"]{border-color:var(--gold);background:#342d1b;color:#ffe7a2}.skill-button{min-width:88px;padding:8px 13px;border-color:rgba(85,215,189,.42);background:#113b35}.skill-button:hover{border-color:var(--teal)}.skill-button[data-action="ultimate"]{border-color:rgba(230,189,103,.62);background:#3a2f18;color:#ffe6a0}.skill-button:disabled,.hero-tab:disabled,.reset-button:disabled{opacity:.48;cursor:wait}.reset-button{padding:8px 12px;border-color:rgba(255,132,114,.4);background:#35201d;color:#ffd1c8}
     .battle-wrap{position:relative;min-height:0;background:#091817}.battle-wrap iframe{display:block;width:100%;height:100%;border:0;background:#0e2522}.hint{position:absolute;right:10px;bottom:max(8px,env(safe-area-inset-bottom));z-index:4;pointer-events:none;padding:5px 8px;border-radius:999px;background:rgba(5,18,17,.74);color:#c8d3ce;font-size:10px;backdrop-filter:blur(5px)}
+    body.qa-mobile .battle-wrap{overflow:auto}body.qa-mobile .battle-wrap iframe{width:390px;height:844px;margin:0 auto}.qa-viewport{font-size:11px;color:#b9c9c2}.qa-viewport select{background:#102c28;color:#f5ecd5;border:1px solid var(--line);padding:3px}
     @media(max-width:720px){.controller{padding-left:9px;padding-right:9px}.topline{margin-bottom:7px}.title b{font-size:14px}.title small{font-size:10px}.toolbar{grid-template-columns:1fr}.hero-tabs{display:grid;grid-template-columns:repeat(3,1fr)}.hero-tab{padding:7px 5px;min-width:0}.skill-buttons{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.skill-button,.reset-button{min-width:0;padding:7px 4px;font-size:12px;min-height:40px}.hint{display:none}}
   </style>
 </head>
@@ -20,6 +21,7 @@
   <section class="controller" aria-label="Bảng test skill">
     <div class="topline">
       <div class="title"><b>Test Skill Trực Tiếp · Lục Thần</b><small data-movement-policy="snap">Trận thật 6v6 · Lục Ảnh dịch chuyển tức thời</small></div>
+      <label class="qa-viewport">Khung QA <select id="qaViewport" aria-label="Khung QA"><option value="desktop">Desktop</option><option value="mobile">390 × 844 (Chromium)</option></select></label>
       <div class="status" id="status" data-phase="loading"><strong>Đang tải</strong><span id="statusDetail">Khởi tạo battle...</span></div>
     </div>
     <div class="toolbar">
@@ -56,6 +58,7 @@
     'bach-dien': { id:'qa-bach-dien', sourceId:'hero_splus_bach_dien', name:'Bạch Diện', force:'qaForceAuthoredAction', skillAlias:true }
   };
   const frame = document.getElementById('battleFrame');
+  document.getElementById('qaViewport').addEventListener('change',event=>document.body.classList.toggle('qa-mobile',event.target.value==='mobile'));
   const status = document.getElementById('status');
   const statusDetail = document.getElementById('statusDetail');
   const resetButton = document.getElementById('resetBattle');

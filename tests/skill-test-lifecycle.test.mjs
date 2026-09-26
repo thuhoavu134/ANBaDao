@@ -49,7 +49,7 @@ function fixture() {
     frame.contentDocument={URL:frame.contentWindow.location.href,querySelector:()=>null};
   }
   Object.defineProperty(frame,'src',{get:()=>pendingUrl,set:value=>{pendingUrl=value;if(state.autoNavigate)navigate();}});
-  const elements={battleFrame:frame,status,statusDetail:detail,resetBattle:reset};
+  const elements={battleFrame:frame,status,statusDetail:detail,resetBattle:reset,qaViewport:element()};
   const document={
     getElementById:id=>elements[id],
     querySelectorAll:selector=>({'[data-hero-tab]':tabs,'[data-action]':actions})[selector]||[]

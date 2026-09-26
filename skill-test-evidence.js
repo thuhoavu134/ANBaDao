@@ -49,7 +49,7 @@
   }
   function begin(frame,row){
     install(frame);
-    current={hero:row.hero,requestedAction:row.action,canonicalAction:row.canonicalAction,t0:performance.now(),draws:{},audio:[],before:frame.contentWindow.__HON_VIET__.getUnits()};
+    current={hero:row.hero,requestedAction:row.action,canonicalAction:row.canonicalAction,frameViewport:{width:frame.contentWindow.innerWidth,height:frame.contentWindow.innerHeight},t0:performance.now(),draws:{},audio:[],before:frame.contentWindow.__HON_VIET__.getUnits()};
   }
   function finish(frame,row){
     if(!current)return;
