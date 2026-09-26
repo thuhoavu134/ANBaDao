@@ -28,10 +28,16 @@
       const result=draw.call(this,image,...args);
       if(current&&image?.src&&/assets\//.test(image.src)){
         const src=new URL(image.src).pathname;
-        const item=current.draws[src]||(current.draws[src]={firstMs:at(),lastMs:0,count:0,frames:[]});
+        const item=current.draws[src]||(current.draws[src]={firstMs:at(),lastMs:0,count:0,frames:[],frameTimes:[]});
         item.lastMs=at();item.count++;
-        const frame=args.length===8?args.slice(0,4).join(','):'whole';
-        if(item.frames.length<128&&!item.frames.includes(frame))item.frames.push(frame);
+        const crop=args.length===8?args.slice(0,4).join(','):'whole';
+        if(item.frames.length<128&&!item.frames.includes(crop))item.frames.push(crop);
+        if(args.length===8&&item.frameTimes.length<256){
+          const [sx,sy,sw,sh]=args;
+          const cols=sw>0&&image.naturalWidth>0?Math.max(1,Math.round(image.naturalWidth/sw)):null;
+          const frameIndex=cols&&sh>0?Math.max(0,Math.floor(sy/sh))*cols+Math.max(0,Math.floor(sx/sw)):null;
+          if(!item.frameTimes.some(entry=>entry.crop===crop))item.frameTimes.push({crop,frameIndex,firstMs:at()});
+        }
       }
       return result;
     };
@@ -39,7 +45,8 @@
       const bus=w[busName];if(!bus?.[method])continue;
       const original=bus[method];
       bus[method]=function(key,...args){
-        const capture=current,entry={kind,key,requestedMs:at(),played:null};
+        const options=args[0]||{};
+        const capture=current,entry={kind,key,requestedMs:at(),played:null,actionId:options.actionId||null,cue:options.cue||null,sampleCue:options.sampleCue||null,cuePerformanceMs:Number.isFinite(Number(options.cuePerformanceMs))?Number(options.cuePerformanceMs):null};
         if(capture)capture.audio.push(entry);
         const result=original.call(this,key,...args);
         Promise.resolve(result).then(ok=>{entry.played=ok===true;entry.resolvedMs=Math.round(performance.now()-(capture?.t0||0));},error=>{entry.error=String(error);});
@@ -49,16 +56,24 @@
   }
   function begin(frame,row){
     install(frame);
-    current={hero:row.hero,requestedAction:row.action,canonicalAction:row.canonicalAction,frameViewport:{width:frame.contentWindow.innerWidth,height:frame.contentWindow.innerHeight},t0:performance.now(),draws:{},audio:[],before:frame.contentWindow.__HON_VIET__.getUnits()};
+    const w=frame.contentWindow;
+    current={hero:row.hero,requestedAction:row.action,canonicalAction:row.canonicalAction,frameViewport:{width:w.innerWidth,height:w.innerHeight},t0:performance.now(),frameT0:w.performance.now(),sfxTimingStart:w.HonVietSfx?.timingEvents?.().length||0,authoredCueStart:w.__HV_AUTHORED_AUDIO_QA?.events?.().length||0,draws:{},audio:[],before:w.__HON_VIET__.getUnits()};
   }
   function finish(frame,row){
     if(!current)return;
     const w=frame.contentWindow;
     const voice=w.__HV_LUC_ANH_ULTIMATE_AUDIO_V2?.audio;
-    const report={...current,durationMs:at(),complete:row.complete,error:row.error||null,trace:row.trace||[],after:w.__HON_VIET__.getUnits(),audioState:{...frame.contentDocument.documentElement.dataset},readiness:w.__HV_BATTLE_ASSET_QA?.events?.()||[],voiceState:{bridgeAvailable:typeof w.__playLucAnhUltimateVoiceGuaranteed==='function',src:voice?.currentSrc||voice?.src,paused:voice?.paused,currentTime:voice?.currentTime,error:voice?.error?.code}};
-    delete report.t0;current=null;runs.push(report);
+    const relative=item=>{
+      const copy={...item};
+      for(const key of Object.keys(copy))if(/PerformanceMs$/.test(key)&&Number.isFinite(Number(copy[key])))copy[key]=Math.round((Number(copy[key])-current.frameT0)*100)/100;
+      return copy;
+    };
+    const audioTiming=(w.HonVietSfx?.timingEvents?.()||[]).slice(current.sfxTimingStart).map(relative);
+    const authoredAudioCues=(w.__HV_AUTHORED_AUDIO_QA?.events?.()||[]).slice(current.authoredCueStart).map(relative);
+    const report={...current,durationMs:at(),complete:row.complete,error:row.error||null,trace:row.trace||[],after:w.__HON_VIET__.getUnits(),audioTiming,authoredAudioCues,audioState:{...frame.contentDocument.documentElement.dataset},readiness:w.__HV_BATTLE_ASSET_QA?.events?.()||[],voiceState:{bridgeAvailable:typeof w.__playLucAnhUltimateVoiceGuaranteed==='function',src:voice?.currentSrc||voice?.src,paused:voice?.paused,currentTime:voice?.currentTime,error:voice?.error?.code}};
+    delete report.t0;delete report.frameT0;delete report.sfxTimingStart;delete report.authoredCueStart;current=null;runs.push(report);
     const el=document.getElementById('authoredEvidence');
     el.textContent=JSON.stringify({url:location.href,viewport:{width:innerWidth,height:innerHeight},runs},null,2);
   }
-  window.SkillTestEvidence={install,begin,finish};
+  window.SkillTestEvidence={install,begin,finish,runs:()=>runs.map(run=>structuredClone(run)),last:()=>runs.length?structuredClone(runs.at(-1)):null};
 })();

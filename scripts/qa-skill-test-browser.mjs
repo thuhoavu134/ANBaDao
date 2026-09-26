@@ -7,7 +7,10 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 const HEROES = [
   ['luc-anh','Lục Ảnh','qa-luc-anh'],
   ['dinh-loi','Đình Lôi','qa-dinh-loi'],
-  ['ong-pho','Ông Phở','ong-pho-gif-test']
+  ['ong-pho','Ông Phở','ong-pho-gif-test'],
+  ['thay-mo','Thầy Mo','qa-thay-mo'],
+  ['linh-dong','Linh Đồng','qa-linh-dong'],
+  ['bach-dien','Bạch Diện','qa-bach-dien']
 ];
 const ACTIONS = ['basic','skill','ultimate'];
 
@@ -46,7 +49,7 @@ async function runViewport(browser,out,name,width,height,dpr,targetBase) {
           const q=window.__SKILL_TEST_QA__, w=document.querySelector('#battleFrame').contentWindow;
           const u=w.__HON_VIET__.getUnits().find(item=>item.id===${JSON.stringify(heroId)});
           const movement=w.__HV_SKILL_MOVEMENT_QA?.events().slice(${row.movementStart})||[];
-          return {lastRun:q.lastRun,status:document.querySelector('#status').dataset.phase,home:u?Math.hypot(u.x-u.baseX,u.y-u.baseY):9999,hp:u?.hp||0,movement};
+          return {lastRun:q.lastRun,status:document.querySelector('#status').dataset.phase,home:u?Math.hypot(u.x-u.baseX,u.y-u.baseY):9999,hp:u?.hp||0,movement,evidence:window.SkillTestEvidence?.last?.()||null};
         })()`);
         row.ok = row.result.lastRun.started===true && row.result.lastRun.impact===true && row.result.lastRun.complete===true && row.result.home<=2 && row.result.hp>0;
         if (heroKey==='luc-anh') {
@@ -92,7 +95,7 @@ export async function run() {
   mkdirSync(out,{recursive:true});
   const browser=await startBrowser();
   const targetBase=(process.env.SKILL_TEST_BASE_URL||browser.origin).replace(/\/+$/,'');
-  const report={targetBase,scope:'Direct skill-test.html controller over real generated 6v6 battle runtime; all 3 authored heroes Basic/Skill/Ultimate plus Reset. Chromium only; not physical iPhone.',revision:process.env.GITHUB_SHA||'local',runs:[],ok:false};
+  const report={targetBase,scope:'Direct skill-test.html controller over real generated 6v6 battle runtime; six authored owners, 16 canonical actions plus Linh Đồng/Bạch Diện Skill→ATK aliases, plus Reset. Chromium only; not physical iPhone/iPad/Safari.',revision:process.env.GITHUB_SHA||'local',runs:[],ok:false};
   try {
     for (const viewport of [['desktop',1280,800,1],['mobile',390,844,2]]) {
       report.runs.push(await runViewport(browser,out,...viewport,targetBase));
