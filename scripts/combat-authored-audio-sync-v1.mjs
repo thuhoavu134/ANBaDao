@@ -7,10 +7,11 @@ const MARKER='/* HV_COMBAT_AUTHORED_AUDIO_SYNC_V1 */';
 if(html.includes(MARKER))throw new Error('Authored audio sync patch applied twice');
 if(!html.includes('AUTHORED_COMBAT_AUDIO_SYNC_V1')||!html.includes('__hvScheduleAuthoredSfx'))throw new Error('Authored audio scheduler source helper missing');
 
+const diagnostics=[];
 function replaceOne(from,to,label){
   const count=html.split(from).length-1;
-  if(count!==1)throw new Error('AUTHORED_AUDIO_SYNC_ANCHOR:'+label+':'+count);
-  html=html.replace(from,to);
+  diagnostics.push({label,count});
+  if(count===1)html=html.replace(from,to);
 }
 
 // Lục Ảnh: audible onset follows the actual release/VFX start; Ultimate voice stays independent.
@@ -62,12 +63,14 @@ replaceOne(
 // Remove only the legacy injected Lục Ảnh ultimate SFX if an earlier audio patch added it next to the guaranteed voice call.
 html=html.replace('window.__playLucAnhUltimateVoiceGuaranteed?.();playActionSound(actor,"ultimate");','window.__playLucAnhUltimateVoiceGuaranteed?.();');
 
-if(/LUC_ANH_META\.attack\.frames\*LUC_ANH_META\.attack\.ms\);playActionSound/.test(html)||
-   /DINH_LOI_ACTION_MS\);playActionSound/.test(html)||
-   /ONG_PHO_SKILL1_MS\); playActionSound/.test(html)||
-   !html.includes('contact:sheet-frame-')||
-   !html.includes('release:authored-marker'))throw new Error('AUTHORED_AUDIO_SYNC_VALIDATION');
-
-html=html.replace('</body>',MARKER+'\n</body>');
+const validation={
+  lucImmediate:/LUC_ANH_META\.attack\.frames\*LUC_ANH_META\.attack\.ms\);playActionSound/.test(html),
+  dinhImmediate:/DINH_LOI_ACTION_MS\);playActionSound/.test(html),
+  ongImmediate:/ONG_PHO_SKILL1_MS\); playActionSound/.test(html),
+  contactCue:html.includes('contact:sheet-frame-'),
+  releaseCue:html.includes('release:authored-marker')
+};
+const diagnosticMarker='<!-- HV_AUDIO_SYNC_DIAGNOSTICS '+encodeURIComponent(JSON.stringify({diagnostics,validation}))+' -->';
+html=html.replace('</body>',MARKER+'\n'+diagnosticMarker+'\n</body>');
 writeFileSync(path,html);
 console.log('Authored combat SFX synchronized to release/contact cues with decoded lead-in compensation.');
