@@ -234,9 +234,9 @@ perform = replaceNth(perform, qaBranch,
       setStatus(actor.name+' '+(action==='ultimate'?'khai Trận Ảnh Phong Môn':'rung Chuông Chấn Phách'));
       dom.phaseLabel.textContent=action==='ultimate'?'Tuyệt kỹ • Trận Ảnh Phong Môn':'Basic • Chuông Chấn Phách';
       setUnitState(actor,action==='ultimate'?'ultimate':'skill1',thayMoAction.totalMs);
+      void __hvScheduleAuthoredSfx(actor,action,thayMoAction.started+thayMoAction.releaseAt,'release:authored-marker',phase1ActionId,__hvActionAssets?.signal||null,'onset');
       if(!await waitThayMoAuthoredMarker(thayMoAction,'release',battleId))return;
       phase1Trace?.marker('release',{actionId:phase1ActionId,position:{x:actor.x,y:actor.y}});
-      playActionSound(actor,action);
       if(!await waitThayMoAuthoredMarker(thayMoAction,'impact',battleId))return;
 ` + qaBranch, 1, 'cast-branch');
 
