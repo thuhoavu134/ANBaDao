@@ -210,7 +210,7 @@
         const events=t.events().slice(beforeEvents).filter(e=>e.type==='action:start'&&e.actorId===spec.id);
         if (!events.length) return false;
         row.actionId=events.at(-1).actionId||''; row.started=true; row.phase='active'; return !!row.actionId;
-      },12000,45,check);
+      },25000,45,check);
       check();
       setStatus('active','Đang ra chiêu',spec.name+' · '+action.toUpperCase());
       await waitFor(() => t.events().some(e=>e.actionId===row.actionId&&e.type==='marker:impact'),18000,45,check);

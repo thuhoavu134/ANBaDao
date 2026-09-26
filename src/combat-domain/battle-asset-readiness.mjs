@@ -25,13 +25,13 @@ export function createBattleAssetReadiness(options) {
     const battleId = getState().battleId;
     if (battleId !== visibleBattleId) { resetVisible(); visibleBattleId = battleId; }
     let pin;
-    if (key === 'idle') {
+    if (key === 'idle' && tasks.size === 0) {
       if (!visible.has(loader)) visible.set(loader, new Map());
       const pins = visible.get(loader);
       if (!pins.has(clip.src)) pins.set(clip.src, Symbol('battle-visible-idle'));
       pin = pins.get(clip.src);
     }
-    // Keep authored idle art resident while rendering; action leases budget for it.
+    // Retain visible idle between actions; active action leases get priority.
     return loader.ensure(clip, { scope: 'battle', priority: 'visible', pin }).image;
   }
   async function prepare(actor, action, target, battleId) {
@@ -65,6 +65,11 @@ export function createBattleAssetReadiness(options) {
       // atlases before the first move. Readiness now owns only the active
       // actor's movement/cast/VFX working set.
       if (actorDescription) {
+        // Mixed Linh Đồng/Bạch Diện idle pins otherwise consume enough of the
+        // shared cache to prevent Bạch Diện's Ultimate lease from ever fitting.
+        // Active action leases own residency until recovery; visible idle may
+        // be admitted again by the same renderer/cache after the action.
+        resetVisible();
         add(actorDescription, 'run');
         add(actorDescription, action === 'ultimate' ? 'ultimate' : 'attack');
         add(actorDescription, action === 'ultimate' ? 'ultimateVfx' : 'atkVfx');

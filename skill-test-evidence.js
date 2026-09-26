@@ -43,7 +43,8 @@
   }
   function finish(frame,row){
     if(!current)return;
-    const report={...current,durationMs:at(),complete:row.complete,error:row.error||null,trace:row.trace||[],after:frame.contentWindow.__HON_VIET__.getUnits(),audioState:{...frame.contentDocument.documentElement.dataset}};
+    const w=frame.contentWindow;
+    const report={...current,durationMs:at(),complete:row.complete,error:row.error||null,trace:row.trace||[],after:w.__HON_VIET__.getUnits(),audioState:{...frame.contentDocument.documentElement.dataset},readiness:w.__HV_BATTLE_ASSET_QA?.events?.()||[]};
     delete report.t0;current=null;runs.push(report);
     const el=document.getElementById('authoredEvidence');
     el.textContent=JSON.stringify({url:location.href,viewport:{width:innerWidth,height:innerHeight},runs},null,2);
