@@ -65,8 +65,8 @@ replaceOne(
 
 function bindSplusAudioClock({title,hero,cap}){
   replaceOne(
-    'function begin'+title+'Action(actor,action,target,battleId){',
-    'function begin'+title+'Action(actor,action,target,battleId,actionId=null){',
+    \`function begin\${title}Action(actor,action,target,battleId){\`,
+    \`function begin\${title}Action(actor,action,target,battleId,actionId=null){\`,
     hero+'-begin-signature'
   );
   replaceOne(
@@ -75,18 +75,32 @@ function bindSplusAudioClock({title,hero,cap}){
     hero+'-action-id'
   );
   replaceOne(
-    'info.assetSignal=actor._hvAssetLease?.signal;\\n  info.clock=create'+title+'TimelineController(normalized,',
-    'info.assetSignal=actor._hvAssetLease?.signal;\\n  void play'+title+'Sfx(normalized,info);\\n  info.clock=create'+title+'TimelineController(normalized,',
+    \`info.assetSignal=actor._hvAssetLease?.signal;
+  info.clock=create\${title}TimelineController(normalized,\`,
+    \`info.assetSignal=actor._hvAssetLease?.signal;
+  void play\${title}Sfx(normalized,info);
+  info.clock=create\${title}TimelineController(normalized,\`,
     hero+'-pre-schedule'
   );
   replaceOne(
-    "function play"+title+"Sfx(action,info){\\n  const normalized=normalize"+title+"Action(action);\\n  if(!normalized)return Promise.resolve(false);\\n  return __hvBattleAssets.playSfx(info||{battleId:state.battleId},normalized==='ultimate'?'"+hero+"-ult':'"+hero+"-atk');\\n}",
-    "function play"+title+"Sfx(action,info){\\n  const normalized=normalize"+title+"Action(action);\\n  if(!normalized)return Promise.resolve(false);\\n  const timeline="+cap+"_TIMELINE[normalized];\\n  const item=info||{battleId:state.battleId,startedAt:performance.now(),actionId:null};\\n  const cuePerformanceMs=(Number(item.startedAt)||performance.now())+(Number(timeline?.releaseMs)||0);\\n  return __hvBattleAssets.playSfx(item,normalized==='ultimate'?'"+hero+"-ult':'"+hero+"-atk',{actionId:item.actionId||null,cue:'release:authored-marker',cuePerformanceMs,sampleCue:'onset'});\\n}",
+    \`function play\${title}Sfx(action,info){
+  const normalized=normalize\${title}Action(action);
+  if(!normalized)return Promise.resolve(false);
+  return __hvBattleAssets.playSfx(info||{battleId:state.battleId},normalized==='ultimate'?'\${hero}-ult':'\${hero}-atk');
+}\`,
+    \`function play\${title}Sfx(action,info){
+  const normalized=normalize\${title}Action(action);
+  if(!normalized)return Promise.resolve(false);
+  const timeline=\${cap}_TIMELINE[normalized];
+  const item=info||{battleId:state.battleId,startedAt:performance.now(),actionId:null};
+  const cuePerformanceMs=(Number(item.startedAt)||performance.now())+(Number(timeline?.releaseMs)||0);
+  return __hvBattleAssets.playSfx(item,normalized==='ultimate'?'\${hero}-ult':'\${hero}-atk',{actionId:item.actionId||null,cue:'release:authored-marker',cuePerformanceMs,sampleCue:'onset'});
+}\`,
     hero+'-timed-play-owner'
   );
   replaceOne(
-    "info.releasePlayed=true;info.clock.advance("+cap+"_TIMELINE[info.action].releaseMs);start"+title+"Fx(info.action,getUnit(info.actorId),getUnit(info.targetId),info);play"+title+"Sfx(info.action,info);return true;",
-    "info.releasePlayed=true;info.clock.advance("+cap+"_TIMELINE[info.action].releaseMs);start"+title+"Fx(info.action,getUnit(info.actorId),getUnit(info.targetId),info);return true;",
+    \`info.releasePlayed=true;info.clock.advance(\${cap}_TIMELINE[info.action].releaseMs);start\${title}Fx(info.action,getUnit(info.actorId),getUnit(info.targetId),info);play\${title}Sfx(info.action,info);return true;\`,
+    \`info.releasePlayed=true;info.clock.advance(\${cap}_TIMELINE[info.action].releaseMs);start\${title}Fx(info.action,getUnit(info.actorId),getUnit(info.targetId),info);return true;\`,
     hero+'-release-no-replay'
   );
 }
