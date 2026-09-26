@@ -83,8 +83,8 @@ function patchSplusReadiness(html) {
   actor._hvAssetLease=__hvSplusAssets;
   try{
   state.selectedAction=action;clearTargets();updateActorHud(actor);`, 'S+ pre-cast readiness');
-  body=replaceOne(body,"  const linhAction=linh&&typeof beginLinhDongAction==='function'?beginLinhDongAction(actor,action,target,battleId):null;",`  if((linh||bach)&&!await __hvSkillMovement.approach(actor,action,target,battleId))return;
-  const linhAction=linh&&typeof beginLinhDongAction==='function'?beginLinhDongAction(actor,action,target,battleId):null;`, 'S+ per-skill approach');
+  body=replaceOne(body,"  const linhAction=linh&&typeof beginLinhDongAction==='function'?beginLinhDongAction(actor,action,target,battleId,presentationId):null;",`  if((linh||bach)&&!await __hvSkillMovement.approach(actor,action,target,battleId))return;
+  const linhAction=linh&&typeof beginLinhDongAction==='function'?beginLinhDongAction(actor,action,target,battleId,presentationId):null;`, 'S+ per-skill approach');
   body=replaceOne(body,"  setUnitState(actor,'idle',800);state.currentId=null;state.locked=false;",`  if((linh||bach)&&actor.hp>0&&!await __hvSkillMovement.returnHome(actor,battleId))return;
   setUnitState(actor,'idle',800);state.currentId=null;state.locked=false;`, 'S+ return after recovery');
   const close=body.lastIndexOf('}');
