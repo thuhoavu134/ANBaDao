@@ -142,6 +142,83 @@ async function runViewport(browser,out,name,width,height,dpr,targetBase) {
       }
     }
 
+    run.lifecycle = { muteUnmute:null, exit:null };
+    const resetLifecycleSession = async () => {
+      const previousSession = await page.evaluate('window.__SKILL_TEST_QA__.sessionIndex');
+      await page.evaluate('window.__SKILL_TEST_QA__.reset()');
+      await page.wait(`window.__SKILL_TEST_QA__.ready===true&&window.__SKILL_TEST_QA__.sessionIndex>${previousSession}`,30000);
+      await page.click('[data-hero-tab="luc-anh"]');
+      await page.wait('window.__SKILL_TEST_QA__.selectedHero==="luc-anh"');
+      await setBattleSpeed(1);
+      const sound = await page.evaluate(`(()=>{
+        const w=document.querySelector('#battleFrame').contentWindow;
+        if(!w.__HON_VIET__?.getState?.().sound) w.document.querySelector('#soundButton')?.click();
+        return {sound:w.__HON_VIET__?.getState?.().sound,enabled:w.document.documentElement.dataset.sfxCombatEnabled};
+      })()`);
+      if(sound.sound!==true) throw new Error('Lifecycle QA could not enable combat sound');
+    };
+    const startLifecycleBasic = async () => {
+      await page.wait('!document.querySelector(\'[data-action="basic"]\').disabled');
+      await page.click('[data-action="basic"]');
+      await page.wait('window.__SKILL_TEST_QA__.lastRun?.hero==="luc-anh"&&window.__SKILL_TEST_QA__.lastRun?.action==="basic"&&window.__SKILL_TEST_QA__.lastRun?.started===true',15000);
+      const actionId=await page.evaluate('window.__SKILL_TEST_QA__.lastRun.actionId');
+      await page.wait(`(()=>{
+        const w=document.querySelector('#battleFrame').contentWindow;
+        return w.HonVietSfx?.timingEvents?.().some(item=>item.actionId===${JSON.stringify(actionId)});
+      })()`,5000);
+      return actionId;
+    };
+
+    await resetLifecycleSession();
+    const mutedActionId = await startLifecycleBasic();
+    await page.evaluate(`document.querySelector('#battleFrame').contentWindow.document.querySelector('#soundButton')?.click()`);
+    await page.wait(`document.querySelector('#battleFrame').contentDocument.documentElement.dataset.sfxCombatEnabled==='false'`,5000);
+    await page.wait(`(()=>{
+      const w=document.querySelector('#battleFrame').contentWindow;
+      return w.HonVietSfx?.timingEvents?.().some(item=>item.actionId===${JSON.stringify(mutedActionId)}&&item.cancelReason==='combat-stop');
+    })()`,5000);
+    await page.wait('window.__SKILL_TEST_QA__.lastRun?.complete===true',30000);
+    const mutedEvidence = await page.evaluate(`(()=>{
+      const w=document.querySelector('#battleFrame').contentWindow;
+      const item=w.HonVietSfx?.timingEvents?.().find(entry=>entry.actionId===${JSON.stringify(mutedActionId)});
+      return {sound:w.__HON_VIET__?.getState?.().sound,active:w.document.documentElement.dataset.sfxActive||'0',timing:item||null};
+    })()`);
+    await page.evaluate(`document.querySelector('#battleFrame').contentWindow.document.querySelector('#soundButton')?.click()`);
+    await page.wait(`document.querySelector('#battleFrame').contentDocument.documentElement.dataset.sfxCombatEnabled==='true'`,5000);
+    const resumedActionId = await startLifecycleBasic();
+    await page.wait('window.__SKILL_TEST_QA__.lastRun?.complete===true',30000);
+    const resumedEvidence = await page.evaluate(`(()=>{
+      const w=document.querySelector('#battleFrame').contentWindow;
+      const item=w.HonVietSfx?.timingEvents?.().find(entry=>entry.actionId===${JSON.stringify(resumedActionId)});
+      return {sound:w.__HON_VIET__?.getState?.().sound,active:w.document.documentElement.dataset.sfxActive||'0',timing:item||null};
+    })()`);
+    run.lifecycle.muteUnmute = {
+      mutedActionId,resumedActionId,mutedEvidence,resumedEvidence,
+      ok: mutedEvidence.sound===false && mutedEvidence.timing?.cancelReason==='combat-stop' &&
+        Number.isFinite(Number(mutedEvidence.timing?.cancelledPerformanceMs)) &&
+        resumedEvidence.sound===true && !!resumedEvidence.timing && !resumedEvidence.timing.cancelReason
+    };
+    if(!run.lifecycle.muteUnmute.ok) throw new Error('Mute/unmute scheduled-audio lifecycle failed');
+
+    await resetLifecycleSession();
+    const exitActionId = await startLifecycleBasic();
+    await page.evaluate(`document.querySelector('#battleFrame').contentWindow.document.querySelector('#exitBattleButton')?.click()`);
+    await page.wait(`(()=>{
+      const w=document.querySelector('#battleFrame').contentWindow;
+      return w.HonVietSfx?.timingEvents?.().some(item=>item.actionId===${JSON.stringify(exitActionId)}&&item.cancelReason==='combat-stop');
+    })()`,5000);
+    const exitEvidence = await page.evaluate(`(()=>{
+      const w=document.querySelector('#battleFrame').contentWindow;
+      const item=w.HonVietSfx?.timingEvents?.().find(entry=>entry.actionId===${JSON.stringify(exitActionId)});
+      return {active:w.document.documentElement.dataset.sfxActive||'0',timing:item||null};
+    })()`);
+    run.lifecycle.exit = {
+      actionId:exitActionId,evidence:exitEvidence,
+      ok: exitEvidence.active==='0' && exitEvidence.timing?.cancelReason==='combat-stop' &&
+        Number.isFinite(Number(exitEvidence.timing?.cancelledPerformanceMs))
+    };
+    if(!run.lifecycle.exit.ok) throw new Error('Battle exit did not synchronously cancel scheduled combat audio');
+
     const beforeReset = await page.evaluate('window.__SKILL_TEST_QA__.sessionIndex');
     await page.click('#resetBattle');
     await page.wait(`window.__SKILL_TEST_QA__.ready===true&&window.__SKILL_TEST_QA__.sessionIndex>${beforeReset}`,30000);
@@ -155,7 +232,7 @@ async function runViewport(browser,out,name,width,height,dpr,targetBase) {
     run.networkFailures = page.events.filter(event=>event.method==='Network.loadingFailed').map(event=>event.params);
     run.criticalNetworkFailures = run.networkFailures.filter(item=>!(item.canceled===true && item.type==='Media'));
     run.qaErrors = await page.evaluate('window.__SKILL_TEST_QA__.errors');
-    run.ok = run.actions.every(item=>item.ok) && run.afterReset.ready===true && run.afterReset.resetCount>=1 && run.exceptions.length===0 && run.criticalHttpErrors.length===0 && run.criticalNetworkFailures.length===0 && run.qaErrors.length===0;
+    run.ok = run.actions.every(item=>item.ok) && run.lifecycle.muteUnmute?.ok===true && run.lifecycle.exit?.ok===true && run.afterReset.ready===true && run.afterReset.resetCount>=1 && run.exceptions.length===0 && run.criticalHttpErrors.length===0 && run.criticalNetworkFailures.length===0 && run.qaErrors.length===0;
     if (!run.ok) run.errors.push('Direct skill-test browser acceptance failed.');
   } catch (error) {
     run.ok=false;
@@ -181,7 +258,7 @@ export async function run() {
     }
     report.ok=report.runs.every(item=>item.ok);
     writeFileSync(resolve(out,'report.json'),JSON.stringify(report,null,2));
-    console.log(JSON.stringify({ok:report.ok,runs:report.runs.map(item=>({name:item.name,ok:item.ok,actions:item.actions.map(row=>({hero:row.hero,action:row.action,speed:row.speed,temperature:row.temperature,sessionIndex:row.sessionIndex,ok:row.ok,timingOk:row.timingOk,actionId:row.actionId,snapApproach:row.snapApproach,maxOffsetMs:row.timing?.cues?.length?Math.max(...row.timing.cues.map(c=>Math.abs(Number(c.signedCueOffsetMs)||0))):null,timingCount:row.timing?.count||0})),afterReset:item.afterReset,errors:item.errors,exceptions:item.exceptions?.length,httpErrors:item.httpErrors?.length,criticalHttpErrors:item.criticalHttpErrors?.length,networkFailures:item.networkFailures?.length,criticalNetworkFailures:item.criticalNetworkFailures?.length,qaErrors:item.qaErrors?.length}))},null,2));
+    console.log(JSON.stringify({ok:report.ok,runs:report.runs.map(item=>({name:item.name,ok:item.ok,actions:item.actions.map(row=>({hero:row.hero,action:row.action,speed:row.speed,temperature:row.temperature,sessionIndex:row.sessionIndex,ok:row.ok,timingOk:row.timingOk,actionId:row.actionId,snapApproach:row.snapApproach,maxOffsetMs:row.timing?.cues?.length?Math.max(...row.timing.cues.map(c=>Math.abs(Number(c.signedCueOffsetMs)||0))):null,timingCount:row.timing?.count||0})),lifecycle:item.lifecycle,afterReset:item.afterReset,errors:item.errors,exceptions:item.exceptions?.length,httpErrors:item.httpErrors?.length,criticalHttpErrors:item.criticalHttpErrors?.length,networkFailures:item.networkFailures?.length,criticalNetworkFailures:item.criticalNetworkFailures?.length,qaErrors:item.qaErrors?.length}))},null,2));
     if(!report.ok) process.exitCode=1;
   } finally {
     await browser.close();
