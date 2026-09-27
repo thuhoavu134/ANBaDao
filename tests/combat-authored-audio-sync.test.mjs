@@ -114,3 +114,16 @@ test('RED: generated battle mute routes through the combat SFX bus so scheduled 
   assert.match(block, /window\.HonVietSfx\?\.setCombatEnabled\?\.\(state\.sound\)/,
     'mute/unmute must drive the combat SFX bus so already-scheduled sources cannot leak after mute');
 });
+
+
+test('RED: generated battle exit stops scheduled combat audio before host abort', () => {
+  const battle = readFileSync(new URL('../dist/battle.html', import.meta.url), 'utf8');
+  const start = battle.indexOf('  dom.exitBattleButton?.addEventListener("click", () => {');
+  const end = battle.indexOf('\n  dom.actionButtons.forEach', start);
+  assert.ok(start >= 0 && end > start, 'embedded exit handler must exist');
+  const block = battle.slice(start, end);
+  assert.match(block, /window\.HonVietSfx\?\.stopCombat\?\.\(\)/,
+    'exit must synchronously cancel active/future scheduled combat audio');
+  assert.ok(block.indexOf('stopCombat') < block.indexOf('postToHonVietHost("battle-abort"'),
+    'audio cancellation must happen before host navigation is requested');
+});
