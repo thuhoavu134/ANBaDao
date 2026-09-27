@@ -2,6 +2,7 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { startBrowser } from './qa-battle-readiness-browser.mjs';
+import { authoredVisualCueTimes, pairAuthoredAudioToVisual } from '../src/combat-domain/authored-audio-visual-timing.mjs';
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 const HEROES = [
@@ -49,14 +50,6 @@ const VISUAL_CUE_SPEC = {
     ultimate:{src:'/assets/characters/bach-dien/ultimate_vfx-atlas.webp'}
   }
 };
-function visualCueTimes(evidence,spec){
-  const draw=evidence?.draws?.[spec?.src];
-  if(!draw)return [];
-  if(Number.isFinite(Number(spec?.frameIndex))){
-    return (draw.frameSequence||[]).filter(entry=>Number(entry.frameIndex)===Number(spec.frameIndex)).map(entry=>Number(entry.firstMs)).filter(Number.isFinite);
-  }
-  return Number.isFinite(Number(draw.firstMs))?[Number(draw.firstMs)]:[];
-}
 function timingContract(row) {
   const evidence = row.result?.evidence;
   const all = Array.isArray(evidence?.audioTiming) ? evidence.audioTiming : [];
@@ -77,21 +70,8 @@ function timingContract(row) {
     (row.hero === 'ong-pho' ? item.sampleCue !== 'dominant' : item.sampleCue !== 'onset')
   );
   const visualSpec = VISUAL_CUE_SPEC[row.hero]?.[row.canonicalAction] || null;
-  const visualTimes = visualCueTimes(evidence,visualSpec);
-  const visualCues = scoped.map(item => {
-    const occurrence=String(item.actionId||'').endsWith(':chain2')?1:0;
-    const visualMs=Number.isFinite(Number(visualTimes[occurrence]))?Number(visualTimes[occurrence]):null;
-    const visualSignedOffsetMs=visualMs===null||!Number.isFinite(Number(item.expectedCuePerformanceMs))
-      ?null:Number(item.expectedCuePerformanceMs)-visualMs;
-    return {
-      actionId:item.actionId,event:item.event,cue:item.cue,source:visualSpec?.src||null,
-      frameIndex:Number.isFinite(Number(visualSpec?.frameIndex))?Number(visualSpec.frameIndex):null,
-      occurrence,visualMs,expectedCuePerformanceMs:item.expectedCuePerformanceMs,visualSignedOffsetMs
-    };
-  });
-  const visualBad = visualCues.filter(item => !Number.isFinite(Number(item.visualMs)) ||
-    !Number.isFinite(Number(item.visualSignedOffsetMs)) ||
-    Math.abs(Number(item.visualSignedOffsetMs)) > TIMING_LIMIT_MS);
+  const visualTimes = authoredVisualCueTimes(evidence,visualSpec);
+  const {cues:visualCues,bad:visualBad} = pairAuthoredAudioToVisual(scoped,visualTimes,TIMING_LIMIT_MS,visualSpec);
   const voice = Array.isArray(evidence?.audio) ? evidence.audio.filter(item => String(item.kind || '').startsWith('voice') && item.played === true) : [];
   const voiceOk = row.hero !== 'luc-anh' || row.canonicalAction !== 'ultimate' || voice.length > 0;
   return {
