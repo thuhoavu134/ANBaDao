@@ -346,3 +346,59 @@ test('RED: output clock reports unavoidable late cue when requested inside devic
   assert.ok(Math.abs(event?.expectedCuePerformanceMs-expectedCueMs)<0.01);
   assert.ok(Math.abs(event?.signedCueOffsetMs-(expectedCueMs-1100))<0.01);
 });
+
+
+test('RED: translates authored cue timestamps between battle iframe and shared parent SFX clock', async () => {
+  const calls=[];
+  const parentTiming=[{
+    type:'sfx:scheduled',
+    actionId:'qa:clock-domain',
+    atPerformanceMs:5480,
+    cuePerformanceMs:5500,
+    expectedCuePerformanceMs:5512,
+    sourceScheduledPerformanceMs:5404,
+    outputTimestampPerformanceMs:5390
+  }];
+  const channel={
+    play:async(event,options)=>{calls.push({event,options});return true;},
+    prepare:async()=>true,
+    unlock:async()=>true,
+    stopCombat(){},setCombatEnabled(){},dispose(){},
+    isBattleActive:()=>true,
+    timingEvents:()=>parentTiming.map(item=>({...item}))
+  };
+  const parent={
+    performance:{timeOrigin:100000,now:()=>6000},
+    HonVietSfx:{createBattleChannel:()=>channel}
+  };
+  const window={parent,addEventListener(){}};
+  const dataset={};
+  vm.runInNewContext(audioSource,{
+    window,URL,console:{warn(){}},Date,
+    performance:{timeOrigin:105000,now:()=>1000},
+    setTimeout,clearTimeout,
+    document:{
+      baseURI:'https://game.example/',
+      documentElement:{dataset},
+      addEventListener(){},
+      querySelectorAll:()=>[]
+    },
+    fetch:async()=>({ok:true,arrayBuffer:async()=>new ArrayBuffer(8)})
+  });
+  assert.equal(await window.HonVietSfx.play('basic',{
+    group:'combat',
+    actionId:'qa:clock-domain',
+    cuePerformanceMs:500,
+    audibleAtPerformanceMs:520
+  }),true);
+  assert.equal(calls.length,1);
+  assert.equal(calls[0].options.cuePerformanceMs,5500,'child cue must be converted to parent performance clock');
+  assert.equal(calls[0].options.audibleAtPerformanceMs,5520,'child audible target must be converted to parent performance clock');
+
+  const event=window.HonVietSfx.timingEvents().find(item=>item.actionId==='qa:clock-domain');
+  assert.equal(event.atPerformanceMs,480);
+  assert.equal(event.cuePerformanceMs,500);
+  assert.equal(event.expectedCuePerformanceMs,512);
+  assert.equal(event.sourceScheduledPerformanceMs,404);
+  assert.equal(event.outputTimestampPerformanceMs,390);
+});
