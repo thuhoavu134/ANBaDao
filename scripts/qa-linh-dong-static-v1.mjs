@@ -65,10 +65,7 @@ export function inspectLinhDongStatic(root = process.cwd()) {
   assert(splusSource.split('e.act(').length === 2, 'S+ Linh Đồng damage is not resolved once');
   assert(!/sleep\(linh\?linhDur/.test(splusSource) && !splusSource.includes('sleep(linhDur'), 'S+ Linh Đồng still sleeps the scaled clip duration');
   assert(battle.includes("['passive','ultimate']"), 'S+ Linh Đồng skill bar still exposes Skill 1');
-  const embedded = index.match(/const BATTLE_HTML_BASE64 = "([A-Za-z0-9+/=]+)";/);
-  assert(embedded, 'embedded battle payload marker is missing');
-  const embeddedBattle = Buffer.from(embedded[1], 'base64').toString('utf8');
-  assert(embeddedBattle.includes('TKT-0145 canonical Linh Dong combat bridge'), 'embedded battle is stale and misses the Linh Đồng bridge');
+  assert(/const BATTLE_HTML_BASE64 = "";/.test(index), 'embedded battle payload must stay disabled; battle.html is the single runtime source');
   return { schema: 'hon-viet-linh-dong-static-qa/v1', ok: true, required: REQUIRED.length, files };
 }
 

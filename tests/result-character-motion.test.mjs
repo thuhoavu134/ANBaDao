@@ -6,10 +6,12 @@ const build = readFileSync(new URL('../scripts/build-static.mjs', import.meta.ur
 const patch = readFileSync(new URL('../scripts/result-character-motion-v1.mjs', import.meta.url), 'utf8');
 const battle = readFileSync(new URL('../dist/battle.html', import.meta.url), 'utf8');
 
-test('result motion is installed after readiness and before iframe sync', () => {
+test('result motion is installed after readiness and before the battle payload finalize', () => {
   const readiness = build.indexOf("await buildBattleReadiness(root);");
   const motion = build.indexOf("await import('./result-character-motion-v1.mjs');");
-  const sync = build.indexOf("const embeddedBattle = readFileSync(join(out, 'battle.html'));");
+  // bf12673 removed the embedded payload; the last build step is now the
+  // BATTLE_HTML_BASE64 emptying, which must still run after the motion patch.
+  const sync = build.indexOf("embeddedIndex = embeddedIndex.replace(embeddedExpression");
   assert.ok(readiness >= 0 && motion > readiness && sync > motion);
 });
 

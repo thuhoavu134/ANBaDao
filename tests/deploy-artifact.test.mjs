@@ -12,7 +12,11 @@ test('L24-D3: sharp stays off the production install', () => {
   assert.equal(pkg.dependencies?.sharp, undefined);
   assert.equal(pkg.devDependencies?.sharp, '0.34.3');
   const vercel = JSON.parse(read('vercel.json'));
-  assert.match(String(vercel.installCommand || ''), /omit=dev/);
+  // The static build packs atlas variants with sharp, so the build install must
+  // include devDependencies; sharp still never ships in the runtime bundle
+  // because it stays out of "dependencies".
+  assert.match(String(vercel.installCommand || ''), /--include=dev/);
+  assert.doesNotMatch(String(vercel.installCommand || ''), /--omit=dev/);
   assert.equal(vercel.outputDirectory, 'dist');
   assert.equal(vercel.buildCommand, 'npm run build');
 });
@@ -32,14 +36,12 @@ test('L24-D1: production copy list ships the game, not QA docs', () => {
   }
 });
 
-test('L24-D2: embedded battle payload still matches the built battle file', () => {
+test('L24-D2: embedded battle payload stays disabled; battle.html is the single runtime', () => {
   const index = read('scripts/build-static.mjs');
   assert.match(index, /BATTLE_HTML_BASE64/);
-  assert.match(index, /embeddedBattle/);
+  assert.match(index, /single runtime source/);
   if (!existsSync(join(root, 'dist/index.html'))) return;
   const html = read('dist/index.html');
-  const battle = readFileSync(join(root, 'dist/battle.html'));
-  const match = html.match(/const BATTLE_HTML_BASE64 = "([A-Za-z0-9+/=]+)";/);
-  assert.ok(match, 'embedded payload marker');
-  assert.equal(Buffer.from(match[1], 'base64').equals(battle), true);
+  assert.match(html, /const BATTLE_HTML_BASE64 = "";/);
+  assert.equal(existsSync(join(root, 'dist/battle.html')), true);
 });

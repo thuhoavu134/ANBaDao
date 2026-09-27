@@ -97,8 +97,6 @@ for (const team of [1, 2]) for (const action of ['basic', 'skill', 'ultimate']) 
 
 test('campaign iframe and standalone battle contain exactly one identical movement owner', () => {
   const index = readFileSync('dist/index.html', 'utf8');
-  const encoded = index.match(/const BATTLE_HTML_BASE64 = "([A-Za-z0-9+/=]+)";/);
-  assert.ok(encoded);
-  assert.equal(Buffer.from(encoded[1], 'base64').toString('utf8'), html);
+  assert.match(index, /const BATTLE_HTML_BASE64 = "";/, 'embedded battle payload stays disabled; iframe loads battle.html directly');
   assert.equal(html.split(startMarker).length - 1, 1, 'movement runtime must be installed');
 });

@@ -50,12 +50,12 @@ test('result actions and all result assets are present', () => {
   }
 });
 
-test('the embedded battle engine is byte-identical to battle.html', () => {
-  // Production patches intentionally transform the source templates. Assert the
-  // built files that Vercel actually serves, including the final embedded payload.
+test('battle.html is the single battle runtime and the embedded payload stays disabled', () => {
+  // bf12673 removed the duplicate ~1.5 MB base64 battle payload from index.html;
+  // the iframe and iOS full-page entry both load battle.html directly. Assert the
+  // built files that Vercel actually serves under that single-runtime contract.
   const builtIndex = fs.readFileSync(new URL('../dist/index.html', import.meta.url), 'utf8');
-  const builtBattle = fs.readFileSync(new URL('../dist/battle.html', import.meta.url));
-  const match = builtIndex.match(/const BATTLE_HTML_BASE64 = "([A-Za-z0-9+/=]+)";/);
-  assert.ok(match, 'embedded battle payload');
-  assert.ok(Buffer.from(match[1], 'base64').equals(builtBattle), 'built iframe and standalone battle have identical bytes');
+  const builtBattle = new URL('../dist/battle.html', import.meta.url);
+  assert.ok(fs.existsSync(builtBattle), 'standalone battle runtime is built');
+  assert.match(builtIndex, /const BATTLE_HTML_BASE64 = "";/, 'embedded base64 battle payload stays disabled');
 });

@@ -9,7 +9,7 @@ test('QA full access bypasses campaign progression gates without changing the no
   assert.match(index, /const baseCampaignGate=typeof hvCampaignGate==='function'\?hvCampaignGate:null/);
   assert.match(index, /hvCampaignGate=function qaCampaignGate/);
   assert.match(index, /if\(!active\|\|!baseCampaignGate\)return baseCampaignGate\?baseCampaignGate\.apply\(this,arguments\):\{ok:false,code:'QA_GATE_UNAVAILABLE'/);
-  assert.match(index, /return \{\.\.base,ok:true,code:'OPEN',qaBypass:true\}/);
+  assert.match(index, /return \{\.\.\.base,ok:true,code:'OPEN',qaBypass:true\}/);
   assert.match(index, /sandbox không lưu/);
 });
 

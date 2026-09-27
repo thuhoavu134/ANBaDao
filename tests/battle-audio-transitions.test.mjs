@@ -93,10 +93,13 @@ test('profile volume and audio-only hunt screens control the shared BGM owner', 
   assert.match(read('src/ui/hunt-3d-runtime.js'), /HonVietAudio\?\.stopMusic\?\.\(\)/);
 });
 
-test('built BGM route uses the shared music bus for screen transitions', () => {
+test('built BGM route keeps one bgmPlayer media owner for screen transitions', () => {
   const patch = read('scripts/bgm-runtime-patch.mjs');
   const routed = patch.slice(patch.indexOf('const newPlay ='), patch.indexOf("if(!s.includes(oldPlay))"));
-  assert.match(routed, /HonVietAudio/);
-  assert.match(routed, /playMusic/);
+  // 526d5de: one HTMLAudioElement (bgmPlayer) is the music owner — direct play()
+  // preserves iOS Safari activation; HonVietAudio.playMusic was deliberately reverted.
+  assert.match(routed, /bgmPlayer/);
+  assert.doesNotMatch(routed, /HonVietAudio\.playMusic/);
+  assert.match(routed, /bgmPlayer\.onerror/);
   assert.match(patch, /__HV_BGM_RETRY/);
 });
