@@ -10,13 +10,39 @@
     'bach-dien-atk': 'bach-dien/atk.wav', 'bach-dien-ult': 'bach-dien/ult.wav'
   };
   const assetBase = new URL('assets/audio/sfx/', document.baseURI).href;
-  let parentBus = null;
+  let parentBus = null, parentPerformanceOffsetMs = 0;
   try {
     if (window.parent !== window) {
       const shared = window.parent.HonVietSfx;
       parentBus = shared?.createBattleChannel ? shared.createBattleChannel() : shared;
+      const localOrigin = Number(performance.timeOrigin);
+      const parentOrigin = Number(window.parent.performance?.timeOrigin);
+      if (Number.isFinite(localOrigin) && Number.isFinite(parentOrigin)) {
+        // Convert a child performance.now() timestamp into the parent's clock:
+        // parentNow = childNow + childTimeOrigin - parentTimeOrigin.
+        parentPerformanceOffsetMs = localOrigin - parentOrigin;
+      } else {
+        const localNow = Number(performance.now());
+        const parentNow = Number(window.parent.performance?.now?.());
+        if (Number.isFinite(localNow) && Number.isFinite(parentNow)) parentPerformanceOffsetMs = parentNow - localNow;
+      }
     }
   } catch (_) {}
+  const translatePerformanceFields = (item, delta) => {
+    const copy = { ...item };
+    for (const key of Object.keys(copy)) {
+      if (/PerformanceMs$/.test(key) && Number.isFinite(Number(copy[key]))) copy[key] = Number(copy[key]) + delta;
+    }
+    return copy;
+  };
+  const optionsForParent = options => {
+    if (!parentBus || !parentPerformanceOffsetMs) return options;
+    const copy = { ...options };
+    for (const key of ['cuePerformanceMs', 'audibleAtPerformanceMs']) {
+      if (Number.isFinite(Number(copy[key]))) copy[key] = Number(copy[key]) + parentPerformanceOffsetMs;
+    }
+    return copy;
+  };
   const active = new Set(), buffers = new Map(), loads = new Map(), analyses = new Map(), last = new Map();
   const timing = [];
   const recordTiming = detail => {
@@ -67,7 +93,14 @@
     return result;
   }
   function timingEvents() {
-    return parentBus?.timingEvents?.() || timing.map(item => ({ ...item }));
+    if (parentBus?.timingEvents) {
+      return parentBus.timingEvents().map(item => ({
+        ...translatePerformanceFields(item, -parentPerformanceOffsetMs),
+        performanceClockDomain: 'battle-local',
+        parentPerformanceOffsetMs
+      }));
+    }
+    return timing.map(item => ({ ...item, performanceClockDomain: 'local', parentPerformanceOffsetMs: 0 }));
   }
   let ownContext = null, combatEnabled = true, combatEpoch = 0, played = 0;
   let battleSession = 0, disposed = false;
@@ -201,7 +234,7 @@
     const requestedAt = Date.now(), requestedPerformanceMs = performance.now();
     if (options.signal?.aborted) return false;
     if (!isBattleActive()) return false;
-    if (parentBus) return parentBus.play(event, options);
+    if (parentBus) return parentBus.play(event, optionsForParent(options));
     if (!files[event]) return false;
     // Forge audio belongs to an explicit shell UI command, never combat.
     if (event === 'forge-reveal' && options.group !== 'ui') return false;
