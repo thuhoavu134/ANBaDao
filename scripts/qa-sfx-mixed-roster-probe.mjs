@@ -36,6 +36,30 @@ try {
 
   await sleep(45000);
 
+  // Generic attack presentation check: sample enemy attack windows and player
+  // hurt states every 200ms, plus movement-owner events per actor. The boss and
+  // campaign enemies share this pipeline — if enemy attacks produce movement +
+  // hurt states here, the presentation works on this build.
+  const states = [];
+  for (let i = 0; i < 150; i++) {
+    try {
+      states.push(await page.evaluate(`(() => {
+        const us = window.__HON_VIET__.getUnits();
+        return { e: us.filter(u => u.team === 'enemy').map(u => u.state).join(','), p: us.filter(u => u.team === 'player').map(u => u.state).join(',') };
+      })()`));
+    } catch (e) {}
+    await sleep(200);
+  }
+  const enemyAttack = states.filter(x => /attack|skill1|ultimate|cast/.test(x.e));
+  const playerHurt = states.filter(x => x.p.includes('hurt'));
+  const movementByActor = await page.evaluate(`(() => {
+    const ev = window.__HV_SKILL_MOVEMENT_QA?.events?.() || [];
+    const by = {};
+    for (const e of ev) { const id = e.actorId || 'unknown'; by[id] = by[id] || {}; by[id][e.type] = (by[id][e.type] || 0) + 1; }
+    return by;
+  })()`);
+  report.presentation = { enemyAttackSamples: enemyAttack.length, enemyAttackExamples: enemyAttack.slice(0, 3), playerHurtSamples: playerHurt.length, playerHurtExamples: playerHurt.slice(0, 3), movementByActor };
+
   report.sfx = await page.evaluate(`(() => {
     const w = document.getElementById("hvBattleFrame").contentWindow;
     let state = {}, units = [];
@@ -46,6 +70,7 @@ try {
 } catch (e) {
   report.errors.push(e.message);
 } finally {
-  await browser.close();
+  // Windows/Chrome can hold the profile dir briefly; never lose the report to close().
+  console.log(JSON.stringify(report, null, 2));
+  try { await browser.close(); } catch (e) {}
 }
-console.log(JSON.stringify(report, null, 2));
