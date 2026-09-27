@@ -142,7 +142,7 @@ async function runViewport(browser,out,name,width,height,dpr,targetBase) {
       }
     }
 
-    run.lifecycle = { muteUnmute:null, exit:null };
+    run.lifecycle = { muteUnmute:null, exit:null, voiceMuteUnmute:null, voiceExit:null };
     const resetLifecycleSession = async () => {
       const previousSession = await page.evaluate('window.__SKILL_TEST_QA__.sessionIndex');
       await page.evaluate('window.__SKILL_TEST_QA__.reset()');
@@ -167,6 +167,28 @@ async function runViewport(browser,out,name,width,height,dpr,targetBase) {
         return w.HonVietSfx?.timingEvents?.().some(item=>item.actionId===${JSON.stringify(actionId)});
       })()`,5000);
       return actionId;
+    };
+
+    const voiceOwnerState = async () => page.evaluate(`(()=>{
+      const w=document.querySelector('#battleFrame').contentWindow;
+      const owner=(w.parent&&w.parent!==w&&w.parent.HonVietAudio)?w.parent:w;
+      return {
+        active:owner.document.documentElement.dataset.voiceCombatActive||'0',
+        sound:w.__HON_VIET__?.getState?.().sound,
+        owner:owner===w?'iframe':'parent'
+      };
+    })()`);
+    const startLifecycleUltimate = async () => {
+      await page.wait('!document.querySelector(\'[data-action="ultimate"]\').disabled');
+      await page.click('[data-action="ultimate"]');
+      await page.wait('window.__SKILL_TEST_QA__.lastRun?.hero==="luc-anh"&&window.__SKILL_TEST_QA__.lastRun?.action==="ultimate"&&window.__SKILL_TEST_QA__.lastRun?.started===true',15000);
+      const actionId=await page.evaluate('window.__SKILL_TEST_QA__.lastRun.actionId');
+      await page.wait(`(()=>{
+        const w=document.querySelector('#battleFrame').contentWindow;
+        const owner=(w.parent&&w.parent!==w&&w.parent.HonVietAudio)?w.parent:w;
+        return Number(owner.document.documentElement.dataset.voiceCombatActive||0)>0;
+      })()`,10000);
+      return {actionId,state:await voiceOwnerState()};
     };
 
     await resetLifecycleSession();
@@ -219,6 +241,49 @@ async function runViewport(browser,out,name,width,height,dpr,targetBase) {
     };
     if(!run.lifecycle.exit.ok) throw new Error('Battle exit did not synchronously cancel scheduled combat audio');
 
+    await resetLifecycleSession();
+    const voiceMutedStart = await startLifecycleUltimate();
+    await page.evaluate(`document.querySelector('#battleFrame').contentWindow.document.querySelector('#soundButton')?.click()`);
+    await page.wait(`(()=>{
+      const w=document.querySelector('#battleFrame').contentWindow;
+      const owner=(w.parent&&w.parent!==w&&w.parent.HonVietAudio)?w.parent:w;
+      return (owner.document.documentElement.dataset.voiceCombatActive||'0')==='0';
+    })()`,5000);
+    const voiceAfterMute = await voiceOwnerState();
+    await page.wait('window.__SKILL_TEST_QA__.lastRun?.complete===true',30000);
+    await page.evaluate(`document.querySelector('#battleFrame').contentWindow.document.querySelector('#soundButton')?.click()`);
+    const voiceResumedStart = await startLifecycleUltimate();
+    const voiceResumed = await voiceOwnerState();
+    run.lifecycle.voiceMuteUnmute = {
+      firstActionId:voiceMutedStart.actionId,
+      resumedActionId:voiceResumedStart.actionId,
+      beforeMute:voiceMutedStart.state,
+      afterMute:voiceAfterMute,
+      resumed:voiceResumed,
+      ok:Number(voiceMutedStart.state.active)>0 && voiceAfterMute.active==='0' &&
+        voiceAfterMute.sound===false && Number(voiceResumed.active)>0 && voiceResumed.sound===true
+    };
+    if(!run.lifecycle.voiceMuteUnmute.ok) throw new Error('Lục Ảnh combat voice did not stop/restart across mute/unmute');
+    await page.evaluate(`document.querySelector('#battleFrame').contentWindow.document.querySelector('#soundButton')?.click()`);
+    await page.wait('window.__SKILL_TEST_QA__.lastRun?.complete===true',30000);
+
+    await resetLifecycleSession();
+    const voiceExitStart = await startLifecycleUltimate();
+    await page.evaluate(`document.querySelector('#battleFrame').contentWindow.document.querySelector('#exitBattleButton')?.click()`);
+    await page.wait(`(()=>{
+      const w=document.querySelector('#battleFrame').contentWindow;
+      const owner=(w.parent&&w.parent!==w&&w.parent.HonVietAudio)?w.parent:w;
+      return (owner.document.documentElement.dataset.voiceCombatActive||'0')==='0';
+    })()`,5000);
+    const voiceAfterExit = await voiceOwnerState();
+    run.lifecycle.voiceExit = {
+      actionId:voiceExitStart.actionId,
+      beforeExit:voiceExitStart.state,
+      afterExit:voiceAfterExit,
+      ok:Number(voiceExitStart.state.active)>0 && voiceAfterExit.active==='0'
+    };
+    if(!run.lifecycle.voiceExit.ok) throw new Error('Battle exit did not synchronously stop Lục Ảnh combat voice');
+
     const beforeReset = await page.evaluate('window.__SKILL_TEST_QA__.sessionIndex');
     await page.click('#resetBattle');
     await page.wait(`window.__SKILL_TEST_QA__.ready===true&&window.__SKILL_TEST_QA__.sessionIndex>${beforeReset}`,30000);
@@ -232,7 +297,7 @@ async function runViewport(browser,out,name,width,height,dpr,targetBase) {
     run.networkFailures = page.events.filter(event=>event.method==='Network.loadingFailed').map(event=>event.params);
     run.criticalNetworkFailures = run.networkFailures.filter(item=>!(item.canceled===true && item.type==='Media'));
     run.qaErrors = await page.evaluate('window.__SKILL_TEST_QA__.errors');
-    run.ok = run.actions.every(item=>item.ok) && run.lifecycle.muteUnmute?.ok===true && run.lifecycle.exit?.ok===true && run.afterReset.ready===true && run.afterReset.resetCount>=1 && run.exceptions.length===0 && run.criticalHttpErrors.length===0 && run.criticalNetworkFailures.length===0 && run.qaErrors.length===0;
+    run.ok = run.actions.every(item=>item.ok) && run.lifecycle.muteUnmute?.ok===true && run.lifecycle.exit?.ok===true && run.lifecycle.voiceMuteUnmute?.ok===true && run.lifecycle.voiceExit?.ok===true && run.afterReset.ready===true && run.afterReset.resetCount>=1 && run.exceptions.length===0 && run.criticalHttpErrors.length===0 && run.criticalNetworkFailures.length===0 && run.qaErrors.length===0;
     if (!run.ok) run.errors.push('Direct skill-test browser acceptance failed.');
   } catch (error) {
     run.ok=false;
