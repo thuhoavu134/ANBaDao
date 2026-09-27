@@ -54,6 +54,51 @@ function fixture() {
   };
 }
 
+
+
+const iosAudioPatchSource = readFileSync(new URL('../scripts/ios-audio-unlock-patch.mjs', import.meta.url), 'utf8');
+function voiceBusFixture() {
+  const match = iosAudioPatchSource.match(/const manager = String\.raw\`<script id="honviet-ios-audio-unlock">([\s\S]*?)<\/script>\`;/);
+  assert.ok(match, 'shared iOS/WebAudio manager source must be extractable');
+  const sources = [], dataset = {};
+  class AudioContextFixture {
+    constructor() { this.state='running'; this.currentTime=0; this.destination={}; }
+    resume() { this.state='running'; return Promise.resolve(); }
+    createBuffer() { return { silent:true }; }
+    decodeAudioData() { return Promise.resolve({ decoded:true }); }
+    createGain() {
+      return {
+        gain:{ value:1, cancelScheduledValues(){}, setValueAtTime(){}, linearRampToValueAtTime(){} },
+        connect(){}, disconnect(){}
+      };
+    }
+    createBufferSource() {
+      const source={
+        buffer:null, connect(){}, disconnect(){},
+        start(){this.started=true;},
+        stop(){this.stopped=true;}
+      };
+      sources.push(source);
+      return source;
+    }
+  }
+  const window={AudioContext:AudioContextFixture};
+  window.window=window;
+  const document={
+    visibilityState:'visible',
+    documentElement:{dataset},
+    addEventListener(){}
+  };
+  vm.runInNewContext(match[1], {
+    window, document,
+    fetch:async()=>({ok:true,arrayBuffer:async()=>new ArrayBuffer(8)}),
+    Audio:class {},
+    console:{warn(){}},
+    setTimeout, clearTimeout
+  });
+  return {bus:window.HonVietAudio,sources,dataset};
+}
+
 test('RED: scheduled combat SFX compensates decoded leading silence so audible onset lands on the visual cue', async () => {
   const f = fixture();
   assert.equal(await f.bus.prepare('basic'), true);
@@ -187,4 +232,25 @@ test('RED: integrated battle host resets and closes the combat voice epoch', () 
     'closing the overlay must stop parent combat voice');
   assert.match(closeBlock, /frame\.contentWindow\?\.HonVietAudio\?\.stopCombat\?\.\(\)/,
     'closing the overlay must also stop an iframe-owned combat voice fallback');
+});
+
+
+test('shared combat voice epoch stops active Ultimate voice and re-enables next battle', async () => {
+  const f=voiceBusFixture();
+  const url='assets/audio/voice-luc-anh-ultimate.mp3';
+  assert.equal(await f.bus.playVoice(url,2.75),true);
+  const first=f.sources.find(source=>source.buffer?.decoded);
+  assert.ok(first?.started,'Ultimate voice must create a decoded WebAudio source');
+  assert.equal(f.dataset.voiceCombatActive,'1');
+
+  f.bus.stopCombat();
+  assert.equal(first.stopped,true,'combat stop must synchronously stop the active Ultimate voice');
+  assert.equal(f.dataset.voiceCombatActive,'0');
+  assert.equal(await f.bus.playVoice(url,2.75),false,'stopped combat epoch must reject stale/new combat voice');
+
+  f.bus.beginCombat();
+  assert.equal(await f.bus.playVoice(url,2.75),true,'new battle/unmute must re-enable combat voice');
+  const decoded=f.sources.filter(source=>source.buffer?.decoded);
+  assert.equal(decoded.length,2);
+  assert.equal(decoded[1].started,true);
 });
