@@ -57,7 +57,9 @@ export function inspectLinhDongStatic(root = process.cwd()) {
   const splusEnd = battle.indexOf('function drawSplusToken', splusStart);
   assert(splusStart >= 0 && splusEnd > splusStart, 'S+ action owner is missing from battle');
   const splusSource = battle.slice(splusStart, splusEnd);
-  assert(splusSource.includes('beginLinhDongAction(actor,action,target,battleId)'), 'S+ Linh Đồng does not start the shared clock');
+  // combat-authored-audio-sync-v1 versioned the shared-clock start with an
+  // optional presentation id; accept both call shapes.
+  assert(/beginLinhDongAction\(actor,action,target,battleId(,[a-zA-Z.]+)?\)/.test(splusSource), 'S+ Linh Đồng does not start the shared clock');
   assert(/waitLinhDongMarker\([^,]+,\s*['"]release['"]/.test(splusSource), 'S+ Linh Đồng does not wait for release');
   assert(splusSource.includes('emitLinhDongRelease'), 'S+ Linh Đồng does not emit release on the shared clock');
   assert(/waitLinhDongMarker\([^,]+,\s*['"]impact['"]/.test(splusSource), 'S+ Linh Đồng does not wait for impact');

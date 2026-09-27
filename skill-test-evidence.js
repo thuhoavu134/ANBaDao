@@ -58,6 +58,9 @@
       bus[method]=wrapped;
     };
     wrapBus(w.HonVietSfx,'play','sfx','iframe');
+    // Production embedded battles play the Lục Ảnh voice on
+    // window.parent.HonVietAudio (see battle.html voice bridge); observe that
+    // exact parent bus when embedded, else the iframe bus for standalone runs.
     const voiceBus=(w.parent&&w.parent!==w&&w.parent.HonVietAudio)?w.parent.HonVietAudio:w.HonVietAudio;
     wrapBus(voiceBus,'playVoice','voice',voiceBus===w.HonVietAudio?'iframe':'parent');
   }

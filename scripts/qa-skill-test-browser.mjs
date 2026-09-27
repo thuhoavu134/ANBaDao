@@ -179,6 +179,24 @@ async function runViewport(browser,out,name,width,height,dpr,targetBase) {
         row.timing = timingContract(row);
         row.timingOk = row.timing.ok;
         row.ok = row.ok && row.timingOk;
+        const voiceEntries = Array.isArray(row.result.evidence?.audio) ? row.result.evidence.audio.filter(item => String(item.kind || '').startsWith('voice')) : [];
+        if (voiceEntries.length) {
+          // The voice must lead the visual: voiceStartMs is the observed voice
+          // graph/media start; voiceLeadMs compares it with the actual first
+          // Ultimate VFX draw of the same run (>= 0 keeps it a lead).
+          const started = voiceEntries.find(item => item.played === true) || voiceEntries[0];
+          row.voiceStartMs = Number.isFinite(Number(started.playingMs)) ? Number(started.playingMs)
+            : Number.isFinite(Number(started.resolvedMs)) ? Number(started.resolvedMs)
+            : Number(started.requestedMs);
+          const ultimateVfx = row.result.evidence?.draws?.[VISUAL_CUE_SPEC[heroKey]?.ultimate?.src];
+          row.voiceLeadMs = Number.isFinite(row.voiceStartMs) && ultimateVfx
+            ? Math.round((ultimateVfx.firstMs - row.voiceStartMs) * 100) / 100
+            : null;
+          if (heroKey === 'luc-anh' && action === 'ultimate') {
+            if (!Number.isFinite(row.voiceStartMs)) throw new Error('Lục Ảnh Ultimate voice start was not observed by the evidence collector');
+            if (!(row.voiceLeadMs >= 0)) throw new Error('Lục Ảnh voice must remain a lead; voiceLeadMs=' + row.voiceLeadMs);
+          }
+        }
         if (heroKey==='luc-anh') {
           const snap=row.result.movement.find(event=>event.type==='approach:snap'&&event.actorId===heroId);
           row.snapApproach=!!snap;
