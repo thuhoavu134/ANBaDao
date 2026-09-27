@@ -103,7 +103,7 @@ async function runViewport(browser,out,name,width,height,dpr,targetBase) {
         await page.wait(`window.__SKILL_TEST_QA__.lastRun?.hero===${JSON.stringify(heroKey)}&&window.__SKILL_TEST_QA__.lastRun?.action===${JSON.stringify(action)}&&window.__SKILL_TEST_QA__.lastRun?.started===true`,15000);
         row.actionId = await page.evaluate('window.__SKILL_TEST_QA__.lastRun.actionId');
         await page.wait('window.__SKILL_TEST_QA__.lastRun?.impact===true',20000);
-        const shot = name+'-'+heroKey+'-'+action+'-impact.png';
+        const shot = name+'-'+speed+'x-'+heroKey+'-'+action+'-impact.png';
         await page.screenshot(resolve(out,shot));
         run.screenshots.push(shot);
         await page.wait('window.__SKILL_TEST_QA__.lastRun?.complete===true',30000);
