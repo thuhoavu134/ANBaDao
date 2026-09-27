@@ -1,0 +1,21 @@
+# Hồn Việt: Mộng Giới — normalize line endings.
+# The build patches anchor on LF regex markers inside index.html/battle.html and
+# several tests compare built bytes; CRLF checkouts break them (2026-09-27).
+* text=auto eol=lf
+
+# Assets are binary; never let git touch their bytes.
+*.webp binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.wav binary
+*.mp3 binary
+*.m4a binary
+*.ogg binary
+*.ttf binary
+*.otf binary
+*.woff binary
+*.woff2 binary
+*.ico binary
+*.zip binary
