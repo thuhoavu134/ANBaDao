@@ -117,6 +117,12 @@ replaceOne(
 );
 
 replaceOne(
+  '  dom.exitBattleButton?.addEventListener("click", () => {\n    if (!EMBEDDED) return;\n    postToHonVietHost("battle-abort", { sessionId: EMBED_CONFIG.sessionId || "" });\n  });',
+  '  dom.exitBattleButton?.addEventListener("click", () => {\n    if (!EMBEDDED) return;\n    window.HonVietSfx?.stopCombat?.();\n    postToHonVietHost("battle-abort", { sessionId: EMBED_CONFIG.sessionId || "" });\n  });',
+  'battle-exit-routing'
+);
+
+replaceOne(
   'const linhAction=beginLinhDongAction(actor,action,target,battleId);',
   'const linhAction=beginLinhDongAction(actor,action,target,battleId,phase1ActionId);',
   'linh-dong-canonical-action-id'
@@ -150,9 +156,10 @@ const validation={
     html.includes("cue:'release:authored-marker'"),
   contactCue:html.includes('contact:sheet-frame-'),
   releaseCue:html.includes('release:authored-marker'),
-  muteRouting:html.includes('window.HonVietSfx?.setCombatEnabled?.(state.sound);')
+  muteRouting:html.includes('window.HonVietSfx?.setCombatEnabled?.(state.sound);'),
+  exitRouting:html.includes('window.HonVietSfx?.stopCombat?.();\n    postToHonVietHost("battle-abort"')
 };
-diagnostics.push({label:'final-validation',count:(validation.lucImmediate||validation.dinhImmediate||validation.ongImmediate||validation.splusReleaseReplay||!validation.splusTimedOwners||!validation.contactCue||!validation.releaseCue||!validation.muteRouting)?0:1,validation});
+diagnostics.push({label:'final-validation',count:(validation.lucImmediate||validation.dinhImmediate||validation.ongImmediate||validation.splusReleaseReplay||!validation.splusTimedOwners||!validation.contactCue||!validation.releaseCue||!validation.muteRouting||!validation.exitRouting)?0:1,validation});
 const anchorFailures=diagnostics.filter(item=>item.label!=='final-validation'&&item.count!==1);
 const finalValidation=diagnostics.find(item=>item.label==='final-validation');
 const __hvAudioSnippet=(needle,radius=900)=>{const at=html.indexOf(needle);return at<0?null:html.slice(Math.max(0,at-radius),Math.min(html.length,at+radius));};
