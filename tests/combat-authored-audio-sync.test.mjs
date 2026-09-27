@@ -127,3 +127,20 @@ test('RED: generated battle exit stops scheduled combat audio before host abort'
   assert.ok(block.indexOf('stopCombat') < block.indexOf('postToHonVietHost("battle-abort"'),
     'audio cancellation must happen before host navigation is requested');
 });
+
+
+test('muting combat stops a source already scheduled for a future authored cue', async () => {
+  const f = fixture();
+  assert.equal(await f.bus.prepare('basic'), true);
+  assert.equal(await f.bus.play('basic', {
+    group: 'combat',
+    actionId: 'qa:future-mute',
+    cue: 'release',
+    cuePerformanceMs: 1800
+  }), true);
+  assert.equal(f.sources.length, 1);
+  assert.ok(f.sources[0].startedAt > f.context.currentTime, 'fixture must actually schedule this source in the future');
+  f.bus.setCombatEnabled(false);
+  assert.equal(f.sources[0].stopped, true, 'mute must cancel the already-scheduled future source immediately');
+  assert.equal(await f.bus.play('skill', { group:'combat' }), false, 'combat remains muted until explicitly re-enabled');
+});
