@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
 import { readFileSync } from 'node:fs';
+import { authoredVisualCueTimes, pairAuthoredAudioToVisual } from '../src/combat-domain/authored-audio-visual-timing.mjs';
 
 const audioSource = readFileSync(new URL('../src/ui/audio-sfx-runtime.js', import.meta.url), 'utf8');
 
@@ -256,13 +257,47 @@ test('shared combat voice epoch stops active Ultimate voice and re-enables next 
 });
 
 
-test('RED: browser timing gate compares scheduled audio with actual authored draw/contact timestamps', () => {
+test('browser timing gate compares scheduled audio with actual authored draw/contact timestamps', () => {
   const qa = readFileSync(new URL('../scripts/qa-skill-test-browser.mjs', import.meta.url), 'utf8');
+  const matcher = readFileSync(new URL('../src/combat-domain/authored-audio-visual-timing.mjs', import.meta.url), 'utf8');
   const evidence = readFileSync(new URL('../skill-test-evidence.js', import.meta.url), 'utf8');
   assert.match(evidence, /frameSequence/, 'draw evidence must preserve repeated frame transitions for multi-hit sheets');
-  assert.match(qa, /visualSignedOffsetMs/, 'timing gate must score audio against actual visual draw time');
+  assert.match(matcher, /visualSignedOffsetMs/, 'timing gate must score audio against actual visual draw time');
   assert.match(qa, /frameIndex:\s*42/, 'Ông Phở Basic must score against sheet contact frame 42');
   assert.match(qa, /frameIndex:\s*36/, 'Ông Phở Skill must score against sheet contact frame 36');
   assert.match(qa, /frameIndex:\s*45/, 'Ông Phở Ultimate must score against sheet contact frame 45');
-  assert.match(qa, /expectedCuePerformanceMs[^\n]*visual/, 'audio-to-visual comparison must use the scheduled audible sample cue, not play\(\) request time');
+  assert.match(matcher, /expectedCuePerformanceMs[\s\S]*visualMs/, 'audio-to-visual comparison must use the scheduled audible sample cue, not play\(\) request time');
+});
+
+
+test('pairs Ông Phở chain2 audio with the second actual contact-frame draw', () => {
+  const spec={src:'/assets/battle-runtime/embedded-11.png',frameIndex:42};
+  const evidence={draws:{
+    [spec.src]:{
+      frameSequence:[
+        {frameIndex:41,firstMs:970},
+        {frameIndex:42,firstMs:1000},
+        {frameIndex:43,firstMs:1040},
+        {frameIndex:41,firstMs:2370},
+        {frameIndex:42,firstMs:2400},
+        {frameIndex:43,firstMs:2440}
+      ]
+    }
+  }};
+  const visualTimes=authoredVisualCueTimes(evidence,spec);
+  assert.deepEqual(visualTimes,[1000,2400]);
+  const scoped=[
+    {actionId:'qa:ong-pho:basic',event:'basic',cue:'contact:sheet-frame-42',expectedCuePerformanceMs:1012},
+    {actionId:'qa:ong-pho:basic:chain2',event:'basic',cue:'contact:sheet-frame-42',expectedCuePerformanceMs:2384}
+  ];
+  const paired=pairAuthoredAudioToVisual(scoped,visualTimes,50,spec);
+  assert.equal(paired.bad.length,0);
+  assert.deepEqual(paired.cues.map(item=>item.occurrence),[0,1]);
+  assert.deepEqual(paired.cues.map(item=>item.visualSignedOffsetMs),[12,-16]);
+
+  const late=pairAuthoredAudioToVisual(
+    [{...scoped[1],expectedCuePerformanceMs:2475}],visualTimes,50,spec
+  );
+  assert.equal(late.bad.length,1,'actual audio cue more than 50ms from contact must fail');
+  assert.equal(late.bad[0].visualSignedOffsetMs,75);
 });
