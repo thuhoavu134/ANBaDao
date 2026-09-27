@@ -108,6 +108,14 @@ function bindSplusAudioClock({title,hero,cap}){
 bindSplusAudioClock({title:'LinhDong',hero:'linh-dong',cap:'LINH_DONG'});
 bindSplusAudioClock({title:'BachDien',hero:'bach-dien',cap:'BACH_DIEN'});
 
+// Battle mute owns the combat SFX bus as well as the presentation state. This
+// stops active and future-scheduled combat sources immediately without touching UI audio.
+replaceOne(
+  '  function toggleSound() {\n    state.sound = !state.sound;\n    dom.soundButton.setAttribute("aria-pressed", String(state.sound));',
+  '  function toggleSound() {\n    state.sound = !state.sound;\n    window.HonVietSfx?.setCombatEnabled?.(state.sound);\n    dom.soundButton.setAttribute("aria-pressed", String(state.sound));',
+  'battle-mute-routing'
+);
+
 replaceOne(
   'const linhAction=beginLinhDongAction(actor,action,target,battleId);',
   'const linhAction=beginLinhDongAction(actor,action,target,battleId,phase1ActionId);',
@@ -141,9 +149,10 @@ const validation={
   splusTimedOwners:['linh-dong-atk','linh-dong-ult','bach-dien-atk','bach-dien-ult'].every(event=>html.includes(event)) &&
     html.includes("cue:'release:authored-marker'"),
   contactCue:html.includes('contact:sheet-frame-'),
-  releaseCue:html.includes('release:authored-marker')
+  releaseCue:html.includes('release:authored-marker'),
+  muteRouting:html.includes('window.HonVietSfx?.setCombatEnabled?.(state.sound);')
 };
-diagnostics.push({label:'final-validation',count:(validation.lucImmediate||validation.dinhImmediate||validation.ongImmediate||validation.splusReleaseReplay||!validation.splusTimedOwners||!validation.contactCue||!validation.releaseCue)?0:1,validation});
+diagnostics.push({label:'final-validation',count:(validation.lucImmediate||validation.dinhImmediate||validation.ongImmediate||validation.splusReleaseReplay||!validation.splusTimedOwners||!validation.contactCue||!validation.releaseCue||!validation.muteRouting)?0:1,validation});
 const anchorFailures=diagnostics.filter(item=>item.label!=='final-validation'&&item.count!==1);
 const finalValidation=diagnostics.find(item=>item.label==='final-validation');
 const __hvAudioSnippet=(needle,radius=900)=>{const at=html.indexOf(needle);return at<0?null:html.slice(Math.max(0,at-radius),Math.min(html.length,at+radius));};
