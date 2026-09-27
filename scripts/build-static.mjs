@@ -131,6 +131,9 @@ await import('./lanes/tkt-0073-npc-busts.mjs');
 // WAVE-I 2026-09-12 TKT-0074 Auth API — fill stub; do not add imports.
 // Same-origin /api on this Vercel project. Keep AFTER safari. Do not edit index.html.
 await import('./lanes/tkt-0074-auth.mjs');
+// 2026-09-27 login-gate modal stacking + battle-return route preservation.
+// Keep AFTER tkt-0074 (anchors on the inlined gate runtime). Do not edit index.html.
+await import('./login-gate-modal-topmost-v1.mjs');
 
 // WAVE-K 2026-09-12 TKT-0083 hồ sơ avatar / giftcode / cài đặt.
 // Keep AFTER auth. Capture #hubScreen .art-avatar. Do not edit index.html.
