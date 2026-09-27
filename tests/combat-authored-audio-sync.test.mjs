@@ -402,3 +402,14 @@ test('RED: translates authored cue timestamps between battle iframe and shared p
   assert.equal(event.sourceScheduledPerformanceMs,404);
   assert.equal(event.outputTimestampPerformanceMs,390);
 });
+
+
+test('RED: browser QA records Lục Ảnh Ultimate voice lead separately from SFX timing', () => {
+  const qa=readFileSync(new URL('../scripts/qa-skill-test-browser.mjs',import.meta.url),'utf8');
+  const evidence=readFileSync(new URL('../skill-test-evidence.js',import.meta.url),'utf8');
+  assert.match(evidence,/voiceBusOwner/,'evidence must state whether Lục Ảnh voice used parent or iframe audio bus');
+  assert.match(evidence,/window\.parent\.HonVietAudio/,'embedded battle evidence must observe the same parent voice bus production uses');
+  assert.match(qa,/voiceStartMs/,'browser report must record the observed voice graph/media start');
+  assert.match(qa,/voiceLeadMs/,'browser report must measure intentional voice lead against actual Ultimate VFX draw');
+  assert.match(qa,/voiceLeadMs\s*>=\s*0/,'Lục Ảnh voice must remain a lead, not be forced after the Ultimate visual release');
+});
