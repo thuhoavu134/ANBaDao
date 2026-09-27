@@ -19,6 +19,44 @@ const EXPECTED_EVENT = {
   'linh-dong': action => action === 'ultimate' ? 'linh-dong-ult' : 'linh-dong-atk',
   'bach-dien': action => action === 'ultimate' ? 'bach-dien-ult' : 'bach-dien-atk'
 };
+const VISUAL_CUE_SPEC = {
+  'luc-anh': {
+    basic:{src:'/assets/characters/luc-anh/basic_projectile-atlas.webp'},
+    skill:{src:'/assets/characters/luc-anh/skill1_vfx-atlas.webp'},
+    ultimate:{src:'/assets/characters/luc-anh/ultimate_vfx-atlas.webp'}
+  },
+  'dinh-loi': {
+    basic:{src:'/assets/characters/dinh-loi/basic-projectile-atlas.png'},
+    skill:{src:'/assets/characters/dinh-loi/skill1-wave-atlas.png'},
+    ultimate:{src:'/assets/characters/dinh-loi/ultimate-vfx-atlas.png'}
+  },
+  'ong-pho': {
+    basic:{src:'/assets/battle-runtime/embedded-11.png',frameIndex:42},
+    skill:{src:'/assets/battle-runtime/embedded-15.png',frameIndex:36},
+    ultimate:{src:'/assets/characters/ong-pho/ultimate-sheet-64-alpha-clean-v310.png',frameIndex:45}
+  },
+  'thay-mo': {
+    basic:{src:'/assets/characters/thay-mo/skill1-wave-v3205-atlas.png'},
+    skill:{src:'/assets/characters/thay-mo/skill1-wave-v3205-atlas.png'},
+    ultimate:{src:'/assets/characters/thay-mo/ultimate-vfx-v3212-atlas.png'}
+  },
+  'linh-dong': {
+    basic:{src:'/assets/characters/linh-dong/ready-v1/skill1_vfx-atlas.webp'},
+    ultimate:{src:'/assets/characters/linh-dong/ready-v1/ultimate_vfx-atlas.webp'}
+  },
+  'bach-dien': {
+    basic:{src:'/assets/characters/bach-dien/skill1_vfx-atlas.webp'},
+    ultimate:{src:'/assets/characters/bach-dien/ultimate_vfx-atlas.webp'}
+  }
+};
+function visualCueTimes(evidence,spec){
+  const draw=evidence?.draws?.[spec?.src];
+  if(!draw)return [];
+  if(Number.isFinite(Number(spec?.frameIndex))){
+    return (draw.frameSequence||[]).filter(entry=>Number(entry.frameIndex)===Number(spec.frameIndex)).map(entry=>Number(entry.firstMs)).filter(Number.isFinite);
+  }
+  return Number.isFinite(Number(draw.firstMs))?[Number(draw.firstMs)]:[];
+}
 function timingContract(row) {
   const evidence = row.result?.evidence;
   const all = Array.isArray(evidence?.audioTiming) ? evidence.audioTiming : [];
@@ -38,16 +76,36 @@ function timingContract(row) {
     Math.abs(Number(item.signedCueOffsetMs)) > TIMING_LIMIT_MS ||
     (row.hero === 'ong-pho' ? item.sampleCue !== 'dominant' : item.sampleCue !== 'onset')
   );
+  const visualSpec = VISUAL_CUE_SPEC[row.hero]?.[row.canonicalAction] || null;
+  const visualTimes = visualCueTimes(evidence,visualSpec);
+  const visualCues = scoped.map(item => {
+    const occurrence=String(item.actionId||'').endsWith(':chain2')?1:0;
+    const visualMs=Number.isFinite(Number(visualTimes[occurrence]))?Number(visualTimes[occurrence]):null;
+    const visualSignedOffsetMs=visualMs===null||!Number.isFinite(Number(item.expectedCuePerformanceMs))
+      ?null:Number(item.expectedCuePerformanceMs)-visualMs;
+    return {
+      actionId:item.actionId,event:item.event,cue:item.cue,source:visualSpec?.src||null,
+      frameIndex:Number.isFinite(Number(visualSpec?.frameIndex))?Number(visualSpec.frameIndex):null,
+      occurrence,visualMs,expectedCuePerformanceMs:item.expectedCuePerformanceMs,visualSignedOffsetMs
+    };
+  });
+  const visualBad = visualCues.filter(item => !Number.isFinite(Number(item.visualMs)) ||
+    !Number.isFinite(Number(item.visualSignedOffsetMs)) ||
+    Math.abs(Number(item.visualSignedOffsetMs)) > TIMING_LIMIT_MS);
   const voice = Array.isArray(evidence?.audio) ? evidence.audio.filter(item => String(item.kind || '').startsWith('voice') && item.played === true) : [];
   const voiceOk = row.hero !== 'luc-anh' || row.canonicalAction !== 'ultimate' || voice.length > 0;
   return {
-    ok: scoped.length > 0 && duplicates.length === 0 && bad.length === 0 && voiceOk,
+    ok: scoped.length > 0 && duplicates.length === 0 && bad.length === 0 && visualSpec !== null && visualBad.length === 0 && voiceOk,
     limitMs: TIMING_LIMIT_MS,
     expectedEvent,
     expectedCuePrefix,
     count: scoped.length,
     duplicates,
     bad,
+    visualSpec,
+    visualTimes,
+    visualBad,
+    visualCues,
     voiceOk,
     voice,
     cues: scoped.map(item => ({
@@ -323,7 +381,7 @@ export async function run() {
     }
     report.ok=report.runs.every(item=>item.ok);
     writeFileSync(resolve(out,'report.json'),JSON.stringify(report,null,2));
-    console.log(JSON.stringify({ok:report.ok,runs:report.runs.map(item=>({name:item.name,ok:item.ok,actions:item.actions.map(row=>({hero:row.hero,action:row.action,speed:row.speed,temperature:row.temperature,sessionIndex:row.sessionIndex,ok:row.ok,timingOk:row.timingOk,actionId:row.actionId,snapApproach:row.snapApproach,maxOffsetMs:row.timing?.cues?.length?Math.max(...row.timing.cues.map(c=>Math.abs(Number(c.signedCueOffsetMs)||0))):null,timingCount:row.timing?.count||0})),lifecycle:item.lifecycle,afterReset:item.afterReset,errors:item.errors,exceptions:item.exceptions?.length,httpErrors:item.httpErrors?.length,criticalHttpErrors:item.criticalHttpErrors?.length,networkFailures:item.networkFailures?.length,criticalNetworkFailures:item.criticalNetworkFailures?.length,qaErrors:item.qaErrors?.length}))},null,2));
+    console.log(JSON.stringify({ok:report.ok,runs:report.runs.map(item=>({name:item.name,ok:item.ok,actions:item.actions.map(row=>({hero:row.hero,action:row.action,speed:row.speed,temperature:row.temperature,sessionIndex:row.sessionIndex,ok:row.ok,timingOk:row.timingOk,actionId:row.actionId,snapApproach:row.snapApproach,maxOffsetMs:row.timing?.visualCues?.length?Math.max(...row.timing.visualCues.map(c=>Math.abs(Number(c.visualSignedOffsetMs)||0))):null,schedulerOffsetMs:row.timing?.cues?.length?Math.max(...row.timing.cues.map(c=>Math.abs(Number(c.signedCueOffsetMs)||0))):null,timingCount:row.timing?.count||0})),lifecycle:item.lifecycle,afterReset:item.afterReset,errors:item.errors,exceptions:item.exceptions?.length,httpErrors:item.httpErrors?.length,criticalHttpErrors:item.criticalHttpErrors?.length,networkFailures:item.networkFailures?.length,criticalNetworkFailures:item.criticalNetworkFailures?.length,qaErrors:item.qaErrors?.length}))},null,2));
     if(!report.ok) process.exitCode=1;
   } finally {
     await browser.close();
