@@ -13,6 +13,7 @@ const HEROES = [
   ['bach-dien','Bạch Diện','qa-bach-dien']
 ];
 const ACTIONS = ['basic','skill','ultimate'];
+const SPEEDS = [1,2,3];
 const TIMING_LIMIT_MS = 50;
 const EXPECTED_EVENT = {
   'linh-dong': action => action === 'ultimate' ? 'linh-dong-ult' : 'linh-dong-atk',
@@ -76,11 +77,25 @@ async function runViewport(browser,out,name,width,height,dpr,targetBase) {
     if (run.initial.body.w>run.initial.body.clientW+1) throw new Error('skill-test page overflows horizontally');
     if (run.initial.frame.w<300 || run.initial.frame.h<300) throw new Error('battle iframe too small for direct testing');
 
-    for (const [heroKey,heroName,heroId] of HEROES) {
+    const setBattleSpeed = async speed => {
+      const actual = await page.evaluate(`(()=>{
+        const w=document.querySelector('#battleFrame').contentWindow;
+        const button=w.document.querySelector('#speedButton');
+        let guard=0;
+        while(w.__HON_VIET__?.getState?.().speed!==${speed} && guard++<4) button?.click();
+        return w.__HON_VIET__?.getState?.().speed;
+      })()`);
+      if (actual!==speed) throw new Error('Cannot set battle speed to '+speed+'x; actual='+actual);
+      return actual;
+    };
+
+    for (const speed of SPEEDS) {
+      await setBattleSpeed(speed);
+      for (const [heroKey,heroName,heroId] of HEROES) {
       await page.click(`[data-hero-tab="${heroKey}"]`);
       await page.wait(`window.__SKILL_TEST_QA__.selectedHero===${JSON.stringify(heroKey)}`);
       for (const action of ACTIONS) {
-        const row = { hero:heroKey,heroName,action };
+        const row = { hero:heroKey,heroName,action,speed };
         run.actions.push(row);
         row.movementStart = await page.evaluate(`document.querySelector('#battleFrame').contentWindow.__HV_SKILL_MOVEMENT_QA?.events().length ?? 0`);
         await page.wait(`!document.querySelector('[data-action="${action}"]').disabled`);
@@ -115,6 +130,7 @@ async function runViewport(browser,out,name,width,height,dpr,targetBase) {
         }
         await sleep(180);
       }
+      }
     }
 
     const beforeReset = await page.evaluate('window.__SKILL_TEST_QA__.sessionIndex');
@@ -148,7 +164,7 @@ export async function run() {
   mkdirSync(out,{recursive:true});
   const browser=await startBrowser();
   const targetBase=(process.env.SKILL_TEST_BASE_URL||browser.origin).replace(/\/+$/,'');
-  const report={targetBase,scope:'Direct skill-test.html controller over real generated 6v6 battle runtime; six authored owners, 16 canonical actions plus Linh Đồng/Bạch Diện Skill→ATK aliases, plus Reset. Chromium only; not physical iPhone/iPad/Safari.',revision:process.env.GITHUB_SHA||'local',runs:[],ok:false};
+  const report={targetBase,scope:'Direct skill-test.html controller over real generated 6v6 battle runtime; six authored owners, 16 canonical actions plus Linh Đồng/Bạch Diện Skill→ATK aliases at 1x/2x/3x, plus Reset. Chromium only; not physical iPhone/iPad/Safari.',revision:process.env.GITHUB_SHA||'local',runs:[],ok:false};
   try {
     for (const viewport of [['desktop',1280,800,1],['mobile',390,844,2]]) {
       report.runs.push(await runViewport(browser,out,...viewport,targetBase));
@@ -156,7 +172,7 @@ export async function run() {
     }
     report.ok=report.runs.every(item=>item.ok);
     writeFileSync(resolve(out,'report.json'),JSON.stringify(report,null,2));
-    console.log(JSON.stringify({ok:report.ok,runs:report.runs.map(item=>({name:item.name,ok:item.ok,actions:item.actions.map(row=>({hero:row.hero,action:row.action,ok:row.ok,timingOk:row.timingOk,actionId:row.actionId,snapApproach:row.snapApproach,maxOffsetMs:row.timing?.cues?.length?Math.max(...row.timing.cues.map(c=>Math.abs(Number(c.signedCueOffsetMs)||0))):null,timingCount:row.timing?.count||0})),afterReset:item.afterReset,errors:item.errors,exceptions:item.exceptions?.length,httpErrors:item.httpErrors?.length,criticalHttpErrors:item.criticalHttpErrors?.length,networkFailures:item.networkFailures?.length,criticalNetworkFailures:item.criticalNetworkFailures?.length,qaErrors:item.qaErrors?.length}))},null,2));
+    console.log(JSON.stringify({ok:report.ok,runs:report.runs.map(item=>({name:item.name,ok:item.ok,actions:item.actions.map(row=>({hero:row.hero,action:row.action,speed:row.speed,ok:row.ok,timingOk:row.timingOk,actionId:row.actionId,snapApproach:row.snapApproach,maxOffsetMs:row.timing?.cues?.length?Math.max(...row.timing.cues.map(c=>Math.abs(Number(c.signedCueOffsetMs)||0))):null,timingCount:row.timing?.count||0})),afterReset:item.afterReset,errors:item.errors,exceptions:item.exceptions?.length,httpErrors:item.httpErrors?.length,criticalHttpErrors:item.criticalHttpErrors?.length,networkFailures:item.networkFailures?.length,criticalNetworkFailures:item.criticalNetworkFailures?.length,qaErrors:item.qaErrors?.length}))},null,2));
     if(!report.ok) process.exitCode=1;
   } finally {
     await browser.close();
