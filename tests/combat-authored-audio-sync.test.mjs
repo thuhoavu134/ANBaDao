@@ -103,3 +103,14 @@ test('RED: final generated battle has one authored SFX cue scheduler instead of 
   assert.doesNotMatch(battle, /LUC_ANH_META\.(?:attack|skill1)\.frames\*LUC_ANH_META\.(?:attack|skill1)\.ms\)\);playActionSound\(actor,action\)/,
     'Lục Ảnh Basic/Skill must not retain owner-local immediate playback');
 });
+
+
+test('RED: generated battle mute routes through the combat SFX bus so scheduled release audio is stopped', () => {
+  const battle = readFileSync(new URL('../dist/battle.html', import.meta.url), 'utf8');
+  const start = battle.indexOf('  function toggleSound() {');
+  const end = battle.indexOf('\n  function pathMountain(', start);
+  assert.ok(start >= 0 && end > start, 'battle toggleSound owner must exist');
+  const block = battle.slice(start, end);
+  assert.match(block, /window\.HonVietSfx\?\.setCombatEnabled\?\.\(state\.sound\)/,
+    'mute/unmute must drive the combat SFX bus so already-scheduled sources cannot leak after mute');
+});
