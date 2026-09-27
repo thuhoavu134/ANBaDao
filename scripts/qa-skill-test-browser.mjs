@@ -95,7 +95,16 @@ async function runViewport(browser,out,name,width,height,dpr,targetBase) {
       await page.click(`[data-hero-tab="${heroKey}"]`);
       await page.wait(`window.__SKILL_TEST_QA__.selectedHero===${JSON.stringify(heroKey)}`);
       for (const action of ACTIONS) {
-        const row = { hero:heroKey,heroName,action,speed };
+        let temperature = 'warm';
+        if (speed===1) {
+          const previousSession = await page.evaluate('window.__SKILL_TEST_QA__.sessionIndex');
+          await page.evaluate('window.__SKILL_TEST_QA__.reset()');
+          await page.wait(`window.__SKILL_TEST_QA__.ready===true&&window.__SKILL_TEST_QA__.sessionIndex>${previousSession}`,30000);
+          await setBattleSpeed(1);
+          temperature = 'cold-decode';
+        }
+        const sessionIndex = await page.evaluate('window.__SKILL_TEST_QA__.sessionIndex');
+        const row = { hero:heroKey,heroName,action,speed,temperature,sessionIndex };
         run.actions.push(row);
         row.movementStart = await page.evaluate(`document.querySelector('#battleFrame').contentWindow.__HV_SKILL_MOVEMENT_QA?.events().length ?? 0`);
         await page.wait(`!document.querySelector('[data-action="${action}"]').disabled`);
@@ -164,7 +173,7 @@ export async function run() {
   mkdirSync(out,{recursive:true});
   const browser=await startBrowser();
   const targetBase=(process.env.SKILL_TEST_BASE_URL||browser.origin).replace(/\/+$/,'');
-  const report={targetBase,scope:'Direct skill-test.html controller over real generated 6v6 battle runtime; six authored owners, 16 canonical actions plus Linh Đồng/Bạch Diện Skill→ATK aliases at 1x/2x/3x, plus Reset. Chromium only; not physical iPhone/iPad/Safari.',revision:process.env.GITHUB_SHA||'local',runs:[],ok:false};
+  const report={targetBase,scope:'Direct skill-test.html controller over real generated 6v6 battle runtime; six authored owners, 16 canonical actions plus Linh Đồng/Bạch Diện Skill→ATK aliases; fresh-frame cold-decode at 1x and warm-cache timing at 2x/3x on desktop/mobile, plus Reset. Chromium only; not physical iPhone/iPad/Safari.',revision:process.env.GITHUB_SHA||'local',runs:[],ok:false};
   try {
     for (const viewport of [['desktop',1280,800,1],['mobile',390,844,2]]) {
       report.runs.push(await runViewport(browser,out,...viewport,targetBase));
@@ -172,7 +181,7 @@ export async function run() {
     }
     report.ok=report.runs.every(item=>item.ok);
     writeFileSync(resolve(out,'report.json'),JSON.stringify(report,null,2));
-    console.log(JSON.stringify({ok:report.ok,runs:report.runs.map(item=>({name:item.name,ok:item.ok,actions:item.actions.map(row=>({hero:row.hero,action:row.action,speed:row.speed,ok:row.ok,timingOk:row.timingOk,actionId:row.actionId,snapApproach:row.snapApproach,maxOffsetMs:row.timing?.cues?.length?Math.max(...row.timing.cues.map(c=>Math.abs(Number(c.signedCueOffsetMs)||0))):null,timingCount:row.timing?.count||0})),afterReset:item.afterReset,errors:item.errors,exceptions:item.exceptions?.length,httpErrors:item.httpErrors?.length,criticalHttpErrors:item.criticalHttpErrors?.length,networkFailures:item.networkFailures?.length,criticalNetworkFailures:item.criticalNetworkFailures?.length,qaErrors:item.qaErrors?.length}))},null,2));
+    console.log(JSON.stringify({ok:report.ok,runs:report.runs.map(item=>({name:item.name,ok:item.ok,actions:item.actions.map(row=>({hero:row.hero,action:row.action,speed:row.speed,temperature:row.temperature,sessionIndex:row.sessionIndex,ok:row.ok,timingOk:row.timingOk,actionId:row.actionId,snapApproach:row.snapApproach,maxOffsetMs:row.timing?.cues?.length?Math.max(...row.timing.cues.map(c=>Math.abs(Number(c.signedCueOffsetMs)||0))):null,timingCount:row.timing?.count||0})),afterReset:item.afterReset,errors:item.errors,exceptions:item.exceptions?.length,httpErrors:item.httpErrors?.length,criticalHttpErrors:item.criticalHttpErrors?.length,networkFailures:item.networkFailures?.length,criticalNetworkFailures:item.criticalNetworkFailures?.length,qaErrors:item.qaErrors?.length}))},null,2));
     if(!report.ok) process.exitCode=1;
   } finally {
     await browser.close();
