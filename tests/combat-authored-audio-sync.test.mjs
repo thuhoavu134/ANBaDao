@@ -142,5 +142,11 @@ test('muting combat stops a source already scheduled for a future authored cue',
   assert.ok(f.sources[0].startedAt > f.context.currentTime, 'fixture must actually schedule this source in the future');
   f.bus.setCombatEnabled(false);
   assert.equal(f.sources[0].stopped, true, 'mute must cancel the already-scheduled future source immediately');
+  const cancelled = f.bus.timingEvents().find(item => item.actionId === 'qa:future-mute');
+  assert.equal(cancelled?.cancelReason, 'combat-stop', 'timing evidence must distinguish forced combat cancellation from normal completion');
+  assert.ok(Number.isFinite(cancelled?.cancelledPerformanceMs), 'timing evidence must record when the scheduled source was cancelled');
+  f.sources[0].onended?.();
+  const ended = f.bus.timingEvents().find(item => item.actionId === 'qa:future-mute');
+  assert.equal(ended?.completed, false, 'a source stopped by mute/exit must never be reported as a natural completion');
   assert.equal(await f.bus.play('skill', { group:'combat' }), false, 'combat remains muted until explicitly re-enabled');
 });
