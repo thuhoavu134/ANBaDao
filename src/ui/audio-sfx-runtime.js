@@ -267,13 +267,34 @@
       active.add(voice);
       const sourceRequestPerformanceMs = performance.now();
       const desiredSourcePerformanceMs = cuePerformanceMs === null ? null : cuePerformanceMs - sampleCueOffsetMs;
-      const sourceScheduledPerformanceMs = desiredSourcePerformanceMs === null
-        ? sourceRequestPerformanceMs : Math.max(sourceRequestPerformanceMs, desiredSourcePerformanceMs);
       const contextNow = Number(c.currentTime);
-      const sourceStartContextTime = desiredSourcePerformanceMs === null || !Number.isFinite(contextNow)
-        ? 0 : contextNow + Math.max(0, sourceScheduledPerformanceMs - sourceRequestPerformanceMs) / 1000;
+      let sourceScheduledPerformanceMs = sourceRequestPerformanceMs;
+      let sourceStartContextTime = 0;
+      let clockMapping = 'current-time';
+      let outputTimestampContextTime = null;
+      let outputTimestampPerformanceMs = null;
+      let estimatedOutputLatencyMs = null;
+      if (desiredSourcePerformanceMs !== null && Number.isFinite(contextNow)) {
+        let outputTimestamp = null;
+        try { outputTimestamp = c.getOutputTimestamp?.() || null; } catch (_) {}
+        const outputContextTime = Number(outputTimestamp?.contextTime);
+        const outputPerformanceMs = Number(outputTimestamp?.performanceTime);
+        if (Number.isFinite(outputContextTime) && Number.isFinite(outputPerformanceMs)) {
+          clockMapping = 'output-timestamp';
+          outputTimestampContextTime = outputContextTime;
+          outputTimestampPerformanceMs = outputPerformanceMs;
+          const earliestOutputPerformanceMs = outputPerformanceMs + Math.max(0, contextNow - outputContextTime) * 1000;
+          estimatedOutputLatencyMs = Math.max(0, earliestOutputPerformanceMs - sourceRequestPerformanceMs);
+          sourceScheduledPerformanceMs = Math.max(sourceRequestPerformanceMs, desiredSourcePerformanceMs, earliestOutputPerformanceMs);
+          sourceStartContextTime = Math.max(contextNow, outputContextTime + Math.max(0, sourceScheduledPerformanceMs - outputPerformanceMs) / 1000);
+        } else {
+          sourceScheduledPerformanceMs = Math.max(sourceRequestPerformanceMs, desiredSourcePerformanceMs);
+          sourceStartContextTime = contextNow + Math.max(0, sourceScheduledPerformanceMs - sourceRequestPerformanceMs) / 1000;
+        }
+      }
       const expectedAudiblePerformanceMs = sourceScheduledPerformanceMs + analysis.audibleLeadInMs;
       const expectedCuePerformanceMs = sourceScheduledPerformanceMs + sampleCueOffsetMs;
+      const baseLatency = Number(c.baseLatency), outputLatency = Number(c.outputLatency);
       voice.timingEvent = recordTiming({
         type: 'sfx:scheduled', event, group,
         battleSession: options.battleSession ?? battleSession,
@@ -284,6 +305,11 @@
         sourceScheduledPerformanceMs, sourceStartContextTime,
         expectedAudiblePerformanceMs, expectedCuePerformanceMs,
         signedCueOffsetMs: cuePerformanceMs === null ? null : expectedCuePerformanceMs - cuePerformanceMs,
+        clockMapping, outputTimestampContextTime, outputTimestampPerformanceMs, estimatedOutputLatencyMs,
+        contextBaseLatencyMs: Number.isFinite(baseLatency) ? baseLatency * 1000 : null,
+        contextOutputLatencyMs: Number.isFinite(outputLatency) ? outputLatency * 1000 : null,
+        timingBasis: 'web-audio-output-scheduled',
+        audibleCueBasis: 'decoded-buffer-envelope',
         analysisMethod: analysis.method
       });
       if (options.signal?.aborted) { cancel(); return false; }
