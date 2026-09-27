@@ -143,6 +143,12 @@
     combatEpoch += 1;
     window.HonVietAudio?.stopCombat?.();
     for (const voice of active) if (voice.group === 'combat') {
+      voice.cancelled = true;
+      if (voice.timingEvent) {
+        voice.timingEvent.cancelled = true;
+        voice.timingEvent.cancelReason = 'combat-stop';
+        voice.timingEvent.cancelledPerformanceMs = performance.now();
+      }
       try { voice.source.stop(); } catch (_) {}
       voice.cleanup();
     }
@@ -242,6 +248,11 @@
       };
       cancel = () => {
         voice.cancelled = true;
+        if (voice.timingEvent) {
+          voice.timingEvent.cancelled = true;
+          voice.timingEvent.cancelReason = 'signal-abort';
+          voice.timingEvent.cancelledPerformanceMs = performance.now();
+        }
         try { source.stop(); } catch (_) {}
         voice.cleanup();
       };
