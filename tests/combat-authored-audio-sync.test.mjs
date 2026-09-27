@@ -254,3 +254,15 @@ test('shared combat voice epoch stops active Ultimate voice and re-enables next 
   assert.equal(decoded.length,2);
   assert.equal(decoded[1].started,true);
 });
+
+
+test('RED: browser timing gate compares scheduled audio with actual authored draw/contact timestamps', () => {
+  const qa = readFileSync(new URL('../scripts/qa-skill-test-browser.mjs', import.meta.url), 'utf8');
+  const evidence = readFileSync(new URL('../skill-test-evidence.js', import.meta.url), 'utf8');
+  assert.match(evidence, /frameSequence/, 'draw evidence must preserve repeated frame transitions for multi-hit sheets');
+  assert.match(qa, /visualSignedOffsetMs/, 'timing gate must score audio against actual visual draw time');
+  assert.match(qa, /frameIndex:\s*42/, 'Ông Phở Basic must score against sheet contact frame 42');
+  assert.match(qa, /frameIndex:\s*36/, 'Ông Phở Skill must score against sheet contact frame 36');
+  assert.match(qa, /frameIndex:\s*45/, 'Ông Phở Ultimate must score against sheet contact frame 45');
+  assert.match(qa, /expectedCuePerformanceMs[^\n]*visual/, 'audio-to-visual comparison must use the scheduled audible sample cue, not play\(\) request time');
+});
