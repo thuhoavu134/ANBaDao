@@ -150,3 +150,41 @@ test('muting combat stops a source already scheduled for a future authored cue',
   assert.equal(ended?.completed, false, 'a source stopped by mute/exit must never be reported as a natural completion');
   assert.equal(await f.bus.play('skill', { group:'combat' }), false, 'combat remains muted until explicitly re-enabled');
 });
+
+
+test('RED: generated battle mute and exit own the Lục Ảnh combat voice lifecycle', () => {
+  const battle = readFileSync(new URL('../dist/battle.html', import.meta.url), 'utf8');
+  const toggleStart = battle.indexOf('  function toggleSound() {');
+  const toggleEnd = battle.indexOf('\n  function pathMountain(', toggleStart);
+  assert.ok(toggleStart >= 0 && toggleEnd > toggleStart, 'battle toggleSound owner must exist');
+  const toggle = battle.slice(toggleStart, toggleEnd);
+  assert.match(toggle, /__hvCombatVoiceBus\(\)\?\.stopCombat\?\.\(\)/,
+    'mute must stop the dedicated Lục Ảnh combat voice bus');
+  assert.match(toggle, /__hvCombatVoiceBus\(\)\?\.beginCombat\?\.\(\)/,
+    'unmute must re-enable combat voice for the next Ultimate');
+
+  const exitStart = battle.indexOf('  dom.exitBattleButton?.addEventListener("click", () => {');
+  const exitEnd = battle.indexOf('\n  dom.actionButtons.forEach', exitStart);
+  assert.ok(exitStart >= 0 && exitEnd > exitStart, 'embedded exit handler must exist');
+  const exit = battle.slice(exitStart, exitEnd);
+  assert.match(exit, /__hvCombatVoiceBus\(\)\?\.stopCombat\?\.\(\)/,
+    'exit must synchronously stop Lục Ảnh combat voice');
+  assert.ok(exit.indexOf('__hvCombatVoiceBus') < exit.indexOf('postToHonVietHost("battle-abort"'),
+    'voice cancellation must happen before host abort navigation');
+});
+
+test('RED: integrated battle host resets and closes the combat voice epoch', () => {
+  const index = readFileSync(new URL('../dist/index.html', import.meta.url), 'utf8');
+  const open = index.indexOf('  function openIntegratedBattle(');
+  const close = index.indexOf('  function closeOverlay() {');
+  assert.ok(open >= 0 && close > open, 'integrated battle open/close owners must exist');
+  const openBlock = index.slice(open, close);
+  assert.match(openBlock, /window\.HonVietAudio\?\.beginCombat\?\.\(\)/,
+    'a new integrated battle must re-enable parent combat voice after a prior stop');
+  const closeEnd = index.indexOf('\n  function ', close + 24);
+  const closeBlock = index.slice(close, closeEnd > close ? closeEnd : close + 1800);
+  assert.match(closeBlock, /window\.HonVietAudio\?\.stopCombat\?\.\(\)/,
+    'closing the overlay must stop parent combat voice');
+  assert.match(closeBlock, /frame\.contentWindow\?\.HonVietAudio\?\.stopCombat\?\.\(\)/,
+    'closing the overlay must also stop an iframe-owned combat voice fallback');
+});
