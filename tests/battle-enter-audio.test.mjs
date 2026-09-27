@@ -48,21 +48,28 @@ test('L158-T3: embedded beginBattle uses parent combat BGM instead of iframe HTM
   assert.match(fn, /new Audio\("assets\/audio\/bgm-combat-new\.mp3"\)/);
 });
 
-test('L158-T4: closeOverlay restores host BGM after ending the battle bus', () => {
+test('L158-T4: closeOverlay preserves the shared BGM handoff after ending the battle bus', () => {
   const index = read('dist/index.html');
   const close = sliceFn(index, 'closeOverlay()', 'function finishIntegratedBattle');
   assert.match(close, /HonVietSfx\?\.endBattle\(\)/);
+  // aaf8648: audio cleanup belongs to the battle-audio-lifecycle owner; closeOverlay
+  // stops result audio while keeping the current track for the next route.
   const afterEnd = close.slice(close.indexOf('HonVietSfx?.endBattle()'));
-  assert.match(afterEnd, /playBgm\(desiredBgm/);
+  assert.match(afterEnd, /__HV_RESULT_AUDIO\?\.stop\(\{keepCurrent:true\}\)/);
+  assert.doesNotMatch(afterEnd, /playBgm\(desiredBgm/);
 });
 
-test('L158-T5: hunt overlay observer does not pause the unlocked host combat player', () => {
+test('L158-T5: hushParentBgm stays neutralized; hunt-3d owns its own pause', () => {
   const index = read('dist/index.html');
+  // 3bf01b4: there is no separate host BGM to hush during integrated battles.
+  // The build may keep the legacy helper for older index variants, but only in
+  // its neutralized form — it must never pause bgmPlayer or stop shared combat.
   const start = index.indexOf('function hushParentBgm()');
-  assert.ok(start >= 0, 'hushParentBgm missing');
-  const chunk = index.slice(start, start + 280);
-  assert.doesNotMatch(chunk, /bgmPlayer\.pause/);
-  assert.doesNotMatch(chunk, /stopCombat/);
+  if (start >= 0) {
+    const chunk = index.slice(start, start + 400);
+    assert.doesNotMatch(chunk, /bgmPlayer\.pause/);
+    assert.doesNotMatch(chunk, /stopCombat/);
+  }
   assert.match(read('src/ui/hunt-3d-runtime.js'), /bgmPlayer\.pause/);
 });
 

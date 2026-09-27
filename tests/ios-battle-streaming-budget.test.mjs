@@ -60,8 +60,9 @@ function readinessFixture() {
   const target = { id: 'target', hp: 100, hero: 'bach-dien' };
   const acquired = [];
   const pins = [];
+  const unpins = [];
   const loader = {
-    cache: { unpin() {}, constrainedMobile: true },
+    cache: { unpin(src, pin) { unpins.push([src, pin]); }, constrainedMobile: true },
     inspect: () => ({ maxBytes: 96 * MiB, maxLoading: 1, constrainedMobile: true }),
     ensure(clip, opts = {}) {
       if (opts.pin) pins.push({ src: clip.src, pin: opts.pin });
@@ -83,7 +84,7 @@ function readinessFixture() {
       sfx: () => null
     })
   });
-  return { api, actor, target, loader, acquired, pins };
+  return { api, actor, target, loader, acquired, pins, unpins };
 }
 
 test('action readiness blocks only on the current actor working set', async () => {
@@ -98,9 +99,14 @@ test('action readiness blocks only on the current actor working set', async () =
   f.api.dispose();
 });
 
-test('low-memory visible idle stays lazy and evictable instead of pinned', () => {
+test('low-memory visible idle is pinned per battle and released on dispose', () => {
   const f = readinessFixture();
+  // 869c66f: visible idle atlases are pinned for the lifetime of the battle so
+  // iOS does not thrash them back in every frame; dispose() unpins via resetVisible().
   f.api.image(f.loader, { src: 'linh-dong/idle' }, 'idle');
-  assert.equal(f.pins.length, 0);
+  assert.equal(f.pins.length, 1);
+  assert.equal(f.pins[0].src, 'linh-dong/idle');
+  assert.equal(typeof f.pins[0].pin, 'symbol');
   f.api.dispose();
+  assert.deepEqual(f.unpins, f.pins.map((entry) => [entry.src, entry.pin]));
 });

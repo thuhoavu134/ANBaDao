@@ -296,7 +296,15 @@ export async function createStoreFromEnv(env = process.env, options = {}) {
       console.error('honviet store postgres failed', err);
     }
   }
-  if (env.VERCEL) return createMemoryStore();
+  if (env.VERCEL) {
+    if (!env.DATABASE_URL) {
+      console.error('HONVIET STORE WARNING: VERCEL deployment has no DATABASE_URL. '
+        + 'Falling back to an in-memory store: player saves, profiles, chat and arena '
+        + 'results are lost on every cold start. Set DATABASE_URL to the Neon Postgres '
+        + 'connection string (Project Settings > Environment Variables).');
+    }
+    return createMemoryStore();
+  }
   const filePath = env.HONVIET_STORE_PATH || 'data/hon-viet-store.json';
   return createFileStore(filePath);
 }
