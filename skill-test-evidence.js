@@ -43,18 +43,23 @@
       }
       return result;
     };
-    for(const [busName,method,kind] of [['HonVietSfx','play','sfx'],['HonVietAudio','playVoice','voice']]){
-      const bus=w[busName];if(!bus?.[method])continue;
+    const wrapBus=(bus,method,kind,owner)=>{
+      if(!bus?.[method]||bus[method].__hvAuthoredEvidenceWrapped)return;
       const original=bus[method];
-      bus[method]=function(key,...args){
-        const options=args[0]||{};
-        const capture=current,entry={kind,key,requestedMs:at(),played:null,actionId:options.actionId||null,cue:options.cue||null,sampleCue:options.sampleCue||null,cuePerformanceMs:Number.isFinite(Number(options.cuePerformanceMs))?Number(options.cuePerformanceMs):null};
+      const wrapped=function(key,...args){
+        const options=args[0]&&typeof args[0]==='object'?args[0]:{};
+        const capture=current,entry={kind,key,requestedMs:at(),played:null,voiceBusOwner:kind==='voice'?owner:null,actionId:options.actionId||null,cue:options.cue||null,sampleCue:options.sampleCue||null,cuePerformanceMs:Number.isFinite(Number(options.cuePerformanceMs))?Number(options.cuePerformanceMs):null};
         if(capture)capture.audio.push(entry);
         const result=original.call(this,key,...args);
         Promise.resolve(result).then(ok=>{entry.played=ok===true;entry.resolvedMs=Math.round(performance.now()-(capture?.t0||0));},error=>{entry.error=String(error);});
         return result;
       };
-    }
+      wrapped.__hvAuthoredEvidenceWrapped=true;
+      bus[method]=wrapped;
+    };
+    wrapBus(w.HonVietSfx,'play','sfx','iframe');
+    const voiceBus=(w.parent&&w.parent!==w&&w.parent.HonVietAudio)?w.parent.HonVietAudio:w.HonVietAudio;
+    wrapBus(voiceBus,'playVoice','voice',voiceBus===w.HonVietAudio?'iframe':'parent');
   }
   function begin(frame,row){
     install(frame);
