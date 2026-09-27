@@ -1,0 +1,89 @@
+✔ Thầy Mo production patch emits syntactically valid character and action owners (79.008088ms)
+✖ cold authored Thầy Mo assets finish decoding before the clock/energy gate (72.176374ms)
+✖ leaving the battle cancels the pending Thầy Mo decode (64.66514ms)
+✖ authored Thầy Mo dispatches sound at release before waiting for impact (68.171047ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 1
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 363.706308
+
+✖ failing tests:
+
+test at tests/thay-mo-authored-production.test.mjs:52:1
+✖ cold authored Thầy Mo assets finish decoding before the clock/energy gate (72.176374ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/b5f6a75b3ba7/luc-than/tests/thay-mo-authored-production.test.mjs:54:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/thay-mo-authored-production.test.mjs:63:1
+✖ leaving the battle cancels the pending Thầy Mo decode (64.66514ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/b5f6a75b3ba7/luc-than/tests/thay-mo-authored-production.test.mjs:65:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/thay-mo-authored-production.test.mjs:70:1
+✖ authored Thầy Mo dispatches sound at release before waiting for impact (68.171047ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /waitThayMoAuthoredMarker\(thayMoAction,'release'/. Input:
+  
+  '} else if (usesThayMoAuthored) {\n' +
+    '      actor.x=actor.baseX;actor.y=actor.baseY;\n' +
+    '      const thayMoAction=beginThayMoAuthoredAction(actor,action,target);\n' +
+    "      setStatus(actor.name+' '+(action==='ultimate'?'khai Trận Ảnh Phong Môn':'rung Chuông Chấn Phách'));\n" +
+    "      dom.phaseLabel.textContent=action==='ultimate'?'Tuyệt kỹ • Trận Ảnh Phong Môn':'Basic • Chuông Chấn Phách';\n" +
+    "      setUnitState(actor,action==='ultimate'?'ultimate':'skill1',thayMoAction.totalMs);\n" +
+    '      playActionSound(actor,action);\n' +
+    '      if(!await sleepVisualMilliseconds(thayMoAction.impactAt,battleId))return;\n' +
+    '    '
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/b5f6a75b3ba7/luc-than/tests/thay-mo-authored-production.test.mjs:75:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: "} else if (usesThayMoAuthored) {\n      actor.x=actor.baseX;actor.y=actor.baseY;\n      const thayMoAction=beginThayMoAuthoredAction(actor,action,target);\n      setStatus(actor.name+' '+(action==='ultimate'?'khai Trận Ảnh Phong Môn':'rung Chuông Chấn Phách'));\n      dom.phaseLabel.textContent=action==='ultimate'?'Tuyệt kỹ • Trận Ảnh Phong Môn':'Basic • Chuông Chấn Phách';\n      setUnitState(actor,action==='ultimate'?'ultimate':'skill1',thayMoAction.totalMs);\n      playActionSound(actor,action);\n      if(!await sleepVisualMilliseconds(thayMoAction.impactAt,battleId))return;\n    ",
+    expected: /waitThayMoAuthoredMarker\(thayMoAction,'release'/,
+    operator: 'match',
+    diff: 'simple'
+  }

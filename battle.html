@@ -4893,6 +4893,20 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     oscillator.stop(started + duration + 0.03);
   }
 
+  // AUTHORED_COMBAT_AUDIO_SYNC_V1
+  const __hvAuthoredAudioCueEvents=[];
+  function __hvScheduleAuthoredSfx(actor,action,cuePerformanceMs,cue,actionId,signal=null,sampleCue='onset',eventOverride=null){
+    const event=eventOverride||(action==='ultimate'?'ultimate':action==='skill'?'skill':'basic');
+    const item={actionId:actionId||null,actorId:actor?.id||null,sourceId:actor?.sourceId||actor?.sourceHeroId||actor?.id||null,action,event,cue,sampleCue,cuePerformanceMs,requestedPerformanceMs:performance.now()};
+    __hvAuthoredAudioCueEvents.push(item);
+    if(__hvAuthoredAudioCueEvents.length>160)__hvAuthoredAudioCueEvents.splice(0,__hvAuthoredAudioCueEvents.length-160);
+    if(!state.sound||!window.HonVietSfx?.play){item.result=false;return Promise.resolve(false);}
+    const request=window.HonVietSfx.play(event,{group:'combat',signal,cuePerformanceMs,sampleCue,actionId:item.actionId,cue});
+    Promise.resolve(request).then(ok=>{item.result=ok===true;item.resolvedPerformanceMs=performance.now();},error=>{item.result=false;item.error=String(error);});
+    return request;
+  }
+  window.__HV_AUTHORED_AUDIO_QA={events:()=>__hvAuthoredAudioCueEvents.map(item=>({...item}))};
+
   function playActionSound(actor, action) {
     const base = actor.team === TEAM_PLAYER ? 230 : 180;
     if (action === "ultimate") {

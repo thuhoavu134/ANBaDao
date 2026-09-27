@@ -40,7 +40,7 @@ export function inspectLinhDongStatic(root = process.cwd()) {
   assert(battle.includes('hero_splus_linh_dong'), 'battle does not contain the canonical hero id');
   assert(battle.includes('combinedVfx'), 'battle registry does not expose combined VFX');
   assert(battle.includes('waitLinhDongMarker'), 'battle does not use the shared Linh Đồng marker clock');
-  assert(/if\(!usesLucAnh && !usesLinhDong(?: && !usesBachDien)?\) triggerImpactPresentation/.test(battle), 'separate impact VFX is still wired to Linh Đồng');
+  assert(/if\((?:!usesThayMoAuthored && )?!usesLucAnh && !usesLinhDong(?: && !usesBachDien)?\) triggerImpactPresentation/.test(battle), 'separate impact VFX is still wired to Linh Đồng');
   assert(!battle.includes('tone(critical ? 105 : 135, critical ? 0.16 : 0.09, "square", 0.035);') || /if\(!isLinhDong\(actor\)(?:&&!isBachDien\(actor\))?\) tone/.test(battle), 'separate impact SFX is still wired to Linh Đồng damage');
   assert(/if\(!isLinhDong\(actor\)(?:&&!isBachDien\(actor\))?\) burst/.test(battle), 'separate impact VFX burst is still wired to Linh Đồng damage');
   assert(!battle.includes('if(isLinhDong(actor)&&action==="skill")'), 'Skill 1 still has a Linh Đồng runtime resolve branch');
@@ -57,7 +57,9 @@ export function inspectLinhDongStatic(root = process.cwd()) {
   const splusEnd = battle.indexOf('function drawSplusToken', splusStart);
   assert(splusStart >= 0 && splusEnd > splusStart, 'S+ action owner is missing from battle');
   const splusSource = battle.slice(splusStart, splusEnd);
-  assert(splusSource.includes('beginLinhDongAction(actor,action,target,battleId)'), 'S+ Linh Đồng does not start the shared clock');
+  // combat-authored-audio-sync-v1 versioned the shared-clock start with an
+  // optional presentation id; accept both call shapes.
+  assert(/beginLinhDongAction\(actor,action,target,battleId(,[a-zA-Z.]+)?\)/.test(splusSource), 'S+ Linh Đồng does not start the shared clock');
   assert(/waitLinhDongMarker\([^,]+,\s*['"]release['"]/.test(splusSource), 'S+ Linh Đồng does not wait for release');
   assert(splusSource.includes('emitLinhDongRelease'), 'S+ Linh Đồng does not emit release on the shared clock');
   assert(/waitLinhDongMarker\([^,]+,\s*['"]impact['"]/.test(splusSource), 'S+ Linh Đồng does not wait for impact');
@@ -65,7 +67,11 @@ export function inspectLinhDongStatic(root = process.cwd()) {
   assert(splusSource.split('e.act(').length === 2, 'S+ Linh Đồng damage is not resolved once');
   assert(!/sleep\(linh\?linhDur/.test(splusSource) && !splusSource.includes('sleep(linhDur'), 'S+ Linh Đồng still sleeps the scaled clip duration');
   assert(battle.includes("['passive','ultimate']"), 'S+ Linh Đồng skill bar still exposes Skill 1');
-  assert(/const BATTLE_HTML_BASE64 = "";/.test(index), 'embedded battle payload must stay disabled; battle.html is the single runtime source');
+  // The final build deliberately serves one battle.html instead of a second
+  // base64 document. Assert that route and inspect its actual authored owner.
+  assert(index.includes('const BATTLE_HTML_BASE64 = "";'), 'unexpected duplicate battle payload');
+  assert(/const url = `battle\.html\?embedded=1&session=/.test(index) && /frame\.src = url;/.test(index), 'host no longer loads the audited battle document');
+  assert(battle.includes('TKT-0145 canonical Linh Dong combat bridge'), 'battle document misses the Linh Đồng bridge');
   return { schema: 'hon-viet-linh-dong-static-qa/v1', ok: true, required: REQUIRED.length, files };
 }
 

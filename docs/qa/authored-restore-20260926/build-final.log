@@ -1,0 +1,121 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> hon-viet-mong-gioi-visual-qa@3.26.0 build
+> node scripts/build-static.mjs
+
+Ông Phở original fall/skill1 PNGs recovered: two known bytes; original CRC + Adler32 verified.
+Luc Anh runtime patch applied
+Runtime safety hotfix applied
+BGM routing patch applied: hub / hero / combat / challenge
+iOS audio unlock on first real interaction applied; no blocking gate
+Victory/defeat result audio integrated
+Luc Anh safe Retina draw patch applied: DPR3 + high-quality sampling, runtime atlas cache disabled
+[QA polish] skip Luc Anh 330 scale -> state-aware compensation
+[QA polish] skip Luc Anh deployed ultimate -> guaranteed voice
+[QA polish] skip Luc Anh deployed ultimate impact hold
+Runtime QA polish v3 applied: manifest-timed Luc Anh Ultimate and local iOS-safe voice bridge
+Runtime QA polish v4 applied: center-reaching triple ultimate, reliable victory taps, production QA disabled, sharper Luc Anh detail idle
+Runtime QA polish v5 applied safely: full-strength original black-smoke Ultimate, SOURCE-OVER preserves authored pixels
+Luc Anh migrated to anchor-based spatial pipeline with authored timing metadata
+Lục Ảnh IDLE 1080 wired: 96 frames · 480×480 cells
+Skill Atlas Runtime v1: Luc Anh Basic + Skill1 + Ultimate manifests wired to proven battle flow
+Skill Atlas Registry v1: 15 skills / 5 heroes
+[Luc Anh local speed] skip VFX duration
+Luc Anh local x1/x2/x3 + authored timing metadata applied with stable block boundary
+Battle visual polish v1 applied: image chapter map + stacked bouncing damage font
+Battle backgrounds v2 applied: 20 authored stages · single full-bleed layer
+3Q combat domain adapter v1 wired: round → move → action → typed result replay
+3Q-style main quest v1 wired: sequential ải → auto-battle → reward → next quest
+Result actions v5 applied: embedded confirm publishes the result and the visible Ải sau label always follows the next-stage path
+M0/P0 runtime repair applied: battleIdle=assets/characters/luc-anh/idle-rgba-v1-battle-atlas.webp (96 frames, 240px cells) · detailIdle=assets/characters/luc-anh/idle-rgba-v1-atlas.webp · single background owner · result CTA owner
+Summon pool guard installed before paid/free debit; no economy changes
+State-backed roster installed: official identities, live stats, one route owner
+Hero detail tabs installed: existing panels and commands, stable idle layout
+Supplied audio SFX, stable canvas/camera and authored Luc Anh motion applied
+Dinh Lôi retina source cells and result portrait cache patched
+Versioned hero skill kit runtime installed: Basic / Ultimate / passive mapping
+Save contract v1 installed: versioned state, revision, backup and recovery guards
+Transaction contract installed: receipts, loadout and forge commits with local ledger
+Campaign scene: live squad, preparation, capped AFK claim, router-owned lifecycle
+Forge item assets installed: 4 slots, 20 equipment icons, 3 material icons
+R08 settlement/navigation installed: protocol guard, one-result controller and reward commit
+R04 return context installed: hero detail back route, session context and stale fallback
+R10 opening loop retained atomic hero upgrade hook
+R10 opening loop installed: event/route/prerequisite contract and safe journey CTA
+QA full access v1 installed: opt-in feature/chapter unlock with save-safe progression sandbox
+Hub dock tray installed: tray begins at button midpoints and buttons stay above it
+Hub mobile side actions stabilized and main quest hub card removed
+Hub icon alpha hotfix installed: removed legacy disc background and stacked dark filters
+iPad formation, Lục Ảnh anchor/camera and combat audio fixes applied
+Battle close now cancels parent SFX, voices, pending result audio and stale iframe channels
+Battle Phase 1 opt-in trace initializer injected
+SPLUS42: source factory, existing scheduler bridge, 42 HUD identities
+Campaign reference flow: intentional partial squad, confirm to AFK, explicit next battle
+Campaign fixed slots: unique saved slots kept through formation layout and save
+Account gear board installed: Trợ trận wheel complete
+Tower lacquer screen installed
+Expedition lacquer screen installed
+Shop lacquer screen installed
+Summon lacquer screen installed
+Arena lacquer screen installed
+Hunt lacquer screen installed
+Hunt battle beast visual installed
+Festival lacquer screen installed
+Daily lacquer screen installed
+Forge hall overlay installed
+Preview journey unlock installed (off luc-than.vercel.app)
+Túi đồ hall overlay installed
+Hòm thư hall overlay installed
+Giao việc hall overlay installed
+Bang Hội hall overlay installed
+Bạn bè hall overlay installed
+Trò chuyện hall overlay installed
+Gia Tộc hall overlay installed
+Kho lưu hall overlay installed
+Tháp Trắng Đêm 3D overlay installed
+Mộng Lộ 3D overlay installed
+Chợ Mộng 3D overlay installed
+Gọi Mộng 3D overlay installed
+Đấu Trường 3D overlay installed
+Săn Boss 3D overlay installed
+Lễ Hội 3D overlay installed
+Hồ sơ tướng 3D overlay installed
+Nhật Ký Mơ 3D overlay installed
+Chinh chiến 3D overlay installed
+Hành trình 3D overlay installed
+Kết quả 3D overlay installed
+Cốt truyện 3D overlay installed
+Trực Tuyến 3D overlay installed
+Trận Hình 3D overlay installed
+Skill seals A installed
+Skill seals B installed
+Skill seals C installed
+Safari overlay pin installed
+Tháp trận NPC installed
+Hub back chip installed
+Giáo Trường 3D overlay installed
+Skill seals D installed
+Thử Thách 3D overlay installed
+Trực Tuyến auth (same-origin + Google) installed
+Login gate (video + register/login) installed
+Hồ sơ avatar overlay installed
+Lục Thần lore overlay installed
+Bách Bảo Rương overlay installed
+Economy balance overlay installed
+Player level1–60: existing108 encounters, entry gate, atomic XP and additive migration
+TKT-0144: lazy Linh Dong atlas cache, fallback and screen cleanup installed
+Linh Đồng runtime bridge, shared clock and canonical action registry installed; 10 asset fingerprints recorded
+Bạch Diện Canvas Sprite Runtime installed; 10 asset fingerprints recorded
+Bạch Diện Extreme v6 uses canonical Canvas Sprite Runtime owner
+TKT-0158: host combat BGM on Xuất chiến; iframe skips HTMLAudio when parent owns it
+iOS battle stays in host frame for continuous audio; delayed direct fallback protects stalled entry
+Per-skill cast approach and return installed in final battle payload
+Battle readiness: cast resources leased through recovery/return; shared SFX results checked.
+BATTLE_READY_ASSET_REPORT [{"profile":"desktop","source":"assets/characters/linh-dong/basic-atlas.webp","src":"assets/characters/linh-dong/ready-v1/basic-atlas.webp","width":1920,"height":1320,"scale":0.5,"sourceBytes":5046406,"bytes":1480002,"decodedBefore":40550400,"decodedAfter":10137600},{"profile":"mobile","source":"assets/characters/linh-dong/basic-atlas.webp","src":"assets/characters/linh-dong/ready-mobile-v1/basic-atlas.webp","width":1920,"height":1320,"scale":0.5,"sourceBytes":5046406,"bytes":1480002,"decodedBefore":40550400,"decodedAfter":10137600},{"profile":"desktop","source":"assets/characters/linh-dong/fall-atlas.webp","src":"assets/characters/linh-dong/ready-v1/fall-atlas.webp","width":1920,"height":2640,"scale":0.5,"sourceBytes":11921470,"bytes":3418464,"decodedBefore":81100800,"decodedAfter":20275200},{"profile":"mobile","source":"assets/characters/linh-dong/fall-atlas.webp","src":"assets/characters/linh-dong/ready-mobile-v1/fall-atlas.webp","width":1920,"height":2640,"scale":0.5,"sourceBytes":11921470,"bytes":3418464,"decodedBefore":81100800,"decodedAfter":20275200},{"profile":"desktop","source":"assets/characters/linh-dong/hit-atlas.webp","src":"assets/characters/linh-dong/ready-v1/hit-atlas.webp","width":1920,"height":2640,"scale":0.5,"sourceBytes":8990298,"bytes":2551646,"decodedBefore":81100800,"decodedAfter":20275200},{"profile":"mobile","source":"assets/characters/linh-dong/hit-atlas.webp","src":"assets/characters/linh-dong/ready-mobile-v1/hit-atlas.webp","width":1920,"height":2640,"scale":0.5,"sourceBytes":8990298,"bytes":2551646,"decodedBefore":81100800,"decodedAfter":20275200},{"profile":"desktop","source":"assets/characters/linh-dong/idle-atlas.webp","src":"assets/characters/linh-dong/ready-v1/idle-atlas.webp","width":1920,"height":2640,"scale":0.5,"sourceBytes":10909760,"bytes":3066574,"decodedBefore":81100800,"decodedAfter":20275200},{"profile":"mobile","source":"assets/characters/linh-dong/idle-atlas.webp","src":"assets/characters/linh-dong/ready-mobile-v1/idle-atlas.webp","width":1920,"height":2640,"scale":0.5,"sourceBytes":10909760,"bytes":3066574,"decodedBefore":81100800,"decodedAfter":20275200},{"profile":"desktop","source":"assets/characters/linh-dong/run-atlas.webp","src":"assets/characters/linh-dong/ready-v1/run-atlas.webp","width":1920,"height":2640,"scale":0.5,"sourceBytes":8278386,"bytes":2453486,"decodedBefore":81100800,"decodedAfter":20275200},{"profile":"mobile","source":"assets/characters/linh-dong/run-atlas.webp","src":"assets/characters/linh-dong/ready-mobile-v1/run-atlas.webp","width":1920,"height":2640,"scale":0.5,"sourceBytes":8278386,"bytes":2453486,"decodedBefore":81100800,"decodedAfter":20275200},{"profile":"desktop","source":"assets/characters/linh-dong/skill1_vfx-atlas.webp","src":"assets/characters/linh-dong/ready-v1/skill1_vfx-atlas.webp","width":2200,"height":1488,"scale":0.5,"sourceBytes":7239332,"bytes":2245294,"decodedBefore":52377600,"decodedAfter":13094400},{"profile":"mobile","source":"assets/characters/linh-dong/skill1_vfx-atlas.webp","src":"assets/characters/linh-dong/ready-mobile-v1/skill1_vfx-atlas.webp","width":2200,"height":1488,"scale":0.5,"sourceBytes":7239332,"bytes":2245294,"decodedBefore":52377600,"decodedAfter":13094400},{"profile":"desktop","source":"assets/characters/linh-dong/ultimate-atlas.webp","src":"assets/characters/linh-dong/ready-v1/ultimate-atlas.webp","width":1920,"height":1760,"scale":0.5,"sourceBytes":4420342,"bytes":1303374,"decodedBefore":54067200,"decodedAfter":13516800},{"profile":"mobile","source":"assets/characters/linh-dong/ultimate-atlas.webp","src":"assets/characters/linh-dong/ready-mobile-v1/ultimate-atlas.webp","width":1920,"height":1760,"scale":0.5,"sourceBytes":4420342,"bytes":1303374,"decodedBefore":54067200,"decodedAfter":13516800},{"profile":"desktop","source":"assets/characters/linh-dong/ultimate_vfx-atlas.webp","src":"assets/characters/linh-dong/ready-v1/ultimate_vfx-atlas.webp","width":2200,"height":1488,"scale":0.5,"sourceBytes":12856778,"bytes":3984664,"decodedBefore":52377600,"decodedAfter":13094400},{"profile":"mobile","source":"assets/characters/linh-dong/ultimate_vfx-atlas.webp","src":"assets/characters/linh-dong/ready-mobile-v1/ultimate_vfx-atlas.webp","width":2200,"height":1488,"scale":0.5,"sourceBytes":12856778,"bytes":3984664,"decodedBefore":52377600,"decodedAfter":13094400},{"profile":"mobile","source":"assets/characters/bach-dien/basic-atlas.webp","src":"assets/characters/bach-dien/ready-mobile-v1/basic-atlas.webp","width":2160,"height":1650,"scale":0.75,"sourceBytes":1399418,"bytes":1974418,"decodedBefore":25344000,"decodedAfter":14256000},{"profile":"mobile","source":"assets/characters/bach-dien/fall-atlas.webp","src":"assets/characters/bach-dien/ready-mobile-v1/fall-atlas.webp","width":2160,"height":1650,"scale":0.75,"sourceBytes":1194914,"bytes":1755572,"decodedBefore":25344000,"decodedAfter":14256000},{"profile":"mobile","source":"assets/characters/bach-dien/hit-atlas.webp","src":"assets/characters/bach-dien/ready-mobile-v1/hit-atlas.webp","width":1800,"height":1320,"scale":0.75,"sourceBytes":1074546,"bytes":1517342,"decodedBefore":16896000,"decodedAfter":9504000},{"profile":"mobile","source":"assets/characters/bach-dien/idle-atlas.webp","src":"assets/characters/bach-dien/ready-mobile-v1/idle-atlas.webp","width":2160,"height":1980,"scale":0.75,"sourceBytes":1811722,"bytes":2653680,"decodedBefore":30412800,"decodedAfter":17107200},{"profile":"mobile","source":"assets/characters/bach-dien/run-atlas.webp","src":"assets/characters/bach-dien/ready-mobile-v1/run-atlas.webp","width":2160,"height":2640,"scale":0.75,"sourceBytes":2446254,"bytes":3539164,"decodedBefore":40550400,"decodedAfter":22809600},{"profile":"mobile","source":"assets/characters/bach-dien/skill1_vfx-atlas.webp","src":"assets/characters/bach-dien/ready-mobile-v1/skill1_vfx-atlas.webp","width":1980,"height":1116,"scale":0.75,"sourceBytes":1087208,"bytes":1279696,"decodedBefore":15713280,"decodedAfter":8838720},{"profile":"mobile","source":"assets/characters/bach-dien/ultimate-atlas.webp","src":"assets/characters/bach-dien/ready-mobile-v1/ultimate-atlas.webp","width":2160,"height":1980,"scale":0.75,"sourceBytes":2020280,"bytes":2975314,"decodedBefore":30412800,"decodedAfter":17107200},{"profile":"mobile","source":"assets/characters/bach-dien/ultimate_vfx-atlas.webp","src":"assets/characters/bach-dien/ready-mobile-v1/ultimate_vfx-atlas.webp","width":2640,"height":1116,"scale":0.75,"sourceBytes":1982204,"bytes":2510706,"decodedBefore":20951040,"decodedAfter":11784960}]
+Result character motion v1 applied: authored Victory entry -> Idle and one-shot Defeat Fall -> final-frame hold
+P0 battle entry: WebKit-safe canvas + deferred fail-open autostart installed
+Reference contact spacing and ultimate target focus applied; formation/scale remain single-owner.
+Battle formation + visual scale v1 applied: approved legacy portrait anchors, single scale owner
+Thay Mo authored production VFX restored: v2 Basic uses Skill1 cast/wave/impact; Ultimate uses cast/full-team VFX.
+Battle runtime served from battle.html; embedded base64 payload disabled.
+Static preview written to /workspace/scratch/b5f6a75b3ba7/luc-than/dist

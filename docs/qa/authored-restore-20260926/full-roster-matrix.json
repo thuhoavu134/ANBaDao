@@ -1,0 +1,447 @@
+{
+  "official": 14,
+  "catalog_plus_extra": 43,
+  "unique_total": 55,
+  "roster": [
+    {
+      "id": "luc_anh",
+      "name": "Lục Ảnh",
+      "classification": "A",
+      "scope": "official",
+      "browser": "PASS canonical actions",
+      "voice": "assets/audio/voice-luc-anh-ultimate.mp3"
+    },
+    {
+      "id": "dinh_loi",
+      "name": "Đình Lôi",
+      "classification": "A",
+      "scope": "official",
+      "browser": "PASS canonical actions",
+      "voice": null
+    },
+    {
+      "id": "thay_mo",
+      "name": "Thầy Mo",
+      "classification": "B",
+      "scope": "official",
+      "browser": "PASS canonical actions",
+      "voice": null
+    },
+    {
+      "id": "ong_hang_pho",
+      "name": "Ông Phở",
+      "classification": "A",
+      "scope": "official",
+      "browser": "PASS canonical actions",
+      "voice": null
+    },
+    {
+      "id": "linh_dong",
+      "name": "Linh Đồng",
+      "classification": "A",
+      "scope": "official",
+      "browser": "PASS canonical actions",
+      "voice": null
+    },
+    {
+      "id": "bach_dien",
+      "name": "Bạch Diện",
+      "classification": "A",
+      "scope": "official",
+      "browser": "PASS canonical actions",
+      "voice": null
+    },
+    {
+      "id": "lac_yen",
+      "name": "Lạc Yên",
+      "classification": "C",
+      "scope": "official",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "cung_thu_tre",
+      "name": "Cung Thủ Tre",
+      "classification": "C",
+      "scope": "official",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "co_dao_ganh_hoi",
+      "name": "Cô Đào Gánh Hội",
+      "classification": "C",
+      "scope": "official",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "phong_tu",
+      "name": "Phong Tử",
+      "classification": "C",
+      "scope": "official",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "thuy_nuong_roi_nuoc",
+      "name": "Thủy Nương Rối Nước",
+      "classification": "C",
+      "scope": "official",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "hong_lien_dao_nuong",
+      "name": "Hồng Liên Đao Nương",
+      "classification": "C",
+      "scope": "official",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "thach_quyen",
+      "name": "Thạch Quyền",
+      "classification": "C",
+      "scope": "official",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "to_diep",
+      "name": "Tố Điệp",
+      "classification": "C",
+      "scope": "official",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "hero_splus_co_trong",
+      "name": "Cơ Trọng",
+      "classification": "C",
+      "scope": "S+ catalog/lab",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "hero_splus_cuong_dong",
+      "name": "Cường Đồng",
+      "classification": "C",
+      "scope": "S+ catalog/lab",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "hero_splus_lac_an",
+      "name": "Lạc An",
+      "classification": "C",
+      "scope": "S+ catalog/lab",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "hero_splus_hac_pha",
+      "name": "Hạc Phá",
+      "classification": "C",
+      "scope": "S+ catalog/lab",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "hero_splus_thiet_lanh",
+      "name": "Thiết Lãnh",
+      "classification": "C",
+      "scope": "S+ catalog/lab",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "hero_splus_minh_toa",
+      "name": "Minh Tỏa",
+      "classification": "C",
+      "scope": "S+ catalog/lab",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "hero_splus_thiem_ngan",
+      "name": "Thiềm Ngân",
+      "classification": "C",
+      "scope": "S+ catalog/lab",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "hero_splus_tieu_hon",
+      "name": "Tiêu Hồn",
+      "classification": "C",
+      "scope": "S+ catalog/lab",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "hero_splus_thach_kinh",
+      "name": "Thạch Kinh",
+      "classification": "C",
+      "scope": "S+ catalog/lab",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "hero_splus_han_nuong",
+      "name": "Hàn Nương",
+      "classification": "C",
+      "scope": "S+ catalog/lab",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "hero_splus_vong_co",
+      "name": "Vọng Cơ",
+      "classification": "C",
+      "scope": "S+ catalog/lab",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "hero_splus_co_nuong",
+      "name": "Cổ Nương",
+      "classification": "C",
+      "scope": "S+ catalog/lab",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "hero_splus_muc_chieu",
+      "name": "Mục Chiêu",
+      "classification": "C",
+      "scope": "S+ catalog/lab",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "hero_splus_thuy_co",
+      "name": "Thủy Cơ",
+      "classification": "C",
+      "scope": "S+ catalog/lab",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "hero_splus_ha_lang",
+      "name": "Hà Lãng",
+      "classification": "C",
+      "scope": "S+ catalog/lab",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "hero_splus_giang_quan",
+      "name": "Giang Quân",
+      "classification": "C",
+      "scope": "S+ catalog/lab",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "hero_splus_thuy_ngoc",
+      "name": "Thủy Ngọc",
+      "classification": "C",
+      "scope": "S+ catalog/lab",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "hero_splus_hai_phong",
+      "name": "Hải Phong",
+      "classification": "C",
+      "scope": "S+ catalog/lab",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "hero_splus_tram_chau",
+      "name": "Trầm Châu",
+      "classification": "C",
+      "scope": "S+ catalog/lab",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "hero_splus_da_xoa",
+      "name": "Dạ Xoa",
+      "classification": "C",
+      "scope": "S+ catalog/lab",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "hero_splus_nung",
+      "name": "Nung",
+      "classification": "C",
+      "scope": "S+ catalog/lab",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "hero_splus_hoa_tieu",
+      "name": "Hỏa Tiêu",
+      "classification": "C",
+      "scope": "S+ catalog/lab",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "hero_splus_hoa_khieu",
+      "name": "Hỏa Khiêu",
+      "classification": "C",
+      "scope": "S+ catalog/lab",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "hero_splus_cuu_tinh",
+      "name": "Cửu Tính",
+      "classification": "C",
+      "scope": "S+ catalog/lab",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "hero_splus_hoa_bai",
+      "name": "Hỏa Bài",
+      "classification": "C",
+      "scope": "S+ catalog/lab",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "hero_splus_hac_dao",
+      "name": "Hắc Đao",
+      "classification": "C",
+      "scope": "S+ catalog/lab",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "hero_splus_hoa_duc",
+      "name": "Hỏa Dực",
+      "classification": "C",
+      "scope": "S+ catalog/lab",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "hero_splus_mien_nuong",
+      "name": "Miên Nương",
+      "classification": "C",
+      "scope": "S+ catalog/lab",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "hero_splus_tram_tue",
+      "name": "Trầm Tuệ",
+      "classification": "C",
+      "scope": "S+ catalog/lab",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "hero_splus_hac_hoa",
+      "name": "Hạc Hoa",
+      "classification": "C",
+      "scope": "S+ catalog/lab",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "hero_splus_tam_nuong",
+      "name": "Tằm Nương",
+      "classification": "C",
+      "scope": "S+ catalog/lab",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "hero_splus_son_cuong",
+      "name": "Sơn Cương",
+      "classification": "C",
+      "scope": "S+ catalog/lab",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "hero_splus_tue_y",
+      "name": "Tuệ Y",
+      "classification": "C",
+      "scope": "S+ catalog/lab",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "hero_splus_mang_xa",
+      "name": "Mãng Xà",
+      "classification": "C",
+      "scope": "S+ catalog/lab",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "hero_splus_khaos",
+      "name": "Khaos",
+      "classification": "C",
+      "scope": "S+ catalog/lab",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "hero_splus_kinh_nuong",
+      "name": "Kính Nương",
+      "classification": "C",
+      "scope": "S+ catalog/lab",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "hero_splus_hoi_anh",
+      "name": "Hồi Ảnh",
+      "classification": "C",
+      "scope": "S+ catalog/lab",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "hero_splus_van_phap",
+      "name": "Vân Pháp",
+      "classification": "C",
+      "scope": "S+ catalog/lab",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "hero_splus_cuu_trieu",
+      "name": "Cửu Triều",
+      "classification": "C",
+      "scope": "S+ catalog/lab",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "hero_splus_thach_mong",
+      "name": "Thạch Mộng",
+      "classification": "C",
+      "scope": "S+ catalog/lab",
+      "browser": "NOT_RUN",
+      "voice": null
+    },
+    {
+      "id": "hero_splus_to_linh",
+      "name": "Tố Linh",
+      "classification": "C",
+      "scope": "S+ catalog/lab",
+      "browser": "NOT_RUN",
+      "voice": null
+    }
+  ]
+}

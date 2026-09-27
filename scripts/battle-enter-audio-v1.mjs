@@ -15,7 +15,7 @@ index = replaceOnce(
   index,
   '    overlay.classList.add("is-open", "is-loading");\n',
   `    overlay.classList.add("is-open", "is-loading");
-    try { window.HonVietSfx?.unlock?.(); window.HonVietAudio?.unlock?.(); window.HonVietSfx?.setCombatEnabled?.(true); } catch (_) {}
+    try { window.HonVietSfx?.unlock?.(); window.HonVietAudio?.unlock?.(); window.HonVietAudio?.beginCombat?.(); window.HonVietSfx?.setCombatEnabled?.(true); } catch (_) {}
     try { if (typeof playBgm === 'function') playBgm('combat'); } catch (_) {}
 `,
   'openIntegratedBattle overlay open'

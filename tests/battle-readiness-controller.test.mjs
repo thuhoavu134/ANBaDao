@@ -63,6 +63,27 @@ test('idle fallback retains one pin and releases it on teardown',()=>{
   const f=setup();const clip={src:'idle'};f.api.image(f.loader,clip,'idle');const pin=f.pins.get('idle');
   f.api.image(f.loader,clip,'idle');assert.equal(f.pins.get('idle'),pin);f.api.dispose();assert.equal(f.pins.size,0);
 });
+test('mixed authored idle pins yield to the action working set until recovery',async()=>{
+  const f=setup();
+  const first={src:'linh-dong/idle'},second={src:'bach-dien/idle'};
+  f.api.image(f.loader,first,'idle');f.api.image(f.loader,second,'idle');
+  assert.equal(f.pins.size,2);
+  const acquire=f.loader.acquire;
+  f.loader.acquire=(clips,opts)=>{
+    assert.equal(f.pins.size,0,'idle pins must be released before the action lease is admitted');
+    return acquire(clips,opts);
+  };
+  const pending=f.api.prepare(f.actor,'ultimate',f.target,1);
+  await tick();
+  f.api.image(f.loader,first,'idle');f.api.image(f.loader,second,'idle');
+  assert.equal(f.pins.size,0,'rendering must not repin idle while an action is loading');
+  f.gate.resolve();const lease=await pending;
+  f.api.image(f.loader,second,'idle');
+  assert.equal(f.pins.size,0,'the action owns residency until recovery');
+  lease.release();f.api.image(f.loader,second,'idle');
+  assert.equal(f.pins.size,1,'idle can be retained again after recovery');
+  f.api.dispose();
+});
 test('audio exceptions are observed rather than unhandled or reported successful',async()=>{
   const f=setup(),info={battleId:1};f.bus.play=()=>{throw new Error('audio offline');};
   assert.equal(await f.api.playSfx(info,'x'),false);assert.notEqual(info.sfxPlayed,true);f.api.dispose();

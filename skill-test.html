@@ -13,6 +13,7 @@
     .toolbar{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:end}.hero-tabs,.skill-buttons{display:flex;gap:7px;flex-wrap:wrap}.hero-tabs{min-width:0}.hero-tab,.skill-button,.reset-button{min-height:42px;border:1px solid rgba(230,189,103,.35);border-radius:10px;background:#102c28;color:#f8efd8;font-weight:700;cursor:pointer;box-shadow:inset 0 1px rgba(255,255,255,.05)}
     .hero-tab{padding:8px 12px;color:#c9d8d1}.hero-tab[aria-pressed="true"]{border-color:var(--gold);background:#342d1b;color:#ffe7a2}.skill-button{min-width:88px;padding:8px 13px;border-color:rgba(85,215,189,.42);background:#113b35}.skill-button:hover{border-color:var(--teal)}.skill-button[data-action="ultimate"]{border-color:rgba(230,189,103,.62);background:#3a2f18;color:#ffe6a0}.skill-button:disabled,.hero-tab:disabled,.reset-button:disabled{opacity:.48;cursor:wait}.reset-button{padding:8px 12px;border-color:rgba(255,132,114,.4);background:#35201d;color:#ffd1c8}
     .battle-wrap{position:relative;min-height:0;background:#091817}.battle-wrap iframe{display:block;width:100%;height:100%;border:0;background:#0e2522}.hint{position:absolute;right:10px;bottom:max(8px,env(safe-area-inset-bottom));z-index:4;pointer-events:none;padding:5px 8px;border-radius:999px;background:rgba(5,18,17,.74);color:#c8d3ce;font-size:10px;backdrop-filter:blur(5px)}
+    body.qa-mobile .battle-wrap{overflow:auto}body.qa-mobile .battle-wrap iframe{width:390px;height:844px;margin:0 auto}.qa-viewport{font-size:11px;color:#b9c9c2}.qa-viewport select{background:#102c28;color:#f5ecd5;border:1px solid var(--line);padding:3px}
     @media(max-width:720px){.controller{padding-left:9px;padding-right:9px}.topline{margin-bottom:7px}.title b{font-size:14px}.title small{font-size:10px}.toolbar{grid-template-columns:1fr}.hero-tabs{display:grid;grid-template-columns:repeat(3,1fr)}.hero-tab{padding:7px 5px;min-width:0}.skill-buttons{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.skill-button,.reset-button{min-width:0;padding:7px 4px;font-size:12px;min-height:40px}.hint{display:none}}
   </style>
 </head>
@@ -20,6 +21,7 @@
   <section class="controller" aria-label="Bảng test skill">
     <div class="topline">
       <div class="title"><b>Test Skill Trực Tiếp · Lục Thần</b><small data-movement-policy="snap">Trận thật 6v6 · Lục Ảnh dịch chuyển tức thời</small></div>
+      <label class="qa-viewport">Khung QA <select id="qaViewport" aria-label="Khung QA"><option value="desktop">Desktop</option><option value="mobile">390 × 844 (Chromium)</option></select></label>
       <div class="status" id="status" data-phase="loading"><strong>Đang tải</strong><span id="statusDetail">Khởi tạo battle...</span></div>
     </div>
     <div class="toolbar">
@@ -27,6 +29,9 @@
         <button class="hero-tab" type="button" data-hero-tab="luc-anh" aria-pressed="true">Lục Ảnh</button>
         <button class="hero-tab" type="button" data-hero-tab="dinh-loi" aria-pressed="false">Đình Lôi</button>
         <button class="hero-tab" type="button" data-hero-tab="ong-pho" aria-pressed="false">Ông Phở</button>
+        <button class="hero-tab" type="button" data-hero-tab="thay-mo" aria-pressed="false">Thầy Mo</button>
+        <button class="hero-tab" type="button" data-hero-tab="linh-dong" aria-pressed="false">Linh Đồng</button>
+        <button class="hero-tab" type="button" data-hero-tab="bach-dien" aria-pressed="false">Bạch Diện</button>
       </div>
       <div class="skill-buttons" role="group" aria-label="Kích hoạt skill">
         <button class="skill-button" type="button" data-action="basic">Basic</button>
@@ -39,15 +44,24 @@
   <main class="battle-wrap">
     <iframe id="battleFrame" title="Lục Thần skill test battle" allow="autoplay; fullscreen"></iframe>
     <div class="hint">Bấm Basic / Skill / Ultimate để ép action ngay</div>
+    <details style="position:absolute;bottom:0;left:0;z-index:10;max-width:70%;background:#061413"><summary>Bằng chứng asset / audio</summary><pre id="authoredEvidence" style="max-height:240px;overflow:auto;font-size:10px;white-space:pre-wrap">Chưa chạy action</pre></details>
   </main>
+<script src="skill-test-evidence.js"></script>
 <script>
 (() => {
   const HEROES = {
     'luc-anh': { id:'qa-luc-anh', sourceId:'luc_anh', name:'Lục Ảnh', force:'qaForceLucAnhAction' },
     'dinh-loi': { id:'qa-dinh-loi', sourceId:'dinh_loi', name:'Đình Lôi', force:'qaForceDinhLoiAction' },
-    'ong-pho': { id:'ong-pho-gif-test', sourceId:'ong_hang_pho', name:'Ông Phở', force:'qaForceOngPhoAction' }
+    'ong-pho': { id:'ong-pho-gif-test', sourceId:'ong_hang_pho', name:'Ông Phở', force:'qaForceOngPhoAction' },
+    'thay-mo': { id:'qa-thay-mo', sourceId:'thay_mo', name:'Thầy Mo', force:'qaForceAuthoredAction' },
+    'linh-dong': { id:'qa-linh-dong', sourceId:'hero_splus_linh_dong', name:'Linh Đồng', force:'qaForceAuthoredAction', skillAlias:true },
+    'bach-dien': { id:'qa-bach-dien', sourceId:'hero_splus_bach_dien', name:'Bạch Diện', force:'qaForceAuthoredAction', skillAlias:true }
   };
   const frame = document.getElementById('battleFrame');
+  document.getElementById('qaViewport').addEventListener('change',event=>{
+    document.body.classList.toggle('qa-mobile',event.target.value==='mobile');
+    qa.resetCount++;qa.lastRun=null;void loadBattle();
+  });
   const status = document.getElementById('status');
   const statusDetail = document.getElementById('statusDetail');
   const resetButton = document.getElementById('resetBattle');
@@ -71,9 +85,9 @@
         hero('qa-luc-anh','luc_anh','Lục Ảnh','player',0,{speed:180}),
         hero('qa-dinh-loi','dinh_loi','Đình Lôi','player',1,{speed:170}),
         hero('ong-pho-gif-test','ong_hang_pho','Ông Phở','player',2,{speed:160}),
-        hero('qa-player-3','dong_quan','Đồng Quân','player',3),
-        hero('qa-player-4','lam_vu','Lâm Vũ','player',4),
-        hero('qa-player-5','moc_an','Mộc An','player',5),
+        hero('qa-thay-mo','thay_mo','Thầy Mo','player',3),
+        hero('qa-linh-dong','hero_splus_linh_dong','Linh Đồng','player',4),
+        hero('qa-bach-dien','hero_splus_bach_dien','Bạch Diện','player',5),
         hero('qa-enemy-0','qa_enemy_0','Địch 1','enemy',0,{hp:999999,def:200}),
         hero('qa-enemy-1','qa_enemy_1','Địch 2','enemy',1,{hp:999999,def:200}),
         hero('qa-enemy-2','qa_enemy_2','Địch 3','enemy',2,{hp:999999,def:200}),
@@ -148,6 +162,8 @@
       await waitFor(() => ['qa-luc-anh','qa-dinh-loi','ong-pho-gif-test'].every(id => api().getUnits().some(unit => unit.id===id && unit.hp>0)), 12000, 45, check);
       check();
       qa.ready = true;
+      if(api().getState?.().auto)api().toggleAuto?.();
+      window.SkillTestEvidence?.install(frame);
       setDisabled(false);
       setStatus('ready','Sẵn sàng',HEROES[selectedHero].name);
     } catch (error) {
@@ -164,6 +180,7 @@
     selectedHero = key;
     qa.selectedHero = key;
     tabButtons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.heroTab===key)));
+    actionButtons.find(button=>button.dataset.action==='skill').textContent=HEROES[key].skillAlias?'Skill (ATK alias)':'Skill';
     if (qa.ready) setStatus('ready','Sẵn sàng',HEROES[key].name);
   }
   async function runAction(action) {
@@ -187,7 +204,11 @@
       if (!unitBefore || unitBefore.hp<=0) throw new Error(spec.name+' không còn sống trong trận test');
       const force = a[spec.force];
       if (typeof force !== 'function') throw new Error('Thiếu runtime hook '+spec.force);
-      Promise.resolve(force.call(a, action)).catch(error => {
+      row.canonicalAction=spec.skillAlias&&action==='skill'?'basic':action;
+      window.SkillTestEvidence?.begin(frame,row);
+      // User click unlocks the existing audio buses; no fabricated audio.
+      await Promise.all([frame.contentWindow.HonVietSfx?.unlock?.(),frame.contentWindow.HonVietAudio?.unlock?.()]);
+      Promise.resolve(spec.force==='qaForceAuthoredAction'?force.call(a,spec.id,row.canonicalAction):force.call(a, action)).catch(error => {
         actionFailed = true;
         actionError = error ?? new Error('Runtime từ chối action');
       });
@@ -195,7 +216,7 @@
         const events=t.events().slice(beforeEvents).filter(e=>e.type==='action:start'&&e.actorId===spec.id);
         if (!events.length) return false;
         row.actionId=events.at(-1).actionId||''; row.started=true; row.phase='active'; return !!row.actionId;
-      },12000,45,check);
+      },25000,45,check);
       check();
       setStatus('active','Đang ra chiêu',spec.name+' · '+action.toUpperCase());
       await waitFor(() => t.events().some(e=>e.actionId===row.actionId&&e.type==='marker:impact'),18000,45,check);
@@ -211,6 +232,7 @@
       check();
       row.complete=true; row.completedAt=Date.now(); row.phase='complete';
       row.trace=t.events().filter(e=>e.actionId===row.actionId).map(e=>({type:e.type,marker:e.marker||null,at:e.at||null}));
+      window.SkillTestEvidence?.finish(frame,row);
       setStatus('complete','Hoàn tất',spec.name+' đã về vị trí');
       // This cosmetic delay must not keep an old finally block alive. Only
       // the current run/load owns controls; the currently selected hero owns its label.
@@ -223,6 +245,7 @@
     } catch (error) {
       if (!ownsRun()) return false;
       row.phase='error'; row.error=String(error?.stack||error); qa.errors.push(row.error);
+      window.SkillTestEvidence?.finish(frame,row);
       setStatus('error','Lỗi action',spec.name+' · '+action.toUpperCase());
       return false;
     } finally {

@@ -25,7 +25,9 @@ for (const name of ['index.html', 'battle.html']) {
     replaceFunction('playReleaseSound', 'async function launchWeaponEffect', `  function playReleaseSound(actor) {
     // Cast SFX is dispatched exactly once by playActionSound, not again on projectile release.
   }`);
-    replace('window.__playLucAnhUltimateVoiceGuaranteed?.();', 'window.__playLucAnhUltimateVoiceGuaranteed?.();playActionSound(actor,"ultimate");', 'Luc Anh ultimate SFX');
+    if (!html.includes('AUTHORED_COMBAT_AUDIO_SYNC_V1')) {
+      replace('window.__playLucAnhUltimateVoiceGuaranteed?.();', 'window.__playLucAnhUltimateVoiceGuaranteed?.();playActionSound(actor,"ultimate");', 'Luc Anh ultimate SFX');
+    }
     replace('tone(critical ? 105 : 135, critical ? 0.16 : 0.09, "square", 0.035);',
       '/* No shared forge impact audio in combat; authored hit VFX stays in applyDamage. */', 'impact SFX');
     replace('tone(520, 0.16, "sine", 0.028);', 'if (state.sound) window.HonVietSfx?.play("heal");', 'heal SFX');

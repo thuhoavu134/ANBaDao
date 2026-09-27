@@ -25,13 +25,13 @@ export function createBattleAssetReadiness(options) {
     const battleId = getState().battleId;
     if (battleId !== visibleBattleId) { resetVisible(); visibleBattleId = battleId; }
     let pin;
-    if (key === 'idle') {
+    if (key === 'idle' && tasks.size === 0 && !loader.cache.constrainedMobile) {
       if (!visible.has(loader)) visible.set(loader, new Map());
       const pins = visible.get(loader);
       if (!pins.has(clip.src)) pins.set(clip.src, Symbol('battle-visible-idle'));
       pin = pins.get(clip.src);
     }
-    // Keep authored idle art resident while rendering; action leases budget for it.
+    // Retain visible idle between actions; active action leases get priority.
     return loader.ensure(clip, { scope: 'battle', priority: 'visible', pin }).image;
   }
   async function prepare(actor, action, target, battleId) {
@@ -65,6 +65,11 @@ export function createBattleAssetReadiness(options) {
       // atlases before the first move. Readiness now owns only the active
       // actor's movement/cast/VFX working set.
       if (actorDescription) {
+        // Mixed Linh Đồng/Bạch Diện idle pins otherwise consume enough of the
+        // shared cache to prevent Bạch Diện's Ultimate lease from ever fitting.
+        // Active action leases own residency until recovery; visible idle may
+        // be admitted again by the same renderer/cache after the action.
+        resetVisible();
         add(actorDescription, 'run');
         add(actorDescription, action === 'ultimate' ? 'ultimate' : 'attack');
         add(actorDescription, action === 'ultimate' ? 'ultimateVfx' : 'atkVfx');
@@ -103,7 +108,7 @@ export function createBattleAssetReadiness(options) {
       throw error;
     }
   }
-  function playSfx(info, event) {
+  function playSfx(info, event, options = {}) {
     if (!info || info.finished || info.sfxPlayed) return Promise.resolve(!!info?.sfxPlayed);
     if (info.sfxPending) return info.sfxPending;
     const live = () => {
@@ -114,17 +119,29 @@ export function createBattleAssetReadiness(options) {
     if (!live()) return Promise.resolve(false);
     const bus = sound();
     if (!bus?.play) { record('sfx:unavailable', { event }); return Promise.resolve(false); }
-    record('sfx:requested', { event, battleId: info.battleId });
+    const timing = {
+      actionId: options.actionId || null,
+      cue: options.cue || null,
+      cuePerformanceMs: Number.isFinite(Number(options.cuePerformanceMs)) ? Number(options.cuePerformanceMs) : null,
+      sampleCue: options.sampleCue === 'dominant' ? 'dominant' : 'onset'
+    };
+    record('sfx:requested', { event, battleId: info.battleId, ...timing });
+    const playback = {
+      ...options,
+      group: 'combat',
+      signal: info.assetSignal,
+      maxDelayMs: Number.isFinite(Number(options.maxDelayMs)) ? Number(options.maxDelayMs) : 250
+    };
     let result;
-    try { result = bus.play(event, { group: 'combat', signal: info.assetSignal, maxDelayMs: 250 }); }
+    try { result = bus.play(event, playback); }
     catch (error) { result = Promise.reject(error); }
     const pending = Promise.resolve(result).then(ok => {
       const played = ok === true && live();
       info.sfxPlayed = played;
-      record(played ? 'sfx:played' : 'sfx:declined', { event, battleId: info.battleId });
+      record(played ? 'sfx:played' : 'sfx:declined', { event, battleId: info.battleId, ...timing });
       return played;
     }, error => {
-      record('sfx:failed', { event, error: String(error?.message || error), battleId: info.battleId });
+      record('sfx:failed', { event, error: String(error?.message || error), battleId: info.battleId, ...timing });
       return false;
     }).finally(() => { if (info.sfxPending === pending) info.sfxPending = null; });
     info.sfxPending = pending;

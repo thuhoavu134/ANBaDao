@@ -46,6 +46,9 @@ function splusFloater(target,amount,healing=false,critical=false) {
   if(splusPresentation){const id=target.id+':'+healing,previous=splusPresentation.get(id);splusPresentation.set(id,{target,amount:amount+(previous?.amount||0),healing,critical:critical||previous?.critical});return;}
   addFloater(target,`${healing?'+':'−'}${amount}`,healing?'#8fe7bd':critical?'#ffd76f':'#ff9688',critical);
 }
+function splusOwnsActor(actor){
+  return !!actor&&actor.kitVersion==='splus42-v2';
+}
 function splusActive() {
   const catalog=globalThis.SPLUS42?.catalog;
   return !splusRuntimeDisabled&&Array.isArray(catalog)&&HEROES.some(h=>catalog.some(c=>c.id===h.sourceId));
@@ -145,24 +148,53 @@ async function performSplusAction(actor, action, target) {
   state.locked=true;state.selectedAction=action;clearTargets();updateActorHud(actor);
   const title=globalThis.SPLUS42.catalog.find(h=>h.id===actor.sourceId)?.actions[action]?.name||action;
   setStatus(`${actor.name} · ${title}`);dom.phaseLabel.textContent=title;
+  const presentationTrace=window.__HV_BATTLE_PHASE1_TRACE;
+  const presentationId=`${battleId}:splus:${state.actionCount+1}:${actor.id}:${action}`;
+  presentationTrace?.begin({actionId:presentationId,roundId:state.round,actorId:actor.id,targetIds:target?[target.id]:[],skillId:action,position:{x:actor.x,y:actor.y}});
   const linhAction=linh&&typeof beginLinhDongAction==='function'?beginLinhDongAction(actor,action,target,battleId):null;
   const bachAction=!linhAction&&bach&&typeof beginBachDienAction==='function'?beginBachDienAction(actor,action,target,battleId):null;
+  let fallbackPresentation=null;
   if(linhAction){
     if(!await waitLinhDongMarker(linhAction,'release',battleId))return;
     emitLinhDongRelease(linhAction);
+    presentationTrace?.marker('release',{actionId:presentationId});
     if(!await waitLinhDongMarker(linhAction,'impact',battleId))return;
   } else if(bachAction){
     if(!await waitBachDienMarker(bachAction,'release',battleId))return;
     emitBachDienRelease(bachAction);
+    presentationTrace?.marker('release',{actionId:presentationId});
     if(!await waitBachDienMarker(bachAction,'impact',battleId))return;
   } else {
-    setUnitState(actor,'attack',TIMING.windup);
+    const origin={x:actor.baseX,y:actor.baseY};
+    const profileName=combatPresentationProfileFor(actor,action);
+    const profile=COMBAT_PRESENTATION_STANDARD.profiles[profileName];
+    const destination=approachPoint(actor,target||actor,action);
+    if(profile?.movesToTarget){
+      setStatus(`${actor.name} áp sát vị trí ra đòn`);
+      dom.phaseLabel.textContent='Di chuyển';
+      setUnitState(actor,'run',TIMING.approach);
+      if(!await tweenUnit(actor,destination.x,destination.y,TIMING.approach,battleId))return;
+    }else{
+      actor.x=actor.baseX;actor.y=actor.baseY;
+      setStatus(`${actor.name} giữ vị trí phát chiêu`);
+    }
+    const releaseDuration=weaponFlightDuration(actor);
+    setUnitState(actor,'attack',TIMING.windup+releaseDuration);
+    dom.phaseLabel.textContent=action==='ultimate'?'Tuyệt kỹ • Xuất chiêu':'Xuất chiêu';
+    queueChargeEffect(actor,action);
+    queueWeaponAnticipation(actor,action);
+    playActionSound(actor,action);
     if(!await sleep(TIMING.windup,battleId))return;
+    presentationTrace?.marker('release',{actionId:presentationId});
+    if(!await launchWeaponEffect(actor,target||actor,action,battleId))return;
+    fallbackPresentation={origin};
   }
   const totals=new Map();let result;splusPresentation=totals;
+  presentationTrace?.marker('impact',{actionId:presentationId,targetId:target?.id||null});
   try{result=e.act(actor.id,action,target?.id);}finally{splusPresentation=null;}
   if(linhAction)linhAction.impactResolved=true;
   if(bachAction)bachAction.impactResolved=true;
+  if(!linhAction&&!bachAction)triggerImpactPresentation(actor,target,action);
   for(const hit of totals.values())splusFloater(hit.target,hit.amount,hit.healing,hit.critical);
   if(result.ok){state.actionCount++;state.actionBreakdown[action]=(state.actionBreakdown[action]||0)+1;const rec=intelUnit(actor);if(rec){rec.actions++;if(action==='ultimate')rec.ultimates++;}addLog(`${actor.name} · ${title}`);}
   updateTeamCounters();splusStateView();updateActorHud(actor);
@@ -172,8 +204,22 @@ async function performSplusAction(actor, action, target) {
   } else if(bachAction){
     if(!await waitBachDienMarker(bachAction,'recovery:end',battleId))return;
     if(typeof finishBachDienAction==='function')finishBachDienAction(bachAction);
-  } else if(!await sleep(TIMING.turnRest,battleId))return;
+  } else {
+    const origin=fallbackPresentation?.origin||{x:actor.baseX,y:actor.baseY};
+    const moved=Math.abs(actor.x-origin.x)>1||Math.abs(actor.y-origin.y)>1;
+    if(actor.hp>0&&moved){
+      setStatus(`${actor.name} trở lại đội hình`);
+      dom.phaseLabel.textContent='Thu thế';
+      setUnitState(actor,'run',TIMING.return);
+      if(!await tweenUnit(actor,origin.x,origin.y,TIMING.return,battleId))return;
+    }else{
+      actor.x=origin.x;actor.y=origin.y;
+    }
+    if(!await sleep(TIMING.turnRest,battleId))return;
+  }
   setUnitState(actor,'idle',800);state.currentId=null;state.locked=false;
+  presentationTrace?.marker('recovery',{actionId:presentationId,position:{x:actor.x,y:actor.y}});
+  presentationTrace?.complete({actionId:presentationId,position:{x:actor.x,y:actor.y}});
   if(battleHasWinner()){if(!await waitForDefeatExit(battleId))return;if(checkBattleEnd()){splusStateView();return;}}
   void advanceTurn();
 }

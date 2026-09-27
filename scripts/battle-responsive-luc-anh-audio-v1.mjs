@@ -33,7 +33,7 @@ replaceOnce(
 );
 
 /* Lục Ảnh's dedicated voice path should also dispatch the shared ultimate SFX. */
-if (!html.includes('playActionSound(actor,"ultimate");')) {
+if (!html.includes('AUTHORED_COMBAT_AUDIO_SYNC_V1') && !html.includes('playActionSound(actor,"ultimate");')) {
   replaceOnce(
     'dom.phaseLabel.textContent="Tuyệt kỹ • Đèn xoay cực đại";playLucAnhUltimateVoice();',
     'dom.phaseLabel.textContent="Tuyệt kỹ • Đèn xoay cực đại";playLucAnhUltimateVoice();playActionSound(actor,"ultimate");',
@@ -51,7 +51,7 @@ replaceOnce(
 if (!html.includes('battleCompactViewport') ||
     !html.includes('anchorY,960,660') ||
     !html.includes('stableLucAnhUltimate') ||
-    !html.includes('playActionSound(actor,"ultimate")') ||
+    (!html.includes('AUTHORED_COMBAT_AUDIO_SYNC_V1') && !html.includes('playActionSound(actor,"ultimate")')) ||
     !html.includes('REFERENCE_SIMPLE || !state.sound')) {
   throw new Error('Battle responsive/Lục Ảnh/audio fixes did not apply');
 }
