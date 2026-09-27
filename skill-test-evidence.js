@@ -27,16 +27,18 @@
     w.CanvasRenderingContext2D.prototype.drawImage=function(image,...args){
       const result=draw.call(this,image,...args);
       if(current&&image?.src&&/assets\//.test(image.src)){
-        const src=new URL(image.src).pathname;
-        const item=current.draws[src]||(current.draws[src]={firstMs:at(),lastMs:0,count:0,frames:[],frameTimes:[]});
-        item.lastMs=at();item.count++;
+        const src=new URL(image.src).pathname,drawMs=at();
+        const item=current.draws[src]||(current.draws[src]={firstMs:drawMs,lastMs:0,count:0,frames:[],frameTimes:[],frameSequence:[]});
+        item.lastMs=drawMs;item.count++;
         const crop=args.length===8?args.slice(0,4).join(','):'whole';
         if(item.frames.length<128&&!item.frames.includes(crop))item.frames.push(crop);
-        if(args.length===8&&item.frameTimes.length<256){
+        if(args.length===8){
           const [sx,sy,sw,sh]=args;
           const cols=sw>0&&image.naturalWidth>0?Math.max(1,Math.round(image.naturalWidth/sw)):null;
           const frameIndex=cols&&sh>0?Math.max(0,Math.floor(sy/sh))*cols+Math.max(0,Math.floor(sx/sw)):null;
-          if(!item.frameTimes.some(entry=>entry.crop===crop))item.frameTimes.push({crop,frameIndex,firstMs:at()});
+          if(item.frameTimes.length<256&&!item.frameTimes.some(entry=>entry.crop===crop))item.frameTimes.push({crop,frameIndex,firstMs:drawMs});
+          const previous=item.frameSequence.at(-1);
+          if(item.frameSequence.length<512&&previous?.frameIndex!==frameIndex)item.frameSequence.push({crop,frameIndex,firstMs:drawMs});
         }
       }
       return result;
