@@ -51,6 +51,21 @@ if (index.includes(legacyHush)) {
   }`);
 }
 
+// hunt-3d-runtime keeps the one-line hush variant for standalone runs. In the
+// integrated runtime the hunt overlay observer must not pause the unlocked
+// shared bgmPlayer (L158-T5), so neutralize its body at build time too.
+const huntHush = `  function hushParentBgm() {
+    try {
+      if (typeof bgmPlayer !== 'undefined' && bgmPlayer) bgmPlayer.pause(); window.HonVietAudio?.stopMusic?.();
+    } catch {}
+    try { window.HonVietAudio?.stopCombat?.(); } catch {}
+  }`;
+if (index.includes(huntHush)) {
+  index = index.replace(huntHush, `  function hushParentBgm() {
+    // TKT-0158: shared audio bus owns music during overlay battle.
+  }`);
+}
+
 writeFileSync(indexPath, index);
 
 const battlePath = join(out, 'battle.html');
