@@ -117,8 +117,8 @@ replaceOne(
 );
 
 replaceOne(
-  '  dom.exitBattleButton?.addEventListener("click", () => {\n    if (!EMBEDDED) return;\n    postToHonVietHost("battle-abort", { sessionId: EMBED_CONFIG.sessionId || "" });\n  });',
-  '  dom.exitBattleButton?.addEventListener("click", () => {\n    if (!EMBEDDED) return;\n    window.HonVietSfx?.stopCombat?.();\n    postToHonVietHost("battle-abort", { sessionId: EMBED_CONFIG.sessionId || "" });\n  });',
+  '    postToHonVietHost("battle-abort", { sessionId: EMBED_CONFIG.sessionId || "" });',
+  '    window.HonVietSfx?.stopCombat?.();\n    postToHonVietHost("battle-abort", { sessionId: EMBED_CONFIG.sessionId || "" });',
   'battle-exit-routing'
 );
 
