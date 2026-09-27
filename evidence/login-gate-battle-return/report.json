@@ -1,0 +1,34 @@
+{
+  "revision": "local",
+  "scope": "Full-page battle return + login gate stacking. Desktop embedded abort is covered by static tests; not physical WebKit.",
+  "checks": [
+    {
+      "name": "gate re-opens on return boot (existing per-boot flow)",
+      "ok": true,
+      "detail": "{\"gateOpen\":true,\"gateZ\":1100000,\"rosterZ\":99999,\"screen\":\"heroes\"}"
+    },
+    {
+      "name": "gate renders above the V4 roster",
+      "ok": true,
+      "detail": "{\"gateOpen\":true,\"gateZ\":1100000,\"rosterZ\":99999,\"screen\":\"heroes\"}"
+    },
+    {
+      "name": "routed destination survives gate entry (heroes, not hub)",
+      "ok": true,
+      "detail": "{\"screen\":\"heroes\",\"rosterOpen\":true,\"gateOpen\":false}"
+    },
+    {
+      "name": "roster is open and gate closed after entry",
+      "ok": true,
+      "detail": "{\"screen\":\"heroes\",\"rosterOpen\":true,\"gateOpen\":false}"
+    },
+    {
+      "name": "dock navigation works after gate entry",
+      "ok": true,
+      "detail": "ST.screen=hub"
+    }
+  ],
+  "errors": [
+    "screenshot skipped: CDP timeout: Page.captureScreenshot"
+  ]
+}
