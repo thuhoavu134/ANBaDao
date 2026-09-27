@@ -301,3 +301,47 @@ test('pairs Ông Phở chain2 audio with the second actual contact-frame draw', 
   assert.equal(late.bad.length,1,'actual audio cue more than 50ms from contact must fail');
   assert.equal(late.bad[0].visualSignedOffsetMs,75);
 });
+
+
+test('RED: maps visual cue time through AudioContext output timestamp instead of render-currentTime', async () => {
+  const f=fixture();
+  f.context.getOutputTimestamp=()=>({contextTime:9.98,performanceTime:1000});
+  assert.equal(await f.bus.prepare('basic'),true);
+  assert.equal(await f.bus.play('basic',{
+    group:'combat',
+    actionId:'qa:output-clock',
+    cue:'release:first-vfx',
+    cuePerformanceMs:1500,
+    sampleCue:'onset'
+  }),true);
+  assert.equal(f.starts.length,1);
+  // Decoded onset is 100 ms. The desired audible output cue is 1500 ms,
+  // so source sample 0 must reach output at 1400 ms. Output timestamp maps
+  // 1400 ms -> contextTime 10.38, whereas currentTime-only math would use 10.40.
+  assert.ok(Math.abs(f.starts[0]-10.38)<0.002,'source start must use output-device clock mapping');
+  const event=f.bus.timingEvents().find(item=>item.actionId==='qa:output-clock');
+  assert.equal(event?.clockMapping,'output-timestamp');
+  assert.ok(Math.abs(event?.outputTimestampContextTime-9.98)<0.0001);
+  assert.ok(Math.abs(event?.outputTimestampPerformanceMs-1000)<0.01);
+  assert.ok(Math.abs(event?.expectedCuePerformanceMs-1500)<0.01);
+  assert.ok(Math.abs(event?.signedCueOffsetMs)<0.01);
+});
+
+test('RED: output clock reports unavoidable late cue when requested inside device latency window', async () => {
+  const f=fixture();
+  f.context.getOutputTimestamp=()=>({contextTime:9.98,performanceTime:1000});
+  assert.equal(await f.bus.prepare('basic'),true);
+  assert.equal(await f.bus.play('basic',{
+    group:'combat',
+    actionId:'qa:output-too-late',
+    cue:'release:first-vfx',
+    cuePerformanceMs:1100,
+    sampleCue:'onset'
+  }),true);
+  const event=f.bus.timingEvents().find(item=>item.actionId==='qa:output-too-late');
+  // currentTime 10.00 cannot be rendered at the device before ~1020 ms,
+  // so a 100 ms source onset can be heard no earlier than ~1120 ms.
+  assert.ok(Math.abs(f.starts[0]-10)<0.0001);
+  assert.ok(Math.abs(event?.expectedCuePerformanceMs-1120)<0.01);
+  assert.ok(Math.abs(event?.signedCueOffsetMs-20)<0.01);
+});
