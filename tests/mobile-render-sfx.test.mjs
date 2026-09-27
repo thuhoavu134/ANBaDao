@@ -183,7 +183,7 @@ test('built battle keeps opaque canvas and stable camera; all inline JS parses',
     }
   }
   const index = read('dist/index.html'), battle = read('dist/battle.html');
-  assert.ok(Buffer.from(index.match(/const BATTLE_HTML_BASE64 = "([^"]+)"/)[1], 'base64').equals(Buffer.from(battle)), 'built battle payload parity');
+  assert.match(index, /const BATTLE_HTML_BASE64 = "";/, 'built battle payload parity: embedded payload disabled, battle.html is the single runtime');
   assert.match(battle, /cameraFlash = 0; cameraShake = 0; cameraZoom = 0/);
   assert.match(battle, /fillRect\(0, 0, dom\.canvas\.width, dom\.canvas\.height\)/);
   assert.doesNotMatch(battle, /ctx\.clearRect\(-100/);

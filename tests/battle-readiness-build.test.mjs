@@ -22,12 +22,12 @@ function fixture(){
   return {actor,state,gate,run,get releases(){return releases;},get entered(){return entered;},get prepared(){return prepared;},get failures(){return failures;},
     ready:()=>gate.resolve({signal:new AbortController().signal,release:()=>{releases++;}})};
 }
-test('final battle gates the real action before energy debit and keeps the same iframe payload',()=>{
+test('final battle gates the real action before energy debit and serves battle.html standalone',()=>{
   assert.equal(html.split('/* HV_BATTLE_ASSET_READINESS_V1 */').length-1,1);
   assert.ok(actionSource.indexOf('__hvBattleAssets.prepare')<actionSource.indexOf('__hvDebitActionEnergy3qAdapter(actor, cost'));
   assert.ok(actionSource.indexOf('__hvBattleAssets.prepare')>actionSource.indexOf('state.locked = true'));
-  const index=readFileSync('dist/index.html','utf8'),encoded=index.match(/const BATTLE_HTML_BASE64 = "([A-Za-z0-9+/=]+)";/);
-  assert.ok(encoded);assert.equal(Buffer.from(encoded[1],'base64').toString('utf8'),html);
+  const index=readFileSync('dist/index.html','utf8');
+  assert.match(index,/const BATTLE_HTML_BASE64 = "";/);
 });
 test('actual generated action does not begin or spend energy while pictures are loading',async()=>{
   const f=fixture();const pending=f.run(f.actor,'basic',{});

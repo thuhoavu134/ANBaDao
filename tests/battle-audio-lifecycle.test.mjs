@@ -139,7 +139,7 @@ test('result music cannot resume after stop while waiting for audio unlock', asy
   vm.runInNewContext(source, { window, Audio, document: { getElementById: () => null }, location: { origin: 'https://game.example' } });
   const play = window.__HV_RESULT_AUDIO.play('victory');
   window.__HV_RESULT_AUDIO.stop(); pending.resolve();
-  assert.equal(await play, false); assert.equal(players[0].played, undefined);
+  assert.equal(await play, false); assert.equal(players.length, 0, 'cancelled play never creates a fallback player');
   listeners.message({ data: { source: 'hon-viet-battle', type: 'battle-result-audio', payload: { sessionId: 'old', victory: true } } });
   assert.equal(window.__HV_RESULT_AUDIO.current(), '', 'stale frame cannot reopen result music');
 });
@@ -155,7 +155,7 @@ test('built close owner stops both parent buses and the child before blanking th
   assert.ok(start >= 0 && end > start);
   const order = [];
   const context = vm.createContext({
-    window: { HonVietSfx: { endBattle: () => order.push('sfx') }, __HV_RESULT_AUDIO: { stop: () => order.push('result') } },
+    window: { HonVietSfx: { endBattle: () => order.push('sfx') }, __HV_RESULT_AUDIO: { stop: () => order.push('result') }, __HV_HOST_ATLASES: { resume() {} } },
     frame: { contentWindow: { HonVietSfx: { dispose: () => order.push('child') } }, removeAttribute() {}, dataset: {}, set src(v) { order.push(v); } },
     activeBattle: null, overlay: { classList: { remove() {} } }, loading: {}, document: { documentElement: { style: {} } }
   });

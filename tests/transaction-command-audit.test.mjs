@@ -47,5 +47,7 @@ test('L03a records receipt absence instead of treating direct persist as atomic'
 
 test('L03a audit source hash is stable for the captured active runtime', () => {
   const hash = crypto.createHash('sha256').update(source).digest('hex');
-  assert.equal(hash, '99d24a2e91828f3df2bd946c0dfc1aafd76300223b1f3e667a469f469f2007b0');
+  // Re-pinned 2026-09-27: index.html changed only in the header version comment
+  // (1.0.2 → 3.26.0); the L03a command inventory assertions above still pass.
+  assert.equal(hash, '464ca35caed4f7bb085c45375e9066f2f19f4539eed11845015082f72f53aa75');
 });

@@ -25,9 +25,14 @@ test('battle bridge protocol annotates every parent message and remains syntacti
   const battle = read('../dist/battle.html');
   const messageCount = (battle.match(/parent\.postMessage\(\{/g) || []).length;
   assert.ok(messageCount >= 8);
+  // b3a359a added the shared postToHonVietHost helper: its `const message =
+  // {schema:"hon-viet-battle/v1",...}` is an annotated schema that posts through
+  // one parent.postMessage(message, '*') call, so it is counted separately.
+  const helperCount = (battle.match(/const message = \{schema:"hon-viet-battle\/v1"/g) || []).length;
+  assert.ok(helperCount >= 1, 'shared bridge helper is installed');
   assert.equal(
     (battle.match(/schema:"hon-viet-battle\/v1"/g) || []).length,
-    messageCount
+    messageCount + helperCount
   );
 
   const scriptBodies = [];

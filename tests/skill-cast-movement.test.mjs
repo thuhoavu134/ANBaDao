@@ -202,6 +202,9 @@ test('final generated living-actor return awaits the movement owner for all four
       usesLucAnh: flag === 'usesLucAnh', usesLinhDong: flag === 'usesLinhDong',
       usesBachDien: flag === 'usesBachDien', usesThayMoBasicQa: flag === 'usesThayMoBasicQa',
       usesOngPhoGif: false, usesDinhLoi: false,
+      // 93f1489 inserts `state.ultimateFocus = null;` at the recovery boundary;
+      // in battle.html `state` is the module-level battle state.
+      state: { ultimateFocus: null },
       __hvSkillMovement: { returnHome: () => { calls++; return new Promise(resolve => { finish = resolve; }); } }
     });
     const result = vm.runInContext('(async()=>{' + block + ';return "after-return";})()', context, { timeout: 1000 });
