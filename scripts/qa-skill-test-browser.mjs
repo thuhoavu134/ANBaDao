@@ -67,7 +67,10 @@ function timingContract(row) {
     !Number.isFinite(Number(item.decodedReadyPerformanceMs)) ||
     !Number.isFinite(Number(item.signedCueOffsetMs)) ||
     Math.abs(Number(item.signedCueOffsetMs)) > TIMING_LIMIT_MS ||
-    (row.hero === 'ong-pho' ? item.sampleCue !== 'dominant' : item.sampleCue !== 'onset')
+    (row.hero === 'ong-pho' ? item.sampleCue !== 'dominant' : item.sampleCue !== 'onset') ||
+    item.clockMapping !== 'output-timestamp' ||
+    item.timingBasis !== 'web-audio-output-scheduled' ||
+    item.audibleCueBasis !== 'decoded-buffer-envelope'
   );
   const visualSpec = VISUAL_CUE_SPEC[row.hero]?.[row.canonicalAction] || null;
   const visualTimes = authoredVisualCueTimes(evidence,visualSpec);
@@ -95,7 +98,18 @@ function timingContract(row) {
       sourceScheduledPerformanceMs:item.sourceScheduledPerformanceMs,
       expectedAudiblePerformanceMs:item.expectedAudiblePerformanceMs,
       expectedCuePerformanceMs:item.expectedCuePerformanceMs,
-      signedCueOffsetMs:item.signedCueOffsetMs
+      signedCueOffsetMs:item.signedCueOffsetMs,
+      clockMapping:item.clockMapping,
+      performanceClockDomain:item.performanceClockDomain,
+      parentPerformanceOffsetMs:item.parentPerformanceOffsetMs,
+      outputTimestampContextTime:item.outputTimestampContextTime,
+      outputTimestampPerformanceMs:item.outputTimestampPerformanceMs,
+      estimatedOutputLatencyMs:item.estimatedOutputLatencyMs,
+      contextBaseLatencyMs:item.contextBaseLatencyMs,
+      contextOutputLatencyMs:item.contextOutputLatencyMs,
+      timingBasis:item.timingBasis,
+      audibleCueBasis:item.audibleCueBasis,
+      analysisMethod:item.analysisMethod
     }))
   };
 }
@@ -353,7 +367,7 @@ export async function run() {
   mkdirSync(out,{recursive:true});
   const browser=await startBrowser();
   const targetBase=(process.env.SKILL_TEST_BASE_URL||browser.origin).replace(/\/+$/,'');
-  const report={targetBase,scope:'Direct skill-test.html controller over real generated 6v6 battle runtime; six authored owners, 16 canonical actions plus Linh Đồng/Bạch Diện Skill→ATK aliases; fresh-frame cold-decode at 1x and warm-cache timing at 2x/3x on desktop/mobile, plus Reset. Chromium only; not physical iPhone/iPad/Safari.',revision:process.env.GITHUB_SHA||'local',runs:[],ok:false};
+  const report={targetBase,scope:'Direct skill-test.html controller over real generated 6v6 battle runtime; six authored owners, 16 canonical actions plus Linh Đồng/Bạch Diện Skill→ATK aliases; fresh-frame cold-decode at 1x and warm-cache timing at 2x/3x on desktop/mobile, plus Reset. Audio timing uses WebAudio output timestamp scheduling and decoded-buffer envelope cues; no microphone/loopback acoustic measurement. Chromium only; not physical iPhone/iPad/Safari.',revision:process.env.GITHUB_SHA||'local',runs:[],ok:false};
   try {
     for (const viewport of [['desktop',1280,800,1],['mobile',390,844,2]]) {
       report.runs.push(await runViewport(browser,out,...viewport,targetBase));
