@@ -102,9 +102,15 @@ function splusStateView() {
   try{
     const e=splusCombat();if(!e)return false;
     splusSkillBar();
+    document.body.classList.add('splus-battle');
+    // The seals HUD (Ấn ký trận đấu) is a QA view: production battles keep
+    // only the skill strip, never the status panel below the battlefield.
+    if(!new URLSearchParams(location.search).has('qaSplus42')){
+      document.getElementById('splus-status-panel')?.remove();
+      return true;
+    }
     let panel=document.getElementById('splus-status-panel');
     if(!panel){panel=document.createElement('section');panel.id='splus-status-panel';panel.setAttribute('aria-label','Trạng thái 42 tướng S+');document.body.append(panel);}
-    document.body.classList.add('splus-battle');
     const heading=document.createElement('h2');heading.textContent=`Ấn ký trận đấu · Hiệp ${state.round||1}`;
     const grid=document.createElement('div');grid.className='splus-status-grid';
     for(const u of units){
@@ -120,7 +126,7 @@ function splusStateView() {
       card.append(name,health,list);grid.append(card);
     }
     panel.replaceChildren(heading,grid);
-    if(new URLSearchParams(location.search).has('qaSplus42')){
+    {
       const details=document.createElement('details'),summary=document.createElement('summary'),pre=document.createElement('pre');summary.textContent='Evidence trận S+ (QA)';pre.id='splus-evidence';
       const actions=e.events.filter(x=>x.type==='action');
       pre.textContent=JSON.stringify({schema:e.schema,mode:state.mode,round:e.round,actionCount:actions.length,eventCount:e.events.length,actionsByHero:actions.reduce((a,x)=>{const id=getUnit(x.sourceId)?.sourceId;a[id]??=[];if(!a[id].includes(x.action))a[id].push(x.action);return a;},{}),uniqueSlots:new Set(units.filter(u=>u.hp>0).map(u=>`${u.team}:${u.slot}`)).size,alive:units.filter(u=>u.hp>0).length,finite:units.every(u=>Number.isFinite(u.hp)&&Number.isFinite(u.energy)),statuses:units.map(u=>({id:u.id,heroId:u.sourceId,hp:u.hp,rage:u.energy,marks:e.hud(u)})),events:e.events.slice(-60)},null,2);details.append(summary,pre);panel.append(details);

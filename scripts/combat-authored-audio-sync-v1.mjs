@@ -3,7 +3,9 @@ import { join } from 'node:path';
 
 const path=join(process.cwd(),'dist','battle.html');
 let html=readFileSync(path,'utf8');
-const MARKER='/* HV_COMBAT_AUTHORED_AUDIO_SYNC_V1 */';
+// HTML comment, not a JS comment: this marker lands at top-level body scope,
+// where a /* */ sequence renders as visible page text (2026-09-28 owner report).
+const MARKER='<!-- HV_COMBAT_AUTHORED_AUDIO_SYNC_V1 -->';
 if(html.includes(MARKER))throw new Error('Authored audio sync patch applied twice');
 if(!html.includes('AUTHORED_COMBAT_AUDIO_SYNC_V1')||!html.includes('__hvScheduleAuthoredSfx'))throw new Error('Authored audio scheduler source helper missing');
 
