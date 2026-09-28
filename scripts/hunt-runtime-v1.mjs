@@ -81,19 +81,16 @@ if (existsSync(battleTarget)) {
     'battle-embed-fallback'
   );
 
-  battle = replaceOnce(
-    battle,
-    "    const maxRounds=Math.max(1,Math.min(STANDARD_ROUND_LIMIT,Math.floor(Number(raw.maxRounds)|| (type==='challenge'?STANDARD_ROUND_LIMIT:type==='survive'||type==='protect'?5:type==='priority'||type==='ritual'?6:STANDARD_ROUND_LIMIT))));",
-    "    const roundCap=Number(raw.maxRounds)>=60?60:STANDARD_ROUND_LIMIT;\n    const maxRounds=Math.max(1,Math.min(roundCap,Math.floor(Number(raw.maxRounds)|| (type==='challenge'?STANDARD_ROUND_LIMIT:type==='survive'||type==='protect'?5:type==='priority'||type==='ritual'?6:STANDARD_ROUND_LIMIT))));",
-    'battle-round-cap'
-  );
-
-  battle = replaceOnce(
-    battle,
-    "    if(round>STANDARD_ROUND_LIMIT){\n      const playerHp=players.reduce((sum,u)=>sum+Math.max(0,Number(u.hp)||0),0);\n      const enemyHp=enemies.reduce((sum,u)=>sum+Math.max(0,Number(u.hp)||0),0);\n      if(playerHp!==enemyHp)return {winner:playerHp>enemyHp?'player':'enemy',reason:'round-limit-hp',playerHp,enemyHp};",
-    "    const roundCap=Math.max(STANDARD_ROUND_LIMIT,Math.min(60,Number(obj.maxRounds)||STANDARD_ROUND_LIMIT));\n    if(round>roundCap){\n      const playerHp=players.reduce((sum,u)=>sum+Math.max(0,Number(u.hp)||0),0);\n      const enemyHp=enemies.reduce((sum,u)=>sum+Math.max(0,Number(u.hp)||0),0);\n      if(playerHp!==enemyHp)return {winner:playerHp>enemyHp?'player':'enemy',reason:'round-limit-hp',playerHp,enemyHp};",
-    'battle-eval-cap'
-  );
+  // TKT-0161: the battle round-cap (60 for hunt/tower) now lives in the core
+  // module (src/domain/combat/hon-viet-core.mjs) and arrives pre-applied in
+  // battle.html. Guard instead of patching — an inline edit would trip the
+  // combat-core drift guard.
+  if (!battle.includes('const roundCap=Number(raw.maxRounds)>=60?60:STANDARD_ROUND_LIMIT;')) {
+    throw new Error('hunt-runtime: round-cap missing from the core module build');
+  }
+  if (!battle.includes('const roundCap=Math.max(STANDARD_ROUND_LIMIT,Math.min(60,Number(obj.maxRounds)||STANDARD_ROUND_LIMIT));')) {
+    throw new Error('hunt-runtime: eval round-cap missing from the core module build');
+  }
 
   battle = replaceOnce(
     battle,
