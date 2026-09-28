@@ -49,7 +49,10 @@ export function patchSplusBattleHtml(input) {
   once('  function preferredTargetFor(actor, action){','  function preferredTargetFor(actor, action){\n    if(splusCombat())return splusCombat().targets(actor,action)[0];');
   once('    showTargets(candidates, targetsAllies ? actor.team : (actor.team === TEAM_PLAYER ? TEAM_ENEMY : TEAM_PLAYER));','    showTargets(candidates, splusTargetTeam(actor,candidates,targetsAllies ? actor.team : (actor.team === TEAM_PLAYER ? TEAM_ENEMY : TEAM_PLAYER)));');
   once('  function decideAi(actor){',`  function decideAi(actor){
-    if(splusCombat()){const action=splusCombat().chooseAction(actor);return {action,target:splusCombat().targets(actor,action)[0]};}`);
+    // Only S+ kit actors delegate to the S+ engine. Delegating every unit froze
+    // legacy heroes on basics forever (no ultimate at 70 rage, no regular-skill
+    // rotation), so statuses and their head icons stopped appearing at all.
+    if(splusCombat()&&actor?.kitVersion==='splus42-v2'){const action=splusCombat().chooseAction(actor);return {action,target:splusCombat().targets(actor,action)[0]};}`);
   once("    if(action==='skill')return;","    if(action==='skill'&&!splusCombat())return;");
   once("    if(action==='basic'){\n      const talent=talentSkillIntent(actor);","    if(action==='basic'&&!splusCombat()){\n      const talent=talentSkillIntent(actor);");
   once('  async function performAction(actor, action, target) {',`  async function performAction(actor, action, target) {
@@ -64,7 +67,10 @@ export function patchSplusBattleHtml(input) {
   once('  function drawUnit(context, unit, time) {','  function drawUnit(context, unit, time) {\n    if(unit.kitVersion===\'splus42-v2\')return drawSplusToken(context,unit,time);');
   once('  function gainEnergy(unit, amount){','  function gainEnergy(unit, amount){\n    if(splusCombat())return splusCombat().gainRage(unit,unit,amount);');
   once('    const visibleStatuses=[];','    const visibleStatuses=splusCombat()?splusCombat().hud(unit).slice(0,4):[];');
-  once('      visibleStatuses.push(status);','      if(!splusCombat())visibleStatuses.push(status);');
+  // 2026-09-28: legacy statuses must still surface when the S+ engine is active
+  // (its hud only knows engine-tracked statuses; legacy burns/buffs landed on
+  // unit.statuses and their head icons vanished). Merge, deduped by type, cap 4.
+  once('      visibleStatuses.push(status);','      if(visibleStatuses.some(shown=>shown.type===status.type)) continue;\n      visibleStatuses.push(status);');
   once('const beneficial=[',"const beneficial=status.polarity==='buff'||[");
   once('icon=statusIconImage(status.type);','icon=status.iconId?null:statusIconImage(status.type);');
   once('      if(isNemVi){\n        context.shadowBlur=0;',`      if(status.iconId){context.shadowBlur=0;context.fillStyle='#fff';context.font='bold 11px sans-serif';context.textAlign='center';const number=globalThis.SPLUS42.catalog.find(h=>h.iconId===status.iconId)?.number;context.fillText(String(number||'')+(status.stacks>1?'×'+status.stacks:''),sx,sy+4);}
