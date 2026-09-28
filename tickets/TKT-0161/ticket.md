@@ -47,3 +47,9 @@ Khảo sát kỹ `scripts/combat-domain-3q-adapter-v1.mjs` cho thấy nhận đ�
 - dist/battle.html: `Math.random()` còn 2/12 (fallback trong bridge);
   rule sites seeded ×7, presentation ×8.
 - tests/meta-rng-seed.test.mjs: 3/3 PASS (replay contract + scoping).
+
+## Cập nhật 28/09 (phiên 2)
+
+- **Seed RNG hub hoàn tất**: PR #235 (Gọi Mộng) + PR #236 (lễ hội/hoa đăng/wish/Bách Bảo wheel/forge rarity/càn quét/nhận việc/mốc tháp/shop pick) — mọi roll cấp giá trị ở hub đều qua stream có seed, ring replay `hv_pull_seeds_v1` + `hv_scope_seeds_v1`. Full suite 1343/1343 PASS.
+- Cosmetic rolls (chat/mail/voice/star/rival-name) cố tình không seed.
+- **Còn lại duy nhất cho "chốt engine"**: rule-swap applyDamage/applyHeal/addStatus sang modular — CHỈ bật sau khi parity replay diff qua fixture `?qaCombatFixture=l05a` (hạ tầng observation đã sẵn: before/after + rngCalls per action). Việc này cần 1 session riêng trọn vẹn.
