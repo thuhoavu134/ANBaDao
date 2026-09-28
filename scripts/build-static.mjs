@@ -216,6 +216,9 @@ await import('./authored-vfx-clock-v1.mjs');
 await import('./legacy-authored-readiness-v1.mjs');
 await import('./combat-authored-qa-v1.mjs');
 await import('./combat-authored-audio-sync-v1.mjs');
+// 2026-09-28 auto-battle skill cadence. Keep AFTER the authored owners (anchors
+// on the final decideAi text). Do not edit battle.html.
+await import('./auto-skill-cadence-v1.mjs');
 
 // battle.html is now the single runtime source for iframe and iOS full-page combat.
 // Do not duplicate ~1.5 MB of battle markup as base64 inside index.html; on mobile
