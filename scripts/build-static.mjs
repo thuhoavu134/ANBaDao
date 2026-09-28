@@ -55,6 +55,8 @@ await import('./summon-pool-guard-v1.mjs');
 // 2026-09-28 meta-roll RNG seeding (Gọi Mộng tier + pick). Keep AFTER
 // summon-pool-guard (anchors on the live doSummon body). Do not edit index.html.
 await import('./meta-rng-seed-v1.mjs');
+// 2026-09-28 meta-roll RNG seeding v2 (festival/bbr/forge/loot). Keep AFTER v1.
+await import('./meta-rng-seed-v2.mjs');
 await import('./hero-roster-phase-a-v4.mjs');
 await import('./hero-detail-tabs.mjs');
 await import('./runtime-mobile-render-sfx-v1.mjs');
