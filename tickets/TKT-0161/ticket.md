@@ -1,0 +1,49 @@
+---
+id: TKT-0161
+title: Chốt 1 combat engine — hiện trạng thật và phần còn lại
+status: IN_PROGRESS
+phase: IN_PROGRESS
+priority: P1
+owner: assistant (theo duyệt chủ)
+created: 2026-09-28
+---
+
+# TKT-0161 — Chốt 1 combat engine
+
+## Hiện trạng thật (khảo sát 28/09, sửa nhận định cũ)
+
+Review đầu tiên kết luận "3 combat engine song song, bản canonical bị chặn sau QA flag".
+Khảo sát kỹ `scripts/combat-domain-3q-adapter-v1.mjs` cho thấy nhận định đó SAI một nửa:
+
+1. **Engine sống là engine inline battle.html** (đã rename `__hvApplyDamage3qAdapter`...),
+   wrapper `applyDamage` LUÔN gọi engine đó trong production. QA fixture
+   (`?qaCombatFixture=l05a`) KHÔNG phải engine thay thế — là **bộ ghi quan sát**
+   (snapshot before/after + rngCalls per action, `parityScope:'full-replay-rule-outcome'`).
+2. **`src/domain/combat` (modules v1) ĐANG ĐƯỢC DÙNG THẬT** trong production như thư viện:
+   seeded combat RNG (toàn bộ rule sites hit/variance/crit/fear/stun + presentation sites
+   đã qua `__hvRuleRandom3qAdapter`/`__hvPresentationRandom3qAdapter` — dist còn đúng
+   2 chỗ `Math.random()` là fallback an toàn trong bridge), session/result snapshots,
+   `recordCombatAction` mỗi resolveAction, `serializeReplay` lúc endBattle.
+3. `__HV_COMBAT_DOMAIN_V1` (3q-core) là **fallback** khi modules v1 thiếu
+   (`modules?.x || core?.x`) — không phải engine song song.
+
+## Đã xong trong ticket này
+
+- Seed RNG meta-roll còn thiếu: **Gọi Mộng** (rollTier + pick) qua
+  `scripts/meta-rng-seed-v1.mjs` — per-pull seed ghi ring `hv_pull_seeds_v1`
+  (localStorage riêng, không đụng save contract), replay contract có test khóa.
+  Full suite 1338 test.
+
+## Phần còn lại (các ticket con sau này)
+
+1. **Rule-swap**: chuyển nội dung applyDamage/applyHeal/addStatus sang modular rules —
+   CHỈ làm khi có parity replay diff (fixture đã ghi đủ dữ liệu để diff).
+2. Seed các meta-roll còn lại: festival wheel, expedition reroll (cùng pattern,
+   scoping theo thân hàm như meta-rng-seed-v1).
+3. Sau parity: xóa fallback 3q-core + fixture gate nếu owner muốn.
+
+## Bằng chứng
+
+- dist/battle.html: `Math.random()` còn 2/12 (fallback trong bridge);
+  rule sites seeded ×7, presentation ×8.
+- tests/meta-rng-seed.test.mjs: 3/3 PASS (replay contract + scoping).
