@@ -53,3 +53,12 @@ Khảo sát kỹ `scripts/combat-domain-3q-adapter-v1.mjs` cho thấy nhận đ�
 - **Seed RNG hub hoàn tất**: PR #235 (Gọi Mộng) + PR #236 (lễ hội/hoa đăng/wish/Bách Bảo wheel/forge rarity/càn quét/nhận việc/mốc tháp/shop pick) — mọi roll cấp giá trị ở hub đều qua stream có seed, ring replay `hv_pull_seeds_v1` + `hv_scope_seeds_v1`. Full suite 1343/1343 PASS.
 - Cosmetic rolls (chat/mail/voice/star/rival-name) cố tình không seed.
 - **Còn lại duy nhất cho "chốt engine"**: rule-swap applyDamage/applyHeal/addStatus sang modular — CHỈ bật sau khi parity replay diff qua fixture `?qaCombatFixture=l05a` (hạ tầng observation đã sẵn: before/after + rngCalls per action). Việc này cần 1 session riêng trọn vẹn.
+
+## Cập nhật 28/09 (phiên 3) — Core single-source HOÀN TẤT
+
+- **HonVietCore (219 API rule: damage/heal/status/objective/synergy/zone...) dời verbatim** từ battle.html script #1 sang `src/domain/combat/hon-viet-core.mjs` (UMD giữ tương thích Node/browser).
+- Nguồn battle.html chỉ còn **placeholder** `<script id="hon-viet-core-umd-v1">`; build inject từ module (`scripts/combat-core-module-v1.mjs`) và **throw** nếu ai tái chèn inline core. battle.html nguồn nhẹ đi 155 KB.
+- Round-cap Tháp/Săn (60 ải) — trước đây là patch chuỗi build đụng vào core — nay là **phần của module**; hunt-runtime-v1 chỉ guard.
+- Contract test mới (`tests/hon-viet-core-module.test.mjs`): golden damage/heal (113/132/291/175-crit), parity sweep 200 case dist-vs-module, byte-for-byte dist, nguồn sạch.
+- Full suite: **1346/1346 PASS**. Từ đây sửa rule combat = sửa module; sửa inline sẽ vỡ build.
+- Còn lại trong ticket: parity replay diff runtime-level qua fixture (hạ tầng có sẵn) trước khi đổi công thức — không chặn việc sửa bug/balance trên module ngay bây giờ.

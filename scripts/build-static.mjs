@@ -30,6 +30,10 @@ for (const entry of entries) {
 
 const { buildOngPhoPngRecovery } = await import('./ong-pho-original-png-recovery.mjs');
 buildOngPhoPngRecovery(out);
+// TKT-0161: HonVietCore single-source. Keep FIRST among battle.html patches —
+// it verifies the inline core equals src/domain/combat/hon-viet-core.mjs and
+// stamps the block id. Do not edit rules inside battle.html; edit the module.
+await import('./combat-core-module-v1.mjs');
 await import('./luc-anh-runtime-patch.mjs');
 await import('./lanes/tkt-0088-skip.mjs');
 await import('./runtime-safety-hotfix.mjs');
