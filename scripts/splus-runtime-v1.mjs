@@ -35,7 +35,7 @@ export function patchSplusBattleHtml(input) {
   const Core={...LegacyCore,
     canUseAction:(u,a)=>splusCombat()?splusCombat().canUse(u,a):LegacyCore.canUseAction(u,a),
     tickStatuses:u=>splusCombat()?(['basic','skill','ultimate'].some(a=>splusCombat().canUse(u,a))?[]:[{type:'control'}]):LegacyCore.tickStatuses(u),
-    buildTurnOrder:list=>splusCombat()?list.filter(u=>u.hp>0).sort((a,b)=>splusCombat().stat(b,'speed')-splusCombat().stat(a,'speed')||String(a.id).localeCompare(String(b.id))).map(u=>u.id):LegacyCore.buildTurnOrder(list)
+    buildTurnOrder:list=>LegacyCore.buildTurnOrder(list)
   };`);
   once('    const sessionId = params.get("session") || "";',`    if(params.has('qaSplus42'))return globalThis.SPLUS42.fixture(params.get('qaSplus42'));
     const sessionId = params.get("session") || "";`);
@@ -45,8 +45,8 @@ export function patchSplusBattleHtml(input) {
   once('const hero=Core.applyProgression(synergized);','const hero=rawHero.kitVersion===\'splus42-v2\'?rawHero:Core.applyProgression(synergized);');
   once('    units = createUnits();','    splusReset();\n    units = createUnits();\n    splusStateView();');
   once('  dom.exitBattleButton?.addEventListener("click", () => {','  dom.exitBattleButton?.addEventListener("click", () => {\n    splusReset();');
-  once('  function legalTargetsFor(actor, action){','  function legalTargetsFor(actor, action){\n    if(splusCombat())return splusCombat().targets(actor,action);');
-  once('  function preferredTargetFor(actor, action){','  function preferredTargetFor(actor, action){\n    if(splusCombat())return splusCombat().targets(actor,action)[0];');
+  once('  function legalTargetsFor(actor, action){','  function legalTargetsFor(actor, action){\n    if(splusOwnsActor(actor)&&splusCombat())return splusCombat().targets(actor,action);');
+  once('  function preferredTargetFor(actor, action){','  function preferredTargetFor(actor, action){\n    if(splusOwnsActor(actor)&&splusCombat())return splusCombat().targets(actor,action)[0];');
   once('    showTargets(candidates, targetsAllies ? actor.team : (actor.team === TEAM_PLAYER ? TEAM_ENEMY : TEAM_PLAYER));','    showTargets(candidates, splusTargetTeam(actor,candidates,targetsAllies ? actor.team : (actor.team === TEAM_PLAYER ? TEAM_ENEMY : TEAM_PLAYER)));');
   once('  function decideAi(actor){',`  function decideAi(actor){
     // Only S+ kit actors delegate to the S+ engine. Delegating every unit froze

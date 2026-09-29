@@ -1,0 +1,65 @@
+{
+  "method": "Actual generated drawSceneContents with real RGBA pages and idle fallback, offline Skia. No browser/Safari or deployment certification.",
+  "authoredFrames": 432,
+  "heroes": [
+    {
+      "id": "linh_dong",
+      "originalBytes": 20275200,
+      "maxCurrentNextAndPosterBytes": 10348800,
+      "frames": 96
+    },
+    {
+      "id": "bach_dien",
+      "originalBytes": 7603200,
+      "maxCurrentNextAndPosterBytes": 6969600,
+      "frames": 32
+    },
+    {
+      "id": "ong_hang_pho",
+      "originalBytes": 6220800,
+      "maxCurrentNextAndPosterBytes": 6350400,
+      "frames": 48
+    },
+    {
+      "id": "luc_anh",
+      "originalBytes": 22118400,
+      "maxCurrentNextAndPosterBytes": 11289600,
+      "frames": 96
+    },
+    {
+      "id": "thay_mo",
+      "originalBytes": 24986880,
+      "maxCurrentNextAndPosterBytes": 12159840,
+      "frames": 96
+    },
+    {
+      "id": "dinh_loi",
+      "originalBytes": 8294400,
+      "maxCurrentNextAndPosterBytes": 6350400,
+      "frames": 64
+    }
+  ],
+  "views": [
+    {
+      "name": "mobile",
+      "width": 390,
+      "height": 310,
+      "fallbackPixelChannelDifferences": 73,
+      "fallbackMaxChannelDelta": 1,
+      "fallbackMaxPremultipliedChannelDelta": 1,
+      "displayedBodies": 9
+    },
+    {
+      "name": "desktop",
+      "width": 768,
+      "height": 610,
+      "fallbackPixelChannelDifferences": 191,
+      "fallbackMaxChannelDelta": 127,
+      "fallbackMaxPremultipliedChannelDelta": 1.0862745098039215,
+      "displayedBodies": 9
+    }
+  ],
+  "originalIdleMiB": 85.352783203125,
+  "maxActiveIdleMiB": 50.991668701171875,
+  "ok": true
+}

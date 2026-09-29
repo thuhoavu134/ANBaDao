@@ -760,7 +760,7 @@ const moduleShim = { exports: {} };
   function legalEnemyTargets(actor, enemies, options = {}) {
     const livingEnemies = enemies.filter((unit) => unit.hp > 0);
     if (!livingEnemies.length) return [];
-    if (options.ignoreFormation || actor?.archetype === "ranger" || actor?.archetype === "mystic" || actor?.archetype === "healer") return livingEnemies;
+    if (options.ignoreFormation) return livingEnemies;
     const front = livingEnemies.filter(isFront);
     return front.length ? front : livingEnemies;
   }
@@ -768,14 +768,12 @@ const moduleShim = { exports: {} };
   function preferredOppositeTarget(actor, enemies, options = {}) {
     const livingEnemies = legalEnemyTargets(actor, enemies, options);
     if (!livingEnemies.length) return null;
-    const actorSlot = Number.isInteger(actor?.slot) ? actor.slot : 0;
-    return livingEnemies
-      .slice()
-      .sort((a, b) => {
-        const aSlot = Number.isInteger(a?.slot) ? a.slot : 99;
-        const bSlot = Number.isInteger(b?.slot) ? b.slot : 99;
-        return Math.abs(aSlot - actorSlot) - Math.abs(bSlot - actorSlot) || aSlot - bSlot;
-      })[0] || null;
+    // Slots 0..2 are the front column, 3..5 the back column, top to bottom.
+    // Prefer the facing row in the first occupied column, then its lowest slot.
+    const front = livingEnemies.filter(isFront);
+    const column = (front.length ? front : livingEnemies).slice().sort((a, b) => a.slot - b.slot);
+    const row = (Number(actor?.slot) || 0) % 3;
+    return column.find(unit => Number(unit.slot) % 3 === row) || column[0] || null;
   }
 
   function selectAiIntent(actor, allies, enemies, randomValue = 0.5) {

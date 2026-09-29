@@ -34,7 +34,7 @@ export function createSplusMechanics(options={}) {
   const tankiest=list=>list.slice().sort((a,b)=>b.maxHp-a.maxHp||bySlot(a,b));
   const near=(a,b)=>Math.abs(a.slot%3-b.slot%3)+Math.abs(Math.floor(a.slot/3)-Math.floor(b.slot/3));
   const adjacent=(target,list)=>list.filter(v=>v!==target&&near(target,v)===1).sort(bySlot);
-  const opposite=(actor,list)=>list.find(v=>v.slot%3===actor.slot%3&&v.slot<3)||front(list)[0]||list[0];
+  const opposite=(actor,list)=>{const first=front(list),column=(first.length?first:list).slice().sort(bySlot);return column.find(v=>v.slot%3===actor.slot%3)||column[0];};
   const weakestBack=list=>weakest(back(list).length?back(list):list)[0];
   const strongestBack=list=>strongest(back(list).length?back(list):list)[0];
   const enraged=list=>list.slice().sort((a,b)=>b.energy-a.energy||bySlot(a,b));
@@ -401,7 +401,9 @@ export function createSplusMechanics(options={}) {
     if(!alive(actor))return {ok:false,reason:'ACTOR_DEAD',events:[]};
     if(preparedTurn!==actor.id)beginTurn(actor);preparedTurn=null;
     if(!alive(actor))return {ok:false,reason:'ACTOR_DEAD',events:[]};
-    const startIndex=events.length;let target=unit(targetId)||targets(actor,action)[0];
+    const startIndex=events.length,legal=targets(actor,action);
+    // Resolve again at impact: a stale/manual basic target cannot skip a living front row.
+    let target=legal.find(u=>u.id===unit(targetId)?.id)||legal[0];
     if(!target)return {ok:false,reason:'TARGET_UNAVAILABLE',events:[]};
     const confusion=status(actor,'confusion');
     if(confusion&&rng('splus.confusion')<n(confusion.chance,.5)){target=random(friends(actor).filter(u=>u!==actor))[0]||target;action='basic';}
@@ -531,7 +533,7 @@ export function createSplusMechanics(options={}) {
     const allies=friends(actor);
     const taunt=status(actor,'taunted');const taunter=unit(taunt?.sourceId);if(alive(taunter)&&taunter.team!==actor.team)return [taunter];
     const scoped=authoredTargets(actor,action,enemies,allies);if(scoped)return scoped.filter(alive);
-    return [opposite(actor,enemies),...enemies].filter((u,i,a)=>u&&a.indexOf(u)===i);
+    return [opposite(actor,enemies)].filter(Boolean);
   }
   function chooseAction(actorId) {return ['ultimate','skill','basic'].find(a=>canUse(actorId,a))||null;}
   function hud(targetId) {
