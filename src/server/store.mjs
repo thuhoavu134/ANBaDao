@@ -8,6 +8,7 @@ function clone(value) {
 export function createMemoryStore() {
   const users = [];
   const saves = new Map();
+  const saveVersions = new Map();
   const profiles = new Map();
   const chat = [];
   const oauthState = new Map();
@@ -37,14 +38,52 @@ export function createMemoryStore() {
     async getSave(userId) {
       return saves.has(userId) ? clone(saves.get(userId)) : null;
     },
-    async putSave(userId, save) {
+    async putSave(userId, save, version = (saveVersions.get(userId) || 0) + 1) {
       saves.set(userId, clone(save));
+      saveVersions.set(userId, version);
+    },
+    async getSaveRecord(userId) {
+      return { save: saves.has(userId) ? clone(saves.get(userId)) : null, version: saveVersions.get(userId) || 0 };
+    },
+    async putSaveIfVersion(userId, save, expectedVersion) {
+      const current = saveVersions.get(userId) || 0;
+      if (current !== expectedVersion) return null;
+      saves.set(userId, clone(save));
+      saveVersions.set(userId, current + 1);
+      return current + 1;
     },
     async getProfile(userId) {
       return profiles.has(userId) ? clone(profiles.get(userId)) : null;
     },
     async putProfile(userId, profile) {
       profiles.set(userId, clone(profile));
+    },
+    async patchProfileStats(userId, fields) {
+      const current = profiles.get(userId);
+      if (!current) throw new Error('Profile must exist before updating stats');
+      profiles.set(userId, { ...current, ...clone(fields) });
+    },
+    async nextRank() {
+      let rank = 999;
+      for (const profile of profiles.values()) rank = Math.max(rank, Number(profile.rank) || 0);
+      return rank + 1;
+    },
+    async listRivals(userId, limit = 8) {
+      return [...profiles.entries()].filter(([id]) => id !== userId).slice(0, limit).map(([id, p]) => ({ userId: id, ...clone(p) }));
+    },
+    async listLeaderboard(by, limit = 20) {
+      const field = by === 'arena' ? 'rank' : by === 'tower' ? 'towerBest' : 'power';
+      const direction = by === 'arena' ? 1 : -1;
+      return [...profiles.entries()].map(([id, p]) => ({ userId: id, ...clone(p) }))
+        .sort((a, b) => direction * ((a[field] || 0) - (b[field] || 0)) || a.user.localeCompare(b.user)).slice(0, limit);
+    },
+    async getProfilesByNames(names) {
+      const wanted = new Set(names);
+      return [...profiles.entries()].filter(([, p]) => wanted.has(p.user)).map(([id, p]) => ({ userId: id, ...clone(p) }));
+    },
+    async listFriendSuggestions(userId, excluded, limit = 12) {
+      return [...profiles.entries()].filter(([id, p]) => id !== userId && !excluded.includes(p.user))
+        .map(([id, p]) => ({ userId: id, ...clone(p) })).sort((a, b) => (b.power || 0) - (a.power || 0)).slice(0, limit);
     },
     async listProfiles() {
       return [...profiles.entries()].map(([userId, profile]) => ({ userId, ...clone(profile) }));
@@ -106,6 +145,7 @@ export function createFileStore(filePath) {
       if (save != null) saves.push([u.id, save]);
     }
     data.saves = saves;
+    data.saveVersions = await Promise.all(data.users.map(async u => [u.id, (await mem.getSaveRecord(u.id)).version]));
     data.profiles = (await mem.listProfiles()).map(p => [p.userId, p]);
     const tmp = filePath + '.tmp';
     mkdirSync(dirname(filePath), { recursive: true });
@@ -117,7 +157,8 @@ export function createFileStore(filePath) {
     try {
       const raw = JSON.parse(readFileSync(filePath, 'utf8'));
       for (const u of raw.users || []) mem.createUser(u);
-      for (const [id, save] of raw.saves || []) mem.putSave(id, save);
+      const versions = new Map(raw.saveVersions || []);
+      for (const [id, save] of raw.saves || []) mem.putSave(id, save, versions.get(id) || 0);
       for (const row of raw.profiles || []) {
         if (Array.isArray(row)) mem.putProfile(row[0], row[1]);
         else if (row && row.userId) {
@@ -131,10 +172,15 @@ export function createFileStore(filePath) {
     }
   }
 
-  const persist = fn => async (...args) => {
-    const out = await fn(...args);
-    await dump();
-    return out;
+  let pendingWrite = Promise.resolve();
+  const persist = fn => (...args) => {
+    const task = pendingWrite.then(async () => {
+      const out = await fn(...args);
+      await dump();
+      return out;
+    });
+    pendingWrite = task.catch(() => {});
+    return task;
   };
 
   return {
@@ -142,7 +188,9 @@ export function createFileStore(filePath) {
     kind: 'file',
     createUser: persist(mem.createUser.bind(mem)),
     putSave: persist(mem.putSave.bind(mem)),
+    putSaveIfVersion: persist(mem.putSaveIfVersion.bind(mem)),
     putProfile: persist(mem.putProfile.bind(mem)),
+    patchProfileStats: persist(mem.patchProfileStats.bind(mem)),
     appendChat: persist(mem.appendChat.bind(mem))
   };
 }
@@ -171,6 +219,10 @@ export async function createPostgresStore(databaseUrl, sqlImpl) {
     rank INT DEFAULT 1000,
     updated_at BIGINT NOT NULL
   )`;
+  await sql`ALTER TABLE hv_saves ADD COLUMN IF NOT EXISTS version BIGINT NOT NULL DEFAULT 0`;
+  await sql`CREATE INDEX IF NOT EXISTS hv_profiles_power_idx ON hv_profiles (power DESC, user_id)`;
+  await sql`CREATE INDEX IF NOT EXISTS hv_profiles_tower_idx ON hv_profiles (tower_best DESC, user_id)`;
+  await sql`CREATE INDEX IF NOT EXISTS hv_profiles_rank_idx ON hv_profiles (rank ASC, user_id)`;
   await sql`CREATE TABLE IF NOT EXISTS hv_chat (
     id BIGSERIAL PRIMARY KEY,
     username TEXT NOT NULL,
@@ -199,6 +251,8 @@ export async function createPostgresStore(databaseUrl, sqlImpl) {
     provider: row.provider,
     createdAt: Number(row.created_at)
   };
+  const mapProfile = row => ({ userId: row.user_id, user: row.username, power: row.power, towerBest: row.tower_best,
+    chapter: row.chapter, squad: row.squad, rank: row.rank, friends: row.friends || [], friendInbox: row.friend_inbox || [] });
 
   return {
     kind: 'postgres',
@@ -228,8 +282,21 @@ export async function createPostgresStore(databaseUrl, sqlImpl) {
       return rows[0] ? rows[0].save : null;
     },
     async putSave(userId, save) {
-      await sql`INSERT INTO hv_saves (user_id, save, updated_at) VALUES (${userId}, ${JSON.stringify(save)}::jsonb, ${Date.now()})
-        ON CONFLICT (user_id) DO UPDATE SET save = excluded.save, updated_at = excluded.updated_at`;
+      await sql`INSERT INTO hv_saves (user_id, save, updated_at, version) VALUES (${userId}, ${JSON.stringify(save)}::jsonb, ${Date.now()}, 1)
+        ON CONFLICT (user_id) DO UPDATE SET save = excluded.save, updated_at = excluded.updated_at, version = hv_saves.version + 1`;
+    },
+    async getSaveRecord(userId) {
+      const rows = await sql`SELECT save, version FROM hv_saves WHERE user_id = ${userId} LIMIT 1`;
+      return { save: rows[0]?.save ?? null, version: Number(rows[0]?.version || 0) };
+    },
+    async putSaveIfVersion(userId, save, expectedVersion) {
+      const rows = expectedVersion === 0
+        ? await sql`INSERT INTO hv_saves (user_id, save, updated_at, version) VALUES (${userId}, ${JSON.stringify(save)}::jsonb, ${Date.now()}, 1)
+            ON CONFLICT (user_id) DO UPDATE SET save = excluded.save, updated_at = excluded.updated_at, version = hv_saves.version + 1
+            WHERE hv_saves.version = 0 RETURNING version`
+        : await sql`UPDATE hv_saves SET save = ${JSON.stringify(save)}::jsonb, updated_at = ${Date.now()}, version = version + 1
+            WHERE user_id = ${userId} AND version = ${expectedVersion} RETURNING version`;
+      return rows[0] ? Number(rows[0].version) : null;
     },
     async getProfile(userId) {
       const rows = await sql`SELECT p.*, u.username FROM hv_profiles p JOIN hv_users u ON u.id = p.user_id WHERE p.user_id = ${userId} LIMIT 1`;
@@ -257,6 +324,38 @@ export async function createPostgresStore(databaseUrl, sqlImpl) {
         friends: row.friends || [],
         friendInbox: row.friend_inbox || []
       }));
+    },
+    async patchProfileStats(userId, fields) {
+      await sql`UPDATE hv_profiles SET power = ${fields.power}, tower_best = ${fields.towerBest}, chapter = ${fields.chapter},
+        squad = ${JSON.stringify(fields.squad)}::jsonb, updated_at = ${Date.now()} WHERE user_id = ${userId}`;
+    },
+    async nextRank() {
+      const rows = await sql`SELECT GREATEST(COALESCE(MAX(rank), 999), 999) + 1 AS rank FROM hv_profiles`;
+      return Number(rows[0].rank);
+    },
+    async listRivals(userId, limit = 8) {
+      const rows = await sql`SELECT p.*, u.username FROM hv_profiles p JOIN hv_users u ON u.id = p.user_id
+        WHERE p.user_id <> ${userId} ORDER BY p.rank, p.user_id LIMIT ${limit}`;
+      return rows.map(mapProfile);
+    },
+    async listLeaderboard(by, limit = 20) {
+      const rows = by === 'arena'
+        ? await sql`SELECT p.*, u.username FROM hv_profiles p JOIN hv_users u ON u.id = p.user_id ORDER BY p.rank ASC, p.user_id LIMIT ${limit}`
+        : by === 'tower'
+          ? await sql`SELECT p.*, u.username FROM hv_profiles p JOIN hv_users u ON u.id = p.user_id ORDER BY p.tower_best DESC, p.user_id LIMIT ${limit}`
+          : await sql`SELECT p.*, u.username FROM hv_profiles p JOIN hv_users u ON u.id = p.user_id ORDER BY p.power DESC, p.user_id LIMIT ${limit}`;
+      return rows.map(mapProfile);
+    },
+    async getProfilesByNames(names) {
+      if (!names.length) return [];
+      const rows = await sql`SELECT p.*, u.username FROM hv_profiles p JOIN hv_users u ON u.id = p.user_id
+        WHERE u.username = ANY(${names}::text[])`;
+      return rows.map(mapProfile);
+    },
+    async listFriendSuggestions(userId, excluded, limit = 12) {
+      const rows = await sql`SELECT p.*, u.username FROM hv_profiles p JOIN hv_users u ON u.id = p.user_id
+        WHERE p.user_id <> ${userId} AND NOT (u.username = ANY(${excluded}::text[])) ORDER BY p.power DESC, p.user_id LIMIT ${limit}`;
+      return rows.map(mapProfile);
     },
     async appendChat(msg) {
       await sql`INSERT INTO hv_chat (username, text, t) VALUES (${msg.user}, ${msg.text}, ${msg.t})`;
@@ -293,17 +392,15 @@ export async function createStoreFromEnv(env = process.env, options = {}) {
     try {
       return await createPostgresStore(env.DATABASE_URL, options.sql);
     } catch (err) {
-      console.error('honviet store postgres failed', err);
+      const unavailable = new Error('Database initialization failed', { cause: err });
+      unavailable.code = 'STORE_UNAVAILABLE';
+      throw unavailable;
     }
   }
   if (env.VERCEL) {
-    if (!env.DATABASE_URL) {
-      console.error('HONVIET STORE WARNING: VERCEL deployment has no DATABASE_URL. '
-        + 'Falling back to an in-memory store: player saves, profiles, chat and arena '
-        + 'results are lost on every cold start. Set DATABASE_URL to the Neon Postgres '
-        + 'connection string (Project Settings > Environment Variables).');
-    }
-    return createMemoryStore();
+    const unavailable = new Error('DATABASE_URL is required in production');
+    unavailable.code = 'STORE_UNAVAILABLE';
+    throw unavailable;
   }
   const filePath = env.HONVIET_STORE_PATH || 'data/hon-viet-store.json';
   return createFileStore(filePath);

@@ -265,6 +265,10 @@
   }
   async function enterGame() {
     pinServer();
+    if (hasSession()) {
+      try { await window.HonVietCloud.ready(); }
+      catch (error) { setErr(error?.message || 'Chưa tải được tiến trình tài khoản. Vui lòng thử lại.'); return false; }
+    }
     if (typeof saveNet === 'function') saveNet();
     hideLogin();
     if (typeof refreshResbar === 'function') refreshResbar();
@@ -277,6 +281,7 @@
   }
   function enterGuest() {
     if (typeof NET !== 'object') return;
+    window.HonVietCloud?.disconnect();
     const id = guestId();
     NET.user = id;
     NET.token = '';
@@ -296,20 +301,8 @@
     return j;
   }
   async function applyAuth(j, guest) {
-    NET.token = j.token;
-    NET.user = j.user;
-    NET.guest = false;
-    pinServer();
+    await window.HonVietCloud.signIn(j);
     saveLast(j.user, !!guest);
-    if (typeof api === 'function') {
-      try {
-        const cloud = await api('/api/save');
-        if (cloud && cloud.save && typeof migrateSave === 'function') {
-          P = migrateSave(cloud.save);
-          if (typeof persist === 'function') persist();
-        }
-      } catch {}
-    }
     await enterGame();
   }
   async function emailAuth(email, pass) {

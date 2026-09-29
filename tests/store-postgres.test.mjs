@@ -81,9 +81,8 @@ test('L76A-T1: createStoreFromEnv with DATABASE_URL uses postgres', async () => 
   assert.equal(store.kind, 'postgres');
 });
 
-test('L76A-T2: no DATABASE_URL + VERCEL=1 is memory; local is file', async () => {
-  const mem = await createStoreFromEnv({ VERCEL: '1' });
-  assert.equal(mem.kind, 'memory');
+test('L76A-T2: production requires DATABASE_URL; local is file', async () => {
+  await assert.rejects(createStoreFromEnv({ VERCEL: '1' }), { code: 'STORE_UNAVAILABLE' });
   const dir = mkdtempSync(join(tmpdir(), 'l76-'));
   const path = join(dir, 'store.json');
   const file = await createStoreFromEnv({ HONVIET_STORE_PATH: path });

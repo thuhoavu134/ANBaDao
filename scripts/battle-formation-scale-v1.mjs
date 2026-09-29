@@ -75,10 +75,19 @@ export function canonicalBattleHeroId(value){
   return raw;
 }
 export function heroVisualScale(unitOrId){
-  const raw=typeof unitOrId==='object'&&unitOrId
-    ? (unitOrId.sourceId||unitOrId.sourceHeroId||unitOrId.id)
-    : unitOrId;
-  return HERO_VISUAL_SCALE[canonicalBattleHeroId(raw)]??HERO_VISUAL_SCALE.default;
+  return HERO_VISUAL_SCALE[battleHeroVisualId(unitOrId)]??HERO_VISUAL_SCALE.default;
+}
+export function battleHeroVisualId(unitOrId){
+  const ids=typeof unitOrId==='object'&&unitOrId
+    ? [unitOrId.sourceId,unitOrId.sourceHeroId,unitOrId.id] : [unitOrId];
+  const normalized=ids.filter(Boolean).map(canonicalBattleHeroId);
+  return normalized.find(id=>Object.prototype.hasOwnProperty.call(HERO_VISUAL_SCALE,id))||normalized[0]||'';
+}
+export function battleCharacterDepthScale(unit){
+  // Approach/ultimate movement changes y. Keep the authored actor's size tied
+  // to its formation slot throughout the animation, including the return.
+  const anchor=[unit?.baseY,unit?.homeAnchor?.y,unit?.y].find(y=>y!=null&&Number.isFinite(Number(y)));
+  return 0.83+(Number(anchor??290)-290)/1500;
 }
 export function battleCharacterScaleForViewport(unitOrId,width,height){
   const base=battleUsesCompactFormation(width,height)?BATTLE_CHARACTER_SCALE.portrait:BATTLE_CHARACTER_SCALE.desktop;
@@ -86,17 +95,11 @@ export function battleCharacterScaleForViewport(unitOrId,width,height){
 }
 export function battleCharacterHorizontalScaleForViewport(unitOrId,width,height){
   if(!battleUsesCompactFormation(width,height))return 1;
-  const raw=typeof unitOrId==='object'&&unitOrId
-    ? (unitOrId.sourceId||unitOrId.sourceHeroId||unitOrId.id)
-    : unitOrId;
-  return HERO_VISUAL_HORIZONTAL_SCALE[canonicalBattleHeroId(raw)]??HERO_VISUAL_HORIZONTAL_SCALE.default;
+  return HERO_VISUAL_HORIZONTAL_SCALE[battleHeroVisualId(unitOrId)]??HERO_VISUAL_HORIZONTAL_SCALE.default;
 }
 export function battleCharacterVisualOffsetXForViewport(unitOrId,team,width,height){
   if(!battleUsesCompactFormation(width,height))return 0;
-  const raw=typeof unitOrId==='object'&&unitOrId
-    ? (unitOrId.sourceId||unitOrId.sourceHeroId||unitOrId.id)
-    : unitOrId;
-  const amount=HERO_VISUAL_OFFSET_X[canonicalBattleHeroId(raw)]??HERO_VISUAL_OFFSET_X.default;
+  const amount=HERO_VISUAL_OFFSET_X[battleHeroVisualId(unitOrId)]??HERO_VISUAL_OFFSET_X.default;
   return team==='enemy'?-amount:amount;
 }
 
@@ -133,7 +136,7 @@ const RUNTIME_LAYOUT=`const PORTRAIT_FORMATION=Object.freeze({rows:Object.freeze
     return raw;
   }
   function battleHeroVisualScale(unit){
-    const id=canonicalBattleHeroId(unit?.sourceId||unit?.sourceHeroId||unit?.id);
+    const id=battleHeroVisualId(unit);
     return HERO_VISUAL_SCALE[id]??HERO_VISUAL_SCALE.default;
   }
   function battleCharacterScale(unit){
@@ -144,16 +147,19 @@ const RUNTIME_LAYOUT=`const PORTRAIT_FORMATION=Object.freeze({rows:Object.freeze
   function battleCharacterHorizontalScale(unit){
     const size=(typeof view!=="undefined"&&view.width>0&&view.height>0)?view:battleViewportSize();
     if(!battleUsesCompactFormation(size.width,size.height))return 1;
-    const id=canonicalBattleHeroId(unit?.sourceId||unit?.sourceHeroId||unit?.id);
+    const id=battleHeroVisualId(unit);
     return HERO_VISUAL_HORIZONTAL_SCALE[id]??HERO_VISUAL_HORIZONTAL_SCALE.default;
   }
   function battleCharacterVisualOffsetX(unit){
     const size=(typeof view!=="undefined"&&view.width>0&&view.height>0)?view:battleViewportSize();
     if(!battleUsesCompactFormation(size.width,size.height))return 0;
-    const id=canonicalBattleHeroId(unit?.sourceId||unit?.sourceHeroId||unit?.id);
+    const id=battleHeroVisualId(unit);
     const amount=HERO_VISUAL_OFFSET_X[id]??HERO_VISUAL_OFFSET_X.default;
     return unit?.team==="enemy"?-amount:amount;
-  }`;
+  }
+  ${battleHeroVisualId.toString()}
+  ${battleCharacterDepthScale.toString()}
+  /* hv-battle-scale-helpers-end */`;
 
 function replaceOnce(source,replacementPattern,replacement,label){
   const matches=source.match(replacementPattern);
@@ -203,6 +209,16 @@ export function applyBattleFormationScale(source){
   const visualScaleCount=s.split(visualScale).length-1;
   if(visualScaleCount<1)throw new Error('Battle layout patch missing character presentation scale owner');
   s=s.split(visualScale).join('context.scale(depthScale * identityScale * battleCharacterHorizontalScale(unit), depthScale * identityScale);');
+  // S+ uses compact source formatting and previously missed both corrections.
+  s=s.split('context.translate(unit.x,unit.y-lift);context.scale(depthScale*identityScale,depthScale*identityScale);')
+    .join('context.translate(unit.x+battleCharacterVisualOffsetX(unit),unit.y-lift);context.scale(depthScale*identityScale*battleCharacterHorizontalScale(unit),depthScale*identityScale);');
+  s=s.replace(/const depthScale\s*=\s*0\.83\s*\+\s*\(unit\.y\s*-\s*290\)\s*\/\s*1500;/g,
+    'const depthScale = battleCharacterDepthScale(unit);');
+  // The canonical Linh Đồng/Bạch Diện blitters already mirror their sprites.
+  // Keep mirroring in the generic owner only for the other renderers.
+  s=s.replace('if (unit.team === TEAM_ENEMY) context.scale(-1, 1);',
+    'if (unit.team === TEAM_ENEMY && !(typeof isLinhDong === "function" && isLinhDong(unit)) && !(typeof isBachDien === "function" && isBachDien(unit))) context.scale(-1, 1);');
+  s=s.replace(/if\(unit\.team===TEAM_ENEMY\)context\.scale\(-1,1\);\s*(?=draw(?:LinhDong|BachDien)Hero\(context,unit,time\))/g,'');
   if(/innerWidth\s*<\s*600\s*\?\s*0\.(?:52|57)\s*:\s*0\.74/.test(s))throw new Error('Battle layout patch left a stale mobile character scale owner');
   return s;
 }

@@ -76,7 +76,7 @@ test('L74-T3: cloud save round-trips behind bearer token', async () => {
   const denied = await json(handle, 'PUT', '/api/save', { body: { save: { gold: 9 } } });
   assert.equal(denied.status, 401);
 
-  const put = await json(handle, 'PUT', '/api/save', { token: auth.token, body: { save: { v: 1, gold: 42, heroes: {} } } });
+  const put = await json(handle, 'PUT', '/api/save', { token: auth.token, body: { expectedVersion: empty.json.version, save: { v: 1, gold: 42, heroes: {} } } });
   assert.equal(put.status, 200);
   const got = await json(handle, 'GET', '/api/save', { token: auth.token });
   assert.equal(got.json.save.gold, 42);
@@ -150,7 +150,7 @@ test('L74-T4c: Facebook token login and public client ids on health', async () =
   assert.equal(me.json.email, 'yen.fb@example.com');
 });
 
-test('L74-T5: profile, rivals, chat, leaderboard, arena swap match live client', async () => {
+test('L74-T5: profile, rivals, chat and leaderboard work; unverified arena results fail closed', async () => {
   const handle = app();
   const a = (await json(handle, 'POST', '/api/register', { body: { user: 'DauSi_A', pass: 'matkhau1' } })).json;
   const b = (await json(handle, 'POST', '/api/register', { body: { user: 'DauSi_B', pass: 'matkhau1' } })).json;
@@ -165,8 +165,9 @@ test('L74-T5: profile, rivals, chat, leaderboard, arena swap match live client',
   assert.equal(typeof rivals.json.myRank, 'number');
 
   const fight = await json(handle, 'POST', '/api/arena/result', { token: a.token, body: { defender: 'DauSi_B', win: true } });
-  assert.equal(fight.status, 200);
-  assert.equal(typeof fight.json.rank, 'number');
+  assert.equal(fight.status, 503);
+  assert.equal(fight.json.code, 'ARENA_VERIFIER_UNAVAILABLE');
+  assert.equal(rivals.json.ranked, false);
 
   const chat = await json(handle, 'POST', '/api/chat', { token: a.token, body: { text: 'Chào bản' } });
   assert.equal(chat.status, 200);

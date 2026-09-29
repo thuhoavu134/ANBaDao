@@ -1,0 +1,292 @@
+TAP version 13
+# Subtest: online maintenance blocks before stamina is spent; local arena still starts
+ok 1 - online maintenance blocks before stamina is spent; local arena still starts
+  ---
+  duration_ms: 2.195689
+  type: 'test'
+  ...
+# Subtest: L74-T2: register then login issues a token; duplicate user is rejected
+ok 2 - L74-T2: register then login issues a token; duplicate user is rejected
+  ---
+  duration_ms: 12.985235
+  type: 'test'
+  ...
+# Subtest: L74-T2b: username and password are validated
+ok 3 - L74-T2b: username and password are validated
+  ---
+  duration_ms: 0.714494
+  type: 'test'
+  ...
+# Subtest: L74-T2c: email register then login
+ok 4 - L74-T2c: email register then login
+  ---
+  duration_ms: 7.74691
+  type: 'test'
+  ...
+# Subtest: L74-T3: cloud save round-trips behind bearer token
+ok 5 - L74-T3: cloud save round-trips behind bearer token
+  ---
+  duration_ms: 3.818768
+  type: 'test'
+  ...
+# Subtest: L74-T4: Google OAuth start redirects and callback exchanges to a token
+ok 6 - L74-T4: Google OAuth start redirects and callback exchanges to a token
+  ---
+  duration_ms: 1.476198
+  type: 'test'
+  ...
+# Subtest: L74-T4b: OAuth is disabled when Google env is missing
+ok 7 - L74-T4b: OAuth is disabled when Google env is missing
+  ---
+  duration_ms: 0.267762
+  type: 'test'
+  ...
+# Subtest: L74-T4c: Facebook token login and public client ids on health
+ok 8 - L74-T4c: Facebook token login and public client ids on health
+  ---
+  duration_ms: 0.954564
+  type: 'test'
+  ...
+# Subtest: L74-T5: profile, rivals, chat and leaderboard work; unverified arena results fail closed
+ok 9 - L74-T5: profile, rivals, chat and leaderboard work; unverified arena results fail closed
+  ---
+  duration_ms: 7.644846
+  type: 'test'
+  ...
+# Subtest: L76A health reports store kind
+ok 10 - L76A health reports store kind
+  ---
+  duration_ms: 0.714483
+  type: 'test'
+  ...
+# Subtest: portrait formation restores the approved legacy mobile anchors and stays inside every target crop
+ok 11 - portrait formation restores the approved legacy mobile anchors and stays inside every target crop
+  ---
+  duration_ms: 2.972115
+  type: 'test'
+  ...
+# Subtest: portrait formation keeps old 90px team columns, 160px opposing frontline lane and mirrored rows
+ok 12 - portrait formation keeps old 90px team columns, 160px opposing frontline lane and mirrored rows
+  ---
+  duration_ms: 0.502866
+  type: 'test'
+  ...
+# Subtest: desktop formation and global desktop scale are unchanged
+ok 13 - desktop formation and global desktop scale are unchanged
+  ---
+  duration_ms: 0.710007
+  type: 'test'
+  ...
+# Subtest: measured special-hero corrections use rendered visible bounds, not atlas canvas size
+ok 14 - measured special-hero corrections use rendered visible bounds, not atlas canvas size
+  ---
+  duration_ms: 0.487412
+  type: 'test'
+  ...
+# Subtest: final runtime patch removes stale formation breakpoints and all stacked scale owners
+ok 15 - final runtime patch removes stale formation breakpoints and all stacked scale owners
+  ---
+  duration_ms: 1.049456
+  type: 'test'
+  ...
+# Subtest: formation owner accepts the unmodified baseline 0.52 generic scale without a pre-patch scale rewrite
+ok 16 - formation owner accepts the unmodified baseline 0.52 generic scale without a pre-patch scale rewrite
+  ---
+  duration_ms: 0.322214
+  type: 'test'
+  ...
+# Subtest: build applies the scoped layout owner after reference presentation but before battle payload sync
+ok 17 - build applies the scoped layout owner after reference presentation but before battle payload sync
+  ---
+  duration_ms: 0.271668
+  type: 'test'
+  ...
+# Subtest: temporary arena IDs use the same canonical hero correction as the renderer
+ok 18 - temporary arena IDs use the same canonical hero correction as the renderer
+  ---
+  duration_ms: 1.515978
+  type: 'test'
+  ...
+# Subtest: approach, attack, ultimate and recovery retain the actor home depth scale
+ok 19 - approach, attack, ultimate and recovery retain the actor home depth scale
+  ---
+  duration_ms: 0.342345
+  type: 'test'
+  ...
+# Subtest: built regular and S+ render paths share scale, offsets and one enemy mirror
+ok 20 - built regular and S+ render paths share scale, offsets and one enemy mirror
+  ---
+  duration_ms: 19.302181
+  type: 'test'
+  ...
+# Subtest: L151-T4 source rects for first, middle and last frame come from metadata
+ok 21 - L151-T4 source rects for first, middle and last frame come from metadata
+  ---
+  duration_ms: 1.959434
+  type: 'test'
+  ...
+# Subtest: L151-T4 enemy flip, source-over blend, destination aspect
+ok 22 - L151-T4 enemy flip, source-over blend, destination aspect
+  ---
+  duration_ms: 0.377928
+  type: 'test'
+  ...
+# Subtest: L151-T4 renderer never hard-codes old cell sizes or naturalWidth/4
+ok 23 - L151-T4 renderer never hard-codes old cell sizes or naturalWidth/4
+  ---
+  duration_ms: 0.438508
+  type: 'test'
+  ...
+# Subtest: L151-T5 FrameClock loops, clamps, and replays the same elapsedMs
+ok 24 - L151-T5 FrameClock loops, clamps, and replays the same elapsedMs
+  ---
+  duration_ms: 0.776146
+  type: 'test'
+  ...
+# Subtest: L151-T6 battle adapter keeps 477×440 destination and combined VFX source-over
+ok 25 - L151-T6 battle adapter keeps 477×440 destination and combined VFX source-over
+  ---
+  duration_ms: 0.567182
+  type: 'test'
+  ...
+# Subtest: OAuth restores the account save before any upload, preserving existing progress
+ok 26 - OAuth restores the account save before any upload, preserving existing progress
+  ---
+  duration_ms: 7.600149
+  type: 'test'
+  ...
+# Subtest: failed cloud reads never upload guest progress or replace local state
+ok 27 - failed cloud reads never upload guest progress or replace local state
+  ---
+  duration_ms: 5.592342
+  type: 'test'
+  ...
+# Subtest: rapid saves serialize independent server versions and keep their own snapshots
+ok 28 - rapid saves serialize independent server versions and keep their own snapshots
+  ---
+  duration_ms: 7.362302
+  type: 'test'
+  ...
+# Subtest: an old account read cannot replace the new account or guest state
+ok 29 - an old account read cannot replace the new account or guest state
+  ---
+  duration_ms: 1.060573
+  type: 'test'
+  ...
+# Subtest: a conflict blocks queued writes and never silently fetches then overwrites
+ok 30 - a conflict blocks queued writes and never silently fetches then overwrites
+  ---
+  duration_ms: 0.416977
+  type: 'test'
+  ...
+# Subtest: a new account cannot inherit another account save
+ok 31 - a new account cannot inherit another account save
+  ---
+  duration_ms: 0.297077
+  type: 'test'
+  ...
+# Subtest: manual pull waits for a write already in flight before reading its committed save
+ok 32 - manual pull waits for a write already in flight before reading its committed save
+  ---
+  duration_ms: 6.98225
+  type: 'test'
+  ...
+# Subtest: offline changes survive reconnect only against the last acknowledged cloud version
+ok 33 - offline changes survive reconnect only against the last acknowledged cloud version
+  ---
+  duration_ms: 0.562415
+  type: 'test'
+  ...
+# Subtest: L74-T1: wrap renderNet + netAuth, hide server field, add Google button
+ok 34 - L74-T1: wrap renderNet + netAuth, hide server field, add Google button
+  ---
+  duration_ms: 0.97822
+  type: 'test'
+  ...
+# Subtest: L74-T6: do not edit frozen shells
+ok 35 - L74-T6: do not edit frozen shells
+  ---
+  duration_ms: 12.526561
+  type: 'test'
+  ...
+# Subtest: L74-T7: one Vercel project gateway + lane stub
+ok 36 - L74-T7: one Vercel project gateway + lane stub
+  ---
+  duration_ms: 0.489826
+  type: 'test'
+  ...
+# Subtest: cloud writes require the last server version and reject concurrent stale writes
+ok 37 - cloud writes require the last server version and reject concurrent stale writes
+  ---
+  duration_ms: 4.196836
+  type: 'test'
+  ...
+# Subtest: profile synchronization preserves social fields and server-owned rank
+ok 38 - profile synchronization preserves social fields and server-owned rank
+  ---
+  duration_ms: 0.591568
+  type: 'test'
+  ...
+# Subtest: production cannot use a volatile fallback when the database is absent or unavailable
+ok 39 - production cannot use a volatile fallback when the database is absent or unavailable
+  ---
+  duration_ms: 1.046267
+  type: 'test'
+  ...
+# Subtest: public ranking queries use bounded store methods instead of loading every profile
+ok 40 - public ranking queries use bounded store methods instead of loading every profile
+  ---
+  duration_ms: 0.747313
+  type: 'test'
+  ...
+# Subtest: client-declared wins cannot change either player rank without a server verifier
+ok 41 - client-declared wins cannot change either player rank without a server verifier
+  ---
+  duration_ms: 0.706301
+  type: 'test'
+  ...
+# Subtest: save versions survive a local store restart and migrate old unversioned saves
+ok 42 - save versions survive a local store restart and migrate old unversioned saves
+  ---
+  duration_ms: 3.924877
+  type: 'test'
+  ...
+# Subtest: HTTP initialization failure returns 503 and cannot acknowledge a save
+ok 43 - HTTP initialization failure returns 503 and cannot acknowledge a save
+  ---
+  duration_ms: 0.460883
+  type: 'test'
+  ...
+# Subtest: L76A-T1: createStoreFromEnv with DATABASE_URL uses postgres
+ok 44 - L76A-T1: createStoreFromEnv with DATABASE_URL uses postgres
+  ---
+  duration_ms: 1.612452
+  type: 'test'
+  ...
+# Subtest: L76A-T2: production requires DATABASE_URL; local is file
+ok 45 - L76A-T2: production requires DATABASE_URL; local is file
+  ---
+  duration_ms: 1.302927
+  type: 'test'
+  ...
+# Subtest: L76A-T3: createUser + findUserByName roundtrip
+ok 46 - L76A-T3: createUser + findUserByName roundtrip
+  ---
+  duration_ms: 0.539911
+  type: 'test'
+  ...
+# Subtest: L76A-T4: putSave / getSave JSONB keeps nested fields
+ok 47 - L76A-T4: putSave / getSave JSONB keeps nested fields
+  ---
+  duration_ms: 1.155636
+  type: 'test'
+  ...
+1..47
+# tests 47
+# suites 0
+# pass 47
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 227.35616
