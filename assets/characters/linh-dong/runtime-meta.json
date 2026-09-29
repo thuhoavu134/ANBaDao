@@ -2,7 +2,10 @@
   "schema": "hon-viet-linh-dong-atlas/v1",
   "runtimeSchema": "canvas-sprite-runtime/v2",
   "heroId": "hero_splus_linh_dong",
-  "aliases": ["linh_dong", "linh-dong"],
+  "aliases": [
+    "linh_dong",
+    "linh-dong"
+  ],
   "source": "Blender 5.1 sharp compositor render v2",
   "encoding": "webp-lossless-rgba",
   "char": {
@@ -12,7 +15,13 @@
     "cols": 8,
     "maxSourceW": 960,
     "maxSourceH": 880,
-    "foot": "bottom-center"
+    "foot": "bottom-center",
+    "registration": {
+      "referenceFile": "idle-atlas.webp",
+      "padding": 16,
+      "fit": "contain",
+      "align": "bottom-center"
+    }
   },
   "vfx": {
     "scale": 1.0,

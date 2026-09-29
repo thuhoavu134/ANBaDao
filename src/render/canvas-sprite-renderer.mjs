@@ -31,6 +31,13 @@ export function drawCanvasSprite(ctx, opts = {}) {
   const baseline = opts.baseline ?? clip.pivot?.y ?? cellH;
   const alpha = opts.alpha ?? 1;
   const blendMode = opts.blendMode || clip.blendMode || 'source-over';
+  // Clip-wide registration restores the authored camera scale/pivot after packing.
+  // Fractions stay valid when readiness swaps in half-size atlas cells. Apply
+  // inside the enemy flip, and keep the caller's baseline in reference space.
+  const registration = clip.registration;
+  const scale = Number(registration?.scale) > 0 ? Number(registration.scale) : 1;
+  const offsetX = Number(registration?.offsetX) || 0;
+  const offsetY = Number(registration?.offsetY) || 0;
   ctx.save();
   ctx.imageSmoothingEnabled = true;
   ctx.imageSmoothingQuality = 'high';
@@ -41,8 +48,8 @@ export function drawCanvasSprite(ctx, opts = {}) {
   ctx.drawImage(
     image,
     sx * atlasScale, sy * atlasScale, sw * atlasScale, sh * atlasScale,
-    -destW / 2, -destH + baseline,
-    destW, destH
+    -destW / 2 + destW * offsetX, -destH + baseline + destH * offsetY,
+    destW * scale, destH * scale
   );
   ctx.restore();
   return true;

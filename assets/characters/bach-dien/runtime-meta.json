@@ -43,7 +43,17 @@
       "atlasHeight": 2640,
       "decodedBytes": 30412800,
       "compressedBytes": 1811722,
-      "sha256": "3b32a8d34d740758edcc6aa2f957f743e280d01c43870de983b97c2823a3009f"
+      "sha256": "3b32a8d34d740758edcc6aa2f957f743e280d01c43870de983b97c2823a3009f",
+      "registrationPose": {
+        "top": 20,
+        "bottom": 415,
+        "footX": 253.5
+      },
+      "registration": {
+        "scale": 1.0,
+        "offsetX": 0.0,
+        "offsetY": 0.0
+      }
     },
     "run": {
       "file": "run-atlas.webp",
@@ -74,7 +84,17 @@
       "atlasHeight": 3520,
       "decodedBytes": 40550400,
       "compressedBytes": 2446254,
-      "sha256": "87510127088dba2baa57adb0f0cd90ab8ac47100853e7746686e1833cbe025b0"
+      "sha256": "87510127088dba2baa57adb0f0cd90ab8ac47100853e7746686e1833cbe025b0",
+      "registrationPose": {
+        "top": 32,
+        "bottom": 414,
+        "footX": 262.5
+      },
+      "registration": {
+        "scale": 1.0340314136125655,
+        "offsetX": -0.037360929319371766,
+        "offsetY": -0.029747739171822926
+      }
     },
     "hurt": {
       "file": "hit-atlas.webp",
@@ -105,7 +125,17 @@
       "atlasHeight": 1760,
       "decodedBytes": 16896000,
       "compressedBytes": 1074546,
-      "sha256": "d70291eddbf144eb98e19a7de59fbe384d9cecf38d7650c16cb446e30062aae4"
+      "sha256": "d70291eddbf144eb98e19a7de59fbe384d9cecf38d7650c16cb446e30062aae4",
+      "registrationPose": {
+        "top": 20,
+        "bottom": 415,
+        "footX": 259.5
+      },
+      "registration": {
+        "scale": 1.0,
+        "offsetX": -0.0125,
+        "offsetY": 0.0
+      }
     },
     "defeated": {
       "file": "fall-atlas.webp",
@@ -136,7 +166,17 @@
       "atlasHeight": 2200,
       "decodedBytes": 25344000,
       "compressedBytes": 1194914,
-      "sha256": "fe395f556a19b2cfec13cbf92705735f0ba25a2462c2265378f7eb709bf78520"
+      "sha256": "fe395f556a19b2cfec13cbf92705735f0ba25a2462c2265378f7eb709bf78520",
+      "registrationPose": {
+        "top": 34,
+        "bottom": 404,
+        "footX": 340.5
+      },
+      "registration": {
+        "scale": 1.0675675675675675,
+        "offsetX": -0.22918074324324328,
+        "offsetY": -0.037039312039312024
+      }
     },
     "attack": {
       "file": "basic-atlas.webp",
@@ -167,7 +207,17 @@
       "atlasHeight": 2200,
       "decodedBytes": 25344000,
       "compressedBytes": 1399418,
-      "sha256": "4c2dddceb08e448fc8dfea39449ce1c77f8dc497b94b2ed82afd4558feedb018"
+      "sha256": "4c2dddceb08e448fc8dfea39449ce1c77f8dc497b94b2ed82afd4558feedb018",
+      "registrationPose": {
+        "top": 70,
+        "bottom": 416,
+        "footX": 216.5
+      },
+      "registration": {
+        "scale": 1.1416184971098267,
+        "offsetX": 0.013207490366088592,
+        "offsetY": -0.13616657908565435
+      }
     },
     "ultimate": {
       "file": "ultimate-atlas.webp",
@@ -198,7 +248,17 @@
       "atlasHeight": 2640,
       "decodedBytes": 30412800,
       "compressedBytes": 2020280,
-      "sha256": "537a4fd133e995453b3c687b184af3f8a249f2093c4ed00d2c68b56d8625c28e"
+      "sha256": "537a4fd133e995453b3c687b184af3f8a249f2093c4ed00d2c68b56d8625c28e",
+      "registrationPose": {
+        "top": 19,
+        "bottom": 416,
+        "footX": 246.5
+      },
+      "registration": {
+        "scale": 0.9949622166246851,
+        "offsetX": 0.017170445004198183,
+        "offsetY": 0.002490267918479493
+      }
     },
     "skill1Vfx": {
       "file": "skill1_vfx-atlas.webp",
@@ -264,5 +324,17 @@
     }
   },
   "totalFrames": 269,
-  "totalCompressedBytes": 13016546
+  "totalCompressedBytes": 13016546,
+  "registrationEvidence": {
+    "referenceClip": "idle",
+    "frame": 0,
+    "alphaThreshold": 100,
+    "footBandPx": 15,
+    "method": "Fixed first-pose body-height and foot-anchor registration; never per-frame normalization.",
+    "referenceBodyHeight": 395,
+    "referenceFoot": {
+      "x": 253.5,
+      "y": 415
+    }
+  }
 }

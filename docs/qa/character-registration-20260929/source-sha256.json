@@ -1,0 +1,14 @@
+{
+  "assets/characters/linh-dong/idle-atlas.webp": "0d65f16e804da6591feb00309fb56e34df4ca883301e833e95a1d4747736bfd1",
+  "assets/characters/linh-dong/run-atlas.webp": "a678acf8a79fa5d1f46ea94948002c7accad25c155aa44ce89f9da9d55f770ba",
+  "assets/characters/linh-dong/hit-atlas.webp": "dd28b9a5e9278160651637766a81b02a2c9232df2cabb2a6cb705f54325f75f2",
+  "assets/characters/linh-dong/fall-atlas.webp": "4027c129280807c8fec89fffdad5a2947026ebe979a2bb3d67627a1847776461",
+  "assets/characters/linh-dong/basic-atlas.webp": "ae8ab338d3d07c08c03dccfc265ac4b0a2d91abaf2f080bc871e81af78437109",
+  "assets/characters/linh-dong/ultimate-atlas.webp": "4578455991499f53d90d8f984a69ad2382b27bebcf3c8523f744aa1ef92ea5e7",
+  "assets/characters/bach-dien/idle-atlas.webp": "3b32a8d34d740758edcc6aa2f957f743e280d01c43870de983b97c2823a3009f",
+  "assets/characters/bach-dien/run-atlas.webp": "87510127088dba2baa57adb0f0cd90ab8ac47100853e7746686e1833cbe025b0",
+  "assets/characters/bach-dien/hit-atlas.webp": "d70291eddbf144eb98e19a7de59fbe384d9cecf38d7650c16cb446e30062aae4",
+  "assets/characters/bach-dien/fall-atlas.webp": "fe395f556a19b2cfec13cbf92705735f0ba25a2462c2265378f7eb709bf78520",
+  "assets/characters/bach-dien/basic-atlas.webp": "4c2dddceb08e448fc8dfea39449ce1c77f8dc497b94b2ed82afd4558feedb018",
+  "assets/characters/bach-dien/ultimate-atlas.webp": "537a4fd133e995453b3c687b184af3f8a249f2093c4ed00d2c68b56d8625c28e"
+}
