@@ -216,6 +216,10 @@ await import('./authored-vfx-clock-v1.mjs');
 await import('./legacy-authored-readiness-v1.mjs');
 await import('./combat-authored-qa-v1.mjs');
 await import('./combat-authored-audio-sync-v1.mjs');
+// Keep visible authored bodies when atlas eviction temporarily interrupts idle/hit.
+const { patchBattleCharacterVisibility } = await import('./battle-character-visibility-v1.mjs');
+const visibilityBattlePath = join(out, 'battle.html');
+writeFileSync(visibilityBattlePath, patchBattleCharacterVisibility(readFileSync(visibilityBattlePath, 'utf8')));
 // 2026-09-28 auto-battle skill cadence. Keep AFTER the authored owners (anchors
 // on the final decideAi text). Do not edit battle.html.
 await import('./auto-skill-cadence-v1.mjs');

@@ -138,8 +138,9 @@ export function createDecodedAtlasCache(options = {}) {
   }
   function evictUntil(need) {
     if (bytes + need <= maxBytes) return true;
-    const candidates = Array.from(entries).filter(([, entry]) => !entry.loading && !entry.pins.size)
-      .sort((a, b) => rank(b[1].priority) - rank(a[1].priority));
+    // Map order is LRU (reserve touches entries). Priority orders pending
+    // decodes only: a completed, unleased cast must not outrank visible idle.
+    const candidates = Array.from(entries).filter(([, entry]) => !entry.loading && !entry.pins.size);
     // Do not discard useful images if protected/in-flight images still prevent admission.
     if (candidates.reduce((sum, [, entry]) => sum + entry.bytes, 0) < bytes + need - maxBytes) return false;
     for (const [src] of candidates) {

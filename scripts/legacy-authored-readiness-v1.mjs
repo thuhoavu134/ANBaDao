@@ -16,6 +16,10 @@ once('    const cost=clip=>',`    const pins=new Map(),leases=new Map();
 once('while(bytes+need>maxBytes){const ready=[...entries.values()].filter(e=>!e.loading)',
   'while(bytes+need>budget()){const ready=[...entries.values()].filter(e=>!e.loading&&!pins.has(e.key))');
 once('need>maxBytes||loading>=maxLoading','need>budget()||loading>=maxLoading');
+// Do not destroy usable idle images when pinned/in-flight bytes make the
+// requested admission impossible anyway. Keep the action's existing budget.
+once('const evict=need=>{while(bytes+need>budget())',
+  'const evict=need=>{const reclaimable=[...entries.values()].filter(e=>!e.loading&&!pins.has(e.key)).reduce((sum,e)=>sum+e.bytes,0);if(bytes+need-budget()>reclaimable)return false;while(bytes+need>budget())');
 once('return {ensure,release,clear,inspect};','return {ensure,release,clear,inspect,retain};');
 once('return {bytes,maxBytes,loading,entries:','return {bytes,maxBytes:budget(),configuredMaxBytes:maxBytes,pinnedKeys:[...pins.keys()],loading,entries:');
 const runtime=`
