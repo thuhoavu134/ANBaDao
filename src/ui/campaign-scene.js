@@ -88,6 +88,20 @@ const spriteSpecs = {
   dinh_loi: { src: 'assets/characters/dinh-loi/campaign-lite/idle-atlas.webp', frames: 64, cols: 8, cellW: 240, cellH: 135, ms: 62.5, pivot: 132.5, foot: 129, body: 116.5 }
 };
 
+// Filled by the build from the final authored descriptors. Each page preserves
+// complete source cells; only current/next pages and one small idle are leased.
+const preparationIdlePacks = {};
+function preparationSpriteFor(pick, time) {
+  const base = spriteSpecs[pick.id], pack = preparationIdlePacks[pick.id];
+  if (!base || !pack) return { spec: base };
+  const frame = frameAt(base, time), page = Math.floor(frame / pack.pageFrames);
+  return {
+    spec: { ...base, ...pack.pages[page], frameIndex: frame % pack.pageFrames },
+    next: { ...base, ...pack.pages[(page + 1) % pack.pages.length] },
+    poster: { ...base, ...pack.poster, frameIndex: 0 }
+  };
+}
+
 // Authored Basic atlases. Fixed pivots measured once, never recentered per frame.
 const farmAttackSpecs = {
   ong_hang_pho: { src:'assets/battle-runtime/embedded-11.png', frames:61, cols:10, cellW:240, cellH:135, ms:2500/61, pivot:100, foot:125, body:119 },
@@ -397,11 +411,19 @@ function drawScene(time) {
       const attack = actor && actor.attackTime >= 0 && farmAttackSpecs[pick.id];
       const attackImage = attack ? imageForScene(farmAttackSpecs[pick.id].src, farmAttackSpecs[pick.id]) : null;
       const readyAttack = attackImage?.complete && attackImage.naturalWidth > 0;
-      const spec = readyAttack ? farmAttackSpecs[pick.id] : farm && farm.phase !== 'march' ? spriteSpecs[pick.id] : specForAfk(pick);
+      const preparation = preparing ? preparationSpriteFor(pick, time) : null;
+      const spec = preparing ? preparation.spec : readyAttack ? farmAttackSpecs[pick.id] : farm && farm.phase !== 'march' ? spriteSpecs[pick.id] : specForAfk(pick);
       const enemyArt = pick.enemy && !spec ? preparationEnemyArt(pick, enemies) : null;
       let drawSpec = spec;
+      // Request the small, full-body idle first; a portrait is not an idle pose.
+      const standby = preparation?.poster;
+      const standbyImage = standby ? imageForScene(standby.src, standby) : null;
       let image = imageForScene(spec?.src || enemyArt?.src || portraitSrc(pick.id, 'master'), spec);
-      if ((!image.complete || image.naturalWidth < 1) && spec && !pick.enemy) {
+      if (preparation?.next && !reducedMotion.matches) imageForScene(preparation.next.src, preparation.next);
+      if ((!image.complete || image.naturalWidth < 1) && standbyImage?.complete && standbyImage.naturalWidth > 0) {
+        image = standbyImage; drawSpec = standby;
+      }
+      if ((!image.complete || image.naturalWidth < 1) && spec && !pick.enemy && !preparing) {
         // A hero must not disappear while its atlas is loading or was denied by
         // budget. Use a small authored portrait as a temporary visual fallback.
         const fallback = imageForScene(portraitSrc(pick.id, 'master'));
@@ -415,7 +437,7 @@ function drawScene(time) {
       }
       if ((farm && farm.direction.x < 0) || pick.enemy) { ctx.translate(2 * x, 0); ctx.scale(-1, 1); }
       if (drawSpec) {
-        const frame = frameAt(drawSpec, readyAttack ? actor.attackTime : time), scale = bodyH / drawSpec.body;
+        const frame = drawSpec.frameIndex ?? frameAt(drawSpec, readyAttack ? actor.attackTime : time), scale = bodyH / drawSpec.body;
         const sx = frame % drawSpec.cols * (drawSpec.strideW || drawSpec.cellW) + (drawSpec.pad || 0);
         const sy = Math.floor(frame / drawSpec.cols) * (drawSpec.strideH || drawSpec.cellH) + (drawSpec.pad || 0);
         ctx.drawImage(image, sx, sy, drawSpec.cellW, drawSpec.cellH, x - drawSpec.pivot * scale, y - drawSpec.foot * scale, drawSpec.cellW * scale, drawSpec.cellH * scale);

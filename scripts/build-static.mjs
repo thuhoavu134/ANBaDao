@@ -201,6 +201,10 @@ await buildBattleMobilePressure(root);
 const { installCampaignMobileAtlases } = await import('./campaign-mobile-atlas-v1.mjs');
 await installCampaignMobileAtlases(root);
 
+// Full-quality idle pages fit the preparation squad into the mobile cache.
+const { installCampaignPreparationIdle } = await import('./campaign-preparation-idle-v1.mjs');
+await installCampaignPreparationIdle(root);
+
 // Repair campaign image ownership after all late host patch owners.
 const { installCampaignResourceLifecycle } = await import('./campaign-resource-lifecycle-v1.mjs');
 installCampaignResourceLifecycle(root);
@@ -223,6 +227,8 @@ writeFileSync(visibilityBattlePath, patchBattleCharacterVisibility(readFileSync(
 // 2026-09-28 auto-battle skill cadence. Keep AFTER the authored owners (anchors
 // on the final decideAi text). Do not edit battle.html.
 await import('./auto-skill-cadence-v1.mjs');
+const { installBattleFormationTargeting } = await import('./battle-formation-targeting-v1.mjs');
+installBattleFormationTargeting(root);
 
 // battle.html is now the single runtime source for iframe and iOS full-page combat.
 // Do not duplicate ~1.5 MB of battle markup as base64 inside index.html; on mobile
