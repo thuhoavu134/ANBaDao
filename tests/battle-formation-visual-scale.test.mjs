@@ -86,38 +86,13 @@ test('desktop formation and global desktop scale are unchanged',()=>{
   assert.equal(battleCharacterScaleForViewport('dinh_loi',1280,528),0.74);
 });
 
-test('measured special-hero corrections use rendered visible bounds, not atlas canvas size',()=>{
-  const diagonal=(width,height)=>Math.hypot(width,height);
-  const normalTarget=121.4*(BATTLE_CHARACTER_SCALE.portrait/0.57);
-  // Live Canvas alpha bounds captured before the final correction.
-  const linhBefore={width:128.6,height:102,override:0.719,globalScale:0.57};
-  const bachBefore={width:100.8,height:156.2,override:0.828,globalScale:0.57};
-  const portraitRatio=BATTLE_CHARACTER_SCALE.portrait/linhBefore.globalScale;
-  const linhRatio=portraitRatio*(HERO_VISUAL_SCALE.hero_splus_linh_dong/linhBefore.override);
-  const predictedLinh=diagonal(
-    linhBefore.width*linhRatio*HERO_VISUAL_HORIZONTAL_SCALE.hero_splus_linh_dong,
-    linhBefore.height*linhRatio
-  );
-  const predictedBach=diagonal(
-    bachBefore.width*(BATTLE_CHARACTER_SCALE.portrait/bachBefore.globalScale)*(HERO_VISUAL_SCALE.hero_splus_bach_dien/bachBefore.override),
-    bachBefore.height*(BATTLE_CHARACTER_SCALE.portrait/bachBefore.globalScale)*(HERO_VISUAL_SCALE.hero_splus_bach_dien/bachBefore.override)
-  );
-  assert.ok(predictedLinh/normalTarget>1.00&&predictedLinh/normalTarget<1.06,'Linh Dong should keep adult-scale visual presence without the wide-idle crop');
-  assert.ok(predictedBach/normalTarget>1.10&&predictedBach/normalTarget<1.16,'Bach Dien should recover visual presence without returning to the oversized baseline');
-
-  // Position-only restore: retain every approved character-scale correction unchanged.
-  assert.deepEqual(Object.keys(HERO_VISUAL_SCALE).sort(),['default','hero_splus_bach_dien','hero_splus_linh_dong']);
-  assert.equal(heroVisualScale('linh_dong'),0.57);
-  assert.equal(heroVisualScale('hero_splus_bach_dien'),0.61);
+test('special heroes use body-height calibration while preserving compact layout offsets',()=>{
+  assert.equal(heroVisualScale('linh_dong'),310/335);
+  assert.equal(heroVisualScale('hero_splus_bach_dien'),310/395);
   assert.equal(heroVisualScale('dinh_loi'),1);
   assert.equal(BATTLE_CHARACTER_SCALE.portrait,0.52);
-  assert.ok(Math.abs(HERO_VISUAL_HORIZONTAL_SCALE.hero_splus_linh_dong-(0.525/0.57))<1e-9);
+  assert.equal(BATTLE_CHARACTER_SCALE.desktop,0.74);
   assert.equal(HERO_VISUAL_OFFSET_X.hero_splus_linh_dong,4.25);
-  assert.ok(Math.abs(
-    battleCharacterScaleForViewport('hero_splus_linh_dong',390,739)*
-      battleCharacterHorizontalScaleForViewport('hero_splus_linh_dong',390,739) -
-    BATTLE_CHARACTER_SCALE.portrait*0.525
-  )<1e-9);
   assert.equal(battleCharacterHorizontalScaleForViewport('hero_splus_linh_dong',1280,800),1);
   assert.equal(battleCharacterVisualOffsetXForViewport('hero_splus_linh_dong','player',390,739),4.25);
   assert.equal(battleCharacterVisualOffsetXForViewport('hero_splus_linh_dong','enemy',390,739),-4.25);
@@ -155,7 +130,7 @@ context.scale(depthScale * identityScale, depthScale * identityScale);`;
   assert.match(patched,/frontOffsetX:80/);
   assert.match(patched,/backOffsetX:170/);
   assert.doesNotMatch(patched,/frontlineYOffset/);
-  assert.match(patched,/const HERO_VISUAL_SCALE=Object\.freeze\(\{default:1,hero_splus_linh_dong:0\.57,hero_splus_bach_dien:0\.61\}\)/);
+  assert.ok(patched.includes('const HERO_VISUAL_SCALE=Object.freeze('+JSON.stringify(HERO_VISUAL_SCALE)+');'));
   assert.match(patched,/hero_splus_linh_dong:0\.9210526316/);
   assert.match(patched,/battleCharacterVisualOffsetX\(unit\)/);
   assert.match(patched,/battleCharacterHorizontalScale\(unit\)/);

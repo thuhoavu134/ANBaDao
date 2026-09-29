@@ -1,0 +1,509 @@
+{
+  "method": "Offline Skia execution of generated drawUnit/drawSplusToken and authored hero draw functions; real production atlases. Not a browser screenshot.",
+  "runs": [
+    {
+      "label": "before",
+      "name": "mobile",
+      "units": [
+        {
+          "id": "bach_dien",
+          "team": "player",
+          "slot": 0,
+          "height": 108,
+          "left": 687,
+          "right": 756,
+          "top": 243,
+          "bottom": 351
+        },
+        {
+          "id": "linh_dong",
+          "team": "player",
+          "slot": 1,
+          "height": 97,
+          "left": 670,
+          "right": 734,
+          "top": 436,
+          "bottom": 533
+        },
+        {
+          "id": "luc_anh",
+          "team": "player",
+          "slot": 2,
+          "height": 158,
+          "left": 634,
+          "right": 811,
+          "top": 550,
+          "bottom": 708
+        },
+        {
+          "id": "thay_mo",
+          "team": "player",
+          "slot": 3,
+          "height": 151,
+          "left": 565,
+          "right": 695,
+          "top": 199,
+          "bottom": 350
+        },
+        {
+          "id": "dinh_loi",
+          "team": "player",
+          "slot": 4,
+          "height": 154,
+          "left": 561,
+          "right": 686,
+          "top": 380,
+          "bottom": 534
+        },
+        {
+          "id": "ong_pho",
+          "team": "player",
+          "slot": 5,
+          "height": 178,
+          "left": 537,
+          "right": 665,
+          "top": 533,
+          "bottom": 711
+        },
+        {
+          "id": "bach_dien",
+          "team": "enemy",
+          "slot": 0,
+          "height": 108,
+          "left": 844,
+          "right": 913,
+          "top": 243,
+          "bottom": 351
+        },
+        {
+          "id": "linh_dong",
+          "team": "enemy",
+          "slot": 1,
+          "height": 98,
+          "left": 866,
+          "right": 930,
+          "top": 436,
+          "bottom": 534
+        },
+        {
+          "id": "luc_anh",
+          "team": "enemy",
+          "slot": 2,
+          "height": 158,
+          "left": 789,
+          "right": 966,
+          "top": 550,
+          "bottom": 708
+        },
+        {
+          "id": "thay_mo",
+          "team": "enemy",
+          "slot": 3,
+          "height": 151,
+          "left": 905,
+          "right": 1035,
+          "top": 199,
+          "bottom": 350
+        },
+        {
+          "id": "dinh_loi",
+          "team": "enemy",
+          "slot": 4,
+          "height": 154,
+          "left": 914,
+          "right": 1039,
+          "top": 380,
+          "bottom": 534
+        },
+        {
+          "id": "ong_pho",
+          "team": "enemy",
+          "slot": 5,
+          "height": 178,
+          "left": 935,
+          "right": 1063,
+          "top": 533,
+          "bottom": 711
+        }
+      ]
+    },
+    {
+      "label": "before",
+      "name": "desktop",
+      "units": [
+        {
+          "id": "bach_dien",
+          "team": "player",
+          "slot": 0,
+          "height": 154,
+          "left": 488,
+          "right": 586,
+          "top": 201,
+          "bottom": 355
+        },
+        {
+          "id": "linh_dong",
+          "team": "player",
+          "slot": 1,
+          "height": 139,
+          "left": 452,
+          "right": 550,
+          "top": 400,
+          "bottom": 539
+        },
+        {
+          "id": "luc_anh",
+          "team": "player",
+          "slot": 2,
+          "height": 224,
+          "left": 413,
+          "right": 665,
+          "top": 486,
+          "bottom": 710
+        },
+        {
+          "id": "thay_mo",
+          "team": "player",
+          "slot": 3,
+          "height": 216,
+          "left": 272,
+          "right": 458,
+          "top": 139,
+          "bottom": 355
+        },
+        {
+          "id": "dinh_loi",
+          "team": "player",
+          "slot": 4,
+          "height": 218,
+          "left": 266,
+          "right": 444,
+          "top": 321,
+          "bottom": 539
+        },
+        {
+          "id": "ong_pho",
+          "team": "player",
+          "slot": 5,
+          "height": 252,
+          "left": 233,
+          "right": 415,
+          "top": 463,
+          "bottom": 715
+        },
+        {
+          "id": "bach_dien",
+          "team": "enemy",
+          "slot": 0,
+          "height": 154,
+          "left": 1014,
+          "right": 1112,
+          "top": 201,
+          "bottom": 355
+        },
+        {
+          "id": "linh_dong",
+          "team": "enemy",
+          "slot": 1,
+          "height": 139,
+          "left": 1050,
+          "right": 1148,
+          "top": 400,
+          "bottom": 539
+        },
+        {
+          "id": "luc_anh",
+          "team": "enemy",
+          "slot": 2,
+          "height": 224,
+          "left": 935,
+          "right": 1188,
+          "top": 486,
+          "bottom": 710
+        },
+        {
+          "id": "thay_mo",
+          "team": "enemy",
+          "slot": 3,
+          "height": 216,
+          "left": 1142,
+          "right": 1328,
+          "top": 139,
+          "bottom": 355
+        },
+        {
+          "id": "dinh_loi",
+          "team": "enemy",
+          "slot": 4,
+          "height": 218,
+          "left": 1156,
+          "right": 1334,
+          "top": 321,
+          "bottom": 539
+        },
+        {
+          "id": "ong_pho",
+          "team": "enemy",
+          "slot": 5,
+          "height": 252,
+          "left": 1185,
+          "right": 1367,
+          "top": 463,
+          "bottom": 715
+        }
+      ]
+    },
+    {
+      "label": "after",
+      "name": "mobile",
+      "units": [
+        {
+          "id": "bach_dien",
+          "team": "player",
+          "slot": 0,
+          "height": 139,
+          "left": 678,
+          "right": 766,
+          "top": 215,
+          "bottom": 354
+        },
+        {
+          "id": "linh_dong",
+          "team": "player",
+          "slot": 1,
+          "height": 159,
+          "left": 637,
+          "right": 740,
+          "top": 383,
+          "bottom": 542
+        },
+        {
+          "id": "luc_anh",
+          "team": "player",
+          "slot": 2,
+          "height": 158,
+          "left": 634,
+          "right": 811,
+          "top": 550,
+          "bottom": 708
+        },
+        {
+          "id": "thay_mo",
+          "team": "player",
+          "slot": 3,
+          "height": 151,
+          "left": 565,
+          "right": 695,
+          "top": 199,
+          "bottom": 350
+        },
+        {
+          "id": "dinh_loi",
+          "team": "player",
+          "slot": 4,
+          "height": 154,
+          "left": 561,
+          "right": 686,
+          "top": 380,
+          "bottom": 534
+        },
+        {
+          "id": "ong_pho",
+          "team": "player",
+          "slot": 5,
+          "height": 178,
+          "left": 537,
+          "right": 665,
+          "top": 533,
+          "bottom": 711
+        },
+        {
+          "id": "bach_dien",
+          "team": "enemy",
+          "slot": 0,
+          "height": 139,
+          "left": 834,
+          "right": 922,
+          "top": 215,
+          "bottom": 354
+        },
+        {
+          "id": "linh_dong",
+          "team": "enemy",
+          "slot": 1,
+          "height": 159,
+          "left": 860,
+          "right": 963,
+          "top": 383,
+          "bottom": 542
+        },
+        {
+          "id": "luc_anh",
+          "team": "enemy",
+          "slot": 2,
+          "height": 158,
+          "left": 789,
+          "right": 966,
+          "top": 550,
+          "bottom": 708
+        },
+        {
+          "id": "thay_mo",
+          "team": "enemy",
+          "slot": 3,
+          "height": 151,
+          "left": 905,
+          "right": 1035,
+          "top": 199,
+          "bottom": 350
+        },
+        {
+          "id": "dinh_loi",
+          "team": "enemy",
+          "slot": 4,
+          "height": 154,
+          "left": 914,
+          "right": 1039,
+          "top": 380,
+          "bottom": 534
+        },
+        {
+          "id": "ong_pho",
+          "team": "enemy",
+          "slot": 5,
+          "height": 178,
+          "left": 935,
+          "right": 1063,
+          "top": 533,
+          "bottom": 711
+        }
+      ]
+    },
+    {
+      "label": "after",
+      "name": "desktop",
+      "units": [
+        {
+          "id": "bach_dien",
+          "team": "player",
+          "slot": 0,
+          "height": 198,
+          "left": 474,
+          "right": 601,
+          "top": 162,
+          "bottom": 360
+        },
+        {
+          "id": "linh_dong",
+          "team": "player",
+          "slot": 1,
+          "height": 226,
+          "left": 400,
+          "right": 559,
+          "top": 325,
+          "bottom": 551
+        },
+        {
+          "id": "luc_anh",
+          "team": "player",
+          "slot": 2,
+          "height": 224,
+          "left": 413,
+          "right": 665,
+          "top": 486,
+          "bottom": 710
+        },
+        {
+          "id": "thay_mo",
+          "team": "player",
+          "slot": 3,
+          "height": 216,
+          "left": 272,
+          "right": 458,
+          "top": 139,
+          "bottom": 355
+        },
+        {
+          "id": "dinh_loi",
+          "team": "player",
+          "slot": 4,
+          "height": 218,
+          "left": 266,
+          "right": 444,
+          "top": 321,
+          "bottom": 539
+        },
+        {
+          "id": "ong_pho",
+          "team": "player",
+          "slot": 5,
+          "height": 252,
+          "left": 233,
+          "right": 415,
+          "top": 463,
+          "bottom": 715
+        },
+        {
+          "id": "bach_dien",
+          "team": "enemy",
+          "slot": 0,
+          "height": 198,
+          "left": 999,
+          "right": 1126,
+          "top": 162,
+          "bottom": 360
+        },
+        {
+          "id": "linh_dong",
+          "team": "enemy",
+          "slot": 1,
+          "height": 226,
+          "left": 1041,
+          "right": 1200,
+          "top": 325,
+          "bottom": 551
+        },
+        {
+          "id": "luc_anh",
+          "team": "enemy",
+          "slot": 2,
+          "height": 224,
+          "left": 935,
+          "right": 1188,
+          "top": 486,
+          "bottom": 710
+        },
+        {
+          "id": "thay_mo",
+          "team": "enemy",
+          "slot": 3,
+          "height": 216,
+          "left": 1142,
+          "right": 1328,
+          "top": 139,
+          "bottom": 355
+        },
+        {
+          "id": "dinh_loi",
+          "team": "enemy",
+          "slot": 4,
+          "height": 218,
+          "left": 1156,
+          "right": 1334,
+          "top": 321,
+          "bottom": 539
+        },
+        {
+          "id": "ong_pho",
+          "team": "enemy",
+          "slot": 5,
+          "height": 252,
+          "left": 1185,
+          "right": 1367,
+          "top": 463,
+          "bottom": 715
+        }
+      ]
+    }
+  ]
+}
