@@ -12,6 +12,7 @@ import { atlasDecodedBytes, atlasDecodeScale, clipSource, createDecodedAtlasCach
 import { createAssetLoader } from '../src/assets/asset-loader.mjs';
 import { createFrameClock, frameAt, frameDurationMs } from '../src/assets/frame-clock.mjs';
 import { drawCanvasSprite, sourceRectForFrame } from '../src/render/canvas-sprite-renderer.mjs';
+import { getClip } from '../src/assets/asset-catalog.mjs';
 
 const root = process.cwd();
 const path = process.env.HV_LINH_DONG_BATTLE_PATH
@@ -55,11 +56,14 @@ function replaceOnce(source, from, to, label) {
 const registryJson = JSON.stringify(LINH_DONG_REGISTRY);
 const timelineJson = JSON.stringify(LINH_DONG_TIMELINE);
 const controllerSource = createLinhDongTimelineController.toString();
+const registrations = Object.fromEntries(['idle', 'run', 'hit', 'fall', 'attack', 'ultimate']
+  .map(key => [key, getClip('linh_dong', key).registration]));
 
 const runtime = `${marker}
 const LINH_DONG_CANONICAL_ID=${JSON.stringify(LINH_DONG_CANONICAL_ID)};
 const LINH_DONG_REGISTRY=Object.freeze(${registryJson});
 const LINH_DONG_TIMELINE=Object.freeze(${timelineJson});
+const LINH_DONG_REGISTRATION=Object.freeze(${JSON.stringify(registrations)});
 const buildLinhDongMarkerSequence=${buildLinhDongMarkerSequence.toString()};
 const createLinhDongTimelineController=${controllerSource};
 const LINH_DONG_CLIPS=Object.freeze({
@@ -114,7 +118,7 @@ function clipFor(key){
   if(!clip)return null;
   const cellW=clip.cellW||clip.w,cellH=clip.cellH||clip.h,cols=clip.cols,frames=clip.frames;
   const rows=clip.rows||Math.ceil(frames/cols);
-  return {file:clip.file,src:LINH_DONG_ASSET_BASE+clip.file,frames,cols,rows,cellW,cellH,w:cellW,h:cellH,ms:clip.ms,loop:!!clip.loop,durationMs:clip.durationMs,pivot:clip.pivot||{x:cellW/2,y:cellH},decodedBytes:cols*cellW*rows*cellH*4,atlasWidth:cols*cellW,atlasHeight:rows*cellH};
+  return {file:clip.file,src:LINH_DONG_ASSET_BASE+clip.file,frames,cols,rows,cellW,cellH,w:cellW,h:cellH,ms:clip.ms,loop:!!clip.loop,durationMs:clip.durationMs,registration:LINH_DONG_REGISTRATION[key],pivot:clip.pivot||{x:cellW/2,y:cellH},decodedBytes:cols*cellW*rows*cellH*4,atlasWidth:cols*cellW,atlasHeight:rows*cellH};
 }
 function linhDongImage(key){
   const clip=clipFor(key);

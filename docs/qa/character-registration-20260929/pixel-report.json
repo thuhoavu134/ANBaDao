@@ -1,0 +1,550 @@
+{
+  "baseline": "52153e0147313feadc874f9dd0f5122cad1433e3",
+  "method": "Generated clip adapters + production drawCanvasSprite with real RGBA atlases, Skia Canvas2D. Offline render; not browser interaction.",
+  "rows": [
+    {
+      "hero": "linh_dong",
+      "key": "idle",
+      "profile": "native",
+      "team": "player",
+      "height": 335,
+      "bottom": 546,
+      "left": 199,
+      "right": 436,
+      "registration": {
+        "scale": 1,
+        "offsetX": 0,
+        "offsetY": 0
+      }
+    },
+    {
+      "hero": "linh_dong",
+      "key": "idle",
+      "profile": "native",
+      "team": "enemy",
+      "height": 335,
+      "bottom": 546,
+      "left": 364,
+      "right": 601,
+      "registration": {
+        "scale": 1,
+        "offsetX": 0,
+        "offsetY": 0
+      }
+    },
+    {
+      "hero": "linh_dong",
+      "key": "idle",
+      "profile": "desktop",
+      "team": "player",
+      "height": 335,
+      "bottom": 546,
+      "left": 199,
+      "right": 436,
+      "registration": {
+        "scale": 1,
+        "offsetX": 0,
+        "offsetY": 0
+      }
+    },
+    {
+      "hero": "linh_dong",
+      "key": "idle",
+      "profile": "desktop",
+      "team": "enemy",
+      "height": 335,
+      "bottom": 546,
+      "left": 364,
+      "right": 601,
+      "registration": {
+        "scale": 1,
+        "offsetX": 0,
+        "offsetY": 0
+      }
+    },
+    {
+      "hero": "linh_dong",
+      "key": "idle",
+      "profile": "mobile",
+      "team": "player",
+      "height": 335,
+      "bottom": 546,
+      "left": 199,
+      "right": 436,
+      "registration": {
+        "scale": 1,
+        "offsetX": 0,
+        "offsetY": 0
+      }
+    },
+    {
+      "hero": "linh_dong",
+      "key": "idle",
+      "profile": "mobile",
+      "team": "enemy",
+      "height": 335,
+      "bottom": 546,
+      "left": 364,
+      "right": 601,
+      "registration": {
+        "scale": 1,
+        "offsetX": 0,
+        "offsetY": 0
+      }
+    },
+    {
+      "hero": "linh_dong",
+      "key": "attack",
+      "profile": "native",
+      "team": "player",
+      "height": 336,
+      "bottom": 547,
+      "left": 188,
+      "right": 452,
+      "registration": {
+        "scale": 1.0308641975308641,
+        "offsetX": -0.03559670781893003,
+        "offsetY": -0.02974186307519634
+      }
+    },
+    {
+      "hero": "linh_dong",
+      "key": "attack",
+      "profile": "native",
+      "team": "enemy",
+      "height": 336,
+      "bottom": 547,
+      "left": 348,
+      "right": 612,
+      "registration": {
+        "scale": 1.0308641975308641,
+        "offsetX": -0.03559670781893003,
+        "offsetY": -0.02974186307519634
+      }
+    },
+    {
+      "hero": "linh_dong",
+      "key": "attack",
+      "profile": "desktop",
+      "team": "player",
+      "height": 335,
+      "bottom": 546,
+      "left": 188,
+      "right": 452,
+      "registration": {
+        "scale": 1.0308641975308641,
+        "offsetX": -0.03559670781893003,
+        "offsetY": -0.02974186307519634
+      }
+    },
+    {
+      "hero": "linh_dong",
+      "key": "attack",
+      "profile": "desktop",
+      "team": "enemy",
+      "height": 335,
+      "bottom": 546,
+      "left": 348,
+      "right": 612,
+      "registration": {
+        "scale": 1.0308641975308641,
+        "offsetX": -0.03559670781893003,
+        "offsetY": -0.02974186307519634
+      }
+    },
+    {
+      "hero": "linh_dong",
+      "key": "attack",
+      "profile": "mobile",
+      "team": "player",
+      "height": 335,
+      "bottom": 546,
+      "left": 188,
+      "right": 452,
+      "registration": {
+        "scale": 1.0308641975308641,
+        "offsetX": -0.03559670781893003,
+        "offsetY": -0.02974186307519634
+      }
+    },
+    {
+      "hero": "linh_dong",
+      "key": "attack",
+      "profile": "mobile",
+      "team": "enemy",
+      "height": 335,
+      "bottom": 546,
+      "left": 348,
+      "right": 612,
+      "registration": {
+        "scale": 1.0308641975308641,
+        "offsetX": -0.03559670781893003,
+        "offsetY": -0.02974186307519634
+      }
+    },
+    {
+      "hero": "linh_dong",
+      "key": "ultimate",
+      "profile": "native",
+      "team": "player",
+      "height": 331,
+      "bottom": 546,
+      "left": 198,
+      "right": 455,
+      "registration": {
+        "scale": 1.308641975308642,
+        "offsetX": -0.29835390946502055,
+        "offsetY": -0.29741863075196395
+      }
+    },
+    {
+      "hero": "linh_dong",
+      "key": "ultimate",
+      "profile": "native",
+      "team": "enemy",
+      "height": 331,
+      "bottom": 546,
+      "left": 345,
+      "right": 602,
+      "registration": {
+        "scale": 1.308641975308642,
+        "offsetX": -0.29835390946502055,
+        "offsetY": -0.29741863075196395
+      }
+    },
+    {
+      "hero": "linh_dong",
+      "key": "ultimate",
+      "profile": "desktop",
+      "team": "player",
+      "height": 331,
+      "bottom": 546,
+      "left": 198,
+      "right": 453,
+      "registration": {
+        "scale": 1.308641975308642,
+        "offsetX": -0.29835390946502055,
+        "offsetY": -0.29741863075196395
+      }
+    },
+    {
+      "hero": "linh_dong",
+      "key": "ultimate",
+      "profile": "desktop",
+      "team": "enemy",
+      "height": 331,
+      "bottom": 546,
+      "left": 347,
+      "right": 602,
+      "registration": {
+        "scale": 1.308641975308642,
+        "offsetX": -0.29835390946502055,
+        "offsetY": -0.29741863075196395
+      }
+    },
+    {
+      "hero": "linh_dong",
+      "key": "ultimate",
+      "profile": "mobile",
+      "team": "player",
+      "height": 331,
+      "bottom": 546,
+      "left": 198,
+      "right": 453,
+      "registration": {
+        "scale": 1.308641975308642,
+        "offsetX": -0.29835390946502055,
+        "offsetY": -0.29741863075196395
+      }
+    },
+    {
+      "hero": "linh_dong",
+      "key": "ultimate",
+      "profile": "mobile",
+      "team": "enemy",
+      "height": 331,
+      "bottom": 546,
+      "left": 347,
+      "right": 602,
+      "registration": {
+        "scale": 1.308641975308642,
+        "offsetX": -0.29835390946502055,
+        "offsetY": -0.29741863075196395
+      }
+    },
+    {
+      "hero": "bach_dien",
+      "key": "idle",
+      "profile": "native",
+      "team": "player",
+      "height": 396,
+      "bottom": 540,
+      "left": 279,
+      "right": 531,
+      "registration": {
+        "scale": 1,
+        "offsetX": 0,
+        "offsetY": 0
+      }
+    },
+    {
+      "hero": "bach_dien",
+      "key": "idle",
+      "profile": "native",
+      "team": "enemy",
+      "height": 396,
+      "bottom": 540,
+      "left": 269,
+      "right": 521,
+      "registration": {
+        "scale": 1,
+        "offsetX": 0,
+        "offsetY": 0
+      }
+    },
+    {
+      "hero": "bach_dien",
+      "key": "idle",
+      "profile": "desktop",
+      "team": "player",
+      "height": 396,
+      "bottom": 540,
+      "left": 279,
+      "right": 531,
+      "registration": {
+        "scale": 1,
+        "offsetX": 0,
+        "offsetY": 0
+      }
+    },
+    {
+      "hero": "bach_dien",
+      "key": "idle",
+      "profile": "desktop",
+      "team": "enemy",
+      "height": 396,
+      "bottom": 540,
+      "left": 269,
+      "right": 521,
+      "registration": {
+        "scale": 1,
+        "offsetX": 0,
+        "offsetY": 0
+      }
+    },
+    {
+      "hero": "bach_dien",
+      "key": "idle",
+      "profile": "mobile",
+      "team": "player",
+      "height": 396,
+      "bottom": 540,
+      "left": 280,
+      "right": 531,
+      "registration": {
+        "scale": 1,
+        "offsetX": 0,
+        "offsetY": 0
+      }
+    },
+    {
+      "hero": "bach_dien",
+      "key": "idle",
+      "profile": "mobile",
+      "team": "enemy",
+      "height": 396,
+      "bottom": 540,
+      "left": 269,
+      "right": 520,
+      "registration": {
+        "scale": 1,
+        "offsetX": 0,
+        "offsetY": 0
+      }
+    },
+    {
+      "hero": "bach_dien",
+      "key": "attack",
+      "profile": "native",
+      "team": "player",
+      "height": 395,
+      "bottom": 539,
+      "left": 292,
+      "right": 526,
+      "registration": {
+        "scale": 1.1416184971098267,
+        "offsetX": 0.013207490366088592,
+        "offsetY": -0.13616657908565435
+      }
+    },
+    {
+      "hero": "bach_dien",
+      "key": "attack",
+      "profile": "native",
+      "team": "enemy",
+      "height": 395,
+      "bottom": 539,
+      "left": 274,
+      "right": 508,
+      "registration": {
+        "scale": 1.1416184971098267,
+        "offsetX": 0.013207490366088592,
+        "offsetY": -0.13616657908565435
+      }
+    },
+    {
+      "hero": "bach_dien",
+      "key": "attack",
+      "profile": "desktop",
+      "team": "player",
+      "height": 395,
+      "bottom": 539,
+      "left": 292,
+      "right": 526,
+      "registration": {
+        "scale": 1.1416184971098267,
+        "offsetX": 0.013207490366088592,
+        "offsetY": -0.13616657908565435
+      }
+    },
+    {
+      "hero": "bach_dien",
+      "key": "attack",
+      "profile": "desktop",
+      "team": "enemy",
+      "height": 395,
+      "bottom": 539,
+      "left": 274,
+      "right": 508,
+      "registration": {
+        "scale": 1.1416184971098267,
+        "offsetX": 0.013207490366088592,
+        "offsetY": -0.13616657908565435
+      }
+    },
+    {
+      "hero": "bach_dien",
+      "key": "attack",
+      "profile": "mobile",
+      "team": "player",
+      "height": 395,
+      "bottom": 539,
+      "left": 292,
+      "right": 526,
+      "registration": {
+        "scale": 1.1416184971098267,
+        "offsetX": 0.013207490366088592,
+        "offsetY": -0.13616657908565435
+      }
+    },
+    {
+      "hero": "bach_dien",
+      "key": "attack",
+      "profile": "mobile",
+      "team": "enemy",
+      "height": 395,
+      "bottom": 539,
+      "left": 274,
+      "right": 508,
+      "registration": {
+        "scale": 1.1416184971098267,
+        "offsetX": 0.013207490366088592,
+        "offsetY": -0.13616657908565435
+      }
+    },
+    {
+      "hero": "bach_dien",
+      "key": "ultimate",
+      "profile": "native",
+      "team": "player",
+      "height": 395,
+      "bottom": 539,
+      "left": 280,
+      "right": 507,
+      "registration": {
+        "scale": 0.9949622166246851,
+        "offsetX": 0.017170445004198183,
+        "offsetY": 0.002490267918479493
+      }
+    },
+    {
+      "hero": "bach_dien",
+      "key": "ultimate",
+      "profile": "native",
+      "team": "enemy",
+      "height": 395,
+      "bottom": 539,
+      "left": 293,
+      "right": 520,
+      "registration": {
+        "scale": 0.9949622166246851,
+        "offsetX": 0.017170445004198183,
+        "offsetY": 0.002490267918479493
+      }
+    },
+    {
+      "hero": "bach_dien",
+      "key": "ultimate",
+      "profile": "desktop",
+      "team": "player",
+      "height": 395,
+      "bottom": 539,
+      "left": 280,
+      "right": 507,
+      "registration": {
+        "scale": 0.9949622166246851,
+        "offsetX": 0.017170445004198183,
+        "offsetY": 0.002490267918479493
+      }
+    },
+    {
+      "hero": "bach_dien",
+      "key": "ultimate",
+      "profile": "desktop",
+      "team": "enemy",
+      "height": 395,
+      "bottom": 539,
+      "left": 293,
+      "right": 520,
+      "registration": {
+        "scale": 0.9949622166246851,
+        "offsetX": 0.017170445004198183,
+        "offsetY": 0.002490267918479493
+      }
+    },
+    {
+      "hero": "bach_dien",
+      "key": "ultimate",
+      "profile": "mobile",
+      "team": "player",
+      "height": 396,
+      "bottom": 539,
+      "left": 280,
+      "right": 507,
+      "registration": {
+        "scale": 0.9949622166246851,
+        "offsetX": 0.017170445004198183,
+        "offsetY": 0.002490267918479493
+      }
+    },
+    {
+      "hero": "bach_dien",
+      "key": "ultimate",
+      "profile": "mobile",
+      "team": "enemy",
+      "height": 396,
+      "bottom": 539,
+      "left": 293,
+      "right": 520,
+      "registration": {
+        "scale": 0.9949622166246851,
+        "offsetX": 0.017170445004198183,
+        "offsetY": 0.002490267918479493
+      }
+    }
+  ],
+  "browser": "NOT_RUN: cloud browser rejects localhost (ERR_BLOCKED_BY_CLIENT); local Chromium is not installed",
+  "physicalIOS": "NOT_RUN",
+  "production": "NOT_DEPLOYED",
+  "ok": true
+}

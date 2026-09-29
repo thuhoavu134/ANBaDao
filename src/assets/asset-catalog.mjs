@@ -3,6 +3,7 @@ import lucAnhRuntime from '../../assets/characters/luc-anh/canvas-sprite-runtime
 import dinhLoiRuntime from '../../assets/characters/dinh-loi/canvas-sprite-runtime.json' with { type: 'json' };
 import bachDienRuntime from '../../assets/characters/bach-dien/runtime-meta.json' with { type: 'json' };
 import { atlasDecodedBytes } from './decoded-atlas-cache.mjs';
+import { registrationFromCrop } from './sprite-registration.mjs';
 
 const HERO_ALIASES = Object.freeze({
   linh_dong: 'hero_splus_linh_dong',
@@ -116,6 +117,7 @@ export function validateManifest(manifest) {
 function freezeClip(clip) {
   return Object.freeze({
     ...clip,
+    ...(clip.registration ? { registration: Object.freeze({ ...clip.registration }) } : {}),
     pivot: Object.freeze({ ...clip.pivot }),
     logicalSize: Object.freeze({ ...clip.logicalSize })
   });
@@ -203,6 +205,11 @@ function hydrateLinhDong(meta) {
       loop: !!raw.loop,
       pivot: { x: Math.round(cellW / 2), y: cellH },
       logicalSize: { w: cellW, h: cellH },
+      ...(kind === 'character' && meta.char.registration ? {
+        registration: registrationFromCrop(packed.cropBox,
+          packedFor(meta, meta.char.registration.referenceFile).cropBox,
+          cellW, cellH, meta.char.registration.padding)
+      } : {}),
       trimMode: 'stable-union',
       blendMode: kind === 'vfx' ? 'source-over' : 'source-over',
       atlasWidth,

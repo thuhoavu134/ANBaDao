@@ -1,0 +1,17 @@
+✔ L151-T4 source rects for first, middle and last frame come from metadata (2.498685ms)
+✔ L151-T4 enemy flip, source-over blend, destination aspect (0.32584ms)
+✔ L151-T4 renderer never hard-codes old cell sizes or naturalWidth/4 (0.458329ms)
+✔ L151-T5 FrameClock loops, clamps, and replays the same elapsedMs (0.656126ms)
+✔ L151-T6 battle adapter keeps 477×440 destination and combined VFX source-over (0.504608ms)
+✔ linh_dong: real Idle / ATK / Ultimate opening poses keep body size and ground contact (736.060847ms)
+✔ bach_dien: real Idle / ATK / Ultimate opening poses keep body size and ground contact (421.632509ms)
+✔ registration is constant through every clip; variants and decoded downsampling keep destination geometry (1.884401ms)
+✔ character registration does not resize the authored VFX (0.211829ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1294.714521

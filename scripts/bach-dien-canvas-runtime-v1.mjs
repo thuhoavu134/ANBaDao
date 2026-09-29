@@ -51,6 +51,7 @@ const clips = Object.fromEntries(Object.entries(bachDienMeta.clips).map(([key, c
   loop: !!clip.loop,
   durationMs: clip.durationMs,
   pivot: clip.pivot,
+  registration: clip.registration,
   kind: clip.kind,
   blendMode: clip.blendMode,
   decodedBytes: clip.decodedBytes
@@ -94,7 +95,7 @@ function clipForBachDien(key){
   if(!clip)return null;
   const cellW=clip.cellW||clip.w,cellH=clip.cellH||clip.h,cols=clip.cols,frames=clip.frames;
   const rows=clip.rows||Math.ceil(frames/cols);
-  return {file:clip.file,src:BACH_DIEN_ASSET_BASE+clip.file,frames,cols,rows,cellW,cellH,w:cellW,h:cellH,ms:clip.ms,fps:clip.fps,loop:!!clip.loop,durationMs:clip.durationMs,pivot:clip.pivot||{x:cellW/2,y:cellH},decodedBytes:clip.decodedBytes||cols*cellW*rows*cellH*4,atlasWidth:cols*cellW,atlasHeight:rows*cellH,blendMode:clip.blendMode||'source-over',kind:clip.kind};
+  return {file:clip.file,src:BACH_DIEN_ASSET_BASE+clip.file,frames,cols,rows,cellW,cellH,w:cellW,h:cellH,ms:clip.ms,fps:clip.fps,loop:!!clip.loop,durationMs:clip.durationMs,registration:clip.registration,pivot:clip.pivot||{x:cellW/2,y:cellH},decodedBytes:clip.decodedBytes||cols*cellW*rows*cellH*4,atlasWidth:cols*cellW,atlasHeight:rows*cellH,blendMode:clip.blendMode||'source-over',kind:clip.kind};
 }
 function bachDienImage(key){
   const clip=clipForBachDien(key);

@@ -1,0 +1,60 @@
+✖ linh_dong: real Idle / ATK / Ultimate opening poses keep body size and ground contact (692.360819ms)
+✖ bach_dien: real Idle / ATK / Ultimate opening poses keep body size and ground contact (251.773973ms)
+✖ registration is constant through every clip; variants and decoded downsampling keep destination geometry (0.368584ms)
+✔ character registration does not resize the authored VFX (1.285692ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 1
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1060.745253
+
+✖ failing tests:
+
+test at tests/character-registration.test.mjs:27:3
+✖ linh_dong: real Idle / ATK / Ultimate opening poses keep body size and ground contact (692.360819ms)
+  AssertionError [ERR_ASSERTION]: ultimate height 253 vs Idle 335
+      at TestContext.<anonymous> (file:///workspace/scratch/2580791a2224/full-repo/luc-than-main/tests/character-registration.test.mjs:31:14)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/character-registration.test.mjs:27:3
+✖ bach_dien: real Idle / ATK / Ultimate opening poses keep body size and ground contact (251.773973ms)
+  AssertionError [ERR_ASSERTION]: attack height 346 vs Idle 395
+      at TestContext.<anonymous> (file:///workspace/scratch/2580791a2224/full-repo/luc-than-main/tests/character-registration.test.mjs:31:14)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/character-registration.test.mjs:37:1
+✖ registration is constant through every clip; variants and decoded downsampling keep destination geometry (0.368584ms)
+  AssertionError [ERR_ASSERTION]: linh_dong/idle: missing registration
+      at TestContext.<anonymous> (file:///workspace/scratch/2580791a2224/full-repo/luc-than-main/tests/character-registration.test.mjs:40:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
