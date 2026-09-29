@@ -1,0 +1,274 @@
+{
+  "method": "Forced loss of Linh Dong/Luc Anh atlas handles after an initial paint; actual generated drawUnit and hero renderers with RGBA assets, offline Skia. Not a live Safari/browser test.",
+  "runs": [
+    {
+      "label": "before",
+      "name": "mobile",
+      "units": [
+        {
+          "hero": "bach_dien",
+          "team": "player",
+          "pixelsWhileMissing": 5057
+        },
+        {
+          "hero": "linh_dong",
+          "team": "player",
+          "pixelsWhileMissing": 0
+        },
+        {
+          "hero": "luc_anh",
+          "team": "player",
+          "pixelsWhileMissing": 0
+        },
+        {
+          "hero": "thay_mo",
+          "team": "player",
+          "pixelsWhileMissing": 7874
+        },
+        {
+          "hero": "dinh_loi",
+          "team": "player",
+          "pixelsWhileMissing": 6948
+        },
+        {
+          "hero": "ong_pho",
+          "team": "player",
+          "pixelsWhileMissing": 7424
+        },
+        {
+          "hero": "bach_dien",
+          "team": "enemy",
+          "pixelsWhileMissing": 5048
+        },
+        {
+          "hero": "linh_dong",
+          "team": "enemy",
+          "pixelsWhileMissing": 0
+        },
+        {
+          "hero": "luc_anh",
+          "team": "enemy",
+          "pixelsWhileMissing": 0
+        },
+        {
+          "hero": "thay_mo",
+          "team": "enemy",
+          "pixelsWhileMissing": 7872
+        },
+        {
+          "hero": "dinh_loi",
+          "team": "enemy",
+          "pixelsWhileMissing": 6946
+        },
+        {
+          "hero": "ong_pho",
+          "team": "enemy",
+          "pixelsWhileMissing": 7419
+        }
+      ],
+      "recovery": "all 12 bodies visible after decode"
+    },
+    {
+      "label": "before",
+      "name": "desktop",
+      "units": [
+        {
+          "hero": "bach_dien",
+          "team": "player",
+          "pixelsWhileMissing": 11579
+        },
+        {
+          "hero": "linh_dong",
+          "team": "player",
+          "pixelsWhileMissing": 0
+        },
+        {
+          "hero": "luc_anh",
+          "team": "player",
+          "pixelsWhileMissing": 0
+        },
+        {
+          "hero": "thay_mo",
+          "team": "player",
+          "pixelsWhileMissing": 17928
+        },
+        {
+          "hero": "dinh_loi",
+          "team": "player",
+          "pixelsWhileMissing": 16136
+        },
+        {
+          "hero": "ong_pho",
+          "team": "player",
+          "pixelsWhileMissing": 16293
+        },
+        {
+          "hero": "bach_dien",
+          "team": "enemy",
+          "pixelsWhileMissing": 11564
+        },
+        {
+          "hero": "linh_dong",
+          "team": "enemy",
+          "pixelsWhileMissing": 0
+        },
+        {
+          "hero": "luc_anh",
+          "team": "enemy",
+          "pixelsWhileMissing": 0
+        },
+        {
+          "hero": "thay_mo",
+          "team": "enemy",
+          "pixelsWhileMissing": 17924
+        },
+        {
+          "hero": "dinh_loi",
+          "team": "enemy",
+          "pixelsWhileMissing": 16133
+        },
+        {
+          "hero": "ong_pho",
+          "team": "enemy",
+          "pixelsWhileMissing": 16283
+        }
+      ],
+      "recovery": "all 12 bodies visible after decode"
+    },
+    {
+      "label": "after",
+      "name": "mobile",
+      "units": [
+        {
+          "hero": "bach_dien",
+          "team": "player",
+          "pixelsWhileMissing": 5057
+        },
+        {
+          "hero": "linh_dong",
+          "team": "player",
+          "pixelsWhileMissing": 5984
+        },
+        {
+          "hero": "luc_anh",
+          "team": "player",
+          "pixelsWhileMissing": 10492
+        },
+        {
+          "hero": "thay_mo",
+          "team": "player",
+          "pixelsWhileMissing": 7874
+        },
+        {
+          "hero": "dinh_loi",
+          "team": "player",
+          "pixelsWhileMissing": 6948
+        },
+        {
+          "hero": "ong_pho",
+          "team": "player",
+          "pixelsWhileMissing": 7424
+        },
+        {
+          "hero": "bach_dien",
+          "team": "enemy",
+          "pixelsWhileMissing": 5048
+        },
+        {
+          "hero": "linh_dong",
+          "team": "enemy",
+          "pixelsWhileMissing": 5984
+        },
+        {
+          "hero": "luc_anh",
+          "team": "enemy",
+          "pixelsWhileMissing": 10492
+        },
+        {
+          "hero": "thay_mo",
+          "team": "enemy",
+          "pixelsWhileMissing": 7872
+        },
+        {
+          "hero": "dinh_loi",
+          "team": "enemy",
+          "pixelsWhileMissing": 6946
+        },
+        {
+          "hero": "ong_pho",
+          "team": "enemy",
+          "pixelsWhileMissing": 7419
+        }
+      ],
+      "recovery": "all 12 bodies visible after decode"
+    },
+    {
+      "label": "after",
+      "name": "desktop",
+      "units": [
+        {
+          "hero": "bach_dien",
+          "team": "player",
+          "pixelsWhileMissing": 11579
+        },
+        {
+          "hero": "linh_dong",
+          "team": "player",
+          "pixelsWhileMissing": 14987
+        },
+        {
+          "hero": "luc_anh",
+          "team": "player",
+          "pixelsWhileMissing": 23196
+        },
+        {
+          "hero": "thay_mo",
+          "team": "player",
+          "pixelsWhileMissing": 17928
+        },
+        {
+          "hero": "dinh_loi",
+          "team": "player",
+          "pixelsWhileMissing": 16136
+        },
+        {
+          "hero": "ong_pho",
+          "team": "player",
+          "pixelsWhileMissing": 16293
+        },
+        {
+          "hero": "bach_dien",
+          "team": "enemy",
+          "pixelsWhileMissing": 11564
+        },
+        {
+          "hero": "linh_dong",
+          "team": "enemy",
+          "pixelsWhileMissing": 14987
+        },
+        {
+          "hero": "luc_anh",
+          "team": "enemy",
+          "pixelsWhileMissing": 23196
+        },
+        {
+          "hero": "thay_mo",
+          "team": "enemy",
+          "pixelsWhileMissing": 17924
+        },
+        {
+          "hero": "dinh_loi",
+          "team": "enemy",
+          "pixelsWhileMissing": 16133
+        },
+        {
+          "hero": "ong_pho",
+          "team": "enemy",
+          "pixelsWhileMissing": 16283
+        }
+      ],
+      "recovery": "all 12 bodies visible after decode"
+    }
+  ],
+  "ok": true
+}

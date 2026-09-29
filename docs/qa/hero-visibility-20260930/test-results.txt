@@ -1,0 +1,75 @@
+BEFORE: battle-visibility-pressure regression
+✖ released critical atlases do not outrank a recently painted idle in LRU eviction (2.565347ms)
+✖ native cache cannot erase a visible idle when a pinned action makes admission impossible (1.57632ms)
+✖ linh-dong/player: real hero renderer keeps body through eviction and resumes decoded animation (5.061219ms)
+✖ linh-dong/enemy: real hero renderer keeps body through eviction and resumes decoded animation (6.256692ms)
+✖ bach-dien/player: real hero renderer keeps body through eviction and resumes decoded animation (4.554778ms)
+✖ bach-dien/enemy: real hero renderer keeps body through eviction and resumes decoded animation (3.657669ms)
+✖ luc-anh/player: real hero renderer keeps body through eviction and resumes decoded animation (3.795336ms)
+✖ luc-anh/enemy: real hero renderer keeps body through eviction and resumes decoded animation (3.541424ms)
+✖ dinh-loi/player: real hero renderer keeps body through eviction and resumes decoded animation (3.889999ms)
+✖ dinh-loi/enemy: real hero renderer keeps body through eviction and resumes decoded animation (3.305911ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 0
+ℹ fail 10
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 134.304898
+✖ failing tests:
+✖ released critical atlases do not outrank a recently painted idle in LRU eviction (2.565347ms)
+✖ native cache cannot erase a visible idle when a pinned action makes admission impossible (1.57632ms)
+✖ linh-dong/player: real hero renderer keeps body through eviction and resumes decoded animation (5.061219ms)
+✖ linh-dong/enemy: real hero renderer keeps body through eviction and resumes decoded animation (6.256692ms)
+✖ bach-dien/player: real hero renderer keeps body through eviction and resumes decoded animation (4.554778ms)
+✖ bach-dien/enemy: real hero renderer keeps body through eviction and resumes decoded animation (3.657669ms)
+✖ luc-anh/player: real hero renderer keeps body through eviction and resumes decoded animation (3.795336ms)
+✖ luc-anh/enemy: real hero renderer keeps body through eviction and resumes decoded animation (3.541424ms)
+✖ dinh-loi/player: real hero renderer keeps body through eviction and resumes decoded animation (3.889999ms)
+✖ dinh-loi/enemy: real hero renderer keeps body through eviction and resumes decoded animation (3.305911ms)
+
+AFTER: focused checks
+✔ released critical atlases do not outrank a recently painted idle in LRU eviction (2.653999ms)
+✔ native cache cannot erase a visible idle when a pinned action makes admission impossible (1.633585ms)
+✔ linh-dong/player: real hero renderer keeps body through eviction and resumes decoded animation (4.855718ms)
+✔ linh-dong/enemy: real hero renderer keeps body through eviction and resumes decoded animation (4.413734ms)
+✔ bach-dien/player: real hero renderer keeps body through eviction and resumes decoded animation (2.983224ms)
+✔ bach-dien/enemy: real hero renderer keeps body through eviction and resumes decoded animation (3.055332ms)
+✔ luc-anh/player: real hero renderer keeps body through eviction and resumes decoded animation (3.309304ms)
+✔ luc-anh/enemy: real hero renderer keeps body through eviction and resumes decoded animation (3.375153ms)
+✔ dinh-loi/player: real hero renderer keeps body through eviction and resumes decoded animation (3.536846ms)
+✔ dinh-loi/enemy: real hero renderer keeps body through eviction and resumes decoded animation (3.478318ms)
+network
+✔ L151-T2 decoded byte formula is atlas width × height × 4 (2.05537ms)
+✔ L151-T2 LRU evicts ready atlases under 128 MiB and never evicts loading (1.997472ms)
+✔ L151-T2 failed and malformed atlases do not retry every frame (1.473845ms)
+✔ L151-T2 release clears handlers and stale onload is harmless (0.572361ms)
+✔ L151-T2 atlas larger than the budget fails with a clear error instead of crashing (0.70541ms)
+✔ L151-T2 cache source stays self-contained for battle injection (0.440442ms)
+✔ backup is shared across teams, bounded to 5 MiB and never recaptured on every paint (2.124754ms)
+✔ backup keeps reference-space foot anchor and mirrors only for the S+ owner (0.991069ms)
+✔ first ready action can seed backup; first idle replaces it once without changing live state (0.305028ms)
+✔ cold miss, failed snapshot and defeated hero never manufacture a visible pose (0.274363ms)
+✔ legacy cast waits for decoded original bytes and holds its cache lease through recovery (2.44895ms)
+✔ cancelled legacy preparation cannot start the action and releases its pins (0.77176ms)
+✔ RED: legacy audio is decoded before the action clock even when the owner has no atlas lease (0.380342ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 187.223476
+
+AFTER: npm test
+✔ L96: Giao Lưu Phố trong giao việc (0.178568ms)
+ℹ tests 1391
+ℹ suites 0
+ℹ pass 1391
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 31651.751449

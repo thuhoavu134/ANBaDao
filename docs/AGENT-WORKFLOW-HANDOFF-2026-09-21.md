@@ -249,3 +249,10 @@ Khi được yêu cầu “tiếp game”, trước tiên:
 Baseline `52153e0` (PR #240). Linh Đồng source-crop registration now lives in `src/assets/sprite-registration.mjs` and the asset catalog; Bạch Diện's fixed first-pose registration is stored in its runtime manifest. Both build adapters pass registration to the shared Canvas renderer, including reduced atlas variants. Keep animation motion; never resize each frame by its alpha bounds.
 
 Evidence/limits: `docs/qa/character-registration-20260929/README.md`. Full real-asset build and 1376 Node tests PASS; 36 offline generated-renderer pixel cases PASS. Interactive browser and physical Safari NOT RUN; not a production deployment. Owner explicitly waived the workflow gate and authorized merge in chat.
+
+
+## 2026-09-30 — hero visibility under atlas pressure
+
+Baseline `3089882` (PR #242); approved character sizes stay unchanged. The late build patch `scripts/battle-character-visibility-v1.mjs` connects `src/render/hero-visibility-cache.mjs` to the four atlas-managed hero renderers. Keep its independent single-frame body backup separate from action/VFX readiness: animation sheets may be evicted, but a living visible hero must not lose its body. Never use the standing backup for a defeated unit. The native cache owner remains `scripts/legacy-authored-readiness-v1.mjs`; shared decoded eviction remains `src/assets/decoded-atlas-cache.mjs`.
+
+Evidence: `docs/qa/hero-visibility-20260930/README.md`. Full build + 1391 tests PASS; forced atlas-loss pixel checks pass for both teams at desktop/mobile and resume normal rendering after reload. Offline Skia evidence only; physical Safari and production are not certified. Owner’s existing merge/gate waiver remains in effect.
