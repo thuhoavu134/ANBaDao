@@ -21,13 +21,18 @@ export const PORTRAIT_FORMATION = Object.freeze({
   compactCropWidth: 1200
 });
 export const BATTLE_CHARACTER_SCALE = Object.freeze({ portrait:0.52, desktop:0.74 });
+// Match the standing body of Ông Phở (310 world px) and Đình Lôi (~300),
+// measured from real first-frame alpha at their production draw sizes. The
+// registered S+ bodies are 335/395 px; cell size or silhouette diagonal is not
+// a measure of character stature (Linh Đồng includes wide stray particles).
+export const BATTLE_HERO_BODY_HEIGHT = 310;
 export const HERO_VISUAL_SCALE = Object.freeze({
   default:1,
-  hero_splus_linh_dong:0.57,
-  hero_splus_bach_dien:0.61
+  hero_splus_linh_dong:BATTLE_HERO_BODY_HEIGHT/335,
+  hero_splus_bach_dien:BATTLE_HERO_BODY_HEIGHT/395
 });
-// Linh Dong's authored idle is unusually wide. Preserve the requested 0.57
-// vertical presence while narrowing only the compact/mobile presentation.
+// Retain the existing compact horizontal/position calibration. The body-height
+// correction above scales both axes and applies to every registered clip.
 export const HERO_VISUAL_HORIZONTAL_SCALE = Object.freeze({
   default:1,
   hero_splus_linh_dong:0.9210526316
@@ -105,7 +110,7 @@ export function battleCharacterVisualOffsetXForViewport(unitOrId,team,width,heig
 
 const RUNTIME_LAYOUT=`const PORTRAIT_FORMATION=Object.freeze({rows:Object.freeze([340,520,700]),frontOffsetX:80,backOffsetX:170,compactCropWidth:1200});
   const BATTLE_CHARACTER_SCALE=Object.freeze({portrait:0.52,desktop:0.74});
-  const HERO_VISUAL_SCALE=Object.freeze({default:1,hero_splus_linh_dong:0.57,hero_splus_bach_dien:0.61});
+  const HERO_VISUAL_SCALE=Object.freeze(${JSON.stringify(HERO_VISUAL_SCALE)});
   const HERO_VISUAL_HORIZONTAL_SCALE=Object.freeze({default:1,hero_splus_linh_dong:0.9210526316});
   const HERO_VISUAL_OFFSET_X=Object.freeze({default:0,hero_splus_linh_dong:4.25});
   function battleWorldCropForViewport(width,height){

@@ -1,0 +1,66 @@
+BEFORE: node --test tests/mixed-roster-size.test.mjs
+Battle formation + visual scale v1 applied: approved legacy portrait anchors, single scale owner
+✖ real Linh Đồng/Bạch Diện bodies match mixed-roster peers at the same depth, in both teams and viewports (632.708207ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 768.173287
+
+✖ failing tests:
+
+test at tests/mixed-roster-size.test.mjs:18:1
+✖ real Linh Đồng/Bạch Diện bodies match mixed-roster peers at the same depth, in both teams and viewports (632.708207ms)
+  AssertionError [ERR_ASSERTION]: linh_dong/idle/player/340/390: 0.616 of ong_pho
+      at TestContext.<anonymous> (file:///workspace/scratch/2580791a2224/full-repo/luc-than-main/tests/mixed-roster-size.test.mjs:38:18)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+AFTER: focused checks
+Battle formation + visual scale v1 applied: approved legacy portrait anchors, single scale owner
+✔ portrait formation restores the approved legacy mobile anchors and stays inside every target crop (2.614093ms)
+✔ portrait formation keeps old 90px team columns, 160px opposing frontline lane and mirrored rows (0.499412ms)
+✔ desktop formation and global desktop scale are unchanged (0.521785ms)
+✔ special heroes use body-height calibration while preserving compact layout offsets (0.375385ms)
+✔ final runtime patch removes stale formation breakpoints and all stacked scale owners (0.958002ms)
+✔ formation owner accepts the unmodified baseline 0.52 generic scale without a pre-patch scale rewrite (0.324768ms)
+✔ build applies the scoped layout owner after reference presentation but before battle payload sync (0.221684ms)
+Battle formation + visual scale v1 applied: approved legacy portrait anchors, single scale owner
+✔ temporary arena IDs use the same canonical hero correction as the renderer (1.619076ms)
+✔ approach, attack, ultimate and recovery retain the actor home depth scale (0.5118ms)
+✔ built regular and S+ render paths share scale, offsets and one enemy mirror (18.969174ms)
+✔ linh_dong: real Idle / ATK / Ultimate opening poses keep body size and ground contact (1174.368368ms)
+✔ bach_dien: real Idle / ATK / Ultimate opening poses keep body size and ground contact (540.53873ms)
+✔ registration is constant through every clip; variants and decoded downsampling keep destination geometry (6.253498ms)
+✔ character registration does not resize the authored VFX (0.464919ms)
+Battle formation + visual scale v1 applied: approved legacy portrait anchors, single scale owner
+✔ real Linh Đồng/Bạch Diện bodies match mixed-roster peers at the same depth, in both teams and viewports (1760.814589ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1920.905151
+
+AFTER: npm test
+✔ L96: Giao Lưu Phố trong giao việc (0.173932ms)
+ℹ tests 1377
+ℹ suites 0
+ℹ pass 1377
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 31419.779885

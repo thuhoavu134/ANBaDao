@@ -46,5 +46,5 @@ test('built regular and S+ render paths share scale, offsets and one enemy mirro
   // Functions between MOBILE_POSITIONS and the next original runtime declaration.
   const block = patched.slice(start, end);
   vm.runInContext(block, context);
-  assert.equal(context.battleCharacterScale({ sourceId: 'arena-0', sourceHeroId: 'linh_dong' }), .52 * .57);
+  assert.equal(context.battleCharacterScale({ sourceId: 'arena-0', sourceHeroId: 'linh_dong' }), .52 * (310 / 335));
 });
