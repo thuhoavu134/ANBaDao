@@ -2,6 +2,17 @@
   if (typeof document === 'undefined' || !document.body) return;
   if (typeof prepareArenaSettle !== 'function') return;
 
+  // Keep local arena playable. Online ranking is closed until the API can
+  // verify battles; stop before the old start handler spends stamina.
+  const baseStartArena = typeof startArena === 'function' ? startArena : null;
+  if (baseStartArena) startArena = function startVerifiedArena(index) {
+    if (P.arena?.rivals?.[index]?.net) {
+      if (typeof toast === 'function') toast('Đấu hạng online đang bảo trì. Chưa trừ thể lực.');
+      return false;
+    }
+    return baseStartArena.apply(this, arguments);
+  };
+
   function commitArena(next, commandId, source) {
     const run = typeof hvRunCommittedTransaction === 'function' ? hvRunCommittedTransaction : null;
     const apply = player => {
@@ -134,7 +145,7 @@
       return `<article class="hv-ar-card" data-arena-card="${i}">
         <b>${r.name}${grudge ? ' · 🔥 Kình Địch' : ''}</b>
         <small>Hạng ${r.rank} · Cấp ${pw.lvl} · ${'★'.repeat(pw.stars)}</small>
-        <button type="button" class="hv-ar-fight" data-arena-fight="${i}">Khiêu chiến — ${cost()}⚡</button>
+        <button type="button" class="hv-ar-fight" data-arena-fight="${i}" ${r.net ? 'disabled' : ''}>${r.net ? 'Đấu hạng online đang bảo trì' : 'Khiêu chiến — ' + cost() + '⚡'}</button>
       </article>`;
     }).join('');
     root.innerHTML = `

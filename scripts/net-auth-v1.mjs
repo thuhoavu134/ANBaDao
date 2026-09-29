@@ -2,7 +2,8 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 const target = join(process.cwd(), 'dist/index.html');
-const runtime = readFileSync(join(process.cwd(), 'src/ui/net-auth-runtime.js'), 'utf8');
+const cloudSource = readFileSync(join(process.cwd(), 'src/domain/save/cloud-session.mjs'), 'utf8').replace(/^export\s+/gm, '');
+const runtime = cloudSource + '\n' + readFileSync(join(process.cwd(), 'src/ui/net-auth-runtime.js'), 'utf8');
 const css = readFileSync(join(process.cwd(), 'src/ui/net-auth.css'), 'utf8');
 new Function(runtime);
 

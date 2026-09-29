@@ -75,7 +75,16 @@ export function resolveIncomingUrl(req) {
 }
 
 export async function handleNode(req, res) {
-  const handle = await getHandle();
+  let handle;
+  try { handle = await getHandle(); }
+  catch {
+    res.statusCode = 503;
+    res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    res.setHeader('Cache-Control', 'no-store');
+    res.setHeader('Retry-After', '5');
+    res.end(JSON.stringify({ error: 'Dịch vụ lưu tiến trình tạm thời không khả dụng. Vui lòng thử lại.', code: 'STORE_UNAVAILABLE' }));
+    return;
+  }
   const result = await handle(req.method, resolveIncomingUrl(req), {
     body: await readBody(req),
     headers: req.headers || {},

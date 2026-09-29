@@ -60,9 +60,7 @@ export function createApp(deps) {
   }
 
   async function nextRank() {
-    const profiles = await store.listProfiles();
-    const max = profiles.reduce((m, p) => Math.max(m, Number(p.rank) || 0), 999);
-    return max + 1;
+    return store.nextRank();
   }
 
   async function ensureProfile(user) {
@@ -89,6 +87,7 @@ export function createApp(deps) {
       return ok({
         ok: true,
         auth: true,
+        arenaRanked: false,
         persist: store.kind || 'memory',
         store: store.kind || 'memory',
         oauth: Boolean(google.clientId && google.clientSecret),
@@ -416,29 +415,31 @@ export function createApp(deps) {
 
     if (m === 'GET' && path === '/api/save') {
       if (!user) return fail(401, 'Chưa đăng nhập.');
-      return ok({ save: await store.getSave(user.id) });
+      return ok(await store.getSaveRecord(user.id));
     }
 
     if (m === 'PUT' && path === '/api/save') {
       if (!user) return fail(401, 'Chưa đăng nhập.');
       const save = body.save;
-      if (!save || typeof save !== 'object') return fail(400, 'Bản lưu không hợp lệ.');
+      if (!save || typeof save !== 'object' || Array.isArray(save)) return fail(400, 'Bản lưu không hợp lệ.');
+      if (!Number.isSafeInteger(body.expectedVersion) || body.expectedVersion < 0) {
+        return { status: 428, json: { error: 'Hãy tải bản lưu tài khoản trước khi đồng bộ.', code: 'SAVE_VERSION_REQUIRED' } };
+      }
       const size = Buffer.byteLength(JSON.stringify(save));
       if (size > SAVE_LIMIT) return fail(413, 'Bản lưu quá lớn.');
-      await store.putSave(user.id, save);
-      return ok({ ok: true });
+      const version = await store.putSaveIfVersion(user.id, save, body.expectedVersion);
+      if (version === null) return { status: 409, json: { error: 'Tiến trình đã thay đổi trên thiết bị khác. Hãy tải lại bản lưu trước khi đồng bộ.', code: 'SAVE_CONFLICT' } };
+      return ok({ ok: true, version });
     }
 
     if (m === 'POST' && path === '/api/profile') {
       if (!user) return fail(401, 'Chưa đăng nhập.');
-      const prev = await ensureProfile(user);
-      await store.putProfile(user.id, {
-        user: user.user,
+      await ensureProfile(user);
+      await store.patchProfileStats(user.id, {
         power: Number(body.power) || 0,
         towerBest: Number(body.towerBest) || 0,
         chapter: Number(body.chapter) || 0,
-        squad: Array.isArray(body.squad) ? body.squad : [],
-        rank: prev.rank
+        squad: Array.isArray(body.squad) ? body.squad : []
       });
       return ok({ ok: true });
     }
@@ -446,32 +447,23 @@ export function createApp(deps) {
     if (m === 'GET' && path === '/api/rivals') {
       if (!user) return fail(401, 'Chưa đăng nhập.');
       const mine = await ensureProfile(user);
-      const all = await store.listProfiles();
+      const all = await store.listRivals(user.id, 8);
       const rivals = all
         .filter(p => p.userId !== user.id && p.user !== user.user)
         .slice(0, 8)
         .map(p => ({ user: p.user, rank: p.rank, power: p.power | 0, squad: p.squad || [] }));
-      return ok({ myRank: mine.rank, rivals });
+      return ok({ myRank: mine.rank, rivals, ranked: false });
     }
 
     if (m === 'POST' && path === '/api/arena/result') {
       if (!user) return fail(401, 'Chưa đăng nhập.');
-      const defenderName = String(body.defender || '');
-      const win = !!body.win;
-      const attacker = await ensureProfile(user);
-      const defenderUser = await store.findUserByName(defenderName);
-      if (!defenderUser) return fail(404, 'Không tìm thấy đối thủ.');
-      const defender = await ensureProfile(defenderUser);
-      if (win && attacker.rank > defender.rank) {
-        const ar = attacker.rank;
-        attacker.rank = defender.rank;
-        defender.rank = ar;
-        await store.putProfile(user.id, attacker);
-        await store.putProfile(defenderUser.id, defender);
-      } else {
-        await store.putProfile(user.id, attacker);
-      }
-      return ok({ rank: attacker.rank });
+      // No authoritative combat runner exists on the server yet. A signed
+      // match ticket would still not prove a client-declared victory. Fail
+      // closed until shared combat replay + one atomic settlement are wired.
+      return { status: 503, json: {
+        code: 'ARENA_VERIFIER_UNAVAILABLE',
+        error: 'Đấu hạng online đang bảo trì. Hạng và phần thưởng chưa thay đổi.'
+      } };
     }
 
     if (m === 'GET' && path === '/api/chat') {
@@ -495,14 +487,15 @@ export function createApp(deps) {
       const mine = await ensureProfile(user);
       const names = Array.isArray(mine.friends) ? mine.friends : [];
       const inboxNames = Array.isArray(mine.friendInbox) ? mine.friendInbox : [];
-      const all = await store.listProfiles();
+      const all = await store.getProfilesByNames([...new Set([...names, ...inboxNames])]);
       const pick = name => {
         const p = all.find(x => x.user === name);
         return p ? { user: p.user, power: p.power | 0, rank: p.rank, chapter: p.chapter | 0 } : { user: name, power: 0, rank: 0, chapter: 0 };
       };
       const list = names.map(pick);
       const inbox = inboxNames.map(pick);
-      const suggest = all
+      const suggestions = await store.listFriendSuggestions(user.id, names, 12);
+      const suggest = suggestions
         .filter(p => p.user !== user.user && !names.includes(p.user))
         .sort((a, b) => (b.power || 0) - (a.power || 0))
         .slice(0, 12)
@@ -562,7 +555,7 @@ export function createApp(deps) {
     if (m === 'GET' && path === '/api/leaderboard') {
       if (!user) return fail(401, 'Chưa đăng nhập.');
       const by = String(query.by || 'power');
-      const all = await store.listProfiles();
+      const all = await store.listLeaderboard(by, 20);
       const sorted = [...all].sort((a, b) => {
         if (by === 'arena') return (a.rank || 9999) - (b.rank || 9999);
         if (by === 'tower') return (b.towerBest || 0) - (a.towerBest || 0);

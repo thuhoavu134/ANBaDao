@@ -11,7 +11,8 @@ test('L74-T1: wrap renderNet + netAuth, hide server field, add Google button', (
   const ui = read('src/ui/net-auth-runtime.js');
   assert.match(ui, /const baseRender = renderNet/);
   assert.match(ui, /renderNet = function/);
-  assert.match(ui, /const baseAuth = netAuth/);
+  assert.match(ui, /netAuth = async function netAuthSameOrigin/);
+  assert.match(ui, /await window\.HonVietCloud\.signIn\(result\)/);
   assert.match(ui, /location\.origin/);
   assert.match(ui, /net_code/);
   assert.match(ui, /\/api\/auth\/oauth\/google/);
