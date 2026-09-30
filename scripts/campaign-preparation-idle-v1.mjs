@@ -23,12 +23,12 @@ export function preparationSourceSpecs(html) {
   return vm.runInNewContext(declarations.join('\n') + '\nspriteSpecs', {}, { timeout: 1000 });
 }
 
-export async function buildPreparationIdlePages(root, specs) {
+export async function buildPreparationIdlePages(root, specs, { pageFrames = PREPARATION_PAGE_FRAMES, outputBase = 'assets/characters/preparation-idle-v1', includePoster = true } = {}) {
   const packs = {};
   for (const [id, spec] of Object.entries(specs)) {
     const { data, info } = await sharp(join(root, 'dist', spec.src)).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
     const { cellW, cellH, frames } = spec;
-    const outputDir = 'assets/characters/preparation-idle-v1/' + id;
+    const outputDir = outputBase + '/' + id;
     mkdirSync(join(root, 'dist', outputDir), { recursive: true });
     const framePixels = index => {
       const x = index % spec.cols * (spec.strideW || cellW) + (spec.pad || 0);
@@ -49,10 +49,10 @@ export async function buildPreparationIdlePages(root, specs) {
       return { src, cols, rows: Math.ceil(count / cols), frames: count, atlasWidth: width, atlasHeight: height,
         strideW: cellW, strideH: cellH, pad: 0 };
     };
-    const poster = await save(framePixels(0), 1, 1, 'idle');
+    const poster = includePoster ? await save(framePixels(0), 1, 1, 'idle') : null;
     const pages = [];
-    for (let start = 0; start < frames; start += PREPARATION_PAGE_FRAMES) {
-      const count = Math.min(PREPARATION_PAGE_FRAMES, frames - start), cols = Math.min(8, count);
+    for (let start = 0; start < frames; start += pageFrames) {
+      const count = Math.min(pageFrames, frames - start), cols = Math.min(8, count);
       const width = cols * cellW, pixels = Buffer.alloc(width * Math.ceil(count / cols) * cellH * 4);
       for (let index = 0; index < count; index++) {
         const frame = framePixels(start + index), x = index % cols * cellW, y = Math.floor(index / cols) * cellH;
@@ -60,7 +60,7 @@ export async function buildPreparationIdlePages(root, specs) {
       }
       pages.push(await save(pixels, cols, count, 'page-' + pages.length));
     }
-    packs[id] = { pageFrames: PREPARATION_PAGE_FRAMES, poster, pages };
+    packs[id] = { pageFrames, poster, pages };
   }
   return packs;
 }
