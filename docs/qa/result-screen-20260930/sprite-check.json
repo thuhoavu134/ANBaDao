@@ -1,0 +1,22 @@
+{
+  "atlasDimensions": [
+    2892,
+    2160
+  ],
+  "sourceVerified": true,
+  "frames": 96,
+  "alphaRange": [
+    0,
+    255
+  ],
+  "cell": [
+    235,
+    264
+  ],
+  "stride": [
+    241,
+    270
+  ],
+  "pad": 3,
+  "cycleMs": 6000
+}

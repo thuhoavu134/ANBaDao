@@ -192,6 +192,8 @@ await buildBattleReadiness(root);
 // Result-screen motion runs after readiness so large authored atlases can reuse
 // any build-sized variants before the final iframe payload is synchronized.
 await import('./result-character-motion-v1.mjs');
+const { installResultScreenContract } = await import('./result-screen-contract-v1.mjs');
+installResultScreenContract(root);
 
 // Final battle visual profile: keep authored clocks, but lower iOS canvas/atlas pressure.
 const { buildBattleMobilePressure } = await import('./battle-mobile-pressure-v1.mjs');

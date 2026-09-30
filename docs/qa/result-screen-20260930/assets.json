@@ -1,0 +1,27 @@
+[
+  {
+    "path": "assets/characters/thay-mo/idle-v3193-atlas.png",
+    "bytes": 3538775,
+    "gitSha": "4ecf2c2f290c8bbf6bb85848917e4a0857a74119"
+  },
+  {
+    "path": "assets/result-icons-art/gold-imagen.png",
+    "bytes": 56955,
+    "gitSha": "fb7d593ce717901cdefef8d4795b354121e2da93"
+  },
+  {
+    "path": "assets/result-icons-art/mastery-imagen.png",
+    "bytes": 62533,
+    "gitSha": "3682b0dfba6cccf6004b9fba7b5a62399aa3678f"
+  },
+  {
+    "path": "assets/result-icons-art/scroll-imagen.png",
+    "bytes": 64446,
+    "gitSha": "c2cce59614daac715e498637546acf926af90867"
+  },
+  {
+    "path": "assets/meta/economy/icon-gems.png",
+    "bytes": 75650,
+    "gitSha": "5816682e09ce697b713ac9d21b6687666cb7b4f9"
+  }
+]

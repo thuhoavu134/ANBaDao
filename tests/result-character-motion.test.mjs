@@ -81,7 +81,10 @@ test('Victory Run waits for its atlas before starting the visible entry timer', 
   assert.ok(patch.includes('qa.runFrames>=MIN_RUN_FRAMES'));
   assert.ok(patch.includes('later(finishRun,5000)'));
   assert.ok(patch.includes('if(!runStarted)finishRun()'));
-  assert.ok(patch.includes('current.classList.remove("irv-motion-run-active")'));
+  assert.ok(patch.includes('const idleReady='));
+  assert.ok(patch.includes('if(!idleReady)'));
+  assert.ok(patch.includes('stopRun();current.classList.add("irv-motion-idle")'));
+  assert.ok(patch.includes('opacity:0!important;visibility:hidden!important'));
 });
 
 
@@ -89,3 +92,4 @@ test('result heroes stay in the wing focus across victory and mobile defeat', ()
   assert.ok(patch.includes('irv-authored-motion.irv-victory .irv-hero-wrap{top:13.5%}'));
   assert.ok(patch.includes('irv-authored-motion.irv-defeat .irv-hero-wrap{top:11.5%}'));
 });
+

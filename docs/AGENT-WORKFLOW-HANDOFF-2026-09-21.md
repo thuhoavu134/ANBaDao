@@ -272,3 +272,16 @@ Baseline `13aa7c4` (PR #244). `scripts/battle-persistent-pages-v1.mjs` is the la
 `scripts/battle-ai-progress-v1.mjs` validates both AI dispatch sites and routes an unavailable turn through the existing scheduler. Keep legal target/slot ownership and never retry partially applied damage. `scripts/battle-enemy-cell-cleanup-v1.mjs` produces a hash-guarded derivative that removes two neighbour fragments from the enemy archer cell without changing the cell grid.
 
 Evidence and limits: `docs/qa/battle-flicker-20260930/README.md`. 73 focused tests plus the existing inline-runtime check PASS; 224 frame pixel comparisons and offline boundary renders checked. Full clean build, interactive browser, physical Safari and production certification NOT RUN in this sparse recovery. Existing owner merge/gate authorization applies.
+
+
+## 2026-09-30 — Result screen / full-page settlement repair
+
+User supplied a Victory screenshot with an opaque Thầy Mo portrait, static/cropped reward labels and ineffective result buttons. Merge remains authorized by the user's earlier explicit gate waiver.
+
+- Reproduced on the served site in Chromium: iframe Confirm advanced 1–1 → 1–2; full-page Next from 1–2 incorrectly completed chapter 1, opened chapter 2 and left player EXP unchanged. The return consumer ran before late campaign route initialization and did not restore ST mode/chapter/stage.
+- Owner: `scripts/result-screen-contract-v1.mjs`, installed after result motion; patches existing result action/transport/return/settlement owners. One native click listener on the result root replaces pointerup/touchend/click capture dispatch. Storage errors are visible and retryable; host save failure releases the existing settlement guard and reports to the child.
+- Full-page results wait for DOMContentLoaded, validate the lease/stage, restore context, and clear pending state only after successful settlement. Gold, first-clear player XP, capped mastery and pet participation share the existing receipt. Reward display uses existing preview/quest/chapter rules and distinguishes player EXP from hero progression. No economy amount is raised.
+- Existing motion owner now handles Thầy Mo's verified transparent padded idle atlas (96 frames / 6000 ms). The pack has no authored Run/Fall: entry translates the animated idle, defeat uses the existing generic fall transform. Do not describe this as a newly authored running clip. Other authored heroes retain their Run clips; legacy roster uses its battle archetype pose. Lục Ảnh result uses verified RGBA idle and the compact legacy painter is removed to avoid competing RAFs. Idle is drawn before the entrance body is hidden.
+- 35 focused tests passed against patched generated HTML; all inline scripts parse; five served assets match current-main Git blob hashes. Inspected six extracted Thầy Mo frames with clean transparency/full body.
+- Full clean npm build/test and post-fix browser/iPhone visual QA NOT_RUN in this recovered sparse workspace. Production reproduction is pre-fix evidence, not proof of the new deployment. See `docs/qa/result-screen-20260930/README.md`.
+
