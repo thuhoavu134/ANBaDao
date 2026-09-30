@@ -61,6 +61,7 @@ function renderFixture() {
     isLucAnh: u => u.hero === 'luc-anh', isDinhLoi: u => u.hero === 'dinh-loi',
     linhDongFrame: () => 0, bachDienFrame: () => 0, lucAnhFrame: () => 0, dinhLoiFrame: () => 0,
     bachDienImage() {}, drawLinhDongAtlas: paint, drawBachDienAtlas: paint, drawLucAnhAtlas: paint, drawDinhLoiAtlasFrame: paint,
+    __hvPersistentPages: { draw: paint },
     LUC_ANH_META: { idle: {}, attack: {}, defeated: {} }, lucAnhPlaybackRate: () => 1,
     lucAnhDisplaySize: () => 330, lucAnhDisplayBaseline: () => 48, DINH_LOI_IMAGES: {},
     DINH_LOI_ACTION_MS: 4000, DINH_LOI_FALL_MS: 4000, DINH_LOI_HIT_MS: 1000, DINH_LOI_FRAMES: 64,

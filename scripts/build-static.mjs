@@ -230,6 +230,14 @@ await import('./auto-skill-cadence-v1.mjs');
 const { installBattleFormationTargeting } = await import('./battle-formation-targeting-v1.mjs');
 installBattleFormationTargeting(root);
 
+// Looping bodies/shields must not compete with temporary action leases.
+const { installBattlePersistentPages } = await import('./battle-persistent-pages-v1.mjs');
+await installBattlePersistentPages(root);
+const { installBattleAiProgress } = await import('./battle-ai-progress-v1.mjs');
+installBattleAiProgress(root);
+const { installBattleEnemyCellCleanup } = await import('./battle-enemy-cell-cleanup-v1.mjs');
+await installBattleEnemyCellCleanup(root);
+
 // battle.html is now the single runtime source for iframe and iOS full-page combat.
 // Do not duplicate ~1.5 MB of battle markup as base64 inside index.html; on mobile
 // that keeps two copies alive exactly when the battle document starts parsing.

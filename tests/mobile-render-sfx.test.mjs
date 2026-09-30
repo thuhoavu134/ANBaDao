@@ -193,7 +193,9 @@ test('built battle keeps opaque canvas and stable camera; all inline JS parses',
   assert.match(battle, /if \(state\.sound\) window\.HonVietSfx\?\.play\(action === 'ultimate' \? 'ultimate' : action === 'skill' \? 'skill' : 'basic'\)/);
   assert.doesNotMatch(battle, /tone\(critical \?/);
   assert.match(battle, /__hvNativeLowMemoryIOS=\/iPad\|iPhone\|iPod\/i/);
-  assert.match(battle, /maxBytes=__hvNativeLowMemoryIOS\?64\*1024\*1024:128\*1024\*1024/);
+  // The looping-page reserve is deducted from the old native budget. The
+  // aggregate 64 MiB contract is exercised in battle-persistent-pages.test.
+  assert.match(battle, /maxBytes=\(__hvNativeLowMemoryIOS\?64\*1024\*1024:128\*1024\*1024\)-\d+/);
   assert.match(battle, /maxLoading=__hvNativeLowMemoryIOS\?1:2/);
   assert.match(battle, /attack:1\.3445945945945945/);
 });
