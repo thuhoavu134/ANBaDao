@@ -1,0 +1,43 @@
+✔ result motion is installed after readiness and before the battle payload finalize (1.162144ms)
+✔ built result screen has authored Victory Run to Idle and one-shot Defeat Fall (4.54037ms)
+✔ result manifest references real authored motion assets and readiness variants (0.31226ms)
+✔ authored result animator owns its RAF and guards legacy painters (0.197676ms)
+✔ default roster gets full-body generic Run Idle and one-shot Fall fallback (0.245897ms)
+✔ large authored fall poses reserve copy clearance on desktop (0.122394ms)
+✔ Victory Run waits for its atlas before starting the visible entry timer (0.191914ms)
+✔ result heroes stay in the wing focus across victory and mobile defeat (0.103594ms)
+✔ full-page result waits for the real 18-stage route, restores context, advances only to 1-3 (5.124341ms)
+✔ Confirm settles the same result but returns to campaign without starting another battle (1.718468ms)
+✔ defeat returns without advancing the current stage (1.456279ms)
+✔ a mismatched return cannot claim a different stage (1.767685ms)
+✔ failed settlement retains the pending event, lease and retry URL (2.150328ms)
+✔ storage failure keeps full-page result in place and permits a successful retry (2.2011ms)
+✔ iframe result uses the annotated parent transport; Back uses the same full-page bridge (2.907691ms)
+✔ one click owner covers touch-generated clicks and double activation cannot publish twice (1.420233ms)
+✔ publish failure and host save rejection re-enable buttons with a visible retry message (1.458773ms)
+✔ defeat Back does not post to itself on a full-page battle (1.22512ms)
+✔ gold, real first-clear XP and capped mastery commit once across repeated result messages (3.867332ms)
+✔ failed save rolls back gold, XP and mastery; retry grants the same reward once (2.930125ms)
+✔ loss grants no win gold or first-clear XP; participation is still recorded once (3.462626ms)
+✔ visible reward rows use values and labels from the result, with no fictitious equipment (27.572337ms)
+✔ result idle uses verified Lục Ảnh RGBA and exact padded Thầy Mo cells/timing (5.510419ms)
+✔ every generated inline script remains syntax valid (99.333156ms)
+✔ failed payload transport does not latch resultPublished; a second tap can publish (17.743873ms)
+✔ reward preview uses real first-clear XP and capped mastery without mutating the save or payload gold (5.385851ms)
+✔ Thầy Mo entrance draws real padded frames then switches to continuous idle and cleans up (9.63153ms)
+✔ a delayed idle atlas keeps the entrance body visible until the first idle frame can be drawn (3.919331ms)
+✔ reduced-motion defeat paints its hold frame after the image is ready (2.730897ms)
+✔ result snapshots carry the battle appearance and Lục Ảnh has no competing legacy painter (4.117916ms)
+✔ R08 build installs the battle protocol after the transaction contract (2.765904ms)
+✔ battle bridge protocol annotates every parent message and remains syntactically valid (89.519864ms)
+✔ the shared battle host message helper satisfies the settlement protocol (28.955491ms)
+✔ settlement hook keeps existing reward values but commits before progress/navigation (0.31936ms)
+✔ navigation controller has one active session and blocks stale/duplicate messages (0.817905ms)
+ℹ tests 35
+ℹ suites 0
+ℹ pass 35
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 479.940642
