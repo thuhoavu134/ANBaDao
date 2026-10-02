@@ -29,3 +29,11 @@ Existing guest QA session in Chromium at luc-than-chi.vercel.app:
 Affected source owners replayed on downloaded production HTML, retaining late modal/callback transforms; all inline scripts parse and the result patch is idempotent. Full clean npm build/full suite not run in this sparse recovery.
 
 Browser observations above are PRE-FIX desktop Chromium, not post-fix or physical iPhone/Safari certification. GitHub merge and Vercel deployment must be verified separately. Main-quest/chapter awards retain their separate existing owners. User previously authorized merge without the workflow gate.
+
+## Full CI follow-up
+
+PR #247 merged as `de1f949`. CI run [36958258385](https://github.com/bktimmy247/luc-than/actions/runs/36958258385) passed the full Build step; 1443/1446 tests passed. Three test harness assumptions needed updating: the return consumer is now async, extracted lore needs its browser window, and the XP settlement harness must load the real mastery participant added in PR #246. Assertions for navigation, all 108 encounters, failed-save rollback and duplicate XP remain intact.
+
+The four affected suites (campaign-flow, player-progress-runtime, campaign-loot-return, result-settlement-regression) pass 47/47 locally after these harness corrections. The follow-up does not change game runtime. Full CI is rerun on the follow-up PR.
+
+Vercel rejected the PR #247 commit author for the connected team. Merge success is not deployment success; post-fix production/iPhone verification remains pending authorized deployment.
