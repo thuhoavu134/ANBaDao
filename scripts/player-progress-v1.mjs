@@ -29,9 +29,9 @@ patch('+(typeof petBondSuffix==="function"?petBondSuffix(petBond):""));\n  }\n\n
   }
 
   function closeOverlay()`);
-// Preserve the explicit Next action through both existing lore wrappers.
-for(const [a,b] of [['return baseBattle(battleId, win => {','return baseBattle(battleId, (win,resultAction) => {'],['return prev(battleId, win => {','return prev(battleId, (win,resultAction) => {']]) patch(a,b);
-if(html.split("if (typeof cb === 'function') cb(win);").length!==3)throw new Error('Lore callback boundaries');
+// Preserve Next through the competitive-loot wrapper. Seal loot now settles atomically.
+patch('return prev(battleId, win => {','return prev(battleId, (win,resultAction) => {');
+if(html.split("if (typeof cb === 'function') cb(win);").length!==2)throw new Error('Lore callback boundaries');
 html=html.replaceAll("if (typeof cb === 'function') cb(win);","if (typeof cb === 'function') cb(win,resultAction);");
 // UI uses existing scene click owner and refresh cadence, no document listener.
 patch('function currentCheckpoint() { return campaignCheckpoint(P, DATA.chapters, chapterBattleSequence); }','function currentCheckpoint() { if (!hvEnsurePlayerProgress()) return null; return campaignCheckpoint(P, DATA.chapters, chapterBattleSequence); }');
@@ -64,3 +64,4 @@ patch("const rw = result.def?.reward || {};\n      showRewardCeremony?.('HOÀN T
 patch('</head>','<style id="hv-player-progress-style">'+read('src/ui/player-progress.css')+'</style></head>');
 writeFileSync('dist/index.html',html);
 console.log('Player level1–60: existing108 encounters, entry gate, atomic XP and additive migration');
+

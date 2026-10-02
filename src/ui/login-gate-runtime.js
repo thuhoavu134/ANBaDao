@@ -4,6 +4,7 @@
 
   const LAST_KEY = 'hv.login.last';
   const GUEST_KEY = 'hv.login.guest';
+  const ENTERED_KEY = 'hv.login.entered';
   const I_FB = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="#1877F2"/><path fill="#fff" d="M13.5 8.5h1.7V6.1c-.4-.1-1.2-.2-2.1-.2-2.1 0-3.5 1.3-3.5 3.6V11H8v2.6h1.6V19h2.6v-5.4h2.1l.4-2.6h-2.5V9.8c0-.7.2-1.3 1.3-1.3z"/></svg>';
   const I_APPLE = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#111" d="M16.7 12.3c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.2-2.8.9-3.5.9s-1.8-.8-3-.8c-1.5 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.3 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7 2-.1 2.9-2.2c1-.1.8-2.2 2.2-3.3-.1 0-2.1-.8-2.1-3.2zM14.8 5.6c.6-.8 1.1-1.8.9-2.9-0.9.1-2 .6-2.6 1.4-.6.7-1.1 1.8-.9 2.8 1 .1 2-.5 2.6-1.3z"/></svg>';
   const I_GG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#EA4335" d="M12 10.2v3.6h5.1c-.2 1.2-1.5 3.6-5.1 3.6-3.1 0-5.6-2.5-5.6-5.6S8.9 6.2 12 6.2c1.8 0 3 .7 3.7 1.4l2.5-2.4C16.7 3.7 14.6 2.8 12 2.8 6.9 2.8 2.8 6.9 2.8 12S6.9 21.2 12 21.2c5.5 0 9.1-3.8 9.1-9.2 0-.6-.1-1.1-.2-1.8H12z"/><path fill="#34A853" d="M3.9 7.4l3 2.2C7.7 7.3 9.7 6.2 12 6.2c1.8 0 3 .7 3.7 1.4l2.5-2.4C16.7 3.7 14.6 2.8 12 2.8 8.2 2.8 4.9 4.9 3.9 7.4z"/><path fill="#FBBC05" d="M12 21.2c2.5 0 4.6-.8 6.1-2.2l-2.8-2.2c-.8.5-1.8.9-3.3.9-3.5 0-4.9-2.4-5.1-3.6H3.8v2.3C5 19.3 8.2 21.2 12 21.2z"/><path fill="#4285F4" d="M21.1 12c0-.6-.1-1.1-.2-1.8H12v3.6h5.1c-.3 1.4-1.2 2.4-2.4 3.1l2.8 2.2c1.6-1.5 2.6-3.7 2.6-7.1z"/></svg>';
@@ -253,6 +254,7 @@
   }
   function hideLogin() {
     entered = true;
+    try { sessionStorage.setItem(ENTERED_KEY, NET.user || ''); } catch {}
     root.hidden = true;
     root.classList.remove('is-open');
     document.body.classList.remove('login-gate-open');
@@ -263,6 +265,20 @@
   function canEnter() {
     return hasSession() || (typeof NET === 'object' && NET.guest && NET.user);
   }
+  async function resumeBattleReturn() {
+    if (new URLSearchParams(location.search).get('hvBattleReturn') !== '1' || !canEnter()) return false;
+    const user = NET.user;
+    try {
+      if (sessionStorage.getItem(ENTERED_KEY) !== user) return false;
+      if (hasSession()) await window.HonVietCloud.ready();
+    } catch (error) {
+      setErr(error?.message || 'Chưa tải được tiến trình tài khoản. Vui lòng thử lại.');
+      return false;
+    }
+    if (!canEnter() || NET.user !== user) return false;
+    hideLogin();
+    return true;
+  }
   async function enterGame() {
     pinServer();
     if (hasSession()) {
@@ -271,6 +287,9 @@
     }
     if (typeof saveNet === 'function') saveNet();
     hideLogin();
+    // Restore a pending battle before navigating to the hub. Continue also
+    // retries a return interrupted by an unavailable account save.
+    if (await window.__HV_RESUME_BATTLE_RETURN?.()) return true;
     if (typeof refreshResbar === 'function') refreshResbar();
     playLoginMusic();
     if (typeof navTo === 'function') navTo('hub');
@@ -487,10 +506,12 @@
     netLogout = function netLogoutWithGate() {
       baseOut.apply(this, arguments);
       if (typeof NET === 'object') { NET.guest = false; NET.token = ''; }
+      try { sessionStorage.removeItem(ENTERED_KEY); } catch {}
       showLogin();
     };
   }
 
+  window.HonVietLoginGate = Object.freeze({ resumeBattleReturn });
   showLogin();
   let code = '';
   try { code = new URLSearchParams(location.search).get('net_code') || ''; } catch {}

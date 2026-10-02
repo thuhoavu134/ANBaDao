@@ -13,20 +13,20 @@ function run(source,env={}){const ctx=vm.createContext({console,URL,URLSearchPar
 const result={sessionId:'regression',battleId:'stage-2',win:true,resultAction:'next',rewards:[{id:'gold',value:180}],units:[{team:'player',hp:100}]};
 const lease={sessionId:'regression',battleId:'stage-2',mode:'campaign',chapterIdx:0,campaignBattleIndex:1};
 
-function returnHarness({action='next',win=true,ready='loading',success=true,leaseOverride={}}={}){
+function returnHarness({action='next',win=true,ready='loading',success=true,leaseOverride={},loginGate}={}){
  const pending={source:'hon-viet-battle',type:'battle-result',payload:{...result,win,resultAction:action}};
  const values=new Map([['hvBattleHostEvent',JSON.stringify(pending)],['hvBattleHostLease',JSON.stringify({...lease,...leaseOverride})]]);
  const calls=[],listeners=new Map(),P={campaignStages:{0:1}};
  let route=['stage-1']; // the early story route which caused false chapter completion
  const env={P,ST:{mode:null,chapterIdx:null,campaignBattleIndex:0},activeBattle:null,
-  location:{search:'?hvBattleReturn=1',href:'https://game.test/index.html?hvBattleReturn=1'},history:{replaceState(...args){calls.push(['url',args[2]])}},window:{name:'config'},
+  location:{search:'?hvBattleReturn=1',href:'https://game.test/index.html?hvBattleReturn=1'},history:{replaceState(...args){calls.push(['url',args[2]])}},window:{name:'config',HonVietLoginGate:loginGate},
   sessionStorage:{getItem:k=>values.get(k),removeItem:k=>values.delete(k)},
   document:{readyState:ready,addEventListener:(event,fn)=>listeners.set(event,fn)},
   navTo:route=>calls.push(['nav',route]),toast:()=>{},persist:()=>true,refreshResbar:()=>{},
   chapterBattleSequence:()=>route,setTimeout:fn=>fn(),startChapter:(idx)=>calls.push(['next',idx]),endChapter:()=>calls.push(['endChapter']),abortIntegratedBattle:()=>{},
   finishIntegratedBattle:payload=>{calls.push(['settle',env.ST.mode,env.ST.chapterIdx,env.ST.campaignBattleIndex]);if(success){ctx.activeBattle.onEnd(payload.win,payload.resultAction);return true;}return false;}};
- const ctx=run(section(host,'  function consumeBattleReturn() {','\n})();'),env);
- return {ctx,calls,P,values,boot(){route=Array.from({length:18},(_,i)=>'stage-'+(i+1));listeners.get('DOMContentLoaded')?.();}};
+ const ctx=run(section(host,'  async function consumeBattleReturn() {','\n})();'),env);
+ return {ctx,calls,P,values,boot(){route=Array.from({length:18},(_,i)=>'stage-'+(i+1));return listeners.get('DOMContentLoaded')?.();}};
 }
 
 test('full-page result waits for the real 18-stage route, restores context, advances only to 1-3',()=>{
@@ -161,4 +161,17 @@ test('result snapshots carry the battle appearance and Lục Ảnh has no compet
  assert.equal((snapshot.match(/archetype:unit.archetype/g)||[]).length,2);
  const show=section(battle,' function show(victory,snap){',' window.__showIntegratedResultV6=show;');assert.doesNotMatch(show,/drawLucAnhIdle\(/);
  const h=motionHarness();assert.equal(h.window.__HV_RESULT_MOTION_CAN_DRAW({sourceId:'lac_yen',archetype:'ranger'}),true);assert.equal(h.window.__HV_RESULT_MOTION_CAN_DRAW({sourceId:'to_diep',archetype:'duelist'}),true);
+});
+
+test('full-page return awaits the account and shares one in-flight settlement',async()=>{
+ let release;const h=returnHarness({loginGate:{resumeBattleReturn:()=>new Promise(resolve=>{release=resolve;})}});
+ const pending=h.boot();assert.equal(h.P.campaignStages[0],1);assert.equal(h.values.size,2);
+ assert.equal(h.ctx.window.__HV_RESUME_BATTLE_RETURN(),pending);
+ release(true);assert.equal(await pending,true);assert.equal(h.P.campaignStages[0],2);
+ assert.equal(h.calls.filter(x=>x[0]==='settle').length,1);assert.equal(h.values.size,0);
+});
+test('blocked login retains the result; Continue retries the same return',async()=>{
+ let ready=false;const h=returnHarness({loginGate:{resumeBattleReturn:async()=>ready}});
+ assert.equal(await h.boot(),false);assert.equal(h.values.size,2);assert.equal(h.P.campaignStages[0],1);
+ ready=true;assert.equal(await h.ctx.window.__HV_RESUME_BATTLE_RETURN(),true);assert.equal(h.P.campaignStages[0],2);
 });

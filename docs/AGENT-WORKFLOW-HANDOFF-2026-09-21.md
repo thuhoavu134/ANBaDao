@@ -285,3 +285,14 @@ User supplied a Victory screenshot with an opaque Thầy Mo portrait, static/cro
 - 35 focused tests passed against patched generated HTML; all inline scripts parse; five served assets match current-main Git blob hashes. Inspected six extracted Thầy Mo frames with clean transparency/full body.
 - Full clean npm build/test and post-fix browser/iPhone visual QA NOT_RUN in this recovered sparse workspace. Production reproduction is pre-fix evidence, not proof of the new deployment. See `docs/qa/result-screen-20260930/README.md`.
 
+
+
+## 2026-10-02 — campaign loot and battle return continuity
+
+Baseline `8a57b69` (PR #246). Live Chromium confirmed Confirm/Next progression, but exposed missing seal rewards in the result display/full-page settlement and a welcome gate covering the next running battle.
+
+`HonVietSealLoot` in `src/ui/lore-luc-than-runtime.js` retains the existing stage formula/hero pool; the existing result receipt now awards seal gold/gems/shards for both transports. Do not restore the old `runBattleWithSealLoot` award callback. `scripts/player-progress-v1.mjs` preserves Next through the remaining competitive callback.
+
+Full-page settlement awaits `HonVietLoginGate.resumeBattleReturn()`: same account previously entered in this tab, existing cloud-readiness checks, no new login. Logout clears the per-tab marker. `__HV_RESUME_BATTLE_RETURN` shares one in-flight attempt and lets Continue retry retained data.
+
+47 focused tests PASS; initial regressions failed. Affected build owners replayed on downloaded production HTML; full clean build/full suite and physical Safari NOT_RUN in the sparse workspace. Evidence: `docs/qa/campaign-loot-20261002/README.md`. Existing owner gate waiver/merge authorization applies. GitHub and Vercel are checked separately.
