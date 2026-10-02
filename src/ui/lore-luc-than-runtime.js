@@ -119,19 +119,32 @@
     };
   }
 
-  function grantLoot(loot) {
-    if (typeof P !== 'object' || !loot) return;
-    if (loot.gold) P.gold = (P.gold || 0) + loot.gold;
-    if (loot.gems) P.gems = (P.gems || 0) + loot.gems;
-    if (loot.shards && DATA && DATA.heroes) {
-      const pool = Object.keys(DATA.heroes);
-      const hid = pool[(Math.random() * pool.length) | 0];
-      P.shards = P.shards || {};
-      P.shards[hid] = (P.shards[hid] || 0) + loot.shards;
-    }
-    if (typeof persist === 'function') persist();
-    if (typeof refreshResbar === 'function') refreshResbar();
+  function previewStageLoot(battleId, context) {
+    const ch = context?.chapterIdx, stage = context?.campaignBattleIndex;
+    if (context?.mode !== 'campaign' || !Number.isInteger(ch) || ch < 0 || ch >= CHAPTERS.length ||
+        !Number.isInteger(stage) || stage < 0 || stage >= SEAL_STAGES ||
+        battleId !== 'lt_seal_' + ch + '_' + stage) return {};
+    return stageLoot(ch, stage);
   }
+
+  // The result transaction owns awards for iframe and full-page battles.
+  // Preview is read-only; retain the same shard draw while a save retries.
+  let pendingLoot = null;
+  window.HonVietSealLoot = Object.freeze({
+    preview: previewStageLoot,
+    prepare(battleId, context, commandId) {
+      const reward = previewStageLoot(battleId, context);
+      if (!reward.gold) return reward;
+      if (pendingLoot?.commandId === commandId && commandId) return { ...pendingLoot.reward };
+      if (reward.shards) {
+        const pool = Object.keys(DATA.heroes || {});
+        if (pool.length) reward.shardHero = pool[(Math.random() * pool.length) | 0];
+        else reward.shards = 0;
+      }
+      if (commandId) pendingLoot = { commandId, reward: { ...reward } };
+      return reward;
+    }
+  });
 
   function expandSeals() {
     if (typeof DATA !== 'object' || !DATA.encounters) return;
@@ -156,25 +169,6 @@
       }
       return out;
     };
-    if (typeof runBattle === 'function') {
-      const baseBattle = runBattle;
-      runBattle = function runBattleWithSealLoot(battleId, cb) {
-        return baseBattle(battleId, win => {
-          if (win && typeof ST === 'object' && ST.mode === 'campaign') {
-            const ch = Number(ST.chapterIdx || 0);
-            const s = Number(ST.campaignBattleIndex || 0);
-            const loot = stageLoot(ch, s);
-            grantLoot(loot);
-            if (typeof toast === 'function') {
-              toast('Ải ' + (s + 1) + '/' + SEAL_STAGES + ' · +🪙' + loot.gold
-                + (loot.gems ? ' +💎' + loot.gems : '')
-                + (loot.shards ? ' +🧩' + loot.shards : ''));
-            }
-          }
-          if (typeof cb === 'function') cb(win);
-        });
-      };
-    }
   }
 
   function pickShardHero() {

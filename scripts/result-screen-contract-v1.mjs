@@ -165,8 +165,45 @@ export function patchResultHost(host){
   return host;
 }
 
+export function patchCampaignResultContinuation(host){
+  if(host.includes('HV_CAMPAIGN_LOOT_SETTLEMENT_V1'))return host;
+  host=once(host,'    const transaction=window.HonVietTransaction?.commit?.({\n      commandId,',`    // HV_CAMPAIGN_LOOT_SETTLEMENT_V1: one receipt for battle and seal loot.
+    const previous=window.HonVietTransaction?.read?.(P,commandId);
+    const sealLoot=payload.win?(previous?(previous.result?.sealLoot||{}):(window.HonVietSealLoot?.prepare?.(payload.battleId,ST,commandId)||{})):{};
+    const transaction=window.HonVietTransaction?.commit?.({
+      commandId,`);
+  host=once(host,'      reward:{gold},\n      source:"battle.settlement",','      reward:{...sealLoot,gold:gold+(sealLoot.gold||0)},\n      source:"battle.settlement",');
+  host=once(host,'win:Boolean(payload.win),playerXp:hvCampaignSettlementXp(player,payload)', 'win:Boolean(payload.win),sealLoot,playerXp:hvCampaignSettlementXp(player,payload)');
+  host=once(host,"    let rewardNote='Nhận khi xác nhận kết quả trận.';",`    const sealLoot=window.HonVietSealLoot?.preview?.(battleId,ST)||{};
+    for(const id of ['gold','gems','shards'])if(sealLoot[id])rewardDetails.push({id,value:sealLoot[id],
+      name:({gold:'Vàng vượt ải',gems:'Ngọc vượt ải',shards:'Mảnh tướng ngẫu nhiên'})[id],detail:'Thưởng ải '+(ST.chapterIdx+1)+'–'+(ST.campaignBattleIndex+1)});
+    let rewardNote='Nhận khi xác nhận kết quả trận.';`);
+  host=once(host,'  function consumeBattleReturn() {','  async function consumeBattleReturn() {');
+  host=once(host,'    ST.mode=lease.mode;',`    if(window.HonVietLoginGate && !await window.HonVietLoginGate.resumeBattleReturn())return false;
+    ST.mode=lease.mode;`);
+  host=once(host,`    try { sessionStorage.removeItem("hvBattleHostEvent");sessionStorage.removeItem("hvBattleHostLease");window.name=''; } catch(_) {}
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',consumeBattleReturn,{once:true});
+  else consumeBattleReturn();`, `    try { sessionStorage.removeItem("hvBattleHostEvent");sessionStorage.removeItem("hvBattleHostLease");window.name=''; } catch(_) {}
+    return true;
+  }
+  let battleReturnTask=null;
+  function resumeBattleReturn(){
+    if(battleReturnTask)return battleReturnTask;
+    battleReturnTask=consumeBattleReturn().catch(error=>{
+      console.error('Không thể khôi phục kết quả trận.',error);
+      toast('Chưa khôi phục được kết quả. Tiến trình trận vẫn được giữ để thử lại.');return false;
+    }).finally(()=>{battleReturnTask=null;});
+    return battleReturnTask;
+  }
+  window.__HV_RESUME_BATTLE_RETURN=resumeBattleReturn;
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',resumeBattleReturn,{once:true});
+  else resumeBattleReturn();`);
+  return host;
+}
+
 export function installResultScreenContract(root){
   const battle=join(root,'dist/battle.html'),host=join(root,'dist/index.html');
   writeFileSync(battle,patchResultBattle(readFileSync(battle,'utf8'),readFileSync(join(root,'src/ui/result-actions-runtime.js'),'utf8')));
-  writeFileSync(host,patchResultHost(readFileSync(host,'utf8')));
+  writeFileSync(host,patchCampaignResultContinuation(patchResultHost(readFileSync(host,'utf8'))));
 }
