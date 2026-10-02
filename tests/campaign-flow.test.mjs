@@ -32,8 +32,8 @@ test('loss stops the chain and exposes recovery routes', () => {
 
 
 test('top-level mobile battle return follows Xác nhận versus Ải sau', () => {
-  const start = builtHtml.indexOf('(function consumeBattleReturn()');
-  const end = builtHtml.indexOf('})();\n})();', start);
+  const start = builtHtml.indexOf('  async function consumeBattleReturn() {');
+  const end = builtHtml.indexOf('\n})();', start);
   assert.ok(start >= 0 && end > start, 'battle-return bridge must exist');
   const bridge = builtHtml.slice(start, end);
   assert.match(bridge, /if \(payload\.resultAction === "next"\) setTimeout\(\(\) => startChapter\(idx, \{ continuing: true \}\), 360\);/);

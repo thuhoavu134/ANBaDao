@@ -55,7 +55,7 @@ test('AC3/4: built UI and AFK grant are inside existing handlers',()=>{
 });
 
 test('AC1: production lore produces 6×18 stable encounters and forwards Next',()=>{
- const c={DATA:{encounters:{template:[{id:'m',stats:{hp:100,atk:20,def:10,spd:90}}]},heroes:{}},P:{},ST:{mode:null},chapterBattleSequence:()=>['template'],runBattle:(id,cb)=>cb(true,'next'),toast:()=>{},persist:()=>true,refreshResbar:()=>{}};
+ const c={window:{},CHAPTERS:Array(6),DATA:{encounters:{template:[{id:'m',stats:{hp:100,atk:20,def:10,spd:90}}]},heroes:{}},P:{},ST:{mode:null},chapterBattleSequence:()=>['template'],runBattle:(id,cb)=>cb(true,'next'),toast:()=>{},persist:()=>true,refreshResbar:()=>{}};
  vm.createContext(c);vm.runInContext(between('  const SEAL_STAGES = 18;', '  function pickShardHero()'),c);vm.runInContext('expandSeals()',c);
  const ids=Array.from({length:6},(_,i)=>c.chapterBattleSequence(i)).flat();assert.equal(new Set(ids).size,108);
  assert.ok(ids.every(id=>c.DATA.encounters[id].length>0));let action;c.runBattle(ids[0],(win,next)=>action=next);assert.equal(action,'next');
@@ -77,6 +77,8 @@ test('AC4: real AFK claim credits EXP together with chest reset, including save 
 test('AC4: actual settlement commit rolls first-clear XP back on save failure',()=>{
  const c=context();c.hvEnsurePlayerProgress();c.ST={mode:'campaign',chapterIdx:0,campaignBattleIndex:0};
  c.safeText=(v,f)=>String(v||f);c.window.HonVietTransaction={commit:c.hvRunCommittedTransaction};
+ // Settlement now owns participation mastery; execute its real empty-squad path.
+ vm.runInContext(between('function masteryBattleProgress(', '\nfunction '),c);
  vm.runInContext(between('function applyLegacyMetaWinHooks(payload)', '\n  function closeOverlay()'),c);
  const payload={win:true,battleId:'lt_seal_0_0',sessionId:'one',units:[]};
  c.persist=()=>false;assert.equal(c.applyLegacyMetaWinHooks(payload),undefined);assert.equal(c.P.hvPlayerProgress.xp,0);assert.deepEqual(Array.from(c.P.hvPlayerProgress.clears),[]);

@@ -296,3 +296,7 @@ Baseline `8a57b69` (PR #246). Live Chromium confirmed Confirm/Next progression, 
 Full-page settlement awaits `HonVietLoginGate.resumeBattleReturn()`: same account previously entered in this tab, existing cloud-readiness checks, no new login. Logout clears the per-tab marker. `__HV_RESUME_BATTLE_RETURN` shares one in-flight attempt and lets Continue retry retained data.
 
 47 focused tests PASS; initial regressions failed. Affected build owners replayed on downloaded production HTML; full clean build/full suite and physical Safari NOT_RUN in the sparse workspace. Evidence: `docs/qa/campaign-loot-20261002/README.md`. Existing owner gate waiver/merge authorization applies. GitHub and Vercel are checked separately.
+
+### CI follow-up to PR #247
+
+Full CI Build passed; Test passed 1443/1446. Updated two existing harnesses for the async return marker, lore window and real mastery settlement function; retained behavior/rollback/duplicate assertions. All four affected suites now pass 47/47 locally. No runtime change in this follow-up. Full CI rerun required on its PR. Vercel currently rejects the commit author for team access; do not equate the merged commit with a live deployment or spoof author identity.
