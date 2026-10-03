@@ -6,9 +6,8 @@ import vm from 'node:vm';
 const entryPatch = readFileSync(new URL('../scripts/battle-entry-fail-open-v1.mjs', import.meta.url), 'utf8');
 const iosEntryPatch = readFileSync(new URL('../scripts/ios-battle-direct-enter-v1.mjs', import.meta.url), 'utf8');
 
-test('iPhone battle boot owns a WebKit-safe Canvas 2D fallback', () => {
+for (const lowMemory of [false, true]) test(`${lowMemory ? 'mobile' : 'desktop'} battle presents complete composited Canvas frames`, () => {
   assert.match(entryPatch, /function __hvCreateBattleContext\(canvas\)/);
-  assert.match(entryPatch, /__HV_BATTLE_LOW_MEMORY[\s\S]*?\? \[\{ alpha: false \}, null\]/);
   assert.match(entryPatch, /canvas\.getContext\("2d", options\)/);
   assert.match(entryPatch, /canvas\.getContext\("2d"\)/);
   assert.match(entryPatch, /const ctx = __hvCreateBattleContext\(dom\.canvas\);/);
@@ -19,7 +18,7 @@ test('iPhone battle boot owns a WebKit-safe Canvas 2D fallback', () => {
   const calls = [];
   const safeContext = { profile: 'webkit-safe' };
   const context = {
-    __HV_BATTLE_LOW_MEMORY: true,
+    __HV_BATTLE_LOW_MEMORY: lowMemory,
     canvas: {
       getContext(type, options) {
         calls.push({ type, options });
@@ -33,6 +32,25 @@ test('iPhone battle boot owns a WebKit-safe Canvas 2D fallback', () => {
   vm.runInNewContext(`${owner}\nresult = __hvCreateBattleContext(canvas);`, context);
   assert.equal(context.result, safeContext);
   assert.equal(JSON.stringify(calls), JSON.stringify([{ type: '2d', options: { alpha: false } }]));
+});
+
+test('Canvas startup falls back when context options throw or return null', () => {
+  const start = entryPatch.indexOf('function __hvCreateBattleContext(canvas)');
+  const end = entryPatch.indexOf('  const ctx = __hvCreateBattleContext(dom.canvas);', start);
+  const owner = entryPatch.slice(start, end);
+  for (const rejects of [false, true]) {
+    const calls = [], safeContext = {};
+    const env = { console: { warn() {} }, __HV_BATTLE_LOW_MEMORY: false,
+      canvas: { getContext(type, options) {
+        calls.push({type, options});
+        if (options) { if (rejects) throw Error('unsupported options'); return null; }
+        return safeContext;
+      } } };
+    vm.runInNewContext(`${owner}\nresult = __hvCreateBattleContext(canvas);`, env);
+    assert.equal(env.result, safeContext);
+    assert.equal(calls.length, 2);
+    assert.ok(calls.every(call => !call.options?.desynchronized));
+  }
 });
 
 test('embedded battle lets the render loop start before deferred autostart retries', () => {

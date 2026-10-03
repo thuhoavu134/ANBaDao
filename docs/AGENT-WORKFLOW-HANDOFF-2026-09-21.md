@@ -300,3 +300,11 @@ Full-page settlement awaits `HonVietLoginGate.resumeBattleReturn()`: same accoun
 ### CI follow-up to PR #247
 
 Full CI Build passed; Test passed 1443/1446. Updated two existing harnesses for the async return marker, lore window and real mastery settlement function; retained behavior/rollback/duplicate assertions. All four affected suites now pass 47/47 locally. No runtime change in this follow-up. Full CI rerun required on its PR. Vercel currently rejects the commit author for team access; do not equate the merged commit with a live deployment or spoof author identity.
+
+## 2026-10-03 — desktop canvas presentation flicker
+
+Baseline `57202df` (#248). User's 13-second video shows the arena background remaining while multiple living heroes disappear/reappear together; user confirms desktop reproduces and phone does not. Do not publish the raw user recording.
+
+The final canvas owner `scripts/battle-entry-fail-open-v1.mjs` previously requested `desynchronized:true` only on desktop. Its direct presentation can expose the background repaint before actors/VFX finish, consistent with the video and device split. Use the existing composited opaque profile `{alpha:false}` on both profiles, retaining the plain 2D fallback. No sprite size, frame timing, combat scheduler, memory budget or phone profile changed. Reference: https://developer.chrome.com/blog/desynchronized/ (Avoiding flicker).
+
+Validation: desktop/profile and fallback regressions failed before the fix (2 fail/3 pass); all 5 entry tests pass after it. All 16 generated battle inline scripts parse after replaying the changed context owner. Full CI runs on the PR. Cloud Chromium did not reproduce the user's physical monitor symptom; final validation on that Windows/GPU setup remains necessary after deployment. GitHub merge is separate from Vercel/production.

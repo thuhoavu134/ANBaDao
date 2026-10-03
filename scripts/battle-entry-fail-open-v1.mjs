@@ -13,9 +13,9 @@ html=replaceOne(
   html,
   '  const ctx = dom.canvas.getContext("2d", { alpha: false, desynchronized: true });',
   `  function __hvCreateBattleContext(canvas) {
-    const attempts = __HV_BATTLE_LOW_MEMORY
-      ? [{ alpha: false }, null]
-      : [{ alpha: false, desynchronized: true }, { alpha: false }, null];
+    // Present the complete background + heroes + VFX together. A desynchronized
+    // desktop canvas can expose the background before the heroes finish drawing.
+    const attempts = [{ alpha: false }, null];
     for (const options of attempts) {
       try {
         const context = options ? canvas.getContext("2d", options) : canvas.getContext("2d");
