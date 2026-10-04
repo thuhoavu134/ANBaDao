@@ -237,6 +237,9 @@ const { installBattlePersistentPages } = await import('./battle-persistent-pages
 await installBattlePersistentPages(root);
 const { installBattleAiProgress } = await import('./battle-ai-progress-v1.mjs');
 installBattleAiProgress(root);
+// Scheduler handoff pacing only; preserve all authored action clocks/recovery.
+const { installBattleTurnPacing } = await import('./battle-turn-pacing-v1.mjs');
+installBattleTurnPacing(root);
 const { installBattleEnemyCellCleanup } = await import('./battle-enemy-cell-cleanup-v1.mjs');
 await installBattleEnemyCellCleanup(root);
 

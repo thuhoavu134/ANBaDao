@@ -321,3 +321,10 @@ Baseline `07f38e5` (#249). Owner authorized the audit fixes and retains the prio
 - Tower copy describes a suggested power level; actual battle result still determines victory. No promise that catch-up alone guarantees a clear. Battle/result hero animation and combat math are unchanged.
 
 Validation: original reward/production regressions failed; 30 focused functional/owner tests pass locally after replaying changed build owners. The sparse workspace lacks the daily artwork and some lane files, so complete clean build/suite and actual desktop/mobile UI are delegated to CI/remaining QA, not claimed from local checks. Physical Safari and production deployment remain unverified. New regression suite: `tests/game-loop-consistency.test.mjs`.
+
+
+## 2026-10-04 — remove stacked turn handoff delays
+
+Baseline `119d6d2` (#250). User reports several idle seconds between heroes. `scripts/battle-turn-pacing-v1.mjs`, installed after final AI/formation/authored owners, shortens only scheduler dead time: rest 80 ms + reveal 40 ms + AI think 0 ms + announcement 60 ms (180 ms at nominal x1, previously 1440 ms). Ong Pho uses the same announcement budget and no extra 120 ms post-idle hold.
+
+Do not accelerate or skip authored attack/recovery/VFX/SFX clocks to reproduce this fix. Existing completion, return-home, cancellation, manual-choice and defeat-exit guards stay intact; the single scheduler still dispatches exactly once. Four regression tests pass (three failed before repair); generated inline scripts parse. Full build/suite run on the PR; physical browser timing and production deployment are not certified from these local scheduler checks. Existing owner merge/gate authorization applies.
