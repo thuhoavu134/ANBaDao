@@ -261,6 +261,8 @@ const { installMixedStatusTick } = await import('./mixed-status-tick-v1.mjs');
 installMixedStatusTick(root);
 const { installMixedStatModifiers } = await import('./mixed-stat-modifiers-v1.mjs');
 installMixedStatModifiers(root);
+const { installLegacyHitDetail } = await import('./legacy-hit-detail-v1.mjs');
+installLegacyHitDetail(root);
 const { installCompactDamageFloaters } = await import('./compact-damage-floaters-v1.mjs');
 installCompactDamageFloaters(root);
 

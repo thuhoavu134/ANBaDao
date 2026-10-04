@@ -436,3 +436,11 @@ Mixed legacy damage stat projection now reads S+ crit modifier as percentage poi
 - Captured pre-extraction mapping outputs for all 14 official IDs in tests/fixtures/legacy-skill-map-baseline.json; shared owner matches baseline. Generated injected function runs in isolated VM with no external helper closures. Focused mapping/audit/boss suite: 10 tests passed; fresh build/full suite remain CI validation.
 - No browser/device/deploy verification or combat win-rate claim. Versioned skill-kit execution/passives/progression overrides are not represented by mapSkill alone.
 - Next: extract/execute actual legacy impact/action owner with versioned kit and progression, compare runtime traces, then mixed campaign win rates and economy assumptions. Do not approximate legacy actions from mapped kinds and call it full simulation.
+
+
+## 2026-10-04 — Shared legacy impact calculation
+- Added resolveLegacyHitDetail: actual Core formula, combined read-only mixed stats, existing ordered RNG labels and force-hit/miss/crit rules, then managed blind charge consumption. Dead targets skip RNG and consumption. Pure detail calculation does not mutate HP/shields/energy.
+- Generated legacy impact adapter now calls this shared function with LegacyCore (not the projected Core wrapper, avoiding double modifiers). Checked build patch runs after mixed stat/hit owners; legacy downstream impact/presentation remains unchanged.
+- Validation: 32 focused mixed-combat tests passed. Formula result/RNG call order checked against previous path, mixed blind expiry tested through generated impact boundary. CI validates fresh build/full suite; browser/device/deploy not verified.
+- This is only hit-detail extraction, not full action/impact simulation. Remaining owners include tactical modifiers, shield/HP settlement, counters/kill rage, legacy versioned multi-hit followups and native skill passives.
+- Also inspect legacy direct HP mutation versus S+ received-damage prevention/reflection/lifesteal before claiming unified impact behavior. No win-rate/economy balancing claim or reward tuning in this change.
