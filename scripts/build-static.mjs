@@ -253,6 +253,8 @@ const { installBattleSettlementConsistency } = await import('./battle-settlement
 installBattleSettlementConsistency(root);
 const { installCampaignChapterSettlement } = await import('./campaign-chapter-settlement-v1.mjs');
 installCampaignChapterSettlement(root);
+const { installMixedCombatHealing } = await import('./mixed-combat-healing-v1.mjs');
+installMixedCombatHealing(root);
 
 // battle.html is now the single runtime source for iframe and iOS full-page combat.
 // Do not duplicate ~1.5 MB of battle markup as base64 inside index.html; on mobile

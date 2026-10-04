@@ -375,3 +375,6 @@ Do not report production/Safari visual verification from the above. Browser QA w
 `scripts/combat-balance-benchmark.mjs` isolates S+ kits at fixture stats (2000 HP/180 ATK/50 DEF), twelve seeds per scenario, with player-level scaling. It is NOT a production campaign simulator and omits legacy kits, equipment, account bonuses, synergy and visual/device timing. Results/assumptions: `docs/qa/combat-balance-20261004/`. No balance or animation changes were made in PR #257.
 
 Active next scope: mixed-adapter simulation and representative campaign data. Preserve single scheduler, existing 15-round judgement, transaction ownership and authored RGBA/pivots.
+
+### Mixed healing integration follow-up
+First mixed-adapter test reproduces legacy healing bypassing S+ antiHeal (340 HP despite full block). The existing generated healing owner now delegates received-healing rules and the canonical heal event to S+ when active; Core retains cast strength and legacy-only behavior. Test coverage: both teams, single reduction, missing-HP cap, death, expiry and one event. Details: `docs/qa/combat-balance-20261004/mixed-healing.md`. Complete mixed campaign simulation and visual/device validation remain pending; do not report full campaign balance from these impact tests.
