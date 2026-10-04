@@ -1,0 +1,11 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import Core from '../src/domain/combat/hon-viet-core.mjs';
+import {createSplusCombat} from '../src/domain/combat/splus-mechanics.mjs';
+import {mixedStatView} from '../src/domain/combat/mixed-stat-view.mjs';
+function setup(){const a={id:'a',sourceId:'hero_splus_linh_dong',team:'player',slot:0,hp:5000,maxHp:5000,atk:100,def:20,speed:100,accuracy:100,evasion:0,energy:100,crit:40,critRes:0,statuses:[]},b={...a,id:'b',sourceId:'legacy',team:'enemy',statuses:[]};const c=createSplusCombat({units:[a,b],mutate:true,rng:()=>.3});c.start();return{a,b,c};}
+test('explicit zero accuracy/evasion remains zero; missing stats retain defaults',()=>{const{a,b}=setup();assert.ok(Math.abs(Core.hitChance(a,b)-.82)<1e-9);assert.ok(Math.abs(Core.hitChance({...a,accuracy:0},b)-.57)<1e-9);assert.ok(Math.abs(Core.hitChance({...a,accuracy:undefined},{...b,evasion:undefined})-.79)<1e-9);});
+test('zero crit/resistance does not fall back to default values',()=>{const{a,b}=setup();assert.equal(Core.critChance({...a,crit:0},b),.02);assert.equal(Core.critChance(a,b),.4);assert.equal(Core.critChance({...a,crit:undefined},{...b,critRes:undefined}),.03);});
+test('legacy crit reduction prevents S+ crit and expiry restores it',()=>{const{a,b,c}=setup();a.statuses=[{type:'critDown',power:.5,turns:1}];const reduced=c.damage(a,b,{forceHit:true,multiplier:1});assert.equal(c.events.filter(e=>e.type==='damage').at(-1).critical,false);Core.tickStatuses(a);const restored=c.damage(a,b,{forceHit:true,multiplier:1});assert.equal(c.events.filter(e=>e.type==='damage').at(-1).critical,true);assert.ok(restored>reduced);assert.equal(a.crit,40);});
+test('legacy crit resistance buffs reduce S+ critical chance',()=>{const{a,b,c}=setup();b.critRes=10;b.statuses=[{type:'critResUp',power:1,turns:2}];c.damage(a,b,{forceHit:true,multiplier:1});assert.equal(c.events.filter(e=>e.type==='damage').at(-1).critical,false);});
+test('managed critDown reaching zero survives legacy damage projection',()=>{const{a,b,c}=setup();c.addStatus(b,a,{type:'critDown',power:.4,turns:2});const view=mixedStatView(a,c);assert.equal(view.crit,0);assert.equal(Core.calculateDamageDetailed(view,b,1,{hit:0,crit:.025,variance:.5}).critical,false);assert.equal(a.crit,40);});
