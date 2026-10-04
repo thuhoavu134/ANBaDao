@@ -245,6 +245,8 @@ const { installBattleDefeatExit } = await import('./battle-defeat-exit-v1.mjs');
 installBattleDefeatExit(root);
 const { installBattleEnemyCellCleanup } = await import('./battle-enemy-cell-cleanup-v1.mjs');
 await installBattleEnemyCellCleanup(root);
+const { installRosterEnemiesSize } = await import('./roster-enemies-size-v1.mjs');
+await installRosterEnemiesSize(root);
 
 // battle.html is now the single runtime source for iframe and iOS full-page combat.
 // Do not duplicate ~1.5 MB of battle markup as base64 inside index.html; on mobile

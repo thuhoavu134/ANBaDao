@@ -28,6 +28,8 @@ export const BATTLE_CHARACTER_SCALE = Object.freeze({ portrait:0.52, desktop:0.7
 export const BATTLE_HERO_BODY_HEIGHT = 310;
 export const HERO_VISUAL_SCALE = Object.freeze({
   default:1,
+  luc_anh:BATTLE_HERO_BODY_HEIGHT/(330*199/240),
+  thay_mo:BATTLE_HERO_BODY_HEIGHT/(348*250/264),
   hero_splus_linh_dong:BATTLE_HERO_BODY_HEIGHT/335,
   hero_splus_bach_dien:BATTLE_HERO_BODY_HEIGHT/395
 });
