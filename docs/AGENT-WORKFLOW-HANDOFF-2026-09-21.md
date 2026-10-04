@@ -350,3 +350,28 @@ Twenty focused local tests pass (roster generation, registered drawing, host syn
 PR #254 baseline `57b1c3d`: ordinary checkpoint, main quest bonus and battle reward share the existing receipt; persistence failure restores original state and supports retry. Living-target VFX/status filtering is installed after prior combat owners.
 
 Final campaign encounter now includes chapter reward, hero unlock, next chapter, world incident, clan XP, weekly progress and chapter checkpoint removal inside that same battle transaction. The reference-loop endChapter path only renders/routes the committed result, and no longer pays replay gold on a duplicate result. Legacy story-mode endChapter remains unchanged. No reward rebalance or animation edits. Focused generated-runtime tests include rollback, duplicate receipt, legitimate replay and non-final/mismatched results. Full CI build/test and browser/device evidence must be reported separately; user has authorized merge and waived the workflow gate.
+
+## 2026-10-04 21:27 +07 — Progress and next implementation
+
+Current source baseline: main `0bf0ba9359cfc0463e37aed0604d970078c3ec17`.
+
+| Work | Evidence | Status |
+| --- | --- | --- |
+| Living-target VFX/statuses, atomic battle rewards/main quest and ordinary checkpoint | PR #254; clean build/full tests passed | Merged |
+| Final chapter reward, hero/chapter unlock, incident, clan XP and weekly progress in battle receipt | PR #255; clean build/full tests passed | Merged |
+| Boss template excluded from regular wave rotation; boss checkpoints 6/12/18 | PR #256; RED 2 failures, GREEN 21 focused tests and CI build/full tests | Merged |
+| Seeded S+ benchmark, 324 controlled matches, deterministic replay | PR #257; 3 focused tests and CI build/full tests | Merged; tool only |
+
+Do not report production/Safari visual verification from the above. Browser QA was running at merge; consult each current Actions run before describing its final outcome. Existing permission to merge and waive workflow gate remains; do not alter protection or claim device PASS.
+
+### Next work, in order
+1. Extend simulation through the actual mixed legacy/S+ effect adapter, canonical hero/encounter definitions and deterministic roster mapping. Keep animations/storage outside headless mechanics.
+2. Cover starter/earned-hero teams at several affordable upgrade states, boss checkpoints and adjacent regular stages. Record seeds, source SHA, action availability, HP judgement, wins and remaining HP. Verify seeded replay and turn/target contracts.
+3. Compare upgrade costs with battle/main quest/chapter/daily/AFK income. Current arithmetic: six heroes level 1→10 costs 16,200 gold; chapter-1 battle + seal + main-quest gold totals 10,114 before chapter rewards, starting balance and daily activities. Campaign-only XP first requires an external source at chapter 3; this excludes daily/AFK XP and is not proof of a progression blocker.
+4. Change only an evidenced mismatch; do not nerf heroes or increase income based on equal-stat S+ fixtures alone.
+5. After balance evidence, clarify activity rewards/unlock routes, then tutorial and remaining animation timing.
+
+### Benchmark limits
+`scripts/combat-balance-benchmark.mjs` isolates S+ kits at fixture stats (2000 HP/180 ATK/50 DEF), twelve seeds per scenario, with player-level scaling. It is NOT a production campaign simulator and omits legacy kits, equipment, account bonuses, synergy and visual/device timing. Results/assumptions: `docs/qa/combat-balance-20261004/`. No balance or animation changes were made in PR #257.
+
+Active next scope: mixed-adapter simulation and representative campaign data. Preserve single scheduler, existing 15-round judgement, transaction ownership and authored RGBA/pivots.
