@@ -50,6 +50,9 @@ export function createSplusMechanics(options={}) {
   const has=(u,type)=>statuses(u).some(s=>s.type===type);
   const status=(u,type)=>statuses(u).find(s=>s.type===type);
   const power=(u,type)=>Math.max(0,...statuses(u).filter(s=>s.type===type).map(s=>n(s.power)*n(s.stacks,1)));
+  const legacyEffects=u=>(u?.statuses||[]).filter(s=>!s.splus);
+  const legacyControl=u=>legacyEffects(u).some(s=>['stun','fear','freeze','sleep','paralysis','timeFreeze','stasis'].includes(s.type));
+  const legacyStat=(u,name,base)=>base*Math.max(.2,1+legacyEffects(u).reduce((sum,s)=>sum+(s.type===name+'Up'?n(s.power):s.type===name+'Down'?-n(s.power):0),0));
   const passive=u=>alive(u)&&!has(u,'timeFreeze');
   const holders=(u,name,enemy=false)=>(enemy?foes(u):friends(u)).filter(v=>key(v)===name&&passive(v));
   const emit=(type,source,target,extra={})=>{
@@ -130,7 +133,7 @@ export function createSplusMechanics(options={}) {
     }
     return m;
   }
-  function stat(targetId,name) {const u=unit(targetId),m=modifiers(u);return Math.max(0,n(u?.[name])*(1+(name==='atk'?m.attack:name==='def'?m.defense:name==='speed'?m.speed:0)));}
+  function stat(targetId,name) {const u=unit(targetId),m=modifiers(u);if(name==='accuracy')return Math.max(0,legacyStat(u,name,n(u?.accuracy,100))-power(u,'blind')*100);if(name==='evasion')return Math.max(0,legacyStat(u,name,n(u?.evasion))); return Math.max(0,n(u?.[name])*(1+(name==='atk'?m.attack:name==='def'?m.defense:name==='speed'?m.speed:0)));}
   function energy(sourceId,targetId,amount,reason='gain') {
     const source=unit(sourceId),target=unit(targetId);if(!alive(target))return 0;
     if(amount>0&&(has(target,'rageBan')||has(target,'timeFreeze'))){emit('energyBlocked',source,target,{reason});return 0;}
@@ -199,7 +202,7 @@ export function createSplusMechanics(options={}) {
       if(key(source)==='cuu_trieu'&&passive(source)&&source.splus.memory.cadence>=8)type='true';
       let amount=Math.max(0,n(options.raw));
       if(!specifiedRaw){
-        const blind=status(source,'blind');const accuracy=clamp(n(source.accuracy,100)/100-power(source,'blind')-n(target.evasion)/100,0,1);
+        const blind=status(source,'blind');const accuracy=clamp(stat(source,'accuracy')/100-stat(target,'evasion')/100,0,1);
         if(blind?.charges!=null)blind.charges--;
         if(!options.forceHit&&rng('splus.hit')>=accuracy){emit('miss',source,target,{action});if(key(target)==='bach_dien')swapBachDienMask(target);return 0;}
         let critChance=n(source.crit)/100+sm.crit-n(target.critRes)/100;
@@ -356,14 +359,14 @@ export function createSplusMechanics(options={}) {
     emit('immune',source,target,{effect:'critical'});
     return true;
   }
-  function canMove(targetId) {const u=unit(targetId);return alive(u)&&!statuses(u).some(s=>hardCC.has(s.type)||s.type==='root'||s.type==='entangle');}
+  function canMove(targetId) {const u=unit(targetId);return alive(u)&&!legacyControl(u)&&!statuses(u).some(s=>hardCC.has(s.type)||s.type==='root'||s.type==='entangle');}
   function canUse(targetId,action) {
     const u=unit(targetId);if(!alive(u)||!['basic','skill','ultimate'].includes(action))return false;
-    if(statuses(u).some(s=>hardCC.has(s.type)))return false;
+    if(legacyControl(u)||statuses(u).some(s=>hardCC.has(s.type)))return false;
     if(action==='basic'&&(has(u,'disarm')||has(u,'entangle')))return false;
     if(action!=='basic'&&['guardian','striker','duelist','ranger'].includes(def(u)?.role)&&statuses(u).some(s=>s.type==='disarm'&&s.weaponSkills))return false;
     if(melee(u)&&statuses(u).some(s=>s.type==='root'&&s.blocksMelee))return false;
-    if(action!=='basic'&&(has(u,'silence')||has(u,'hardSilence')))return false;
+    if(action!=='basic'&&(has(u,'silence')||has(u,'hardSilence')||legacyEffects(u).some(s=>s.type==='silence'||s.type==='hardSilence')))return false;
     const cost=actionCost(u,action);
     return u.energy>=cost&&n(u.splus.cooldowns[action])<=round;
   }

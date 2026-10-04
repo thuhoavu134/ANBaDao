@@ -389,3 +389,11 @@ Legacy atkUp/atkDown, defUp/defDown, armorBreak and speedUp/speedDown now contri
 Owner supplied IMG_7500 reference and IMG_7625/7626 current-game shots. Reduce damage font 31/24→22/18, critical label 14 vs number 22, pop peak 1.36→1.18, stroke 8/7→3.5/3, glow to 2; non-damage large/base 25/18→16/13 with 2px outline. Keep actual values, event lifetime and damage timing. Offline canvas preview generated/inspected via `docs/qa/compact-floaters-20261004/render-preview.mjs`; this is not browser/device evidence. Images remain original RGBA; no asset edits.
 
 Mixed legacy damage stat projection now reads S+ crit modifier as percentage points and critDamage as a multiplier increment, strips only consumed S+ critUp/critDown from its read-only projection, and keeps base stats intact. Test: base crit10 + S+ .3→40 instead of Core relative 13; critDamage1.5+.2→1.7. Legacy crit aliases into S+, accuracy/control compatibility and complete campaign simulations remain pending. Full CI/browser/device/deployment statuses must be reported separately.
+
+
+## 2026-10-04 — Mixed control and accuracy interoperability
+- Legacy silence now blocks S+ skill/ultimate; hard controls block manual actions before actor-turn ticking.
+- Freeze/sleep capture control before expiration so the affected actor skips exactly that turn.
+- S+ hit rolls consume legacy accuracy/evasion modifiers; legacy damage projection reads managed blind and strips projected modifiers to avoid double application.
+- Focused local validation: 21 tests passed across control/accuracy, mixed status, stats and healing. Fresh generated build and complete test suite remain CI checks; no live browser/device verification claimed.
+- Remaining: explicit-zero fallback in legacy hitChance; managed blind charge consumption for legacy attacks; legacy crit modifiers into S+ engine; full canonical mixed campaign simulation before economy/balance changes.
