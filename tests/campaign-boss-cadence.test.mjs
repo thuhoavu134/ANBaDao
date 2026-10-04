@@ -14,3 +14,4 @@ test('multiple regular waves retain variety without inserting the final boss',()
 test('single-template and missing-template chapters remain playable and generation stays stable',()=>{
  for(const templates of [[wave(600,100)],[]]){const c=campaign(templates),ids=c.chapterBattleSequence(0);assert.equal(ids.length,18);assert.ok(ids.every(id=>c.DATA.encounters[id].length));const before=JSON.stringify(c.DATA.encounters);c.chapterBattleSequence(0);assert.equal(JSON.stringify(c.DATA.encounters),before);}
 });
+test('dynamic mirror boss resolves current squad before generating boss checkpoints',()=>{let calls=0;const c=campaign([wave(560,96),()=>{calls++;return wave(4200,190);}]);const ids=c.chapterBattleSequence(4);assert.equal(calls,1);for(const stage of [5,11,17])assert.equal(c.DATA.encounters[ids[stage]][0].stats.hp,Math.round(4200*(1+4*.22+stage*.05)));assert.ok(c.DATA.encounters[ids[0]][0].stats.hp<4200);c.chapterBattleSequence(4);assert.equal(calls,1);});
