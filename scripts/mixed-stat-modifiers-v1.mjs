@@ -9,4 +9,14 @@ export function patchMixedStatModifiers(html){if(html.includes('/* HV_MIXED_STAT
     },
     effectiveStat:(unit,name)=>splusCombat()&&['atk','def','speed'].includes(name)?splusCombat().stat(unit,name):LegacyCore.effectiveStat(unit,name),`);
 }
-export function installMixedStatModifiers(root){const p=join(root,'dist','battle.html');writeFileSync(p,patchMixedStatModifiers(readFileSync(p,'utf8')));}
+export function patchMixedHitAttempts(html){
+ if(html.includes('/* HV_MIXED_HIT_ATTEMPT_V1 */'))return html;
+ const anchor='    if(detail.missed){ target._lastDamageMissed=true;';
+ if(html.split(anchor).length!==2)throw new Error('Mixed hit-attempt owner anchor missing');
+ return html.replace(anchor,`    /* HV_MIXED_HIT_ATTEMPT_V1 */
+    // Consume at impact after the current hit reads its modifiers. Previews
+    // and rejected dead-target attempts never reach this boundary.
+    if(typeof splusCombat==='function')splusCombat()?.consumeHitAttempt(actor);
+`+anchor);
+}
+export function installMixedStatModifiers(root){const p=join(root,'dist','battle.html');writeFileSync(p,patchMixedHitAttempts(patchMixedStatModifiers(readFileSync(p,'utf8'))));}

@@ -191,6 +191,10 @@ export function createSplusMechanics(options={}) {
       healer.splus.memory.rescueReady=round+2;heal(healer,target,target.maxHp*0.25);buff(healer,target,'controlImmune',0,1);break;
     }
   }
+  function consumeHitAttempt(sourceId) {
+    const blind=status(unit(sourceId),'blind');
+    if(blind?.charges!=null)blind.charges=Math.max(0,blind.charges-1);
+  }
   function damage(sourceId,targetId,options={}) {
     const source=unit(sourceId),target=unit(targetId);if(!source||!alive(target)||eventDepth>20)return 0;
     if(has(target,'damageImmune')){emit('immune',source,target,{effect:'damage'});return 0;}
@@ -202,8 +206,8 @@ export function createSplusMechanics(options={}) {
       if(key(source)==='cuu_trieu'&&passive(source)&&source.splus.memory.cadence>=8)type='true';
       let amount=Math.max(0,n(options.raw));
       if(!specifiedRaw){
-        const blind=status(source,'blind');const accuracy=clamp(stat(source,'accuracy')/100-stat(target,'evasion')/100,0,1);
-        if(blind?.charges!=null)blind.charges--;
+        const accuracy=clamp(stat(source,'accuracy')/100-stat(target,'evasion')/100,0,1);
+        consumeHitAttempt(source);
         if(!options.forceHit&&rng('splus.hit')>=accuracy){emit('miss',source,target,{action});if(key(target)==='bach_dien')swapBachDienMask(target);return 0;}
         let critChance=legacyStat(source,'crit',n(source.crit))/100+sm.crit-legacyStat(target,'critRes',n(target.critRes))/100;
         let critBonus=sm.critDamage+power(target,'bloodDebt');
@@ -708,6 +712,6 @@ export function createSplusMechanics(options={}) {
       default:D(target,defaults.singleUltimateMultiplier);return;
     }
   }
-  return {schema:'luc-than-splus-combat/v2',profileVersion:'splus-profile/2026-09-08-v2',units,events,unit,start,beginTurn,beginRound,finishRound,act,damage,heal,shield,gainRage:energy,addStatus,cleanse,modifiers,stat,canUse,canMove,targets,chooseAction,hud,get round(){return round;}};
+  return {schema:'luc-than-splus-combat/v2',profileVersion:'splus-profile/2026-09-08-v2',units,events,unit,start,beginTurn,beginRound,finishRound,act,damage,consumeHitAttempt,heal,shield,gainRage:energy,addStatus,cleanse,modifiers,stat,canUse,canMove,targets,chooseAction,hud,get round(){return round;}};
 }
 
