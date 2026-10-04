@@ -428,3 +428,11 @@ Mixed legacy damage stat projection now reads S+ crit modifier as percentage poi
 - RED reproduced map-is-not-a-function. Focused audit/boss/slot suite: 11 tests passed. Fresh build/full test suite are CI validation; no browser/device/deploy claims.
 - Reproduction, totals, fixture mirror squad and limitations: docs/qa/campaign-progression-20261004/README.md. No reward/encounter numeric tuning.
 - Next: canonical bridge and legacy impact execution with trace equivalence, then representative budget/bonus assumptions for mixed win-rate/progression simulation.
+
+
+## 2026-10-04 — Shared legacy skill bridge mapping
+- Extracted existing host mapSkill verbatim into src/domain/combat/legacy-skill-map.mjs (local helpers included for closure-free build injection). Host bridge delegates to this owner through a checked/idempotent build patch. No intentional skill/multiplier/energy behavior changes.
+- Canonical campaign audit now includes mapped skill/ultimate kinds and multipliers for each player profile and encounter enemy from the same owner as the generated host.
+- Captured pre-extraction mapping outputs for all 14 official IDs in tests/fixtures/legacy-skill-map-baseline.json; shared owner matches baseline. Generated injected function runs in isolated VM with no external helper closures. Focused mapping/audit/boss suite: 10 tests passed; fresh build/full suite remain CI validation.
+- No browser/device/deploy verification or combat win-rate claim. Versioned skill-kit execution/passives/progression overrides are not represented by mapSkill alone.
+- Next: extract/execute actual legacy impact/action owner with versioned kit and progression, compare runtime traces, then mixed campaign win rates and economy assumptions. Do not approximate legacy actions from mapped kinds and call it full simulation.

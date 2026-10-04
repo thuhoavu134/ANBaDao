@@ -253,6 +253,8 @@ const { installBattleSettlementConsistency } = await import('./battle-settlement
 installBattleSettlementConsistency(root);
 const { installCampaignChapterSettlement } = await import('./campaign-chapter-settlement-v1.mjs');
 installCampaignChapterSettlement(root);
+const { installLegacySkillMap } = await import('./legacy-skill-map-v1.mjs');
+installLegacySkillMap(root);
 const { installMixedCombatHealing } = await import('./mixed-combat-healing-v1.mjs');
 installMixedCombatHealing(root);
 const { installMixedStatusTick } = await import('./mixed-status-tick-v1.mjs');

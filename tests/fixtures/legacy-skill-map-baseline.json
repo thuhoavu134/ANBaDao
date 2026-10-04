@@ -1,0 +1,184 @@
+[
+  {
+    "id": "ong_hang_pho",
+    "expected": {
+      "skillName": "Thiết Vá Chấn Kình",
+      "skillDetail": "Vận lực, lao tới quét chiếc vá gây sát thương mạnh, là • 25 khí",
+      "skillKind": "burn",
+      "skillMultiplier": 1.3305,
+      "ultimateName": "Thiết Vá Long Triều",
+      "ultimateDetail": "AOE toàn địch; mỗi tầng Nêm Vị tăng thêm 10% sát thươn • 60 khí",
+      "ultimateKind": "aoe",
+      "ultimateMultiplier": 1.6870000000000003
+    }
+  },
+  {
+    "id": "thay_mo",
+    "expected": {
+      "skillName": "Chuông Chấn Phách",
+      "skillDetail": "Rung chuông tạo sóng chấn phách, gây sát thương diện r • 25 khí",
+      "skillKind": "aoeBurn",
+      "skillMultiplier": 1.0566,
+      "ultimateName": "Trận Ảnh Phong Môn",
+      "ultimateDetail": "Dựng đại trận đánh toàn bộ sáu vị trí địch và kích nổ  • 60 khí",
+      "ultimateKind": "aoeDebuff",
+      "ultimateMultiplier": 1.6744
+    }
+  },
+  {
+    "id": "lac_yen",
+    "expected": {
+      "skillName": "Mũi Nỏ Phá Giáp",
+      "skillDetail": "Bắn bolt nặng phá giáp mục tiêu; có thể xuyên sang tuy • 25 khí",
+      "skillKind": "break",
+      "skillMultiplier": 1.2084,
+      "ultimateName": "Thiên Nỏ Truy Hồn",
+      "ultimateDetail": "Khóa mục tiêu có phần trăm máu thấp nhất và tung phát  • 60 khí",
+      "ultimateKind": "execute",
+      "ultimateMultiplier": 2.191
+    }
+  },
+  {
+    "id": "cung_thu_tre",
+    "expected": {
+      "skillName": "Trúc Tiễn Xuyên Hàng",
+      "skillDetail": "Tên tre xuyên trục trước–sau và ghim giảm tốc mục tiêu • 25 khí",
+      "skillKind": "break",
+      "skillMultiplier": 1.1688,
+      "ultimateName": "Vạn Trúc Lạc Vũ",
+      "ultimateDetail": "Mưa tên tre phủ toàn bộ đội địch. • 60 khí",
+      "ultimateKind": "aoe",
+      "ultimateMultiplier": 1.6576
+    }
+  },
+  {
+    "id": "co_dao_ganh_hoi",
+    "expected": {
+      "skillName": "Đổi Vai Giữ Nhịp",
+      "skillDetail": "Tăng nhịp và cấp khiên cho đồng minh đang thiếu nộ. • 25 khí",
+      "skillKind": "guardAll",
+      "skillMultiplier": 1.0995,
+      "ultimateName": "Hội Làng Rợp Cờ",
+      "ultimateDetail": "Gây sát thương toàn địch và tăng tốc toàn đội. • 60 khí",
+      "ultimateKind": "aoe",
+      "ultimateMultiplier": 1.5904000000000003
+    }
+  },
+  {
+    "id": "phong_tu",
+    "expected": {
+      "skillName": "Hoán Phong Đoạt Nhịp",
+      "skillDetail": "Dash chém mục tiêu, gỡ nhịp tăng tốc và hất lùi lượt. • 25 khí",
+      "skillKind": "break",
+      "skillMultiplier": 1.1886,
+      "ultimateName": "Bát Phong Đoạn Ảnh",
+      "ultimateDetail": "Chuỗi dash lướt qua nhiều mục tiêu rồi trở về đúng vị  • 60 khí",
+      "ultimateKind": "multi",
+      "ultimateMultiplier": 1.4224
+    }
+  },
+  {
+    "id": "thuy_nuong_roi_nuoc",
+    "expected": {
+      "skillName": "Kéo Màn Thủy Đình",
+      "skillDetail": "Dựng sân nước, gây sát thương và kéo lùi nhịp mục tiêu • 25 khí",
+      "skillKind": "aoeBurn",
+      "skillMultiplier": 1.0302,
+      "ultimateName": "Thủy Đình Vạn Tượng",
+      "ultimateDetail": "Rối nước phủ sân khấu, gây AOE và làm chậm toàn địch. • 60 khí",
+      "ultimateKind": "aoeDebuff",
+      "ultimateMultiplier": 1.6492
+    }
+  },
+  {
+    "id": "hong_lien_dao_nuong",
+    "expected": {
+      "skillName": "Hồng Liên Phá Tuyến",
+      "skillDetail": "Dash xuyên tuyến và thiêu đốt mục tiêu ở contact cuối. • 25 khí",
+      "skillKind": "burn",
+      "skillMultiplier": 1.2546,
+      "ultimateName": "Cửu Liên Phần Trận",
+      "ultimateDetail": "Chín cánh Hồng Liên quét toàn đội địch. • 60 khí",
+      "ultimateKind": "aoeDebuff",
+      "ultimateMultiplier": 1.7164000000000001
+    }
+  },
+  {
+    "id": "thach_quyen",
+    "expected": {
+      "skillName": "Địa Chấn Liên Quyền",
+      "skillDetail": "Đấm mục tiêu chính, phá thế và phát sóng chấn động san • 25 khí",
+      "skillKind": "break",
+      "skillMultiplier": 1.2315,
+      "ultimateName": "Sơn Quyền Trấn Địa",
+      "ultimateDetail": "Đập đất gây sát thương hàng trước và lan ra hàng sau. • 60 khí",
+      "ultimateKind": "aoe",
+      "ultimateMultiplier": 1.6828
+    }
+  },
+  {
+    "id": "dinh_loi",
+    "expected": {
+      "skillName": "Hồi Văn Hộ Trận",
+      "skillDetail": "Cấp khiên cho đồng minh yếu nhất và bản thân, dựng thế • 25 khí",
+      "skillKind": "guard",
+      "skillMultiplier": 1.0995,
+      "ultimateName": "Đông Sơn Lôi Trận",
+      "ultimateDetail": "Gióng trống đồng, dựng khiên toàn đội và chấn động quâ • 60 khí",
+      "ultimateKind": "guardAll",
+      "ultimateMultiplier": 1.603
+    }
+  },
+  {
+    "id": "luc_anh",
+    "expected": {
+      "skillName": "Kéo Đèn Lục Ảnh",
+      "skillDetail": "Xoay Đèn Kéo Quân, gọi sáu hình nhân nhập đúng 6 vị tr • 25 khí",
+      "skillKind": "aoeBurn",
+      "skillMultiplier": 1.0236,
+      "ultimateName": "Độc Vân Phủ Thế",
+      "ultimateDetail": "Đèn xoay cực đại, gọi độc vân từ trời phủ toàn đội địc • 60 khí",
+      "ultimateKind": "aoe",
+      "ultimateMultiplier": 1.3636000000000001
+    }
+  },
+  {
+    "id": "to_diep",
+    "expected": {
+      "skillName": "Khắc Bản Sao Thế",
+      "skillDetail": "In bản suy giảm của tăng ích cho đồng minh yếu nhất; k • 25 khí",
+      "skillKind": "guardAll",
+      "skillMultiplier": 1.0995,
+      "ultimateName": "Vạn Bản Đồng Khắc",
+      "ultimateDetail": "Trải mộc bản lớn, gây AOE và khuếch đại dấu ấn có hại. • 60 khí",
+      "ultimateKind": "aoeDebuff",
+      "ultimateMultiplier": 1.6072000000000002
+    }
+  },
+  {
+    "id": "linh_dong",
+    "expected": {
+      "skillName": "Nhiễu Loạn Âm Ty",
+      "skillDetail": "Rung chuông gieo Nhiễu Loạn lên một địch phía trước; 5 • 25 khí",
+      "skillKind": "break",
+      "skillMultiplier": 1.0335,
+      "ultimateName": "Bách Quỷ Dạ Hành",
+      "ultimateDetail": "Triệu Bách Quỷ, gây sát thương toàn địch và Câm lặng 1 • 60 khí",
+      "ultimateKind": "aoeDebuff",
+      "ultimateMultiplier": 1.6156000000000001
+    }
+  },
+  {
+    "id": "bach_dien",
+    "expected": {
+      "skillName": "Huyễn Diện Trảm",
+      "skillDetail": "Phóng khí mặt quỷ vào địch máu thấp nhất. 240% Công ph • 25 khí",
+      "skillKind": "break",
+      "skillMultiplier": 1.512,
+      "ultimateName": "Ly Hồn Đoạt Phách",
+      "ultimateDetail": "Ném mặt nạ chính diện vào địch Công cao nhất. 420% Côn • 60 khí",
+      "ultimateKind": "execute",
+      "ultimateMultiplier": 2.55
+    }
+  }
+]
