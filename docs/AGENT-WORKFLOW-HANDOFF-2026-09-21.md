@@ -420,3 +420,11 @@ Mixed legacy damage stat projection now reads S+ crit modifier as percentage poi
 - RED test reproduced 6 -> 1; after fix 12 focused generated-host/roster/campaign tests passed. Fresh build/full suite are CI validation. No physical browser/deploy verification claimed.
 - Difficulty impact: encounters with repeated identities may now be harder because previously omitted foes enter combat. No numeric encounter/reward rebalance in this fix.
 - Canonical full mixed campaign simulator is still pending. Do not use the S+-only equal-stat benchmark to tune campaign rewards; next extract canonical host hero stats, expanded encounter waves, bridge skill mapping and progression assumptions into an auditable harness.
+
+
+## 2026-10-04 — Canonical campaign data audit and dynamic chapter-5 boss
+- Added scripts/campaign-progression-audit.mjs: selected generated-host data + actual heroStats/levelCost + lore expansion + roster conversion. Covers 108 stages/14 official IDs, explicit bare level profiles and seal-only loot; NOT a win-rate simulator or affordability model.
+- Extraction found a real chapter-5 blocker: authored mirror boss is a factory, previously passed directly to cloneWave. Resolve factory before wave cloning; reuse already-generated chapter waves without repeated factory invocation. Static templates and boss stages 6/12/18 retained.
+- RED reproduced map-is-not-a-function. Focused audit/boss/slot suite: 11 tests passed. Fresh build/full test suite are CI validation; no browser/device/deploy claims.
+- Reproduction, totals, fixture mirror squad and limitations: docs/qa/campaign-progression-20261004/README.md. No reward/encounter numeric tuning.
+- Next: canonical bridge and legacy impact execution with trace equivalence, then representative budget/bonus assumptions for mixed win-rate/progression simulation.

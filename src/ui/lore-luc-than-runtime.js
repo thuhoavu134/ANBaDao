@@ -152,8 +152,13 @@
     const baseSeq = chapterBattleSequence;
     chapterBattleSequence = function lucThanSealSequence(idx) {
       const ch = Math.max(0, Math.min(5, Number(idx) || 0));
+      const cachedIds = Array.from({length:SEAL_STAGES}, (_,s) => 'lt_seal_' + ch + '_' + s);
+      if(cachedIds.every(id => Array.isArray(DATA.encounters[id])))return cachedIds;
       const authored = baseSeq(ch) || [];
-      const templates = authored.map(id => DATA.encounters[id]).filter(Boolean);
+      const templates = authored.map(id => {
+        const encounter=DATA.encounters[id];
+        return typeof encounter === 'function' ? encounter() : encounter;
+      }).filter(Array.isArray);
       // The authored final encounter is the chapter boss. Keep it out of
       // regular-wave rotation; boss checkpoints remain 6, 12 and 18.
       const regularTemplates = templates.length > 1 ? templates.slice(0, -1) : templates;
