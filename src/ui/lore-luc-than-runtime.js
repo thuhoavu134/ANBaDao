@@ -154,6 +154,9 @@
       const ch = Math.max(0, Math.min(5, Number(idx) || 0));
       const authored = baseSeq(ch) || [];
       const templates = authored.map(id => DATA.encounters[id]).filter(Boolean);
+      // The authored final encounter is the chapter boss. Keep it out of
+      // regular-wave rotation; boss checkpoints remain 6, 12 and 18.
+      const regularTemplates = templates.length > 1 ? templates.slice(0, -1) : templates;
       const fallback = DATA.encounters.luyen_tap || DATA.encounters.ch01_fight_street_mobs || [];
       const out = [];
       for (let s = 0; s < SEAL_STAGES; s++) {
@@ -162,7 +165,7 @@
           const isBoss = s === SEAL_STAGES - 1 || (s + 1) % 6 === 0;
           const src = isBoss && templates.length
             ? templates[templates.length - 1]
-            : (templates[s % Math.max(1, templates.length)] || fallback);
+            : (regularTemplates[s % Math.max(1, regularTemplates.length)] || fallback);
           DATA.encounters[id] = cloneWave(src, ch, s, id);
         }
         out.push(id);
