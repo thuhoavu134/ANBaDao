@@ -3,20 +3,6 @@
   if (typeof applyReward !== 'function') return;
 
   const RAR_UI = { b: 'B', a: 'A', s: 'S', ss: 'S+', ssr: 'S+' };
-  const DAILY_DRIP = {
-    q_win: { tinh: 4 },
-    q_train: { hoat: 4 },
-    q_tower: { tinh: 4 },
-    q_hunt: { hoat: 6 },
-    q_arena: { tinh: 4, hoat: 4 },
-    q_guild: { tinh: 6 },
-    q_spin: { hoat: 4 }
-  };
-  const WEEKLY_DRIP = {
-    w_win: { tinh: 12, hoat: 12 },
-    w_hunt: { hoat: 16 },
-    w_campaign: { tinh: 16 }
-  };
   const JOB_DRIP = {
     ship_pho: { tinh: 4 },
     trong_quan: { hoat: 6 },
@@ -45,12 +31,8 @@
     } catch (_) { /* frozen */ }
   }
 
-  if (DATA && DATA.daily && Array.isArray(DATA.daily.quests)) {
-    DATA.daily.quests.forEach(q => patchObjReward(q, DAILY_DRIP[q.id]));
-  }
-  if (typeof WEEKLY_QUESTS !== 'undefined' && Array.isArray(WEEKLY_QUESTS)) {
-    WEEKLY_QUESTS.forEach(q => patchObjReward(q, WEEKLY_DRIP[q.id]));
-  }
+  // DAILY_DRIP / WEEKLY_DRIP are applied once by the canonical daily domain.
+  // Do not patch the legacy catalog: it is not the live claim/preview owner.
   if (DATA && Array.isArray(DATA.jobs)) {
     DATA.jobs.forEach(j => patchObjReward(j, JOB_DRIP[j.id]));
   }

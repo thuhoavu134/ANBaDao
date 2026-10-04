@@ -59,8 +59,8 @@ patch("sceneState.root.querySelector('.cs-receipt')?.showModal();", "sceneState.
 patch("  if (button.hasAttribute('data-hv-afk-claim'))", "  if (button.dataset.sceneAction === 'player-quests') { navTo('daily'); return; }\n  if (button.hasAttribute('data-hv-afk-claim'))");
 // Every stage exposes its level requirement in the existing progress sheet.
 patch("'Thủ lĩnh' : 'Ải ' + (i + 1)}</small>", "'Thủ lĩnh' : 'Ải ' + (i + 1)} · Cấp ${hvStageLevel(checkpoint.chapterIndex,i)}</small>");
-patch("const rw = result.def?.reward || {};\n      showRewardCeremony?.('HOÀN THÀNH VIỆC VẶT'", "const rw = result.def?.reward || {};\n      toast?.('+80 EXP · Cấp '+hvPlayerLevel(P.hvPlayerProgress?.xp));\n      showRewardCeremony?.('HOÀN THÀNH VIỆC VẶT'");
-patch("const rw = result.def?.reward || {};\n      showRewardCeremony?.('HOÀN THÀNH VIỆC TUẦN'", "const rw = result.def?.reward || {};\n      toast?.('+240 EXP · Cấp '+hvPlayerLevel(P.hvPlayerProgress?.xp));\n      showRewardCeremony?.('HOÀN THÀNH VIỆC TUẦN'");
+// Daily UI presents actual account XP from the committed receipt.
+if (!html.includes('playerXp: tx?.result?.playerXp || 0')) throw new Error('Daily reward receipt owner missing');
 patch('</head>','<style id="hv-player-progress-style">'+read('src/ui/player-progress.css')+'</style></head>');
 writeFileSync('dist/index.html',html);
 console.log('Player level1–60: existing108 encounters, entry gate, atomic XP and additive migration');

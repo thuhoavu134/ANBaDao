@@ -74,7 +74,7 @@
     }
     const gate = currentGate();
     if (!gate.pass) {
-      toast?.('Lực chiến chưa đủ — vẫn vào trận. Cần ' + fmt(gate.required) + ' · đội ' + fmt(gate.effective) + '.');
+      toast?.('Dưới mức lực chiến đề xuất — vẫn vào trận. Mốc ' + fmt(gate.required) + ' · đội ' + fmt(gate.effective) + '.');
     }
     const cost = climb.spentStamina || (typeof TOWER_CLIMB_STAMINA === 'number' ? TOWER_CLIMB_STAMINA : 5);
     if (typeof spendStamina === 'function') {

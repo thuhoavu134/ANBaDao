@@ -22,12 +22,14 @@
       persist?.();
       return { ok: true };
     }
-    return run({
+    const tx = run({
       commandId: commandId || (source + ':' + (P.revision || 0)),
       source,
       reason: 'daily',
       mutate: apply
     });
+    if (!tx.ok) toast?.(tx.message || 'Chưa lưu được phần thưởng. Anh thử lại nhé.');
+    return tx;
   }
 
   function fmt(n) {
@@ -48,7 +50,8 @@
       clanIdleMult: typeof clanIdleMult === 'function' ? clanIdleMult() : 1,
       petMeoMun: typeof petActive === 'function' ? petActive('meo_mun') : false,
       petGaBaoThuc: typeof petActive === 'function' ? petActive('ga_bao_thuc') : false,
-      rng: Math.random.bind(Math)
+      rng: Math.random.bind(Math),
+      featureUnlocks: typeof JOURNEY_UNLOCK === 'object' ? JOURNEY_UNLOCK : undefined
     };
   }
 
@@ -61,20 +64,37 @@
   }
 
   function rewardLabel(rw) {
-    if (!rw) return '';
-    if (rw.gold) return '🪙' + rw.gold;
-    if (rw.gems) return '💎' + rw.gems;
-    return '';
+    return dailyRewardItems(rw).map(it => '+' + fmt(it.value) + ' ' + it.label).join(' · ');
+  }
+
+  function presentReward(title, reward, tx, major = false) {
+    const items = dailyRewardItems({ ...reward, playerXp: tx?.result?.playerXp || 0 });
+    if (major && typeof showRewardCeremony === 'function') {
+      showRewardCeremony(title, 'Đã cộng vào tài khoản.', items, '🎁', 'Phần thưởng');
+    } else {
+      const detail = items.map(it => '+' + fmt(it.value) + ' ' + it.label).join(' · ');
+      if (typeof showProgressBurst === 'function') showProgressBurst(title, detail);
+      else toast?.(title + ': ' + detail);
+    }
   }
 
   function adoptOpen() {
     const opened = prepareDailyOpen(P, openArgs());
-    if (!opened?.ok) return;
-    if (opened.refreshed) commitDaily(opened, 'daily.reset:' + opened.day, 'daily.reset');
+    if (!opened?.ok) return false;
+    if (opened.refreshed || opened.assignmentsChanged) {
+      const assignmentKey = [...opened.daily.quests, ...opened.weekly.quests]
+        .filter(q => q.variant).map(q => q.id).join(',');
+      const key = opened.refreshed ? 'daily.reset:' + opened.day + ':' + opened.weekIndex
+        : 'daily.assign:' + opened.day + ':' + opened.weekIndex + ':' + assignmentKey;
+      const tx = commitDaily(opened, key, opened.refreshed ? 'daily.reset' : 'daily.assign');
+      if (!tx.ok) return false;
+      if (opened.refreshed && !tx.duplicate && typeof dailyFlavorMail === 'function') dailyFlavorMail();
+    }
     else {
       if (opened.daily) P.daily = opened.daily;
       if (opened.weekly) P.weekly = opened.weekly;
     }
+    return true;
   }
 
   function renderLacquer() {
@@ -82,7 +102,7 @@
     const body = document.getElementById('dailyBody');
     if (!body) return;
     screen?.classList.add('hv-daily-live');
-    adoptOpen();
+    if (!adoptOpen()) return;
     const d = P.daily || emptyDaily();
     const w = P.weekly || emptyWeekly(Math.floor(dayNow() / 7));
     const claimedToday = d.signInClaimedDay === dayNow();
@@ -101,23 +121,23 @@
     const pts = d.activityPoints || 0;
     const wpts = w.points || 0;
     const quests = (d.quests || []).map(q => {
-      const def = DAILY_QUESTS.find(x => x.id === q.id);
+      const def = dailyQuestDefinition(P, q.id);
       if (!def) return '';
       const done = q.progress >= def.goal;
       const pct = Math.min(100, (q.progress / def.goal) * 100);
       return `<div class="hv-daily-quest" data-daily-quest="${q.id}">
-        <div class="hv-daily-qt"><b>${def.text}</b><i style="width:${pct}%"></i></div>
+        <div class="hv-daily-qt"><b>${def.text}</b><small class="hv-daily-reward">${rewardLabel(def.reward)}</small><i style="width:${pct}%"></i></div>
         <span>${Math.min(q.progress, def.goal)}/${def.goal}</span>
         <button type="button" class="hv-daily-claim" data-daily-claim="${q.id}" ${(!done || q.claimed) ? 'disabled' : ''}>${q.claimed ? '✓' : 'Nhận'}</button>
       </div>`;
     }).join('');
     const weekly = (w.quests || []).map(q => {
-      const def = WEEKLY_QUESTS.find(x => x.id === q.id);
+      const def = weeklyQuestDefinition(P, q.id);
       if (!def) return '';
       const done = q.progress >= def.goal;
       const pct = Math.min(100, (q.progress / def.goal) * 100);
       return `<div class="hv-daily-quest" data-daily-week="${q.id}">
-        <div class="hv-daily-qt"><b>${def.text}</b><i style="width:${pct}%"></i></div>
+        <div class="hv-daily-qt"><b>${def.text}</b><small class="hv-daily-reward">${rewardLabel(def.reward)}</small><i style="width:${pct}%"></i></div>
         <span>${Math.min(q.progress, def.goal)}/${def.goal}</span>
         <button type="button" class="hv-daily-claim" data-daily-wclaim="${q.id}" ${(!done || q.claimed) ? 'disabled' : ''}>${q.claimed ? '✓' : 'Nhận'}</button>
       </div>`;
@@ -212,11 +232,13 @@
       toast?.(result.message);
       return null;
     }
-    if (commitDaily(result, 'daily.sign:' + result.n + ':' + result.daily.signInClaimedDay, 'daily.sign').ok) {
+    const reward = { ...result.rw, so: result.so - (P.so || 0), stamina: result.stamina - (P.stamina || 0) };
+    const tx = commitDaily(result, 'daily.sign:' + result.n + ':' + result.daily.signInClaimedDay, 'daily.sign');
+    if (tx.ok && !tx.duplicate) {
       deliver(result);
       if (typeof petBondActivity === 'function') result.petBond = petBondActivity('signin', { day: result.n });
       refreshResbar?.();
-      showRewardCeremony?.('ĐIỂM DANH NGÀY ' + result.n, 'Chuỗi điểm danh tiếp tục.', [{ label: result.rw.label }], '☾', 'Nhật ký đêm');
+      presentReward('Điểm danh ngày ' + result.n, reward, tx, result.n % 7 === 0);
       renderDaily();
       return { n: result.n, rw: result.rw, petBond: result.petBond };
     }
@@ -245,13 +267,14 @@
       toast?.(result.message);
       return null;
     }
-    if (commitDaily(result, 'daily.idle:' + result.idle.claimedAt, 'daily.idle').ok) {
+    const tx = commitDaily(result, 'daily.idle:' + result.idle.claimedAt, 'daily.idle');
+    if (tx.ok && !tx.duplicate) {
       deliver(result);
       questProgress?.('idle', 1);
       if (typeof clanDutyProgress === 'function') clanDutyProgress('idle', 1);
       if (typeof petBondActivity === 'function') result.petBond = petBondActivity('idle', { hours: result.hrs, gold: result.goldGain });
       refreshResbar?.();
-      showRewardCeremony?.('CA TRỰC ĐÊM', 'Đội đã đứng gác khi anh vắng mặt.', [{ icon: '🪙', label: 'Vàng', value: result.goldGain }], '🌙', 'Thưởng treo máy');
+      presentReward('Đã nhận Ca Trực Đêm', { gold: result.goldGain }, tx);
       renderDaily();
       return { hrs: result.hrs, gold: result.goldGain, petBond: result.petBond };
     }
@@ -264,11 +287,12 @@
       toast?.(result.message);
       return false;
     }
-    if (commitDaily(result, 'daily.quest:' + id + ':' + dayNow(), 'daily.quest').ok) {
+    const tx = commitDaily(result, 'daily.quest:' + id + ':' + dayNow(), 'daily.quest');
+    if (tx.ok && !tx.duplicate) {
       if (typeof clanAddXp === 'function') clanAddXp(result.clanXp || 5);
       refreshResbar?.();
       const rw = result.def?.reward || {};
-      showRewardCeremony?.('HOÀN THÀNH VIỆC VẶT', result.def?.text || '', [rw.gold ? { icon: '🪙', label: 'Vàng', value: rw.gold } : { icon: '💎', label: 'Ngọc', value: rw.gems || 0 }], '✓', 'Nhiệm vụ');
+      presentReward('Hoàn thành việc vặt', rw, tx);
       renderDaily();
       return true;
     }
@@ -281,9 +305,10 @@
       toast?.(result.message);
       return false;
     }
-    if (commitDaily(result, 'daily.act:' + p + ':' + dayNow(), 'daily.act').ok) {
+    const tx = commitDaily(result, 'daily.act:' + p + ':' + dayNow(), 'daily.act');
+    if (tx.ok && !tx.duplicate) {
       refreshResbar?.();
-      showRewardCeremony?.('MỐC SÔI NỔI', 'Đã nhận mốc ' + p + ' điểm.', [{ icon: '✦', label: 'Phần thưởng ngày' }], '🔥', 'Hoạt động ngày');
+      presentReward('Mốc Sôi Nổi ' + p + ' điểm', result.reward, tx, p === 80);
       renderDaily();
       return true;
     }
@@ -296,10 +321,11 @@
       toast?.(result.message);
       return false;
     }
-    if (commitDaily(result, 'daily.weekly:' + id + ':' + result.weekly.weekIndex, 'daily.weekly').ok) {
+    const tx = commitDaily(result, 'daily.weekly:' + id + ':' + result.weekly.weekIndex, 'daily.weekly');
+    if (tx.ok && !tx.duplicate) {
       refreshResbar?.();
       const rw = result.def?.reward || {};
-      showRewardCeremony?.('HOÀN THÀNH VIỆC TUẦN', result.def?.text || '', [rw.gold ? { icon: '🪙', label: 'Vàng', value: rw.gold } : { icon: '💎', label: 'Ngọc', value: rw.gems || 0 }], '🏮', 'Danh vọng tuần');
+      presentReward('Hoàn thành việc tuần', rw, tx);
       renderDaily();
       return true;
     }
@@ -312,28 +338,19 @@
       toast?.(result.message);
       return false;
     }
-    if (commitDaily(result, 'daily.weekm:' + p + ':' + result.weekly.weekIndex, 'daily.weekm').ok) {
+    const tx = commitDaily(result, 'daily.weekm:' + p + ':' + result.weekly.weekIndex, 'daily.weekm');
+    if (tx.ok && !tx.duplicate) {
       refreshResbar?.();
-      showRewardCeremony?.('MỐC DANH VỌNG', 'Đã nhận mốc ' + p + ' điểm.', [{ icon: '✦', label: 'Phần thưởng tuần' }], '🏮', 'Danh vọng tuần');
+      presentReward('Mốc Danh Vọng ' + p + ' điểm', result.reward, tx, p === 100);
       renderDaily();
       return true;
     }
     return false;
   }
 
-  const baseCheck = typeof checkDailyReset === 'function' ? checkDailyReset : null;
   checkDailyReset = function honVietCheckDailyReset() {
     if (typeof petNormalize === 'function') petNormalize(P);
-    const opened = prepareDailyOpen(P, openArgs());
-    if (!opened?.ok) {
-      if (baseCheck) return baseCheck();
-      return;
-    }
-    if (opened.refreshed) {
-      if (commitDaily(opened, 'daily.reset:' + opened.day, 'daily.reset').ok) {
-        if (typeof dailyFlavorMail === 'function') dailyFlavorMail();
-      }
-    }
+    return adoptOpen();
   };
 
   const baseRender = typeof renderDaily === 'function' ? renderDaily : null;
@@ -376,6 +393,10 @@
   claimWeeklyMilestone = function honVietClaimWeekm(p) {
     return honVietWeekm(p);
   };
+
+  window.HonVietDailyQuests = Object.freeze({ daily: dailyQuestDefinition, weekly: weeklyQuestDefinition });
+  // Initialize assignments before the first activity can increment counters.
+  adoptOpen();
 
   window.HonVietDaily = {
     render: renderDaily,
@@ -507,6 +528,9 @@
   if (baseNav) {
     navTo = function honVietLichNav(name) {
       hideLichWheel();
+      // Cloud login may replace P after script initialization; route entry also
+      // catches day/week rollover before the next activity can make progress.
+      if (!adoptOpen()) return;
       return baseNav(name);
     };
   }
