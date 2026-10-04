@@ -103,9 +103,17 @@ export function createSplusMechanics(options={}) {
     const u=unit(targetId);const m={attack:0,defense:0,magicDefense:0,speed:0,crit:0,critDamage:0,resist:0,lifesteal:0,mitigation:0};
     if(!u)return m;
     m.attack=power(u,'attackUp')-power(u,'attackDown');m.defense=power(u,'armorUp')-power(u,'armorDown');
+    // Legacy effects keep their actor-turn lifetime but share stat semantics.
+    const legacy=(u.statuses||[]).filter(s=>!s.splus);
+    const legacyPower=type=>legacy.filter(s=>s.type===type).reduce((sum,s)=>sum+n(s.power),0);
+    m.attack+=legacyPower('atkUp')-legacyPower('atkDown');
+    const legacyArmor=legacyPower('defUp')-legacyPower('defDown')-(legacy.some(s=>s.type==='armorBreak') ? 0.32 : 0);
+    m.defense+=legacyArmor;
+
     m.speed=power(u,'speedUp')-power(u,'speedDown')-power(u,'actionSlow');m.crit=power(u,'critUp')-power(u,'critDown');m.resist=power(u,'resistUp')-power(u,'resistDown');
     m.lifesteal=power(u,'lifesteal');m.mitigation=power(u,'mitigation');
-    m.magicDefense=power(u,'magicArmorUp')-power(u,'magicArmorDown');m.speed-=power(u,'coldSteel');m.crit-=statuses(u).filter(s=>s.type==='coldSteel').reduce((v,s)=>v+s.stacks*.04,0);
+    m.speed+=legacyPower('speedUp')-legacyPower('speedDown');
+    m.magicDefense=power(u,'magicArmorUp')-power(u,'magicArmorDown');m.magicDefense+=legacyArmor;m.speed-=power(u,'coldSteel');m.crit-=statuses(u).filter(s=>s.type==='coldSteel').reduce((v,s)=>v+s.stacks*.04,0);
     m.critDamage+=power(u,'critDamage');
     if(has(u,'joyMask'))m.crit+=n(status(u,'joyMask').power,.25);
     if(has(u,'rageMask')){const rage=status(u,'rageMask');m.critDamage+=n(rage.power,.3);m.lifesteal+=n(rage.lifesteal,.15);}
@@ -699,3 +707,4 @@ export function createSplusMechanics(options={}) {
   }
   return {schema:'luc-than-splus-combat/v2',profileVersion:'splus-profile/2026-09-08-v2',units,events,unit,start,beginTurn,beginRound,finishRound,act,damage,heal,shield,gainRage:energy,addStatus,cleanse,modifiers,stat,canUse,canMove,targets,chooseAction,hud,get round(){return round;}};
 }
+
