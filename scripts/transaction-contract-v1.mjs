@@ -29,6 +29,7 @@ const helper = `function hvReceiptForCommand(commandId){
   return receipt ? {ok:receipt.status==='success',duplicate:true,receipt,result:receipt.result} : null;
 }
 function hvRunCommittedTransaction({commandId,cost={},balances={},source,reason,reward,applyRewardFn,mutate,afterCommit}){
+  const originalPlayer=P;
   let before;
   try { before=JSON.stringify(P); } catch(e) {
     return {ok:false,code:'STATE_NOT_SERIALIZABLE',message:'Không thể chuẩn bị giao dịch.'};
@@ -38,8 +39,13 @@ function hvRunCommittedTransaction({commandId,cost={},balances={},source,reason,
     ? settleRewardTransaction({...txOptions,reward,applyReward:applyRewardFn||applyReward})
     : executeLocalTransaction(txOptions);
   if(!tx.ok || tx.duplicate) return tx;
-  if(typeof persist!=='function' || !persist()){
-    try { P=JSON.parse(before); } catch(e) {}
+  let saved=false;
+  try { saved=typeof persist==='function' && Boolean(persist()); } catch(e) {}
+  if(!saved){
+    // persist may replace P during normalization, even when its write fails.
+    const restored=JSON.parse(before);
+    for(const key of Object.keys(originalPlayer)) delete originalPlayer[key];
+    Object.assign(originalPlayer,restored); P=originalPlayer;
     return {ok:false,code:'SAVE_WRITE_FAILED',message:'Không thể lưu giao dịch.'};
   }
   try { if(typeof afterCommit==='function') afterCommit(tx); } catch(e) {}

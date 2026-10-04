@@ -19,6 +19,14 @@ function hvCampaignSettlementXp(player, payload) {
   if (ST.mode !== 'campaign' || !payload.win) return 0;
   const chapter = ST.chapterIdx, stage = ST.campaignBattleIndex;
   if (hvStageLevel(chapter, stage) === null) return 0;
+  // The battle receipt persists rewards and the next encounter together.
+  // Chapter completion still belongs to endChapter; never write past the route.
+  const sequence = typeof chapterBattleSequence === 'function' ? chapterBattleSequence(chapter) : null;
+  if (Array.isArray(sequence) && sequence[stage] === payload.battleId && stage + 1 < sequence.length) {
+    player.campaignStages = player.campaignStages || {};
+    const savedStage = Number(player.campaignStages[chapter]);
+    player.campaignStages[chapter] = Math.max(Number.isFinite(savedStage) ? Math.max(0, Math.floor(savedStage)) : 0, stage + 1);
+  }
   return hvRecordCampaignXp(player, chapter, stage);
 }
 window.HonVietPlayerProgress = Object.freeze({ ensure: hvEnsurePlayerProgress, gate: hvCampaignGate,

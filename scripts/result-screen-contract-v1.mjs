@@ -121,7 +121,7 @@ export function patchResultHost(host){
     }
     const callback`, '    const callback');
   host=once(host,'    if (!payload.win) return;','    // Wins and losses both settle participation exactly once.');
-  host=once(host,'    const gold = Math.max(0, Math.round(Number(payloadGold?.value) || (ST.mode === "train" ? 140 : 180)));','    const gold = payload.win ? Math.max(0, Math.round(Number(payloadGold?.value) || (ST.mode === "train" ? 140 : 180))) : 0;');
+  host=once(host,'    const gold = Math.max(0, Math.round(Number(payloadGold?.value) || (ST.mode === "train" ? 140 : 180)));','    const gold = payload.win ? Math.max(0, Math.round(Number.isFinite(Number(payloadGold?.value)) ? Number(payloadGold.value) : (ST.mode === "train" ? 140 : 180))) : 0;');
   host=once(host,'mutate:player=>({ok:true,battleId:safeText(payload.battleId,"battle"),win:true,playerXp:hvCampaignSettlementXp(player,payload)})', 'mutate:player=>({ok:true,battleId:safeText(payload.battleId,"battle"),win:Boolean(payload.win),playerXp:hvCampaignSettlementXp(player,payload),masteryGain:masteryBattleProgress(Boolean(payload.win),false),petBond:typeof petBondActivity==="function"?petBondActivity("battle",{win:Boolean(payload.win),alive:survivors,mode:ST.mode||null}):null})');
   host=once(host,'    if (!transaction.duplicate) {\n      window.__HV_MAIN_QUEST_RUNTIME_V1', '    if (payload.win && !transaction.duplicate) {\n      window.__HV_MAIN_QUEST_RUNTIME_V1');
   host=once(host,'    if (!transaction.duplicate && typeof questProgress === "function") {','    if (payload.win && !transaction.duplicate && typeof questProgress === "function") {');
