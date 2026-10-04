@@ -444,3 +444,11 @@ Mixed legacy damage stat projection now reads S+ crit modifier as percentage poi
 - Validation: 32 focused mixed-combat tests passed. Formula result/RNG call order checked against previous path, mixed blind expiry tested through generated impact boundary. CI validates fresh build/full suite; browser/device/deploy not verified.
 - This is only hit-detail extraction, not full action/impact simulation. Remaining owners include tactical modifiers, shield/HP settlement, counters/kill rage, legacy versioned multi-hit followups and native skill passives.
 - Also inspect legacy direct HP mutation versus S+ received-damage prevention/reflection/lifesteal before claiming unified impact behavior. No win-rate/economy balancing claim or reward tuning in this change.
+
+
+## 2026-10-05 — Mixed received-damage settlement
+- RED reproduced real generated legacy adapter bypassing managed damageImmune (265 damage despite immunity) and killing immortal/deathWard targets.
+- Added settleLegacyDamage: legacy formula/tactical modifiers retain outgoing raw damage; active S+ engine owns received mitigation, shield packs, prevention and reactions. Legacy-only HP/shield settlement preserved. Incoming melee/type derived explicitly from legacy archetype.
+- Primary engine damage/death events carry legacyImpact provenance. S+ bridge suppresses only their duplicate presentation/statistics; legacy adapter owns primary feedback, engine owns kill count/rage. Secondary/reflected/native S+ events retain normal presentation. Blocked hits return without false hurt/rage.
+- Validation: 41-test mixed suite passed, then an additional native-S+ presentation regression test passed (42 focused cases total). Tests execute full generated legacy adapter + actual S+ event bridge with presentation stubs, not just a reimplemented formula. Checks include shields, cocoon charges, immortal/ward expiry, reflection/lifesteal, single damage/death/kill-rage credit and legacy-only behavior. Fresh build/full tests remain CI validation; no physical browser/deploy claim.
+- Full campaign simulation still pending. Remaining: legacy counterReady direct-HP branch, versioned multi-hit followups/passives and runtime trace equivalence. Review bubble crit cancellation with precomputed legacy raw damage separately. No win-rate/economy balancing claim.
