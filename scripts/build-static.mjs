@@ -257,6 +257,8 @@ const { installMixedCombatHealing } = await import('./mixed-combat-healing-v1.mj
 installMixedCombatHealing(root);
 const { installMixedStatusTick } = await import('./mixed-status-tick-v1.mjs');
 installMixedStatusTick(root);
+const { installMixedStatModifiers } = await import('./mixed-stat-modifiers-v1.mjs');
+installMixedStatModifiers(root);
 
 // battle.html is now the single runtime source for iframe and iOS full-page combat.
 // Do not duplicate ~1.5 MB of battle markup as base64 inside index.html; on mobile
