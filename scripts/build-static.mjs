@@ -255,6 +255,8 @@ const { installCampaignChapterSettlement } = await import('./campaign-chapter-se
 installCampaignChapterSettlement(root);
 const { installMixedCombatHealing } = await import('./mixed-combat-healing-v1.mjs');
 installMixedCombatHealing(root);
+const { installMixedStatusTick } = await import('./mixed-status-tick-v1.mjs');
+installMixedStatusTick(root);
 
 // battle.html is now the single runtime source for iframe and iOS full-page combat.
 // Do not duplicate ~1.5 MB of battle markup as base64 inside index.html; on mobile
