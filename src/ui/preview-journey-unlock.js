@@ -1,7 +1,9 @@
 (() => {
   if (typeof document === 'undefined' || typeof featLocked !== 'function') return;
   const host = String(location.hostname || '').toLowerCase();
-  if (host === 'luc-than.vercel.app') return;
+  if (host === 'luc-than.vercel.app' || host === 'luc-than-chi.vercel.app') return;
+  // Preview access is deliberate configuration, never inferred from a host.
+  if (window.HonVietPreviewConfig?.unlockJourney !== true) return;
   if (document.documentElement.dataset.hvQaFullAccess === '1') return;
   if (document.documentElement.dataset.hvPreviewUnlock === '1') return;
 

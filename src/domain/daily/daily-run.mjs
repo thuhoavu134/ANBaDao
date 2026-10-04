@@ -1,4 +1,9 @@
+import { DAILY_DRIP, WEEKLY_DRIP, applyDripTable } from '../economy/balance.mjs';
+
 const dailyFail = (code, message) => ({ ok: false, code, message });
+const balancedQuests = (quests, table) => Object.freeze(quests.map(q => Object.freeze({
+  ...q, reward: Object.freeze(applyDripTable(q.id, q.reward, table))
+})));
 
 export const DAILY_STAM_CAP = 120;
 export const DAILY_REGEN_MS = 5 * 60 * 1000;
@@ -16,7 +21,7 @@ export const DAILY_JOURNAL_MAX = 40;
 export const DAILY_CLAN_XP_PER_QUEST = 5;
 export const DAILY_CALENDAR_DAYS = 28;
 
-export const DAILY_QUESTS = Object.freeze([
+export const DAILY_QUESTS = balancedQuests([
   Object.freeze({ id: 'q_win', text: 'Thắng 3 trận', type: 'win', goal: 3, reward: Object.freeze({ gold: 200 }), pts: 15 }),
   Object.freeze({ id: 'q_skill', text: 'Dùng chiêu chữ ký 5 lần', type: 'skill', goal: 5, reward: Object.freeze({ gold: 150 }), pts: 10 }),
   Object.freeze({ id: 'q_idle', text: 'Nhận thưởng Ca Trực Đêm 1 lần', type: 'idle', goal: 1, reward: Object.freeze({ gems: 20 }), pts: 10 }),
@@ -31,7 +36,7 @@ export const DAILY_QUESTS = Object.freeze([
   Object.freeze({ id: 'q_spin', text: 'Quay sò 1 lần', type: 'spin', goal: 1, reward: Object.freeze({ gold: 150 }), pts: 10 }),
   Object.freeze({ id: 'q_craft', text: 'Rèn 1 món trang bị', type: 'craft', goal: 1, reward: Object.freeze({ gold: 120, tinh: 10, hoat: 10 }), pts: 10 }),
   Object.freeze({ id: 'q_guild', text: 'Cống hiến Bang Hội 1 lần', type: 'guild', goal: 1, reward: Object.freeze({ gold: 180 }), pts: 10 })
-]);
+], DAILY_DRIP);
 
 export const DAILY_QUEST_IDS = Object.freeze(DAILY_QUESTS.map(q => q.id));
 export const DAILY_QUEST_COUNT = DAILY_QUESTS.length;
@@ -43,13 +48,13 @@ export const ACT_MILESTONES = Object.freeze([
   Object.freeze({ p: 80, reward: Object.freeze({ gems: 50 }) })
 ]);
 
-export const WEEKLY_QUESTS = Object.freeze([
+export const WEEKLY_QUESTS = balancedQuests([
   Object.freeze({ id: 'w_win', text: 'Thắng 12 trận', type: 'win', goal: 12, pts: 25, reward: Object.freeze({ gold: 650 }) }),
   Object.freeze({ id: 'w_rogue', text: 'Vượt 6 tầng Mộng Lộ', type: 'rogue', goal: 6, pts: 30, reward: Object.freeze({ gems: 45 }) }),
   Object.freeze({ id: 'w_hunt', text: 'Săn Boss Mộng 4 lượt', type: 'hunt', goal: 4, pts: 20, reward: Object.freeze({ gold: 500 }) }),
   Object.freeze({ id: 'w_build', text: 'Đổi build trước trận 3 lần', type: 'build', goal: 3, pts: 15, reward: Object.freeze({ gold: 360 }) }),
   Object.freeze({ id: 'w_campaign', text: 'Hoàn thành 3 chương/trận chiến dịch', type: 'campaign', goal: 3, pts: 20, reward: Object.freeze({ gems: 30 }) })
-]);
+], WEEKLY_DRIP);
 
 export const WEEKLY_QUEST_IDS = Object.freeze(WEEKLY_QUESTS.map(q => q.id));
 export const WEEKLY_QUEST_COUNT = WEEKLY_QUESTS.length;
@@ -206,7 +211,8 @@ function cloneQuests(list, catalog) {
     return {
       id: def.id,
       progress: Math.max(0, asInt(raw && raw.progress, 0)),
-      claimed: !!(raw && raw.claimed)
+      claimed: !!(raw && raw.claimed),
+      ...(raw?.variant === 'accessible' ? { variant: 'accessible' } : {})
     };
   });
 }
@@ -281,6 +287,63 @@ function chaptersOf(player) {
   return Array.isArray(player?.clearedChapters) ? player.clearedChapters.slice() : [];
 }
 
+// Keep each quest's receipt ID, reward and points. A replacement is locked for
+// its day/week so unlocking a district cannot change a partially completed goal.
+const QUEST_ACCESS = Object.freeze({
+  q_summon: { feature: 'summon', ch: 1, type: 'win', goal: 1, text: 'Thắng 1 trận để dựng đội' },
+  q_tower: { feature: 'tower', ch: 1, type: 'win', goal: 1, text: 'Thắng 1 trận chuẩn bị leo Tháp' },
+  q_arena: { feature: 'arena', ch: 3, type: 'train', goal: 1, text: 'Luyện tập 1 trận chuẩn bị Đấu Trường' },
+  q_hunt: { feature: 'hunt', ch: 3, type: 'win', goal: 2, text: 'Thắng 2 trận chuẩn bị săn Boss' },
+  q_craft: { feature: 'forge', ch: 1, type: 'train', goal: 1, text: 'Luyện tập 1 trận tích nguyên liệu Rèn' },
+  q_guild: { feature: 'guild', ch: 4, type: 'train', goal: 1, text: 'Luyện tập 1 trận chuẩn bị vào Bang' },
+  q_hoadang: { feature: 'festival', ch: 0, type: 'train', goal: 1, text: 'Luyện tập 1 trận' },
+  q_spin: { feature: 'festival', ch: 0, type: 'train', goal: 1, text: 'Luyện tập 1 trận tích nguyên liệu' },
+  q_level: { type: 'win', goal: 1, text: 'Thắng 1 trận với đội đã đạt cấp tối đa' },
+  w_rogue: { feature: 'expedition', ch: 2, type: 'win', goal: 6, text: 'Thắng 6 trận chuẩn bị Mộng Lộ' },
+  w_hunt: { feature: 'hunt', ch: 3, type: 'win', goal: 4, text: 'Thắng 4 trận chuẩn bị săn Boss' }
+});
+
+function accessibleDefinition(catalog, state, id) {
+  const def = catalog.find(q => q.id === id);
+  if (!def) return null;
+  const q = state?.quests?.find(q => q.id === id), alt = QUEST_ACCESS[id];
+  return q?.variant === 'accessible' && alt
+    ? { ...def, type: alt.type, goal: alt.goal, text: alt.text } : def;
+}
+
+export function dailyQuestDefinition(player, id) {
+  return accessibleDefinition(DAILY_QUESTS, player?.daily, id);
+}
+
+export function weeklyQuestDefinition(player, id) {
+  return accessibleDefinition(WEEKLY_QUESTS, player?.weekly, id);
+}
+
+function assignAccessibleQuests(state, player, opts) {
+  let changed = false;
+  const owned = Object.values(player?.heroes || {}).filter(h => h?.owned);
+  for (const q of state.quests) {
+    const alt = QUEST_ACCESS[q.id];
+    if (!alt || q.variant || q.claimed || q.progress > 0) continue;
+    const configured = opts.featureUnlocks?.[alt.feature]?.ch;
+    const needed = Number.isFinite(Number(configured)) ? Number(configured) : alt.ch;
+    const unavailable = alt.feature
+      ? chaptersOf(player).length < needed
+      : owned.length > 0 && owned.every(h => asInt(h.level, 1) >= 30);
+    if (unavailable) { q.variant = 'accessible'; changed = true; }
+  }
+  return changed;
+}
+
+export function dailyRewardItems(reward = {}) {
+  return [
+    ['gold', '🪙', 'Vàng'], ['gems', '💎', 'Ngọc'], ['tinh', '✦', 'Tinh'],
+    ['hoat', '✧', 'Hoạt'], ['so', '🐚', 'Sò'], ['stamina', '⚡', 'Thể lực'],
+    ['playerXp', '✹', 'EXP tài khoản']
+  ].filter(([key]) => asInt(reward[key], 0) > 0)
+    .map(([key, icon, label]) => ({ icon, label, value: asInt(reward[key], 0) }));
+}
+
 export function chapterMultOf(player) {
   return 1 + chaptersOf(player).length * 0.5;
 }
@@ -332,12 +395,15 @@ export function prepareDailyOpen(player, opts = {}) {
     nextWeekly = emptyWeekly(weekIndex);
     refreshed = true;
   }
+  const dailyAssignmentsChanged = assignAccessibleQuests(nextDaily, player, opts);
+  const weeklyAssignmentsChanged = assignAccessibleQuests(nextWeekly, player, opts);
   return {
     ok: true,
     daily: nextDaily,
     weekly: nextWeekly,
     guild: nextGuild,
     refreshed,
+    assignmentsChanged: dailyAssignmentsChanged || weeklyAssignmentsChanged,
     day,
     weekIndex,
     clearedChapters: chaptersOf(player)
@@ -460,7 +526,7 @@ export function prepareClaimQuest(player, id, opts = {}) {
   const daily = opened.daily;
   const key = String(id || '');
   const q = daily.quests.find(x => x.id === key);
-  const def = DAILY_QUESTS.find(x => x.id === key);
+  const def = dailyQuestDefinition({ daily }, key);
   if (!q || !def) return dailyFail('UNKNOWN_QUEST', 'Việc vặt này không có trong sổ.');
   if (q.claimed) return dailyFail('ALREADY_CLAIMED', 'Đã nhận việc này.');
   if (q.progress < def.goal) return dailyFail('NOT_DONE', 'Chưa làm xong việc này.');
@@ -514,7 +580,7 @@ export function prepareClaimWeeklyQuest(player, id, opts = {}) {
   const weekly = opened.weekly;
   const key = String(id || '');
   const q = weekly.quests.find(x => x.id === key);
-  const def = WEEKLY_QUESTS.find(x => x.id === key);
+  const def = weeklyQuestDefinition({ weekly }, key);
   if (!q || !def) return dailyFail('UNKNOWN_QUEST', 'Việc tuần này không có trong sổ.');
   if (q.claimed) return dailyFail('ALREADY_CLAIMED', 'Đã nhận việc tuần này.');
   if (q.progress < def.goal) return dailyFail('NOT_DONE', 'Chưa làm xong việc tuần.');

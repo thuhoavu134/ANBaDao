@@ -46,21 +46,19 @@
 
   function powerHint(gate) {
     if (gate.pass) {
-      if (gate.days) return 'Bù ngày đã đủ. Leo là qua tầng này.';
-      return 'Đủ lực chiến. Leo là qua tầng này.';
+      return 'Đạt mức lực chiến đề xuất. Kết quả phụ thuộc đội hình và trận đấu.';
     }
     const pct = Math.round((typeof TOWER_CATCHUP_PER_DAY === 'number' ? TOWER_CATCHUP_PER_DAY : 0.12) * 100);
     const cap = typeof TOWER_CATCHUP_MAX_DAYS === 'number' ? TOWER_CATCHUP_MAX_DAYS : 5;
     if (!gate.power) return 'Chưa đo được lực chiến đội.';
     const needDays = Math.ceil(((gate.required / gate.power) - 1) / ((typeof TOWER_CATCHUP_PER_DAY === 'number' ? TOWER_CATCHUP_PER_DAY : 0.12) || 0.12));
-    const remain = Math.max(0, needDays - (gate.days || 0));
     if (needDays > cap) {
-      return 'Thiếu ' + fmt(gate.missing) + '. Bù tối đa ' + cap + ' ngày (+' + (pct * cap) + '%) vẫn chưa đủ — phải tăng lực chiến.';
+      return 'Dưới mức đề xuất ' + fmt(gate.missing) + '. Bù tối đa ' + cap + ' ngày (+' + (pct * cap) + '%) vẫn dưới mốc. Có thể thử trận hoặc nâng đội.';
     }
     if (!gate.days) {
-      return 'Thiếu ' + fmt(gate.missing) + '. Tăng lực ở Trợ trận / Rèn / sao tướng. Thử leo để bắt đầu đếm ngày bù (~' + remain + ' ngày).';
+      return 'Dưới mức đề xuất ' + fmt(gate.missing) + '. Vẫn có thể vào trận; nếu thua, đổi đội / Rèn / nâng sao rồi thử lại.';
     }
-    return 'Thiếu ' + fmt(gate.missing) + '. Đã kẹt ' + gate.days + ' ngày · bù +' + (pct * gate.days) + '% · còn khoảng ' + remain + ' ngày sẽ qua.';
+    return 'Dưới mức đề xuất ' + fmt(gate.missing) + '. Đã kẹt ' + gate.days + ' ngày · mức tham khảo có bù +' + (pct * gate.days) + '%. Chiến thắng vẫn tính theo trận đấu.';
   }
 
   function rewardLine(clear) {
