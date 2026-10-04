@@ -240,6 +240,9 @@ installBattleAiProgress(root);
 // Scheduler handoff pacing only; preserve all authored action clocks/recovery.
 const { installBattleTurnPacing } = await import('./battle-turn-pacing-v1.mjs');
 installBattleTurnPacing(root);
+// Every battlefield painter must stop after a defeated hero's fall ends.
+const { installBattleDefeatExit } = await import('./battle-defeat-exit-v1.mjs');
+installBattleDefeatExit(root);
 const { installBattleEnemyCellCleanup } = await import('./battle-enemy-cell-cleanup-v1.mjs');
 await installBattleEnemyCellCleanup(root);
 
