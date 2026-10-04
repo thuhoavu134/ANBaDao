@@ -76,9 +76,9 @@ function splusHeroConfig(raw, index) {
 }
 function splusEvent(event) {
   const t=getUnit(event.targetId),a=getUnit(event.sourceId);
-  if(t&&event.type==='damage'){splusFloater(t,event.amount,false,event.critical);t.hpTween=null;const rec=intelUnit(t);if(rec)rec.damageTaken+=event.amount;const ar=intelUnit(a);if(ar)ar.damage+=event.amount;if(typeof isLinhDong==='function'&&isLinhDong(t)&&t.hp>0&&typeof linhDongActionMs==='function'){const hurtMs=linhDongActionMs('hurt');setUnitState(t,'hurt',hurtMs);setTimeout(()=>{ if(t.hp>0&&t.state==='hurt') setUnitState(t,'idle',800); }, hurtMs);}else if(typeof isBachDien==='function'&&isBachDien(t)&&t.hp>0&&typeof bachDienActionMs==='function'){const hurtMs=bachDienActionMs('hurt');setUnitState(t,'hurt',hurtMs);setTimeout(()=>{ if(t.hp>0&&t.state==='hurt') setUnitState(t,'idle',800); }, hurtMs);}}
+  if(t&&event.type==='damage'&&!event.legacyImpact){splusFloater(t,event.amount,false,event.critical);t.hpTween=null;const rec=intelUnit(t);if(rec)rec.damageTaken+=event.amount;const ar=intelUnit(a);if(ar)ar.damage+=event.amount;if(typeof isLinhDong==='function'&&isLinhDong(t)&&t.hp>0&&typeof linhDongActionMs==='function'){const hurtMs=linhDongActionMs('hurt');setUnitState(t,'hurt',hurtMs);setTimeout(()=>{ if(t.hp>0&&t.state==='hurt') setUnitState(t,'idle',800); }, hurtMs);}else if(typeof isBachDien==='function'&&isBachDien(t)&&t.hp>0&&typeof bachDienActionMs==='function'){const hurtMs=bachDienActionMs('hurt');setUnitState(t,'hurt',hurtMs);setTimeout(()=>{ if(t.hp>0&&t.state==='hurt') setUnitState(t,'idle',800); }, hurtMs);}}
   if(t&&event.type==='heal'){splusFloater(t,event.amount,true);t.hpTween=null;const ar=intelUnit(a);if(ar)ar.healing+=event.amount;}
-  if(t&&event.type==='death')markDefeated(t);
+  if(t&&event.type==='death'&&!event.legacyImpact)markDefeated(t);
   if(t&&event.type==='resurrect'){t.defeatedAt=0;t.displayHp=t.hp;setUnitState(t,'idle',800);}
   if(event.type==='extraTurn')state.queue.unshift(event.sourceId);
   if(event.type==='actionDelay'){
@@ -258,3 +258,4 @@ function drawSplusToken(context, unit, time) {
   context.fillStyle='#fff1d5';context.font='bold 15px sans-serif';context.fillText(unit.name,0,-48);context.font='11px sans-serif';context.fillStyle='#aec4ce';context.fillText('S+ · Đang thử cơ chế',0,-24);context.restore();
   drawUnitHud(context,unit,time,1);
 }
+

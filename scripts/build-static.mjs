@@ -263,6 +263,8 @@ const { installMixedStatModifiers } = await import('./mixed-stat-modifiers-v1.mj
 installMixedStatModifiers(root);
 const { installLegacyHitDetail } = await import('./legacy-hit-detail-v1.mjs');
 installLegacyHitDetail(root);
+const { installMixedDamageSettlement } = await import('./mixed-damage-settlement-v1.mjs');
+installMixedDamageSettlement(root);
 const { installCompactDamageFloaters } = await import('./compact-damage-floaters-v1.mjs');
 installCompactDamageFloaters(root);
 

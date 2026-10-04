@@ -261,11 +261,11 @@ export function createSplusMechanics(options={}) {
       if(has(target,'damageToRage')){const converted=Math.round(amount*.5);amount-=converted;energy(target,target,converted/target.maxHp*100,'pearl-conversion');emit('damageConverted',target,target,{amount:converted});}
       if(!options.bypassShield&&target.shield>0)amount-=absorbShield(source,target,amount);
       const before=target.hp;const dealt=Math.min(before,Math.max(0,amount));target.hp-=dealt;
-      emit('damage',source,target,{amount:dealt,critical,damageType:type,action,dot:options.dot||false,reflection:options.reflection||false,secondary:options.secondary||false});
+      emit('damage',source,target,{amount:dealt,critical,damageType:type,action,dot:options.dot||false,reflection:options.reflection||false,secondary:options.secondary||false,...(options.legacyImpact?{legacyImpact:true}:{})});
       if(dealt>0&&!options.dot&&has(target,'sleep'))remove(target,s=>s.type==='sleep','awaken');
       if(target.hp<=0&&!preventDeath(target,source)){
         target.hp=0;target.dead=true;target.splus.memory.deathSequence=events.length;source.kills=n(source.kills)+1;
-        emit('death',source,target);energy(source,source,12,'kill');
+        emit('death',source,target,options.legacyImpact?{legacyImpact:true}:{});energy(source,source,12,'kill');
       } else rescueLow(target);
       if(options.dot&&options.burning&&dealt>0)for(const healer of holders(source,'hoa_duc')){
         const recipient=weakest(friends(healer))[0];if(recipient)heal(healer,recipient,dealt*0.5);
