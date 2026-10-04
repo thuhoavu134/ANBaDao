@@ -404,3 +404,11 @@ Mixed legacy damage stat projection now reads S+ crit modifier as percentage poi
 - S+ critical rolls now apply legacy critUp/Down and critResUp/Down using the legacy multiplicative convention, separately from managed additive crit effects. Actor-turn expiry restores original behavior without mutating base stats.
 - Validation: 26 focused local mixed-combat tests passed, including deterministic before/after critical rolls and explicit-zero cases. Fresh generated build/full tests are CI checks; no live device verification claimed.
 - Remaining: managed blind charge consumption in legacy impact path, full canonical mixed campaign simulation, then evidence-based reward/economy balance.
+
+
+## 2026-10-04 — Mixed one-hit blind consumption
+- Managed blind charges now share consumeHitAttempt between S+ rolled damage and the legacy impact adapter.
+- Legacy damage computes its current hit with blind before consuming the charge; consumption happens even on a miss, never in read-only previews or rejected dead-target attempts. Raw DOT retains existing non-consumption behavior.
+- Build owner patches the impact boundary with an idempotent checked anchor. No additional RNG calls or changes to hit probability formulas.
+- Validation: 29 focused local mixed-combat tests passed, including extracted generated impact-boundary checks. Fresh build/full suite remain CI validation; physical browser/device behavior unverified.
+- Next: canonical mixed campaign simulation with real encounters/host stats and affordable teams, before evidence-based reward changes. Existing S+-only benchmark is not a campaign simulation.
