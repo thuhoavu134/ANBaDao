@@ -26,7 +26,7 @@ test('build registrations support fractional legacy cells and all poses match 31
  for(const pose of pack.poses)assert.equal(pose.body*310/pose.body,310);
 });
 test('renderer uses same registered roster row for both teams and duplicate roles',()=>{
- const stub='  function drawGeneratedHero(context, unit, time, progress) { old(); }\n  function drawUnit(context, unit, time) { if (unit && typeof honVietDrawHuntUnit === "function") { } }';
+ const stub='  function drawGeneratedHero(context, unit, time, progress) { old(); }\n  const __hvHeroVisibility={finish(){}};\n  /* HV_BATTLE_DEFEAT_EXIT_V1 */\n  function drawUnit(context, unit, time) { if (unit && typeof honVietDrawHuntUnit === "function") { } }';
  const pack={cellW:100,cellH:120,poses:[{body:80,foot:100},{body:100,foot:110},{body:60,foot:100},{body:90,foot:115}]};
  const patched=patchRosterBattle(stub,{ranger:pack});assert.equal(patchRosterBattle(patched,{ranger:pack}),patched);
  const context={globalAlpha:1,save(){},restore(){},drawImage(...args){this.draws.push(args)},draws:[]};
@@ -37,6 +37,7 @@ test('renderer uses same registered roster row for both teams and duplicate role
   assert.ok(context.draws.length);for(const d of context.draws){assert.equal(d[2],0);const col=d[1]/100;assert.ok(Math.abs(d[8]*pack.poses[col].body/pack.poses[col].foot-310)<1e-9);assert.ok(Math.abs(d[6]+pack.poses[col].foot*310/pack.poses[col].body)<1e-9);}
  }
  assert.doesNotMatch(patched,/HERO_ATLASES|sameAppearanceBefore/);
+ assert.match(patched,/const __hvHeroVisibility/);assert.match(patched,/HV_BATTLE_DEFEAT_EXIT_V1/);
 });
 test('authored standing bodies share roster height without changing frame clocks',()=>{
  assert.ok(Math.abs(heroVisualScale('luc_anh')*330*199/240-310)<1e-9);

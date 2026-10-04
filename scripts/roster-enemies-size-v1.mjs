@@ -34,10 +34,22 @@ export async function poseRegistration(bytes) {
 export function patchRosterBattle(html, registrations) {
   if (html.includes('/* HV_ROSTER_ENEMIES_SIZE_V1 */')) return html;
   const start = html.indexOf('  function drawGeneratedHero(context, unit, time, progress) {');
-  let end = html.indexOf('  function drawUnit(context, unit, time) {', start);
-  const defeatMarker = html.lastIndexOf('  /* HV_BATTLE_DEFEAT_EXIT_V1 */', end);
-  if(defeatMarker>start)end=defeatMarker;
-  if (start < 0 || end < 0) throw new Error('Generated roster renderer boundary missing');
+  if (start < 0) throw new Error('Generated roster renderer boundary missing');
+  // Replace only this function. Readiness/visibility owners inject declarations
+  // between it and drawUnit, so drawUnit is not a safe replacement boundary.
+  let end = html.indexOf('{', start), depth = 0, quote = '', comment = '';
+  for (; end < html.length; end++) {
+    const char=html[end],next=html[end+1];
+    if(comment==='line'){if(char==='\n')comment='';continue;}
+    if(comment==='block'){if(char==='*'&&next==='/'){comment='';end++;}continue;}
+    if(quote){if(char==='\\'){end++;continue;}if(char===quote)quote='';continue;}
+    if(char==='/'&&next==='/'){comment='line';end++;continue;}
+    if(char==='/'&&next==='*'){comment='block';end++;continue;}
+    if(char==='"'||char==="'"||char==='`'){quote=char;continue;}
+    if(char==='{')depth++;
+    if(char==='}'&&--depth===0){end++;break;}
+  }
+  if(depth!==0)throw new Error('Unclosed generated renderer');
   const runtime = `  /* HV_ROSTER_ENEMIES_SIZE_V1 */
   const ROSTER_POSE_REGISTRATION=${JSON.stringify(registrations)};
   function drawGeneratedHero(context,unit,time,progress){
