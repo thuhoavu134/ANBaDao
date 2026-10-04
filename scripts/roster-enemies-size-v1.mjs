@@ -73,6 +73,12 @@ export function patchRosterBattle(html, registrations) {
     'if (unit && !unit.sourceId && typeof honVietDrawHuntUnit === "function") {');
   return html;
 }
+export function patchRosterEnemySlots(host) {
+  if(host.includes('/* HV_ENEMY_SLOT_IDENTITY_V1 */'))return host;
+  return replaceOne(host,
+    'const identity = safeText(entry.unit?.sourceHeroId || entry.unit?.heroId || entry.unit?.id, entry.unit?.uid);',
+    '/* HV_ENEMY_SLOT_IDENTITY_V1 */\n      const identity = team === "enemy" ? `enemy-slot:${entry.slot}` : safeText(entry.unit?.sourceHeroId || entry.unit?.heroId || entry.unit?.id, entry.unit?.uid);');
+}
 export async function installRosterEnemiesSize(root) {
   const out = join(root, 'dist'), registrations = {};
   const roles = { guardian:'05',ranger:'06',healer:'07',striker:'08',duelist:'09',mystic:'10' };
@@ -105,5 +111,5 @@ export async function installRosterEnemiesSize(root) {
 CAMPAIGN_CHAPTER_WORLDS.forEach((world,index)=>{const id=['lac_yen','co_dao_ganh_hoi','thuy_nuong_roi_nuoc','hong_lien_dao_nuong','to_diep','cung_thu_tre'][index],spec=spriteSpecs[id];world.monster={...spec,heroId:id,width:spec.cellW,height:spec.cellH,motion:'step'};});
 function drawCampaignFarm(ctx, farm, w, h, layer = 'effects') {`);
   host = replaceOne(host, 'ctx.drawImage(image,-monster.pivot*scale,-monster.foot*scale,monster.width*scale,monster.height*scale);ctx.restore();', 'ctx.drawImage(image,0,0,monster.cellW,monster.cellH,-monster.pivot*scale,-monster.foot*scale,monster.width*scale,monster.height*scale);ctx.restore();');
-  writeFileSync(hostPath, host);
+  writeFileSync(hostPath, patchRosterEnemySlots(host));
 }
