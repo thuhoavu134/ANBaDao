@@ -1,0 +1,275 @@
+{
+  "scope": "Controlled S+ mechanics benchmark; equal base stats 2000 HP / 180 ATK / 50 DEF, level scaling only. Not a production campaign simulator: no legacy kits, gear, account bonuses, formations, art, audio or device timing.",
+  "rows": [
+    {
+      "player": "balanced",
+      "enemy": "balanced",
+      "level": 1,
+      "seeds": 12,
+      "wins": 5,
+      "winRate": 0.4166666666666667,
+      "averageRounds": 15,
+      "roundLimit": 12
+    },
+    {
+      "player": "balanced",
+      "enemy": "balanced",
+      "level": 5,
+      "seeds": 12,
+      "wins": 12,
+      "winRate": 1,
+      "averageRounds": 15,
+      "roundLimit": 12
+    },
+    {
+      "player": "balanced",
+      "enemy": "balanced",
+      "level": 10,
+      "seeds": 12,
+      "wins": 12,
+      "winRate": 1,
+      "averageRounds": 15,
+      "roundLimit": 12
+    },
+    {
+      "player": "balanced",
+      "enemy": "offense",
+      "level": 1,
+      "seeds": 12,
+      "wins": 9,
+      "winRate": 0.75,
+      "averageRounds": 10.92,
+      "roundLimit": 0
+    },
+    {
+      "player": "balanced",
+      "enemy": "offense",
+      "level": 5,
+      "seeds": 12,
+      "wins": 12,
+      "winRate": 1,
+      "averageRounds": 9.08,
+      "roundLimit": 0
+    },
+    {
+      "player": "balanced",
+      "enemy": "offense",
+      "level": 10,
+      "seeds": 12,
+      "wins": 12,
+      "winRate": 1,
+      "averageRounds": 7.25,
+      "roundLimit": 0
+    },
+    {
+      "player": "balanced",
+      "enemy": "sustain",
+      "level": 1,
+      "seeds": 12,
+      "wins": 2,
+      "winRate": 0.16666666666666666,
+      "averageRounds": 15,
+      "roundLimit": 12
+    },
+    {
+      "player": "balanced",
+      "enemy": "sustain",
+      "level": 5,
+      "seeds": 12,
+      "wins": 12,
+      "winRate": 1,
+      "averageRounds": 15,
+      "roundLimit": 12
+    },
+    {
+      "player": "balanced",
+      "enemy": "sustain",
+      "level": 10,
+      "seeds": 12,
+      "wins": 12,
+      "winRate": 1,
+      "averageRounds": 15,
+      "roundLimit": 12
+    },
+    {
+      "player": "offense",
+      "enemy": "balanced",
+      "level": 1,
+      "seeds": 12,
+      "wins": 5,
+      "winRate": 0.4166666666666667,
+      "averageRounds": 11.92,
+      "roundLimit": 0
+    },
+    {
+      "player": "offense",
+      "enemy": "balanced",
+      "level": 5,
+      "seeds": 12,
+      "wins": 12,
+      "winRate": 1,
+      "averageRounds": 6,
+      "roundLimit": 0
+    },
+    {
+      "player": "offense",
+      "enemy": "balanced",
+      "level": 10,
+      "seeds": 12,
+      "wins": 12,
+      "winRate": 1,
+      "averageRounds": 5.17,
+      "roundLimit": 0
+    },
+    {
+      "player": "offense",
+      "enemy": "offense",
+      "level": 1,
+      "seeds": 12,
+      "wins": 8,
+      "winRate": 0.6666666666666666,
+      "averageRounds": 7.92,
+      "roundLimit": 0
+    },
+    {
+      "player": "offense",
+      "enemy": "offense",
+      "level": 5,
+      "seeds": 12,
+      "wins": 12,
+      "winRate": 1,
+      "averageRounds": 4.92,
+      "roundLimit": 0
+    },
+    {
+      "player": "offense",
+      "enemy": "offense",
+      "level": 10,
+      "seeds": 12,
+      "wins": 12,
+      "winRate": 1,
+      "averageRounds": 3.92,
+      "roundLimit": 0
+    },
+    {
+      "player": "offense",
+      "enemy": "sustain",
+      "level": 1,
+      "seeds": 12,
+      "wins": 12,
+      "winRate": 1,
+      "averageRounds": 11.42,
+      "roundLimit": 0
+    },
+    {
+      "player": "offense",
+      "enemy": "sustain",
+      "level": 5,
+      "seeds": 12,
+      "wins": 12,
+      "winRate": 1,
+      "averageRounds": 6.92,
+      "roundLimit": 0
+    },
+    {
+      "player": "offense",
+      "enemy": "sustain",
+      "level": 10,
+      "seeds": 12,
+      "wins": 12,
+      "winRate": 1,
+      "averageRounds": 5.92,
+      "roundLimit": 0
+    },
+    {
+      "player": "sustain",
+      "enemy": "balanced",
+      "level": 1,
+      "seeds": 12,
+      "wins": 8,
+      "winRate": 0.6666666666666666,
+      "averageRounds": 15,
+      "roundLimit": 12
+    },
+    {
+      "player": "sustain",
+      "enemy": "balanced",
+      "level": 5,
+      "seeds": 12,
+      "wins": 12,
+      "winRate": 1,
+      "averageRounds": 15,
+      "roundLimit": 12
+    },
+    {
+      "player": "sustain",
+      "enemy": "balanced",
+      "level": 10,
+      "seeds": 12,
+      "wins": 12,
+      "winRate": 1,
+      "averageRounds": 15,
+      "roundLimit": 12
+    },
+    {
+      "player": "sustain",
+      "enemy": "offense",
+      "level": 1,
+      "seeds": 12,
+      "wins": 0,
+      "winRate": 0,
+      "averageRounds": 11.83,
+      "roundLimit": 0
+    },
+    {
+      "player": "sustain",
+      "enemy": "offense",
+      "level": 5,
+      "seeds": 12,
+      "wins": 12,
+      "winRate": 1,
+      "averageRounds": 11.58,
+      "roundLimit": 0
+    },
+    {
+      "player": "sustain",
+      "enemy": "offense",
+      "level": 10,
+      "seeds": 12,
+      "wins": 12,
+      "winRate": 1,
+      "averageRounds": 9.33,
+      "roundLimit": 0
+    },
+    {
+      "player": "sustain",
+      "enemy": "sustain",
+      "level": 1,
+      "seeds": 12,
+      "wins": 4,
+      "winRate": 0.3333333333333333,
+      "averageRounds": 15,
+      "roundLimit": 12
+    },
+    {
+      "player": "sustain",
+      "enemy": "sustain",
+      "level": 5,
+      "seeds": 12,
+      "wins": 12,
+      "winRate": 1,
+      "averageRounds": 15,
+      "roundLimit": 12
+    },
+    {
+      "player": "sustain",
+      "enemy": "sustain",
+      "level": 10,
+      "seeds": 12,
+      "wins": 12,
+      "winRate": 1,
+      "averageRounds": 15,
+      "roundLimit": 12
+    }
+  ]
+}
