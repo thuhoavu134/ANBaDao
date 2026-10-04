@@ -34,7 +34,7 @@ test('renderer uses same registered roster row for both teams and duplicate role
  vm.createContext(sandbox);vm.runInContext(patched,sandbox);
  for(const team of ['player','enemy'])for(const slot of [0,1,5])for(const state of ['idle','run','attack','ultimate']){
   context.draws=[];sandbox.drawGeneratedHero(context,{archetype:'ranger',team,slot,state},0,.7);
-  assert.ok(context.draws.length);for(const d of context.draws){assert.equal(d[2],0);const col=d[1]/100;assert.ok(Math.abs(d[8]*pack.poses[col].body/120-310)<1e-9);assert.ok(Math.abs(d[6]+pack.poses[col].foot*310/pack.poses[col].body)<1e-9);}
+  assert.ok(context.draws.length);for(const d of context.draws){assert.equal(d[2],0);const col=d[1]/100;assert.ok(Math.abs(d[8]*pack.poses[col].body/pack.poses[col].foot-310)<1e-9);assert.ok(Math.abs(d[6]+pack.poses[col].foot*310/pack.poses[col].body)<1e-9);}
  }
  assert.doesNotMatch(patched,/HERO_ATLASES|sameAppearanceBefore/);
 });

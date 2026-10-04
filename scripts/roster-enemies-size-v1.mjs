@@ -11,9 +11,20 @@ export async function poseRegistration(bytes) {
   const cellW = info.width / 4, cellH = info.height / 2;
   if (cellW < 1 || cellH < 1) throw new Error('Roster pose grid changed');
   const poses = Array.from({ length: 4 }, (_, column) => {
-    let top = cellH, bottom = -1;
-    for (let y = 0; y < cellH; y++) for (let x = Math.ceil(column * cellW); x < Math.floor((column + 1) * cellW); x++) {
-      if (data[(y * info.width + x) * 4 + 3] > 100) { top = Math.min(top, y); bottom = Math.max(bottom, y); }
+    // Largest connected silhouette excludes fragments of neighbouring sheet cells.
+    const left=Math.ceil(column*cellW),width=Math.floor((column+1)*cellW)-left,height=Math.floor(cellH);
+    const visited=new Uint8Array(width*height);let largest=0,top=height,bottom=-1;
+    const opaque=(x,y)=>data[(y*info.width+left+x)*4+3]>100;
+    for(let y=0;y<height;y++)for(let x=0;x<width;x++){
+      const index=y*width+x;if(visited[index]||!opaque(x,y))continue;
+      const stack=[index];visited[index]=1;let count=0,lo=y,hi=y;
+      while(stack.length){const n=stack.pop(),cy=Math.floor(n/width),cx=n%width;count++;lo=Math.min(lo,cy);hi=Math.max(hi,cy);
+        for(const [nx,ny] of [[cx-1,cy],[cx+1,cy],[cx,cy-1],[cx,cy+1]]){
+          if(nx<0||nx>=width||ny<0||ny>=height)continue;const next=ny*width+nx;
+          if(!visited[next]&&opaque(nx,ny)){visited[next]=1;stack.push(next);}
+        }
+      }
+      if(count>largest){largest=count;top=lo;bottom=hi;}
     }
     if (bottom < top) throw new Error('Empty roster pose');
     return { body: bottom - top + 1, foot: bottom + 1 };
@@ -37,7 +48,7 @@ export function patchRosterBattle(html, registrations) {
     const release=unit.state==='attack'?Core.clamp((progress-.4)/.14,0,1):0;
     const paint=(col,alpha)=>{if(alpha<=0)return;const pose=pack.poses[col],scale=310/pose.body;
       context.save();context.globalAlpha*=alpha;
-      context.drawImage(image,col*pack.cellW,0,pack.cellW,pack.cellH,-pack.cellW*scale/2,-pose.foot*scale,pack.cellW*scale,pack.cellH*scale);
+      context.drawImage(image,col*pack.cellW,0,pack.cellW,pose.foot,-pack.cellW*scale/2,-pose.foot*scale,pack.cellW*scale,pose.foot*scale);
       context.restore();};
     if(release>0){paint(column,1-release);paint(3,release);}else paint(column,1);
     return true;
@@ -75,7 +86,7 @@ export async function installRosterEnemiesSize(root) {
   host = host.replace('gameRosterEnemy(enemy,sceneState.checkpoint.battleId+\':\'+index)', 'gameRosterEnemy(enemy)');
   const specs = {};
   const roleIds = {lac_yen:'ranger',cung_thu_tre:'ranger',co_dao_ganh_hoi:'duelist',phong_tu:'duelist',thuy_nuong_roi_nuoc:'mystic',hong_lien_dao_nuong:'striker',thach_quyen:'striker',to_diep:'duelist'};
-  for(const [id,role] of Object.entries(roleIds)){const pack=registrations[role],pose=pack.poses[0];specs[id]={src:'assets/battle-runtime/embedded-'+roles[role]+'.webp',frames:1,cols:4,cellW:pack.cellW,cellH:pack.cellH,ms:1000,pivot:pack.cellW/2,foot:pose.foot,body:pose.body};}
+  for(const [id,role] of Object.entries(roleIds)){const pack=registrations[role],pose=pack.poses[0];specs[id]={src:'assets/battle-runtime/embedded-'+roles[role]+'.webp',frames:1,cols:4,cellW:pack.cellW,cellH:pose.foot,ms:1000,pivot:pack.cellW/2,foot:pose.foot,body:pose.body};}
   host = replaceOne(host, 'function preparationSpriteFor(pick, time) {', 'Object.assign(spriteSpecs,'+JSON.stringify(specs)+');\nfunction preparationSpriteFor(pick, time) {');
   host = replaceOne(host, "function drawCampaignFarm(ctx, farm, w, h, layer = 'effects') {", `
 // Ambient enemies use the same roster bodies as formation/combat.
