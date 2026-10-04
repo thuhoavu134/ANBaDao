@@ -205,7 +205,7 @@ export function createSplusMechanics(options={}) {
         const blind=status(source,'blind');const accuracy=clamp(stat(source,'accuracy')/100-stat(target,'evasion')/100,0,1);
         if(blind?.charges!=null)blind.charges--;
         if(!options.forceHit&&rng('splus.hit')>=accuracy){emit('miss',source,target,{action});if(key(target)==='bach_dien')swapBachDienMask(target);return 0;}
-        let critChance=n(source.crit)/100+sm.crit-n(target.critRes)/100;
+        let critChance=legacyStat(source,'crit',n(source.crit))/100+sm.crit-legacyStat(target,'critRes',n(target.critRes))/100;
         let critBonus=sm.critDamage+power(target,'bloodDebt');
         if(key(source)==='tieu_hon'&&source.splus.memory.rageCritReady){critBonus+=.3;source.splus.memory.rageCritReady=false;}
         const focusTarget=key(source)==='lac_an'&&passive(source)&&statuses(target).some(s=>control.has(s.type));

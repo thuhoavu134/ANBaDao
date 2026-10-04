@@ -45,16 +45,21 @@ const moduleShim = { exports: {} };
     return Math.max(stat === "atk" ? 1 : 0, base * Math.max(0.2, multiplier));
   }
 
+  function statOrDefault(unit, name, fallback) {
+    return unit?.[name] != null && Number.isFinite(Number(unit[name]))
+      ? Math.max(0, effectiveStat(unit, name)) : fallback;
+  }
+
   function hitChance(attacker, target) {
-    const accuracy = Math.max(0, effectiveStat(attacker, "accuracy") || 100);
-    const evasion = Math.max(0, effectiveStat(target, "evasion") || 5);
+    const accuracy = statOrDefault(attacker, "accuracy", 100);
+    const evasion = statOrDefault(target, "evasion", 5);
     const speedEdge = clamp(((Number(attacker?.speed)||0) - (Number(target?.speed)||0)) * 0.001, -0.06, 0.06);
     return clamp(0.82 + (accuracy - 100) * 0.0025 - evasion * 0.006 + speedEdge + (battlefieldZone(attacker).hit||0), 0.55, 0.98);
   }
 
   function critChance(attacker, target) {
-    const crit = Math.max(0, effectiveStat(attacker, "crit") || 8);
-    const resist = Math.max(0, effectiveStat(target, "critRes") || 5);
+    const crit = statOrDefault(attacker, "crit", 8);
+    const resist = statOrDefault(target, "critRes", 5);
     return clamp((crit - resist) / 100 + (battlefieldZone(attacker).crit||0), 0.02, 0.72);
   }
 
@@ -1379,3 +1384,4 @@ const moduleShim = { exports: {} };
 
 export const honVietCore = moduleShim.exports;
 export default honVietCore;
+

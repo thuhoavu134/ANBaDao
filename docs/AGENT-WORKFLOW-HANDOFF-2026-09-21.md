@@ -397,3 +397,10 @@ Mixed legacy damage stat projection now reads S+ crit modifier as percentage poi
 - S+ hit rolls consume legacy accuracy/evasion modifiers; legacy damage projection reads managed blind and strips projected modifiers to avoid double application.
 - Focused local validation: 21 tests passed across control/accuracy, mixed status, stats and healing. Fresh generated build and complete test suite remain CI checks; no live browser/device verification claimed.
 - Remaining: explicit-zero fallback in legacy hitChance; managed blind charge consumption for legacy attacks; legacy crit modifiers into S+ engine; full canonical mixed campaign simulation before economy/balance changes.
+
+
+## 2026-10-04 — Explicit zero stats and mixed critical modifiers
+- Legacy hit/critical formulas now honor explicit zero accuracy, evasion, crit and crit resistance. Defaults apply only to absent/invalid base stats; existing probability floors/caps remain unchanged.
+- S+ critical rolls now apply legacy critUp/Down and critResUp/Down using the legacy multiplicative convention, separately from managed additive crit effects. Actor-turn expiry restores original behavior without mutating base stats.
+- Validation: 26 focused local mixed-combat tests passed, including deterministic before/after critical rolls and explicit-zero cases. Fresh generated build/full tests are CI checks; no live device verification claimed.
+- Remaining: managed blind charge consumption in legacy impact path, full canonical mixed campaign simulation, then evidence-based reward/economy balance.
