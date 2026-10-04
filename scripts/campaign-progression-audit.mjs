@@ -3,6 +3,7 @@
 import vm from 'node:vm';
 import {readFileSync} from 'node:fs';
 import {pathToFileURL} from 'node:url';
+import {mapLegacyCombatSkill} from '../src/domain/combat/legacy-skill-map.mjs';
 import {rosterEnemy} from '../src/domain/combat/roster-enemies.mjs';
 const between=(s,a,b)=>{const start=s.indexOf(a),end=s.indexOf(b,start);if(start<0||end<0)throw new Error('Canonical host anchor missing: '+a);return s.slice(start,end);};
 export function loadCampaignContent(host=readFileSync('dist/index.html','utf8'),lore=readFileSync('src/ui/lore-luc-than-runtime.js','utf8')){
@@ -27,9 +28,9 @@ export function campaignProgressionAudit(content=loadCampaignContent()){
  if(content.ids.some(id=>!roster[id]?.stats))throw new Error('Incomplete canonical roster');
  const chapters=Array.from({length:6},(_,chapter)=>({chapter:chapter+1,stages:content.sequence(chapter).map((battleId,index)=>{
    const raw=content.data.encounters[battleId];if(!Array.isArray(raw)||!raw.length||raw.length>6)throw new Error('Invalid canonical wave '+battleId);
-   const foes=raw.map(def=>rosterEnemy(def,roster));return{stage:index+1,battleId,boss:(index+1)%6===0,enemies:foes.map((f,slot)=>({slot:slot+1,sourceId:f.sourceHeroId||f.id,stats:{...f.stats}})),duplicateRosterInstances:foes.length-new Set(foes.map(f=>f.sourceHeroId||f.id)).size,sealLoot:content.loot(chapter,index)};
+   const foes=raw.map(def=>rosterEnemy(def,roster));return{stage:index+1,battleId,boss:(index+1)%6===0,enemies:foes.map((f,slot)=>({slot:slot+1,sourceId:f.sourceHeroId||f.id,stats:{...f.stats},skillMapping:mapLegacyCombatSkill({...f,side:"foe"})})),duplicateRosterInstances:foes.length-new Set(foes.map(f=>f.sourceHeroId||f.id)).size,sealLoot:content.loot(chapter,index)};
  })}));
- const profiles=[1,5,10].map(level=>({level,stars:1,heroes:content.ids.map(id=>({id,stats:content.heroStats(id,level,1),goldFromLevel1:Array.from({length:level-1},(_,i)=>content.levelCost(id,i+1)).reduce((a,b)=>a+b,0)}))}));
+ const profiles=[1,5,10].map(level=>({level,stars:1,heroes:content.ids.map(id=>({id,stats:content.heroStats(id,level,1),skillMapping:mapLegacyCombatSkill({...content.data.heroes[id],side:"ally"}),goldFromLevel1:Array.from({length:level-1},(_,i)=>content.levelCost(id,i+1)).reduce((a,b)=>a+b,0)}))}));
  return{mirrorBossSquad:content.ids.slice(0,6),scope:'Canonical generated-host content and bare hero-stat audit; NOT a win-rate or campaign combat simulation. Gear, guild, clan, awakening, relationship and mastery bonuses explicitly zero. Profiles are comparisons, not ownership or affordability claims. Seal loot excludes base battle, first-clear, quest, chapter, world, daily and AFK rewards.',chapters,profiles};
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href)console.log(JSON.stringify(campaignProgressionAudit(),null,2));
