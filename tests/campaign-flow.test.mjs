@@ -13,7 +13,8 @@ test('campaign exposes one current mission instead of a chapter selector', () =>
 });
 
 test('Victory choice gates campaign continuation after a win', () => {
-  assert.match(builtHtml, /P\.campaignStages\[idx\]=stageIndex\+1/);
+  assert.match(builtHtml, /const nextStage=Math\.max\(Number\(P\.campaignStages\[idx\]\)\|\|0,stageIndex\+1\)/);
+  assert.match(builtHtml, /P\.campaignStages\[idx\]=nextStage/);
   assert.match(builtHtml, /if\(resultAction==="next"\) setTimeout\(\(\)=>startChapter\(idx,\{continuing:true\}\),360\); else navTo\("campaign"\);/);
   assert.match(builtHtml, /endChapter\(\{referenceLoop:true,autoContinue:resultAction==="next"\}\)/);
 });

@@ -13,10 +13,10 @@ function run(source,env={}){const ctx=vm.createContext({console,URL,URLSearchPar
 const result={sessionId:'regression',battleId:'stage-2',win:true,resultAction:'next',rewards:[{id:'gold',value:180}],units:[{team:'player',hp:100}]};
 const lease={sessionId:'regression',battleId:'stage-2',mode:'campaign',chapterIdx:0,campaignBattleIndex:1};
 
-function returnHarness({action='next',win=true,ready='loading',success=true,leaseOverride={},loginGate}={}){
+function returnHarness({action='next',win=true,ready='loading',success=true,leaseOverride={},loginGate,startStage=1}={}){
  const pending={source:'hon-viet-battle',type:'battle-result',payload:{...result,win,resultAction:action}};
  const values=new Map([['hvBattleHostEvent',JSON.stringify(pending)],['hvBattleHostLease',JSON.stringify({...lease,...leaseOverride})]]);
- const calls=[],listeners=new Map(),P={campaignStages:{0:1}};
+ const calls=[],listeners=new Map(),P={campaignStages:{0:startStage}};
  let route=['stage-1']; // the early story route which caused false chapter completion
  const env={P,ST:{mode:null,chapterIdx:null,campaignBattleIndex:0},activeBattle:null,
   location:{search:'?hvBattleReturn=1',href:'https://game.test/index.html?hvBattleReturn=1'},history:{replaceState(...args){calls.push(['url',args[2]])}},window:{name:'config',HonVietLoginGate:loginGate},
@@ -175,3 +175,5 @@ test('blocked login retains the result; Continue retries the same return',async(
  assert.equal(await h.boot(),false);assert.equal(h.values.size,2);assert.equal(h.P.campaignStages[0],1);
  ready=true;assert.equal(await h.ctx.window.__HV_RESUME_BATTLE_RETURN(),true);assert.equal(h.P.campaignStages[0],2);
 });
+
+test('late full-page results cannot roll a newer campaign checkpoint backwards',()=>{const h=returnHarness({startStage:5,action:'confirm'});h.boot();assert.equal(h.P.campaignStages[0],5);});

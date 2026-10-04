@@ -16,7 +16,8 @@ test('L03c QA bridge exposes an opt-in one-shot persist failure and retry contro
 
 test('L03c transaction build owner restores the candidate state after save failure', () => {
   const transaction = read('../scripts/transaction-contract-v1.mjs');
-  assert.match(transaction, /if\(typeof persist!=='function' \|\| !persist\(\)\)/);
-  assert.match(transaction, /P=JSON\.parse\(before\)/);
+  assert.match(transaction, /try \{ saved=typeof persist==='function' && Boolean\(persist\(\)\); \} catch\(e\) \{\}/);
+  assert.match(transaction, /if\(!saved\)/);
+  assert.match(transaction, /Object\.assign\(originalPlayer,restored\); P=originalPlayer/);
   assert.match(transaction, /code:'SAVE_WRITE_FAILED'/);
 });

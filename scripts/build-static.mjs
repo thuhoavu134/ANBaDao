@@ -247,6 +247,10 @@ const { installBattleEnemyCellCleanup } = await import('./battle-enemy-cell-clea
 await installBattleEnemyCellCleanup(root);
 const { installRosterEnemiesSize } = await import('./roster-enemies-size-v1.mjs');
 await installRosterEnemiesSize(root);
+const { installBattleLivingTargets } = await import('./battle-living-targets-v1.mjs');
+installBattleLivingTargets(root);
+const { installBattleSettlementConsistency } = await import('./battle-settlement-consistency-v1.mjs');
+installBattleSettlementConsistency(root);
 
 // battle.html is now the single runtime source for iframe and iOS full-page combat.
 // Do not duplicate ~1.5 MB of battle markup as base64 inside index.html; on mobile
