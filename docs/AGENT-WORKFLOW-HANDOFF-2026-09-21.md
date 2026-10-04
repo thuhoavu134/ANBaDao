@@ -412,3 +412,11 @@ Mixed legacy damage stat projection now reads S+ crit modifier as percentage poi
 - Build owner patches the impact boundary with an idempotent checked anchor. No additional RNG calls or changes to hit probability formulas.
 - Validation: 29 focused local mixed-combat tests passed, including extracted generated impact-boundary checks. Fresh build/full suite remain CI validation; physical browser/device behavior unverified.
 - Next: canonical mixed campaign simulation with real encounters/host stats and affordable teams, before evidence-based reward changes. Existing S+-only benchmark is not a campaign simulation.
+
+
+## 2026-10-04 — Enemy slot preservation before campaign simulation
+- While tracing canonical campaign payloads, found prepareTeam deduplicating enemy instances by roster source identity. Six foes sharing a roster body could collapse to one, despite preparation preserving all instances.
+- Roster build owner now identifies enemy entries by formation slot; separate slots may share a hero identity. Player identity deduplication remains intact. Duplicate enemy slot entries remain rejected; encounter HP/ATK and source ordering stay unchanged.
+- RED test reproduced 6 -> 1; after fix 12 focused generated-host/roster/campaign tests passed. Fresh build/full suite are CI validation. No physical browser/deploy verification claimed.
+- Difficulty impact: encounters with repeated identities may now be harder because previously omitted foes enter combat. No numeric encounter/reward rebalance in this fix.
+- Canonical full mixed campaign simulator is still pending. Do not use the S+-only equal-stat benchmark to tune campaign rewards; next extract canonical host hero stats, expanded encounter waves, bridge skill mapping and progression assumptions into an auditable harness.
