@@ -944,7 +944,7 @@ const moduleShim = { exports: {} };
   function decayBattleMomentum(momentumState){ const st=momentumState&&typeof momentumState==='object'?momentumState:createBattleMomentumState(); const v=Number(st.value)||0; if(v===0)return {state:st,before:0,after:0,delta:0,band:'neutral'}; return applyBattleMomentum(st,v>0?-Math.min(BATTLE_MOMENTUM.decayPerRound,v):Math.min(BATTLE_MOMENTUM.decayPerRound,-v),'round-decay'); }
   function spendMomentumBreak(momentumState,team){ const st=momentumState&&typeof momentumState==='object'?momentumState:createBattleMomentumState(); const player=team==='player'; const ready=player?st.playerBreakReady:st.enemyBreakReady, used=player?st.playerBreakUsed:st.enemyBreakUsed; if(!ready||used)return {ok:false,state:st,reason:used?'used':'not-ready'}; if(player){st.playerBreakReady=false;st.playerBreakUsed=true;}else{st.enemyBreakReady=false;st.enemyBreakUsed=true;} const delta=player?-BATTLE_MOMENTUM.breakCost:BATTLE_MOMENTUM.breakCost; const r=applyBattleMomentum(st,delta,player?'player-break':'enemy-break',{team}); return {ok:true,state:st,...r}; }
   function createBattleOrderState(){ return {points:2,maxPoints:2,used:[]}; }
-  function applyBattleOrder(orderId, allies, orderState){
+  function applyBattleOrder(orderId, allies, orderState, effects={}){
     const order=BATTLE_ORDERS[orderId];
     const st=orderState&&typeof orderState==='object'?orderState:createBattleOrderState();
     st.points=clamp(Math.round(Number(st.points??2)),0,2); st.maxPoints=2; st.used=Array.isArray(st.used)?st.used:[];
@@ -952,7 +952,7 @@ const moduleShim = { exports: {} };
     if(st.points<=0) return {ok:false,reason:'empty',state:st,affected:0};
     if(st.used.includes(orderId)) return {ok:false,reason:'used',state:st,affected:0};
     const living=(allies||[]).filter(x=>x&&x.hp>0); let affected=0,gain=0,waste=0,removed=0;
-    if(orderId==='ward'){ living.forEach(u=>{u.statuses=Array.isArray(u.statuses)?u.statuses:[]; u.statuses=u.statuses.filter(x=>x.type!=='guard');u.statuses.push({type:'guard',turns:1,power:0});u.shield=Math.max(Number(u.shield)||0,Math.round((Number(u.maxHp)||Number(u.hp)||1)*.10));affected++;}); }
+    if(orderId==='ward'){ living.forEach(u=>{u.statuses=Array.isArray(u.statuses)?u.statuses:[]; if(!effects.canBuff||effects.canBuff(u)){u.statuses=u.statuses.filter(x=>x.type!=='guard');u.statuses.push({type:'guard',turns:1,power:0});}const minimum=Math.round((Number(u.maxHp)||Number(u.hp)||1)*.10);if(effects.grantShield)effects.grantShield(u,minimum);else u.shield=Math.max(Number(u.shield)||0,minimum);affected++;}); }
     if(orderId==='surge'){ living.forEach(u=>{const before=clamp(Number(u.energy)||0,0,100),after=clamp(before+14,0,100);u.energy=after;gain+=after-before;waste+=14-(after-before);affected++;}); }
     if(orderId==='cleanse'){ const bad=['stun','fear','silence','healDown','atkDown','defDown','armorBreak','burn','bleed','poison']; living.forEach(u=>{u.statuses=Array.isArray(u.statuses)?u.statuses:[];const idx=u.statuses.findIndex(x=>bad.includes(x.type));if(idx>=0){u.statuses.splice(idx,1);removed++;affected++;}}); }
     st.points-=1; st.used.push(orderId);
