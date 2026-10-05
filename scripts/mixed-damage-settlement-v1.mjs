@@ -1,3 +1,4 @@
+import{settleLegacyStatusRemoval}from'../src/domain/combat/legacy-status-settlement.mjs';
 import{settleLegacyShield}from'../src/domain/combat/legacy-shield-settlement.mjs';
 import{readFileSync,writeFileSync}from'node:fs';import{join}from'node:path';import{settleLegacyDamage}from'../src/domain/combat/legacy-damage-settlement.mjs';
 export function patchMixedDamageSettlement(html){
@@ -103,4 +104,14 @@ export function patchTacticalShieldSettlement(html){
  owner('activateAdaptivePending',once=>once('addStatus(target,{type:"guard",turns:weakened?1:2});target.shield=Math.max(target.shield||0,Math.round(target.maxHp*(weakened?0.06:0.12)));',"const adaptiveCombat=typeof splusCombat==='function'?splusCombat():null;if(!adaptiveCombat?.hasStatus(target,'buffBan'))addStatus(target,{type:'guard',turns:weakened?1:2});settleLegacyShield(target,target,Math.round(target.maxHp*(weakened?0.06:0.12)),{combat:adaptiveCombat});"));
  return html.replace('  function rewardTacticalOpportunity(', '/* HV_TACTICAL_SHIELD_SETTLEMENT_V1 */\n  function rewardTacticalOpportunity(');
 }
-export function installMixedDamageSettlement(root){const p=join(root,'dist','battle.html');writeFileSync(p,patchTacticalShieldSettlement(patchSkillShieldSettlement(patchSupportBenefitSettlement(patchSupportDamageSettlement(patchTeamReactionSettlement(patchLegacyCounterAndCritical(patchMixedDamageSettlement(readFileSync(p,'utf8')))))))));}
+export function patchLegacyStatusOwnership(html){
+ if(html.includes('/* HV_LEGACY_STATUS_OWNERSHIP_V1 */'))return html;
+ const once=(from,to)=>{if(html.split(from).length!==2)throw new Error('Legacy status ownership contract drift: '+from);html=html.replace(from,to);};
+ once('    const existing = unit.statuses.find((candidate) => candidate.type === status.type);',"    const statusCombat=typeof splusCombat==='function'?splusCombat():null;\n    if((beneficialTypes.includes(status.type)||['beneficial','buff'].includes(status.polarity))&&statusCombat?.hasStatus(unit,'buffBan'))return;\n    const existing = unit.statuses.find((candidate) => !candidate.splus && candidate.type === status.type);");
+ once('  function __hvAddStatus3qAdapter(unit, status) {','/* HV_LEGACY_STATUS_OWNERSHIP_V1 */\n'+settleLegacyStatusRemoval.toString()+'\n  function __hvAddStatus3qAdapter(unit, status) {');
+ once('friend.statuses=friend.statuses.filter(s=>!["stun","fear","silence","atkDown","defDown","armorBreak","burn","bleed","poison"].includes(s.type));',"settleLegacyStatusRemoval(friend,['stun','fear','silence','atkDown','defDown','armorBreak','burn','bleed','poison'],{combat:typeof splusCombat==='function'?splusCombat():null});");
+ once('target.statuses=(target.statuses||[]).filter(s=>!["guard","atkUp","speedUp","regen","evasionUp"].includes(s.type)); target.shield=0;',"settleLegacyStatusRemoval(target,['guard','atkUp','speedUp','regen','evasionUp'],{combat:typeof splusCombat==='function'?splusCombat():null,managedPolarity:'buff'}); target.shield=0;");
+ once("canBuff:u=>!orderCombat?.hasStatus(u,'buffBan')}","canBuff:u=>!orderCombat?.hasStatus(u,'buffBan'),grantStatus:(u,s)=>{u.statuses=u.statuses.filter(x=>x.splus||x.type!==s.type);return addStatus(u,s);},cleanse:(u,types,count)=>settleLegacyStatusRemoval(u,types,{combat:orderCombat,count})}");
+ return html;
+}
+export function installMixedDamageSettlement(root){const p=join(root,'dist','battle.html');writeFileSync(p,patchLegacyStatusOwnership(patchTacticalShieldSettlement(patchSkillShieldSettlement(patchSupportBenefitSettlement(patchSupportDamageSettlement(patchTeamReactionSettlement(patchLegacyCounterAndCritical(patchMixedDamageSettlement(readFileSync(p,'utf8'))))))))));}

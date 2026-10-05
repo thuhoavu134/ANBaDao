@@ -952,9 +952,9 @@ const moduleShim = { exports: {} };
     if(st.points<=0) return {ok:false,reason:'empty',state:st,affected:0};
     if(st.used.includes(orderId)) return {ok:false,reason:'used',state:st,affected:0};
     const living=(allies||[]).filter(x=>x&&x.hp>0); let affected=0,gain=0,waste=0,removed=0;
-    if(orderId==='ward'){ living.forEach(u=>{u.statuses=Array.isArray(u.statuses)?u.statuses:[]; if(!effects.canBuff||effects.canBuff(u)){u.statuses=u.statuses.filter(x=>x.type!=='guard');u.statuses.push({type:'guard',turns:1,power:0});}const minimum=Math.round((Number(u.maxHp)||Number(u.hp)||1)*.10);if(effects.grantShield)effects.grantShield(u,minimum);else u.shield=Math.max(Number(u.shield)||0,minimum);affected++;}); }
+    if(orderId==='ward'){ living.forEach(u=>{u.statuses=Array.isArray(u.statuses)?u.statuses:[]; if(!effects.canBuff||effects.canBuff(u)){if(effects.grantStatus)effects.grantStatus(u,{type:'guard',turns:1,power:0});else{u.statuses=u.statuses.filter(x=>x.type!=='guard');u.statuses.push({type:'guard',turns:1,power:0});}}const minimum=Math.round((Number(u.maxHp)||Number(u.hp)||1)*.10);if(effects.grantShield)effects.grantShield(u,minimum);else u.shield=Math.max(Number(u.shield)||0,minimum);affected++;}); }
     if(orderId==='surge'){ living.forEach(u=>{const before=clamp(Number(u.energy)||0,0,100),after=clamp(before+14,0,100);u.energy=after;gain+=after-before;waste+=14-(after-before);affected++;}); }
-    if(orderId==='cleanse'){ const bad=['stun','fear','silence','healDown','atkDown','defDown','armorBreak','burn','bleed','poison']; living.forEach(u=>{u.statuses=Array.isArray(u.statuses)?u.statuses:[];const idx=u.statuses.findIndex(x=>bad.includes(x.type));if(idx>=0){u.statuses.splice(idx,1);removed++;affected++;}}); }
+    if(orderId==='cleanse'){ const bad=['stun','fear','silence','healDown','atkDown','defDown','armorBreak','burn','bleed','poison']; living.forEach(u=>{u.statuses=Array.isArray(u.statuses)?u.statuses:[];if(effects.cleanse){const cleared=effects.cleanse(u,bad,1);removed+=cleared.length;if(cleared.length)affected++;}else{const idx=u.statuses.findIndex(x=>bad.includes(x.type));if(idx>=0){u.statuses.splice(idx,1);removed++;affected++;}}}); }
     st.points-=1; st.used.push(orderId);
     return {ok:true,orderId,state:st,affected,gain,waste,removed};
   }
