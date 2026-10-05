@@ -1,5 +1,5 @@
 import{settleLegacyStatusRemoval}from'../src/domain/combat/legacy-status-settlement.mjs';
-import{settleLegacyShield}from'../src/domain/combat/legacy-shield-settlement.mjs';
+import{settleLegacyShield,rollbackLegacyShieldGrant}from'../src/domain/combat/legacy-shield-settlement.mjs';
 import{readFileSync,writeFileSync}from'node:fs';import{join}from'node:path';import{settleLegacyDamage}from'../src/domain/combat/legacy-damage-settlement.mjs';
 export function patchMixedDamageSettlement(html){
  if(html.includes('/* HV_MIXED_DAMAGE_SETTLEMENT_V1 */'))return html;
@@ -114,4 +114,20 @@ export function patchLegacyStatusOwnership(html){
  once("canBuff:u=>!orderCombat?.hasStatus(u,'buffBan')}","canBuff:u=>!orderCombat?.hasStatus(u,'buffBan'),grantStatus:(u,s)=>{u.statuses=u.statuses.filter(x=>x.splus||x.type!==s.type);return addStatus(u,s);},cleanse:(u,types,count)=>settleLegacyStatusRemoval(u,types,{combat:orderCombat,count})}");
  return html;
 }
-export function installMixedDamageSettlement(root){const p=join(root,'dist','battle.html');writeFileSync(p,patchLegacyStatusOwnership(patchTacticalShieldSettlement(patchSkillShieldSettlement(patchSupportBenefitSettlement(patchSupportDamageSettlement(patchTeamReactionSettlement(patchLegacyCounterAndCritical(patchMixedDamageSettlement(readFileSync(p,'utf8'))))))))));}
+export function patchPlanRecoverySettlement(html){
+ if(html.includes('/* HV_PLAN_RECOVERY_SETTLEMENT_V1 */'))return html;
+ const start=html.indexOf('  function usePlanRecovery('),end=html.indexOf('\n  function ',start+3);if(start<0||end<0)throw new Error('Plan recovery owner missing');let owner=html.slice(start,end);
+ const once=(from,to)=>{if(owner.split(from).length!==2)throw new Error('Plan recovery contract drift: '+from);owner=owner.replace(from,to);};
+ once('function usePlanRecovery(id,auto=false){',"function usePlanRecovery(id,auto=false){const actor=getUnit(state.currentId);if(state.mode!=='battle'||!actor||actor.hp<=0||actor.team!==TEAM_PLAYER||(!auto&&(state.locked||state.auto)))return false;");
+ once(" let effect='none';", " if(!seq||(id!=='pivot'&&['unweave','fortify'].includes(pr.sourceDisruption)&&!(target?.hp>0)))return false;let effect='none';");
+ once('target.shield=Math.max(Number(snap.shieldBefore)||0,(Number(target.shield)||0)-added);','rollbackLegacyShieldGrant(target,added);');
+ once("target.statuses=(target.statuses||[]).filter(s=>s.type!=='guard');", "settleLegacyStatusRemoval(target,['guard'],{combat:typeof splusCombat==='function'?splusCombat():null});");
+ html=html.slice(0,start)+'/* HV_PLAN_RECOVERY_SETTLEMENT_V1 */\n'+rollbackLegacyShieldGrant.toString()+'\n'+owner+html.slice(end);
+ const manual="const manual=state.mode==='battle'&&actor?.team===TEAM_PLAYER&&!state.locked&&!state.auto&&pr.available";
+ if(html.split(manual).length!==2)throw new Error('Plan recovery manual eligibility drift');
+ html=html.replace(manual,"const manual=state.mode==='battle'&&actor?.team===TEAM_PLAYER&&actor.hp>0&&!state.locked&&!state.auto&&pr.available");
+ const eligibility="btn.disabled=!manual||!Core.canPlanRecover(pr,id,{orderPoints:state.battleOrders?.points,momentum:state.momentum?.value});";
+ if(html.split(eligibility).length!==2)throw new Error('Plan recovery button eligibility drift');
+ return html.replace(eligibility,"btn.disabled=!manual||(id!=='pivot'&&['unweave','fortify'].includes(pr.sourceDisruption)&&!(getUnit(pr.targetId)?.hp>0))||!Core.canPlanRecover(pr,id,{orderPoints:state.battleOrders?.points,momentum:state.momentum?.value});");
+}
+export function installMixedDamageSettlement(root){const p=join(root,'dist','battle.html');writeFileSync(p,patchPlanRecoverySettlement(patchLegacyStatusOwnership(patchTacticalShieldSettlement(patchSkillShieldSettlement(patchSupportBenefitSettlement(patchSupportDamageSettlement(patchTeamReactionSettlement(patchLegacyCounterAndCritical(patchMixedDamageSettlement(readFileSync(p,'utf8')))))))))));}
