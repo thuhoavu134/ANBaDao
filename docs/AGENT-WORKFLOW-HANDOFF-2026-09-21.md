@@ -551,3 +551,9 @@ Baseline main `2ab4c9b` (PR #280). Branch `fix/primer-recovery-ownership-2026100
 - Validation: 84 focused tests PASS (13 ownership cases + prior recovery/shield/status/reaction/S+ combat/V2); serialized browser factory, idempotency/drift, document prefix and five sparse generated inline scripts checked. Initial 79/80 harness result is preserved; an omitted existing dead-recipient guard was restored without changing production for it.
 - Local checkout/fixture is sparse, not a full clean build or served-browser acceptance. Fresh full build/suite run on PR CI. Screenshot review, physical Safari and production deployment NOT_RUN.
 - Next: reaction extension/consumption, tactical status ownership and trace equivalence; canonical mixed campaign progression/affordability simulation and activity receipt/gate coverage; final visual regression. Preserve Ông Phở ultimate chase, no new art integration.
+
+## 2026-10-05 — Reaction status interoperability
+
+Continuation of PR #281 from `79f98af`; main `2ab4c9b`, REVIEW. Native reaction consumption now uses selected status removal accounting and remaining DOT tick damage. Native extension updates round expiry/tick budget through its owner, preserves provenance, respects buff bans and never shortens longer effects. Preview and resolution share eligibility/type aliases; legacy follow-ups cannot overwrite managed marks. Existing legacy amounts and reaction coefficients remain.
+
+Validation: RED evidence followed by 97/97 focused tests, including 13 new generated-runtime cases; regenerated sparse inline scripts parse and diff checks pass. Local fixture is not a full build. Fresh full-suite/build/browser CI pending this commit; physical Safari and deployment NOT_RUN. Evidence: `docs/qa/reaction-status-20261005/`. Next: remaining tactical status/trace routes, canonical mixed campaign progression and activity receipt gates, final visual regression. Existing owner workflow waiver applies; no board claim asserted.

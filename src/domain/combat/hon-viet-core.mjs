@@ -890,41 +890,43 @@ const moduleShim = { exports: {} };
     {id:'lockdown',name:'Khóa Nhịp',primer:'atkDown',triggers:['stun','fear'],mode:'extend',maxTurns:3,desc:'Khống chế của đồng đội kéo dài nhịp Giảm Công thêm 1 lượt, tối đa 3.'},
     {id:'nurture',name:'Dưỡng Thế',primer:'regen',triggers:['guard','guardAll','cleanseGuard'],mode:'extend-shield',maxTurns:3,shieldPct:0.06,desc:'Hộ trận của đồng đội nuôi Tái Sinh thêm 1 lượt và dựng một lớp khiên phụ.'}
   ]);
-  function reactionPrimer(target,reaction,actor){
+  function reactionPrimer(target,reaction,actor,effects={}){
     const list=Array.isArray(target?.statuses)?target.statuses:[];
-    return list.find(x=>x?.type===reaction.primer && x.sourceId && String(x.sourceId)!==String(actor?.id||''))||null;
+    return list.find(x=>(effects.matchesPrimer?effects.matchesPrimer(x,reaction.primer):x?.type===reaction.primer) && x.sourceId && String(x.sourceId)!==String(actor?.id||'') && (!effects.isActive||effects.isActive(target,x,reaction)))||null;
   }
-  function previewSkillReaction(actor,triggerKind,target){
+  function previewSkillReaction(actor,triggerKind,target,effects={}){
     if(!actor||!target||actor.team!==target.team&&['guard','guardAll','cleanseGuard'].includes(triggerKind)) return null;
     for(const reaction of SKILL_REACTIONS){
       if(!reaction.triggers.includes(triggerKind)) continue;
-      const primer=reactionPrimer(target,reaction,actor);
+      const primer=reactionPrimer(target,reaction,actor,effects);
       if(primer) return {id:reaction.id,name:reaction.name,primer:reaction.primer,desc:reaction.desc,sourceId:primer.sourceId};
     }
     return null;
   }
   function upsertReactionStatus(target,status){
     if(!target||!status)return; target.statuses=Array.isArray(target.statuses)?target.statuses:[];
-    const existing=target.statuses.find(x=>x.type===status.type);
+    const existing=target.statuses.find(x=>!x.splus&&x.type===status.type);
     if(existing){existing.turns=Math.max(Number(existing.turns)||0,Number(status.turns)||0);existing.power=Math.max(Number(existing.power)||0,Number(status.power)||0); if(status.sourceId)existing.sourceId=status.sourceId;}
     else target.statuses.push({...status});
   }
-  function applySkillReaction(actor,triggerKind,target){
-    const preview=previewSkillReaction(actor,triggerKind,target); if(!preview)return {triggered:false};
+  function applySkillReaction(actor,triggerKind,target,effects={}){
+    const preview=previewSkillReaction(actor,triggerKind,target,effects); if(!preview)return {triggered:false};
     const reaction=SKILL_REACTIONS.find(x=>x.id===preview.id), list=Array.isArray(target.statuses)?target.statuses:[];
-    const idx=list.findIndex(x=>x.type===reaction.primer&&String(x.sourceId||'')===String(preview.sourceId||'')); if(idx<0)return {triggered:false};
+    const idx=list.indexOf(reactionPrimer(target,reaction,actor,effects)); if(idx<0)return {triggered:false};
     const primer=list[idx]; let bonusDamage=0,shield=0;
+    const consume=()=>effects.removeStatus?effects.removeStatus(target,primer):Boolean(list.splice(idx,1).length);
+    const follow=()=>{if(reaction.follow){const status={...reaction.follow,sourceId:actor.id,sourceHeroId:actor.sourceId||actor.id};if(effects.grantStatus)effects.grantStatus(target,status);else upsertReactionStatus(target,status);}};
+    const extend=()=>effects.extendStatus?effects.extendStatus(target,primer,reaction.maxTurns):(primer.turns=Math.min(reaction.maxTurns,Math.max(1,Number(primer.turns)||1)+1),true);
     if(reaction.mode==='consume-burst'){
-      const stored=Math.max(0,Number(primer.power)||0)*Math.max(1,Number(primer.turns)||1);
+      const stored=effects.storedDamage?effects.storedDamage(target,primer):Math.max(0,Number(primer.power)||0)*Math.max(1,Number(primer.turns)||1);
       bonusDamage=Math.max(1,Math.min(Math.round((Number(target.maxHp)||Number(target.hp)||1)*reaction.maxHpPct),Math.round(stored*reaction.powerScale)));
-      list.splice(idx,1);
-      if(reaction.follow)upsertReactionStatus(target,{...reaction.follow,sourceId:actor.id,sourceHeroId:actor.sourceId||actor.id});
+      if(!consume())return {triggered:false};follow();
     }else if(reaction.mode==='convert'){
-      list.splice(idx,1); if(reaction.follow)upsertReactionStatus(target,{...reaction.follow,sourceId:actor.id,sourceHeroId:actor.sourceId||actor.id});
+      if(!consume())return {triggered:false};follow();
     }else if(reaction.mode==='extend'){
-      primer.turns=Math.min(reaction.maxTurns,Math.max(1,Number(primer.turns)||1)+1);
+      if(!extend())return {triggered:false};
     }else if(reaction.mode==='extend-shield'){
-      primer.turns=Math.min(reaction.maxTurns,Math.max(1,Number(primer.turns)||1)+1); shield=Math.max(1,Math.round((Number(target.maxHp)||Number(target.hp)||1)*reaction.shieldPct));
+      if(!extend())return {triggered:false};shield=Math.max(1,Math.round((Number(target.maxHp)||Number(target.hp)||1)*reaction.shieldPct));
     }
     return {triggered:true,id:reaction.id,name:reaction.name,primer:reaction.primer,bonusDamage,shield,sourceId:preview.sourceId,desc:reaction.desc};
   }

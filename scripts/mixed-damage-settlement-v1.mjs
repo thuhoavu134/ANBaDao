@@ -1,5 +1,6 @@
 import{settleLegacyStatusRemoval}from'../src/domain/combat/legacy-status-settlement.mjs';
 import{restoreLegacyPrimer}from'../src/domain/combat/legacy-primer-recovery.mjs';
+import{legacyReactionEffects}from'../src/domain/combat/legacy-reaction-effects.mjs';
 import{settleLegacyShield,rollbackLegacyShieldGrant}from'../src/domain/combat/legacy-shield-settlement.mjs';
 import{readFileSync,writeFileSync}from'node:fs';import{join}from'node:path';import{settleLegacyDamage}from'../src/domain/combat/legacy-damage-settlement.mjs';
 export function patchMixedDamageSettlement(html){
@@ -141,4 +142,15 @@ export function patchPrimerRecoveryOwnership(html){
  once('  function resolvePlanDisruption(', '/* HV_PRIMER_RECOVERY_OWNERSHIP_V1 */\n'+restoreLegacyPrimer.toString()+'\n  function resolvePlanDisruption(');
  return html;
 }
-export function installMixedDamageSettlement(root){const p=join(root,'dist','battle.html');writeFileSync(p,patchPrimerRecoveryOwnership(patchPlanRecoverySettlement(patchLegacyStatusOwnership(patchTacticalShieldSettlement(patchSkillShieldSettlement(patchSupportBenefitSettlement(patchSupportDamageSettlement(patchTeamReactionSettlement(patchLegacyCounterAndCritical(patchMixedDamageSettlement(readFileSync(p,'utf8'))))))))))));}
+export function patchReactionStatusOwnership(html){
+ if(html.includes('/* HV_REACTION_STATUS_OWNERSHIP_V1 */'))return html;
+ const effects="legacyReactionEffects(typeof splusCombat==='function'?splusCombat():null,addStatus)";
+ for(const before of ["Core.previewSkillReaction(actor,actionKind(actor,'skill'),u)","Core.previewSkillReaction(actor,actionKind(actor,'ultimate'),u)",'Core.previewSkillReaction(actor,kind,target)','Core.previewSkillReaction(actor,kind,unit)','Core.applySkillReaction(actor,kind,unit)']){
+  if(html.split(before).length!==2)throw new Error('Reaction status contract drift: '+before);
+  html=html.replace(before,before.slice(0,-1)+','+effects+')');
+ }
+ const owner='  function resolveTeamSkillReactions(';
+ if(html.split(owner).length!==2)throw new Error('Reaction status owner missing');
+ return html.replace(owner,'/* HV_REACTION_STATUS_OWNERSHIP_V1 */\n'+legacyReactionEffects.toString()+'\n'+owner);
+}
+export function installMixedDamageSettlement(root){const p=join(root,'dist','battle.html');writeFileSync(p,patchReactionStatusOwnership(patchPrimerRecoveryOwnership(patchPlanRecoverySettlement(patchLegacyStatusOwnership(patchTacticalShieldSettlement(patchSkillShieldSettlement(patchSupportBenefitSettlement(patchSupportDamageSettlement(patchTeamReactionSettlement(patchLegacyCounterAndCritical(patchMixedDamageSettlement(readFileSync(p,'utf8')))))))))))));}

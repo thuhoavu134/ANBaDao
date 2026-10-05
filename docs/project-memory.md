@@ -1,3 +1,9 @@
+## 2026-10-05 — Reaction status interoperability
+
+Continuation of PR #281 from `79f98af`; main `2ab4c9b`, REVIEW. Native reaction consumption now uses selected status removal accounting and remaining DOT tick damage. Native extension updates round expiry/tick budget through its owner, preserves provenance, respects buff bans and never shortens longer effects. Preview and resolution share eligibility/type aliases; legacy follow-ups cannot overwrite managed marks. Existing legacy amounts and reaction coefficients remain.
+
+Validation: RED evidence followed by 97/97 focused tests, including 13 new generated-runtime cases; regenerated sparse inline scripts parse and diff checks pass. Local fixture is not a full build. Fresh full-suite/build/browser CI pending this commit; physical Safari and deployment NOT_RUN. Evidence: `docs/qa/reaction-status-20261005/`. Next: remaining tactical status/trace routes, canonical mixed campaign progression and activity receipt gates, final visual regression. Existing owner workflow waiver applies; no board claim asserted.
+
 ## 2026-10-05 — Primer removal / recovery ownership
 
 Baseline main `2ab4c9b` (PR #280). Branch `fix/primer-recovery-ownership-20261005`; source-only REVIEW. Supplied vibe-builder/vibe-lab read; the handoff's existing owner workflow waiver retained, no Ticket Board claim invented.
