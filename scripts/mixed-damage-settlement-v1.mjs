@@ -59,4 +59,22 @@ export function patchSupportDamageSettlement(html){
  const after="const supportActor={...hero,id:'__support_'+String(hero.sourceId||hero.id),team:TEAM_PLAYER,hp:0,maxHp:1,energy:0,shield:0,statuses:[]};const impact=settleLegacyDamage(supportActor,target,raw,{combat:typeof splusCombat==='function'?splusCombat():null,action:'skill',secondary:true,noTriggers:true});const dealt=impact.amount;if(impact.shieldAbsorbed>0)addFloater(target,`⛊${impact.shieldAbsorbed}`,'#7de3d0');target.hpTween=null;const rec=intelUnit(target);if(rec)rec.damageTaken+=dealt;";
  return html.slice(0,start)+'/* HV_SUPPORT_DAMAGE_SETTLEMENT_V1 */\n'+owner.replace(before,after)+html.slice(end);
 }
-export function installMixedDamageSettlement(root){const p=join(root,'dist','battle.html');writeFileSync(p,patchSupportDamageSettlement(patchTeamReactionSettlement(patchLegacyCounterAndCritical(patchMixedDamageSettlement(readFileSync(p,'utf8'))))));}
+export function patchSupportBenefitSettlement(html){
+ if(html.includes('/* HV_SUPPORT_BENEFIT_SETTLEMENT_V1 */'))return html;
+ const start=html.indexOf('  function useSupportCall('),end=html.indexOf('\n',start);
+ if(start<0||end<0)throw new Error('Support benefit owner missing');
+ let owner=html.slice(start,end);
+ const once=(from,to)=>{if(owner.split(from).length!==2)throw new Error('Support benefit contract drift: '+from);owner=owner.replace(from,to);};
+ once('if(!hero)return false;const role=',"if(!hero)return false;const benefitCombat=typeof splusCombat==='function'?splusCombat():null;const benefitSource={...hero,id:'__support_'+String(hero.sourceId||hero.id),team:TEAM_PLAYER,hp:0,maxHp:1,energy:0,shield:0,statuses:[]};const role=");
+ once('const shield=Math.max(1,Math.round(target.maxHp*.14));target.shield=Math.max(Number(target.shield)||0,shield);',"const requestedShield=Math.max(1,Math.round(target.maxHp*.14));const shield=benefitCombat?benefitCombat.shield(benefitSource,target,requestedShield,{floor:true}):Math.max(0,requestedShield-(Number(target.shield)||0));if(!benefitCombat)target.shield=Math.max(Number(target.shield)||0,requestedShield);");
+ once("e.energy=Math.max(0,(e.energy||0)-12);addFloater(e,'NỘ −12','#9bc5ff',true);", "const drained=benefitCombat?-benefitCombat.gainRage(benefitSource,e,-12,'support-drain'):Math.min(12,e.energy||0);if(!benefitCombat)e.energy=Math.max(0,(e.energy||0)-12);addFloater(e,`NỘ −${drained}`,'#9bc5ff',true);");
+ once('const heal=Math.max(1,Math.round(target.maxHp*.08));target.hp=Math.min(target.maxHp,target.hp+heal);target.energy=Math.min(100,(target.energy||0)+10);',"const legacyReduction=(target.statuses||[]).filter(s=>!s.splus&&s.type==='healDown').reduce((sum,s)=>sum+(Number(s.power)||.35),0);const requestedHeal=Math.round(Math.max(1,Math.round(target.maxHp*.08))*Math.max(.2,1-legacyReduction));const heal=benefitCombat?benefitCombat.heal(benefitSource,target,requestedHeal,{legacyImpact:true}):Math.min(target.maxHp-target.hp,requestedHeal);if(!benefitCombat)target.hp+=heal;const rage=benefitCombat?benefitCombat.gainRage(benefitSource,target,10,'support-gain'):Math.min(10,100-(target.energy||0));if(!benefitCombat)target.energy=Math.min(100,(target.energy||0)+10);target.hpTween=null;");
+ once('`HỒI +${heal} · NỘ +10`','`HỒI +${heal} · NỘ +${rage}`');
+ once('effect=`hỗ trợ ${target.name}`;', 'effect=`hỗ trợ ${target.name}: +${heal} HP · +${rage} Nộ`;');
+ once('effect=`${enemies.length} địch mất 12 Nộ`;','effect=`${enemies.length} địch bị giảm tối đa 12 Nộ`;');
+ html=html.slice(0,start)+'/* HV_SUPPORT_BENEFIT_SETTLEMENT_V1 */\n'+owner+html.slice(end);
+ const copy='Làm toàn bộ địch mất 12 Nộ và khóa nhịp 1 lần.';
+ if(html.split(copy).length!==2)throw new Error('Support controller copy drift');
+ return html.replace(copy,'Giảm tối đa 12 Nộ của mỗi địch còn sống.');
+}
+export function installMixedDamageSettlement(root){const p=join(root,'dist','battle.html');writeFileSync(p,patchSupportBenefitSettlement(patchSupportDamageSettlement(patchTeamReactionSettlement(patchLegacyCounterAndCritical(patchMixedDamageSettlement(readFileSync(p,'utf8')))))));}
