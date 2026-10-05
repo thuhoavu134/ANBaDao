@@ -58,7 +58,7 @@ test('AC08: rời màn dừng clock, đóng dialog, một scope', () => {
 test('AC09: điểm nối Run theo ID, thiếu thì Idle, không bịa FPS', () => {
   const ui = js();
   assert.match(ui, /HonVietCampaignRunSpecs/);
-  assert.match(ui, /spriteSpecs\[pick\.id\]/);
+  assert.match(ui, /spriteSpecs\[campaignActorArtId\(pick\.id\)\]/);
   assert.doesNotMatch(ui, /run-placeholder/);
   assert.doesNotMatch(ui, /fakeRun|pretendRun|scrollOffset\s*=\s*time/);
 });
@@ -88,5 +88,6 @@ test('AC02: canvas aria-label theo đội đang chọn, art theo pick.id', () =>
   assert.match(ui, /savedSceneSquad\(\)/);
   assert.match(ui, /Đội đang thám hiểm: ' \+ squad\.map/);
   assert.match(ui, /specForAfk\(pick\)/);
-  assert.match(ui, /spriteSpecs\[pick\.id\]/);
+  assert.match(ui, /spriteSpecs\[campaignActorArtId\(pick\.id\)\]/);
 });
+

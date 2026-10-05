@@ -31,15 +31,15 @@ function approx(actual,expected,tolerance=1e-6,message=''){
   assert.ok(Math.abs(actual-expected)<=tolerance,message||`${actual} ~= ${expected}`);
 }
 
-test('portrait formation restores the approved legacy mobile anchors and stays inside every target crop',()=>{
+test('portrait formation gives opposing fronts room and stays inside every target crop',()=>{
   const expected={
     player:[
-      {x:720,y:340},{x:720,y:520},{x:720,y:700},
-      {x:630,y:340},{x:630,y:520},{x:630,y:700}
+      {x:690,y:340},{x:690,y:520},{x:690,y:700},
+      {x:640,y:340},{x:640,y:520},{x:640,y:700}
     ],
     enemy:[
-      {x:880,y:340},{x:880,y:520},{x:880,y:700},
-      {x:970,y:340},{x:970,y:520},{x:970,y:700}
+      {x:910,y:340},{x:910,y:520},{x:910,y:700},
+      {x:960,y:340},{x:960,y:520},{x:960,y:700}
     ]
   };
   for(const viewport of mobileStages){
@@ -54,20 +54,20 @@ test('portrait formation restores the approved legacy mobile anchors and stays i
   }
 });
 
-test('portrait formation keeps old 90px team columns, 160px opposing frontline lane and mirrored rows',()=>{
+test('portrait formation keeps 50px team columns, 220px opposing frontline lane and mirrored rows',()=>{
   const formation=battleFormationForViewport(390,739);
   assert.deepEqual(PORTRAIT_FORMATION.rows,[340,520,700]);
-  assert.equal(PORTRAIT_FORMATION.frontOffsetX,80);
-  assert.equal(PORTRAIT_FORMATION.backOffsetX,170);
+  assert.equal(PORTRAIT_FORMATION.frontOffsetX,110);
+  assert.equal(PORTRAIT_FORMATION.backOffsetX,160);
   for(const team of ['player','enemy']){
     assert.equal(new Set(formation[team].map(p=>`${p.x}:${p.y}`)).size,6);
     const front=formation[team].slice(0,3),back=formation[team].slice(3);
     assert.deepEqual(front.map(p=>p.y),[340,520,700]);
     assert.deepEqual(back.map(p=>p.y),[340,520,700]);
-    for(let row=0;row<3;row++)assert.equal(Math.abs(front[row].x-back[row].x),90);
+    for(let row=0;row<3;row++)assert.equal(Math.abs(front[row].x-back[row].x),50);
   }
   for(let row=0;row<3;row++){
-    assert.equal(formation.enemy[row].x-formation.player[row].x,160);
+    assert.equal(formation.enemy[row].x-formation.player[row].x,220);
     assert.equal(formation.player[row].y,formation.enemy[row].y);
     assert.equal(formation.player[row+3].y,formation.enemy[row+3].y);
     approx(formation.player[row].x+formation.enemy[row].x,BATTLE_WORLD.width);
@@ -90,7 +90,7 @@ test('special heroes use body-height calibration while preserving compact layout
   assert.equal(heroVisualScale('linh_dong'),310/335);
   assert.equal(heroVisualScale('hero_splus_bach_dien'),310/395);
   assert.equal(heroVisualScale('dinh_loi'),1);
-  assert.equal(BATTLE_CHARACTER_SCALE.portrait,0.52);
+  assert.equal(BATTLE_CHARACTER_SCALE.portrait,0.34);
   assert.equal(BATTLE_CHARACTER_SCALE.desktop,0.74);
   assert.equal(HERO_VISUAL_OFFSET_X.hero_splus_linh_dong,4.25);
   assert.equal(battleCharacterHorizontalScaleForViewport('hero_splus_linh_dong',1280,800),1);
@@ -127,8 +127,8 @@ context.scale(depthScale * identityScale, depthScale * identityScale);`;
   assert.match(patched,/function battleFormationForViewport\(/);
   assert.match(patched,/function battleCharacterScale\(/);
   assert.match(patched,/rows:Object\.freeze\(\[340,520,700\]\)/);
-  assert.match(patched,/frontOffsetX:80/);
-  assert.match(patched,/backOffsetX:170/);
+  assert.match(patched,/frontOffsetX:110/);
+  assert.match(patched,/backOffsetX:160/);
   assert.doesNotMatch(patched,/frontlineYOffset/);
   assert.ok(patched.includes('const HERO_VISUAL_SCALE=Object.freeze('+JSON.stringify(HERO_VISUAL_SCALE)+');'));
   assert.match(patched,/hero_splus_linh_dong:0\.9210526316/);
@@ -182,3 +182,4 @@ test('build applies the scoped layout owner after reference presentation but bef
   assert.ok(refIndex>=0&&layoutIndex>refIndex,'layout owner must supersede the late reference formation/scale patch');
   assert.ok(syncIndex<0||layoutIndex<syncIndex,'layout owner must run before any embedded payload sync');
 });
+

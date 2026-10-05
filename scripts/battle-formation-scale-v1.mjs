@@ -16,11 +16,11 @@ export const DESKTOP_FORMATION = Object.freeze({
 // Keep this geometry under the current viewport-aware owner; do not revive MOBILE_POSITIONS.
 export const PORTRAIT_FORMATION = Object.freeze({
   rows: Object.freeze([340,520,700]),
-  frontOffsetX: 80,
-  backOffsetX: 170,
+  frontOffsetX: 110,
+  backOffsetX: 160,
   compactCropWidth: 1200
 });
-export const BATTLE_CHARACTER_SCALE = Object.freeze({ portrait:0.52, desktop:0.74 });
+export const BATTLE_CHARACTER_SCALE = Object.freeze({ portrait:0.34, desktop:0.74 });
 // Match the standing body of Ông Phở (310 world px) and Đình Lôi (~300),
 // measured from real first-frame alpha at their production draw sizes. The
 // registered S+ bodies are 335/395 px; cell size or silhouette diagonal is not
@@ -110,8 +110,8 @@ export function battleCharacterVisualOffsetXForViewport(unitOrId,team,width,heig
   return team==='enemy'?-amount:amount;
 }
 
-const RUNTIME_LAYOUT=`const PORTRAIT_FORMATION=Object.freeze({rows:Object.freeze([340,520,700]),frontOffsetX:80,backOffsetX:170,compactCropWidth:1200});
-  const BATTLE_CHARACTER_SCALE=Object.freeze({portrait:0.52,desktop:0.74});
+const RUNTIME_LAYOUT=`const PORTRAIT_FORMATION=Object.freeze({rows:Object.freeze([340,520,700]),frontOffsetX:110,backOffsetX:160,compactCropWidth:1200});
+  const BATTLE_CHARACTER_SCALE=Object.freeze({portrait:0.34,desktop:0.74});
   const HERO_VISUAL_SCALE=Object.freeze(${JSON.stringify(HERO_VISUAL_SCALE)});
   const HERO_VISUAL_HORIZONTAL_SCALE=Object.freeze({default:1,hero_splus_linh_dong:0.9210526316});
   const HERO_VISUAL_OFFSET_X=Object.freeze({default:0,hero_splus_linh_dong:4.25});
@@ -238,3 +238,4 @@ if(process.env.HV_SKIP_BATTLE_FORMATION_SCALE_PATCH!=='1'&&existsSync(path)){
   writeFileSync(path,patched);
   console.log('Battle formation + visual scale v1 applied: approved legacy portrait anchors, single scale owner');
 }
+

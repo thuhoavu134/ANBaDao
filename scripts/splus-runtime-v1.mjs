@@ -1,3 +1,4 @@
+import { combatStatusIconType } from '../src/render/combat-status-presentation.mjs';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { join, resolve } from 'node:path';
@@ -72,10 +73,13 @@ export function patchSplusBattleHtml(input) {
   // unit.statuses and their head icons vanished). Merge, deduped by type, cap 4.
   once('      visibleStatuses.push(status);','      if(visibleStatuses.some(shown=>shown.type===status.type)) continue;\n      visibleStatuses.push(status);');
   once('const beneficial=[',"const beneficial=status.polarity==='buff'||[");
-  once('icon=statusIconImage(status.type);','icon=status.iconId?null:statusIconImage(status.type);');
-  once('      if(isNemVi){\n        context.shadowBlur=0;',`      if(status.iconId){context.shadowBlur=0;context.fillStyle='#fff';context.font='bold 11px sans-serif';context.textAlign='center';const number=globalThis.SPLUS42.catalog.find(h=>h.iconId===status.iconId)?.number;context.fillText(String(number||'')+(status.stacks>1?'×'+status.stacks:''),sx,sy+4);}
-      if(isNemVi){
-        context.shadowBlur=0;`);
+  once('icon=statusIconImage(status.type);','icon=statusIconImage(combatStatusIconType(status.type));');
+  once('  function statusIconImage(type)',`  ${combatStatusIconType.toString()}
+  function statusIconImage(type)`);
+  once('context.arc(sx,sy,isNemVi?size*.34:(compact?5:6),0,Math.PI*2);context.fill();',`context.roundRect(sx-size/2,sy-size/2,size,size,3);context.fill();
+        const label=globalThis.SPLUS42.labels[status.type]||status.type;
+        const short=label.split(/\\s+/).slice(0,2).map(word=>word[0]).join('').toUpperCase();
+        context.fillStyle='#fff';context.font='bold 9px sans-serif';context.textAlign='center';context.fillText(short,sx,sy+3);`);
   once('</head>','<link rel="stylesheet" href="/splus-skill-details.css"><script src="/splus-skill-details.js"></script><style>.splus-battle .action-buttons{grid-template-columns:1fr!important}.splus-battle .action-button[data-action="skill"],.splus-battle .action-button[data-action="ultimate"]{display:none!important}#splus-battle-skills{margin:0!important}#splus-battle-skills .splus-skill-visual{width:64px}#splus-battle-skills .splus-skill-name{font-size:11px}#splus-battle-skills .splus-skill-kind{margin:1px}.splus-battle .action-zone{max-width:510px!important;background:#10202cec;border:1px solid #8e784955;border-radius:14px}.splus-battle .action-button small{display:none!important}@media(max-width:600px){#splus-battle-skills .splus-skill-visual{width:48px}#splus-battle-skills .splus-skill-name{font-size:10px}}</style></head>');
   once('dom.actionButtons.forEach((button) => button.addEventListener("click", () => chooseAction(button.dataset.action)));','dom.actionButtons.forEach((button) => button.addEventListener("click", () => splusInspectAction(button.dataset.action,button)));');
   once('      chooseAction(actionByKey[event.key]);','      if(!document.getElementById("splus-skill-dialog")?.open)splusInspectAction(actionByKey[event.key]);');
@@ -90,3 +94,4 @@ export function buildSplusRuntime(root=process.cwd()) {
   console.log('SPLUS42: source factory, existing scheduler bridge, 42 HUD identities');
 }
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url))buildSplusRuntime();
+

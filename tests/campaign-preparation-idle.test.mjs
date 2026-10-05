@@ -23,7 +23,7 @@ function extract(name) {
 }
 function fixture(extra = {}) {
   const context = vm.createContext({ spriteSpecs: specs, preparationIdlePacks: packs, reducedMotion: { matches: false }, ...extra });
-  for (const name of ['frameAt', 'preparationSpriteFor']) vm.runInContext(extract(name), context);
+  for (const name of ['campaignActorArtId', 'frameAt', 'preparationSpriteFor']) vm.runInContext(extract(name), context);
   return context;
 }
 
@@ -130,3 +130,4 @@ test('real preparation draw uses a full-body idle when a page is delayed, then r
   assert.equal(drawn.length, 2);
   for (const args of drawn) assert.match(args[0].src, /\/page-/);
 });
+

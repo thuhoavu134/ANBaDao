@@ -3,13 +3,14 @@ import { join } from 'node:path';
 import { createHash } from 'node:crypto';
 import vm from 'node:vm';
 import sharp from 'sharp';
+import { registrationFromCrop } from '../src/assets/sprite-registration.mjs';
 
-export const PREPARATION_PAGE_FRAMES = 24;
+export const PREPARATION_PAGE_FRAMES = 8;
 
 // Read the final build's descriptors, including earlier authored asset patches.
 // Frames, timing and pivots continue to have a single source in campaign-scene.
-export function preparationSourceSpecs(html) {
-  const declarations = ['LUC_ANH_IDLE_1080', 'AFK_THAY_MO_IDLE_DURATIONS', 'spriteSpecs'].map(name => {
+export function preparationSourceSpecs(html, descriptor = 'spriteSpecs') {
+  const declarations = ['LUC_ANH_IDLE_1080', 'AFK_THAY_MO_IDLE_DURATIONS', descriptor].map(name => {
     const start = html.indexOf('const ' + name + ' =');
     if (start < 0) throw new Error('Preparation idle descriptor: ' + name);
     // A comment in a descriptor may itself contain a semicolon.
@@ -20,7 +21,7 @@ export function preparationSourceSpecs(html) {
     }
     throw new Error('Unterminated preparation idle descriptor: ' + name);
   });
-  return vm.runInNewContext(declarations.join('\n') + '\nspriteSpecs', {}, { timeout: 1000 });
+  return vm.runInNewContext(declarations.join('\n') + '\n'+descriptor, {}, { timeout: 1000 });
 }
 
 export async function buildPreparationIdlePages(root, specs, { pageFrames = PREPARATION_PAGE_FRAMES, outputBase = 'assets/characters/preparation-idle-v1', includePoster = true } = {}) {
@@ -67,11 +68,30 @@ export async function buildPreparationIdlePages(root, specs, { pageFrames = PREP
 
 export async function installCampaignPreparationIdle(root) {
   const file = join(root, 'dist', 'index.html');
-  const html = readFileSync(file, 'utf8'), anchor = 'const preparationIdlePacks = {};';
+  let html = readFileSync(file, 'utf8');
+  const anchor = 'const preparationIdlePacks = {};';
   if (html.split(anchor).length !== 2) throw new Error('Preparation idle pack anchor');
   const packs = await buildPreparationIdlePages(root, preparationSourceSpecs(html));
-  writeFileSync(file, html.replace(anchor, () => 'const preparationIdlePacks = ' + JSON.stringify(packs) + ';'));
+  const attacks=preparationSourceSpecs(html,'farmAttackSpecs');
+  const bach=JSON.parse(readFileSync(join(root,'assets/characters/bach-dien/runtime-meta.json'),'utf8'));
+  const linh=JSON.parse(readFileSync(join(root,'assets/characters/linh-dong/runtime-meta.json'),'utf8'));
+  attacks.bach_dien.registration=bach.clips.attack.registration;
+  attacks.linh_dong.registration=registrationFromCrop(linh.packed.find(c=>c.file==='basic-atlas.webp').cropBox,linh.packed.find(c=>c.file==='idle-atlas.webp').cropBox,480,440);
+  const attackPacks=await buildPreparationIdlePages(root,attacks,{pageFrames:8,outputBase:'assets/characters/campaign-atk-v1',includePoster:false});
+  const runs=preparationSourceSpecs(html,'runSpecs');
+  const runPacks=await buildPreparationIdlePages(root,runs,{pageFrames:8,outputBase:'assets/characters/campaign-run-v1',includePoster:false});
+  const vfx=preparationSourceSpecs(html,'farmBasicVfxSpecs');
+  const vfxPacks=await buildPreparationIdlePages(root,vfx,{pageFrames:8,outputBase:'assets/characters/campaign-vfx-v1',includePoster:false});
+  html=html.replace(anchor, () => 'const preparationIdlePacks = ' + JSON.stringify(packs) + ';');
+  for(const [name,value] of [['farmAttackPacks',attackPacks],['farmVfxPacks',vfxPacks],['farmRunPacks',runPacks]]){
+    const token='const '+name+' = {};';if(html.split(token).length!==2)throw new Error('Campaign pack anchor '+name);
+    html=html.replace(token,()=> 'const '+name+' = '+JSON.stringify(value)+';');
+  }
+  const descriptor='const farmAttackSpecs =';
+  const start=html.indexOf(descriptor),end=html.indexOf(';',start);
+  html=html.slice(0,start)+descriptor+' '+JSON.stringify(attacks)+';'+html.slice(end+1);
+  writeFileSync(file,html);
   writeFileSync(join(root, 'dist', 'preparation-idle-packs.json'), JSON.stringify(packs));
-  console.log('Preparation idle: full RGBA frames in 24-frame pages, authored idle fallback.');
+  console.log('Preparation idle + campaign ATK/VFX: canonical RGBA pages, authored registration.');
   return packs;
 }
