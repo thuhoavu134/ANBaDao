@@ -32,6 +32,8 @@ export function patchBattleLivingTargets(html) {
     '  function ongPhoFollowUp(actor,target,multiplier,label,{forceCrit=false,addTaste=false}={}){\n    if(!actor || actor.hp<=0)return 0;');
   once('      if(secondTarget?.hp>0){\n        secondDamage=ongPhoFollowUp',
     '      if(secondTarget?.hp>0 && actor.hp>0){\n        secondDamage=ongPhoFollowUp');
+  once('for(let i=0;i<hits&&target?.hp>0;i++)',
+    'for(let i=0;i<hits&&actor?.hp>0&&target?.hp>0;i++)');
   return html;
 }
 export function installBattleLivingTargets(root) {
