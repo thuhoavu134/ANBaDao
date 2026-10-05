@@ -144,7 +144,16 @@ export function createSplusMechanics(options={}) {
   function shield(sourceId,targetId,amount,extra={}) {
     const source=unit(sourceId),target=unit(targetId);if(!alive(target))return 0;
     if(has(target,'shieldBan')){emit('shieldBlocked',source,target);return 0;}
-    const value=Math.max(0,Math.round(amount)),type=extra.explodes?'waterShield':extra.bubble?'bubble':'shieldLayer';
+    const value=Math.max(0,Math.round(amount));
+    // Reserve protection raises the unlayered shield floor, retaining its
+    // original non-stacking, non-expiring semantics under engine bans.
+    if(extra.floor){
+      if(has(target,'buffBan')){emit('buffBlocked',source,target,{effect:'shieldLayer'});return 0;}
+      const added=Math.max(0,value-target.shield);target.shield+=added;
+      if(added>0)emit('shield',source,target,{amount:added,iconId:def(source)?.iconId||null});
+      return added;
+    }
+    const type=extra.explodes?'waterShield':extra.bubble?'bubble':'shieldLayer';
     const previous=statuses(target).find(s=>s.type===type&&s.sourceId===source?.id);
     const layer=buff(source,target,type,extra.explosionPower||0.5,extra.turns??defaults.duration,{shieldRemaining:value+n(previous?.shieldRemaining)});
     if(!layer)return 0;target.shield+=value;
@@ -165,7 +174,7 @@ export function createSplusMechanics(options={}) {
     const permitted=Math.max(0,Math.round(amount*(1-clamp(anti))));
     const converted=source!==target&&has(target,'wound')?Math.round(permitted*0.5):0;
     const actual=Math.min(target.maxHp-target.hp,permitted-converted);target.hp+=actual;
-    emit('heal',source,target,{amount:actual,requested:amount,blocked:Math.round(amount-permitted),iconId:def(source)?.iconId||null});
+    emit('heal',source,target,{amount:actual,requested:amount,blocked:Math.round(amount-permitted),iconId:def(source)?.iconId||null,...(extra.legacyImpact?{legacyImpact:true}:{})});
     if(source&&key(source)==='thiem_ngan'&&passive(source)){
       buff(source,target,'armorUp',0.1);const over=permitted-converted-actual;if(over>0)shield(source,target,over);
     }
