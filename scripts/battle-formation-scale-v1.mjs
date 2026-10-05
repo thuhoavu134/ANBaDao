@@ -12,11 +12,11 @@ export const DESKTOP_FORMATION = Object.freeze({
     Object.freeze({ x:1235,y:340 }),Object.freeze({ x:1235,y:520 }),Object.freeze({ x:1235,y:700 })
   ])
 });
-// Approved legacy portrait anchors from the stable iPhone layout.
+// Review geometry: distinct allied columns and a moderate central combat lane.
 // Keep this geometry under the current viewport-aware owner; do not revive MOBILE_POSITIONS.
 export const PORTRAIT_FORMATION = Object.freeze({
   rows: Object.freeze([340,520,700]),
-  frontOffsetX: 110,
+  frontOffsetX: 70,
   backOffsetX: 160,
   compactCropWidth: 1200
 });
@@ -110,7 +110,7 @@ export function battleCharacterVisualOffsetXForViewport(unitOrId,team,width,heig
   return team==='enemy'?-amount:amount;
 }
 
-const RUNTIME_LAYOUT=`const PORTRAIT_FORMATION=Object.freeze({rows:Object.freeze([340,520,700]),frontOffsetX:110,backOffsetX:160,compactCropWidth:1200});
+const RUNTIME_LAYOUT=`const PORTRAIT_FORMATION=Object.freeze({rows:Object.freeze([340,520,700]),frontOffsetX:70,backOffsetX:160,compactCropWidth:1200});
   const BATTLE_CHARACTER_SCALE=Object.freeze({portrait:0.34,desktop:0.74});
   const HERO_VISUAL_SCALE=Object.freeze(${JSON.stringify(HERO_VISUAL_SCALE)});
   const HERO_VISUAL_HORIZONTAL_SCALE=Object.freeze({default:1,hero_splus_linh_dong:0.9210526316});
@@ -227,7 +227,18 @@ export function applyBattleFormationScale(source){
     'if (unit.team === TEAM_ENEMY && !(typeof isLinhDong === "function" && isLinhDong(unit)) && !(typeof isBachDien === "function" && isBachDien(unit))) context.scale(-1, 1);');
   s=s.replace(/if\(unit\.team===TEAM_ENEMY\)context\.scale\(-1,1\);\s*(?=draw(?:LinhDong|BachDien)Hero\(context,unit,time\))/g,'');
   if(/innerWidth\s*<\s*600\s*\?\s*0\.(?:52|57)\s*:\s*0\.74/.test(s))throw new Error('Battle layout patch left a stale mobile character scale owner');
-  return s;
+  return s.includes('function drawUnitHud(')?patchCompactBattleHud(s):s;
+}
+
+export function patchCompactBattleHud(source){
+  if(source.includes('/* compact-column-hud-v2 */'))return source;
+  const edits=[
+    ['const y = unit.y - (compact ? 132 : 164);','/* compact-column-hud-v2 */ const y = unit.y - (compact ? battleCharacterScale(unit)*310*battleCharacterDepthScale(unit)+18 : 164);'],
+    ['const iconSize=compact?21:23, signatureSize=compact?24:26, gap=compact?25:28;','const iconSize=compact?16:23, signatureSize=compact?18:26, gap=compact?18:28;'],
+    ['const statusY=y-(compact?25:28);','const statusY=y-(compact?17:28);']
+  ];
+  for(const [from,to]of edits){if(source.split(from).length!==2)throw new Error('Compact HUD owner drift: '+from);source=source.replace(from,to);}
+  return source;
 }
 
 const root=process.cwd();
@@ -238,4 +249,3 @@ if(process.env.HV_SKIP_BATTLE_FORMATION_SCALE_PATCH!=='1'&&existsSync(path)){
   writeFileSync(path,patched);
   console.log('Battle formation + visual scale v1 applied: approved legacy portrait anchors, single scale owner');
 }
-

@@ -34,11 +34,11 @@ function approx(actual,expected,tolerance=1e-6,message=''){
 test('portrait formation gives opposing fronts room and stays inside every target crop',()=>{
   const expected={
     player:[
-      {x:690,y:340},{x:690,y:520},{x:690,y:700},
+      {x:730,y:340},{x:730,y:520},{x:730,y:700},
       {x:640,y:340},{x:640,y:520},{x:640,y:700}
     ],
     enemy:[
-      {x:910,y:340},{x:910,y:520},{x:910,y:700},
+      {x:870,y:340},{x:870,y:520},{x:870,y:700},
       {x:960,y:340},{x:960,y:520},{x:960,y:700}
     ]
   };
@@ -54,20 +54,20 @@ test('portrait formation gives opposing fronts room and stays inside every targe
   }
 });
 
-test('portrait formation keeps 50px team columns, 220px opposing frontline lane and mirrored rows',()=>{
+test('portrait formation keeps 90px team columns, 140px opposing frontline lane and mirrored rows',()=>{
   const formation=battleFormationForViewport(390,739);
   assert.deepEqual(PORTRAIT_FORMATION.rows,[340,520,700]);
-  assert.equal(PORTRAIT_FORMATION.frontOffsetX,110);
+  assert.equal(PORTRAIT_FORMATION.frontOffsetX,70);
   assert.equal(PORTRAIT_FORMATION.backOffsetX,160);
   for(const team of ['player','enemy']){
     assert.equal(new Set(formation[team].map(p=>`${p.x}:${p.y}`)).size,6);
     const front=formation[team].slice(0,3),back=formation[team].slice(3);
     assert.deepEqual(front.map(p=>p.y),[340,520,700]);
     assert.deepEqual(back.map(p=>p.y),[340,520,700]);
-    for(let row=0;row<3;row++)assert.equal(Math.abs(front[row].x-back[row].x),50);
+    for(let row=0;row<3;row++)assert.equal(Math.abs(front[row].x-back[row].x),90);
   }
   for(let row=0;row<3;row++){
-    assert.equal(formation.enemy[row].x-formation.player[row].x,220);
+    assert.equal(formation.enemy[row].x-formation.player[row].x,140);
     assert.equal(formation.player[row].y,formation.enemy[row].y);
     assert.equal(formation.player[row+3].y,formation.enemy[row+3].y);
     approx(formation.player[row].x+formation.enemy[row].x,BATTLE_WORLD.width);
@@ -127,7 +127,7 @@ context.scale(depthScale * identityScale, depthScale * identityScale);`;
   assert.match(patched,/function battleFormationForViewport\(/);
   assert.match(patched,/function battleCharacterScale\(/);
   assert.match(patched,/rows:Object\.freeze\(\[340,520,700\]\)/);
-  assert.match(patched,/frontOffsetX:110/);
+  assert.match(patched,/frontOffsetX:70/);
   assert.match(patched,/backOffsetX:160/);
   assert.doesNotMatch(patched,/frontlineYOffset/);
   assert.ok(patched.includes('const HERO_VISUAL_SCALE=Object.freeze('+JSON.stringify(HERO_VISUAL_SCALE)+');'));

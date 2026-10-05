@@ -74,6 +74,9 @@ export function patchSplusBattleHtml(input) {
   once('      visibleStatuses.push(status);','      if(visibleStatuses.some(shown=>shown.type===status.type)) continue;\n      visibleStatuses.push(status);');
   once('const beneficial=[',"const beneficial=status.polarity==='buff'||[");
   once('icon=statusIconImage(status.type);','icon=statusIconImage(combatStatusIconType(status.type));');
+  once('const STATUS_ICON_SOURCES = Object.freeze({',`const STATUS_ICON_SOURCES = Object.freeze({
+    spiritMark: "assets/ui/status/spirit-mark.svg",
+    stealth: "assets/ui/status/stealth.svg",`);
   once('  function statusIconImage(type)',`  ${combatStatusIconType.toString()}
   function statusIconImage(type)`);
   once('context.arc(sx,sy,isNemVi?size*.34:(compact?5:6),0,Math.PI*2);context.fill();',`context.roundRect(sx-size/2,sy-size/2,size,size,3);context.fill();
@@ -94,4 +97,3 @@ export function buildSplusRuntime(root=process.cwd()) {
   console.log('SPLUS42: source factory, existing scheduler bridge, 42 HUD identities');
 }
 if(process.argv[1]&&resolve(process.argv[1])===fileURLToPath(import.meta.url))buildSplusRuntime();
-
