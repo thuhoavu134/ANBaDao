@@ -1,4 +1,6 @@
 import{settleLegacyStatusRemoval}from'../src/domain/combat/legacy-status-settlement.mjs';
+import{restoreLegacyPrimer}from'../src/domain/combat/legacy-primer-recovery.mjs';
+import{legacyReactionEffects}from'../src/domain/combat/legacy-reaction-effects.mjs';
 import{settleLegacyShield,rollbackLegacyShieldGrant}from'../src/domain/combat/legacy-shield-settlement.mjs';
 import{readFileSync,writeFileSync}from'node:fs';import{join}from'node:path';import{settleLegacyDamage}from'../src/domain/combat/legacy-damage-settlement.mjs';
 export function patchMixedDamageSettlement(html){
@@ -130,4 +132,25 @@ export function patchPlanRecoverySettlement(html){
  if(html.split(eligibility).length!==2)throw new Error('Plan recovery button eligibility drift');
  return html.replace(eligibility,"btn.disabled=!manual||(id!=='pivot'&&['unweave','fortify'].includes(pr.sourceDisruption)&&!(getUnit(pr.targetId)?.hp>0))||!Core.canPlanRecover(pr,id,{orderPoints:state.battleOrders?.points,momentum:state.momentum?.value});");
 }
-export function installMixedDamageSettlement(root){const p=join(root,'dist','battle.html');writeFileSync(p,patchPlanRecoverySettlement(patchLegacyStatusOwnership(patchTacticalShieldSettlement(patchSkillShieldSettlement(patchSupportBenefitSettlement(patchSupportDamageSettlement(patchTeamReactionSettlement(patchLegacyCounterAndCritical(patchMixedDamageSettlement(readFileSync(p,'utf8')))))))))));}
+export function patchPrimerRecoveryOwnership(html){
+ if(html.includes('/* HV_PRIMER_RECOVERY_OWNERSHIP_V1 */'))return html;
+ const once=(from,to)=>{if(html.split(from).length!==2)throw new Error('Primer recovery contract drift: '+from);html=html.replace(from,to);};
+ once('const removed=target.statuses.splice(idx,1)[0];',"const removed=settleLegacyStatusRemoval(target,[target.statuses[idx].type],{combat:typeof splusCombat==='function'?splusCombat():null,count:1,selectedStatus:target.statuses[idx]})[0];");
+ once("let effect='none';\n    if(id==='rebuild')", "const restored=pr.sourceDisruption==='unweave'&&id!=='pivot'?restoreLegacyPrimer(target,snap.removedStatus,{combat:typeof splusCombat==='function'?splusCombat():null,force:id==='force',addLegacyStatus:addStatus}):null;if(pr.sourceDisruption==='unweave'&&id!=='pivot'&&!restored)return false;let effect='none';\n    if(id==='rebuild')");
+ once('upsertReactionStatus(target,{...snap.removedStatus,turns:Math.max(1,Number(snap.removedStatus.turns)||1)});','');
+ once('upsertReactionStatus(target,{...snap.removedStatus,turns:1,power:Math.max(1,Math.round((Number(snap.removedStatus.power)||1)*.5))});','');
+ once('  function resolvePlanDisruption(', '/* HV_PRIMER_RECOVERY_OWNERSHIP_V1 */\n'+restoreLegacyPrimer.toString()+'\n  function resolvePlanDisruption(');
+ return html;
+}
+export function patchReactionStatusOwnership(html){
+ if(html.includes('/* HV_REACTION_STATUS_OWNERSHIP_V1 */'))return html;
+ const effects="legacyReactionEffects(typeof splusCombat==='function'?splusCombat():null,addStatus)";
+ for(const before of ["Core.previewSkillReaction(actor,actionKind(actor,'skill'),u)","Core.previewSkillReaction(actor,actionKind(actor,'ultimate'),u)",'Core.previewSkillReaction(actor,kind,target)','Core.previewSkillReaction(actor,kind,unit)','Core.applySkillReaction(actor,kind,unit)']){
+  if(html.split(before).length!==2)throw new Error('Reaction status contract drift: '+before);
+  html=html.replace(before,before.slice(0,-1)+','+effects+')');
+ }
+ const owner='  function resolveTeamSkillReactions(';
+ if(html.split(owner).length!==2)throw new Error('Reaction status owner missing');
+ return html.replace(owner,'/* HV_REACTION_STATUS_OWNERSHIP_V1 */\n'+legacyReactionEffects.toString()+'\n'+owner);
+}
+export function installMixedDamageSettlement(root){const p=join(root,'dist','battle.html');writeFileSync(p,patchReactionStatusOwnership(patchPrimerRecoveryOwnership(patchPlanRecoverySettlement(patchLegacyStatusOwnership(patchTacticalShieldSettlement(patchSkillShieldSettlement(patchSupportBenefitSettlement(patchSupportDamageSettlement(patchTeamReactionSettlement(patchLegacyCounterAndCritical(patchMixedDamageSettlement(readFileSync(p,'utf8')))))))))))));}

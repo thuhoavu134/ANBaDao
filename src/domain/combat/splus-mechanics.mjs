@@ -100,6 +100,36 @@ export function createSplusMechanics(options={}) {
   function cleanse(targetId,count=Infinity,filter=s=>s.polarity==='debuff') {
     let used=0;return remove(targetId,s=>filter(s)&&used++<count,'cleanse');
   }
+  // Recovery restores a removed native effect, not a fresh duration or DOT budget.
+  function restoreStatus(targetId,snapshot,{force=false}={}) {
+    const target=unit(targetId);
+    if(!alive(target)||!snapshot?.splus||!snapshot.type)return null;
+    if(snapshot.expiresRound!=null&&snapshot.expiresRound<=round)return null;
+    if(snapshot.charges!=null&&snapshot.charges<=0)return null;
+    const existing=statuses(target).find(s=>s.type===snapshot.type&&s.sourceId===snapshot.sourceId);
+    if(existing)return existing;
+    const effect={...snapshot};
+    if(force){effect.turns=1;effect.power=Math.max(1,Math.round((n(snapshot.power)||1)*.5));}
+    const restored=addStatus(unit(snapshot.sourceId),target,effect);
+    if(!restored)return null;
+    restored.expiresRound=force?Math.min(snapshot.expiresRound??Infinity,round+1):snapshot.expiresRound;
+    restored.appliedRound=snapshot.appliedRound;
+    restored.ticksLeft=force?Math.min(n(snapshot.ticksLeft,1),1):snapshot.ticksLeft;
+    return restored;
+  }
+  function extendStatus(targetId,entry,maxTurns=3){
+    const target=unit(targetId);
+    if(!alive(target)||!target.statuses.includes(entry)||!active(entry))return false;
+    if(entry.polarity==='buff'&&has(target,'buffBan')){emit('buffBlocked',unit(entry.sourceId),target,{effect:entry.type});return false;}
+    if(entry.expiresRound==null)return true;
+    const remaining=entry.expiresRound-round,added=Math.max(0,Math.min(1,n(maxTurns,3)-remaining));
+    if(added>0){entry.expiresRound+=added;entry.turns=n(entry.turns)+added;if(entry.ticksLeft!=null)entry.ticksLeft=n(entry.ticksLeft)+added;emit('statusExtend',unit(entry.sourceId),target,{effect:entry.type,added,expiresRound:entry.expiresRound});}
+    return true;
+  }
+  function storedDotDamage(targetId,entry){
+    const target=unit(targetId);
+    return alive(target)&&target.statuses.includes(entry)&&active(entry)&&dots.has(entry.type)?dotAmount(target,entry,Math.max(0,n(entry.ticksLeft))):0;
+  }
   const buff=(a,t,type,powerValue=0,turns=defaults.duration,extra={})=>addStatus(a,t,{type,power:powerValue,turns,...extra});
   const mark=(a,t,type,powerValue,extra={})=>buff(a,t,type,powerValue,defaults.markDuration,extra);
   function modifiers(targetId) {
@@ -721,6 +751,5 @@ export function createSplusMechanics(options={}) {
       default:D(target,defaults.singleUltimateMultiplier);return;
     }
   }
-  return {schema:'luc-than-splus-combat/v2',profileVersion:'splus-profile/2026-09-08-v2',units,events,unit,start,beginTurn,beginRound,finishRound,act,damage,consumeHitAttempt,heal,shield,gainRage:energy,addStatus,cleanse,hasStatus:(targetId,type)=>has(unit(targetId),type),modifiers,stat,canUse,canMove,targets,chooseAction,hud,get round(){return round;}};
+  return {schema:'luc-than-splus-combat/v2',profileVersion:'splus-profile/2026-09-08-v2',units,events,unit,start,beginTurn,beginRound,finishRound,act,damage,consumeHitAttempt,heal,shield,gainRage:energy,addStatus,restoreStatus,extendStatus,storedDotDamage,cleanse,hasStatus:(targetId,type)=>has(unit(targetId),type),modifiers,stat,canUse,canMove,targets,chooseAction,hud,get round(){return round;}};
 }
-

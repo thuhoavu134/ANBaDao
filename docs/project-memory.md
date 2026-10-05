@@ -1,3 +1,19 @@
+## 2026-10-05 — Reaction status interoperability
+
+Continuation of PR #281 from `79f98af`; main `2ab4c9b`, REVIEW. Native reaction consumption now uses selected status removal accounting and remaining DOT tick damage. Native extension updates round expiry/tick budget through its owner, preserves provenance, respects buff bans and never shortens longer effects. Preview and resolution share eligibility/type aliases; legacy follow-ups cannot overwrite managed marks. Existing legacy amounts and reaction coefficients remain.
+
+Validation: RED evidence followed by 97/97 focused tests, including 13 new generated-runtime cases; regenerated sparse inline scripts parse and diff checks pass. Local fixture is not a full build. Fresh full-suite/build/browser CI pending this commit; physical Safari and deployment NOT_RUN. Evidence: `docs/qa/reaction-status-20261005/`. Next: remaining tactical status/trace routes, canonical mixed campaign progression and activity receipt gates, final visual regression. Existing owner workflow waiver applies; no board claim asserted.
+
+## 2026-10-05 — Primer removal / recovery ownership
+
+Baseline main `2ab4c9b` (PR #280). Branch `fix/primer-recovery-ownership-20261005`; source-only REVIEW. Supplied vibe-builder/vibe-lab read; the handoff's existing owner workflow waiver retained, no Ticket Board claim invented.
+
+- RED generated rebuild/force crashed on an unexported `upsertReactionStatus` global; unweave removed managed primers without native accounting.
+- Existing mixed settlement build owner now delegates selected removal to native accounting and restoration to the legacy adapter / S+ `restoreStatus` owner. Original managed deadlines, applied round and remaining tick budget remain; expired/banned grants return before costs, newer same-source statuses remain unchanged. Force retains the existing power expression and limits native lifetime/ticks to one round. Legacy merge, resource costs, windows and single-use receipt remain.
+- Validation: 84 focused tests PASS (13 ownership cases + prior recovery/shield/status/reaction/S+ combat/V2); serialized browser factory, idempotency/drift, document prefix and five sparse generated inline scripts checked. Initial 79/80 harness result is preserved; an omitted existing dead-recipient guard was restored without changing production for it.
+- Local checkout/fixture is sparse, not a full clean build or served-browser acceptance. Fresh full build/suite run on PR CI. Screenshot review, physical Safari and production deployment NOT_RUN.
+- Next: reaction extension/consumption, tactical status ownership and trace equivalence; canonical mixed campaign progression/affordability simulation and activity receipt/gate coverage; final visual regression. Preserve Ông Phở ultimate chase, no new art integration.
+
 ## 26/09/2026 — Khôi phục authored combat, REVIEW / chưa merge
 
 Branch `fix/restore-mixed-roster-vfx-sfx-voice-20260926`, PR #231. Xem [audit đầy đủ từng tướng/action](COMBAT-AUTHORED-AUDIT-2026-09-26.md). Runtime checkpoint `5c009474ae8be7b36c1cd308cae61623df6ff16b`; QA viewport `1c10ecf258f942b48dde8601520c79d373077a25`.

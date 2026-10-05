@@ -1,0 +1,64 @@
+TAP version 13
+# Subtest: generated legacy rebuild and force restore primers without a missing runtime global
+ok 1 - generated legacy rebuild and force restore primers without a missing runtime global
+  ---
+  duration_ms: 27.088263
+  type: 'test'
+  ...
+# Subtest: unweave removes a managed primer through native accounting once
+ok 2 - unweave removes a managed primer through native accounting once
+  ---
+  duration_ms: 10.939786
+  type: 'test'
+  ...
+# Subtest: managed rebuild retains deadline, tick budget and source after the round advances
+ok 3 - managed rebuild retains deadline, tick budget and source after the round advances
+  ---
+  duration_ms: 7.367797
+  type: 'test'
+  ...
+# Subtest: expired managed primer cannot be restored or charged as a successful recovery
+ok 4 - expired managed primer cannot be restored or charged as a successful recovery
+  ---
+  duration_ms: 6.609844
+  type: 'test'
+  ...
+# Subtest: managed force caps original remaining lifetime and ticks to one round
+ok 5 - managed force caps original remaining lifetime and ticks to one round
+  ---
+  duration_ms: 6.455731
+  type: 'test'
+  ...
+# Subtest: managed recovery does not overwrite a newer primer from the same source
+ok 6 - managed recovery does not overwrite a newer primer from the same source
+  ---
+  duration_ms: 6.803295
+  type: 'test'
+  ...
+# Subtest: managed regen recovery honors buff ban without spending resources
+ok 7 - managed regen recovery honors buff ban without spending resources
+  ---
+  duration_ms: 6.703915
+  type: 'test'
+  ...
+# Subtest: legacy restoration leaves independent managed status clocks unchanged
+ok 8 - legacy restoration leaves independent managed status clocks unchanged
+  ---
+  duration_ms: 6.802825
+  type: 'test'
+  ...
+# Subtest: primer recovery patch is idempotent, preserves document prefix and rejects drift
+ok 9 - primer recovery patch is idempotent, preserves document prefix and rejects drift
+  ---
+  duration_ms: 7.994392
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 179.995101

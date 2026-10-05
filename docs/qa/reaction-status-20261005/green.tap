@@ -1,0 +1,70 @@
+TAP version 13
+# Subtest: generated reaction uses native remaining DOT ticks and native removal accounting
+ok 1 - generated reaction uses native remaining DOT ticks and native removal accounting
+  ---
+  duration_ms: 10.222903
+  type: 'test'
+  ...
+# Subtest: native bleed burst reads percent damage and stacks with unchanged burst cap
+ok 2 - native bleed burst reads percent damage and stacks with unchanged burst cap
+  ---
+  duration_ms: 12.375131
+  type: 'test'
+  ...
+# Subtest: native regen extension changes its deadline and ticks without rewriting source or power
+ok 3 - native regen extension changes its deadline and ticks without rewriting source or power
+  ---
+  duration_ms: 6.889774
+  type: 'test'
+  ...
+# Subtest: native extension uses remaining rounds and never shortens an existing longer effect
+ok 4 - native extension uses remaining rounds and never shortens an existing longer effect
+  ---
+  duration_ms: 11.482664
+  type: 'test'
+  ...
+# Subtest: buff ban blocks native regen extension and reaction shield until it expires
+ok 5 - buff ban blocks native regen extension and reaction shield until it expires
+  ---
+  duration_ms: 10.110819
+  type: 'test'
+  ...
+# Subtest: expired, exhausted and own-source native primers cannot trigger reactions
+ok 6 - expired, exhausted and own-source native primers cannot trigger reactions
+  ---
+  duration_ms: 28.260547
+  type: 'test'
+  ...
+# Subtest: legacy follow-up leaves a managed marked effect and its deadline untouched
+ok 7 - legacy follow-up leaves a managed marked effect and its deadline untouched
+  ---
+  duration_ms: 6.688361
+  type: 'test'
+  ...
+# Subtest: managed attack/armor aliases work for lockdown/expose and preserve exact source selection
+ok 8 - managed attack/armor aliases work for lockdown/expose and preserve exact source selection
+  ---
+  duration_ms: 17.469471
+  type: 'test'
+  ...
+# Subtest: legacy-only reaction math and actor-turn extension remain unchanged
+ok 9 - legacy-only reaction math and actor-turn extension remain unchanged
+  ---
+  duration_ms: 23.592304
+  type: 'test'
+  ...
+# Subtest: runtime reaction previews and resolution receive the same ownership effects
+ok 10 - runtime reaction previews and resolution receive the same ownership effects
+  ---
+  duration_ms: 9.91583
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 237.364075
