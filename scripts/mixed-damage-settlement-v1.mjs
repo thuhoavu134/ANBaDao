@@ -56,7 +56,7 @@ export function patchSupportDamageSettlement(html){
  const owner=html.slice(start,end);
  const before='const before=target.hp;target.hp=Math.max(0,target.hp-raw);const dealt=Math.max(0,Math.round(before-target.hp));';
  if(owner.split(before).length!==2)throw new Error('Support damage settlement contract drift');
- const after="const supportActor={...hero,id:'__support_'+String(hero.sourceId||hero.id),team:TEAM_PLAYER,hp:1,maxHp:1,energy:0,shield:0,statuses:[]};const impact=settleLegacyDamage(supportActor,target,raw,{combat:typeof splusCombat==='function'?splusCombat():null,action:'skill',secondary:true,noTriggers:true});const dealt=impact.amount;if(impact.shieldAbsorbed>0)addFloater(target,`⛊${impact.shieldAbsorbed}`,'#7de3d0');target.hpTween=null;const rec=intelUnit(target);if(rec)rec.damageTaken+=dealt;";
+ const after="const supportActor={...hero,id:'__support_'+String(hero.sourceId||hero.id),team:TEAM_PLAYER,hp:0,maxHp:1,energy:0,shield:0,statuses:[]};const impact=settleLegacyDamage(supportActor,target,raw,{combat:typeof splusCombat==='function'?splusCombat():null,action:'skill',secondary:true,noTriggers:true});const dealt=impact.amount;if(impact.shieldAbsorbed>0)addFloater(target,`⛊${impact.shieldAbsorbed}`,'#7de3d0');target.hpTween=null;const rec=intelUnit(target);if(rec)rec.damageTaken+=dealt;";
  return html.slice(0,start)+'/* HV_SUPPORT_DAMAGE_SETTLEMENT_V1 */\n'+owner.replace(before,after)+html.slice(end);
 }
 export function installMixedDamageSettlement(root){const p=join(root,'dist','battle.html');writeFileSync(p,patchSupportDamageSettlement(patchTeamReactionSettlement(patchLegacyCounterAndCritical(patchMixedDamageSettlement(readFileSync(p,'utf8'))))));}
