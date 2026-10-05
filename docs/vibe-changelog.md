@@ -1,3 +1,13 @@
+## 2026-10-05 — Primer removal / recovery ownership
+
+Baseline main `2ab4c9b` (PR #280). Branch `fix/primer-recovery-ownership-20261005`; source-only REVIEW. Supplied vibe-builder/vibe-lab read; the handoff's existing owner workflow waiver retained, no Ticket Board claim invented.
+
+- RED generated rebuild/force crashed on an unexported `upsertReactionStatus` global; unweave removed managed primers without native accounting.
+- Existing mixed settlement build owner now delegates selected removal to native accounting and restoration to the legacy adapter / S+ `restoreStatus` owner. Original managed deadlines, applied round and remaining tick budget remain; expired/banned grants return before costs, newer same-source statuses remain unchanged. Force retains the existing power expression and limits native lifetime/ticks to one round. Legacy merge, resource costs, windows and single-use receipt remain.
+- Validation: 83 focused tests PASS (12 ownership cases + prior recovery/shield/status/reaction/S+ combat/V2); serialized browser factory, idempotency/drift, document prefix and five sparse generated inline scripts checked. Initial 79/80 harness result is preserved; an omitted existing dead-recipient guard was restored without changing production for it.
+- Local checkout/fixture is sparse, not a full clean build or served-browser acceptance. Fresh full build/suite run on PR CI. Screenshot review, physical Safari and production deployment NOT_RUN.
+- Next: reaction extension/consumption, tactical status ownership and trace equivalence; canonical mixed campaign progression/affordability simulation and activity receipt/gate coverage; final visual regression. Preserve Ông Phở ultimate chase, no new art integration.
+
 ## 26/09/2026 — Khôi phục authored combat, REVIEW / chưa merge
 
 Branch `fix/restore-mixed-roster-vfx-sfx-voice-20260926`, PR #231. Xem [audit đầy đủ từng tướng/action](COMBAT-AUTHORED-AUDIT-2026-09-26.md). Runtime checkpoint `5c009474ae8be7b36c1cd308cae61623df6ff16b`; QA viewport `1c10ecf258f942b48dde8601520c79d373077a25`.

@@ -1,0 +1,508 @@
+TAP version 13
+# Subtest: legacy skill shields honor shield and buff bans across generic and Dinh Loi paths
+ok 1 - legacy skill shields honor shield and buff bans across generic and Dinh Loi paths
+  ---
+  duration_ms: 17.887479
+  type: 'test'
+  ...
+# Subtest: unblocked skills preserve floor amounts and non-expiring shield behavior
+ok 2 - unblocked skills preserve floor amounts and non-expiring shield behavior
+  ---
+  duration_ms: 8.103987
+  type: 'test'
+  ...
+# Subtest: Dinh Loi shows only newly added shield and dead actors cannot grant shields
+ok 3 - Dinh Loi shows only newly added shield and dead actors cannot grant shields
+  ---
+  duration_ms: 1.977413
+  type: 'test'
+  ...
+# Subtest: shield reaction reports actual shield and respects bans
+ok 4 - shield reaction reports actual shield and respects bans
+  ---
+  duration_ms: 3.189122
+  type: 'test'
+  ...
+# Subtest: ban expiry restores granting and stronger shields are not reduced or advertised twice
+ok 5 - ban expiry restores granting and stronger shields are not reduced or advertised twice
+  ---
+  duration_ms: 1.722269
+  type: 'test'
+  ...
+# Subtest: dead recipients cannot receive a legacy shield
+ok 6 - dead recipients cannot receive a legacy shield
+  ---
+  duration_ms: 0.752185
+  type: 'test'
+  ...
+# Subtest: legacy beneficial grants respect managed buff ban and resume after expiry
+ok 7 - legacy beneficial grants respect managed buff ban and resume after expiry
+  ---
+  duration_ms: 20.500552
+  type: 'test'
+  ...
+# Subtest: legacy status refresh never overwrites a managed effect or its round deadline
+ok 8 - legacy status refresh never overwrites a managed effect or its round deadline
+  ---
+  duration_ms: 2.421964
+  type: 'test'
+  ...
+# Subtest: strip removes managed buffs and shield layers before a new shield is granted
+ok 9 - strip removes managed buffs and shield layers before a new shield is granted
+  ---
+  duration_ms: 3.075601
+  type: 'test'
+  ...
+# Subtest: cleanseGuard clears equivalent managed attack/armor debuffs but retains other effects
+ok 10 - cleanseGuard clears equivalent managed attack/armor debuffs but retains other effects
+  ---
+  duration_ms: 2.207681
+  type: 'test'
+  ...
+# Subtest: ward preserves managed guard and cleanse removes only one equivalent debuff
+ok 11 - ward preserves managed guard and cleanse removes only one equivalent debuff
+  ---
+  duration_ms: 3.390826
+  type: 'test'
+  ...
+# Subtest: dead recipients reject legacy status grants
+ok 12 - dead recipients reject legacy status grants
+  ---
+  duration_ms: 1.4845
+  type: 'test'
+  ...
+# Subtest: legacy-only buff refresh and selected cleanse/strip keep former amounts and durations
+ok 13 - legacy-only buff refresh and selected cleanse/strip keep former amounts and durations
+  ---
+  duration_ms: 4.063101
+  type: 'test'
+  ...
+# Subtest: actual buffAll action cannot grant attack buff to a banned recipient
+ok 14 - actual buffAll action cannot grant attack buff to a banned recipient
+  ---
+  duration_ms: 1.454855
+  type: 'test'
+  ...
+# Subtest: managed removal emits once per selected status and never triggers a shield explosion
+ok 15 - managed removal emits once per selected status and never triggers a shield explosion
+  ---
+  duration_ms: 1.596569
+  type: 'test'
+  ...
+# Subtest: status build patch is idempotent and rejects drift
+ok 16 - status build patch is idempotent and rejects drift
+  ---
+  duration_ms: 4.558788
+  type: 'test'
+  ...
+# Subtest: rebuild never restores shield already consumed by damage
+ok 17 - rebuild never restores shield already consumed by damage
+  ---
+  duration_ms: 6.406947
+  type: 'test'
+  ...
+# Subtest: zero grant rollback cannot recreate old shield
+ok 18 - zero grant rollback cannot recreate old shield
+  ---
+  duration_ms: 1.169485
+  type: 'test'
+  ...
+# Subtest: rollback preserves remaining native layers and their later expiry accounting
+ok 19 - rollback preserves remaining native layers and their later expiry accounting
+  ---
+  duration_ms: 2.632763
+  type: 'test'
+  ...
+# Subtest: force removes managed Guard through native removal once and preserves other statuses
+ok 20 - force removes managed Guard through native removal once and preserves other statuses
+  ---
+  duration_ms: 1.393522
+  type: 'test'
+  ...
+# Subtest: invalid current actor or manual state cannot spend recovery resources
+ok 21 - invalid current actor or manual state cannot spend recovery resources
+  ---
+  duration_ms: 16.287766
+  type: 'test'
+  ...
+# Subtest: dead target blocks target recovery before spending but pivot can change the plan
+ok 22 - dead target blocks target recovery before spending but pivot can change the plan
+  ---
+  duration_ms: 2.734926
+  type: 'test'
+  ...
+# Subtest: alive auto recovery remains allowed during scheduler lock and receipt is single use
+ok 23 - alive auto recovery remains allowed during scheduler lock and receipt is single use
+  ---
+  duration_ms: 1.085658
+  type: 'test'
+  ...
+# Subtest: compress recovery keeps its existing window and resource costs
+ok 24 - compress recovery keeps its existing window and resource costs
+  ---
+  duration_ms: 0.935061
+  type: 'test'
+  ...
+# Subtest: recovery buttons disable a dead actor and dead-target options while allowing pivot
+ok 25 - recovery buttons disable a dead actor and dead-target options while allowing pivot
+  ---
+  duration_ms: 2.759294
+  type: 'test'
+  ...
+# Subtest: expired or missing sequence recovery cannot consume resources
+ok 26 - expired or missing sequence recovery cannot consume resources
+  ---
+  duration_ms: 1.793446
+  type: 'test'
+  ...
+# Subtest: recovery build patch preserves document prefix, is idempotent and rejects drift
+ok 27 - recovery build patch preserves document prefix, is idempotent and rejects drift
+  ---
+  duration_ms: 11.88334
+  type: 'test'
+  ...
+# Subtest: partial rollback preserves the old floor without raising current shield
+ok 28 - partial rollback preserves the old floor without raising current shield
+  ---
+  duration_ms: 1.337107
+  type: 'test'
+  ...
+# Subtest: generated legacy rebuild and force restore primers without a missing runtime global
+ok 29 - generated legacy rebuild and force restore primers without a missing runtime global
+  ---
+  duration_ms: 31.884979
+  type: 'test'
+  ...
+# Subtest: unweave removes a managed primer through native accounting once
+ok 30 - unweave removes a managed primer through native accounting once
+  ---
+  duration_ms: 10.172744
+  type: 'test'
+  ...
+# Subtest: managed rebuild retains deadline, tick budget and source after the round advances
+ok 31 - managed rebuild retains deadline, tick budget and source after the round advances
+  ---
+  duration_ms: 17.299301
+  type: 'test'
+  ...
+# Subtest: expired managed primer cannot be restored or charged as a successful recovery
+ok 32 - expired managed primer cannot be restored or charged as a successful recovery
+  ---
+  duration_ms: 11.428264
+  type: 'test'
+  ...
+# Subtest: managed force caps original remaining lifetime and ticks to one round
+ok 33 - managed force caps original remaining lifetime and ticks to one round
+  ---
+  duration_ms: 7.798356
+  type: 'test'
+  ...
+# Subtest: managed recovery does not overwrite a newer primer from the same source
+ok 34 - managed recovery does not overwrite a newer primer from the same source
+  ---
+  duration_ms: 7.380306
+  type: 'test'
+  ...
+# Subtest: managed regen recovery honors buff ban without spending resources
+ok 35 - managed regen recovery honors buff ban without spending resources
+  ---
+  duration_ms: 7.610052
+  type: 'test'
+  ...
+# Subtest: legacy restoration leaves independent managed status clocks unchanged
+ok 36 - legacy restoration leaves independent managed status clocks unchanged
+  ---
+  duration_ms: 6.092353
+  type: 'test'
+  ...
+# Subtest: legacy regen recovery is blocked by buff ban and can retry once it expires
+ok 37 - legacy regen recovery is blocked by buff ban and can retry once it expires
+  ---
+  duration_ms: 9.078107
+  type: 'test'
+  ...
+# Subtest: native owner rejects defeated targets and exhausted charges
+ok 38 - native owner rejects defeated targets and exhausted charges
+  ---
+  duration_ms: 7.679618
+  type: 'test'
+  ...
+# Subtest: serialized browser factory carries the same restoration owner and deadlines
+ok 39 - serialized browser factory carries the same restoration owner and deadlines
+  ---
+  duration_ms: 7.100053
+  type: 'test'
+  ...
+# Subtest: primer recovery patch is idempotent, preserves document prefix and rejects drift
+ok 40 - primer recovery patch is idempotent, preserves document prefix and rejects drift
+  ---
+  duration_ms: 9.739005
+  type: 'test'
+  ...
+# Subtest: S42-A1: 42 authored S+ heroes expose executable combat contract
+ok 41 - S42-A1: 42 authored S+ heroes expose executable combat contract
+  ---
+  duration_ms: 1.248574
+  type: 'test'
+  ...
+# Subtest: S42-A2: gear adds 3% team defense after ally action and resets per battle
+ok 42 - S42-A2: gear adds 3% team defense after ally action and resets per battle
+  ---
+  duration_ms: 6.357172
+  type: 'test'
+  ...
+# Subtest: S42-A4: Cường Đồng mitigation and reflection cannot ping-pong
+ok 43 - S42-A4: Cường Đồng mitigation and reflection cannot ping-pong
+  ---
+  duration_ms: 0.574116
+  type: 'test'
+  ...
+# Subtest: S42-A2: Lạc An accumulates 4 percentage points per arrow up to 40
+ok 44 - S42-A2: Lạc An accumulates 4 percentage points per arrow up to 40
+  ---
+  duration_ms: 1.922721
+  type: 'test'
+  ...
+# Subtest: S42-A4: Hắc Đao passive is 80% anti-heal; Ultimate is 100%
+ok 45 - S42-A4: Hắc Đao passive is 80% anti-heal; Ultimate is 100%
+  ---
+  duration_ms: 3.87722
+  type: 'test'
+  ...
+# Subtest: S42-A4: cocoon consumes two incoming hits and third reaches HP
+ok 46 - S42-A4: cocoon consumes two incoming hits and third reaches HP
+  ---
+  duration_ms: 0.618583
+  type: 'test'
+  ...
+# Subtest: S42-A4: Mục Chiêu rescues once per battle, not per damage recursion
+ok 47 - S42-A4: Mục Chiêu rescues once per battle, not per damage recursion
+  ---
+  duration_ms: 2.189905
+  type: 'test'
+  ...
+# Subtest: S42-A4: root, disarm and silence have different action restrictions
+ok 48 - S42-A4: root, disarm and silence have different action restrictions
+  ---
+  duration_ms: 0.577762
+  type: 'test'
+  ...
+# Subtest: S42-A5: dispelled and expired statuses disappear from HUD with source provenance
+ok 49 - S42-A5: dispelled and expired statuses disappear from HUD with source provenance
+  ---
+  duration_ms: 0.790182
+  type: 'test'
+  ...
+# Subtest: action slow affects ordering speed for both authored rounds and emits current queue delay
+ok 50 - action slow affects ordering speed for both authored rounds and emits current queue delay
+  ---
+  duration_ms: 8.911466
+  type: 'test'
+  ...
+# Subtest: poison detonation consumes the authored raw tick amount once
+ok 51 - poison detonation consumes the authored raw tick amount once
+  ---
+  duration_ms: 2.479441
+  type: 'test'
+  ...
+# Subtest: burn-to-healing consumes the zone source so it cannot return next turn
+ok 52 - burn-to-healing consumes the zone source so it cannot return next turn
+  ---
+  duration_ms: 1.279471
+  type: 'test'
+  ...
+# Subtest: V2 metal: gear cap, 3% aura, caster HP shields and expiry
+ok 53 - V2 metal: gear cap, 3% aura, caster HP shields and expiry
+  ---
+  duration_ms: 13.114969
+  type: 'test'
+  ...
+# Subtest: V2 Cuong: mitigation applies to ranged attacks and reflection never loops
+ok 54 - V2 Cuong: mitigation applies to ranged attacks and reflection never loops
+  ---
+  duration_ms: 0.763652
+  type: 'test'
+  ...
+# Subtest: V2 Lac An: eight focus stacks affect rate and crit damage, controlled targets guarantee crit
+ok 55 - V2 Lac An: eight focus stacks affect rate and crit damage, controlled targets guarantee crit
+  ---
+  duration_ms: 4.961866
+  type: 'test'
+  ...
+# Subtest: V2 Linh/Tieu: third basic mark drains rage; soul siphon is 15 and rage lock blocks gain
+ok 56 - V2 Linh/Tieu: third basic mark drains rage; soul siphon is 15 and rage lock blocks gain
+  ---
+  duration_ms: 2.264316
+  type: 'test'
+  ...
+# Subtest: V2 Thach Kinh accumulates damage in 10% HP units, not one layer per hit
+ok 57 - V2 Thach Kinh accumulates damage in 10% HP units, not one layer per hit
+  ---
+  duration_ms: 0.546184
+  type: 'test'
+  ...
+# Subtest: V2 Vong marks only highest attack and delays its skill cooldown
+ok 58 - V2 Vong marks only highest attack and delays its skill cooldown
+  ---
+  duration_ms: 0.76922
+  type: 'test'
+  ...
+# Subtest: V2 Co Nuong parasite drains tankiest on hit and returns actual lost HP
+ok 59 - V2 Co Nuong parasite drains tankiest on hit and returns actual lost HP
+  ---
+  duration_ms: 2.202883
+  type: 'test'
+  ...
+# Subtest: V2 water: same-row haste, caster HP healing, critical-only cap
+ok 60 - V2 water: same-row haste, caster HP healing, critical-only cap
+  ---
+  duration_ms: 0.883043
+  type: 'test'
+  ...
+# Subtest: V2 Tram Chau bubble blocks crit/bleed only while shield remains and damage conversion prevents HP loss
+ok 61 - V2 Tram Chau bubble blocks crit/bleed only while shield remains and damage conversion prevents HP loss
+  ---
+  duration_ms: 1.98139
+  type: 'test'
+  ...
+# Subtest: V2 Nung burns only melee attackers using Nung HP; Deep Wound bleeds using source ATK
+ok 62 - V2 Nung burns only melee attackers using Nung HP; Deep Wound bleeds using source ATK
+  ---
+  duration_ms: 0.890083
+  type: 'test'
+  ...
+# Subtest: V2 Hoa Bai ground zone ticks on victim turn and follows the slot after displacement
+ok 63 - V2 Hoa Bai ground zone ticks on victim turn and follows the slot after displacement
+  ---
+  duration_ms: 0.589459
+  type: 'test'
+  ...
+# Subtest: V2 Mien heals at each ally turn start once when host prepares before act
+ok 64 - V2 Mien heals at each ally turn start once when host prepares before act
+  ---
+  duration_ms: 0.335566
+  type: 'test'
+  ...
+# Subtest: V2 Tue Y emergency has a shared two-round cooldown and resurrects most recent death
+ok 65 - V2 Tue Y emergency has a shared two-round cooldown and resurrects most recent death
+  ---
+  duration_ms: 1.2129
+  type: 'test'
+  ...
+# Subtest: V2 sleep survives DoT; Tằm Nương renews a two-hit cocoon after two rounds
+ok 66 - V2 sleep survives DoT; Tằm Nương renews a two-hit cocoon after two rounds
+  ---
+  duration_ms: 0.686405
+  type: 'test'
+  ...
+# Subtest: V2 Mang poison spreads on each victim action, next-hit blindness consumes one charge
+ok 67 - V2 Mang poison spreads on each victim action, next-hit blindness consumes one charge
+  ---
+  duration_ms: 1.380243
+  type: 'test'
+  ...
+# Subtest: V2 Kinh Nuong successful basic reflection negates damage and cannot bounce
+ok 68 - V2 Kinh Nuong successful basic reflection negates damage and cannot bounce
+  ---
+  duration_ms: 0.458252
+  type: 'test'
+  ...
+# Subtest: V2 Khaos clone explodes and respawns after 3 rounds; ultimate bypasses shield
+ok 69 - V2 Khaos clone explodes and respawns after 3 rounds; ultimate bypasses shield
+  ---
+  duration_ms: 1.638934
+  type: 'test'
+  ...
+# Subtest: V2 Hoi Anh forces an immediate friendly strike; Van ward rolls 35% after action
+ok 70 - V2 Hoi Anh forces an immediate friendly strike; Van ward rolls 35% after action
+  ---
+  duration_ms: 0.905787
+  type: 'test'
+  ...
+# Subtest: V2 Cuu Trieu stacks on all actors, burns current HP, loses half stacks to silence
+ok 71 - V2 Cuu Trieu stacks on all actors, burns current HP, loses half stacks to silence
+  ---
+  duration_ms: 1.895109
+  type: 'test'
+  ...
+# Subtest: V2 Time Freeze suppresses rage gain and passive reflection
+ok 72 - V2 Time Freeze suppresses rage gain and passive reflection
+  ---
+  duration_ms: 0.553345
+  type: 'test'
+  ...
+# Subtest: player tactical shield grants honor bans and show actual added shield
+ok 73 - player tactical shield grants honor bans and show actual added shield
+  ---
+  duration_ms: 18.310948
+  type: 'test'
+  ...
+# Subtest: unblocked tactical grants preserve floors, consumption and lifetime
+ok 74 - unblocked tactical grants preserve floors, consumption and lifetime
+  ---
+  duration_ms: 11.252709
+  type: 'test'
+  ...
+# Subtest: enemy fortify and adaptation respect bans
+ok 75 - enemy fortify and adaptation respect bans
+  ---
+  duration_ms: 5.387088
+  type: 'test'
+  ...
+# Subtest: fortify snapshot and rescue floater report only shield actually added
+ok 76 - fortify snapshot and rescue floater report only shield actually added
+  ---
+  duration_ms: 2.948599
+  type: 'test'
+  ...
+# Subtest: dead current actor cannot consume tactical resources, terrain or an order
+ok 77 - dead current actor cannot consume tactical resources, terrain or an order
+  ---
+  duration_ms: 3.878963
+  type: 'test'
+  ...
+# Subtest: ward does not grant Guard under buff ban and grants again after expiry
+ok 78 - ward does not grant Guard under buff ban and grants again after expiry
+  ---
+  duration_ms: 1.673124
+  type: 'test'
+  ...
+# Subtest: tactical build patch preserves document prefix, is idempotent and rejects owner drift
+ok 79 - tactical build patch preserves document prefix, is idempotent and rejects owner drift
+  ---
+  duration_ms: 10.011766
+  type: 'test'
+  ...
+# Subtest: team reaction respects managed immunity and lethal prevention
+ok 80 - team reaction respects managed immunity and lethal prevention
+  ---
+  duration_ms: 6.842855
+  type: 'test'
+  ...
+# Subtest: team reaction gives one kill and one kill-rage grant
+ok 81 - team reaction gives one kill and one kill-rage grant
+  ---
+  duration_ms: 1.566764
+  type: 'test'
+  ...
+# Subtest: reaction uses managed shields and legacy-only fallback
+ok 82 - reaction uses managed shields and legacy-only fallback
+  ---
+  duration_ms: 2.065537
+  type: 'test'
+  ...
+# Subtest: defeated actors cannot produce team reaction damage
+ok 83 - defeated actors cannot produce team reaction damage
+  ---
+  duration_ms: 0.718154
+  type: 'test'
+  ...
+1..83
+# tests 83
+# suites 0
+# pass 83
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 316.83742

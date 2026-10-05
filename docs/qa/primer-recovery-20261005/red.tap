@@ -1,0 +1,209 @@
+TAP version 13
+# Subtest: generated legacy rebuild and force restore primers without a missing runtime global
+not ok 1 - generated legacy rebuild and force restore primers without a missing runtime global
+  ---
+  duration_ms: 5.585638
+  type: 'test'
+  location: '/workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/primer-recovery-ownership.test.mjs:27:1'
+  failureType: 'testCodeFailure'
+  error: 'upsertReactionStatus is not defined'
+  code: 'ERR_TEST_FAILURE'
+  name: 'ReferenceError'
+  stack: |-
+    Object.usePlanRecovery (evalmachine.<anonymous>:2:166)
+    Object.use (file:///workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/primer-recovery-ownership.test.mjs:25:109)
+    TestContext.<anonymous> (file:///workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/primer-recovery-ownership.test.mjs:28:166)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.start (node:internal/test_runner/test:1242:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+  ...
+# Subtest: unweave removes a managed primer through native accounting once
+not ok 2 - unweave removes a managed primer through native accounting once
+  ---
+  duration_ms: 4.639851
+  type: 'test'
+  location: '/workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/primer-recovery-ownership.test.mjs:30:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/primer-recovery-ownership.test.mjs:30:185)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: managed rebuild retains deadline, tick budget and source after the round advances
+not ok 3 - managed rebuild retains deadline, tick budget and source after the round advances
+  ---
+  duration_ms: 3.4932
+  type: 'test'
+  location: '/workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/primer-recovery-ownership.test.mjs:31:1'
+  failureType: 'testCodeFailure'
+  error: 'upsertReactionStatus is not defined'
+  code: 'ERR_TEST_FAILURE'
+  name: 'ReferenceError'
+  stack: |-
+    Object.usePlanRecovery (evalmachine.<anonymous>:2:166)
+    Object.use (file:///workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/primer-recovery-ownership.test.mjs:25:109)
+    TestContext.<anonymous> (file:///workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/primer-recovery-ownership.test.mjs:31:198)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: expired managed primer cannot be restored or charged as a successful recovery
+not ok 4 - expired managed primer cannot be restored or charged as a successful recovery
+  ---
+  duration_ms: 3.272137
+  type: 'test'
+  location: '/workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/primer-recovery-ownership.test.mjs:32:1'
+  failureType: 'testCodeFailure'
+  error: 'upsertReactionStatus is not defined'
+  code: 'ERR_TEST_FAILURE'
+  name: 'ReferenceError'
+  stack: |-
+    Object.usePlanRecovery (evalmachine.<anonymous>:2:166)
+    Object.use (file:///workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/primer-recovery-ownership.test.mjs:25:109)
+    TestContext.<anonymous> (file:///workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/primer-recovery-ownership.test.mjs:32:181)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: managed force caps original remaining lifetime and ticks to one round
+not ok 5 - managed force caps original remaining lifetime and ticks to one round
+  ---
+  duration_ms: 2.95605
+  type: 'test'
+  location: '/workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/primer-recovery-ownership.test.mjs:33:1'
+  failureType: 'testCodeFailure'
+  error: 'upsertReactionStatus is not defined'
+  code: 'ERR_TEST_FAILURE'
+  name: 'ReferenceError'
+  stack: |-
+    Object.usePlanRecovery (evalmachine.<anonymous>:3:178)
+    Object.use (file:///workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/primer-recovery-ownership.test.mjs:25:109)
+    TestContext.<anonymous> (file:///workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/primer-recovery-ownership.test.mjs:33:165)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: managed recovery does not overwrite a newer primer from the same source
+not ok 6 - managed recovery does not overwrite a newer primer from the same source
+  ---
+  duration_ms: 3.195501
+  type: 'test'
+  location: '/workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/primer-recovery-ownership.test.mjs:34:1'
+  failureType: 'testCodeFailure'
+  error: 'upsertReactionStatus is not defined'
+  code: 'ERR_TEST_FAILURE'
+  name: 'ReferenceError'
+  stack: |-
+    Object.usePlanRecovery (evalmachine.<anonymous>:2:166)
+    Object.use (file:///workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/primer-recovery-ownership.test.mjs:25:109)
+    TestContext.<anonymous> (file:///workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/primer-recovery-ownership.test.mjs:34:248)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: managed regen recovery honors buff ban without spending resources
+not ok 7 - managed regen recovery honors buff ban without spending resources
+  ---
+  duration_ms: 2.862399
+  type: 'test'
+  location: '/workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/primer-recovery-ownership.test.mjs:35:1'
+  failureType: 'testCodeFailure'
+  error: 'upsertReactionStatus is not defined'
+  code: 'ERR_TEST_FAILURE'
+  name: 'ReferenceError'
+  stack: |-
+    Object.usePlanRecovery (evalmachine.<anonymous>:2:166)
+    Object.use (file:///workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/primer-recovery-ownership.test.mjs:25:109)
+    TestContext.<anonymous> (file:///workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/primer-recovery-ownership.test.mjs:35:255)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: legacy restoration leaves independent managed status clocks unchanged
+not ok 8 - legacy restoration leaves independent managed status clocks unchanged
+  ---
+  duration_ms: 2.98296
+  type: 'test'
+  location: '/workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/primer-recovery-ownership.test.mjs:36:1'
+  failureType: 'testCodeFailure'
+  error: 'upsertReactionStatus is not defined'
+  code: 'ERR_TEST_FAILURE'
+  name: 'ReferenceError'
+  stack: |-
+    Object.usePlanRecovery (evalmachine.<anonymous>:2:166)
+    Object.use (file:///workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/primer-recovery-ownership.test.mjs:25:109)
+    TestContext.<anonymous> (file:///workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/primer-recovery-ownership.test.mjs:36:222)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: primer recovery patch is idempotent, preserves document prefix and rejects drift
+not ok 9 - primer recovery patch is idempotent, preserves document prefix and rejects drift
+  ---
+  duration_ms: 0.468356
+  type: 'test'
+  location: '/workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/primer-recovery-ownership.test.mjs:37:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'undefined'
+    - 'function'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'function'
+  actual: 'undefined'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/primer-recovery-ownership.test.mjs:37:101)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 0
+# fail 9
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 125.843606

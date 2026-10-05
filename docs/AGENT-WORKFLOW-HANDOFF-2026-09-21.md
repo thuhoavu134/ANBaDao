@@ -540,3 +540,14 @@ Mixed legacy damage stat projection now reads S+ crit modifier as percentage poi
 - GREEN: 73 focused tests PASS, including 12 new generated recovery cases with real Core/S+ damage, mixed/native shields and expiry, manual/auto eligibility, dead target pivot, button state, unchanged compress cost/window and single-use receipt. Patch idempotence/drift, document prefix and 15 generated inline script parses pass. Full fresh build/suite run on PR.
 - Physical Safari, screenshot review and production deployment not certified. Known GitHub artifact storage quota is separate infrastructure; do not rerun unchanged builds solely for upload quota.
 - Next: managed primer consumption/restoration and reaction extension/trace equivalence; canonical mixed campaign progression/affordability simulation, activity receipt/gate coverage and final visual regression. Preserve Ong Pho ultimate chase; no new art integration.
+
+
+## 2026-10-05 — Primer removal / recovery ownership
+
+Baseline main `2ab4c9b` (PR #280). Branch `fix/primer-recovery-ownership-20261005`; source-only REVIEW. Supplied vibe-builder/vibe-lab read; the handoff's existing owner workflow waiver retained, no Ticket Board claim invented.
+
+- RED generated rebuild/force crashed on an unexported `upsertReactionStatus` global; unweave removed managed primers without native accounting.
+- Existing mixed settlement build owner now delegates selected removal to native accounting and restoration to the legacy adapter / S+ `restoreStatus` owner. Original managed deadlines, applied round and remaining tick budget remain; expired/banned grants return before costs, newer same-source statuses remain unchanged. Force retains the existing power expression and limits native lifetime/ticks to one round. Legacy merge, resource costs, windows and single-use receipt remain.
+- Validation: 83 focused tests PASS (12 ownership cases + prior recovery/shield/status/reaction/S+ combat/V2); serialized browser factory, idempotency/drift, document prefix and five sparse generated inline scripts checked. Initial 79/80 harness result is preserved; an omitted existing dead-recipient guard was restored without changing production for it.
+- Local checkout/fixture is sparse, not a full clean build or served-browser acceptance. Fresh full build/suite run on PR CI. Screenshot review, physical Safari and production deployment NOT_RUN.
+- Next: reaction extension/consumption, tactical status ownership and trace equivalence; canonical mixed campaign progression/affordability simulation and activity receipt/gate coverage; final visual regression. Preserve Ông Phở ultimate chase, no new art integration.
