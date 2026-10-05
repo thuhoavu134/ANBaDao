@@ -467,3 +467,10 @@ Mixed legacy damage stat projection now reads S+ crit modifier as percentage poi
 - Source build owner now rejects dead actors in ongPhoFollowUp and gates the delayed second skill impact/status block on actor HP after waiting. Living-actor behavior and existing target-selection policy retained.
 - RED reproduced dead actor doing 10 damage; GREEN: 3 generated-runtime behavioral tests passed, including actor dying during the await and no subsequent hit/status. CI validates fresh build/full tests; no physical device/deploy claim.
 - Next: broader versioned follow-up/trace equivalence and canonical mixed campaign simulator; no complete balance simulation or reward tuning claimed.
+
+
+## 2026-10-05 — Generic sequential legacy multi-hit actor liveness
+- RED reproduced generic double/multi loop continuing after actor died during first impact (double produced 2 hits instead of 1). Existing loop already checked target HP but omitted actor HP.
+- Living-target build owner now checks both participants before each sequential hit. Original 2/4 hit counts, .78/.72 multipliers and dead-target stop behavior retained.
+- Validation: 6 generated-runtime behavioral tests passed across generic multi-hit and Ong Pho queued follow-up, including actor death, target death and unchanged living participant behavior. Fresh build/full suite remain CI checks; no physical browser/device/deploy verification claimed.
+- Next: remaining raw team-skill reaction settlement and versioned action trace equivalence before full canonical mixed campaign simulation. No complete balance or win-rate claim.
