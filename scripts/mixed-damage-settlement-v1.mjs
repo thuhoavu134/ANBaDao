@@ -120,7 +120,7 @@ export function patchPlanRecoverySettlement(html){
  const once=(from,to)=>{if(owner.split(from).length!==2)throw new Error('Plan recovery contract drift: '+from);owner=owner.replace(from,to);};
  once('function usePlanRecovery(id,auto=false){',"function usePlanRecovery(id,auto=false){const actor=getUnit(state.currentId);if(state.mode!=='battle'||!actor||actor.hp<=0||actor.team!==TEAM_PLAYER||(!auto&&(state.locked||state.auto)))return false;");
  once(" let effect='none';", " if(!seq||(id!=='pivot'&&['unweave','fortify'].includes(pr.sourceDisruption)&&!(target?.hp>0)))return false;let effect='none';");
- once('target.shield=Math.max(Number(snap.shieldBefore)||0,(Number(target.shield)||0)-added);','rollbackLegacyShieldGrant(target,added);');
+ once('target.shield=Math.max(Number(snap.shieldBefore)||0,(Number(target.shield)||0)-added);','rollbackLegacyShieldGrant(target,added,{minimum:snap.shieldBefore});');
  once("target.statuses=(target.statuses||[]).filter(s=>s.type!=='guard');", "settleLegacyStatusRemoval(target,['guard'],{combat:typeof splusCombat==='function'?splusCombat():null});");
  html=html.slice(0,start)+'/* HV_PLAN_RECOVERY_SETTLEMENT_V1 */\n'+rollbackLegacyShieldGrant.toString()+'\n'+owner+html.slice(end);
  const manual="const manual=state.mode==='battle'&&actor?.team===TEAM_PLAYER&&!state.locked&&!state.auto&&pr.available";
