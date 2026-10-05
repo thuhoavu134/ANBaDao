@@ -134,7 +134,7 @@ export function patchPlanRecoverySettlement(html){
 export function patchPrimerRecoveryOwnership(html){
  if(html.includes('/* HV_PRIMER_RECOVERY_OWNERSHIP_V1 */'))return html;
  const once=(from,to)=>{if(html.split(from).length!==2)throw new Error('Primer recovery contract drift: '+from);html=html.replace(from,to);};
- once('const removed=target.statuses.splice(idx,1)[0];',"const removed=settleLegacyStatusRemoval(target,[target.statuses[idx].type],{combat:typeof splusCombat==='function'?splusCombat():null,count:1})[0];");
+ once('const removed=target.statuses.splice(idx,1)[0];',"const removed=settleLegacyStatusRemoval(target,[target.statuses[idx].type],{combat:typeof splusCombat==='function'?splusCombat():null,count:1,selectedStatus:target.statuses[idx]})[0];");
  once("let effect='none';\n    if(id==='rebuild')", "const restored=pr.sourceDisruption==='unweave'&&id!=='pivot'?restoreLegacyPrimer(target,snap.removedStatus,{combat:typeof splusCombat==='function'?splusCombat():null,force:id==='force',addLegacyStatus:addStatus}):null;if(pr.sourceDisruption==='unweave'&&id!=='pivot'&&!restored)return false;let effect='none';\n    if(id==='rebuild')");
  once('upsertReactionStatus(target,{...snap.removedStatus,turns:Math.max(1,Number(snap.removedStatus.turns)||1)});','');
  once('upsertReactionStatus(target,{...snap.removedStatus,turns:1,power:Math.max(1,Math.round((Number(snap.removedStatus.power)||1)*.5))});','');

@@ -9,8 +9,9 @@ The existing mixed settlement build owner now removes the selected primer throug
 ## Evidence
 
 - `red.tap`: 9/9 original cases failed before implementation; the actual generated recovery raised `ReferenceError: upsertReactionStatus is not defined`; native removal accounting also failed. Exit 1.
+- `selected-primer-red.tap`: a later RED case reproduced removing an earlier managed attackDown alias instead of the selected legacy atkDown. The removal helper now accepts an exact selectedStatus while preserving other callers' alias/cleanse semantics. Exit 1.
 - `green.tap`: initial 9/9 cases passed. Exit 0.
-- `regression-final.tap`: 83/83 tests passed across nine files, including 12 recovery ownership cases, existing recovery/shield/status/team-reaction tests and S+ combat/V2/consumption tests. Exit 0.
+- `regression-final.tap`: 84/84 tests passed across nine files, including 13 recovery ownership cases, existing recovery/shield/status/team-reaction tests and S+ combat/V2/consumption tests. Exit 0.
 - Syntax: changed modules checked; all five inline scripts in the sparse generated battle parse. Build patch idempotency/drift and document prefix verified by test. Serialized S+ factory restoration verified in a separate VM realm.
 - `regression.tap` preserves the earlier 79/80 result: the sparse fixture omitted the existing dead-recipient guard. Restoring that exact guard from the unmodified `battle-living-targets-v1.mjs` fixed the harness failure; no production patch or assertion was changed for that failure.
 
