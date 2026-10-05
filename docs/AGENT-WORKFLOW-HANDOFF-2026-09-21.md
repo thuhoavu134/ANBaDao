@@ -474,3 +474,10 @@ Mixed legacy damage stat projection now reads S+ crit modifier as percentage poi
 - Living-target build owner now checks both participants before each sequential hit. Original 2/4 hit counts, .78/.72 multipliers and dead-target stop behavior retained.
 - Validation: 6 generated-runtime behavioral tests passed across generic multi-hit and Ong Pho queued follow-up, including actor death, target death and unchanged living participant behavior. Fresh build/full suite remain CI checks; no physical browser/device/deploy verification claimed.
 - Next: remaining raw team-skill reaction settlement and versioned action trace equivalence before full canonical mixed campaign simulation. No complete balance or win-rate claim.
+
+
+## 2026-10-05 — Finish systems before new hero assets: team reactions
+- Owner asks to finish the game systems before adding new heroes/art. Preserve Ong Pho's own ultimate chase; new concept image is not integrated.
+- RED: generated applyReactionDamage dealt 100 through damageImmune and allowed a dead actor to deal 40. Mixed settlement build owner now delegates reaction raw damage to settleLegacyDamage (skill, secondary/noTriggers), preserving shields/protection and preventing recursive on-hit chains. Legacy-only fallback retained; engine owns kill/rage, reaction owner owns primary feedback/statistics. Reaction loop stops before consuming primers if actor died.
+- Local verification: 41 focused combat/reward/navigation tests PASS; patch idempotency/drift and 15 generated inline scripts parse. Full fresh build/suite and browser QA are CI checks. Physical Safari/production not verified.
+- Remaining order: remaining special action/assist received-damage bypasses and runtime trace equivalence; canonical mixed campaign progression/affordability simulation; activity gates and reward receipt coverage; visual/timing regression checks; reusable hero data/asset contract. Do not claim all systems complete or tune economy using the S+-only benchmark.
