@@ -460,3 +460,10 @@ Mixed legacy damage stat projection now reads S+ crit modifier as percentage poi
 - Added lightweight hasStatus API using engine active-status clock. Shared hit detail forces a non-critical roll while bubble is active, retaining original RNG order. criticalBlocked prevents forced-critical label/flags from overriding immunity. Expiry restores normal critical behavior.
 - Validation: 47 focused mixed-combat tests passed, including full generated legacy adapter, shield/immunity/protection, bubble expiry, single counter stats/floater, no reflection loop and legacy-only compatibility. Fresh build/full suite are CI checks; no physical browser/device/deploy verification claimed.
 - Next: versioned multi-hit/followup execution and runtime trace equivalence, then mixed campaign simulation. No complete win-rate simulator or reward rebalance claimed.
+
+
+## 2026-10-05 — Ong Pho follow-up actor liveness
+- Found delayed skill strike #2 checking only target HP; actor killed by first-hit reflection could still deal the next hit and stun. Generic Ong Pho follow-up also lacked actor-liveness guard.
+- Source build owner now rejects dead actors in ongPhoFollowUp and gates the delayed second skill impact/status block on actor HP after waiting. Living-actor behavior and existing target-selection policy retained.
+- RED reproduced dead actor doing 10 damage; GREEN: 3 generated-runtime behavioral tests passed, including actor dying during the await and no subsequent hit/status. CI validates fresh build/full tests; no physical device/deploy claim.
+- Next: broader versioned follow-up/trace equivalence and canonical mixed campaign simulator; no complete balance simulation or reward tuning claimed.

@@ -28,6 +28,10 @@ export function patchBattleLivingTargets(html) {
       drawLucAnhAtlas(context,key,frame,anchor.x,anchor.y,960,660,{baseline:330,screen:false,alpha:1});
       context.restore();
     }`+html.slice(end);
+  once('  function ongPhoFollowUp(actor,target,multiplier,label,{forceCrit=false,addTaste=false}={}){',
+    '  function ongPhoFollowUp(actor,target,multiplier,label,{forceCrit=false,addTaste=false}={}){\n    if(!actor || actor.hp<=0)return 0;');
+  once('      if(secondTarget?.hp>0){\n        secondDamage=ongPhoFollowUp',
+    '      if(secondTarget?.hp>0 && actor.hp>0){\n        secondDamage=ongPhoFollowUp');
   return html;
 }
 export function installBattleLivingTargets(root) {
