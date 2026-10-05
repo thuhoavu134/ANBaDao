@@ -1,3 +1,4 @@
+import{settleLegacyShield}from'../src/domain/combat/legacy-shield-settlement.mjs';
 import{readFileSync,writeFileSync}from'node:fs';import{join}from'node:path';import{settleLegacyDamage}from'../src/domain/combat/legacy-damage-settlement.mjs';
 export function patchMixedDamageSettlement(html){
  if(html.includes('/* HV_MIXED_DAMAGE_SETTLEMENT_V1 */'))return html;
@@ -77,4 +78,17 @@ export function patchSupportBenefitSettlement(html){
  if(html.split(copy).length!==2)throw new Error('Support controller copy drift');
  return html.replace(copy,'Giảm tối đa 12 Nộ của mỗi địch còn sống.');
 }
-export function installMixedDamageSettlement(root){const p=join(root,'dist','battle.html');writeFileSync(p,patchSupportBenefitSettlement(patchSupportDamageSettlement(patchTeamReactionSettlement(patchLegacyCounterAndCritical(patchMixedDamageSettlement(readFileSync(p,'utf8')))))));}
+export function patchSkillShieldSettlement(html){
+ if(html.includes('/* HV_SKILL_SHIELD_SETTLEMENT_V1 */'))return html;
+ const start=html.indexOf('  function __hvResolveAction3qAdapter('),end=html.indexOf('  function combatPresentationProfileFor(',start);
+ if(start<0||end<0)throw new Error('Legacy skill shield owner missing');
+ let owner=html.slice(start,end);
+ const once=(from,to)=>{if(owner.split(from).length!==2)throw new Error('Legacy skill shield contract drift: '+from);owner=owner.replace(from,to);};
+ const options="{combat:typeof splusCombat==='function'?splusCombat():null}";
+ for(const pct of ['.20','.28'])once('const shield=Math.max(1,Math.round(friend.maxHp*'+pct+'));friend.shield=Math.max(friend.shield,shield);','const shield=settleLegacyShield(actor,friend,Math.max(1,Math.round(friend.maxHp*'+pct+')),'+options+');');
+ once('friend.shield=Math.max(friend.shield,Math.round(friend.maxHp*0.16));','settleLegacyShield(actor,friend,Math.round(friend.maxHp*0.16),'+options+');');
+ once('friend.shield=Math.max(friend.shield,Math.round(friend.maxHp*(kind==="guardAll"?0.18:0.12)*sustainShield));','settleLegacyShield(actor,friend,Math.round(friend.maxHp*(kind==="guardAll"?0.18:0.12)*sustainShield),'+options+');');
+ once("if(r.shield){unit.shield=Math.max(Number(unit.shield)||0,r.shield);addFloater(unit,`⚗ ${r.name} +KHIÊN`,'#9ff5dd',true);}","if(r.shield){r.shield=settleLegacyShield(actor,unit,r.shield,"+options+");if(r.shield>0)addFloater(unit,`⚗ ${r.name} +KHIÊN ${r.shield}`,'#9ff5dd',true);}");
+ return html.slice(0,start)+'/* HV_SKILL_SHIELD_SETTLEMENT_V1 */\n'+settleLegacyShield.toString()+'\n'+owner+html.slice(end);
+}
+export function installMixedDamageSettlement(root){const p=join(root,'dist','battle.html');writeFileSync(p,patchSkillShieldSettlement(patchSupportBenefitSettlement(patchSupportDamageSettlement(patchTeamReactionSettlement(patchLegacyCounterAndCritical(patchMixedDamageSettlement(readFileSync(p,'utf8'))))))));}
