@@ -1,0 +1,23 @@
+name: Full game UI audit
+on:
+  push:
+    branches: ['review/full-game-ui-20261006']
+    paths: ['scripts/**','src/**','index.html','.github/workflows/full-game-ui-audit.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci
+      - run: npm run build
+      - name: Inspect every actual screen
+        run: |
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
+          node scripts/qa-full-game-ui-audit.mjs

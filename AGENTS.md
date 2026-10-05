@@ -1,3 +1,6 @@
+## Owner direction — 2026-10-06
+Every merge requires explicit owner approval on GitHub. Work from a real branch of current main, preserve every existing feature and actual game logic. PR283/284 prototypes were rejected; do not integrate their simplified shells, fixtures, hidden features or mock dialogs. Preview must use the full normal game build, not a substitute application. Audit each existing screen before UI changes. No production promotion before approval.
+
 # Hồn Việt / Lục Thần — hướng dẫn bắt đầu
 
 > **LATEST ENTRYPOINT — 21/09/2026**
