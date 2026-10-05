@@ -1,0 +1,154 @@
+✖ canonical and alias S+ IDs resolve full-body campaign idle/run/attack (3.296725ms)
+✖ portrait fronts separate more with smaller consistent stature; desktop unchanged (6.44754ms)
+✖ managed HUD stops suppressing semantic icon art or displaying source hero number (0.308804ms)
+✖ Dinh Loi enemy projectile and wave blitters mirror at the draw owner (12.395009ms)
+✖ AFK renderer uses attack pose/mob approach and authored VFX instead of token line (0.21276ms)
+✔ canonical semantic shield/debuff icons retain effect identity (0.83877ms)
+✖ AFK approach reaches its mob and returns without modifying sparse squad slots (1.719244ms)
+✔ actual Dinh Loi projectile travels enemy-to-player and mirrors once (28.455306ms)
+✔ browser fixture extracts the current hook despite intervening validation statement (1.9097ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 3
+ℹ fail 6
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 156.686563
+
+✖ failing tests:
+
+test at tests/iphone-afk-visual.test.mjs:11:1
+✖ canonical and alias S+ IDs resolve full-body campaign idle/run/attack (3.296725ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'object'
+  - 'function'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/iphone-afk-visual.test.mjs:11:111)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'object',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/iphone-afk-visual.test.mjs:12:1
+✖ portrait fronts separate more with smaller consistent stature; desktop unchanged (6.44754ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(f.enemy[0].x-f.player[0].x>=200)
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/iphone-afk-visual.test.mjs:12:192)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/iphone-afk-visual.test.mjs:13:1
+✖ managed HUD stops suppressing semantic icon art or displaying source hero number (0.308804ms)
+  AssertionError [ERR_ASSERTION]: S+ HUD suppresses icons and substitutes hero numbers
+      at TestContext.<anonymous> (file:///workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/iphone-afk-visual.test.mjs:13:146)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/iphone-afk-visual.test.mjs:14:1
+✖ Dinh Loi enemy projectile and wave blitters mirror at the draw owner (12.395009ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /basicProjectile[^\n]*flip:actor.team===TEAM_ENEMY/. Input:
+  
+  '  function drawDinhLoiFx(context,time){\n' +
+    '    const fx=dinhLoiFx;if(!fx)return;const elapsed=time-fx.started;if(elapsed<0||elapsed>=fx.duration){dinhLoiFx=null;return;}\n' +
+    '    const actor=getUnit(fx.actorId),target=getUnit(fx.targetId);if(!actor)return;\n' +
+    '    const p=Math.max(0,Math.min(1,elapsed/fx.duration)),frame=dinhLoiFrame(elapsed/fx.duration*DINH_LOI_ACTION_MS,false);\n' +
+    '    if(fx.kind==="basicProjectile"&&target){const x=actor.x+(target.x-actor.x)*p,y=actor.y-82+(target.y-actor.y)*p;drawDinhLoiAtlasFrame(context,DINH_LOI_IMAGES.basicProjectile,frame,x,y,300,169,{baseline:84});}\n' +
+    '    else if(fx.kind==="basicImpact"&&target)drawDinhLoiAtlasFrame(context,DINH_LOI_IMAGES.basicImpact,frame,target.x,target.y,370,208,{baseline:104,screen:true});\n' +
+    '    else if(fx.kind==="skill1Wave"&&target){const x=actor.x+(target.x-actor.x)*p,y=actor.y-72+(target.y-actor.y)*p;drawDinhLoiAtlasFrame(context,DINH_LOI_IMAGES.skill1Wave,frame,x,y,350,197,{baseline:98,screen:true});}\n' +
+    '    else if(fx.kind==="skill1Impact"&&target)drawDinhLoiAtlasFrame(context,DINH_LOI_IMAGES.skill1Impact,frame,target.x,target.y,400,225,{baseline:112,screen:true});\n' +
+    '    else if(fx.kind==="ultimateVfx"){const image=DINH_LOI_IMAGES.ultimateVfx;if(image?.complete&&image.naturalWidth>1){const cellW=135,cellH=240,sx=(frame%8)*cellW,sy=Math.floor(frame/8)*cellH;context.save();context.globalCompositeOperation="screen";context.globalAlpha=.92;context.drawImage(image,sx,sy,cellW,cellH,170,45,WORLD.width-340,WORLD.height-90);context.restore();}}\n' +
+    '    else if(fx.kind==="ultimateImpact"){const image=DINH_LOI_IMAGES.ultimateImpact;if(image?.complete&&image.naturalWidth>1){const cellW=135,cellH=240,sx=(frame%8)*cellW,sy=Math.floor(frame/8)*cellH;context.save();context.globalCompositeOperation="screen";context.globalAlpha=.96;context.drawImage(image,sx,sy,cellW,cellH,120,10,WORLD.width-240,WORLD.height-20);context.restore();}}\n' +
+    '  }\n' +
+    '  function drawDinhLoiPersistentShields(context,time){\n' +
+    '    const image=DINH_LOI_IMAGES.skill1Shield;if(!image?.complete||image.naturalWidth<2)return;const frame=dinhLoiFrame(time,true);\n' +
+    '    for(const unit of living(TEAM_PLAYER).concat(living(TEAM_ENEMY))){if(!(unit.statuses||[]).some(s=>s.type==="guard"&&s.sourceHeroId===DINH_LOI_ID))continue;drawDinhLoiAtlasFrame(context,image,frame,unit.x,unit.y,330,186,{baseline:93,screen:true,alpha:.82});}\n' +
+    '  }\n' +
+    '\n' +
+    '  // v3.26.0 — Lục Ảnh Golden Character. Authored character/VFX atlases are kept\n' +
+    '  // separate: Character Cast stays on the home slot; Skill 1 places six effigies on\n' +
+    '  // enemy slots; Ultimate renders the toxic-cloud source at exactly 3x over the enemy team.\n'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/iphone-afk-visual.test.mjs:14:638)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '  function drawDinhLoiFx(context,time){\n    const fx=dinhLoiFx;if(!fx)return;const elapsed=time-fx.started;if(elapsed<0||elapsed>=fx.duration){dinhLoiFx=null;return;}\n    const actor=getUnit(fx.actorId),target=getUnit(fx.targetId);if(!actor)return;\n    const p=Math.max(0,Math.min(1,elapsed/fx.duration)),frame=dinhLoiFrame(elapsed/fx.duration*DINH_LOI_ACTION_MS,false);\n    if(fx.kind==="basicProjectile"&&target){const x=actor.x+(target.x-actor.x)*p,y=actor.y-82+(target.y-actor.y)*p;drawDinhLoiAtlasFrame(context,DINH_LOI_IMAGES.basicProjectile,frame,x,y,300,169,{baseline:84});}\n    else if(fx.kind==="basicImpact"&&target)drawDinhLoiAtlasFrame(context,DINH_LOI_IMAGES.basicImpact,frame,target.x,target.y,370,208,{baseline:104,screen:true});\n    else if(fx.kind==="skill1Wave"&&target){const x=actor.x+(target.x-actor.x)*p,y=actor.y-72+(target.y-actor.y)*p;drawDinhLoiAtlasFrame(context,DINH_LOI_IMAGES.skill1Wave,frame,x,y,350,197,{baseline:98,screen:true});}\n    else if(fx.kind==="skill1Impact"&&target)drawDinhLoiAtlasFrame(context,DINH_LOI_IMAGES.skill1Impact,frame,target.x,target.y,400,225,{baseline:112,screen:true});\n    else if(fx.kind==="ultimateVfx"){const image=DINH_LOI_IMAGES.ultimateVfx;if(image?.complete&&image.naturalWidth>1){const cellW=135,cellH=240,sx=(frame%8)*cellW,sy=Math.floor(frame/8)*cellH;context.save();context.globalCompositeOperation="screen";context.globalAlpha=.92;context.drawImage(image,sx,sy,cellW,cellH,170,45,WORLD.width-340,WORLD.height-90);context.restore();}}\n    else if(fx.kind==="ultimateImpact"){const image=DINH_LOI_IMAGES.ultimateImpact;if(image?.complete&&image.naturalWidth>1){const cellW=135,cellH=240,sx=(frame%8)*cellW,sy=Math.floor(frame/8)*cellH;context.save();context.globalCompositeOperation="screen";context.globalAlpha=.96;context.drawImage(image,sx,sy,cellW,cellH,120,10,WORLD.width-240,WORLD.height-20);context.restore();}}\n  }\n  function drawDinhLoiPersistentShields(context,time){\n    const image=DINH_LOI_IMAGES.skill1Shield;if(!image?.complete||image.naturalWidth<2)return;const frame=dinhLoiFrame(time,true);\n    for(const unit of living(TEAM_PLAYER).concat(living(TEAM_ENEMY))){if(!(unit.statuses||[]).some(s=>s.type==="guard"&&s.sourceHeroId===DINH_LOI_ID))continue;drawDinhLoiAtlasFrame(context,image,frame,unit.x,unit.y,330,186,{baseline:93,screen:true,alpha:.82});}\n  }\n\n  // v3.26.0 — Lục Ảnh Golden Character. Authored character/VFX atlases are kept\n  // separate: Character Cast stays on the home slot; Skill 1 places six effigies on\n  // enemy slots; Ultimate renders the toxic-cloud source at exactly 3x over the enemy team.\n',
+    expected: /basicProjectile[^\n]*flip:actor.team===TEAM_ENEMY/,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/iphone-afk-visual.test.mjs:15:1
+✖ AFK renderer uses attack pose/mob approach and authored VFX instead of token line (0.21276ms)
+  AssertionError [ERR_ASSERTION]: AFK approach/cast/return owner missing
+      at TestContext.<anonymous> (file:///workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/iphone-afk-visual.test.mjs:15:102)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/iphone-afk-visual.test.mjs:19:1
+✖ AFK approach reaches its mob and returns without modifying sparse squad slots (1.719244ms)
+  evalmachine.<anonymous>:113
+  ({sampleCampaignFarm,campaignFarmActorPose,homePartyPose});
+                       ^
+  
+  ReferenceError: campaignFarmActorPose is not defined
+      at evalmachine.<anonymous>:113:22
+      at Script.runInContext (node:vm:149:12)
+      at Script.runInNewContext (node:vm:154:17)
+      at Object.runInNewContext (node:vm:310:38)
+      at TestContext.<anonymous> (file:///workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/iphone-afk-visual.test.mjs:20:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)

@@ -1,0 +1,113 @@
+✔ portrait formation gives opposing fronts room and stays inside every target crop (2.300266ms)
+✔ portrait formation keeps 50px team columns, 220px opposing frontline lane and mirrored rows (0.311588ms)
+✔ desktop formation and global desktop scale are unchanged (0.369225ms)
+✔ special heroes use body-height calibration while preserving compact layout offsets (0.335124ms)
+✔ final runtime patch removes stale formation breakpoints and all stacked scale owners (0.948134ms)
+✔ formation owner accepts the unmodified baseline 0.52 generic scale without a pre-patch scale rewrite (0.304838ms)
+✔ build applies the scoped layout owner after reference presentation but before battle payload sync (0.195503ms)
+✔ temporary arena IDs use the same canonical hero correction as the renderer (1.616118ms)
+✔ approach, attack, ultimate and recovery retain the actor home depth scale (0.376856ms)
+✔ built regular and S+ render paths share scale, offsets and one enemy mirror (26.496063ms)
+✔ campaign never returns an empty hero image merely because a battle overlay state is stale (1.262516ms)
+✔ campaign drops failed resource handle and falls back to authored full-body poster before unregistered portrait instead of skipping actor (0.343116ms)
+✖ AC01: cảnh chiếm chiều cao chính, rương fab gọn, không bảng lớn luôn hiện (1.993094ms)
+✔ AC04: popup rương có thời gian, cap 15 giờ, nhận, đóng (0.9586ms)
+✔ AC05: nhận thưởng khóa nhấn nhanh, chỉ commit một lần (0.682695ms)
+✔ AC07: Khiêu chiến và Đổi đội hình giữ luồng prepare (0.779992ms)
+✔ AC08: rời màn dừng clock, đóng dialog, một scope (0.820783ms)
+✔ AC09: điểm nối Run theo ID, thiếu thì Idle, không bịa FPS (0.813892ms)
+✖ AC03: đường giữa màn, chân theo slot, prepare không đổi (0.764118ms)
+✖ AC10: domain AFK và board không bị ticket này sửa công thức (0.206299ms)
+✔ AC02: canvas aria-label theo đội đang chọn, art theo pick.id (0.682595ms)
+file:///workspace/scratch/4f9857a8e8e1/projects/luc-than/scripts/campaign-preparation-idle-v1.mjs:15
+    if (start < 0) throw new Error('Preparation idle descriptor: ' + name);
+                         ^
+
+Error: Preparation idle descriptor: LUC_ANH_IDLE_1080
+    at file:///workspace/scratch/4f9857a8e8e1/projects/luc-than/scripts/campaign-preparation-idle-v1.mjs:15:26
+    at Array.map (<anonymous>)
+    at preparationSourceSpecs (file:///workspace/scratch/4f9857a8e8e1/projects/luc-than/scripts/campaign-preparation-idle-v1.mjs:13:88)
+    at file:///workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/campaign-preparation-idle.test.mjs:11:15
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.19.0
+✖ tests/campaign-preparation-idle.test.mjs (138.744441ms)
+✔ canonical and alias S+ IDs resolve full-body campaign idle/run/attack (4.455854ms)
+✔ portrait fronts separate more with smaller consistent stature; desktop unchanged (0.554043ms)
+✔ managed HUD stops suppressing semantic icon art or displaying source hero number (0.806081ms)
+✔ Dinh Loi enemy projectile and wave blitters mirror at the draw owner (14.579162ms)
+✔ AFK renderer uses attack pose/mob approach and authored VFX instead of token line (0.391098ms)
+✔ canonical semantic shield/debuff icons retain effect identity (0.859021ms)
+✔ AFK approach reaches its mob and returns without modifying sparse squad slots (2.860427ms)
+✔ actual Dinh Loi projectile travels enemy-to-player and mirrors once (10.163017ms)
+✔ browser fixture extracts the current hook despite intervening validation statement (2.039544ms)
+ℹ tests 31
+ℹ suites 0
+ℹ pass 27
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 172.055197
+
+✖ failing tests:
+
+test at tests/campaign-afk-ui.test.mjs:12:1
+✖ AC01: cảnh chiếm chiều cao chính, rương fab gọn, không bảng lớn luôn hiện (1.993094ms)
+  Error: ENOENT: no such file or directory, open '/workspace/scratch/4f9857a8e8e1/projects/luc-than/src/ui/campaign-3d.css'
+      at readFileSync (node:fs:484:20)
+      at read (file:///workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/campaign-afk-ui.test.mjs:8:21)
+      at css (file:///workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/campaign-afk-ui.test.mjs:10:55)
+      at TestContext.<anonymous> (file:///workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/campaign-afk-ui.test.mjs:14:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/workspace/scratch/4f9857a8e8e1/projects/luc-than/src/ui/campaign-3d.css'
+  }
+
+test at tests/campaign-afk-ui.test.mjs:66:1
+✖ AC03: đường giữa màn, chân theo slot, prepare không đổi (0.764118ms)
+  Error: ENOENT: no such file or directory, open '/workspace/scratch/4f9857a8e8e1/projects/luc-than/src/ui/campaign-3d.css'
+      at readFileSync (node:fs:484:20)
+      at read (file:///workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/campaign-afk-ui.test.mjs:8:21)
+      at css (file:///workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/campaign-afk-ui.test.mjs:10:55)
+      at TestContext.<anonymous> (file:///workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/campaign-afk-ui.test.mjs:68:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/workspace/scratch/4f9857a8e8e1/projects/luc-than/src/ui/campaign-3d.css'
+  }
+
+test at tests/campaign-afk-ui.test.mjs:78:1
+✖ AC10: domain AFK và board không bị ticket này sửa công thức (0.206299ms)
+  Error: ENOENT: no such file or directory, open '/workspace/scratch/4f9857a8e8e1/projects/luc-than/src/domain/afk/afk-chest.mjs'
+      at readFileSync (node:fs:484:20)
+      at read (file:///workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/campaign-afk-ui.test.mjs:8:21)
+      at TestContext.<anonymous> (file:///workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/campaign-afk-ui.test.mjs:79:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/workspace/scratch/4f9857a8e8e1/projects/luc-than/src/domain/afk/afk-chest.mjs'
+  }
+
+test at tests/campaign-preparation-idle.test.mjs:1:1
+✖ tests/campaign-preparation-idle.test.mjs (138.744441ms)
+  'test failed'
