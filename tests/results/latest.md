@@ -1,20 +1,12 @@
 # Test Results
-Loop: 1
-Status: PASS (runtime checks); CI/CD artifact upload BLOCKED
+Status: REVIEW — runtime checks PASS; CI/CD artifact upload BLOCKED by quota
 Date: 2026-10-07
-Revision: a92df74f13ba4d3d4c989aa96ce7f8594bf79774
+Runtime: 4a5185d07e2e7a2a494e5da53040ea57280737e3
+QA: 82ce2085e4e58453d8f78981ece19d5affeb3419
 
-[PASS] focused generated Basic/formation tests — 6/6
-[PASS] full tests — 1667/1667
-[PASS] build — clean GitHub Actions build
-[PASS] actual mobile full and 3-hero preparation — transparent empty buttons, remove/add/remove interaction
-[PASS] opening Basic — restored second contact and +15 rage; HP 605→400 (full), shield 109→0 and HP 605→574 (partial)
-[PASS] queue — both real actor sequences match existing rage/slot rule
-[PASS] full game audit — https://github.com/bktimmy247/luc-than/actions/runs/37622337544
-[PASS] focused browser — https://github.com/bktimmy247/luc-than/actions/runs/37622337541
-[PASS] preview — READY, HTTP200, deployed markers verified
-[BLOCKED] CI/CD evidence upload — existing GitHub artifact storage quota; build/test/VFX pass, later steps skipped in that workflow
-[NOT TESTED] physical Safari
-[OPEN] owner confirmation if intended initiative/order differs from current per-round total-rage rule
-
-Review branch only; no merge or production promotion.
+- Clean build PASS; focused 8/8; full tests 1671/1671.
+- Full game UI audit 37627980726 PASS.
+- Facing target QA 37630872610 PASS: 21/21 action and impact targets; mobile full/partial, desktop persisted partial; exceptions 0.
+- Vercel preview HTTP 200 and deployed source verified.
+- Physical iPhone/Safari NOT_RUN. No production promotion or main merge.
+- Details: docs/qa/facing-target-20261007/README.md
