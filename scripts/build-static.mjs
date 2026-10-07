@@ -270,6 +270,9 @@ installCompactDamageFloaters(root);
 const { installBattleVfxDirection } = await import('./battle-vfx-direction-v1.mjs');
 installBattleVfxDirection(root);
 
+const { installBattleInstantSkip } = await import('./battle-instant-skip-v1.mjs');
+installBattleInstantSkip(root);
+
 // battle.html is now the single runtime source for iframe and iOS full-page combat.
 // Do not duplicate ~1.5 MB of battle markup as base64 inside index.html; on mobile
 // that keeps two copies alive exactly when the battle document starts parsing.

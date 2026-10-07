@@ -44,7 +44,7 @@ export async function startBrowser() {
     async function click(selector){const rect=await evaluate(`(()=>{const el=document.querySelector(${JSON.stringify(selector)});if(!el)return null;const r=el.getBoundingClientRect();return {x:r.x+r.width/2,y:r.y+r.height/2,w:r.width,h:r.height};})()`);if(!rect||!rect.w||!rect.h)throw new Error('Not clickable: '+selector);await send('Input.dispatchMouseEvent',{type:'mousePressed',x:rect.x,y:rect.y,button:'left',clickCount:1});await send('Input.dispatchMouseEvent',{type:'mouseReleased',x:rect.x,y:rect.y,button:'left',clickCount:1});}
     return {send,evaluate,wait,screenshot,click,events,close:async()=>{ws.close();await fetch('http://127.0.0.1:'+port+'/json/close/'+target.id);}};
   }
-  return {origin,page,requestLog,close:async()=>{chrome.kill();server.close();await sleep(200);rmSync(profile,{recursive:true,force:true});}};
+  return {origin,page,requestLog,close:async()=>{const exited=chrome.exitCode!==null?Promise.resolve():once(chrome,'exit');chrome.kill();server.close();await exited;rmSync(profile,{recursive:true,force:true,maxRetries:5,retryDelay:100});}};
 }
 const snapshotExpression=`(()=>{const s=__HON_VIET__.getState();return {state:{mode:s.mode,battleId:s.battleId,round:s.round,actionCount:s.actionCount,currentId:s.currentId,auto:s.auto,speed:s.speed,sound:s.sound},units:__HON_VIET__.getUnits(),dataset:{...document.documentElement.dataset},paints:__HV_BATTLE_ASSET_QA.paints(),cache:__HV_BATTLE_ASSET_QA.inspect(),events:__HV_BATTLE_ASSET_QA.events(),movement:window.__HV_SKILL_MOVEMENT_QA?.events?.()||[],audio:window.__qaAudio||[]};})()`;
 export async function run(){
@@ -115,3 +115,4 @@ export async function run(){
   }finally{await browser.close();}
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href)await run();
+
