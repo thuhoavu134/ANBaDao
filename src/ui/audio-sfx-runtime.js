@@ -312,7 +312,14 @@
         try { outputTimestamp = c.getOutputTimestamp?.() || null; } catch (_) {}
         const outputContextTime = Number(outputTimestamp?.contextTime);
         const outputPerformanceMs = Number(outputTimestamp?.performanceTime);
-        if (Number.isFinite(outputContextTime) && Number.isFinite(outputPerformanceMs)) {
+        // A newly resumed output device can report (0,0), or a timestamp from
+        // before suspension. Mapping the page clock through it schedules early
+        // attacks seconds late; their action lease then cancels them unheard.
+        const outputAgeMs = sourceRequestPerformanceMs - outputPerformanceMs;
+        const freshOutputClock = Number.isFinite(outputContextTime) && Number.isFinite(outputPerformanceMs)
+          && outputPerformanceMs > 0 && outputContextTime >= 0 && outputContextTime <= contextNow + .05
+          && outputAgeMs >= -50 && outputAgeMs <= 1000;
+        if (freshOutputClock) {
           clockMapping = 'output-timestamp';
           outputTimestampContextTime = outputContextTime;
           outputTimestampPerformanceMs = outputPerformanceMs;

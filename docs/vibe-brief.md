@@ -1,3 +1,9 @@
+# Active repair — first-action media (2026-10-07)
+
+Fix first AFK VFX and early battle SFX on cold loading; preserve art, animation cues, rules and AFK reward accrual. No new screen. Baseline32cbbf1; runtime25df23ba; PR288 REVIEW. Preview and evidence: docs/qa/first-action-media-20261007/README.md. Rollback: close unmerged PR; main is untouched. Owner approval required before merge.
+
+---
+
 ## 26/09/2026 — Khôi phục authored combat, REVIEW / chưa merge
 
 Branch `fix/restore-mixed-roster-vfx-sfx-voice-20260926`, PR #231. Xem [audit đầy đủ từng tướng/action](COMBAT-AUTHORED-AUDIT-2026-09-26.md). Runtime checkpoint `5c009474ae8be7b36c1cd308cae61623df6ff16b`; QA viewport `1c10ecf258f942b48dde8601520c79d373077a25`.

@@ -1,0 +1,21 @@
+name: First action media QA
+on:
+  push:
+    branches: [fix/first-action-vfx-sfx-20261007]
+    paths: ['src/**','scripts/**','tests/**','.github/workflows/first-action-media.yml']
+  workflow_dispatch:
+jobs:
+  media:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: npm run build
+      - run: node --test --test-concurrency=1 tests/*.test.mjs
+      - run: |
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
+          node scripts/qa-first-action-media.mjs

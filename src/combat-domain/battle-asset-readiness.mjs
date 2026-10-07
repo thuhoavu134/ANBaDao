@@ -77,11 +77,12 @@ export function createBattleAssetReadiness(options) {
       record('assets:waiting', { taskId, actorId: actor.id, battleId, action,
         urls: [...grouped.values()].flatMap(clips => [...clips.keys()]) });
       options.onWaiting?.(actor);
-      // Prepare buffers without emitting sound. Muted/unsupported audio is not
-      // a readiness blocker. The audio bus bounds preparation independently.
+      // A cold sound shares the bounded pre-cast resource deadline. A shorter
+      // best-effort wait let the first cast consume its cue before decoding.
+      // Muted/unsupported or failed audio still cannot deadlock the battle.
       const event = actorDescription?.sfx(action);
       const audio = getState().sound && event && sound()?.prepare
-        ? Promise.resolve(sound().prepare(event, { signal: controller.signal, timeoutMs: 2000 }))
+        ? Promise.resolve(sound().prepare(event, { signal: controller.signal, timeoutMs }))
           .then(ok => record('sfx:prepared', { event, ok: ok === true, taskId }))
           .catch(error => record('sfx:prepare-failed', { event, error: String(error.message || error), taskId }))
         : Promise.resolve();

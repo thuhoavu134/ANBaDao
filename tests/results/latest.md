@@ -1,13 +1,20 @@
 # Test Results
+Loop: 1
+Status: PASS (dedicated task validation)
 Date: 2026-10-07
-Status: REVIEW — runtime PASS, CI/CD artifact storage quota remains
-Revision: 29ecbd04c787bdc93413cb7025d5635fca3a1fa1
+Runtime: 25df23ba69374fb46c575646d6fc5e829b8ebc45
 
-- Build PASS; full tests 1673/1673.
-- Focused lossless reference/pixel preservation 2/2.
-- Loading profile and host re-entry/all-screen audit PASS: run 37638060432.
-- 26 assets visible pixels identical; transfer 25,055,307 -> 18,625,472 bytes.
-- Mobile/desktop Chromium runtime/asset errors 0; screenshots inspected.
-- Vercel preview READY and HTTP 200.
-- Physical iPhone/Safari NOT_RUN; no guaranteed FPS or first-action speedup claim.
-- No merge. Evidence: docs/qa/loading-20261007/README.md
+[PASS] focused — 7 tests after 6 observed RED failures
+[PASS] build — clean Actions build
+[PASS] full-node — 1680 passed, 0 failed
+[PASS] desktop-cold-vfx — first effects at8583/9783 visual ms
+[PASS] iphone-code-path — first action audio on both teams
+[PASS] iphone-cold-audio — 6.5s real SFX response delay, first9 actor requests played
+[PASS] runtime — 0 exceptions / 0 asset HTTP errors
+[PASS] preview — READY, host/battle HTTP200 and new source verified
+[FAIL-INFRA] general-ci-artifact-upload — existing GitHub artifact storage quota
+[NOT_RUN] physical Safari/WebKit / device listening
+[NOT_APPLICABLE] dedicated lint/typecheck — no package script
+
+Evidence: docs/qa/first-action-media-20261007/README.md
+Handoff: PR288 REVIEW, main unchanged. PR287 remains separate.
