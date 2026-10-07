@@ -42,7 +42,7 @@ test('generated legacy routing in a mixed battle preserves heals and uses facing
   const box=vm.createContext({Core,TEAM_PLAYER:'player',TEAM_ENEMY:'enemy',REFERENCE_SIMPLE:true,state:{bossPhase:null,enemyFormation:null},
     splusCombat:()=>({targets:()=>[enemies[0]]}),splusOwnsActor:()=>false,
     living:team=>team==='player'?[actor,ally]:enemies,enemiesOf:()=>enemies});
-  for(const name of ['actionKind','actionIgnoresFormation','legalTargetsFor','preferredTargetFor'])vm.runInContext(extract(name),box);
+  for(const name of ['actionKind','actionIgnoresFormation','usesFacingTarget','legalTargetsFor','preferredTargetFor'])vm.runInContext(extract(name),box);
   assert.equal(box.preferredTargetFor(actor,'basic').id,'enemy-3','slot 2 chooses slot 4 when slot 5 is absent');
   assert.equal(box.preferredTargetFor(actor,'skill').id,ally.id,'legacy healer must not delegate to S+ enemy targets');
 });

@@ -15,6 +15,12 @@ export function patchBattleFormationTargeting(input) {
   };
   replaceFunction('actionIgnoresFormation', 'legalTargetsFor', `  function actionIgnoresFormation(actor, action){
     return ["aoe","aoeBurn","aoeDebuff","heal","healAll","guardAll","cleanseGuard","buffAll","hasteAll"].includes(actionKind(actor,action));
+  }
+  function usesFacingTarget(actor, action){
+    if(!actor)return false;
+    if(action==="basic")return true;
+    if(splusOwnsActor(actor))return false;
+    return !["aoe","aoeBurn","aoeDebuff","heal","healAll","guard","guardAll","taunt","cleanseGuard","buff","buffAll","hasteAll","regen"].includes(actionKind(actor,action));
   }`);
   replaceFunction('legalTargetsFor', 'preferredTargetFor', `  function legalTargetsFor(actor, action){
     if(splusOwnsActor(actor)&&splusCombat())return splusCombat().targets(actor,action);
@@ -23,7 +29,7 @@ export function patchBattleFormationTargeting(input) {
     const legal=Core.legalEnemyTargets(actor,enemiesOf(actor),{ignoreFormation:actionIgnoresFormation(actor,action)});
     const taunter=legal.find(unit=>Core.hasStatus(unit,"taunt"));
     if(taunter)return [taunter];
-    return action==="basic"?[Core.preferredOppositeTarget(actor,legal)].filter(Boolean):legal;
+    return usesFacingTarget(actor,action)?[Core.preferredOppositeTarget(actor,legal)].filter(Boolean):legal;
   }`);
   replaceFunction('preferredTargetFor', 'sequenceTarget', `  function preferredTargetFor(actor, action){
     if(splusOwnsActor(actor)&&splusCombat())return splusCombat().targets(actor,action)[0];
@@ -32,10 +38,13 @@ export function patchBattleFormationTargeting(input) {
     const legal=legalTargetsFor(actor,action);
     return legal.find(unit=>Core.hasStatus(unit,"taunt"))||Core.preferredOppositeTarget(actor,legal);
   }`);
-  once('  function adaptiveTarget(actor, action, fallback){', '  function adaptiveTarget(actor, action, fallback){\n    if(action==="basic")return preferredTargetFor(actor,action);');
-  once('const planned=plannedAiIntent(actor); if(planned)return planned;', 'const planned=plannedAiIntent(actor); if(planned)return planned.action==="basic"?{...planned,target:preferredTargetFor(actor,"basic")}:planned;');
+  once('  function adaptiveTarget(actor, action, fallback){', '  function adaptiveTarget(actor, action, fallback){\n    if(usesFacingTarget(actor,action))return preferredTargetFor(actor,action);');
+  once('const planned=plannedAiIntent(actor); if(planned)return planned;', 'const planned=plannedAiIntent(actor); if(planned)return usesFacingTarget(actor,planned.action)?{...planned,target:preferredTargetFor(actor,planned.action)}:planned;');
   // This runs before both legacy and S+ animation owners: visual target = damage target.
-  once('  async function performAction(actor, action, target) {', '  async function performAction(actor, action, target) {\n    if(actor&&action==="basic")target=preferredTargetFor(actor,action);');
+  once('  async function performAction(actor, action, target) {', '  async function performAction(actor, action, target) {\n    if(usesFacingTarget(actor,action))target=preferredTargetFor(actor,action);');
+  // A dead contact target must not redirect a chain to a low-HP unit in another lane.
+  once('return foes.slice().sort((a,b)=>Core.hpRatio(a)-Core.hpRatio(b)||nemViStacks(b)-nemViStacks(a))[0]||null;',
+    'return preferredTargetFor(actor,actor._tacticalAction||"basic")||null;');
   return html;
 }
 
