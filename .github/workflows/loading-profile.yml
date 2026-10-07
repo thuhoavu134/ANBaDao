@@ -14,6 +14,11 @@ jobs:
         with: {node-version: 22}
       - run: npm ci
       - run: npm run build
+      - run: node --test --test-concurrency=1 tests/*.test.mjs
       - run: |
           export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
           node scripts/qa-loading-profile.mjs
+      - run: |
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
+          node scripts/qa-host-battle-entry.mjs
+          node scripts/qa-full-game-ui-audit.mjs
