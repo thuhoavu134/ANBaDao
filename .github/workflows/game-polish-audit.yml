@@ -1,0 +1,71 @@
+name: Pre-roster stabilization audit
+on:
+  push:
+    branches: ['review/game-polish-20261007-v2']
+    paths: ['scripts/**','src/**','tests/**','index.html','.github/workflows/game-polish-audit.yml']
+  workflow_dispatch:
+permissions: {contents: read}
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: 22}
+      - run: npm ci
+      - run: npm run build
+      - name: Full tests
+        run: node --test --test-concurrency=1 tests/*.test.mjs
+      - name: Instant skip real victory and defeat
+        if: ${{ !cancelled() }}
+        run: |
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
+          node scripts/qa-instant-skip.mjs
+      - name: Instant skip actual host and reentry
+        if: ${{ !cancelled() }}
+        run: |
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
+          node scripts/qa-instant-skip-host.mjs
+      - name: Owner Oct7 actual roster and result flow
+        if: ${{ !cancelled() }}
+        run: |
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
+          node scripts/qa-owner-oct7-browser.mjs
+      - name: Actual guest AFK canvas
+        if: ${{ !cancelled() }}
+        run: |
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
+          node scripts/qa-real-host-afk.mjs
+      - name: Formation and authored AFK geometry
+        if: ${{ !cancelled() }}
+        run: |
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
+          node scripts/qa-iphone-afk-visual.mjs
+      - name: Real host battle entry and return
+        if: ${{ !cancelled() }}
+        run: |
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
+          node scripts/qa-host-battle-entry.mjs
+      - name: Inspect every actual screen
+        if: ${{ !cancelled() }}
+        run: |
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
+          node scripts/qa-full-game-ui-audit.mjs
+
+
+      - name: Seamless entry
+        if: ${{ !cancelled() }}
+        run: |
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
+          node scripts/qa-entry-transition.mjs
+      - name: First action media
+        if: ${{ !cancelled() }}
+        run: |
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
+          node scripts/qa-first-action-media.mjs
+      - name: Loading profile
+        if: ${{ !cancelled() }}
+        run: |
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
+          node scripts/qa-loading-profile.mjs

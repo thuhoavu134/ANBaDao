@@ -286,6 +286,8 @@ if (!embeddedExpression.test(embeddedIndex)) throw new Error('Embedded battle pa
 embeddedIndex = embeddedIndex.replace(embeddedExpression, 'const BATTLE_HTML_BASE64 = "";');
 writeFileSync(join(out, 'index.html'), embeddedIndex);
 console.log('Battle runtime served from battle.html; embedded base64 payload disabled.');
+const { installSeamlessBattleEntry } = await import('./seamless-battle-entry-v1.mjs');
+installSeamlessBattleEntry(root);
 const { buildLoadingLossless } = await import('./loading-lossless-v1.mjs');
 await buildLoadingLossless(root);
 console.log(`Static preview written to ${out}`);
