@@ -31,5 +31,5 @@ try{for(const [width,height]of [[390,844],[1280,800]]){
  run.assetErrors=p.events.filter(e=>e.method==='Network.responseReceived'&&e.params.response.status>=400&&new URL(e.params.response.url).pathname.startsWith('/assets/')).map(e=>e.params.response.url);
  run.ok=!run.exceptions.length&&!run.assetErrors.length;
  }catch(e){run.ok=false;run.error=String(e.stack||e);run.exceptions=p.events.filter(e=>e.method==='Runtime.exceptionThrown');}finally{await p.close();}
-}}finally{await browser.close();}
-report.ok=report.runs.every(r=>r.ok);console.log('SKIP_HOST_REPORT:'+JSON.stringify(report));if(!report.ok)process.exitCode=1;
+}}finally{report.ok=report.runs.every(r=>r.ok);console.log('SKIP_HOST_REPORT:'+JSON.stringify(report));await browser.close();}
+if(!report.ok)process.exitCode=1;

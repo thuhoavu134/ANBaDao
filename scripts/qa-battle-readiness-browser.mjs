@@ -44,7 +44,19 @@ export async function startBrowser() {
     async function click(selector){const rect=await evaluate(`(()=>{const el=document.querySelector(${JSON.stringify(selector)});if(!el)return null;const r=el.getBoundingClientRect();return {x:r.x+r.width/2,y:r.y+r.height/2,w:r.width,h:r.height};})()`);if(!rect||!rect.w||!rect.h)throw new Error('Not clickable: '+selector);await send('Input.dispatchMouseEvent',{type:'mousePressed',x:rect.x,y:rect.y,button:'left',clickCount:1});await send('Input.dispatchMouseEvent',{type:'mouseReleased',x:rect.x,y:rect.y,button:'left',clickCount:1});}
     return {send,evaluate,wait,screenshot,click,events,close:async()=>{ws.close();await fetch('http://127.0.0.1:'+port+'/json/close/'+target.id);}};
   }
-  return {origin,page,requestLog,close:async()=>{const exited=chrome.exitCode!==null?Promise.resolve():once(chrome,'exit');chrome.kill();server.close();await exited;rmSync(profile,{recursive:true,force:true,maxRetries:5,retryDelay:100});}};
+  async function closeBrowser(){
+    const exited=chrome.exitCode!==null||chrome.signalCode!==null?Promise.resolve():once(chrome,'exit');
+    // Browser.close flushes profiles and shuts down renderer children; SIGTERM
+    // alone can leave them writing while the temporary profile is removed.
+    try{
+      const version=await fetch('http://127.0.0.1:'+port+'/json/version',{signal:AbortSignal.timeout(1000)}).then(r=>r.json());
+      await new Promise(resolve=>{const socket=new WebSocket(version.webSocketDebuggerUrl);const timer=setTimeout(()=>{socket.close();resolve();},3000);const done=()=>{clearTimeout(timer);resolve();};socket.onopen=()=>socket.send(JSON.stringify({id:1,method:'Browser.close'}));socket.onclose=done;socket.onerror=done;});
+    }catch{chrome.kill();}
+    let timer;await Promise.race([exited,new Promise(resolve=>{timer=setTimeout(resolve,5000);})]);clearTimeout(timer);
+    if(chrome.exitCode===null&&chrome.signalCode===null){chrome.kill('SIGKILL');await exited;}
+    server.close();rmSync(profile,{recursive:true,force:true,maxRetries:10,retryDelay:100});
+  }
+  return {origin,page,requestLog,close:closeBrowser};
 }
 const snapshotExpression=`(()=>{const s=__HON_VIET__.getState();return {state:{mode:s.mode,battleId:s.battleId,round:s.round,actionCount:s.actionCount,currentId:s.currentId,auto:s.auto,speed:s.speed,sound:s.sound},units:__HON_VIET__.getUnits(),dataset:{...document.documentElement.dataset},paints:__HV_BATTLE_ASSET_QA.paints(),cache:__HV_BATTLE_ASSET_QA.inspect(),events:__HV_BATTLE_ASSET_QA.events(),movement:window.__HV_SKILL_MOVEMENT_QA?.events?.()||[],audio:window.__qaAudio||[]};})()`;
 export async function run(){
@@ -115,4 +127,3 @@ export async function run(){
   }finally{await browser.close();}
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href)await run();
-

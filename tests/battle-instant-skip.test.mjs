@@ -23,3 +23,9 @@ test('skip releases a late visual lease and does not start subsequent image load
  box.__hvRequestBattleSkip();const lease=await pending;assert.equal(typeof lease.release,'function');complete({release:()=>released++});await Promise.resolve();await Promise.resolve();assert.equal(released,1);
  await box.__hvSkipVisualAssets(()=>{loads++;},7);assert.equal(loads,0);
 });
+test('skip resumes a paused manual turn through the existing AI owner exactly once',()=>{
+ const {box}=harness();const actor={id:'ally',hp:100};let resumed=0;
+ box.state.locked=false;box.state.currentId=actor.id;box.getUnit=()=>actor;
+ box.__hvRunAiTurn=(unit,id)=>{assert.equal(unit,actor);assert.equal(id,7);assert.equal(box.state.locked,true);resumed++;};
+ box.__hvRequestBattleSkip();box.__hvRequestBattleSkip();assert.equal(resumed,1);
+});

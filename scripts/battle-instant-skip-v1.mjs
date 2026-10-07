@@ -17,7 +17,6 @@ export function patchBattleInstantSkip(input,runtime){
   const from='await '+call;if(!s.includes(from))throw Error('Instant skip asset anchor '+call);
   s=s.split(from).join('await __hvSkipVisualAssets(()=>'+call+',battleId)');
  }
- once('const playerControlled = actor.team === TEAM_PLAYER && !state.auto;','let playerControlled = actor.team === TEAM_PLAYER && !state.auto;');
  once('    if (playerControlled) {\n      dom.actionPrompt.textContent', '    if (playerControlled && !state.auto) {\n      dom.actionPrompt.textContent');
  const anchor='document.getElementById("embeddedSkipButton")?.addEventListener("click", () => {';
  const start=s.indexOf(anchor),end=s.indexOf('\n  });',start);
