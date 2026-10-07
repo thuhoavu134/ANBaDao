@@ -1,7 +1,7 @@
 /* Presentation owner for Chinh chiến. Rewards and battles keep their domain owners. */
 const sceneState = { root: null, canvas: null, active: false, scope: null, resizeObserver: null,
   raf: 0, rafRelease: null, timer: 0, timerRelease: null, booted: false,
-  lastFrame: 0, farmTime: 0, width: 390, height: 300, draft: null, slot: 0, checkpoint: null, launching: false,
+  lastFrame: 0, farmTime: 0, farmReady: true, width: 390, height: 300, draft: null, slot: 0, checkpoint: null, launching: false,
   claiming: false, activationGeneration: 0 };
 const sceneResourceCache = typeof createCampaignResourcePackCache === 'function'
   ? createCampaignResourcePackCache({
@@ -369,12 +369,15 @@ function drawCampaignBasicVfx(ctx,actor,farm,w,h,size) {
   // Ong Pho's authored ATK already contains its contact VFX; never add a token line.
   if(!base)return;
   const castTime=actor.attackTime-(actor.approachMs||0),beat=castTime/(actor.castDuration||actor.duration);
+  // Request the first small effect page during the cast, before release.
+  if(beat>=0&&beat<.48){const first=campaignPagedSprite(base,farmVfxPacks[key],0).spec;imageForScene(first.src,first);}
   if(beat<.48||beat>.82)return;
   const p=Math.min(1,(beat-.48)/.20),map=campaignMapView(w,h,farm.center),mob=farm.mobs[actor.target];
   const pose=campaignFarmActorPose(actor,w,h,farm),tx=map.left+mob.worldX*map.width,ty=map.top+mob.worldY*map.height-size*.45;
   const x=pose.x+(tx-pose.x)*p,y=pose.y-pose.bodyH*.55+(ty-(pose.y-pose.bodyH*.55))*p;
   const sampled=campaignPagedSprite(base,farmVfxPacks[key],Math.min(base.frames-1,Math.floor((beat-.48)/.34*base.frames))*base.ms),spec=sampled.spec;
-  const image=imageForScene(spec.src,spec);if(!image?.complete||image.naturalWidth<1)return;
+  const image=imageForScene(spec.src,spec);
+  if(!image?.complete||image.naturalWidth<1){sceneState.farmReady=false;return;}
   const frame=spec.frameIndex??Math.min(base.frames-1,Math.floor((beat-.48)/.34*base.frames)),scale=Math.min(pose.bodyH*.8/spec.cellH,pose.bodyH*1.6/spec.cellW,w*.22/spec.cellW);
   ctx.save();ctx.translate(x,y);ctx.scale(pose.facing,1);
   ctx.drawImage(image,frame%spec.cols*(spec.strideW||spec.cellW)+(spec.pad||0),Math.floor(frame/spec.cols)*(spec.strideH||spec.cellH)+(spec.pad||0),spec.cellW,spec.cellH,-spec.pivot*scale,-spec.foot*scale,spec.cellW*scale,spec.cellH*scale);ctx.restore();
@@ -436,6 +439,8 @@ function drawScene(time) {
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, w, h);
   ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
   const preparing = Boolean(sceneState.draft);
+  // Only the visual farm clock waits. AFK accrual still uses its domain clock.
+  sceneState.farmReady=true;
   const enemies = preparing ? preparationEnemies() : [];
   const picks = preparing ? [...sceneState.draft, ...enemies] : savedSceneSquad();
   const farm = preparing ? null : sampleCampaignFarm(reducedMotion.matches ? 0 : sceneState.farmTime, picks, false, farmAttackSpecs, sceneState.world||campaignWorldForChapter(0));
@@ -470,6 +475,7 @@ function drawScene(time) {
       const attackSprite=attack?campaignPagedSprite(attackBase,farmAttackPacks[artId],pose.castTime):null;
       const attackImage=attackSprite?imageForScene(attackSprite.spec.src,attackSprite.spec):null;
       const readyAttack=attackImage?.complete&&attackImage.naturalWidth>0;
+      if(attack&&!readyAttack)sceneState.farmReady=false;
       const preparation=preparing||farm?.phase!=='march'?preparationSpriteFor(pick,time):null;
       const running=pose?.moving||farm?.phase==='march';
       const runBase=running?specForAfk(pick):null,runSprite=runBase&&farmRunPacks[artId]?campaignPagedSprite(runBase,farmRunPacks[artId],(time%(runBase.frames*runBase.ms))):null;
@@ -527,7 +533,7 @@ function sceneTick(time) {
     return;
   }
   if (time - sceneState.lastFrame >= 32) {
-    if (!sceneState.draft && !reducedMotion.matches) sceneState.farmTime += Math.min(100, time - sceneState.lastFrame);
+    if (!sceneState.draft && !reducedMotion.matches && sceneState.farmReady!==false) sceneState.farmTime += Math.min(100, time - sceneState.lastFrame);
     drawScene(time); sceneState.lastFrame = time;
   }
   if (!reducedMotion.matches) sceneState.raf = scheduleSceneFrame();
