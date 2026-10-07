@@ -1789,8 +1789,9 @@
   const baseNav = typeof navTo === 'function' ? navTo : null;
   if (baseNav) {
     navTo = function accountGearNavTo(name) {
-      if (name === 'gear') { showScreen('team'); openBoard(); return; }
-      if (name === 'team' && !ST.hvOpenFormation) { showScreen('team'); openAssistWheel(); return; }
+      if (name === 'gear') { ST.hvAssistOpen = true; showScreen('team'); openBoard(); return; }
+      if (name === 'team' && !ST.hvOpenFormation) { ST.hvAssistOpen = true; showScreen('team'); openAssistWheel(); return; }
+      ST.hvAssistOpen = false;
       ST.hvOpenFormation = false;
       hide();
       return baseNav(name);

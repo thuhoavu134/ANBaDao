@@ -18,7 +18,7 @@
   document.body.append(root);
 
   const syncOpen = name => {
-    const open = name === 'team';
+    const open = name === 'team' && !ST.hvAssistOpen;
     root.hidden = !open;
     root.classList.toggle('is-open', open);
     document.body.classList.toggle('team-3d-active', open);
@@ -41,3 +41,4 @@
   root.querySelector('[data-team-close]').addEventListener('click', () => navTo('hub'));
   syncOpen(typeof ST === 'object' ? ST.screen : '');
 })();
+

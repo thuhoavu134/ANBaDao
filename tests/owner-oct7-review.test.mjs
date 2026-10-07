@@ -8,8 +8,9 @@ test('roster to assist goes through the screen owner before opening the wheel',(
  const start=source.indexOf('  const baseNav ='),end=source.indexOf("  if (typeof heroStats",start);
  const box={ST:{screen:'heroes'},navTo:n=>events.push('base:'+n),showScreen:n=>{box.ST.screen=n;events.push('screen:'+n);},openAssistWheel:()=>events.push('wheel'),openBoard:()=>events.push('board'),hide:()=>events.push('hide')};
  vm.runInNewContext(source.slice(start,end),box);box.navTo('team');
- assert.deepEqual(events,['screen:team','wheel']);assert.equal(box.ST.screen,'team');
- events.length=0;box.ST.hvOpenFormation=true;box.navTo('team');assert.deepEqual(events,['hide','base:team']);assert.equal(box.ST.hvOpenFormation,false);
+ assert.deepEqual(events,['screen:team','wheel']);assert.equal(box.ST.screen,'team');assert.equal(box.ST.hvAssistOpen,true);
+ assert.match(read('src/ui/team-3d-runtime.js'), /name === 'team' && !ST.hvAssistOpen/);
+ events.length=0;box.ST.hvOpenFormation=true;box.navTo('team');assert.deepEqual(events,['hide','base:team']);assert.equal(box.ST.hvOpenFormation,false);assert.equal(box.ST.hvAssistOpen,false);
 });
 test('AFK remains beside its mob between attacks until the whole pack is cleared',()=>{
  const source=read('src/ui/campaign-scene.js');
