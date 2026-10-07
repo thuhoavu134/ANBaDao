@@ -1,0 +1,30 @@
+✔ portrait formation gives opposing fronts room and stays inside every target crop (2.549442ms)
+✔ portrait formation keeps 90px team columns, 140px opposing frontline lane and mirrored rows (0.534433ms)
+✔ desktop formation and global desktop scale are unchanged (0.41209ms)
+✔ special heroes use body-height calibration while preserving compact layout offsets (0.317077ms)
+✔ final runtime patch removes stale formation breakpoints and all stacked scale owners (0.984ms)
+✔ formation owner accepts the unmodified baseline 0.52 generic scale without a pre-patch scale rewrite (0.325449ms)
+✔ build applies the scoped layout owner after reference presentation but before battle payload sync (0.230456ms)
+✔ temporary arena IDs use the same canonical hero correction as the renderer (1.448848ms)
+✔ approach, attack, ultimate and recovery retain the actor home depth scale (0.393161ms)
+✔ built regular and S+ render paths share scale, offsets and one enemy mirror (24.230497ms)
+✔ canonical and alias S+ IDs resolve full-body campaign idle/run/attack (3.195844ms)
+✔ portrait central lane and allied columns stay readable; desktop unchanged (0.566672ms)
+✔ managed HUD stops suppressing semantic icon art or displaying source hero number (0.26613ms)
+✔ Dinh Loi enemy projectile and wave blitters mirror at the draw owner (9.210557ms)
+✔ AFK renderer uses attack pose/mob approach and authored VFX instead of token line (0.285068ms)
+✔ canonical semantic shield/debuff icons retain effect identity (1.032973ms)
+✔ AFK approach reaches its mob and returns without modifying sparse squad slots (3.449786ms)
+✔ actual Dinh Loi projectile travels enemy-to-player and mirrors once (9.287893ms)
+✔ browser fixture extracts the current hook despite intervening validation statement (1.8163ms)
+✔ portrait separates allied columns while keeping a reference-proportion center lane (1.238271ms)
+✔ compact HUD lane fits within allied columns (10.159644ms)
+✔ spirit mark and stealth have explicit semantic artwork instead of letter badges (0.428034ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 131.303451

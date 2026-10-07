@@ -76,6 +76,10 @@ const sceneRewards = [
   ['hoat', 'Hoạt lực', 'assets/ui/menu-v3233/icons/resource-energy-imagen.png']
 ];
 const sceneDock = [['hub', 'hub', 'Thành Chính'], ['heroes', 'heroes', 'Tướng'], ['team', 'team', 'Trợ trận'], ['daily', 'daily', 'Lịch Luyện'], ['campaign', 'expedition', 'Chinh chiến']];
+function campaignActorArtId(value) {
+  const id=String(value||'').replace(/-/g,'_');
+  return id==='hero_splus_linh_dong'?'linh_dong':id==='hero_splus_bach_dien'?'bach_dien':id;
+}
 const spriteSpecs = {
   // Same fixed cell and bottom-center pivot as the authored combat pack.
   // Idle occupies 240px of the 320px cell; portrait/master is a bust, not a body.
@@ -92,7 +96,7 @@ const spriteSpecs = {
 // complete source cells; only current/next pages and one small idle are leased.
 const preparationIdlePacks = {};
 function preparationSpriteFor(pick, time) {
-  const base = spriteSpecs[pick.id], pack = preparationIdlePacks[pick.id];
+  const base = spriteSpecs[campaignActorArtId(pick.id)], pack = preparationIdlePacks[campaignActorArtId(pick.id)];
   if (!base || !pack) return { spec: base };
   const frame = frameAt(base, time), page = Math.floor(frame / pack.pageFrames);
   return {
@@ -103,14 +107,37 @@ function preparationSpriteFor(pick, time) {
 }
 
 // Authored Basic atlases. Fixed pivots measured once, never recentered per frame.
+const farmAttackPacks = {};
+const farmVfxPacks = {};
+const farmRunPacks = {};
 const farmAttackSpecs = {
+  linh_dong: {src:'assets/characters/linh-dong/basic-atlas.webp',frames:44,cols:8,cellW:480,cellH:440,ms:34,pivot:240,foot:424,body:335,moveToTarget:true},
+  bach_dien: {src:'assets/characters/bach-dien/basic-atlas.webp',frames:30,cols:6,cellW:480,cellH:440,ms:1000/30,pivot:253.5,foot:415,body:395,moveToTarget:true},
   ong_hang_pho: { src:'assets/battle-runtime/embedded-11.png', frames:61, cols:10, cellW:240, cellH:135, ms:2500/61, pivot:100, foot:125, body:119 },
   luc_anh: { src:'assets/characters/luc-anh/basic-atlas.webp', frames:64, cols:8, cellW:240, cellH:240, ms:38, pivot:120, foot:190, body:148 },
   thay_mo: { src:'assets/characters/thay-mo/basic-cast-v3198-atlas.png', frames:96, cols:12, cellW:307, cellH:270, strideW:313, strideH:276, pad:3, durations:[60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60,60,70,60,60], ms:62.5, pivot:117.5, foot:265, body:263 },
   dinh_loi: { src:'assets/characters/dinh-loi/basic-cast-atlas.png', frames:64, cols:8, cellW:480, cellH:270, ms:62.5, pivot:265, foot:255, body:235 }
 };
 
+const farmBasicVfxSpecs = {
+  linh_dong:{src:'assets/characters/linh-dong/skill1_vfx-atlas.webp',frames:120,cols:10,cellW:440,cellH:248,ms:33,pivot:220,foot:124,body:248},
+  bach_dien:{src:'assets/characters/bach-dien/skill1_vfx-atlas.webp',frames:36,cols:6,cellW:440,cellH:248,ms:1000/30,pivot:220,foot:124,body:248},
+  luc_anh:{src:'assets/characters/luc-anh/basic_projectile-atlas.webp',frames:64,cols:8,cellW:320,cellH:220,ms:28,pivot:160,foot:110,body:220},
+  dinh_loi:{src:'assets/characters/dinh-loi/basic-projectile-atlas.png',frames:64,cols:8,cellW:480,cellH:270,ms:62.5,pivot:240,foot:135,body:270},
+  thay_mo:{src:'assets/characters/thay-mo/projectile-v3201-atlas.png',frames:24,cols:6,cellW:480,cellH:90,strideW:488,strideH:98,pad:4,ms:60,pivot:240,foot:45,body:90}
+};
+function campaignPagedSprite(base, pack, time) {
+  if(!base||!pack)return {spec:base};
+  let frame=0,elapsed=Math.max(0,time);
+  if(base.durations){for(;frame<base.frames-1&&elapsed>=base.durations[frame];frame++)elapsed-=base.durations[frame];}
+  else frame=Math.min(base.frames-1,Math.floor(elapsed/Math.max(1,base.ms||1)));
+  const page=Math.floor(frame/pack.pageFrames);
+  return {spec:{...base,...pack.pages[page],frameIndex:frame%pack.pageFrames},poster:pack.poster?{...base,...pack.poster,frameIndex:0}:null};
+}
 const runSpecs = {
+  luc_anh: { src: 'assets/characters/luc-anh/run-atlas.webp', frames:61, cols:8, cellW:240, cellH:240, ms:28, pivot:120, foot:213.5, body:199 },
+  dinh_loi: { src:'assets/characters/dinh-loi/run-atlas.png', frames:64, cols:8, cellW:480, cellH:270, ms:63, pivot:265, foot:258, body:233 },
+  ong_hang_pho: { src:'assets/battle-runtime/embedded-11.png', frames:9, startFrame:28, cols:10, cellW:240, cellH:135, ms:41, pivot:100, foot:125, body:119 },
   linh_dong: { src: 'assets/characters/linh-dong/campaign-lite/run-atlas.webp', frames: 96, cols: 8, cellW: 240, cellH: 220, ms: 42, pivot: 120, foot: 220, body: 165 },
   bach_dien: { src: 'assets/characters/bach-dien/campaign-lite/run-atlas.webp', frames: 45, cols: 6, cellW: 240, cellH: 220, ms: 1000 / 30, pivot: 120, foot: 220, body: 165 }
 };
@@ -197,13 +224,13 @@ function frameAt(spec, time) {
     }
     return 0;
   }
-  return Math.floor(time / spec.ms) % spec.frames;
+  return (spec.startFrame || 0) + Math.floor(time / spec.ms) % spec.frames;
 }
 function specForAfk(pick) {
-  if (sceneState.draft) return spriteSpecs[pick.id];
-  const run = runSpecs[pick.id] || window.HonVietCampaignRunSpecs?.[pick.id];
+  if (sceneState.draft) return spriteSpecs[campaignActorArtId(pick.id)];
+  const run = runSpecs[campaignActorArtId(pick.id)] || window.HonVietCampaignRunSpecs?.[campaignActorArtId(pick.id)] || window.HonVietCampaignRunSpecs?.[pick.id];
   if (run && run.src && Number(run.frames) > 0 && run.cellW && run.cellH && run.pivot && run.foot && run.body) return run;
-  return spriteSpecs[pick.id];
+  return spriteSpecs[campaignActorArtId(pick.id)];
 }
 const HOME_SLOT = [
   { x: 0.32, y: 0.57, s: 1.00 },
@@ -285,16 +312,16 @@ function sampleCampaignFarm(time, squad, quiet = false, specs = {}, world = null
   const direction={x:(to.x-from.x)/length,y:(to.y-from.y)/length};
   const count=Math.min(4,Math.max(1,squad.length));
   const events=[], actors=squad.map((hero,i)=>{
-    const spec=specs[hero.id],duration=spec ? (spec.durations?.reduce((a,b)=>a+b,0)||spec.frames*spec.ms) : 1200;
+    const spec=specs[hero.id]||specs[String(hero.id).replace(/^hero_splus_/,'').replace(/-/g,'_')],castDuration=spec ? (spec.durations?.reduce((a,b)=>a+b,0)||spec.frames*spec.ms) : 1200,approachMs=spec&&spec.src?350:0,duration=castDuration+approachMs*2;
     const start=6200+i*110;
     let attackTime=-1;
     for(let round=0;round<2;round++) {
       const at=start+round*6500;
       if(elapsed>=at&&elapsed<at+duration)attackTime=elapsed-at;
       const crit=(cycle+i+round)%4===0,damage=Math.round((118+i*19+(cycle%5)*11)*(crit?1.8:1));
-      events.push({at:at+duration*.68,actorId:hero.id,lane:i,target:i%count,crit,damage});
+      events.push({at:at+approachMs+castDuration*.68,actorId:hero.id,lane:i,target:i%count,crit,damage});
     }
-    return {...hero,attackTime,duration,target:i%count};
+    return {...hero,attackTime,duration,castDuration,approachMs,engageAt:start,target:i%count};
   });
   const mobs=Array.from({length:count},(_,i)=>{
     const hits=events.filter(e=>e.target===i),total=hits.reduce((n,e)=>n+e.damage,0);
@@ -316,6 +343,42 @@ function sampleCampaignFarm(time, squad, quiet = false, specs = {}, world = null
   return {cycle,elapsed,center,direction,actors,mobs,hits,loot,world:world||campaignWorldForChapter(0),
     phase:elapsed<5000?'march':elapsed<6200?'spawn':elapsed<19500?'attack':elapsed<22500?'loot':'rest'};
 }
+function campaignFarmActorPose(pick,w,h,farm) {
+  const home=homePartyPose(pick,w,h,farm),actor=farm?.actors.find(a=>a.id===pick.id);
+  if(!actor||!actor.approachMs||farm.elapsed<actor.engageAt)return {...home,facing:farm?.direction.x<0?-1:1,castTime:-1};
+  const map=campaignMapView(w,h,farm.center),mob=farm.mobs[actor.target];
+  const tx=map.left+mob.worldX*map.width,ty=map.top+mob.worldY*map.height;
+  const dx=tx-home.x,dy=ty-home.y,distance=Math.max(1,Math.hypot(dx,dy));
+  const reach=home.bodyH*.85,ratio=Math.max(0,(distance-reach)/distance);
+  const e=actor.attackTime,castEnd=actor.approachMs+actor.castDuration;
+  // Hold the same engagement point through the pauses between authored ATKs.
+  // Regroup only after the entire pack has died and the last cast has recovered.
+  const packClearAt=Math.max(...farm.mobs.map(m=>m.deadAt))+180;
+  const lastCastEnd=Math.max(...farm.actors.map(a=>a.engageAt+6500+a.approachMs+a.castDuration));
+  const regroupAt=Math.max(packClearAt,lastCastEnd);
+  const approach=Math.min(1,(farm.elapsed-actor.engageAt)/actor.approachMs);
+  const returning=farm.elapsed>regroupAt;
+  let blend=returning?1-(farm.elapsed-regroupAt)/actor.approachMs:approach;
+  blend=Math.max(0,Math.min(1,blend));blend=blend*blend*(3-2*blend);
+  return {...home,x:home.x+dx*ratio*blend,y:home.y+dy*ratio*blend,facing:dx<0?-1:1,
+    moving:approach<1||(returning&&blend>0),castTime:e>=actor.approachMs&&e<=castEnd?e-actor.approachMs:-1};
+}
+function drawCampaignBasicVfx(ctx,actor,farm,w,h,size) {
+  if(actor.attackTime<0)return;
+  const key=campaignActorArtId(actor.id),base=farmBasicVfxSpecs[key];
+  // Ong Pho's authored ATK already contains its contact VFX; never add a token line.
+  if(!base)return;
+  const castTime=actor.attackTime-(actor.approachMs||0),beat=castTime/(actor.castDuration||actor.duration);
+  if(beat<.48||beat>.82)return;
+  const p=Math.min(1,(beat-.48)/.20),map=campaignMapView(w,h,farm.center),mob=farm.mobs[actor.target];
+  const pose=campaignFarmActorPose(actor,w,h,farm),tx=map.left+mob.worldX*map.width,ty=map.top+mob.worldY*map.height-size*.45;
+  const x=pose.x+(tx-pose.x)*p,y=pose.y-pose.bodyH*.55+(ty-(pose.y-pose.bodyH*.55))*p;
+  const sampled=campaignPagedSprite(base,farmVfxPacks[key],Math.min(base.frames-1,Math.floor((beat-.48)/.34*base.frames))*base.ms),spec=sampled.spec;
+  const image=imageForScene(spec.src,spec);if(!image?.complete||image.naturalWidth<1)return;
+  const frame=spec.frameIndex??Math.min(base.frames-1,Math.floor((beat-.48)/.34*base.frames)),scale=Math.min(pose.bodyH*.8/spec.cellH,pose.bodyH*1.6/spec.cellW,w*.22/spec.cellW);
+  ctx.save();ctx.translate(x,y);ctx.scale(pose.facing,1);
+  ctx.drawImage(image,frame%spec.cols*(spec.strideW||spec.cellW)+(spec.pad||0),Math.floor(frame/spec.cols)*(spec.strideH||spec.cellH)+(spec.pad||0),spec.cellW,spec.cellH,-spec.pivot*scale,-spec.foot*scale,spec.cellW*scale,spec.cellH*scale);ctx.restore();
+}
 function drawCampaignFarm(ctx, farm, w, h, layer = 'effects') {
   if (!farm) return;
   const map=campaignMapView(w,h,farm.center);
@@ -326,6 +389,7 @@ function drawCampaignFarm(ctx, farm, w, h, layer = 'effects') {
   const ready=image.complete&&image.naturalWidth>0;
   if(layer==='monsters-back'||layer==='monsters-front') {
     for(const actor of farm.actors)if(farmAttackSpecs[actor.id])imageForScene(farmAttackSpecs[actor.id].src);
+
     for(const mob of [...farm.mobs].sort((a,b)=>a.worldY-b.worldY)) {
       if(!ready||mob.alpha<=0)continue;
       if((mob.worldY<farm.center.y)!==(layer==='monsters-back'))continue;
@@ -340,14 +404,7 @@ function drawCampaignFarm(ctx, farm, w, h, layer = 'effects') {
     }
     return;
   }
-  for(const actor of farm.actors) {
-    if(actor.attackTime<0)continue;
-    const beat=actor.attackTime/actor.duration;
-    if(beat<.48||beat>.68)continue;
-    const hero=homePartyPose(actor,w,h,farm),target=project(farm.mobs[actor.target]);
-    const t=(beat-.48)/.2,sx=hero.x,sy=hero.y-hero.bodyH*.5,tx=target.x,ty=target.y-size*.45;
-    ctx.save();ctx.strokeStyle='#ffedb1';ctx.lineWidth=2;ctx.globalAlpha=.85;ctx.beginPath();ctx.moveTo(sx+(tx-sx)*Math.max(0,t-.13),sy+(ty-sy)*Math.max(0,t-.13));ctx.lineTo(sx+(tx-sx)*t,sy+(ty-sy)*t);ctx.stroke();ctx.restore();
-  }
+  for(const actor of farm.actors) drawCampaignBasicVfx(ctx,actor,farm,w,h,size);
   for(const hit of farm.hits) {
     const target=project(farm.mobs[hit.target]);
     const t=hit.age/1000,pop=1+.24*Math.sin(Math.min(1,t*4)*Math.PI);
@@ -392,7 +449,7 @@ function drawScene(time) {
   })
     .sort((a, b) => preparing
       ? (a.row === 'back' ? 0 : 1) - (b.row === 'back' ? 0 : 1)
-      : (homePartyPose(a, w, h, farm).y - homePartyPose(b, w, h, farm).y) || (homePartyPose(a, w, h, farm).x - homePartyPose(b, w, h, farm).x))
+      : (campaignFarmActorPose(a, w, h, farm).y - campaignFarmActorPose(b, w, h, farm).y) || (homePartyPose(a, w, h, farm).x - homePartyPose(b, w, h, farm).x))
     .forEach(pick => {
       let x, y, bodyH;
       if (preparing) {
@@ -400,47 +457,53 @@ function drawScene(time) {
         y = h * (.38 + .27 * pick.rowIndex);
         bodyH = Math.min(w * .23, h * .28);
       } else {
-        const plaza = homePartyPose(pick, w, h, farm);
+        const plaza = campaignFarmActorPose(pick, w, h, farm);
         x = plaza.x; y = plaza.y; bodyH = plaza.bodyH;
       }
       if (preparing && !pick.enemy && preparationDrag?.heroId === pick.id && preparationDrag.moved) {
         x += preparationDrag.dx || 0; y += preparationDrag.dy || 0;
       }
       ctx.fillStyle = 'rgba(15,30,23,.24)'; ctx.beginPath(); ctx.ellipse(x, y, bodyH * .31, bodyH * .075, 0, 0, Math.PI * 2); ctx.fill();
-      const actor = farm?.actors.find(a=>a.id===pick.id);
-      const attack = actor && actor.attackTime >= 0 && farmAttackSpecs[pick.id];
-      const attackImage = attack ? imageForScene(farmAttackSpecs[pick.id].src, farmAttackSpecs[pick.id]) : null;
-      const readyAttack = attackImage?.complete && attackImage.naturalWidth > 0;
-      const preparation = preparing ? preparationSpriteFor(pick, time) : null;
-      const spec = preparing ? preparation.spec : readyAttack ? farmAttackSpecs[pick.id] : farm && farm.phase !== 'march' ? spriteSpecs[pick.id] : specForAfk(pick);
+      const actor = farm?.actors.find(a=>a.id===pick.id),pose=preparing?null:campaignFarmActorPose(pick,w,h,farm);
+      const artId=campaignActorArtId(pick.id),attackBase=farmAttackSpecs[artId];
+      const attack=actor&&pose.castTime>=0&&attackBase;
+      const attackSprite=attack?campaignPagedSprite(attackBase,farmAttackPacks[artId],pose.castTime):null;
+      const attackImage=attackSprite?imageForScene(attackSprite.spec.src,attackSprite.spec):null;
+      const readyAttack=attackImage?.complete&&attackImage.naturalWidth>0;
+      const preparation=preparing||farm?.phase!=='march'?preparationSpriteFor(pick,time):null;
+      const running=pose?.moving||farm?.phase==='march';
+      const runBase=running?specForAfk(pick):null,runSprite=runBase&&farmRunPacks[artId]?campaignPagedSprite(runBase,farmRunPacks[artId],(time%(runBase.frames*runBase.ms))):null;
+      const spec=readyAttack?attackSprite.spec:running?(runSprite?.spec||runBase):preparation?.spec||spriteSpecs[artId];
       const enemyArt = pick.enemy && !spec ? preparationEnemyArt(pick, enemies) : null;
       let drawSpec = spec;
       // Request the small, full-body idle first; a portrait is not an idle pose.
       const standby = preparation?.poster;
       const standbyImage = standby ? imageForScene(standby.src, standby) : null;
       let image = imageForScene(spec?.src || enemyArt?.src || portraitSrc(pick.id, 'master'), spec);
-      if (preparation?.next && !reducedMotion.matches) imageForScene(preparation.next.src, preparation.next);
+      if (preparing && preparation?.next && !reducedMotion.matches) imageForScene(preparation.next.src, preparation.next);
       if ((!image.complete || image.naturalWidth < 1) && standbyImage?.complete && standbyImage.naturalWidth > 0) {
         image = standbyImage; drawSpec = standby;
       }
       if ((!image.complete || image.naturalWidth < 1) && spec && !pick.enemy && !preparing) {
         // A hero must not disappear while its atlas is loading or was denied by
         // budget. Use a small authored portrait as a temporary visual fallback.
-        const fallback = imageForScene(portraitSrc(pick.id, 'master'));
-        if (fallback.complete && fallback.naturalWidth > 0) { image = fallback; drawSpec = null; }
+        const fullBody=preparationIdlePacks[artId]?.poster;
+        const fallback = imageForScene(fullBody?.src||portraitSrc(pick.id, 'master'),fullBody);
+        if (fallback.complete && fallback.naturalWidth > 0) { image = fallback; drawSpec = fullBody?{...spriteSpecs[artId],...fullBody,frameIndex:0}:null; }
       }
       if (!image.complete || image.naturalWidth < 1) return;
       ctx.save();
-      if (actor && !farmAttackSpecs[pick.id] && actor.attackTime >= 0) {
+      if (actor && !farmAttackSpecs[campaignActorArtId(pick.id)] && actor.attackTime >= 0) {
         const lean = Math.sin(actor.attackTime / actor.duration * Math.PI) * .08;
         ctx.translate(x,y); ctx.rotate(lean); ctx.translate(-x,-y);
       }
-      if ((farm && farm.direction.x < 0) || pick.enemy) { ctx.translate(2 * x, 0); ctx.scale(-1, 1); }
+      if ((pose && pose.facing < 0) || pick.enemy) { ctx.translate(2 * x, 0); ctx.scale(-1, 1); }
       if (drawSpec) {
-        const frame = drawSpec.frameIndex ?? frameAt(drawSpec, readyAttack ? actor.attackTime : time), scale = bodyH / drawSpec.body;
+        const frame = drawSpec.frameIndex ?? frameAt(drawSpec, readyAttack ? pose.castTime : time), scale = bodyH / drawSpec.body;
         const sx = frame % drawSpec.cols * (drawSpec.strideW || drawSpec.cellW) + (drawSpec.pad || 0);
         const sy = Math.floor(frame / drawSpec.cols) * (drawSpec.strideH || drawSpec.cellH) + (drawSpec.pad || 0);
-        ctx.drawImage(image, sx, sy, drawSpec.cellW, drawSpec.cellH, x - drawSpec.pivot * scale, y - drawSpec.foot * scale, drawSpec.cellW * scale, drawSpec.cellH * scale);
+        const registration=drawSpec.registration||{},registeredScale=registration.scale||1;
+        ctx.drawImage(image, sx, sy, drawSpec.cellW, drawSpec.cellH, x - drawSpec.pivot * scale+drawSpec.cellW*scale*(registration.offsetX||0), y - drawSpec.foot * scale+drawSpec.cellH*scale*(registration.offsetY||0), drawSpec.cellW * scale*registeredScale, drawSpec.cellH * scale*registeredScale);
       } else if (enemyArt) {
         const cw = image.naturalWidth / enemyArt.cols, ch = image.naturalHeight / enemyArt.rows;
         const drawW = bodyH * cw / ch;

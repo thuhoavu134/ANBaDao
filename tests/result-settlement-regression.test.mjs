@@ -149,7 +149,7 @@ test('Thầy Mo entrance draws real padded frames then switches to continuous id
  h.window.__hideIntegratedResultV6();assert.equal(h.rafs.size,0);assert.equal(h.timers.size,0);assert.ok(h.images.every(im=>im.src===''));
 });
 test('a delayed idle atlas keeps the entrance body visible until the first idle frame can be drawn',()=>{
- const h=motionHarness({holdIdle:true});h.show('luc_anh');for(let i=0;i<80;i++)h.step(20);assert.equal(h.state().phase,'run');assert.ok(!h.classes.has('irv-motion-idle'));assert.ok(h.state().runFrames>8);
+ const h=motionHarness({holdIdle:true});h.show('luc_anh');for(let i=0;i<100;i++)h.step(20);assert.equal(h.state().phase,'run');assert.ok(!h.classes.has('irv-motion-idle'));assert.ok(h.state().runFrames>8);
  h.images.find(im=>im.src.includes('idle-rgba')).load();for(let i=0;i<8;i++)h.step(20);assert.equal(h.state().phase,'idle');assert.ok(h.state().idleFrames>0);
 });
 test('reduced-motion defeat paints its hold frame after the image is ready',()=>{

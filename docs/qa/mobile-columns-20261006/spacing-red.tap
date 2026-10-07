@@ -1,0 +1,155 @@
+✖ portrait separates allied columns while keeping a reference-proportion center lane (1.278252ms)
+✖ compact HUD lane fits within allied columns (0.550778ms)
+✖ spirit mark and stealth have explicit semantic artwork instead of letter badges (0.860704ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 0
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 96.188226
+
+✖ failing tests:
+
+test at tests/mobile-column-status-review.test.mjs:5:1
+✖ portrait separates allied columns while keeping a reference-proportion center lane (1.278252ms)
+  AssertionError [ERR_ASSERTION]: allied columns need room for the 72px HP bar
+      at TestContext.<anonymous> (file:///workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/mobile-column-status-review.test.mjs:8:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/mobile-column-status-review.test.mjs:14:1
+✖ compact HUD lane fits within allied columns (0.550778ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/mobile-column-status-review.test.mjs:15:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/mobile-column-status-review.test.mjs:23:1
+✖ spirit mark and stealth have explicit semantic artwork instead of letter badges (0.860704ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /spiritMark:.*spirit-mark\.svg/. Input:
+  
+  "import { combatStatusIconType } from '../src/render/combat-status-presentation.mjs';\n" +
+    "import { readFileSync, writeFileSync } from 'node:fs';\n" +
+    "import { fileURLToPath } from 'node:url';\n" +
+    "import { join, resolve } from 'node:path';\n" +
+    "import { createSplusMechanics } from '../src/domain/combat/splus-mechanics.mjs';\n" +
+    "import { SPLUS_HEROES, SPLUS_EXTRA_HEROES, SPLUS_REVIEW_DEFAULTS } from '../src/domain/hero/splus-catalog.mjs';\n" +
+    "import { SPLUS_STATUS_LABELS, SPLUS_ICON_MANIFEST } from '../src/domain/hero/splus-status.mjs';\n" +
+    "import { splusProfilePayload } from '../src/domain/hero/splus-profiles.mjs';\n" +
+    '\n' +
+    'export function createSplusFixture(catalog, selectedId) {\n' +
+    '  const selected=catalog.find(h=>h.id===selectedId)||catalog.find(h=>h.element===selectedId)||catalog[0];\n' +
+    '  function team(element,side,chosen) {\n' +
+    '    const pool=catalog.filter(h=>h.element===element),preferred=chosen||pool[0];\n' +
+    '    const picked=[preferred,...pool.filter(h=>h!==preferred)].slice(0,6),used=new Set(),slots=new Map();\n' +
+    "    const placement=[preferred,...picked.filter(h=>h!==preferred).sort((a,b)=>(a.role==='guardian'?0:a.recommendedSlots.some(s=>s<3)?1:2)-(b.role==='guardian'?0:b.recommendedSlots.some(s=>s<3)?1:2))];\n" +
+    '    for(const h of placement){const slot=h.recommendedSlots.find(s=>!used.has(s))??[0,1,2,3,4,5].find(s=>!used.has(s));used.add(slot);slots.set(h.id,slot);}\n' +
+    '    return picked.map((h,i)=>{\n' +
+    '      const slot=slots.get(h.id);\n' +
+    "      return {id:`${side}:${h.id}`,sourceId:h.id,name:h.name,team:side,slot,archetype:h.role,color:({metal:'#edc66d',soul:'#a8baff',water:'#71daf5',fire:'#ffa176',wood:'#96e1ac',dream:'#cdacff'})[h.element],hp:24000,atk:1700,def:400,speed:100-i,energy:35,accuracy:100,evasion:0,crit:10,critRes:0,critDamage:1.5,level:1,stars:1};\n" +
+    '    });\n' +
+    '  }\n' +
+    "  const elements=['metal','soul','water','fire','wood','dream'],opponent=elements[(elements.indexOf(selected.element)+1)%6];\n" +
+    '  // Fixture-only stats; this config never grants ownership or emits campaign rewards.\n' +
+    "  return {splusReview:true,referenceSimple:true,timingScale:0.35,combatSeed:'splus42-review-v1',playerTeamName:selected.elementName,enemyTeamName:catalog.find(h=>h.element===opponent).elementName,heroes:[...team(selected.element,'player',selected),...team(opponent,'enemy')]};\n" +
+    '}\n' +
+    '\n' +
+    'export function patchSplusBattleHtml(input) {\n' +
+    "  let html=input.replace(/\\r\\n/g,'\\n');\n" +
+    '  const once=(from,to)=>{const count=html.split(from).length-1;if(count!==1)throw new Error(`SPLUS_BUILD_ANCHOR:${from.slice(0,80)}:${count}`);html=html.replace(from,to);};\n' +
+    `  if(html.includes('id="splus42-runtime-v1"'))throw new Error('SPLUS_ALREADY_PATCHED');\n` +
+    "  const bridge=readFileSync(new URL('../src/runtime/splus-battle-bridge.js',import.meta.url),'utf8');\n" +
+    "  const json=x=>JSON.stringify(x).replaceAll('<','\\\\u003c');\n" +
+    '  const payload=`(()=>{const catalog=${json([...SPLUS_HEROES,...SPLUS_EXTRA_HEROES])},defaults=${json(SPLUS_REVIEW_DEFAULTS)};globalThis.SPLUS42=Object.freeze({catalog,profiles:${json(splusProfilePayload())},icons:${json(SPLUS_ICON_MANIFEST)},labels:${json(SPLUS_STATUS_LABELS)},create:options=>(${createSplusMechanics.toString()})({...options,catalog,defaults}),fixture:id=>(${createSplusFixture.toString()})(catalog,id)});})();`;\n' +
+    '  once(\'</head>\',`<script id="splus42-runtime-v1">${payload}</script><style id="splus42-style">body:has(#splus-status-panel){overflow:auto!important;height:auto!important;min-height:100vh}#splus-status-panel{position:relative;z-index:5;max-width:1200px;margin:24px auto;padding:20px;background:#111f29;color:#e9e6d8;font:14px/1.5 sans-serif;border:1px solid #687778;border-radius:16px}#splus-status-panel h2{font-size:20px}.splus-status-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}.splus-status-grid article{padding:12px;background:#1c2c36;border-radius:10px}.splus-status-grid p{color:#d8c793}.splus-status-grid ul{padding-left:18px;margin:8px 0}.splus-status-grid li[data-polarity=debuff]{color:#ffb4a7}.splus-status-grid li[data-polarity=buff]{color:#a5e0bd}.splus-battle #battleOrders{display:none!important}.splus-battle .action-zone{width:min(900px,calc(100vw - 20px))!important}.splus-battle .action-button strong{font-size:13px!important}.splus-battle .action-button small{font-size:10px!important}#splus-evidence{max-height:320px;overflow:auto;font:11px monospace}</style></head>`);\n' +
+    "  once('  const Core = globalThis.HonVietCore;',`  const LegacyCore=globalThis.HonVietCore;\n" +
+    '  const Core={...LegacyCore,\n' +
+    '    canUseAction:(u,a)=>splusCombat()?splusCombat().canUse(u,a):LegacyCore.canUseAction(u,a),\n' +
+    "    tickStatuses:u=>splusCombat()?(['basic','skill','ultimate'].some(a=>splusCombat().canUse(u,a))?[]:[{type:'control'}]):LegacyCore.tickStatuses(u),\n" +
+    '    buildTurnOrder:list=>LegacyCore.buildTurnOrder(list)\n' +
+    '  };`);\n' +
+    '  once(\'    const sessionId = params.get("session") || "";\',`    if(params.has(\'qaSplus42\'))return globalThis.SPLUS42.fixture(params.get(\'qaSplus42\'));\n' +
+    '    const sessionId = params.get("session") || "";`);\n' +
+    `  once('  const REFERENCE_SIMPLE = Boolean(EMBED_CONFIG.referenceSimple);','  const REFERENCE_SIMPLE = Boolean(EMBED_CONFIG.referenceSimple || EMBED_CONFIG.heroes?.some(h=>String(h.sourceId).startsWith("hero_splus_")));');\n` +
+    "  once('? EMBED_CONFIG.heroes.map(normalizeConfiguredHero)','? EMBED_CONFIG.heroes.map(splusHeroConfig)');\n" +
+    "  once('  let units = [];',`  let units = [];\\n${bridge}`);\n" +
+    "  once('const hero=Core.applyProgression(synergized);','const hero=rawHero.kitVersion===\\'splus42-v2\\'?rawHero:Core.applyProgression(synergized);');\n" +
+    "  once('    units = createUnits();','    splusReset();\\n    units = createUnits();\\n    splusStateView();');\n" +
+    `  once('  dom.exitBattleButton?.addEventListener("click", () => {','  dom.exitBattleButton?.addEventListener("click", () => {\\n    splusReset();');\n` +
+    "  once('  function legalTargetsFor(actor, action){','  function legalTargetsFor(actor, action){\\n    if(splusOwnsActor(actor)&&splusCombat())return splusCombat().targets(actor,action);');\n" +
+    "  once('  function preferredTargetFor(actor, action){','  function preferredTargetFor(actor, action){\\n    if(splusOwnsActor(actor)&&splusCombat())return splusCombat().targets(actor,action)[0];');\n" +
+    "  once('    showTargets(candidates, targetsAllies ? actor.team : (actor.team === TEAM_PLAYER ? TEAM_ENEMY : TEAM_PLAYER));','    showTargets(candidates, splusTargetTeam(actor,candidates,targetsAllies ? actor.team : (actor.team === TEAM_PLAYER ? TEAM_ENEMY : TEAM_PLAYER)));');\n" +
+    "  once('  function decideAi(actor){',`  function decideAi(actor){\n" +
+    '    // Only S+ kit actors delegate to the S+ engine. Delegating every unit froze\n' +
+    '    // legacy heroes on basics forever (no ultimate at 70 rage, no regular-skill\n' +
+    '    // rotation), so statuses and their head icons stopped appearing at all.\n' +
+    "    if(splusCombat()&&actor?.kitVersion==='splus42-v2'){const action=splusCombat().chooseAction(actor);return {action,target:splusCombat().targets(actor,action)[0]};}`);\n" +
+    `  once("    if(action==='skill')return;","    if(action==='skill'&&!splusCombat())return;");\n` +
+    `  once("    if(action==='basic'){\\n      const talent=talentSkillIntent(actor);","    if(action==='basic'&&!splusCombat()){\\n      const talent=talentSkillIntent(actor);");\n` +
+    "  once('  async function performAction(actor, action, target) {',`  async function performAction(actor, action, target) {\n" +
+    "    if(actor?.kitVersion==='splus42-v2'&&splusCombat()){\n" +
+    "      if(state.locked||state.mode!=='battle'||actor.id!==state.currentId||!splusCombat().canUse(actor,action))return;\n" +
+    '      return performSplusAction(actor,action,target);\n' +
+    '    }`);\n' +
+    "  once('        state.round += 1;',`        state.round += 1;\n" +
+    '        if(splusCombat()){if(state.round<=15)splusCombat().beginRound(state.round);else splusCombat().finishRound();splusStateView();}`);\n' +
+    "  once('  function updateActorHud(actor) {',`  function updateActorHud(actor) {\n" +
+    '    if(splusCombat()){const button=document.querySelector(\'[data-action="skill"]\');button.hidden=false;button.removeAttribute(\'aria-hidden\');document.querySelector(\'[data-action="ultimate"] .action-key\').textContent=\'3\';splusStateView();}`);\n' +
+    "  once('  function drawUnit(context, unit, time) {','  function drawUnit(context, unit, time) {\\n    if(unit.kitVersion===\\'splus42-v2\\')return drawSplusToken(context,unit,time);');\n" +
+    "  once('  function gainEnergy(unit, amount){','  function gainEnergy(unit, amount){\\n    if(splusCombat())return splusCombat().gainRage(unit,unit,amount);');\n" +
+    "  once('    const visibleStatuses=[];','    const visibleStatuses=splusCombat()?splusCombat().hud(unit).slice(0,4):[];');\n" +
+    '  // 2026-09-28: legacy statuses must still surface when the S+ engine is active\n' +
+    '  // (its hud only knows engine-tracked statuses; legacy burns/buffs landed on\n' +
+    '  // unit.statuses and their head icons vanished). Merge, deduped by type, cap 4.\n' +
+    "  once('      visibleStatuses.push(status);','      if(visibleStatuses.some(shown=>shown.type===status.type)) continue;\\n      visibleStatuses.push(status);');\n" +
+    `  once('const beneficial=[',"const beneficial=status.polarity==='buff'||[");\n` +
+    "  once('icon=statusIconImage(status.type);','icon=statusIconImage(combatStatusIconType(status.type));');\n" +
+    "  once('  function statusIconImage(type)',`  ${combatStatusIconType.toString()}\n" +
+    '  function statusIconImage(type)`);\n' +
+    "  once('context.arc(sx,sy,isNemVi?size*.34:(compact?5:6),0,Math.PI*2);context.fill();',`context.roundRect(sx-size/2,sy-size/2,size,size,3);context.fill();\n" +
+    '        const label=globalThis.SPLUS42.labels[status.type]||status.type;\n' +
+    "        const short=label.split(/\\\\s+/).slice(0,2).map(word=>word[0]).join('').toUpperCase();\n" +
+    "        context.fillStyle='#fff';context.font='bold 9px sans-serif';context.textAlign='center';context.fillText(short,sx,sy+3);`);\n" +
+    `  once('</head>','<link rel="stylesheet" href="/splus-skill-details.css"><script src="/splus-skill-details.js"></script><style>.splus-battle .action-buttons{grid-template-columns:1fr!important}.splus-battle .action-button[data-action="skill"],.splus-battle .action-button[data-action="ultimate"]{display:none!important}#splus-battle-skills{margin:0!importan`... 1767 more characters
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/mobile-column-status-review.test.mjs:25:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'import { combatStatusIconType } from \'../src/render/combat-status-presentation.mjs\';\nimport { readFileSync, writeFileSync } from \'node:fs\';\nimport { fileURLToPath } from \'node:url\';\nimport { join, resolve } from \'node:path\';\nimport { createSplusMechanics } from \'../src/domain/combat/splus-mechanics.mjs\';\nimport { SPLUS_HEROES, SPLUS_EXTRA_HEROES, SPLUS_REVIEW_DEFAULTS } from \'../src/domain/hero/splus-catalog.mjs\';\nimport { SPLUS_STATUS_LABELS, SPLUS_ICON_MANIFEST } from \'../src/domain/hero/splus-status.mjs\';\nimport { splusProfilePayload } from \'../src/domain/hero/splus-profiles.mjs\';\n\nexport function createSplusFixture(catalog, selectedId) {\n  const selected=catalog.find(h=>h.id===selectedId)||catalog.find(h=>h.element===selectedId)||catalog[0];\n  function team(element,side,chosen) {\n    const pool=catalog.filter(h=>h.element===element),preferred=chosen||pool[0];\n    const picked=[preferred,...pool.filter(h=>h!==preferred)].slice(0,6),used=new Set(),slots=new Map();\n    const placement=[preferred,...picked.filter(h=>h!==preferred).sort((a,b)=>(a.role===\'guardian\'?0:a.recommendedSlots.some(s=>s<3)?1:2)-(b.role===\'guardian\'?0:b.recommendedSlots.some(s=>s<3)?1:2))];\n    for(const h of placement){const slot=h.recommendedSlots.find(s=>!used.has(s))??[0,1,2,3,4,5].find(s=>!used.has(s));used.add(slot);slots.set(h.id,slot);}\n    return picked.map((h,i)=>{\n      const slot=slots.get(h.id);\n      return {id:`${side}:${h.id}`,sourceId:h.id,name:h.name,team:side,slot,archetype:h.role,color:({metal:\'#edc66d\',soul:\'#a8baff\',water:\'#71daf5\',fire:\'#ffa176\',wood:\'#96e1ac\',dream:\'#cdacff\'})[h.element],hp:24000,atk:1700,def:400,speed:100-i,energy:35,accuracy:100,evasion:0,crit:10,critRes:0,critDamage:1.5,level:1,stars:1};\n    });\n  }\n  const elements=[\'metal\',\'soul\',\'water\',\'fire\',\'wood\',\'dream\'],opponent=elements[(elements.indexOf(selected.element)+1)%6];\n  // Fixture-only stats; this config never grants ownership or emits campaign rewards.\n  return {splusReview:true,referenceSimple:true,timingScale:0.35,combatSeed:\'splus42-review-v1\',playerTeamName:selected.elementName,enemyTeamName:catalog.find(h=>h.element===opponent).elementName,heroes:[...team(selected.element,\'player\',selected),...team(opponent,\'enemy\')]};\n}\n\nexport function patchSplusBattleHtml(input) {\n  let html=input.replace(/\\r\\n/g,\'\\n\');\n  const once=(from,to)=>{const count=html.split(from).length-1;if(count!==1)throw new Error(`SPLUS_BUILD_ANCHOR:${from.slice(0,80)}:${count}`);html=html.replace(from,to);};\n  if(html.includes(\'id="splus42-runtime-v1"\'))throw new Error(\'SPLUS_ALREADY_PATCHED\');\n  const bridge=readFileSync(new URL(\'../src/runtime/splus-battle-bridge.js\',import.meta.url),\'utf8\');\n  const json=x=>JSON.stringify(x).replaceAll(\'<\',\'\\\\u003c\');\n  const payload=`(()=>{const catalog=${json([...SPLUS_HEROES,...SPLUS_EXTRA_HEROES])},defaults=${json(SPLUS_REVIEW_DEFAULTS)};globalThis.SPLUS42=Object.freeze({catalog,profiles:${json(splusProfilePayload())},icons:${json(SPLUS_ICON_MANIFEST)},labels:${json(SPLUS_STATUS_LABELS)},create:options=>(${createSplusMechanics.toString()})({...options,catalog,defaults}),fixture:id=>(${createSplusFixture.toString()})(catalog,id)});})();`;\n  once(\'</head>\',`<script id="splus42-runtime-v1">${payload}</script><style id="splus42-style">body:has(#splus-status-panel){overflow:auto!important;height:auto!important;min-height:100vh}#splus-status-panel{position:relative;z-index:5;max-width:1200px;margin:24px auto;padding:20px;background:#111f29;color:#e9e6d8;font:14px/1.5 sans-serif;border:1px solid #687778;border-radius:16px}#splus-status-panel h2{font-size:20px}.splus-status-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}.splus-status-grid article{padding:12px;background:#1c2c36;border-radius:10px}.splus-status-grid p{color:#d8c793}.splus-status-grid ul{padding-left:18px;margin:8px 0}.splus-status-grid li[data-polarity=debuff]{color:#ffb4a7}.splus-status-grid li[data-polarity=buff]{color:#a5e0bd}.splus-battle #battleOrders{display:none!important}.splus-battle .action-zone{width:min(900px,calc(100vw - 20px))!important}.splus-battle .action-button strong{font-size:13px!important}.splus-battle .action-button small{font-size:10px!important}#splus-evidence{max-height:320px;overflow:auto;font:11px monospace}</style></head>`);\n  once(\'  const Core = globalThis.HonVietCore;\',`  const LegacyCore=globalThis.HonVietCore;\n  const Core={...LegacyCore,\n    canUseAction:(u,a)=>splusCombat()?splusCombat().canUse(u,a):LegacyCore.canUseAction(u,a),\n    tickStatuses:u=>splusCombat()?([\'basic\',\'skill\',\'ultimate\'].some(a=>splusCombat().canUse(u,a))?[]:[{type:\'control\'}]):LegacyCore.tickStatuses(u),\n    buildTurnOrder:list=>LegacyCore.buildTurnOrder(list)\n  };`);\n  once(\'    const sessionId = params.get("session") || "";\',`    if(params.has(\'qaSplus42\'))return globalThis.SPLUS42.fixture(params.get(\'qaSplus42\'));\n    const sessionId = params.get("session") || "";`);\n  once(\'  const REFERENCE_SIMPLE = Boolean(EMBED_CONFIG.referenceSimple);\',\'  const REFERENCE_SIMPLE = Boolean(EMBED_CONFIG.referenceSimple || EMBED_CONFIG.heroes?.some(h=>String(h.sourceId).startsWith("hero_splus_")));\');\n  once(\'? EMBED_CONFIG.heroes.map(normalizeConfiguredHero)\',\'? EMBED_CONFIG.heroes.map(splusHeroConfig)\');\n  once(\'  let units = [];\',`  let units = [];\\n${bridge}`);\n  once(\'const hero=Core.applyProgression(synergized);\',\'const hero=rawHero.kitVersion===\\\'splus42-v2\\\'?rawHero:Core.applyProgression(synergized);\');\n  once(\'    units = createUnits();\',\'    splusReset();\\n    units = createUnits();\\n    splusStateView();\');\n  once(\'  dom.exitBattleButton?.addEventListener("click", () => {\',\'  dom.exitBattleButton?.addEventListener("click", () => {\\n    splusReset();\');\n  once(\'  function legalTargetsFor(actor, action){\',\'  function legalTargetsFor(actor, action){\\n    if(splusOwnsActor(actor)&&splusCombat())return splusCombat().targets(actor,action);\');\n  once(\'  function preferredTargetFor(actor, action){\',\'  function preferredTargetFor(actor, action){\\n    if(splusOwnsActor(actor)&&splusCombat())return splusCombat().targets(actor,action)[0];\');\n  once(\'    showTargets(candidates, targetsAllies ? actor.team : (actor.team === TEAM_PLAYER ? TEAM_ENEMY : TEAM_PLAYER));\',\'    showTargets(candidates, splusTargetTeam(actor,candidates,targetsAllies ? actor.team : (actor.team === TEAM_PLAYER ? TEAM_ENEMY : TEAM_PLAYER)));\');\n  once(\'  function decideAi(actor){\',`  function decideAi(actor){\n    // Only S+ kit actors delegate to the S+ engine. Delegating every unit froze\n    // legacy heroes on basics forever (no ultimate at 70 rage, no regular-skill\n    // rotation), so statuses and their head icons stopped appearing at all.\n    if(splusCombat()&&actor?.kitVersion===\'splus42-v2\'){const action=splusCombat().chooseAction(actor);return {action,target:splusCombat().targets(actor,action)[0]};}`);\n  once("    if(action===\'skill\')return;","    if(action===\'skill\'&&!splusCombat())return;");\n  once("    if(action===\'basic\'){\\n      const talent=talentSkillIntent(actor);","    if(action===\'basic\'&&!splusCombat()){\\n      const talent=talentSkillIntent(actor);");\n  once(\'  async function performAction(actor, action, target) {\',`  async function performAction(actor, action, target) {\n    if(actor?.kitVersion===\'splus42-v2\'&&splusCombat()){\n      if(state.locked||state.mode!==\'battle\'||actor.id!==state.currentId||!splusCombat().canUse(actor,action))return;\n      return performSplusAction(actor,action,target);\n    }`);\n  once(\'        state.round += 1;\',`        state.round += 1;\n        if(splusCombat()){if(state.round<=15)splusCombat().beginRound(state.round);else splusCombat().finishRound();splusStateView();}`);\n  once(\'  function updateActorHud(actor) {\',`  function updateActorHud(actor) {\n    if(splusCombat()){const button=document.querySelector(\'[data-action="skill"]\');button.hidden=false;button.removeAttribute(\'aria-hidden\');document.querySelector(\'[data-action="ultimate"] .action-key\').textContent=\'3\';splusStateView();}`);\n  once(\'  function drawUnit(context, unit, time) {\',\'  function drawUnit(context, unit, time) {\\n    if(unit.kitVersion===\\\'splus42-v2\\\')return drawSplusToken(context,unit,time);\');\n  once(\'  function gainEnergy(unit, amount){\',\'  function gainEnergy(unit, amount){\\n    if(splusCombat())return splusCombat().gainRage(unit,unit,amount);\');\n  once(\'    const visibleStatuses=[];\',\'    const visibleStatuses=splusCombat()?splusCombat().hud(unit).slice(0,4):[];\');\n  // 2026-09-28: legacy statuses must still surface when the S+ engine is active\n  // (its hud only knows engine-tracked statuses; legacy burns/buffs landed on\n  // unit.statuses and their head icons vanished). Merge, deduped by type, cap 4.\n  once(\'      visibleStatuses.push(status);\',\'      if(visibleStatuses.some(shown=>shown.type===status.type)) continue;\\n      visibleStatuses.push(status);\');\n  once(\'const beneficial=[\',"const beneficial=status.polarity===\'buff\'||[");\n  once(\'icon=statusIconImage(status.type);\',\'icon=statusIconImage(combatStatusIconType(status.type));\');\n  once(\'  function statusIconImage(type)\',`  ${combatStatusIconType.toString()}\n  function statusIconImage(type)`);\n  once(\'context.arc(sx,sy,isNemVi?size*.34:(compact?5:6),0,Math.PI*2);context.fill();\',`context.roundRect(sx-size/2,sy-size/2,size,size,3);context.fill();\n        const label=globalThis.SPLUS42.labels[status.type]||status.type;\n        const short=label.split(/\\\\s+/).slice(0,2).map(word=>word[0]).join(\'\').toUpperCase();\n        context.fillStyle=\'#fff\';context.font=\'bold 9px sans-serif\';context.textAlign=\'center\';context.fillText(short,sx,sy+3);`);\n  once(\'</head>\',\'<link rel="stylesheet" href="/splus-skill-details.css"><script src="/splus-skill-details.js"></script><style>.splus-battle .action-buttons{grid-template-columns:1fr!important}.splus-battle .action-button[data-action="skill"],.splus-battle .action-button[data-action="ultimate"]{display:none!important}#splus-battle-skills{margin:0!importan'... 1767 more characters,
+    expected: /spiritMark:.*spirit-mark\.svg/,
+    operator: 'match',
+    diff: 'simple'
+  }

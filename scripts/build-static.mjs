@@ -267,6 +267,15 @@ const { installMixedDamageSettlement } = await import('./mixed-damage-settlement
 installMixedDamageSettlement(root);
 const { installCompactDamageFloaters } = await import('./compact-damage-floaters-v1.mjs');
 installCompactDamageFloaters(root);
+const { installBattleVfxDirection } = await import('./battle-vfx-direction-v1.mjs');
+installBattleVfxDirection(root);
+
+// Restore versioned Basic action dispatch after authored runtime owners.
+const { installVersionedBasicDispatch } = await import('./versioned-basic-dispatch-v1.mjs');
+installVersionedBasicDispatch(root);
+
+const { installBattleInstantSkip } = await import('./battle-instant-skip-v1.mjs');
+installBattleInstantSkip(root);
 
 // battle.html is now the single runtime source for iframe and iOS full-page combat.
 // Do not duplicate ~1.5 MB of battle markup as base64 inside index.html; on mobile
@@ -278,3 +287,4 @@ embeddedIndex = embeddedIndex.replace(embeddedExpression, 'const BATTLE_HTML_BAS
 writeFileSync(join(out, 'index.html'), embeddedIndex);
 console.log('Battle runtime served from battle.html; embedded base64 payload disabled.');
 console.log(`Static preview written to ${out}`);
+

@@ -18,6 +18,7 @@ function fixture(){
     __hvLegacyAuthored:{prepare:async()=>({release(){}})},
     __hvBattleAssetError:()=>{failures++;state.locked=false;},
   });
+  vm.runInContext(readFileSync('src/runtime/battle-instant-skip.js','utf8'),context);
   const run=vm.runInContext(actionSource+';__hvPerformAction3qAdapter',context);
   return {actor,state,gate,run,get releases(){return releases;},get entered(){return entered;},get prepared(){return prepared;},get failures(){return failures;},
     ready:()=>gate.resolve({signal:new AbortController().signal,release:()=>{releases++;}})};

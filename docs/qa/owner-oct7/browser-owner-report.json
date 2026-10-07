@@ -1,0 +1,256 @@
+{
+  "revision": "5a2baf3d4a72147903c62b8d560f6b3162081e9e",
+  "runs": [
+    {
+      "w": 390,
+      "h": 844,
+      "assist": {
+        "screen": "team",
+        "rosterHidden": true,
+        "gearOpen": true,
+        "formationHidden": true,
+        "topIsGear": true
+      },
+      "first": {
+        "motion": {
+          "epoch": 1,
+          "hero": "linh_dong",
+          "supported": true,
+          "entryMotion": "authored-run",
+          "generic": false,
+          "phase": "run",
+          "runFrames": 6,
+          "idleFrames": 0,
+          "fallFrames": 0,
+          "fallCycles": 0,
+          "lastRunFrame": 3,
+          "lastIdleFrame": null,
+          "lastFallFrame": null,
+          "expectedFallLast": 95,
+          "source": {
+            "run": "assets/characters/linh-dong/ready-mobile-v1/run-atlas.webp",
+            "idle": "assets/characters/linh-dong/ready-mobile-v1/idle-atlas.webp",
+            "fall": "assets/characters/linh-dong/ready-mobile-v1/fall-atlas.webp"
+          }
+        },
+        "x": -288.8984375
+      },
+      "middle": {
+        "motion": {
+          "epoch": 1,
+          "hero": "linh_dong",
+          "supported": true,
+          "entryMotion": "authored-run",
+          "generic": false,
+          "phase": "run",
+          "runFrames": 72,
+          "idleFrames": 0,
+          "fallFrames": 0,
+          "fallCycles": 0,
+          "lastRunFrame": 29,
+          "lastIdleFrame": null,
+          "lastFallFrame": null,
+          "expectedFallLast": 95,
+          "source": {
+            "run": "assets/characters/linh-dong/ready-mobile-v1/run-atlas.webp",
+            "idle": "assets/characters/linh-dong/ready-mobile-v1/idle-atlas.webp",
+            "fall": "assets/characters/linh-dong/ready-mobile-v1/fall-atlas.webp"
+          }
+        },
+        "x": -64.20306396484375
+      },
+      "idle": {
+        "epoch": 1,
+        "hero": "linh_dong",
+        "supported": true,
+        "entryMotion": "authored-run",
+        "generic": false,
+        "phase": "idle",
+        "runFrames": 102,
+        "idleFrames": 3,
+        "fallFrames": 0,
+        "fallCycles": 0,
+        "lastRunFrame": 41,
+        "lastIdleFrame": 1,
+        "lastFallFrame": null,
+        "expectedFallLast": 95,
+        "source": {
+          "run": "assets/characters/linh-dong/ready-mobile-v1/run-atlas.webp",
+          "idle": "assets/characters/linh-dong/ready-mobile-v1/idle-atlas.webp",
+          "fall": "assets/characters/linh-dong/ready-mobile-v1/fall-atlas.webp"
+        }
+      },
+      "errors": [],
+      "assetErrors": [],
+      "ok": true
+    },
+    {
+      "w": 430,
+      "h": 932,
+      "assist": {
+        "screen": "team",
+        "rosterHidden": true,
+        "gearOpen": true,
+        "formationHidden": true,
+        "topIsGear": true
+      },
+      "first": {
+        "motion": {
+          "epoch": 1,
+          "hero": "linh_dong",
+          "supported": true,
+          "entryMotion": "authored-run",
+          "generic": false,
+          "phase": "run",
+          "runFrames": 3,
+          "idleFrames": 0,
+          "fallFrames": 0,
+          "fallCycles": 0,
+          "lastRunFrame": 1,
+          "lastIdleFrame": null,
+          "lastFallFrame": null,
+          "expectedFallLast": 95,
+          "source": {
+            "run": "assets/characters/linh-dong/ready-mobile-v1/run-atlas.webp",
+            "idle": "assets/characters/linh-dong/ready-mobile-v1/idle-atlas.webp",
+            "fall": "assets/characters/linh-dong/ready-mobile-v1/fall-atlas.webp"
+          }
+        },
+        "x": -317.796875
+      },
+      "middle": {
+        "motion": {
+          "epoch": 1,
+          "hero": "linh_dong",
+          "supported": true,
+          "entryMotion": "authored-run",
+          "generic": false,
+          "phase": "run",
+          "runFrames": 69,
+          "idleFrames": 0,
+          "fallFrames": 0,
+          "fallCycles": 0,
+          "lastRunFrame": 27,
+          "lastIdleFrame": null,
+          "lastFallFrame": null,
+          "expectedFallLast": 95,
+          "source": {
+            "run": "assets/characters/linh-dong/ready-mobile-v1/run-atlas.webp",
+            "idle": "assets/characters/linh-dong/ready-mobile-v1/idle-atlas.webp",
+            "fall": "assets/characters/linh-dong/ready-mobile-v1/fall-atlas.webp"
+          }
+        },
+        "x": -82.35720825195312
+      },
+      "idle": {
+        "epoch": 1,
+        "hero": "linh_dong",
+        "supported": true,
+        "entryMotion": "authored-run",
+        "generic": false,
+        "phase": "idle",
+        "runFrames": 105,
+        "idleFrames": 3,
+        "fallFrames": 0,
+        "fallCycles": 0,
+        "lastRunFrame": 42,
+        "lastIdleFrame": 1,
+        "lastFallFrame": null,
+        "expectedFallLast": 95,
+        "source": {
+          "run": "assets/characters/linh-dong/ready-mobile-v1/run-atlas.webp",
+          "idle": "assets/characters/linh-dong/ready-mobile-v1/idle-atlas.webp",
+          "fall": "assets/characters/linh-dong/ready-mobile-v1/fall-atlas.webp"
+        }
+      },
+      "errors": [],
+      "assetErrors": [],
+      "ok": true
+    },
+    {
+      "w": 1280,
+      "h": 800,
+      "assist": {
+        "screen": "team",
+        "rosterHidden": true,
+        "gearOpen": true,
+        "formationHidden": true,
+        "topIsGear": true
+      },
+      "first": {
+        "motion": {
+          "epoch": 1,
+          "hero": "linh_dong",
+          "supported": true,
+          "entryMotion": "authored-run",
+          "generic": false,
+          "phase": "run",
+          "runFrames": 7,
+          "idleFrames": 0,
+          "fallFrames": 0,
+          "fallCycles": 0,
+          "lastRunFrame": 3,
+          "lastIdleFrame": null,
+          "lastFallFrame": null,
+          "expectedFallLast": 95,
+          "source": {
+            "run": "assets/characters/linh-dong/ready-mobile-v1/run-atlas.webp",
+            "idle": "assets/characters/linh-dong/ready-mobile-v1/idle-atlas.webp",
+            "fall": "assets/characters/linh-dong/ready-mobile-v1/fall-atlas.webp"
+          }
+        },
+        "x": 75.5
+      },
+      "middle": {
+        "motion": {
+          "epoch": 1,
+          "hero": "linh_dong",
+          "supported": true,
+          "entryMotion": "authored-run",
+          "generic": false,
+          "phase": "run",
+          "runFrames": 72,
+          "idleFrames": 0,
+          "fallFrames": 0,
+          "fallCycles": 0,
+          "lastRunFrame": 29,
+          "lastIdleFrame": null,
+          "lastFallFrame": null,
+          "expectedFallLast": 95,
+          "source": {
+            "run": "assets/characters/linh-dong/ready-mobile-v1/run-atlas.webp",
+            "idle": "assets/characters/linh-dong/ready-mobile-v1/idle-atlas.webp",
+            "fall": "assets/characters/linh-dong/ready-mobile-v1/fall-atlas.webp"
+          }
+        },
+        "x": 337.9932861328125
+      },
+      "idle": {
+        "epoch": 1,
+        "hero": "linh_dong",
+        "supported": true,
+        "entryMotion": "authored-run",
+        "generic": false,
+        "phase": "idle",
+        "runFrames": 102,
+        "idleFrames": 7,
+        "fallFrames": 0,
+        "fallCycles": 0,
+        "lastRunFrame": 41,
+        "lastIdleFrame": 3,
+        "lastFallFrame": null,
+        "expectedFallLast": 95,
+        "source": {
+          "run": "assets/characters/linh-dong/ready-mobile-v1/run-atlas.webp",
+          "idle": "assets/characters/linh-dong/ready-mobile-v1/idle-atlas.webp",
+          "fall": "assets/characters/linh-dong/ready-mobile-v1/fall-atlas.webp"
+        }
+      },
+      "errors": [],
+      "assetErrors": [],
+      "ok": true
+    }
+  ],
+  "scope": "Full generated game: real roster dock click; authored result renderer/real atlases with explicit QA snapshot, not physical Safari",
+  "ok": true
+}

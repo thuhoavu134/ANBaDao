@@ -140,9 +140,9 @@ const runtime = `
       const frame=Math.min(THAY_MO_SKILL1_WAVE_FRAMES-1,Math.floor(p*THAY_MO_SKILL1_WAVE_FRAMES));
       const sx=(frame%THAY_MO_SKILL1_WAVE_COLS)*THAY_MO_SKILL1_WAVE_STRIDE_W+THAY_MO_SKILL1_WAVE_PAD;
       const sy=Math.floor(frame/THAY_MO_SKILL1_WAVE_COLS)*THAY_MO_SKILL1_WAVE_STRIDE_H+THAY_MO_SKILL1_WAVE_PAD;
-      const fromX=actor.x+64,fromY=actor.y-86;
+      const dir=actor.team===TEAM_ENEMY?-1:1,fromX=actor.x+64*dir,fromY=actor.y-86;
       for(const rowTarget of targets){
-        const toX=rowTarget.x-16,toY=rowTarget.y-72,dx=toX-fromX,dy=toY-fromY,angle=Math.atan2(dy,dx);
+        const toX=rowTarget.x-16*dir,toY=rowTarget.y-72,dx=toX-fromX,dy=toY-fromY,angle=Math.atan2(dy,dx);
         const x=fromX+dx*p,y=fromY+dy*p,drawW=rowTarget.id===primary.id?300:270,drawH=THAY_MO_SKILL1_WAVE_CELL_H/THAY_MO_SKILL1_WAVE_CELL_W*drawW;
         context.save();context.translate(x,y);context.rotate(angle);context.globalCompositeOperation="source-over";
         context.drawImage(THAY_MO_SKILL1_WAVE_IMAGE(),sx,sy,THAY_MO_SKILL1_WAVE_CELL_W,THAY_MO_SKILL1_WAVE_CELL_H,-drawW*.28,-drawH*.5,drawW,drawH);context.restore();
@@ -269,3 +269,4 @@ perform=replaceOnce(perform,
 html = html.slice(0, performStart) + perform + html.slice(performEnd);
 writeFileSync(path, html);
 console.log('Thay Mo authored production VFX restored: v2 Basic uses Skill1 cast/wave/impact; Ultimate uses cast/full-team VFX.');
+

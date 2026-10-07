@@ -1,0 +1,193 @@
+{
+  "revision": "a92df74f13ba4d3d4c989aa96ce7f8594bf79774",
+  "baseline": "e953458f988df0c3678dbf20c3b870b588c8a3fb",
+  "browserRun": 37622337541,
+  "tests": {
+    "focused": 6,
+    "full": 1667,
+    "failures": 0
+  },
+  "preview": "https://luc-than-eg1b57pgu-nyto1.vercel.app",
+  "runs": [
+    {
+      "partial": false,
+      "emptySlots": [],
+      "order": {
+        "expected": [
+          "hv-player-0-ong_hang_pho",
+          "hv-enemy-0-to_diep",
+          "hv-player-1-dinh_loi",
+          "hv-enemy-1-hero_splus_linh_dong",
+          "hv-player-2-co_dao_ganh_hoi",
+          "hv-enemy-2-bach_dien",
+          "hv-player-3-thay_mo",
+          "hv-enemy-3-ong_hang_pho",
+          "hv-player-4-lac_yen",
+          "hv-player-5-cung_thu_tre"
+        ],
+        "actual": [
+          "hv-player-0-ong_hang_pho",
+          "hv-enemy-0-to_diep",
+          "hv-player-1-dinh_loi",
+          "hv-enemy-1-hero_splus_linh_dong",
+          "hv-player-2-co_dao_ganh_hoi",
+          "hv-enemy-2-bach_dien",
+          "hv-player-3-thay_mo",
+          "hv-enemy-3-ong_hang_pho",
+          "hv-player-4-lac_yen",
+          "hv-player-5-cung_thu_tre"
+        ]
+      },
+      "openingOngPho": {
+        "before": {
+          "id": "hv-enemy-0-to_diep",
+          "source": "to_diep",
+          "team": "enemy",
+          "slot": 0,
+          "accuracy": 104,
+          "evasion": 6,
+          "atk": 113,
+          "def": 38,
+          "hp": 605,
+          "displayHp": 605,
+          "maxHp": 605,
+          "shield": 0,
+          "energy": 51,
+          "kit": "samkok-v2.1",
+          "action": "idle",
+          "statuses": []
+        },
+        "after": {
+          "id": "hv-enemy-0-to_diep",
+          "source": "to_diep",
+          "team": "enemy",
+          "slot": 0,
+          "accuracy": 104,
+          "evasion": 6,
+          "atk": 113,
+          "def": 38,
+          "hp": 400,
+          "displayHp": 400,
+          "maxHp": 605,
+          "shield": 0,
+          "energy": 67,
+          "kit": "samkok-v2.1",
+          "action": "hurt",
+          "statuses": [
+            {
+              "type": "nemVi"
+            }
+          ]
+        },
+        "beforeRage": 51,
+        "afterRage": 66
+      },
+      "exceptions": []
+    },
+    {
+      "partial": true,
+      "emptySlots": [
+        {
+          "slot": "2",
+          "label": "Ô trống hàng trước 3",
+          "empty": true,
+          "background": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "slot": "4",
+          "label": "Ô trống hàng sau 2",
+          "empty": true,
+          "background": "rgba(0, 0, 0, 0)"
+        },
+        {
+          "slot": "5",
+          "label": "Ô trống hàng sau 3",
+          "empty": true,
+          "background": "rgba(0, 0, 0, 0)"
+        }
+      ],
+      "order": {
+        "expected": [
+          "hv-enemy-0-to_diep",
+          "hv-player-0-ong_hang_pho",
+          "hv-enemy-1-hero_splus_linh_dong",
+          "hv-player-1-dinh_loi",
+          "hv-enemy-2-bach_dien",
+          "hv-enemy-3-ong_hang_pho",
+          "hv-player-3-thay_mo"
+        ],
+        "actual": [
+          "hv-enemy-0-to_diep",
+          "hv-player-0-ong_hang_pho",
+          "hv-enemy-1-hero_splus_linh_dong",
+          "hv-player-1-dinh_loi",
+          "hv-enemy-2-bach_dien",
+          "hv-enemy-3-ong_hang_pho",
+          "hv-player-3-thay_mo"
+        ]
+      },
+      "openingOngPho": {
+        "before": {
+          "id": "hv-enemy-0-to_diep",
+          "source": "to_diep",
+          "team": "enemy",
+          "slot": 0,
+          "accuracy": 104,
+          "evasion": 6,
+          "atk": 113,
+          "def": 38,
+          "hp": 605,
+          "displayHp": 605,
+          "maxHp": 605,
+          "shield": 109,
+          "energy": 34,
+          "kit": "samkok-v2.1",
+          "action": "idle",
+          "statuses": [
+            {
+              "type": "guard"
+            }
+          ]
+        },
+        "after": {
+          "id": "hv-enemy-0-to_diep",
+          "source": "to_diep",
+          "team": "enemy",
+          "slot": 0,
+          "accuracy": 104,
+          "evasion": 6,
+          "atk": 113,
+          "def": 38,
+          "hp": 574,
+          "displayHp": 574,
+          "maxHp": 605,
+          "shield": 0,
+          "energy": 42,
+          "kit": "samkok-v2.1",
+          "action": "hurt",
+          "statuses": [
+            {
+              "type": "guard"
+            },
+            {
+              "type": "nemVi"
+            }
+          ]
+        },
+        "beforeRage": 43,
+        "afterRage": 58
+      },
+      "exceptions": []
+    }
+  ],
+  "limitations": [
+    "Chromium mobile 390x844; not physical Safari.",
+    "Turn-order rule unchanged: higher living team rage starts each round, then alternating slots 0..5 with missing slots skipped.",
+    "CI/CD build/tests/VFX passed; artifact upload failed on existing storage quota, skipping later steps in that workflow. Separate full-game audit supplies additional runtime checks."
+  ],
+  "fullGameAudit": {
+    "run": 37622337544,
+    "job": 112795439139,
+    "conclusion": "success"
+  }
+}

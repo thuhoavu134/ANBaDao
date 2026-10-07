@@ -1,0 +1,478 @@
+{
+  "runtime": "4a5185d07e2e7a2a494e5da53040ea57280737e3",
+  "qa": "82ce2085e4e58453d8f78981ece19d5affeb3419",
+  "run": 37630872610,
+  "runs": [
+    {
+      "width": 390,
+      "partial": false,
+      "preparation": {
+        "squad": [
+          {
+            "id": "ong_hang_pho",
+            "row": "front"
+          },
+          {
+            "id": "dinh_loi",
+            "row": "front"
+          },
+          {
+            "id": "co_dao_ganh_hoi",
+            "row": "front"
+          },
+          {
+            "id": "thay_mo",
+            "row": "back"
+          },
+          {
+            "id": "lac_yen",
+            "row": "back"
+          },
+          {
+            "id": "cung_thu_tre",
+            "row": "back"
+          }
+        ],
+        "slots": [
+          {
+            "slot": "0",
+            "label": "Gỡ Ông Phở khỏi đội hình",
+            "empty": false,
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "slot": "1",
+            "label": "Gỡ Đình Lôi — Vệ Binh Trống Đồng khỏi đội hình",
+            "empty": false,
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "slot": "2",
+            "label": "Gỡ Cô Đào Gánh Hội khỏi đội hình",
+            "empty": false,
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "slot": "3",
+            "label": "Gỡ Thầy Mo khỏi đội hình",
+            "empty": false,
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "slot": "4",
+            "label": "Gỡ Thần Nỏ Sơn Nữ — Lạc Yên khỏi đội hình",
+            "empty": false,
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "slot": "5",
+            "label": "Gỡ Nữ Cung Thủ Tre khỏi đội hình",
+            "empty": false,
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ]
+      },
+      "order": {
+        "expected": [
+          "hv-player-0-ong_hang_pho",
+          "hv-enemy-0-to_diep",
+          "hv-player-1-dinh_loi",
+          "hv-enemy-1-hero_splus_linh_dong",
+          "hv-player-2-co_dao_ganh_hoi",
+          "hv-enemy-2-bach_dien",
+          "hv-player-3-thay_mo",
+          "hv-enemy-3-ong_hang_pho",
+          "hv-player-4-lac_yen",
+          "hv-player-5-cung_thu_tre"
+        ],
+        "actual": [
+          "hv-player-0-ong_hang_pho",
+          "hv-enemy-0-to_diep",
+          "hv-player-1-dinh_loi",
+          "hv-enemy-1-hero_splus_linh_dong",
+          "hv-player-2-co_dao_ganh_hoi",
+          "hv-enemy-2-bach_dien",
+          "hv-player-3-thay_mo",
+          "hv-enemy-3-ong_hang_pho",
+          "hv-player-4-lac_yen",
+          "hv-player-5-cung_thu_tre"
+        ]
+      },
+      "targetChecks": [
+        {
+          "id": "2:action:1:hv-player-0-ong_hang_pho:basic",
+          "actor": "hv-player-0-ong_hang_pho",
+          "slot": 0,
+          "action": "basic",
+          "expected": "hv-enemy-0-to_diep",
+          "actual": "hv-enemy-0-to_diep",
+          "impact": "hv-enemy-0-to_diep"
+        },
+        {
+          "id": "2:action:2:hv-enemy-0-to_diep:ultimate",
+          "actor": "hv-enemy-0-to_diep",
+          "slot": 0,
+          "action": "ultimate",
+          "expected": "hv-player-0-ong_hang_pho",
+          "actual": "hv-player-0-ong_hang_pho",
+          "impact": "hv-player-0-ong_hang_pho"
+        },
+        {
+          "id": "2:splus:4:hv-enemy-1-hero_splus_linh_dong:basic",
+          "actor": "hv-enemy-1-hero_splus_linh_dong",
+          "slot": 1,
+          "action": "basic",
+          "expected": "hv-player-1-dinh_loi",
+          "actual": "hv-player-1-dinh_loi",
+          "impact": "hv-player-1-dinh_loi"
+        },
+        {
+          "id": "2:splus:6:hv-enemy-2-bach_dien:basic",
+          "actor": "hv-enemy-2-bach_dien",
+          "slot": 2,
+          "action": "basic",
+          "expected": "hv-player-2-co_dao_ganh_hoi",
+          "actual": "hv-player-2-co_dao_ganh_hoi",
+          "impact": "hv-player-2-co_dao_ganh_hoi"
+        },
+        {
+          "id": "2:action:9:hv-player-4-lac_yen:skill",
+          "actor": "hv-player-4-lac_yen",
+          "slot": 4,
+          "action": "skill",
+          "expected": "hv-enemy-1-hero_splus_linh_dong",
+          "actual": "hv-enemy-1-hero_splus_linh_dong",
+          "impact": "hv-enemy-1-hero_splus_linh_dong"
+        },
+        {
+          "id": "2:action:10:hv-player-5-cung_thu_tre:skill",
+          "actor": "hv-player-5-cung_thu_tre",
+          "slot": 5,
+          "action": "skill",
+          "expected": "hv-enemy-2-bach_dien",
+          "actual": "hv-enemy-2-bach_dien",
+          "impact": "hv-enemy-2-bach_dien"
+        },
+        {
+          "id": "2:action:14:hv-player-2-co_dao_ganh_hoi:basic",
+          "actor": "hv-player-2-co_dao_ganh_hoi",
+          "slot": 2,
+          "action": "basic",
+          "expected": "hv-enemy-2-bach_dien",
+          "actual": "hv-enemy-2-bach_dien",
+          "impact": "hv-enemy-2-bach_dien"
+        },
+        {
+          "id": "2:action:16:hv-player-3-thay_mo:basic",
+          "actor": "hv-player-3-thay_mo",
+          "slot": 3,
+          "action": "basic",
+          "expected": "hv-enemy-1-hero_splus_linh_dong",
+          "actual": "hv-enemy-1-hero_splus_linh_dong",
+          "impact": "hv-enemy-1-hero_splus_linh_dong"
+        },
+        {
+          "id": "2:action:17:hv-player-5-cung_thu_tre:basic",
+          "actor": "hv-player-5-cung_thu_tre",
+          "slot": 5,
+          "action": "basic",
+          "expected": "hv-enemy-2-bach_dien",
+          "actual": "hv-enemy-2-bach_dien",
+          "impact": "hv-enemy-2-bach_dien"
+        }
+      ],
+      "exceptions": []
+    },
+    {
+      "width": 390,
+      "partial": true,
+      "preparation": {
+        "squad": [
+          {
+            "id": "ong_hang_pho",
+            "row": "front",
+            "slot": 0
+          },
+          {
+            "id": "dinh_loi",
+            "row": "front",
+            "slot": 1
+          },
+          {
+            "id": "co_dao_ganh_hoi",
+            "row": "front",
+            "slot": 2
+          },
+          {
+            "id": "thay_mo",
+            "row": "back",
+            "slot": 3
+          },
+          {
+            "id": "lac_yen",
+            "row": "back",
+            "slot": 4
+          },
+          {
+            "id": "cung_thu_tre",
+            "row": "back",
+            "slot": 5
+          }
+        ],
+        "slots": [
+          {
+            "slot": "0",
+            "label": "Gỡ Ông Phở khỏi đội hình",
+            "empty": false,
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "slot": "1",
+            "label": "Gỡ Đình Lôi — Vệ Binh Trống Đồng khỏi đội hình",
+            "empty": false,
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "slot": "2",
+            "label": "Ô trống hàng trước 3",
+            "empty": true,
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "slot": "3",
+            "label": "Gỡ Thầy Mo khỏi đội hình",
+            "empty": false,
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "slot": "4",
+            "label": "Ô trống hàng sau 2",
+            "empty": true,
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "slot": "5",
+            "label": "Ô trống hàng sau 3",
+            "empty": true,
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ]
+      },
+      "order": {
+        "expected": [
+          "hv-enemy-0-to_diep",
+          "hv-player-0-ong_hang_pho",
+          "hv-enemy-1-hero_splus_linh_dong",
+          "hv-player-1-dinh_loi",
+          "hv-enemy-2-bach_dien",
+          "hv-enemy-3-ong_hang_pho",
+          "hv-player-3-thay_mo"
+        ],
+        "actual": [
+          "hv-enemy-0-to_diep",
+          "hv-player-0-ong_hang_pho",
+          "hv-enemy-1-hero_splus_linh_dong",
+          "hv-player-1-dinh_loi",
+          "hv-enemy-2-bach_dien",
+          "hv-enemy-3-ong_hang_pho",
+          "hv-player-3-thay_mo"
+        ]
+      },
+      "targetChecks": [
+        {
+          "id": "2:action:2:hv-player-0-ong_hang_pho:basic",
+          "actor": "hv-player-0-ong_hang_pho",
+          "slot": 0,
+          "action": "basic",
+          "expected": "hv-enemy-0-to_diep",
+          "actual": "hv-enemy-0-to_diep",
+          "impact": "hv-enemy-0-to_diep"
+        },
+        {
+          "id": "2:splus:3:hv-enemy-1-hero_splus_linh_dong:basic",
+          "actor": "hv-enemy-1-hero_splus_linh_dong",
+          "slot": 1,
+          "action": "basic",
+          "expected": "hv-player-1-dinh_loi",
+          "actual": "hv-player-1-dinh_loi",
+          "impact": "hv-player-1-dinh_loi"
+        },
+        {
+          "id": "2:splus:5:hv-enemy-2-bach_dien:basic",
+          "actor": "hv-enemy-2-bach_dien",
+          "slot": 2,
+          "action": "basic",
+          "expected": "hv-player-0-ong_hang_pho",
+          "actual": "hv-player-0-ong_hang_pho",
+          "impact": "hv-player-0-ong_hang_pho"
+        },
+        {
+          "id": "2:action:6:hv-enemy-3-ong_hang_pho:basic",
+          "actor": "hv-enemy-3-ong_hang_pho",
+          "slot": 3,
+          "action": "basic",
+          "expected": "hv-player-0-ong_hang_pho",
+          "actual": "hv-player-0-ong_hang_pho",
+          "impact": "hv-player-0-ong_hang_pho"
+        },
+        {
+          "id": "2:splus:12:hv-enemy-2-bach_dien:basic",
+          "actor": "hv-enemy-2-bach_dien",
+          "slot": 2,
+          "action": "basic",
+          "expected": "hv-player-0-ong_hang_pho",
+          "actual": "hv-player-0-ong_hang_pho",
+          "impact": "hv-player-0-ong_hang_pho"
+        },
+        {
+          "id": "2:action:14:hv-player-3-thay_mo:basic",
+          "actor": "hv-player-3-thay_mo",
+          "slot": 3,
+          "action": "basic",
+          "expected": "hv-enemy-0-to_diep",
+          "actual": "hv-enemy-0-to_diep",
+          "impact": "hv-enemy-0-to_diep"
+        }
+      ],
+      "exceptions": []
+    },
+    {
+      "width": 1280,
+      "partial": false,
+      "preparation": {
+        "squad": [
+          {
+            "id": "ong_hang_pho",
+            "row": "front",
+            "slot": 0
+          },
+          {
+            "id": "dinh_loi",
+            "row": "front",
+            "slot": 1
+          },
+          {
+            "id": "thay_mo",
+            "row": "back",
+            "slot": 3
+          }
+        ],
+        "slots": [
+          {
+            "slot": "0",
+            "label": "Gỡ Ông Phở khỏi đội hình",
+            "empty": false,
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "slot": "1",
+            "label": "Gỡ Đình Lôi — Vệ Binh Trống Đồng khỏi đội hình",
+            "empty": false,
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "slot": "2",
+            "label": "Ô trống hàng trước 3",
+            "empty": true,
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "slot": "3",
+            "label": "Gỡ Thầy Mo khỏi đội hình",
+            "empty": false,
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "slot": "4",
+            "label": "Ô trống hàng sau 2",
+            "empty": true,
+            "background": "rgba(0, 0, 0, 0)"
+          },
+          {
+            "slot": "5",
+            "label": "Ô trống hàng sau 3",
+            "empty": true,
+            "background": "rgba(0, 0, 0, 0)"
+          }
+        ]
+      },
+      "order": {
+        "expected": [
+          "hv-enemy-0-to_diep",
+          "hv-player-0-ong_hang_pho",
+          "hv-enemy-1-hero_splus_linh_dong",
+          "hv-player-1-dinh_loi",
+          "hv-enemy-2-bach_dien",
+          "hv-enemy-3-ong_hang_pho",
+          "hv-player-3-thay_mo"
+        ],
+        "actual": [
+          "hv-enemy-0-to_diep",
+          "hv-player-0-ong_hang_pho",
+          "hv-enemy-1-hero_splus_linh_dong",
+          "hv-player-1-dinh_loi",
+          "hv-enemy-2-bach_dien",
+          "hv-enemy-3-ong_hang_pho",
+          "hv-player-3-thay_mo"
+        ]
+      },
+      "targetChecks": [
+        {
+          "id": "2:action:2:hv-player-0-ong_hang_pho:basic",
+          "actor": "hv-player-0-ong_hang_pho",
+          "slot": 0,
+          "action": "basic",
+          "expected": "hv-enemy-0-to_diep",
+          "actual": "hv-enemy-0-to_diep",
+          "impact": "hv-enemy-0-to_diep"
+        },
+        {
+          "id": "2:splus:3:hv-enemy-1-hero_splus_linh_dong:basic",
+          "actor": "hv-enemy-1-hero_splus_linh_dong",
+          "slot": 1,
+          "action": "basic",
+          "expected": "hv-player-1-dinh_loi",
+          "actual": "hv-player-1-dinh_loi",
+          "impact": "hv-player-1-dinh_loi"
+        },
+        {
+          "id": "2:splus:5:hv-enemy-2-bach_dien:basic",
+          "actor": "hv-enemy-2-bach_dien",
+          "slot": 2,
+          "action": "basic",
+          "expected": "hv-player-0-ong_hang_pho",
+          "actual": "hv-player-0-ong_hang_pho",
+          "impact": "hv-player-0-ong_hang_pho"
+        },
+        {
+          "id": "2:action:6:hv-enemy-3-ong_hang_pho:basic",
+          "actor": "hv-enemy-3-ong_hang_pho",
+          "slot": 3,
+          "action": "basic",
+          "expected": "hv-player-0-ong_hang_pho",
+          "actual": "hv-player-0-ong_hang_pho",
+          "impact": "hv-player-0-ong_hang_pho"
+        },
+        {
+          "id": "2:splus:12:hv-enemy-2-bach_dien:basic",
+          "actor": "hv-enemy-2-bach_dien",
+          "slot": 2,
+          "action": "basic",
+          "expected": "hv-player-0-ong_hang_pho",
+          "actual": "hv-player-0-ong_hang_pho",
+          "impact": "hv-player-0-ong_hang_pho"
+        },
+        {
+          "id": "2:action:14:hv-player-3-thay_mo:basic",
+          "actor": "hv-player-3-thay_mo",
+          "slot": 3,
+          "action": "basic",
+          "expected": "hv-enemy-0-to_diep",
+          "actual": "hv-enemy-0-to_diep",
+          "impact": "hv-enemy-0-to_diep"
+        }
+      ],
+      "exceptions": []
+    }
+  ]
+}

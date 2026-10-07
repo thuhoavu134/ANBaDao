@@ -1,3 +1,137 @@
+# Facing-target correction — 2026-10-07
+
+Owner clarified that attacks choose the wrong opposing hero, not that initiative is wrong. Review only: PR #285, branch review/full-game-ui-20261006. Runtime revision 4a5185d07e2e7a2a494e5da53040ea57280737e3; QA revision 82ce2085e4e58453d8f78981ece19d5affeb3419.
+
+## Fix
+- Existing targeting owner now resolves generic single-target Basic/Skill/Ultimate to the opposing living formation lane. Existing taunt, legal-frontline and deterministic casualty fallback remain in force.
+- Bạch Diện/Linh Đồng aliases normalize Skill to Basic before resolving the animation target. Previously presentation could approach a stale Skill target while the S+ mechanics owner damaged the opposing Basic target.
+- Ông Phở's chain fallback uses the same formation selector.
+- Initiative, damage formulas, AoE/support targeting, native S+ special skill rules, saves and rewards remain unchanged.
+
+## RED and GREEN
+- Focused RED: generic skill chose enemy0 instead of opposite enemy1; authored alias kept player0 instead of player2.
+- Actual-browser RED: run 37626363166 showed Bạch Diện slot2 choosing player0 rather than player2.
+- Build anchor collision caught in run 37627223246: the same normalization line exists in the legacy adapter. Insertion is now scoped to the unique performAction signature.
+- Clean build and 8 focused tests passed in run 37627980949.
+- Full audit run 37627980726 passed: 1671/1671 tests, instant skip win/loss, actual host/reentry/result, AFK canvas, formation geometry and all-screen checks.
+- Runtime trace at 4a5185d: full mobile roster checked 9 actions; partial mobile and desktop checked 6 each. All 21 action targets and impact targets matched. Screenshot inspected: mobile offensive skill hit the correct opposing lane.
+- Initial browser harness required a non-basic offensive cast in EACH two-round scenario, including a partial support roster. That coverage assertion failed despite all target equalities passing. QA-only revision requires non-basic offensive impact coverage across the suite while retaining every per-action equality and per-scenario Basic check.
+
+## Preview and limitations
+- Verified READY preview for runtime 4a5185d: https://luc-than-4g31dw60a-nyto1.vercel.app/
+- Host and battle HTTP 200; deployed source confirms target resolution after authored alias normalization.
+- Responsive Chromium is not physical iPhone/Safari; physical device acceptance remains owner review.
+- CI/CD build, tests and VFX QA passed, but artifact upload failed because GitHub artifact storage quota is exhausted. Separate full audit completed successfully; no quota bypass or deletion.
+- Ticket Board remains unavailable under the previously recorded owner waiver; no ticket transition is claimed. VibeLab run 20261007-200308-2upkipg.
+- No merge or production promotion. Owner approval required on GitHub.
+
+## Final facing-target browser gate
+PASS: run 37630872610 on 82ce2085e4e58453d8f78981ece19d5affeb3419. All three real-host scenarios passed (390px full roster, 390px partial roster, 1280px persisted partial roster): 21/21 matching action/impact targets, no runtime exceptions, queue order unchanged. Full mobile includes offensive Skill and Ultimate impacts. Partial formation screenshot inspected: gray cells absent, add/remove controls retained.
+
+---
+
+# Formation cells and opening Basic — 2026-10-07
+
+Review-only change for owner reports: gray empty formation cells, opening attack losing no HP, and perceived turn-order reversal. Runtime revision a92df74f13ba4d3d4c989aa96ce7f8594bf79774; Draft PR #285. Main remains 0cf636aca931265ac236f9f4eb8548c214c312d8. No merge or production promotion.
+
+## Changes and diagnosis
+- Empty preparation buttons no longer paint their full hit area. A small oval plus marker retains discoverability, selection, keyboard focus and the original add/remove/drag event owner.
+- Fixed omitted action arguments at versioned Basic dispatch sites. The predicate required `action === "basic"`, but callers supplied only the actor. This skipped Ông Phở's authored two-contact Basic branch, second-hit plan and +15 rage, and ignored other versioned Basic multipliers. A bounded idempotent late build patch fixes callers after authored runtime owners.
+- The opening first contact in the reproduced guest fight was an actual MISS (combat log confirms it). Do not force a hit or bypass evasion/shields. After restoring the second contact, full roster target HP goes 605→400 and Ông Phở gains 51→66 rage. Partial 3-hero roster target shield goes 109→0 and HP 605→574; rage 43→58.
+- Turn order is not changed. Source and actual browser trace agree: higher total living-team rage starts each round (ties player), then alternating same-numbered slots 0..5; empty/dead slots are skipped. Removing heroes preserves slots 0,1,3. Full and partial first-round actual actor sequences exactly match their queued order. The leading side can change between rounds. If the owner expects fixed initiative or a different alternation rule, that product choice still needs clarification; do not claim an ordering bug was fixed.
+
+## Verification
+- RED: baseline gray CSS assertion fails; generated resolver regression fails with multiplier 1 instead of 0.868 / 1.7, missing authored Basic plan/rage. Baseline actual-browser diagnostics: runs 37620985183 and 37621766165.
+- GREEN: 6/6 focused generated-runtime/formation tests; actual guest mobile 390×844 full/partial roster browser run 37622337541 passes with no runtime exceptions. Gỡ→empty slot→add→remove verified by actual clicks. Preparation screenshot inspected: no gray rectangles, three small plus markers.
+- Full test suite: 1667/1667 passed. CI/CD run 37622344596 build, tests and VFX browser QA pass; job fails at artifact upload because GitHub storage quota is exhausted, so downstream jobs there are skipped. This is not a green CI job.
+- Separate full-game audit run 37622337544: PASS: full build/tests, instant skip real victory/defeat and host reentry, owner roster/result flow, actual AFK canvas, formation/AFK geometry, real host entry/return and every-screen inspection.
+- Vercel preview READY and HTTP 200: https://luc-than-eg1b57pgu-nyto1.vercel.app . Deployed host contains transparent slot rule; battle contains corrected Basic dispatch with no omitted-action calls.
+- Physical iPhone/Safari not tested. No new assets, economy/save migrations, initiative changes or reward changes.
+- Ticket Board waiver carried from the existing session; no ticket claim or board transition fabricated. VibeLab run 20261007-192310-2r3cw30, REVIEW handoff after verification. Rollback this slice by reverting a92df74; retain prior instant-skip fix.
+
+---
+
+# Instant battle skip — 2026-10-07
+
+Owner contract: bottom-right ›| beside Chinh chiến skips all remaining battle animation and opens the authentic win/loss result. Review branch / Draft PR285 only; no merge or production promotion.
+
+Baseline a230300; final runtime e89634c; final browser/test revision 2dd707f (later changes only QA). One existing button handler now wakes presentation waits, skips authored marker/tween/image waits and continues the existing AI/action scheduler. The same damage, status, round cap, result snapshot and settlement owners run. Repeated clicks are idempotent; sound and skip state reset at result/new battle. Skipped action leases retain a unique stable task ID across S+ impact, so Linh Đồng/Bạch Diện return ownership cannot stall the scheduler.
+
+RED: deployed handler only toggled animations; real button failed finish assertion. Browser RED at 023a6a4 exposed S+ action ownership stalling after action 4. Fixed stable lease identity; generated-runtime movement regression passes. Asset-readiness VM fixtures now load the real added runtime; original assertions remain. Browser cleanup now uses graceful Browser.close before removing profiles, fixing observed ENOTEMPTY cleanup races.
+
+GREEN: 5 focused skip tests; existing legacy and S+ asset readiness cases pass; 15 generated inline scripts parse. Full clean build and 1665/1665 tests passed at e89634c; final 2dd707f full build/test steps also passed.
+- Focused browser audit SUCCESS: https://github.com/bktimmy247/luc-than/actions/runs/37619196832
+- Four authentic 15-round victory/defeat cases at speeds 1/2/3: correct winner/rewards/round cap, confirm/next/back, one settlement publication, repeated click safe, 913–1048 ms.
+- Actual guest → Chinh chiến → prepare → battle → skip → result → confirm → reenter: two cycles each on 390×844 iframe, 1280×800 iframe, and iPhone-user-agent full-page transport. All 6 cycles passed, 462–1234 ms; sound restored, new battle unskipped, zero runtime/asset errors. Real result hero Idle frames and screenshots checked.
+- Broader final audit https://github.com/bktimmy247/luc-than/actions/runs/37619197266: build/full tests/skip fixtures/actual host/roster-result steps passed; other screens still running at this checkpoint. No blanket all-audit-green claim.
+- Preview candidate: https://luc-than-1s404ig60-nyto1.vercel.app READY, revision 2dd707f; deployed battle HTTP200 with skip handler and stable action lease verified.
+- Physical iPhone/Safari NOT_RUN. Emulated iPhone transport is Chromium, not WebKit. Existing Thầy Mo missing authored Run limitation is unchanged.
+- Main remains 0cf636a. Owner approval required before merge. Ticket Board unavailable under prior documented owner waiver; no ticket claim/lease or DONE state asserted.
+
+# AFK VFX sizing — 2026-10-07
+Runtime8b5c9b1, parent7c20dd7, owner clarified AFK ONLY.
+Changed only campaign drawCampaignBasicVfx: uniform scale bounded by 0.8×hero body height, width1.6×body height and22% viewport. Long shallow Thay Mo projectile no longer gets giant width from height-only scaling. Preserves aspect, authored frames/timing, direction, pivots, Run/ATK behavior. Battle VFX unchanged.
+RED: actual draw width exceeded cap. GREEN18/18 focused (sparse local test import uses existing HV_SKIP_BATTLE_FORMATION_SCALE_PATCH=1); full clean CI build and1660/1660 tests passed.
+Actual guest AFK390×844,430×932,1280×800 passed, ATK/VFX and next-pack Run present,0runtime/asset errors; screenshots reviewed including reduced Dinh Loi effect. Browser report attached.
+Audit37612639112: AFK/geometry/host/all-screen steps passed; owner result step failed on browser cleanup ENOTEMPTY in /tmp Chrome profile after screenshots, not a game assertion. Overall audit is NOT green; no blanket gate claim. Source scope deliberately remains AFK only.
+Preview https://luc-than-ote3e2vis-nyto1.vercel.app READY; HTTP200 and deployed scale verified. Physical Safari NOT_RUN. PR285 review only, no merge/promotion. Owner size approval pending.
+
+# AFK travel Run — 2026-10-07
+
+Runtime b3980fadceaa45851a7acd7601d8d31d162b64d2, baseline0875c1b, PR285 review only.
+- Added canonical paged Run descriptors for Luc Anh, Dinh Loi and Ong Pho. Existing Linh Dong/Bach Dien clips retained. Ong Pho uses only authored source frames28–36 (9-frame loop); page builder honors source startFrame.
+- Canonicalized external Run aliases; parked fallback uses Idle. March/approach/regroup use Run; ATK and hold-until-pack-clear unchanged. No save, reward or combat changes.
+- Thay Mo has no authored Run; retained honest Idle fallback. No invented/replacement character animation.
+- RED2/2, GREEN10/10, syntax3/3; full build +1659 tests pass. Full UI audit37609416517 success; normal guest AFK on390×844,430×932,1280×800 observed Ong Pho and Dinh Loi Run drawing after24.5s, with ATK/VFX retained and0runtime/asset errors. Screenshots reviewed: characters visible and contained during next-pack movement.
+- Preview https://luc-than-7p35pp3nj-nyto1.vercel.app READY; deployed Run pages verified: Luc Anh61, Dinh Loi64, Ong Pho9, Linh Dong96, Bach Dien45 frames.
+- General CI37609421064 failed solely at artifact upload: GitHub storage quota exhausted; later CI jobs skipped. Audit uses inline logs and completed. Physical Safari NOT_RUN, owner approval pending. No merge/promotion.
+
+# Oct7 verified review checkpoint — runtime 5a2baf3
+Preview: https://luc-than-jgkwuhr8t-nyto1.vercel.app — Vercel READY, deployed host HTTP200 with assist route guard.
+Audit: https://github.com/bktimmy247/luc-than/actions/runs/37600017304 — SUCCESS.
+1657/1657 full tests, full build, actual roster→assist hit-test, authored result Run→Idle (Linh Đồng explicit QA snapshot), real guest AFK, formation geometry, host entry/return and all-screen inventory passed.
+Responsive Chrome: 390×844, 430×932 and desktop where applicable. Runtime/asset errors empty in owner flows. Physical Safari NOT_RUN.
+Reviewed screenshots: assist is visibly on top; Linh Đồng visible at left during Run and centered at Idle; actual AFK actors stay next to the pack between casts.
+
+A first runtime 3296f50 browser route-state check was insufficient: screenshot showed Trận Hình above assist. Fixed team-3d owner to honor ST.hvAssistOpen, cleared on normal navigation/formation, strengthened browser checks with formationHidden and actual elementFromPoint hit-testing.
+Delayed-idle regression now waits past 1.77s entrance before loading the held atlas; 3/3 motion harness tests passed.
+Q1/Q3/Q4 implemented. Q2 PARTIAL: Thầy Mo still has no authored Run; existing idle-translation explicitly retained. Need original approved Run clip/atlas. No replacement character or claim of true Run for Thầy Mo.
+General CI/CD 37600022507 still running broader browser jobs at handoff; full UI audit above is green. Owner visual acceptance pending. Draft PR285 only; no merge or production promotion.
+
+# Owner corrections — 2026-10-07 (PR285 only)
+Baseline 748b549; current main remains 0cf636a. User screenshots IMG_7704/7705/7706/7703.
+
+Q1: A=anhDan (Ảnh Đạn), MH=joyMask (Mặt Hỷ), CB=buffBan (Cấm buff). Added semantic SVGs for these plus rageMask, generic non-letter status glyph. Removed initials drawing entirely, including cold image-loading fallback. Existing statuses/mechanics unchanged.
+Q2 PARTIAL: result entry starts fully beyond left viewport edge, travels to center over 1.6s, then Idle; Run/Idle waits for decoded assets. Actual authored Run remains used for supported heroes. Thầy Mo has NO Run asset in repository: retained explicitly identified idle-translation, never another hero or fabricated Run. Need owner-supplied/approved Thầy Mo Run clip to complete this criterion. QA now exposes entryMotion.
+Q3: accountGearNavTo invokes existing showScreen('team') before opening wheel/board; roster wrapper closes the heroes overlay. Normal formation bypass remains intact. No new global input listener.
+Q4: cosmetic AFK actor holds engagement point between casts. Regroup begins only after ALL mobs die AND final cast finishes. Same event/damage/loot/reward clocks and squad identities; no game economy change.
+
+RED: four focused failures on prior owners. GREEN: 22 focused tests, including movement/return bounds, current AFK regression, status registration/fallback, roster route owner and result entrance; generated result script parse passes. Local checkout sparse, no full build claim.
+Added actual browser script: real login → Tướng → Trợ trận click, real result renderer + authored Linh Đồng snapshot on390/430/desktop. Explicit QA snapshot only in test, not player preview.
+Previous full audit GitHub job111957306150 cancelled before any steps; not passed. New CI and Vercel preview results pending commit. Physical Safari NOT_RUN. Broader every-screen UI audit still unfinished.
+Existing documented board waiver retained, no claim/lease fabricated. Draft review only, no main merge/production promotion. New status SVGs original code-authored presentation assets, not owner aesthetic approval.
+
+# 2026-10-06 — owner correction IMG_7695
+PR285 only, parent ac1492b. User rejects cramped allied columns / overly wide center and raw S badge. S is spiritMark (Linh Dong mark), missing localized label/art; stealth displayed TH.
+S1 front offset70/back160: allied column gap90 vs previous50; opposing gap140 vs220. Preserve .34 portrait scale and desktop.
+S2 add transparent vector bell-seal spiritMark and concealed-eye stealth HUD symbols plus Hồn Ấn label; original bespoke UI SVG, not claimed as owner-approved final art. No status mechanics changes.
+S3 existing drawUnitHud owner: 16/18px compact icons/gap, 72px HP bar retained, vertical anchor follows scaled body. Four-icon lane70px fits 90px column.
+RED3/3; GREEN22/22 focused tests including existing AFK/VFX regressions. Full build/browser and physical Safari pending; not aesthetic approved. No main merge or production promotion. Existing Ticket Board waiver retained. No routes removed.
+
+# Review checkpoint — 2026-10-06
+Runtime commit 1a2f0842ee1c6d9c3863e3bdb6995186f596dfda, PR285. Integrated selected PR282 source/tests into full game; main unchanged.
+
+Owner's screenshot used old unchanged checkpoint 4c6297b. New code enables canonical AFK approach/ATK/VFX and smaller mobile battle geometry. Source blob hashes compared to focused local test files and match.
+
+RED: six user-contract failures against checkpoint source (9 tests, 3 pass/6 fail); initial harness side-effect failure corrected using existing HV_SKIP_BATTLE_FORMATION_SCALE_PATCH flag, not production edits.
+GREEN: 16/16 focused behavior/geometry tests. Expanded local attempt 27 pass/4 fail because checkout lacks full dist/preparation assets and two unchanged source dependencies; this is NOT full suite acceptance.
+Full build, full suite, normal guest live AFK, host entry/return and screen audit queued on GitHub run37366721220. Physical Safari NOT_RUN. Do not claim verified rendering or aesthetic acceptance from local tests.
+
+Preview branch alias: https://luc-than-git-review-full-game-ui-20261006-nyto1.vercel.app
+New deployment: https://luc-than-q0g0m1tf1-nyto1.vercel.app ; Vercel BUILDING at record time, not ready acceptance.
+Main0cf636a; no merge/promotion. Existing board waiver retained. Broad UI consistency audit remains pending, no screen functions removed.
+
+
 ## 2026-10-05 — Reaction status interoperability
 
 Continuation of PR #281 from `79f98af`; main `2ab4c9b`, REVIEW. Native reaction consumption now uses selected status removal accounting and remaining DOT tick damage. Native extension updates round expiry/tick budget through its owner, preserves provenance, respects buff bans and never shortens longer effects. Preview and resolution share eligibility/type aliases; legacy follow-ups cannot overwrite managed marks. Existing legacy amounts and reaction coefficients remain.

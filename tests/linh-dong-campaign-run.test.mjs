@@ -9,7 +9,7 @@ const exists = rel => fs.existsSync(new URL(rel, root));
 
 function afkBox() {
   const scene = read('src/ui/campaign-scene.js');
-  const start = scene.indexOf('const spriteSpecs =');
+  const start = scene.indexOf('function campaignActorArtId(');
   const end = scene.indexOf('const HOME_SLOT');
   assert.ok(start >= 0 && end > start);
   const box = {
@@ -35,7 +35,7 @@ test('L153-T1 march uses Linh Dong Run; preparation stays Idle', () => {
   assert.equal(box.idle.src, 'assets/characters/linh-dong/campaign-lite/idle-atlas.webp');
   const scene = read('src/ui/campaign-scene.js');
   assert.match(scene, /HonVietCampaignRunSpecs/);
-  assert.match(scene, /runSpecs\[pick\.id\]|runSpecs\.linh_dong/);
+  assert.match(scene, /runSpecs\[campaignActorArtId\(pick\.id\)\]/);
 });
 
 test('L153-T2 Run shares Idle cell and pivot; no invented fps', () => {
@@ -67,3 +67,4 @@ test('L153-T3 authored run atlas exists; L144 idle spec unchanged', () => {
   const index = read('index.html');
   assert.doesNotMatch(index, /BETS\s*=\s*\[[^\]]*[^2, 10, 50]/);
 });
+

@@ -7,8 +7,9 @@ test('campaign never returns an empty hero image merely because a battle overlay
  assert.doesNotMatch(scene,/function imageForScene\(src, spec = null\) \{\s*if \(campaignBattleOpen\(\)\) return emptySceneImage/);
 });
 
-test('campaign drops failed resource handle and falls back to authored portrait instead of skipping actor',()=>{
+test('campaign drops failed resource handle and falls back to authored full-body poster before unregistered portrait instead of skipping actor',()=>{
  assert.match(scene,/if \(sceneImages\.get\(src\) === handle\) sceneImages\.delete\(src\)/);
  assert.match(scene,/portraitSrc\(pick\.id, 'master'\)/);
- assert.match(scene,/drawSpec = null/);
+ assert.match(scene,/drawSpec = fullBody\?/);
 });
+

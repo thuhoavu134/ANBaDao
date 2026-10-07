@@ -1,0 +1,24 @@
+✔ portrait formation gives opposing fronts room and stays inside every target crop (1.767497ms)
+✔ portrait formation keeps 50px team columns, 220px opposing frontline lane and mirrored rows (0.281012ms)
+✔ desktop formation and global desktop scale are unchanged (0.411378ms)
+✔ special heroes use body-height calibration while preserving compact layout offsets (0.215944ms)
+✔ final runtime patch removes stale formation breakpoints and all stacked scale owners (0.822897ms)
+✔ formation owner accepts the unmodified baseline 0.52 generic scale without a pre-patch scale rewrite (0.261653ms)
+✔ build applies the scoped layout owner after reference presentation but before battle payload sync (0.115844ms)
+✔ canonical and alias S+ IDs resolve full-body campaign idle/run/attack (2.492276ms)
+✔ portrait fronts separate more with smaller consistent stature; desktop unchanged (0.489325ms)
+✔ managed HUD stops suppressing semantic icon art or displaying source hero number (0.455184ms)
+✔ Dinh Loi enemy projectile and wave blitters mirror at the draw owner (10.438267ms)
+✔ AFK renderer uses attack pose/mob approach and authored VFX instead of token line (0.257036ms)
+✔ canonical semantic shield/debuff icons retain effect identity (0.721234ms)
+✔ AFK approach reaches its mob and returns without modifying sparse squad slots (3.016984ms)
+✔ actual Dinh Loi projectile travels enemy-to-player and mirrors once (8.732073ms)
+✔ browser fixture extracts the current hook despite intervening validation statement (1.753515ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 129.636234
