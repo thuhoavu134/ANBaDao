@@ -1,0 +1,76 @@
+{
+  "revision": "b3980fadceaa45851a7acd7601d8d31d162b64d2",
+  "scope": "Normal guest profile, real login/hub/campaign; live clock and actual canvas, no fixture squad or unlock",
+  "runs": [
+    {
+      "width": 390,
+      "height": 844,
+      "nextPackRuns": [
+        "ong_hang_pho",
+        "dinh_loi"
+      ],
+      "draws": {
+        "attacks": [
+          "ong_hang_pho",
+          "dinh_loi",
+          "thay_mo"
+        ],
+        "vfx": [
+          "dinh_loi",
+          "thay_mo"
+        ],
+        "count": 1757
+      },
+      "exceptions": [],
+      "assetErrors": [],
+      "ok": true
+    },
+    {
+      "width": 430,
+      "height": 932,
+      "nextPackRuns": [
+        "ong_hang_pho",
+        "dinh_loi"
+      ],
+      "draws": {
+        "attacks": [
+          "ong_hang_pho",
+          "dinh_loi",
+          "thay_mo"
+        ],
+        "vfx": [
+          "dinh_loi",
+          "thay_mo"
+        ],
+        "count": 1796
+      },
+      "exceptions": [],
+      "assetErrors": [],
+      "ok": true
+    },
+    {
+      "width": 1280,
+      "height": 800,
+      "nextPackRuns": [
+        "ong_hang_pho",
+        "dinh_loi"
+      ],
+      "draws": {
+        "attacks": [
+          "ong_hang_pho",
+          "dinh_loi",
+          "thay_mo"
+        ],
+        "vfx": [
+          "dinh_loi",
+          "thay_mo"
+        ],
+        "count": 1781
+      },
+      "exceptions": [],
+      "assetErrors": [],
+      "ok": true
+    }
+  ],
+  "ok": true
+}
