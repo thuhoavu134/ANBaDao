@@ -22,6 +22,11 @@ jobs:
         run: |
           export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
           node scripts/qa-instant-skip.mjs
+      - name: Instant skip actual host and reentry
+        if: ${{ !cancelled() }}
+        run: |
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
+          node scripts/qa-instant-skip-host.mjs
       - name: Owner Oct7 actual roster and result flow
         if: ${{ !cancelled() }}
         run: |
