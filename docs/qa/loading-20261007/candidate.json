@@ -1,0 +1,1556 @@
+{
+  "revision": "29ecbd04c787bdc93413cb7025d5635fca3a1fa1",
+  "assets": {
+    "images": [
+      {
+        "src": "assets/ui/menu-v3233/icons/arena.png",
+        "dest": "assets/ui/menu-v3233/icons/lossless-v1/arena.webp",
+        "width": 614,
+        "height": 682,
+        "before": 601075,
+        "after": 455486,
+        "visiblePixelsEqual": true
+      },
+      {
+        "src": "assets/ui/menu-v3233/icons/bag.png",
+        "dest": "assets/ui/menu-v3233/icons/lossless-v1/bag.webp",
+        "width": 614,
+        "height": 682,
+        "before": 625010,
+        "after": 467202,
+        "visiblePixelsEqual": true
+      },
+      {
+        "src": "assets/ui/menu-v3233/icons/chat.png",
+        "dest": "assets/ui/menu-v3233/icons/lossless-v1/chat.webp",
+        "width": 616,
+        "height": 682,
+        "before": 396323,
+        "after": 294184,
+        "visiblePixelsEqual": true
+      },
+      {
+        "src": "assets/ui/menu-v3233/icons/daily.png",
+        "dest": "assets/ui/menu-v3233/icons/lossless-v1/daily.webp",
+        "width": 614,
+        "height": 682,
+        "before": 489098,
+        "after": 362554,
+        "visiblePixelsEqual": true
+      },
+      {
+        "src": "assets/ui/menu-v3233/icons/expedition.png",
+        "dest": "assets/ui/menu-v3233/icons/lossless-v1/expedition.webp",
+        "width": 614,
+        "height": 682,
+        "before": 598929,
+        "after": 426924,
+        "visiblePixelsEqual": true
+      },
+      {
+        "src": "assets/ui/menu-v3233/icons/festival.png",
+        "dest": "assets/ui/menu-v3233/icons/lossless-v1/festival.webp",
+        "width": 614,
+        "height": 684,
+        "before": 578007,
+        "after": 444342,
+        "visiblePixelsEqual": true
+      },
+      {
+        "src": "assets/ui/menu-v3233/icons/forge.png",
+        "dest": "assets/ui/menu-v3233/icons/lossless-v1/forge.webp",
+        "width": 614,
+        "height": 684,
+        "before": 620652,
+        "after": 468594,
+        "visiblePixelsEqual": true
+      },
+      {
+        "src": "assets/ui/menu-v3233/icons/friends-v2.png",
+        "dest": "assets/ui/menu-v3233/icons/lossless-v1/friends-v2.webp",
+        "width": 256,
+        "height": 256,
+        "before": 82036,
+        "after": 57460,
+        "visiblePixelsEqual": true
+      },
+      {
+        "src": "assets/ui/menu-v3233/icons/guild.png",
+        "dest": "assets/ui/menu-v3233/icons/lossless-v1/guild.webp",
+        "width": 614,
+        "height": 684,
+        "before": 688298,
+        "after": 510818,
+        "visiblePixelsEqual": true
+      },
+      {
+        "src": "assets/ui/menu-v3233/icons/heroes.png",
+        "dest": "assets/ui/menu-v3233/icons/lossless-v1/heroes.webp",
+        "width": 661,
+        "height": 793,
+        "before": 989648,
+        "after": 748684,
+        "visiblePixelsEqual": true
+      },
+      {
+        "src": "assets/ui/menu-v3233/icons/hub.png",
+        "dest": "assets/ui/menu-v3233/icons/lossless-v1/hub.webp",
+        "width": 661,
+        "height": 793,
+        "before": 801918,
+        "after": 620628,
+        "visiblePixelsEqual": true
+      },
+      {
+        "src": "assets/ui/menu-v3233/icons/hunt.png",
+        "dest": "assets/ui/menu-v3233/icons/lossless-v1/hunt.webp",
+        "width": 614,
+        "height": 684,
+        "before": 616179,
+        "after": 452866,
+        "visiblePixelsEqual": true
+      },
+      {
+        "src": "assets/ui/menu-v3233/icons/jobs.png",
+        "dest": "assets/ui/menu-v3233/icons/lossless-v1/jobs.webp",
+        "width": 614,
+        "height": 682,
+        "before": 581909,
+        "after": 435260,
+        "visiblePixelsEqual": true
+      },
+      {
+        "src": "assets/ui/menu-v3233/icons/mail.png",
+        "dest": "assets/ui/menu-v3233/icons/lossless-v1/mail.webp",
+        "width": 614,
+        "height": 682,
+        "before": 471704,
+        "after": 346108,
+        "visiblePixelsEqual": true
+      },
+      {
+        "src": "assets/ui/menu-v3233/icons/profile-ong-pho-imagen.png",
+        "dest": "assets/ui/menu-v3233/icons/lossless-v1/profile-ong-pho-imagen.webp",
+        "width": 256,
+        "height": 256,
+        "before": 93357,
+        "after": 64488,
+        "visiblePixelsEqual": true
+      },
+      {
+        "src": "assets/ui/menu-v3233/icons/quests.png",
+        "dest": "assets/ui/menu-v3233/icons/lossless-v1/quests.webp",
+        "width": 256,
+        "height": 256,
+        "before": 91607,
+        "after": 61062,
+        "visiblePixelsEqual": true
+      },
+      {
+        "src": "assets/ui/menu-v3233/icons/resource-energy-imagen.png",
+        "dest": "assets/ui/menu-v3233/icons/lossless-v1/resource-energy-imagen.webp",
+        "width": 256,
+        "height": 256,
+        "before": 47493,
+        "after": 36758,
+        "visiblePixelsEqual": true
+      },
+      {
+        "src": "assets/ui/menu-v3233/icons/resource-gem-imagen.png",
+        "dest": "assets/ui/menu-v3233/icons/lossless-v1/resource-gem-imagen.webp",
+        "width": 256,
+        "height": 256,
+        "before": 53579,
+        "after": 37422,
+        "visiblePixelsEqual": true
+      },
+      {
+        "src": "assets/ui/menu-v3233/icons/resource-gold-imagen.png",
+        "dest": "assets/ui/menu-v3233/icons/lossless-v1/resource-gold-imagen.webp",
+        "width": 256,
+        "height": 256,
+        "before": 85529,
+        "after": 66526,
+        "visiblePixelsEqual": true
+      },
+      {
+        "src": "assets/ui/menu-v3233/icons/shop.png",
+        "dest": "assets/ui/menu-v3233/icons/lossless-v1/shop.webp",
+        "width": 616,
+        "height": 682,
+        "before": 588794,
+        "after": 457324,
+        "visiblePixelsEqual": true
+      },
+      {
+        "src": "assets/ui/menu-v3233/icons/story.png",
+        "dest": "assets/ui/menu-v3233/icons/lossless-v1/story.webp",
+        "width": 614,
+        "height": 682,
+        "before": 694505,
+        "after": 508502,
+        "visiblePixelsEqual": true
+      },
+      {
+        "src": "assets/ui/menu-v3233/icons/summon.png",
+        "dest": "assets/ui/menu-v3233/icons/lossless-v1/summon.webp",
+        "width": 614,
+        "height": 682,
+        "before": 666982,
+        "after": 501534,
+        "visiblePixelsEqual": true
+      },
+      {
+        "src": "assets/ui/menu-v3233/icons/team.png",
+        "dest": "assets/ui/menu-v3233/icons/lossless-v1/team.webp",
+        "width": 661,
+        "height": 793,
+        "before": 884339,
+        "after": 679368,
+        "visiblePixelsEqual": true
+      },
+      {
+        "src": "assets/hub/background-v3240/vietnamese-cloud-citadel.png",
+        "dest": "assets/hub/background-v3240/vietnamese-cloud-citadel.lossless-v1.webp",
+        "width": 2048,
+        "height": 3072,
+        "before": 8493747,
+        "after": 6595848,
+        "visiblePixelsEqual": true
+      },
+      {
+        "src": "assets/hub/foreground-v3240/vietnamese-gateway-foreground.png",
+        "dest": "assets/hub/foreground-v3240/vietnamese-gateway-foreground.lossless-v1.webp",
+        "width": 1109,
+        "height": 1418,
+        "before": 2650393,
+        "after": 1593918,
+        "visiblePixelsEqual": true
+      },
+      {
+        "src": "assets/battle/backgrounds-v1/06-ben-song-den-hoa.png",
+        "dest": "assets/battle/backgrounds-v1/06-ben-song-den-hoa.lossless-v1.webp",
+        "width": 941,
+        "height": 1672,
+        "before": 2564196,
+        "after": 1931612,
+        "visiblePixelsEqual": true
+      }
+    ],
+    "before": 25055307,
+    "after": 18625472
+  },
+  "profile": {
+    "revision": "29ecbd04c787bdc93413cb7025d5635fca3a1fa1",
+    "runs": [
+      {
+        "width": 390,
+        "stages": [
+          {
+            "label": "login",
+            "time": 1079.2999999999884,
+            "long": [
+              {
+                "at": 121.89999999999418,
+                "ms": 202
+              },
+              {
+                "at": 364.29999999998836,
+                "ms": 187
+              },
+              {
+                "at": 557.7000000000116,
+                "ms": 130
+              },
+              {
+                "at": 990,
+                "ms": 53
+              }
+            ],
+            "resources": [
+              {
+                "url": "/assets/hub/background-v3240/vietnamese-cloud-citadel.lossless-v1.webp",
+                "bytes": 6595848,
+                "duration": 212,
+                "type": "img"
+              },
+              {
+                "url": "/assets/hub/foreground-v3240/vietnamese-gateway-foreground.lossless-v1.webp",
+                "bytes": 1593918,
+                "duration": 65.69999999998254,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/auth/login-bg.jpg",
+                "bytes": 910219,
+                "duration": 18.89999999999418,
+                "type": "video"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/heroes.webp",
+                "bytes": 748684,
+                "duration": 133.80000000001746,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/team.webp",
+                "bytes": 679368,
+                "duration": 135.80000000001746,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/hub.webp",
+                "bytes": 620628,
+                "duration": 125.10000000000582,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/guild.webp",
+                "bytes": 510818,
+                "duration": 93.60000000000582,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/story.webp",
+                "bytes": 508502,
+                "duration": 136.10000000000582,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/summon.webp",
+                "bytes": 501534,
+                "duration": 117.60000000000582,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/forge.webp",
+                "bytes": 468594,
+                "duration": 95.39999999999418,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/bag.webp",
+                "bytes": 467202,
+                "duration": 99.29999999998836,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/shop.webp",
+                "bytes": 457324,
+                "duration": 109,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/arena.webp",
+                "bytes": 455486,
+                "duration": 114.10000000000582,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/hunt.webp",
+                "bytes": 452866,
+                "duration": 84.80000000001746,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/festival.webp",
+                "bytes": 444342,
+                "duration": 43.39999999999418,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/jobs.webp",
+                "bytes": 435260,
+                "duration": 67.70000000001164,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/expedition.webp",
+                "bytes": 426924,
+                "duration": 78.19999999998254,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/daily.webp",
+                "bytes": 362554,
+                "duration": 54.10000000000582,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/mail.webp",
+                "bytes": 346108,
+                "duration": 68.29999999998836,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/chat.webp",
+                "bytes": 294184,
+                "duration": 98.5,
+                "type": "img"
+              }
+            ]
+          },
+          {
+            "label": "hub",
+            "time": 1567.6000000000058,
+            "long": [
+              {
+                "at": 121.89999999999418,
+                "ms": 202
+              },
+              {
+                "at": 364.29999999998836,
+                "ms": 187
+              },
+              {
+                "at": 557.7000000000116,
+                "ms": 130
+              },
+              {
+                "at": 990,
+                "ms": 53
+              },
+              {
+                "at": 1109.2000000000116,
+                "ms": 252
+              }
+            ],
+            "resources": [
+              {
+                "url": "/assets/ui/auth/login-bg.mp4",
+                "bytes": 7652022,
+                "duration": 471,
+                "type": "video"
+              },
+              {
+                "url": "/assets/hub/background-v3240/vietnamese-cloud-citadel.lossless-v1.webp",
+                "bytes": 6595848,
+                "duration": 212,
+                "type": "img"
+              },
+              {
+                "url": "/assets/audio/bgm-hub-new.mp3",
+                "bytes": 3414354,
+                "duration": 59.5,
+                "type": "audio"
+              },
+              {
+                "url": "/assets/hub/foreground-v3240/vietnamese-gateway-foreground.lossless-v1.webp",
+                "bytes": 1593918,
+                "duration": 65.69999999998254,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/auth/login-bg.jpg",
+                "bytes": 910219,
+                "duration": 18.89999999999418,
+                "type": "video"
+              },
+              {
+                "url": "/assets/audio/sfx/linh-dong/atk.wav",
+                "bytes": 770126,
+                "duration": 88.20000000001164,
+                "type": "fetch"
+              },
+              {
+                "url": "/assets/audio/sfx/linh-dong/ult.wav",
+                "bytes": 770126,
+                "duration": 89,
+                "type": "fetch"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/heroes.webp",
+                "bytes": 748684,
+                "duration": 133.80000000001746,
+                "type": "img"
+              },
+              {
+                "url": "/assets/audio/sfx/bach-dien/atk.wav",
+                "bytes": 692046,
+                "duration": 89.79999999998836,
+                "type": "fetch"
+              },
+              {
+                "url": "/assets/audio/sfx/bach-dien/ult.wav",
+                "bytes": 692046,
+                "duration": 90.89999999999418,
+                "type": "fetch"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/team.webp",
+                "bytes": 679368,
+                "duration": 135.80000000001746,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/hub.webp",
+                "bytes": 620628,
+                "duration": 125.10000000000582,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/guild.webp",
+                "bytes": 510818,
+                "duration": 93.60000000000582,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/story.webp",
+                "bytes": 508502,
+                "duration": 136.10000000000582,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/summon.webp",
+                "bytes": 501534,
+                "duration": 117.60000000000582,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/forge.webp",
+                "bytes": 468594,
+                "duration": 95.39999999999418,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/bag.webp",
+                "bytes": 467202,
+                "duration": 99.29999999998836,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/shop.webp",
+                "bytes": 457324,
+                "duration": 109,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/arena.webp",
+                "bytes": 455486,
+                "duration": 114.10000000000582,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/hunt.webp",
+                "bytes": 452866,
+                "duration": 84.80000000001746,
+                "type": "img"
+              }
+            ]
+          },
+          {
+            "label": "prepare",
+            "time": 2328.2000000000116,
+            "long": [
+              {
+                "at": 121.89999999999418,
+                "ms": 202
+              },
+              {
+                "at": 364.29999999998836,
+                "ms": 187
+              },
+              {
+                "at": 557.7000000000116,
+                "ms": 130
+              },
+              {
+                "at": 990,
+                "ms": 53
+              },
+              {
+                "at": 1109.2000000000116,
+                "ms": 252
+              },
+              {
+                "at": 1896.2999999999884,
+                "ms": 59
+              },
+              {
+                "at": 2086.7999999999884,
+                "ms": 129
+              }
+            ],
+            "resources": [
+              {
+                "url": "/assets/ui/auth/login-bg.mp4",
+                "bytes": 7652022,
+                "duration": 471,
+                "type": "video"
+              },
+              {
+                "url": "/assets/hub/background-v3240/vietnamese-cloud-citadel.lossless-v1.webp",
+                "bytes": 6595848,
+                "duration": 212,
+                "type": "img"
+              },
+              {
+                "url": "/assets/audio/bgm-challenge-new.mp3",
+                "bytes": 3984773,
+                "duration": 63.79999999998836,
+                "type": "audio"
+              },
+              {
+                "url": "/assets/characters/thay-mo/idle-v3193-atlas.png",
+                "bytes": 3538775,
+                "duration": 54.39999999999418,
+                "type": "img"
+              },
+              {
+                "url": "/assets/audio/bgm-hub-new.mp3",
+                "bytes": 3414354,
+                "duration": 59.5,
+                "type": "audio"
+              },
+              {
+                "url": "/assets/battle/backgrounds-v1/06-ben-song-den-hoa.png",
+                "bytes": 2564196,
+                "duration": 54.70000000001164,
+                "type": "css"
+              },
+              {
+                "url": "/assets/characters/thay-mo/master-reference-v1.png",
+                "bytes": 2307766,
+                "duration": 40.20000000001164,
+                "type": "img"
+              },
+              {
+                "url": "/assets/hub/foreground-v3240/vietnamese-gateway-foreground.lossless-v1.webp",
+                "bytes": 1593918,
+                "duration": 65.69999999998254,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/auth/login-bg.jpg",
+                "bytes": 910219,
+                "duration": 18.89999999999418,
+                "type": "video"
+              },
+              {
+                "url": "/assets/audio/sfx/linh-dong/atk.wav",
+                "bytes": 770126,
+                "duration": 88.20000000001164,
+                "type": "fetch"
+              },
+              {
+                "url": "/assets/audio/sfx/linh-dong/ult.wav",
+                "bytes": 770126,
+                "duration": 89,
+                "type": "fetch"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/heroes.webp",
+                "bytes": 748684,
+                "duration": 133.80000000001746,
+                "type": "img"
+              },
+              {
+                "url": "/assets/audio/sfx/bach-dien/atk.wav",
+                "bytes": 692046,
+                "duration": 89.79999999998836,
+                "type": "fetch"
+              },
+              {
+                "url": "/assets/audio/sfx/bach-dien/ult.wav",
+                "bytes": 692046,
+                "duration": 90.89999999999418,
+                "type": "fetch"
+              },
+              {
+                "url": "/assets/ui/campaign/campaign-map-v3.webp",
+                "bytes": 684154,
+                "duration": 6.399999999994179,
+                "type": "css"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/team.webp",
+                "bytes": 679368,
+                "duration": 135.80000000001746,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/hub.webp",
+                "bytes": 620628,
+                "duration": 125.10000000000582,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/guild.webp",
+                "bytes": 510818,
+                "duration": 93.60000000000582,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/story.webp",
+                "bytes": 508502,
+                "duration": 136.10000000000582,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/summon.webp",
+                "bytes": 501534,
+                "duration": 117.60000000000582,
+                "type": "img"
+              }
+            ]
+          }
+        ],
+        "firstTwoActionsMs": 4932,
+        "battle": {
+          "time": 4454.799999999988,
+          "long": [
+            {
+              "at": 169,
+              "ms": 122
+            }
+          ],
+          "assets": [
+            {
+              "type": "assets:waiting",
+              "at": 1791383963721,
+              "taskId": 1,
+              "actorId": "hv-player-0-ong_hang_pho",
+              "battleId": 2,
+              "action": "basic",
+              "urls": []
+            },
+            {
+              "type": "assets:ready",
+              "at": 1791383963721,
+              "taskId": 1,
+              "actorId": "hv-player-0-ong_hang_pho",
+              "battleId": 2,
+              "action": "basic"
+            },
+            {
+              "type": "assets:released",
+              "at": 1791383966485,
+              "taskId": 1,
+              "actorId": "hv-player-0-ong_hang_pho",
+              "battleId": 2
+            },
+            {
+              "type": "assets:waiting",
+              "at": 1791383966525,
+              "taskId": 2,
+              "actorId": "hv-enemy-0-to_diep",
+              "battleId": 2,
+              "action": "ultimate",
+              "urls": []
+            },
+            {
+              "type": "assets:ready",
+              "at": 1791383966525,
+              "taskId": 2,
+              "actorId": "hv-enemy-0-to_diep",
+              "battleId": 2,
+              "action": "ultimate"
+            }
+          ],
+          "resources": [
+            {
+              "url": "/assets/characters/thay-mo/idle-v3193-atlas.png",
+              "bytes": 3538775,
+              "duration": 80.10000000000582,
+              "type": "img"
+            },
+            {
+              "url": "/assets/characters/linh-dong/ready-v1/idle-atlas.webp",
+              "bytes": 3067782,
+              "duration": 107,
+              "type": "img"
+            },
+            {
+              "url": "/assets/battle/backgrounds-v1/06-ben-song-den-hoa.lossless-v1.webp",
+              "bytes": 1931612,
+              "duration": 43.19999999998254,
+              "type": "img"
+            },
+            {
+              "url": "/assets/characters/bach-dien/idle-atlas.webp",
+              "bytes": 1811722,
+              "duration": 24.70000000001164,
+              "type": "img"
+            },
+            {
+              "url": "/assets/battle-runtime/embedded-11.png",
+              "bytes": 1384035,
+              "duration": 8.39999999999418,
+              "type": "img"
+            },
+            {
+              "url": "/assets/battle-runtime/embedded-15.png",
+              "bytes": 1353916,
+              "duration": 7.699999999982538,
+              "type": "img"
+            },
+            {
+              "url": "/assets/battle-runtime/embedded-12.png",
+              "bytes": 936293,
+              "duration": 17.20000000001164,
+              "type": "img"
+            },
+            {
+              "url": "/assets/hunt/nhen-det-ac-mong.png",
+              "bytes": 756412,
+              "duration": 26.900000000023283,
+              "type": "img"
+            },
+            {
+              "url": "/assets/ui/menu-v3233/icons/lossless-v1/heroes.webp",
+              "bytes": 748684,
+              "duration": 20.39999999999418,
+              "type": "img"
+            },
+            {
+              "url": "/assets/ui/menu-v3233/icons/lossless-v1/team.webp",
+              "bytes": 679368,
+              "duration": 46.39999999999418,
+              "type": "img"
+            },
+            {
+              "url": "/assets/ui/menu-v3233/icons/lossless-v1/hub.webp",
+              "bytes": 620628,
+              "duration": 18.79999999998836,
+              "type": "img"
+            },
+            {
+              "url": "/assets/hunt/dong-ho-cat-vo.png",
+              "bytes": 613579,
+              "duration": 29.60000000000582,
+              "type": "img"
+            },
+            {
+              "url": "/assets/hunt/ca-voi-nuot-trang.png",
+              "bytes": 593668,
+              "duration": 23.89999999999418,
+              "type": "img"
+            },
+            {
+              "url": "/assets/ui/menu-v3233/icons/lossless-v1/story.webp",
+              "bytes": 508502,
+              "duration": 71,
+              "type": "img"
+            },
+            {
+              "url": "/assets/ui/menu-v3233/icons/lossless-v1/daily.webp",
+              "bytes": 362554,
+              "duration": 46.69999999998254,
+              "type": "img"
+            },
+            {
+              "url": "/assets/battle-runtime/embedded-08.webp",
+              "bytes": 321224,
+              "duration": 15.60000000000582,
+              "type": "img"
+            },
+            {
+              "url": "/assets/battle-runtime/embedded-06.webp",
+              "bytes": 318740,
+              "duration": 9,
+              "type": "img"
+            },
+            {
+              "url": "/assets/characters/ong-pho/card.png",
+              "bytes": 281067,
+              "duration": 3.2999999999883585,
+              "type": "img"
+            },
+            {
+              "url": "/assets/battle-runtime/embedded-09.webp",
+              "bytes": 235226,
+              "duration": 10.5,
+              "type": "img"
+            },
+            {
+              "url": "/assets/characters/battle-persistent-v1/dinh-idle/page-2-4ce32e22f244.webp",
+              "bytes": 119096,
+              "duration": 6,
+              "type": "img"
+            },
+            {
+              "url": "/assets/characters/battle-persistent-v1/dinh-idle/page-3-be826811f7b4.webp",
+              "bytes": 117022,
+              "duration": 3.3999999999941792,
+              "type": "img"
+            },
+            {
+              "url": "/assets/characters/battle-persistent-v1/dinh-idle/page-4-bae3ea866bc5.webp",
+              "bytes": 116820,
+              "duration": 4.100000000005821,
+              "type": "img"
+            },
+            {
+              "url": "/assets/characters/battle-persistent-v1/dinh-idle/page-6-a2fe7dd6d6b0.webp",
+              "bytes": 116212,
+              "duration": 5.199999999982538,
+              "type": "img"
+            },
+            {
+              "url": "/assets/characters/battle-persistent-v1/dinh-idle/page-5-0c45f09688f8.webp",
+              "bytes": 116068,
+              "duration": 5.100000000005821,
+              "type": "img"
+            },
+            {
+              "url": "/assets/characters/battle-persistent-v1/dinh-idle/page-1-376471bcc22f.webp",
+              "bytes": 115816,
+              "duration": 2.7999999999883585,
+              "type": "img"
+            }
+          ]
+        },
+        "assetErrors": [],
+        "errors": []
+      },
+      {
+        "width": 1280,
+        "stages": [
+          {
+            "label": "login",
+            "time": 636.1999999999825,
+            "long": [
+              {
+                "at": 159,
+                "ms": 59
+              },
+              {
+                "at": 555.0999999999767,
+                "ms": 52
+              }
+            ],
+            "resources": [
+              {
+                "url": "/assets/hub/background-v3240/vietnamese-cloud-citadel.lossless-v1.webp",
+                "bytes": 6595848,
+                "duration": 136.39999999999418,
+                "type": "img"
+              },
+              {
+                "url": "/assets/hub/foreground-v3240/vietnamese-gateway-foreground.lossless-v1.webp",
+                "bytes": 1593918,
+                "duration": 30.099999999976717,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/auth/login-bg.jpg",
+                "bytes": 910219,
+                "duration": 23.39999999999418,
+                "type": "video"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/heroes.webp",
+                "bytes": 748684,
+                "duration": 94,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/team.webp",
+                "bytes": 679368,
+                "duration": 93.79999999998836,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/hub.webp",
+                "bytes": 620628,
+                "duration": 77.89999999999418,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/guild.webp",
+                "bytes": 510818,
+                "duration": 53.69999999998254,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/story.webp",
+                "bytes": 508502,
+                "duration": 77.40000000002328,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/summon.webp",
+                "bytes": 501534,
+                "duration": 103.70000000001164,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/forge.webp",
+                "bytes": 468594,
+                "duration": 54.59999999997672,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/bag.webp",
+                "bytes": 467202,
+                "duration": 62.10000000000582,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/shop.webp",
+                "bytes": 457324,
+                "duration": 61.20000000001164,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/arena.webp",
+                "bytes": 455486,
+                "duration": 103.89999999999418,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/hunt.webp",
+                "bytes": 452866,
+                "duration": 44.19999999998254,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/festival.webp",
+                "bytes": 444342,
+                "duration": 24.5,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/jobs.webp",
+                "bytes": 435260,
+                "duration": 33.30000000001746,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/expedition.webp",
+                "bytes": 426924,
+                "duration": 42,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/daily.webp",
+                "bytes": 362554,
+                "duration": 26.300000000017462,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/mail.webp",
+                "bytes": 346108,
+                "duration": 37.60000000000582,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/chat.webp",
+                "bytes": 294184,
+                "duration": 62,
+                "type": "img"
+              }
+            ]
+          },
+          {
+            "label": "hub",
+            "time": 1207.5,
+            "long": [
+              {
+                "at": 159,
+                "ms": 59
+              },
+              {
+                "at": 555.0999999999767,
+                "ms": 52
+              },
+              {
+                "at": 642.3999999999942,
+                "ms": 226
+              },
+              {
+                "at": 868.6999999999825,
+                "ms": 225
+              }
+            ],
+            "resources": [
+              {
+                "url": "/assets/hub/background-v3240/vietnamese-cloud-citadel.lossless-v1.webp",
+                "bytes": 6595848,
+                "duration": 136.39999999999418,
+                "type": "img"
+              },
+              {
+                "url": "/assets/audio/bgm-hub-new.mp3",
+                "bytes": 3414354,
+                "duration": 75,
+                "type": "audio"
+              },
+              {
+                "url": "/assets/hub/foreground-v3240/vietnamese-gateway-foreground.lossless-v1.webp",
+                "bytes": 1593918,
+                "duration": 30.099999999976717,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/auth/login-bg.jpg",
+                "bytes": 910219,
+                "duration": 23.39999999999418,
+                "type": "video"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/heroes.webp",
+                "bytes": 748684,
+                "duration": 94,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/team.webp",
+                "bytes": 679368,
+                "duration": 93.79999999998836,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/hub.webp",
+                "bytes": 620628,
+                "duration": 77.89999999999418,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/guild.webp",
+                "bytes": 510818,
+                "duration": 53.69999999998254,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/story.webp",
+                "bytes": 508502,
+                "duration": 77.40000000002328,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/summon.webp",
+                "bytes": 501534,
+                "duration": 103.70000000001164,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/forge.webp",
+                "bytes": 468594,
+                "duration": 54.59999999997672,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/bag.webp",
+                "bytes": 467202,
+                "duration": 62.10000000000582,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/shop.webp",
+                "bytes": 457324,
+                "duration": 61.20000000001164,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/arena.webp",
+                "bytes": 455486,
+                "duration": 103.89999999999418,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/hunt.webp",
+                "bytes": 452866,
+                "duration": 44.19999999998254,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/festival.webp",
+                "bytes": 444342,
+                "duration": 24.5,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/jobs.webp",
+                "bytes": 435260,
+                "duration": 33.30000000001746,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/expedition.webp",
+                "bytes": 426924,
+                "duration": 42,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/daily.webp",
+                "bytes": 362554,
+                "duration": 26.300000000017462,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/mail.webp",
+                "bytes": 346108,
+                "duration": 37.60000000000582,
+                "type": "img"
+              }
+            ]
+          },
+          {
+            "label": "prepare",
+            "time": 2134.0999999999767,
+            "long": [
+              {
+                "at": 159,
+                "ms": 59
+              },
+              {
+                "at": 555.0999999999767,
+                "ms": 52
+              },
+              {
+                "at": 642.3999999999942,
+                "ms": 226
+              },
+              {
+                "at": 868.6999999999825,
+                "ms": 225
+              },
+              {
+                "at": 1680.1999999999825,
+                "ms": 94
+              },
+              {
+                "at": 1833.2999999999884,
+                "ms": 126
+              },
+              {
+                "at": 1994.6999999999825,
+                "ms": 62
+              }
+            ],
+            "resources": [
+              {
+                "url": "/assets/hub/background-v3240/vietnamese-cloud-citadel.lossless-v1.webp",
+                "bytes": 6595848,
+                "duration": 136.39999999999418,
+                "type": "img"
+              },
+              {
+                "url": "/assets/characters/thay-mo/idle-v3193-atlas.png",
+                "bytes": 3538775,
+                "duration": 86.30000000001746,
+                "type": "img"
+              },
+              {
+                "url": "/assets/audio/bgm-hub-new.mp3",
+                "bytes": 3414354,
+                "duration": 75,
+                "type": "audio"
+              },
+              {
+                "url": "/assets/battle/backgrounds-v1/06-ben-song-den-hoa.png",
+                "bytes": 2564196,
+                "duration": 40,
+                "type": "css"
+              },
+              {
+                "url": "/assets/characters/thay-mo/master-reference-v1.png",
+                "bytes": 2307766,
+                "duration": 32.10000000000582,
+                "type": "img"
+              },
+              {
+                "url": "/assets/hub/foreground-v3240/vietnamese-gateway-foreground.lossless-v1.webp",
+                "bytes": 1593918,
+                "duration": 30.099999999976717,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/auth/login-bg.jpg",
+                "bytes": 910219,
+                "duration": 23.39999999999418,
+                "type": "video"
+              },
+              {
+                "url": "/assets/audio/sfx/linh-dong/atk.wav",
+                "bytes": 770126,
+                "duration": 58.60000000000582,
+                "type": "fetch"
+              },
+              {
+                "url": "/assets/audio/sfx/linh-dong/ult.wav",
+                "bytes": 770126,
+                "duration": 58.79999999998836,
+                "type": "fetch"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/heroes.webp",
+                "bytes": 748684,
+                "duration": 94,
+                "type": "img"
+              },
+              {
+                "url": "/assets/audio/sfx/bach-dien/atk.wav",
+                "bytes": 692046,
+                "duration": 58.60000000000582,
+                "type": "fetch"
+              },
+              {
+                "url": "/assets/audio/sfx/bach-dien/ult.wav",
+                "bytes": 692046,
+                "duration": 65.5,
+                "type": "fetch"
+              },
+              {
+                "url": "/assets/ui/campaign/campaign-map-v3.webp",
+                "bytes": 684154,
+                "duration": 9.5,
+                "type": "css"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/team.webp",
+                "bytes": 679368,
+                "duration": 93.79999999998836,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/hub.webp",
+                "bytes": 620628,
+                "duration": 77.89999999999418,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/guild.webp",
+                "bytes": 510818,
+                "duration": 53.69999999998254,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/story.webp",
+                "bytes": 508502,
+                "duration": 77.40000000002328,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/summon.webp",
+                "bytes": 501534,
+                "duration": 103.70000000001164,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/forge.webp",
+                "bytes": 468594,
+                "duration": 54.59999999997672,
+                "type": "img"
+              },
+              {
+                "url": "/assets/ui/menu-v3233/icons/lossless-v1/bag.webp",
+                "bytes": 467202,
+                "duration": 62.10000000000582,
+                "type": "img"
+              }
+            ]
+          }
+        ],
+        "firstTwoActionsMs": 5517,
+        "battle": {
+          "time": 5052.1999999999825,
+          "long": [
+            {
+              "at": 161.10000000000582,
+              "ms": 112
+            }
+          ],
+          "assets": [
+            {
+              "type": "assets:waiting",
+              "at": 1791383971245,
+              "taskId": 1,
+              "actorId": "hv-player-0-ong_hang_pho",
+              "battleId": 2,
+              "action": "basic",
+              "urls": []
+            },
+            {
+              "type": "assets:ready",
+              "at": 1791383971245,
+              "taskId": 1,
+              "actorId": "hv-player-0-ong_hang_pho",
+              "battleId": 2,
+              "action": "basic"
+            },
+            {
+              "type": "assets:released",
+              "at": 1791383974301,
+              "taskId": 1,
+              "actorId": "hv-player-0-ong_hang_pho",
+              "battleId": 2
+            },
+            {
+              "type": "assets:waiting",
+              "at": 1791383974397,
+              "taskId": 2,
+              "actorId": "hv-enemy-0-to_diep",
+              "battleId": 2,
+              "action": "ultimate",
+              "urls": []
+            },
+            {
+              "type": "assets:ready",
+              "at": 1791383974397,
+              "taskId": 2,
+              "actorId": "hv-enemy-0-to_diep",
+              "battleId": 2,
+              "action": "ultimate"
+            }
+          ],
+          "resources": [
+            {
+              "url": "/assets/characters/thay-mo/idle-v3193-atlas.png",
+              "bytes": 3538775,
+              "duration": 99.19999999998254,
+              "type": "img"
+            },
+            {
+              "url": "/assets/characters/linh-dong/ready-v1/idle-atlas.webp",
+              "bytes": 3067782,
+              "duration": 68.89999999999418,
+              "type": "img"
+            },
+            {
+              "url": "/assets/battle/backgrounds-v1/06-ben-song-den-hoa.lossless-v1.webp",
+              "bytes": 1931612,
+              "duration": 64.80000000001746,
+              "type": "img"
+            },
+            {
+              "url": "/assets/characters/bach-dien/idle-atlas.webp",
+              "bytes": 1811722,
+              "duration": 71.60000000000582,
+              "type": "img"
+            },
+            {
+              "url": "/assets/battle-runtime/embedded-11.png",
+              "bytes": 1384035,
+              "duration": 18.199999999982538,
+              "type": "img"
+            },
+            {
+              "url": "/assets/battle-runtime/embedded-15.png",
+              "bytes": 1353916,
+              "duration": 19.39999999999418,
+              "type": "img"
+            },
+            {
+              "url": "/assets/battle-runtime/embedded-12.png",
+              "bytes": 936293,
+              "duration": 20.599999999976717,
+              "type": "img"
+            },
+            {
+              "url": "/assets/hunt/nhen-det-ac-mong.png",
+              "bytes": 756412,
+              "duration": 24.29999999998836,
+              "type": "img"
+            },
+            {
+              "url": "/assets/ui/menu-v3233/icons/lossless-v1/heroes.webp",
+              "bytes": 748684,
+              "duration": 25.29999999998836,
+              "type": "img"
+            },
+            {
+              "url": "/assets/ui/menu-v3233/icons/lossless-v1/team.webp",
+              "bytes": 679368,
+              "duration": 69.89999999999418,
+              "type": "img"
+            },
+            {
+              "url": "/assets/ui/menu-v3233/icons/lossless-v1/hub.webp",
+              "bytes": 620628,
+              "duration": 18.10000000000582,
+              "type": "img"
+            },
+            {
+              "url": "/assets/hunt/dong-ho-cat-vo.png",
+              "bytes": 613579,
+              "duration": 25.599999999976717,
+              "type": "img"
+            },
+            {
+              "url": "/assets/hunt/ca-voi-nuot-trang.png",
+              "bytes": 593668,
+              "duration": 19.10000000000582,
+              "type": "img"
+            },
+            {
+              "url": "/assets/ui/menu-v3233/icons/lossless-v1/story.webp",
+              "bytes": 508502,
+              "duration": 90.30000000001746,
+              "type": "img"
+            },
+            {
+              "url": "/assets/ui/menu-v3233/icons/lossless-v1/daily.webp",
+              "bytes": 362554,
+              "duration": 67,
+              "type": "img"
+            },
+            {
+              "url": "/assets/battle-runtime/embedded-10.webp",
+              "bytes": 331474,
+              "duration": 23,
+              "type": "img"
+            },
+            {
+              "url": "/assets/battle-runtime/embedded-08.webp",
+              "bytes": 321224,
+              "duration": 42.29999999998836,
+              "type": "img"
+            },
+            {
+              "url": "/assets/battle-runtime/embedded-06.webp",
+              "bytes": 318740,
+              "duration": 23.60000000000582,
+              "type": "img"
+            },
+            {
+              "url": "/assets/characters/ong-pho/card.png",
+              "bytes": 281067,
+              "duration": 4.5,
+              "type": "img"
+            },
+            {
+              "url": "/assets/battle-runtime/embedded-09.webp",
+              "bytes": 235226,
+              "duration": 41.79999999998836,
+              "type": "img"
+            },
+            {
+              "url": "/assets/characters/battle-persistent-v1/dinh-idle/page-2-4ce32e22f244.webp",
+              "bytes": 119096,
+              "duration": 7,
+              "type": "img"
+            },
+            {
+              "url": "/assets/characters/battle-persistent-v1/dinh-idle/page-3-be826811f7b4.webp",
+              "bytes": 117022,
+              "duration": 4.5,
+              "type": "img"
+            },
+            {
+              "url": "/assets/characters/battle-persistent-v1/dinh-idle/page-4-bae3ea866bc5.webp",
+              "bytes": 116820,
+              "duration": 2.5,
+              "type": "img"
+            },
+            {
+              "url": "/assets/characters/battle-persistent-v1/dinh-idle/page-6-a2fe7dd6d6b0.webp",
+              "bytes": 116212,
+              "duration": 3.5,
+              "type": "img"
+            },
+            {
+              "url": "/assets/characters/battle-persistent-v1/dinh-idle/page-5-0c45f09688f8.webp",
+              "bytes": 116068,
+              "duration": 3.6000000000058208,
+              "type": "img"
+            }
+          ]
+        },
+        "assetErrors": [],
+        "errors": []
+      }
+    ]
+  }
+}

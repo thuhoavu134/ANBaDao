@@ -1,0 +1,867 @@
+{
+  "revision": "13208cd3147175a9eab39b3ba0002e2f33318ebf",
+  "runs": [
+    {
+      "width": 390,
+      "firstTwoActionsMs": 5098,
+      "stages": [
+        {
+          "label": "login",
+          "time": 1235.5999999999767,
+          "longTasks": [
+            {
+              "at": 116.5,
+              "ms": 172
+            },
+            {
+              "at": 350.69999999998254,
+              "ms": 128
+            },
+            {
+              "at": 479,
+              "ms": 101
+            },
+            {
+              "at": 1062.1999999999825,
+              "ms": 83
+            }
+          ],
+          "topImages": [
+            {
+              "url": "/assets/hub/background-v3240/vietnamese-cloud-citadel.png",
+              "bytes": 8493747,
+              "duration": 240.20000000001164,
+              "type": "img"
+            },
+            {
+              "url": "/assets/hub/foreground-v3240/vietnamese-gateway-foreground.png",
+              "bytes": 2650393,
+              "duration": 149.39999999999418,
+              "type": "img"
+            },
+            {
+              "url": "/assets/ui/menu-v3233/icons/heroes.png",
+              "bytes": 989648,
+              "duration": 179.89999999999418,
+              "type": "img"
+            },
+            {
+              "url": "/assets/ui/menu-v3233/icons/team.png",
+              "bytes": 884339,
+              "duration": 182.39999999999418,
+              "type": "img"
+            },
+            {
+              "url": "/assets/ui/menu-v3233/icons/hub.png",
+              "bytes": 801918,
+              "duration": 118,
+              "type": "img"
+            },
+            {
+              "url": "/assets/ui/menu-v3233/icons/story.png",
+              "bytes": 694505,
+              "duration": 132.79999999998836,
+              "type": "img"
+            },
+            {
+              "url": "/assets/ui/menu-v3233/icons/guild.png",
+              "bytes": 688298,
+              "duration": 109.40000000002328,
+              "type": "img"
+            },
+            {
+              "url": "/assets/ui/menu-v3233/icons/summon.png",
+              "bytes": 666982,
+              "duration": 182.70000000001164,
+              "type": "img"
+            }
+          ]
+        },
+        {
+          "label": "hub",
+          "time": 1503.8999999999942,
+          "longTasks": [
+            {
+              "at": 116.5,
+              "ms": 172
+            },
+            {
+              "at": 350.69999999998254,
+              "ms": 128
+            },
+            {
+              "at": 479,
+              "ms": 101
+            },
+            {
+              "at": 1062.1999999999825,
+              "ms": 83
+            }
+          ],
+          "topImages": [
+            {
+              "url": "/assets/hub/background-v3240/vietnamese-cloud-citadel.png",
+              "bytes": 8493747,
+              "duration": 240.20000000001164,
+              "type": "img"
+            },
+            {
+              "url": "/assets/hub/foreground-v3240/vietnamese-gateway-foreground.png",
+              "bytes": 2650393,
+              "duration": 149.39999999999418,
+              "type": "img"
+            },
+            {
+              "url": "/assets/ui/menu-v3233/icons/heroes.png",
+              "bytes": 989648,
+              "duration": 179.89999999999418,
+              "type": "img"
+            },
+            {
+              "url": "/assets/ui/menu-v3233/icons/team.png",
+              "bytes": 884339,
+              "duration": 182.39999999999418,
+              "type": "img"
+            },
+            {
+              "url": "/assets/ui/menu-v3233/icons/hub.png",
+              "bytes": 801918,
+              "duration": 118,
+              "type": "img"
+            },
+            {
+              "url": "/assets/ui/menu-v3233/icons/story.png",
+              "bytes": 694505,
+              "duration": 132.79999999998836,
+              "type": "img"
+            },
+            {
+              "url": "/assets/ui/menu-v3233/icons/guild.png",
+              "bytes": 688298,
+              "duration": 109.40000000002328,
+              "type": "img"
+            },
+            {
+              "url": "/assets/ui/menu-v3233/icons/summon.png",
+              "bytes": 666982,
+              "duration": 182.70000000001164,
+              "type": "img"
+            }
+          ]
+        },
+        {
+          "label": "prepare",
+          "time": 2251.7999999999884,
+          "longTasks": [
+            {
+              "at": 116.5,
+              "ms": 172
+            },
+            {
+              "at": 350.69999999998254,
+              "ms": 128
+            },
+            {
+              "at": 479,
+              "ms": 101
+            },
+            {
+              "at": 1062.1999999999825,
+              "ms": 83
+            },
+            {
+              "at": 1583.1999999999825,
+              "ms": 95
+            },
+            {
+              "at": 1826.0999999999767,
+              "ms": 69
+            },
+            {
+              "at": 2090.399999999994,
+              "ms": 90
+            }
+          ],
+          "topImages": [
+            {
+              "url": "/assets/hub/background-v3240/vietnamese-cloud-citadel.png",
+              "bytes": 8493747,
+              "duration": 240.20000000001164,
+              "type": "img"
+            },
+            {
+              "url": "/assets/characters/thay-mo/idle-v3193-atlas.png",
+              "bytes": 3538775,
+              "duration": 84.69999999998254,
+              "type": "img"
+            },
+            {
+              "url": "/assets/hub/foreground-v3240/vietnamese-gateway-foreground.png",
+              "bytes": 2650393,
+              "duration": 149.39999999999418,
+              "type": "img"
+            },
+            {
+              "url": "/assets/characters/thay-mo/master-reference-v1.png",
+              "bytes": 2307766,
+              "duration": 106.79999999998836,
+              "type": "img"
+            },
+            {
+              "url": "/assets/ui/menu-v3233/icons/heroes.png",
+              "bytes": 989648,
+              "duration": 179.89999999999418,
+              "type": "img"
+            },
+            {
+              "url": "/assets/ui/menu-v3233/icons/team.png",
+              "bytes": 884339,
+              "duration": 182.39999999999418,
+              "type": "img"
+            },
+            {
+              "url": "/assets/ui/menu-v3233/icons/hub.png",
+              "bytes": 801918,
+              "duration": 118,
+              "type": "img"
+            },
+            {
+              "url": "/assets/ui/menu-v3233/icons/story.png",
+              "bytes": 694505,
+              "duration": 132.79999999998836,
+              "type": "img"
+            }
+          ]
+        }
+      ],
+      "battle": {
+        "time": 4617.399999999994,
+        "long": [
+          {
+            "at": 149.69999999998254,
+            "ms": 57
+          },
+          {
+            "at": 215.89999999999418,
+            "ms": 135
+          }
+        ],
+        "assets": [
+          {
+            "type": "assets:waiting",
+            "at": 1791383079500,
+            "taskId": 1,
+            "actorId": "hv-player-0-ong_hang_pho",
+            "battleId": 2,
+            "action": "basic",
+            "urls": []
+          },
+          {
+            "type": "assets:ready",
+            "at": 1791383079500,
+            "taskId": 1,
+            "actorId": "hv-player-0-ong_hang_pho",
+            "battleId": 2,
+            "action": "basic"
+          },
+          {
+            "type": "assets:released",
+            "at": 1791383082265,
+            "taskId": 1,
+            "actorId": "hv-player-0-ong_hang_pho",
+            "battleId": 2
+          },
+          {
+            "type": "assets:waiting",
+            "at": 1791383082315,
+            "taskId": 2,
+            "actorId": "hv-enemy-0-to_diep",
+            "battleId": 2,
+            "action": "ultimate",
+            "urls": []
+          },
+          {
+            "type": "assets:ready",
+            "at": 1791383082315,
+            "taskId": 2,
+            "actorId": "hv-enemy-0-to_diep",
+            "battleId": 2,
+            "action": "ultimate"
+          }
+        ],
+        "resources": [
+          {
+            "url": "/assets/characters/thay-mo/idle-v3193-atlas.png",
+            "bytes": 3538775,
+            "duration": 93.5,
+            "type": "img"
+          },
+          {
+            "url": "/assets/characters/linh-dong/ready-v1/idle-atlas.webp",
+            "bytes": 3067782,
+            "duration": 89.5,
+            "type": "img"
+          },
+          {
+            "url": "/assets/battle/backgrounds-v1/06-ben-song-den-hoa.png",
+            "bytes": 2564196,
+            "duration": 80,
+            "type": "img"
+          },
+          {
+            "url": "/assets/characters/bach-dien/idle-atlas.webp",
+            "bytes": 1811722,
+            "duration": 63,
+            "type": "img"
+          },
+          {
+            "url": "/assets/battle-runtime/embedded-11.png",
+            "bytes": 1384035,
+            "duration": 11.5,
+            "type": "img"
+          },
+          {
+            "url": "/assets/battle-runtime/embedded-15.png",
+            "bytes": 1353916,
+            "duration": 13.199999999982538,
+            "type": "img"
+          },
+          {
+            "url": "/assets/ui/menu-v3233/icons/heroes.png",
+            "bytes": 989648,
+            "duration": 21.099999999976717,
+            "type": "img"
+          },
+          {
+            "url": "/assets/battle-runtime/embedded-12.png",
+            "bytes": 936293,
+            "duration": 29.5,
+            "type": "img"
+          },
+          {
+            "url": "/assets/ui/menu-v3233/icons/team.png",
+            "bytes": 884339,
+            "duration": 52.30000000001746,
+            "type": "img"
+          },
+          {
+            "url": "/assets/ui/menu-v3233/icons/hub.png",
+            "bytes": 801918,
+            "duration": 23.599999999976717,
+            "type": "img"
+          },
+          {
+            "url": "/assets/hunt/nhen-det-ac-mong.png",
+            "bytes": 756412,
+            "duration": 38.70000000001164,
+            "type": "img"
+          },
+          {
+            "url": "/assets/ui/menu-v3233/icons/story.png",
+            "bytes": 694505,
+            "duration": 61.10000000000582,
+            "type": "img"
+          },
+          {
+            "url": "/assets/hunt/dong-ho-cat-vo.png",
+            "bytes": 613579,
+            "duration": 40.30000000001746,
+            "type": "img"
+          },
+          {
+            "url": "/assets/hunt/ca-voi-nuot-trang.png",
+            "bytes": 593668,
+            "duration": 29.5,
+            "type": "img"
+          },
+          {
+            "url": "/assets/ui/menu-v3233/icons/daily.png",
+            "bytes": 489098,
+            "duration": 53.19999999998254,
+            "type": "img"
+          },
+          {
+            "url": "/assets/battle-runtime/embedded-10.webp",
+            "bytes": 331474,
+            "duration": 23.39999999999418,
+            "type": "img"
+          },
+          {
+            "url": "/assets/battle-runtime/embedded-08.webp",
+            "bytes": 321224,
+            "duration": 33,
+            "type": "img"
+          },
+          {
+            "url": "/assets/battle-runtime/embedded-06.webp",
+            "bytes": 318740,
+            "duration": 9.900000000023283,
+            "type": "img"
+          },
+          {
+            "url": "/assets/characters/ong-pho/card.png",
+            "bytes": 281067,
+            "duration": 5,
+            "type": "img"
+          },
+          {
+            "url": "/assets/battle-runtime/embedded-09.webp",
+            "bytes": 235226,
+            "duration": 7.100000000005821,
+            "type": "img"
+          },
+          {
+            "url": "/assets/characters/battle-persistent-v1/dinh-idle/page-2-4ce32e22f244.webp",
+            "bytes": 119096,
+            "duration": 14,
+            "type": "img"
+          },
+          {
+            "url": "/assets/characters/battle-persistent-v1/dinh-idle/page-3-be826811f7b4.webp",
+            "bytes": 117022,
+            "duration": 5.399999999994179,
+            "type": "img"
+          },
+          {
+            "url": "/assets/characters/battle-persistent-v1/dinh-idle/page-4-bae3ea866bc5.webp",
+            "bytes": 116820,
+            "duration": 4.2000000000116415,
+            "type": "img"
+          },
+          {
+            "url": "/assets/characters/battle-persistent-v1/dinh-idle/page-6-a2fe7dd6d6b0.webp",
+            "bytes": 116212,
+            "duration": 3.8999999999941792,
+            "type": "img"
+          },
+          {
+            "url": "/assets/characters/battle-persistent-v1/dinh-idle/page-5-0c45f09688f8.webp",
+            "bytes": 116068,
+            "duration": 7.7000000000116415,
+            "type": "img"
+          }
+        ]
+      },
+      "errors": []
+    },
+    {
+      "width": 1280,
+      "firstTwoActionsMs": 5132,
+      "stages": [
+        {
+          "label": "login",
+          "time": 749,
+          "longTasks": [
+            {
+              "at": 157,
+              "ms": 79
+            },
+            {
+              "at": 236.70000000001164,
+              "ms": 53
+            }
+          ],
+          "topImages": [
+            {
+              "url": "/assets/hub/background-v3240/vietnamese-cloud-citadel.png",
+              "bytes": 8493747,
+              "duration": 232.89999999999418,
+              "type": "img"
+            },
+            {
+              "url": "/assets/hub/foreground-v3240/vietnamese-gateway-foreground.png",
+              "bytes": 2650393,
+              "duration": 96.20000000001164,
+              "type": "img"
+            },
+            {
+              "url": "/assets/ui/menu-v3233/icons/heroes.png",
+              "bytes": 989648,
+              "duration": 99.39999999999418,
+              "type": "img"
+            },
+            {
+              "url": "/assets/ui/menu-v3233/icons/team.png",
+              "bytes": 884339,
+              "duration": 107.60000000000582,
+              "type": "img"
+            },
+            {
+              "url": "/assets/ui/menu-v3233/icons/hub.png",
+              "bytes": 801918,
+              "duration": 77.60000000000582,
+              "type": "img"
+            },
+            {
+              "url": "/assets/ui/menu-v3233/icons/story.png",
+              "bytes": 694505,
+              "duration": 78.10000000000582,
+              "type": "img"
+            },
+            {
+              "url": "/assets/ui/menu-v3233/icons/guild.png",
+              "bytes": 688298,
+              "duration": 85.60000000000582,
+              "type": "img"
+            },
+            {
+              "url": "/assets/ui/menu-v3233/icons/summon.png",
+              "bytes": 666982,
+              "duration": 134.90000000002328,
+              "type": "img"
+            }
+          ]
+        },
+        {
+          "label": "hub",
+          "time": 822.9000000000233,
+          "longTasks": [
+            {
+              "at": 157,
+              "ms": 79
+            },
+            {
+              "at": 236.70000000001164,
+              "ms": 53
+            },
+            {
+              "at": 676.7000000000116,
+              "ms": 61
+            }
+          ],
+          "topImages": [
+            {
+              "url": "/assets/hub/background-v3240/vietnamese-cloud-citadel.png",
+              "bytes": 8493747,
+              "duration": 232.89999999999418,
+              "type": "img"
+            },
+            {
+              "url": "/assets/hub/foreground-v3240/vietnamese-gateway-foreground.png",
+              "bytes": 2650393,
+              "duration": 96.20000000001164,
+              "type": "img"
+            },
+            {
+              "url": "/assets/ui/menu-v3233/icons/heroes.png",
+              "bytes": 989648,
+              "duration": 99.39999999999418,
+              "type": "img"
+            },
+            {
+              "url": "/assets/ui/menu-v3233/icons/team.png",
+              "bytes": 884339,
+              "duration": 107.60000000000582,
+              "type": "img"
+            },
+            {
+              "url": "/assets/ui/menu-v3233/icons/hub.png",
+              "bytes": 801918,
+              "duration": 77.60000000000582,
+              "type": "img"
+            },
+            {
+              "url": "/assets/ui/menu-v3233/icons/story.png",
+              "bytes": 694505,
+              "duration": 78.10000000000582,
+              "type": "img"
+            },
+            {
+              "url": "/assets/ui/menu-v3233/icons/guild.png",
+              "bytes": 688298,
+              "duration": 85.60000000000582,
+              "type": "img"
+            },
+            {
+              "url": "/assets/ui/menu-v3233/icons/summon.png",
+              "bytes": 666982,
+              "duration": 134.90000000002328,
+              "type": "img"
+            }
+          ]
+        },
+        {
+          "label": "prepare",
+          "time": 1503,
+          "longTasks": [
+            {
+              "at": 157,
+              "ms": 79
+            },
+            {
+              "at": 236.70000000001164,
+              "ms": 53
+            },
+            {
+              "at": 676.7000000000116,
+              "ms": 61
+            },
+            {
+              "at": 995.2000000000116,
+              "ms": 147
+            },
+            {
+              "at": 1322,
+              "ms": 61
+            }
+          ],
+          "topImages": [
+            {
+              "url": "/assets/hub/background-v3240/vietnamese-cloud-citadel.png",
+              "bytes": 8493747,
+              "duration": 232.89999999999418,
+              "type": "img"
+            },
+            {
+              "url": "/assets/characters/thay-mo/idle-v3193-atlas.png",
+              "bytes": 3538775,
+              "duration": 80.39999999999418,
+              "type": "img"
+            },
+            {
+              "url": "/assets/hub/foreground-v3240/vietnamese-gateway-foreground.png",
+              "bytes": 2650393,
+              "duration": 96.20000000001164,
+              "type": "img"
+            },
+            {
+              "url": "/assets/characters/thay-mo/master-reference-v1.png",
+              "bytes": 2307766,
+              "duration": 93.29999999998836,
+              "type": "img"
+            },
+            {
+              "url": "/assets/ui/menu-v3233/icons/heroes.png",
+              "bytes": 989648,
+              "duration": 99.39999999999418,
+              "type": "img"
+            },
+            {
+              "url": "/assets/ui/menu-v3233/icons/team.png",
+              "bytes": 884339,
+              "duration": 107.60000000000582,
+              "type": "img"
+            },
+            {
+              "url": "/assets/ui/menu-v3233/icons/hub.png",
+              "bytes": 801918,
+              "duration": 77.60000000000582,
+              "type": "img"
+            },
+            {
+              "url": "/assets/ui/menu-v3233/icons/story.png",
+              "bytes": 694505,
+              "duration": 78.10000000000582,
+              "type": "img"
+            }
+          ]
+        }
+      ],
+      "battle": {
+        "time": 4953.5,
+        "long": [
+          {
+            "at": 205.70000000001164,
+            "ms": 107
+          }
+        ],
+        "assets": [
+          {
+            "type": "assets:waiting",
+            "at": 1791383085986,
+            "taskId": 1,
+            "actorId": "hv-player-0-ong_hang_pho",
+            "battleId": 2,
+            "action": "basic",
+            "urls": []
+          },
+          {
+            "type": "assets:ready",
+            "at": 1791383085986,
+            "taskId": 1,
+            "actorId": "hv-player-0-ong_hang_pho",
+            "battleId": 2,
+            "action": "basic"
+          },
+          {
+            "type": "assets:released",
+            "at": 1791383089086,
+            "taskId": 1,
+            "actorId": "hv-player-0-ong_hang_pho",
+            "battleId": 2
+          },
+          {
+            "type": "assets:waiting",
+            "at": 1791383089182,
+            "taskId": 2,
+            "actorId": "hv-enemy-0-to_diep",
+            "battleId": 2,
+            "action": "ultimate",
+            "urls": []
+          },
+          {
+            "type": "assets:ready",
+            "at": 1791383089182,
+            "taskId": 2,
+            "actorId": "hv-enemy-0-to_diep",
+            "battleId": 2,
+            "action": "ultimate"
+          }
+        ],
+        "resources": [
+          {
+            "url": "/assets/characters/thay-mo/idle-v3193-atlas.png",
+            "bytes": 3538775,
+            "duration": 122,
+            "type": "img"
+          },
+          {
+            "url": "/assets/characters/linh-dong/ready-v1/idle-atlas.webp",
+            "bytes": 3067782,
+            "duration": 126.5,
+            "type": "img"
+          },
+          {
+            "url": "/assets/battle/backgrounds-v1/06-ben-song-den-hoa.png",
+            "bytes": 2564196,
+            "duration": 61.89999999999418,
+            "type": "img"
+          },
+          {
+            "url": "/assets/characters/bach-dien/idle-atlas.webp",
+            "bytes": 1811722,
+            "duration": 121.29999999998836,
+            "type": "img"
+          },
+          {
+            "url": "/assets/battle-runtime/embedded-11.png",
+            "bytes": 1384035,
+            "duration": 16,
+            "type": "img"
+          },
+          {
+            "url": "/assets/battle-runtime/embedded-15.png",
+            "bytes": 1353916,
+            "duration": 17,
+            "type": "img"
+          },
+          {
+            "url": "/assets/ui/menu-v3233/icons/heroes.png",
+            "bytes": 989648,
+            "duration": 26.10000000000582,
+            "type": "img"
+          },
+          {
+            "url": "/assets/battle-runtime/embedded-12.png",
+            "bytes": 936293,
+            "duration": 93.90000000002328,
+            "type": "img"
+          },
+          {
+            "url": "/assets/ui/menu-v3233/icons/team.png",
+            "bytes": 884339,
+            "duration": 41,
+            "type": "img"
+          },
+          {
+            "url": "/assets/ui/menu-v3233/icons/hub.png",
+            "bytes": 801918,
+            "duration": 23.10000000000582,
+            "type": "img"
+          },
+          {
+            "url": "/assets/hunt/nhen-det-ac-mong.png",
+            "bytes": 756412,
+            "duration": 16.800000000017462,
+            "type": "img"
+          },
+          {
+            "url": "/assets/ui/menu-v3233/icons/story.png",
+            "bytes": 694505,
+            "duration": 80.79999999998836,
+            "type": "img"
+          },
+          {
+            "url": "/assets/hunt/dong-ho-cat-vo.png",
+            "bytes": 613579,
+            "duration": 20,
+            "type": "img"
+          },
+          {
+            "url": "/assets/hunt/ca-voi-nuot-trang.png",
+            "bytes": 593668,
+            "duration": 12.299999999988358,
+            "type": "img"
+          },
+          {
+            "url": "/assets/ui/menu-v3233/icons/daily.png",
+            "bytes": 489098,
+            "duration": 75.19999999998254,
+            "type": "img"
+          },
+          {
+            "url": "/assets/battle-runtime/embedded-10.webp",
+            "bytes": 331474,
+            "duration": 74.79999999998836,
+            "type": "img"
+          },
+          {
+            "url": "/assets/battle-runtime/embedded-08.webp",
+            "bytes": 321224,
+            "duration": 101.40000000002328,
+            "type": "img"
+          },
+          {
+            "url": "/assets/battle-runtime/embedded-06.webp",
+            "bytes": 318740,
+            "duration": 81.5,
+            "type": "img"
+          },
+          {
+            "url": "/assets/characters/ong-pho/card.png",
+            "bytes": 281067,
+            "duration": 7,
+            "type": "img"
+          },
+          {
+            "url": "/assets/battle-runtime/embedded-09.webp",
+            "bytes": 235226,
+            "duration": 95.39999999999418,
+            "type": "img"
+          },
+          {
+            "url": "/assets/characters/battle-persistent-v1/dinh-idle/page-2-4ce32e22f244.webp",
+            "bytes": 119096,
+            "duration": 4.5,
+            "type": "img"
+          },
+          {
+            "url": "/assets/characters/battle-persistent-v1/dinh-idle/page-3-be826811f7b4.webp",
+            "bytes": 117022,
+            "duration": 4.900000000023283,
+            "type": "img"
+          },
+          {
+            "url": "/assets/characters/battle-persistent-v1/dinh-idle/page-4-bae3ea866bc5.webp",
+            "bytes": 116820,
+            "duration": 4.099999999976717,
+            "type": "img"
+          },
+          {
+            "url": "/assets/characters/battle-persistent-v1/dinh-idle/page-6-a2fe7dd6d6b0.webp",
+            "bytes": 116212,
+            "duration": 8.299999999988358,
+            "type": "img"
+          },
+          {
+            "url": "/assets/characters/battle-persistent-v1/dinh-idle/page-5-0c45f09688f8.webp",
+            "bytes": 116068,
+            "duration": 4.2000000000116415,
+            "type": "img"
+          }
+        ]
+      },
+      "errors": []
+    }
+  ]
+}
