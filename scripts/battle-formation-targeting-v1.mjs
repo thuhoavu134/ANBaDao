@@ -20,7 +20,7 @@ export function patchBattleFormationTargeting(input) {
     if(!actor)return false;
     if(action==="basic")return true;
     if(splusOwnsActor(actor))return false;
-    return !["aoe","aoeBurn","aoeDebuff","heal","healAll","guard","guardAll","taunt","cleanseGuard","buff","buffAll","hasteAll","regen"].includes(actionKind(actor,action));
+    return !["aoe","aoeBurn","aoeDebuff","heal","healAll","guard","shield","guardAll","taunt","cleanseGuard","buff","buffAll","hasteAll","regen"].includes(actionKind(actor,action));
   }`);
   replaceFunction('legalTargetsFor', 'preferredTargetFor', `  function legalTargetsFor(actor, action){
     if(splusOwnsActor(actor)&&splusCombat())return splusCombat().targets(actor,action);
@@ -41,7 +41,11 @@ export function patchBattleFormationTargeting(input) {
   once('  function adaptiveTarget(actor, action, fallback){', '  function adaptiveTarget(actor, action, fallback){\n    if(usesFacingTarget(actor,action))return preferredTargetFor(actor,action);');
   once('const planned=plannedAiIntent(actor); if(planned)return planned;', 'const planned=plannedAiIntent(actor); if(planned)return usesFacingTarget(actor,planned.action)?{...planned,target:preferredTargetFor(actor,planned.action)}:planned;');
   // This runs before both legacy and S+ animation owners: visual target = damage target.
-  once('  async function performAction(actor, action, target) {', '  async function performAction(actor, action, target) {\n    if(usesFacingTarget(actor,action))target=preferredTargetFor(actor,action);');
+  // Authored S+ aliases normalize Skill to Basic. Resolve its target only AFTER
+  // normalization, otherwise the animation carries the old Skill target while
+  // the mechanics owner damages the opposing Basic target.
+  once('    if(isBachDien(actor)) action=bachDienLegacyAction(action)||action;',
+    '    if(isBachDien(actor)) action=bachDienLegacyAction(action)||action;\n    if(usesFacingTarget(actor,action))target=preferredTargetFor(actor,action);');
   // A dead contact target must not redirect a chain to a low-HP unit in another lane.
   once('return foes.slice().sort((a,b)=>Core.hpRatio(a)-Core.hpRatio(b)||nemViStacks(b)-nemViStacks(a))[0]||null;',
     'return preferredTargetFor(actor,actor._tacticalAction||"basic")||null;');

@@ -40,3 +40,15 @@ test('ally support and AoE anchors retain their chosen target',async()=>{
   await box.performAction(actor,'skill',target);assert.equal(seen[0],target.id,kind);
  }
 });
+test('authored Bach Dien/Linh Dong Skill aliases retarget AFTER normalization to ATK',async()=>{
+ for(const hero of ['BachDien','LinhDong']){
+  const {box,actor,enemies}=harness('enemy',2);actor.kitVersion='splus42-v2';
+  box['is'+hero]=()=>true;
+  vm.runInContext(extract('normalize'+hero+'Action')+'\n'+extract(hero==='BachDien'?'bachDienLegacyAction':'linhDongLegacyAction'),box);
+  const engine={canUse:()=>true,targets:(a,action)=>action==='basic'?[enemies[2]]:[enemies[0]]};
+  box.splusCombat=()=>engine;box.state={mode:'battle',locked:false,currentId:actor.id};
+  const actual=[];box.performSplusAction=async(a,action,target)=>actual.push({action,id:target.id});
+  await box.performAction(actor,'skill',enemies[0]);
+  assert.deepEqual(actual,[{action:'basic',id:enemies[2].id}],hero+' must animate at the same target as resolved ATK');
+ }
+});

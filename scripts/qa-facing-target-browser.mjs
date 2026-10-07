@@ -30,7 +30,7 @@ try{for(const [width,partial] of [[390,false],[390,true],[1280,false]]){
   if(checked.has(event.actionId))continue;
   const actor=snap.units.find(u=>u.id===event.actorId);
   const action=event.skillId,kind=action==='basic'?(actor?.basicKind||'damage'):action==='skill'?actor?.skillKind:actor?.ultimateKind;
-  if(!actor||actor.kit==='splus42-v2'&&action!=='basic'||['aoe','aoeBurn','aoeDebuff','heal','healAll','guard','guardAll','taunt','cleanseGuard','buff','buffAll','hasteAll','regen'].includes(kind))continue;
+  if(!actor||actor.kit==='splus42-v2'&&action!=='basic'||['aoe','aoeBurn','aoeDebuff','heal','healAll','guard','shield','guardAll','taunt','cleanseGuard','buff','buffAll','hasteAll','regen'].includes(kind))continue;
   const enemies=snap.units.filter(u=>u.team!==actor.team&&u.hp>0),front=enemies.filter(u=>u.slot<3);
   const row=(front.length?front:enemies).sort((a,b)=>a.slot-b.slot);
   const expected=row.find(u=>u.slot%3===actor.slot%3)||row[0];
@@ -43,7 +43,7 @@ try{for(const [width,partial] of [[390,false],[390,true],[1280,false]]){
  }
  const key=JSON.stringify({...snap,units:snap.units.map(u=>({...u,displayHp:undefined,action:undefined}))});
  if(key!==prev){r.events.push({ms:Date.now()-began,...snap});prev=key;}
- if(!r.battleShot&&snap.phase==='Va chạm'&&snap.action==='skill'){const shot=await p.send('Page.captureScreenshot',{format:'jpeg',quality:70});console.log('TARGET_IMAGE:'+partial+':'+shot.data);r.battleShot=true;}
+ if(!r.battleShot&&snap.phase==='Va chạm'&&snap.action==='skill'&&r.targetChecks.some(c=>c.actor===snap.current&&c.action===snap.action)){const shot=await p.send('Page.captureScreenshot',{format:'jpeg',quality:70});console.log('TARGET_IMAGE:'+partial+':'+shot.data);r.battleShot=true;}
  if(snap.round>=3||snap.mode==='result')break;
  await new Promise(r=>setTimeout(r,50));
  }
