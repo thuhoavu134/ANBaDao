@@ -16,11 +16,11 @@ test('AFK renderer uses attack pose/mob approach and authored VFX instead of tok
 
 test('canonical semantic shield/debuff icons retain effect identity',async()=>{const {combatStatusIconType}=await import('../src/render/combat-status-presentation.mjs');for(const [a,b]of [['worldSubstitute','guard'],['armorDown','defDown'],['attackDown','atkDown'],['hardSilence','silence']])assert.equal(combatStatusIconType(a),b);assert.equal(combatStatusIconType('joyMask'),'joyMask');});
 
-test('AFK approach reaches its mob and returns without modifying sparse squad slots',()=>{
+test('AFK approach holds through the pack and regroups without modifying sparse squad slots',()=>{
  const api=vm.runInNewContext(scene.slice(scene.indexOf('const HOME_SLOT'),scene.indexOf('function drawCampaignFarm('))+'\n({sampleCampaignFarm,campaignFarmActorPose,homePartyPose});');
  const squad=[{id:'hero_splus_linh_dong',slot:4,row:'back'}],before=JSON.stringify(squad),specs=campaign().attacks;
  const poseAt=t=>{const farm=api.sampleCampaignFarm(t,squad,false,specs);return {home:api.homePartyPose(squad[0],390,696,farm),pose:api.campaignFarmActorPose(squad[0],390,696,farm)};};
- const start=poseAt(6200),cast=poseAt(7200),end=poseAt(8395);
+ const start=poseAt(6200),cast=poseAt(7200),end=poseAt(23000);
  assert.equal(start.pose.x,start.home.x);assert.ok(Math.hypot(cast.pose.x-cast.home.x,cast.pose.y-cast.home.y)>10);assert.ok(cast.pose.castTime>=0);assert.ok(Math.hypot(end.pose.x-end.home.x,end.pose.y-end.home.y)<1);assert.equal(JSON.stringify(squad),before);
 });
 test('actual Dinh Loi projectile travels enemy-to-player and mirrors once',()=>{

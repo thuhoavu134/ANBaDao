@@ -1,0 +1,314 @@
+✖ roster to assist goes through the screen owner before opening the wheel (3.948283ms)
+✖ AFK remains beside its mob between attacks until the whole pack is cleared (2.779814ms)
+✖ all HUD statuses use artwork fallback without abbreviated letters (0.784221ms)
+✖ result run starts beyond left edge and exposes missing authored run truthfully (0.886385ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 0
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 98.463155
+
+✖ failing tests:
+
+test at tests/owner-oct7-review.test.mjs:6:1
+✖ roster to assist goes through the screen owner before opening the wheel (3.948283ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+  -   'screen:team',
+      'wheel'
+    ]
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/owner-oct7-review.test.mjs:11:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'wheel' ],
+    expected: [ 'screen:team', 'wheel' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/owner-oct7-review.test.mjs:14:1
+✖ AFK remains beside its mob between attacks until the whole pack is cleared (2.779814ms)
+  AssertionError [ERR_ASSERTION]: must not reset to formation between casts
+      at TestContext.<anonymous> (file:///workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/owner-oct7-review.test.mjs:21:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/owner-oct7-review.test.mjs:26:1
+✖ all HUD statuses use artwork fallback without abbreviated letters (0.784221ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /anhDan:.*assets\/ui\/status\//. Input:
+  
+  "import { combatStatusIconType } from '../src/render/combat-status-presentation.mjs';\n" +
+    "import { readFileSync, writeFileSync } from 'node:fs';\n" +
+    "import { fileURLToPath } from 'node:url';\n" +
+    "import { join, resolve } from 'node:path';\n" +
+    "import { createSplusMechanics } from '../src/domain/combat/splus-mechanics.mjs';\n" +
+    "import { SPLUS_HEROES, SPLUS_EXTRA_HEROES, SPLUS_REVIEW_DEFAULTS } from '../src/domain/hero/splus-catalog.mjs';\n" +
+    "import { SPLUS_STATUS_LABELS, SPLUS_ICON_MANIFEST } from '../src/domain/hero/splus-status.mjs';\n" +
+    "import { splusProfilePayload } from '../src/domain/hero/splus-profiles.mjs';\n" +
+    '\n' +
+    'export function createSplusFixture(catalog, selectedId) {\n' +
+    '  const selected=catalog.find(h=>h.id===selectedId)||catalog.find(h=>h.element===selectedId)||catalog[0];\n' +
+    '  function team(element,side,chosen) {\n' +
+    '    const pool=catalog.filter(h=>h.element===element),preferred=chosen||pool[0];\n' +
+    '    const picked=[preferred,...pool.filter(h=>h!==preferred)].slice(0,6),used=new Set(),slots=new Map();\n' +
+    "    const placement=[preferred,...picked.filter(h=>h!==preferred).sort((a,b)=>(a.role==='guardian'?0:a.recommendedSlots.some(s=>s<3)?1:2)-(b.role==='guardian'?0:b.recommendedSlots.some(s=>s<3)?1:2))];\n" +
+    '    for(const h of placement){const slot=h.recommendedSlots.find(s=>!used.has(s))??[0,1,2,3,4,5].find(s=>!used.has(s));used.add(slot);slots.set(h.id,slot);}\n' +
+    '    return picked.map((h,i)=>{\n' +
+    '      const slot=slots.get(h.id);\n' +
+    "      return {id:`${side}:${h.id}`,sourceId:h.id,name:h.name,team:side,slot,archetype:h.role,color:({metal:'#edc66d',soul:'#a8baff',water:'#71daf5',fire:'#ffa176',wood:'#96e1ac',dream:'#cdacff'})[h.element],hp:24000,atk:1700,def:400,speed:100-i,energy:35,accuracy:100,evasion:0,crit:10,critRes:0,critDamage:1.5,level:1,stars:1};\n" +
+    '    });\n' +
+    '  }\n' +
+    "  const elements=['metal','soul','water','fire','wood','dream'],opponent=elements[(elements.indexOf(selected.element)+1)%6];\n" +
+    '  // Fixture-only stats; this config never grants ownership or emits campaign rewards.\n' +
+    "  return {splusReview:true,referenceSimple:true,timingScale:0.35,combatSeed:'splus42-review-v1',playerTeamName:selected.elementName,enemyTeamName:catalog.find(h=>h.element===opponent).elementName,heroes:[...team(selected.element,'player',selected),...team(opponent,'enemy')]};\n" +
+    '}\n' +
+    '\n' +
+    'export function patchSplusBattleHtml(input) {\n' +
+    "  let html=input.replace(/\\r\\n/g,'\\n');\n" +
+    '  const once=(from,to)=>{const count=html.split(from).length-1;if(count!==1)throw new Error(`SPLUS_BUILD_ANCHOR:${from.slice(0,80)}:${count}`);html=html.replace(from,to);};\n' +
+    `  if(html.includes('id="splus42-runtime-v1"'))throw new Error('SPLUS_ALREADY_PATCHED');\n` +
+    "  const bridge=readFileSync(new URL('../src/runtime/splus-battle-bridge.js',import.meta.url),'utf8');\n" +
+    "  const json=x=>JSON.stringify(x).replaceAll('<','\\\\u003c');\n" +
+    '  const payload=`(()=>{const catalog=${json([...SPLUS_HEROES,...SPLUS_EXTRA_HEROES])},defaults=${json(SPLUS_REVIEW_DEFAULTS)};globalThis.SPLUS42=Object.freeze({catalog,profiles:${json(splusProfilePayload())},icons:${json(SPLUS_ICON_MANIFEST)},labels:${json(SPLUS_STATUS_LABELS)},create:options=>(${createSplusMechanics.toString()})({...options,catalog,defaults}),fixture:id=>(${createSplusFixture.toString()})(catalog,id)});})();`;\n' +
+    '  once(\'</head>\',`<script id="splus42-runtime-v1">${payload}</script><style id="splus42-style">body:has(#splus-status-panel){overflow:auto!important;height:auto!important;min-height:100vh}#splus-status-panel{position:relative;z-index:5;max-width:1200px;margin:24px auto;padding:20px;background:#111f29;color:#e9e6d8;font:14px/1.5 sans-serif;border:1px solid #687778;border-radius:16px}#splus-status-panel h2{font-size:20px}.splus-status-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}.splus-status-grid article{padding:12px;background:#1c2c36;border-radius:10px}.splus-status-grid p{color:#d8c793}.splus-status-grid ul{padding-left:18px;margin:8px 0}.splus-status-grid li[data-polarity=debuff]{color:#ffb4a7}.splus-status-grid li[data-polarity=buff]{color:#a5e0bd}.splus-battle #battleOrders{display:none!important}.splus-battle .action-zone{width:min(900px,calc(100vw - 20px))!important}.splus-battle .action-button strong{font-size:13px!important}.splus-battle .action-button small{font-size:10px!important}#splus-evidence{max-height:320px;overflow:auto;font:11px monospace}</style></head>`);\n' +
+    "  once('  const Core = globalThis.HonVietCore;',`  const LegacyCore=globalThis.HonVietCore;\n" +
+    '  const Core={...LegacyCore,\n' +
+    '    canUseAction:(u,a)=>splusCombat()?splusCombat().canUse(u,a):LegacyCore.canUseAction(u,a),\n' +
+    "    tickStatuses:u=>splusCombat()?(['basic','skill','ultimate'].some(a=>splusCombat().canUse(u,a))?[]:[{type:'control'}]):LegacyCore.tickStatuses(u),\n" +
+    '    buildTurnOrder:list=>LegacyCore.buildTurnOrder(list)\n' +
+    '  };`);\n' +
+    '  once(\'    const sessionId = params.get("session") || "";\',`    if(params.has(\'qaSplus42\'))return globalThis.SPLUS42.fixture(params.get(\'qaSplus42\'));\n' +
+    '    const sessionId = params.get("session") || "";`);\n' +
+    `  once('  const REFERENCE_SIMPLE = Boolean(EMBED_CONFIG.referenceSimple);','  const REFERENCE_SIMPLE = Boolean(EMBED_CONFIG.referenceSimple || EMBED_CONFIG.heroes?.some(h=>String(h.sourceId).startsWith("hero_splus_")));');\n` +
+    "  once('? EMBED_CONFIG.heroes.map(normalizeConfiguredHero)','? EMBED_CONFIG.heroes.map(splusHeroConfig)');\n" +
+    "  once('  let units = [];',`  let units = [];\\n${bridge}`);\n" +
+    "  once('const hero=Core.applyProgression(synergized);','const hero=rawHero.kitVersion===\\'splus42-v2\\'?rawHero:Core.applyProgression(synergized);');\n" +
+    "  once('    units = createUnits();','    splusReset();\\n    units = createUnits();\\n    splusStateView();');\n" +
+    `  once('  dom.exitBattleButton?.addEventListener("click", () => {','  dom.exitBattleButton?.addEventListener("click", () => {\\n    splusReset();');\n` +
+    "  once('  function legalTargetsFor(actor, action){','  function legalTargetsFor(actor, action){\\n    if(splusOwnsActor(actor)&&splusCombat())return splusCombat().targets(actor,action);');\n" +
+    "  once('  function preferredTargetFor(actor, action){','  function preferredTargetFor(actor, action){\\n    if(splusOwnsActor(actor)&&splusCombat())return splusCombat().targets(actor,action)[0];');\n" +
+    "  once('    showTargets(candidates, targetsAllies ? actor.team : (actor.team === TEAM_PLAYER ? TEAM_ENEMY : TEAM_PLAYER));','    showTargets(candidates, splusTargetTeam(actor,candidates,targetsAllies ? actor.team : (actor.team === TEAM_PLAYER ? TEAM_ENEMY : TEAM_PLAYER)));');\n" +
+    "  once('  function decideAi(actor){',`  function decideAi(actor){\n" +
+    '    // Only S+ kit actors delegate to the S+ engine. Delegating every unit froze\n' +
+    '    // legacy heroes on basics forever (no ultimate at 70 rage, no regular-skill\n' +
+    '    // rotation), so statuses and their head icons stopped appearing at all.\n' +
+    "    if(splusCombat()&&actor?.kitVersion==='splus42-v2'){const action=splusCombat().chooseAction(actor);return {action,target:splusCombat().targets(actor,action)[0]};}`);\n" +
+    `  once("    if(action==='skill')return;","    if(action==='skill'&&!splusCombat())return;");\n` +
+    `  once("    if(action==='basic'){\\n      const talent=talentSkillIntent(actor);","    if(action==='basic'&&!splusCombat()){\\n      const talent=talentSkillIntent(actor);");\n` +
+    "  once('  async function performAction(actor, action, target) {',`  async function performAction(actor, action, target) {\n" +
+    "    if(actor?.kitVersion==='splus42-v2'&&splusCombat()){\n" +
+    "      if(state.locked||state.mode!=='battle'||actor.id!==state.currentId||!splusCombat().canUse(actor,action))return;\n" +
+    '      return performSplusAction(actor,action,target);\n' +
+    '    }`);\n' +
+    "  once('        state.round += 1;',`        state.round += 1;\n" +
+    '        if(splusCombat()){if(state.round<=15)splusCombat().beginRound(state.round);else splusCombat().finishRound();splusStateView();}`);\n' +
+    "  once('  function updateActorHud(actor) {',`  function updateActorHud(actor) {\n" +
+    '    if(splusCombat()){const button=document.querySelector(\'[data-action="skill"]\');button.hidden=false;button.removeAttribute(\'aria-hidden\');document.querySelector(\'[data-action="ultimate"] .action-key\').textContent=\'3\';splusStateView();}`);\n' +
+    "  once('  function drawUnit(context, unit, time) {','  function drawUnit(context, unit, time) {\\n    if(unit.kitVersion===\\'splus42-v2\\')return drawSplusToken(context,unit,time);');\n" +
+    "  once('  function gainEnergy(unit, amount){','  function gainEnergy(unit, amount){\\n    if(splusCombat())return splusCombat().gainRage(unit,unit,amount);');\n" +
+    "  once('    const visibleStatuses=[];','    const visibleStatuses=splusCombat()?splusCombat().hud(unit).slice(0,4):[];');\n" +
+    '  // 2026-09-28: legacy statuses must still surface when the S+ engine is active\n' +
+    '  // (its hud only knows engine-tracked statuses; legacy burns/buffs landed on\n' +
+    '  // unit.statuses and their head icons vanished). Merge, deduped by type, cap 4.\n' +
+    "  once('      visibleStatuses.push(status);','      if(visibleStatuses.some(shown=>shown.type===status.type)) continue;\\n      visibleStatuses.push(status);');\n" +
+    `  once('const beneficial=[',"const beneficial=status.polarity==='buff'||[");\n` +
+    "  once('icon=statusIconImage(status.type);','icon=statusIconImage(combatStatusIconType(status.type));');\n" +
+    "  once('const STATUS_ICON_SOURCES = Object.freeze({',`const STATUS_ICON_SOURCES = Object.freeze({\n" +
+    '    spiritMark: "assets/ui/status/spirit-mark.svg",\n' +
+    '    stealth: "assets/ui/status/stealth.svg",`);\n' +
+    "  once('  function statusIconImage(type)',`  ${combatStatusIconType.toString()}\n" +
+    '  function statusIconImage(type)`);\n' +
+    "  once('context.arc(sx,sy,isNemVi?size*.34:(compact?5:6),0,Math.PI*2);context.fill();',`context.roundRect(sx-size/2,sy-size/2,size,size,3);context.fill();\n" +
+    '        const label=globalThis.SPLUS42.labels[status.type]||status.type;\n' +
+    "        const short=label.split(/\\\\s+/).slice(0,2).map(word=>word[0]).join('').toUpperCase();\n" +
+    "        context.fillStyle='#fff';context.font='bold 9px sans-serif';context.textAlign='center';context.fillText(short,sx,sy+3);`);\n" +
+    `  once('</head>','<link rel="stylesheet" href="/splus-skill-details.css"><script src="/splus-skill-details.js"></script><style>.splus-battle .action-buttons{gr`... 1964 more characters
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/owner-oct7-review.test.mjs:28:68)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'import { combatStatusIconType } from \'../src/render/combat-status-presentation.mjs\';\nimport { readFileSync, writeFileSync } from \'node:fs\';\nimport { fileURLToPath } from \'node:url\';\nimport { join, resolve } from \'node:path\';\nimport { createSplusMechanics } from \'../src/domain/combat/splus-mechanics.mjs\';\nimport { SPLUS_HEROES, SPLUS_EXTRA_HEROES, SPLUS_REVIEW_DEFAULTS } from \'../src/domain/hero/splus-catalog.mjs\';\nimport { SPLUS_STATUS_LABELS, SPLUS_ICON_MANIFEST } from \'../src/domain/hero/splus-status.mjs\';\nimport { splusProfilePayload } from \'../src/domain/hero/splus-profiles.mjs\';\n\nexport function createSplusFixture(catalog, selectedId) {\n  const selected=catalog.find(h=>h.id===selectedId)||catalog.find(h=>h.element===selectedId)||catalog[0];\n  function team(element,side,chosen) {\n    const pool=catalog.filter(h=>h.element===element),preferred=chosen||pool[0];\n    const picked=[preferred,...pool.filter(h=>h!==preferred)].slice(0,6),used=new Set(),slots=new Map();\n    const placement=[preferred,...picked.filter(h=>h!==preferred).sort((a,b)=>(a.role===\'guardian\'?0:a.recommendedSlots.some(s=>s<3)?1:2)-(b.role===\'guardian\'?0:b.recommendedSlots.some(s=>s<3)?1:2))];\n    for(const h of placement){const slot=h.recommendedSlots.find(s=>!used.has(s))??[0,1,2,3,4,5].find(s=>!used.has(s));used.add(slot);slots.set(h.id,slot);}\n    return picked.map((h,i)=>{\n      const slot=slots.get(h.id);\n      return {id:`${side}:${h.id}`,sourceId:h.id,name:h.name,team:side,slot,archetype:h.role,color:({metal:\'#edc66d\',soul:\'#a8baff\',water:\'#71daf5\',fire:\'#ffa176\',wood:\'#96e1ac\',dream:\'#cdacff\'})[h.element],hp:24000,atk:1700,def:400,speed:100-i,energy:35,accuracy:100,evasion:0,crit:10,critRes:0,critDamage:1.5,level:1,stars:1};\n    });\n  }\n  const elements=[\'metal\',\'soul\',\'water\',\'fire\',\'wood\',\'dream\'],opponent=elements[(elements.indexOf(selected.element)+1)%6];\n  // Fixture-only stats; this config never grants ownership or emits campaign rewards.\n  return {splusReview:true,referenceSimple:true,timingScale:0.35,combatSeed:\'splus42-review-v1\',playerTeamName:selected.elementName,enemyTeamName:catalog.find(h=>h.element===opponent).elementName,heroes:[...team(selected.element,\'player\',selected),...team(opponent,\'enemy\')]};\n}\n\nexport function patchSplusBattleHtml(input) {\n  let html=input.replace(/\\r\\n/g,\'\\n\');\n  const once=(from,to)=>{const count=html.split(from).length-1;if(count!==1)throw new Error(`SPLUS_BUILD_ANCHOR:${from.slice(0,80)}:${count}`);html=html.replace(from,to);};\n  if(html.includes(\'id="splus42-runtime-v1"\'))throw new Error(\'SPLUS_ALREADY_PATCHED\');\n  const bridge=readFileSync(new URL(\'../src/runtime/splus-battle-bridge.js\',import.meta.url),\'utf8\');\n  const json=x=>JSON.stringify(x).replaceAll(\'<\',\'\\\\u003c\');\n  const payload=`(()=>{const catalog=${json([...SPLUS_HEROES,...SPLUS_EXTRA_HEROES])},defaults=${json(SPLUS_REVIEW_DEFAULTS)};globalThis.SPLUS42=Object.freeze({catalog,profiles:${json(splusProfilePayload())},icons:${json(SPLUS_ICON_MANIFEST)},labels:${json(SPLUS_STATUS_LABELS)},create:options=>(${createSplusMechanics.toString()})({...options,catalog,defaults}),fixture:id=>(${createSplusFixture.toString()})(catalog,id)});})();`;\n  once(\'</head>\',`<script id="splus42-runtime-v1">${payload}</script><style id="splus42-style">body:has(#splus-status-panel){overflow:auto!important;height:auto!important;min-height:100vh}#splus-status-panel{position:relative;z-index:5;max-width:1200px;margin:24px auto;padding:20px;background:#111f29;color:#e9e6d8;font:14px/1.5 sans-serif;border:1px solid #687778;border-radius:16px}#splus-status-panel h2{font-size:20px}.splus-status-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}.splus-status-grid article{padding:12px;background:#1c2c36;border-radius:10px}.splus-status-grid p{color:#d8c793}.splus-status-grid ul{padding-left:18px;margin:8px 0}.splus-status-grid li[data-polarity=debuff]{color:#ffb4a7}.splus-status-grid li[data-polarity=buff]{color:#a5e0bd}.splus-battle #battleOrders{display:none!important}.splus-battle .action-zone{width:min(900px,calc(100vw - 20px))!important}.splus-battle .action-button strong{font-size:13px!important}.splus-battle .action-button small{font-size:10px!important}#splus-evidence{max-height:320px;overflow:auto;font:11px monospace}</style></head>`);\n  once(\'  const Core = globalThis.HonVietCore;\',`  const LegacyCore=globalThis.HonVietCore;\n  const Core={...LegacyCore,\n    canUseAction:(u,a)=>splusCombat()?splusCombat().canUse(u,a):LegacyCore.canUseAction(u,a),\n    tickStatuses:u=>splusCombat()?([\'basic\',\'skill\',\'ultimate\'].some(a=>splusCombat().canUse(u,a))?[]:[{type:\'control\'}]):LegacyCore.tickStatuses(u),\n    buildTurnOrder:list=>LegacyCore.buildTurnOrder(list)\n  };`);\n  once(\'    const sessionId = params.get("session") || "";\',`    if(params.has(\'qaSplus42\'))return globalThis.SPLUS42.fixture(params.get(\'qaSplus42\'));\n    const sessionId = params.get("session") || "";`);\n  once(\'  const REFERENCE_SIMPLE = Boolean(EMBED_CONFIG.referenceSimple);\',\'  const REFERENCE_SIMPLE = Boolean(EMBED_CONFIG.referenceSimple || EMBED_CONFIG.heroes?.some(h=>String(h.sourceId).startsWith("hero_splus_")));\');\n  once(\'? EMBED_CONFIG.heroes.map(normalizeConfiguredHero)\',\'? EMBED_CONFIG.heroes.map(splusHeroConfig)\');\n  once(\'  let units = [];\',`  let units = [];\\n${bridge}`);\n  once(\'const hero=Core.applyProgression(synergized);\',\'const hero=rawHero.kitVersion===\\\'splus42-v2\\\'?rawHero:Core.applyProgression(synergized);\');\n  once(\'    units = createUnits();\',\'    splusReset();\\n    units = createUnits();\\n    splusStateView();\');\n  once(\'  dom.exitBattleButton?.addEventListener("click", () => {\',\'  dom.exitBattleButton?.addEventListener("click", () => {\\n    splusReset();\');\n  once(\'  function legalTargetsFor(actor, action){\',\'  function legalTargetsFor(actor, action){\\n    if(splusOwnsActor(actor)&&splusCombat())return splusCombat().targets(actor,action);\');\n  once(\'  function preferredTargetFor(actor, action){\',\'  function preferredTargetFor(actor, action){\\n    if(splusOwnsActor(actor)&&splusCombat())return splusCombat().targets(actor,action)[0];\');\n  once(\'    showTargets(candidates, targetsAllies ? actor.team : (actor.team === TEAM_PLAYER ? TEAM_ENEMY : TEAM_PLAYER));\',\'    showTargets(candidates, splusTargetTeam(actor,candidates,targetsAllies ? actor.team : (actor.team === TEAM_PLAYER ? TEAM_ENEMY : TEAM_PLAYER)));\');\n  once(\'  function decideAi(actor){\',`  function decideAi(actor){\n    // Only S+ kit actors delegate to the S+ engine. Delegating every unit froze\n    // legacy heroes on basics forever (no ultimate at 70 rage, no regular-skill\n    // rotation), so statuses and their head icons stopped appearing at all.\n    if(splusCombat()&&actor?.kitVersion===\'splus42-v2\'){const action=splusCombat().chooseAction(actor);return {action,target:splusCombat().targets(actor,action)[0]};}`);\n  once("    if(action===\'skill\')return;","    if(action===\'skill\'&&!splusCombat())return;");\n  once("    if(action===\'basic\'){\\n      const talent=talentSkillIntent(actor);","    if(action===\'basic\'&&!splusCombat()){\\n      const talent=talentSkillIntent(actor);");\n  once(\'  async function performAction(actor, action, target) {\',`  async function performAction(actor, action, target) {\n    if(actor?.kitVersion===\'splus42-v2\'&&splusCombat()){\n      if(state.locked||state.mode!==\'battle\'||actor.id!==state.currentId||!splusCombat().canUse(actor,action))return;\n      return performSplusAction(actor,action,target);\n    }`);\n  once(\'        state.round += 1;\',`        state.round += 1;\n        if(splusCombat()){if(state.round<=15)splusCombat().beginRound(state.round);else splusCombat().finishRound();splusStateView();}`);\n  once(\'  function updateActorHud(actor) {\',`  function updateActorHud(actor) {\n    if(splusCombat()){const button=document.querySelector(\'[data-action="skill"]\');button.hidden=false;button.removeAttribute(\'aria-hidden\');document.querySelector(\'[data-action="ultimate"] .action-key\').textContent=\'3\';splusStateView();}`);\n  once(\'  function drawUnit(context, unit, time) {\',\'  function drawUnit(context, unit, time) {\\n    if(unit.kitVersion===\\\'splus42-v2\\\')return drawSplusToken(context,unit,time);\');\n  once(\'  function gainEnergy(unit, amount){\',\'  function gainEnergy(unit, amount){\\n    if(splusCombat())return splusCombat().gainRage(unit,unit,amount);\');\n  once(\'    const visibleStatuses=[];\',\'    const visibleStatuses=splusCombat()?splusCombat().hud(unit).slice(0,4):[];\');\n  // 2026-09-28: legacy statuses must still surface when the S+ engine is active\n  // (its hud only knows engine-tracked statuses; legacy burns/buffs landed on\n  // unit.statuses and their head icons vanished). Merge, deduped by type, cap 4.\n  once(\'      visibleStatuses.push(status);\',\'      if(visibleStatuses.some(shown=>shown.type===status.type)) continue;\\n      visibleStatuses.push(status);\');\n  once(\'const beneficial=[\',"const beneficial=status.polarity===\'buff\'||[");\n  once(\'icon=statusIconImage(status.type);\',\'icon=statusIconImage(combatStatusIconType(status.type));\');\n  once(\'const STATUS_ICON_SOURCES = Object.freeze({\',`const STATUS_ICON_SOURCES = Object.freeze({\n    spiritMark: "assets/ui/status/spirit-mark.svg",\n    stealth: "assets/ui/status/stealth.svg",`);\n  once(\'  function statusIconImage(type)\',`  ${combatStatusIconType.toString()}\n  function statusIconImage(type)`);\n  once(\'context.arc(sx,sy,isNemVi?size*.34:(compact?5:6),0,Math.PI*2);context.fill();\',`context.roundRect(sx-size/2,sy-size/2,size,size,3);context.fill();\n        const label=globalThis.SPLUS42.labels[status.type]||status.type;\n        const short=label.split(/\\\\s+/).slice(0,2).map(word=>word[0]).join(\'\').toUpperCase();\n        context.fillStyle=\'#fff\';context.font=\'bold 9px sans-serif\';context.textAlign=\'center\';context.fillText(short,sx,sy+3);`);\n  once(\'</head>\',\'<link rel="stylesheet" href="/splus-skill-details.css"><script src="/splus-skill-details.js"></script><style>.splus-battle .action-buttons{gr'... 1964 more characters,
+    expected: /anhDan:.*assets\/ui\/status\//,
+    operator: 'match',
+    diff: 'simple'
+  }
+
+test at tests/owner-oct7-review.test.mjs:31:1
+✖ result run starts beyond left edge and exposes missing authored run truthfully (0.886385ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /--irv-run-start/. Input:
+  
+  "import { existsSync, readFileSync, writeFileSync } from 'node:fs';\n" +
+    "import { join } from 'node:path';\n" +
+    "import { LUC_ANH_IDLE_BATTLE } from '../src/domain/character/luc-anh-idle.mjs';\n" +
+    '\n' +
+    "const out = join(process.cwd(), 'dist');\n" +
+    "const battlePath = join(out, 'battle.html');\n" +
+    "let battle = readFileSync(battlePath, 'utf8');\n" +
+    "const marker = 'HV_RESULT_CHARACTER_MOTION_V1';\n" +
+    'if (battle.includes(marker)) {\n' +
+    "  console.log('Result character motion already installed');\n" +
+    '  process.exit(0);\n' +
+    '}\n' +
+    '\n' +
+    'let readiness = [];\n' +
+    "const readinessPath = join(out, 'battle-readiness-assets.json');\n" +
+    'if (existsSync(readinessPath)) {\n' +
+    "  try { readiness = JSON.parse(readFileSync(readinessPath, 'utf8')); } catch (_error) { readiness = []; }\n" +
+    '}\n' +
+    'const readyBySource = new Map(readiness.map(row => [row.source, row]));\n' +
+    '\n' +
+    'function clip(source, frames, cols, cellW, cellH, ms, extra = {}) {\n' +
+    '  const ready = readyBySource.get(source);\n' +
+    '  const scale = ready?.scale || 1;\n' +
+    '  return {\n' +
+    '    src: ready?.src || source,\n' +
+    '    frames,\n' +
+    '    cols,\n' +
+    '    cellW: Math.round(cellW * scale),\n' +
+    '    cellH: Math.round(cellH * scale),\n' +
+    '    ms,\n' +
+    '    ...extra\n' +
+    '  };\n' +
+    '}\n' +
+    '\n' +
+    'const manifest = {\n' +
+    "  // No authored Run/Fall exists in Thầy Mo's pack. Keep his real transparent\n" +
+    '  // animated body for the entrance; never substitute the opaque portrait or\n' +
+    "  // another hero's running pose. Authored Run clips remain used where present.\n" +
+    '  thay_mo: {\n' +
+    "    aliases: ['thay_mo', 'thay-mo', 'hero_thay_mo'],\n" +
+    "    entryMotion: 'idle-translation',\n" +
+    "    run: clip('assets/characters/thay-mo/idle-v3193-atlas.png', 96, 12, 235, 264, 62.5,\n" +
+    '      { strideW: 241, strideH: 270, pad: 3, durations: Array.from({length:96},(_,i)=>i%4===1?70:60) }),\n' +
+    "    idle: clip('assets/characters/thay-mo/idle-v3193-atlas.png', 96, 12, 235, 264, 62.5,\n" +
+    '      { strideW: 241, strideH: 270, pad: 3, durations: Array.from({length:96},(_,i)=>i%4===1?70:60) }),\n' +
+    "    fall: clip('assets/characters/thay-mo/idle-v3193-atlas.png', 96, 12, 235, 264, 62.5,\n" +
+    '      { strideW: 241, strideH: 270, pad: 3, frameEnd: 0, syntheticFall: true })\n' +
+    '  },\n' +
+    '  luc_anh: {\n' +
+    "    aliases: ['luc_anh', 'luc-anh', 'hero_splus_luc_anh'],\n" +
+    "    run: clip('assets/characters/luc-anh/run-atlas.webp', 61, 8, 240, 240, 28),\n" +
+    '    idle: clip(LUC_ANH_IDLE_BATTLE.src, 96, 8, 240, 240, 42),\n' +
+    "    fall: clip('assets/characters/luc-anh/fall-atlas.webp', 64, 8, 240, 240, 34)\n" +
+    '  },\n' +
+    '  linh_dong: {\n' +
+    "    aliases: ['linh_dong', 'linh-dong', 'hero_splus_linh_dong'],\n" +
+    "    run: clip('assets/characters/linh-dong/run-atlas.webp', 96, 8, 480, 440, 42),\n" +
+    "    idle: clip('assets/characters/linh-dong/idle-atlas.webp', 96, 8, 480, 440, 42),\n" +
+    "    fall: clip('assets/characters/linh-dong/fall-atlas.webp', 96, 8, 480, 440, 42)\n" +
+    '  },\n' +
+    '  bach_dien: {\n' +
+    "    aliases: ['bach_dien', 'bach-dien', 'hero_splus_bach_dien'],\n" +
+    "    run: clip('assets/characters/bach-dien/run-atlas.webp', 94, 8, 480, 440, 34),\n" +
+    "    idle: clip('assets/characters/bach-dien/idle-atlas.webp', 94, 8, 480, 440, 34),\n" +
+    "    fall: clip('assets/characters/bach-dien/fall-atlas.webp', 94, 8, 480, 440, 34)\n" +
+    '  },\n' +
+    '  dinh_loi: {\n' +
+    "    aliases: ['dinh_loi', 'dinh-loi'],\n" +
+    "    run: clip('assets/characters/dinh-loi/run-atlas.png', 64, 8, 480, 270, 63),\n" +
+    "    idle: clip('assets/characters/dinh-loi/idle-atlas.png', 64, 8, 480, 270, 63),\n" +
+    "    fall: clip('assets/characters/dinh-loi/fall-atlas.png', 64, 8, 480, 270, 63)\n" +
+    '  },\n' +
+    '  ong_pho: {\n' +
+    "    aliases: ['ong_hang_pho', 'ong-pho-gif-test', 'ong_pho'],\n" +
+    "    run: clip('assets/battle-runtime/embedded-11.png', 61, 10, 240, 135, 41, { frameStart: 28, frameEnd: 36 }),\n" +
+    "    idle: clip('assets/battle-runtime/embedded-12.png', 48, 8, 240, 135, 120),\n" +
+    "    fall: clip('assets/battle-runtime/embedded-14.png', 32, 8, 240, 135, 50)\n" +
+    '  }\n' +
+    '};\n' +
+    '\n' +
+    'const css = [\n' +
+    `  '<style id="hv-result-character-motion-v1">',\n` +
+    "  '@media (max-width:699px){#integratedResultV6.irv-defeat .irv-card{height:calc(100% - min(56.25vw,31.640625vh));object-fit:cover;object-position:center top}#integratedResultV6.irv-authored-motion.irv-defeat .irv-hero-wrap{top:11.5%}}',\n" +
+    "  '#integratedResultV6.irv-authored-motion.irv-victory .irv-hero-wrap{top:13.5%}',\n" +
+    "  '#integratedResultV6.irv-authored-motion .irv-hero{image-rendering:auto;will-change:transform,opacity;transition:none}',\n" +
+    "  '#integratedResultV6.irv-authored-motion.irv-victory .irv-hero.run{opacity:1;transform:translateX(-118%);animation:none}',\n" +
+    "  '#integratedResultV6.irv-authored-motion.irv-victory.irv-motion-run-active .irv-hero.run{animation:hvResultRunIn 1.2s .12s cubic-bezier(.2,.72,.2,1) forwards}',\n" +
+    "  '#integratedResultV6.irv-authored-motion.irv-victory.irv-motion-idle .irv-hero.run{opacity:0!important;visibility:hidden!important}',\n" +
+    "  '#integratedResultV6.irv-authored-motion.irv-victory .irv-hero.idle{opacity:0!important;animation:none!important;transform:translateX(0)!important}',\n" +
+    "  '#integratedResultV6.irv-authored-motion.irv-victory.irv-motion-idle .irv-hero.idle{opacity:1!important}',\n" +
+    "  '#integratedResultV6.irv-authored-motion.irv-defeat .irv-hero.fall:not(.irv-generic-fall){animation:none!important;transform:none!important;opacity:1!important;transform-origin:50% 86%}',\n" +
+    `  '@media (min-width:700px){#integratedResultV6.irv-authored-motion.irv-defeat[data-irv-motion-hero="linh_dong"] .irv-hero.fall:not(.irv-generic-fall),#integratedResultV6.irv-authored-motion.irv-defeat[data-irv-motion-hero="bach_dien"] .irv-hero.fall:not(.irv-generic-fall){transform:translateY(-14%) scale(.90)!important}}',\n` +
+    "  '#integratedResultV6.irv-authored-motion.irv-defeat .irv-hero.fall.irv-generic-fall{animation:hvResultGenericFall .76s cubic-bezier(.22,.72,.24,1) forwards!important;transform-origin:50% 84%}',\n" +
+    "  '@keyframes hvResultRunIn{0%{transform:translateX(-118%) translateY(1.5%)}38%{transform:translateX(-68%) translateY(-2%)}74%{transform:translateX(-22%) translateY(.6%)}100%{transform:translateX(0) translateY(0)}}',\n" +
+    "  '@keyframes hvResultGenericFall{0%{transform:translateY(0) rotate(0deg) scale(1)}28%{transform:translateY(-3%) rotate(-16deg) scale(.98)}72%{transform:translateY(2%) rotate(-70deg) scale(.86)}100%{transform:translateY(3%) rotate(-82deg) scale(.80)}}',\n" +
+    "  '@keyframes hvResultGenericFallDesktop{0%{transform:translateY(0) rotate(0deg) scale(.94)}28%{transform:translateY(-4%) rotate(-16deg) scale(.90)}72%{transform:translateY(-4%) rotate(-70deg) scale(.72)}100%{transform:translateY(-4%) rotate(-82deg) scale(.66)}}',\n" +
+    "  '@media (min-width:700px){#integratedResultV6.irv-authored-motion.irv-defeat .irv-hero.fall.irv-generic-fall{animation:hvResultGenericFallDesktop .76s cubic-bezier(.22,.72,.24,1) forwards!important}}',\n" +
+    "  '@media (prefers-reduced-motion:reduce){#integratedResultV6.irv-authored-motion.irv-victory .irv-hero.run{animation:none!important;transform:none!important;opacity:0!important}#integratedResultV6.irv-authored-motion.irv-victory .irv-hero.idle{opacity:1!important}#integratedResultV6.irv-authored-motion.irv-defeat .irv-hero.fall.irv-generic-fall{animation:none!important;transform:translateY(3%) rotate(-82deg) scale(.80)!important}}',\n" +
+    "  '@media (min-width:700px) and (prefers-reduced-motion:reduce){#integratedResultV6.irv-authored-motion.irv-defeat .irv-hero.fall.irv-generic-fall{transform:translateY(-4%) rotate(-82deg) scale(.66)!important}}',\n" +
+    "  '</style>'\n" +
+    "].join('\\n');\n" +
+    "if (!battle.includes('</head>')) throw new Error('Result motion: head boundary missing');\n" +
+    "battle = battle.replace('</head>', css + '\\n</head>');\n" +
+    '\n' +
+    '// Legacy result painters can own their own RAF loops (notably Lục Ảnh idle).\n' +
+    '// Skip them only for heroes handled by this authored result animator, otherwise\n' +
+    '// they would paint over Run/Fall frames after show() returns.\n' +
+    'const oldLucAnhPainter = [\n' +
+    `  "if(victory&&String(m?.sourceId||m?.id)==='luc_anh'){",\n` +
+    `  " const runC=root.querySelector('canvas.irv-hero.run'),idleC=root.querySelector('canvas.irv-hero.idle');",\n` +
+    '  " if(runC)drawLucAnhIdle(runC);",\n' +
+    '  " if(idleC)drawLucAnhIdle(idleC);",\n' +
+    `  "}else root.querySelectorAll('canvas.irv-hero').forEach(c=>paintHero(c,m));"\n` +
+    "].join('\\n');\n" +
+    `const fallbackPainter = "root.querySelectorAll('canvas.irv-hero').forEach(c=>paintHero(c,m));";\n` +
+    `const guardedPainter = "if(!window.__HV_RESULT_MOTION_CAN_DRAW?.(m))root.querySelectorAll('canvas.irv-hero').forEach(c=>paintHero(c,m));";\n` +
+    "const compactLucPainter = oldLucAnhPainter.replace(/\\n /g, '').replace(/\\n/g, '');\n" +
+    'if (battle.includes(compactLucPainter)) battle = battle.replace(compactLucPainter, guardedPainter);\n' +
+    'else if (battle.includes(oldLucAnhPainter)) battle = battle.replace(oldLucAnhPainter, guardedPainter);\n' +
+    'else if (battle.includes(fallbackPainter)) battle = battle.replace(fallbackPainter, guardedPainter);\n' +
+    "else throw new Error('Result motion: legacy painter boundary missing');\n" +
+    '\n' +
+    'const runtimeLines = [\n' +
+    `  '<script id="hv-result-character-motion-v1">',\n` +
+    "  '(()=>{',\n" +
+    `  '"use strict";',\n` +
+    `  'const MARKER="HV_RESULT_CHARACTER_MOTION_V1";',\n` +
+    "  'const MANIFEST=' + JSON.stringify(manifest) + ';',\n" +
+    `  'const GENERIC_ARCHETYPES={dong_quan:["guardian","assets/battle-runtime/embedded-05.webp"],lam_vu:["ranger","assets/battle-runtime/embedded-06.webp"],moc_an:["healer","assets/battle-runtime/embedded-07.webp"],hoa_ho:["striker","assets/battle-runtime/embedded-08.webp"],van_chi:["mystic","assets/battle-runtime/embedded-10.webp"]};',\n` +
+    `  'const root=()=>document.getElementById("integratedResultV6");',\n` +
+    `  'const normalize=value=>String(value||"").trim().toLowerCase().replace(/-/g,"_");',\n` +
+    `  'const keyFor=m=>{const raw=normalize(m?.sourceId||m?.id||"");const name=String(m?.name||"").trim();for(const [key,entry] of Object.entries(MANIFEST)){if(entry.aliases.some(alias=>normalize(alias)===raw))return key;}if(name==="Thầy Mo")return "thay_mo";if(name==="Ông Phở")return "ong_pho";if(name==="Lục Ảnh")return "luc_anh";if(name==="Linh Đồng")return "linh_dong";if(name==="Bạch Diện")return "bach_dien";if(name==="Đình Lôi")return "dinh_loi";return "";};',\n` +
+    `  'const genericFor=m=>{const raw=normalize(m?.sourceId||m?.id||""),type=String(m?.archetype||""),sources={guardian:"assets/battle-runtime/embedded-05.webp",ranger:"assets/battle-runtime/embedded-06.webp",healer:"assets/battle-runtime/embedded-07.webp",striker:"assets`... 10593 more characters
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/4f9857a8e8e1/projects/luc-than/tests/owner-oct7-review.test.mjs:33:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: `import { existsSync, readFileSync, writeFileSync } from 'node:fs';\nimport { join } from 'node:path';\nimport { LUC_ANH_IDLE_BATTLE } from '../src/domain/character/luc-anh-idle.mjs';\n\nconst out = join(process.cwd(), 'dist');\nconst battlePath = join(out, 'battle.html');\nlet battle = readFileSync(battlePath, 'utf8');\nconst marker = 'HV_RESULT_CHARACTER_MOTION_V1';\nif (battle.includes(marker)) {\n  console.log('Result character motion already installed');\n  process.exit(0);\n}\n\nlet readiness = [];\nconst readinessPath = join(out, 'battle-readiness-assets.json');\nif (existsSync(readinessPath)) {\n  try { readiness = JSON.parse(readFileSync(readinessPath, 'utf8')); } catch (_error) { readiness = []; }\n}\nconst readyBySource = new Map(readiness.map(row => [row.source, row]));\n\nfunction clip(source, frames, cols, cellW, cellH, ms, extra = {}) {\n  const ready = readyBySource.get(source);\n  const scale = ready?.scale || 1;\n  return {\n    src: ready?.src || source,\n    frames,\n    cols,\n    cellW: Math.round(cellW * scale),\n    cellH: Math.round(cellH * scale),\n    ms,\n    ...extra\n  };\n}\n\nconst manifest = {\n  // No authored Run/Fall exists in Thầy Mo's pack. Keep his real transparent\n  // animated body for the entrance; never substitute the opaque portrait or\n  // another hero's running pose. Authored Run clips remain used where present.\n  thay_mo: {\n    aliases: ['thay_mo', 'thay-mo', 'hero_thay_mo'],\n    entryMotion: 'idle-translation',\n    run: clip('assets/characters/thay-mo/idle-v3193-atlas.png', 96, 12, 235, 264, 62.5,\n      { strideW: 241, strideH: 270, pad: 3, durations: Array.from({length:96},(_,i)=>i%4===1?70:60) }),\n    idle: clip('assets/characters/thay-mo/idle-v3193-atlas.png', 96, 12, 235, 264, 62.5,\n      { strideW: 241, strideH: 270, pad: 3, durations: Array.from({length:96},(_,i)=>i%4===1?70:60) }),\n    fall: clip('assets/characters/thay-mo/idle-v3193-atlas.png', 96, 12, 235, 264, 62.5,\n      { strideW: 241, strideH: 270, pad: 3, frameEnd: 0, syntheticFall: true })\n  },\n  luc_anh: {\n    aliases: ['luc_anh', 'luc-anh', 'hero_splus_luc_anh'],\n    run: clip('assets/characters/luc-anh/run-atlas.webp', 61, 8, 240, 240, 28),\n    idle: clip(LUC_ANH_IDLE_BATTLE.src, 96, 8, 240, 240, 42),\n    fall: clip('assets/characters/luc-anh/fall-atlas.webp', 64, 8, 240, 240, 34)\n  },\n  linh_dong: {\n    aliases: ['linh_dong', 'linh-dong', 'hero_splus_linh_dong'],\n    run: clip('assets/characters/linh-dong/run-atlas.webp', 96, 8, 480, 440, 42),\n    idle: clip('assets/characters/linh-dong/idle-atlas.webp', 96, 8, 480, 440, 42),\n    fall: clip('assets/characters/linh-dong/fall-atlas.webp', 96, 8, 480, 440, 42)\n  },\n  bach_dien: {\n    aliases: ['bach_dien', 'bach-dien', 'hero_splus_bach_dien'],\n    run: clip('assets/characters/bach-dien/run-atlas.webp', 94, 8, 480, 440, 34),\n    idle: clip('assets/characters/bach-dien/idle-atlas.webp', 94, 8, 480, 440, 34),\n    fall: clip('assets/characters/bach-dien/fall-atlas.webp', 94, 8, 480, 440, 34)\n  },\n  dinh_loi: {\n    aliases: ['dinh_loi', 'dinh-loi'],\n    run: clip('assets/characters/dinh-loi/run-atlas.png', 64, 8, 480, 270, 63),\n    idle: clip('assets/characters/dinh-loi/idle-atlas.png', 64, 8, 480, 270, 63),\n    fall: clip('assets/characters/dinh-loi/fall-atlas.png', 64, 8, 480, 270, 63)\n  },\n  ong_pho: {\n    aliases: ['ong_hang_pho', 'ong-pho-gif-test', 'ong_pho'],\n    run: clip('assets/battle-runtime/embedded-11.png', 61, 10, 240, 135, 41, { frameStart: 28, frameEnd: 36 }),\n    idle: clip('assets/battle-runtime/embedded-12.png', 48, 8, 240, 135, 120),\n    fall: clip('assets/battle-runtime/embedded-14.png', 32, 8, 240, 135, 50)\n  }\n};\n\nconst css = [\n  '<style id="hv-result-character-motion-v1">',\n  '@media (max-width:699px){#integratedResultV6.irv-defeat .irv-card{height:calc(100% - min(56.25vw,31.640625vh));object-fit:cover;object-position:center top}#integratedResultV6.irv-authored-motion.irv-defeat .irv-hero-wrap{top:11.5%}}',\n  '#integratedResultV6.irv-authored-motion.irv-victory .irv-hero-wrap{top:13.5%}',\n  '#integratedResultV6.irv-authored-motion .irv-hero{image-rendering:auto;will-change:transform,opacity;transition:none}',\n  '#integratedResultV6.irv-authored-motion.irv-victory .irv-hero.run{opacity:1;transform:translateX(-118%);animation:none}',\n  '#integratedResultV6.irv-authored-motion.irv-victory.irv-motion-run-active .irv-hero.run{animation:hvResultRunIn 1.2s .12s cubic-bezier(.2,.72,.2,1) forwards}',\n  '#integratedResultV6.irv-authored-motion.irv-victory.irv-motion-idle .irv-hero.run{opacity:0!important;visibility:hidden!important}',\n  '#integratedResultV6.irv-authored-motion.irv-victory .irv-hero.idle{opacity:0!important;animation:none!important;transform:translateX(0)!important}',\n  '#integratedResultV6.irv-authored-motion.irv-victory.irv-motion-idle .irv-hero.idle{opacity:1!important}',\n  '#integratedResultV6.irv-authored-motion.irv-defeat .irv-hero.fall:not(.irv-generic-fall){animation:none!important;transform:none!important;opacity:1!important;transform-origin:50% 86%}',\n  '@media (min-width:700px){#integratedResultV6.irv-authored-motion.irv-defeat[data-irv-motion-hero="linh_dong"] .irv-hero.fall:not(.irv-generic-fall),#integratedResultV6.irv-authored-motion.irv-defeat[data-irv-motion-hero="bach_dien"] .irv-hero.fall:not(.irv-generic-fall){transform:translateY(-14%) scale(.90)!important}}',\n  '#integratedResultV6.irv-authored-motion.irv-defeat .irv-hero.fall.irv-generic-fall{animation:hvResultGenericFall .76s cubic-bezier(.22,.72,.24,1) forwards!important;transform-origin:50% 84%}',\n  '@keyframes hvResultRunIn{0%{transform:translateX(-118%) translateY(1.5%)}38%{transform:translateX(-68%) translateY(-2%)}74%{transform:translateX(-22%) translateY(.6%)}100%{transform:translateX(0) translateY(0)}}',\n  '@keyframes hvResultGenericFall{0%{transform:translateY(0) rotate(0deg) scale(1)}28%{transform:translateY(-3%) rotate(-16deg) scale(.98)}72%{transform:translateY(2%) rotate(-70deg) scale(.86)}100%{transform:translateY(3%) rotate(-82deg) scale(.80)}}',\n  '@keyframes hvResultGenericFallDesktop{0%{transform:translateY(0) rotate(0deg) scale(.94)}28%{transform:translateY(-4%) rotate(-16deg) scale(.90)}72%{transform:translateY(-4%) rotate(-70deg) scale(.72)}100%{transform:translateY(-4%) rotate(-82deg) scale(.66)}}',\n  '@media (min-width:700px){#integratedResultV6.irv-authored-motion.irv-defeat .irv-hero.fall.irv-generic-fall{animation:hvResultGenericFallDesktop .76s cubic-bezier(.22,.72,.24,1) forwards!important}}',\n  '@media (prefers-reduced-motion:reduce){#integratedResultV6.irv-authored-motion.irv-victory .irv-hero.run{animation:none!important;transform:none!important;opacity:0!important}#integratedResultV6.irv-authored-motion.irv-victory .irv-hero.idle{opacity:1!important}#integratedResultV6.irv-authored-motion.irv-defeat .irv-hero.fall.irv-generic-fall{animation:none!important;transform:translateY(3%) rotate(-82deg) scale(.80)!important}}',\n  '@media (min-width:700px) and (prefers-reduced-motion:reduce){#integratedResultV6.irv-authored-motion.irv-defeat .irv-hero.fall.irv-generic-fall{transform:translateY(-4%) rotate(-82deg) scale(.66)!important}}',\n  '</style>'\n].join('\\n');\nif (!battle.includes('</head>')) throw new Error('Result motion: head boundary missing');\nbattle = battle.replace('</head>', css + '\\n</head>');\n\n// Legacy result painters can own their own RAF loops (notably Lục Ảnh idle).\n// Skip them only for heroes handled by this authored result animator, otherwise\n// they would paint over Run/Fall frames after show() returns.\nconst oldLucAnhPainter = [\n  "if(victory&&String(m?.sourceId||m?.id)==='luc_anh'){",\n  " const runC=root.querySelector('canvas.irv-hero.run'),idleC=root.querySelector('canvas.irv-hero.idle');",\n  " if(runC)drawLucAnhIdle(runC);",\n  " if(idleC)drawLucAnhIdle(idleC);",\n  "}else root.querySelectorAll('canvas.irv-hero').forEach(c=>paintHero(c,m));"\n].join('\\n');\nconst fallbackPainter = "root.querySelectorAll('canvas.irv-hero').forEach(c=>paintHero(c,m));";\nconst guardedPainter = "if(!window.__HV_RESULT_MOTION_CAN_DRAW?.(m))root.querySelectorAll('canvas.irv-hero').forEach(c=>paintHero(c,m));";\nconst compactLucPainter = oldLucAnhPainter.replace(/\\n /g, '').replace(/\\n/g, '');\nif (battle.includes(compactLucPainter)) battle = battle.replace(compactLucPainter, guardedPainter);\nelse if (battle.includes(oldLucAnhPainter)) battle = battle.replace(oldLucAnhPainter, guardedPainter);\nelse if (battle.includes(fallbackPainter)) battle = battle.replace(fallbackPainter, guardedPainter);\nelse throw new Error('Result motion: legacy painter boundary missing');\n\nconst runtimeLines = [\n  '<script id="hv-result-character-motion-v1">',\n  '(()=>{',\n  '"use strict";',\n  'const MARKER="HV_RESULT_CHARACTER_MOTION_V1";',\n  'const MANIFEST=' + JSON.stringify(manifest) + ';',\n  'const GENERIC_ARCHETYPES={dong_quan:["guardian","assets/battle-runtime/embedded-05.webp"],lam_vu:["ranger","assets/battle-runtime/embedded-06.webp"],moc_an:["healer","assets/battle-runtime/embedded-07.webp"],hoa_ho:["striker","assets/battle-runtime/embedded-08.webp"],van_chi:["mystic","assets/battle-runtime/embedded-10.webp"]};',\n  'const root=()=>document.getElementById("integratedResultV6");',\n  'const normalize=value=>String(value||"").trim().toLowerCase().replace(/-/g,"_");',\n  'const keyFor=m=>{const raw=normalize(m?.sourceId||m?.id||"");const name=String(m?.name||"").trim();for(const [key,entry] of Object.entries(MANIFEST)){if(entry.aliases.some(alias=>normalize(alias)===raw))return key;}if(name==="Thầy Mo")return "thay_mo";if(name==="Ông Phở")return "ong_pho";if(name==="Lục Ảnh")return "luc_anh";if(name==="Linh Đồng")return "linh_dong";if(name==="Bạch Diện")return "bach_dien";if(name==="Đình Lôi")return "dinh_loi";return "";};',\n  'const genericFor=m=>{const raw=normalize(m?.sourceId||m?.id||""),type=String(m?.archetype||""),sources={guardian:"assets/battle-runtime/embedded-05.webp",ranger:"assets/battle-runtime/embedded-06.webp",healer:"assets/battle-runtime/embedded-07.webp",striker:"assets`... 10593 more characters,
+    expected: /--irv-run-start/,
+    operator: 'match',
+    diff: 'simple'
+  }

@@ -318,7 +318,7 @@ function sampleCampaignFarm(time, squad, quiet = false, specs = {}, world = null
       const crit=(cycle+i+round)%4===0,damage=Math.round((118+i*19+(cycle%5)*11)*(crit?1.8:1));
       events.push({at:at+approachMs+castDuration*.68,actorId:hero.id,lane:i,target:i%count,crit,damage});
     }
-    return {...hero,attackTime,duration,castDuration,approachMs,target:i%count};
+    return {...hero,attackTime,duration,castDuration,approachMs,engageAt:start,target:i%count};
   });
   const mobs=Array.from({length:count},(_,i)=>{
     const hits=events.filter(e=>e.target===i),total=hits.reduce((n,e)=>n+e.damage,0);
@@ -342,16 +342,23 @@ function sampleCampaignFarm(time, squad, quiet = false, specs = {}, world = null
 }
 function campaignFarmActorPose(pick,w,h,farm) {
   const home=homePartyPose(pick,w,h,farm),actor=farm?.actors.find(a=>a.id===pick.id);
-  if(!actor||actor.attackTime<0||!actor.approachMs)return {...home,facing:farm?.direction.x<0?-1:1,castTime:-1};
+  if(!actor||!actor.approachMs||farm.elapsed<actor.engageAt)return {...home,facing:farm?.direction.x<0?-1:1,castTime:-1};
   const map=campaignMapView(w,h,farm.center),mob=farm.mobs[actor.target];
   const tx=map.left+mob.worldX*map.width,ty=map.top+mob.worldY*map.height;
   const dx=tx-home.x,dy=ty-home.y,distance=Math.max(1,Math.hypot(dx,dy));
   const reach=home.bodyH*.85,ratio=Math.max(0,(distance-reach)/distance);
   const e=actor.attackTime,castEnd=actor.approachMs+actor.castDuration;
-  let blend=e<actor.approachMs?e/actor.approachMs:e>castEnd?1-(e-castEnd)/actor.approachMs:1;
+  // Hold the same engagement point through the pauses between authored ATKs.
+  // Regroup only after the entire pack has died and the last cast has recovered.
+  const packClearAt=Math.max(...farm.mobs.map(m=>m.deadAt))+180;
+  const lastCastEnd=Math.max(...farm.actors.map(a=>a.engageAt+6500+a.approachMs+a.castDuration));
+  const regroupAt=Math.max(packClearAt,lastCastEnd);
+  const approach=Math.min(1,(farm.elapsed-actor.engageAt)/actor.approachMs);
+  const returning=farm.elapsed>regroupAt;
+  let blend=returning?1-(farm.elapsed-regroupAt)/actor.approachMs:approach;
   blend=Math.max(0,Math.min(1,blend));blend=blend*blend*(3-2*blend);
   return {...home,x:home.x+dx*ratio*blend,y:home.y+dy*ratio*blend,facing:dx<0?-1:1,
-    moving:e<actor.approachMs||e>castEnd,castTime:e>=actor.approachMs&&e<=castEnd?e-actor.approachMs:-1};
+    moving:approach<1||(returning&&blend>0),castTime:e>=actor.approachMs&&e<=castEnd?e-actor.approachMs:-1};
 }
 function drawCampaignBasicVfx(ctx,actor,farm,w,h,size) {
   if(actor.attackTime<0)return;
@@ -961,4 +968,3 @@ function bootCampaignScene() {
   });
 }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bootCampaignScene, { once: true }); else bootCampaignScene();
-

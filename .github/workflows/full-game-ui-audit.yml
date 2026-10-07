@@ -17,6 +17,11 @@ jobs:
       - run: npm run build
       - name: Full tests
         run: node --test --test-concurrency=1 tests/*.test.mjs
+      - name: Owner Oct7 actual roster and result flow
+        if: ${{ !cancelled() }}
+        run: |
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
+          node scripts/qa-owner-oct7-browser.mjs
       - name: Actual guest AFK canvas
         if: ${{ !cancelled() }}
         run: |
@@ -37,3 +42,4 @@ jobs:
         run: |
           export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
           node scripts/qa-full-game-ui-audit.mjs
+

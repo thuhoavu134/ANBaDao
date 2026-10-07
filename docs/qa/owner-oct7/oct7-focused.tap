@@ -1,0 +1,30 @@
+✔ farm keeps sparse squad identities and authored fractional frame durations (2.414335ms)
+✔ farm remains presentation-only and shares scene lifetime, no reward or combat owner (0.358379ms)
+✔ AC01 party travels continuously, pauses to fight, and reverses without teleporting (4.607116ms)
+✔ AC02-04 all squad attack multiple monsters, hits kill before loot drops and flies (14.518909ms)
+✔ AC05 cosmetic sampler cannot access state or create clocks (1.757355ms)
+✔ AC01 moving camera keeps squad and encounters inside mobile viewport and minimap projection (19.176161ms)
+✔ canonical and alias S+ IDs resolve full-body campaign idle/run/attack (3.220859ms)
+✔ portrait central lane and allied columns stay readable; desktop unchanged (0.692632ms)
+✔ managed HUD stops suppressing semantic icon art or displaying source hero number (0.37173ms)
+✔ Dinh Loi enemy projectile and wave blitters mirror at the draw owner (15.681169ms)
+✔ AFK renderer uses attack pose/mob approach and authored VFX instead of token line (0.321284ms)
+✔ canonical semantic shield/debuff icons retain effect identity (0.880105ms)
+✔ AFK approach holds through the pack and regroups without modifying sparse squad slots (3.363033ms)
+✔ actual Dinh Loi projectile travels enemy-to-player and mirrors once (6.993659ms)
+✔ browser fixture extracts the current hook despite intervening validation statement (1.577565ms)
+✔ portrait separates allied columns while keeping a reference-proportion center lane (1.792278ms)
+✔ compact HUD lane fits within allied columns (5.717938ms)
+✔ spirit mark and stealth have explicit semantic artwork instead of letter badges (0.37821ms)
+✔ roster to assist goes through the screen owner before opening the wheel (4.221435ms)
+✔ AFK remains beside its mob between attacks until the whole pack is cleared (2.403849ms)
+✔ all HUD statuses use artwork fallback without abbreviated letters (0.428685ms)
+✔ result run starts beyond left edge and exposes missing authored run truthfully (0.215595ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 141.084615

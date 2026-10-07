@@ -76,7 +76,7 @@ test('Victory Run waits for its atlas before starting the visible entry timer', 
   assert.ok(patch.includes('irv-motion-run-active'));
   assert.ok(patch.includes('const runSource=entry?entry.run.src:generic.src'));
   assert.ok(patch.includes('imageFor(runSource,beginRun)'));
-  assert.ok(patch.includes('later(finishRunWhenVisible,1370)'));
+  assert.ok(patch.includes('later(finishRunWhenVisible,1770)'));
   assert.ok(patch.includes('MIN_RUN_FRAMES=8'));
   assert.ok(patch.includes('qa.runFrames>=MIN_RUN_FRAMES'));
   assert.ok(patch.includes('later(finishRun,5000)'));
@@ -92,4 +92,5 @@ test('result heroes stay in the wing focus across victory and mobile defeat', ()
   assert.ok(patch.includes('irv-authored-motion.irv-victory .irv-hero-wrap{top:13.5%}'));
   assert.ok(patch.includes('irv-authored-motion.irv-defeat .irv-hero-wrap{top:11.5%}'));
 });
+
 
