@@ -1,6 +1,6 @@
 // Presentation waits only. The existing turn/action/settlement owners still run.
 const __hvSkipWaiters = new Set();
-let __hvSkipSound = null, __hvSkipYieldCount = 0;
+let __hvSkipSound = null, __hvSkipYieldCount = 0, __hvSkipLeaseSequence = 0;
 function __hvIsSkipping() { return state.mode === 'battle' && state.instantSkip === state.battleId; }
 function __hvSkipWait(ms, battleId) {
   const active = () => battleId === state.battleId;
@@ -16,7 +16,12 @@ function __hvSkipWait(ms, battleId) {
   });
 }
 function __hvSkipVisualAssets(prepare, battleId) {
-  const empty = () => ({signal:new AbortController().signal,release(){}});
+  const empty = () => {
+    const controller=new AbortController();
+    return {taskId:`skip:${battleId}:${++__hvSkipLeaseSequence}`,signal:controller.signal,
+      active:()=>!controller.signal.aborted&&state.battleId===battleId&&state.mode==='battle',
+      release(){controller.abort();}};
+  };
   if (__hvIsSkipping()) return Promise.resolve(empty());
   return new Promise((resolve,reject) => {
     let done = false;
