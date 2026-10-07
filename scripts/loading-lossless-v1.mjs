@@ -11,18 +11,21 @@ const iconDir='assets/ui/menu-v3233/icons';
 const outputPath=src=>src.startsWith(iconDir+'/')?src.replace(iconDir+'/',iconDir+'/lossless-v1/').replace(/\.png$/,'.webp'):src.replace(/\.png$/,'.lossless-v1.webp');
 export function patchLoadingImages(html,backgrounds=LOADING_BACKGROUNDS){
  // Covers literal URLs and the existing ${icon}/${cleanMenuIcons[name]} templates.
- let out=html.replace(/assets\/ui\/menu-v3233\/icons\/([^\s"'`<>/]+)\.png/g,(_all,name)=>iconDir+'/lossless-v1/'+name+'.webp');
+ // friends.png is a truncated legacy file. The shipped hub already overrides
+ // it with friends-v2.png; select that same canonical icon before first paint.
+ let out=html.replaceAll("friends:'friends'","friends:'friends-v2'").replaceAll(iconDir+'/friends.png',iconDir+'/friends-v2.png');
+ out=out.replace(/assets\/ui\/menu-v3233\/icons\/([^\s"'`<>/]+)\.png/g,(_all,name)=>iconDir+'/lossless-v1/'+name+'.webp');
  for(const src of backgrounds)out=out.replaceAll(src,outputPath(src));
  return out;
 }
 export async function buildLoadingLossless(root,{backgrounds=LOADING_BACKGROUNDS}={}){
  const dist=join(root,'dist'),icons=join(dist,iconDir);
- const sources=[...readdirSync(icons).filter(n=>n.endsWith('.png')).sort().map(n=>iconDir+'/'+n),...backgrounds];
+ const sources=[...readdirSync(icons).filter(n=>n.endsWith('.png')&&n!=='friends.png').sort().map(n=>iconDir+'/'+n),...backgrounds];
  const images=[];
  // Sequential conversion bounds build memory; no new runtime loader/cache.
  for(const src of sources){
   const original=readFileSync(join(dist,src));
-  const {data,info}=await sharp(original).ensureAlpha().raw().toBuffer({resolveWithObject:true});
+  const {data,info}=await sharp(original).ensureAlpha().raw().toBuffer({resolveWithObject:true}).catch(error=>{throw new Error('Loading image '+src+': '+error.message)});
   const encoded=await sharp(data,{raw:{width:info.width,height:info.height,channels:4}}).webp({lossless:true,effort:4}).toBuffer();
   const decoded=await sharp(encoded).ensureAlpha().raw().toBuffer({resolveWithObject:true});
   if(decoded.info.width!==info.width||decoded.info.height!==info.height)throw new Error('Lossless dimensions: '+src);

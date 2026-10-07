@@ -13,6 +13,8 @@ test('static and templated menu references switch together, unrelated art is unt
  assert.match(out,/icons\/lossless-v1\/heroes\.webp/);
  assert.match(out,/assets\/characters\/hero\.png/);
  assert.equal(patchLoadingImages(out),out);
+ assert.equal(patchLoadingImages("friends:'friends'"),"friends:'friends-v2'");
+ assert.match(patchLoadingImages('assets/ui/menu-v3233/icons/friends.png'),/friends-v2.webp/);
 });
 test('build preserves dimensions and all visible RGBA pixels without touching original',async()=>{
  const root=mkdtempSync(join(tmpdir(),'hv-lossless-'));
