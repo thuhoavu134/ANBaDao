@@ -1,0 +1,372 @@
+{
+  "revision": "1db394b90775af0c741271b80940e30cf8d38753",
+  "runs": [
+    {
+      "width": 390,
+      "height": 844,
+      "checks": [
+        {
+          "name": "hub route",
+          "ok": true,
+          "snapshot": {
+            "route": "hub",
+            "visible": true,
+            "overflow": false,
+            "buttons": 20
+          }
+        },
+        {
+          "name": "heroes route",
+          "ok": true,
+          "snapshot": {
+            "route": "heroes",
+            "visible": true,
+            "overflow": false,
+            "buttons": 31
+          }
+        },
+        {
+          "name": "roster controls at least 44px",
+          "ok": false
+        },
+        {
+          "name": "catalog tab works",
+          "ok": true
+        },
+        {
+          "name": "roster assist navigation works",
+          "ok": true
+        },
+        {
+          "name": "team route",
+          "ok": true,
+          "snapshot": {
+            "route": "team",
+            "visible": true,
+            "overflow": false,
+            "buttons": 64
+          }
+        },
+        {
+          "name": "campaign route",
+          "ok": true,
+          "snapshot": {
+            "route": "campaign",
+            "visible": true,
+            "overflow": false,
+            "buttons": 29
+          }
+        }
+      ],
+      "controls": [
+        {
+          "label": "Tướng",
+          "width": 108.8125,
+          "height": 39
+        },
+        {
+          "label": "Đồ Giám",
+          "width": 108.828125,
+          "height": 33
+        },
+        {
+          "label": "Sắp xếp tướng",
+          "width": 85,
+          "height": 27
+        },
+        {
+          "label": "Tất cả hệ",
+          "width": 32,
+          "height": 34
+        },
+        {
+          "label": "Hệ Hỏa",
+          "width": 32,
+          "height": 34
+        },
+        {
+          "label": "Hệ Kim",
+          "width": 32,
+          "height": 34
+        },
+        {
+          "label": "Hệ Mộc",
+          "width": 32,
+          "height": 34
+        },
+        {
+          "label": "Hệ Phong",
+          "width": 32,
+          "height": 34
+        },
+        {
+          "label": "Hệ Thủy",
+          "width": 32,
+          "height": 34
+        },
+        {
+          "label": "Hệ Thổ",
+          "width": 32,
+          "height": 34
+        },
+        {
+          "label": "Hệ Mộng",
+          "width": 32,
+          "height": 34
+        },
+        {
+          "label": "Hệ Âm Hồn",
+          "width": 32,
+          "height": 34
+        }
+      ],
+      "exceptions": [],
+      "ok": false
+    },
+    {
+      "width": 320,
+      "height": 740,
+      "checks": [
+        {
+          "name": "hub route",
+          "ok": true,
+          "snapshot": {
+            "route": "hub",
+            "visible": true,
+            "overflow": false,
+            "buttons": 20
+          }
+        },
+        {
+          "name": "heroes route",
+          "ok": true,
+          "snapshot": {
+            "route": "heroes",
+            "visible": true,
+            "overflow": false,
+            "buttons": 31
+          }
+        },
+        {
+          "name": "roster controls at least 44px",
+          "ok": false
+        },
+        {
+          "name": "catalog tab works",
+          "ok": true
+        },
+        {
+          "name": "roster assist navigation works",
+          "ok": true
+        },
+        {
+          "name": "team route",
+          "ok": true,
+          "snapshot": {
+            "route": "team",
+            "visible": true,
+            "overflow": false,
+            "buttons": 64
+          }
+        },
+        {
+          "name": "campaign route",
+          "ok": true,
+          "snapshot": {
+            "route": "campaign",
+            "visible": true,
+            "overflow": false,
+            "buttons": 29
+          }
+        }
+      ],
+      "controls": [
+        {
+          "label": "Tướng",
+          "width": 88.234375,
+          "height": 39
+        },
+        {
+          "label": "Đồ Giám",
+          "width": 88.234375,
+          "height": 33
+        },
+        {
+          "label": "Sắp xếp tướng",
+          "width": 85,
+          "height": 27
+        },
+        {
+          "label": "Tất cả hệ",
+          "width": 32,
+          "height": 34
+        },
+        {
+          "label": "Hệ Hỏa",
+          "width": 32,
+          "height": 34
+        },
+        {
+          "label": "Hệ Kim",
+          "width": 32,
+          "height": 34
+        },
+        {
+          "label": "Hệ Mộc",
+          "width": 32,
+          "height": 34
+        },
+        {
+          "label": "Hệ Phong",
+          "width": 32,
+          "height": 34
+        },
+        {
+          "label": "Hệ Thủy",
+          "width": 32,
+          "height": 34
+        },
+        {
+          "label": "Hệ Thổ",
+          "width": 32,
+          "height": 34
+        },
+        {
+          "label": "Hệ Mộng",
+          "width": 32,
+          "height": 34
+        },
+        {
+          "label": "Hệ Âm Hồn",
+          "width": 32,
+          "height": 34
+        }
+      ],
+      "exceptions": [],
+      "ok": false
+    },
+    {
+      "width": 1280,
+      "height": 800,
+      "checks": [
+        {
+          "name": "hub route",
+          "ok": true,
+          "snapshot": {
+            "route": "hub",
+            "visible": true,
+            "overflow": false,
+            "buttons": 20
+          }
+        },
+        {
+          "name": "heroes route",
+          "ok": true,
+          "snapshot": {
+            "route": "heroes",
+            "visible": true,
+            "overflow": false,
+            "buttons": 31
+          }
+        },
+        {
+          "name": "roster controls at least 44px",
+          "ok": false
+        },
+        {
+          "name": "catalog tab works",
+          "ok": true
+        },
+        {
+          "name": "roster assist navigation works",
+          "ok": true
+        },
+        {
+          "name": "team route",
+          "ok": true,
+          "snapshot": {
+            "route": "team",
+            "visible": true,
+            "overflow": false,
+            "buttons": 64
+          }
+        },
+        {
+          "name": "campaign route",
+          "ok": true,
+          "snapshot": {
+            "route": "campaign",
+            "visible": true,
+            "overflow": false,
+            "buttons": 29
+          }
+        }
+      ],
+      "controls": [
+        {
+          "label": "Tướng",
+          "width": 370.578125,
+          "height": 39
+        },
+        {
+          "label": "Đồ Giám",
+          "width": 370.59375,
+          "height": 33
+        },
+        {
+          "label": "Sắp xếp tướng",
+          "width": 85,
+          "height": 27
+        },
+        {
+          "label": "Tất cả hệ",
+          "width": 32,
+          "height": 34
+        },
+        {
+          "label": "Hệ Hỏa",
+          "width": 32,
+          "height": 34
+        },
+        {
+          "label": "Hệ Kim",
+          "width": 32,
+          "height": 34
+        },
+        {
+          "label": "Hệ Mộc",
+          "width": 32,
+          "height": 34
+        },
+        {
+          "label": "Hệ Phong",
+          "width": 32,
+          "height": 34
+        },
+        {
+          "label": "Hệ Thủy",
+          "width": 32,
+          "height": 34
+        },
+        {
+          "label": "Hệ Thổ",
+          "width": 32,
+          "height": 34
+        },
+        {
+          "label": "Hệ Mộng",
+          "width": 32,
+          "height": 34
+        },
+        {
+          "label": "Hệ Âm Hồn",
+          "width": 32,
+          "height": 34
+        }
+      ],
+      "exceptions": [],
+      "ok": false
+    }
+  ],
+  "ok": false
+}

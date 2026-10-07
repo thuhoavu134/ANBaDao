@@ -1,3 +1,9 @@
+# Current UI trial — 2026-10-08
+
+PR290 REVIEW only; baseline main fef053e includes previous entry/media merges. Runtime 5f677ad3670b6870d779873c043907f88a53c6a4. Full game preview: https://luc-than-lsqtxhayh-nyto1.vercel.app. Four-screen polish preserves original assets and all gameplay owners. Build,1684 tests and dedicated browser workflow37665868908 passed; owner aesthetics and physical Safari still pending. Details: docs/qa/ui-polish-20261008/README.md. DO NOT merge until owner approves this UI trial.
+
+---
+
 # First AFK VFX and early battle SFX — 2026-10-07
 
 Status: REVIEW after validation; Draft PR288, no merge approved. Baseline main32cbbf1; runtime25df23ba69374fb46c575646d6fc5e829b8ebc45. Branch fix/first-action-vfx-sfx-20261007. PR287 remains separate and unmerged.

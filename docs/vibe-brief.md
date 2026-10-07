@@ -1,3 +1,9 @@
+# Current UI trial — 2026-10-08
+
+PR290 REVIEW only; baseline main fef053e includes previous entry/media merges. Runtime 5f677ad3670b6870d779873c043907f88a53c6a4. Full game preview: https://luc-than-lsqtxhayh-nyto1.vercel.app. Four-screen polish preserves original assets and all gameplay owners. Build,1684 tests and dedicated browser workflow37665868908 passed; owner aesthetics and physical Safari still pending. Details: docs/qa/ui-polish-20261008/README.md. DO NOT merge until owner approves this UI trial.
+
+---
+
 # Active repair — first-action media (2026-10-07)
 
 Fix first AFK VFX and early battle SFX on cold loading; preserve art, animation cues, rules and AFK reward accrual. No new screen. Baseline32cbbf1; runtime25df23ba; PR288 REVIEW. Preview and evidence: docs/qa/first-action-media-20261007/README.md. Rollback: close unmerged PR; main is untouched. Owner approval required before merge.

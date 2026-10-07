@@ -1,0 +1,60 @@
+/* Presentation only: existing routes, art, animation clocks and commands own behavior. */
+:root{--lt-paper:#f7efdc;--lt-paper-light:#fff9eb;--lt-ink:#392e23;--lt-muted:#776b55;--lt-brass:#b78b43;--lt-jade:#345b4e;--lt-line:#d9c69e}
+#hvHeroRosterV4,#hvGearRoot{width:min(100%,620px);margin-inline:auto;box-shadow:0 0 60px #10272255}
+#hvHeroRosterV4{background:var(--lt-paper);color:var(--lt-ink)}
+#hvHeroRosterV4 .v4-top,#hvCampaignScene .cs-header,#hvCampaignScene .cs-prep-header,#hvGearRoot [data-gear-view="wheel"]>.hv-gear-top{background:linear-gradient(115deg,#fff8e7,#eee1c4);color:var(--lt-ink);border-bottom:1px solid var(--lt-brass);box-shadow:0 2px 9px #4c351b12}
+#hvHeroRosterV4 .v4-profile{height:78px;box-sizing:border-box;padding:10px 12px;grid-template-columns:46px minmax(0,1fr) auto;gap:10px}
+#hvHeroRosterV4 .v4-avatar{width:44px;height:44px;border:1px solid var(--lt-brass);border-radius:10px;background:linear-gradient(#fffaf0,#eedab4);color:#684b27;box-shadow:inset 0 1px #fff;font-size:28px}
+#hvHeroRosterV4 .v4-name{font:700 20px/1.15 Georgia,"Times New Roman",serif;letter-spacing:.01em}
+#hvHeroRosterV4 .v4-sub{font-size:11px;line-height:1.4;color:var(--lt-muted);margin-top:3px}
+#hvHeroRosterV4 .v4-total{font-size:16px;line-height:1.3;color:#9a6222;font-variant-numeric:tabular-nums}
+#hvHeroRosterV4 .v4-res{gap:4px;grid-template-columns:1fr}
+#hvHeroRosterV4 .v4-res span{background:#fffaf099;border:1px solid #d9c69e99;border-radius:6px;padding:3px 8px;font-size:11px;color:#57472f;font-variant-numeric:tabular-nums}
+#hvHeroRosterV4 .v4-tabs{height:auto;min-height:52px;grid-template-columns:1fr 1fr minmax(112px,1.3fr);gap:6px;padding:0 12px 6px;align-items:center}
+#hvHeroRosterV4 .v4-tab,#hvHeroRosterV4 .v4-tab.active{height:44px;min-height:44px;border:1px solid var(--lt-line);border-radius:8px;background:#fff9eb;color:#735c38;font-size:12px;font-weight:750;box-shadow:inset 0 1px #fff}
+#hvHeroRosterV4 .v4-tab.active{background:linear-gradient(#416e5d,#315345);color:#fff1cb;border-color:#294d40;box-shadow:inset 0 1px #ffffff30,0 2px 4px #23423418}
+#hvHeroRosterV4 .v4-sort{display:flex;align-items:center;justify-content:flex-end;gap:4px;font-size:10px;color:var(--lt-muted);min-width:0}
+#hvHeroRosterV4 select{min-height:44px;max-width:100%;min-width:76px;border:1px solid var(--lt-line);border-radius:8px;background:#fff9eb;color:#57472f;padding:6px;font-size:11px}
+#hvHeroRosterV4 .v4-filter{height:58px;box-sizing:border-box;padding:6px 12px;gap:6px;justify-content:flex-start;overflow-x:auto;overflow-y:hidden;background:#f4e9d1;border-top:1px solid #e5d5b3;scrollbar-width:thin;overscroll-behavior-x:contain}
+#hvHeroRosterV4 .v4-filter button{flex:0 0 44px;width:44px;height:44px;min-width:44px;min-height:44px;border:1px solid #cfb982;background:#fffaf0;font-size:17px;box-shadow:inset 0 1px #fff}
+#hvHeroRosterV4 .v4-filter button.active{outline:0;background:#f0d394;border:2px solid #a87c32;box-shadow:inset 0 0 0 2px #fff5d8}
+#hvHeroRosterV4 .v4-grid{gap:10px;padding:12px 12px 18px;grid-auto-rows:minmax(154px,auto);scroll-padding:12px;scrollbar-width:thin;scrollbar-color:#bda579 transparent;overscroll-behavior-y:contain}
+#hvHeroRosterV4 .v4-grid{box-sizing:border-box!important;width:100%!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;column-gap:10px!important;padding-inline:12px!important}
+#hvHeroRosterV4 .v4-card{box-sizing:border-box!important;width:100%!important;min-width:0!important;max-width:100%!important}
+#hvHeroRosterV4 .v4-grid{grid-auto-rows:auto!important}
+#hvHeroRosterV4 .v4-card{height:clamp(154px,31vw,215px)!important;aspect-ratio:auto!important}
+#hvHeroRosterV4 .v4-card{min-height:154px;border-radius:9px;box-shadow:0 0 0 1px #a47a32,inset 0 0 0 1px #fff5d8,0 3px 6px #68481c22}
+#hvHeroRosterV4 .v4-veil{height:42%;padding:0 3px 6px;background:linear-gradient(transparent,#f9e5bda8 34%,#ecd098f5 73%)}
+#hvHeroRosterV4 .v4-cardname{font-size:11px;font-weight:750;line-height:1.22;white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;min-height:27px;overflow:hidden;text-shadow:0 1px #fff1cf}
+#hvHeroRosterV4 .v4-level{font-size:10px;right:5px;top:6px}
+#hvHeroRosterV4 .v4-dock,#hvCampaignScene .cs-dock{background:linear-gradient(#3c5e50,#213c33);border-top:1px solid #c7a45d;box-shadow:0 -3px 10px #243f3220;padding-top:6px}
+#hvHeroRosterV4 .v4-dock,#hvCampaignScene.hv-campaign-3d .cs-dock{background:linear-gradient(#3c5e50,#213c33)!important}
+#hvHeroRosterV4 .v4-dock button,#hvCampaignScene .cs-dock button{min-height:60px;font-size:11px;line-height:1.35;color:#f3e7ca;border-radius:8px;padding:2px 0;touch-action:manipulation}
+#hvHeroRosterV4 .v4-dock [aria-current],#hvCampaignScene .cs-dock [aria-current]{color:#ffe1a0;background:linear-gradient(#d0ad5a35,#d0ad5a09);box-shadow:inset 0 2px #d9b86a;font-weight:800}
+#hvGearRoot [data-gear-view="wheel"]>.hv-gear-top{min-height:62px;padding:8px 12px;padding-top:max(8px,env(safe-area-inset-top))}
+/* The gear header owns Back. The global home shortcut otherwise covers it. */
+body:has(#hvGearRoot.is-open:not([hidden])) #hvHubBackChip{display:none!important}
+#hvGearRoot [data-gear-view="wheel"]>.hv-gear-top>b{font:700 20px Georgia,"Times New Roman",serif;letter-spacing:.02em}
+#hvGearRoot .hv-gear-back{min-width:44px;min-height:44px;border:1px solid #b89455;border-radius:10px;font-size:26px}
+#hvGearRoot [data-gear-view="wheel"] .hv-gear-back{background:#fff8e7;color:#684b27;box-shadow:inset 0 1px #fff}
+#hvGearRoot .hv-assist-spoke{pointer-events:auto;touch-action:manipulation;width:72px;margin-left:-36px}
+#hvGearRoot .hv-assist-spoke small{box-sizing:border-box;width:72px;font:600 11px/1.2 system-ui,-apple-system,sans-serif;max-width:72px;max-height:30px;padding:2px 4px;border-radius:5px;background:#241a10b8;color:#fff2cf;text-shadow:0 1px 2px #000;overflow:visible;display:block}
+@media(max-width:360px){#hvGearRoot .hv-assist-spoke{width:66px;margin-left:-33px}#hvGearRoot .hv-assist-spoke small{width:66px;font-size:10px}}
+#hvGearRoot .hv-assist-spoke:focus-visible{outline:2px solid #ffe2a0;outline-offset:5px;border-radius:10px}
+#hvGearRoot .hv-assist-spoke.is-on span{box-shadow:0 0 0 3px #f0c66a,0 3px 10px #36251166}
+#hvCampaignScene .cs-wallet span{font-size:11px;padding:3px 6px;background:#fffaf099;border:1px solid #d9c69e99;color:#57472f}
+#hvCampaignScene .cs-leader{font:700 17px Georgia,"Times New Roman",serif;color:#443826}
+#hvCampaignScene .cs-header small{font-size:11px;color:var(--lt-muted)}
+#hvCampaignScene .cs-stage-pill{min-height:44px;border-radius:10px;border-color:#bb9556;background:#fff8e9e8;box-shadow:0 2px 5px #44311c15;font-size:13px}
+#hvCampaignScene .cs-sheet-close{width:44px;height:44px;border-radius:8px;color:#684b27;background:#e8d5af66}
+#hvCampaignScene .cs-chest-sheet,#hvCampaignScene .cs-stages-sheet,#hvCampaignScene .cs-map-sheet{border:1px solid #b89455;border-radius:14px;background:linear-gradient(135deg,#fff9ec,#eee0c0);box-shadow:0 18px 45px #102a2255,inset 0 0 0 3px #fff9eb66;padding-top:24px}
+#hvCampaignScene .cs-chest-sheet h2,#hvCampaignScene .cs-stages-sheet h2{padding-right:38px;color:#443826}
+#hvCampaignScene .cs-prep-footer{background:linear-gradient(#fff8e7,#eee1c4);border-color:#c5aa73}
+#hvCampaignScene .cs-prep-footer .cs-primary,#hvCampaignScene .cs-prep-footer .cs-secondary{border:1px solid #a67b36;border-radius:8px;background:linear-gradient(#f4d999,#d5ac5e);box-shadow:inset 0 1px #fff0c5,0 2px 5px #6d4c211a;color:#523819;min-height:48px}
+#hubScreen .art-side .art-label-text{font-size:9.5px!important;line-height:1.15!important;font-weight:650!important;text-shadow:0 1px 2px #182f28,0 0 4px #182f28!important}
+#hubScreen .art-dock .art-action{touch-action:manipulation}
+#hubScreen .art-action:focus-visible{outline:2px solid #ffe2a0;outline-offset:3px}
+#hvHeroRosterV4 button,#hvHeroRosterV4 select,#hvGearRoot button,#hvCampaignScene button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+#hvHeroRosterV4 .v4-tab:active,#hvHeroRosterV4 .v4-filter button:active,#hvHeroRosterV4 .v4-card:active,#hubScreen .art-action:active{filter:brightness(1.08)}
+@media(prefers-reduced-motion:no-preference){#hvHeroRosterV4 .v4-tab,#hvHeroRosterV4 .v4-filter button,#hvHeroRosterV4 .v4-card{transition:filter .12s ease,box-shadow .12s ease}}
+@media(max-width:360px){#hvHeroRosterV4 .v4-profile{padding-inline:10px;gap:8px}#hvHeroRosterV4 .v4-tabs{padding-inline:10px;gap:5px;grid-template-columns:1fr 1fr 118px}#hvHeroRosterV4 .v4-sort{font-size:9px}#hvHeroRosterV4 .v4-grid{padding-inline:9px;gap:7px}#hvHeroRosterV4 .v4-cardname{font-size:10px}#hvHeroRosterV4 .v4-dock button,#hvCampaignScene .cs-dock button{font-size:10px}#hubScreen .art-side .art-label-text{font-size:9px!important}}

@@ -365,7 +365,7 @@ export function patchLinhDongIndex(input) {
     '    const st=definition.stats||{}; const sourceId=String(id); const synthetic={side:"ally",skill:definition.skill||null,ultimate:definition.ultimate||null};',
     '    const st=definition.stats||{}; const rawSourceId=String(id); const sourceId=/^(?:linh_dong|linh-dong|hero_splus_linh_dong)$/i.test(rawSourceId) ? "hero_splus_linh_dong" : rawSourceId; const synthetic={side:"ally",skill:definition.skill||null,ultimate:definition.ultimate||null};',
   );
-  return `${html}\n<script id="linh-dong-index-qa">window.__HV_LINH_DONG_INDEX_QA=Object.freeze({heroId:"hero_splus_linh_dong",aliases:["linh_dong","linh-dong","hero_splus_linh_dong"],actions:{atk:{character:"assets/characters/linh-dong/basic-atlas.webp",combinedVfx:"assets/characters/linh-dong/skill1_vfx-atlas.webp",sfx:"assets/audio/sfx/linh-dong/atk.wav"},ultimate:{character:"assets/characters/linh-dong/ultimate-atlas.webp",combinedVfx:"assets/characters/linh-dong/ultimate_vfx-atlas.webp",sfx:"assets/audio/sfx/linh-dong/ult.wav"}}});</script>\n${indexMarker}\n`;
+  return `${html}\n<script id="linh-dong-index-qa">window.__HV_LINH_DONG_INDEX_QA=Object.freeze({heroId:"hero_splus_linh_dong",aliases:["linh_dong","linh-dong","hero_splus_linh_dong"],actions:{atk:{character:"assets/characters/linh-dong/basic-atlas.webp",combinedVfx:"assets/characters/linh-dong/skill1_vfx-atlas.webp",sfx:"assets/audio/sfx/linh-dong/atk.wav"},ultimate:{character:"assets/characters/linh-dong/ultimate-atlas.webp",combinedVfx:"assets/characters/linh-dong/ultimate_vfx-atlas.webp",sfx:"assets/audio/sfx/linh-dong/ult.wav"}}});</script>\n<!-- ${indexMarker} -->\n`;
 }
 
 export function writeLinhDongStaticFingerprint() {
@@ -395,3 +395,4 @@ if (process.env.HV_SKIP_LINH_DONG_BUILD_PATCH !== '1' && existsSync(path)) {
   const fingerprint = writeLinhDongStaticFingerprint();
   console.log(`Linh Đồng runtime bridge, shared clock and canonical action registry installed; ${Object.keys(fingerprint.files).length} asset fingerprints recorded`);
 }
+

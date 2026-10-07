@@ -1,0 +1,922 @@
+{
+  "revision": "5f677ad3670b6870d779873c043907f88a53c6a4",
+  "runs": [
+    {
+      "width": 390,
+      "height": 844,
+      "checks": [
+        {
+          "name": "hub route",
+          "ok": true,
+          "snapshot": {
+            "route": "hub",
+            "visible": true,
+            "overflow": false,
+            "buttons": 20
+          }
+        },
+        {
+          "name": "heroes route",
+          "ok": true,
+          "snapshot": {
+            "route": "heroes",
+            "visible": true,
+            "overflow": false,
+            "buttons": 31
+          }
+        },
+        {
+          "name": "roster controls at least 44px",
+          "ok": true
+        },
+        {
+          "name": "all four roster columns inside viewport",
+          "ok": true
+        },
+        {
+          "name": "roster rows do not overlap",
+          "ok": true
+        },
+        {
+          "name": "catalog tab works",
+          "ok": true
+        },
+        {
+          "name": "roster assist navigation works",
+          "ok": true
+        },
+        {
+          "name": "team route",
+          "ok": true,
+          "snapshot": {
+            "route": "team",
+            "visible": true,
+            "overflow": false,
+            "buttons": 64
+          }
+        },
+        {
+          "name": "assist equipment opens",
+          "ok": true
+        },
+        {
+          "name": "equipment back returns to assist wheel",
+          "ok": true
+        },
+        {
+          "name": "campaign route",
+          "ok": true,
+          "snapshot": {
+            "route": "campaign",
+            "visible": true,
+            "overflow": false,
+            "buttons": 29
+          }
+        },
+        {
+          "name": "campaign dock readable contrast",
+          "ok": true
+        },
+        {
+          "name": "afk reward sheet opens",
+          "ok": true
+        },
+        {
+          "name": "afk reward sheet closes",
+          "ok": true
+        }
+      ],
+      "controls": [
+        {
+          "label": "Tướng",
+          "width": 107.265625,
+          "height": 44
+        },
+        {
+          "label": "Đồ Giám",
+          "width": 107.265625,
+          "height": 44
+        },
+        {
+          "label": "Sắp xếp tướng",
+          "width": 87,
+          "height": 44
+        },
+        {
+          "label": "Tất cả hệ",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Hệ Hỏa",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Hệ Kim",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Hệ Mộc",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Hệ Phong",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Hệ Thủy",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Hệ Thổ",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Hệ Mộng",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Hệ Âm Hồn",
+          "width": 44,
+          "height": 44
+        }
+      ],
+      "grid": {
+        "client": 390,
+        "scroll": 390,
+        "columns": "84px 84px 84px 84px",
+        "cards": [
+          {
+            "left": 12,
+            "right": 96,
+            "top": 201,
+            "bottom": 355,
+            "width": 84,
+            "inside": true
+          },
+          {
+            "left": 106,
+            "right": 190,
+            "top": 201,
+            "bottom": 355,
+            "width": 84,
+            "inside": true
+          },
+          {
+            "left": 200,
+            "right": 284,
+            "top": 201,
+            "bottom": 355,
+            "width": 84,
+            "inside": true
+          },
+          {
+            "left": 294,
+            "right": 378,
+            "top": 201,
+            "bottom": 355,
+            "width": 84,
+            "inside": true
+          },
+          {
+            "left": 12,
+            "right": 96,
+            "top": 365,
+            "bottom": 519,
+            "width": 84,
+            "inside": true
+          },
+          {
+            "left": 106,
+            "right": 190,
+            "top": 365,
+            "bottom": 519,
+            "width": 84,
+            "inside": true
+          },
+          {
+            "left": 200,
+            "right": 284,
+            "top": 365,
+            "bottom": 519,
+            "width": 84,
+            "inside": true
+          },
+          {
+            "left": 294,
+            "right": 378,
+            "top": 365,
+            "bottom": 519,
+            "width": 84,
+            "inside": true
+          }
+        ]
+      },
+      "dock": {
+        "background": "linear-gradient(rgb(60, 94, 80), rgb(33, 60, 51))",
+        "color": "rgb(243, 231, 202)",
+        "contrasts": [
+          5.876197686759191,
+          9.719141843325126
+        ]
+      },
+      "exceptions": [],
+      "ok": true
+    },
+    {
+      "width": 320,
+      "height": 740,
+      "checks": [
+        {
+          "name": "hub route",
+          "ok": true,
+          "snapshot": {
+            "route": "hub",
+            "visible": true,
+            "overflow": false,
+            "buttons": 20
+          }
+        },
+        {
+          "name": "heroes route",
+          "ok": true,
+          "snapshot": {
+            "route": "heroes",
+            "visible": true,
+            "overflow": false,
+            "buttons": 31
+          }
+        },
+        {
+          "name": "roster controls at least 44px",
+          "ok": true
+        },
+        {
+          "name": "all four roster columns inside viewport",
+          "ok": true
+        },
+        {
+          "name": "roster rows do not overlap",
+          "ok": true
+        },
+        {
+          "name": "catalog tab works",
+          "ok": true
+        },
+        {
+          "name": "roster assist navigation works",
+          "ok": true
+        },
+        {
+          "name": "team route",
+          "ok": true,
+          "snapshot": {
+            "route": "team",
+            "visible": true,
+            "overflow": false,
+            "buttons": 64
+          }
+        },
+        {
+          "name": "assist equipment opens",
+          "ok": true
+        },
+        {
+          "name": "equipment back returns to assist wheel",
+          "ok": true
+        },
+        {
+          "name": "campaign route",
+          "ok": true,
+          "snapshot": {
+            "route": "campaign",
+            "visible": true,
+            "overflow": false,
+            "buttons": 29
+          }
+        },
+        {
+          "name": "campaign dock readable contrast",
+          "ok": true
+        },
+        {
+          "name": "afk reward sheet opens",
+          "ok": true
+        },
+        {
+          "name": "afk reward sheet closes",
+          "ok": true
+        }
+      ],
+      "controls": [
+        {
+          "label": "Tướng",
+          "width": 86,
+          "height": 44
+        },
+        {
+          "label": "Đồ Giám",
+          "width": 86,
+          "height": 44
+        },
+        {
+          "label": "Sắp xếp tướng",
+          "width": 80.734375,
+          "height": 44
+        },
+        {
+          "label": "Tất cả hệ",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Hệ Hỏa",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Hệ Kim",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Hệ Mộc",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Hệ Phong",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Hệ Thủy",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Hệ Thổ",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Hệ Mộng",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Hệ Âm Hồn",
+          "width": 44,
+          "height": 44
+        }
+      ],
+      "grid": {
+        "client": 320,
+        "scroll": 320,
+        "columns": "66.5px 66.5px 66.5px 66.5px",
+        "cards": [
+          {
+            "left": 12,
+            "right": 78.5,
+            "top": 201,
+            "bottom": 355,
+            "width": 66.5,
+            "inside": true
+          },
+          {
+            "left": 88.5,
+            "right": 155,
+            "top": 201,
+            "bottom": 355,
+            "width": 66.5,
+            "inside": true
+          },
+          {
+            "left": 165,
+            "right": 231.5,
+            "top": 201,
+            "bottom": 355,
+            "width": 66.5,
+            "inside": true
+          },
+          {
+            "left": 241.5,
+            "right": 308,
+            "top": 201,
+            "bottom": 355,
+            "width": 66.5,
+            "inside": true
+          },
+          {
+            "left": 12,
+            "right": 78.5,
+            "top": 362,
+            "bottom": 516,
+            "width": 66.5,
+            "inside": true
+          },
+          {
+            "left": 88.5,
+            "right": 155,
+            "top": 362,
+            "bottom": 516,
+            "width": 66.5,
+            "inside": true
+          },
+          {
+            "left": 165,
+            "right": 231.5,
+            "top": 362,
+            "bottom": 516,
+            "width": 66.5,
+            "inside": true
+          },
+          {
+            "left": 241.5,
+            "right": 308,
+            "top": 362,
+            "bottom": 516,
+            "width": 66.5,
+            "inside": true
+          }
+        ]
+      },
+      "dock": {
+        "background": "linear-gradient(rgb(60, 94, 80), rgb(33, 60, 51))",
+        "color": "rgb(243, 231, 202)",
+        "contrasts": [
+          5.876197686759191,
+          9.719141843325126
+        ]
+      },
+      "exceptions": [],
+      "ok": true
+    },
+    {
+      "width": 620,
+      "height": 930,
+      "checks": [
+        {
+          "name": "hub route",
+          "ok": true,
+          "snapshot": {
+            "route": "hub",
+            "visible": true,
+            "overflow": false,
+            "buttons": 20
+          }
+        },
+        {
+          "name": "heroes route",
+          "ok": true,
+          "snapshot": {
+            "route": "heroes",
+            "visible": true,
+            "overflow": false,
+            "buttons": 31
+          }
+        },
+        {
+          "name": "roster controls at least 44px",
+          "ok": true
+        },
+        {
+          "name": "all four roster columns inside viewport",
+          "ok": true
+        },
+        {
+          "name": "roster rows do not overlap",
+          "ok": true
+        },
+        {
+          "name": "catalog tab works",
+          "ok": true
+        },
+        {
+          "name": "roster assist navigation works",
+          "ok": true
+        },
+        {
+          "name": "team route",
+          "ok": true,
+          "snapshot": {
+            "route": "team",
+            "visible": true,
+            "overflow": false,
+            "buttons": 64
+          }
+        },
+        {
+          "name": "assist equipment opens",
+          "ok": true
+        },
+        {
+          "name": "equipment back returns to assist wheel",
+          "ok": true
+        },
+        {
+          "name": "campaign route",
+          "ok": true,
+          "snapshot": {
+            "route": "campaign",
+            "visible": true,
+            "overflow": false,
+            "buttons": 29
+          }
+        },
+        {
+          "name": "campaign dock readable contrast",
+          "ok": true
+        },
+        {
+          "name": "afk reward sheet opens",
+          "ok": true
+        },
+        {
+          "name": "afk reward sheet closes",
+          "ok": true
+        }
+      ],
+      "controls": [
+        {
+          "label": "Tướng",
+          "width": 176.96875,
+          "height": 44
+        },
+        {
+          "label": "Đồ Giám",
+          "width": 176.96875,
+          "height": 44
+        },
+        {
+          "label": "Sắp xếp tướng",
+          "width": 87,
+          "height": 44
+        },
+        {
+          "label": "Tất cả hệ",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Hệ Hỏa",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Hệ Kim",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Hệ Mộc",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Hệ Phong",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Hệ Thủy",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Hệ Thổ",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Hệ Mộng",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Hệ Âm Hồn",
+          "width": 44,
+          "height": 44
+        }
+      ],
+      "grid": {
+        "client": 610,
+        "scroll": 610,
+        "columns": "139px 139px 139px 139px",
+        "cards": [
+          {
+            "left": 12,
+            "right": 151,
+            "top": 201,
+            "bottom": 393.1875,
+            "width": 139,
+            "inside": true
+          },
+          {
+            "left": 161,
+            "right": 300,
+            "top": 201,
+            "bottom": 393.1875,
+            "width": 139,
+            "inside": true
+          },
+          {
+            "left": 310,
+            "right": 449,
+            "top": 201,
+            "bottom": 393.1875,
+            "width": 139,
+            "inside": true
+          },
+          {
+            "left": 459,
+            "right": 598,
+            "top": 201,
+            "bottom": 393.1875,
+            "width": 139,
+            "inside": true
+          },
+          {
+            "left": 12,
+            "right": 151,
+            "top": 403.1875,
+            "bottom": 595.375,
+            "width": 139,
+            "inside": true
+          },
+          {
+            "left": 161,
+            "right": 300,
+            "top": 403.1875,
+            "bottom": 595.375,
+            "width": 139,
+            "inside": true
+          },
+          {
+            "left": 310,
+            "right": 449,
+            "top": 403.1875,
+            "bottom": 595.375,
+            "width": 139,
+            "inside": true
+          },
+          {
+            "left": 459,
+            "right": 598,
+            "top": 403.1875,
+            "bottom": 595.375,
+            "width": 139,
+            "inside": true
+          }
+        ]
+      },
+      "dock": {
+        "background": "linear-gradient(rgb(60, 94, 80), rgb(33, 60, 51))",
+        "color": "rgb(243, 231, 202)",
+        "contrasts": [
+          5.876197686759191,
+          9.719141843325126
+        ]
+      },
+      "exceptions": [],
+      "ok": true
+    },
+    {
+      "width": 1280,
+      "height": 800,
+      "checks": [
+        {
+          "name": "hub route",
+          "ok": true,
+          "snapshot": {
+            "route": "hub",
+            "visible": true,
+            "overflow": false,
+            "buttons": 20
+          }
+        },
+        {
+          "name": "heroes route",
+          "ok": true,
+          "snapshot": {
+            "route": "heroes",
+            "visible": true,
+            "overflow": false,
+            "buttons": 31
+          }
+        },
+        {
+          "name": "roster controls at least 44px",
+          "ok": true
+        },
+        {
+          "name": "all four roster columns inside viewport",
+          "ok": true
+        },
+        {
+          "name": "roster rows do not overlap",
+          "ok": true
+        },
+        {
+          "name": "catalog tab works",
+          "ok": true
+        },
+        {
+          "name": "roster assist navigation works",
+          "ok": true
+        },
+        {
+          "name": "team route",
+          "ok": true,
+          "snapshot": {
+            "route": "team",
+            "visible": true,
+            "overflow": false,
+            "buttons": 64
+          }
+        },
+        {
+          "name": "assist equipment opens",
+          "ok": true
+        },
+        {
+          "name": "equipment back returns to assist wheel",
+          "ok": true
+        },
+        {
+          "name": "campaign route",
+          "ok": true,
+          "snapshot": {
+            "route": "campaign",
+            "visible": true,
+            "overflow": false,
+            "buttons": 29
+          }
+        },
+        {
+          "name": "campaign dock readable contrast",
+          "ok": true
+        },
+        {
+          "name": "afk reward sheet opens",
+          "ok": true
+        },
+        {
+          "name": "afk reward sheet closes",
+          "ok": true
+        }
+      ],
+      "controls": [
+        {
+          "label": "Tướng",
+          "width": 176.96875,
+          "height": 44
+        },
+        {
+          "label": "Đồ Giám",
+          "width": 176.96875,
+          "height": 44
+        },
+        {
+          "label": "Sắp xếp tướng",
+          "width": 87,
+          "height": 44
+        },
+        {
+          "label": "Tất cả hệ",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Hệ Hỏa",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Hệ Kim",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Hệ Mộc",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Hệ Phong",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Hệ Thủy",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Hệ Thổ",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Hệ Mộng",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Hệ Âm Hồn",
+          "width": 44,
+          "height": 44
+        }
+      ],
+      "grid": {
+        "client": 610,
+        "scroll": 610,
+        "columns": "139px 139px 139px 139px",
+        "cards": [
+          {
+            "left": 342,
+            "right": 481,
+            "top": 201,
+            "bottom": 416,
+            "width": 139,
+            "inside": true
+          },
+          {
+            "left": 491,
+            "right": 630,
+            "top": 201,
+            "bottom": 416,
+            "width": 139,
+            "inside": true
+          },
+          {
+            "left": 640,
+            "right": 779,
+            "top": 201,
+            "bottom": 416,
+            "width": 139,
+            "inside": true
+          },
+          {
+            "left": 789,
+            "right": 928,
+            "top": 201,
+            "bottom": 416,
+            "width": 139,
+            "inside": true
+          },
+          {
+            "left": 342,
+            "right": 481,
+            "top": 426,
+            "bottom": 641,
+            "width": 139,
+            "inside": true
+          },
+          {
+            "left": 491,
+            "right": 630,
+            "top": 426,
+            "bottom": 641,
+            "width": 139,
+            "inside": true
+          },
+          {
+            "left": 640,
+            "right": 779,
+            "top": 426,
+            "bottom": 641,
+            "width": 139,
+            "inside": true
+          },
+          {
+            "left": 789,
+            "right": 928,
+            "top": 426,
+            "bottom": 641,
+            "width": 139,
+            "inside": true
+          }
+        ]
+      },
+      "dock": {
+        "background": "linear-gradient(rgb(60, 94, 80), rgb(33, 60, 51))",
+        "color": "rgb(243, 231, 202)",
+        "contrasts": [
+          5.876197686759191,
+          9.719141843325126
+        ]
+      },
+      "exceptions": [],
+      "ok": true
+    }
+  ],
+  "ok": true
+}

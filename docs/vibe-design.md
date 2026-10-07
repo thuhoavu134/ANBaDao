@@ -1,3 +1,7 @@
+# 2026-10-08 — four-screen UI trial
+
+Warm parchment and brass headers, jade selected tabs/dock, original icons and art. Minimum44px roster controls; four columns; two-line labels; 620px frame on desktop. Assist keeps its wheel and its local Back. Campaign keeps AFK/combat owners. Final user approval pending on PR290; no redesign of remaining screens.
+
 # Thiết kế Hồn Việt: Mộng Giới
 
 ## 2026-09-08 — Bàn giao L11 cho Luna: REVIEW / IN_PROGRESS

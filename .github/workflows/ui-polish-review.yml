@@ -1,0 +1,31 @@
+name: UI polish review
+on:
+  push:
+    branches: ['review/ui-polish-20261008']
+    paths: ['scripts/**','src/**','tests/**','.github/workflows/ui-polish-review.yml']
+  workflow_dispatch:
+permissions: {contents: read}
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: 22}
+      - run: npm ci
+      - run: npm run build
+      - name: UI sizes and real routes
+        run: |
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
+          node scripts/qa-ui-polish.mjs
+      - name: Full tests
+        run: node --test --test-concurrency=1 tests/*.test.mjs
+      - name: Actual roster and result flow
+        run: |
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
+          node scripts/qa-owner-oct7-browser.mjs
+      - name: Campaign preparation and battle return
+        run: |
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
+          node scripts/qa-host-battle-entry.mjs
