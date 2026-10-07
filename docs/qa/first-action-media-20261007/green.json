@@ -1,0 +1,288 @@
+{
+  "revision": "25df23ba69374fb46c575646d6fc5e829b8ebc45",
+  "ok": true,
+  "runs": [
+    {
+      "profile": "desktop",
+      "ok": true,
+      "firstVfx": [
+        {
+          "actor": "dinh_loi",
+          "release": 8580,
+          "first": 8583.3
+        },
+        {
+          "actor": "thay_mo",
+          "release": 9760,
+          "first": 9783.199999999995
+        }
+      ],
+      "firstSounds": [
+        {
+          "actor": "hv-player-0-ong_hang_pho",
+          "team": "player",
+          "event": "basic",
+          "ok": true,
+          "context": "running",
+          "playCallMs": 5.100000000034925
+        },
+        {
+          "actor": "hv-enemy-0-to_diep",
+          "team": "enemy",
+          "event": "ultimate",
+          "ok": true,
+          "context": "running",
+          "playCallMs": 3.5
+        },
+        {
+          "actor": "hv-player-1-dinh_loi",
+          "team": "player",
+          "event": "skill",
+          "ok": true,
+          "context": "running",
+          "playCallMs": 1.3000000000465661
+        },
+        {
+          "actor": "hv-enemy-1-hero_splus_linh_dong",
+          "team": "enemy",
+          "event": "linh-dong-atk",
+          "ok": true,
+          "context": "running",
+          "playCallMs": 2
+        },
+        {
+          "actor": "hv-player-2-co_dao_ganh_hoi",
+          "team": "player",
+          "event": "skill",
+          "ok": true,
+          "context": "running",
+          "playCallMs": 0.29999999998835847
+        },
+        {
+          "actor": "hv-enemy-2-bach_dien",
+          "team": "enemy",
+          "event": "bach-dien-atk",
+          "ok": true,
+          "context": "running",
+          "playCallMs": 2.099999999976717
+        },
+        {
+          "actor": "hv-player-3-thay_mo",
+          "team": "player",
+          "event": "skill",
+          "ok": true,
+          "context": "running",
+          "playCallMs": 0.29999999998835847
+        },
+        {
+          "actor": "hv-enemy-3-ong_hang_pho",
+          "team": "enemy",
+          "event": "ultimate",
+          "ok": true,
+          "context": "running",
+          "playCallMs": 0.29999999998835847
+        },
+        {
+          "actor": "hv-player-4-lac_yen",
+          "team": "player",
+          "event": "skill",
+          "ok": true,
+          "context": "running",
+          "playCallMs": 0.9000000000232831
+        }
+      ],
+      "battleActions": 10,
+      "pcmNonzero": 14,
+      "exceptions": [],
+      "assetErrors": []
+    },
+    {
+      "profile": "iphone",
+      "ok": true,
+      "firstVfx": [
+        {
+          "actor": "dinh_loi",
+          "release": 8580,
+          "first": 8582.8
+        },
+        {
+          "actor": "thay_mo",
+          "release": 9760,
+          "first": 9765.9
+        }
+      ],
+      "firstSounds": [
+        {
+          "actor": "hv-player-0-ong_hang_pho",
+          "team": "player",
+          "event": "basic",
+          "ok": true,
+          "context": "running",
+          "playCallMs": 3.2999999999883585
+        },
+        {
+          "actor": "hv-enemy-0-to_diep",
+          "team": "enemy",
+          "event": "ultimate",
+          "ok": true,
+          "context": "running",
+          "playCallMs": 0.7999999999883585
+        },
+        {
+          "actor": "hv-player-1-dinh_loi",
+          "team": "player",
+          "event": "skill",
+          "ok": true,
+          "context": "running",
+          "playCallMs": 1.1999999999534339
+        },
+        {
+          "actor": "hv-enemy-1-hero_splus_linh_dong",
+          "team": "enemy",
+          "event": "linh-dong-atk",
+          "ok": true,
+          "context": "running",
+          "playCallMs": 2.6000000000349246
+        },
+        {
+          "actor": "hv-player-2-co_dao_ganh_hoi",
+          "team": "player",
+          "event": "skill",
+          "ok": true,
+          "context": "running",
+          "playCallMs": 1.7000000000116415
+        },
+        {
+          "actor": "hv-enemy-2-bach_dien",
+          "team": "enemy",
+          "event": "bach-dien-atk",
+          "ok": true,
+          "context": "running",
+          "playCallMs": 1.8000000000465661
+        },
+        {
+          "actor": "hv-player-3-thay_mo",
+          "team": "player",
+          "event": "skill",
+          "ok": true,
+          "context": "running",
+          "playCallMs": 0.29999999998835847
+        },
+        {
+          "actor": "hv-enemy-3-ong_hang_pho",
+          "team": "enemy",
+          "event": "ultimate",
+          "ok": true,
+          "context": "running",
+          "playCallMs": 0.20000000001164153
+        },
+        {
+          "actor": "hv-player-4-lac_yen",
+          "team": "player",
+          "event": "skill",
+          "ok": true,
+          "context": "running",
+          "playCallMs": 0.5999999999767169
+        }
+      ],
+      "battleActions": 10,
+      "pcmNonzero": 18,
+      "exceptions": [],
+      "assetErrors": []
+    },
+    {
+      "profile": "iphone-cold-audio",
+      "ok": true,
+      "firstVfx": [
+        {
+          "actor": "dinh_loi",
+          "release": 8580,
+          "first": 8599.6
+        },
+        {
+          "actor": "thay_mo",
+          "release": 9760,
+          "first": 9783.000000000004
+        }
+      ],
+      "firstSounds": [
+        {
+          "actor": "hv-player-0-ong_hang_pho",
+          "team": "player",
+          "event": "basic",
+          "ok": true,
+          "context": "running",
+          "playCallMs": 3.7000000000116415
+        },
+        {
+          "actor": "hv-enemy-0-to_diep",
+          "team": "enemy",
+          "event": "ultimate",
+          "ok": true,
+          "context": "running",
+          "playCallMs": 1.2000000000116415
+        },
+        {
+          "actor": "hv-player-1-dinh_loi",
+          "team": "player",
+          "event": "skill",
+          "ok": true,
+          "context": "running",
+          "playCallMs": 1.3999999999650754
+        },
+        {
+          "actor": "hv-enemy-1-hero_splus_linh_dong",
+          "team": "enemy",
+          "event": "linh-dong-atk",
+          "ok": true,
+          "context": "running",
+          "playCallMs": 2.5
+        },
+        {
+          "actor": "hv-player-2-co_dao_ganh_hoi",
+          "team": "player",
+          "event": "skill",
+          "ok": true,
+          "context": "running",
+          "playCallMs": 1
+        },
+        {
+          "actor": "hv-enemy-2-bach_dien",
+          "team": "enemy",
+          "event": "bach-dien-atk",
+          "ok": true,
+          "context": "running",
+          "playCallMs": 1.8000000000465661
+        },
+        {
+          "actor": "hv-player-3-thay_mo",
+          "team": "player",
+          "event": "skill",
+          "ok": true,
+          "context": "running",
+          "playCallMs": 0.3999999999650754
+        },
+        {
+          "actor": "hv-enemy-3-ong_hang_pho",
+          "team": "enemy",
+          "event": "ultimate",
+          "ok": true,
+          "context": "running",
+          "playCallMs": 0.20000000001164153
+        },
+        {
+          "actor": "hv-player-4-lac_yen",
+          "team": "player",
+          "event": "skill",
+          "ok": true,
+          "context": "running",
+          "playCallMs": 0.20000000001164153
+        }
+      ],
+      "battleActions": 10,
+      "pcmNonzero": 18,
+      "exceptions": [],
+      "assetErrors": []
+    }
+  ]
+}

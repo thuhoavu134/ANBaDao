@@ -1,0 +1,287 @@
+{
+  "revision": "4c11181fb2c3a7045a396d5d4bd83176d62cfc46",
+  "ok": false,
+  "runs": [
+    {
+      "profile": "desktop",
+      "ok": false,
+      "error": "AssertionError [ERR_ASSERTION]: first AFK VFX must paint near release even on cold network\n    at file:///home/runner/work/luc-than/luc-than/scripts/qa-first-action-media.mjs:44:10",
+      "firstVfx": [
+        {
+          "actor": "dinh_loi",
+          "release": 8580,
+          "first": 15082.699999999999
+        },
+        {
+          "actor": "thay_mo",
+          "release": 9760,
+          "first": 16265.999999999998
+        }
+      ],
+      "firstSounds": [
+        {
+          "actor": "hv-player-0-ong_hang_pho",
+          "team": "player",
+          "event": "basic",
+          "ok": true,
+          "context": "running",
+          "latencyMs": 4.899999999965075
+        },
+        {
+          "actor": "hv-enemy-0-to_diep",
+          "team": "enemy",
+          "event": "ultimate",
+          "ok": true,
+          "context": "running",
+          "latencyMs": 2.1000000000349246
+        },
+        {
+          "actor": "hv-player-1-dinh_loi",
+          "team": "player",
+          "event": "skill",
+          "ok": true,
+          "context": "running",
+          "latencyMs": 5.2999999999883585
+        },
+        {
+          "actor": "hv-enemy-1-hero_splus_linh_dong",
+          "team": "enemy",
+          "event": "linh-dong-atk",
+          "ok": true,
+          "context": "running",
+          "latencyMs": 2.199999999953434
+        },
+        {
+          "actor": "hv-player-2-co_dao_ganh_hoi",
+          "team": "player",
+          "event": "skill",
+          "ok": true,
+          "context": "running",
+          "latencyMs": 0.20000000001164153
+        },
+        {
+          "actor": "hv-enemy-2-bach_dien",
+          "team": "enemy",
+          "event": "bach-dien-atk",
+          "ok": true,
+          "context": "running",
+          "latencyMs": 1.5
+        },
+        {
+          "actor": "hv-player-3-thay_mo",
+          "team": "player",
+          "event": "skill",
+          "ok": true,
+          "context": "running",
+          "latencyMs": 1.1000000000349246
+        },
+        {
+          "actor": "hv-enemy-3-ong_hang_pho",
+          "team": "enemy",
+          "event": "ultimate",
+          "ok": true,
+          "context": "running",
+          "latencyMs": 0.20000000001164153
+        },
+        {
+          "actor": "hv-player-4-lac_yen",
+          "team": "player",
+          "event": "skill",
+          "ok": true,
+          "context": "running",
+          "latencyMs": 0.40000000002328306
+        }
+      ],
+      "battleActions": 10,
+      "exceptions": [],
+      "assetErrors": []
+    },
+    {
+      "profile": "iphone",
+      "ok": true,
+      "firstVfx": [
+        {
+          "actor": "dinh_loi",
+          "release": 8580,
+          "first": 8683.1
+        },
+        {
+          "actor": "thay_mo",
+          "release": 9760,
+          "first": 9866.299999999997
+        }
+      ],
+      "firstSounds": [
+        {
+          "actor": "hv-player-0-ong_hang_pho",
+          "team": "player",
+          "event": "basic",
+          "ok": true,
+          "context": "running",
+          "latencyMs": 4.600000000034925
+        },
+        {
+          "actor": "hv-enemy-0-to_diep",
+          "team": "enemy",
+          "event": "ultimate",
+          "ok": true,
+          "context": "running",
+          "latencyMs": 2.2999999999883585
+        },
+        {
+          "actor": "hv-player-1-dinh_loi",
+          "team": "player",
+          "event": "skill",
+          "ok": true,
+          "context": "running",
+          "latencyMs": 1.2999999999883585
+        },
+        {
+          "actor": "hv-enemy-1-hero_splus_linh_dong",
+          "team": "enemy",
+          "event": "linh-dong-atk",
+          "ok": true,
+          "context": "running",
+          "latencyMs": 3.1000000000349246
+        },
+        {
+          "actor": "hv-player-2-co_dao_ganh_hoi",
+          "team": "player",
+          "event": "skill",
+          "ok": true,
+          "context": "running",
+          "latencyMs": 1.6000000000349246
+        },
+        {
+          "actor": "hv-enemy-2-bach_dien",
+          "team": "enemy",
+          "event": "bach-dien-atk",
+          "ok": true,
+          "context": "running",
+          "latencyMs": 2.6000000000349246
+        },
+        {
+          "actor": "hv-player-3-thay_mo",
+          "team": "player",
+          "event": "skill",
+          "ok": true,
+          "context": "running",
+          "latencyMs": 1.2000000000116415
+        },
+        {
+          "actor": "hv-enemy-3-ong_hang_pho",
+          "team": "enemy",
+          "event": "ultimate",
+          "ok": true,
+          "context": "running",
+          "latencyMs": 0.20000000001164153
+        },
+        {
+          "actor": "hv-player-4-lac_yen",
+          "team": "player",
+          "event": "skill",
+          "ok": true,
+          "context": "running",
+          "latencyMs": 0.20000000001164153
+        }
+      ],
+      "battleActions": 10,
+      "exceptions": [],
+      "assetErrors": []
+    },
+    {
+      "profile": "iphone-cold-audio",
+      "ok": false,
+      "error": "AssertionError [ERR_ASSERTION]: each first SFX request must actually start\n    at file:///home/runner/work/luc-than/luc-than/scripts/qa-first-action-media.mjs:46:10",
+      "firstVfx": [
+        {
+          "actor": "dinh_loi",
+          "release": 8580,
+          "first": 8682.900000000001
+        },
+        {
+          "actor": "thay_mo",
+          "release": 9760,
+          "first": 9916.300000000001
+        }
+      ],
+      "firstSounds": [
+        {
+          "actor": "hv-player-0-ong_hang_pho",
+          "team": "player",
+          "event": "basic",
+          "ok": false,
+          "context": "running",
+          "latencyMs": 3612.9000000000233
+        },
+        {
+          "actor": "hv-enemy-0-to_diep",
+          "team": "enemy",
+          "event": "ultimate",
+          "ok": true,
+          "context": "running",
+          "latencyMs": 2.599999999976717
+        },
+        {
+          "actor": "hv-player-1-dinh_loi",
+          "team": "player",
+          "event": "skill",
+          "ok": true,
+          "context": "running",
+          "latencyMs": 1.400000000023283
+        },
+        {
+          "actor": "hv-enemy-1-hero_splus_linh_dong",
+          "team": "enemy",
+          "event": "linh-dong-atk",
+          "ok": true,
+          "context": "running",
+          "latencyMs": 2.2999999999883585
+        },
+        {
+          "actor": "hv-player-2-co_dao_ganh_hoi",
+          "team": "player",
+          "event": "skill",
+          "ok": true,
+          "context": "running",
+          "latencyMs": 0.9000000000232831
+        },
+        {
+          "actor": "hv-enemy-2-bach_dien",
+          "team": "enemy",
+          "event": "bach-dien-atk",
+          "ok": true,
+          "context": "running",
+          "latencyMs": 1.900000000023283
+        },
+        {
+          "actor": "hv-player-3-thay_mo",
+          "team": "player",
+          "event": "skill",
+          "ok": true,
+          "context": "running",
+          "latencyMs": 1.3999999999650754
+        },
+        {
+          "actor": "hv-enemy-3-ong_hang_pho",
+          "team": "enemy",
+          "event": "ultimate",
+          "ok": true,
+          "context": "running",
+          "latencyMs": 0.8000000000465661
+        },
+        {
+          "actor": "hv-player-4-lac_yen",
+          "team": "player",
+          "event": "skill",
+          "ok": true,
+          "context": "running",
+          "latencyMs": 0.20000000001164153
+        }
+      ],
+      "battleActions": 10,
+      "exceptions": [],
+      "assetErrors": []
+    }
+  ]
+}
