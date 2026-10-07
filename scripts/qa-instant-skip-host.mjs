@@ -7,7 +7,7 @@ try{for(const [width,height,iphone]of [[390,844,false],[1280,800,false],[390,844
  await p.send('Page.navigate',{url:browser.origin+'/'});
  await p.wait('!!document.getElementById("hvLoginContinue")');await p.click('#hvLoginContinue');await p.wait('document.getElementById("hvLoginRoot").hidden');
  for(let cycle=0;cycle<2;cycle++){
- await p.click('#hubScreen [data-art-go="campaign"]');await p.wait('!document.getElementById("hvCampaignScene").hidden');
+ if(!await p.evaluate('!!document.getElementById("hvCampaignScene")&&!document.getElementById("hvCampaignScene").hidden'))await p.click('#hubScreen [data-art-go="campaign"]');await p.wait('!document.getElementById("hvCampaignScene").hidden');
  await p.click('#hvCampaignScene [data-hv-afk-challenge]');await p.wait('!document.querySelector(".cs-prepare").hidden');await p.click('[data-scene-action="launch"]');
  const f='(document.getElementById("hvBattleFrame")?.contentWindow?.__HON_VIET__?document.getElementById("hvBattleFrame").contentWindow:window)';
  await p.wait(f+'.__HON_VIET__?.getState().mode==="battle"',45000);
@@ -25,6 +25,7 @@ try{for(const [width,height,iphone]of [[390,844,false],[1280,800,false],[390,844
  const elapsedMs=Date.now()-began,result=await p.evaluate(f+'.__HON_VIET__.getState()');
  if(elapsedMs>5000||!['player','enemy'].includes(result.result)||result.sound!==before.sound||result.instantSkip!=null)throw Error('Result/reset contract failed: '+elapsedMs);
  run.cycles.push({cycle,elapsedMs,winner:result.result,actions:result.actionCount,round:result.round});
+ await p.wait(f+'.__HV_RESULT_MOTION_QA?.state().idleFrames>=2',15000);
  const image=await p.send('Page.captureScreenshot',{format:'jpeg',quality:65});console.log('SKIP_IMAGE:'+width+':'+cycle+':'+image.data);
  await p.evaluate(f+'.document.querySelector("#integratedResultV6 [data-result-action=confirm],#integratedResultV6 [data-result-action=back]").click()');
  await p.wait('!location.pathname.endsWith("/battle.html")&&!document.getElementById("hvBattleOverlay")?.classList.contains("is-open")',15000);
