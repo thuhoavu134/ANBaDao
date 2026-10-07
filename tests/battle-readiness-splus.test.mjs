@@ -15,6 +15,7 @@ function fixture(){
     __hvSkillMovement:{approach:async()=>{calls.push('approach');return true;}},
     clearTargets:()=>{},updateActorHud:()=>{},setStatus:()=>{},dom:{phaseLabel:{}},SPLUS42:{catalog:[]},
     beginLinhDongAction:()=>{calls.push('cast');throw new Error('CAST_REACHED');}});
+  vm.runInContext(readFileSync('src/runtime/battle-instant-skip.js','utf8'),context);
   const action=vm.runInContext(source+';performSplusAction',context);
   return {action,calls,state,actor:{id:'a',hp:100,energy:80},resolve:()=>resolve({release:()=>calls.push('release')}),reject};
 }

@@ -22,7 +22,9 @@ function __hvSkipVisualAssets(prepare, battleId) {
     let done = false;
     const skip = () => { if(done)return;done=true;__hvSkipWaiters.delete(skip);if(battleId!==state.battleId){reject(Object.assign(new Error("Battle changed"),{name:"AbortError"}));return;}resolve(empty()); };
     __hvSkipWaiters.add(skip);
-    Promise.resolve().then(prepare).then(lease => {
+    let pending;
+    try{pending=prepare();}catch(error){__hvSkipWaiters.delete(skip);reject(error);return;}
+    Promise.resolve(pending).then(lease => {
       __hvSkipWaiters.delete(skip);
       if(done){lease?.release?.();return;}
       done=true;resolve(lease);
@@ -52,6 +54,6 @@ function __hvRequestBattleSkip() {
   for(const finish of [...__hvSkipWaiters])finish();
   // A paused manual turn has no pending scheduler continuation to wake.
   const actor=getUnit(state.currentId);
-  if(!state.locked&&actor?.hp>0){const intent=decideAi(actor);if(intent?.target)void performAction(actor,intent.action,intent.target);}
+  if(!state.locked&&actor?.hp>0){state.locked=true;void __hvRunAiTurn(actor,state.battleId);}
   return true;
 }
