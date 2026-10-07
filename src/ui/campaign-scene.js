@@ -375,7 +375,7 @@ function drawCampaignBasicVfx(ctx,actor,farm,w,h,size) {
   const x=pose.x+(tx-pose.x)*p,y=pose.y-pose.bodyH*.55+(ty-(pose.y-pose.bodyH*.55))*p;
   const sampled=campaignPagedSprite(base,farmVfxPacks[key],Math.min(base.frames-1,Math.floor((beat-.48)/.34*base.frames))*base.ms),spec=sampled.spec;
   const image=imageForScene(spec.src,spec);if(!image?.complete||image.naturalWidth<1)return;
-  const frame=spec.frameIndex??Math.min(base.frames-1,Math.floor((beat-.48)/.34*base.frames)),scale=pose.bodyH*1.2/spec.body;
+  const frame=spec.frameIndex??Math.min(base.frames-1,Math.floor((beat-.48)/.34*base.frames)),scale=Math.min(pose.bodyH*.8/spec.cellH,pose.bodyH*1.6/spec.cellW,w*.22/spec.cellW);
   ctx.save();ctx.translate(x,y);ctx.scale(pose.facing,1);
   ctx.drawImage(image,frame%spec.cols*(spec.strideW||spec.cellW)+(spec.pad||0),Math.floor(frame/spec.cols)*(spec.strideH||spec.cellH)+(spec.pad||0),spec.cellW,spec.cellH,-spec.pivot*scale,-spec.foot*scale,spec.cellW*scale,spec.cellH*scale);ctx.restore();
 }
