@@ -1,0 +1,160 @@
+{
+  "revision": "2dd707fac6787035d0cd0e2eeff2446f5aff8fc6",
+  "runtime": "e89634c66f61c426bd7b0f39f3d0c8cb032dcec8",
+  "host": {
+    "revision": "2dd707fac6787035d0cd0e2eeff2446f5aff8fc6",
+    "runs": [
+      {
+        "width": 390,
+        "height": 844,
+        "iphone": false,
+        "cycles": [
+          {
+            "cycle": 0,
+            "elapsedMs": 1172,
+            "winner": "player",
+            "actions": 53,
+            "round": 6
+          },
+          {
+            "cycle": 1,
+            "elapsedMs": 722,
+            "winner": "player",
+            "actions": 27,
+            "round": 3
+          }
+        ],
+        "rect": {
+          "x": 360,
+          "y": 811,
+          "w": 44,
+          "h": 44
+        },
+        "exceptions": [],
+        "assetErrors": [],
+        "ok": true
+      },
+      {
+        "width": 1280,
+        "height": 800,
+        "iphone": false,
+        "cycles": [
+          {
+            "cycle": 0,
+            "elapsedMs": 626,
+            "winner": "player",
+            "actions": 33,
+            "round": 4
+          },
+          {
+            "cycle": 1,
+            "elapsedMs": 1234,
+            "winner": "player",
+            "actions": 49,
+            "round": 6
+          }
+        ],
+        "rect": {
+          "x": 1231,
+          "y": 768,
+          "w": 44,
+          "h": 44
+        },
+        "exceptions": [],
+        "assetErrors": [],
+        "ok": true
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "iphone": true,
+        "cycles": [
+          {
+            "cycle": 0,
+            "elapsedMs": 462,
+            "winner": "player",
+            "actions": 23,
+            "round": 3
+          },
+          {
+            "cycle": 1,
+            "elapsedMs": 795,
+            "winner": "player",
+            "actions": 77,
+            "round": 11
+          }
+        ],
+        "rect": {
+          "x": 360,
+          "y": 811,
+          "w": 44,
+          "h": 44
+        },
+        "exceptions": [],
+        "assetErrors": [],
+        "ok": true
+      }
+    ],
+    "ok": true
+  },
+  "winLoss": {
+    "ok": true,
+    "runs": [
+      {
+        "name": "victory-confirm-x1",
+        "elapsedMs": 913,
+        "ok": true,
+        "round": 15,
+        "reason": "round-limit-hp",
+        "traceMax": 15,
+        "action": "confirm",
+        "errors": [],
+        "exceptions": 0,
+        "httpErrors": 0
+      },
+      {
+        "name": "victory-next-x2",
+        "elapsedMs": 985,
+        "ok": true,
+        "round": 15,
+        "reason": "round-limit-hp",
+        "traceMax": 15,
+        "action": "next",
+        "errors": [],
+        "exceptions": 0,
+        "httpErrors": 0
+      },
+      {
+        "name": "victory-confirm-x3",
+        "elapsedMs": 1021,
+        "ok": true,
+        "round": 15,
+        "reason": "round-limit-hp",
+        "traceMax": 15,
+        "action": "confirm",
+        "errors": [],
+        "exceptions": 0,
+        "httpErrors": 0
+      },
+      {
+        "name": "defeat-back-x3",
+        "elapsedMs": 1048,
+        "ok": true,
+        "round": 15,
+        "reason": "round-limit-hp",
+        "traceMax": 15,
+        "action": "campaign",
+        "errors": [],
+        "exceptions": 0,
+        "httpErrors": 0
+      }
+    ]
+  },
+  "scope": "Actual generated game in Chromium; iPhone user agent exercises full-page transport, not physical Safari.",
+  "workflow": "https://github.com/bktimmy247/luc-than/actions/runs/37619196832",
+  "deployment": {
+    "status": 200,
+    "skipOwner": true,
+    "stableLease": true
+  }
+}

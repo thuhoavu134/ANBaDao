@@ -1,3 +1,20 @@
+# Instant battle skip — 2026-10-07
+
+Owner contract: bottom-right ›| beside Chinh chiến skips all remaining battle animation and opens the authentic win/loss result. Review branch / Draft PR285 only; no merge or production promotion.
+
+Baseline a230300; final runtime e89634c; final browser/test revision 2dd707f (later changes only QA). One existing button handler now wakes presentation waits, skips authored marker/tween/image waits and continues the existing AI/action scheduler. The same damage, status, round cap, result snapshot and settlement owners run. Repeated clicks are idempotent; sound and skip state reset at result/new battle. Skipped action leases retain a unique stable task ID across S+ impact, so Linh Đồng/Bạch Diện return ownership cannot stall the scheduler.
+
+RED: deployed handler only toggled animations; real button failed finish assertion. Browser RED at 023a6a4 exposed S+ action ownership stalling after action 4. Fixed stable lease identity; generated-runtime movement regression passes. Asset-readiness VM fixtures now load the real added runtime; original assertions remain. Browser cleanup now uses graceful Browser.close before removing profiles, fixing observed ENOTEMPTY cleanup races.
+
+GREEN: 5 focused skip tests; existing legacy and S+ asset readiness cases pass; 15 generated inline scripts parse. Full clean build and 1665/1665 tests passed at e89634c; final 2dd707f full build/test steps also passed.
+- Focused browser audit SUCCESS: https://github.com/bktimmy247/luc-than/actions/runs/37619196832
+- Four authentic 15-round victory/defeat cases at speeds 1/2/3: correct winner/rewards/round cap, confirm/next/back, one settlement publication, repeated click safe, 913–1048 ms.
+- Actual guest → Chinh chiến → prepare → battle → skip → result → confirm → reenter: two cycles each on 390×844 iframe, 1280×800 iframe, and iPhone-user-agent full-page transport. All 6 cycles passed, 462–1234 ms; sound restored, new battle unskipped, zero runtime/asset errors. Real result hero Idle frames and screenshots checked.
+- Broader final audit https://github.com/bktimmy247/luc-than/actions/runs/37619197266: build/full tests/skip fixtures/actual host/roster-result steps passed; other screens still running at this checkpoint. No blanket all-audit-green claim.
+- Preview candidate: https://luc-than-1s404ig60-nyto1.vercel.app READY, revision 2dd707f; deployed battle HTTP200 with skip handler and stable action lease verified.
+- Physical iPhone/Safari NOT_RUN. Emulated iPhone transport is Chromium, not WebKit. Existing Thầy Mo missing authored Run limitation is unchanged.
+- Main remains 0cf636a. Owner approval required before merge. Ticket Board unavailable under prior documented owner waiver; no ticket claim/lease or DONE state asserted.
+
 # AFK VFX sizing — 2026-10-07
 Runtime8b5c9b1, parent7c20dd7, owner clarified AFK ONLY.
 Changed only campaign drawCampaignBasicVfx: uniform scale bounded by 0.8×hero body height, width1.6×body height and22% viewport. Long shallow Thay Mo projectile no longer gets giant width from height-only scaling. Preserves aspect, authored frames/timing, direction, pivots, Run/ATK behavior. Battle VFX unchanged.
