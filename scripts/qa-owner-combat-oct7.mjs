@@ -15,7 +15,7 @@ try{for(const partial of [false,true]){
  await p.wait(f+'.__HON_VIET__?.getState().mode==="battle"',45000);
  const began=Date.now();let prev='';
  while(Date.now()-began<90000){
- const snap=await p.evaluate('(()=>{const w='+f+',s=w.__HON_VIET__.getState();return {mode:s.mode,round:s.round,count:s.actionCount,current:s.currentId,action:s.selectedAction,queue:s.queue,phase:w.document.querySelector("#phaseLabel")?.textContent,units:w.__HON_VIET__.getUnits().map(u=>({id:u.id,name:u.name,source:u.sourceId,team:u.team,slot:u.slot,hp:u.hp,displayHp:u.displayHp,maxHp:u.maxHp,shield:u.shield,energy:u.energy,kit:u.kitVersion,action:u.state,statuses:u.statuses?.map(s=>({type:s.type,shieldRemaining:s.shieldRemaining}))}))}})()');
+ const snap=await p.evaluate('(()=>{const w='+f+',s=w.__HON_VIET__.getState();return {mode:s.mode,round:s.round,count:s.actionCount,current:s.currentId,action:s.selectedAction,queue:s.queue,phase:w.document.querySelector("#phaseLabel")?.textContent,log:w.document.querySelector("#battleLog")?.textContent,units:w.__HON_VIET__.getUnits().map(u=>({id:u.id,name:u.name,source:u.sourceId,team:u.team,slot:u.slot,accuracy:u.accuracy,evasion:u.evasion,atk:u.atk,def:u.def,hp:u.hp,displayHp:u.displayHp,maxHp:u.maxHp,shield:u.shield,energy:u.energy,kit:u.kitVersion,action:u.state,statuses:u.statuses?.map(s=>({type:s.type,shieldRemaining:s.shieldRemaining}))}))}})()');
  const key=JSON.stringify({...snap,units:snap.units.map(u=>({...u,displayHp:undefined,action:undefined}))});
  if(key!==prev){r.events.push({ms:Date.now()-began,...snap});prev=key;}
  if(snap.round>=2||snap.mode==='result')break;
