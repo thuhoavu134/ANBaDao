@@ -14,6 +14,7 @@ try{for(const [width,height]of [[390,844],[1280,800]]){
  const before=await p.evaluate(f+'.__HON_VIET__.getState()');
  if(before.instantSkip!=null)throw Error('Skip persisted into new battle');
  const rect=await p.evaluate('(()=>{const f=document.getElementById("hvBattleFrame"),r=f.getBoundingClientRect(),b=f.contentDocument.querySelector("#embeddedSkipButton").getBoundingClientRect();return {x:r.x+b.x+b.width/2,y:r.y+b.y+b.height/2,w:b.width,h:b.height}})()');
+ run.rect=rect;
  if(!rect.w||!rect.h)throw Error('Skip not visible');
  const began=Date.now();
  await p.send('Input.dispatchMouseEvent',{type:'mousePressed',x:rect.x,y:rect.y,button:'left',clickCount:1});
@@ -30,6 +31,8 @@ try{for(const [width,height]of [[390,844],[1280,800]]){
  run.exceptions=p.events.filter(e=>e.method==='Runtime.exceptionThrown').map(e=>e.params.exceptionDetails.exception?.description||e.params.exceptionDetails.text);
  run.assetErrors=p.events.filter(e=>e.method==='Network.responseReceived'&&e.params.response.status>=400&&new URL(e.params.response.url).pathname.startsWith('/assets/')).map(e=>e.params.response.url);
  run.ok=!run.exceptions.length&&!run.assetErrors.length;
- }catch(e){run.ok=false;run.error=String(e.stack||e);run.exceptions=p.events.filter(e=>e.method==='Runtime.exceptionThrown');}finally{await p.close();}
+ }catch(e){run.ok=false;run.error=String(e.stack||e);
+ try{run.failure=await p.evaluate('(()=>{const f=document.getElementById("hvBattleFrame"),w=f?.contentWindow||window,s=w.__HON_VIET__?.getState(),b=w.document.querySelector("#embeddedSkipButton");return {url:location.href,state:s?{mode:s.mode,round:s.round,actions:s.actionCount,locked:s.locked,skip:s.instantSkip,battleId:s.battleId,current:s.currentId}:null,button:b?{disabled:b.disabled,rect:b.getBoundingClientRect().toJSON()}:null,assetError:w.document.querySelector("#hvBattleAssetError")?.innerText,top:document.elementFromPoint(innerWidth-30,innerHeight-30)?.outerHTML.slice(0,200)}})()');const shot=await p.send('Page.captureScreenshot',{format:'jpeg',quality:65});console.log('SKIP_FAILURE_IMAGE:'+width+':'+shot.data);}catch{}
+ run.exceptions=p.events.filter(e=>e.method==='Runtime.exceptionThrown');}finally{await p.close();}
 }}finally{report.ok=report.runs.every(r=>r.ok);console.log('SKIP_HOST_REPORT:'+JSON.stringify(report));await browser.close();}
 if(!report.ok)process.exitCode=1;
