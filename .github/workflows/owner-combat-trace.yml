@@ -2,7 +2,7 @@ name: Owner combat trace
 on:
   push:
     branches: ['review/full-game-ui-20261006']
-    paths: ['scripts/qa-owner-combat-oct7.mjs','.github/workflows/owner-combat-trace.yml']
+    paths: ['scripts/qa-owner-combat-oct7.mjs','scripts/versioned-basic-dispatch-v1.mjs','src/ui/campaign-scene.css','.github/workflows/owner-combat-trace.yml']
   workflow_dispatch:
 permissions: {contents: read}
 jobs:
@@ -15,6 +15,7 @@ jobs:
         with: {node-version: 22}
       - run: npm ci
       - run: npm run build
+      - run: node --test tests/versioned-basic-dispatch.test.mjs tests/formation-order-targeting.test.mjs
       - run: |
           export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
           node scripts/qa-owner-combat-oct7.mjs

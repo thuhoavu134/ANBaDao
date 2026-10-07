@@ -1,3 +1,4 @@
+import assert from 'node:assert/strict';
 import {startBrowser} from './qa-battle-readiness-browser.mjs';
 const b=await startBrowser(),report={revision:process.env.GITHUB_SHA,runs:[]};
 try{for(const partial of [false,true]){
@@ -8,7 +9,14 @@ try{for(const partial of [false,true]){
  await p.click('#hubScreen [data-art-go="campaign"]');await p.wait('!document.getElementById("hvCampaignScene").hidden');
  await p.click('#hvCampaignScene [data-hv-afk-challenge]');await p.wait('!document.querySelector(".cs-prepare").hidden');
  if(partial)for(const slot of [2,4,5]){const sel='[data-scene-slot="'+slot+'"]:not(.is-empty)';if(await p.evaluate('!!document.querySelector('+JSON.stringify(sel)+')'))await p.click(sel);}
+ if(partial){
+  await p.click('[data-scene-slot="2"]');
+  await p.click('[data-scene-hero="co_dao_ganh_hoi"]');
+  assert.equal(await p.evaluate('document.querySelector("[data-scene-slot=\\"2\\"]").classList.contains("is-empty")'),false,'empty slot remains usable');
+  await p.click('[data-scene-slot="2"]');
+ }
  r.preparation=await p.evaluate('({squad:P.squad,slots:[...document.querySelectorAll("[data-scene-slot]")].map(e=>({slot:e.dataset.sceneSlot,label:e.getAttribute("aria-label"),empty:e.classList.contains("is-empty"),background:getComputedStyle(e).backgroundColor}))})');
+ assert.ok(r.preparation.slots.filter(s=>s.empty).every(s=>s.background==='rgba(0, 0, 0, 0)'),'empty slots must not paint gray rectangles');
  const shot=await p.send('Page.captureScreenshot',{format:'jpeg',quality:65});console.log('PREP_IMAGE:'+partial+':'+shot.data);
  await p.click('[data-scene-action="launch"]');
  const f='document.getElementById("hvBattleFrame").contentWindow';
@@ -21,6 +29,18 @@ try{for(const partial of [false,true]){
  if(snap.round>=2||snap.mode==='result')break;
  await new Promise(r=>setTimeout(r,50));
  }
+ const first=r.events.find(e=>e.round===1&&e.current);
+ assert.ok(first,'first round started');
+ const initial=r.events[0].units;
+ const rage=team=>initial.filter(u=>u.team===team).reduce((n,u)=>n+u.energy,0);
+ const sides=rage('enemy')>rage('player')?['enemy','player']:['player','enemy'];
+ const expected=Array.from({length:6},(_,slot)=>sides.flatMap(team=>initial.filter(u=>u.team===team&&u.slot===slot).map(u=>u.id))).flat();
+ const order=[];for(const e of r.events.filter(e=>e.round===1))if(e.current&&!order.includes(e.current))order.push(e.current);
+ assert.deepEqual([first.current,...first.queue],expected,'initial queue follows slots and existing rage initiative');
+ assert.deepEqual(order,expected,'real actions consume queue in order');
+ assert.ok(r.events.some(e=>e.round===2||e.mode==='result'),'opening round completes');
+ r.order={expected,actual:order};
  r.exceptions=p.events.filter(e=>e.method==='Runtime.exceptionThrown').map(e=>e.params.exceptionDetails.exception?.description||e.params.exceptionDetails.text);
  }catch(e){r.error=String(e.stack||e);}finally{await p.close();}
 }}finally{console.log('OWNER_COMBAT_TRACE:'+JSON.stringify(report));await b.close();}
+if(report.runs.some(r=>r.error||r.exceptions?.length))process.exitCode=1;

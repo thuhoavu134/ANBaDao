@@ -270,6 +270,10 @@ installCompactDamageFloaters(root);
 const { installBattleVfxDirection } = await import('./battle-vfx-direction-v1.mjs');
 installBattleVfxDirection(root);
 
+// Restore versioned Basic action dispatch after authored runtime owners.
+const { installVersionedBasicDispatch } = await import('./versioned-basic-dispatch-v1.mjs');
+installVersionedBasicDispatch(root);
+
 const { installBattleInstantSkip } = await import('./battle-instant-skip-v1.mjs');
 installBattleInstantSkip(root);
 
