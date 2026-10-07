@@ -32,6 +32,7 @@ export async function buildPreparationIdlePages(root, specs, { pageFrames = PREP
     const outputDir = outputBase + '/' + id;
     mkdirSync(join(root, 'dist', outputDir), { recursive: true });
     const framePixels = index => {
+      index += spec.startFrame || 0;
       const x = index % spec.cols * (spec.strideW || cellW) + (spec.pad || 0);
       const y = Math.floor(index / spec.cols) * (spec.strideH || cellH) + (spec.pad || 0);
       if (x + cellW > info.width || y + cellH > info.height) throw new Error('Preparation idle source bounds: ' + id);

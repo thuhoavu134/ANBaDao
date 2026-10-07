@@ -135,6 +135,9 @@ function campaignPagedSprite(base, pack, time) {
   return {spec:{...base,...pack.pages[page],frameIndex:frame%pack.pageFrames},poster:pack.poster?{...base,...pack.poster,frameIndex:0}:null};
 }
 const runSpecs = {
+  luc_anh: { src: 'assets/characters/luc-anh/run-atlas.webp', frames:61, cols:8, cellW:240, cellH:240, ms:28, pivot:120, foot:213.5, body:199 },
+  dinh_loi: { src:'assets/characters/dinh-loi/run-atlas.png', frames:64, cols:8, cellW:480, cellH:270, ms:63, pivot:265, foot:258, body:233 },
+  ong_hang_pho: { src:'assets/battle-runtime/embedded-11.png', frames:9, startFrame:28, cols:10, cellW:240, cellH:135, ms:41, pivot:100, foot:125, body:119 },
   linh_dong: { src: 'assets/characters/linh-dong/campaign-lite/run-atlas.webp', frames: 96, cols: 8, cellW: 240, cellH: 220, ms: 42, pivot: 120, foot: 220, body: 165 },
   bach_dien: { src: 'assets/characters/bach-dien/campaign-lite/run-atlas.webp', frames: 45, cols: 6, cellW: 240, cellH: 220, ms: 1000 / 30, pivot: 120, foot: 220, body: 165 }
 };
@@ -221,11 +224,11 @@ function frameAt(spec, time) {
     }
     return 0;
   }
-  return Math.floor(time / spec.ms) % spec.frames;
+  return (spec.startFrame || 0) + Math.floor(time / spec.ms) % spec.frames;
 }
 function specForAfk(pick) {
   if (sceneState.draft) return spriteSpecs[campaignActorArtId(pick.id)];
-  const run = runSpecs[campaignActorArtId(pick.id)] || window.HonVietCampaignRunSpecs?.[pick.id];
+  const run = runSpecs[campaignActorArtId(pick.id)] || window.HonVietCampaignRunSpecs?.[campaignActorArtId(pick.id)] || window.HonVietCampaignRunSpecs?.[pick.id];
   if (run && run.src && Number(run.frames) > 0 && run.cellW && run.cellH && run.pivot && run.foot && run.body) return run;
   return spriteSpecs[campaignActorArtId(pick.id)];
 }
@@ -470,7 +473,7 @@ function drawScene(time) {
       const preparation=preparing||farm?.phase!=='march'?preparationSpriteFor(pick,time):null;
       const running=pose?.moving||farm?.phase==='march';
       const runBase=running?specForAfk(pick):null,runSprite=runBase&&farmRunPacks[artId]?campaignPagedSprite(runBase,farmRunPacks[artId],(time%(runBase.frames*runBase.ms))):null;
-      const spec=readyAttack?attackSprite.spec:running?(runSprite?.spec||runBase):preparation?.spec||specForAfk(pick);
+      const spec=readyAttack?attackSprite.spec:running?(runSprite?.spec||runBase):preparation?.spec||spriteSpecs[artId];
       const enemyArt = pick.enemy && !spec ? preparationEnemyArt(pick, enemies) : null;
       let drawSpec = spec;
       // Request the small, full-body idle first; a portrait is not an idle pose.
