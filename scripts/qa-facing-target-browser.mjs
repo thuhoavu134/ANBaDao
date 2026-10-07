@@ -1,8 +1,8 @@
 import assert from 'node:assert/strict';
 import {startBrowser} from './qa-battle-readiness-browser.mjs';
 const b=await startBrowser(),report={revision:process.env.GITHUB_SHA,runs:[]};
-try{for(const partial of [false,true]){
- const p=await b.page(390,844,1),r={partial,events:[]};report.runs.push(r);
+try{for(const [width,partial] of [[390,false],[390,true],[1280,false]]){
+ const p=await b.page(width,844,1),r={width,partial,events:[]};report.runs.push(r);
  try{
  await p.send('Page.addScriptToEvaluateOnNewDocument',{source:'if(location.pathname.endsWith("/battle.html")){const u=new URL(location.href);u.searchParams.set("qaPhase01","1");history.replaceState(null,"",u);}'});
  r.targetChecks=[];const checked=new Map();
@@ -25,12 +25,12 @@ try{for(const partial of [false,true]){
  await p.wait(f+'.__HON_VIET__?.getState().mode==="battle"',45000);
  const began=Date.now();let prev='';
  while(Date.now()-began<90000){
- const snap=await p.evaluate('(()=>{const w='+f+',s=w.__HON_VIET__.getState();return {trace:w.__HV_BATTLE_PHASE1_TRACE?.events()||[],mode:s.mode,round:s.round,count:s.actionCount,current:s.currentId,action:s.selectedAction,queue:s.queue,phase:w.document.querySelector("#phaseLabel")?.textContent,log:w.document.querySelector("#battleLog")?.textContent,units:w.__HON_VIET__.getUnits().map(u=>({id:u.id,name:u.name,source:u.sourceId,team:u.team,slot:u.slot,accuracy:u.accuracy,evasion:u.evasion,atk:u.atk,def:u.def,hp:u.hp,displayHp:u.displayHp,maxHp:u.maxHp,shield:u.shield,energy:u.energy,kit:u.kitVersion,skillKind:u.skillKind,ultimateKind:u.ultimateKind,action:u.state,statuses:u.statuses?.map(s=>({type:s.type,shieldRemaining:s.shieldRemaining}))}))}})()');
+ const snap=await p.evaluate('(()=>{const w='+f+',s=w.__HON_VIET__.getState();return {trace:w.__HV_BATTLE_PHASE1_TRACE?.events()||[],mode:s.mode,round:s.round,count:s.actionCount,current:s.currentId,action:s.selectedAction,queue:s.queue,phase:w.document.querySelector("#phaseLabel")?.textContent,log:w.document.querySelector("#battleLog")?.textContent,units:w.__HON_VIET__.getUnits().map(u=>({id:u.id,name:u.name,source:u.sourceId,team:u.team,slot:u.slot,accuracy:u.accuracy,evasion:u.evasion,atk:u.atk,def:u.def,hp:u.hp,displayHp:u.displayHp,maxHp:u.maxHp,shield:u.shield,energy:u.energy,kit:u.kitVersion,basicKind:w.honVietSkillKitFor?.(u.sourceId)?.actions?.basic?.kind,skillKind:u.skillKind,ultimateKind:u.ultimateKind,action:u.state,statuses:u.statuses?.map(s=>({type:s.type,shieldRemaining:s.shieldRemaining}))}))}})()');
  for(const event of snap.trace.filter(e=>e.type==='action:start')){
   if(checked.has(event.actionId))continue;
   const actor=snap.units.find(u=>u.id===event.actorId);
-  const action=event.skillId,kind=action==='skill'?actor?.skillKind:actor?.ultimateKind;
-  if(!actor||actor.kit==='splus42-v2'&&action!=='basic'||action!=='basic'&&['aoe','aoeBurn','aoeDebuff','heal','healAll','guard','guardAll','taunt','cleanseGuard','buff','buffAll','hasteAll','regen'].includes(kind))continue;
+  const action=event.skillId,kind=action==='basic'?(actor?.basicKind||'damage'):action==='skill'?actor?.skillKind:actor?.ultimateKind;
+  if(!actor||actor.kit==='splus42-v2'&&action!=='basic'||['aoe','aoeBurn','aoeDebuff','heal','healAll','guard','guardAll','taunt','cleanseGuard','buff','buffAll','hasteAll','regen'].includes(kind))continue;
   const enemies=snap.units.filter(u=>u.team!==actor.team&&u.hp>0),front=enemies.filter(u=>u.slot<3);
   const row=(front.length?front:enemies).sort((a,b)=>a.slot-b.slot);
   const expected=row.find(u=>u.slot%3===actor.slot%3)||row[0];
