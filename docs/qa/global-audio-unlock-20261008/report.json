@@ -1,0 +1,4385 @@
+{
+  "revision": "f3559a4d80752d6ba0736248668a757b9997f0ca",
+  "runs": [
+    {
+      "profile": "desktop",
+      "routes": [
+        {
+          "route": "hub",
+          "url": "/",
+          "state": "running",
+          "unlocked": true,
+          "track": "assets/audio/bgm-hub-new.mp3",
+          "contexts": 1,
+          "gestures": 1,
+          "activeGesture": false,
+          "legacyPaused": true
+        },
+        {
+          "route": "heroes",
+          "url": "/",
+          "state": "running",
+          "unlocked": true,
+          "track": "assets/audio/bgm-hero-new.mp3",
+          "contexts": 1,
+          "gestures": 1,
+          "activeGesture": false,
+          "legacyPaused": true
+        },
+        {
+          "route": "team",
+          "url": "/",
+          "state": "running",
+          "unlocked": true,
+          "track": "assets/audio/bgm-hub-new.mp3",
+          "contexts": 1,
+          "gestures": 1,
+          "activeGesture": false,
+          "legacyPaused": true
+        },
+        {
+          "route": "shop",
+          "url": "/",
+          "state": "running",
+          "unlocked": true,
+          "track": "assets/audio/bgm-hub-new.mp3",
+          "contexts": 1,
+          "gestures": 1,
+          "activeGesture": false,
+          "legacyPaused": true
+        },
+        {
+          "route": "daily",
+          "url": "/",
+          "state": "running",
+          "unlocked": true,
+          "track": "assets/audio/bgm-hub-new.mp3",
+          "contexts": 1,
+          "gestures": 1,
+          "activeGesture": false,
+          "legacyPaused": true
+        },
+        {
+          "route": "campaign",
+          "url": "/",
+          "state": "running",
+          "unlocked": true,
+          "track": "assets/audio/bgm-challenge-new.mp3",
+          "contexts": 1,
+          "gestures": 1,
+          "activeGesture": false,
+          "legacyPaused": true
+        }
+      ],
+      "entries": [
+        {
+          "host": true,
+          "childContexts": 0,
+          "state": "running",
+          "count": 2,
+          "sfx": [
+            {
+              "atPerformanceMs": 1885.899999999965,
+              "type": "sfx:scheduled",
+              "event": "basic",
+              "group": "combat",
+              "battleSession": 1,
+              "actionId": "2:action:1:hv-player-0-ong_hang_pho:basic",
+              "cue": "contact:sheet-frame-36",
+              "sampleCue": "dominant",
+              "requestedPerformanceMs": 1885.5999999999767,
+              "decodedReadyPerformanceMs": 1885.5999999999767,
+              "cuePerformanceMs": 3010.7142857142862,
+              "audibleLeadInMs": 315.03401360544217,
+              "dominantCueMs": 412.3809523809524,
+              "sampleCueOffsetMs": 412.3809523809524,
+              "sourceScheduledPerformanceMs": 2598.333333333334,
+              "sourceStartContextTime": 12.066532333333368,
+              "expectedAudiblePerformanceMs": 2913.367346938776,
+              "expectedCuePerformanceMs": 3010.7142857142862,
+              "signedCueOffsetMs": 0,
+              "clockMapping": "output-timestamp",
+              "outputTimestampContextTime": 11.350099,
+              "outputTimestampPerformanceMs": 1881.899999999965,
+              "estimatedOutputLatencyMs": 38.39124943311799,
+              "contextBaseLatencyMs": 10,
+              "contextOutputLatencyMs": 32,
+              "timingBasis": "web-audio-output-scheduled",
+              "audibleCueBasis": "decoded-buffer-envelope",
+              "analysisMethod": "decoded-buffer:rms-5ms--50db/onset;rms-10ms-max/dominant",
+              "endedPerformanceMs": 3757.2999999999884,
+              "completed": true,
+              "performanceClockDomain": "battle-local",
+              "parentPerformanceOffsetMs": 11730.5
+            }
+          ],
+          "cache": {
+            "suspended": true,
+            "entries": 0,
+            "decodedBytes": 0
+          },
+          "audio": {
+            "url": "/",
+            "state": "running",
+            "unlocked": true,
+            "track": "assets/audio/bgm-combat-new.mp3",
+            "contexts": 1,
+            "gestures": 1,
+            "activeGesture": false,
+            "pcm": [
+              {
+                "at": 506.8999999999651,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 2238,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 2238.1999999999534,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 2253.399999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 2253.5,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 2441.0999999999767,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 3101.2999999999884,
+                "state": "running",
+                "peak": 0.6773398518562317,
+                "duration": 136.41349206349207,
+                "music": "assets/audio/bgm-hub-new.mp3"
+              },
+              {
+                "at": 9048.799999999988,
+                "state": "running",
+                "peak": 0.7007325291633606,
+                "duration": 148.77349206349206,
+                "music": "assets/audio/bgm-hero-new.mp3"
+              },
+              {
+                "at": 9651.099999999977,
+                "state": "running",
+                "peak": 0.6773398518562317,
+                "duration": 136.41349206349207,
+                "music": "assets/audio/bgm-hub-new.mp3"
+              },
+              {
+                "at": 10783.899999999965,
+                "state": "running",
+                "peak": 0.9694064855575562,
+                "duration": 171.69349206349207,
+                "music": "assets/audio/bgm-challenge-new.mp3"
+              },
+              {
+                "at": 10837.899999999965,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 10838.699999999953,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10838.699999999953,
+                "state": "running",
+                "peak": 0.6615056395530701,
+                "duration": 4.310204081632653,
+                "music": null
+              },
+              {
+                "at": 10971.399999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10971.399999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10994.399999999965,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 11046.199999999953,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11046.199999999953,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11081,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 11680.799999999988,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11680.899999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11708,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11708,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11731.599999999977,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 12225.699999999953,
+                "state": "running",
+                "peak": 0.7007339000701904,
+                "duration": 127.09349206349206,
+                "music": "assets/audio/bgm-combat-new.mp3"
+              },
+              {
+                "at": 12692.899999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 12693,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 13616.5,
+                "state": "running",
+                "peak": 0.9457755088806152,
+                "duration": 1.180498866213152,
+                "music": null
+              }
+            ],
+            "legacyPaused": true
+          },
+          "result": {
+            "url": "/",
+            "state": "running",
+            "unlocked": true,
+            "track": "assets/audio/bgm-victory.mp3",
+            "contexts": 1,
+            "gestures": 1,
+            "activeGesture": false,
+            "pcm": [
+              {
+                "at": 506.8999999999651,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 2238,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 2238.1999999999534,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 2253.399999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 2253.5,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 2441.0999999999767,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 3101.2999999999884,
+                "state": "running",
+                "peak": 0.6773398518562317,
+                "duration": 136.41349206349207,
+                "music": "assets/audio/bgm-hub-new.mp3"
+              },
+              {
+                "at": 9048.799999999988,
+                "state": "running",
+                "peak": 0.7007325291633606,
+                "duration": 148.77349206349206,
+                "music": "assets/audio/bgm-hero-new.mp3"
+              },
+              {
+                "at": 9651.099999999977,
+                "state": "running",
+                "peak": 0.6773398518562317,
+                "duration": 136.41349206349207,
+                "music": "assets/audio/bgm-hub-new.mp3"
+              },
+              {
+                "at": 10783.899999999965,
+                "state": "running",
+                "peak": 0.9694064855575562,
+                "duration": 171.69349206349207,
+                "music": "assets/audio/bgm-challenge-new.mp3"
+              },
+              {
+                "at": 10837.899999999965,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 10838.699999999953,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10838.699999999953,
+                "state": "running",
+                "peak": 0.6615056395530701,
+                "duration": 4.310204081632653,
+                "music": null
+              },
+              {
+                "at": 10971.399999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10971.399999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10994.399999999965,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 11046.199999999953,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11046.199999999953,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11081,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 11680.799999999988,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11680.899999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11708,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11708,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11731.599999999977,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 12225.699999999953,
+                "state": "running",
+                "peak": 0.7007339000701904,
+                "duration": 127.09349206349206,
+                "music": "assets/audio/bgm-combat-new.mp3"
+              },
+              {
+                "at": 12692.899999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 12693,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 13616.5,
+                "state": "running",
+                "peak": 0.9457755088806152,
+                "duration": 1.180498866213152,
+                "music": null
+              },
+              {
+                "at": 16759.899999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 16760.399999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 16760.79999999999,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 17033.099999999977,
+                "state": "running",
+                "peak": 0.9869499802589417,
+                "duration": 4.0751020408163265,
+                "music": null
+              },
+              {
+                "at": 17663.899999999965,
+                "state": "running",
+                "peak": 0.588417649269104,
+                "duration": 2.2934920634920637,
+                "music": "assets/audio/bgm-victory.mp3"
+              }
+            ],
+            "legacyPaused": true
+          },
+          "returned": {
+            "url": "/",
+            "state": "running",
+            "unlocked": true,
+            "track": "assets/audio/bgm-hero-new.mp3",
+            "contexts": 1,
+            "gestures": 1,
+            "activeGesture": false,
+            "pcm": [
+              {
+                "at": 506.8999999999651,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 2238,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 2238.1999999999534,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 2253.399999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 2253.5,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 2441.0999999999767,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 3101.2999999999884,
+                "state": "running",
+                "peak": 0.6773398518562317,
+                "duration": 136.41349206349207,
+                "music": "assets/audio/bgm-hub-new.mp3"
+              },
+              {
+                "at": 9048.799999999988,
+                "state": "running",
+                "peak": 0.7007325291633606,
+                "duration": 148.77349206349206,
+                "music": "assets/audio/bgm-hero-new.mp3"
+              },
+              {
+                "at": 9651.099999999977,
+                "state": "running",
+                "peak": 0.6773398518562317,
+                "duration": 136.41349206349207,
+                "music": "assets/audio/bgm-hub-new.mp3"
+              },
+              {
+                "at": 10783.899999999965,
+                "state": "running",
+                "peak": 0.9694064855575562,
+                "duration": 171.69349206349207,
+                "music": "assets/audio/bgm-challenge-new.mp3"
+              },
+              {
+                "at": 10837.899999999965,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 10838.699999999953,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10838.699999999953,
+                "state": "running",
+                "peak": 0.6615056395530701,
+                "duration": 4.310204081632653,
+                "music": null
+              },
+              {
+                "at": 10971.399999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10971.399999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10994.399999999965,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 11046.199999999953,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11046.199999999953,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11081,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 11680.799999999988,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11680.899999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11708,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11708,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11731.599999999977,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 12225.699999999953,
+                "state": "running",
+                "peak": 0.7007339000701904,
+                "duration": 127.09349206349206,
+                "music": "assets/audio/bgm-combat-new.mp3"
+              },
+              {
+                "at": 12692.899999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 12693,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 13616.5,
+                "state": "running",
+                "peak": 0.9457755088806152,
+                "duration": 1.180498866213152,
+                "music": null
+              },
+              {
+                "at": 16759.899999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 16760.399999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 16760.79999999999,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 17033.099999999977,
+                "state": "running",
+                "peak": 0.9869499802589417,
+                "duration": 4.0751020408163265,
+                "music": null
+              },
+              {
+                "at": 17663.899999999965,
+                "state": "running",
+                "peak": 0.588417649269104,
+                "duration": 2.2934920634920637,
+                "music": "assets/audio/bgm-victory.mp3"
+              },
+              {
+                "at": 18267.599999999977,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 18267.699999999953,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 18273.29999999999,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 19516.29999999999,
+                "state": "running",
+                "peak": 0.7007325291633606,
+                "duration": 148.77349206349206,
+                "music": "assets/audio/bgm-hero-new.mp3"
+              }
+            ],
+            "legacyPaused": true
+          }
+        },
+        {
+          "host": true,
+          "childContexts": 0,
+          "state": "running",
+          "count": 2,
+          "sfx": [
+            {
+              "atPerformanceMs": -6267.40004882816,
+              "type": "sfx:scheduled",
+              "event": "basic",
+              "group": "combat",
+              "battleSession": 1,
+              "actionId": "2:action:1:hv-player-0-ong_hang_pho:basic",
+              "cue": "contact:sheet-frame-36",
+              "sampleCue": "dominant",
+              "requestedPerformanceMs": -6267.700048828148,
+              "decodedReadyPerformanceMs": -6267.700048828148,
+              "cuePerformanceMs": -5142.585763113839,
+              "audibleLeadInMs": 315.03401360544217,
+              "dominantCueMs": 412.3809523809524,
+              "sampleCueOffsetMs": 412.3809523809524,
+              "sourceScheduledPerformanceMs": -5554.966715494791,
+              "sourceStartContextTime": 12.066532333333368,
+              "expectedAudiblePerformanceMs": -5239.932701889349,
+              "expectedCuePerformanceMs": -5142.585763113839,
+              "signedCueOffsetMs": 0,
+              "clockMapping": "output-timestamp",
+              "outputTimestampContextTime": 11.350099,
+              "outputTimestampPerformanceMs": -6271.40004882816,
+              "estimatedOutputLatencyMs": 38.39124943311799,
+              "contextBaseLatencyMs": 10,
+              "contextOutputLatencyMs": 32,
+              "timingBasis": "web-audio-output-scheduled",
+              "audibleCueBasis": "decoded-buffer-envelope",
+              "analysisMethod": "decoded-buffer:rms-5ms--50db/onset;rms-10ms-max/dominant",
+              "endedPerformanceMs": -4396.000048828137,
+              "completed": true,
+              "performanceClockDomain": "battle-local",
+              "parentPerformanceOffsetMs": 19883.800048828125
+            },
+            {
+              "atPerformanceMs": -2850.7000488281483,
+              "type": "sfx:scheduled",
+              "event": "victory",
+              "group": "combat",
+              "battleSession": 1,
+              "actionId": null,
+              "cue": null,
+              "sampleCue": "onset",
+              "requestedPerformanceMs": -2913.40004882816,
+              "decodedReadyPerformanceMs": -2864.5000488281366,
+              "cuePerformanceMs": -19883.800048828125,
+              "audibleLeadInMs": 18.979591836734695,
+              "dominantCueMs": 2882.1995464852607,
+              "sampleCueOffsetMs": 18.979591836734695,
+              "sourceScheduledPerformanceMs": -2850.7000488281483,
+              "sourceStartContextTime": 0,
+              "expectedAudiblePerformanceMs": -2831.720456991414,
+              "expectedCuePerformanceMs": -2831.720456991414,
+              "signedCueOffsetMs": null,
+              "clockMapping": "current-time",
+              "outputTimestampContextTime": null,
+              "outputTimestampPerformanceMs": -19883.800048828125,
+              "estimatedOutputLatencyMs": null,
+              "contextBaseLatencyMs": 10,
+              "contextOutputLatencyMs": 32,
+              "timingBasis": "web-audio-output-scheduled",
+              "audibleCueBasis": "decoded-buffer-envelope",
+              "analysisMethod": "decoded-buffer:rms-5ms--50db/onset;rms-10ms-max/dominant",
+              "cancelled": true,
+              "cancelReason": "combat-stop",
+              "cancelledPerformanceMs": -1516.5000488281366,
+              "endedPerformanceMs": -1408.800048828125,
+              "completed": false,
+              "performanceClockDomain": "battle-local",
+              "parentPerformanceOffsetMs": 19883.800048828125
+            },
+            {
+              "atPerformanceMs": 2330.699951171875,
+              "type": "sfx:scheduled",
+              "event": "basic",
+              "group": "combat",
+              "battleSession": 3,
+              "actionId": "2:action:1:hv-player-0-ong_hang_pho:basic",
+              "cue": "contact:sheet-frame-36",
+              "sampleCue": "dominant",
+              "requestedPerformanceMs": 2330.4999511718634,
+              "decodedReadyPerformanceMs": 2330.59995117184,
+              "cuePerformanceMs": 3455.7142857142862,
+              "audibleLeadInMs": 315.03401360544217,
+              "dominantCueMs": 412.3809523809524,
+              "sampleCueOffsetMs": 412.3809523809524,
+              "sourceScheduledPerformanceMs": 3043.333333333332,
+              "sourceStartContextTime": 20.66476838216149,
+              "expectedAudiblePerformanceMs": 3358.367346938776,
+              "expectedCuePerformanceMs": 3455.7142857142862,
+              "signedCueOffsetMs": 0,
+              "clockMapping": "output-timestamp",
+              "outputTimestampContextTime": 19.950035,
+              "outputTimestampPerformanceMs": 2328.59995117184,
+              "estimatedOutputLatencyMs": 40.245952380915696,
+              "contextBaseLatencyMs": 10,
+              "contextOutputLatencyMs": 32,
+              "timingBasis": "web-audio-output-scheduled",
+              "audibleCueBasis": "decoded-buffer-envelope",
+              "analysisMethod": "decoded-buffer:rms-5ms--50db/onset;rms-10ms-max/dominant",
+              "endedPerformanceMs": 4203.699951171875,
+              "completed": true,
+              "performanceClockDomain": "battle-local",
+              "parentPerformanceOffsetMs": 19883.800048828125
+            }
+          ],
+          "cache": {
+            "suspended": true,
+            "entries": 0,
+            "decodedBytes": 0
+          },
+          "audio": {
+            "url": "/",
+            "state": "running",
+            "unlocked": true,
+            "track": "assets/audio/bgm-combat-new.mp3",
+            "contexts": 1,
+            "gestures": 1,
+            "activeGesture": false,
+            "pcm": [
+              {
+                "at": 506.8999999999651,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 2238,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 2238.1999999999534,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 2253.399999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 2253.5,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 2441.0999999999767,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 3101.2999999999884,
+                "state": "running",
+                "peak": 0.6773398518562317,
+                "duration": 136.41349206349207,
+                "music": "assets/audio/bgm-hub-new.mp3"
+              },
+              {
+                "at": 9048.799999999988,
+                "state": "running",
+                "peak": 0.7007325291633606,
+                "duration": 148.77349206349206,
+                "music": "assets/audio/bgm-hero-new.mp3"
+              },
+              {
+                "at": 9651.099999999977,
+                "state": "running",
+                "peak": 0.6773398518562317,
+                "duration": 136.41349206349207,
+                "music": "assets/audio/bgm-hub-new.mp3"
+              },
+              {
+                "at": 10783.899999999965,
+                "state": "running",
+                "peak": 0.9694064855575562,
+                "duration": 171.69349206349207,
+                "music": "assets/audio/bgm-challenge-new.mp3"
+              },
+              {
+                "at": 10837.899999999965,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 10838.699999999953,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10838.699999999953,
+                "state": "running",
+                "peak": 0.6615056395530701,
+                "duration": 4.310204081632653,
+                "music": null
+              },
+              {
+                "at": 10971.399999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10971.399999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10994.399999999965,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 11046.199999999953,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11046.199999999953,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11081,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 11680.799999999988,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11680.899999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11708,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11708,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11731.599999999977,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 12225.699999999953,
+                "state": "running",
+                "peak": 0.7007339000701904,
+                "duration": 127.09349206349206,
+                "music": "assets/audio/bgm-combat-new.mp3"
+              },
+              {
+                "at": 12692.899999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 12693,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 13616.5,
+                "state": "running",
+                "peak": 0.9457755088806152,
+                "duration": 1.180498866213152,
+                "music": null
+              },
+              {
+                "at": 16759.899999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 16760.399999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 16760.79999999999,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 17033.099999999977,
+                "state": "running",
+                "peak": 0.9869499802589417,
+                "duration": 4.0751020408163265,
+                "music": null
+              },
+              {
+                "at": 17663.899999999965,
+                "state": "running",
+                "peak": 0.588417649269104,
+                "duration": 2.2934920634920637,
+                "music": "assets/audio/bgm-victory.mp3"
+              },
+              {
+                "at": 18267.599999999977,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 18267.699999999953,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 18273.29999999999,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 19516.29999999999,
+                "state": "running",
+                "peak": 0.7007325291633606,
+                "duration": 148.77349206349206,
+                "music": "assets/audio/bgm-hero-new.mp3"
+              },
+              {
+                "at": 19653.79999999999,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 19653.79999999999,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 19666.29999999999,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 19711.599999999977,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 19711.699999999953,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 19861.599999999977,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 19861.599999999977,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 19862.699999999953,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 19862.699999999953,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 19884,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 21308.5,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 21308.599999999977,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 21320.699999999953,
+                "state": "running",
+                "peak": 0.7007339000701904,
+                "duration": 127.09349206349206,
+                "music": "assets/audio/bgm-combat-new.mp3"
+              },
+              {
+                "at": 22214.5,
+                "state": "running",
+                "peak": 0.9457755088806152,
+                "duration": 1.180498866213152,
+                "music": null
+              }
+            ],
+            "legacyPaused": true
+          },
+          "result": {
+            "url": "/",
+            "state": "running",
+            "unlocked": true,
+            "track": "assets/audio/bgm-victory.mp3",
+            "contexts": 1,
+            "gestures": 1,
+            "activeGesture": false,
+            "pcm": [
+              {
+                "at": 506.8999999999651,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 2238,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 2238.1999999999534,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 2253.399999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 2253.5,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 2441.0999999999767,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 3101.2999999999884,
+                "state": "running",
+                "peak": 0.6773398518562317,
+                "duration": 136.41349206349207,
+                "music": "assets/audio/bgm-hub-new.mp3"
+              },
+              {
+                "at": 9048.799999999988,
+                "state": "running",
+                "peak": 0.7007325291633606,
+                "duration": 148.77349206349206,
+                "music": "assets/audio/bgm-hero-new.mp3"
+              },
+              {
+                "at": 9651.099999999977,
+                "state": "running",
+                "peak": 0.6773398518562317,
+                "duration": 136.41349206349207,
+                "music": "assets/audio/bgm-hub-new.mp3"
+              },
+              {
+                "at": 10783.899999999965,
+                "state": "running",
+                "peak": 0.9694064855575562,
+                "duration": 171.69349206349207,
+                "music": "assets/audio/bgm-challenge-new.mp3"
+              },
+              {
+                "at": 10837.899999999965,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 10838.699999999953,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10838.699999999953,
+                "state": "running",
+                "peak": 0.6615056395530701,
+                "duration": 4.310204081632653,
+                "music": null
+              },
+              {
+                "at": 10971.399999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10971.399999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10994.399999999965,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 11046.199999999953,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11046.199999999953,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11081,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 11680.799999999988,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11680.899999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11708,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11708,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11731.599999999977,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 12225.699999999953,
+                "state": "running",
+                "peak": 0.7007339000701904,
+                "duration": 127.09349206349206,
+                "music": "assets/audio/bgm-combat-new.mp3"
+              },
+              {
+                "at": 12692.899999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 12693,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 13616.5,
+                "state": "running",
+                "peak": 0.9457755088806152,
+                "duration": 1.180498866213152,
+                "music": null
+              },
+              {
+                "at": 16759.899999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 16760.399999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 16760.79999999999,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 17033.099999999977,
+                "state": "running",
+                "peak": 0.9869499802589417,
+                "duration": 4.0751020408163265,
+                "music": null
+              },
+              {
+                "at": 17663.899999999965,
+                "state": "running",
+                "peak": 0.588417649269104,
+                "duration": 2.2934920634920637,
+                "music": "assets/audio/bgm-victory.mp3"
+              },
+              {
+                "at": 18267.599999999977,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 18267.699999999953,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 18273.29999999999,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 19516.29999999999,
+                "state": "running",
+                "peak": 0.7007325291633606,
+                "duration": 148.77349206349206,
+                "music": "assets/audio/bgm-hero-new.mp3"
+              },
+              {
+                "at": 19653.79999999999,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 19653.79999999999,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 19666.29999999999,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 19711.599999999977,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 19711.699999999953,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 19861.599999999977,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 19861.599999999977,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 19862.699999999953,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 19862.699999999953,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 19884,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 21308.5,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 21308.599999999977,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 21320.699999999953,
+                "state": "running",
+                "peak": 0.7007339000701904,
+                "duration": 127.09349206349206,
+                "music": "assets/audio/bgm-combat-new.mp3"
+              },
+              {
+                "at": 22214.5,
+                "state": "running",
+                "peak": 0.9457755088806152,
+                "duration": 1.180498866213152,
+                "music": null
+              },
+              {
+                "at": 26019,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 26019.399999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 26024.699999999953,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 26294.5,
+                "state": "running",
+                "peak": 0.9869499802589417,
+                "duration": 4.0751020408163265,
+                "music": null
+              },
+              {
+                "at": 27234.199999999953,
+                "state": "running",
+                "peak": 0.588417649269104,
+                "duration": 2.2934920634920637,
+                "music": "assets/audio/bgm-victory.mp3"
+              }
+            ],
+            "legacyPaused": true
+          },
+          "returned": {
+            "url": "/",
+            "state": "running",
+            "unlocked": true,
+            "track": "assets/audio/bgm-hero-new.mp3",
+            "contexts": 1,
+            "gestures": 1,
+            "activeGesture": false,
+            "pcm": [
+              {
+                "at": 506.8999999999651,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 2238,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 2238.1999999999534,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 2253.399999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 2253.5,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 2441.0999999999767,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 3101.2999999999884,
+                "state": "running",
+                "peak": 0.6773398518562317,
+                "duration": 136.41349206349207,
+                "music": "assets/audio/bgm-hub-new.mp3"
+              },
+              {
+                "at": 9048.799999999988,
+                "state": "running",
+                "peak": 0.7007325291633606,
+                "duration": 148.77349206349206,
+                "music": "assets/audio/bgm-hero-new.mp3"
+              },
+              {
+                "at": 9651.099999999977,
+                "state": "running",
+                "peak": 0.6773398518562317,
+                "duration": 136.41349206349207,
+                "music": "assets/audio/bgm-hub-new.mp3"
+              },
+              {
+                "at": 10783.899999999965,
+                "state": "running",
+                "peak": 0.9694064855575562,
+                "duration": 171.69349206349207,
+                "music": "assets/audio/bgm-challenge-new.mp3"
+              },
+              {
+                "at": 10837.899999999965,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 10838.699999999953,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10838.699999999953,
+                "state": "running",
+                "peak": 0.6615056395530701,
+                "duration": 4.310204081632653,
+                "music": null
+              },
+              {
+                "at": 10971.399999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10971.399999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10994.399999999965,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 11046.199999999953,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11046.199999999953,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11081,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 11680.799999999988,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11680.899999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11708,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11708,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11731.599999999977,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 12225.699999999953,
+                "state": "running",
+                "peak": 0.7007339000701904,
+                "duration": 127.09349206349206,
+                "music": "assets/audio/bgm-combat-new.mp3"
+              },
+              {
+                "at": 12692.899999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 12693,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 13616.5,
+                "state": "running",
+                "peak": 0.9457755088806152,
+                "duration": 1.180498866213152,
+                "music": null
+              },
+              {
+                "at": 16759.899999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 16760.399999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 16760.79999999999,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 17033.099999999977,
+                "state": "running",
+                "peak": 0.9869499802589417,
+                "duration": 4.0751020408163265,
+                "music": null
+              },
+              {
+                "at": 17663.899999999965,
+                "state": "running",
+                "peak": 0.588417649269104,
+                "duration": 2.2934920634920637,
+                "music": "assets/audio/bgm-victory.mp3"
+              },
+              {
+                "at": 18267.599999999977,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 18267.699999999953,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 18273.29999999999,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 19516.29999999999,
+                "state": "running",
+                "peak": 0.7007325291633606,
+                "duration": 148.77349206349206,
+                "music": "assets/audio/bgm-hero-new.mp3"
+              },
+              {
+                "at": 19653.79999999999,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 19653.79999999999,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 19666.29999999999,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 19711.599999999977,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 19711.699999999953,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 19861.599999999977,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 19861.599999999977,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 19862.699999999953,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 19862.699999999953,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 19884,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 21308.5,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 21308.599999999977,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 21320.699999999953,
+                "state": "running",
+                "peak": 0.7007339000701904,
+                "duration": 127.09349206349206,
+                "music": "assets/audio/bgm-combat-new.mp3"
+              },
+              {
+                "at": 22214.5,
+                "state": "running",
+                "peak": 0.9457755088806152,
+                "duration": 1.180498866213152,
+                "music": null
+              },
+              {
+                "at": 26019,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 26019.399999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 26024.699999999953,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 26294.5,
+                "state": "running",
+                "peak": 0.9869499802589417,
+                "duration": 4.0751020408163265,
+                "music": null
+              },
+              {
+                "at": 27234.199999999953,
+                "state": "running",
+                "peak": 0.588417649269104,
+                "duration": 2.2934920634920637,
+                "music": "assets/audio/bgm-victory.mp3"
+              },
+              {
+                "at": 27652.899999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 27652.899999999965,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 27665.399999999965,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 29586.199999999953,
+                "state": "running",
+                "peak": 0.7007325291633606,
+                "duration": 148.77349206349206,
+                "music": "assets/audio/bgm-hero-new.mp3"
+              }
+            ],
+            "legacyPaused": true
+          }
+        }
+      ],
+      "before": {
+        "url": "/",
+        "state": "suspended",
+        "unlocked": false,
+        "contexts": 1,
+        "gestures": 0,
+        "activeGesture": false,
+        "pcm": [
+          {
+            "at": 506.8999999999651,
+            "state": "suspended",
+            "peak": 0,
+            "duration": 0.000045351473922902495,
+            "music": null
+          }
+        ],
+        "legacyPaused": true
+      },
+      "uiSound": true,
+      "voice": true,
+      "errors": [],
+      "assetErrors": [],
+      "ok": true
+    },
+    {
+      "profile": "iphone-path",
+      "routes": [
+        {
+          "route": "hub",
+          "url": "/",
+          "state": "running",
+          "unlocked": true,
+          "track": "assets/audio/bgm-hub-new.mp3",
+          "contexts": 1,
+          "gestures": 1,
+          "activeGesture": false,
+          "legacyPaused": true
+        },
+        {
+          "route": "heroes",
+          "url": "/",
+          "state": "running",
+          "unlocked": true,
+          "track": "assets/audio/bgm-hero-new.mp3",
+          "contexts": 1,
+          "gestures": 1,
+          "activeGesture": false,
+          "legacyPaused": true
+        },
+        {
+          "route": "team",
+          "url": "/",
+          "state": "running",
+          "unlocked": true,
+          "track": "assets/audio/bgm-hub-new.mp3",
+          "contexts": 1,
+          "gestures": 1,
+          "activeGesture": false,
+          "legacyPaused": true
+        },
+        {
+          "route": "shop",
+          "url": "/",
+          "state": "running",
+          "unlocked": true,
+          "track": "assets/audio/bgm-hub-new.mp3",
+          "contexts": 1,
+          "gestures": 1,
+          "activeGesture": false,
+          "legacyPaused": true
+        },
+        {
+          "route": "daily",
+          "url": "/",
+          "state": "running",
+          "unlocked": true,
+          "track": "assets/audio/bgm-hub-new.mp3",
+          "contexts": 1,
+          "gestures": 1,
+          "activeGesture": false,
+          "legacyPaused": true
+        },
+        {
+          "route": "campaign",
+          "url": "/",
+          "state": "running",
+          "unlocked": true,
+          "track": "assets/audio/bgm-challenge-new.mp3",
+          "contexts": 1,
+          "gestures": 1,
+          "activeGesture": false,
+          "legacyPaused": true
+        }
+      ],
+      "entries": [
+        {
+          "host": true,
+          "childContexts": 0,
+          "state": "running",
+          "count": 2,
+          "sfx": [
+            {
+              "atPerformanceMs": 1790.9000000000233,
+              "type": "sfx:scheduled",
+              "event": "basic",
+              "group": "combat",
+              "battleSession": 1,
+              "actionId": "2:action:1:hv-player-0-ong_hang_pho:basic",
+              "cue": "contact:sheet-frame-36",
+              "sampleCue": "dominant",
+              "requestedPerformanceMs": 1790.2000000000116,
+              "decodedReadyPerformanceMs": 1790.600000000035,
+              "cuePerformanceMs": 2915.2142857142862,
+              "audibleLeadInMs": 315.03401360544217,
+              "dominantCueMs": 412.3809523809524,
+              "sampleCueOffsetMs": 412.3809523809524,
+              "sourceScheduledPerformanceMs": 2502.833333333334,
+              "sourceStartContextTime": 11.906640333333346,
+              "expectedAudiblePerformanceMs": 2817.867346938776,
+              "expectedCuePerformanceMs": 2915.2142857142862,
+              "signedCueOffsetMs": 0,
+              "clockMapping": "output-timestamp",
+              "outputTimestampContextTime": 11.190107000000001,
+              "outputTimestampPerformanceMs": 1786.2999999999884,
+              "estimatedOutputLatencyMs": 38.146061224464574,
+              "contextBaseLatencyMs": 10,
+              "contextOutputLatencyMs": 32,
+              "timingBasis": "web-audio-output-scheduled",
+              "audibleCueBasis": "decoded-buffer-envelope",
+              "analysisMethod": "decoded-buffer:rms-5ms--50db/onset;rms-10ms-max/dominant",
+              "endedPerformanceMs": 3653.2999999999884,
+              "completed": true,
+              "performanceClockDomain": "battle-local",
+              "parentPerformanceOffsetMs": 10590
+            }
+          ],
+          "cache": {
+            "suspended": true,
+            "entries": 0,
+            "decodedBytes": 0
+          },
+          "released": "157",
+          "audio": {
+            "url": "/",
+            "state": "running",
+            "unlocked": true,
+            "track": "assets/audio/bgm-combat-new.mp3",
+            "contexts": 1,
+            "gestures": 1,
+            "activeGesture": false,
+            "pcm": [
+              {
+                "at": 220,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 1150.9000000000233,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 1152.4000000000233,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 1160.2999999999884,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 1160.4000000000233,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 1451.7999999999884,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 2660.2000000000116,
+                "state": "running",
+                "peak": 0.6773398518562317,
+                "duration": 136.41349206349207,
+                "music": "assets/audio/bgm-hub-new.mp3"
+              },
+              {
+                "at": 8530.700000000012,
+                "state": "running",
+                "peak": 0.7007325291633606,
+                "duration": 148.77349206349206,
+                "music": "assets/audio/bgm-hero-new.mp3"
+              },
+              {
+                "at": 9169.799999999988,
+                "state": "running",
+                "peak": 0.6773398518562317,
+                "duration": 136.41349206349207,
+                "music": "assets/audio/bgm-hub-new.mp3"
+              },
+              {
+                "at": 10196.5,
+                "state": "running",
+                "peak": 0.9694064855575562,
+                "duration": 171.69349206349207,
+                "music": "assets/audio/bgm-challenge-new.mp3"
+              },
+              {
+                "at": 10238.400000000023,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 10239.400000000023,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10239.400000000023,
+                "state": "running",
+                "peak": 0.6615056395530701,
+                "duration": 4.310204081632653,
+                "music": null
+              },
+              {
+                "at": 10308,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10308.100000000035,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10337.200000000012,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 10383.700000000012,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10383.799999999988,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10435.700000000012,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 10556.600000000035,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10556.700000000012,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10560.299999999988,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10560.299999999988,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10590.900000000023,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 11502.400000000023,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11502.400000000023,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11531.799999999988,
+                "state": "running",
+                "peak": 0.7007339000701904,
+                "duration": 127.09349206349206,
+                "music": "assets/audio/bgm-combat-new.mp3"
+              },
+              {
+                "at": 12380.900000000023,
+                "state": "running",
+                "peak": 0.9457755088806152,
+                "duration": 1.180498866213152,
+                "music": null
+              }
+            ],
+            "legacyPaused": true
+          },
+          "result": {
+            "url": "/",
+            "state": "running",
+            "unlocked": true,
+            "track": "assets/audio/bgm-victory.mp3",
+            "contexts": 1,
+            "gestures": 1,
+            "activeGesture": false,
+            "pcm": [
+              {
+                "at": 220,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 1150.9000000000233,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 1152.4000000000233,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 1160.2999999999884,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 1160.4000000000233,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 1451.7999999999884,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 2660.2000000000116,
+                "state": "running",
+                "peak": 0.6773398518562317,
+                "duration": 136.41349206349207,
+                "music": "assets/audio/bgm-hub-new.mp3"
+              },
+              {
+                "at": 8530.700000000012,
+                "state": "running",
+                "peak": 0.7007325291633606,
+                "duration": 148.77349206349206,
+                "music": "assets/audio/bgm-hero-new.mp3"
+              },
+              {
+                "at": 9169.799999999988,
+                "state": "running",
+                "peak": 0.6773398518562317,
+                "duration": 136.41349206349207,
+                "music": "assets/audio/bgm-hub-new.mp3"
+              },
+              {
+                "at": 10196.5,
+                "state": "running",
+                "peak": 0.9694064855575562,
+                "duration": 171.69349206349207,
+                "music": "assets/audio/bgm-challenge-new.mp3"
+              },
+              {
+                "at": 10238.400000000023,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 10239.400000000023,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10239.400000000023,
+                "state": "running",
+                "peak": 0.6615056395530701,
+                "duration": 4.310204081632653,
+                "music": null
+              },
+              {
+                "at": 10308,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10308.100000000035,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10337.200000000012,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 10383.700000000012,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10383.799999999988,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10435.700000000012,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 10556.600000000035,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10556.700000000012,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10560.299999999988,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10560.299999999988,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10590.900000000023,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 11502.400000000023,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11502.400000000023,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11531.799999999988,
+                "state": "running",
+                "peak": 0.7007339000701904,
+                "duration": 127.09349206349206,
+                "music": "assets/audio/bgm-combat-new.mp3"
+              },
+              {
+                "at": 12380.900000000023,
+                "state": "running",
+                "peak": 0.9457755088806152,
+                "duration": 1.180498866213152,
+                "music": null
+              },
+              {
+                "at": 15150.700000000012,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 15152.100000000035,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 15152.700000000012,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 15387.100000000035,
+                "state": "running",
+                "peak": 0.9869499802589417,
+                "duration": 4.0751020408163265,
+                "music": null
+              },
+              {
+                "at": 15848.5,
+                "state": "running",
+                "peak": 0.588417649269104,
+                "duration": 2.2934920634920637,
+                "music": "assets/audio/bgm-victory.mp3"
+              }
+            ],
+            "legacyPaused": true
+          },
+          "returned": {
+            "url": "/",
+            "state": "running",
+            "unlocked": true,
+            "track": "assets/audio/bgm-hero-new.mp3",
+            "contexts": 1,
+            "gestures": 1,
+            "activeGesture": false,
+            "pcm": [
+              {
+                "at": 220,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 1150.9000000000233,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 1152.4000000000233,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 1160.2999999999884,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 1160.4000000000233,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 1451.7999999999884,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 2660.2000000000116,
+                "state": "running",
+                "peak": 0.6773398518562317,
+                "duration": 136.41349206349207,
+                "music": "assets/audio/bgm-hub-new.mp3"
+              },
+              {
+                "at": 8530.700000000012,
+                "state": "running",
+                "peak": 0.7007325291633606,
+                "duration": 148.77349206349206,
+                "music": "assets/audio/bgm-hero-new.mp3"
+              },
+              {
+                "at": 9169.799999999988,
+                "state": "running",
+                "peak": 0.6773398518562317,
+                "duration": 136.41349206349207,
+                "music": "assets/audio/bgm-hub-new.mp3"
+              },
+              {
+                "at": 10196.5,
+                "state": "running",
+                "peak": 0.9694064855575562,
+                "duration": 171.69349206349207,
+                "music": "assets/audio/bgm-challenge-new.mp3"
+              },
+              {
+                "at": 10238.400000000023,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 10239.400000000023,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10239.400000000023,
+                "state": "running",
+                "peak": 0.6615056395530701,
+                "duration": 4.310204081632653,
+                "music": null
+              },
+              {
+                "at": 10308,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10308.100000000035,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10337.200000000012,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 10383.700000000012,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10383.799999999988,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10435.700000000012,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 10556.600000000035,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10556.700000000012,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10560.299999999988,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10560.299999999988,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10590.900000000023,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 11502.400000000023,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11502.400000000023,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11531.799999999988,
+                "state": "running",
+                "peak": 0.7007339000701904,
+                "duration": 127.09349206349206,
+                "music": "assets/audio/bgm-combat-new.mp3"
+              },
+              {
+                "at": 12380.900000000023,
+                "state": "running",
+                "peak": 0.9457755088806152,
+                "duration": 1.180498866213152,
+                "music": null
+              },
+              {
+                "at": 15150.700000000012,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 15152.100000000035,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 15152.700000000012,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 15387.100000000035,
+                "state": "running",
+                "peak": 0.9869499802589417,
+                "duration": 4.0751020408163265,
+                "music": null
+              },
+              {
+                "at": 15848.5,
+                "state": "running",
+                "peak": 0.588417649269104,
+                "duration": 2.2934920634920637,
+                "music": "assets/audio/bgm-victory.mp3"
+              },
+              {
+                "at": 16290.400000000023,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 16290.5,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 16293.400000000023,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 17702.400000000023,
+                "state": "running",
+                "peak": 0.7007325291633606,
+                "duration": 148.77349206349206,
+                "music": "assets/audio/bgm-hero-new.mp3"
+              }
+            ],
+            "legacyPaused": true
+          }
+        },
+        {
+          "host": true,
+          "childContexts": 0,
+          "state": "running",
+          "count": 2,
+          "sfx": [
+            {
+              "atPerformanceMs": -6036.200097656227,
+              "type": "sfx:scheduled",
+              "event": "basic",
+              "group": "combat",
+              "battleSession": 1,
+              "actionId": "2:action:1:hv-player-0-ong_hang_pho:basic",
+              "cue": "contact:sheet-frame-36",
+              "sampleCue": "dominant",
+              "requestedPerformanceMs": -6036.900097656238,
+              "decodedReadyPerformanceMs": -6036.500097656215,
+              "cuePerformanceMs": -4911.885811941964,
+              "audibleLeadInMs": 315.03401360544217,
+              "dominantCueMs": 412.3809523809524,
+              "sampleCueOffsetMs": 412.3809523809524,
+              "sourceScheduledPerformanceMs": -5324.266764322916,
+              "sourceStartContextTime": 11.906640333333346,
+              "expectedAudiblePerformanceMs": -5009.232750717474,
+              "expectedCuePerformanceMs": -4911.885811941964,
+              "signedCueOffsetMs": 0,
+              "clockMapping": "output-timestamp",
+              "outputTimestampContextTime": 11.190107000000001,
+              "outputTimestampPerformanceMs": -6040.800097656262,
+              "estimatedOutputLatencyMs": 38.146061224464574,
+              "contextBaseLatencyMs": 10,
+              "contextOutputLatencyMs": 32,
+              "timingBasis": "web-audio-output-scheduled",
+              "audibleCueBasis": "decoded-buffer-envelope",
+              "analysisMethod": "decoded-buffer:rms-5ms--50db/onset;rms-10ms-max/dominant",
+              "endedPerformanceMs": -4173.800097656262,
+              "completed": true,
+              "performanceClockDomain": "battle-local",
+              "parentPerformanceOffsetMs": 18417.10009765625
+            },
+            {
+              "atPerformanceMs": -3030.10009765625,
+              "type": "sfx:scheduled",
+              "event": "victory",
+              "group": "combat",
+              "battleSession": 1,
+              "actionId": null,
+              "cue": null,
+              "sampleCue": "onset",
+              "requestedPerformanceMs": -3065.60009765625,
+              "decodedReadyPerformanceMs": -3041.60009765625,
+              "cuePerformanceMs": -18417.10009765625,
+              "audibleLeadInMs": 18.979591836734695,
+              "dominantCueMs": 2882.1995464852607,
+              "sampleCueOffsetMs": 18.979591836734695,
+              "sourceScheduledPerformanceMs": -3030.10009765625,
+              "sourceStartContextTime": 0,
+              "expectedAudiblePerformanceMs": -3011.1205058195155,
+              "expectedCuePerformanceMs": -3011.1205058195155,
+              "signedCueOffsetMs": null,
+              "clockMapping": "current-time",
+              "outputTimestampContextTime": null,
+              "outputTimestampPerformanceMs": -18417.10009765625,
+              "estimatedOutputLatencyMs": null,
+              "contextBaseLatencyMs": 10,
+              "contextOutputLatencyMs": 32,
+              "timingBasis": "web-audio-output-scheduled",
+              "audibleCueBasis": "decoded-buffer-envelope",
+              "analysisMethod": "decoded-buffer:rms-5ms--50db/onset;rms-10ms-max/dominant",
+              "cancelled": true,
+              "cancelReason": "combat-stop",
+              "cancelledPerformanceMs": -2049.7000976562267,
+              "endedPerformanceMs": -1673.4000976562384,
+              "completed": false,
+              "performanceClockDomain": "battle-local",
+              "parentPerformanceOffsetMs": 18417.10009765625
+            },
+            {
+              "atPerformanceMs": 1819.5999023437616,
+              "type": "sfx:scheduled",
+              "event": "basic",
+              "group": "combat",
+              "battleSession": 3,
+              "actionId": "2:action:1:hv-player-0-ong_hang_pho:basic",
+              "cue": "contact:sheet-frame-36",
+              "sampleCue": "dominant",
+              "requestedPerformanceMs": 1819.5999023437616,
+              "decodedReadyPerformanceMs": 1819.5999023437616,
+              "cuePerformanceMs": 2944.6142857143095,
+              "audibleLeadInMs": 315.03401360544217,
+              "dominantCueMs": 412.3809523809524,
+              "sampleCueOffsetMs": 412.3809523809524,
+              "sourceScheduledPerformanceMs": 2532.2333333333554,
+              "sourceStartContextTime": 19.763124430989617,
+              "expectedAudiblePerformanceMs": 2847.267346938799,
+              "expectedCuePerformanceMs": 2944.6142857143095,
+              "signedCueOffsetMs": 0,
+              "clockMapping": "output-timestamp",
+              "outputTimestampContextTime": 19.050091,
+              "outputTimestampPerformanceMs": 1819.1999023437384,
+              "estimatedOutputLatencyMs": 42.11670975054585,
+              "contextBaseLatencyMs": 10,
+              "contextOutputLatencyMs": 32,
+              "timingBasis": "web-audio-output-scheduled",
+              "audibleCueBasis": "decoded-buffer-envelope",
+              "analysisMethod": "decoded-buffer:rms-5ms--50db/onset;rms-10ms-max/dominant",
+              "endedPerformanceMs": 3679.1999023437384,
+              "completed": true,
+              "performanceClockDomain": "battle-local",
+              "parentPerformanceOffsetMs": 18417.10009765625
+            }
+          ],
+          "cache": {
+            "suspended": true,
+            "entries": 0,
+            "decodedBytes": 0
+          },
+          "released": "157",
+          "audio": {
+            "url": "/",
+            "state": "running",
+            "unlocked": true,
+            "track": "assets/audio/bgm-combat-new.mp3",
+            "contexts": 1,
+            "gestures": 1,
+            "activeGesture": false,
+            "pcm": [
+              {
+                "at": 220,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 1150.9000000000233,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 1152.4000000000233,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 1160.2999999999884,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 1160.4000000000233,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 1451.7999999999884,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 2660.2000000000116,
+                "state": "running",
+                "peak": 0.6773398518562317,
+                "duration": 136.41349206349207,
+                "music": "assets/audio/bgm-hub-new.mp3"
+              },
+              {
+                "at": 8530.700000000012,
+                "state": "running",
+                "peak": 0.7007325291633606,
+                "duration": 148.77349206349206,
+                "music": "assets/audio/bgm-hero-new.mp3"
+              },
+              {
+                "at": 9169.799999999988,
+                "state": "running",
+                "peak": 0.6773398518562317,
+                "duration": 136.41349206349207,
+                "music": "assets/audio/bgm-hub-new.mp3"
+              },
+              {
+                "at": 10196.5,
+                "state": "running",
+                "peak": 0.9694064855575562,
+                "duration": 171.69349206349207,
+                "music": "assets/audio/bgm-challenge-new.mp3"
+              },
+              {
+                "at": 10238.400000000023,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 10239.400000000023,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10239.400000000023,
+                "state": "running",
+                "peak": 0.6615056395530701,
+                "duration": 4.310204081632653,
+                "music": null
+              },
+              {
+                "at": 10308,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10308.100000000035,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10337.200000000012,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 10383.700000000012,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10383.799999999988,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10435.700000000012,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 10556.600000000035,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10556.700000000012,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10560.299999999988,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10560.299999999988,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10590.900000000023,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 11502.400000000023,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11502.400000000023,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11531.799999999988,
+                "state": "running",
+                "peak": 0.7007339000701904,
+                "duration": 127.09349206349206,
+                "music": "assets/audio/bgm-combat-new.mp3"
+              },
+              {
+                "at": 12380.900000000023,
+                "state": "running",
+                "peak": 0.9457755088806152,
+                "duration": 1.180498866213152,
+                "music": null
+              },
+              {
+                "at": 15150.700000000012,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 15152.100000000035,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 15152.700000000012,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 15387.100000000035,
+                "state": "running",
+                "peak": 0.9869499802589417,
+                "duration": 4.0751020408163265,
+                "music": null
+              },
+              {
+                "at": 15848.5,
+                "state": "running",
+                "peak": 0.588417649269104,
+                "duration": 2.2934920634920637,
+                "music": "assets/audio/bgm-victory.mp3"
+              },
+              {
+                "at": 16290.400000000023,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 16290.5,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 16293.400000000023,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 17702.400000000023,
+                "state": "running",
+                "peak": 0.7007325291633606,
+                "duration": 148.77349206349206,
+                "music": "assets/audio/bgm-hero-new.mp3"
+              },
+              {
+                "at": 18047.900000000023,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 18048,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 18065,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 18098,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 18098,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 18393.70000000001,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 18393.70000000001,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 18395.600000000035,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 18395.600000000035,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 18417.70000000001,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 19427.600000000035,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 19427.79999999999,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 19445.400000000023,
+                "state": "running",
+                "peak": 0.7007339000701904,
+                "duration": 127.09349206349206,
+                "music": "assets/audio/bgm-combat-new.mp3"
+              },
+              {
+                "at": 20236.900000000023,
+                "state": "running",
+                "peak": 0.9457755088806152,
+                "duration": 1.180498866213152,
+                "music": null
+              }
+            ],
+            "legacyPaused": true
+          },
+          "result": {
+            "url": "/",
+            "state": "running",
+            "unlocked": true,
+            "track": "assets/audio/bgm-victory.mp3",
+            "contexts": 1,
+            "gestures": 1,
+            "activeGesture": false,
+            "pcm": [
+              {
+                "at": 220,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 1150.9000000000233,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 1152.4000000000233,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 1160.2999999999884,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 1160.4000000000233,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 1451.7999999999884,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 2660.2000000000116,
+                "state": "running",
+                "peak": 0.6773398518562317,
+                "duration": 136.41349206349207,
+                "music": "assets/audio/bgm-hub-new.mp3"
+              },
+              {
+                "at": 8530.700000000012,
+                "state": "running",
+                "peak": 0.7007325291633606,
+                "duration": 148.77349206349206,
+                "music": "assets/audio/bgm-hero-new.mp3"
+              },
+              {
+                "at": 9169.799999999988,
+                "state": "running",
+                "peak": 0.6773398518562317,
+                "duration": 136.41349206349207,
+                "music": "assets/audio/bgm-hub-new.mp3"
+              },
+              {
+                "at": 10196.5,
+                "state": "running",
+                "peak": 0.9694064855575562,
+                "duration": 171.69349206349207,
+                "music": "assets/audio/bgm-challenge-new.mp3"
+              },
+              {
+                "at": 10238.400000000023,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 10239.400000000023,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10239.400000000023,
+                "state": "running",
+                "peak": 0.6615056395530701,
+                "duration": 4.310204081632653,
+                "music": null
+              },
+              {
+                "at": 10308,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10308.100000000035,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10337.200000000012,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 10383.700000000012,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10383.799999999988,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10435.700000000012,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 10556.600000000035,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10556.700000000012,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10560.299999999988,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10560.299999999988,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10590.900000000023,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 11502.400000000023,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11502.400000000023,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11531.799999999988,
+                "state": "running",
+                "peak": 0.7007339000701904,
+                "duration": 127.09349206349206,
+                "music": "assets/audio/bgm-combat-new.mp3"
+              },
+              {
+                "at": 12380.900000000023,
+                "state": "running",
+                "peak": 0.9457755088806152,
+                "duration": 1.180498866213152,
+                "music": null
+              },
+              {
+                "at": 15150.700000000012,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 15152.100000000035,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 15152.700000000012,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 15387.100000000035,
+                "state": "running",
+                "peak": 0.9869499802589417,
+                "duration": 4.0751020408163265,
+                "music": null
+              },
+              {
+                "at": 15848.5,
+                "state": "running",
+                "peak": 0.588417649269104,
+                "duration": 2.2934920634920637,
+                "music": "assets/audio/bgm-victory.mp3"
+              },
+              {
+                "at": 16290.400000000023,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 16290.5,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 16293.400000000023,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 17702.400000000023,
+                "state": "running",
+                "peak": 0.7007325291633606,
+                "duration": 148.77349206349206,
+                "music": "assets/audio/bgm-hero-new.mp3"
+              },
+              {
+                "at": 18047.900000000023,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 18048,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 18065,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 18098,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 18098,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 18393.70000000001,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 18393.70000000001,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 18395.600000000035,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 18395.600000000035,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 18417.70000000001,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 19427.600000000035,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 19427.79999999999,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 19445.400000000023,
+                "state": "running",
+                "peak": 0.7007339000701904,
+                "duration": 127.09349206349206,
+                "music": "assets/audio/bgm-combat-new.mp3"
+              },
+              {
+                "at": 20236.900000000023,
+                "state": "running",
+                "peak": 0.9457755088806152,
+                "duration": 1.180498866213152,
+                "music": null
+              },
+              {
+                "at": 23377.79999999999,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 23378.20000000001,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 23378.79999999999,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 23530.100000000035,
+                "state": "running",
+                "peak": 0.9869499802589417,
+                "duration": 4.0751020408163265,
+                "music": null
+              },
+              {
+                "at": 23969.70000000001,
+                "state": "running",
+                "peak": 0.588417649269104,
+                "duration": 2.2934920634920637,
+                "music": "assets/audio/bgm-victory.mp3"
+              }
+            ],
+            "legacyPaused": true
+          },
+          "returned": {
+            "url": "/",
+            "state": "running",
+            "unlocked": true,
+            "track": "assets/audio/bgm-hero-new.mp3",
+            "contexts": 1,
+            "gestures": 1,
+            "activeGesture": false,
+            "pcm": [
+              {
+                "at": 220,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 1150.9000000000233,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 1152.4000000000233,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 1160.2999999999884,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 1160.4000000000233,
+                "state": "suspended",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 1451.7999999999884,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 2660.2000000000116,
+                "state": "running",
+                "peak": 0.6773398518562317,
+                "duration": 136.41349206349207,
+                "music": "assets/audio/bgm-hub-new.mp3"
+              },
+              {
+                "at": 8530.700000000012,
+                "state": "running",
+                "peak": 0.7007325291633606,
+                "duration": 148.77349206349206,
+                "music": "assets/audio/bgm-hero-new.mp3"
+              },
+              {
+                "at": 9169.799999999988,
+                "state": "running",
+                "peak": 0.6773398518562317,
+                "duration": 136.41349206349207,
+                "music": "assets/audio/bgm-hub-new.mp3"
+              },
+              {
+                "at": 10196.5,
+                "state": "running",
+                "peak": 0.9694064855575562,
+                "duration": 171.69349206349207,
+                "music": "assets/audio/bgm-challenge-new.mp3"
+              },
+              {
+                "at": 10238.400000000023,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 10239.400000000023,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10239.400000000023,
+                "state": "running",
+                "peak": 0.6615056395530701,
+                "duration": 4.310204081632653,
+                "music": null
+              },
+              {
+                "at": 10308,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10308.100000000035,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10337.200000000012,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 10383.700000000012,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10383.799999999988,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10435.700000000012,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 10556.600000000035,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10556.700000000012,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10560.299999999988,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10560.299999999988,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 10590.900000000023,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 11502.400000000023,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11502.400000000023,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 11531.799999999988,
+                "state": "running",
+                "peak": 0.7007339000701904,
+                "duration": 127.09349206349206,
+                "music": "assets/audio/bgm-combat-new.mp3"
+              },
+              {
+                "at": 12380.900000000023,
+                "state": "running",
+                "peak": 0.9457755088806152,
+                "duration": 1.180498866213152,
+                "music": null
+              },
+              {
+                "at": 15150.700000000012,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 15152.100000000035,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 15152.700000000012,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 15387.100000000035,
+                "state": "running",
+                "peak": 0.9869499802589417,
+                "duration": 4.0751020408163265,
+                "music": null
+              },
+              {
+                "at": 15848.5,
+                "state": "running",
+                "peak": 0.588417649269104,
+                "duration": 2.2934920634920637,
+                "music": "assets/audio/bgm-victory.mp3"
+              },
+              {
+                "at": 16290.400000000023,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 16290.5,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 16293.400000000023,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 17702.400000000023,
+                "state": "running",
+                "peak": 0.7007325291633606,
+                "duration": 148.77349206349206,
+                "music": "assets/audio/bgm-hero-new.mp3"
+              },
+              {
+                "at": 18047.900000000023,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 18048,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 18065,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 18098,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 18098,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 18393.70000000001,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 18393.70000000001,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 18395.600000000035,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 18395.600000000035,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 18417.70000000001,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 19427.600000000035,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 19427.79999999999,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 19445.400000000023,
+                "state": "running",
+                "peak": 0.7007339000701904,
+                "duration": 127.09349206349206,
+                "music": "assets/audio/bgm-combat-new.mp3"
+              },
+              {
+                "at": 20236.900000000023,
+                "state": "running",
+                "peak": 0.9457755088806152,
+                "duration": 1.180498866213152,
+                "music": null
+              },
+              {
+                "at": 23377.79999999999,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 23378.20000000001,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 23378.79999999999,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 23530.100000000035,
+                "state": "running",
+                "peak": 0.9869499802589417,
+                "duration": 4.0751020408163265,
+                "music": null
+              },
+              {
+                "at": 23969.70000000001,
+                "state": "running",
+                "peak": 0.588417649269104,
+                "duration": 2.2934920634920637,
+                "music": "assets/audio/bgm-victory.mp3"
+              },
+              {
+                "at": 24209.5,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 24209.600000000035,
+                "state": "running",
+                "peak": 0,
+                "duration": 0.000045351473922902495,
+                "music": null
+              },
+              {
+                "at": 24214,
+                "state": "running",
+                "peak": 0.44924992322921753,
+                "duration": 0.5774603174603175,
+                "music": null
+              },
+              {
+                "at": 25797.29999999999,
+                "state": "running",
+                "peak": 0.7007325291633606,
+                "duration": 148.77349206349206,
+                "music": "assets/audio/bgm-hero-new.mp3"
+              }
+            ],
+            "legacyPaused": true
+          }
+        }
+      ],
+      "before": {
+        "url": "/",
+        "state": "suspended",
+        "unlocked": false,
+        "contexts": 1,
+        "gestures": 0,
+        "activeGesture": false,
+        "pcm": [
+          {
+            "at": 220,
+            "state": "suspended",
+            "peak": 0,
+            "duration": 0.000045351473922902495,
+            "music": null
+          }
+        ],
+        "legacyPaused": true
+      },
+      "uiSound": true,
+      "voice": true,
+      "errors": [],
+      "assetErrors": [],
+      "ok": true
+    }
+  ],
+  "scope": "Full game, one trusted login click, then production routes/buttons without new activation. Chromium; iPhone platform path is not physical Safari.",
+  "ok": true
+}

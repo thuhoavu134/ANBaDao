@@ -18,14 +18,14 @@ const from = `    // Grok/iOS preview is itself an iframe; a nested battle ifram
       return;
     }`;
 
-const to = `    // iPhone/iPad open battle.html as the top-level document so Safari can release the heavy host page
-    // before parsing combat. The battle document now owns WebKit-safe Canvas creation and deferred autostart,
-    // so direct entry no longer depends on the older synchronous bootstrap.
+const to = `    // Keep the unlocked host audio device through iPhone/iPad battles. The
+    // existing host image/atlas release runs before iframe load. Direct entry
+    // remains the recovery path for unsupported nested previews or a stalled load.
     const __HV_IOS_DIRECT_BATTLE=(()=>{try{
       const n=navigator,ua=String(n?.userAgent||''),platform=String(n?.platform||''),touch=Number(n?.maxTouchPoints||0);
       return /iPad|iPhone|iPod/i.test(ua)||(platform==='MacIntel'&&touch>1);
     }catch(_){return false;}})();
-    if (window.parent !== window || __HV_IOS_DIRECT_BATTLE) {
+    if (window.parent !== window) {
       window.name = \`hvBattleConfig:\${encodeURIComponent(serializedBattleConfig)}\`;
       location.assign(url);
       return;
@@ -154,3 +154,4 @@ html = replaceOnce(
 html = patchHostBattleResources(html);
 writeFileSync(target, html);
 console.log('iOS battle stays in host frame for continuous audio; delayed direct fallback protects stalled entry');
+

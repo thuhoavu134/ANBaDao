@@ -112,11 +112,11 @@ test('iPhone entry keeps the iframe first and hands off only after twelve second
   assert.match(desktop.copy, /vui lòng chờ thêm/);
 });
 
-test('iPhone Xuất chiến enters battle.html directly while desktop keeps the iframe', () => {
+test('iPhone and desktop retain the unlocked host; nested previews retain direct entry', () => {
   const ownerStart = html.indexOf('function openIntegratedBattle()');
-  const start = html.indexOf('    if (window.parent !== window || __HV_IOS_DIRECT_BATTLE) {', ownerStart);
+  const start = html.indexOf('    if (window.parent !== window) {', ownerStart);
   const end = html.indexOf('    window.__HV_HOST_ATLASES.suspend();', start);
-  assert.ok(ownerStart >= 0 && start > ownerStart && end > start, 'direct iOS entry must run before iframe setup');
+  assert.ok(ownerStart >= 0 && start > ownerStart && end > start, 'nested-preview entry must run before iframe setup');
   const handoff = html.slice(start, end);
 
   function run(isIos, nested = false) {
@@ -134,8 +134,8 @@ test('iPhone Xuất chiến enters battle.html directly while desktop keeps the 
   }
 
   const ios = run(true);
-  assert.equal(ios.navigation, 'battle.html?embedded=1&session=session-1&autostart=1');
-  assert.match(ios.windowName, /^hvBattleConfig:/);
+  assert.equal(ios.navigation, null);
+  assert.equal(ios.windowName, '');
 
   const desktop = run(false);
   assert.equal(desktop.navigation, null);

@@ -74,13 +74,16 @@ test('L158-T5: hushParentBgm stays neutralized; hunt-3d owns its own pause', () 
 });
 
 
-test('L158-T6: iPhone and iPadOS bypass the host battle iframe and use the full-page return flow', () => {
+test('L158-T6: iPhone and iPadOS retain the audio host, release images and keep direct recovery', () => {
   const index = read('dist/index.html');
   const open = sliceFn(index, 'openIntegratedBattle', 'function syncResultIntoMongGioi');
   assert.match(open, /__HV_IOS_DIRECT_BATTLE/);
   assert.match(open, /\/iPad\|iPhone\|iPod\/i\.test\(ua\)/);
   assert.match(open, /platform==='MacIntel'&&touch>1/);
   const direct = open.slice(open.indexOf('const __HV_IOS_DIRECT_BATTLE'), open.indexOf('frame.src = url;'));
+  assert.match(direct, /if \(window\.parent !== window\)/);
+  assert.doesNotMatch(direct, /window\.parent !== window \|\| __HV_IOS_DIRECT_BATTLE/);
+  assert.match(direct, /__HV_BATTLE_HOST_MEMORY_RELEASE/);
   assert.match(direct, /location\.assign\(url\)/);
   assert.match(direct, /window\.name = `hvBattleConfig:/);
   assert.match(read('scripts/build-static.mjs'), /ios-battle-direct-enter-v1\.mjs/);
@@ -95,3 +98,4 @@ test('P0: battle autostart is fail-open when iOS audio initialization throws', (
   for (const delay of [50, 400, 1200, 2500]) assert.match(battle, new RegExp('\\b' + delay + '\\b'));
   assert.match(read('scripts/build-static.mjs'), /battle-entry-fail-open-v1\.mjs/);
 });
+

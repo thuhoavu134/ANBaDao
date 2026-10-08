@@ -1,0 +1,22 @@
+name: Global audio unlock QA
+on:
+  push:
+    branches: ['fix/global-audio-unlock-20261008']
+    paths: ['src/**','scripts/**','tests/**','.github/workflows/global-audio-unlock.yml']
+  workflow_dispatch:
+permissions: {contents: read}
+jobs:
+  audio:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: 22}
+      - run: npm ci
+      - run: npm run build
+      - run: node --test --test-concurrency=1 tests/*.test.mjs
+      - name: One gesture across screens and repeated battles
+        run: |
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
+          node scripts/qa-global-audio-unlock.mjs

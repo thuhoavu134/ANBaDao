@@ -8,12 +8,29 @@ const battlePath = join(out, 'battle.html');
 const manager = String.raw`<script id="honviet-ios-audio-unlock">
 (()=>{
   if(window.HonVietAudio)return;
+  // Embedded screens borrow the host device. Their SFX battle channel owns
+  // lifecycle/cancellation; destroying an old iframe must not stop host music.
+  try{
+    const parent=window.parent;
+    const shared=parent&&parent!==window?parent.HonVietAudio:null;
+    if(shared){
+      window.__HV_EARLY_CTX=shared.context();
+      window.HonVietAudio={
+        context:()=>shared.context(),unlock:()=>shared.unlock(),
+        isUnlocked:()=>shared.isUnlocked(),preload:u=>shared.preload(u),
+        playVoice:(...args)=>shared.playVoice(...args),
+        playMusic:(...args)=>shared.playMusic(...args),music:()=>shared.music(),musicRequest:()=>shared.musicRequest(),
+        setMusicVolume:value=>shared.setMusicVolume(value),
+        beginCombat(){},stopCombat(){},stopMusic(){}
+      };
+      return;
+    }
+  }catch(_e){}
   const AC=window.AudioContext||window.webkitAudioContext;
-  let ctx=window.__HV_EARLY_CTX||null, unlocked=false, unlockPromise=null;
+  let ctx=window.__HV_EARLY_CTX||null, unlocked=false;
   try{
     if(!ctx&&AC)ctx=new AC();
     window.__HV_EARLY_CTX=ctx;
-    if(ctx&&ctx.state==='suspended')ctx.resume();
     if(ctx){
       const b=ctx.createBuffer(1,1,22050),s=ctx.createBufferSource();
       s.buffer=b;s.connect(ctx.destination);s.start(0);
@@ -21,6 +38,7 @@ const manager = String.raw`<script id="honviet-ios-audio-unlock">
   }catch(_e){}
   const buffers=new Map();
   const loads=new Map();
+  const musicUrls=new Set();
   const activeVoices=new Set();
   let combatEpoch=0,combatEnabled=true;
   function beginCombat(){combatEnabled=true;}
@@ -50,46 +68,43 @@ const manager = String.raw`<script id="honviet-ios-audio-unlock">
       .catch(e=>{loads.delete(url);throw e;});
     loads.set(url,p);return p;
   }
-  async function unlock(){
-    if(unlocked){
-      const c=getCtx();
-      if(c&&c.state==='suspended')try{await c.resume();}catch(_e){}
-      return true;
-    }
-    if(unlockPromise)return unlockPromise;
-    unlockPromise=(async()=>{
-      const c=getCtx();
-      if(c){
-        try{if(c.state==='suspended')await c.resume();}catch(_e){}
-        try{
-          const b=c.createBuffer(1,1,22050),s=c.createBufferSource();
-          s.buffer=b;s.connect(c.destination);s.start(0);
-        }catch(_e){}
+  function unlock(){
+    let c,resumed;
+    try{
+      c=getCtx();
+      if(!c)return Promise.resolve(false);
+      // Always call resume synchronously in this gesture. An earlier call
+      // outside a gesture may still be pending and must not swallow this one.
+      resumed=c.state==='running'?Promise.resolve():c.resume();
+    }catch(_e){return Promise.resolve(false);}
+    try{
+      const b=c.createBuffer(1,1,22050),s=c.createBufferSource();
+      s.buffer=b;s.connect(c.destination);s.onended=()=>s.disconnect();s.start(0);
+    }catch(_e){}
+    const settled=()=>{
+      const wasUnlocked=unlocked;
+      unlocked=c.state==='running';
+      document.documentElement.dataset.audioUnlocked=unlocked?'1':'0';
+      if(unlocked){
+        if(!wasUnlocked)voiceUrls.forEach(u=>decode(u).catch(()=>{}));
+        if(musicIntent?.pending&&musicIntent.src!==musicCurrent?.url)void playMusic(musicIntent.src,musicIntent.options);
       }
-      // Unlock only Web Audio here. A pending muted play() on an app-owned
-      // HTMLMediaElement can settle after its source changes to combat BGM,
-      // then pause and rewind the live track. Each media owner starts its own
-      // track synchronously from the user's interaction instead.
-      unlocked=true;
-      document.documentElement.dataset.audioUnlocked='1';
-      voiceUrls.forEach(u=>decode(u).catch(()=>{}));
-      return true;
-    })().finally(()=>{unlockPromise=null;});
-    return unlockPromise;
+      return unlocked;
+    };
+    return Promise.resolve(resumed).then(settled,settled);
   }
   async function playVoice(url,gainValue=1){
     const combat=String(url).includes('voice-luc-anh-ultimate.mp3'),ticket=combatEpoch;
     const current=()=>!combat||(combatEnabled&&ticket===combatEpoch);
     if(!current())return false;
-    await unlock();
+    if(!await unlock())return false;
     if(!current())return false;
     const c=getCtx();
     if(!c)return false;
     try{
       const buf=await decode(url);
       if(!current())return false;
-      if(c.state==='suspended')await c.resume();
-      if(!current())return false;
+      if(c.state!=='running'||!current())return false;
       const src=c.createBufferSource(),gain=c.createGain();
       src.buffer=buf;gain.gain.value=Math.max(0,Number(gainValue)||1);
       src.connect(gain);gain.connect(c.destination);
@@ -107,7 +122,7 @@ const manager = String.raw`<script id="honviet-ios-audio-unlock">
       }catch(_e2){return false;}
     }
   }
-  let musicEpoch=0,musicCurrent=null,musicVolume=0.34;
+  let musicEpoch=0,musicCurrent=null,musicIntent=null,musicVolume=0.34;
   const clampVolume=value=>Math.max(0,Math.min(1,Number(value)||0));
   function setMusicVolume(value){
     musicVolume=clampVolume(value);
@@ -132,24 +147,37 @@ const manager = String.raw`<script id="honviet-ios-audio-unlock">
     const loop=options.loop!==false,category=options.category||'bgm';
     const volume=category==='bgm'?(options.volume==null?musicVolume:clampVolume(options.volume)):clampVolume(options.volume==null?1:options.volume);
     const fadeMs=Math.max(0,Math.min(1500,Number(options.fadeMs??260)||0));
-    if(musicCurrent?.url===src&&musicCurrent.loop===loop){
+    musicUrls.add(src);
+    musicIntent={src,options:{...options},pending:true};
+    if(category==='bgm')musicVolume=volume;
+    const ticket=++musicEpoch,c=getCtx();
+    if(!c||!unlocked||c.state!=='running')return false;
+    if(musicCurrent?.url===src&&musicCurrent.loop===loop&&musicCurrent.category===category){
+      musicIntent.pending=false;
       if(category==='bgm')setMusicVolume(volume);
       return true;
     }
-    const ticket=++musicEpoch,c=getCtx();
-    if(!c||!unlocked)return false;
     let buffer;
-    try{buffer=await decode(src);}catch(_e){return false;}
-    if(ticket!==musicEpoch||c.state!=='running')return false;
+    try{buffer=await decode(src);}catch(_e){
+      if(ticket===musicEpoch&&options.fallback&&options.fallback!==src){
+        return playMusic(options.fallback,{...options,fallback:null});
+      }
+      return false;
+    }
+    if(ticket!==musicEpoch||c.state!=='running'){
+      if(src!==musicIntent?.src&&src!==musicCurrent?.url)buffers.delete(src);
+      return false;
+    }
     const source=c.createBufferSource(),gain=c.createGain(),old=musicCurrent;
     const now=Number(c.currentTime)||0,seconds=fadeMs/1000;
+    const startVolume=category==='bgm'?musicVolume:volume;
     source.buffer=buffer;source.loop=loop;gain.gain.value=0;
     source.connect(gain);gain.connect(c.destination);
     try{
       gain.gain.setValueAtTime?.(0,now);
-      if(seconds)gain.gain.linearRampToValueAtTime?.(volume,now+seconds);
-      else gain.gain.value=volume;
-    }catch(_e){gain.gain.value=volume;}
+      if(seconds)gain.gain.linearRampToValueAtTime?.(startVolume,now+seconds);
+      else gain.gain.value=startVolume;
+    }catch(_e){gain.gain.value=startVolume;}
     const track={source,gain,url:src,loop,category,volume};
     source.onended=()=>{
       try{source.disconnect();gain.disconnect();}catch(_e){}
@@ -157,13 +185,16 @@ const manager = String.raw`<script id="honviet-ios-audio-unlock">
     };
     musicCurrent=track;
     try{source.start(0);}catch(_e){musicCurrent=old;return false;}
+    musicIntent.pending=false;
     if(old)fadeTrack(old,fadeMs,now);
+    // The fading source retains its own buffer; the cache keeps only current music.
+    for(const url of musicUrls)if(url!==src)buffers.delete(url);
     document.documentElement.dataset.musicTrack=src;
     document.documentElement.dataset.musicActive='1';
     return true;
   }
   function stopMusic(options={}){
-    musicEpoch++;
+    musicEpoch++;musicIntent=null;
     if(options.keepCurrent)return;
     const track=musicCurrent;if(!track)return;
     musicCurrent=null;
@@ -172,7 +203,7 @@ const manager = String.raw`<script id="honviet-ios-audio-unlock">
     document.documentElement.dataset.musicTrack='';
   }
   const getMusic=()=>musicCurrent;
-  window.HonVietAudio={unlock,playVoice,beginCombat,stopCombat,playMusic,stopMusic,setMusicVolume,music:getMusic,preload:(u)=>decode(u),isUnlocked:()=>unlocked,context:()=>getCtx()};
+  window.HonVietAudio={unlock,playVoice,beginCombat,stopCombat,playMusic,stopMusic,setMusicVolume,music:getMusic,musicRequest:()=>musicIntent?.src||null,preload:(u)=>decode(u),isUnlocked:()=>unlocked&&ctx?.state==='running',context:()=>getCtx()};
 
   // Keep unlocking on every gesture until the context is running. Full-page
   // battle.html on iOS often misses the original Xuất chiến tap.
@@ -180,8 +211,7 @@ const manager = String.raw`<script id="honviet-ios-audio-unlock">
     // Start a direct-battle HTMLMediaElement synchronously in the gesture before awaiting AudioContext.resume().
     try{const p=window.__HV_BATTLE_BGM?.play?.();p?.catch?.(()=>{});}catch(_e){}
     unlock().then(()=>{
-      try{window.__HV_BGM_RETRY?.();}catch(_e){}
-      try{window.__HV_BATTLE_BGM?.play?.();}catch(_e){}
+      try{const p=window.__HV_BATTLE_BGM?.play?.();p?.catch?.(()=>{});}catch(_e){}
     }).catch(()=>{});
   };
   ['pointerdown','touchstart','touchend','click','keydown'].forEach(t=>
@@ -191,9 +221,8 @@ const manager = String.raw`<script id="honviet-ios-audio-unlock">
   // Resume again after iOS returns from background / tab switch.
   document.addEventListener('visibilitychange',()=>{
     if(document.visibilityState==='visible'){
-      const c=getCtx();
-      if(c&&c.state==='suspended')c.resume().catch(()=>{});
-      try{window.__HV_BATTLE_BGM?.play?.();}catch(_e){}
+      if(unlocked)void unlock();
+      try{const p=window.__HV_BATTLE_BGM?.play?.();p?.catch?.(()=>{});}catch(_e){}
     }
   });
 })();
@@ -230,3 +259,4 @@ battle=battle.replace(/function playLucAnhUltimateVoice\(\)\{[\s\S]*?\}\s*(?=fun
 `);
 writeFileSync(battlePath,battle);
 console.log('iOS audio unlock on first real interaction applied; no blocking gate');
+

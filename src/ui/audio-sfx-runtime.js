@@ -163,7 +163,9 @@
     const c = context();
     if (!c) { stamp('sfxState', 'unsupported'); return Promise.resolve(false); }
     // resume() is invoked synchronously inside the real click/touch gesture.
-    const resumed = c.state === 'running' ? Promise.resolve() : c.resume();
+    const resumed = window.HonVietAudio?.unlock
+      ? window.HonVietAudio.unlock()
+      : c.state === 'running' ? Promise.resolve() : c.resume();
     return resumed.then(() => {
       stamp('sfxState', c.state);
       if (c.state !== 'running') return false;
@@ -370,3 +372,4 @@
   window.addEventListener('pagehide', parentBus ? dispose : endBattle);
   stamp('sfxVersion', 'forge-isolation-v3');
 })();
+

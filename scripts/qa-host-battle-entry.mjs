@@ -7,7 +7,7 @@ const browser = await startBrowser();
 const out = resolve('evidence/host-entry');
 mkdirSync(out, { recursive: true });
 const report = { revision: process.env.GITHUB_SHA || 'local',
-  scope: 'Host/iframe lifetime only. Direct iPhone top-level entry is covered by qa-formation-entry-p0.mjs; not physical WebKit or total RAM.', runs: [] };
+  scope: 'Host/iframe lifetime only. iPhone transport is covered by qa-formation-entry-p0.mjs; not physical WebKit or total RAM.', runs: [] };
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 const owner = 'window.__HV_HOST_ATLASES';
 const frame = 'document.getElementById("hvBattleFrame").contentWindow';
@@ -36,7 +36,7 @@ try {
         await page.wait(frame + '.__HON_VIET__.getState().actionCount >= 2', 60000);
         const entry = await page.evaluate(`({cache:${owner}.inspect(),draws:window.__qaHostDraws,
           battle:${frame}.__HON_VIET__.getState(),units:${frame}.__HON_VIET__.getUnits(),
-          audio:{paused:bgmPlayer.paused,time:bgmPlayer.currentTime,src:bgmPlayer.currentSrc},
+          audio:{paused:HonVietAudio.context().state!=='running'||!HonVietAudio.music(),time:HonVietAudio.context().currentTime,src:HonVietAudio.music()?.url},
           releasedImages:document.documentElement.dataset.battleHostImagesReleased})`);
         entry.elapsedMs = Date.now() - began;
         await sleep(500);
@@ -47,9 +47,9 @@ try {
         run.entries.push(entry);
         await page.click('#hvHubBackChip');
         await page.wait('!document.getElementById("hvBattleOverlay").classList.contains("is-open") && !' + owner + '.suspended');
-        await page.wait('bgmPlayer.currentTime > 0 && !bgmPlayer.paused');
+        await page.wait("HonVietAudio.context().state==='running' && !!HonVietAudio.music()");
         entry.afterClose = await page.evaluate(`({cache:${owner}.inspect(),frameSrc:document.getElementById('hvBattleFrame').getAttribute('src'),
-          released:document.documentElement.dataset.battleHostImagesReleased,audioPaused:bgmPlayer.paused})`);
+          released:document.documentElement.dataset.battleHostImagesReleased,audioPaused:HonVietAudio.context().state!=='running'||!HonVietAudio.music()})`);
         if (entry.afterClose.frameSrc !== 'about:blank' || entry.afterClose.released !== undefined) throw new Error('Close did not restore host lifecycle');
         await page.screenshot(join(out, name + '-' + cycle + '-closed.png'));
       }
@@ -69,3 +69,4 @@ try {
   await browser.close();
   if (!report.ok) process.exitCode = 1;
 }
+

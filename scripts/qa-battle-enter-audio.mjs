@@ -64,8 +64,8 @@ const snap = await page.evaluate(() => {
     sfxCombat: document.documentElement.dataset.sfxCombatEnabled || '',
     hasSfx: typeof window.HonVietSfx?.play === 'function',
     hasPlayBgm: typeof playBgm === 'function',
-    bgmSrc: player?.currentSrc || player?.src || '',
-    bgmPaused: player ? player.paused : null,
+    bgmSrc: window.HonVietAudio?.music?.()?.url || player?.currentSrc || player?.src || '',
+    bgmPaused: window.HonVietAudio?.music?.() ? window.HonVietAudio.context().state !== 'running' : player ? player.paused : null,
     ctxState: window.HonVietAudio?.context?.()?.state || window.__HV_EARLY_CTX?.state || ''
   };
 });
@@ -109,3 +109,4 @@ if (!evidence.pass) {
   process.exit(1);
 }
 console.log('L158 QA PASS', snap);
+

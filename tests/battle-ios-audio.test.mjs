@@ -26,7 +26,7 @@ test('L12-C2: iOS unlock does not inject a floating Bật tiếng control', () =
   assert.doesNotMatch(unlock, /hvUnmuteAudio/);
   assert.doesNotMatch(unlock, /function showUnmute/);
   assert.match(unlock, /pointerdown/);
-  assert.match(unlock, /ctx\.resume/);
+  assert.match(unlock, /c\.resume/);
 });
 
 
@@ -67,3 +67,4 @@ test('an outstanding muted-audio unlock cannot pause the new combat BGM', async 
   assert.equal(music.paused, false, 'late unlock cleanup must not pause the active combat track');
   assert.equal(music.currentTime, 2, 'late unlock cleanup must not rewind the active combat track');
 });
+
