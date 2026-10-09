@@ -410,6 +410,7 @@ export function createSplusMechanics(options={}) {
     if(action!=='basic'&&['guardian','striker','duelist','ranger'].includes(def(u)?.role)&&statuses(u).some(s=>s.type==='disarm'&&s.weaponSkills))return false;
     if(melee(u)&&statuses(u).some(s=>s.type==='root'&&s.blocksMelee))return false;
     if(action!=='basic'&&(has(u,'silence')||has(u,'hardSilence')||legacyEffects(u).some(s=>s.type==='silence'||s.type==='hardSilence')))return false;
+    if(key(u)==='ky_van'&&action==='skill')return false;
     const cost=actionCost(u,action);
     return u.energy>=cost&&n(u.splus.cooldowns[action])<=round;
   }
@@ -502,6 +503,10 @@ export function createSplusMechanics(options={}) {
     for(const h of holders(actor,'mien_nuong')){const t=weakest(friends(h))[0];if(t)heal(h,t,h.maxHp*.05);}
     for(const s of statuses(actor).filter(s=>s.type==='brimstone'&&s.zone))tickDot(actor,s);
   }
+  function consumeTurnStatuses(targetId){
+    const target=unit(targetId);if(!target)return;
+    remove(target,s=>s.remainingTurns!=null&&--s.remainingTurns<=0,'turn-complete');
+  }
   function finishRound() {
     start();if(lastFinished===round)return;lastFinished=round;
     for(const source of units.filter(passive)){
@@ -577,7 +582,7 @@ export function createSplusMechanics(options={}) {
       case 'nung':return enemyFront;
       case 'hoa_khieu':return one(strongestEnemy);
       case 'hac_dao':{const target=tankiest(enemies)[0];return target?unique([target,...adjacent(target,enemies).slice(0,4)]):[];}
-      case 'to_linh':case 'linh_dong':case 'cuong_dong':case 'han_nuong':case 'vong_co':case 'co_nuong':case 'ha_lang':case 'hai_phong':case 'hoa_tieu':case 'tram_tue':case 'hoi_anh':case 'cuu_trieu':case 'khaos':return enemies;
+      case 'ky_van':case 'to_linh':case 'linh_dong':case 'cuong_dong':case 'han_nuong':case 'vong_co':case 'co_nuong':case 'ha_lang':case 'hai_phong':case 'hoa_tieu':case 'tram_tue':case 'hoi_anh':case 'cuu_trieu':case 'khaos':return enemies;
       default:return null;
     }
   }
@@ -747,9 +752,22 @@ export function createSplusMechanics(options={}) {
       case 'cuu_trieu':hits(all,9,1.8);return;
       case 'thach_mong':{S(ours,0.35);const stored=n(actor.splus.memory.intercepted);for(const t of all)D(t,0,{raw:stored*0.3,type:'true',secondary:true});actor.splus.memory.intercepted=0;return;}
       case 'to_linh':B(all,'timeFreeze',0,1);return;
+      case 'ky_van':{
+        const r=rules(actor,action);
+        for(const t of all){
+          D(t,n(r.multiplier,1.2),{type:'elemental'});
+          // One proc per target per cast: the 3 visual bolts do not roll again.
+          if(!alive(t)||rng('splus.ky-van-stun')>=clamp(n(r.stunChance,.3)))continue;
+          const stun=buff(actor,t,'stun',0,null,{remainingTurns:1});
+          // Preserve native resistance, immunity and reflection ownership.
+          if(stun&&(t.statuses||[]).includes(stun))buff(actor,t,'antiHeal',1,null,{remainingTurns:1});
+        }
+        return;
+      }
       case 'bach_dien':{const t=target||strongestEnemy,r=rules(actor,action);D(t,n(r.multiplier,4.2),{type:'elemental'});if(t&&alive(t)){const stolen=n(t.atk)*n(r.stealAtk,.25);B(t,'attackDown',n(r.stealAtk,.25),n(r.turns,2));B(actor,'attackUp',stolen/Math.max(1,n(actor.atk)),n(r.turns,2));B(t,'stun',0,n(r.lockTurns,1));B(t,'antiHeal',1,n(r.lockTurns,1));B(t,'buffBan',0,n(r.lockTurns,1));}return;}
       default:D(target,defaults.singleUltimateMultiplier);return;
     }
   }
-  return {schema:'luc-than-splus-combat/v2',profileVersion:'splus-profile/2026-09-08-v2',units,events,unit,start,beginTurn,beginRound,finishRound,act,damage,consumeHitAttempt,heal,shield,gainRage:energy,addStatus,restoreStatus,extendStatus,storedDotDamage,cleanse,hasStatus:(targetId,type)=>has(unit(targetId),type),modifiers,stat,canUse,canMove,targets,chooseAction,hud,get round(){return round;}};
+  return {schema:'luc-than-splus-combat/v2',profileVersion:'splus-profile/2026-09-08-v2',units,events,unit,start,beginTurn,beginRound,finishRound,consumeTurnStatuses,act,damage,consumeHitAttempt,heal,shield,gainRage:energy,addStatus,restoreStatus,extendStatus,storedDotDamage,cleanse,hasStatus:(targetId,type)=>has(unit(targetId),type),modifiers,stat,canUse,canMove,targets,chooseAction,hud,get round(){return round;}};
 }
+

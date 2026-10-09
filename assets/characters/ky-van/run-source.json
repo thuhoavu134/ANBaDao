@@ -1,0 +1,293 @@
+{
+  "clipId": "run",
+  "label": "run",
+  "source": "file_1410---87fb8138-b953-407f-b378-ceb628b3d562.mp4",
+  "sourceSha256": "0ac76749b1b88efe57d0f5846bd6292518a92894e64cccef30806b23fc7e9ece",
+  "sourceResolution": [
+    848,
+    464
+  ],
+  "sourceFrameCount": 94,
+  "sourceDurationSeconds": 3.900023,
+  "selectedFrameCount": 18,
+  "distinctPoseRate": 4.615,
+  "sampling": "18 evenly spaced nearest-PTS source frames",
+  "keyColorLinear": [
+    0.014444,
+    0.806952,
+    0.008568,
+    1.0
+  ],
+  "keyingSettings": "Blender 5.1.2 Bạch Diện-style Keying settings",
+  "cropRect": [
+    34,
+    27,
+    545,
+    464
+  ],
+  "cellSize": [
+    480,
+    440
+  ],
+  "contentSizeNoUpscale": [
+    480,
+    410
+  ],
+  "contentOffset": [
+    0,
+    30
+  ],
+  "pivot": "bottom-center",
+  "atlas": {
+    "file": "sprite_sheets\\run-18frames-6x3.png",
+    "columns": 6,
+    "rows": 3,
+    "canvas": [
+      2880,
+      1320
+    ]
+  },
+  "frames": [
+    {
+      "sampleIndex": 0,
+      "sourceFrameIndex": 0,
+      "sourcePtsSeconds": 0.0,
+      "targetTimeSeconds": 0.0,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 0,
+        "y": 0,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "sampleIndex": 1,
+      "sourceFrameIndex": 6,
+      "sourcePtsSeconds": 0.233333,
+      "targetTimeSeconds": 0.216668,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 480,
+        "y": 0,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "sampleIndex": 2,
+      "sourceFrameIndex": 11,
+      "sourcePtsSeconds": 0.466667,
+      "targetTimeSeconds": 0.433336,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 960,
+        "y": 0,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "sampleIndex": 3,
+      "sourceFrameIndex": 16,
+      "sourcePtsSeconds": 0.666667,
+      "targetTimeSeconds": 0.650004,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 1440,
+        "y": 0,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "sampleIndex": 4,
+      "sourceFrameIndex": 21,
+      "sourcePtsSeconds": 0.866667,
+      "targetTimeSeconds": 0.866672,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 1920,
+        "y": 0,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "sampleIndex": 5,
+      "sourceFrameIndex": 26,
+      "sourcePtsSeconds": 1.066667,
+      "targetTimeSeconds": 1.08334,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 2400,
+        "y": 0,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "sampleIndex": 6,
+      "sourceFrameIndex": 31,
+      "sourcePtsSeconds": 1.3,
+      "targetTimeSeconds": 1.300008,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 0,
+        "y": 440,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "sampleIndex": 7,
+      "sourceFrameIndex": 37,
+      "sourcePtsSeconds": 1.533333,
+      "targetTimeSeconds": 1.516676,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 480,
+        "y": 440,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "sampleIndex": 8,
+      "sourceFrameIndex": 42,
+      "sourcePtsSeconds": 1.733333,
+      "targetTimeSeconds": 1.733344,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 960,
+        "y": 440,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "sampleIndex": 9,
+      "sourceFrameIndex": 47,
+      "sourcePtsSeconds": 1.966667,
+      "targetTimeSeconds": 1.950011,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 1440,
+        "y": 440,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "sampleIndex": 10,
+      "sourceFrameIndex": 52,
+      "sourcePtsSeconds": 2.166667,
+      "targetTimeSeconds": 2.166679,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 1920,
+        "y": 440,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "sampleIndex": 11,
+      "sourceFrameIndex": 58,
+      "sourcePtsSeconds": 2.4,
+      "targetTimeSeconds": 2.383347,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 2400,
+        "y": 440,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "sampleIndex": 12,
+      "sourceFrameIndex": 63,
+      "sourcePtsSeconds": 2.633333,
+      "targetTimeSeconds": 2.600015,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 0,
+        "y": 880,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "sampleIndex": 13,
+      "sourceFrameIndex": 68,
+      "sourcePtsSeconds": 2.833333,
+      "targetTimeSeconds": 2.816683,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 480,
+        "y": 880,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "sampleIndex": 14,
+      "sourceFrameIndex": 73,
+      "sourcePtsSeconds": 3.033333,
+      "targetTimeSeconds": 3.033351,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 960,
+        "y": 880,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "sampleIndex": 15,
+      "sourceFrameIndex": 78,
+      "sourcePtsSeconds": 3.233333,
+      "targetTimeSeconds": 3.250019,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 1440,
+        "y": 880,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "sampleIndex": 16,
+      "sourceFrameIndex": 83,
+      "sourcePtsSeconds": 3.466667,
+      "targetTimeSeconds": 3.466687,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 1920,
+        "y": 880,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "sampleIndex": 17,
+      "sourceFrameIndex": 89,
+      "sourcePtsSeconds": 3.7,
+      "targetTimeSeconds": 3.683355,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 2400,
+        "y": 880,
+        "width": 480,
+        "height": 440
+      }
+    }
+  ],
+  "preview": {
+    "file": "preview\\run-18frames.mp4",
+    "fps": 30,
+    "frames": 117,
+    "durationSeconds": 3.9
+  },
+  "noisyClipExcluded": true
+}

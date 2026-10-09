@@ -19,13 +19,14 @@ function player(extra = {}) {
 
 test('L17-T1: star cost matches live 20x current stars and caps at 6', () => {
   assert.equal(STAR_MAX, 6);
-  assert.equal(STAR_ROSTER_IDS.length, 14);
+  assert.equal(STAR_ROSTER_IDS.length, 15);
   assert.equal(starUpCost(1), 20);
   assert.equal(starUpCost(5), 100);
   assert.ok(STAR_ROSTER_IDS.includes('ong_hang_pho'));
   assert.ok(STAR_ROSTER_IDS.includes('luc_anh'));
   assert.ok(STAR_ROSTER_IDS.includes('linh_dong'));
   assert.ok(STAR_ROSTER_IDS.includes('bach_dien'));
+  assert.ok(STAR_ROSTER_IDS.includes('ky_van')); // Newly registered authored hero.
 });
 
 test('L17-T2: prepare spends shards, stays immutable, and rejects max/unowned/missing shards', () => {
@@ -72,3 +73,4 @@ test('L17-T4: wheel opens Tướng Tinh as a 12-hero star board', () => {
   assert.match(inject, /account-stars\.mjs/);
   new Function(ui);
 });
+

@@ -2,6 +2,7 @@
   'use strict';
   if (window.HonVietSfx) return;
   const files = {
+    'ky-van-basic-x1':'ky-van/basic-x1.m4a','ky-van-basic-x2':'ky-van/basic-x2.m4a','ky-van-basic-x3':'ky-van/basic-x3.m4a','ky-van-ultimate-x1':'ky-van/ultimate-x1.m4a','ky-van-ultimate-x2':'ky-van/ultimate-x2.m4a','ky-van-ultimate-x3':'ky-van/ultimate-x3.m4a',
     ui: 'se_button_click.mp3', select: 'se_icon_click.wav',
     victory: 'se_battlewin.mp3', defeat: 'se_battlelose.mp3', heal: 'se_gift.mp3',
     basic: '201800_se_atk.wav', skill: '201800_se_s1.wav',
@@ -372,4 +373,5 @@
   window.addEventListener('pagehide', parentBus ? dispose : endBattle);
   stamp('sfxVersion', 'forge-isolation-v3');
 })();
+
 

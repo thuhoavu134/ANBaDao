@@ -1,0 +1,282 @@
+{
+  "clip": "file1403",
+  "packVariant": "cut-18-frames",
+  "source": "file_1403---ad887f3d-74eb-493b-bbe8-1d775008a301.mp4",
+  "sourceSha256": "fb29e274407f7fc59a656d5fe162eb00c3c04df6aeaea438815772d707271895",
+  "sourceFrameCount": 94,
+  "sourceDurationSeconds": 3.900023,
+  "selectedFrameCount": 18,
+  "distinctPoseRate": 4.615,
+  "samplingMethod": "18 evenly spaced target times; nearest native PTS; source-frame index retained",
+  "cropRect": [
+    215,
+    8,
+    643,
+    464
+  ],
+  "cellSize": [
+    480,
+    440
+  ],
+  "contentSizeNoUpscale": [
+    413,
+    440
+  ],
+  "contentOffset": [
+    33,
+    0
+  ],
+  "pivot": "bottom-center",
+  "atlas": {
+    "file": "sprite_sheets/cut-18frames-6x3.png",
+    "columns": 6,
+    "rows": 3,
+    "canvas": [
+      2880,
+      1320
+    ]
+  },
+  "frames": [
+    {
+      "index": 0,
+      "sourceFrameIndex": 0,
+      "sourcePtsSeconds": 0.0,
+      "displayTimeSeconds": 0.0,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 0,
+        "y": 0,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "index": 1,
+      "sourceFrameIndex": 6,
+      "sourcePtsSeconds": 0.233333,
+      "displayTimeSeconds": 0.216668,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 480,
+        "y": 0,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "index": 2,
+      "sourceFrameIndex": 11,
+      "sourcePtsSeconds": 0.466667,
+      "displayTimeSeconds": 0.433336,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 960,
+        "y": 0,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "index": 3,
+      "sourceFrameIndex": 16,
+      "sourcePtsSeconds": 0.666667,
+      "displayTimeSeconds": 0.650004,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 1440,
+        "y": 0,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "index": 4,
+      "sourceFrameIndex": 21,
+      "sourcePtsSeconds": 0.866667,
+      "displayTimeSeconds": 0.866672,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 1920,
+        "y": 0,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "index": 5,
+      "sourceFrameIndex": 26,
+      "sourcePtsSeconds": 1.066667,
+      "displayTimeSeconds": 1.08334,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 2400,
+        "y": 0,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "index": 6,
+      "sourceFrameIndex": 31,
+      "sourcePtsSeconds": 1.3,
+      "displayTimeSeconds": 1.300008,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 0,
+        "y": 440,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "index": 7,
+      "sourceFrameIndex": 37,
+      "sourcePtsSeconds": 1.533333,
+      "displayTimeSeconds": 1.516676,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 480,
+        "y": 440,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "index": 8,
+      "sourceFrameIndex": 42,
+      "sourcePtsSeconds": 1.733333,
+      "displayTimeSeconds": 1.733344,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 960,
+        "y": 440,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "index": 9,
+      "sourceFrameIndex": 47,
+      "sourcePtsSeconds": 1.966667,
+      "displayTimeSeconds": 1.950011,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 1440,
+        "y": 440,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "index": 10,
+      "sourceFrameIndex": 52,
+      "sourcePtsSeconds": 2.166667,
+      "displayTimeSeconds": 2.166679,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 1920,
+        "y": 440,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "index": 11,
+      "sourceFrameIndex": 58,
+      "sourcePtsSeconds": 2.4,
+      "displayTimeSeconds": 2.383347,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 2400,
+        "y": 440,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "index": 12,
+      "sourceFrameIndex": 63,
+      "sourcePtsSeconds": 2.633333,
+      "displayTimeSeconds": 2.600015,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 0,
+        "y": 880,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "index": 13,
+      "sourceFrameIndex": 68,
+      "sourcePtsSeconds": 2.833333,
+      "displayTimeSeconds": 2.816683,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 480,
+        "y": 880,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "index": 14,
+      "sourceFrameIndex": 73,
+      "sourcePtsSeconds": 3.033333,
+      "displayTimeSeconds": 3.033351,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 960,
+        "y": 880,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "index": 15,
+      "sourceFrameIndex": 78,
+      "sourcePtsSeconds": 3.233333,
+      "displayTimeSeconds": 3.250019,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 1440,
+        "y": 880,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "index": 16,
+      "sourceFrameIndex": 83,
+      "sourcePtsSeconds": 3.466667,
+      "displayTimeSeconds": 3.466687,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 1920,
+        "y": 880,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "index": 17,
+      "sourceFrameIndex": 89,
+      "sourcePtsSeconds": 3.7,
+      "displayTimeSeconds": 3.683355,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 2400,
+        "y": 880,
+        "width": 480,
+        "height": 440
+      }
+    }
+  ],
+  "preview": {
+    "mp4": "preview/file1403-cut-18frames.mp4",
+    "contactSheet": "preview/cut-18-contact.png",
+    "durationSeconds": 3.9,
+    "fps": 30,
+    "note": "30fps MP4 holds 18 sparse poses over full source duration; MP4 checkerboard is for review only, atlas PNG retains alpha."
+  }
+}

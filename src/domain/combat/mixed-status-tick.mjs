@@ -16,5 +16,8 @@ export function tickMixedStatuses(unit,legacyCore,combat){
  const events=legacyCore.tickStatuses(shadow);
  unit.statuses=shadow.statuses.map(s=>{if(!s.__hvOriginalType)return s;const restored={...s,type:s.__hvOriginalType};delete restored.__hvOriginalType;return restored;}).concat(managed);
  if((legacyControl||!['basic','skill','ultimate'].some(a=>combat.canUse(unit,a)))&&!events.some(e=>e.type==='control'))events.push({type:'control'});
+ // Capture the skipped action before consuming explicitly turn-scoped effects.
+ combat.consumeTurnStatuses?.(unit);
  return events;
 }
+

@@ -1,0 +1,13 @@
+✔ Kỷ Vân registered outside the fixed 42 and exposes review probability (0.897121ms)
+✔ ultimate rolls once per living enemy, blocks healing and exactly one action (7.428441ms)
+✔ failed proc still damages but does not prohibit healing (2.757791ms)
+✔ turn status survives round boundary until recipient turn, keeps native immunities (1.52818ms)
+✔ normal ATK does not apply the ultimate debuff (0.470559ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 107.069946

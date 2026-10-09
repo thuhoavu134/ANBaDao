@@ -1,0 +1,97 @@
+✖ Kỷ Vân registered outside the fixed 42 and exposes review probability (1.47519ms)
+✖ ultimate rolls once per living enemy, blocks healing and exactly one action (6.025699ms)
+✖ failed proc still damages but does not prohibit healing (1.150402ms)
+✖ turn status survives round boundary until recipient turn, keeps native immunities (2.479191ms)
+✔ normal ATK does not apply the ultimate debuff (0.616107ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 1
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 111.150387
+
+✖ failing tests:
+
+test at luc-than/tests/ky-van.test.mjs:10:1
+✖ Kỷ Vân registered outside the fixed 42 and exposes review probability (1.47519ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  undefined !== 0.3
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/c342e3d6d7cc/luc-than/tests/ky-van.test.mjs:10:127)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 0.3,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at luc-than/tests/ky-van.test.mjs:11:1
+✖ ultimate rolls once per living enemy, blocks healing and exactly one action (6.025699ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 6
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/c342e3d6d7cc/luc-than/tests/ky-van.test.mjs:11:165)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 6,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at luc-than/tests/ky-van.test.mjs:12:1
+✖ failed proc still damages but does not prohibit healing (1.150402ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 6
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/c342e3d6d7cc/luc-than/tests/ky-van.test.mjs:12:126)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 6,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at luc-than/tests/ky-van.test.mjs:13:1
+✖ turn status survives round boundary until recipient turn, keeps native immunities (2.479191ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/c342e3d6d7cc/luc-than/tests/ky-van.test.mjs:13:262)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,311 @@
+{
+  "clip": "file1409-fall-die",
+  "source": "file_1409---185ccdcd-92ff-4545-b4fe-69555e7473bd.mp4",
+  "sourceSha256": "150607388a965abff8a079e016cec2dd648f8e520aba5f00383624ebd8a22b14",
+  "sourceResolution": [
+    848,
+    464
+  ],
+  "sourceFrameCount": 94,
+  "sourceDurationSeconds": 3.900023,
+  "selectedFrameCount": 18,
+  "distinctPoseRate": 4.615,
+  "selection": "18 evenly spaced nearest-PTS source frames",
+  "keying": {
+    "tool": "Blender 5.1.2 Compositor Keying node",
+    "keyColorSrgbMedian": [
+      21,
+      230,
+      32
+    ],
+    "keyColorLinear": [
+      0.007499,
+      0.791298,
+      0.014444,
+      1.0
+    ],
+    "clipBlack": 0.28,
+    "clipWhite": 0.68,
+    "dilateSize": -2,
+    "featherSize": 2,
+    "despillStrength": 1.2,
+    "despillBalance": 0.5,
+    "blurPre": 1,
+    "blurPost": 1
+  },
+  "crop": {
+    "method": "largest connected alpha component union + 16px margin",
+    "sourceRect": [
+      18,
+      10,
+      529,
+      464
+    ],
+    "cell": [
+      480,
+      440
+    ],
+    "contentSizeNoUpscale": [
+      480,
+      426
+    ],
+    "contentOffset": [
+      0,
+      14
+    ],
+    "pivot": "bottom-center"
+  },
+  "atlas": {
+    "file": "fall-die-18frames-6x3.png",
+    "columns": 6,
+    "rows": 3,
+    "canvas": [
+      2880,
+      1320
+    ]
+  },
+  "frames": [
+    {
+      "index": 0,
+      "sourceFrameIndex": 0,
+      "targetTimeSeconds": 0.0,
+      "sourcePtsSeconds": 0.0,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 0,
+        "y": 0,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "index": 1,
+      "sourceFrameIndex": 6,
+      "targetTimeSeconds": 0.216668,
+      "sourcePtsSeconds": 0.233333,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 480,
+        "y": 0,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "index": 2,
+      "sourceFrameIndex": 11,
+      "targetTimeSeconds": 0.433336,
+      "sourcePtsSeconds": 0.466667,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 960,
+        "y": 0,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "index": 3,
+      "sourceFrameIndex": 16,
+      "targetTimeSeconds": 0.650004,
+      "sourcePtsSeconds": 0.666667,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 1440,
+        "y": 0,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "index": 4,
+      "sourceFrameIndex": 21,
+      "targetTimeSeconds": 0.866672,
+      "sourcePtsSeconds": 0.866667,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 1920,
+        "y": 0,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "index": 5,
+      "sourceFrameIndex": 26,
+      "targetTimeSeconds": 1.08334,
+      "sourcePtsSeconds": 1.066667,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 2400,
+        "y": 0,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "index": 6,
+      "sourceFrameIndex": 31,
+      "targetTimeSeconds": 1.300008,
+      "sourcePtsSeconds": 1.3,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 0,
+        "y": 440,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "index": 7,
+      "sourceFrameIndex": 37,
+      "targetTimeSeconds": 1.516676,
+      "sourcePtsSeconds": 1.533333,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 480,
+        "y": 440,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "index": 8,
+      "sourceFrameIndex": 42,
+      "targetTimeSeconds": 1.733344,
+      "sourcePtsSeconds": 1.733333,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 960,
+        "y": 440,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "index": 9,
+      "sourceFrameIndex": 47,
+      "targetTimeSeconds": 1.950011,
+      "sourcePtsSeconds": 1.966667,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 1440,
+        "y": 440,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "index": 10,
+      "sourceFrameIndex": 52,
+      "targetTimeSeconds": 2.166679,
+      "sourcePtsSeconds": 2.166667,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 1920,
+        "y": 440,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "index": 11,
+      "sourceFrameIndex": 58,
+      "targetTimeSeconds": 2.383347,
+      "sourcePtsSeconds": 2.4,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 2400,
+        "y": 440,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "index": 12,
+      "sourceFrameIndex": 63,
+      "targetTimeSeconds": 2.600015,
+      "sourcePtsSeconds": 2.633333,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 0,
+        "y": 880,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "index": 13,
+      "sourceFrameIndex": 68,
+      "targetTimeSeconds": 2.816683,
+      "sourcePtsSeconds": 2.833333,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 480,
+        "y": 880,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "index": 14,
+      "sourceFrameIndex": 73,
+      "targetTimeSeconds": 3.033351,
+      "sourcePtsSeconds": 3.033333,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 960,
+        "y": 880,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "index": 15,
+      "sourceFrameIndex": 78,
+      "targetTimeSeconds": 3.250019,
+      "sourcePtsSeconds": 3.233333,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 1440,
+        "y": 880,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "index": 16,
+      "sourceFrameIndex": 83,
+      "targetTimeSeconds": 3.466687,
+      "sourcePtsSeconds": 3.466667,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 1920,
+        "y": 880,
+        "width": 480,
+        "height": 440
+      }
+    },
+    {
+      "index": 17,
+      "sourceFrameIndex": 89,
+      "targetTimeSeconds": 3.683355,
+      "sourcePtsSeconds": 3.7,
+      "durationMs": 216.668,
+      "atlasRect": {
+        "x": 2400,
+        "y": 880,
+        "width": 480,
+        "height": 440
+      }
+    }
+  ],
+  "preview": {
+    "file": "preview/file1409-fall-die-18frames.mp4",
+    "fps": 30,
+    "frameCount": 117,
+    "durationSeconds": 3.9,
+    "distinctPoseRate": 4.615,
+    "checkerboard": true
+  }
+}

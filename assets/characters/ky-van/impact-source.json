@@ -1,0 +1,98 @@
+{
+  "ma": "kl_10_klzd_d",
+  "phai": "kunlun",
+  "phai_ten": "Côn Lôn",
+  "hanh": "Thổ",
+  "frames_n": 10,
+  "interval_ms": 60,
+  "dirs": null,
+  "nguon": "pak\\image_4.pak #356",
+  "dung_boi": [],
+  "sfx": [
+    "sfx/kunlun/kl_axxf_c.wav",
+    "sfx/kunlun/kl_axxf_f.wav",
+    "sfx/wudang/wd_jfjt_f.wav"
+  ],
+  "frames": [
+    {
+      "f": 0,
+      "png": "f00.png",
+      "w": 128,
+      "h": 132,
+      "ox": 0,
+      "oy": 0
+    },
+    {
+      "f": 1,
+      "png": "f01.png",
+      "w": 128,
+      "h": 132,
+      "ox": 0,
+      "oy": 0
+    },
+    {
+      "f": 2,
+      "png": "f02.png",
+      "w": 128,
+      "h": 132,
+      "ox": 0,
+      "oy": 0
+    },
+    {
+      "f": 3,
+      "png": "f03.png",
+      "w": 128,
+      "h": 132,
+      "ox": 0,
+      "oy": 0
+    },
+    {
+      "f": 4,
+      "png": "f04.png",
+      "w": 128,
+      "h": 132,
+      "ox": 0,
+      "oy": 0
+    },
+    {
+      "f": 5,
+      "png": "f05.png",
+      "w": 128,
+      "h": 132,
+      "ox": 0,
+      "oy": 0
+    },
+    {
+      "f": 6,
+      "png": "f06.png",
+      "w": 128,
+      "h": 132,
+      "ox": 0,
+      "oy": 0
+    },
+    {
+      "f": 7,
+      "png": "f07.png",
+      "w": 128,
+      "h": 132,
+      "ox": 0,
+      "oy": 0
+    },
+    {
+      "f": 8,
+      "png": "f08.png",
+      "w": 128,
+      "h": 132,
+      "ox": 0,
+      "oy": 0
+    },
+    {
+      "f": 9,
+      "png": "f09.png",
+      "w": 128,
+      "h": 132,
+      "ox": 0,
+      "oy": 0
+    }
+  ]
+}

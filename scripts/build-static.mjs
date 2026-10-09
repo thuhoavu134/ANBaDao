@@ -277,6 +277,10 @@ installVersionedBasicDispatch(root);
 const { installBattleInstantSkip } = await import('./battle-instant-skip-v1.mjs');
 installBattleInstantSkip(root);
 
+// Kỷ Vân joins the final production owners, including skip and mixed status settlement.
+const { installKyVan } = await import('./ky-van-runtime-v1.mjs');
+installKyVan(root);
+
 // battle.html is now the single runtime source for iframe and iOS full-page combat.
 // Do not duplicate ~1.5 MB of battle markup as base64 inside index.html; on mobile
 // that keeps two copies alive exactly when the battle document starts parsing.
@@ -293,5 +297,6 @@ installCoreScreenPolish(root);
 const { buildLoadingLossless } = await import('./loading-lossless-v1.mjs');
 await buildLoadingLossless(root);
 console.log(`Static preview written to ${out}`);
+
 
 

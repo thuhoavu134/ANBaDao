@@ -3,7 +3,7 @@ const starFail = (code, message) => ({ ok: false, code, message });
 export const STAR_ROSTER_IDS = Object.freeze([
   'ong_hang_pho', 'thay_mo', 'lac_yen', 'cung_thu_tre',
   'co_dao_ganh_hoi', 'phong_tu', 'thuy_nuong_roi_nuoc', 'hong_lien_dao_nuong',
-  'thach_quyen', 'dinh_loi', 'luc_anh', 'to_diep', 'linh_dong', 'bach_dien'
+  'thach_quyen', 'dinh_loi', 'luc_anh', 'to_diep', 'linh_dong', 'bach_dien', 'ky_van'
 ]);
 
 export const STAR_MAX = 6;
@@ -56,3 +56,4 @@ export function prepareStarUp(player, { id } = {}) {
   const shards = { ...(player.shards || {}), [id]: have - cost };
   return { ok: true, heroes, shards, id, stars: stars + 1, spent: cost };
 }
+
