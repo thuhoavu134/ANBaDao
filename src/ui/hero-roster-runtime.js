@@ -121,21 +121,24 @@
   const baseDetail = renderHeroDetail;
   renderHeroDetail = function renderDetailWithoutIdleRestart(id) {
     const canvas = ST.screen === 'heroDetail' && ST._heroDetailId === id
-      ? (document.getElementById('lucAnhDetailIdle') || document.getElementById('linhDongDetailIdle') || document.getElementById('bachDienDetailIdle')) : null;
+      ? (document.getElementById('lucAnhDetailIdle') || document.getElementById('linhDongDetailIdle') || document.getElementById('bachDienDetailIdle') || document.getElementById('kyVanDetailIdle')) : null;
     const raf = canvas ? _lucDetailRaf : 0;
     const startLucIdle = startLucAnhDetailIdle;
     const startLinhIdle = typeof startLinhDongDetailIdle === 'function' ? startLinhDongDetailIdle : null;
     const startBachIdle = typeof startBachDienDetailIdle === 'function' ? startBachDienDetailIdle : null;
+    const startKyIdle = typeof startKyVanDetailIdle === 'function' ? startKyVanDetailIdle : null;
     if (canvas) {
       startLucAnhDetailIdle = () => {};
       if (startLinhIdle) startLinhDongDetailIdle = () => {};
       if (startBachIdle) startBachDienDetailIdle = () => {};
+      if (startKyIdle) startKyVanDetailIdle = () => {};
     }
     try { baseDetail(id); }
     finally {
       startLucAnhDetailIdle = startLucIdle;
       if (startLinhIdle) startLinhDongDetailIdle = startLinhIdle;
       if (startBachIdle) startBachDienDetailIdle = startBachIdle;
+      if (startKyIdle) startKyVanDetailIdle = startKyIdle;
     }
     if (canvas) {
       const next = document.getElementById(canvas.id);
@@ -157,3 +160,4 @@
   root.classList.toggle('is-open', ST.screen === 'heroes');
   if (ST.screen === 'heroes') renderHeroes();
 })();
+

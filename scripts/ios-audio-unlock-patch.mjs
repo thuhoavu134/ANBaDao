@@ -26,6 +26,12 @@ const manager = String.raw`<script id="honviet-ios-audio-unlock">
       return;
     }
   }catch(_e){}
+  function configurePlaybackSession(){
+    // WebKit: playback remains audible with the iPhone Ring/Silent switch on.
+    // Feature detection preserves older browsers; in-game gain/mute stays owned here.
+    try{if(navigator.audioSession)navigator.audioSession.type='playback';}catch(_e){}
+  }
+  configurePlaybackSession();
   const AC=window.AudioContext||window.webkitAudioContext;
   let ctx=window.__HV_EARLY_CTX||null, unlocked=false;
   try{
@@ -69,6 +75,7 @@ const manager = String.raw`<script id="honviet-ios-audio-unlock">
     loads.set(url,p);return p;
   }
   function unlock(){
+    configurePlaybackSession();
     let c,resumed;
     try{
       c=getCtx();
@@ -259,4 +266,5 @@ battle=battle.replace(/function playLucAnhUltimateVoice\(\)\{[\s\S]*?\}\s*(?=fun
 `);
 writeFileSync(battlePath,battle);
 console.log('iOS audio unlock on first real interaction applied; no blocking gate');
+
 

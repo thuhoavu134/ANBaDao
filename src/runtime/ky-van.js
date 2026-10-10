@@ -10,11 +10,12 @@ function kyVanFrame(durations,elapsed,loop){
  const total=durations.reduce((a,b)=>a+b,0);let t=loop?elapsed%total:Math.min(elapsed,total-.001);
  for(let i=0;i<durations.length;i++){t-=durations[i];if(t<0)return i;}return durations.length-1;
 }
+function kyVanFallDuration(){return 900/Math.max(1,Math.min(3,Number(state.speed)||1));}
 function drawKyVanHero(ctx,u,time){
  if(!isKyVan(u))return false;
  const info=u._kyVanAction,active=info&&info.battleId===state.battleId;
  let key='idle',elapsed=time,loop=true,frame=0;
- if(u.hp<=0){key='fall-die';elapsed=Math.max(0,time-u.defeatedAt);loop=false;}
+ if(u.hp<=0){key='fall-die';elapsed=Math.max(0,time-u.defeatedAt)*KY_VAN_META.clips['fall-die'].durationMs/(u.defeatFallDuration||kyVanFallDuration());loop=false;}
  else if((u.state==='hurt'||u.state==='hit')&&time-u.stateStarted<KY_VAN_META.clips.hit.durationMs){key='hit';elapsed=Math.max(0,time-u.stateStarted);loop=false;}
  else if(active){key=info.action;elapsed=kyVanElapsed(info);loop=false;}
  else if(u.state==='run'){key='run';elapsed=Math.max(0,time-u.stateStarted);}
@@ -23,7 +24,7 @@ function drawKyVanHero(ctx,u,time){
   // Request the next page before the current page runs out. Cache remains LRU-owned.
   const next=(Number(key.slice(5))+1)%Math.ceil(KY_VAN_META.idle.frames/16);kyVanImage('idle-'+next);
  }else frame=kyVanFrame(KY_VAN_META.clips[key].frameDurationsMs,elapsed,loop);
- ctx.save();ctx.translate(u.x,u.y);const scale=(.83+(u.y-290)/1500)*(innerWidth<600?.52:.74);ctx.scale(scale*(u.team===TEAM_ENEMY?-1:1),scale);
+ ctx.save();ctx.translate(u.x,u.y);const scale=battleCharacterDepthScale(u)*battleCharacterScale(u);ctx.scale(scale*(u.team===TEAM_ENEMY?-1:1),scale);
  kyVanPaint(ctx,key,frame,-240,-440,480,440)||kyVanPaint(ctx,'standing',0,-240,-440,480,440);ctx.restore();if(u.hp>0)drawUnitHud(ctx,u,time,1);return true;
 }
 async function beginKyVanAction(actor,action,target,battleId){

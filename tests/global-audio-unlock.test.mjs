@@ -6,7 +6,7 @@ import {readFileSync} from 'node:fs';
 const source=readFileSync(new URL('../scripts/ios-audio-unlock-patch.mjs',import.meta.url),'utf8');
 const manager=source.match(/const manager = String.raw`<script[^>]*>([\s\S]*?)<\/script>`;/)[1];
 const tick=()=>new Promise(resolve=>setImmediate(resolve));
-function fixture({parent,blocked=false,holdResume=false,fetchAudio}={}){
+function fixture({parent,blocked=false,holdResume=false,fetchAudio,audioSession}={}){
   const sources=[],contexts=[],listeners={},pending=[];
   let allowed=!blocked,gesture=false;
   class Context{
@@ -24,7 +24,7 @@ function fixture({parent,blocked=false,holdResume=false,fetchAudio}={}){
   }
   const window={AudioContext:Context};window.parent=parent||window;
   const document={documentElement:{dataset:{}},visibilityState:'visible',addEventListener(t,f){listeners[t]=f;}};
-  vm.runInNewContext(manager,{window,document,fetch:fetchAudio|| (async()=>({ok:true,arrayBuffer:async()=>new ArrayBuffer(1)})),console,setTimeout,clearTimeout});
+  vm.runInNewContext(manager,{window,document,navigator:{audioSession},fetch:fetchAudio|| (async()=>({ok:true,arrayBuffer:async()=>new ArrayBuffer(1)})),console,setTimeout,clearTimeout});
   return {window,bus:window.HonVietAudio,contexts,sources,document,listeners,
     async gesture(){gesture=true;listeners.pointerdown?.();gesture=false;await tick();},
     allow(){allowed=true;}};
@@ -122,3 +122,7 @@ test('unsupported Web Audio keeps the original media fallback usable',async()=>{
   const f=routeFixture();f.window.HonVietAudio=null;
   assert.equal(await f.c.playBgm('hero'),true);assert.deepEqual(f.plays,['hero.mp3']);
 });
+
+
+test('iOS playback routing is requested before playback and restored on gesture without a second context',async()=>{const session={type:'ambient'};const f=fixture({audioSession:session,blocked:true});assert.equal(session.type,'playback');session.type='ambient';await f.gesture();assert.equal(session.type,'playback');assert.equal(f.contexts.length,1);assert.equal(f.bus.isUnlocked(),true);});
+test('unsupported or read-only AudioSession does not break normal unlock',async()=>{const session={set type(v){throw new Error('unsupported');}};const f=fixture({audioSession:session});assert.equal(await f.bus.unlock(),true);});
