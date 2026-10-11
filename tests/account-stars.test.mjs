@@ -19,7 +19,8 @@ function player(extra = {}) {
 
 test('L17-T1: star cost matches live 20x current stars and caps at 6', () => {
   assert.equal(STAR_MAX, 6);
-  assert.equal(STAR_ROSTER_IDS.length, 15);
+  assert.ok(STAR_ROSTER_IDS.includes('tieu_phong'));
+  assert.equal(STAR_ROSTER_IDS.length, 16);
   assert.equal(starUpCost(1), 20);
   assert.equal(starUpCost(5), 100);
   assert.ok(STAR_ROSTER_IDS.includes('ong_hang_pho'));

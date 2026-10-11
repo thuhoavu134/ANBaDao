@@ -256,11 +256,11 @@ export function createSplusMechanics(options={}) {
         if(key(source)==='da_xoa'&&passive(source)&&targetRatio<0.5){critChance+=0.35;critBonus+=0.5;}
         if(holders(source,'hoa_khieu').length&&statuses(target).some(isBurn))critChance+=0.15;
         critChance+=n(options.critBonus)+(has(target,'resinPoison')?0.2:0);
-        critical=critical||rng('splus.crit')<clamp(critChance);
+        critical=critical||rng('splus.crit')<clamp(options.critChanceOverride??critChance);
         if(has(target,'bubble'))critical=false;
         const armor=type==='true'?0:Math.max(0,n(target.def)*(1+(type==='elemental'?tm.magicDefense:tm.defense)))*(1-clamp(Math.max(n(options.armorPierce),focusTarget ? rules(source).controlPierce : 0)));
         amount=Math.max(12,stat(source,'atk')*n(options.multiplier,1)*(100/(100+armor*0.82))*(0.94+clamp(rng('splus.variance'))*0.12)*1.22);
-        if(critical)amount*=Math.max(1,n(source.critDamage,1.5)+critBonus);
+        if(critical)amount*=Math.max(1,options.critMultiplierOverride??(n(source.critDamage,1.5)+critBonus));
       }
       if(has(target,'bubble'))critical=false;
       if(critical&&!options.dot&&!options.secondary&&!options.reflection&&tryWorldSubstitute(target,source))return 0;
@@ -410,7 +410,7 @@ export function createSplusMechanics(options={}) {
     if(action!=='basic'&&['guardian','striker','duelist','ranger'].includes(def(u)?.role)&&statuses(u).some(s=>s.type==='disarm'&&s.weaponSkills))return false;
     if(melee(u)&&statuses(u).some(s=>s.type==='root'&&s.blocksMelee))return false;
     if(action!=='basic'&&(has(u,'silence')||has(u,'hardSilence')||legacyEffects(u).some(s=>s.type==='silence'||s.type==='hardSilence')))return false;
-    if(key(u)==='ky_van'&&action==='skill')return false;
+    if(['ky_van','tieu_phong'].includes(key(u))&&action==='skill')return false;
     const cost=actionCost(u,action);
     return u.energy>=cost&&n(u.splus.cooldowns[action])<=round;
   }
@@ -468,11 +468,38 @@ export function createSplusMechanics(options={}) {
       emit('action',actor,target,{action});
       const killsBefore=n(actor.kills);
       if(action==='basic'){damage(actor,target,{multiplier:1,action});energy(actor,actor,defaults.basicRage,'basic');}
-      else resolveSkill(actor,action,target);
+      else if(key(actor)==='tieu_phong'&&action==='ultimate'){
+        const cast={id:currentAction.id,action:currentAction,targets:legal.filter(t=>t.slot%3===target.slot%3).map(t=>t.id),resolved:[]};
+        actor.splus.memory.fanCast=cast;
+        if(settings.deferTieuPhong)return {ok:true,castId:cast.id,events:events.slice(startIndex)};
+        for(let wave=0;wave<3;wave++)for(const id of cast.targets)resolveTieuPhongImpact(actor,cast.id,wave,id);
+        delete actor.splus.memory.fanCast;
+      }else resolveSkill(actor,action,target);
       if(action!=='basic')actor.splus.cooldowns[action]=round+(action==='skill'?defaults.skillCooldown:0)+(has(actor,'cooldownDelay')?1:0);
       if(action==='ultimate'&&key(actor)==='cuu_trieu'&&n(actor.kills)>killsBefore&&actor.splus.memory.extraRound!==round&&!has(actor,'noExtraTurn')&&alive(actor)){actor.splus.memory.extraRound=round;emit('extraTurn',actor,actor);}
       afterAction(actor,action);return {ok:true,events:events.slice(startIndex),extraTurn:events.slice(startIndex).some(e=>e.type==='extraTurn')};
     }finally{currentAction=previous;}
+  }
+  function resolveTieuPhongImpact(actorId,castId,wave,targetId){
+    const actor=unit(actorId),cast=actor?.splus?.memory?.fanCast,target=unit(targetId),token=wave+':'+targetId;
+    if(!cast||cast.id!==castId||!Number.isInteger(wave)||wave<0||wave>2||!cast.targets.includes(targetId)||cast.resolved.includes(token))return {ok:false};
+    cast.resolved.push(token);if(!alive(actor)||!alive(target))return {ok:true,events:[]};
+    const previous=currentAction,startIndex=events.length;currentAction=cast.action;
+    try{
+      const r=rules(actor,'ultimate');
+      const critical=wave===2&&rng('splus.tieu-phong-crit')<n(r.criticalChance,.3);
+      damage(actor,target,{action:'ultimate',multiplier:n(r.waveMultiplier,1),forceCrit:critical,critChanceOverride:0,critMultiplierOverride:n(r.criticalMultiplier,2)});
+      if(alive(target)&&wave===0&&rng('splus.tieu-phong-stun')<n(r.stunChance,.5))buff(actor,target,'stun',0,null,{remainingTurns:1});
+      if(alive(target)&&wave===1&&rng('splus.tieu-phong-antiheal')<n(r.antiHealChance,.4))buff(actor,target,'antiHeal',1,null,{remainingTurns:2});
+      emit('tornadoImpact',actor,target,{wave:wave+1,critical});
+      return {ok:true,events:events.slice(startIndex)};
+    }finally{currentAction=previous;}
+  }
+  function finishTieuPhongCast(actorId,castId){
+    const actor=unit(actorId),cast=actor?.splus?.memory?.fanCast;
+    if(!cast||cast.id!==castId||cast.resolved.length!==cast.targets.length*3)return false;
+    const previous=currentAction;currentAction=cast.action;
+    try{delete actor.splus.memory.fanCast;actor.splus.cooldowns.ultimate=round;afterAction(actor,'ultimate');return true;}finally{currentAction=previous;}
   }
   function start() {
     if(started)return;started=true;
@@ -582,6 +609,7 @@ export function createSplusMechanics(options={}) {
       case 'nung':return enemyFront;
       case 'hoa_khieu':return one(strongestEnemy);
       case 'hac_dao':{const target=tankiest(enemies)[0];return target?unique([target,...adjacent(target,enemies).slice(0,4)]):[];}
+      case 'tieu_phong':{const lane=oppositeTarget?.slot%3;return enemies.filter(t=>t.slot%3===lane);}
       case 'ky_van':case 'to_linh':case 'linh_dong':case 'cuong_dong':case 'han_nuong':case 'vong_co':case 'co_nuong':case 'ha_lang':case 'hai_phong':case 'hoa_tieu':case 'tram_tue':case 'hoi_anh':case 'cuu_trieu':case 'khaos':return enemies;
       default:return null;
     }
@@ -768,6 +796,7 @@ export function createSplusMechanics(options={}) {
       default:D(target,defaults.singleUltimateMultiplier);return;
     }
   }
-  return {schema:'luc-than-splus-combat/v2',profileVersion:'splus-profile/2026-09-08-v2',units,events,unit,start,beginTurn,beginRound,finishRound,consumeTurnStatuses,act,damage,consumeHitAttempt,heal,shield,gainRage:energy,addStatus,restoreStatus,extendStatus,storedDotDamage,cleanse,hasStatus:(targetId,type)=>has(unit(targetId),type),modifiers,stat,canUse,canMove,targets,chooseAction,hud,get round(){return round;}};
+  return {schema:'luc-than-splus-combat/v2',profileVersion:'splus-profile/2026-09-08-v2',units,events,unit,start,beginTurn,beginRound,finishRound,consumeTurnStatuses,act,resolveTieuPhongImpact,finishTieuPhongCast,damage,consumeHitAttempt,heal,shield,gainRage:energy,addStatus,restoreStatus,extendStatus,storedDotDamage,cleanse,hasStatus:(targetId,type)=>has(unit(targetId),type),modifiers,stat,canUse,canMove,targets,chooseAction,hud,get round(){return round;}};
 }
+
 

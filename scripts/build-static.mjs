@@ -280,6 +280,8 @@ installBattleInstantSkip(root);
 // Kỷ Vân joins the final production owners, including skip and mixed status settlement.
 const { installKyVan } = await import('./ky-van-runtime-v1.mjs');
 await installKyVan(root);
+const {installTieuPhong}=await import('./tieu-phong-runtime-v1.mjs');
+await installTieuPhong(root);
 
 // Scale the final authored clocks after the instant-skip owner has installed
 // its marker short-circuit. Both paths continue sharing the same controller.

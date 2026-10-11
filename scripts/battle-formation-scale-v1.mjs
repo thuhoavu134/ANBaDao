@@ -28,6 +28,7 @@ export const BATTLE_CHARACTER_SCALE = Object.freeze({ portrait:0.34, desktop:0.7
 export const BATTLE_HERO_BODY_HEIGHT = 310;
 export const HERO_VISUAL_SCALE = Object.freeze({
   default:1,
+  hero_splus_tieu_phong:BATTLE_HERO_BODY_HEIGHT/419,
   hero_splus_ky_van:BATTLE_HERO_BODY_HEIGHT/419,
   luc_anh:BATTLE_HERO_BODY_HEIGHT/(330*199/240),
   thay_mo:BATTLE_HERO_BODY_HEIGHT/(348*250/264),
@@ -80,6 +81,7 @@ export function canonicalBattleHeroId(value){
   const raw=String(value??'').trim().toLowerCase();
   if(/^(?:linh_dong|linh-dong|hero_splus_linh_dong)$/.test(raw)) return 'hero_splus_linh_dong';
   if(/^(?:bach_dien|bach-dien|hero_splus_bach_dien)$/.test(raw)) return 'hero_splus_bach_dien';
+  if(/^(?:tieu_phong|tieu-phong|hero_splus_tieu_phong)$/.test(raw))return "hero_splus_tieu_phong";
   if(/^(?:ky_van|ky-van|hero_splus_ky_van)$/.test(raw))return "hero_splus_ky_van";
   return raw;
 }
@@ -142,7 +144,8 @@ const RUNTIME_LAYOUT=`const PORTRAIT_FORMATION=Object.freeze({rows:Object.freeze
     const raw=String(value??"").trim().toLowerCase();
     if(/^(?:linh_dong|linh-dong|hero_splus_linh_dong)$/.test(raw))return "hero_splus_linh_dong";
     if(/^(?:bach_dien|bach-dien|hero_splus_bach_dien)$/.test(raw))return "hero_splus_bach_dien";
-    if(/^(?:ky_van|ky-van|hero_splus_ky_van)$/.test(raw))return "hero_splus_ky_van";
+    if(/^(?:tieu_phong|tieu-phong|hero_splus_tieu_phong)$/.test(raw))return "hero_splus_tieu_phong";
+  if(/^(?:ky_van|ky-van|hero_splus_ky_van)$/.test(raw))return "hero_splus_ky_van";
     return raw;
   }
   function battleHeroVisualScale(unit){

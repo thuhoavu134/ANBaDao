@@ -1,0 +1,21 @@
+name: Tieu Phong integration QA
+on:
+  push:
+    branches: [feat/tieu-phong-ground-tornado-20261011]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install
+      - run: npm test
+      - name: Full game desktop and mobile
+        run: |
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
+          node scripts/qa-tieu-phong.mjs

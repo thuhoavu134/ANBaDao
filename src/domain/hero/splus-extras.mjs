@@ -1,3 +1,4 @@
+import {TIEU_PHONG_HERO} from './tieu-phong.mjs';
 import {KY_VAN_HERO} from './ky-van.mjs';
 // Authored S+ extras live outside the locked 42-hero / 7-per-element grid.
 // Bạch Diện is Tướng 03 S+ by owner bible 15/09; Canvas Sprite Runtime pack TKT-0154.
@@ -78,7 +79,7 @@ export const SPLUS_EXTRA_HEROES = Object.freeze([
     }),
     passive: skill('passive', 'bach_dien.passive', 0, 0)
   }),
-  KY_VAN_HERO
+  KY_VAN_HERO, TIEU_PHONG_HERO
 ]);
 
 export const SPLUS_EXTRA_BY_ID = Object.freeze(Object.fromEntries(SPLUS_EXTRA_HEROES.map(h => [h.id, h])));
@@ -92,6 +93,7 @@ export const BACH_DIEN_ALIASES = Object.freeze({
 export function resolveSplusExtraId(id) {
   const raw = String(id || '').trim();
   if (!raw) return '';
+  if (/^(?:hero_splus_)?tieu[_-]phong$/i.test(raw)) return 'hero_splus_tieu_phong';
   if (/^(?:hero_splus_)?ky[_-]van$/i.test(raw)) return 'hero_splus_ky_van';
   if (Object.hasOwn(BACH_DIEN_ALIASES, raw)) return BACH_DIEN_ALIASES[raw];
   const lower = raw.toLowerCase();

@@ -2,6 +2,7 @@
   'use strict';
   if (window.HonVietSfx) return;
   const files = {
+'tieu-phong-basic-x1':'tieu-phong/basic-x1.m4a','tieu-phong-basic-x2':'tieu-phong/basic-x2.m4a','tieu-phong-basic-x3':'tieu-phong/basic-x3.m4a','tieu-phong-ultimate-x1':'tieu-phong/ultimate-x1.m4a','tieu-phong-ultimate-x2':'tieu-phong/ultimate-x2.m4a','tieu-phong-ultimate-x3':'tieu-phong/ultimate-x3.m4a',
     'ky-van-basic-x1':'ky-van/basic-x1.m4a','ky-van-basic-x2':'ky-van/basic-x2.m4a','ky-van-basic-x3':'ky-van/basic-x3.m4a','ky-van-ultimate-x1':'ky-van/ultimate-x1.m4a','ky-van-ultimate-x2':'ky-van/ultimate-x2.m4a','ky-van-ultimate-x3':'ky-van/ultimate-x3.m4a',
     ui: 'se_button_click.mp3', select: 'se_icon_click.wav',
     victory: 'se_battlewin.mp3', defeat: 'se_battlelose.mp3', heal: 'se_gift.mp3',
@@ -373,5 +374,6 @@
   window.addEventListener('pagehide', parentBus ? dispose : endBattle);
   stamp('sfxVersion', 'forge-isolation-v3');
 })();
+
 
 
