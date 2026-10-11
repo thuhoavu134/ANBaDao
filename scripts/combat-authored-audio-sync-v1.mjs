@@ -95,7 +95,7 @@ function bindSplusAudioClock({title,hero,cap}){
   if(!normalized)return Promise.resolve(false);
   const timeline=${cap}_TIMELINE[normalized];
   const item=info||{battleId:state.battleId,startedAt:performance.now(),actionId:null};
-  const cuePerformanceMs=(Number(item.startedAt)||performance.now())+(Number(timeline?.releaseMs)||0);
+  const cuePerformanceMs=(Number(item.startedAt)||performance.now())+(Number(timeline?.releaseMs)||0)/(item.playbackRate||1);
   return __hvBattleAssets.playSfx(item,normalized==='ultimate'?'${hero}-ult':'${hero}-atk',{actionId:item.actionId||null,cue:'release:authored-marker',cuePerformanceMs,sampleCue:'onset'});
 }`,
     hero+'-timed-play-owner'
@@ -184,3 +184,4 @@ const diagnosticMarker='<!-- HV_AUDIO_SYNC_DIAGNOSTICS '+encodeURIComponent(JSON
 html=html.replace('</body>',MARKER+'\n'+diagnosticMarker+'\n</body>');
 writeFileSync(path,html);
 console.log('Authored combat SFX synchronized to release/contact cues with decoded lead-in compensation.');
+

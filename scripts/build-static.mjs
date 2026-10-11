@@ -281,6 +281,11 @@ installBattleInstantSkip(root);
 const { installKyVan } = await import('./ky-van-runtime-v1.mjs');
 await installKyVan(root);
 
+// Scale the final authored clocks after the instant-skip owner has installed
+// its marker short-circuit. Both paths continue sharing the same controller.
+const { patchAuthoredBattleSpeed } = await import('./authored-battle-speed-v1.mjs');
+writeFileSync(join(out, 'battle.html'), patchAuthoredBattleSpeed(readFileSync(join(out, 'battle.html'), 'utf8')));
+
 // battle.html is now the single runtime source for iframe and iOS full-page combat.
 // Do not duplicate ~1.5 MB of battle markup as base64 inside index.html; on mobile
 // that keeps two copies alive exactly when the battle document starts parsing.

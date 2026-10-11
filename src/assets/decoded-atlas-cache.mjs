@@ -77,6 +77,7 @@ export function createDecodedAtlasCache(options = {}) {
     throw new RangeError('Atlas cache requires a positive budget and loading limit');
   }
   const makeImage = options.makeImage || (() => new Image());
+  const loadTimeoutMs = Math.max(1, Number(options.loadTimeoutMs) || 12000);
   const makeCanvas = options.makeCanvas || (() => {
     try {
       if (typeof document !== 'undefined' && document.createElement) return document.createElement('canvas');
@@ -119,6 +120,7 @@ export function createDecodedAtlasCache(options = {}) {
   function releaseSrc(src, reason = new Error('Atlas request cancelled'), force = false) {
     const entry = lookup(src);
     if (!entry || (!force && entry.pins.size)) return false;
+    clearTimeout(entry.loadTimer);
     queued.delete(src);
     if (entries.delete(src)) bytes -= entry.bytes;
     if (!entry.settled) {
@@ -170,15 +172,20 @@ export function createDecodedAtlasCache(options = {}) {
     function fail(reason) {
       if (entries.get(src) !== entry) return;
       const error = String(reason || 'load failed');
-      failed.set(src, error); logOnce(src, error);
+      failed.set(src, error); logOnce(src, src + ': ' + error);
       releaseSrc(src, new Error(error), true);
     }
     try {
       const image = makeImage();
       entry.image = image; image.decoding = 'async';
+      // A request without onload/onerror must not occupy the iOS single-load
+      // slot forever. Network timeouts use the existing explicit retry path.
+      entry.loadTimer = setTimeout(() => fail('network timeout'), loadTimeoutMs);
+      entry.loadTimer.unref?.();
       image.onerror = () => fail('network');
       image.onload = () => {
         if (entries.get(src) !== entry) return;
+        clearTimeout(entry.loadTimer);
         if (image.naturalWidth !== width || image.naturalHeight !== height) {
           fail(`dimension ${image.naturalWidth}x${image.naturalHeight} != ${width}x${height}`);
           return;
@@ -279,3 +286,4 @@ export function createDecodedAtlasCache(options = {}) {
   return { reserve, release, unpin, clearScope, clear, allowRetry, inspect, atlasDecodedBytes, atlasDecodeScale,
     constrainedMobile, maxBytes, maxLoading };
 }
+

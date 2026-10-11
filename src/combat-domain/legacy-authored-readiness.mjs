@@ -28,8 +28,13 @@ export function createLegacyAuthoredReadiness({cache,describe,sound,enabled,time
       // Decode before the cast clock, using the remaining resource budget.
       // Do not give up after 2s and let the action lease cancel a cold sound.
       if(enabled()&&sound()?.prepare)await sound().prepare(action==='ultimate'?'ultimate':action==='skill'?'skill':'basic',{signal,timeoutMs:Math.max(1,deadline-Date.now())}).catch(()=>false);
-      check();return {release};
+      // The atlas deadline has already been checked after every decode.
+      // An optional sound exhausting its budget must not turn valid images
+      // into a false atlas error; cancellation still prevents a stale cast.
+      if(signal?.aborted)throw abort();
+      return {release};
     }catch(error){release();throw error;}
   }
   return {prepare};
 }
+

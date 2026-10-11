@@ -1,6 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createLegacyAuthoredReadiness} from '../src/combat-domain/legacy-authored-readiness.mjs';
+test('late best-effort audio failure does not report ready images as missing',async()=>{
+  const gate=createLegacyAuthoredReadiness({timeoutMs:5,cache:{retain:()=>()=>{}},describe:()=>[],enabled:()=>true,
+    sound:()=>({prepare:async()=>{await new Promise(r=>setTimeout(r,12));return false;}})});
+  const lease=await gate.prepare({},'basic',new AbortController().signal);
+  lease.release();
+});
 function fixture(){
   let decoded,releaseCount=0;const calls=[];
   const image={src:'real-atlas.png',complete:false,naturalWidth:0,decode:()=>new Promise(resolve=>{decoded=()=>{image.complete=true;image.naturalWidth=100;resolve();};})};
@@ -28,3 +34,4 @@ test('RED: legacy audio is decoded before the action clock even when the owner h
   assert.deepEqual(prepared,['skill']);
   lease.release();
 });
+

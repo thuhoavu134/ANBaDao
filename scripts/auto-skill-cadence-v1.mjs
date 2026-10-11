@@ -28,12 +28,22 @@ if (html.split(anchor).length !== 2) throw new Error('Auto skill cadence anchor 
 const branch = [
   '    /* HV_AUTO_SKILL_CADENCE_V1: regular Skill joins the auto rotation once rage allows. */',
   '    const skillCost=Core.actionCost("skill");',
-  '    if(Number.isFinite(skillCost)&&actor.energy>=skillCost&&Core.canUseAction(actor,"skill")&&!(isOngPhoCarry(actor)&&actor.energy<70)){',
+  '    if(!actor._autoSkillSinceUltimate&&Number.isFinite(skillCost)&&actor.energy>=skillCost&&Core.canUseAction(actor,"skill")&&!(isOngPhoCarry(actor)&&actor.energy<70)){',
   '      const skillTarget=adaptiveTarget(actor,"skill",preferredTargetFor(actor,"skill"));',
   '      if(skillTarget)return {action:"skill",target:skillTarget};',
   '    }'
 ].join('\n');
 html = html.replace(anchor, branch + '\n' + anchor);
 
+// Record only committed, paid actions, after readiness and the existing debit.
+// Deciding an intent or retrying a failed asset load must not spend this allowance.
+// One regular skill per ultimate cycle prevents repeated 25-rage spending from
+// starving the existing ultimate threshold; free talents retain their own rules.
+const adapterDebit = '    __hvDebitActionEnergy3qAdapter(actor, cost, talentActivation);';
+const debit = html.includes(adapterDebit) ? adapterDebit : '    actor.energy = Math.max(0, actor.energy - cost);';
+if (html.split(debit).length !== 2) throw new Error('Auto cadence debit anchor missing or ambiguous');
+html = html.replace(debit, debit + '\n    if(action==="ultimate")actor._autoSkillSinceUltimate=false;\n    else if(action==="skill"&&cost>0)actor._autoSkillSinceUltimate=true;');
+
 writeFileSync(p, html);
 console.log('Auto skill cadence installed: decideAi casts the regular Skill when rage allows (target-aware, carry pacing preserved)');
+

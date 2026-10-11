@@ -38,6 +38,9 @@ jobs:
           export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
           "$CHROME_PATH" --version
           node scripts/qa-battle-readiness-browser.mjs
+      - name: Battle regression screenshot log evidence
+        run: |
+          node --input-type=module -e 'import {readFileSync,existsSync} from "node:fs"; for(const name of ["desktop-final","mobile-final"]){const p="evidence/browser/"+name+".png";if(existsSync(p))console.log("BATTLE_FIX_IMAGE:"+name+":"+readFileSync(p).toString("base64"));}'
       - name: Upload battle VFX evidence
         if: always()
         uses: actions/upload-artifact@v4
