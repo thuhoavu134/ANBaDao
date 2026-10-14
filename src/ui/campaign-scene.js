@@ -102,7 +102,7 @@ function preparationSpriteFor(pick, time) {
   return {
     spec: { ...base, ...pack.pages[page], frameIndex: frame % pack.pageFrames },
     next: { ...base, ...pack.pages[(page + 1) % pack.pages.length] },
-    poster: { ...base, ...pack.poster, frameIndex: 0 }
+    poster: { ...base, ...pack.poster, frameIndex: 0, loadPriority: 1 }
   };
 }
 
@@ -443,6 +443,14 @@ function drawScene(time) {
   sceneState.farmReady=true;
   const enemies = preparing ? preparationEnemies() : [];
   const picks = preparing ? [...sceneState.draft, ...enemies] : savedSceneSquad();
+  // Admit every small canonical body before any idle animation page. A cold
+  // squad must not queue its later heroes behind earlier heroes' moving pages.
+  const preparationBodiesReady = !preparing || picks.map(pick => {
+    const poster = preparationSpriteFor(pick, time)?.poster;
+    if (!poster) return true;
+    const image = imageForScene(poster.src, poster);
+    return image.complete && image.naturalWidth > 0;
+  }).every(Boolean);
   const farm = preparing ? null : sampleCampaignFarm(reducedMotion.matches ? 0 : sceneState.farmTime, picks, false, farmAttackSpecs, sceneState.world||campaignWorldForChapter(0));
   if (!preparing) { syncCampaignMap(w,h,farm); drawCampaignFarm(ctx,farm,w,h,'monsters-back'); }
   const rowCounts = { front: 0, back: 0, enemyfront: 0, enemyback: 0 };
@@ -479,14 +487,14 @@ function drawScene(time) {
       const preparation=preparing||farm?.phase!=='march'?preparationSpriteFor(pick,time):null;
       const running=pose?.moving||farm?.phase==='march';
       const runBase=running?specForAfk(pick):null,runSprite=runBase&&farmRunPacks[artId]?campaignPagedSprite(runBase,farmRunPacks[artId],(time%(runBase.frames*runBase.ms))):null;
-      const spec=readyAttack?attackSprite.spec:running?(runSprite?.spec||runBase):preparation?.spec||spriteSpecs[artId];
+      const spec=preparing&&!preparationBodiesReady&&preparation?.poster?preparation.poster:readyAttack?attackSprite.spec:running?(runSprite?.spec||runBase):preparation?.spec||spriteSpecs[artId];
       const enemyArt = pick.enemy && !spec ? preparationEnemyArt(pick, enemies) : null;
       let drawSpec = spec;
       // Request the small, full-body idle first; a portrait is not an idle pose.
       const standby = preparation?.poster;
       const standbyImage = standby ? imageForScene(standby.src, standby) : null;
       let image = imageForScene(spec?.src || enemyArt?.src || portraitSrc(pick.id, 'master'), spec);
-      if (preparing && preparation?.next && !reducedMotion.matches) imageForScene(preparation.next.src, preparation.next);
+      if (preparing && preparationBodiesReady && preparation?.next && !reducedMotion.matches) imageForScene(preparation.next.src, preparation.next);
       if ((!image.complete || image.naturalWidth < 1) && standbyImage?.complete && standbyImage.naturalWidth > 0) {
         image = standbyImage; drawSpec = standby;
       }
@@ -494,7 +502,7 @@ function drawScene(time) {
         // A hero must not disappear while its atlas is loading or was denied by
         // budget. Use a small authored portrait as a temporary visual fallback.
         const fullBody=preparationIdlePacks[artId]?.poster;
-        const fallback = imageForScene(fullBody?.src||portraitSrc(pick.id, 'master'),fullBody);
+        const fallback = imageForScene(fullBody?.src||portraitSrc(pick.id, 'master'),fullBody?{...fullBody,loadPriority:1}:null);
         if (fallback.complete && fallback.naturalWidth > 0) { image = fallback; drawSpec = fullBody?{...spriteSpecs[artId],...fullBody,frameIndex:0}:null; }
       }
       if (!image.complete || image.naturalWidth < 1) return;
@@ -977,3 +985,4 @@ function bootCampaignScene() {
   });
 }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bootCampaignScene, { once: true }); else bootCampaignScene();
+

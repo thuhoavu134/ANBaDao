@@ -114,6 +114,9 @@ export function createCampaignResourcePackCache(options = {}) {
       entry = { key, pack, reservation, owners: new Set(), image: makeImage(pack), bytes: 0, state: 'queued',
         pendingClearAt: null, lastUsedAt: now, serial: ++serial, generation: 1, cancelled: false, settled: false, promise, resolve, reject };
       entries.set(key, entry); queue.push({ key, entry });
+      // First-body images may overtake queued animation, never active decodes.
+      // Equal priorities retain FIFO order and the existing memory reservations.
+      queue.sort((a,b)=>(Number(b.entry.pack.priority)||0)-(Number(a.entry.pack.priority)||0)||a.entry.serial-b.entry.serial);
     }
     entry.owners.add(String(owner)); entry.lastUsedAt = now; entry.pendingClearAt = null; pump(now);
     return { key, get image() { return entry.image; }, get state() { return entry.state; }, promise: entry.promise };
@@ -151,3 +154,4 @@ export function createCampaignResourcePackCache(options = {}) {
     entries: [...entries.values()].map(e => ({ key: e.key, state: e.state, bytes: e.bytes, reservation: e.reservation, owners: owners(e), pendingClear: e.pendingClearAt != null })) }; }
   return { ensure, acquire, release, clearScope, sweep, purge, inspect };
 }
+

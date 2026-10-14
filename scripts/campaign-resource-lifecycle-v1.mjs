@@ -21,7 +21,7 @@ export function patchCampaignResourceLifecycle(input) {
   const width = spec.atlasWidth || spec.cols * (spec.strideW || spec.cellW);
   const height = spec.atlasHeight || rows * (spec.strideH || spec.cellH);
   return {heroId:src,clip:src.includes('/run-')?'run':'idle',tier:'campaign-lite',src,
-    decodedBytes:width*height*4};
+    decodedBytes:width*height*4,priority:Number(spec.loadPriority)||0};
 }`);
   html = replaceFunction(html, 'dropSceneStored', 'frameAt', `${marker}
 const sceneImageOwner=(${createCampaignSceneImageOwner.toString()})({
@@ -50,3 +50,4 @@ export function installCampaignResourceLifecycle(root) {
   const file = join(root, 'dist', 'index.html');
   writeFileSync(file, patchCampaignResourceLifecycle(readFileSync(file, 'utf8')));
 }
+

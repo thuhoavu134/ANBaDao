@@ -1,0 +1,27 @@
+name: Preparation cold load review
+on:
+  pull_request:
+    paths:
+      - 'src/ui/campaign-scene.js'
+      - 'src/assets/campaign-resource-pack-cache.mjs'
+      - 'scripts/campaign-resource-lifecycle-v1.mjs'
+      - 'tests/preparation-cold-load.test.mjs'
+      - 'scripts/qa-preparation-cold-load.mjs'
+      - '.github/workflows/preparation-cold-load-review.yml'
+permissions:
+  contents: read
+jobs:
+  preparation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci
+      - run: npm test
+      - name: Cold six-hero preparation with delayed animation
+        run: |
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
+          node scripts/qa-preparation-cold-load.mjs
