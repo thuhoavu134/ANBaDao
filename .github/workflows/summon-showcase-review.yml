@@ -1,0 +1,20 @@
+name: Summon showcase review
+on:
+  push:
+    branches: ['feat/summon-showcase-20261014']
+permissions:
+  contents: read
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - run: npm ci --no-audit --no-fund
+      # Baseline screenshot: successful review run 38495379652, exact main512e461.
+      - run: npm run build
+      - run: node --test --test-concurrency=1 tests/*.test.mjs
+      - run: node scripts/qa-summon-showcase.mjs

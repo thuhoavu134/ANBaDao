@@ -307,3 +307,7 @@ console.log(`Static preview written to ${out}`);
 
 
 
+
+
+const { finalizeSummonShowcase } = await import('./summon-showcase-assets-v1.mjs');
+await finalizeSummonShowcase(root);

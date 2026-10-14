@@ -24,3 +24,56 @@
 }
 #hvSummonRoot .hv-sum-copy{color:#5a3a18!important}
 body.summon-3d-active .hv-brandbar,body.summon-3d-active #resbar{display:none!important}
+
+
+/* Editorial banner: original summon actions and transaction owner stay intact. */
+#hvSummonRoot{--sum-ink:#f8ecd3!important;--sum-muted:#d4c19e!important;background:#131b20!important;color:#f8ecd3!important}
+#hvSummonRoot .hv-sum-top{flex:none;max-width:740px;width:100%;box-sizing:border-box;margin:0 auto;padding-top:8px;padding-bottom:8px}
+#hvSummonRoot .hv-sum-back,#hvSummonRoot .hv-sum-chip{background:#243038!important;color:#f7e9cd!important;box-shadow:0 0 0 1px #617078!important}
+#hvSummonRoot .hv-sum-showcase{position:relative;flex:none;isolation:isolate;width:100%;max-width:740px;margin:0 auto;height:clamp(300px,43svh,410px);overflow:hidden;touch-action:pan-y;background:#22313a url('assets/ui/summon-scenes/hoi-tu.webp') center/cover}
+#hvSummonRoot .hv-sum-showcase[data-scene="net-mong"]{background-image:url('assets/ui/summon-scenes/net-mong.webp')}
+#hvSummonRoot .hv-sum-showcase[data-scene="phong-van"]{background-image:url('assets/ui/summon-scenes/phong-van.webp')}
+.hv-sum-showcase:before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(#101b28a8,transparent 46%,#111b20e6)}
+.hv-sum-scene-copy{position:absolute;top:17px;left:12px;right:12px;text-align:center;z-index:3;text-shadow:0 2px 10px #08141e}
+.hv-sum-scene-copy span{font-size:10px;letter-spacing:.28em;color:#e2bf75}
+.hv-sum-scene-copy h2{font-family:Georgia,'Times New Roman',serif;font-weight:500;font-size:clamp(26px,5vw,34px);margin:5px 0}
+.hv-sum-scene-copy p{font-size:11px;margin:0;color:#e4dbc8}
+.hv-sum-cast{position:absolute;inset:85px 12px 49px}
+.hv-sum-figure{margin:0;position:absolute;bottom:0;display:flex;flex-direction:column;align-items:center;width:39%;height:84%}
+.hv-sum-figure img{width:100%;height:calc(100% - 24px);object-fit:contain;filter:drop-shadow(0 8px 7px #08111c88)}
+.hv-sum-figure figcaption{max-width:100%;overflow:hidden;text-overflow:ellipsis;height:24px;white-space:nowrap;font-size:11px;line-height:24px;letter-spacing:.03em;color:#fff1ce;text-shadow:0 2px 4px #000}
+.hv-sum-figure.cast-0{left:29%;width:42%;height:100%;z-index:2}
+.hv-sum-figure.cast-1{left:0;bottom:9px}
+.hv-sum-figure.cast-2{right:0;bottom:9px}
+.hv-sum-scene-nav{position:absolute;bottom:3px;left:9px;right:9px;display:flex;align-items:center;justify-content:space-between;gap:4px}
+.hv-sum-scene-nav>div{display:flex;gap:4px}
+#hvSummonRoot .hv-sum-scene-nav button{min-width:44px;min-height:44px;border:0;background:transparent;color:#c4c8c7;font-size:11px;padding:0 10px;border-radius:4px}
+#hvSummonRoot .hv-sum-scene-nav button[aria-pressed="true"]{color:#ffe2a6;background:#eed29418;box-shadow:inset 0 -2px #ddbe78}
+#hvSummonRoot .hv-sum-scene-nav>button{font-size:25px;padding:0}
+#hvSummonRoot .hv-sum-panel{box-sizing:border-box;width:100%;max-width:740px;margin:0 auto;padding:16px 18px calc(24px + env(safe-area-inset-bottom));background:linear-gradient(#1d2a30,#131b20)!important;color:#f8ecd3!important;border-top:1px solid #b1a58170!important;gap:10px;flex:1 0 auto}
+.hv-sum-panel-heading{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.hv-sum-panel-heading h2{font-family:Georgia,'Times New Roman',serif;font-size:23px;font-weight:500;margin:3px 0}
+#hvSummonRoot .hv-sum-panel .hv-sum-kicker{color:#c6b079!important;font-size:9px;letter-spacing:.18em;text-shadow:none!important}
+#hvSummonRoot .hv-sum-panel .hv-sum-best{color:#efcf89!important;font-size:10px;text-shadow:none!important;padding:6px 9px;border:1px solid #a18e585c;border-radius:4px}
+.hv-sum-scene-note{font-size:10px;color:#a9b5b6;line-height:1.4;margin:0}
+#hvSummonRoot .hv-sum-copy{color:#c2cfcb!important;font-size:10px}
+#hvSummonRoot .hv-sum-meter{font-size:12px;gap:6px}
+#hvSummonRoot .hv-sum-meter i{height:5px;background:#081419}
+#hvSummonRoot .hv-sum-meter small{font-size:10px;color:#aab9b9}
+#hvSummonRoot .hv-sum-free{font-size:11px;color:#c9bd9f}
+#hvSummonRoot .hv-sum-btn{min-height:48px;border-radius:7px}
+#hvSummonRoot .hv-sum-btn:not(.is-gold),#hvSummonRoot .hv-sum-pick{background:#2c3a3f!important;color:#f6e7c3!important;box-shadow:inset 0 0 0 1px #a9a08380!important}
+#hvSummonRoot .hv-sum-btn.is-gold{background:linear-gradient(135deg,#f0dca2,#c6a05a);color:#302615;box-shadow:inset 0 0 0 1px #f4ddb4}
+#hvSummonRoot [data-summon-pull="free"]{min-height:44px;background:#314441;color:#e8edcd;border:1px solid #647863;box-shadow:none}
+#hvSummonRoot .hv-sum-spark{display:block;border-top:1px solid #8293903b;padding-top:4px}
+.hv-sum-spark summary{cursor:pointer;min-height:44px;line-height:44px;font-size:12px;color:#d8c79f}
+#hvSummonRoot .hv-sum-spark-h{display:none}
+#hvSummonRoot .hv-sum-picks{margin-top:10px}
+#hvSummonRoot .hv-sum-pick{min-height:44px}
+#hvSummonRoot .hv-sum-card{background:#26363a}
+#hvSummonRoot button:focus-visible,#hvSummonRoot summary:focus-visible{outline:2px solid #f4d68e;outline-offset:2px}
+@media(prefers-reduced-motion:no-preference){.hv-sum-cast{animation:sumSceneEnter .35s ease-out}.hv-sum-figure.cast-0 img{animation:sumSceneIdle 4s ease-in-out infinite alternate}}
+@keyframes sumSceneEnter{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+@keyframes sumSceneIdle{to{transform:translateY(-3px)}}
+@media(max-width:360px){#hvSummonRoot .hv-sum-panel{padding-left:12px;padding-right:12px}.hv-sum-scene-nav>div{gap:0}#hvSummonRoot .hv-sum-scene-nav button{padding:0 7px}.hv-sum-panel-heading h2{font-size:21px}}
+@media(prefers-reduced-motion:reduce){#hvSummonRoot *,#hvSummonRoot *:before{animation:none!important;transition:none!important}}
