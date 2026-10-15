@@ -1,0 +1,27 @@
+name: Hero visibility review
+on:
+  pull_request:
+    paths:
+      - 'src/runtime/ky-van.js'
+      - 'src/runtime/tieu-phong.js'
+      - 'scripts/battle-character-visibility-v1.mjs'
+      - 'tests/new-hero-visibility.test.mjs'
+      - 'scripts/qa-new-hero-visibility.mjs'
+      - '.github/workflows/hero-visibility-review.yml'
+permissions:
+  contents: read
+jobs:
+  visibility:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci
+      - run: npm test
+      - name: Actual browser renderer under forced image unavailability
+        run: |
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
+          node scripts/qa-new-hero-visibility.mjs

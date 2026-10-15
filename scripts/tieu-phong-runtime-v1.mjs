@@ -40,7 +40,7 @@ export function patchTieuPhongHost(input,meta,detailRuntime){
  if(input.includes('tieu_phong:{slug:'))return input;
  let s=input;
  const once=(from,to)=>{if(s.split(from).length!==2)throw Error('Tieu Phong host anchor: '+from);s=s.replace(from,()=>to);};
- once('const CHARACTER_MANIFEST={','const CHARACTER_MANIFEST={\n'+"  tieu_phong:{slug:'tieu-phong',displayName:'Tiêu Phong',identityVersion:'partial-authored-review',reference:{master:'assets/characters/tieu-phong/standing.webp',runtime:true},assets:Object.fromEntries(['master','avatar','dialogue','card','icon','idle'].map(k=>[k,'assets/characters/tieu-phong/standing.webp'])),surfaces:['roster','formation','hero-detail','battle'],mechanics:{ultimate:'tam-diep-phong-bao'}},");
+ once('const CHARACTER_MANIFEST={','const CHARACTER_MANIFEST={\n'+"  tieu_phong:{slug:'tieu-phong',displayName:'Tiêu Phong',identityVersion:'authored-idle-v1',reference:{master:'assets/characters/tieu-phong/avatar.webp',runtime:true},assets:Object.fromEntries(['master','avatar','dialogue','card','icon'].map(k=>[k,'assets/characters/tieu-phong/avatar.webp']).concat([['idle','assets/characters/tieu-phong/idle-authored-0.webp']])),surfaces:['roster','formation','hero-detail','battle'],mechanics:{ultimate:'tam-diep-phong-bao'}},");
  once(" bach_dien:{he:'soul'"," tieu_phong:{he:'kim',faction:'hoi_lang',archetype:'mystic',rarity:'ssr',name:'Tiêu Phong',role:'Ngự Phong Công Tử / Khống chế',col:'#b6d8e8',stats:{hp:900,mp:60,atk:122,def:52,spd:112},passive:{name:'Thiết Phiến',desc:'Điều khiển phong bạo bằng thiết phiến.'},skill:{name:'Hô Phong',cost:0,vfx:'wind',desc:'Lốc nhỏ chạy sát đất đến mục tiêu.',fx:{kind:'damage',target:'enemy',power:1}},ultimate:{name:'Tam Điệp Phong Bạo',cost:60,vfx:'wind',desc:'Ba lốc xuyên hàng: 50% choáng 1 lượt; 40% cấm hồi máu 2 lượt; 30% chí mạng 200% ATK cơ bản.',fx:{kind:'damage',target:'aoe_enemy',power:1.2}}},"+"\n bach_dien:{he:'soul'");
  const roster='"linh_dong","bach_dien","ky_van"]';
  if(s.split(roster).length!==4)throw Error('Tieu Phong roster owners changed');
@@ -54,13 +54,14 @@ export function patchTieuPhongHost(input,meta,detailRuntime){
   once("const id=String(value||'').replace(/-/g,'_');", "const id=String(value||'').replace(/-/g,'_');if(id==='hero_splus_tieu_phong')return 'tieu_phong';");
   once("if(id==='bach_dien'){ startBachDienDetailIdle(); }", "if(id==='bach_dien'){ startBachDienDetailIdle(); }\n  if(id==='tieu_phong'){startTieuPhongDetailIdle();}");
   once("id==='bach_dien'?'<canvas id=", "id==='tieu_phong'?'<canvas id=\"tieuPhongDetailIdle\" width=\"540\" height=\"496\" aria-label=\"Tiêu Phong idle\"></canvas>':id==='bach_dien'?'<canvas id=");
-  once('function startBachDienDetailIdle(){','const TIEU_PHONG_DETAIL_META='+JSON.stringify(meta.idle)+';\n'+detailRuntime+'\nfunction startBachDienDetailIdle(){');
+  once('function startBachDienDetailIdle(){','const TIEU_PHONG_DETAIL_META='+JSON.stringify(meta.idleVisual)+';\n'+detailRuntime+'\nfunction startBachDienDetailIdle(){');
   // The hall moves hdBody outside hero-detail-art-screen: scope to the actual stage.
   once('</head>',`<style id="tieu-phong-detail-layout">
-  #hdBody .hstage[data-hero-id="tieu_phong"]{position:relative!important;overflow:hidden!important;padding-top:270px!important;box-sizing:border-box!important;}
+  #hdBody .hstage[data-hero-id="tieu_phong"]{position:relative!important;overflow:hidden!important;padding-top:420px!important;box-sizing:border-box!important;}
   #hdBody .hstage[data-hero-id="tieu_phong"]>.hsava{display:none!important;}
-  #tieuPhongDetailIdle{position:absolute!important;top:12px!important;left:50%!important;transform:translateX(-50%)!important;width:270px!important;height:248px!important;max-width:100%;pointer-events:none;}
+  #tieuPhongDetailIdle{position:absolute!important;top:10px!important;left:50%!important;transform:translateX(-50%)!important;width:260px!important;height:402px!important;max-width:100%;pointer-events:none;}
   </style></head>`);
  }
  return s.split(roster).join('"linh_dong","bach_dien","ky_van","tieu_phong"]');
 }
+

@@ -79,7 +79,7 @@
   }
   function battleConfig(sessionId) {
     return {
-      embedded:true, autoStart:true, qaMode:true, referenceSimple:true, timingScale:1,
+      embedded:false, autoStart:true, qaMode:true, referenceSimple:true, timingScale:1,
       sessionId, battleId:sessionId, objective:{type:'challenge',maxRounds:15}, rewards:{items:[]},
       heroes:[
         hero('qa-luc-anh','luc_anh','Lục Ảnh','player',0,{speed:180}),
@@ -149,7 +149,7 @@
       frame.name = 'skill-test';
       frame.dataset.config = JSON.stringify(cfg);
       sessionStorage.setItem('honVietBattleConfig:'+sessionId, JSON.stringify(cfg));
-      frame.src = 'battle.html?embedded=1&qaPhase01=1&session='+encodeURIComponent(sessionId)+'&skillTest='+sessionIndex;
+      frame.src = 'battle.html?qaPhase01=1&session='+encodeURIComponent(sessionId)+'&skillTest='+sessionIndex;
       await waitFor(() => {
         // Setting src does not replace contentWindow synchronously. Never
         // accept the previous battle's API as readiness for this new session.

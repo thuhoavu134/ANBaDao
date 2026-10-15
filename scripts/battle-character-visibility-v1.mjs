@@ -9,7 +9,7 @@ export function patchBattleCharacterVisibility(input) {
     html = html.replace(from, () => to);
   };
   once('  function drawUnit(context, unit, time) {', `/* HV_HERO_VISIBILITY_CACHE_V1 */
-  const __hvHeroVisibility=(${createHeroVisibilityCache.toString()})();
+  const __hvHeroVisibility=(${createHeroVisibilityCache.toString()})({maxEntries:6});
   window.addEventListener('pagehide',()=>__hvHeroVisibility.clear(),{once:true});
   /* HV_HERO_VISIBILITY_CACHE_END */
   function drawUnit(context, unit, time) {`);
@@ -37,3 +37,4 @@ if (process.argv[1]?.endsWith('battle-character-visibility-v1.mjs')) {
   const path = 'dist/battle.html';
   writeFileSync(path, patchBattleCharacterVisibility(readFileSync(path, 'utf8')));
 }
+

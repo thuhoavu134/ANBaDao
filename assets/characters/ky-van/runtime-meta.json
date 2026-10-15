@@ -226,6 +226,84 @@
         216.668
       ],
       "blendMode": "source-over"
+    },
+    "idle-authored-0": {
+      "file": "idle-authored-0.webp",
+      "cols": 3,
+      "frames": 9,
+      "cellW": 432,
+      "cellH": 668,
+      "blendMode": "source-over",
+      "frameDurationsMs": [
+        41.666667,
+        83.333333,
+        83.333333,
+        83.333333,
+        83.333333,
+        83.333333,
+        83.333333,
+        83.333333,
+        83.333333
+      ],
+      "durationMs": 708.3333309999999,
+      "rows": 3
+    },
+    "idle-authored-1": {
+      "file": "idle-authored-1.webp",
+      "cols": 3,
+      "frames": 9,
+      "cellW": 432,
+      "cellH": 668,
+      "blendMode": "source-over",
+      "frameDurationsMs": [
+        83.333333,
+        83.333333,
+        83.333333,
+        83.333333,
+        83.333333,
+        83.333333,
+        83.333333,
+        83.333333,
+        83.333333
+      ],
+      "durationMs": 749.999997,
+      "rows": 3
+    },
+    "idle-authored-2": {
+      "file": "idle-authored-2.webp",
+      "cols": 3,
+      "frames": 9,
+      "cellW": 432,
+      "cellH": 668,
+      "blendMode": "source-over",
+      "frameDurationsMs": [
+        83.333333,
+        83.333333,
+        83.333333,
+        83.333333,
+        83.333333,
+        83.333333,
+        83.333333,
+        83.333333,
+        83.333333
+      ],
+      "durationMs": 749.999997,
+      "rows": 3
+    },
+    "idle-authored-3": {
+      "file": "idle-authored-3.webp",
+      "cols": 3,
+      "frames": 3,
+      "cellW": 432,
+      "cellH": 668,
+      "blendMode": "source-over",
+      "frameDurationsMs": [
+        83.333333,
+        83.333333,
+        41.666667
+      ],
+      "durationMs": 208.33333299999998,
+      "rows": 3
     }
   },
   "idle": {
@@ -318,5 +396,65 @@
     "pageSize": 16,
     "frames": 83
   },
-  "encoding": "WebP q90 derivatives with lossless alpha; RGBA sources retained in supplied ZIPs and source metadata."
+  "encoding": "WebP q90 derivatives with lossless alpha; RGBA sources retained in supplied ZIPs and source metadata.",
+  "idleVisual": {
+    "schema": "honviet.authored-idle/v1",
+    "sourcePack": "kiemthe-ky-van-idle-atlas-only-30frame-24fps-v1.zip",
+    "sourcePackSha256": "4ad029dae93fd9f453568fae09d6bb845e6d238e7c07f436d06eda679a756efa",
+    "frames": 30,
+    "durationMs": 2416.666658,
+    "frameDurationsMs": [
+      41.666667,
+      83.333333,
+      83.333333,
+      83.333333,
+      83.333333,
+      83.333333,
+      83.333333,
+      83.333333,
+      83.333333,
+      83.333333,
+      83.333333,
+      83.333333,
+      83.333333,
+      83.333333,
+      83.333333,
+      83.333333,
+      83.333333,
+      83.333333,
+      83.333333,
+      83.333333,
+      83.333333,
+      83.333333,
+      83.333333,
+      83.333333,
+      83.333333,
+      83.333333,
+      83.333333,
+      83.333333,
+      83.333333,
+      41.666667
+    ],
+    "pageFrames": 9,
+    "pages": 4,
+    "cols": 3,
+    "cellW": 432,
+    "cellH": 668,
+    "pivot": "bottom-center",
+    "avatar": "avatar.webp",
+    "avatarFrame": 12,
+    "runtimeArtifactSha256": {
+      "idle-authored-0.webp": "660c80056d9cd56e1b746ecc0a832c2939642890432020a626f7715a985f4b2d",
+      "idle-authored-1.webp": "2e6ae52e4adb3288bc845745dc07bf791b9c1d9face4994b1cc15708b5a20919",
+      "idle-authored-2.webp": "e75b27f9547983f33c3ed72f557e221a5c6c3cfe2ae8df01c31b5555ccf32167",
+      "idle-authored-3.webp": "569cd663702b980e69ea4578e5da9681654d1d2ee09f8ce6e302f9fc7d3f91da",
+      "avatar.webp": "d15001dbdd84a1291b9f544a4593c1e7e59a82805939531c4c3f7c53faa7ba2b"
+    },
+    "avatarFileSha256": "d15001dbdd84a1291b9f544a4593c1e7e59a82805939531c4c3f7c53faa7ba2b",
+    "contentSize": [
+      432,
+      668
+    ],
+    "fitPolicy": "contain, centered horizontally, bottom anchored"
+  }
 }

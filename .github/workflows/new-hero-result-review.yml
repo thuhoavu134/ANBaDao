@@ -1,0 +1,25 @@
+name: New hero result identity review
+on:
+  pull_request:
+    paths:
+      - 'scripts/result-character-motion-v1.mjs'
+      - 'scripts/qa-new-hero-result.mjs'
+      - 'tests/new-hero-result.test.mjs'
+      - '.github/workflows/new-hero-result-review.yml'
+permissions:
+  contents: read
+jobs:
+  result-identity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci
+      - run: npm test
+      - name: Result identity and authored motion on desktop and mobile
+        run: |
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
+          node scripts/qa-new-hero-result.mjs

@@ -38,7 +38,7 @@ export function patchKyVanHost(input,meta,detailRuntime){
  if(input.includes('ky_van:{slug:'))return input;
  let s=input;
  const once=(from,to)=>{if(s.split(from).length!==2)throw Error('Ky Van host anchor: '+from);s=s.replace(from,()=>to);};
- once('const CHARACTER_MANIFEST={','const CHARACTER_MANIFEST={\n'+"  ky_van:{slug:'ky-van',displayName:'Kỷ Vân',identityVersion:'partial-authored-review',reference:{master:'assets/characters/ky-van/standing.webp',runtime:true},assets:Object.fromEntries(['master','avatar','dialogue','card','icon','idle'].map(k=>[k,'assets/characters/ky-van/standing.webp'])),surfaces:['roster','formation','hero-detail','battle'],mechanics:{ultimate:'thien-loi-cham-tran'}},");
+ once('const CHARACTER_MANIFEST={','const CHARACTER_MANIFEST={\n'+"  ky_van:{slug:'ky-van',displayName:'Kỷ Vân',identityVersion:'authored-idle-v1',reference:{master:'assets/characters/ky-van/avatar.webp',runtime:true},assets:Object.fromEntries(['master','avatar','dialogue','card','icon'].map(k=>[k,'assets/characters/ky-van/avatar.webp']).concat([['idle','assets/characters/ky-van/idle-authored-0.webp']])),surfaces:['roster','formation','hero-detail','battle'],mechanics:{ultimate:'thien-loi-cham-tran'}},");
  once(" bach_dien:{he:'soul'"," ky_van:{he:'kim',faction:'hoi_lang',archetype:'mystic',rarity:'ssr',name:'Kỷ Vân',role:'Lôi Châm Sư / Khống chế',col:'#b6d8e8',stats:{hp:900,mp:60,atk:122,def:52,spd:112},passive:{name:'Lôi Châm',desc:'Điều khiển phi châm dẫn sét.'},skill:{name:'Phi Châm',cost:0,vfx:'lightning',desc:'Phóng một phi châm dẫn sét.',fx:{kind:'damage',target:'enemy',power:1}},ultimate:{name:'Thiên Lôi Châm Trận',cost:60,vfx:'lightning',desc:'Sát thương toàn địch. 30% tỷ lệ mỗi địch bị choáng và cấm hồi máu trong một lượt. Thông số thử cân bằng.',fx:{kind:'damage',target:'aoe_enemy',power:1.2}}},"+"\n bach_dien:{he:'soul'");
  const roster='"linh_dong","bach_dien"]';
  if(s.split(roster).length!==4)throw Error('Ky Van roster owners changed');
@@ -52,13 +52,14 @@ export function patchKyVanHost(input,meta,detailRuntime){
   once("const id=String(value||'').replace(/-/g,'_');", "const id=String(value||'').replace(/-/g,'_');if(id==='hero_splus_ky_van')return 'ky_van';");
   once("if(id==='bach_dien'){ startBachDienDetailIdle(); }", "if(id==='bach_dien'){ startBachDienDetailIdle(); }\n  if(id==='ky_van'){startKyVanDetailIdle();}");
   once("id==='bach_dien'?'<canvas id=", "id==='ky_van'?'<canvas id=\"kyVanDetailIdle\" width=\"540\" height=\"496\" aria-label=\"Kỷ Vân idle\"></canvas>':id==='bach_dien'?'<canvas id=");
-  once('function startBachDienDetailIdle(){','const KY_VAN_DETAIL_META='+JSON.stringify(meta.idle)+';\n'+detailRuntime+'\nfunction startBachDienDetailIdle(){');
+  once('function startBachDienDetailIdle(){','const KY_VAN_DETAIL_META='+JSON.stringify(meta.idleVisual)+';\n'+detailRuntime+'\nfunction startBachDienDetailIdle(){');
   // The hall moves hdBody outside hero-detail-art-screen: scope to the actual stage.
   once('</head>',`<style id="ky-van-detail-layout">
-  #hdBody .hstage[data-hero-id="ky_van"]{position:relative!important;overflow:hidden!important;padding-top:270px!important;box-sizing:border-box!important;}
+  #hdBody .hstage[data-hero-id="ky_van"]{position:relative!important;overflow:hidden!important;padding-top:420px!important;box-sizing:border-box!important;}
   #hdBody .hstage[data-hero-id="ky_van"]>.hsava{display:none!important;}
-  #kyVanDetailIdle{position:absolute!important;top:12px!important;left:50%!important;transform:translateX(-50%)!important;width:270px!important;height:248px!important;max-width:100%;pointer-events:none;}
+  #kyVanDetailIdle{position:absolute!important;top:10px!important;left:50%!important;transform:translateX(-50%)!important;width:260px!important;height:402px!important;max-width:100%;pointer-events:none;}
   </style></head>`);
  }
  return s.split(roster).join('"linh_dong","bach_dien","ky_van"]');
 }
+

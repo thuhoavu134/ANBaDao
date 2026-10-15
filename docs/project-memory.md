@@ -1,3 +1,22 @@
+## 2026-10-15 — PR306 idle/action scale follow-up (REVIEW)
+Owner authorized updating PR306. Both authored idle loops now use one fixed registration matching the existing 413px action body and y=-12 ground. RED reproduced; GREEN 22/22 focused tests. Real-asset comparison inspected offline. Full build/browser CI pending; physical Safari and deployment NOT_RUN. See docs/qa/idle-action-scale-20261015.md. Existing Ticket Board exception retained; no merge authorization inferred.
+
+# Result identity correction — 2026-10-14
+
+PR306 follow-up at f8c8816e45f42fa2195361050f7f3f510ce9be43. User screenshot: Tiêu Phong MVP was painted with the generic female mystic. Cause: both new heroes were absent from the authored result manifest and fell through to archetype art. Existing result motion owner now uses each hero's actual Run, all six Idle pages with original fractional durations, and Fall; sourceHeroId is also recognized. No reward/settlement/combat/UI layout change.
+
+RED: two generated-manifest identity tests fail before implementation. GREEN: four focused tests pass, including mapping every frame in 83/87-frame Idle loops to its correct page/cell. New hero result identity review run 38550768527 / job115807886587 SUCCESS: full normal build and1753/1753 Node tests; four Chromium cases (390x844/1280x800, both heroes) verify only correct hero source images were drawn, all six idle pages, authored Run, one Fall to final frame, and Confirm returning from Victory/Defeat. Zero runtime exceptions and asset HTTP errors. Four Victory screenshots inspected: correct chibi fan wielder and silver-haired Ky Van in wing focus; desktop uses centered portrait result layout. Result snapshots are controlled QA inputs with empty rewards; no full campaign/economy certification claimed.
+
+No merge or production deployment. Existing nyto1 preview cannot be updated via this session: Vercel scope query returns403, no local CLI available, Git integrations report blocked deployment. Do not tell owner their old preview already contains this commit. Physical Safari NOT_RUN. Previous flicker repair retained.
+
+---
+
+# Kỷ Vân / Tiêu Phong battle flicker — 2026-10-14
+
+PR306, branch fix/ky-van-tieu-phong-flicker-20261014. REVIEW only; no merge or production promotion. Runtime 94f044e76dea6268eda896eae7de09465b5ffdb1 based on current main 0c5603d9e4d95fce320a03c2f45903c0f902a309. Carries PR301's missing-body fix plus current-page-before-prefetch ordering. Keeps PR305 formation work. Full normal build and 1749 tests PASS; desktop/mobile real battle renderer image-loss/recovery/Ultimate/Reset+Basic PASS, zero runtime/asset errors. Four screenshots reviewed; physical Safari not run. Evidence: docs/qa/new-hero-flicker-20261014.md; Actions run 38547610199. No blanket campaign or layout certification; no ticket board transition claimed.
+
+---
+
 # Current UI trial — 2026-10-08
 
 PR290 REVIEW only; baseline main fef053e includes previous entry/media merges. Runtime 5f677ad3670b6870d779873c043907f88a53c6a4. Full game preview: https://luc-than-lsqtxhayh-nyto1.vercel.app. Four-screen polish preserves original assets and all gameplay owners. Build,1684 tests and dedicated browser workflow37665868908 passed; owner aesthetics and physical Safari still pending. Details: docs/qa/ui-polish-20261008/README.md. DO NOT merge until owner approves this UI trial.

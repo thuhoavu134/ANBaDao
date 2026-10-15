@@ -7,8 +7,8 @@ if(globalThis.SPLUS42?.profiles){
  if(hero&&!globalThis.SPLUS42.profiles.profiles.some(h=>h.id===hero.id))globalThis.SPLUS42.profiles.profiles.push({...hero,skills:Object.fromEntries(['passive','ultimate'].map(slot=>{const skill=slot==='passive'?hero.passive:hero.actions[slot];return [slot,{...skill,slot,shortName:skill.name,effects:skill.effects||[],target:skill.target||'Bản thân'}];}))});
 }
 function isTieuPhong(u){return !!u&&[u.sourceId,u.sourceHeroId,u.id].some(x=>/^(?:hero_splus_)?tieu[_-]phong$/i.test(String(x)));}
-function tieuPhongClip(key){const c=TIEU_PHONG_META.clips[key];return {...c,src:TIEU_PHONG_BASE+c.file,rows:Math.ceil(c.frames/c.cols),decodedBytes:c.cols*c.cellW*Math.ceil(c.frames/c.cols)*c.cellH*4};}
-function tieuPhongImage(key){return BACH_DIEN_LOADER.ensure(tieuPhongClip(key),{scope:'battle',priority:'visible'}).image;}
+function tieuPhongClip(key){const c=TIEU_PHONG_META.clips[key],rows=c.rows??Math.ceil(c.frames/c.cols);return {...c,src:TIEU_PHONG_BASE+c.file,rows,decodedBytes:c.cols*c.cellW*rows*c.cellH*4};}
+function tieuPhongImage(key,priority='visible'){return BACH_DIEN_LOADER.ensure(tieuPhongClip(key),{scope:'battle',priority}).image;}
 function tieuPhongPaint(ctx,key,frame,x,y,w,h){const c=TIEU_PHONG_META.clips[key],img=tieuPhongImage(key);if(!img||img.complete===false||img.naturalWidth===0)return false;ctx.save();ctx.globalCompositeOperation=c.blendMode;ctx.drawImage(img,(frame%c.cols)*c.cellW,Math.floor(frame/c.cols)*c.cellH,c.cellW,c.cellH,x,y,w,h);ctx.restore();return true;}
 function tieuPhongElapsed(info){return Math.max(0,(performance.now()-info.startedAt)*info.speed);}
 function tieuPhongFrame(durations,elapsed,loop){
@@ -19,18 +19,25 @@ function tieuPhongFallDuration(){return 900/Math.max(1,Math.min(3,Number(state.s
 function drawTieuPhongHero(ctx,u,time){
  if(!isTieuPhong(u))return false;
  const info=u._tieuPhongAction,active=info&&info.battleId===state.battleId;
- let key='idle',elapsed=time,loop=true,frame=0;
+ let key='idle',elapsed=time,loop=true,frame=0,nextPage=null;
  if(u.hp<=0){key='fall-die';elapsed=Math.max(0,time-u.defeatedAt)*TIEU_PHONG_META.clips['fall-die'].durationMs/(u.defeatFallDuration||tieuPhongFallDuration());loop=false;}
  else if((u.state==='hurt'||u.state==='hit')&&time-u.stateStarted<TIEU_PHONG_META.clips.hit.durationMs){key='hit';elapsed=Math.max(0,time-u.stateStarted);loop=false;}
  else if(active){key=info.action;elapsed=tieuPhongElapsed(info);loop=false;}
  else if(u.state==='run'){key='run';elapsed=Math.max(0,time-u.stateStarted);}
  if(key==='idle'){
-  frame=tieuPhongFrame(TIEU_PHONG_META.idle.frameDurationsMs,elapsed,true);key='idle-'+Math.floor(frame/16);frame%=16;
-  // Request the next page before the current page runs out. Cache remains LRU-owned.
-  const next=(Number(key.slice(5))+1)%Math.ceil(TIEU_PHONG_META.idle.frames/16);tieuPhongImage('idle-'+next);
+  frame=tieuPhongFrame(TIEU_PHONG_META.idleVisual.frameDurationsMs,elapsed,true);key='idle-authored-'+Math.floor(frame/TIEU_PHONG_META.idleVisual.pageFrames);frame%=TIEU_PHONG_META.idleVisual.pageFrames;
+  // Paint the visible page before admitting speculative work to the shared LRU.
+  nextPage='idle-authored-'+((Number(key.slice(14))+1)%TIEU_PHONG_META.idleVisual.pages);
  }else frame=tieuPhongFrame(TIEU_PHONG_META.clips[key].frameDurationsMs,elapsed,loop);
  ctx.save();ctx.translate(u.x,u.y-(active&&info.action==='ultimate'?tieuPhongLift(info):0));const scale=battleCharacterDepthScale(u)*battleCharacterScale(u);ctx.scale(scale*(u.team===TEAM_ENEMY?-1:1),scale);
- tieuPhongPaint(ctx,key,frame,-240,-440,480,440)||tieuPhongPaint(ctx,'standing',0,-240,-440,480,440);ctx.restore();if(u.hp>0)drawUnitHud(ctx,u,time,1);return true;
+ // Keep a canonical, unscaled body frame in the shared visibility owner.
+ // The outer transform owns position, depth and enemy mirroring exactly once.
+ // One registration for the entire authored idle loop, measured against the
+ // 413px standing/action body and its ground at y=-12. Never fit per frame.
+ const idleScale=413/648.5,idleW=432*idleScale,idleH=668*idleScale;
+ const paintBody=copy=>key.startsWith('idle-authored-')?tieuPhongPaint(copy,key,frame,-idleW/2,-12-658*idleScale,idleW,idleH):tieuPhongPaint(copy,key,frame,-240,-440,480,440)||(u.hp>0&&tieuPhongPaint(copy,'standing',0,-240,-440,480,440));
+ const drawn=__hvHeroVisibility.finish(ctx,'tieu-phong',u,time,paintBody(ctx),paintBody);
+ ctx.restore();if(nextPage)tieuPhongImage(nextPage,'prefetch');if(u.hp>0)drawUnitHud(ctx,u,time,1);return drawn;
 }
 async function beginTieuPhongAction(actor,action,target,battleId){
  const normalized=action==='ultimate'?'ultimate':'basic';
@@ -78,10 +85,17 @@ function drawTieuPhongFx(ctx){
   for(const at of starts){const p=(age-at)/(info.action==='ultimate'?400:300);if(p<0||p>=1)continue;const c=TIEU_PHONG_META.clips['wind-'+info.action];
    // Size both tornado attacks to the enemy body, preserving the ground anchor.
    const targetHeights=info.targets.map(t=>getUnit(t.id)).filter(Boolean).map(t=>310*battleCharacterScale(t)*battleCharacterDepthScale(t)/(typeof battleHeroVisualScale==='function'?battleHeroVisualScale(t):1));
-   const h=Math.max(...targetHeights,310*scale)*1.15,w=h*c.cellW/c.cellH;
-   tieuPhongPaint(ctx,'wind-'+info.action,Math.min(c.frames-1,Math.floor(p*c.frames)),info.fromX+(info.toX-info.fromX)*p-w/2,info.groundY-h,w,h);
+   const h=Math.max(...targetHeights,310*scale)*1.45,w=h*c.cellW/c.cellH;
+   const frame=Math.min(c.frames-1,Math.floor(p*c.frames)),x=info.fromX+(info.toX-info.fromX)*p;
+   // Two offset, lighter spiral echoes broaden the ground-hugging gust while
+   // the larger authored vortex stays in front and keeps the same timing.
+   const echoH=h*.68,echoW=echoH*c.cellW/c.cellH,alpha=ctx.globalAlpha??1;
+   ctx.save();ctx.globalAlpha=alpha*.56;
+   tieuPhongPaint(ctx,'wind-'+info.action,Math.max(0,frame-2),x-w*.32-echoW/2,info.groundY-echoH,echoW,echoH);
+   tieuPhongPaint(ctx,'wind-'+info.action,Math.min(c.frames-1,frame+2),x+w*.32-echoW/2,info.groundY-echoH,echoW,echoH);
+   ctx.restore();tieuPhongPaint(ctx,'wind-'+info.action,frame,x-w/2,info.groundY-h,w,h);
   }
-  for(const hit of info.impacts){const dt=age-hit.at;if(dt<0||dt>=150)continue;const target=getUnit(hit.targetId);if(!target)continue;const c=TIEU_PHONG_META.clips['impact-'+info.action],w=c.cellW*scale,h=c.cellH*scale;
+  for(const hit of info.impacts){const dt=age-hit.at;if(dt<0||dt>=150)continue;const target=getUnit(hit.targetId);if(!target)continue;const c=TIEU_PHONG_META.clips['impact-'+info.action],w=c.cellW*scale*1.45,h=c.cellH*scale*1.45;
    tieuPhongPaint(ctx,'impact-'+info.action,Math.min(c.frames-1,Math.floor(dt/150*c.frames)),target.x-w/2,target.y-h,w,h);
   }
  }
@@ -98,3 +112,4 @@ async function resolveTieuPhongCast(e,info,actor,action,target,battleId){
  }
  e.finishTieuPhongCast(actor,result.castId);return result;
 }
+
