@@ -1,3 +1,6 @@
+## 2026-10-15 — Thầy Mo auto Basic rage (REVIEW)
+PR306 merged with owner approval at main 47f1455; this new branch fixes auto selecting a 25-rage legacy Skill behind Thay Mo's Basic animation. Existing identity owner excludes him only from the paid auto-Skill branch. Actual Basic stays free/+15; Ultimate and free talent unchanged. RED 3 identity cases reproduced; GREEN 10/10 focused tests (both teams, 30→45→60→75→Ultimate→15). Full build/browser/device/deployment not certified. docs/qa/thay-mo-auto-basic-rage-20261015.md. No merge authorization inferred for this new fix; existing Ticket Board exception retained.
+
 ## 2026-10-15 — PR306 idle/action scale follow-up (REVIEW)
 Owner authorized updating PR306. Both authored idle loops now use one fixed registration matching the existing 413px action body and y=-12 ground. RED reproduced; GREEN 22/22 focused tests. Real-asset comparison inspected offline. Full build/browser CI pending; physical Safari and deployment NOT_RUN. See docs/qa/idle-action-scale-20261015.md. Existing Ticket Board exception retained; no merge authorization inferred.
 

@@ -28,7 +28,10 @@ if (html.split(anchor).length !== 2) throw new Error('Auto skill cadence anchor 
 const branch = [
   '    /* HV_AUTO_SKILL_CADENCE_V1: regular Skill joins the auto rotation once rage allows. */',
   '    const skillCost=Core.actionCost("skill");',
-  '    if(!actor._autoSkillSinceUltimate&&Number.isFinite(skillCost)&&actor.energy>=skillCost&&Core.canUseAction(actor,"skill")&&!(isOngPhoCarry(actor)&&actor.energy<70)){',
+  // Thay Mo's authored non-Ultimate cast is also his Basic presentation.
+  // Do not auto-buy the legacy 25-rage Skill behind that same animation.
+  // His Basic keeps the existing +15 rage; free talent intent remains below.
+  '    if(!(typeof isThayMoAuthored==="function"&&isThayMoAuthored(actor))&&!actor._autoSkillSinceUltimate&&Number.isFinite(skillCost)&&actor.energy>=skillCost&&Core.canUseAction(actor,"skill")&&!(isOngPhoCarry(actor)&&actor.energy<70)){',
   '      const skillTarget=adaptiveTarget(actor,"skill",preferredTargetFor(actor,"skill"));',
   '      if(skillTarget)return {action:"skill",target:skillTarget};',
   '    }'
