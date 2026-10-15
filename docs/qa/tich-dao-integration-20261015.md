@@ -29,3 +29,11 @@ Cả hai viewport **390×844 và 1280×800: PASS** — `evidence/tich-dao-fixes/
 - Thông số kit + host dataset stats (hp 920/atk 138/def 50/spd 122) là review defaults chờ duyệt.
 - Không đụng Gọi Mộng showcase (`summon/showcase.mjs`) — ngoài phạm vi brief.
 - KHÔNG merge / KHÔNG deploy production. Safari/iPhone thật NOT_RUN.
+
+## QA checkpoint follow-up (16/10/2026) + CI status
+Đối chứng 3 ghi chú của Tôm với commit `e4239ed` (bằng chứng lệnh, không cần commit mới):
+1. **review PNG**: `git show --stat` / `git ls-files` / worktree — 0 file `review-idle-page-*.png` (đã xoá trước khi stage; chỉ webp phái sinh + meta vào repo).
+2. **Phase map**: `runtime-meta.json` (đã commit) chứa `ultimateTimeline.phases` đủ 9 phase phủ frame 0–95; phase-03/05 `visible=false, cells=0`; `src/runtime/tich-dao.js` lookup `elapsed` → phase (dòng 22) và `hidden=!phase.visible` (dòng 42); `clips.ultimate.strikeMs=[1083,1750,2917]` = đầu phase-04/06/08. Đã chứng minh bằng draw-log QA (2 gap vẽ) + screenshot phase ẩn chỉ còn HP bar.
+3. **Patch owner**: `git diff main...HEAD` — 0 sửa trực tiếp `battle.html`/`index.html`; toàn bộ qua `scripts/tich-dao-runtime-v1.mjs` do `scripts/build-static.mjs` install sau `installTieuPhong`.
+
+**CI trên PR #308: FAIL hạ tầng billing** — mọi workflow (CI/CD, Hero visibility review, New hero result identity review, Tich Dao integration QA) kết thúc sau 3–5s với annotation GitHub: *"The job was not started because recent account payments have failed or your spending limit needs to be increased. Please check the 'Billing & plans' section in your settings"*; job có **0 steps** chạy (ví dụ run 38778646696). Đây là lỗi billing/spending limit tài khoản GitHub chỉ owner xử lý được, trùng đúng blocker hạ tầng đã ghi từ 25/09. Không phải assertion failure — không rerun tiêu quota cho tới khi owner sửa billing; local full suite (1793 test) + browser QA Chromium là bằng chứng hiện hữu của PR.
