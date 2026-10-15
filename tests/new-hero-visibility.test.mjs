@@ -23,7 +23,7 @@ function harness(slug, title, team = 'player') {
   return {cache,canvases,draws,requests,unit,c,setReady:v=>ready=v,
     draw:()=>{draws.length=0;return c['draw'+title+'Hero'](context(),unit,100);}};
 }
-for(const [slug,title] of [['ky-van','KyVan'],['tieu-phong','TieuPhong']]) {
+for(const [slug,title] of [['ky-van','KyVan'],['tieu-phong','TieuPhong'],['tich-dao','TichDao']]) {
   test(slug+': visible page is requested before speculative next page',()=>{
     const h=harness(slug,title);h.draw();
     assert.ok(h.requests[0].src.endsWith('/idle-authored-0.webp'));

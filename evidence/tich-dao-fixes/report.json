@@ -1,0 +1,198 @@
+{
+  "runs": [
+    {
+      "width": 390,
+      "height": 844,
+      "detail": {
+        "frames": 16,
+        "bounds": {
+          "x": 65,
+          "y": 88,
+          "width": 260,
+          "height": 402
+        },
+        "contained": true,
+        "titleBelow": true,
+        "posterHidden": true
+      },
+      "afk": {
+        "squad": "Đội đang thám hiểm: Tích Đạo, Ông Phở, Đình Lôi — Vệ Binh Trống Đồng, Thầy Mo, Linh Đồng, Bạch Diện",
+        "frames": 113,
+        "clips": [
+          "idle-poster.webp",
+          "run.webp",
+          "idle-authored-1.webp",
+          "idle-authored-2.webp",
+          "idle-authored-3.webp",
+          "idle-authored-4.webp",
+          "basic.webp",
+          "idle-authored-8.webp",
+          "idle-authored-0.webp",
+          "idle-authored-5.webp",
+          "idle-authored-6.webp",
+          "idle-authored-7.webp"
+        ]
+      },
+      "ultimate": {
+        "hero": "tich-dao",
+        "heroName": "Tích Đạo",
+        "action": "ultimate",
+        "movement": null,
+        "phase": "complete",
+        "started": true,
+        "impact": true,
+        "complete": true,
+        "actionId": "3:splus:1:qa-tich-dao:ultimate",
+        "beforeEvents": 0,
+        "startedAt": 1792085433386,
+        "canonicalAction": "ultimate",
+        "impactAt": 1792085434650,
+        "completedAt": 1792085437508,
+        "trace": [
+          {
+            "type": "action:start",
+            "marker": null,
+            "at": 1792085433421
+          },
+          {
+            "type": "marker:release",
+            "marker": null,
+            "at": 1792085434609
+          },
+          {
+            "type": "marker:impact",
+            "marker": null,
+            "at": 1792085434609
+          },
+          {
+            "type": "marker:recovery",
+            "marker": null,
+            "at": 1792085437507
+          },
+          {
+            "type": "action:complete",
+            "marker": null,
+            "at": 1792085437507
+          }
+        ]
+      },
+      "battle": {
+        "width": 390,
+        "height": 738,
+        "display": "block",
+        "draws": 22
+      },
+      "phases": {
+        "cells": 17,
+        "strokes": 142,
+        "phase02": true,
+        "vanish1": true,
+        "vanish2": true,
+        "phase04": true,
+        "phase06": true,
+        "phase08": true
+      },
+      "exceptions": [],
+      "assetErrors": [],
+      "ok": true
+    },
+    {
+      "width": 1280,
+      "height": 800,
+      "detail": {
+        "frames": 12,
+        "bounds": {
+          "x": 168.40625,
+          "y": 94,
+          "width": 260,
+          "height": 402
+        },
+        "contained": true,
+        "titleBelow": true,
+        "posterHidden": true
+      },
+      "afk": {
+        "squad": "Đội đang thám hiểm: Tích Đạo, Ông Phở, Đình Lôi — Vệ Binh Trống Đồng, Thầy Mo, Linh Đồng, Bạch Diện",
+        "frames": 113,
+        "clips": [
+          "idle-poster.webp",
+          "run.webp",
+          "idle-authored-1.webp",
+          "idle-authored-2.webp",
+          "idle-authored-3.webp",
+          "idle-authored-4.webp",
+          "basic.webp",
+          "idle-authored-8.webp",
+          "idle-authored-0.webp",
+          "idle-authored-5.webp",
+          "idle-authored-6.webp",
+          "idle-authored-7.webp"
+        ]
+      },
+      "ultimate": {
+        "hero": "tich-dao",
+        "heroName": "Tích Đạo",
+        "action": "ultimate",
+        "movement": null,
+        "phase": "complete",
+        "started": true,
+        "impact": true,
+        "complete": true,
+        "actionId": "3:splus:1:qa-tich-dao:ultimate",
+        "beforeEvents": 0,
+        "startedAt": 1792085462346,
+        "canonicalAction": "ultimate",
+        "impactAt": 1792085463789,
+        "completedAt": 1792085466723,
+        "trace": [
+          {
+            "type": "action:start",
+            "marker": null,
+            "at": 1792085462433
+          },
+          {
+            "type": "marker:release",
+            "marker": null,
+            "at": 1792085463786
+          },
+          {
+            "type": "marker:impact",
+            "marker": null,
+            "at": 1792085463786
+          },
+          {
+            "type": "marker:recovery",
+            "marker": null,
+            "at": 1792085466641
+          },
+          {
+            "type": "action:complete",
+            "marker": null,
+            "at": 1792085466641
+          }
+        ]
+      },
+      "battle": {
+        "width": 1265,
+        "height": 686.84375,
+        "display": "block",
+        "draws": 18
+      },
+      "phases": {
+        "cells": 17,
+        "strokes": 52,
+        "phase02": true,
+        "vanish1": true,
+        "vanish2": true,
+        "phase04": true,
+        "phase06": true,
+        "phase08": true
+      },
+      "exceptions": [],
+      "assetErrors": [],
+      "ok": true
+    }
+  ],
+  "ok": true,
+  "physicalIphone": "NOT_RUN"
+}
