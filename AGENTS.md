@@ -1,3 +1,7 @@
+## Tích hợp tướng / VFX / SFX — GLM 5.3 Flash và các coding agent
+
+Khi làm tướng hoặc asset Kiếm Thế, đọc [docs/GLM-HERO-VFX-SFX-GUIDE.md](docs/GLM-HERO-VFX-SFX-GUIDE.md). Hướng dẫn chứa bản đồ source, chọn/duyệt asset có tiếng, timeline, HUD, kiểm thử và hợp đồng Tịch Dao hiện hành. Không lấy các bộ asset tạm trong lịch sử QA làm bản đã duyệt.
+
 ## Owner direction — 2026-10-06
 Every merge requires explicit owner approval on GitHub. Work from a real branch of current main, preserve every existing feature and actual game logic. PR283/284 prototypes were rejected; do not integrate their simplified shells, fixtures, hidden features or mock dialogs. Preview must use the full normal game build, not a substitute application. Audit each existing screen before UI changes. No production promotion before approval.
 
