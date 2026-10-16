@@ -4,7 +4,7 @@
       "width": 390,
       "height": 844,
       "detail": {
-        "frames": 13,
+        "frames": 14,
         "bounds": {
           "x": 65,
           "y": 88,
@@ -17,7 +17,7 @@
       },
       "afk": {
         "squad": "Đội đang thám hiểm: Tịch Dao, Ông Phở, Đình Lôi — Vệ Binh Trống Đồng, Thầy Mo, Linh Đồng, Bạch Diện",
-        "frames": 114,
+        "frames": 112,
         "clips": [
           "idle-poster.webp",
           "run.webp",
@@ -44,35 +44,35 @@
         "complete": true,
         "actionId": "3:splus:1:qa-tich-dao:ultimate",
         "beforeEvents": 0,
-        "startedAt": 1792149955603,
+        "startedAt": 1792150718750,
         "canonicalAction": "ultimate",
-        "impactAt": 1792149957118,
-        "completedAt": 1792149959855,
+        "impactAt": 1792150720203,
+        "completedAt": 1792150723235,
         "trace": [
           {
             "type": "action:start",
             "marker": null,
-            "at": 1792149955677
+            "at": 1792150718812
           },
           {
             "type": "marker:release",
             "marker": null,
-            "at": 1792149956930
+            "at": 1792150720198
           },
           {
             "type": "marker:impact",
             "marker": null,
-            "at": 1792149956930
+            "at": 1792150720198
           },
           {
             "type": "marker:recovery",
             "marker": null,
-            "at": 1792149959853
+            "at": 1792150723106
           },
           {
             "type": "action:complete",
             "marker": null,
-            "at": 1792149959853
+            "at": 1792150723106
           }
         ]
       },
@@ -80,11 +80,11 @@
         "width": 390,
         "height": 738,
         "display": "block",
-        "draws": 21
+        "draws": 23
       },
       "phases": {
         "cells": 17,
-        "strokes": 138,
+        "strokes": 141,
         "phase02": true,
         "vanish1": true,
         "vanish2": true,
@@ -92,7 +92,7 @@
         "phase06": true,
         "phase08": true
       },
-      "basic": 48,
+      "basic": 53,
       "sfxProbe": {
         "tich-dao-blink": true,
         "tich-dao-slash": true,
@@ -175,9 +175,9 @@
       "sfxState": {
         "state": "running",
         "lastResult": "played",
-        "active": "2"
+        "active": "3"
       },
-      "rain": 21,
+      "rain": 26,
       "rainVictim": null,
       "victimAfter": null,
       "exceptions": [],
@@ -205,16 +205,16 @@
         "clips": [
           "idle-poster.webp",
           "run.webp",
-          "idle-authored-1.webp",
           "idle-authored-2.webp",
           "idle-authored-3.webp",
           "idle-authored-4.webp",
-          "basic.webp",
-          "idle-authored-8.webp",
-          "idle-authored-0.webp",
           "idle-authored-5.webp",
+          "basic.webp",
+          "idle-authored-0.webp",
+          "idle-authored-1.webp",
           "idle-authored-6.webp",
-          "idle-authored-7.webp"
+          "idle-authored-7.webp",
+          "idle-authored-8.webp"
         ]
       },
       "ultimate": {
@@ -228,35 +228,35 @@
         "complete": true,
         "actionId": "3:splus:1:qa-tich-dao:ultimate",
         "beforeEvents": 0,
-        "startedAt": 1792149989205,
+        "startedAt": 1792150753106,
         "canonicalAction": "ultimate",
-        "impactAt": 1792149990905,
-        "completedAt": 1792149993789,
+        "impactAt": 1792150754719,
+        "completedAt": 1792150757663,
         "trace": [
           {
             "type": "action:start",
             "marker": null,
-            "at": 1792149989307
+            "at": 1792150753200
           },
           {
             "type": "marker:release",
             "marker": null,
-            "at": 1792149990820
+            "at": 1792150754713
           },
           {
             "type": "marker:impact",
             "marker": null,
-            "at": 1792149990820
+            "at": 1792150754713
           },
           {
             "type": "marker:recovery",
             "marker": null,
-            "at": 1792149993724
+            "at": 1792150757661
           },
           {
             "type": "action:complete",
             "marker": null,
-            "at": 1792149993724
+            "at": 1792150757661
           }
         ]
       },
@@ -268,7 +268,7 @@
       },
       "phases": {
         "cells": 17,
-        "strokes": 53,
+        "strokes": 50,
         "phase02": true,
         "vanish1": true,
         "vanish2": true,
@@ -276,7 +276,7 @@
         "phase06": true,
         "phase08": true
       },
-      "basic": 20,
+      "basic": 21,
       "sfxProbe": {
         "tich-dao-blink": true,
         "tich-dao-slash": true,
@@ -361,7 +361,7 @@
         "lastResult": "played",
         "active": "3"
       },
-      "rain": 14,
+      "rain": 11,
       "rainVictim": null,
       "victimAfter": null,
       "exceptions": [],
