@@ -2,6 +2,7 @@
   'use strict';
   if (window.HonVietSfx) return;
   const files = {
+    'tich-dao-blink':'tich-dao/blink.wav','tich-dao-slash':'tich-dao/slash.wav','tich-dao-sword-rain':'tich-dao/sword-rain.wav','tich-dao-execute-impact':'tich-dao/execute-impact.wav',
 'tieu-phong-basic-x1':'tieu-phong/basic-x1.m4a','tieu-phong-basic-x2':'tieu-phong/basic-x2.m4a','tieu-phong-basic-x3':'tieu-phong/basic-x3.m4a','tieu-phong-ultimate-x1':'tieu-phong/ultimate-x1.m4a','tieu-phong-ultimate-x2':'tieu-phong/ultimate-x2.m4a','tieu-phong-ultimate-x3':'tieu-phong/ultimate-x3.m4a',
     'ky-van-basic-x1':'ky-van/basic-x1.m4a','ky-van-basic-x2':'ky-van/basic-x2.m4a','ky-van-basic-x3':'ky-van/basic-x3.m4a','ky-van-ultimate-x1':'ky-van/ultimate-x1.m4a','ky-van-ultimate-x2':'ky-van/ultimate-x2.m4a','ky-van-ultimate-x3':'ky-van/ultimate-x3.m4a',
     ui: 'se_button_click.mp3', select: 'se_icon_click.wav',
@@ -271,9 +272,11 @@
         ? Number(options.cuePerformanceMs)
         : Number.isFinite(Number(options.audibleAtPerformanceMs)) ? Number(options.audibleAtPerformanceMs) : null;
       const sampleCue = options.sampleCue === 'dominant' ? 'dominant' : 'onset';
-      const sampleCueOffsetMs = sampleCue === 'dominant' ? analysis.dominantCueMs : analysis.audibleLeadInMs;
+      const playbackRate=event.startsWith('tich-dao-')?Math.max(1,Math.min(3,Number(options.playbackRate)||1)):1;
+      const sampleCueOffsetMs = (sampleCue === 'dominant' ? analysis.dominantCueMs : analysis.audibleLeadInMs)/playbackRate;
       const source = c.createBufferSource(), gain = c.createGain();
       source.buffer = buffer;
+      if(source.playbackRate)source.playbackRate.value=playbackRate;
       gain.gain.value = event === 'forge-reveal' ? 0.4 : group === 'ui' ? 0.3 : 0.38;
       source.connect(gain); gain.connect(c.destination);
       const voice = { source, group, cleanup: null, cancelled: false, timingEvent: null };
@@ -336,11 +339,11 @@
           sourceStartContextTime = contextNow + Math.max(0, sourceScheduledPerformanceMs - sourceRequestPerformanceMs) / 1000;
         }
       }
-      const expectedAudiblePerformanceMs = sourceScheduledPerformanceMs + analysis.audibleLeadInMs;
+      const expectedAudiblePerformanceMs = sourceScheduledPerformanceMs + analysis.audibleLeadInMs/playbackRate;
       const expectedCuePerformanceMs = sourceScheduledPerformanceMs + sampleCueOffsetMs;
       const baseLatency = Number(c.baseLatency), outputLatency = Number(c.outputLatency);
       voice.timingEvent = recordTiming({
-        type: 'sfx:scheduled', event, group,
+        type: 'sfx:scheduled', event, group, playbackRate,
         battleSession: options.battleSession ?? battleSession,
         actionId: options.actionId || null, cue: options.cue || null, sampleCue,
         requestedPerformanceMs, decodedReadyPerformanceMs,
@@ -374,6 +377,7 @@
   window.addEventListener('pagehide', parentBus ? dispose : endBattle);
   stamp('sfxVersion', 'forge-isolation-v3');
 })();
+
 
 
 

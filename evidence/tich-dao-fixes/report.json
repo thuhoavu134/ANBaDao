@@ -1,0 +1,374 @@
+{
+  "runs": [
+    {
+      "width": 390,
+      "height": 844,
+      "detail": {
+        "frames": 14,
+        "bounds": {
+          "x": 65,
+          "y": 88,
+          "width": 260,
+          "height": 402
+        },
+        "contained": true,
+        "titleBelow": true,
+        "posterHidden": true
+      },
+      "afk": {
+        "squad": "Đội đang thám hiểm: Tịch Dao, Ông Phở, Đình Lôi — Vệ Binh Trống Đồng, Thầy Mo, Linh Đồng, Bạch Diện",
+        "frames": 112,
+        "clips": [
+          "idle-poster.webp",
+          "run.webp",
+          "idle-authored-2.webp",
+          "idle-authored-3.webp",
+          "idle-authored-4.webp",
+          "idle-authored-5.webp",
+          "basic.webp",
+          "idle-authored-0.webp",
+          "idle-authored-1.webp",
+          "idle-authored-6.webp",
+          "idle-authored-7.webp",
+          "idle-authored-8.webp"
+        ]
+      },
+      "ultimate": {
+        "hero": "tich-dao",
+        "heroName": "Tịch Dao",
+        "action": "ultimate",
+        "movement": null,
+        "phase": "complete",
+        "started": true,
+        "impact": true,
+        "complete": true,
+        "actionId": "3:splus:1:qa-tich-dao:ultimate",
+        "beforeEvents": 0,
+        "startedAt": 1792150718750,
+        "canonicalAction": "ultimate",
+        "impactAt": 1792150720203,
+        "completedAt": 1792150723235,
+        "trace": [
+          {
+            "type": "action:start",
+            "marker": null,
+            "at": 1792150718812
+          },
+          {
+            "type": "marker:release",
+            "marker": null,
+            "at": 1792150720198
+          },
+          {
+            "type": "marker:impact",
+            "marker": null,
+            "at": 1792150720198
+          },
+          {
+            "type": "marker:recovery",
+            "marker": null,
+            "at": 1792150723106
+          },
+          {
+            "type": "action:complete",
+            "marker": null,
+            "at": 1792150723106
+          }
+        ]
+      },
+      "battle": {
+        "width": 390,
+        "height": 738,
+        "display": "block",
+        "draws": 23
+      },
+      "phases": {
+        "cells": 17,
+        "strokes": 141,
+        "phase02": true,
+        "vanish1": true,
+        "vanish2": true,
+        "phase04": true,
+        "phase06": true,
+        "phase08": true
+      },
+      "basic": 53,
+      "sfxProbe": {
+        "tich-dao-blink": true,
+        "tich-dao-slash": true,
+        "tich-dao-sword-rain": true,
+        "tich-dao-execute-impact": true
+      },
+      "sfxBefore": {
+        "plays": 23,
+        "audible": 13,
+        "recent": [
+          {
+            "ms": 0,
+            "peak": 0.475,
+            "state": "running"
+          },
+          {
+            "ms": 1,
+            "peak": 0.569,
+            "state": "running"
+          },
+          {
+            "ms": 0,
+            "peak": 0.475,
+            "state": "running"
+          },
+          {
+            "ms": 1,
+            "peak": 0.569,
+            "state": "running"
+          },
+          {
+            "ms": 2,
+            "peak": 0.644,
+            "state": "running"
+          },
+          {
+            "ms": 1,
+            "peak": 0.712,
+            "state": "running"
+          }
+        ]
+      },
+      "rainForced": false,
+      "sfxAfter": {
+        "plays": 23,
+        "audible": 13,
+        "recent": [
+          {
+            "ms": 0,
+            "peak": 0.475,
+            "state": "running"
+          },
+          {
+            "ms": 1,
+            "peak": 0.569,
+            "state": "running"
+          },
+          {
+            "ms": 0,
+            "peak": 0.475,
+            "state": "running"
+          },
+          {
+            "ms": 1,
+            "peak": 0.569,
+            "state": "running"
+          },
+          {
+            "ms": 2,
+            "peak": 0.644,
+            "state": "running"
+          },
+          {
+            "ms": 1,
+            "peak": 0.712,
+            "state": "running"
+          }
+        ]
+      },
+      "sfxState": {
+        "state": "running",
+        "lastResult": "played",
+        "active": "3"
+      },
+      "rain": 26,
+      "rainVictim": null,
+      "victimAfter": null,
+      "exceptions": [],
+      "assetErrors": [],
+      "ok": true
+    },
+    {
+      "width": 1280,
+      "height": 800,
+      "detail": {
+        "frames": 16,
+        "bounds": {
+          "x": 168.40625,
+          "y": 94,
+          "width": 260,
+          "height": 402
+        },
+        "contained": true,
+        "titleBelow": true,
+        "posterHidden": true
+      },
+      "afk": {
+        "squad": "Đội đang thám hiểm: Tịch Dao, Ông Phở, Đình Lôi — Vệ Binh Trống Đồng, Thầy Mo, Linh Đồng, Bạch Diện",
+        "frames": 113,
+        "clips": [
+          "idle-poster.webp",
+          "run.webp",
+          "idle-authored-2.webp",
+          "idle-authored-3.webp",
+          "idle-authored-4.webp",
+          "idle-authored-5.webp",
+          "basic.webp",
+          "idle-authored-0.webp",
+          "idle-authored-1.webp",
+          "idle-authored-6.webp",
+          "idle-authored-7.webp",
+          "idle-authored-8.webp"
+        ]
+      },
+      "ultimate": {
+        "hero": "tich-dao",
+        "heroName": "Tịch Dao",
+        "action": "ultimate",
+        "movement": null,
+        "phase": "complete",
+        "started": true,
+        "impact": true,
+        "complete": true,
+        "actionId": "3:splus:1:qa-tich-dao:ultimate",
+        "beforeEvents": 0,
+        "startedAt": 1792150753106,
+        "canonicalAction": "ultimate",
+        "impactAt": 1792150754719,
+        "completedAt": 1792150757663,
+        "trace": [
+          {
+            "type": "action:start",
+            "marker": null,
+            "at": 1792150753200
+          },
+          {
+            "type": "marker:release",
+            "marker": null,
+            "at": 1792150754713
+          },
+          {
+            "type": "marker:impact",
+            "marker": null,
+            "at": 1792150754713
+          },
+          {
+            "type": "marker:recovery",
+            "marker": null,
+            "at": 1792150757661
+          },
+          {
+            "type": "action:complete",
+            "marker": null,
+            "at": 1792150757661
+          }
+        ]
+      },
+      "battle": {
+        "width": 1265,
+        "height": 686.84375,
+        "display": "block",
+        "draws": 18
+      },
+      "phases": {
+        "cells": 17,
+        "strokes": 50,
+        "phase02": true,
+        "vanish1": true,
+        "vanish2": true,
+        "phase04": true,
+        "phase06": true,
+        "phase08": true
+      },
+      "basic": 21,
+      "sfxProbe": {
+        "tich-dao-blink": true,
+        "tich-dao-slash": true,
+        "tich-dao-sword-rain": true,
+        "tich-dao-execute-impact": true
+      },
+      "sfxBefore": {
+        "plays": 24,
+        "audible": 14,
+        "recent": [
+          {
+            "ms": 0,
+            "peak": 0.475,
+            "state": "running"
+          },
+          {
+            "ms": 1,
+            "peak": 0.569,
+            "state": "running"
+          },
+          {
+            "ms": 0,
+            "peak": 0.475,
+            "state": "running"
+          },
+          {
+            "ms": 1,
+            "peak": 0.569,
+            "state": "running"
+          },
+          {
+            "ms": 2,
+            "peak": 0.644,
+            "state": "running"
+          },
+          {
+            "ms": 1,
+            "peak": 0.712,
+            "state": "running"
+          }
+        ]
+      },
+      "rainForced": false,
+      "sfxAfter": {
+        "plays": 24,
+        "audible": 14,
+        "recent": [
+          {
+            "ms": 0,
+            "peak": 0.475,
+            "state": "running"
+          },
+          {
+            "ms": 1,
+            "peak": 0.569,
+            "state": "running"
+          },
+          {
+            "ms": 0,
+            "peak": 0.475,
+            "state": "running"
+          },
+          {
+            "ms": 1,
+            "peak": 0.569,
+            "state": "running"
+          },
+          {
+            "ms": 2,
+            "peak": 0.644,
+            "state": "running"
+          },
+          {
+            "ms": 1,
+            "peak": 0.712,
+            "state": "running"
+          }
+        ]
+      },
+      "sfxState": {
+        "state": "running",
+        "lastResult": "played",
+        "active": "3"
+      },
+      "rain": 11,
+      "rainVictim": null,
+      "victimAfter": null,
+      "exceptions": [],
+      "assetErrors": [],
+      "ok": true
+    }
+  ],
+  "ok": true,
+  "physicalIphone": "NOT_RUN"
+}

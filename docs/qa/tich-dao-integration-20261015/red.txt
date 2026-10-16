@@ -1,0 +1,128 @@
+✖ Tích Đạo registry: authored extra, assassin kit, no Skill 1 (3.0126ms)
+✖ Basic Ảnh Trảm assassin targeting: weakest back-line, else weakest front (4.3898ms)
+✖ Ultimate legal targets cover every visible enemy and skip stealthed foes (1.9498ms)
+✖ Ultimate resolves three deferred strikes at 0.7/0.9/1.0 ATK with assassin retargeting (6.2099ms)
+✖ Ultimate grants stealth for one recipient turn after at least one kill (1.6817ms)
+✖ Passive Ảnh Bộ: first drop below 40% HP vanishes once per battle (0.7052ms)
+✔ Pack contract: nine ultimate phases cover 0-95, hidden gaps carry no atlas cells (0.5741ms)
+✔ Pack budgets: 77-frame idle on nine-frame pages inside mobile decode caps (0.3767ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 2
+ℹ fail 6
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 174.4685
+
+✖ failing tests:
+
+test at tests\tich-dao.test.mjs:12:1
+✖ Tích Đạo registry: authored extra, assassin kit, no Skill 1 (3.0126ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'Tích Đạo'
+  
+      at TestContext.<anonymous> (file:///C:/Users/Admin/.zcode/workspace/luc-than/tests/tich-dao.test.mjs:14:9)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.start (node:internal/test_runner/test:1096:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'Tích Đạo',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\tich-dao.test.mjs:27:1
+✖ Basic Ảnh Trảm assassin targeting: weakest back-line, else weakest front (4.3898ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+  +   'e0'
+  -   'e4'
+    ]
+  
+      at TestContext.<anonymous> (file:///C:/Users/Admin/.zcode/workspace/luc-than/tests/tich-dao.test.mjs:30:9)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'e0' ],
+    expected: [ 'e4' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests\tich-dao.test.mjs:35:1
+✖ Ultimate legal targets cover every visible enemy and skip stealthed foes (1.9498ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 6
+  
+      at TestContext.<anonymous> (file:///C:/Users/Admin/.zcode/workspace/luc-than/tests/tich-dao.test.mjs:37:9)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 6,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\tich-dao.test.mjs:42:1
+✖ Ultimate resolves three deferred strikes at 0.7/0.9/1.0 ATK with assassin retargeting (6.2099ms)
+  TypeError: e.resolveTichDaoImpact is not a function
+      at TestContext.<anonymous> (file:///C:/Users/Admin/.zcode/workspace/luc-than/tests/tich-dao.test.mjs:51:16)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7)
+
+test at tests\tich-dao.test.mjs:65:1
+✖ Ultimate grants stealth for one recipient turn after at least one kill (1.6817ms)
+  TypeError: e.resolveTichDaoImpact is not a function
+      at TestContext.<anonymous> (file:///C:/Users/Admin/.zcode/workspace/luc-than/tests/tich-dao.test.mjs:68:39)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7)
+
+test at tests\tich-dao.test.mjs:80:1
+✖ Passive Ảnh Bộ: first drop below 40% HP vanishes once per battle (0.7052ms)
+  AssertionError [ERR_ASSERTION]: first threshold crossing vanishes
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///C:/Users/Admin/.zcode/workspace/luc-than/tests/tich-dao.test.mjs:85:9)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

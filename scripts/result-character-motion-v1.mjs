@@ -38,16 +38,22 @@ function newHeroMotion(slug) {
     const c=meta.clips[key];
     return clip('assets/characters/'+slug+'/'+c.file,c.frames,c.cols,c.cellW,c.cellH,c.durationMs/c.frames,{durations:c.frameDurationsMs});
   };
-  const pages=Array.from({length:Math.ceil(meta.idle.frames/16)},(_,i)=>make('idle-'+i));
+  // Packs with a repaginated authored idle have no 16-frame legacy pages; their
+  // pages and pageFrames come from the idleVisual contract instead. Packs that
+  // still ship idle-N keep the original 16-frame paging.
+  const pagedIdle=meta.clips['idle-0']?null:meta.idleVisual;
+  const pageFrames=pagedIdle?pagedIdle.pageFrames:16;
+  const pages=Array.from({length:Math.ceil(meta.idle.frames/pageFrames)},(_,i)=>make(pagedIdle?'idle-authored-'+i:'idle-'+i));
   const id=slug.replaceAll('-','_');
   return {aliases:[id,slug,'hero_splus_'+id],
-    run:make('run'),idle:{...pages[0],pages,pageFrames:16,frames:meta.idle.frames,durations:meta.idle.frameDurationsMs},
+    run:make('run'),idle:{...pages[0],pages,pageFrames,frames:meta.idle.frames,durations:meta.idle.frameDurationsMs},
     fall:make('fall-die')};
 }
 
 const manifest = {
   ky_van:newHeroMotion('ky-van'),
   tieu_phong:newHeroMotion('tieu-phong'),
+  tich_dao:newHeroMotion('tich-dao'),
   // No authored Run/Fall exists in Thầy Mo's pack. Keep his real transparent
   // animated body for the entrance; never substitute the opaque portrait or
   // another hero's running pose. Authored Run clips remain used where present.
