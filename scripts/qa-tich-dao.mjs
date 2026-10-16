@@ -45,14 +45,14 @@ try{for(const [width,height]of [[390,844],[1280,800]]){
   run.phases=await page.evaluate(`(()=>{const cast=__kyDraws.filter(x=>x.src.endsWith('/ultimate.webp'));const rel=cast.map(x=>x.time).sort((a,b)=>a-b);const t0=rel[0]||0;const r=rel.map(t=>t-t0);const gapIn=(a,b)=>{let best=0,prev=r[0];for(const t of r.slice(1)){if(t>=a&&t<=b)best=Math.max(best,t-prev);prev=t;}return best;};return {cells:new Set(cast.map(x=>x.cell.join(':'))).size,strokes:r.length,phase02:r.some(t=>t>=300&&t<1000),vanish1:gapIn(820,1300)>=45,vanish2:gapIn(1280,1900)>=150,phase04:r.some(t=>t>=1000&&t<1550),phase06:r.some(t=>t>=1650&&t<2500),phase08:r.some(t=>t>=2800&&t<3400)};})()`);
   // Ảnh Bộ (locked-kit Basic): kiếm quang chém rơi tại mục tiêu nhận dấu Hoa Ấn.
   await page.evaluate("void(window.__shadowForceB=__HON_VIET__.qaForceAuthoredAction('qa-tich-dao','basic'))");
-  await page.wait("__kyDraws.some(x=>x.src.includes('slash-atlas'))",15000).catch(()=>{});
+  await page.wait("__kyDraws.some(x=>x.src.includes('flower.webp'))",15000).catch(()=>{});
   await pause(300);await shot(page,'basic-'+width);
-  run.basic=await page.evaluate("__kyDraws.filter(x=>x.src.includes('slash-atlas')).length");
+  run.basic=await page.evaluate("__kyDraws.filter(x=>x.src.includes('flower.webp')).length");
   // Audit SFX: gọi play() THẬT trên bus HonVietSfx với 4 cue Cổ Mộ của Tịch Dao —
   // true = fetch + decode + phát thành công (không mock, đúng file trong assets/audio/sfx).
   await page.evaluate("(()=>{if(window.HonVietSfx&&window.HonVietSfx.unlock)try{window.HonVietSfx.unlock();}catch(e){}})()");
   await pause(250);
-  run.sfxProbe=await page.evaluate("(async()=>{const s=window.HonVietSfx;if(!s)return {err:'no-bus'};const out={};for(const cue of ['tich-dao-basic','tich-dao-strike-launch','tich-dao-strike','tich-dao-rain']){try{out[cue]=await s.play(cue,{group:'combat'});}catch(e){out[cue]=String(e).slice(0,60);}await new Promise(r=>setTimeout(r,120));}return out;})()");
+  run.sfxProbe=await page.evaluate("(async()=>{const s=window.HonVietSfx;if(!s)return {err:'no-bus'};const out={};for(const cue of ['tich-dao-blink','tich-dao-slash','tich-dao-sword-rain','tich-dao-execute-impact']){try{out[cue]=await s.play(cue,{group:'combat'});}catch(e){out[cue]=String(e).slice(0,60);}await new Promise(r=>setTimeout(r,120));}return out;})()");
   // Audit SFX: đếm node audio PHÁT THẬT (peak>0.008) trong bus parent trước/sau
   // chuỗi ultimate — battle iframe dùng chung bus parent nên bắt được tại đây.
   // Section này chạy battle.html ở tầng trên cùng: bus HonVietSfx tạo node ngay
@@ -68,14 +68,14 @@ try{for(const [width,height]of [[390,844],[1280,800]]){
   run.rainForced=await page.evaluate("(()=>{const h=(window.SPLUS42?.catalog||[]).find(c=>c.id==='hero_splus_tich_dao');return !!(h&&h.actions?.ultimate?.rules&&h.actions.ultimate.rules.executeHp>1);})()");
   run.sfxAfter=await page.evaluate(sfxExpr);
   run.sfxState=await page.evaluate("(()=>{const d=document.documentElement.dataset;return {state:d.sfxState||null,lastResult:d.sfxLastResult||null,active:d.sfxActive||null};})()");
-  await page.wait("__kyDraws.some(x=>x.src.includes('rain-atlas'))",30000).catch(()=>{});
+  await page.wait("__kyDraws.some(x=>x.src.includes('rain.webp'))",30000).catch(()=>{});
   await pause(400);await shot(page,'rain-'+width);
-  run.rain=await page.evaluate("__kyDraws.filter(x=>x.src.includes('rain-atlas')).length");
+  run.rain=await page.evaluate("__kyDraws.filter(x=>x.src.includes('rain.webp')).length");
   run.rainVictim=await page.evaluate("window.__rainVictim||null");
   run.victimAfter=await page.evaluate("(()=>{const v=window.__rainVictim;if(!v)return null;const u=__HON_VIET__.getUnits().find(x=>x.id===v.id);return u?{id:u.id,hp:Math.round(u.hp),dead:!!u.dead}:null;})()");
   run.exceptions=page.events.filter(e=>e.method==='Runtime.exceptionThrown').map(e=>e.params.exceptionDetails.exception?.description||e.params.exceptionDetails.text);
   run.assetErrors=page.events.filter(e=>e.method==='Network.responseReceived'&&e.params.response.status>=400&&new URL(e.params.response.url).pathname.startsWith('/assets/')).map(e=>e.params.response.url);
-  run.ok=run.phases.cells>=6&&run.phases.phase02&&run.phases.vanish1&&run.phases.phase04&&run.phases.vanish2&&run.phases.phase06&&run.phases.phase08&&run.battle.width>0&&run.battle.height>0&&run.battle.display!=='none'&&run.detail.frames>1&&run.detail.contained&&run.detail.titleBelow&&run.detail.posterHidden&&run.afk.frames>2&&run.afk.squad.includes('Tịch Dao')&&run.basic>0&&run.rain>0&&run.sfxProbe&&run.sfxProbe['tich-dao-basic']===true&&run.sfxProbe['tich-dao-strike-launch']===true&&run.sfxProbe['tich-dao-strike']===true&&run.sfxProbe['tich-dao-rain']===true&&run.sfxAfter.audible>=0&&!run.exceptions.length&&!run.assetErrors.length;
+  run.ok=run.phases.cells>=6&&run.phases.phase02&&run.phases.vanish1&&run.phases.phase04&&run.phases.vanish2&&run.phases.phase06&&run.phases.phase08&&run.battle.width>0&&run.battle.height>0&&run.battle.display!=='none'&&run.detail.frames>1&&run.detail.contained&&run.detail.titleBelow&&run.detail.posterHidden&&run.afk.frames>2&&run.afk.squad.includes('Tịch Dao')&&run.basic>0&&run.rain>0&&run.sfxProbe&&run.sfxProbe['tich-dao-blink']===true&&run.sfxProbe['tich-dao-slash']===true&&run.sfxProbe['tich-dao-sword-rain']===true&&run.sfxProbe['tich-dao-execute-impact']===true&&run.sfxAfter.audible>=0&&!run.exceptions.length&&!run.assetErrors.length;
  }catch(error){run.ok=false;run.error=String(error.stack||error);}finally{await page.close();}
 }}finally{await browser.close();}
 const report={revision:process.env.GITHUB_SHA,runs,ok:runs.every(x=>x.ok),physicalIphone:'NOT_RUN'};writeFileSync(out+'/report.json',JSON.stringify(report,null,2));console.log('TICH_DAO_REPORT:'+JSON.stringify(report));if(!report.ok)process.exitCode=1;

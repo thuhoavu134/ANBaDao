@@ -58,7 +58,7 @@ function drawTichDaoHero(ctx,u,time){
  let key='idle',elapsed=time,loop=true,frame=0,nextPage=null,hidden=false;
  if(u.hp<=0){key='fall-die';elapsed=Math.max(0,time-u.defeatedAt)*TICH_DAO_META.clips['fall-die'].durationMs/(u.defeatFallDuration||tichDaoFallDuration());loop=false;}
  else if((u.state==='hurt'||u.state==='hit')&&time-u.stateStarted<TICH_DAO_META.clips.hit.durationMs){key='hit';elapsed=Math.max(0,time-u.stateStarted);loop=false;}
- else if(active){key=info.action;elapsed=tichDaoElapsed(info);loop=false;}
+ else if(active){key=info.action;elapsed=tichDaoElapsed(info);if(info.rainDelay&&elapsed>=3150)elapsed-=Math.min(elapsed-3150,info.rainDelay);loop=false;}
  else if(u.state==='run'){key='run';elapsed=Math.max(0,time-u.stateStarted);}
  if(key==='idle'){
   frame=tichDaoFrame(TICH_DAO_META.idleVisual.frameDurationsMs,elapsed,true);key='idle-authored-'+Math.floor(frame/TICH_DAO_META.idleVisual.pageFrames);frame%=TICH_DAO_META.idleVisual.pageFrames;
@@ -88,23 +88,25 @@ function drawTichDaoHero(ctx,u,time){
  const drawn=__hvHeroVisibility.finish(ctx,'tich-dao',u,time,paintBody(ctx),paintBody);
  ctx.restore();if(nextPage)tichDaoImage(nextPage,'prefetch');if(u.hp>0)drawUnitHud(ctx,u,time,1);return drawn;
 }
-async function beginTichDaoAction(actor,action,target,battleId){
+async function beginTichDaoAction(actor,action,target,battleId,engine){
  const normalized=action==='ultimate'?'ultimate':'basic';
  // Snapshot x1/x2/x3 for the whole cast so animation and damage agree.
  const speed=[1,2,3].reduce((a,b)=>Math.abs(b-state.speed)<Math.abs(a-state.speed)?b:a,1);
  const info={actor,action:normalized,battleId,speed,target,startedAt:0,abort:new AbortController(),lease:null};tichDaoActive.add(info);
  try{
   if(!__hvIsSkipping()){
-   info.lease=await __hvSkipVisualAssets(()=>BACH_DIEN_LOADER.acquire([normalized,'standing'].map(tichDaoClip),{scope:'battle',owner:'tich-dao:'+actor.id,signal:info.abort.signal}),battleId);
+   info.lease=await __hvSkipVisualAssets(()=>BACH_DIEN_LOADER.acquire([...[normalized,'standing'].map(tichDaoClip),...Object.keys(TICH_DAO_META.vfx.clips).map(tichDaoVfxClip)],{scope:'battle',owner:'tich-dao:'+actor.id,signal:info.abort.signal}),battleId);
    if(__hvIsSkipping())info.abort.abort();
   }
   try{
-   const cues=normalized==='ultimate'
-     ?['tich-dao-strike-launch','tich-dao-strike','tich-dao-rain']
-     :['tich-dao-basic'];
+   const cues=(normalized==='ultimate'?['blink','slash','sword-rain','execute-impact']:['blink','slash']).map(key=>'tich-dao-'+key);
    for(const cue of cues)await window.HonVietSfx?.prepare(cue,{signal:info.abort.signal});
   }catch(error){}
   if(battleId!==state.battleId){finishTichDaoAction(info);return null;}
+  // Resolve the visual destination before phase-02, without spending rage
+  // or resolving damage ahead of the shared impact marker.
+  const opening=engine?.tichDaoOpeningTarget(actor.id,normalized);
+  info.spot=tichDaoSpotFor(actor,opening?getUnit(opening.id):target);
   info.startedAt=performance.now();actor._tichDaoAction=info;
   actor.state=normalized==='ultimate'?'ultimate':'attack';actor.stateStarted=info.startedAt;
   actor.stateDuration=TICH_DAO_META.clips[normalized].durationMs/speed;
@@ -113,50 +115,51 @@ async function beginTichDaoAction(actor,action,target,battleId){
 }
 async function waitTichDaoMarker(info,marker,battleId){
  const clip=TICH_DAO_META.clips[info.action];
- const at=typeof marker==='number'?marker:marker==='recovery:end'?clip.durationMs:marker==='release'?(clip.releaseMs??0):(clip.impactMs??clip.releaseMs??0);
+ const at=typeof marker==='number'?marker:marker==='recovery:end'?clip.durationMs+(info.rainDelay||0):marker==='release'?(clip.releaseMs??0):(clip.impactMs??clip.releaseMs??0);
  while(state.battleId===battleId){if(__hvIsSkipping()||tichDaoElapsed(info)>=at)return true;if(!await sleepVisualMilliseconds(Math.min(40,(at-tichDaoElapsed(info))/info.speed),battleId))break;}
  finishTichDaoAction(info);return false;
 }
 function finishTichDaoAction(info){if(!info)return;info.abort.abort();info.lease?.release();tichDaoActive.delete(info);if(info.actor._tichDaoAction===info)delete info.actor._tichDaoAction;}
-function cancelTichDaoActions(){for(const info of [...tichDaoActive])finishTichDaoAction(info);}
+function cancelTichDaoActions(){for(const info of [...tichDaoActive])finishTichDaoAction(info);tichDaoVfxLive.length=0;}
 /* ---- VFX Cổ Mộ overlays: grid atlases under assets/vfx/tich-dao/ ---- */
 function tichDaoVfxClip(key){const c=TICH_DAO_META.vfx.clips[key];return {...c,src:'assets/vfx/tich-dao/'+c.file,decodedBytes:c.cols*c.cellW*Math.ceil(c.frames/c.cols)*c.cellH*4};}
 function tichDaoVfxImage(key){return BACH_DIEN_LOADER.ensure(tichDaoVfxClip(key),{scope:'battle',priority:'visible'}).image;}
 const tichDaoVfxLive=[];
-function tichDaoSfx(cue,signal){
+function tichDaoSfx(cue,info){
  if(!state.sound||__hvIsSkipping())return;
- try{void window.HonVietSfx?.play(cue,{group:'combat',signal});}catch(error){}
+ try{void window.HonVietSfx?.play(cue,{group:'combat',signal:info.abort.signal,playbackRate:info.speed});}catch(error){}
 }
-function spawnTichDaoVfx(key,x,y){if(!TICH_DAO_META.vfx?.clips?.[key])return;tichDaoVfxImage(key);tichDaoVfxLive.push({key,x,y,startedAt:performance.now(),battleId:state.battleId});}
+function spawnTichDaoVfx(key,x,y,info,target){if(!TICH_DAO_META.vfx?.clips?.[key])return;tichDaoVfxImage(key);const waistY=target?target.y-310*battleCharacterDepthScale(target)*battleCharacterScale(target)/(typeof battleHeroVisualScale==='function'?battleHeroVisualScale(target):1)*.5:y;
+ tichDaoVfxLive.push({key,x,y,waistY,speed:info?.speed||state.speed||1,startedAt:performance.now(),battleId:state.battleId});}
 function drawTichDaoVfx(context,time){
  for(let i=tichDaoVfxLive.length-1;i>=0;i--){
-  const v=tichDaoVfxLive[i],clip=TICH_DAO_META.vfx.clips[v.key],elapsed=time-v.startedAt,ms=clip.frames/clip.fps*1000;
+  const v=tichDaoVfxLive[i],clip=TICH_DAO_META.vfx.clips[v.key],elapsed=(time-v.startedAt)*v.speed,ms=clip.frames/clip.fps*1000;
   if(elapsed>=ms||state.battleId!==v.battleId){tichDaoVfxLive.splice(i,1);continue;}
   const img=tichDaoVfxImage(v.key);if(!img||img.complete===false||img.naturalWidth===0)continue;
   const frame=Math.min(clip.frames-1,Math.floor(elapsed/1000*clip.fps));
-  // Hiệu ứng phóng to phủ lên thân + ĐẦU mục tiêu (anchor đáy ~78% chiều cao).
+  // Only the flower ring is centered on the target waist; other approved FX keep their anchors.
   const d=clip.display||{},dh=d.heightPx||clip.cellH,anchor=d.headAnchor??0.78;
   const k=dh/clip.cellH,w=clip.cellW*k,h=dh;
-  context.save();context.drawImage(img,(frame%clip.cols)*clip.cellW,Math.floor(frame/clip.cols)*clip.cellH,clip.cellW,clip.cellH,v.x-w/2,v.y-h*anchor,w,h);context.restore();
+  context.save();context.globalCompositeOperation=clip.blendMode||'source-over';context.drawImage(img,(frame%clip.cols)*clip.cellW,Math.floor(frame/clip.cols)*clip.cellH,clip.cellW,clip.cellH,v.x-w/2,d.anchor==='waist'?v.waistY-h/2:v.y-h*anchor,w,h);context.restore();
  }
 }
 async function resolveTichDaoCast(e,info,actor,action,target,battleId){
  if(action!=='ultimate'){
   const result=e.act(actor.id,action,target?.id);
-  // Ảnh Bộ: tan tại nhà → hoa trận + kiếm quang nổ ngay trên địch nhận dấu.
-  const stamped=(result?.events||[]).find(x=>x.type==='hoaAn');
+  // Approved vortex + flower accompany the basic strike at its real victim.
+  if(!result.ok)return result;
+  const stamped=(result.events||[]).find(x=>x.type==='hoaAn'||x.type==='damage');
   const victim=getUnit(stamped?.targetId||target?.id);
   if(victim){
    __tdSetSpot(info,tichDaoSpotFor(actor,victim));
-   spawnTichDaoVfx('vanish',actor.x,actor.y);
-   spawnTichDaoVfx('appear',victim.x,victim.y);
-   spawnTichDaoVfx('slash',victim.x,victim.y);
+   spawnTichDaoVfx('vanish',victim.x,victim.y,info);
+   spawnTichDaoVfx('appear',victim.x,victim.y,info,victim);
+
   }
-  tichDaoSfx('tich-dao-basic',info.abort.signal);
+  if(victim){tichDaoSfx('tich-dao-blink',info);tichDaoSfx('tich-dao-slash',info);}
   return result;
  }
  const result=e.act(actor.id,action,target?.id,{deferTichDao:true});if(!result.ok)return result;
- const battle=state.battleId;
  const spotOf=strike=>{
   if(typeof e.tichDaoStrikeTarget!=='function')return null;
   const victim=e.tichDaoStrikeTarget(actor.id,result.castId,strike);
@@ -167,22 +170,22 @@ async function resolveTichDaoCast(e,info,actor,action,target,battleId){
   __tdSetSpot(info,spot);
   const victimId=e.tichDaoStrikeTarget(actor.id,result.castId,strike)?.id;
   const victim=getUnit(victimId);
-  if(victim){spawnTichDaoVfx('vanish',victim.x,victim.y);spawnTichDaoVfx('appear',victim.x,victim.y);spawnTichDaoVfx('slash',victim.x,victim.y);}
-  tichDaoSfx(strike===0?'tich-dao-strike-launch':'tich-dao-strike',info.abort.signal);
+  if(victim){spawnTichDaoVfx('vanish',victim.x,victim.y,info);spawnTichDaoVfx('appear',victim.x,victim.y,info,victim);}
+  tichDaoSfx('tich-dao-blink',info);tichDaoSfx('tich-dao-slash',info);
  };
  const at=async ms=>{if(!await waitTichDaoMarker(info,ms,battleId))return false;return state.battleId===battleId;};
  // Nine authored phases: vanish gap → hoa trận xuất hiện + chém (phase-04/06/08),
  // mưa kiếm kết liễu ngay sau nhịp 3, trước phase-09 recovery.
  __tdSetSpot(info,spotOf(0)); // hướng dash phase-02 về nạn nhân đầu
  if(!await at(1000)){return {ok:false};}
- {const me=getUnit(actor);if(me)spawnTichDaoVfx('vanish',me.x,me.y);}
+ {const spot=info.spot||actor;spawnTichDaoVfx('vanish',spot.x,spot.y,info);}
  if(!await at(1083)){return {ok:false};}
  strikeVfx(0);
  e.resolveTichDaoImpact(actor,result.castId,0);
  if(splusPresentation){for(const entry of splusPresentation.values())splusFloater(entry.target,entry.amount,entry.healing,entry.critical);splusPresentation.clear();}
  updateTeamCounters();splusStateView();
  if(!await at(1500)){return {ok:false};}
- {const me=getUnit(actor);if(me)spawnTichDaoVfx('vanish',me.x,me.y);}
+ {const spot=info.spot||actor;spawnTichDaoVfx('vanish',spot.x,spot.y,info);}
  if(!await at(1750)){return {ok:false};}
  strikeVfx(1);
  e.resolveTichDaoImpact(actor,result.castId,1);
@@ -195,12 +198,22 @@ async function resolveTichDaoCast(e,info,actor,action,target,battleId){
  updateTeamCounters();splusStateView();
  // Mưa kiếm kết liễu trong phase-08 (2917-3292ms), tối đa 2 mục tiêu.
  if(!await at(3150)){return {ok:false};}
- const ex=e.resolveTichDaoExecute(actor,result.castId);
- if(ex.ok&&ex.executed.length){
-  for(const id of ex.executed){const u=getUnit(id);if(u)spawnTichDaoVfx('rain',u.x,u.y);}
-  tichDaoSfx('tich-dao-rain',info.abort.signal);
+ for(let i=0;i<2;i++){
+  const victim=e.nextTichDaoExecution(actor,result.castId);if(!victim)break;
+  const atMs=3150+(info.rainDelay||0);info.rainDelay=(info.rainDelay||0)+600;
+  actor.stateDuration=(TICH_DAO_META.clips.ultimate.durationMs+info.rainDelay)/info.speed;
+  const visible=getUnit(victim.id);if(visible)spawnTichDaoVfx('rain',visible.x,visible.y,info);
+  tichDaoSfx('tich-dao-sword-rain',info);
+  if(!await at(atMs+250))return {ok:false};
+  const ex=e.resolveTichDaoExecution(actor,result.castId,victim.id);
+  if(ex.executed.length)tichDaoSfx('tich-dao-execute-impact',info);
+  if(splusPresentation){for(const entry of splusPresentation.values())splusFloater(entry.target,entry.amount,entry.healing,entry.critical);splusPresentation.clear();}
+  updateTeamCounters();splusStateView();
+  if(!await at(atMs+600))return {ok:false};
+  if(!ex.killed)break;
  }
  if(splusPresentation){for(const entry of splusPresentation.values())splusFloater(entry.target,entry.amount,entry.healing,entry.critical);splusPresentation.clear();}
  updateTeamCounters();splusStateView();
  e.finishTichDaoCast(actor,result.castId);return result;
 }
+

@@ -109,3 +109,22 @@ headless (thời điểm resume AudioContext) nên chỉ ghi số liệu phụ, 
 
 Kết quả vòng 3: tests 23/23 (thêm assert launch-variant) · full suite **1801/1787/14 =
 baseline** · Browser QA **PASS 390 + 1280** (`sfxProbe` 4/4).
+
+
+## Vòng 4 (2026-10-16 đêm) — sync nhánh + audit SFX
+
+- Rebase lên `784c8cd` (bản approved của session kia: 3 VFX clip ftw/hxc/qzzh + SFX mix
+  blink/slash/sword-rain/execute-impact). Xử lý xung đột: GIỮ nguyên bản approved làm
+  chuẩn, đóng góp của vòng audit nhập vào dạng **provenance**:
+  `meta.sfx.provenance.jx1PairTable` = bảng cặp VFX↔SFX gốc từ bảng missile Cổ Mộ
+  (518 znwz+mylx_f/mylx_c; 522 lgss+qzzh+dmdj; 547 ftw+bxxl; 548/574 byhw im lặng) —
+  trả lời mốc "NOT verified as original Cổ Mộ audio" của bản approved; nguồn file gốc
+  decode sẵn trong `SKILLPACK/sfx/{cuiyan,shaolin}` nếu owner duyệt swap 100% audio gốc.
+- **QA chứng minh SFX phát thật**: gọi trực tiếp `HonVietSfx.play()` với 4 cue approved
+  → **4/4 true** (fetch+decode+AudioContext running+node start) trên cả 390 lẫn 1280;
+  telemetry bus `sfxState=running / sfxLastResult=played / sfxActive=2-3 voices`.
+  Đếm node `__qaAudio` để làm số liệu phụ (delta flaky trong headless — thời điểm resume
+  AudioContext); **gotcha realm**: `__qaAudio` của Parent không thấy node tạo trong iframe
+  realm khác — battle top-level thì thấy.
+- Full suite **1811/1797/14 = baseline** · QA **PASS 390+1280** (phases ✓, flower 48/20,
+  rain 21/14 draws, sfxProbe 4/4).

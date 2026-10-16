@@ -17,7 +17,7 @@
       },
       "afk": {
         "squad": "Đội đang thám hiểm: Tịch Dao, Ông Phở, Đình Lôi — Vệ Binh Trống Đồng, Thầy Mo, Linh Đồng, Bạch Diện",
-        "frames": 113,
+        "frames": 114,
         "clips": [
           "idle-poster.webp",
           "run.webp",
@@ -44,35 +44,35 @@
         "complete": true,
         "actionId": "3:splus:1:qa-tich-dao:ultimate",
         "beforeEvents": 0,
-        "startedAt": 1792146963975,
+        "startedAt": 1792149955603,
         "canonicalAction": "ultimate",
-        "impactAt": 1792146965384,
-        "completedAt": 1792146968286,
+        "impactAt": 1792149957118,
+        "completedAt": 1792149959855,
         "trace": [
           {
             "type": "action:start",
             "marker": null,
-            "at": 1792146964020
+            "at": 1792149955677
           },
           {
             "type": "marker:release",
             "marker": null,
-            "at": 1792146965320
+            "at": 1792149956930
           },
           {
             "type": "marker:impact",
             "marker": null,
-            "at": 1792146965320
+            "at": 1792149956930
           },
           {
             "type": "marker:recovery",
             "marker": null,
-            "at": 1792146968259
+            "at": 1792149959853
           },
           {
             "type": "action:complete",
             "marker": null,
-            "at": 1792146968259
+            "at": 1792149959853
           }
         ]
       },
@@ -84,7 +84,7 @@
       },
       "phases": {
         "cells": 17,
-        "strokes": 140,
+        "strokes": 138,
         "phase02": true,
         "vanish1": true,
         "vanish2": true,
@@ -92,82 +92,82 @@
         "phase06": true,
         "phase08": true
       },
-      "basic": 236,
+      "basic": 48,
       "sfxProbe": {
-        "tich-dao-basic": true,
-        "tich-dao-strike-launch": true,
-        "tich-dao-strike": true,
-        "tich-dao-rain": true
+        "tich-dao-blink": true,
+        "tich-dao-slash": true,
+        "tich-dao-sword-rain": true,
+        "tich-dao-execute-impact": true
       },
       "sfxBefore": {
-        "plays": 19,
-        "audible": 9,
+        "plays": 23,
+        "audible": 13,
         "recent": [
           {
-            "ms": 2,
-            "peak": 0.698,
-            "state": "running"
-          },
-          {
-            "ms": 2,
-            "peak": 0.487,
-            "state": "running"
-          },
-          {
-            "ms": 2,
-            "peak": 0.487,
+            "ms": 0,
+            "peak": 0.475,
             "state": "running"
           },
           {
             "ms": 1,
-            "peak": 0.661,
+            "peak": 0.569,
             "state": "running"
           },
           {
-            "ms": 2,
-            "peak": 0.698,
+            "ms": 0,
+            "peak": 0.475,
             "state": "running"
           },
           {
             "ms": 1,
-            "peak": 0.6,
+            "peak": 0.569,
+            "state": "running"
+          },
+          {
+            "ms": 2,
+            "peak": 0.644,
+            "state": "running"
+          },
+          {
+            "ms": 1,
+            "peak": 0.712,
             "state": "running"
           }
         ]
       },
       "rainForced": false,
       "sfxAfter": {
-        "plays": 19,
-        "audible": 9,
+        "plays": 23,
+        "audible": 13,
         "recent": [
           {
-            "ms": 2,
-            "peak": 0.698,
-            "state": "running"
-          },
-          {
-            "ms": 2,
-            "peak": 0.487,
-            "state": "running"
-          },
-          {
-            "ms": 2,
-            "peak": 0.487,
+            "ms": 0,
+            "peak": 0.475,
             "state": "running"
           },
           {
             "ms": 1,
-            "peak": 0.661,
+            "peak": 0.569,
             "state": "running"
           },
           {
-            "ms": 2,
-            "peak": 0.698,
+            "ms": 0,
+            "peak": 0.475,
             "state": "running"
           },
           {
             "ms": 1,
-            "peak": 0.6,
+            "peak": 0.569,
+            "state": "running"
+          },
+          {
+            "ms": 2,
+            "peak": 0.644,
+            "state": "running"
+          },
+          {
+            "ms": 1,
+            "peak": 0.712,
             "state": "running"
           }
         ]
@@ -175,9 +175,9 @@
       "sfxState": {
         "state": "running",
         "lastResult": "played",
-        "active": "4"
+        "active": "2"
       },
-      "rain": 44,
+      "rain": 21,
       "rainVictim": null,
       "victimAfter": null,
       "exceptions": [],
@@ -188,7 +188,7 @@
       "width": 1280,
       "height": 800,
       "detail": {
-        "frames": 17,
+        "frames": 16,
         "bounds": {
           "x": 168.40625,
           "y": 94,
@@ -201,7 +201,7 @@
       },
       "afk": {
         "squad": "Đội đang thám hiểm: Tịch Dao, Ông Phở, Đình Lôi — Vệ Binh Trống Đồng, Thầy Mo, Linh Đồng, Bạch Diện",
-        "frames": 114,
+        "frames": 113,
         "clips": [
           "idle-poster.webp",
           "run.webp",
@@ -210,11 +210,11 @@
           "idle-authored-3.webp",
           "idle-authored-4.webp",
           "basic.webp",
-          "idle-authored-7.webp",
           "idle-authored-8.webp",
           "idle-authored-0.webp",
           "idle-authored-5.webp",
-          "idle-authored-6.webp"
+          "idle-authored-6.webp",
+          "idle-authored-7.webp"
         ]
       },
       "ultimate": {
@@ -228,35 +228,35 @@
         "complete": true,
         "actionId": "3:splus:1:qa-tich-dao:ultimate",
         "beforeEvents": 0,
-        "startedAt": 1792146997808,
+        "startedAt": 1792149989205,
         "canonicalAction": "ultimate",
-        "impactAt": 1792146999556,
-        "completedAt": 1792147002358,
+        "impactAt": 1792149990905,
+        "completedAt": 1792149993789,
         "trace": [
           {
             "type": "action:start",
             "marker": null,
-            "at": 1792146997898
+            "at": 1792149989307
           },
           {
             "type": "marker:release",
             "marker": null,
-            "at": 1792146999397
+            "at": 1792149990820
           },
           {
             "type": "marker:impact",
             "marker": null,
-            "at": 1792146999397
+            "at": 1792149990820
           },
           {
             "type": "marker:recovery",
             "marker": null,
-            "at": 1792147002354
+            "at": 1792149993724
           },
           {
             "type": "action:complete",
             "marker": null,
-            "at": 1792147002354
+            "at": 1792149993724
           }
         ]
       },
@@ -264,11 +264,11 @@
         "width": 1265,
         "height": 686.84375,
         "display": "block",
-        "draws": 17
+        "draws": 18
       },
       "phases": {
         "cells": 17,
-        "strokes": 49,
+        "strokes": 53,
         "phase02": true,
         "vanish1": true,
         "vanish2": true,
@@ -276,82 +276,82 @@
         "phase06": true,
         "phase08": true
       },
-      "basic": 94,
+      "basic": 20,
       "sfxProbe": {
-        "tich-dao-basic": true,
-        "tich-dao-strike-launch": true,
-        "tich-dao-strike": true,
-        "tich-dao-rain": true
+        "tich-dao-blink": true,
+        "tich-dao-slash": true,
+        "tich-dao-sword-rain": true,
+        "tich-dao-execute-impact": true
       },
       "sfxBefore": {
-        "plays": 20,
-        "audible": 10,
+        "plays": 24,
+        "audible": 14,
         "recent": [
           {
-            "ms": 3,
-            "peak": 0.936,
-            "state": "running"
-          },
-          {
-            "ms": 2,
-            "peak": 0.487,
-            "state": "running"
-          },
-          {
-            "ms": 2,
-            "peak": 0.487,
+            "ms": 0,
+            "peak": 0.475,
             "state": "running"
           },
           {
             "ms": 1,
-            "peak": 0.661,
+            "peak": 0.569,
             "state": "running"
           },
           {
-            "ms": 2,
-            "peak": 0.698,
+            "ms": 0,
+            "peak": 0.475,
             "state": "running"
           },
           {
             "ms": 1,
-            "peak": 0.6,
+            "peak": 0.569,
+            "state": "running"
+          },
+          {
+            "ms": 2,
+            "peak": 0.644,
+            "state": "running"
+          },
+          {
+            "ms": 1,
+            "peak": 0.712,
             "state": "running"
           }
         ]
       },
       "rainForced": false,
       "sfxAfter": {
-        "plays": 20,
-        "audible": 10,
+        "plays": 24,
+        "audible": 14,
         "recent": [
           {
-            "ms": 3,
-            "peak": 0.936,
-            "state": "running"
-          },
-          {
-            "ms": 2,
-            "peak": 0.487,
-            "state": "running"
-          },
-          {
-            "ms": 2,
-            "peak": 0.487,
+            "ms": 0,
+            "peak": 0.475,
             "state": "running"
           },
           {
             "ms": 1,
-            "peak": 0.661,
+            "peak": 0.569,
             "state": "running"
           },
           {
-            "ms": 2,
-            "peak": 0.698,
+            "ms": 0,
+            "peak": 0.475,
             "state": "running"
           },
           {
             "ms": 1,
-            "peak": 0.6,
+            "peak": 0.569,
+            "state": "running"
+          },
+          {
+            "ms": 2,
+            "peak": 0.644,
+            "state": "running"
+          },
+          {
+            "ms": 1,
+            "peak": 0.712,
             "state": "running"
           }
         ]
@@ -359,9 +359,9 @@
       "sfxState": {
         "state": "running",
         "lastResult": "played",
-        "active": "5"
+        "active": "3"
       },
-      "rain": 24,
+      "rain": 14,
       "rainVictim": null,
       "victimAfter": null,
       "exceptions": [],

@@ -1,6 +1,8 @@
 import test from 'node:test';import assert from 'node:assert/strict';import {readFileSync,existsSync} from 'node:fs';import vm from 'node:vm';
+import {createSplusCombat} from '../src/domain/combat/splus-mechanics.mjs';
+import {createHash} from 'node:crypto';
 import {createHeroVisibilityCache} from '../src/render/hero-visibility-cache.mjs';
-import {patchTichDaoBattle,patchTichDaoHost} from '../scripts/tich-dao-runtime-v1.mjs';
+import {patchTichDaoBattle,patchTichDaoHost,tichDaoCampaignDescriptor} from '../scripts/tich-dao-runtime-v1.mjs';
 import {patchKyVanHost} from '../scripts/ky-van-runtime-v1.mjs';
 import {patchTieuPhongHost} from '../scripts/tieu-phong-runtime-v1.mjs';
 const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8');
@@ -23,6 +25,26 @@ function harness(){
   draw:()=>{draws.length=0;huds.length=0;return c.drawTichDaoHero(ctx,actor,now);}};
 }
 
+test('regression: campaign clips use the same fixed scale and foot anchor as battle',()=>{
+ const idle=tichDaoCampaignDescriptor(meta,'idle-authored-0');
+ for(const key of ['basic','run']){
+  const clip=tichDaoCampaignDescriptor(meta,key),scale=idle.body/clip.body;
+  assert.equal(scale,meta.clips[key].content.scale);
+  assert.equal(clip.pivot/clip.cellW,.5);
+  assert.equal(clip.foot/clip.cellH,1);
+  assert.ok(Math.abs(meta.clips[key].content.frameHeightPx*scale-meta.clips['idle-authored-0'].content.frameHeightPx)<5);
+ }
+});
+test('regression: dash has its combat-selected destination before impact',async()=>{
+ for(const action of ['basic','ultimate']){
+  const h=harness(),victim={id:'e5',x:1500,y:400};
+  const engine={tichDaoOpeningTarget:()=>victim};
+  h.c.getUnit=id=>id===victim.id?victim:null;
+  h.setTime(1);await h.c.beginTichDaoAction(h.actor,action,null,1,engine);
+  h.setTime(action==='basic'?301:701);h.draw();
+  assert.ok(h.translates.at(-1).x>h.actor.x,'body must move before damage resolves');
+ }
+});
 test('LOI-1: atk/ultimate body vẽ phóng theo content scale, idle giữ nguyên',async()=>{
  const h=harness();h.setTime(1);
  // idle: dest đúng 480x440 như cũ
@@ -45,27 +67,32 @@ test('LOI-2: thân dịch chuyển tới trước mặt địch hàng sau trong 
  const home=h.translateAt(1+3450);
  assert.ok(home.x<enemy.x-72-100,'phase-09 đang quay về nhà, got '+home.x);
 });
-test('LOI-3: VFX Cổ Mộ phóng to phủ lên đầu địch + SFX 3 cue có file',async()=>{
+test('approved VFX/SFX: original clips and four event cues match pinned hashes',async()=>{
  const h=harness();h.setTime(1);
  h.c.spawnTichDaoVfx('rain',1500,400);
  h.setTime(1+100);h.vdraw();
- const rain=h.vdraws.find(d=>d[0].src.includes('rain-atlas'));
+ const rain=h.vdraws.find(d=>d[0].src.endsWith('/rain.webp'));
  assert.ok(rain,'rain vfx painted');
  const dh=TICH_DAO_VFX_H('rain');
  assert.ok(Math.abs(rain[8]-dh)<2,'rain height = meta display ('+dh+'), got '+rain[8]);
  assert.ok(rain[6]<400-dh*0.6,'rain top nằm TRÊN đầu địch (y='+Math.round(rain[6])+')');
  // SFX: meta + file thật
  const sfx=meta.sfx;
- for(const k of ['basic','strike','strikeLaunch','rain'])assert.ok(sfx?.[k]?.audio,'meta.sfx.'+k+' thiếu');
- for(const k of ['basic','strike','strikeLaunch','rain']){
+ for(const k of ['blink','slash','sword-rain','execute-impact'])assert.ok(sfx?.[k]?.audio,'meta.sfx.'+k+' thiếu');
+ for(const k of ['blink','slash','sword-rain','execute-impact']){
   const f='assets/audio/sfx/tich-dao/'+sfx[k].file;
   assert.ok(existsSync(new URL('../'+f,import.meta.url)),'thiếu file '+f);
  }
- const patched=patchTichDaoBattle(read('dist/battle.html'),read('src/runtime/tich-dao.js'),meta);
- assert.match(patched,/'tich-dao-basic':'tich-dao\/(basic[.]wav|m4a)'/,'battle SFX map có tich-dao-basic');
- assert.match(patched,/'tich-dao-strike-launch':'tich-dao\/strike-launch.wav'/,'battle SFX map có biến thể launch');
- assert.match(patched,/strike===0\?'tich-dao-strike-launch':'tich-dao-strike'/,'nhịp 1 phát biến thể phóng');
- assert.match(patched,/'tich-dao-rain':'tich-dao\/rain.wav'/,'battle SFX map có mưa kiếm');
+ for(const c of Object.values(meta.vfx.clips)){
+  const bytes=readFileSync(new URL('../assets/vfx/tich-dao/'+c.file,import.meta.url));
+  assert.equal(createHash('sha256').update(bytes).digest('hex'),c.sha256);
+  assert.equal(c.blendMode,'screen');
+ }
+ for(const key of ['blink','slash','sword-rain','execute-impact']){
+  const c=meta.sfx[key],bytes=readFileSync(new URL('../assets/audio/sfx/tich-dao/'+c.file,import.meta.url));
+  assert.equal(createHash('sha256').update(bytes).digest('hex'),c.sha256);
+ }
+
 });
 
 test('idle paints the 480x440 cell grid natively and prefetches the next page',()=>{
@@ -135,4 +162,37 @@ test('host composes after Kỷ Vân + Tiêu Phong and registers idle, ATK, run a
  assert.match(host,/"linh_dong","bach_dien","ky_van","tieu_phong","tich_dao"\]/);
  assert.equal(host.split('"linh_dong","bach_dien","ky_van","tieu_phong","tich_dao"]').length-1,3);
  assert.equal(patchTichDaoHost(host,meta,''),host);
+});
+
+
+test('approved event timeline: conditional chained executions and speed-aware cues',async()=>{
+ for(const speed of [1,2,3])for(const low of [false,true]){
+  const h=harness(),played=[];let now=1;h.setTime(now);h.c.state.speed=speed;
+  Object.assign(h.actor,{slot:0,maxHp:100,atk:100,energy:100,accuracy:100,crit:0});
+  const foes=Array.from({length:6},(_,slot)=>({id:'e'+slot,slot,team:'enemy',hp:low&&slot>=3?2500:9000,maxHp:10000,x:1500,y:300+slot*30}));
+  const e=createSplusCombat({units:[h.actor,...foes],mutate:true,rng:()=>.5});
+  h.c.getUnit=id=>e.unit(id);h.c.splusPresentation=null;h.c.updateTeamCounters=()=>{};h.c.splusStateView=()=>{};
+  h.c.sleepVisualMilliseconds=async ms=>{now+=ms;h.setTime(now);return true;};
+  h.c.window.HonVietSfx.play=(cue,options)=>{played.push({cue,at:now,rate:options.playbackRate});return true;};
+  const info=await h.c.beginTichDaoAction(h.actor,'ultimate',null,1,e);
+  await h.c.waitTichDaoMarker(info,'impact',1);
+  assert.equal((await h.c.resolveTichDaoCast(e,info,h.actor,'ultimate',null,1)).ok,true);
+  const rain=played.filter(p=>p.cue==='tich-dao-sword-rain'),impact=played.filter(p=>p.cue==='tich-dao-execute-impact');
+  assert.equal(rain.length,low?2:0);assert.equal(impact.length,rain.length);
+  assert.equal(played.filter(p=>p.cue==='tich-dao-slash').length,3);
+  for(let i=0;i<rain.length;i++){assert.ok(impact[i].at>rain[i].at);if(i)assert.ok(rain[i].at>impact[i-1].at);}
+  assert.ok(played.every(p=>p.rate===speed));
+  await h.c.waitTichDaoMarker(info,'recovery:end',1);h.c.finishTichDaoAction(info);
+  assert.equal(h.actor._tichDaoAction,undefined);
+ }
+});
+
+test('flower ring center follows enemy waist without changing its size or timing',()=>{
+ const h=harness(),victim={x:1500,y:400};
+ h.c.spawnTichDaoVfx('appear',victim.x,victim.y,null,victim);
+ h.setTime(100);h.vdraw();
+ const draw=h.vdraws.find(d=>d[0].src.endsWith('/flower.webp'));
+ assert.ok(draw);
+ assert.equal(draw[6]+draw[8]/2,400-310*.5*.5);
+ assert.equal(draw[8],meta.vfx.clips.appear.display.heightPx);
 });
