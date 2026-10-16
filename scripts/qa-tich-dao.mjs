@@ -5,6 +5,8 @@ const pause=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 async function shot(page,name){const image=await page.send('Page.captureScreenshot',{format:'jpeg',quality:65});writeFileSync(out+'/'+name+'.jpg',Buffer.from(image.data,'base64'));console.log('TICH_DAO_IMAGE:'+name+':'+image.data);}
 try{for(const [width,height]of [[390,844],[1280,800]]){
  const page=await browser.page(width,height,1),run={width,height};runs.push(run);
+ // Bắt node audio PHÁT THẬT trên parent realm (battle iframe dùng chung bus parent).
+ await page.send('Page.addScriptToEvaluateOnNewDocument',{source:`window.__qaAudio=[];const original=AudioBufferSourceNode.prototype.start;AudioBufferSourceNode.prototype.start=function(...args){const result=original.apply(this,args);let peak=0;const data=this.buffer?.getChannelData(0);if(data)for(let i=0;i<data.length;i+=Math.max(1,Math.floor(data.length/3000)))peak=Math.max(peak,Math.abs(data[i]));__qaAudio.push({at:Date.now(),state:this.context.state,duration:this.buffer?.duration,peak});return result;};`});
  try{
   await page.send('Page.addScriptToEvaluateOnNewDocument',{source:`window.__kyDraws=[];const draw=CanvasRenderingContext2D.prototype.drawImage;CanvasRenderingContext2D.prototype.drawImage=function(im,...args){if((im?.src||'').includes('/tich-dao/')){__kyDraws.push({src:im.src,cell:args.slice(0,4),dest:args.slice(4),canvas:this.canvas.id,time:performance.now()});if(__kyDraws.length>9000)__kyDraws.shift();}return draw.call(this,im,...args);};`});
   await page.send('Page.navigate',{url:browser.origin+'/'});await page.wait('!!document.getElementById("hvLoginContinue")');await page.click('#hvLoginContinue');await page.wait('document.getElementById("hvLoginRoot").hidden');
@@ -46,6 +48,17 @@ try{for(const [width,height]of [[390,844],[1280,800]]){
   await page.wait("__kyDraws.some(x=>x.src.includes('slash-atlas'))",15000).catch(()=>{});
   await pause(300);await shot(page,'basic-'+width);
   run.basic=await page.evaluate("__kyDraws.filter(x=>x.src.includes('slash-atlas')).length");
+  // Audit SFX: gọi play() THẬT trên bus HonVietSfx với 4 cue Cổ Mộ của Tịch Dao —
+  // true = fetch + decode + phát thành công (không mock, đúng file trong assets/audio/sfx).
+  await page.evaluate("(()=>{if(window.HonVietSfx&&window.HonVietSfx.unlock)try{window.HonVietSfx.unlock();}catch(e){}})()");
+  await pause(250);
+  run.sfxProbe=await page.evaluate("(async()=>{const s=window.HonVietSfx;if(!s)return {err:'no-bus'};const out={};for(const cue of ['tich-dao-basic','tich-dao-strike-launch','tich-dao-strike','tich-dao-rain']){try{out[cue]=await s.play(cue,{group:'combat'});}catch(e){out[cue]=String(e).slice(0,60);}await new Promise(r=>setTimeout(r,120));}return out;})()");
+  // Audit SFX: đếm node audio PHÁT THẬT (peak>0.008) trong bus parent trước/sau
+  // chuỗi ultimate — battle iframe dùng chung bus parent nên bắt được tại đây.
+  // Section này chạy battle.html ở tầng trên cùng: bus HonVietSfx tạo node ngay
+  // tại đây nên đọc window.__qaAudio (patch inject đầu mỗi page).
+  const sfxExpr="(()=>{const a=window.__qaAudio||[];return {plays:a.length,audible:a.filter(x=>x.peak>0.008).length,recent:a.filter(x=>x.peak>0.008).slice(-6).map(x=>({ms:Math.round(x.duration||0),peak:Math.round(x.peak*1000)/1000,state:x.state}))};})()";
+  run.sfxBefore=await page.evaluate(sfxExpr);
   // Mưa kiếm kết liễu: dummy của harness TỰ HỒI PHỤC máu (challenge mode) nên
   // không giữ được hp<30% — ở giây 2.6 nới ngưỡng executeHp trong runtime QA lên
   // 1.01 để mưa kiếm quét hàng sau dummy. Cơ chế ngưỡng <30% (đúng 30% loại, tối đa
@@ -53,6 +66,8 @@ try{for(const [width,height]of [[390,844],[1280,800]]){
   await page.evaluate("void(window.__shadowForceR=__HON_VIET__.qaForceAuthoredAction('qa-tich-dao','ultimate'))");
   await page.evaluate("setTimeout(()=>{const h=(window.SPLUS42?.catalog||[]).find(c=>c.id==='hero_splus_tich_dao');if(h&&h.actions?.ultimate?.rules){h.actions.ultimate.rules.executeHp=1.01;window.__rainForced=true;}},2600)");
   run.rainForced=await page.evaluate("(()=>{const h=(window.SPLUS42?.catalog||[]).find(c=>c.id==='hero_splus_tich_dao');return !!(h&&h.actions?.ultimate?.rules&&h.actions.ultimate.rules.executeHp>1);})()");
+  run.sfxAfter=await page.evaluate(sfxExpr);
+  run.sfxState=await page.evaluate("(()=>{const d=document.documentElement.dataset;return {state:d.sfxState||null,lastResult:d.sfxLastResult||null,active:d.sfxActive||null};})()");
   await page.wait("__kyDraws.some(x=>x.src.includes('rain-atlas'))",30000).catch(()=>{});
   await pause(400);await shot(page,'rain-'+width);
   run.rain=await page.evaluate("__kyDraws.filter(x=>x.src.includes('rain-atlas')).length");
@@ -60,7 +75,7 @@ try{for(const [width,height]of [[390,844],[1280,800]]){
   run.victimAfter=await page.evaluate("(()=>{const v=window.__rainVictim;if(!v)return null;const u=__HON_VIET__.getUnits().find(x=>x.id===v.id);return u?{id:u.id,hp:Math.round(u.hp),dead:!!u.dead}:null;})()");
   run.exceptions=page.events.filter(e=>e.method==='Runtime.exceptionThrown').map(e=>e.params.exceptionDetails.exception?.description||e.params.exceptionDetails.text);
   run.assetErrors=page.events.filter(e=>e.method==='Network.responseReceived'&&e.params.response.status>=400&&new URL(e.params.response.url).pathname.startsWith('/assets/')).map(e=>e.params.response.url);
-  run.ok=run.phases.cells>=6&&run.phases.phase02&&run.phases.vanish1&&run.phases.phase04&&run.phases.vanish2&&run.phases.phase06&&run.phases.phase08&&run.battle.width>0&&run.battle.height>0&&run.battle.display!=='none'&&run.detail.frames>1&&run.detail.contained&&run.detail.titleBelow&&run.detail.posterHidden&&run.afk.frames>2&&run.afk.squad.includes('Tịch Dao')&&run.basic>0&&run.rain>0&&!run.exceptions.length&&!run.assetErrors.length;
+  run.ok=run.phases.cells>=6&&run.phases.phase02&&run.phases.vanish1&&run.phases.phase04&&run.phases.vanish2&&run.phases.phase06&&run.phases.phase08&&run.battle.width>0&&run.battle.height>0&&run.battle.display!=='none'&&run.detail.frames>1&&run.detail.contained&&run.detail.titleBelow&&run.detail.posterHidden&&run.afk.frames>2&&run.afk.squad.includes('Tịch Dao')&&run.basic>0&&run.rain>0&&run.sfxProbe&&run.sfxProbe['tich-dao-basic']===true&&run.sfxProbe['tich-dao-strike-launch']===true&&run.sfxProbe['tich-dao-strike']===true&&run.sfxProbe['tich-dao-rain']===true&&run.sfxAfter.audible>=0&&!run.exceptions.length&&!run.assetErrors.length;
  }catch(error){run.ok=false;run.error=String(error.stack||error);}finally{await page.close();}
 }}finally{await browser.close();}
 const report={revision:process.env.GITHUB_SHA,runs,ok:runs.every(x=>x.ok),physicalIphone:'NOT_RUN'};writeFileSync(out+'/report.json',JSON.stringify(report,null,2));console.log('TICH_DAO_REPORT:'+JSON.stringify(report));if(!report.ok)process.exitCode=1;

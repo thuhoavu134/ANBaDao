@@ -4,7 +4,7 @@
       "width": 390,
       "height": 844,
       "detail": {
-        "frames": 16,
+        "frames": 13,
         "bounds": {
           "x": 65,
           "y": 88,
@@ -17,108 +17,7 @@
       },
       "afk": {
         "squad": "Đội đang thám hiểm: Tịch Dao, Ông Phở, Đình Lôi — Vệ Binh Trống Đồng, Thầy Mo, Linh Đồng, Bạch Diện",
-        "frames": 114,
-        "clips": [
-          "run.webp",
-          "idle-poster.webp",
-          "idle-authored-3.webp",
-          "idle-authored-4.webp",
-          "idle-authored-5.webp",
-          "idle-authored-6.webp",
-          "basic.webp",
-          "idle-authored-1.webp",
-          "idle-authored-2.webp",
-          "idle-authored-7.webp",
-          "idle-authored-8.webp",
-          "idle-authored-0.webp"
-        ]
-      },
-      "ultimate": {
-        "hero": "tich-dao",
-        "heroName": "Tịch Dao",
-        "action": "ultimate",
-        "movement": null,
-        "phase": "complete",
-        "started": true,
-        "impact": true,
-        "complete": true,
-        "actionId": "3:splus:1:qa-tich-dao:ultimate",
-        "beforeEvents": 0,
-        "startedAt": 1792140353810,
-        "canonicalAction": "ultimate",
-        "impactAt": 1792140355289,
-        "completedAt": 1792140358231,
-        "trace": [
-          {
-            "type": "action:start",
-            "marker": null,
-            "at": 1792140353930
-          },
-          {
-            "type": "marker:release",
-            "marker": null,
-            "at": 1792140355209
-          },
-          {
-            "type": "marker:impact",
-            "marker": null,
-            "at": 1792140355209
-          },
-          {
-            "type": "marker:recovery",
-            "marker": null,
-            "at": 1792140358136
-          },
-          {
-            "type": "action:complete",
-            "marker": null,
-            "at": 1792140358136
-          }
-        ]
-      },
-      "battle": {
-        "width": 390,
-        "height": 738,
-        "display": "block",
-        "draws": 21
-      },
-      "phases": {
-        "cells": 17,
-        "strokes": 141,
-        "phase02": true,
-        "vanish1": true,
-        "vanish2": true,
-        "phase04": true,
-        "phase06": true,
-        "phase08": true
-      },
-      "basic": 251,
-      "rainForced": false,
-      "rain": 46,
-      "rainVictim": null,
-      "victimAfter": null,
-      "exceptions": [],
-      "assetErrors": [],
-      "ok": true
-    },
-    {
-      "width": 1280,
-      "height": 800,
-      "detail": {
-        "frames": 18,
-        "bounds": {
-          "x": 168.40625,
-          "y": 94,
-          "width": 260,
-          "height": 402
-        },
-        "contained": true,
-        "titleBelow": true,
-        "posterHidden": true
-      },
-      "afk": {
-        "squad": "Đội đang thám hiểm: Tịch Dao, Ông Phở, Đình Lôi — Vệ Binh Trống Đồng, Thầy Mo, Linh Đồng, Bạch Diện",
-        "frames": 114,
+        "frames": 113,
         "clips": [
           "idle-poster.webp",
           "run.webp",
@@ -145,47 +44,47 @@
         "complete": true,
         "actionId": "3:splus:1:qa-tich-dao:ultimate",
         "beforeEvents": 0,
-        "startedAt": 1792140387022,
+        "startedAt": 1792146963975,
         "canonicalAction": "ultimate",
-        "impactAt": 1792140388837,
-        "completedAt": 1792140391837,
+        "impactAt": 1792146965384,
+        "completedAt": 1792146968286,
         "trace": [
           {
             "type": "action:start",
             "marker": null,
-            "at": 1792140387134
+            "at": 1792146964020
           },
           {
             "type": "marker:release",
             "marker": null,
-            "at": 1792140388832
+            "at": 1792146965320
           },
           {
             "type": "marker:impact",
             "marker": null,
-            "at": 1792140388832
+            "at": 1792146965320
           },
           {
             "type": "marker:recovery",
             "marker": null,
-            "at": 1792140391763
+            "at": 1792146968259
           },
           {
             "type": "action:complete",
             "marker": null,
-            "at": 1792140391763
+            "at": 1792146968259
           }
         ]
       },
       "battle": {
-        "width": 1265,
-        "height": 686.84375,
+        "width": 390,
+        "height": 738,
         "display": "block",
-        "draws": 19
+        "draws": 21
       },
       "phases": {
         "cells": 17,
-        "strokes": 51,
+        "strokes": 140,
         "phase02": true,
         "vanish1": true,
         "vanish2": true,
@@ -193,9 +92,276 @@
         "phase06": true,
         "phase08": true
       },
-      "basic": 96,
+      "basic": 236,
+      "sfxProbe": {
+        "tich-dao-basic": true,
+        "tich-dao-strike-launch": true,
+        "tich-dao-strike": true,
+        "tich-dao-rain": true
+      },
+      "sfxBefore": {
+        "plays": 19,
+        "audible": 9,
+        "recent": [
+          {
+            "ms": 2,
+            "peak": 0.698,
+            "state": "running"
+          },
+          {
+            "ms": 2,
+            "peak": 0.487,
+            "state": "running"
+          },
+          {
+            "ms": 2,
+            "peak": 0.487,
+            "state": "running"
+          },
+          {
+            "ms": 1,
+            "peak": 0.661,
+            "state": "running"
+          },
+          {
+            "ms": 2,
+            "peak": 0.698,
+            "state": "running"
+          },
+          {
+            "ms": 1,
+            "peak": 0.6,
+            "state": "running"
+          }
+        ]
+      },
       "rainForced": false,
-      "rain": 22,
+      "sfxAfter": {
+        "plays": 19,
+        "audible": 9,
+        "recent": [
+          {
+            "ms": 2,
+            "peak": 0.698,
+            "state": "running"
+          },
+          {
+            "ms": 2,
+            "peak": 0.487,
+            "state": "running"
+          },
+          {
+            "ms": 2,
+            "peak": 0.487,
+            "state": "running"
+          },
+          {
+            "ms": 1,
+            "peak": 0.661,
+            "state": "running"
+          },
+          {
+            "ms": 2,
+            "peak": 0.698,
+            "state": "running"
+          },
+          {
+            "ms": 1,
+            "peak": 0.6,
+            "state": "running"
+          }
+        ]
+      },
+      "sfxState": {
+        "state": "running",
+        "lastResult": "played",
+        "active": "4"
+      },
+      "rain": 44,
+      "rainVictim": null,
+      "victimAfter": null,
+      "exceptions": [],
+      "assetErrors": [],
+      "ok": true
+    },
+    {
+      "width": 1280,
+      "height": 800,
+      "detail": {
+        "frames": 17,
+        "bounds": {
+          "x": 168.40625,
+          "y": 94,
+          "width": 260,
+          "height": 402
+        },
+        "contained": true,
+        "titleBelow": true,
+        "posterHidden": true
+      },
+      "afk": {
+        "squad": "Đội đang thám hiểm: Tịch Dao, Ông Phở, Đình Lôi — Vệ Binh Trống Đồng, Thầy Mo, Linh Đồng, Bạch Diện",
+        "frames": 114,
+        "clips": [
+          "idle-poster.webp",
+          "run.webp",
+          "idle-authored-1.webp",
+          "idle-authored-2.webp",
+          "idle-authored-3.webp",
+          "idle-authored-4.webp",
+          "basic.webp",
+          "idle-authored-7.webp",
+          "idle-authored-8.webp",
+          "idle-authored-0.webp",
+          "idle-authored-5.webp",
+          "idle-authored-6.webp"
+        ]
+      },
+      "ultimate": {
+        "hero": "tich-dao",
+        "heroName": "Tịch Dao",
+        "action": "ultimate",
+        "movement": null,
+        "phase": "complete",
+        "started": true,
+        "impact": true,
+        "complete": true,
+        "actionId": "3:splus:1:qa-tich-dao:ultimate",
+        "beforeEvents": 0,
+        "startedAt": 1792146997808,
+        "canonicalAction": "ultimate",
+        "impactAt": 1792146999556,
+        "completedAt": 1792147002358,
+        "trace": [
+          {
+            "type": "action:start",
+            "marker": null,
+            "at": 1792146997898
+          },
+          {
+            "type": "marker:release",
+            "marker": null,
+            "at": 1792146999397
+          },
+          {
+            "type": "marker:impact",
+            "marker": null,
+            "at": 1792146999397
+          },
+          {
+            "type": "marker:recovery",
+            "marker": null,
+            "at": 1792147002354
+          },
+          {
+            "type": "action:complete",
+            "marker": null,
+            "at": 1792147002354
+          }
+        ]
+      },
+      "battle": {
+        "width": 1265,
+        "height": 686.84375,
+        "display": "block",
+        "draws": 17
+      },
+      "phases": {
+        "cells": 17,
+        "strokes": 49,
+        "phase02": true,
+        "vanish1": true,
+        "vanish2": true,
+        "phase04": true,
+        "phase06": true,
+        "phase08": true
+      },
+      "basic": 94,
+      "sfxProbe": {
+        "tich-dao-basic": true,
+        "tich-dao-strike-launch": true,
+        "tich-dao-strike": true,
+        "tich-dao-rain": true
+      },
+      "sfxBefore": {
+        "plays": 20,
+        "audible": 10,
+        "recent": [
+          {
+            "ms": 3,
+            "peak": 0.936,
+            "state": "running"
+          },
+          {
+            "ms": 2,
+            "peak": 0.487,
+            "state": "running"
+          },
+          {
+            "ms": 2,
+            "peak": 0.487,
+            "state": "running"
+          },
+          {
+            "ms": 1,
+            "peak": 0.661,
+            "state": "running"
+          },
+          {
+            "ms": 2,
+            "peak": 0.698,
+            "state": "running"
+          },
+          {
+            "ms": 1,
+            "peak": 0.6,
+            "state": "running"
+          }
+        ]
+      },
+      "rainForced": false,
+      "sfxAfter": {
+        "plays": 20,
+        "audible": 10,
+        "recent": [
+          {
+            "ms": 3,
+            "peak": 0.936,
+            "state": "running"
+          },
+          {
+            "ms": 2,
+            "peak": 0.487,
+            "state": "running"
+          },
+          {
+            "ms": 2,
+            "peak": 0.487,
+            "state": "running"
+          },
+          {
+            "ms": 1,
+            "peak": 0.661,
+            "state": "running"
+          },
+          {
+            "ms": 2,
+            "peak": 0.698,
+            "state": "running"
+          },
+          {
+            "ms": 1,
+            "peak": 0.6,
+            "state": "running"
+          }
+        ]
+      },
+      "sfxState": {
+        "state": "running",
+        "lastResult": "played",
+        "active": "5"
+      },
+      "rain": 24,
       "rainVictim": null,
       "victimAfter": null,
       "exceptions": [],

@@ -1,843 +1,880 @@
 {
-  "schema": "tich-dao-authored/v1",
-  "sourceCharacter": "tich-dao-six-state-phase-aware.zip",
-  "sourcePackSha256": "3a4c6a63418cbb41eda7554368c890a3d0e6f16278ae4e57e5833ad3e64a2eab",
-  "sourceVfx": null,
-  "pending": [
-    "avatar.webp là ảnh tạm cắt từ idle frame 53 — portrait authored chờ owner",
-    "chưa có SFX authored cho basic/ultimate/hit"
-  ],
-  "clips": {
-    "basic": {
-      "file": "basic.webp",
-      "cols": 6,
-      "rows": 3,
-      "frames": 18,
-      "cellW": 480,
-      "cellH": 440,
-      "durationMs": 900,
-      "frameDurationsMs": [
-        50,
-        50,
-        50,
-        50,
-        50,
-        50,
-        50,
-        50,
-        50,
-        50,
-        50,
-        50,
-        50,
-        50,
-        50,
-        50,
-        50,
-        50
-      ],
-      "releaseMs": 300,
-      "impactMs": 450,
-      "content": {
-        "frameHeightPx": 350,
-        "scale": 1.21,
-        "normalizedHeightPx": 424
-      }
-    },
-    "ultimate": {
-      "file": "ultimate.webp",
-      "cols": 6,
-      "rows": 3,
-      "frames": 18,
-      "cellW": 480,
-      "cellH": 440,
-      "durationMs": 4000,
-      "frameDurationsMs": [
-        222.22222222222223,
-        222.22222222222223,
-        222.22222222222223,
-        222.22222222222223,
-        222.22222222222223,
-        222.22222222222223,
-        222.22222222222223,
-        222.22222222222223,
-        222.22222222222223,
-        222.22222222222223,
-        222.22222222222223,
-        222.22222222222223,
-        222.22222222222223,
-        222.22222222222223,
-        222.22222222222223,
-        222.22222222222223,
-        222.22222222222223,
-        222.22222222222223
-      ],
-      "strikeMs": [
-        1083,
-        1750,
-        2917
-      ],
-      "releaseMs": 1083,
-      "impactMs": 1083,
-      "content": {
-        "frameHeightPx": 328,
-        "scale": 1.29,
-        "normalizedHeightPx": 423
-      }
-    },
-    "hit": {
-      "file": "hit.webp",
-      "cols": 6,
-      "rows": 3,
-      "frames": 18,
-      "cellW": 480,
-      "cellH": 440,
-      "durationMs": 350,
-      "frameDurationsMs": [
-        19.444444444444443,
-        19.444444444444443,
-        19.444444444444443,
-        19.444444444444443,
-        19.444444444444443,
-        19.444444444444443,
-        19.444444444444443,
-        19.444444444444443,
-        19.444444444444443,
-        19.444444444444443,
-        19.444444444444443,
-        19.444444444444443,
-        19.444444444444443,
-        19.444444444444443,
-        19.444444444444443,
-        19.444444444444443,
-        19.444444444444443,
-        19.444444444444443
-      ],
-      "content": {
-        "frameHeightPx": 424,
-        "scale": 1,
-        "normalizedHeightPx": 424
-      }
-    },
-    "run": {
-      "file": "run.webp",
-      "cols": 6,
-      "rows": 3,
-      "frames": 18,
-      "cellW": 480,
-      "cellH": 440,
-      "durationMs": 750,
-      "frameDurationsMs": [
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664
-      ],
-      "content": {
-        "frameHeightPx": 412,
-        "scale": 1.03,
-        "normalizedHeightPx": 424
-      }
-    },
-    "fall-die": {
-      "file": "fall-die.webp",
-      "cols": 6,
-      "rows": 3,
-      "frames": 18,
-      "cellW": 480,
-      "cellH": 440,
-      "durationMs": 4000,
-      "frameDurationsMs": [
-        222.22222222222223,
-        222.22222222222223,
-        222.22222222222223,
-        222.22222222222223,
-        222.22222222222223,
-        222.22222222222223,
-        222.22222222222223,
-        222.22222222222223,
-        222.22222222222223,
-        222.22222222222223,
-        222.22222222222223,
-        222.22222222222223,
-        222.22222222222223,
-        222.22222222222223,
-        222.22222222222223,
-        222.22222222222223,
-        222.22222222222223,
-        222.22222222222223
-      ],
-      "content": {
-        "frameHeightPx": 354,
-        "scale": 1.19,
-        "normalizedHeightPx": 421
-      }
-    },
-    "standing": {
-      "file": "standing.webp",
-      "cols": 1,
-      "rows": 1,
-      "frames": 1,
-      "cellW": 480,
-      "cellH": 440,
-      "durationMs": 0,
-      "frameDurationsMs": [
-        0
-      ]
-    },
-    "idle-authored-0": {
-      "file": "idle-authored-0.webp",
-      "cols": 3,
-      "rows": 3,
-      "frames": 9,
-      "cellW": 480,
-      "cellH": 440,
-      "durationMs": 375,
-      "frameDurationsMs": [
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664
-      ],
-      "content": {
-        "frameHeightPx": 423,
-        "scale": 1
-      }
-    },
-    "idle-authored-1": {
-      "file": "idle-authored-1.webp",
-      "cols": 3,
-      "rows": 3,
-      "frames": 9,
-      "cellW": 480,
-      "cellH": 440,
-      "durationMs": 375,
-      "frameDurationsMs": [
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664
-      ],
-      "content": {
-        "frameHeightPx": 423,
-        "scale": 1
-      }
-    },
-    "idle-authored-2": {
-      "file": "idle-authored-2.webp",
-      "cols": 3,
-      "rows": 3,
-      "frames": 9,
-      "cellW": 480,
-      "cellH": 440,
-      "durationMs": 375,
-      "frameDurationsMs": [
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664
-      ],
-      "content": {
-        "frameHeightPx": 423,
-        "scale": 1
-      }
-    },
-    "idle-authored-3": {
-      "file": "idle-authored-3.webp",
-      "cols": 3,
-      "rows": 3,
-      "frames": 9,
-      "cellW": 480,
-      "cellH": 440,
-      "durationMs": 375,
-      "frameDurationsMs": [
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664
-      ],
-      "content": {
-        "frameHeightPx": 423,
-        "scale": 1
-      }
-    },
-    "idle-authored-4": {
-      "file": "idle-authored-4.webp",
-      "cols": 3,
-      "rows": 3,
-      "frames": 9,
-      "cellW": 480,
-      "cellH": 440,
-      "durationMs": 375,
-      "frameDurationsMs": [
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664
-      ],
-      "content": {
-        "frameHeightPx": 423,
-        "scale": 1
-      }
-    },
-    "idle-authored-5": {
-      "file": "idle-authored-5.webp",
-      "cols": 3,
-      "rows": 3,
-      "frames": 9,
-      "cellW": 480,
-      "cellH": 440,
-      "durationMs": 375,
-      "frameDurationsMs": [
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664
-      ],
-      "content": {
-        "frameHeightPx": 423,
-        "scale": 1
-      }
-    },
-    "idle-authored-6": {
-      "file": "idle-authored-6.webp",
-      "cols": 3,
-      "rows": 3,
-      "frames": 9,
-      "cellW": 480,
-      "cellH": 440,
-      "durationMs": 375,
-      "frameDurationsMs": [
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664
-      ],
-      "content": {
-        "frameHeightPx": 423,
-        "scale": 1
-      }
-    },
-    "idle-authored-7": {
-      "file": "idle-authored-7.webp",
-      "cols": 3,
-      "rows": 3,
-      "frames": 9,
-      "cellW": 480,
-      "cellH": 440,
-      "durationMs": 375,
-      "frameDurationsMs": [
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664
-      ],
-      "content": {
-        "frameHeightPx": 423,
-        "scale": 1
-      }
-    },
-    "idle-authored-8": {
-      "file": "idle-authored-8.webp",
-      "cols": 3,
-      "rows": 2,
-      "frames": 5,
-      "cellW": 480,
-      "cellH": 440,
-      "durationMs": 208.33333333333334,
-      "frameDurationsMs": [
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664,
-        41.666666666666664
-      ],
-      "content": {
-        "frameHeightPx": 423,
-        "scale": 1
-      }
-    }
+ "schema": "tich-dao-authored/v1",
+ "sourceCharacter": "tich-dao-six-state-phase-aware.zip",
+ "sourcePackSha256": "3a4c6a63418cbb41eda7554368c890a3d0e6f16278ae4e57e5833ad3e64a2eab",
+ "sourceVfx": null,
+ "pending": [
+  "avatar.webp là ảnh tạm cắt từ idle frame 53 — portrait authored chờ owner",
+  "chưa có SFX authored cho basic/ultimate/hit"
+ ],
+ "clips": {
+  "basic": {
+   "file": "basic.webp",
+   "cols": 6,
+   "rows": 3,
+   "frames": 18,
+   "cellW": 480,
+   "cellH": 440,
+   "durationMs": 900,
+   "frameDurationsMs": [
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50,
+    50
+   ],
+   "releaseMs": 300,
+   "impactMs": 450,
+   "content": {
+    "frameHeightPx": 350,
+    "scale": 1.21,
+    "normalizedHeightPx": 424
+   }
   },
-  "idle": {
-    "frames": 77,
-    "durationMs": 3208.3333333333335,
-    "frameDurationsMs": [
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664
-    ]
+  "ultimate": {
+   "file": "ultimate.webp",
+   "cols": 6,
+   "rows": 3,
+   "frames": 18,
+   "cellW": 480,
+   "cellH": 440,
+   "durationMs": 4000,
+   "frameDurationsMs": [
+    222.22222222222223,
+    222.22222222222223,
+    222.22222222222223,
+    222.22222222222223,
+    222.22222222222223,
+    222.22222222222223,
+    222.22222222222223,
+    222.22222222222223,
+    222.22222222222223,
+    222.22222222222223,
+    222.22222222222223,
+    222.22222222222223,
+    222.22222222222223,
+    222.22222222222223,
+    222.22222222222223,
+    222.22222222222223,
+    222.22222222222223,
+    222.22222222222223
+   ],
+   "strikeMs": [
+    1083,
+    1750,
+    2917
+   ],
+   "releaseMs": 1083,
+   "impactMs": 1083,
+   "content": {
+    "frameHeightPx": 328,
+    "scale": 1.29,
+    "normalizedHeightPx": 423
+   }
   },
-  "idleVisual": {
-    "schema": "honviet.authored-idle/v1",
-    "sourcePack": "tich-dao-six-state-phase-aware.zip",
-    "sourcePackSha256": "3a4c6a63418cbb41eda7554368c890a3d0e6f16278ae4e57e5833ad3e64a2eab",
-    "frames": 77,
-    "durationMs": 3208.3333333333335,
-    "frameDurationsMs": [
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664,
-      41.666666666666664
-    ],
-    "pageFrames": 9,
-    "pages": 9,
-    "cols": 3,
-    "cellW": 480,
-    "cellH": 440,
-    "pivot": "bottom-center",
-    "contentOffset": [
-      50,
-      0
-    ],
-    "contentSize": [
-      379,
-      440
-    ],
-    "avatar": "avatar.webp",
-    "avatarFrame": 53,
-    "fitPolicy": "contain, centered horizontally, bottom anchored",
-    "runtimeArtifactSha256": {
-      "basic.webp": "663cb10066ddc80dd11557ccf7bbbad4828952db501e6557db0287f9a47233f8",
-      "ultimate.webp": "8bc61360051fd4166af63b0a45df3e4ef4f747287c2b2f16930d9abc09a13047",
-      "hit.webp": "3280ecf62cb3215696f5a0bddaac409ac489883ee0a358c1e919459ef1c91001",
-      "run.webp": "eb2323e76c148af3bb885a5dc97cd914073836466582c4f0479d635cea6f7f6f",
-      "fall-die.webp": "87b69fb616f6b46544532ad9b87956f11a71c0baf8a9be50479296a2c3619f32",
-      "standing.webp": "b2ede0f26ad6da728a471e855e2a7d3d5598410152fa745323d17336c63864cc",
-      "avatar.webp": "61ef66249b9ebad90fbf84f87562ca5277dd24b9240c4a3dc3b5fe8734372e73",
-      "idle-authored-0.webp": "a0036fe3587bc2a010a697fc72d3b1566d6b8c61818034c9655f08317f61253e",
-      "idle-authored-1.webp": "4869977c1ceac5b7cfb2867ab87615dcd83a1ee5564bf94f25f2a8bbe55ff4e4",
-      "idle-authored-2.webp": "6eadada1a73ae1735dc571544b59389378f6f6f49cb976edf2d94ab496a7a123",
-      "idle-authored-3.webp": "17c92fcc733aad7ce75ed66369c7951ad280ce8fb61cb2747671cb197dc64c40",
-      "idle-authored-4.webp": "dd1cb281d80ee6dcb764c5953e44c4b442824f4d1e716b7fa117224f1fd52de6",
-      "idle-authored-5.webp": "71aca8cba3e69511ce7bf8a81eb9b32d8f0054b43aa1f72b7f016ef73767aae1",
-      "idle-authored-6.webp": "990f6c76a3ecb74f67b215ec0904d607ba41afc9c004ec2ca646bccbd7c1b568",
-      "idle-authored-7.webp": "ec82a541fccd854a2f1206e851d20b503e4c5c48d47290f275b49b15e11e53c4",
-      "idle-authored-8.webp": "af384eeb950d83a3d5575204f49d2a767f2eec5e480a876305c6ccf11424ced2"
-    },
-    "avatarFileSha256": "61ef66249b9ebad90fbf84f87562ca5277dd24b9240c4a3dc3b5fe8734372e73"
+  "hit": {
+   "file": "hit.webp",
+   "cols": 6,
+   "rows": 3,
+   "frames": 18,
+   "cellW": 480,
+   "cellH": 440,
+   "durationMs": 350,
+   "frameDurationsMs": [
+    19.444444444444443,
+    19.444444444444443,
+    19.444444444444443,
+    19.444444444444443,
+    19.444444444444443,
+    19.444444444444443,
+    19.444444444444443,
+    19.444444444444443,
+    19.444444444444443,
+    19.444444444444443,
+    19.444444444444443,
+    19.444444444444443,
+    19.444444444444443,
+    19.444444444444443,
+    19.444444444444443,
+    19.444444444444443,
+    19.444444444444443,
+    19.444444444444443
+   ],
+   "content": {
+    "frameHeightPx": 424,
+    "scale": 1,
+    "normalizedHeightPx": 424
+   }
   },
-  "ultimateTimeline": {
-    "sourceFps": 24,
-    "sourceFrameCount": 96,
-    "sourceDurationSeconds": 4,
-    "boundaryConvention": "sourceFrameStart inclusive, sourceFrameEndInclusive inclusive, endPtsSecondsExclusive is next frame boundary",
-    "phases": [
-      {
-        "id": "phase-01-windup",
-        "label": "Wind-up / cast",
-        "startMs": 0,
-        "endMs": 458.33299999999997,
-        "sourceFrames": [
-          0,
-          10
-        ],
-        "visible": true,
-        "cells": [
-          0,
-          1
-        ]
-      },
-      {
-        "id": "phase-02-dash-out",
-        "label": "Dash-out / afterimage",
-        "startMs": 458.33299999999997,
-        "endMs": 1000,
-        "sourceFrames": [
-          11,
-          23
-        ],
-        "visible": true,
-        "cells": [
-          2,
-          3,
-          4
-        ]
-      },
-      {
-        "id": "phase-03-vanish-gap-1",
-        "label": "Vanish gap 1",
-        "startMs": 1000,
-        "endMs": 1083.333,
-        "sourceFrames": [
-          24,
-          25
-        ],
-        "visible": false,
-        "cells": []
-      },
-      {
-        "id": "phase-04-reappear-strike-1",
-        "label": "Reappear / strike 1",
-        "startMs": 1083.333,
-        "endMs": 1500,
-        "sourceFrames": [
-          26,
-          35
-        ],
-        "visible": true,
-        "cells": [
-          5,
-          6
-        ]
-      },
-      {
-        "id": "phase-05-vanish-gap-2",
-        "label": "Vanish gap 2",
-        "startMs": 1500,
-        "endMs": 1750,
-        "sourceFrames": [
-          36,
-          41
-        ],
-        "visible": false,
-        "cells": []
-      },
-      {
-        "id": "phase-06-reappear-combo",
-        "label": "Reappear / combo",
-        "startMs": 1750,
-        "endMs": 2458.333,
-        "sourceFrames": [
-          42,
-          58
-        ],
-        "visible": true,
-        "cells": [
-          8,
-          9,
-          10
-        ]
-      },
-      {
-        "id": "phase-07-settle",
-        "label": "Settle / bridge",
-        "startMs": 2458.333,
-        "endMs": 2916.667,
-        "sourceFrames": [
-          59,
-          69
-        ],
-        "visible": true,
-        "cells": [
-          11,
-          12,
-          13
-        ]
-      },
-      {
-        "id": "phase-08-final-strike",
-        "label": "Final strike",
-        "startMs": 2916.667,
-        "endMs": 3291.667,
-        "sourceFrames": [
-          70,
-          78
-        ],
-        "visible": true,
-        "cells": [
-          14
-        ]
-      },
-      {
-        "id": "phase-09-recovery",
-        "label": "Recovery",
-        "startMs": 3291.667,
-        "endMs": 4000,
-        "sourceFrames": [
-          79,
-          95
-        ],
-        "visible": true,
-        "cells": [
-          15,
-          16,
-          17
-        ]
-      }
-    ]
+  "run": {
+   "file": "run.webp",
+   "cols": 6,
+   "rows": 3,
+   "frames": 18,
+   "cellW": 480,
+   "cellH": 440,
+   "durationMs": 750,
+   "frameDurationsMs": [
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664
+   ],
+   "content": {
+    "frameHeightPx": 412,
+    "scale": 1.03,
+    "normalizedHeightPx": 424
+   }
   },
-  "vfx": {
-    "provenance": {
-      "source": "Owner-approved Cổ Mộ shortlist, 2026-10-15; tich-dao-vfx-sfx-v1 previews",
-      "blendMode": "screen; original alpha retained"
-    },
-    "clips": {
-      "vanish": {
-        "file": "vortex.webp",
-        "frames": 15,
-        "cols": 5,
-        "rows": 3,
-        "cellW": 350,
-        "cellH": 307,
-        "blendMode": "screen",
-        "sourceCode": "jgm_120_ftw_c",
-        "fps": 42.857142857142854,
-        "display": {
-          "heightPx": 300,
-          "headAnchor": 1
-        },
-        "sha256": "265ce6eaa00058af05c080aa8835c88040d263b5a613a44ffab1157bde474222"
-      },
-      "appear": {
-        "file": "flower.webp",
-        "frames": 15,
-        "cols": 5,
-        "rows": 3,
-        "cellW": 287,
-        "cellH": 205,
-        "blendMode": "screen",
-        "sourceCode": "jgm_30_hxc_c",
-        "fps": 33.333333333333336,
-        "display": {
-          "heightPx": 300,
-          "headAnchor": 1,
-          "anchor": "waist"
-        },
-        "sha256": "4093c58267c68ceffba9e2b069ed17bf70daa2ab0434b6c7d9286d992dfeca13"
-      },
-      "rain": {
-        "file": "rain.webp",
-        "frames": 15,
-        "cols": 5,
-        "rows": 3,
-        "cellW": 384,
-        "cellH": 386,
-        "blendMode": "screen",
-        "sourceCode": "zgm_110_qzzh_c",
-        "fps": 25.0,
-        "display": {
-          "heightPx": 300,
-          "headAnchor": 1
-        },
-        "sha256": "5901b4630e032759c1f84ff7d903738c14b47a623caccae10f1c099d592ed897"
-      }
-    }
+  "fall-die": {
+   "file": "fall-die.webp",
+   "cols": 6,
+   "rows": 3,
+   "frames": 18,
+   "cellW": 480,
+   "cellH": 440,
+   "durationMs": 4000,
+   "frameDurationsMs": [
+    222.22222222222223,
+    222.22222222222223,
+    222.22222222222223,
+    222.22222222222223,
+    222.22222222222223,
+    222.22222222222223,
+    222.22222222222223,
+    222.22222222222223,
+    222.22222222222223,
+    222.22222222222223,
+    222.22222222222223,
+    222.22222222222223,
+    222.22222222222223,
+    222.22222222222223,
+    222.22222222222223,
+    222.22222222222223,
+    222.22222222222223,
+    222.22222222222223
+   ],
+   "content": {
+    "frameHeightPx": 354,
+    "scale": 1.19,
+    "normalizedHeightPx": 421
+   }
   },
-  "sfx": {
-    "provenance": {
-      "source": "tich-dao-vfx-sfx-v1 approved 2026-10-15",
-      "note": "Reused/mixed Đường Môn and Võ Đang; NOT verified as original Cổ Mộ audio"
-    },
-    "blink": {
-      "audio": "tich-dao-blink",
-      "file": "blink.wav",
-      "sha256": "123831684e78ce012d07152955c8a55d5c7045b937d0d5027adfb21a3a7cdff4"
-    },
-    "slash": {
-      "audio": "tich-dao-slash",
-      "file": "slash.wav",
-      "sha256": "178202d5dff8b8168103721d857b09c2f87c2ae6089c356cf915c8e69c2aaa79"
-    },
-    "sword-rain": {
-      "audio": "tich-dao-sword-rain",
-      "file": "sword-rain.wav",
-      "sha256": "fef3a3be15236fec02cb5bcebea683a39292dc43d9bfca850db0eb6599d4ccec"
-    },
-    "execute-impact": {
-      "audio": "tich-dao-execute-impact",
-      "file": "execute-impact.wav",
-      "sha256": "e7d3430c85612f9877246dd76da967c9bdc10d0cbf6f77cfda719d081e0e1ef6"
-    }
+  "standing": {
+   "file": "standing.webp",
+   "cols": 1,
+   "rows": 1,
+   "frames": 1,
+   "cellW": 480,
+   "cellH": 440,
+   "durationMs": 0,
+   "frameDurationsMs": [
+    0
+   ]
+  },
+  "idle-authored-0": {
+   "file": "idle-authored-0.webp",
+   "cols": 3,
+   "rows": 3,
+   "frames": 9,
+   "cellW": 480,
+   "cellH": 440,
+   "durationMs": 375,
+   "frameDurationsMs": [
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664
+   ],
+   "content": {
+    "frameHeightPx": 423,
+    "scale": 1
+   }
+  },
+  "idle-authored-1": {
+   "file": "idle-authored-1.webp",
+   "cols": 3,
+   "rows": 3,
+   "frames": 9,
+   "cellW": 480,
+   "cellH": 440,
+   "durationMs": 375,
+   "frameDurationsMs": [
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664
+   ],
+   "content": {
+    "frameHeightPx": 423,
+    "scale": 1
+   }
+  },
+  "idle-authored-2": {
+   "file": "idle-authored-2.webp",
+   "cols": 3,
+   "rows": 3,
+   "frames": 9,
+   "cellW": 480,
+   "cellH": 440,
+   "durationMs": 375,
+   "frameDurationsMs": [
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664
+   ],
+   "content": {
+    "frameHeightPx": 423,
+    "scale": 1
+   }
+  },
+  "idle-authored-3": {
+   "file": "idle-authored-3.webp",
+   "cols": 3,
+   "rows": 3,
+   "frames": 9,
+   "cellW": 480,
+   "cellH": 440,
+   "durationMs": 375,
+   "frameDurationsMs": [
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664
+   ],
+   "content": {
+    "frameHeightPx": 423,
+    "scale": 1
+   }
+  },
+  "idle-authored-4": {
+   "file": "idle-authored-4.webp",
+   "cols": 3,
+   "rows": 3,
+   "frames": 9,
+   "cellW": 480,
+   "cellH": 440,
+   "durationMs": 375,
+   "frameDurationsMs": [
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664
+   ],
+   "content": {
+    "frameHeightPx": 423,
+    "scale": 1
+   }
+  },
+  "idle-authored-5": {
+   "file": "idle-authored-5.webp",
+   "cols": 3,
+   "rows": 3,
+   "frames": 9,
+   "cellW": 480,
+   "cellH": 440,
+   "durationMs": 375,
+   "frameDurationsMs": [
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664
+   ],
+   "content": {
+    "frameHeightPx": 423,
+    "scale": 1
+   }
+  },
+  "idle-authored-6": {
+   "file": "idle-authored-6.webp",
+   "cols": 3,
+   "rows": 3,
+   "frames": 9,
+   "cellW": 480,
+   "cellH": 440,
+   "durationMs": 375,
+   "frameDurationsMs": [
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664
+   ],
+   "content": {
+    "frameHeightPx": 423,
+    "scale": 1
+   }
+  },
+  "idle-authored-7": {
+   "file": "idle-authored-7.webp",
+   "cols": 3,
+   "rows": 3,
+   "frames": 9,
+   "cellW": 480,
+   "cellH": 440,
+   "durationMs": 375,
+   "frameDurationsMs": [
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664
+   ],
+   "content": {
+    "frameHeightPx": 423,
+    "scale": 1
+   }
+  },
+  "idle-authored-8": {
+   "file": "idle-authored-8.webp",
+   "cols": 3,
+   "rows": 2,
+   "frames": 5,
+   "cellW": 480,
+   "cellH": 440,
+   "durationMs": 208.33333333333334,
+   "frameDurationsMs": [
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664,
+    41.666666666666664
+   ],
+   "content": {
+    "frameHeightPx": 423,
+    "scale": 1
+   }
   }
+ },
+ "idle": {
+  "frames": 77,
+  "durationMs": 3208.3333333333335,
+  "frameDurationsMs": [
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664
+  ]
+ },
+ "idleVisual": {
+  "schema": "honviet.authored-idle/v1",
+  "sourcePack": "tich-dao-six-state-phase-aware.zip",
+  "sourcePackSha256": "3a4c6a63418cbb41eda7554368c890a3d0e6f16278ae4e57e5833ad3e64a2eab",
+  "frames": 77,
+  "durationMs": 3208.3333333333335,
+  "frameDurationsMs": [
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664,
+   41.666666666666664
+  ],
+  "pageFrames": 9,
+  "pages": 9,
+  "cols": 3,
+  "cellW": 480,
+  "cellH": 440,
+  "pivot": "bottom-center",
+  "contentOffset": [
+   50,
+   0
+  ],
+  "contentSize": [
+   379,
+   440
+  ],
+  "avatar": "avatar.webp",
+  "avatarFrame": 53,
+  "fitPolicy": "contain, centered horizontally, bottom anchored",
+  "runtimeArtifactSha256": {
+   "basic.webp": "663cb10066ddc80dd11557ccf7bbbad4828952db501e6557db0287f9a47233f8",
+   "ultimate.webp": "8bc61360051fd4166af63b0a45df3e4ef4f747287c2b2f16930d9abc09a13047",
+   "hit.webp": "3280ecf62cb3215696f5a0bddaac409ac489883ee0a358c1e919459ef1c91001",
+   "run.webp": "eb2323e76c148af3bb885a5dc97cd914073836466582c4f0479d635cea6f7f6f",
+   "fall-die.webp": "87b69fb616f6b46544532ad9b87956f11a71c0baf8a9be50479296a2c3619f32",
+   "standing.webp": "b2ede0f26ad6da728a471e855e2a7d3d5598410152fa745323d17336c63864cc",
+   "avatar.webp": "61ef66249b9ebad90fbf84f87562ca5277dd24b9240c4a3dc3b5fe8734372e73",
+   "idle-authored-0.webp": "a0036fe3587bc2a010a697fc72d3b1566d6b8c61818034c9655f08317f61253e",
+   "idle-authored-1.webp": "4869977c1ceac5b7cfb2867ab87615dcd83a1ee5564bf94f25f2a8bbe55ff4e4",
+   "idle-authored-2.webp": "6eadada1a73ae1735dc571544b59389378f6f6f49cb976edf2d94ab496a7a123",
+   "idle-authored-3.webp": "17c92fcc733aad7ce75ed66369c7951ad280ce8fb61cb2747671cb197dc64c40",
+   "idle-authored-4.webp": "dd1cb281d80ee6dcb764c5953e44c4b442824f4d1e716b7fa117224f1fd52de6",
+   "idle-authored-5.webp": "71aca8cba3e69511ce7bf8a81eb9b32d8f0054b43aa1f72b7f016ef73767aae1",
+   "idle-authored-6.webp": "990f6c76a3ecb74f67b215ec0904d607ba41afc9c004ec2ca646bccbd7c1b568",
+   "idle-authored-7.webp": "ec82a541fccd854a2f1206e851d20b503e4c5c48d47290f275b49b15e11e53c4",
+   "idle-authored-8.webp": "af384eeb950d83a3d5575204f49d2a767f2eec5e480a876305c6ccf11424ced2"
+  },
+  "avatarFileSha256": "61ef66249b9ebad90fbf84f87562ca5277dd24b9240c4a3dc3b5fe8734372e73"
+ },
+ "ultimateTimeline": {
+  "sourceFps": 24,
+  "sourceFrameCount": 96,
+  "sourceDurationSeconds": 4,
+  "boundaryConvention": "sourceFrameStart inclusive, sourceFrameEndInclusive inclusive, endPtsSecondsExclusive is next frame boundary",
+  "phases": [
+   {
+    "id": "phase-01-windup",
+    "label": "Wind-up / cast",
+    "startMs": 0,
+    "endMs": 458.33299999999997,
+    "sourceFrames": [
+     0,
+     10
+    ],
+    "visible": true,
+    "cells": [
+     0,
+     1
+    ]
+   },
+   {
+    "id": "phase-02-dash-out",
+    "label": "Dash-out / afterimage",
+    "startMs": 458.33299999999997,
+    "endMs": 1000,
+    "sourceFrames": [
+     11,
+     23
+    ],
+    "visible": true,
+    "cells": [
+     2,
+     3,
+     4
+    ]
+   },
+   {
+    "id": "phase-03-vanish-gap-1",
+    "label": "Vanish gap 1",
+    "startMs": 1000,
+    "endMs": 1083.333,
+    "sourceFrames": [
+     24,
+     25
+    ],
+    "visible": false,
+    "cells": []
+   },
+   {
+    "id": "phase-04-reappear-strike-1",
+    "label": "Reappear / strike 1",
+    "startMs": 1083.333,
+    "endMs": 1500,
+    "sourceFrames": [
+     26,
+     35
+    ],
+    "visible": true,
+    "cells": [
+     5,
+     6
+    ]
+   },
+   {
+    "id": "phase-05-vanish-gap-2",
+    "label": "Vanish gap 2",
+    "startMs": 1500,
+    "endMs": 1750,
+    "sourceFrames": [
+     36,
+     41
+    ],
+    "visible": false,
+    "cells": []
+   },
+   {
+    "id": "phase-06-reappear-combo",
+    "label": "Reappear / combo",
+    "startMs": 1750,
+    "endMs": 2458.333,
+    "sourceFrames": [
+     42,
+     58
+    ],
+    "visible": true,
+    "cells": [
+     8,
+     9,
+     10
+    ]
+   },
+   {
+    "id": "phase-07-settle",
+    "label": "Settle / bridge",
+    "startMs": 2458.333,
+    "endMs": 2916.667,
+    "sourceFrames": [
+     59,
+     69
+    ],
+    "visible": true,
+    "cells": [
+     11,
+     12,
+     13
+    ]
+   },
+   {
+    "id": "phase-08-final-strike",
+    "label": "Final strike",
+    "startMs": 2916.667,
+    "endMs": 3291.667,
+    "sourceFrames": [
+     70,
+     78
+    ],
+    "visible": true,
+    "cells": [
+     14
+    ]
+   },
+   {
+    "id": "phase-09-recovery",
+    "label": "Recovery",
+    "startMs": 3291.667,
+    "endMs": 4000,
+    "sourceFrames": [
+     79,
+     95
+    ],
+    "visible": true,
+    "cells": [
+     15,
+     16,
+     17
+    ]
+   }
+  ]
+ },
+ "vfx": {
+  "provenance": {
+   "source": "Kiếm Thế (JX1) — kit Cổ Mộ phái, thư mục gumupai trong update03.pak",
+   "extractedBy": "numpy g_FileNameHash brute-force + SPR decode (PROJECT/bruteforce_gumu.py, gumu_extract.py)",
+   "packedTo": "animated webp per-frame (FULL_KIEMTHECHUAN NGUHANH_GAME assets), atlas hóa tại đây",
+   "license": "asset học tập/tái sử dụng nội bộ — không phân phối thương mại",
+   "scheduledAt": {
+    "vanish": "phase-03 + phase-05 start (1000ms/1500ms) — thoắt biến mất tại thân",
+    "appear": "phase-04 + phase-06 start (1083ms/1750ms) — hoa trận tại điểm hiện hình",
+    "slash": "Ảnh Bộ basic impact (450ms) — kiếm quang chém",
+    "rain": "Mưa kiếm kết liễu, ngay sau nhịp 3 (phase-08) trước phase-09"
+   }
+  },
+  "clips": {
+   "vanish": {
+    "file": "vanish-atlas.png",
+    "source": "vanish-xoay.webp",
+    "sourceCode": "zgm_70_yfz_b (xoáy tím biến mất)",
+    "cols": 8,
+    "rows": 2,
+    "frames": 10,
+    "cellW": 146,
+    "cellH": 161,
+    "fps": 30,
+    "display": {
+     "heightPx": 340,
+     "headAnchor": 0.78
+    }
+   },
+   "appear": {
+    "file": "appear-atlas.png",
+    "source": "appear-hoa-tran.webp",
+    "sourceCode": "jgm_30_hxc_c (vòng hoa-bướm tím)",
+    "cols": 8,
+    "rows": 2,
+    "frames": 15,
+    "cellW": 264,
+    "cellH": 203,
+    "fps": 30,
+    "display": {
+     "heightPx": 400,
+     "headAnchor": 0.78
+    }
+   },
+   "slash": {
+    "file": "slash-atlas.png",
+    "source": "atk.webp",
+    "sourceCode": "zgm_105_lgss_c (3 vệt chém chéo tím)",
+    "cols": 8,
+    "rows": 10,
+    "frames": 80,
+    "cellW": 139,
+    "cellH": 139,
+    "fps": 30,
+    "display": {
+     "heightPx": 430,
+     "headAnchor": 0.78
+    }
+   },
+   "rain": {
+    "file": "rain-atlas.png",
+    "source": "ultimate.webp",
+    "sourceCode": "zgm_85_xydy_c (chùm kiếm tím rơi)",
+    "cols": 8,
+    "rows": 3,
+    "frames": 23,
+    "cellW": 250,
+    "cellH": 220,
+    "fps": 30,
+    "display": {
+     "heightPx": 540,
+     "headAnchor": 0.78
+    }
+   }
+  }
+ },
+ "sfx": {
+  "provenance": {
+   "source": "Kiếm Thế (JX1) fightskill SFX — phái Cổ Mộ mượn tiếng theo bảng missile.txt gốc",
+   "note": "Cổ Mộ không có SFX riêng trong client JX1; bảng kỹ năng gán tiếng Thúy Yên/Thiếu Lâm cho các chiêu jgm/zgm — giữ đúng nguồn gốc đó",
+   "pairTable": {
+    "missile-518": "jgm_110_znwz_c + cy_mylx_f (launch) + cy_mylx_c (hit) → Tịch Dao nhịp 1 phát mylx_f, nhịp 2-3 mylx_c",
+    "missile-522": "zgm_105_lgss_c + zgm_110_qzzh_c + sl_dmdj_c → mưa kiếm kết liễu dùng dmdj (sl_dmdj_c); qzzh_c dự phòng mưa kiếm mục tiêu 2 (chờ duyệt)",
+    "missile-547": "jgm_120_ftw_c + cy_bxxl_c → Ảnh Bộ basic dùng bxxl (cùng họ ftw)",
+    "missile-548/574": "jgm_50_byhw_c — không kèm tiếng (đúng bảng)"
+   },
+   "jx1PairTable": {
+    "note": "AUDIT 2026-10-16: bảng missile Cổ Mộ gốc (1fightskill/missile.txt server 17-phái) — trả lời câu 'NOT verified as original Cổ Mộ audio' phía trên. Đây là cặp VFX↔SFX NGUỒN GỐC; các file blink/slash/sword-rain hiện tại là bản mix đã duyệt — muốn chuyển 100% audio gốc thì swap theo bảng này (chờ owner duyệt).",
+    "missile-518": "jgm_110_znwz_c + cy_mylx_f (SndFile2 phóng) + cy_mylx_c (SndFile4 trúng) — biến thể launch/hit của cùng một chiêu",
+    "missile-522": "zgm_105_lgss_c + zgm_110_qzzh_c + sl_dmdj_c (Thiếu Lâm) — kiếm quang và mưa kiếm dùng chung dmdj",
+    "missile-547": "jgm_120_ftw_c + cy_bxxl_c (Thúy Yên)",
+    "missile-548/574": "jgm_50_byhw_c — không kèm tiếng (đúng bảng)",
+    "nguon_file_goc": "SKILLPACK/sfx/{cuiyan,shaolin}/*.wav đã trích decode sẵn"
+   }
+  },
+  "basic": {
+   "audio": "tich-dao-basic",
+   "file": "basic.wav",
+   "sourceCode": "cuiyan/cy_bxxl_c.wav",
+   "note": "kiếm quang Ảnh Bộ"
+  },
+  "strike": {
+   "audio": "tich-dao-strike",
+   "file": "strike.wav",
+   "sourceCode": "cuiyan/cy_mylx_c.wav",
+   "note": "mỗi nhát chém Tam Ảnh"
+  },
+  "rain": {
+   "audio": "tich-dao-rain",
+   "file": "rain.wav",
+   "sourceCode": "shaolin/sl_dmdj_c.wav",
+   "note": "mưa kiếm kết liễu"
+  },
+  "strikeLaunch": {
+   "audio": "tich-dao-strike-launch",
+   "file": "strike-launch.wav",
+   "sourceCode": "cuiyan/cy_mylx_f.wav",
+   "note": "biến thể PHÓNG của nhịp 1 (SndFile2 missile 518); mylx_c = trúng (SndFile4)"
+  }
+ }
 }

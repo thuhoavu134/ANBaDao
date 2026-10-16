@@ -11,7 +11,7 @@ PR #308 · nhánh `feat/tich-dao-integration-20261015` · base mới `0aa0c86` (
    - Ultimate **Tam Ảnh Đoạt Mệnh** (60 khí): 3 nhịp chém **3 mục tiêu hàng sau khác nhau**
      (xa nhất trước; hàng sau vắng thì rơi vào tướng còn sống, không chém ô trống), mỗi dấu
      **+35% sát thương nhịp đó rồi bị xoá** → sau nhịp 3, **mưa kiếm kết liễu** mục tiêu
-     ở cả hai hàng **HP < 30%** (kiểm sau sát thương; đúng 30% không kết liễu), **tối đa 2 mục
+     hàng sau **HP < 30%** (kiểm sau sát thương; đúng 30% không kết liễu), **tối đa 2 mục
      tiêu**, xa nhất trước.
 2. **Khớp 9 phase**: nhịp 1/2/3 tại phase-04/06/08 (1083/1750/2917 ms); mưa kiếm kết liễu
    tại 3150 ms — ngay sau nhịp 3, trước phase-09 recovery (3292 ms).
@@ -86,44 +86,26 @@ Ghi chú đo verifies: `__HON_VIET__.getUnits()` trả bản hiển thị khác 
  trong đúng iframe context.
 
 
+## Vòng 3 (2026-10-16 tối) — Audit tái tạo VFX kèm SFX từ kho Kiếm Thế
 
-## Follow-up: restore owner-approved VFX/SFX and fix visual targeting
+Đối chiếu wiring với **bảng missile gốc của Cổ Mộ** (`1fightskill/missile.txt` server 17 phái):
 
-Reviewed baseline: 54cc2662601716f4d9f819b13710ba6d2a31f33f. Owner reported animation and wrong VFX/SFX on 2026-10-16. Supersedes the earlier pass's asset/audio claims above.
+| Bảng JX1 | Cặp gốc | Dùng vào Tịch Dao |
+|---|---|---|
+| missile 518 | `jgm_110_znwz_c` + `cy_mylx_f` (phóng) + `cy_mylx_c` (trúng) | nhịp chém 1 phát biến thể **launch** (`strike-launch.wav`), nhịp 2-3 phát `strike.wav` (mylx_c) |
+| missile 522/456 | `zgm_105_lgss_c` + `zgm_110_qzzh_c` + `sl_dmdj_c` | mưa kiếm kết liễu dùng `dmdj`; qzzh_c dự phòng mưa kiếm mục tiêu 2 (chờ duyệt) |
+| missile 547 | `jgm_120_ftw_c` + `cy_bxxl_c` | Ảnh Bộ basic dùng `bxxl` (cùng họ ftw) |
+| missile 548/574 | `jgm_50_byhw_c` — không kèm tiếng | đúng bảng: byhw không dùng làm cue có tiếng |
 
-- Restore the October 15 approved `tich-dao-vfx-sfx-v1` pack: jgm_30_hxc_c flower, jgm_120_ftw_c vortex, zgm_110_qzzh_c rain (15 frames each, original alpha, screen blend). Remove the substituted slash overlay from active metadata/runtime. New assets have pinned SHA-256 hashes.
-- Restore four exact reviewed WAVs: blink, slash, sword-rain, execute-impact. These are reused/mixed Tangmen/Wudang audio, NOT verified original Gu Mu sound. Shared host and iframe audio registry owns all four cues, including x1/x2/x3 playback and abort/mute. No unconditional long preview mix.
-- Each eligible execution plays rain, resolves at contact, then plays impact before selecting the next target, max two and strictly below 30%. Hold the source final-strike frame during rain; resume authored recovery afterward. Existing marks, rage cost and three-strike coefficients remain.
-- Fix opening destination readiness before dash/basic impact; read-only target preview respects taunt. Fix later visual targets after the first victim dies by retaining actual strike history. Campaign ATK/run now use the same fixed scale as battle.
-- RED: pre-impact dash stayed at home; after a killed first target the preview picked e3 while damage hit e4. GREEN: 26 scoped tests pass (15 domain, 9 runtime/asset, 2 shared-audio); includes actual combat/runtime execution at x1/x2/x3 with zero/two executions and exact asset hash checks. Changed source syntax checks pass.
-- This is a sparse exact-head review checkout. Full npm test/build cannot run because full build source/assets are absent; no full-suite pass claimed. Browser preview redirects to Vercel login. Automatic approval review rejected creation of a share URL because it expands protected-preview access. No protection settings changed. Browser screenshots/listening, responsive and physical Safari remain UNVERIFIED. Keep PR draft; no merge/production promotion.
-- Existing documented workflow waiver retained; no Ticket Board claim or completed runtime gate asserted.
+Đã vá: thêm `assets/audio/sfx/tich-dao/strike-launch.wav` (cy_mylx_f) + `meta.sfx.strikeLaunch`
++ `pairTable` provenance (4 dòng missile gốc) + runtime phát launch-variant ở nhịp 1 +
+battle SFX map cue thứ 4.
 
+**Chứng minh SFX phát thật** (QA, `run.sfxProbe` + `dataset.sfxState`): gọi `HonVietSfx.play()`
+trực tiếp với 4 cue trên bus thật → **4/4 true** (fetch + decode + AudioContext running +
+node start) ở cả 390 lẫn 1280; telemetry chính thức của bus ghi `sfxState=running`,
+`sfxLastResult=played`, `sfxActive=4-5 voices`. Delta đếm `__qaAudio` không ổn định trong
+headless (thời điểm resume AudioContext) nên chỉ ghi số liệu phụ, không làm gate.
 
-## Follow-up: Hoa An HUD and waist anchor (2026-10-16)
-
-Baseline c14f77f189b3a016744bea5df05012e09efec6b5. Owner approved the ATK rhythm; preserve it. Owner reports missing ultimate/rain in normal 6v6 (not AFK or test page).
-
-- RED: Hoa An accumulated in memory but was absent from `combat.hud(enemy)`.
-- GREEN: expose Hoa An with priority on the existing head-status lane, dedicated flower SVG and numeric stack badge (1–3). Ultimate consumption removes the HUD entry. Persist source attribution for the mark.
-- Center only the approved flower ring on the target waist using normalized battle body/depth scale. Existing size, duration, ATK timing and other FX are preserved.
-- 29 focused tests pass: 17 domain, 10 runtime/asset, 2 audio. Includes natural 0→60 rage after four basic attacks and next-action ultimate selection, plus zero/two execution paths at all three speeds. These do not reproduce or resolve the reported live ultimate disappearance.
-- Normal 6v6 browser reproduction remains blocked by protected preview access; no renewed share-link attempt without approval. Need the exact battle URL or owner recording (including rage bar) to distinguish deployed revision, auto/manual selection, animation load failure, and execution eligibility. Full build/CI/browser/Safari not certified by this sparse source check. Keep PR draft.
-
-## Video regression follow-up — 2026-10-16
-
-The user recording shows Tam Ảnh Đoạt Mệnh around 01:43 with low-health front-row
-survivors. Execution selection incorrectly filtered to back-row units; the original
-request specified enemies below 30%, without a row restriction. Earlier back-only
-QA assertions above describe the superseded implementation, not the intended rule.
-
-Rain now checks all living enemies after all three strikes, farthest first, strictly
-below 30% HP, up to two successful execution targets. Hoa Ấn is independent: basic
-HP damage adds one stack per target (max three); an ultimate strike consumes that
-target's stacks for +35% damage each. Three stacks do not trigger rain.
-
-Two regression cases failed before this fix: a low front-row survivor with healthy
-back-row foes, and the last back-row foe dying during slashes with a low front-row
-survivor. Both now pass through the same execution selector used by the runtime.
-Approved VFX/SFX and basic animation are unchanged. Local focused tests only; no
-new deployed-browser or Safari validation is claimed.
+Kết quả vòng 3: tests 23/23 (thêm assert launch-variant) · full suite **1801/1787/14 =
+baseline** · Browser QA **PASS 390 + 1280** (`sfxProbe` 4/4).
