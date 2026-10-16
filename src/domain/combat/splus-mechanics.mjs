@@ -579,7 +579,7 @@ export function createSplusMechanics(options={}) {
       return {ok:true,events:events.slice(startIndex)};
     }finally{currentAction=previous;}
   }
-  // Mưa Kiếm Kết Liễu: after the three strikes the back line is swept once —
+  // Mưa Kiếm Kết Liễu: after the three strikes both enemy rows are eligible —
   // foes strictly below 30% HP (checked after strike damage) are executed,
   // farthest first, at most `executeMax` per cast.
   function nextTichDaoExecution(actorId,castId){
@@ -587,7 +587,7 @@ export function createSplusMechanics(options={}) {
     if(!alive(actor)||!cast||cast.id!==castId||cast.executed||cast.resolved.length!==3)return null;
     const r=rules(actor,'ultimate');
     if((cast.executionCount||0)>=n(r.executeMax,2))return null;
-    return farthestFrom(actor)(back(foes(actor)).filter(u=>alive(u)&&u.hp/u.maxHp<n(r.executeHp,.3)))[0]||null;
+    return farthestFrom(actor)(foes(actor).filter(u=>alive(u)&&u.hp/u.maxHp<n(r.executeHp,.3)))[0]||null;
   }
   function resolveTichDaoExecution(actorId,castId,expectedTargetId){
     const actor=unit(actorId),cast=actor?.splus?.memory?.shadowCast;

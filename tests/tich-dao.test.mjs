@@ -134,13 +134,13 @@ test('Mưa kiếm: đúng 30% máu KHÔNG được kết liễu (ngưỡng là d
  e.finishTichDaoCast('shadow',r.castId);
 });
 
-test('Mưa kiếm chỉ quét hàng sau: tướng hàng trước dưới 30% không bị kết liễu',()=>{
+test('Mưa kiếm xét cả hai hàng: tướng hàng trước dưới 30% được kết liễu',()=>{
  const e=setup(.5,units(['e5',5000],['e0',100]));
  const r=e.act('shadow','ultimate','e0',{deferTichDao:true});
  for(let strike=0;strike<3;strike++)e.resolveTichDaoImpact('shadow',r.castId,strike);
  const step=e.resolveTichDaoExecute('shadow',r.castId);
- assert.deepEqual(step.executed,[],'e0 (hàng trước, 1% máu) không thuộc hàng kết liễu');
- assert.equal(e.unit('e0').hp,100);
+ assert.deepEqual(step.executed,['e0'],'hàng trước cũng thuộc phạm vi kết liễu');
+ assert.equal(e.unit('e0').hp,0);
  e.finishTichDaoCast('shadow',r.castId);
 });
 
@@ -241,4 +241,17 @@ test('natural auto cadence reaches ultimate from zero rage after four basics',()
  assert.equal(e.chooseAction('shadow'),'ultimate');
  assert.equal(e.act('shadow','ultimate',null,{deferTichDao:true}).ok,true);
  assert.equal(e.unit('shadow').energy,0);
+});
+
+test('regression video: rear dies during slashes, rain still targets low front survivor',()=>{
+ const e=setup(.5,[actor,enemy(0,9000),enemy(1,1000),enemy(2,4000),enemy(3,1)]);
+ const cast=e.act('shadow','ultimate',null,{deferTichDao:true});
+ assert.equal(e.nextTichDaoExecution('shadow',cast.castId),null);
+ for(let i=0;i<3;i++)e.resolveTichDaoImpact('shadow',cast.castId,i);
+ assert.equal(e.unit('e3').hp,0);
+ assert.equal(e.nextTichDaoExecution('shadow',cast.castId)?.id,'e1');
+ const result=e.resolveTichDaoExecution('shadow',cast.castId,'e1');
+ assert.equal(result.killed,true);
+ assert.deepEqual(result.executed,['e1']);
+ assert.equal(e.nextTichDaoExecution('shadow',cast.castId),null);
 });

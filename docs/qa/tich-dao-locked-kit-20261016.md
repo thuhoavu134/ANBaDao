@@ -11,7 +11,7 @@ PR #308 · nhánh `feat/tich-dao-integration-20261015` · base mới `0aa0c86` (
    - Ultimate **Tam Ảnh Đoạt Mệnh** (60 khí): 3 nhịp chém **3 mục tiêu hàng sau khác nhau**
      (xa nhất trước; hàng sau vắng thì rơi vào tướng còn sống, không chém ô trống), mỗi dấu
      **+35% sát thương nhịp đó rồi bị xoá** → sau nhịp 3, **mưa kiếm kết liễu** mục tiêu
-     hàng sau **HP < 30%** (kiểm sau sát thương; đúng 30% không kết liễu), **tối đa 2 mục
+     ở cả hai hàng **HP < 30%** (kiểm sau sát thương; đúng 30% không kết liễu), **tối đa 2 mục
      tiêu**, xa nhất trước.
 2. **Khớp 9 phase**: nhịp 1/2/3 tại phase-04/06/08 (1083/1750/2917 ms); mưa kiếm kết liễu
    tại 3150 ms — ngay sau nhịp 3, trước phase-09 recovery (3292 ms).
@@ -109,3 +109,21 @@ Baseline c14f77f189b3a016744bea5df05012e09efec6b5. Owner approved the ATK rhythm
 - Center only the approved flower ring on the target waist using normalized battle body/depth scale. Existing size, duration, ATK timing and other FX are preserved.
 - 29 focused tests pass: 17 domain, 10 runtime/asset, 2 audio. Includes natural 0→60 rage after four basic attacks and next-action ultimate selection, plus zero/two execution paths at all three speeds. These do not reproduce or resolve the reported live ultimate disappearance.
 - Normal 6v6 browser reproduction remains blocked by protected preview access; no renewed share-link attempt without approval. Need the exact battle URL or owner recording (including rage bar) to distinguish deployed revision, auto/manual selection, animation load failure, and execution eligibility. Full build/CI/browser/Safari not certified by this sparse source check. Keep PR draft.
+
+## Video regression follow-up — 2026-10-16
+
+The user recording shows Tam Ảnh Đoạt Mệnh around 01:43 with low-health front-row
+survivors. Execution selection incorrectly filtered to back-row units; the original
+request specified enemies below 30%, without a row restriction. Earlier back-only
+QA assertions above describe the superseded implementation, not the intended rule.
+
+Rain now checks all living enemies after all three strikes, farthest first, strictly
+below 30% HP, up to two successful execution targets. Hoa Ấn is independent: basic
+HP damage adds one stack per target (max three); an ultimate strike consumes that
+target's stacks for +35% damage each. Three stacks do not trigger rain.
+
+Two regression cases failed before this fix: a low front-row survivor with healthy
+back-row foes, and the last back-row foe dying during slashes with a low front-row
+survivor. Both now pass through the same execution selector used by the runtime.
+Approved VFX/SFX and basic animation are unchanged. Local focused tests only; no
+new deployed-browser or Safari validation is claimed.
