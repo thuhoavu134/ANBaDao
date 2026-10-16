@@ -315,6 +315,7 @@ export function createSplusMechanics(options={}) {
       if(key(source)==='tich_dao'&&passive(source)&&action==='basic'&&dealt>0&&alive(target)){
         const cap=n(rules(source,'passive').maxMarks,3);
         target.splus.memory.hoaAn=Math.min(cap,n(target.splus.memory.hoaAn)+1);
+        target.splus.memory.hoaAnSourceId=source.id;
         emit('hoaAn',source,target,{marks:target.splus.memory.hoaAn});
       }
       if(options.dot&&options.burning&&dealt>0)for(const healer of holders(source,'hoa_duc')){
@@ -748,6 +749,8 @@ export function createSplusMechanics(options={}) {
   function hud(targetId) {
     const target=unit(targetId);if(!alive(target))return [];
     const entries=statuses(target).map(s=>({id:`${s.type}:${s.sourceId}`,type:s.type,iconId:s.iconId,sourceId:s.sourceId,sourceHeroId:s.sourceHeroId,polarity:s.polarity,stacks:s.stacks,maxStacks:s.maxStacks,charges:s.charges??null,remainingRounds:s.expiresRound==null?null:Math.max(0,s.expiresRound-round),name:def(unit(s.sourceId))?.passiveName||s.type}));
+    const hoaAn=Math.min(3,n(target.splus.memory.hoaAn));
+    if(hoaAn>0)entries.unshift({id:'hoaAn:'+target.id,type:'hoaAn',iconId:'hoaAn',name:'Hoa Ấn',sourceId:target.splus.memory.hoaAnSourceId||null,sourceHeroId:'hero_splus_tich_dao',polarity:'debuff',stacks:hoaAn,maxStacks:3,charges:null,remainingRounds:null});
     function aura(source,type,stacks=1,extra={}) {if(source&&stacks>0)entries.push({id:`aura:${type}:${source.id}`,type,iconId:def(source)?.iconId||null,sourceId:source.id,sourceHeroId:source.sourceId,polarity:'buff',stacks,maxStacks:null,charges:null,remainingRounds:null,name:def(source)?.passiveName||type,...extra});}
     for(const s of holders(target,'co_trong'))aura(s,'gears',n(s.splus.memory.gears));
     if(passive(target)){

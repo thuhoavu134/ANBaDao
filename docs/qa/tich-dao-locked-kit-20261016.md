@@ -98,3 +98,14 @@ Reviewed baseline: 54cc2662601716f4d9f819b13710ba6d2a31f33f. Owner reported anim
 - RED: pre-impact dash stayed at home; after a killed first target the preview picked e3 while damage hit e4. GREEN: 26 scoped tests pass (15 domain, 9 runtime/asset, 2 shared-audio); includes actual combat/runtime execution at x1/x2/x3 with zero/two executions and exact asset hash checks. Changed source syntax checks pass.
 - This is a sparse exact-head review checkout. Full npm test/build cannot run because full build source/assets are absent; no full-suite pass claimed. Browser preview redirects to Vercel login. Automatic approval review rejected creation of a share URL because it expands protected-preview access. No protection settings changed. Browser screenshots/listening, responsive and physical Safari remain UNVERIFIED. Keep PR draft; no merge/production promotion.
 - Existing documented workflow waiver retained; no Ticket Board claim or completed runtime gate asserted.
+
+
+## Follow-up: Hoa An HUD and waist anchor (2026-10-16)
+
+Baseline c14f77f189b3a016744bea5df05012e09efec6b5. Owner approved the ATK rhythm; preserve it. Owner reports missing ultimate/rain in normal 6v6 (not AFK or test page).
+
+- RED: Hoa An accumulated in memory but was absent from `combat.hud(enemy)`.
+- GREEN: expose Hoa An with priority on the existing head-status lane, dedicated flower SVG and numeric stack badge (1–3). Ultimate consumption removes the HUD entry. Persist source attribution for the mark.
+- Center only the approved flower ring on the target waist using normalized battle body/depth scale. Existing size, duration, ATK timing and other FX are preserved.
+- 29 focused tests pass: 17 domain, 10 runtime/asset, 2 audio. Includes natural 0→60 rage after four basic attacks and next-action ultimate selection, plus zero/two execution paths at all three speeds. These do not reproduce or resolve the reported live ultimate disappearance.
+- Normal 6v6 browser reproduction remains blocked by protected preview access; no renewed share-link attempt without approval. Need the exact battle URL or owner recording (including rage bar) to distinguish deployed revision, auto/manual selection, animation load failure, and execution eligibility. Full build/CI/browser/Safari not certified by this sparse source check. Keep PR draft.

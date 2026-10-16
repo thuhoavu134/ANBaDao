@@ -129,17 +129,18 @@ function tichDaoSfx(cue,info){
  if(!state.sound||__hvIsSkipping())return;
  try{void window.HonVietSfx?.play(cue,{group:'combat',signal:info.abort.signal,playbackRate:info.speed});}catch(error){}
 }
-function spawnTichDaoVfx(key,x,y,info){if(!TICH_DAO_META.vfx?.clips?.[key])return;tichDaoVfxImage(key);tichDaoVfxLive.push({key,x,y,speed:info?.speed||state.speed||1,startedAt:performance.now(),battleId:state.battleId});}
+function spawnTichDaoVfx(key,x,y,info,target){if(!TICH_DAO_META.vfx?.clips?.[key])return;tichDaoVfxImage(key);const waistY=target?target.y-310*battleCharacterDepthScale(target)*battleCharacterScale(target)/(typeof battleHeroVisualScale==='function'?battleHeroVisualScale(target):1)*.5:y;
+ tichDaoVfxLive.push({key,x,y,waistY,speed:info?.speed||state.speed||1,startedAt:performance.now(),battleId:state.battleId});}
 function drawTichDaoVfx(context,time){
  for(let i=tichDaoVfxLive.length-1;i>=0;i--){
   const v=tichDaoVfxLive[i],clip=TICH_DAO_META.vfx.clips[v.key],elapsed=(time-v.startedAt)*v.speed,ms=clip.frames/clip.fps*1000;
   if(elapsed>=ms||state.battleId!==v.battleId){tichDaoVfxLive.splice(i,1);continue;}
   const img=tichDaoVfxImage(v.key);if(!img||img.complete===false||img.naturalWidth===0)continue;
   const frame=Math.min(clip.frames-1,Math.floor(elapsed/1000*clip.fps));
-  // Hiệu ứng phóng to phủ lên thân + ĐẦU mục tiêu (anchor đáy ~78% chiều cao).
+  // Only the flower ring is centered on the target waist; other approved FX keep their anchors.
   const d=clip.display||{},dh=d.heightPx||clip.cellH,anchor=d.headAnchor??0.78;
   const k=dh/clip.cellH,w=clip.cellW*k,h=dh;
-  context.save();context.globalCompositeOperation=clip.blendMode||'source-over';context.drawImage(img,(frame%clip.cols)*clip.cellW,Math.floor(frame/clip.cols)*clip.cellH,clip.cellW,clip.cellH,v.x-w/2,v.y-h*anchor,w,h);context.restore();
+  context.save();context.globalCompositeOperation=clip.blendMode||'source-over';context.drawImage(img,(frame%clip.cols)*clip.cellW,Math.floor(frame/clip.cols)*clip.cellH,clip.cellW,clip.cellH,v.x-w/2,d.anchor==='waist'?v.waistY-h/2:v.y-h*anchor,w,h);context.restore();
  }
 }
 async function resolveTichDaoCast(e,info,actor,action,target,battleId){
@@ -152,7 +153,7 @@ async function resolveTichDaoCast(e,info,actor,action,target,battleId){
   if(victim){
    __tdSetSpot(info,tichDaoSpotFor(actor,victim));
    spawnTichDaoVfx('vanish',victim.x,victim.y,info);
-   spawnTichDaoVfx('appear',victim.x,victim.y,info);
+   spawnTichDaoVfx('appear',victim.x,victim.y,info,victim);
 
   }
   if(victim){tichDaoSfx('tich-dao-blink',info);tichDaoSfx('tich-dao-slash',info);}
@@ -169,7 +170,7 @@ async function resolveTichDaoCast(e,info,actor,action,target,battleId){
   __tdSetSpot(info,spot);
   const victimId=e.tichDaoStrikeTarget(actor.id,result.castId,strike)?.id;
   const victim=getUnit(victimId);
-  if(victim){spawnTichDaoVfx('vanish',victim.x,victim.y,info);spawnTichDaoVfx('appear',victim.x,victim.y,info);}
+  if(victim){spawnTichDaoVfx('vanish',victim.x,victim.y,info);spawnTichDaoVfx('appear',victim.x,victim.y,info,victim);}
   tichDaoSfx('tich-dao-blink',info);tichDaoSfx('tich-dao-slash',info);
  };
  const at=async ms=>{if(!await waitTichDaoMarker(info,ms,battleId))return false;return state.battleId===battleId;};

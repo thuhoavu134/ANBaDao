@@ -218,3 +218,27 @@ test('LỖI-2 engine: tichDaoStrikeTarget preview khớp đúng mục tiêu từ
  e.resolveTichDaoExecute('shadow',r.castId);e.finishTichDaoCast('shadow',r.castId);
 });
 
+
+test('Hoa An is visible in the shared enemy HUD and clears after its ultimate strike',()=>{
+ const e=setup();e.act('shadow','basic');
+ let mark=e.hud('e5').find(s=>s.type==='hoaAn');
+ assert.ok(mark,'Hoa An must be exported to the enemy head-icon owner');
+ assert.equal(mark.stacks,1);assert.equal(mark.maxStacks,3);assert.equal(mark.name,'Hoa Ấn');
+ e.act('shadow','basic');e.act('shadow','basic');
+ assert.equal(e.hud('e5').find(s=>s.type==='hoaAn').stacks,3);
+ const cast=e.act('shadow','ultimate',null,{deferTichDao:true});
+ e.resolveTichDaoImpact('shadow',cast.castId,0);
+ assert.equal(e.hud('e5').some(s=>s.type==='hoaAn'),false);
+});
+
+test('natural auto cadence reaches ultimate from zero rage after four basics',()=>{
+ const e=setup();e.unit('shadow').energy=0;
+ for(let i=0;i<4;i++){
+  assert.equal(e.chooseAction('shadow'),'basic');
+  assert.equal(e.act('shadow','basic').ok,true);
+  assert.equal(e.unit('shadow').energy,(i+1)*15);
+ }
+ assert.equal(e.chooseAction('shadow'),'ultimate');
+ assert.equal(e.act('shadow','ultimate',null,{deferTichDao:true}).ok,true);
+ assert.equal(e.unit('shadow').energy,0);
+});

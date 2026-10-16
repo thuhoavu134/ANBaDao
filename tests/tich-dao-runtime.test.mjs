@@ -186,3 +186,13 @@ test('approved event timeline: conditional chained executions and speed-aware cu
   assert.equal(h.actor._tichDaoAction,undefined);
  }
 });
+
+test('flower ring center follows enemy waist without changing its size or timing',()=>{
+ const h=harness(),victim={x:1500,y:400};
+ h.c.spawnTichDaoVfx('appear',victim.x,victim.y,null,victim);
+ h.setTime(100);h.vdraw();
+ const draw=h.vdraws.find(d=>d[0].src.endsWith('/flower.webp'));
+ assert.ok(draw);
+ assert.equal(draw[6]+draw[8]/2,400-310*.5*.5);
+ assert.equal(draw[8],meta.vfx.clips.appear.display.heightPx);
+});

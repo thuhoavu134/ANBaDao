@@ -22,6 +22,14 @@ export function patchTichDaoBattle(input,runtime,meta){
  once(`function splusEvent(event) {`,`function splusEvent(event) {
   if(event.type==='damage'){const u=getUnit(event.targetId);if(isTichDao(u)&&u.hp>0&&!u._tichDaoAction){setUnitState(u,'hurt',TICH_DAO_META.clips.hit.durationMs);tichDaoImage('hit');}}
   if(event.type==='death'){const u=getUnit(event.targetId);if(isTichDao(u))tichDaoImage('fall-die');}`);
+ // Hoa An stays on the existing status lane; no second HUD renderer.
+ once('const STATUS_ICON_SOURCES = Object.freeze({','const STATUS_ICON_SOURCES = Object.freeze({\n    hoaAn: "assets/ui/status/hoa-an.svg",');
+ once('      if(isNemVi){',`      if(status.type==='hoaAn'){
+        context.shadowBlur=0;context.font='bold 11px sans-serif';context.textAlign='center';context.textBaseline='middle';
+        context.fillStyle='#21112f';context.beginPath();context.arc(sx+size*.34,sy+size*.30,7,0,Math.PI*2);context.fill();
+        context.fillStyle='#ffe0fa';context.fillText(String(status.stacks||1),sx+size*.34,sy+size*.30);
+      }
+      if(isNemVi){`);
  // VFX Cổ Mộ overlays render in the shared effects pass (drawn after units).
  once('    drawEffects(ctx, time);','    drawEffects(ctx, time);\n    drawTichDaoVfx(ctx, time);');
  // Approved cues are registered in the shared host/iframe audio owner.

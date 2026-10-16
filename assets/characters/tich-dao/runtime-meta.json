@@ -791,7 +791,8 @@
         "fps": 33.333333333333336,
         "display": {
           "heightPx": 300,
-          "headAnchor": 1
+          "headAnchor": 1,
+          "anchor": "waist"
         },
         "sha256": "4093c58267c68ceffba9e2b069ed17bf70daa2ab0434b6c7d9286d992dfeca13"
       },
