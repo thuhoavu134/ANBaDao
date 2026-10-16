@@ -22,6 +22,8 @@ export function patchTichDaoBattle(input,runtime,meta){
  once(`function splusEvent(event) {`,`function splusEvent(event) {
   if(event.type==='damage'){const u=getUnit(event.targetId);if(isTichDao(u)&&u.hp>0&&!u._tichDaoAction){setUnitState(u,'hurt',TICH_DAO_META.clips.hit.durationMs);tichDaoImage('hit');}}
   if(event.type==='death'){const u=getUnit(event.targetId);if(isTichDao(u))tichDaoImage('fall-die');}`);
+ // VFX Cổ Mộ overlays render in the shared effects pass (drawn after units).
+ once('    drawEffects(ctx, time);','    drawEffects(ctx, time);\n    drawTichDaoVfx(ctx, time);');
  return s;
 }
 export async function buildTichDaoCampaignAssets(root){
@@ -39,8 +41,8 @@ export function patchTichDaoHost(input,meta,detailRuntime){
  if(input.includes("tich_dao:{slug:'tich-dao'"))return input;
  let s=input;
  const once=(from,to)=>{if(s.split(from).length!==2)throw Error('Tich Dao host anchor: '+from);s=s.replace(from,()=>to);};
- once('const CHARACTER_MANIFEST={','const CHARACTER_MANIFEST={\n'+"  tich_dao:{slug:'tich-dao',displayName:'Tích Đạo',identityVersion:'authored-idle-v1',reference:{master:'assets/characters/tich-dao/avatar.webp',runtime:true},assets:Object.fromEntries(['master','avatar','dialogue','card','icon'].map(k=>[k,'assets/characters/tich-dao/avatar.webp']).concat([['idle','assets/characters/tich-dao/idle-authored-0.webp']])),surfaces:['roster','formation','hero-detail','battle'],mechanics:{ultimate:'tich-anh-lien-tram'}},");
- once(" bach_dien:{he:'soul'"," tich_dao:{he:'soul',faction:'am_hon',archetype:'duelist',rarity:'ssr',name:'Tích Đạo',role:'Ảnh Nhận Khách / Ám sát',col:'#c9b6e8',stats:{hp:920,mp:60,atk:138,def:50,spd:122},passive:{name:'Ảnh Bộ',desc:'Lần đầu mỗi trận dưới 40% máu: tan vào bóng tối 1 lượt, địch ưu tiên mục tiêu khác.'},skill:{name:'Ảnh Trảm',cost:0,vfx:'slash',desc:'Dùng cùng đòn đánh thường.',fx:{kind:'damage',target:'enemy',power:1}},ultimate:{name:'Tịch Ảnh Liên Trảm',cost:60,vfx:'slash',desc:'Ba nhát 0.7/0.9/1.0× ATK vào hàng sau yếu nhất và các mục tiêu ít máu; nhát cuối 35% chí mạng ×1.8. Hạ gục ít nhất 1 mục tiêu → tàng hình 1 lượt.',fx:{kind:'damage',target:'enemy',power:1}}},"+"\n bach_dien:{he:'soul'");
+ once('const CHARACTER_MANIFEST={','const CHARACTER_MANIFEST={\n'+"  tich_dao:{slug:'tich-dao',displayName:'Tịch Dao',identityVersion:'authored-idle-v1',reference:{master:'assets/characters/tich-dao/avatar.webp',runtime:true},assets:Object.fromEntries(['master','avatar','dialogue','card','icon'].map(k=>[k,'assets/characters/tich-dao/avatar.webp']).concat([['idle','assets/characters/tich-dao/idle-authored-0.webp']])),surfaces:['roster','formation','hero-detail','battle'],mechanics:{ultimate:'tam-anh-doat-menh'}},");
+ once(" bach_dien:{he:'soul'"," tich_dao:{he:'soul',faction:'am_hon',archetype:'duelist',rarity:'ssr',name:'Tịch Dao',role:'Ảnh Sát Song Kiếm',col:'#c9b6e8',stats:{hp:920,mp:60,atk:138,def:50,spd:122},passive:{name:'Hoa Ấn',desc:'Đòn chém đặt 1 dấu Hoa Ấn (tối đa 3); dấu cộng sát thương chiêu thức và bị ultimate tiêu thụ.'},ultimate:{name:'Tam Ảnh Đoạt Mệnh',cost:60,vfx:'slash',desc:'Ba nhịp thoắt hiện chém 3 mục tiêu hàng sau (mỗi dấu +35% sát thương nhịp đó rồi bị tiêu hao). Sau chuỗi: mưa kiếm kết liễu mục tiêu hàng sau dưới 30% máu, tối đa 2 mục tiêu.',fx:{kind:'damage',target:'enemy',power:1}}},"+"\n bach_dien:{he:'soul'");
  const roster='"linh_dong","bach_dien","ky_van","tieu_phong"]';
  if(s.split(roster).length!==4)throw Error('Tich Dao roster owners changed');
  if(meta&&detailRuntime){
@@ -52,7 +54,7 @@ export function patchTichDaoHost(input,meta,detailRuntime){
   once('function frameAt(spec, time) {','Object.assign(runSpecs,{tich_dao:'+JSON.stringify(descriptor('run'))+'});\nObject.assign(farmAttackSpecs,{tich_dao:'+JSON.stringify(descriptor('basic'))+'});\nfunction frameAt(spec, time) {');
   once("const id=String(value||'').replace(/-/g,'_');", "const id=String(value||'').replace(/-/g,'_');if(id==='hero_splus_tich_dao')return 'tich_dao';");
   once("if(id==='bach_dien'){ startBachDienDetailIdle(); }", "if(id==='bach_dien'){ startBachDienDetailIdle(); }\n  if(id==='tich_dao'){startTichDaoDetailIdle();}");
-  once("id==='bach_dien'?'<canvas id=", "id==='tich_dao'?'<canvas id=\"tichDaoDetailIdle\" width=\"540\" height=\"496\" aria-label=\"Tích Đạo idle\"></canvas>':id==='bach_dien'?'<canvas id=");
+  once("id==='bach_dien'?'<canvas id=", "id==='tich_dao'?'<canvas id=\"tichDaoDetailIdle\" width=\"540\" height=\"496\" aria-label=\"Tịch Dao idle\"></canvas>':id==='bach_dien'?'<canvas id=");
   once('function startBachDienDetailIdle(){','const TICH_DAO_DETAIL_META='+JSON.stringify(meta.idleVisual)+';\n'+detailRuntime+'\nfunction startBachDienDetailIdle(){');
   // The hall moves hdBody outside hero-detail-art-screen: scope to the actual stage.
   once('</head>',`<style id="tich-dao-detail-layout">

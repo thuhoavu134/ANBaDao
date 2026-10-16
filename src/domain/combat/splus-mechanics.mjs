@@ -37,6 +37,10 @@ export function createSplusMechanics(options={}) {
   const opposite=(actor,list)=>{const first=front(list),column=(first.length?first:list).slice().sort(bySlot);return column.find(v=>v.slot%3===actor.slot%3)||column[0];};
   const weakestBack=list=>weakest(back(list).length?back(list):list)[0];
   const strongestBack=list=>strongest(back(list).length?back(list):list)[0];
+  // Ảnh Bộ hunts the deepest back-line foe: the column farthest from the
+  // attacker's column, ties broken toward the lower slot.
+  const farthestFrom=actor=>list=>list.slice().sort((a,b)=>
+    Math.abs(b.slot%3-actor.slot%3)-Math.abs(a.slot%3-actor.slot%3)||bySlot(a,b));
   const enraged=list=>list.slice().sort((a,b)=>b.energy-a.energy||bySlot(a,b));
   const enragedBack=list=>enraged(back(list).length?back(list):list)[0];
   const random=list=>{const result=list.slice();for(let i=result.length-1;i>0;i--){const j=Math.min(i,Math.floor(clamp(rng('splus.targets'),0,0.999999999)*(i+1)));[result[i],result[j]]=[result[j],result[i]];}return result;};
@@ -306,11 +310,12 @@ export function createSplusMechanics(options={}) {
         target.hp=0;target.dead=true;target.splus.memory.deathSequence=events.length;source.kills=n(source.kills)+1;
         emit('death',source,target,options.legacyImpact?{legacyImpact:true}:{});energy(source,source,12,'kill');
       } else rescueLow(target);
-      // Ảnh Bộ passive: the first time Tích Đạo drops below the authored
-      // threshold each battle she vanishes for one recipient turn.
-      if(key(target)==='tich_dao'&&passive(target)&&!target.splus.memory.vanishUsed&&ratio(target)<clamp(n(rules(target).vanishBelow,.4))){
-        target.splus.memory.vanishUsed=true;
-        if(buff(target,target,'stealth',0,null,{remainingTurns:n(rules(target).vanishTurns,1)}))emit('shadowVanish',target,target);
+      // Hoa Ấn: every landed Tịch Dao basic carve stamps one mark (max 3) on
+      // the victim; the ultimate consumes them for bonus damage per strike.
+      if(key(source)==='tich_dao'&&passive(source)&&action==='basic'&&dealt>0&&alive(target)){
+        const cap=n(rules(source,'passive').maxMarks,3);
+        target.splus.memory.hoaAn=Math.min(cap,n(target.splus.memory.hoaAn)+1);
+        emit('hoaAn',source,target,{marks:target.splus.memory.hoaAn});
       }
       if(options.dot&&options.burning&&dealt>0)for(const healer of holders(source,'hoa_duc')){
         const recipient=weakest(friends(healer))[0];if(recipient)heal(healer,recipient,dealt*0.5);
@@ -485,7 +490,7 @@ export function createSplusMechanics(options={}) {
         actor.splus.memory.shadowCast=cast;
         if(settings.deferTichDao)return {ok:true,castId:cast.id,events:events.slice(startIndex)};
         for(let strike=0;strike<3;strike++)resolveTichDaoImpact(actor,cast.id,strike);
-        settleTichDaoStealth(actor,cast);
+        resolveTichDaoExecute(actor,cast.id);
         delete actor.splus.memory.shadowCast;
       }else resolveSkill(actor,action,target);
       if(action!=='basic')actor.splus.cooldowns[action]=round+(action==='skill'?defaults.skillCooldown:0)+(has(actor,'cooldownDelay')?1:0);
@@ -514,15 +519,9 @@ export function createSplusMechanics(options={}) {
     const previous=currentAction;currentAction=cast.action;
     try{delete actor.splus.memory.fanCast;actor.splus.cooldowns.ultimate=round;afterAction(actor,'ultimate');return true;}finally{currentAction=previous;}
   }
-  // Ảnh Nhận Khách resolves each authored ultimate strike at its own visual
-  // phase: back-line hunter, then the lowest-HP foe, then a finishing blow.
-  function settleTichDaoStealth(actor,cast){
-    if(!cast.killed||cast.stealthGranted)return;
-    cast.stealthGranted=true;
-    if(!alive(actor))return;
-    if(!buff(actor,actor,'stealth',0,null,{remainingTurns:n(rules(actor,'passive').vanishTurns,1)}))return;
-    emit('shadowVeil',actor,actor);
-  }
+  // Tam Ảnh Đoạt Mệnh resolves each authored ultimate strike at its own
+  // visual phase: three distinct back-line foes, farthest column first.
+  // Each strike consumes the victim's Hoa Ấn marks at +35% damage per mark.
   function resolveTichDaoImpact(actorId,castId,strike){
     const actor=unit(actorId),cast=actor?.splus?.memory?.shadowCast,token=String(strike);
     if(!cast||cast.id!==castId||!Number.isInteger(strike)||strike<0||strike>2||cast.resolved.includes(token))return {ok:false};
@@ -531,28 +530,57 @@ export function createSplusMechanics(options={}) {
     if(!alive(actor)||!living.length)return {ok:true,events:[]};
     const previous=currentAction,startIndex=events.length;currentAction=cast.action;
     try{
-      const r=rules(actor,'ultimate'),multipliers=r.strikeMultipliers||[.7,.9,1];
-      let target;
-      if(strike===0){target=weakestBack(living);cast.primaryTarget=target?.id||null;}
-      else{
-        // Strike 2 skips the first victim's target when another foe remains;
-        // the final strike always chases the lowest-HP survivor.
-        const pool=strike===1&&living.length>1?living.filter(u=>u.id!==cast.primaryTarget):living;
-        target=weakest(pool)[0];
-      }
-      const critical=strike===2&&rng('splus.tich-dao-crit')<n(r.criticalChance,.35);
-      const dealt=damage(actor,target,{action:'ultimate',multiplier:n(multipliers[strike],1),forceCrit:critical,critChanceOverride:0,critMultiplierOverride:n(r.criticalMultiplier,1.8)});
+      const r=rules(actor,'ultimate'),multipliers=r.strikeMultipliers||[1,1,1];
+      // The three strikes own three distinct back-line targets when the back
+      // row has them; with a shorter back row the later strikes chase other
+      // living foes instead of hitting empty tiles.
+      const order=farthestFrom(actor);
+      const struck=new Set(cast.struck||[]);
+      // Prefer un-struck back-line foes, farthest first; once the back row is
+      // exhausted the later strikes chase other living foes (no empty tiles).
+      const freshBack=order(back(living).filter(u=>!struck.has(u.id)));
+      const pool=freshBack.length?freshBack:order(living.filter(u=>!struck.has(u.id)));
+      const target=pool[0]||null;
+      if(target)struck.add(target.id);
+      cast.struck=[...struck];
+      if(!target)return {ok:true,events:[]};
+      const marksUsed=Math.min(n(target.splus.memory.hoaAn),n(r.maxMarks,3));
+      target.splus.memory.hoaAn=0;
+      const bonus=1+n(r.markMultiplier,.35)*marksUsed;
+      const dealt=damage(actor,target,{action:'ultimate',multiplier:n(multipliers[strike],1)*bonus});
       if(target&&!alive(target))cast.killed=true;
-      if(strike===2)settleTichDaoStealth(actor,cast);
-      emit('shadowStrike',actor,target,{strike:strike+1,dealt,critical});
+      emit('shadowStrike',actor,target,{strike:strike+1,dealt,marks:marksUsed});
       return {ok:true,events:events.slice(startIndex)};
+    }finally{currentAction=previous;}
+  }
+  // Mưa Kiếm Kết Liễu: after the three strikes the back line is swept once —
+  // foes strictly below 30% HP (checked after strike damage) are executed,
+  // farthest first, at most `executeMax` per cast.
+  function resolveTichDaoExecute(actorId,castId){
+    const actor=unit(actorId),cast=actor?.splus?.memory?.shadowCast;
+    if(!cast||cast.id!==castId||cast.executed)return {ok:false,executed:[]};
+    cast.executed=true;
+    if(!alive(actor))return {ok:true,executed:[]};
+    const previous=currentAction,startIndex=events.length;currentAction=cast.action;
+    try{
+      const r=rules(actor,'ultimate');
+      const limit=n(r.executeMax,2),threshold=n(r.executeHp,.3);
+      const candidates=farthestFrom(actor)(back(foes(actor)).filter(u=>alive(u)&&u.hp>0&&u.hp/u.maxHp<threshold)).slice(0,limit);
+      const executed=[];
+      for(const target of candidates){
+        if(!alive(target))continue;
+        emit('muaKien',actor,target,{seq:executed.length+1});
+        damage(actor,target,{raw:target.hp,type:'true',action:'ultimate',bypassShield:true,bypassGuard:true,secondary:true});
+        executed.push(target.id);
+      }
+      return {ok:true,executed,events:events.slice(startIndex)};
     }finally{currentAction=previous;}
   }
   function finishTichDaoCast(actorId,castId){
     const actor=unit(actorId),cast=actor?.splus?.memory?.shadowCast;
     if(!cast||cast.id!==castId||cast.resolved.length!==3)return false;
     const previous=currentAction;currentAction=cast.action;
-    try{settleTichDaoStealth(actor,cast);delete actor.splus.memory.shadowCast;actor.splus.cooldowns.ultimate=round;afterAction(actor,'ultimate');return true;}finally{currentAction=previous;}
+    try{delete actor.splus.memory.shadowCast;actor.splus.cooldowns.ultimate=round;afterAction(actor,'ultimate');return true;}finally{currentAction=previous;}
   }
   function start() {
     if(started)return;started=true;
@@ -624,9 +652,9 @@ export function createSplusMechanics(options={}) {
     const k=key(actor),r=rules(actor,action),enemyFront=frontOrAll(enemies),enemyBack=backOrAll(enemies),allyFront=frontOrAll(allies),allyBack=backOrAll(allies);
     const oppositeTarget=opposite(actor,enemies),strongestEnemy=strongest(enemies)[0],weakestEnemyBack=weakestBack(enemies),strongestEnemyBack=strongestBack(enemies);
     const one=value=>value?[value]:[];
-    // Ảnh Trảm is an assassin Basic: it hunts the weakest back-line unit
-    // instead of the common opposite-column fallback.
-    if(action==='basic')return k==='tich_dao'?one(weakestEnemyBack):null;
+    // Ảnh Bộ is an assassin Basic: it dives past the front line and carves
+    // the deepest back-line foe (farthest column), not the weakest one.
+    if(action==='basic')return k==='tich_dao'?one(farthestFrom(actor)(backOrAll(enemies))[0]):null;
     if(action==='skill')switch(k){
       case 'co_trong':return allyFront.slice(0,r.count||2);
       case 'cuong_dong':case 'thiet_lanh':case 'minh_toa':case 'linh_dong':case 'ha_lang':case 'giang_quan':case 'hac_dao':case 'hac_hoa':case 'nung':return one(oppositeTarget);
@@ -852,7 +880,7 @@ export function createSplusMechanics(options={}) {
       default:D(target,defaults.singleUltimateMultiplier);return;
     }
   }
-  return {schema:'luc-than-splus-combat/v2',profileVersion:'splus-profile/2026-09-08-v2',units,events,unit,start,beginTurn,beginRound,finishRound,consumeTurnStatuses,act,resolveTieuPhongImpact,finishTieuPhongCast,resolveTichDaoImpact,finishTichDaoCast,damage,consumeHitAttempt,heal,shield,gainRage:energy,addStatus,restoreStatus,extendStatus,storedDotDamage,cleanse,hasStatus:(targetId,type)=>has(unit(targetId),type),modifiers,stat,canUse,canMove,targets,chooseAction,hud,get round(){return round;}};
+  return {schema:'luc-than-splus-combat/v2',profileVersion:'splus-profile/2026-09-08-v2',units,events,unit,start,beginTurn,beginRound,finishRound,consumeTurnStatuses,act,resolveTieuPhongImpact,finishTieuPhongCast,resolveTichDaoImpact,resolveTichDaoExecute,finishTichDaoCast,damage,consumeHitAttempt,heal,shield,gainRage:energy,addStatus,restoreStatus,extendStatus,storedDotDamage,cleanse,hasStatus:(targetId,type)=>has(unit(targetId),type),modifiers,stat,canUse,canMove,targets,chooseAction,hud,get round(){return round;}};
 }
 
 

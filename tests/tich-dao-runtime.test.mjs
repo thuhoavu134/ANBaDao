@@ -68,6 +68,7 @@ test('battle patch composes on the real Kỷ Vân + Tiêu Phong text and is idem
  assert.match(patched,/\/\* HV_TICH_DAO_V1 \*\//);
  assert.match(patched,/const shadowAction=isTichDao\(actor\)\?await beginTichDaoAction/);
  assert.match(patched,/result=shadowAction\?await resolveTichDaoCast/);
+ assert.match(patched,/drawTichDaoVfx\(ctx, time\);/,'Cổ Mộ VFX overlays render in the effects pass');
  assert.match(patched,/if\(isTichDao\(unit\)\)return drawTichDaoHero/);
  assert.match(patched,/isTichDao\(unit\)\?battleCharacterScale\(unit\)\*419|isTichDao\(unit\)\)\?battleCharacterScale\(unit\)\*419/);
  assert.equal(patchTichDaoBattle(patched,read('src/runtime/tich-dao.js'),meta),patched);

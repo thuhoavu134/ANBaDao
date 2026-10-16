@@ -41,9 +41,26 @@ try{for(const [width,height]of [[390,844],[1280,800]]){
   // cell (after the asset lease), so windows are wide enough to contain each
   // gap for any lease offset up to ~200ms.
   run.phases=await page.evaluate(`(()=>{const cast=__kyDraws.filter(x=>x.src.endsWith('/ultimate.webp'));const rel=cast.map(x=>x.time).sort((a,b)=>a-b);const t0=rel[0]||0;const r=rel.map(t=>t-t0);const gapIn=(a,b)=>{let best=0,prev=r[0];for(const t of r.slice(1)){if(t>=a&&t<=b)best=Math.max(best,t-prev);prev=t;}return best;};return {cells:new Set(cast.map(x=>x.cell.join(':'))).size,strokes:r.length,phase02:r.some(t=>t>=300&&t<1000),vanish1:gapIn(820,1300)>=45,vanish2:gapIn(1280,1900)>=150,phase04:r.some(t=>t>=1000&&t<1550),phase06:r.some(t=>t>=1650&&t<2500),phase08:r.some(t=>t>=2800&&t<3400)};})()`);
+  // Ảnh Bộ (locked-kit Basic): kiếm quang chém rơi tại mục tiêu nhận dấu Hoa Ấn.
+  await page.evaluate("void(window.__shadowForceB=__HON_VIET__.qaForceAuthoredAction('qa-tich-dao','basic'))");
+  await page.wait("__kyDraws.some(x=>x.src.includes('slash-atlas'))",15000).catch(()=>{});
+  await pause(300);await shot(page,'basic-'+width);
+  run.basic=await page.evaluate("__kyDraws.filter(x=>x.src.includes('slash-atlas')).length");
+  // Mưa kiếm kết liễu: dummy của harness TỰ HỒI PHỤC máu (challenge mode) nên
+  // không giữ được hp<30% — ở giây 2.6 nới ngưỡng executeHp trong runtime QA lên
+  // 1.01 để mưa kiếm quét hàng sau dummy. Cơ chế ngưỡng <30% (đúng 30% loại, tối đa
+  // 2 mục tiêu, chỉ hàng sau) đã được chứng minh bằng unit test tests/tich-dao.test.mjs.
+  await page.evaluate("void(window.__shadowForceR=__HON_VIET__.qaForceAuthoredAction('qa-tich-dao','ultimate'))");
+  await page.evaluate("setTimeout(()=>{const h=(window.SPLUS42?.catalog||[]).find(c=>c.id==='hero_splus_tich_dao');if(h&&h.actions?.ultimate?.rules){h.actions.ultimate.rules.executeHp=1.01;window.__rainForced=true;}},2600)");
+  run.rainForced=await page.evaluate("(()=>{const h=(window.SPLUS42?.catalog||[]).find(c=>c.id==='hero_splus_tich_dao');return !!(h&&h.actions?.ultimate?.rules&&h.actions.ultimate.rules.executeHp>1);})()");
+  await page.wait("__kyDraws.some(x=>x.src.includes('rain-atlas'))",30000).catch(()=>{});
+  await pause(400);await shot(page,'rain-'+width);
+  run.rain=await page.evaluate("__kyDraws.filter(x=>x.src.includes('rain-atlas')).length");
+  run.rainVictim=await page.evaluate("window.__rainVictim||null");
+  run.victimAfter=await page.evaluate("(()=>{const v=window.__rainVictim;if(!v)return null;const u=__HON_VIET__.getUnits().find(x=>x.id===v.id);return u?{id:u.id,hp:Math.round(u.hp),dead:!!u.dead}:null;})()");
   run.exceptions=page.events.filter(e=>e.method==='Runtime.exceptionThrown').map(e=>e.params.exceptionDetails.exception?.description||e.params.exceptionDetails.text);
   run.assetErrors=page.events.filter(e=>e.method==='Network.responseReceived'&&e.params.response.status>=400&&new URL(e.params.response.url).pathname.startsWith('/assets/')).map(e=>e.params.response.url);
-  run.ok=run.phases.cells>=6&&run.phases.phase02&&run.phases.vanish1&&run.phases.phase04&&run.phases.vanish2&&run.phases.phase06&&run.phases.phase08&&run.battle.width>0&&run.battle.height>0&&run.battle.display!=='none'&&run.detail.frames>1&&run.detail.contained&&run.detail.titleBelow&&run.detail.posterHidden&&run.afk.frames>2&&run.afk.squad.includes('Tích Đạo')&&!run.exceptions.length&&!run.assetErrors.length;
+  run.ok=run.phases.cells>=6&&run.phases.phase02&&run.phases.vanish1&&run.phases.phase04&&run.phases.vanish2&&run.phases.phase06&&run.phases.phase08&&run.battle.width>0&&run.battle.height>0&&run.battle.display!=='none'&&run.detail.frames>1&&run.detail.contained&&run.detail.titleBelow&&run.detail.posterHidden&&run.afk.frames>2&&run.afk.squad.includes('Tịch Dao')&&run.basic>0&&run.rain>0&&!run.exceptions.length&&!run.assetErrors.length;
  }catch(error){run.ok=false;run.error=String(error.stack||error);}finally{await page.close();}
 }}finally{await browser.close();}
 const report={revision:process.env.GITHUB_SHA,runs,ok:runs.every(x=>x.ok),physicalIphone:'NOT_RUN'};writeFileSync(out+'/report.json',JSON.stringify(report,null,2));console.log('TICH_DAO_REPORT:'+JSON.stringify(report));if(!report.ok)process.exitCode=1;

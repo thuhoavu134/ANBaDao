@@ -20,7 +20,7 @@
 <body>
   <section class="controller" aria-label="Bảng test skill">
     <div class="topline">
-      <div class="title"><b>Test Skill Trực Tiếp · Lục Thần</b><small data-movement-policy="snap">Trận thật 6v6 · Tích Đạo · Tịch Ảnh Liên Trảm 9 phase</small></div>
+      <div class="title"><b>Test Skill Trực Tiếp · Lục Thần</b><small data-movement-policy="snap">Trận thật 6v6 · Tịch Dao · Tam Ảnh Đoạt Mệnh 9 phase</small></div>
       <label class="qa-viewport">Khung QA <select id="qaViewport" aria-label="Khung QA"><option value="desktop">Desktop</option><option value="mobile">390 × 844 (Chromium)</option></select></label>
       <div class="status" id="status" data-phase="loading"><strong>Đang tải</strong><span id="statusDetail">Khởi tạo battle...</span></div>
     </div>
@@ -31,7 +31,7 @@
         <button class="hero-tab" type="button" data-hero-tab="ong-pho" aria-pressed="false">Ông Phở</button>
         <button class="hero-tab" type="button" data-hero-tab="thay-mo" aria-pressed="false">Thầy Mo</button>
         <button class="hero-tab" type="button" data-hero-tab="linh-dong" aria-pressed="false">Linh Đồng</button>
-        <button class="hero-tab" type="button" data-hero-tab="tich-dao" aria-pressed="true">Tích Đạo</button>
+        <button class="hero-tab" type="button" data-hero-tab="tich-dao" aria-pressed="true">Tịch Dao</button>
       </div>
       <div class="skill-buttons" role="group" aria-label="Kích hoạt skill">
         <button class="skill-button" type="button" data-action="basic">Basic</button>
@@ -55,7 +55,7 @@
     'ong-pho': { id:'ong-pho-gif-test', sourceId:'ong_hang_pho', name:'Ông Phở', force:'qaForceOngPhoAction' },
     'thay-mo': { id:'qa-thay-mo', sourceId:'thay_mo', name:'Thầy Mo', force:'qaForceAuthoredAction' },
     'linh-dong': { id:'qa-linh-dong', sourceId:'hero_splus_linh_dong', name:'Linh Đồng', force:'qaForceAuthoredAction', skillAlias:true },
-    'tich-dao': { id:'qa-tich-dao', sourceId:'hero_splus_tich_dao', name:'Tích Đạo', force:'qaForceAuthoredAction', skillAlias:true }
+    'tich-dao': { id:'qa-tich-dao', sourceId:'hero_splus_tich_dao', name:'Tịch Dao', force:'qaForceAuthoredAction', skillAlias:true }
   };
   const frame = document.getElementById('battleFrame');
   document.getElementById('qaViewport').addEventListener('change',event=>{
@@ -87,7 +87,7 @@
         hero('ong-pho-gif-test','ong_hang_pho','Ông Phở','player',2,{speed:160}),
         hero('qa-thay-mo','thay_mo','Thầy Mo','player',3),
         hero('qa-linh-dong','hero_splus_linh_dong','Linh Đồng','player',4),
-        hero('qa-tich-dao','hero_splus_tich_dao','Tích Đạo','player',5),
+        hero('qa-tich-dao','hero_splus_tich_dao','Tịch Dao','player',5),
         hero('qa-enemy-0','qa_enemy_0','Địch 1','enemy',0,{hp:999999,def:200}),
         hero('qa-enemy-1','qa_enemy_1','Địch 2','enemy',1,{hp:999999,def:200}),
         hero('qa-enemy-2','qa_enemy_2','Địch 3','enemy',2,{hp:999999,def:200}),

@@ -16,26 +16,26 @@
         "posterHidden": true
       },
       "afk": {
-        "squad": "Đội đang thám hiểm: Tích Đạo, Ông Phở, Đình Lôi — Vệ Binh Trống Đồng, Thầy Mo, Linh Đồng, Bạch Diện",
+        "squad": "Đội đang thám hiểm: Tịch Dao, Ông Phở, Đình Lôi — Vệ Binh Trống Đồng, Thầy Mo, Linh Đồng, Bạch Diện",
         "frames": 113,
         "clips": [
           "idle-poster.webp",
           "run.webp",
-          "idle-authored-1.webp",
           "idle-authored-2.webp",
           "idle-authored-3.webp",
           "idle-authored-4.webp",
-          "basic.webp",
-          "idle-authored-8.webp",
-          "idle-authored-0.webp",
           "idle-authored-5.webp",
+          "basic.webp",
+          "idle-authored-0.webp",
+          "idle-authored-1.webp",
           "idle-authored-6.webp",
-          "idle-authored-7.webp"
+          "idle-authored-7.webp",
+          "idle-authored-8.webp"
         ]
       },
       "ultimate": {
         "hero": "tich-dao",
-        "heroName": "Tích Đạo",
+        "heroName": "Tịch Dao",
         "action": "ultimate",
         "movement": null,
         "phase": "complete",
@@ -44,35 +44,35 @@
         "complete": true,
         "actionId": "3:splus:1:qa-tich-dao:ultimate",
         "beforeEvents": 0,
-        "startedAt": 1792085433386,
+        "startedAt": 1792134405988,
         "canonicalAction": "ultimate",
-        "impactAt": 1792085434650,
-        "completedAt": 1792085437508,
+        "impactAt": 1792134407296,
+        "completedAt": 1792134410208,
         "trace": [
           {
             "type": "action:start",
             "marker": null,
-            "at": 1792085433421
+            "at": 1792134406100
           },
           {
             "type": "marker:release",
             "marker": null,
-            "at": 1792085434609
+            "at": 1792134407292
           },
           {
             "type": "marker:impact",
             "marker": null,
-            "at": 1792085434609
+            "at": 1792134407292
           },
           {
             "type": "marker:recovery",
             "marker": null,
-            "at": 1792085437507
+            "at": 1792134410206
           },
           {
             "type": "action:complete",
             "marker": null,
-            "at": 1792085437507
+            "at": 1792134410206
           }
         ]
       },
@@ -80,11 +80,11 @@
         "width": 390,
         "height": 738,
         "display": "block",
-        "draws": 22
+        "draws": 21
       },
       "phases": {
         "cells": 17,
-        "strokes": 142,
+        "strokes": 147,
         "phase02": true,
         "vanish1": true,
         "vanish2": true,
@@ -92,6 +92,11 @@
         "phase06": true,
         "phase08": true
       },
+      "basic": 19,
+      "rainForced": false,
+      "rain": 42,
+      "rainVictim": null,
+      "victimAfter": null,
       "exceptions": [],
       "assetErrors": [],
       "ok": true
@@ -100,7 +105,7 @@
       "width": 1280,
       "height": 800,
       "detail": {
-        "frames": 12,
+        "frames": 17,
         "bounds": {
           "x": 168.40625,
           "y": 94,
@@ -112,26 +117,26 @@
         "posterHidden": true
       },
       "afk": {
-        "squad": "Đội đang thám hiểm: Tích Đạo, Ông Phở, Đình Lôi — Vệ Binh Trống Đồng, Thầy Mo, Linh Đồng, Bạch Diện",
+        "squad": "Đội đang thám hiểm: Tịch Dao, Ông Phở, Đình Lôi — Vệ Binh Trống Đồng, Thầy Mo, Linh Đồng, Bạch Diện",
         "frames": 113,
         "clips": [
           "idle-poster.webp",
           "run.webp",
-          "idle-authored-1.webp",
-          "idle-authored-2.webp",
           "idle-authored-3.webp",
           "idle-authored-4.webp",
-          "basic.webp",
-          "idle-authored-8.webp",
-          "idle-authored-0.webp",
           "idle-authored-5.webp",
           "idle-authored-6.webp",
-          "idle-authored-7.webp"
+          "basic.webp",
+          "idle-authored-1.webp",
+          "idle-authored-2.webp",
+          "idle-authored-7.webp",
+          "idle-authored-8.webp",
+          "idle-authored-0.webp"
         ]
       },
       "ultimate": {
         "hero": "tich-dao",
-        "heroName": "Tích Đạo",
+        "heroName": "Tịch Dao",
         "action": "ultimate",
         "movement": null,
         "phase": "complete",
@@ -140,35 +145,35 @@
         "complete": true,
         "actionId": "3:splus:1:qa-tich-dao:ultimate",
         "beforeEvents": 0,
-        "startedAt": 1792085462346,
+        "startedAt": 1792134439810,
         "canonicalAction": "ultimate",
-        "impactAt": 1792085463789,
-        "completedAt": 1792085466723,
+        "impactAt": 1792134441327,
+        "completedAt": 1792134444443,
         "trace": [
           {
             "type": "action:start",
             "marker": null,
-            "at": 1792085462433
+            "at": 1792134439897
           },
           {
             "type": "marker:release",
             "marker": null,
-            "at": 1792085463786
+            "at": 1792134441323
           },
           {
             "type": "marker:impact",
             "marker": null,
-            "at": 1792085463786
+            "at": 1792134441323
           },
           {
             "type": "marker:recovery",
             "marker": null,
-            "at": 1792085466641
+            "at": 1792134444245
           },
           {
             "type": "action:complete",
             "marker": null,
-            "at": 1792085466641
+            "at": 1792134444245
           }
         ]
       },
@@ -180,7 +185,7 @@
       },
       "phases": {
         "cells": 17,
-        "strokes": 52,
+        "strokes": 53,
         "phase02": true,
         "vanish1": true,
         "vanish2": true,
@@ -188,6 +193,11 @@
         "phase06": true,
         "phase08": true
       },
+      "basic": 10,
+      "rainForced": false,
+      "rain": 30,
+      "rainVictim": null,
+      "victimAfter": null,
       "exceptions": [],
       "assetErrors": [],
       "ok": true

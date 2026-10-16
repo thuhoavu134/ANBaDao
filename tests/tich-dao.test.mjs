@@ -8,87 +8,135 @@ const actor={id:'shadow',sourceId:'hero_splus_tich_dao',team:'player',slot:0,hp:
 const enemy=(i,hp=9000)=>({id:'e'+i,team:'enemy',slot:i,hp,maxHp:10000,atk:10,energy:0});
 const units=(...overrides)=>{const list=[actor,...Array.from({length:6},(_,i)=>enemy(i))];for(const [id,hp] of overrides){const u=list.find(u=>u.id===id);if(u)u.hp=hp;else list.push({id,team:'enemy',slot:Number(id.slice(1)),hp,maxHp:10000,atk:10,energy:0});}return list;};
 const setup=(proc=0,heroUnits)=>createSplusCombat({units:heroUnits||units(),rng:site=>site.startsWith('splus.tich-dao')?proc:.5});
+const marks=(e,id)=>e.unit(id)?.splus?.memory?.hoaAn||0;
 
-test('Tích Đạo registry: authored extra, assassin kit, no Skill 1',()=>{
+test('Tịch Dao registry: locked kit — Basic Ảnh Bộ + Ultimate Tam Ảnh Đoạt Mệnh + passive Hoa Ấn',()=>{
  const hero=getSplusHero('tich_dao');
- assert.equal(hero?.name,'Tích Đạo');
- assert.equal(hero?.fullName,'Ảnh Nhận Khách — Tích Đạo');
+ assert.equal(hero?.name,'Tịch Dao');
+ assert.equal(hero?.fullName,'Ảnh Sát Song Kiếm — Tịch Dao');
  assert.equal(hero?.rarity,'S+');assert.equal(hero?.role,'duelist');assert.equal(hero?.element,'soul');
  assert.ok(SPLUS_EXTRA_HEROES.some(h=>h.id==='hero_splus_tich_dao'));
  assert.equal(resolveSplusExtraId('tich-dao'),'hero_splus_tich_dao');
  assert.equal(resolveSplusExtraId('hero_splus_tich_dao'),'hero_splus_tich_dao');
+ // Hợp đồng kit S+: Basic + Ultimate + passive. Slot `skill` chỉ là alias hiển thị
+ // (pattern Kỷ Vân/Tiêu Phong) — combat chặn, không tiêu khí riêng.
+ assert.equal(hero.actions.skill?.name,'Ảnh Bộ','skill slot là alias hiển thị của Basic');
+ assert.equal(hero.actions.skill?.cost,0,'alias không tiêu khí — Ảnh Bộ là đòn Basic miễn phí');
+ assert.equal(hero.actions.basic?.name,'Ảnh Bộ');
+ assert.equal(hero.actions.basic?.cost,0,'Ảnh Bộ là đòn Basic miễn phí');
+ assert.equal(hero.actions.ultimate?.name,'Tam Ảnh Đoạt Mệnh');
+ assert.equal(hero.actions.ultimate?.cost,60);
+ assert.equal(hero.passive?.name,'Hoa Ấn');
+ const r=hero.actions.ultimate?.rules||{};
+ assert.equal(r.markMultiplier,.35,'+35% sát thương mỗi dấu');
+ assert.equal(r.executeHp,.30,'ngưỡng kết liễu 30%');
+ assert.equal(r.executeMax,2,'tối đa 2 mục tiêu kết liễu');
+ assert.equal(r.maxMarks,3,'Hoa Ấn tối đa 3 dấu');
  const e=setup();
  assert.equal(e.canUse('shadow','skill'),false,'duelist ships Basic+Ultimate only');
  assert.equal(e.canUse('shadow','basic'),true);
- assert.equal(e.unit('shadow').energy>=60,true);
- assert.equal(hero.actions.ultimate.cost,60);
 });
 
-test('Basic Ảnh Trảm assassin targeting: weakest back-line, else weakest front',()=>{
- // e4 is the weakest back-line unit; default opposite targeting would pick e0.
- const e=setup(0,units(['e4',2000],['e0',1500]));
- assert.deepEqual(e.targets('shadow','basic').map(u=>u.id),['e4']);
- // With the whole back row dead the assassin falls back to the weakest front unit.
+test('Ảnh Bộ Basic chém hàng sau XA NHẤT (fallback: hàng trước xa nhất khi hàng sau chết)',()=>{
+ // Actor ở slot 0 (cột 0): hàng sau của địch là e3/e4/e5 (cột 0/1/2) → xa nhất là e5 (cột 2).
+ const e=setup(0,units(['e5',2000],['e3',1500]));
+ assert.deepEqual(e.targets('shadow','basic').map(u=>u.id),['e5'],'xa nhất = cột cách xa nhất, không phải yếu máu');
+ // Hàng sau chết hết → chém tướng còn sống ở hàng trước xa nhất (e2, cột 2).
  const e2=setup(0,[actor,enemy(0,1500),enemy(1,9000),enemy(2,9000),enemy(3,0),enemy(4,0),enemy(5,0)]);
- assert.equal(e2.targets('shadow','basic')[0].id,'e0');
+ assert.equal(e2.targets('shadow','basic')[0].id,'e2');
 });
 
-test('Ultimate legal targets cover every visible enemy and skip stealthed foes',()=>{
- const e=setup();
- assert.equal(e.targets('shadow','ultimate').length,6);
- e.addStatus('shadow','e3',{type:'stealth',turns:2});
- assert.equal(e.targets('shadow','ultimate').some(u=>u.id==='e3'),false);
+test('Ảnh Bộ đặt 1 dấu Hoa Ấn, tối đa 3 dấu',()=>{
+ const e=setup(0);
+ e.act('shadow','basic','e5');
+ assert.equal(marks(e,'e5'),1,'một nhát chém = một dấu');
+ e.act('shadow','basic','e5');
+ e.act('shadow','basic','e5');
+ assert.equal(marks(e,'e5'),3);
+ e.act('shadow','basic','e5');
+ assert.equal(marks(e,'e5'),3,'vượt 3 dấu không cộng thêm');
+ assert.equal(marks(e,'e4'),0,'dấu gắn theo mục tiêu');
 });
 
-test('Ultimate resolves three deferred strikes at 0.7/0.9/1.0 ATK with assassin retargeting',()=>{
- // proc .5 keeps the third-strike 35% crit roll from firing so amounts stay pure.
- const e=setup(.5,units(['e4',2000],['e0',1500]));
+test('Tam Ảnh Đoạt Mệnh: 3 nhịp chém 3 mục tiêu hàng sau KHÁC nhau, xa nhất trước, +35%/dấu rồi xoá dấu',()=>{
+ const e=setup(.5,units(['e5',6000]));
+ e.unit('e5').splus.memory.hoaAn=3;   // 3 dấu sẵn trên mục tiêu xa nhất
  const r=e.act('shadow','ultimate','e0',{deferTichDao:true});
  assert.equal(r.ok,true);
- assert.equal(e.unit('shadow').energy,40,'rage debited once at cast');
- assert.equal(e.unit('e4').hp,2000,'no damage before visual markers');
+ assert.equal(e.unit('shadow').energy,40,'60 khí trừ một lần lúc tung');
+ assert.equal(e.unit('e5').hp,6000,'chưa có sát thương trước marker');
  for(let strike=0;strike<3;strike++){
   const step=e.resolveTichDaoImpact('shadow',r.castId,strike);
-  assert.equal(step.ok,true,'strike '+strike+' resolves once');
-  assert.equal(e.resolveTichDaoImpact('shadow',r.castId,strike).ok,false,'duplicate token rejected');
+  assert.equal(step.ok,true,'nhịp '+(strike+1)+' resolves once');
  }
- assert.equal(e.unit('shadow').energy,40,'impacts never debit rage again');
- const amounts=[];
- // strike 0 hit e4 (weakest back), strike 1 hit e0 (lowest HP excluding e4), strike 2 hit e0 again (lowest living)
- assert.equal(e.unit('e4').hp,2000-Math.round(100*0.7*1.22));
- assert.equal(e.unit('e0').hp,1500-Math.round(100*0.9*1.22)-Math.round(100*1.22));
- for(const other of ['e1','e2','e3','e5'])assert.equal(e.unit(other).hp,9000);
- assert.equal(e.finishTichDaoCast('shadow',r.castId),true);
- assert.equal(e.finishTichDaoCast('shadow',r.castId),false,'finish is single-use');
-});
-
-test('Ultimate grants stealth for one recipient turn after at least one kill',()=>{
- const e=setup(0,units(['e4',80]));
- const r=e.act('shadow','ultimate','e0',{deferTichDao:true});
- for(let strike=0;strike<3;strike++)e.resolveTichDaoImpact('shadow',r.castId,strike);
- assert.equal(e.unit('e4').hp,0);
- assert.equal(e.hasStatus('shadow','stealth'),true,'kill during ultimate grants stealth');
- e.consumeTurnStatuses('shadow');
- assert.equal(e.hasStatus('shadow','stealth'),false);
- // no-kill cast stays visible
- const e2=setup(0,units(['e4',5000]));
+ // Nhịp 1 → e5 (xa nhất, 3 dấu): 100 × 1.22 × (1+0.35×3) = 250; dấu bị xoá.
+ assert.equal(e.unit('e5').hp,6000-Math.round(100*1.22*(1+.35*3)));
+ assert.equal(marks(e,'e5'),0,'dấu bị ultimate tiêu thụ');
+ // Nhịp 2 → e4, nhịp 3 → e3 (3 mục tiêu hàng sau khác nhau, không đánh ô trống).
+ assert.equal(e.unit('e4').hp,9000-Math.round(100*1.22));
+ assert.equal(e.unit('e3').hp,9000-Math.round(100*1.22));
+ // Hàng trước không dính đòn khi hàng sau còn sống.
+ for(const other of ['e0','e1','e2'])assert.equal(e.unit(other).hp,9000);
+ // Hàng sau chỉ còn 2 tướng: nhịp 3 đánh tướng còn sống (không bỏ nhịp).
+ const e2=setup(.5,[actor,enemy(0,9000),enemy(1,9000),enemy(2,9000),enemy(3,5000),enemy(4,0),enemy(5,0)]);
  const r2=e2.act('shadow','ultimate','e0',{deferTichDao:true});
  for(let strike=0;strike<3;strike++)e2.resolveTichDaoImpact('shadow',r2.castId,strike);
- assert.equal(e2.hasStatus('shadow','stealth'),false);
+ assert.ok(e2.unit('e3').hp<5000,'nhịp 1 vào e3');
+ assert.ok(e2.unit('e2').hp<9000,'nhịp 2 rơi vào tướng hàng trước xa nhất còn sống');
+ assert.ok(e2.unit('e1').hp<9000,'nhịp 3 rơi vào tướng còn sống kế tiếp');
+ assert.equal(e2.unit('e0').hp,9000,'cột gần nhất bị bỏ lại cuối');
+ assert.equal(e2.finishTichDaoCast('shadow',r2.castId),true);
+ assert.equal(e2.finishTichDaoCast('shadow',r2.castId),false,'finish single-use');
 });
 
-test('Passive Ảnh Bộ: first drop below 40% HP vanishes once per battle',()=>{
- const e=setup();
- assert.equal(e.hasStatus('shadow','stealth'),false);
- e.damage('e0','shadow',{raw:7000,forceHit:true});
- assert.equal(e.unit('shadow').hp,3000);
- assert.equal(e.hasStatus('shadow','stealth'),true,'first threshold crossing vanishes');
- e.consumeTurnStatuses('shadow');
- e.damage('e0','shadow',{raw:1000,forceHit:true});
- assert.equal(e.hasStatus('shadow','stealth'),false,'second crossing does not re-trigger');
+test('Mưa kiếm kết liễu: HP < 30% sau chuỗi chém, tối đa 2 mục tiêu, xa nhất trước',()=>{
+ // 3 mục tiêu hàng sau đủ điều kiện sau sát thương nhịp chém → chỉ 2 bị kết liễu.
+ const e=setup(.5,units(['e5',3100],['e4',3100],['e3',3100]));
+ const r=e.act('shadow','ultimate','e0',{deferTichDao:true});
+ for(let strike=0;strike<3;strike++)e.resolveTichDaoImpact('shadow',r.castId,strike);
+ // sau nhịp: e5/e4/e3 đều 3100−122=2978 < 3000 (30%) → đủ điều kiện, nhưng tối đa 2.
+ const step=e.resolveTichDaoExecute('shadow',r.castId);
+ assert.equal(step.ok,true);
+ assert.deepEqual(step.executed,['e5','e4'],'kết liễu xa nhất trước, tối đa 2');
+ assert.equal(e.unit('e5').hp,0);
+ assert.equal(e.unit('e4').hp,0);
+ assert.ok(e.unit('e3').hp>0,'mục tiêu thứ 3 sống vì đã đủ hạn 2');
+ assert.ok(e.unit('e3').hp<3000,'e3 vốn đủ điều kiện nhưng bị cắt bởi executeMax');
+ assert.equal(e.resolveTichDaoExecute('shadow',r.castId).ok,false,'execute single-use per cast');
+ assert.equal(e.finishTichDaoCast('shadow',r.castId),true);
+});
+
+test('Mưa kiếm: đúng 30% máu KHÔNG được kết liễu (ngưỡng là dưới 30%)',()=>{
+ const e=setup(.5,units(['e5',3122]));   // 3122 − 122 (nhịp 1) = đúng 3000
+ const r=e.act('shadow','ultimate','e0',{deferTichDao:true});
+ for(let strike=0;strike<3;strike++)e.resolveTichDaoImpact('shadow',r.castId,strike);
+ assert.equal(e.unit('e5').hp,3000,'đúng 30% sau nhịp chém');
+ const step=e.resolveTichDaoExecute('shadow',r.castId);
+ assert.deepEqual(step.executed,[],'đúng 30% không đủ điều kiện kết liễu');
+ assert.equal(e.unit('e5').hp,3000);
+ e.finishTichDaoCast('shadow',r.castId);
+});
+
+test('Mưa kiếm chỉ quét hàng sau: tướng hàng trước dưới 30% không bị kết liễu',()=>{
+ const e=setup(.5,units(['e5',5000],['e0',100]));
+ const r=e.act('shadow','ultimate','e0',{deferTichDao:true});
+ for(let strike=0;strike<3;strike++)e.resolveTichDaoImpact('shadow',r.castId,strike);
+ const step=e.resolveTichDaoExecute('shadow',r.castId);
+ assert.deepEqual(step.executed,[],'e0 (hàng trước, 1% máu) không thuộc hàng kết liễu');
+ assert.equal(e.unit('e0').hp,100);
+ e.finishTichDaoCast('shadow',r.castId);
+});
+
+test('Không còn tàng hình: bỏ stealth-on-kill và vanish dưới 40% của kit tạm',()=>{
+ const e=setup(.5,units(['e5',200]));
+ const r=e.act('shadow','ultimate','e0',{deferTichDao:true});
+ for(let strike=0;strike<3;strike++)e.resolveTichDaoImpact('shadow',r.castId,strike);
+ e.resolveTichDaoExecute('shadow',r.castId);
+ e.finishTichDaoCast('shadow',r.castId);
+ assert.equal(e.hasStatus('shadow','stealth'),false,'hạ gục không còn tự tàng hình');
  const e2=setup();
- e2.damage('e0','shadow',{raw:5500,forceHit:true});
- assert.equal(e2.hasStatus('shadow','stealth'),false,'staying above 40% never vanishes');
+ e2.damage('e0','shadow',{raw:7000,forceHit:true});
+ assert.equal(e2.hasStatus('shadow','stealth'),false,'rớt dưới 40% không còn vanish');
 });
 
 test('Pack contract: nine ultimate phases cover 0-95, hidden gaps carry no atlas cells',()=>{
@@ -104,6 +152,18 @@ test('Pack contract: nine ultimate phases cover 0-95, hidden gaps carry no atlas
  assert.deepEqual(meta.clips.ultimate.strikeMs,[1083,1750,2917]);
  assert.equal(meta.clips.ultimate.durationMs,4000);
  assert.ok(meta.clips.ultimate.strikeMs.every((ms,i)=>{const p=phases.find(p=>Math.round(p.startMs)===ms);return p&&['phase-04-reappear-strike-1','phase-06-reappear-combo','phase-08-final-strike'].includes(p.id);}));
+});
+
+test('VFX provenance: 4 clip Cổ Mộ Kiếm Thế port đúng, có nguồn trong runtime-meta',()=>{
+ const vfx=meta.vfx;
+ assert.ok(vfx,'runtime-meta.vfx tồn tại');
+ assert.equal(vfx.provenance?.source,'Kiếm Thế (JX1) — kit Cổ Mộ phái, thư mục gumupai trong update03.pak');
+ for(const key of ['vanish','appear','slash','rain'])assert.ok(vfx.clips?.[key]?.file,'thiếu vfx clip '+key);
+ for(const key of ['vanish','appear','slash','rain']){
+  const c=vfx.clips[key];
+  assert.ok(c.frames>0&&c.cols>0&&c.cellW>0&&c.cellH>0,key+' có grid atlas hợp lệ');
+  assert.ok(c.sourceCode,'ghi mã hiệu ứng gốc');
+ }
 });
 
 test('Pack budgets: 77-frame idle on nine-frame pages inside mobile decode caps',()=>{
