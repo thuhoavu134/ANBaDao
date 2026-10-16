@@ -4,7 +4,7 @@ export function patchTichDaoBattle(input,runtime,meta){
  if(input.includes('/* HV_TICH_DAO_V1 */'))return input;let s=input;
  const once=(from,to)=>{if(s.split(from).length!==2)throw Error('Tich Dao anchor '+from.slice(0,80));s=s.replace(from,()=>to);};
  once('async function performSplusAction(actor, action, target) {','/* HV_TICH_DAO_V1 */\nconst TICH_DAO_META='+JSON.stringify(meta)+';\n'+runtime+'\nasync function performSplusAction(actor, action, target) {');
- once('  const fanAction=isTieuPhong(actor)?await beginTieuPhongAction(actor,action,target,battleId):null;',`  const shadowAction=isTichDao(actor)?await beginTichDaoAction(actor,action,target,battleId):null;
+ once('  const fanAction=isTieuPhong(actor)?await beginTieuPhongAction(actor,action,target,battleId):null;',`  const shadowAction=isTichDao(actor)?await beginTichDaoAction(actor,action,target,battleId,e):null;
   if(isTichDao(actor)&&!shadowAction){if(state.battleId===battleId){state.locked=false;state.currentId=null;void advanceTurn();}return;}
   const fanAction=isTieuPhong(actor)?await beginTieuPhongAction(actor,action,target,battleId):null;`);
  once("  if(fanAction){\n    if(!await waitTieuPhongMarker(fanAction,'release',battleId))return;\n    presentationTrace?.marker('release',{actionId:presentationId});\n    if(!await waitTieuPhongMarker(fanAction,'impact',battleId))return;\n  }else if(kyAction){", "  if(shadowAction){\n    if(!await waitTichDaoMarker(shadowAction,'release',battleId))return;\n    presentationTrace?.marker('release',{actionId:presentationId});\n    if(!await waitTichDaoMarker(shadowAction,'impact',battleId))return;\n  }else if(fanAction){\n    if(!await waitTieuPhongMarker(fanAction,'release',battleId))return;\n    presentationTrace?.marker('release',{actionId:presentationId});\n    if(!await waitTieuPhongMarker(fanAction,'impact',battleId))return;\n  }else if(kyAction){");
@@ -24,9 +24,7 @@ export function patchTichDaoBattle(input,runtime,meta){
   if(event.type==='death'){const u=getUnit(event.targetId);if(isTichDao(u))tichDaoImage('fall-die');}`);
  // VFX Cổ Mộ overlays render in the shared effects pass (drawn after units).
  once('    drawEffects(ctx, time);','    drawEffects(ctx, time);\n    drawTichDaoVfx(ctx, time);');
- // SFX Cổ Mộ (mượn tiếng theo bảng missile JX1 gốc của phái): 3 cue vào bus chung.
- const NL=String.fromCharCode(10);
- once("'tieu-phong-basic-x1':'tieu-phong/basic-x1.m4a',","'tich-dao-basic':'tich-dao/basic.wav','tich-dao-strike':'tich-dao/strike.wav','tich-dao-rain':'tich-dao/rain.wav',"+NL+"    'tieu-phong-basic-x1':'tieu-phong/basic-x1.m4a',");
+ // Approved cues are registered in the shared host/iframe audio owner.
  return s;
 }
 export async function buildTichDaoCampaignAssets(root){
@@ -40,6 +38,11 @@ export async function buildTichDaoCampaignAssets(root){
 }
 export async function installTichDao(root){await buildTichDaoCampaignAssets(root);const out=join(root,'dist'),p=join(out,'battle.html');writeFileSync(p,patchTichDaoBattle(readFileSync(p,'utf8'),readFileSync(join(root,'src/runtime/tich-dao.js'),'utf8'),JSON.parse(readFileSync(join(root,'assets/characters/tich-dao/runtime-meta.json'),'utf8'))));const host=join(out,'index.html');writeFileSync(host,patchTichDaoHost(readFileSync(host,'utf8'),JSON.parse(readFileSync(join(root,'assets/characters/tich-dao/runtime-meta.json'),'utf8')),readFileSync(join(root,'src/ui/tich-dao-detail.js'),'utf8')));copyFileSync(join(root,'tich-dao-test.html'),join(out,'tich-dao-test.html'));}
 
+export function tichDaoCampaignDescriptor(meta,key){
+ const c=meta.clips[key];
+ // Match battle's fixed clip scale around the same bottom-center anchor.
+ return {src:'assets/characters/tich-dao/campaign/'+c.file,frames:c.frames,cols:c.cols,cellW:240,cellH:220,pivot:120,foot:220,body:220/((c.content&&c.content.scale)||1),ms:c.durationMs/c.frames};
+}
 export function patchTichDaoHost(input,meta,detailRuntime){
  if(input.includes("tich_dao:{slug:'tich-dao'"))return input;
  let s=input;
@@ -50,7 +53,7 @@ export function patchTichDaoHost(input,meta,detailRuntime){
  if(s.split(roster).length!==4)throw Error('Tich Dao roster owners changed');
  if(meta&&detailRuntime){
   const base={src:'assets/characters/tich-dao/campaign/idle-authored-0.webp',frames:meta.idle.frames,cols:3,cellW:240,cellH:220,pivot:120,foot:220,body:220,durations:meta.idle.frameDurationsMs};
-  const descriptor=key=>{const c=meta.clips[key];return {src:'assets/characters/tich-dao/campaign/'+c.file,frames:c.frames,cols:c.cols,cellW:240,cellH:220,pivot:120,foot:220,body:220,ms:c.durationMs/c.frames};};
+  const descriptor=key=>tichDaoCampaignDescriptor(meta,key);
   const pages=Array.from({length:meta.idleVisual.pages},(_,i)=>({...descriptor('idle-authored-'+i),rows:Math.ceil(meta.clips['idle-authored-'+i].frames/3)}));
   const pack={pageFrames:meta.idleVisual.pageFrames,pages,poster:{...pages[0],src:'assets/characters/tich-dao/campaign/idle-poster.webp',cols:1,rows:1,frames:1,frameIndex:0}};
   once('function preparationSpriteFor(pick, time) {','Object.assign(spriteSpecs,{tich_dao:'+JSON.stringify(base)+'});\nObject.assign(preparationIdlePacks,{tich_dao:'+JSON.stringify(pack)+'});\nfunction preparationSpriteFor(pick, time) {');
@@ -68,3 +71,4 @@ export function patchTichDaoHost(input,meta,detailRuntime){
  }
  return s.split(roster).join('"linh_dong","bach_dien","ky_van","tieu_phong","tich_dao"]');
 }
+

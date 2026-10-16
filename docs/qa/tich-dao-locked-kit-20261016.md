@@ -84,3 +84,17 @@ draws, rain 46/22 draws, 0 exceptions). Evidence ảnh mới: `basic-*`, `rain-*
 Ghi chú đo verifies: `__HON_VIET__.getUnits()` trả bản hiển thị khác refs unit engine
  internal — probe dịch chuyển phải đọc `window.__TDACTOR`-style marker hoặc canvas
  trong đúng iframe context.
+
+
+
+## Follow-up: restore owner-approved VFX/SFX and fix visual targeting
+
+Reviewed baseline: 54cc2662601716f4d9f819b13710ba6d2a31f33f. Owner reported animation and wrong VFX/SFX on 2026-10-16. Supersedes the earlier pass's asset/audio claims above.
+
+- Restore the October 15 approved `tich-dao-vfx-sfx-v1` pack: jgm_30_hxc_c flower, jgm_120_ftw_c vortex, zgm_110_qzzh_c rain (15 frames each, original alpha, screen blend). Remove the substituted slash overlay from active metadata/runtime. New assets have pinned SHA-256 hashes.
+- Restore four exact reviewed WAVs: blink, slash, sword-rain, execute-impact. These are reused/mixed Tangmen/Wudang audio, NOT verified original Gu Mu sound. Shared host and iframe audio registry owns all four cues, including x1/x2/x3 playback and abort/mute. No unconditional long preview mix.
+- Each eligible execution plays rain, resolves at contact, then plays impact before selecting the next target, max two and strictly below 30%. Hold the source final-strike frame during rain; resume authored recovery afterward. Existing marks, rage cost and three-strike coefficients remain.
+- Fix opening destination readiness before dash/basic impact; read-only target preview respects taunt. Fix later visual targets after the first victim dies by retaining actual strike history. Campaign ATK/run now use the same fixed scale as battle.
+- RED: pre-impact dash stayed at home; after a killed first target the preview picked e3 while damage hit e4. GREEN: 26 scoped tests pass (15 domain, 9 runtime/asset, 2 shared-audio); includes actual combat/runtime execution at x1/x2/x3 with zero/two executions and exact asset hash checks. Changed source syntax checks pass.
+- This is a sparse exact-head review checkout. Full npm test/build cannot run because full build source/assets are absent; no full-suite pass claimed. Browser preview redirects to Vercel login. Automatic approval review rejected creation of a share URL because it expands protected-preview access. No protection settings changed. Browser screenshots/listening, responsive and physical Safari remain UNVERIFIED. Keep PR draft; no merge/production promotion.
+- Existing documented workflow waiver retained; no Ticket Board claim or completed runtime gate asserted.

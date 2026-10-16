@@ -9,6 +9,23 @@ const enemy=(i,hp=9000)=>({id:'e'+i,team:'enemy',slot:i,hp,maxHp:10000,atk:10,en
 const units=(...overrides)=>{const list=[actor,...Array.from({length:6},(_,i)=>enemy(i))];for(const [id,hp] of overrides){const u=list.find(u=>u.id===id);if(u)u.hp=hp;else list.push({id,team:'enemy',slot:Number(id.slice(1)),hp,maxHp:10000,atk:10,energy:0});}return list;};
 const setup=(proc=0,heroUnits)=>createSplusCombat({units:heroUnits||units(),rng:site=>site.startsWith('splus.tich-dao')?proc:.5});
 const marks=(e,id)=>e.unit(id)?.splus?.memory?.hoaAn||0;
+test('regression: visual strike preview matches damage after earlier targets die',()=>{
+ const e=setup();e.unit('e5').hp=1;
+ const cast=e.act('shadow','ultimate',null,{deferTichDao:true});
+ for(let strike=0;strike<3;strike++){
+  const preview=e.tichDaoStrikeTarget('shadow',cast.castId,strike)?.id;
+  const result=e.resolveTichDaoImpact('shadow',cast.castId,strike);
+  assert.equal(preview,result.events.find(x=>x.type==='shadowStrike')?.targetId);
+ }
+});
+test('regression: opening destination is read-only and respects targeting restrictions',()=>{
+ const e=setup(),before=JSON.stringify(e.units);
+ assert.equal(e.tichDaoOpeningTarget('shadow','ultimate')?.id,'e5');
+ assert.equal(e.tichDaoOpeningTarget('shadow','basic')?.id,'e5');
+ assert.equal(JSON.stringify(e.units),before,'preview must not spend rage or deal damage');
+ e.addStatus('e1','shadow',{type:'taunted',turns:2});
+ assert.equal(e.tichDaoOpeningTarget('shadow','ultimate')?.id,'e1');
+});
 
 test('Tịch Dao registry: locked kit — Basic Ảnh Bộ + Ultimate Tam Ảnh Đoạt Mệnh + passive Hoa Ấn',()=>{
  const hero=getSplusHero('tich_dao');
@@ -154,12 +171,13 @@ test('Pack contract: nine ultimate phases cover 0-95, hidden gaps carry no atlas
  assert.ok(meta.clips.ultimate.strikeMs.every((ms,i)=>{const p=phases.find(p=>Math.round(p.startMs)===ms);return p&&['phase-04-reappear-strike-1','phase-06-reappear-combo','phase-08-final-strike'].includes(p.id);}));
 });
 
-test('VFX provenance: 4 clip Cổ Mộ Kiếm Thế port đúng, có nguồn trong runtime-meta',()=>{
+test('VFX provenance: restores the three owner-approved clips',()=>{
  const vfx=meta.vfx;
  assert.ok(vfx,'runtime-meta.vfx tồn tại');
- assert.equal(vfx.provenance?.source,'Kiếm Thế (JX1) — kit Cổ Mộ phái, thư mục gumupai trong update03.pak');
- for(const key of ['vanish','appear','slash','rain'])assert.ok(vfx.clips?.[key]?.file,'thiếu vfx clip '+key);
- for(const key of ['vanish','appear','slash','rain']){
+ assert.match(vfx.provenance?.source,/Owner-approved/);
+ assert.deepEqual(Object.values(vfx.clips).map(c=>c.sourceCode),['jgm_120_ftw_c','jgm_30_hxc_c','zgm_110_qzzh_c']);
+ for(const key of ['vanish','appear','rain'])assert.ok(vfx.clips?.[key]?.file,'thiếu vfx clip '+key);
+ for(const key of ['vanish','appear','rain']){
   const c=vfx.clips[key];
   assert.ok(c.frames>0&&c.cols>0&&c.cellW>0&&c.cellH>0,key+' có grid atlas hợp lệ');
   assert.ok(c.sourceCode,'ghi mã hiệu ứng gốc');
@@ -199,3 +217,4 @@ test('LỖI-2 engine: tichDaoStrikeTarget preview khớp đúng mục tiêu từ
  assert.deepEqual(struck,picks,'strike thực khớp preview');
  e.resolveTichDaoExecute('shadow',r.castId);e.finishTichDaoCast('shadow',r.castId);
 });
+

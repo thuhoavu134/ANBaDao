@@ -530,17 +530,26 @@ export function createSplusMechanics(options={}) {
     const pool=freshBack.length?freshBack:order(living.filter(u=>!struck.has(u.id)));
     return pool[0]||null;
   }
+  function tichDaoOpeningTarget(actorId,action){
+    const actor=unit(actorId);if(!alive(actor))return null;
+    return tichDaoPick(actor,targets(actorId,action),[]);
+  }
   function tichDaoStrikeTarget(actorId,castId,strike){
     const actor=unit(actorId),cast=actor?.splus?.memory?.shadowCast;
     if(!cast||cast.id!==castId||!Number.isInteger(strike)||strike<0||strike>2)return null;
     const living=cast.targets.map(unit).filter(u=>alive(u)&&u.hp>0);
-    const struck=[];
+    if(cast.resolved.includes(String(strike)))return null;
+    // Keep prior victims, including dead ones, in the history. Rebuilding the
+    // sequence from only living foes shifts the visual target after a kill.
+    const struck=[...(cast.struck||[])];
     for(let i=0;i<=strike;i++){
+      if(cast.resolved.includes(String(i)))continue;
       const t=tichDaoPick(actor,living,struck);
-      if(!t)break;
+      if(!t)return null;
+      if(i===strike)return t;
       struck.push(t.id);
     }
-    return unit(struck[strike])||null;
+    return null;
   }
   // Tam Ảnh Đoạt Mệnh resolves each authored ultimate strike at its own
   // visual phase: three distinct back-line foes, farthest column first.
@@ -572,25 +581,38 @@ export function createSplusMechanics(options={}) {
   // Mưa Kiếm Kết Liễu: after the three strikes the back line is swept once —
   // foes strictly below 30% HP (checked after strike damage) are executed,
   // farthest first, at most `executeMax` per cast.
+  function nextTichDaoExecution(actorId,castId){
+    const actor=unit(actorId),cast=actor?.splus?.memory?.shadowCast;
+    if(!alive(actor)||!cast||cast.id!==castId||cast.executed||cast.resolved.length!==3)return null;
+    const r=rules(actor,'ultimate');
+    if((cast.executionCount||0)>=n(r.executeMax,2))return null;
+    return farthestFrom(actor)(back(foes(actor)).filter(u=>alive(u)&&u.hp/u.maxHp<n(r.executeHp,.3)))[0]||null;
+  }
+  function resolveTichDaoExecution(actorId,castId,expectedTargetId){
+    const actor=unit(actorId),cast=actor?.splus?.memory?.shadowCast;
+    const target=nextTichDaoExecution(actorId,castId);
+    if(!target||(expectedTargetId&&target.id!==expectedTargetId))return {ok:false,executed:[],killed:false};
+    const previous=currentAction,startIndex=events.length;currentAction=cast.action;
+    try{
+      cast.executionCount=(cast.executionCount||0)+1;
+      emit('muaKien',actor,target,{seq:cast.executionCount});
+      damage(actor,target,{raw:target.hp,type:'true',action:'ultimate',bypassShield:true,bypassGuard:true,secondary:true});
+      const killed=!alive(target);
+      if(!killed)cast.executed=true;
+      return {ok:true,executed:[target.id],killed,events:events.slice(startIndex)};
+    }finally{currentAction=previous;}
+  }
+  // Retain the synchronous entry point for callers without authored playback.
   function resolveTichDaoExecute(actorId,castId){
     const actor=unit(actorId),cast=actor?.splus?.memory?.shadowCast;
     if(!cast||cast.id!==castId||cast.executed)return {ok:false,executed:[]};
+    const startIndex=events.length,executed=[];
+    while(nextTichDaoExecution(actorId,castId)){
+      const result=resolveTichDaoExecution(actorId,castId);executed.push(...result.executed);
+      if(!result.killed)break;
+    }
     cast.executed=true;
-    if(!alive(actor))return {ok:true,executed:[]};
-    const previous=currentAction,startIndex=events.length;currentAction=cast.action;
-    try{
-      const r=rules(actor,'ultimate');
-      const limit=n(r.executeMax,2),threshold=n(r.executeHp,.3);
-      const candidates=farthestFrom(actor)(back(foes(actor)).filter(u=>alive(u)&&u.hp>0&&u.hp/u.maxHp<threshold)).slice(0,limit);
-      const executed=[];
-      for(const target of candidates){
-        if(!alive(target))continue;
-        emit('muaKien',actor,target,{seq:executed.length+1});
-        damage(actor,target,{raw:target.hp,type:'true',action:'ultimate',bypassShield:true,bypassGuard:true,secondary:true});
-        executed.push(target.id);
-      }
-      return {ok:true,executed,events:events.slice(startIndex)};
-    }finally{currentAction=previous;}
+    return {ok:true,executed,events:events.slice(startIndex)};
   }
   function finishTichDaoCast(actorId,castId){
     const actor=unit(actorId),cast=actor?.splus?.memory?.shadowCast;
@@ -896,7 +918,8 @@ export function createSplusMechanics(options={}) {
       default:D(target,defaults.singleUltimateMultiplier);return;
     }
   }
-  return {schema:'luc-than-splus-combat/v2',profileVersion:'splus-profile/2026-09-08-v2',units,events,unit,start,beginTurn,beginRound,finishRound,consumeTurnStatuses,act,resolveTieuPhongImpact,finishTieuPhongCast,resolveTichDaoImpact,resolveTichDaoExecute,tichDaoStrikeTarget,finishTichDaoCast,damage,consumeHitAttempt,heal,shield,gainRage:energy,addStatus,restoreStatus,extendStatus,storedDotDamage,cleanse,hasStatus:(targetId,type)=>has(unit(targetId),type),modifiers,stat,canUse,canMove,targets,chooseAction,hud,get round(){return round;}};
+  return {schema:'luc-than-splus-combat/v2',profileVersion:'splus-profile/2026-09-08-v2',units,events,unit,start,beginTurn,beginRound,finishRound,consumeTurnStatuses,act,resolveTieuPhongImpact,finishTieuPhongCast,resolveTichDaoImpact,resolveTichDaoExecute,nextTichDaoExecution,resolveTichDaoExecution,tichDaoOpeningTarget,tichDaoStrikeTarget,finishTichDaoCast,damage,consumeHitAttempt,heal,shield,gainRage:energy,addStatus,restoreStatus,extendStatus,storedDotDamage,cleanse,hasStatus:(targetId,type)=>has(unit(targetId),type),modifiers,stat,canUse,canMove,targets,chooseAction,hud,get round(){return round;}};
 }
+
 
 
