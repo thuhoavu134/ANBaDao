@@ -519,6 +519,29 @@ export function createSplusMechanics(options={}) {
     const previous=currentAction;currentAction=cast.action;
     try{delete actor.splus.memory.fanCast;actor.splus.cooldowns.ultimate=round;afterAction(actor,'ultimate');return true;}finally{currentAction=previous;}
   }
+  // Shared strike selection: three distinct back-line foes, farthest column
+  // first; once the back row is exhausted the strikes chase other living foes.
+  // The runtime mirrors this via tichDaoStrikeTarget to park the body in front
+  // of the exact victim before the authored phase lands its damage.
+  function tichDaoPick(actor,living,struckIds){
+    const order=farthestFrom(actor);
+    const struck=new Set(struckIds||[]);
+    const freshBack=order(back(living).filter(u=>!struck.has(u.id)));
+    const pool=freshBack.length?freshBack:order(living.filter(u=>!struck.has(u.id)));
+    return pool[0]||null;
+  }
+  function tichDaoStrikeTarget(actorId,castId,strike){
+    const actor=unit(actorId),cast=actor?.splus?.memory?.shadowCast;
+    if(!cast||cast.id!==castId||!Number.isInteger(strike)||strike<0||strike>2)return null;
+    const living=cast.targets.map(unit).filter(u=>alive(u)&&u.hp>0);
+    const struck=[];
+    for(let i=0;i<=strike;i++){
+      const t=tichDaoPick(actor,living,struck);
+      if(!t)break;
+      struck.push(t.id);
+    }
+    return unit(struck[strike])||null;
+  }
   // Tam Ảnh Đoạt Mệnh resolves each authored ultimate strike at its own
   // visual phase: three distinct back-line foes, farthest column first.
   // Each strike consumes the victim's Hoa Ấn marks at +35% damage per mark.
@@ -534,15 +557,8 @@ export function createSplusMechanics(options={}) {
       // The three strikes own three distinct back-line targets when the back
       // row has them; with a shorter back row the later strikes chase other
       // living foes instead of hitting empty tiles.
-      const order=farthestFrom(actor);
-      const struck=new Set(cast.struck||[]);
-      // Prefer un-struck back-line foes, farthest first; once the back row is
-      // exhausted the later strikes chase other living foes (no empty tiles).
-      const freshBack=order(back(living).filter(u=>!struck.has(u.id)));
-      const pool=freshBack.length?freshBack:order(living.filter(u=>!struck.has(u.id)));
-      const target=pool[0]||null;
-      if(target)struck.add(target.id);
-      cast.struck=[...struck];
+      const target=tichDaoPick(actor,living,cast.struck);
+      if(target)cast.struck=[...(cast.struck||[]),target.id];
       if(!target)return {ok:true,events:[]};
       const marksUsed=Math.min(n(target.splus.memory.hoaAn),n(r.maxMarks,3));
       target.splus.memory.hoaAn=0;
@@ -880,7 +896,7 @@ export function createSplusMechanics(options={}) {
       default:D(target,defaults.singleUltimateMultiplier);return;
     }
   }
-  return {schema:'luc-than-splus-combat/v2',profileVersion:'splus-profile/2026-09-08-v2',units,events,unit,start,beginTurn,beginRound,finishRound,consumeTurnStatuses,act,resolveTieuPhongImpact,finishTieuPhongCast,resolveTichDaoImpact,resolveTichDaoExecute,finishTichDaoCast,damage,consumeHitAttempt,heal,shield,gainRage:energy,addStatus,restoreStatus,extendStatus,storedDotDamage,cleanse,hasStatus:(targetId,type)=>has(unit(targetId),type),modifiers,stat,canUse,canMove,targets,chooseAction,hud,get round(){return round;}};
+  return {schema:'luc-than-splus-combat/v2',profileVersion:'splus-profile/2026-09-08-v2',units,events,unit,start,beginTurn,beginRound,finishRound,consumeTurnStatuses,act,resolveTieuPhongImpact,finishTieuPhongCast,resolveTichDaoImpact,resolveTichDaoExecute,tichDaoStrikeTarget,finishTichDaoCast,damage,consumeHitAttempt,heal,shield,gainRage:energy,addStatus,restoreStatus,extendStatus,storedDotDamage,cleanse,hasStatus:(targetId,type)=>has(unit(targetId),type),modifiers,stat,canUse,canMove,targets,chooseAction,hud,get round(){return round;}};
 }
 
 

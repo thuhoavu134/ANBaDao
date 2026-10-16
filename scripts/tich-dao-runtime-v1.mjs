@@ -24,6 +24,9 @@ export function patchTichDaoBattle(input,runtime,meta){
   if(event.type==='death'){const u=getUnit(event.targetId);if(isTichDao(u))tichDaoImage('fall-die');}`);
  // VFX Cổ Mộ overlays render in the shared effects pass (drawn after units).
  once('    drawEffects(ctx, time);','    drawEffects(ctx, time);\n    drawTichDaoVfx(ctx, time);');
+ // SFX Cổ Mộ (mượn tiếng theo bảng missile JX1 gốc của phái): 3 cue vào bus chung.
+ const NL=String.fromCharCode(10);
+ once("'tieu-phong-basic-x1':'tieu-phong/basic-x1.m4a',","'tich-dao-basic':'tich-dao/basic.wav','tich-dao-strike':'tich-dao/strike.wav','tich-dao-rain':'tich-dao/rain.wav',"+NL+"    'tieu-phong-basic-x1':'tieu-phong/basic-x1.m4a',");
  return s;
 }
 export async function buildTichDaoCampaignAssets(root){

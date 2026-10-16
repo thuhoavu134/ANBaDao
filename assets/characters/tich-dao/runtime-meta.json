@@ -37,7 +37,12 @@
     50
    ],
    "releaseMs": 300,
-   "impactMs": 450
+   "impactMs": 450,
+   "content": {
+    "frameHeightPx": 350,
+    "scale": 1.21,
+    "normalizedHeightPx": 424
+   }
   },
   "ultimate": {
    "file": "ultimate.webp",
@@ -73,7 +78,12 @@
     2917
    ],
    "releaseMs": 1083,
-   "impactMs": 1083
+   "impactMs": 1083,
+   "content": {
+    "frameHeightPx": 328,
+    "scale": 1.29,
+    "normalizedHeightPx": 423
+   }
   },
   "hit": {
    "file": "hit.webp",
@@ -102,7 +112,12 @@
     19.444444444444443,
     19.444444444444443,
     19.444444444444443
-   ]
+   ],
+   "content": {
+    "frameHeightPx": 424,
+    "scale": 1,
+    "normalizedHeightPx": 424
+   }
   },
   "run": {
    "file": "run.webp",
@@ -131,7 +146,12 @@
     41.666666666666664,
     41.666666666666664,
     41.666666666666664
-   ]
+   ],
+   "content": {
+    "frameHeightPx": 412,
+    "scale": 1.03,
+    "normalizedHeightPx": 424
+   }
   },
   "fall-die": {
    "file": "fall-die.webp",
@@ -160,7 +180,12 @@
     222.22222222222223,
     222.22222222222223,
     222.22222222222223
-   ]
+   ],
+   "content": {
+    "frameHeightPx": 354,
+    "scale": 1.19,
+    "normalizedHeightPx": 421
+   }
   },
   "standing": {
    "file": "standing.webp",
@@ -192,7 +217,11 @@
     41.666666666666664,
     41.666666666666664,
     41.666666666666664
-   ]
+   ],
+   "content": {
+    "frameHeightPx": 423,
+    "scale": 1
+   }
   },
   "idle-authored-1": {
    "file": "idle-authored-1.webp",
@@ -212,7 +241,11 @@
     41.666666666666664,
     41.666666666666664,
     41.666666666666664
-   ]
+   ],
+   "content": {
+    "frameHeightPx": 423,
+    "scale": 1
+   }
   },
   "idle-authored-2": {
    "file": "idle-authored-2.webp",
@@ -232,7 +265,11 @@
     41.666666666666664,
     41.666666666666664,
     41.666666666666664
-   ]
+   ],
+   "content": {
+    "frameHeightPx": 423,
+    "scale": 1
+   }
   },
   "idle-authored-3": {
    "file": "idle-authored-3.webp",
@@ -252,7 +289,11 @@
     41.666666666666664,
     41.666666666666664,
     41.666666666666664
-   ]
+   ],
+   "content": {
+    "frameHeightPx": 423,
+    "scale": 1
+   }
   },
   "idle-authored-4": {
    "file": "idle-authored-4.webp",
@@ -272,7 +313,11 @@
     41.666666666666664,
     41.666666666666664,
     41.666666666666664
-   ]
+   ],
+   "content": {
+    "frameHeightPx": 423,
+    "scale": 1
+   }
   },
   "idle-authored-5": {
    "file": "idle-authored-5.webp",
@@ -292,7 +337,11 @@
     41.666666666666664,
     41.666666666666664,
     41.666666666666664
-   ]
+   ],
+   "content": {
+    "frameHeightPx": 423,
+    "scale": 1
+   }
   },
   "idle-authored-6": {
    "file": "idle-authored-6.webp",
@@ -312,7 +361,11 @@
     41.666666666666664,
     41.666666666666664,
     41.666666666666664
-   ]
+   ],
+   "content": {
+    "frameHeightPx": 423,
+    "scale": 1
+   }
   },
   "idle-authored-7": {
    "file": "idle-authored-7.webp",
@@ -332,7 +385,11 @@
     41.666666666666664,
     41.666666666666664,
     41.666666666666664
-   ]
+   ],
+   "content": {
+    "frameHeightPx": 423,
+    "scale": 1
+   }
   },
   "idle-authored-8": {
    "file": "idle-authored-8.webp",
@@ -348,7 +405,11 @@
     41.666666666666664,
     41.666666666666664,
     41.666666666666664
-   ]
+   ],
+   "content": {
+    "frameHeightPx": 423,
+    "scale": 1
+   }
   }
  },
  "idle": {
@@ -719,7 +780,11 @@
     "frames": 10,
     "cellW": 146,
     "cellH": 161,
-    "fps": 30
+    "fps": 30,
+    "display": {
+     "heightPx": 340,
+     "headAnchor": 0.78
+    }
    },
    "appear": {
     "file": "appear-atlas.png",
@@ -730,7 +795,11 @@
     "frames": 15,
     "cellW": 264,
     "cellH": 203,
-    "fps": 30
+    "fps": 30,
+    "display": {
+     "heightPx": 400,
+     "headAnchor": 0.78
+    }
    },
    "slash": {
     "file": "slash-atlas.png",
@@ -741,7 +810,11 @@
     "frames": 80,
     "cellW": 139,
     "cellH": 139,
-    "fps": 30
+    "fps": 30,
+    "display": {
+     "heightPx": 430,
+     "headAnchor": 0.78
+    }
    },
    "rain": {
     "file": "rain-atlas.png",
@@ -752,8 +825,36 @@
     "frames": 23,
     "cellW": 250,
     "cellH": 220,
-    "fps": 30
+    "fps": 30,
+    "display": {
+     "heightPx": 540,
+     "headAnchor": 0.78
+    }
    }
+  }
+ },
+ "sfx": {
+  "provenance": {
+   "source": "Kiếm Thế (JX1) fightskill SFX — phái Cổ Mộ mượn tiếng theo bảng missile.txt gốc",
+   "note": "Cổ Mộ không có SFX riêng trong client JX1; bảng kỹ năng gán tiếng Thúy Yên/Thiếu Lâm cho các chiêu jgm/zgm — giữ đúng nguồn gốc đó"
+  },
+  "basic": {
+   "audio": "tich-dao-basic",
+   "file": "basic.wav",
+   "sourceCode": "cuiyan/cy_bxxl_c.wav",
+   "note": "kiếm quang Ảnh Bộ"
+  },
+  "strike": {
+   "audio": "tich-dao-strike",
+   "file": "strike.wav",
+   "sourceCode": "cuiyan/cy_mylx_c.wav",
+   "note": "mỗi nhát chém Tam Ảnh"
+  },
+  "rain": {
+   "audio": "tich-dao-rain",
+   "file": "rain.wav",
+   "sourceCode": "shaolin/sl_dmdj_c.wav",
+   "note": "mưa kiếm kết liễu"
   }
  }
 }

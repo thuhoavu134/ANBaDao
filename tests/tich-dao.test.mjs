@@ -177,3 +177,25 @@ test('Pack budgets: 77-frame idle on nine-frame pages inside mobile decode caps'
   else assert.ok(decoded<16*1024*1024,key+' '+decoded);
  }
 });
+
+test('LỖI-1: clip atk/ultimate chuẩn hoá kích thước nội dung bằng idle (content scale)',()=>{
+ const clips=meta.clips;
+ const idleH=clips['idle-authored-0'].content?.frameHeightPx||0;
+ assert.ok(idleH>350,'idle content height cần được đo (>350px), got '+idleH);
+ for(const key of ['basic','ultimate','hit','run','fall-die']){
+  const c=clips[key],scale=c.content?.scale??1,h=c.content?.frameHeightPx??0;
+  assert.ok(h>0,key+': cần đo frameHeightPx');
+  assert.ok(scale>1.01||h>=idleH*0.9,key+': nội dung bị bé ('+Math.round(h*scale)+'px vs idle '+idleH+'px) — cần phóng scale '+ (idleH/Math.max(1,h)).toFixed(2));
+  assert.ok(h*scale<=idleH*1.25,key+': sau scale vượt quá 125% idle');
+ }
+});
+test('LỖI-2 engine: tichDaoStrikeTarget preview khớp đúng mục tiêu từng nhịp',()=>{
+ const e=setup(.5,units(['e5',6000],['e3',1500]));
+ const r=e.act('shadow','ultimate','e0',{deferTichDao:true});
+ const picks=[0,1,2].map(s=>e.tichDaoStrikeTarget('shadow',r.castId,s)?.id);
+ assert.deepEqual(picks,['e5','e4','e3'],'preview: xa nhất trước, 3 mục tiêu khác nhau');
+ for(let s=0;s<3;s++)e.resolveTichDaoImpact('shadow',r.castId,s);
+ const struck=(e.events||[]).filter(x=>x.type==='shadowStrike').map(x=>x.targetId);
+ assert.deepEqual(struck,picks,'strike thực khớp preview');
+ e.resolveTichDaoExecute('shadow',r.castId);e.finishTichDaoCast('shadow',r.castId);
+});

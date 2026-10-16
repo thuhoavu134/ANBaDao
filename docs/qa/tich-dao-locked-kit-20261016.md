@@ -53,3 +53,34 @@ rơi hàng sau — banner "Tam Ảnh Đoạt Mệnh" hiện trên trận), `batt
 - **CI đỏ trên PR #308 KHÔNG phải lỗi code**: job không chạy (0 step) — GitHub báo lỗi
   thanh toán/spending limit. Không sửa gì cho CI.
 - Vẫn **Draft** — chưa merge, chưa deploy.
+
+
+## Vòng 2 (2026-10-16 chiều) — 3 lỗi owner report, đã fix
+
+1. **Kích thước atk/ultimate bé hơn idle**: đo alpha-bbox từng frame (idle 423px,
+   basic 350px, ultimate 328px, phase-02 chỉ 241px) → `scripts/tich-dao-content-v1.mjs`
+   ghi `clips[k].content.scale` (basic 1.21×, ultimate 1.29×, run 1.03×, fall 1.19×;
+   hit sẵn 424px) → runtime paint cell theo scale, anchor bottom-center. Unit test
+   chặn hồi quy: scale×content ≈ idle (90-125%).
+2. **Dịch chuyển sát thủ**: thân biến mất tại nhà → hiện TRƯỚC MẶT địch hàng sau
+   (x ± 70px về phía Tịch Dao, y +8) → chém → lerp về vị trí cũ. Ultimate: dash
+   phase-02 hướng nạn nhân 1, đứng tại nạn nhân 1/2/3 ở phase-04/06/08 (giữ phase-07),
+   glide về nhà trong phase-09; Basic: ra đòn tại mục tiêu từ release-60ms, lerp về
+   nhà trong 220ms cuối. Nạn nhân từng nhịp lấy bằng **engine preview
+   `tichDaoStrikeTarget`** (cùng selection với resolveTichDaoImpact — unit test chứng
+   minh preview khớp strike thật).
+3. **VFX Cổ Mộ to + trên đầu địch + SFX**: 4 clip phóng theo `vfx.clips[k].display`
+   (vanish 340px, appear 400px, slash 430px, rain 540px; neo đáy 78% chiều cao → phủ
+   thân + đầu mục tiêu); thêm slash cho từng nhịp ultimate + appear cho Basic.
+   SFX 3 cue (`assets/audio/sfx/tich-dao/{basic,strike,rain}.wav`, nguồn JX1 đúng bảng
+   missile Cổ Mộ mượn tiếng: cy_bxxl_c / cy_mylx_c / sl_dmdj_c) map vào bus HonVietSfx,
+   play: basic lúc ra đòn, strike mỗi nhịp, rain lúc kết liễu.
+
+RED→GREEN vòng 2: **+5 test mới (2 domain + 3 runtime), 21/21 pass**; full suite
+1801/1787/14 = baseline có sẵn. Browser QA PASS 390+1280 (phases ✓, basic 251/96
+draws, rain 46/22 draws, 0 exceptions). Evidence ảnh mới: `basic-*`, `rain-*`,
+`u-phase0*` (thân đứng cạnh địch + hiệu ứng phủ đầu).
+
+Ghi chú đo verifies: `__HON_VIET__.getUnits()` trả bản hiển thị khác refs unit engine
+ internal — probe dịch chuyển phải đọc `window.__TDACTOR`-style marker hoặc canvas
+ trong đúng iframe context.
