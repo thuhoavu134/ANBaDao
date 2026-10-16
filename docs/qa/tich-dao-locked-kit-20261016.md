@@ -1,3 +1,5 @@
+> **Đính chính hiện hành 16/10/2026, sau merge PR #308:** Mưa kiếm xét địch sống ở **cả hai hàng**, HP <30%, tối đa 2; không cần đủ 3 Hoa Ấn. Các đoạn “chỉ hàng sau” và bộ VFX/SFX tạm bên dưới là lịch sử đã bị thay thế. Bản được duyệt là flower/vortex/rain và bốn cue blink/slash/sword-rain/execute-impact trong runtime-meta.json. Xem [hướng dẫn tích hợp](../GLM-HERO-VFX-SFX-GUIDE.md). PR #308 đã merge; các trạng thái Draft/CI/deploy bên dưới chỉ phản ánh thời điểm từng lần ghi nhận, không phải trạng thái hiện tại.
+
 # QA — Tịch Dao: kit locked (Ảnh Bộ + Hoa Ấn + Tam Ảnh Đoạt Mệnh) — 2026-10-16
 
 PR #308 · nhánh `feat/tich-dao-integration-20261015` · base mới `0aa0c86` (#307).
