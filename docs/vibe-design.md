@@ -1,3 +1,15 @@
+# 2026-10-17 — Chuẩn vóc dáng trong trận (DRAFT / REVIEW)
+
+Thân tướng dùng chuẩn **310 world units**, theo Bạch Diện, trước viewport và home-slot depth. Idle/ATK/Ultimate cùng một tỷ lệ cơ thể, còn pose và quỹ đạo authored được giữ. Chiều cao bounding box từng frame không phải tiêu chí đồng đều; tóc, vũ khí, khoảng trong suốt và VFX không được kéo giãn hoặc thu nhỏ thân.
+
+`source-body` khai báo body height tương đương tư thế đứng và chân cố định theo camera xuất của từng clip. Shared painter tính registration từ metadata; atlas downsample chỉ đổi source crop. `pre-registered` giữ clip registration owner cũ và chỉ nhận correction chung. Điểm giữa/đỉnh thân cho impact/HUD dùng cùng projection, gồm compact offset đang có. Generic và skeleton fallback cũng theo chuẩn thân này. Riêng thẻ UI `splus-pending-art` chưa có profile giữ HUD theo rectangle thật cao 126, đáy -4, scale 1; profile authored luôn được ưu tiên khi đã có.
+
+Đọc [HERO-BATTLE-SIZE-CONTRACT.md](HERO-BATTLE-SIZE-CONTRACT.md) trước khi nhập bộ ảnh mới: có 10 profile hiện tại, giá trị legacy và foot proxy, phân loại character/VFX, và giới hạn inventory gate cho Ông Phở/Đình Lôi/Thầy Mo. Không thêm phép vá scale hoặc HUD theo tên tướng; calibration của asset nằm trong manifest và cần chứng cứ đo thật.
+
+Trạng thái thay đổi mới: **DRAFT / REVIEW**, sau baseline đã merge PR #310; chưa có merge/live claim. Lượt kiểm cuối có 67 test đạt/0 lỗi. [QA note](qa/shared-hero-scale-20261017.md) và [ảnh sprite thật trên Canvas offline](qa/shared-hero-scale-20261017.png) là điểm vào review. Full build, browser và physical-device validation của lát này chưa được chứng minh; waiver Ticket Board cũ giữ nguyên. Các phần dưới là lịch sử thiết kế.
+
+---
+
 # 2026-10-08 — four-screen UI trial
 
 Warm parchment and brass headers, jade selected tabs/dock, original icons and art. Minimum44px roster controls; four columns; two-line labels; 620px frame on desktop. Assist keeps its wheel and its local Back. Campaign keeps AFK/combat owners. Final user approval pending on PR290; no redesign of remaining screens.

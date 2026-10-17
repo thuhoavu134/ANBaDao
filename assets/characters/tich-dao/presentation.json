@@ -1,0 +1,115 @@
+{
+  "schema": "battle-hero-presentation/v1",
+  "heroId": "hero_splus_tich_dao",
+  "aliases": [
+    "tich-dao",
+    "tich_dao",
+    "hero_splus_tich_dao"
+  ],
+  "referenceBodyHeight": 423,
+  "footOffsetY": 0,
+  "registration": "source-body",
+  "clips": {
+    "basic": {
+      "bodyHeight": 350,
+      "footX": 240,
+      "footY": 440
+    },
+    "ultimate": {
+      "bodyHeight": 328,
+      "footX": 240,
+      "footY": 440
+    },
+    "hit": {
+      "bodyHeight": 424,
+      "footX": 240,
+      "footY": 440
+    },
+    "run": {
+      "bodyHeight": 412,
+      "footX": 240,
+      "footY": 440
+    },
+    "fall-die": {
+      "bodyHeight": 354,
+      "footX": 240,
+      "footY": 440
+    },
+    "standing": {
+      "bodyHeight": 423,
+      "footX": 240,
+      "footY": 440
+    },
+    "idle-authored-0": {
+      "bodyHeight": 423,
+      "footX": 240,
+      "footY": 440
+    },
+    "idle-authored-1": {
+      "bodyHeight": 423,
+      "footX": 240,
+      "footY": 440
+    },
+    "idle-authored-2": {
+      "bodyHeight": 423,
+      "footX": 240,
+      "footY": 440
+    },
+    "idle-authored-3": {
+      "bodyHeight": 423,
+      "footX": 240,
+      "footY": 440
+    },
+    "idle-authored-4": {
+      "bodyHeight": 423,
+      "footX": 240,
+      "footY": 440
+    },
+    "idle-authored-5": {
+      "bodyHeight": 423,
+      "footX": 240,
+      "footY": 440
+    },
+    "idle-authored-6": {
+      "bodyHeight": 423,
+      "footX": 240,
+      "footY": 440
+    },
+    "idle-authored-7": {
+      "bodyHeight": 423,
+      "footX": 240,
+      "footY": 440
+    },
+    "idle-authored-8": {
+      "bodyHeight": 423,
+      "footX": 240,
+      "footY": 440
+    }
+  },
+  "vfxClips": [
+    "vanish",
+    "appear",
+    "rain"
+  ],
+  "states": {
+    "idle": [
+      "idle-authored-0",
+      "idle-authored-1",
+      "idle-authored-2",
+      "idle-authored-3",
+      "idle-authored-4",
+      "idle-authored-5",
+      "idle-authored-6",
+      "idle-authored-7",
+      "idle-authored-8",
+      "standing"
+    ],
+    "attack": [
+      "basic"
+    ],
+    "ultimate": [
+      "ultimate"
+    ]
+  },
+  "evidence": "runtime-meta.json records content.frameHeightPx for each authored clip; standing and idle use the 423px reference body. The existing paint owner uses the fixed 480x440 bottom-center anchor. These are clip-wide registrations, preserving crouch, fall and vanish phases without per-frame fitting."
+}

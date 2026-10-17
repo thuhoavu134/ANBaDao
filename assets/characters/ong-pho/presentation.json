@@ -1,0 +1,33 @@
+{
+  "schema": "battle-hero-presentation/v1",
+  "heroId": "ong_hang_pho",
+  "aliases": [
+    "ong-pho",
+    "ong_pho",
+    "ong-pho-gif-test"
+  ],
+  "referenceBodyHeight": 266.0833333333333,
+  "footOffsetY": 18.75,
+  "registration": "pre-registered",
+  "clips": {
+    "idle": {},
+    "attack": {},
+    "hit": {},
+    "fall": {},
+    "skill1": {},
+    "ultimate": {}
+  },
+  "vfxClips": [],
+  "states": {
+    "idle": [
+      "idle"
+    ],
+    "attack": [
+      "attack"
+    ],
+    "ultimate": [
+      "ultimate"
+    ]
+  },
+  "evidence": "Body-only landmarks measured on embedded-12.png frame0: source y23..125 inclusive (103px), excluding the ladle/staff above the head with body-only x86..159. Native drawH348.75 / sourceH135 yields body266.0833333333333 and footOffset -348.75+42+126*348.75/135=18.75. Retain the existing common actor cell density for all authored clips. The former310 alpha measurement included the tall staff."
+}

@@ -29,12 +29,10 @@ function hongThuongClipMeta(key){
 }
 function hongThuongClip(key){const c=hongThuongClipMeta(key);if(!c)return null;const rows=c.rows??Math.ceil(c.frames/c.cols);return {...c,src:HONG_THUONG_BASE+c.file+'?v='+encodeURIComponent(HONG_THUONG_META.assetRevision||'rgba-v2-verified'),rows,decodedBytes:c.cols*c.cellW*rows*c.cellH*4};}
 function hongThuongImage(key,priority='visible'){const clip=hongThuongClip(key);return clip?BACH_DIEN_LOADER.ensure(clip,{scope:'battle',priority}).image:null;}
-function hongThuongPaint(ctx,clipKey,frame,x,y){const c=hongThuongClipMeta(clipKey),img=hongThuongImage(clipKey);if(!c||!img||img.complete===false||img.naturalWidth===0)return false;
- // Body-centre/foot registration from the meta: bodyCx sits on the unit x,
- // footCellY sits on the unit y; the spear may overhang either side freely.
- const k=(c.content&&c.content.scale)||1,dw=c.cellW*k,dh=c.cellH*k;
- const cx=(c.content&&c.content.bodyCx)||c.cellW/2,foot=(c.content&&c.content.footCellY)||c.cellH;
- ctx.save();ctx.drawImage(img,(frame%c.cols)*c.cellW,Math.floor(frame/c.cols)*c.cellH,c.cellW,c.cellH,x-cx*k,y-foot*k,dw,dh);ctx.restore();return true;}
+function hongThuongPaint(ctx,u,clipKey,frame){
+ const clip=hongThuongClipMeta(clipKey);
+ return !!clip&&battlePaintCharacter(ctx,u,clipKey,clip,hongThuongImage(clipKey),frame);
+}
 function hongThuongElapsed(info){return Math.max(0,(performance.now()-info.startedAt)*info.speed);}
 function hongThuongFrame(durations,elapsed,loop){
  const total=durations.reduce((a,b)=>a+b,0);let t=loop?elapsed%total:Math.min(elapsed,total-.001);
@@ -95,7 +93,7 @@ function drawHongThuongHero(ctx,u,time){
  }
  const bodyPos=hongThuongBodyPos(u,elapsed,info&&info.action);
  ctx.save();ctx.translate(bodyPos?bodyPos.x:u.x,bodyPos?bodyPos.y:u.y);const scale=battleCharacterDepthScale(u)*battleCharacterScale(u);ctx.scale(scale*(u.team===TEAM_ENEMY?-1:1),scale);
- const paintBody=copy=>{const c=hongThuongClipMeta(key);return c&&hongThuongPaint(copy,key,frame,0,0)||key!=='idle-authored-0'&&(u.hp>0&&hongThuongPaint(copy,'standing',0,0,0));};
+ const paintBody=copy=>{const c=hongThuongClipMeta(key);return c&&hongThuongPaint(copy,u,key,frame)||key!=='idle-authored-0'&&(u.hp>0&&hongThuongPaint(copy,u,'standing',0));};
  const drawn=__hvHeroVisibility.finish(ctx,'hong-thuong',u,time,paintBody(ctx),paintBody);
  ctx.restore();if(nextPage)hongThuongImage(nextPage,'prefetch');if(u.hp>0)drawUnitHud(ctx,u,time,1);return drawn;
 }
@@ -146,9 +144,8 @@ function hongThuongSfx(info){
  try{void window.HonVietSfx?.play('hong-thuong-impact',{group:'combat',signal:info.abort.signal,playbackRate:info.speed});}catch(error){}
 }
 function spawnHongThuongVfx(x,y,info,target){hongThuongVfxImage('impact');
- const authored=target&&[isHongThuong,typeof isKyVan==='function'?isKyVan:()=>false,typeof isTieuPhong==='function'?isTieuPhong:()=>false,typeof isTichDao==='function'?isTichDao:()=>false].some(fn=>fn(target));
- const bodyHeight=target?(authored?419:310)*battleCharacterDepthScale(target)*battleCharacterScale(target):0;
- const centerX=target?target.x:x,centerY=target?target.y-bodyHeight*.5:y;
+ const body=target?battleCharacterBody(target):null;
+ const centerX=body?body.centerX:x,centerY=body?body.centerY:y;
  hongThuongVfxLive.push({x:centerX,y:centerY,speed:info?.speed||state.speed||1,startedAt:performance.now(),battleId:state.battleId});}
 
 function drawHongThuongVfx(context,time){

@@ -32,10 +32,8 @@ function drawTieuPhongHero(ctx,u,time){
  ctx.save();ctx.translate(u.x,u.y-(active&&info.action==='ultimate'?tieuPhongLift(info):0));const scale=battleCharacterDepthScale(u)*battleCharacterScale(u);ctx.scale(scale*(u.team===TEAM_ENEMY?-1:1),scale);
  // Keep a canonical, unscaled body frame in the shared visibility owner.
  // The outer transform owns position, depth and enemy mirroring exactly once.
- // One registration for the entire authored idle loop, measured against the
- // 413px standing/action body and its ground at y=-12. Never fit per frame.
- const idleScale=413/648.5,idleW=432*idleScale,idleH=668*idleScale;
- const paintBody=copy=>key.startsWith('idle-authored-')?tieuPhongPaint(copy,key,frame,-idleW/2,-12-658*idleScale,idleW,idleH):tieuPhongPaint(copy,key,frame,-240,-440,480,440)||(u.hp>0&&tieuPhongPaint(copy,'standing',0,-240,-440,480,440));
+ // Clip registration is data-driven and fixed for the whole animation.
+ const paintBody=copy=>battlePaintCharacter(copy,u,key,TIEU_PHONG_META.clips[key],tieuPhongImage(key),frame)||(u.hp>0&&battlePaintCharacter(copy,u,'standing',TIEU_PHONG_META.clips.standing,tieuPhongImage('standing'),0));
  const drawn=__hvHeroVisibility.finish(ctx,'tieu-phong',u,time,paintBody(ctx),paintBody);
  ctx.restore();if(nextPage)tieuPhongImage(nextPage,'prefetch');if(u.hp>0)drawUnitHud(ctx,u,time,1);return drawn;
 }
@@ -71,8 +69,7 @@ function finishTieuPhongAction(info){if(!info)return;info.abort.abort();info.lea
 function cancelTieuPhongActions(){for(const info of [...tieuPhongActive])finishTieuPhongAction(info);}
 function tieuPhongLift(info){
  const age=tieuPhongElapsed(info),actor=info.actor,target=getUnit(info.targets[0]?.id);
- const correction=target&&typeof battleHeroVisualScale==='function'?battleHeroVisualScale(target):1;
- const height=(target?battleCharacterScale(target)*battleCharacterDepthScale(target)/correction:.5)*310;
+ const height=target?battleCharacterBody(target).height:BATTLE_HERO_BODY_HEIGHT*.5;
  const max=Math.max(0,actor.y-(info.groundY-height));
  const points=[[0,0],[500,1],[2200,1],[2700,0]];
  for(let i=1;i<points.length;i++){const [b,w]=points[i],[a,v]=points[i-1];if(age<=b){const p=Math.max(0,Math.min(1,(age-a)/(b-a)));return max*(v+(w-v)*p*p*(3-2*p));}}return 0;
@@ -84,8 +81,8 @@ function drawTieuPhongFx(ctx){
   const scale=battleCharacterScale(info.actor)*battleCharacterDepthScale(info.actor);
   for(const at of starts){const p=(age-at)/(info.action==='ultimate'?400:300);if(p<0||p>=1)continue;const c=TIEU_PHONG_META.clips['wind-'+info.action];
    // Size both tornado attacks to the enemy body, preserving the ground anchor.
-   const targetHeights=info.targets.map(t=>getUnit(t.id)).filter(Boolean).map(t=>310*battleCharacterScale(t)*battleCharacterDepthScale(t)/(typeof battleHeroVisualScale==='function'?battleHeroVisualScale(t):1));
-   const h=Math.max(...targetHeights,310*scale)*1.45,w=h*c.cellW/c.cellH;
+   const targetHeights=info.targets.map(t=>getUnit(t.id)).filter(Boolean).map(t=>battleCharacterBody(t).height);
+   const h=Math.max(...targetHeights,battleCharacterBody(info.actor).height)*1.45,w=h*c.cellW/c.cellH;
    const frame=Math.min(c.frames-1,Math.floor(p*c.frames)),x=info.fromX+(info.toX-info.fromX)*p;
    // Two offset, lighter spiral echoes broaden the ground-hugging gust while
    // the larger authored vortex stays in front and keeps the same timing.

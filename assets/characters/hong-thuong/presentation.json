@@ -1,0 +1,138 @@
+{
+  "schema": "battle-hero-presentation/v1",
+  "heroId": "hero_splus_hong_thuong",
+  "aliases": [
+    "hong-thuong",
+    "hong_thuong",
+    "hero_splus_hong_thuong"
+  ],
+  "referenceBodyHeight": 423,
+  "footOffsetY": 0,
+  "registration": "source-body",
+  "clips": {
+    "basic": {
+      "bodyHeight": 423,
+      "footX": 195.306,
+      "footY": 454.25
+    },
+    "ult-prep": {
+      "bodyHeight": 423,
+      "footX": 247.972,
+      "footY": 454.25
+    },
+    "ult-cluster": {
+      "bodyHeight": 423,
+      "footX": 247.972,
+      "footY": 454.25
+    },
+    "ult-finisher": {
+      "bodyHeight": 423,
+      "footX": 247.972,
+      "footY": 454.25
+    },
+    "run": {
+      "bodyHeight": 423,
+      "footX": 228.661,
+      "footY": 454.25
+    },
+    "hit": {
+      "bodyHeight": 423,
+      "footX": 237.439,
+      "footY": 454.25
+    },
+    "fall-die": {
+      "bodyHeight": 423,
+      "footX": 319.95,
+      "footY": 454.25
+    },
+    "standing": {
+      "bodyHeight": 423,
+      "footX": 191.794,
+      "footY": 454.25
+    },
+    "idle-authored-0": {
+      "bodyHeight": 423,
+      "footX": 191.794,
+      "footY": 454.25
+    },
+    "idle-authored-1": {
+      "bodyHeight": 423,
+      "footX": 191.794,
+      "footY": 454.25
+    },
+    "idle-authored-2": {
+      "bodyHeight": 423,
+      "footX": 191.794,
+      "footY": 454.25
+    },
+    "idle-authored-3": {
+      "bodyHeight": 423,
+      "footX": 191.794,
+      "footY": 454.25
+    },
+    "idle-authored-4": {
+      "bodyHeight": 423,
+      "footX": 191.794,
+      "footY": 454.25
+    },
+    "idle-authored-5": {
+      "bodyHeight": 423,
+      "footX": 191.794,
+      "footY": 454.25
+    },
+    "idle-authored-6": {
+      "bodyHeight": 423,
+      "footX": 191.794,
+      "footY": 454.25
+    },
+    "idle-authored-7": {
+      "bodyHeight": 423,
+      "footX": 191.794,
+      "footY": 454.25
+    },
+    "idle-authored-8": {
+      "bodyHeight": 423,
+      "footX": 191.794,
+      "footY": 454.25
+    },
+    "idle-authored-9": {
+      "bodyHeight": 423,
+      "footX": 191.794,
+      "footY": 454.25
+    },
+    "idle-authored-10": {
+      "bodyHeight": 423,
+      "footX": 191.794,
+      "footY": 454.25
+    }
+  },
+  "vfxClips": [
+    "impact"
+  ],
+  "states": {
+    "idle": [
+      "idle-authored-0",
+      "idle-authored-1",
+      "idle-authored-2",
+      "idle-authored-3",
+      "idle-authored-4",
+      "idle-authored-5",
+      "idle-authored-6",
+      "idle-authored-7",
+      "idle-authored-8",
+      "idle-authored-9",
+      "idle-authored-10",
+      "standing"
+    ],
+    "attack": [
+      "basic"
+    ],
+    "ultimate": [
+      "ult-prep",
+      "run",
+      "ult-cluster",
+      "ult-finisher"
+    ]
+  },
+  "evidence": "runtime-meta.json owner-pack v2 content supplies bodyHeightPx=423 and fixed bodyCx/footCellY for each clip. All idle pages and the standing alias share idleVisual.content. Spear overhang is retained and does not determine body height; module motion is not fitted per frame."
+}

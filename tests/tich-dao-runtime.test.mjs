@@ -1,3 +1,4 @@
+import {installHeroPresentation} from './helpers/hero-presentation.mjs';
 import test from 'node:test';import assert from 'node:assert/strict';import {readFileSync,existsSync} from 'node:fs';import vm from 'node:vm';
 import {createSplusCombat} from '../src/domain/combat/splus-mechanics.mjs';
 import {createHash} from 'node:crypto';
@@ -7,7 +8,7 @@ import {patchKyVanHost} from '../scripts/ky-van-runtime-v1.mjs';
 import {patchTieuPhongHost} from '../scripts/tieu-phong-runtime-v1.mjs';
 const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8');
 const meta=JSON.parse(read('assets/characters/tich-dao/runtime-meta.json'));
-const TICH_DAO_SCALE=key=>{const c=meta.clips[key]?.content;return c&&c.scale?c.scale:1;};
+const TICH_DAO_SCALE=key=>423/(meta.clips[key]?.content?.frameHeightPx||423);
 const TICH_DAO_VFX_H=key=>meta.vfx?.clips?.[key]?.display?.heightPx||300;
 function harness(){
  let now=0,releases=0;const draws=[],requests=[],huds=[],translates=[],vdraws=[];
@@ -16,7 +17,7 @@ function harness(){
   BACH_DIEN_LOADER:{ensure:clip=>{requests.push(clip.src);return {image:{src:clip.src,complete:true,naturalWidth:2000}};},acquire:async()=>({release:()=>releases++})},
   window:{HonVietSfx:{prepare:async()=>true,play:()=>true}},__hvIsSkipping:()=>false,__hvSkipVisualAssets:fn=>fn(),
   battleCharacterDepthScale:()=>1,battleCharacterScale:()=>.5,drawUnitHud:(...a)=>huds.push(a)});
- vm.runInContext(read('src/runtime/tich-dao.js'),c);
+ installHeroPresentation(c);vm.runInContext(read('src/runtime/tich-dao.js'),c);
  const ctx={save(){},restore(){},translate(x,y){translates.push({x,y,t:now});},scale(){},drawImage(...a){draws.push(a);}};
  const vctx={save(){},restore(){},translate(){},scale(){},drawImage(...a){vdraws.push(a);}};
  return {c,actor,ctx,draws,requests,huds,translates,vdraws,setTime:t=>now=t,releases:()=>releases,
@@ -45,7 +46,7 @@ test('regression: dash has its combat-selected destination before impact',async(
   assert.ok(h.translates.at(-1).x>h.actor.x,'body must move before damage resolves');
  }
 });
-test('LOI-1: atk/ultimate body vẽ phóng theo content scale, idle giữ nguyên',async()=>{
+test('atk/ultimate use the shared fixed source-body registration, idle keeps its density',async()=>{
  const h=harness();h.setTime(1);
  // idle: dest đúng 480x440 như cũ
  await h.c.beginTichDaoAction(h.actor,'basic',null,1);h.setTime(1+500);
@@ -148,7 +149,7 @@ test('battle patch composes on the real Kỷ Vân + Tiêu Phong text and is idem
  assert.match(patched,/result=(?:spearAction\?await resolveHongThuongCast\(e,spearAction,actor,action,target,battleId\):)?shadowAction\?await resolveTichDaoCast/,'Tịch Dao giữ vị trí trong chuỗi result; tướng mới cắm trước đó');
  assert.match(patched,/drawTichDaoVfx\(ctx, time\);/,'Cổ Mộ VFX overlays render in the effects pass');
  assert.match(patched,/if\(isTichDao\(unit\)\)return drawTichDaoHero/);
- assert.match(patched,/isTichDao\(unit\)\?battleCharacterScale\(unit\)\*419|isTichDao\(unit\)\)\?battleCharacterScale\(unit\)\*419|isTichDao\(unit\)\|\|isHongThuong\(unit\)\)\?battleCharacterScale\(unit\)\*419/);
+ assert.match(patched,/battleCharacterBody\(unit\)\.topY - 18/);
  assert.equal(patchTichDaoBattle(patched,read('src/runtime/tich-dao.js'),meta),patched);
 });
 test('host composes after Kỷ Vân + Tiêu Phong and registers idle, ATK, run and detail',()=>{

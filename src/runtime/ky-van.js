@@ -36,10 +36,8 @@ function drawKyVanHero(ctx,u,time){
  ctx.save();ctx.translate(u.x,u.y);const scale=battleCharacterDepthScale(u)*battleCharacterScale(u);ctx.scale(scale*(u.team===TEAM_ENEMY?-1:1),scale);
  // Keep a canonical, unscaled body frame in the shared visibility owner.
  // The outer transform owns position, depth and enemy mirroring exactly once.
- // One registration for the entire authored idle loop, measured against the
- // 413px standing/action body and its ground at y=-12. Never fit per frame.
- const idleScale=413/645,idleW=432*idleScale,idleH=668*idleScale;
- const paintBody=copy=>key.startsWith('idle-authored-')?kyVanPaint(copy,key,frame,-idleW/2,-12-657*idleScale,idleW,idleH):kyVanPaint(copy,key,frame,-240,-440,480,440)||(u.hp>0&&kyVanPaint(copy,'standing',0,-240,-440,480,440));
+ // Clip registration is data-driven and fixed for the whole animation.
+ const paintBody=copy=>battlePaintCharacter(copy,u,key,KY_VAN_META.clips[key],kyVanImage(key),frame)||(u.hp>0&&battlePaintCharacter(copy,u,'standing',KY_VAN_META.clips.standing,kyVanImage('standing'),0));
  const drawn=__hvHeroVisibility.finish(ctx,'ky-van',u,time,paintBody(ctx),paintBody);
  ctx.restore();if(nextPage)kyVanImage(nextPage,'prefetch');if(u.hp>0)drawUnitHud(ctx,u,time,1);return drawn;
 }

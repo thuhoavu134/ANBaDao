@@ -12,7 +12,6 @@ export function patchKyVanBattle(input,runtime,meta){
  once('  if(!linhAction&&!bachAction)triggerImpactPresentation(actor,target,action);','  if(!kyAction&&!linhAction&&!bachAction)triggerImpactPresentation(actor,target,action);');
  once("  if(linhAction){\n    if(!await waitLinhDongMarker(linhAction,'recovery:end',battleId))return;", "  if(kyAction){\n    if(!await waitKyVanMarker(kyAction,'recovery:end',battleId))return;\n    finishKyVanAction(kyAction);\n  } else if(linhAction){\n    if(!await waitLinhDongMarker(linhAction,'recovery:end',battleId))return;");
  once('function drawSplusToken(context, unit, time) {','function drawSplusToken(context, unit, time) {\n  if(isKyVan(unit))return drawKyVanHero(context,unit,time);');
- once('const y = unit.y - (compact ? battleCharacterScale(unit)*310*battleCharacterDepthScale(unit)+18 : 164);', 'const y = unit.y - (isKyVan(unit)?battleCharacterScale(unit)*419*battleCharacterDepthScale(unit)+18:(compact ? battleCharacterScale(unit)*310*battleCharacterDepthScale(unit)+18 : 164));');
  once('    drawBachDienFx(ctx,time);' ,'    drawBachDienFx(ctx,time);\n    drawKyVanFx(ctx,time);');
  once('function splusReset(){','function splusReset(){\n  cancelKyVanActions();');
  once('  async function performAction(actor, action, target) {',"  async function performAction(actor, action, target) {\n    if(typeof isKyVan==='function'&&isKyVan(actor)&&action==='skill')action='basic';");

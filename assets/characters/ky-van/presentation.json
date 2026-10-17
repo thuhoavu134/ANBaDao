@@ -1,0 +1,120 @@
+{
+  "schema": "battle-hero-presentation/v1",
+  "heroId": "hero_splus_ky_van",
+  "aliases": [
+    "ky-van",
+    "ky_van",
+    "hero_splus_ky_van"
+  ],
+  "referenceBodyHeight": 413,
+  "footOffsetY": -12,
+  "registration": "source-body",
+  "clips": {
+    "basic": {
+      "bodyHeight": 413,
+      "footX": 240,
+      "footY": 428
+    },
+    "ultimate": {
+      "bodyHeight": 413,
+      "footX": 240,
+      "footY": 428
+    },
+    "standing": {
+      "bodyHeight": 413,
+      "footX": 240,
+      "footY": 428
+    },
+    "idle-0": {
+      "bodyHeight": 413,
+      "footX": 240,
+      "footY": 428
+    },
+    "idle-1": {
+      "bodyHeight": 413,
+      "footX": 240,
+      "footY": 428
+    },
+    "idle-2": {
+      "bodyHeight": 413,
+      "footX": 240,
+      "footY": 428
+    },
+    "idle-3": {
+      "bodyHeight": 413,
+      "footX": 240,
+      "footY": 428
+    },
+    "idle-4": {
+      "bodyHeight": 413,
+      "footX": 240,
+      "footY": 428
+    },
+    "idle-5": {
+      "bodyHeight": 413,
+      "footX": 240,
+      "footY": 428
+    },
+    "run": {
+      "bodyHeight": 413,
+      "footX": 240,
+      "footY": 428
+    },
+    "hit": {
+      "bodyHeight": 413,
+      "footX": 240,
+      "footY": 428
+    },
+    "fall-die": {
+      "bodyHeight": 413,
+      "footX": 240,
+      "footY": 428
+    },
+    "idle-authored-0": {
+      "bodyHeight": 645,
+      "footX": 216,
+      "footY": 657
+    },
+    "idle-authored-1": {
+      "bodyHeight": 645,
+      "footX": 216,
+      "footY": 657
+    },
+    "idle-authored-2": {
+      "bodyHeight": 645,
+      "footX": 216,
+      "footY": 657
+    },
+    "idle-authored-3": {
+      "bodyHeight": 645,
+      "footX": 216,
+      "footY": 657
+    }
+  },
+  "vfxClips": [
+    "bolt",
+    "impact"
+  ],
+  "states": {
+    "idle": [
+      "idle-authored-0",
+      "idle-authored-1",
+      "idle-authored-2",
+      "idle-authored-3",
+      "standing",
+      "idle-0",
+      "idle-1",
+      "idle-2",
+      "idle-3",
+      "idle-4",
+      "idle-5"
+    ],
+    "attack": [
+      "basic"
+    ],
+    "ultimate": [
+      "ultimate"
+    ]
+  },
+  "evidence": "docs/qa/idle-action-scale-20261015.md records authored-idle median body 645px and feet at y=657; the established action registration is body 413px, feet y=428 in a 480x440 cell, rendered at local y=-12. Each clip/page uses one fixed source registration; no per-frame fitting."
+}

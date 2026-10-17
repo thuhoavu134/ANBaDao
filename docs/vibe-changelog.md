@@ -1,3 +1,13 @@
+## 2026-10-17 — Shared battle hero size contract (DRAFT / REVIEW)
+
+Baseline main `de5d425` sau PR #310 đã merge; branch mới `fix/shared-hero-scale-contract-20261017` chưa merge hoặc phát hành. Quy chuẩn thân 310 world units theo Bạch Diện được giữ trước viewport/home-depth. Mười `presentation.json` thay bảng scale theo hero ID; bốn direct runtime dùng shared body registration, HUD/impact dùng shared projection. Generic/procedural fallback cùng chuẩn và không nhân authored correction hai lần.
+
+Build kiểm manifest và source inventory khi có `runtime-meta.json`, chặn clip chưa phân loại, character/VFX trùng key và geometry không hợp lệ. Ông Phở/Đình Lôi/Thầy Mo hiện chưa có runtime-meta inventory gate; legacy calibration và foot proxy được ghi đúng nguồn. Cơ thể giữ density/feet theo camera/clip, không fit từng frame; VFX giữ painter riêng.
+
+[Contract và hướng dẫn tích hợp](HERO-BATTLE-SIZE-CONTRACT.md), [QA note](qa/shared-hero-scale-20261017.md), [Canvas offline dùng sprite thật](qa/shared-hero-scale-20261017.png). Lượt kiểm cuối: 50 focused tests trong 8 file +17 targeted runtime regressions = **67 đạt/0 lỗi**; registry có 10 family. Bao gồm projection đúng rectangle thẻ S+ pending-art; profile authored được ưu tiên nếu đã tồn tại. Không khẳng định full build/browser/device hoặc production từ focused tests/ảnh offline. Waiver Ticket Board/workflow cũ tiếp tục áp dụng. Lịch sử phía dưới được giữ nguyên.
+
+---
+
 ## 2026-10-15 — Thầy Mo auto Basic rage (REVIEW)
 PR306 merged with owner approval at main 47f1455; this new branch fixes auto selecting a 25-rage legacy Skill behind Thay Mo's Basic animation. Existing identity owner excludes him only from the paid auto-Skill branch. Actual Basic stays free/+15; Ultimate and free talent unchanged. RED 3 identity cases reproduced; GREEN 10/10 focused tests (both teams, 30→45→60→75→Ultimate→15). Full build/browser/device/deployment not certified. docs/qa/thay-mo-auto-basic-rage-20261015.md. No merge authorization inferred for this new fix; existing Ticket Board exception retained.
 
