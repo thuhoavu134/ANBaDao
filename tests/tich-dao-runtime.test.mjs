@@ -145,10 +145,10 @@ test('battle patch composes on the real Kỷ Vân + Tiêu Phong text and is idem
  const patched=patchTichDaoBattle(read('dist/battle.html'),read('src/runtime/tich-dao.js'),meta);
  assert.match(patched,/\/\* HV_TICH_DAO_V1 \*\//);
  assert.match(patched,/const shadowAction=isTichDao\(actor\)\?await beginTichDaoAction/);
- assert.match(patched,/result=shadowAction\?await resolveTichDaoCast/);
+ assert.match(patched,/result=(?:spearAction\?await resolveHongThuongCast\(e,spearAction,actor,action,target,battleId\):)?shadowAction\?await resolveTichDaoCast/,'Tịch Dao giữ vị trí trong chuỗi result; tướng mới cắm trước đó');
  assert.match(patched,/drawTichDaoVfx\(ctx, time\);/,'Cổ Mộ VFX overlays render in the effects pass');
  assert.match(patched,/if\(isTichDao\(unit\)\)return drawTichDaoHero/);
- assert.match(patched,/isTichDao\(unit\)\?battleCharacterScale\(unit\)\*419|isTichDao\(unit\)\)\?battleCharacterScale\(unit\)\*419/);
+ assert.match(patched,/isTichDao\(unit\)\?battleCharacterScale\(unit\)\*419|isTichDao\(unit\)\)\?battleCharacterScale\(unit\)\*419|isTichDao\(unit\)\|\|isHongThuong\(unit\)\)\?battleCharacterScale\(unit\)\*419/);
  assert.equal(patchTichDaoBattle(patched,read('src/runtime/tich-dao.js'),meta),patched);
 });
 test('host composes after Kỷ Vân + Tiêu Phong and registers idle, ATK, run and detail',()=>{

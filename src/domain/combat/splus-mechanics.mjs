@@ -422,7 +422,7 @@ export function createSplusMechanics(options={}) {
     if(action!=='basic'&&['guardian','striker','duelist','ranger'].includes(def(u)?.role)&&statuses(u).some(s=>s.type==='disarm'&&s.weaponSkills))return false;
     if(melee(u)&&statuses(u).some(s=>s.type==='root'&&s.blocksMelee))return false;
     if(action!=='basic'&&(has(u,'silence')||has(u,'hardSilence')||legacyEffects(u).some(s=>s.type==='silence'||s.type==='hardSilence')))return false;
-    if(['ky_van','tieu_phong','tich_dao'].includes(key(u))&&action==='skill')return false;
+    if(['ky_van','tieu_phong','tich_dao','hong_thuong'].includes(key(u))&&action==='skill')return false;
     const cost=actionCost(u,action);
     return u.energy>=cost&&n(u.splus.cooldowns[action])<=round;
   }
@@ -479,7 +479,17 @@ export function createSplusMechanics(options={}) {
       if(!settings.alreadyPaid)energy(actor,actor,-(action==='basic'?0:actionCost(actor,action)),'cost');
       emit('action',actor,target,{action});
       const killsBefore=n(actor.kills);
-      if(action==='basic'){damage(actor,target,{multiplier:1,action});energy(actor,actor,defaults.basicRage,'basic');}
+      // Hồng Thương's authored three-thrust basic: one action, three distinct
+      // hit resolutions at the animation markers, rage granted once per action.
+      if(action==='basic'&&key(actor)==='hong_thuong'){
+        const cast={id:currentAction.id,kind:'basic',action:currentAction,targets:[target.id],resolved:[]};
+        actor.splus.memory.spearCast=cast;
+        if(settings.deferHongThuong)return {ok:true,castId:cast.id,events:events.slice(startIndex)};
+        for(let hit=0;hit<3;hit++)resolveHongThuongHit(actor.id,cast.id,target.id,hit);
+        energy(actor,actor,defaults.basicRage,'basic');
+        delete actor.splus.memory.spearCast;
+      }
+      else if(action==='basic'){damage(actor,target,{multiplier:1,action});energy(actor,actor,defaults.basicRage,'basic');}
       else if(key(actor)==='tieu_phong'&&action==='ultimate'){
         const cast={id:currentAction.id,action:currentAction,targets:legal.filter(t=>t.slot%3===target.slot%3).map(t=>t.id),resolved:[]};
         actor.splus.memory.fanCast=cast;
@@ -493,6 +503,16 @@ export function createSplusMechanics(options={}) {
         for(let strike=0;strike<3;strike++)resolveTichDaoImpact(actor,cast.id,strike);
         resolveTichDaoExecute(actor,cast.id);
         delete actor.splus.memory.shadowCast;
+      }else if(key(actor)==='hong_thuong'&&action==='ultimate'){
+        const cast={id:currentAction.id,kind:'ultimate',action:currentAction,targets:legal.map(t=>t.id),resolved:[],struckIds:[],finaleDone:false,finished:false};
+        actor.splus.memory.spearCast=cast;
+        if(settings.deferHongThuong)return {ok:true,castId:cast.id,events:events.slice(startIndex)};
+        while(nextHongThuongCluster(actor.id,cast.id)){
+          const victim=nextHongThuongCluster(actor.id,cast.id);
+          for(let hit=0;hit<3;hit++)resolveHongThuongHit(actor.id,cast.id,victim.id,hit);
+        }
+        resolveHongThuongFinale(actor.id,cast.id);
+        delete actor.splus.memory.spearCast;
       }else resolveSkill(actor,action,target);
       if(action!=='basic')actor.splus.cooldowns[action]=round+(action==='skill'?defaults.skillCooldown:0)+(has(actor,'cooldownDelay')?1:0);
       if(action==='ultimate'&&key(actor)==='cuu_trieu'&&n(actor.kills)>killsBefore&&actor.splus.memory.extraRound!==round&&!has(actor,'noExtraTurn')&&alive(actor)){actor.splus.memory.extraRound=round;emit('extraTurn',actor,actor);}
@@ -621,6 +641,117 @@ export function createSplusMechanics(options={}) {
     const previous=currentAction;currentAction=cast.action;
     try{delete actor.splus.memory.shadowCast;actor.splus.cooldowns.ultimate=round;afterAction(actor,'ultimate');return true;}finally{currentAction=previous;}
   }
+  // ---- Hồng Thương (temp) — Sơ Hở / Phá Trận / Kinh Hoồng Phá Trận ----
+  // Sơ Hở lives in per-target memory like Hoa Ấn, but expires after soHoTurns
+  // owner-rounds (REVIEW DEFAULT 3) and is shared between copies of the heroine
+  // (REVIEW DEFAULT — undecided by owner, recorded in the integration doc).
+  function hongThuongStacks(target){
+    const turns=n(def(target)?.passive?.rules?.soHoTurns,3);
+    const applied=n(target?.splus?.memory?.soHoRound,0);
+    if(applied&&round-applied>=turns){target.splus.memory.soHo=0;return 0;}
+    return Math.min(3,Math.max(0,n(target?.splus?.memory?.soHo)));
+  }
+  function hongThuongAddStack(source,target){
+    if(!alive(target))return 0;
+    const cap=n(def(source)?.passive?.rules?.maxStacks,3);
+    const stacks=Math.min(cap,hongThuongStacks(target)+1);
+    target.splus.memory.soHo=stacks;target.splus.memory.soHoRound=round;target.splus.memory.soHoSourceId=source.id;
+    emit('soHo',source,target,{stacks});
+    return stacks;
+  }
+  // Consumption happens BEFORE the hit resolves: the thrust that completes the
+  // third stack never consumes it — only the NEXT valid thrust does.
+  function hongThuongConsume(source,target){
+    const r=def(source)?.passive?.rules||{};
+    if(hongThuongStacks(target)<n(r.maxStacks,3))return null;
+    target.splus.memory.soHo=0;
+    emit('loDiemYeu',source,target,{consumed:3});
+    return {armorPierce:n(r.armorPierce,.35),shieldBonus:n(r.shieldBonus,.5)};
+  }
+  function spearCastOf(actorId,castId){
+    const actor=unit(actorId),cast=actor?.splus?.memory?.spearCast;
+    return cast&&cast.id===castId?cast:null;
+  }
+  // One resolve per (cast, target, hitIndex). A dead target skips its remaining
+  // hits without redirecting (REVIEW DEFAULT: drop hit, keep the cluster plan).
+  function resolveHongThuongHit(actorId,castId,targetId,hitIndex){
+    const actor=unit(actorId),cast=spearCastOf(actorId,castId),target=unit(targetId),token=targetId+':'+hitIndex;
+    if(!cast||!Number.isInteger(hitIndex)||hitIndex<0||hitIndex>2||cast.resolved.includes(token))return {ok:false};
+    cast.resolved.push(token);
+    if(cast.kind==='ultimate'&&!cast.struckIds.includes(targetId))cast.struckIds.push(targetId);
+    if(!alive(actor))return {ok:true,events:[]};
+    if(!alive(target))return {ok:true,events:[]};
+    const previous=currentAction,startIndex=events.length;currentAction=cast.action;
+    try{
+      const kind=cast.kind,slot=kind==='basic'?'basic':'ultimate';
+      const r=rules(actor,slot),mult=(kind==='basic'?r.hitMultipliers:r.clusterMultipliers)[hitIndex];
+      const consume=hongThuongConsume(actor,target);
+      const absorbed=()=>events.slice(startIndex).filter(e=>e.type==='shieldAbsorb'&&e.targetId===target.id).reduce((sum,e)=>sum+n(e.amount),0);
+      const dealt=damage(actor,target,{action:slot,multiplier:n(mult,1),armorPierce:consume?consume.armorPierce:0});
+      if(consume&&alive(target)){
+        const shieldHit=absorbed();
+        // Extra thrust damage melts the shield that just absorbed the hit.
+        if(shieldHit>0)damage(actor,target,{raw:Math.round(shieldHit*consume.shieldBonus),action:slot,noTriggers:true});
+      }
+      const landed=events.slice(startIndex).some(e=>e.type==='damage'&&e.targetId===target.id);
+      if(landed&&alive(target))hongThuongAddStack(actor,target);
+      emit('spearThrust',actor,target,{hit:hitIndex+1,kind,dealt,consumed:!!consume});
+      return {ok:true,events:events.slice(startIndex)};
+    }finally{currentAction=previous;}
+  }
+  // Cluster order: both rows, slot ascending (front line first — REVIEW DEFAULT).
+  // Re-derived from living foes each cluster so late deaths never aim at corpses.
+  function nextHongThuongCluster(actorId,castId){
+    const actor=unit(actorId),cast=spearCastOf(actorId,castId);
+    if(!alive(actor)||!cast||cast.kind!=='ultimate'||cast.finished)return null;
+    const struck=new Set(cast.struckIds);
+    return foes(actor).filter(u=>!struck.has(u.id)).sort(bySlot)[0]||null;
+  }
+  // Hồi Mã Thương: pick highest shield/maxHp ratio among living foes at this
+  // moment; without shields fall back to highest defense; stable bySlot ties.
+  function nextHongThuongFinale(actorId,castId){
+    const actor=unit(actorId),cast=spearCastOf(actorId,castId);
+    if(!alive(actor)||!cast||cast.kind!=='ultimate'||cast.finaleDone)return null;
+    const living=foes(actor);
+    if(!living.length)return null;
+    const shielded=living.filter(u=>u.shield>0).sort((a,b)=>b.shield/b.maxHp-a.shield/a.maxHp||bySlot(a,b));
+    if(shielded.length)return shielded[0];
+    return living.slice().sort((a,b)=>stat(b,'def')-stat(a,'def')||bySlot(a,b))[0];
+  }
+  function resolveHongThuongFinale(actorId,castId){
+    const actor=unit(actorId),cast=spearCastOf(actorId,castId);
+    if(!cast||cast.kind!=='ultimate'||cast.finaleDone)return {ok:false,executed:false};
+    // Pick the victim before latching finaleDone: the selector itself checks it.
+    const target=nextHongThuongFinale(actorId,castId);
+    cast.finaleDone=true;
+    if(!alive(actor)||!target)return {ok:true,executed:false,events:[]};
+    const previous=currentAction,startIndex=events.length;currentAction=cast.action;
+    try{
+      const consume=hongThuongConsume(actor,target);
+      const dealt=damage(actor,target,{action:'ultimate',multiplier:n(rules(actor,'ultimate').finaleMultiplier,1.2),armorPierce:consume?consume.armorPierce:0});
+      const shieldBefore=target.shield;
+      if(consume&&alive(target)&&shieldBefore>0){
+        const absorbed=events.slice(startIndex).filter(e=>e.type==='shieldAbsorb'&&e.targetId===target.id).reduce((sum,e)=>sum+n(e.amount),0);
+        if(absorbed>0)damage(actor,target,{raw:Math.round(absorbed*consume.shieldBonus),action:'ultimate',noTriggers:true});
+      }
+      const landed=events.slice(startIndex).some(e=>e.type==='damage'&&e.targetId===target.id);
+      if(landed&&alive(target))hongThuongAddStack(actor,target);
+      emit('hoiMaThuong',actor,target,{dealt,consumed:!!consume});
+      return {ok:true,executed:true,targetId:target.id,events:events.slice(startIndex)};
+    }finally{currentAction=previous;}
+  }
+  function finishHongThuongCast(actorId,castId){
+    const actor=unit(actorId),cast=spearCastOf(actorId,castId);
+    if(!cast||cast.finished)return false;
+    const previous=currentAction;currentAction=cast.action;
+    try{
+      cast.finished=true;delete actor.splus.memory.spearCast;
+      if(cast.kind==='ultimate')actor.splus.cooldowns.ultimate=round;
+      else energy(actor,actor,defaults.basicRage,'basic');
+      afterAction(actor,cast.kind);
+      return true;
+    }finally{currentAction=previous;}
+  }
   function start() {
     if(started)return;started=true;
     for(const actor of units.filter(passive)){
@@ -732,7 +863,7 @@ export function createSplusMechanics(options={}) {
       case 'hoa_khieu':return one(strongestEnemy);
       case 'hac_dao':{const target=tankiest(enemies)[0];return target?unique([target,...adjacent(target,enemies).slice(0,4)]):[];}
       case 'tieu_phong':{const lane=oppositeTarget?.slot%3;return enemies.filter(t=>t.slot%3===lane);}
-      case 'tich_dao':return enemies;
+      case 'tich_dao':case 'hong_thuong':return enemies;
       case 'ky_van':case 'to_linh':case 'linh_dong':case 'cuong_dong':case 'han_nuong':case 'vong_co':case 'co_nuong':case 'ha_lang':case 'hai_phong':case 'hoa_tieu':case 'tram_tue':case 'hoi_anh':case 'cuu_trieu':case 'khaos':return enemies;
       default:return null;
     }
@@ -751,6 +882,11 @@ export function createSplusMechanics(options={}) {
     const entries=statuses(target).map(s=>({id:`${s.type}:${s.sourceId}`,type:s.type,iconId:s.iconId,sourceId:s.sourceId,sourceHeroId:s.sourceHeroId,polarity:s.polarity,stacks:s.stacks,maxStacks:s.maxStacks,charges:s.charges??null,remainingRounds:s.expiresRound==null?null:Math.max(0,s.expiresRound-round),name:def(unit(s.sourceId))?.passiveName||s.type}));
     const hoaAn=Math.min(3,n(target.splus.memory.hoaAn));
     if(hoaAn>0)entries.unshift({id:'hoaAn:'+target.id,type:'hoaAn',iconId:'hoaAn',name:'Hoa Ấn',sourceId:target.splus.memory.hoaAnSourceId||null,sourceHeroId:'hero_splus_tich_dao',polarity:'debuff',stacks:hoaAn,maxStacks:3,charges:null,remainingRounds:null});
+    const soHo=hongThuongStacks(target);
+    if(soHo>0){
+      const turnsLeft=Math.max(1,n(def(target)?.passive?.rules?.soHoTurns,3));
+      entries.unshift({id:'soHo:'+target.id,type:soHo>=3?'loDiemYeu':'soHo',iconId:'soHo',name:soHo>=3?'Lộ Điểm Yếu':'Sơ Hở',sourceId:target.splus.memory.soHoSourceId||null,sourceHeroId:'hero_splus_hong_thuong',polarity:'debuff',stacks:soHo,maxStacks:3,charges:null,remainingRounds:turnsLeft});
+    }
     function aura(source,type,stacks=1,extra={}) {if(source&&stacks>0)entries.push({id:`aura:${type}:${source.id}`,type,iconId:def(source)?.iconId||null,sourceId:source.id,sourceHeroId:source.sourceId,polarity:'buff',stacks,maxStacks:null,charges:null,remainingRounds:null,name:def(source)?.passiveName||type,...extra});}
     for(const s of holders(target,'co_trong'))aura(s,'gears',n(s.splus.memory.gears));
     if(passive(target)){
@@ -921,7 +1057,7 @@ export function createSplusMechanics(options={}) {
       default:D(target,defaults.singleUltimateMultiplier);return;
     }
   }
-  return {schema:'luc-than-splus-combat/v2',profileVersion:'splus-profile/2026-09-08-v2',units,events,unit,start,beginTurn,beginRound,finishRound,consumeTurnStatuses,act,resolveTieuPhongImpact,finishTieuPhongCast,resolveTichDaoImpact,resolveTichDaoExecute,nextTichDaoExecution,resolveTichDaoExecution,tichDaoOpeningTarget,tichDaoStrikeTarget,finishTichDaoCast,damage,consumeHitAttempt,heal,shield,gainRage:energy,addStatus,restoreStatus,extendStatus,storedDotDamage,cleanse,hasStatus:(targetId,type)=>has(unit(targetId),type),modifiers,stat,canUse,canMove,targets,chooseAction,hud,get round(){return round;}};
+  return {schema:'luc-than-splus-combat/v2',profileVersion:'splus-profile/2026-09-08-v2',units,events,unit,start,beginTurn,beginRound,finishRound,consumeTurnStatuses,act,resolveTieuPhongImpact,finishTieuPhongCast,resolveTichDaoImpact,resolveTichDaoExecute,nextTichDaoExecution,resolveTichDaoExecution,tichDaoOpeningTarget,tichDaoStrikeTarget,finishTichDaoCast,resolveHongThuongHit,nextHongThuongCluster,nextHongThuongFinale,resolveHongThuongFinale,finishHongThuongCast,hongThuongStacks,damage,consumeHitAttempt,heal,shield,gainRage:energy,addStatus,restoreStatus,extendStatus,storedDotDamage,cleanse,hasStatus:(targetId,type)=>has(unit(targetId),type),modifiers,stat,canUse,canMove,targets,chooseAction,hud,get round(){return round;}};
 }
 
 

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+  <!-- Sơ Hở status icon: spearhead breaching a shield line (UI chrome for the
+       Hồng Thương kit; the stack count is drawn by the battle status lane). -->
+  <path d="M12 2.5 15.5 9l-2-.9v6.2l2.4-1.4 1.4 2.4L12 19l-5.3-3.7 1.4-2.4 2.4 1.4V8.1l-2 .9Z" fill="#ffb46a" stroke="#3a1d0e" stroke-width="1.1" stroke-linejoin="round"/>
+  <path d="M4 20.5h16" stroke="#ffdca8" stroke-width="1.6" stroke-linecap="round" opacity=".85"/>
+</svg>

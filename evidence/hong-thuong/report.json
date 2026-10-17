@@ -1,0 +1,245 @@
+{
+  "runs": [
+    {
+      "width": 390,
+      "height": 844,
+      "detail": {
+        "frames": 13,
+        "bounds": {
+          "x": 55,
+          "y": 88,
+          "width": 280,
+          "height": 430
+        },
+        "contained": true,
+        "titleBelow": true,
+        "posterHidden": true
+      },
+      "afk": {
+        "squad": "Đội đang thám hiểm: Hồng Thương (tên tạm), Ông Phở, Đình Lôi — Vệ Binh Trống Đồng, Thầy Mo, Linh Đồng, Bạch Diện",
+        "frames": 94,
+        "clips": [
+          "idle-poster.webp",
+          "run.webp",
+          "idle-authored-2.webp",
+          "idle-authored-3.webp",
+          "idle-authored-4.webp",
+          "idle-authored-5.webp",
+          "basic.webp",
+          "idle-authored-0.webp",
+          "idle-authored-1.webp"
+        ]
+      },
+      "basic": {
+        "phase": "complete",
+        "cells": 0,
+        "strokes": 0,
+        "timeline": [
+          "action:start",
+          "marker:release",
+          "marker:impact",
+          "marker:recovery",
+          "action:complete"
+        ]
+      },
+      "sfxProbe": {
+        "hong-thuong-impact": true
+      },
+      "basicBattle": {
+        "cells": 18,
+        "strokes": 38,
+        "vfx": 50
+      },
+      "sfxAfter": {
+        "plays": 33,
+        "audible": 23,
+        "recent": [
+          {
+            "ms": 0,
+            "peak": 0.585,
+            "state": "running"
+          },
+          {
+            "ms": 0,
+            "peak": 0.585,
+            "state": "running"
+          },
+          {
+            "ms": 0,
+            "peak": 0.585,
+            "state": "running"
+          },
+          {
+            "ms": 0,
+            "peak": 0.585,
+            "state": "running"
+          },
+          {
+            "ms": 0,
+            "peak": 0.585,
+            "state": "running"
+          },
+          {
+            "ms": 0,
+            "peak": 0.585,
+            "state": "running"
+          }
+        ]
+      },
+      "sfxState": {
+        "state": "running",
+        "lastResult": "played",
+        "active": "0"
+      },
+      "ultimate": {
+        "prep": 11,
+        "clusterCells": 15,
+        "clusterStrokes": 280,
+        "clusterGaps": [],
+        "finisher": 22,
+        "vfxStrokes": 917
+      },
+      "videoFrames": 56,
+      "exceptions": [],
+      "assetErrors": [],
+      "natural": {
+        "actions": [
+          {
+            "action": "basic"
+          },
+          {
+            "action": "ultimate"
+          }
+        ],
+        "ultimateSeen": true,
+        "energy": 65
+      },
+      "ok": true
+    },
+    {
+      "width": 1280,
+      "height": 800,
+      "detail": {
+        "frames": 11,
+        "bounds": {
+          "x": 158.40625,
+          "y": 94,
+          "width": 280,
+          "height": 430
+        },
+        "contained": true,
+        "titleBelow": true,
+        "posterHidden": true
+      },
+      "afk": {
+        "squad": "Đội đang thám hiểm: Hồng Thương (tên tạm), Ông Phở, Đình Lôi — Vệ Binh Trống Đồng, Thầy Mo, Linh Đồng, Bạch Diện",
+        "frames": 93,
+        "clips": [
+          "idle-poster.webp",
+          "run.webp",
+          "idle-authored-2.webp",
+          "idle-authored-3.webp",
+          "idle-authored-4.webp",
+          "idle-authored-5.webp",
+          "basic.webp",
+          "idle-authored-0.webp",
+          "idle-authored-1.webp"
+        ]
+      },
+      "basic": {
+        "phase": "complete",
+        "cells": 0,
+        "strokes": 0,
+        "timeline": [
+          "action:start",
+          "marker:release",
+          "marker:impact",
+          "marker:recovery",
+          "action:complete"
+        ]
+      },
+      "sfxProbe": {
+        "hong-thuong-impact": true
+      },
+      "basicBattle": {
+        "cells": 17,
+        "strokes": 17,
+        "vfx": 29
+      },
+      "sfxAfter": {
+        "plays": 33,
+        "audible": 23,
+        "recent": [
+          {
+            "ms": 0,
+            "peak": 0.585,
+            "state": "running"
+          },
+          {
+            "ms": 0,
+            "peak": 0.585,
+            "state": "running"
+          },
+          {
+            "ms": 0,
+            "peak": 0.585,
+            "state": "running"
+          },
+          {
+            "ms": 0,
+            "peak": 0.585,
+            "state": "running"
+          },
+          {
+            "ms": 0,
+            "peak": 0.585,
+            "state": "running"
+          },
+          {
+            "ms": 0,
+            "peak": 0.585,
+            "state": "running"
+          }
+        ]
+      },
+      "sfxState": {
+        "state": "running",
+        "lastResult": "played",
+        "active": "0"
+      },
+      "ultimate": {
+        "prep": 9,
+        "clusterCells": 15,
+        "clusterStrokes": 106,
+        "clusterGaps": [
+          172
+        ],
+        "finisher": 22,
+        "vfxStrokes": 379
+      },
+      "videoFrames": 21,
+      "exceptions": [],
+      "assetErrors": [],
+      "natural": {
+        "actions": [
+          {
+            "action": "basic"
+          },
+          {
+            "action": "ultimate"
+          }
+        ],
+        "ultimateSeen": true,
+        "energy": 20
+      },
+      "ok": true
+    }
+  ],
+  "ok": true,
+  "physicalIphone": "NOT_RUN",
+  "notes": {
+    "spearClip": "ATK clip chỉ có 2 cú đâm riêng biệt — hit2/hit3 map cú đâm mạnh (đề xuất chờ duyệt)",
+    "naturalRage": "Trận tự nhiên từ nộ 0: basic ×3+ rồi ultimate khi đủ 60",
+    "fixture": "qaForceAuthoredAction ép energy=100 cho forced actions (cơ chế của hook QA sẵn có)"
+  }
+}

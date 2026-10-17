@@ -284,7 +284,9 @@ const {installTieuPhong}=await import('./tieu-phong-runtime-v1.mjs');
 await installTieuPhong(root);
 // Tích Đạo anchors on the Kỷ Vân + Tiêu Phong patched battle text.
 const {installTichDao}=await import('./tich-dao-runtime-v1.mjs');
+const {installHongThuong}=await import('./hong-thuong-runtime-v1.mjs');
 await installTichDao(root);
+await installHongThuong(root);
 
 // Scale the final authored clocks after the instant-skip owner has installed
 // its marker short-circuit. Both paths continue sharing the same controller.
