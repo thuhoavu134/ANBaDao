@@ -231,30 +231,26 @@ function drawCoNuongImpactOverlay(context,time){
 // Use the existing visual waiter and shared audio bus, with one speed snapshot per cast.
 async function performCoNuongAction(actor,action,target,e,battleId){
   const kind=action==='ultimate'?'ultimate':'basic',speed=Math.max(1,Math.min(3,Number(state.speed)||1));
-  const info={actor,battleId,speed,start:0,pierces:[],abort:new AbortController()};coNuongActive.add(info);
+  const info={actor,battleId,speed,start:0,abort:new AbortController()};coNuongActive.add(info);
   const cue='co-nuong-'+(kind==='basic'?'atk':'ultimate');
   const current=()=>state.battleId===battleId&&!info.abort.signal.aborted;
   const wait=async at=>{
     while(current()){
-      const elapsed=(performance.now()-info.start)*speed;
-      while(info.pierces.length&&info.pierces[0]<=elapsed+.001){
-        const marker=info.pierces.shift();
-        if(state.sound&&!__hvIsSkipping()&&elapsed-marker<120*speed)void window.HonVietSfx?.play('co-nuong-pierce',{group:'combat',signal:info.abort.signal,playbackRate:speed,maxDelayMs:120});
-      }
-      const remaining=Math.min(at,info.pierces[0]??Infinity)-elapsed;
-      if(__hvIsSkipping()){info.abort.abort();return state.battleId===battleId;}
-      if(at-elapsed<=.001)return true;
+      if(__hvIsSkipping())return true;
+      const remaining=at-(performance.now()-info.start)*speed;
+      if(remaining<=.001)return true;
       if(!await sleepVisualMilliseconds(Math.min(40,remaining/speed),battleId))return false;
     }
     return false;
   };
+  const present=fn=>{const totals=new Map();splusPresentation=totals;try{return fn();}finally{splusPresentation=null;for(const hit of totals.values())splusFloater(hit.target,hit.amount,hit.healing,hit.critical);updateTeamCounters();splusStateView();}};
+  const sound=key=>{if(state.sound&&!__hvIsSkipping())void window.HonVietSfx?.play(key,{group:'combat',signal:info.abort.signal,playbackRate:speed,maxDelayMs:120});};
   state.locked=true;state.selectedAction=action;clearTargets();updateActorHud(actor);
   const title=globalThis.SPLUS42.catalog.find(h=>h.id===actor.sourceId)?.actions[action]?.name||action;
+  let cast;
   try{
     if(!__hvIsSkipping()){
-      // Decode only this cast's pages; a missing asset must not hold the battle forever.
-      let timer;
-      try{await Promise.race([
+      let timer;try{await Promise.race([
         Promise.all([kind,'vfx-'+kind,'vfx-parasite'].map(key=>coNuongImage(coNuongClips[key][0]).decode().catch(()=>{}))),
         new Promise(resolve=>{timer=setTimeout(resolve,2000);})
       ]);}finally{clearTimeout(timer);}
@@ -262,40 +258,39 @@ async function performCoNuongAction(actor,action,target,e,battleId){
       if(state.sound)await Promise.all([cue,...(kind==='basic'?['co-nuong-pierce']:[])].map(key=>window.HonVietSfx?.prepare(key,{signal:info.abort.signal})));
     }
     if(!current())return;
-    info.start=performance.now();
-    coNuongMotion.set(actor.id,{kind,start:info.start,duration:kind==='basic'?720:2000,speed});
+    info.start=performance.now();coNuongMotion.set(actor.id,{kind,start:info.start,duration:kind==='basic'?720:2000,speed});
     setUnitState(actor,kind==='ultimate'?'ultimate':'attack',(kind==='basic'?720:2000)/speed);
     setStatus(`${actor.name} · ${title}`);dom.phaseLabel.textContent=title;
-    if(!await wait(kind==='ultimate'?1060:600))return;
-    if(kind==='basic'&&!__hvIsSkipping()){
-      const victims=action==='basic'&&target?.hp>0?[target]:(e.targets?.(actor,action)||[target]).filter(Boolean);
-      info.pierces=Array.from({length:3},(_,blade)=>Array.from({length:4},(_,pass)=>600+.85*(blade*120+360+100+pass*200))).flat().sort((a,b)=>a-b);
+    if(!await wait(kind==='ultimate'?1380:600))return;
+    cast=e.act(actor.id,action,target?.id,{deferCoNuong:true});
+    if(!cast.ok)return;
+    const victims=cast.targetIds.map(id=>getUnit(id)).filter(Boolean),events=[];
+    if(kind==='basic'){
       const body=coNuongBody(actor),dir=actor.team===TEAM_ENEMY?-1:1;
-      for(const victim of victims)coNuongImpacts.push({kind:'vfx-basic',battleId,actor,target:victim,origin:{x:body.centerX+dir*body.height*.18,y:body.centerY+body.height*.02},start:performance.now(),duration:1292,speed});
-    }
-    if(kind==='basic'&&state.sound&&!__hvIsSkipping())void window.HonVietSfx?.play(cue,{group:'combat',signal:info.abort.signal,playbackRate:speed,maxDelayMs:120});
-    if(!await wait(kind==='ultimate'?1380:991)&&!(__hvIsSkipping()&&state.battleId===battleId))return;
-    if(state.battleId!==battleId)return;
-    const totals=new Map();let result;splusPresentation=totals;
-    try{result = e.act(actor.id,action,target?.id);}finally{splusPresentation=null;}
-    const ultimateVictims=[];
-    for(const hit of totals.values()){
-      splusFloater(hit.target,hit.amount,hit.healing,hit.critical);
-      if(kind==='ultimate'&&!hit.healing&&hit.target.team!==actor.team)ultimateVictims.push(hit.target);
-    }
-    if(result.ok){state.actionCount++;state.actionBreakdown[action]=(state.actionBreakdown[action]||0)+1;const rec=intelUnit(actor);if(rec){rec.actions++;if(action==='ultimate')rec.ultimates++;}addLog(`${actor.name} · ${title}`);}
-    updateTeamCounters();splusStateView();updateActorHud(actor);
-    // Three visual/audio waves, one domain action: no repeated damage or mark detonation.
-    if(kind==='ultimate')for(let wave=0;wave<3;wave++){
-      if(__hvIsSkipping())break;
-      if(!await wait(1380+wave*900)){if(__hvIsSkipping()&&state.battleId===battleId)break;return;}
-      if(!__hvIsSkipping()){
-        for(const victim of ultimateVictims)for(const delay of [0,300])coNuongImpacts.push({kind:'vfx-ultimate',battleId,target:victim,start:performance.now()+delay/speed,duration:900,speed,mirror:actor.team===TEAM_ENEMY});
-        if(state.sound)void window.HonVietSfx?.play(cue,{group:'combat',signal:info.abort.signal,playbackRate:speed,maxDelayMs:120});
+      if(!__hvIsSkipping())for(const victim of victims)coNuongImpacts.push({kind:'vfx-basic',battleId,actor,target:victim,origin:{x:body.centerX+dir*body.height*.18,y:body.centerY+body.height*.02},start:info.start+600/speed,duration:1292,speed});
+      sound(cue);
+      for(let blade=0;blade<3;blade++)for(let pass=0;pass<4;pass++)events.push({at:600+.85*(blade*120+460+pass*200),hit:blade*4+pass});
+    }else{
+      for(let wave=0;wave<3;wave++)for(let echo=0;echo<2;echo++){
+        events.push({at:1380+wave*900+echo*300,release:true,wave,echo});
+        events.push({at:1380+wave*900+echo*300+180,hit:wave*2+echo});
       }
     }
-    if(!await wait(kind==='ultimate'?4500:2000)&&!(__hvIsSkipping()&&state.battleId===battleId))return;
-    if(state.battleId!==battleId)return;
+    events.sort((a,b)=>a.at-b.at);
+    for(const event of events){
+      if(!await wait(event.at)||!current())return;
+      if(event.release){
+        if(!__hvIsSkipping())for(const victim of victims.filter(u=>u.hp>0))coNuongImpacts.push({kind:'vfx-ultimate',battleId,target:victim,start:info.start+event.at/speed,duration:900,speed,mirror:actor.team===TEAM_ENEMY});
+        if(!event.echo)sound(cue);
+      }else{
+        for(const victim of victims)present(()=>e.resolveCoNuongImpact(actor.id,cast.castId,victim.id,event.hit));
+        if(kind==='basic')sound('co-nuong-pierce');
+      }
+    }
+    present(()=>e.finishCoNuongCast(actor.id,cast.castId));
+    state.actionCount++;state.actionBreakdown[action]=(state.actionBreakdown[action]||0)+1;
+    const rec=intelUnit(actor);if(rec){rec.actions++;if(action==='ultimate')rec.ultimates++;}addLog(`${actor.name} · ${title}`);updateActorHud(actor);
+    if(!await wait(kind==='ultimate'?4500:2000)||!current())return;
     setUnitState(actor,'idle',800);state.currentId=null;state.locked=false;
     if(battleHasWinner()){if(!await waitForDefeatExit(battleId))return;if(checkBattleEnd()){splusStateView();return;}}
     void advanceTurn();
@@ -424,5 +419,6 @@ function drawSplusToken(context, unit, time) {
   context.fillStyle='#fff1d5';context.font='bold 15px sans-serif';context.fillText(unit.name,0,-48);context.font='11px sans-serif';context.fillStyle='#aec4ce';context.fillText('S+ · Đang thử cơ chế',0,-24);context.restore();
   drawUnitHud(context,unit,time,1);
 }
+
 
 

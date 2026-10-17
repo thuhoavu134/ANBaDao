@@ -82,6 +82,18 @@ export async function buildOwnerRefreshAssets(root=process.cwd(),sharpImpl){
  return evidence;
 }
 function once(s,a,b){if(s.split(a).length!==2)throw new Error('Owner refresh owner missing/ambiguous: '+a.slice(0,90));return s.replace(a,()=>b);}
+export function patchDinhOpening(s){
+  // Basic owns both the enemy contact and the existing received-shield rules.
+  const guardStart=s.indexOf('    if(isDinhLoi(actor)&&action==="skill"){');
+  const guardEnd=s.indexOf('    if(isDinhLoi(actor)&&action==="ultimate"){',guardStart);
+  if(guardStart<0||guardEnd<0)throw new Error('Dinh guard settlement owner missing');
+  const guard=s.slice(guardStart,guardEnd);
+  const basic=guard.replace('action==="skill"','action==="basic"')
+   .replace('      const protectedAlly=', '      if(!target||target.hp<=0||target.team===actor.team)return;\n      applyDamage(actor,target,multiplier);\n      gainEnergy(actor,15);\n      const protectedAlly=');
+  s=once(s,'    if (action === "basic" && !(isVersionedSkillKit(actor) && isOngPhoCarry(actor))) {',basic+'    if (action === "basic" && !(isVersionedSkillKit(actor) && isOngPhoCarry(actor))) {');
+  s=once(s,'  async function performAction(actor, action, target) {', '  async function performAction(actor, action, target) {\n    if(isDinhLoi(actor)&&action==="skill"){action="basic";target=preferredTargetFor(actor,action);}');
+  return s;
+}
 export function patchOwnerRefresh(input,kind){
  if(input.includes('/* OWNER_REFRESH_20261018 */'))return input;
  let s=input;
@@ -100,6 +112,7 @@ export function patchOwnerRefresh(input,kind){
   function dinhLoiImage(key){`);
   s=once(s,'const protectedAlly=target&&target.team===actor.team?target:Core.lowestHealth(friends)||actor;',
    'const protectedAlly=ownerDinhProtectedAlly(actor,target,friends);');
+  s=patchDinhOpening(s);
   const attackStart=s.indexOf('    if(fx.kind==="basicProjectile"&&target)');
   const attackEnd=s.indexOf('    else if(fx.kind==="skill1Wave"',attackStart);
   if(attackStart<0||attackEnd<0)throw new Error('Owner ATK phase owner missing');
