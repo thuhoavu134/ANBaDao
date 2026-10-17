@@ -87,10 +87,12 @@ export function patchOwnerRefresh(input,kind){
  if(kind==='battle'){
   const event="const event=eventOverride||(action==='ultimate'?'ultimate':action==='skill'?'skill':'basic');";
   s=once(s,event,"const ownerId=String(actor?.sourceId||actor?.sourceHeroId||actor?.id||'');\n    const event=eventOverride||(ownerId==='dinh_loi'?'dinh-loi-'+(action==='ultimate'?'ultimate':action==='skill'?'skill':'atk'):ownerId==='thay_mo'&&action==='ultimate'?'thay-mo-ultimate':(action==='ultimate'?'ultimate':action==='skill'?'skill':'basic')); /* OWNER_REFRESH_20261018 */");
-  const ready='__hvActionAssets=await __hvBattleAssets.prepare(actor,action,target,battleId);';
+  // This final installer runs AFTER battle-instant-skip-v1, which wraps every
+  // readiness await. Bind to that production owner and share its cancellation.
+  const ready='__hvActionAssets=await __hvSkipVisualAssets(()=>__hvBattleAssets.prepare(actor,action,target,battleId),battleId);';
   s=once(s,ready,ready+`\n      const ownerSoundId=String(actor.sourceId||actor.sourceHeroId||actor.id||'');
       const ownerCue=ownerSoundId==='dinh_loi'?'dinh-loi-'+(action==='ultimate'?'ultimate':action==='skill'?'skill':'atk'):ownerSoundId==='thay_mo'&&action==='ultimate'?'thay-mo-ultimate':null;
-      if(ownerCue&&state.sound)await window.HonVietSfx?.prepare(ownerCue,{signal:__hvActionAssets.signal,timeoutMs:2000});`);
+      if(ownerCue&&state.sound)await __hvSkipVisualAssets(()=>window.HonVietSfx?.prepare(ownerCue,{signal:__hvActionAssets.signal,timeoutMs:2000}),battleId);`);
   // Keep the new authored VFX's aspect ratio. The compatibility portrait cell
   // contains a centered landscape strip; uniform scaling restores that strip.
   for(const [x,y,pad] of [[170,45,340],[120,10,240]]){
