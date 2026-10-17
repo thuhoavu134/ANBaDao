@@ -630,5 +630,6 @@
   "file": "kiemthe-six-state-package-v2-phase-aware.zip",
   "sha256": "65c942da11bffac52c57be1275193be0e392c776c62f0a15d2cdd84200813d6b",
   "policy": "Owner explicitly accepts 18 sampled frames per non-idle state to reduce size; preserve 81 idle frames."
- }
+ },
+ "assetRevision": "rgba-v2-verified-24af7ff"
 }

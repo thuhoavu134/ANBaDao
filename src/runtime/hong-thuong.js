@@ -27,7 +27,7 @@ function hongThuongClipMeta(key){
  if(c)return c;
  return null;
 }
-function hongThuongClip(key){const c=hongThuongClipMeta(key);if(!c)return null;const rows=c.rows??Math.ceil(c.frames/c.cols);return {...c,src:HONG_THUONG_BASE+c.file,rows,decodedBytes:c.cols*c.cellW*rows*c.cellH*4};}
+function hongThuongClip(key){const c=hongThuongClipMeta(key);if(!c)return null;const rows=c.rows??Math.ceil(c.frames/c.cols);return {...c,src:HONG_THUONG_BASE+c.file+'?v='+encodeURIComponent(HONG_THUONG_META.assetRevision||'rgba-v2-verified'),rows,decodedBytes:c.cols*c.cellW*rows*c.cellH*4};}
 function hongThuongImage(key,priority='visible'){const clip=hongThuongClip(key);return clip?BACH_DIEN_LOADER.ensure(clip,{scope:'battle',priority}).image:null;}
 function hongThuongPaint(ctx,clipKey,frame,x,y){const c=hongThuongClipMeta(clipKey),img=hongThuongImage(clipKey);if(!c||!img||img.complete===false||img.naturalWidth===0)return false;
  // Body-centre/foot registration from the meta: bodyCx sits on the unit x,
@@ -116,6 +116,7 @@ async function beginHongThuongAction(actor,action,target,battleId,engine){
   try{await window.HonVietSfx?.prepare('hong-thuong-impact',{signal:info.abort.signal});}catch(error){}
   if(battleId!==state.battleId){finishHongThuongAction(info);return null;}
   info.startedAt=performance.now();actor._hongThuongAction=info;
+  window.__HV_HONG_THUONG_ACTION={actorId:actor.id,action:normalized,phase:'playing',battleId};
   const tl=HONG_THUONG_META.ultimateTimeline;
   info.impactMs=normalized==='basic'?(tl.hitMsBasic?.[0]??384):tl.prepMs+(tl.clusterHitsAt?.[0]??96);
   info.actionTotalMs=normalized==='basic'
@@ -126,7 +127,7 @@ async function beginHongThuongAction(actor,action,target,battleId,engine){
    ?tl.prepMs+tl.clusterMs*6+tl.finisherMs+600
    :HONG_THUONG_META.clips.basic.durationMs)/speed;
   return info;
- }catch(error){finishHongThuongAction(info);if(error.name!=='AbortError')console.error('Hồng Thương asset readiness failed',error);return null;}
+ }catch(error){finishHongThuongAction(info);if(error.name!=='AbortError'){console.error('Hồng Thương asset readiness failed',error);window.__HV_HONG_THUONG_ACTION={actorId:actor.id,action:normalized,phase:'asset-error',error:String(error),battleId};if(typeof setStatus==='function')setStatus('Không tải được animation Hồng Thương — thử tải lại trận');}return null;}
 }
 async function waitHongThuongMarker(info,marker,battleId){
  const at=typeof marker==='number'?marker:marker==='recovery:end'?info.actionTotalMs:marker==='impact'?info.impactMs||0:0;

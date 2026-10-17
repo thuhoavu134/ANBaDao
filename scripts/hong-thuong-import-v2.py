@@ -32,6 +32,7 @@ def atlas(name,fs,cols):
  sizes[name+'.webp']=list(im.size)
  return rows
 m=json.loads((OUT/'runtime-meta.json').read_text());m['ownerPack']={'file':Path(sys.argv[1]).name,'sha256':hashlib.sha256(Path(sys.argv[1]).read_bytes()).hexdigest(),'policy':'Owner explicitly accepts 18 sampled frames per non-idle state to reduce size; preserve 81 idle frames.'}
+m['assetRevision']='rgba-v2-'+m['ownerPack']['sha256'][:16]
 m['pending']=[x for x in m['pending'] if not x.startswith('ATK clip')]
 fs,c,src=frames('idle');dur=[f['durationMs'] for f in src['frames']]
 iv=dict(schema='idle-pages-v1',frames=len(fs),pageFrames=8,pages=math.ceil(len(fs)/8),cols=4,cellW=fs[0].width,cellH=474,content={k:v for k,v in c.items() if k!='scale'},contentScale=1,frameDurationsMs=dur,durationMs=sum(dur))
