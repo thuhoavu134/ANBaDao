@@ -580,3 +580,8 @@ Prior patch misunderstood Basic VFX as a stationary impact. Implemented three st
 Baseline main 1b271d4 (PR314 merged). Branch feat/owner-asset-refresh-20261018: Cổ Nương adds 12 shared-bus piercing cues and 300ms Ultimate echoes (one settlement, recovery4500ms); replaces Victory/Defeat title assets; full supplied Đình Đồng pack maps to canonical dinh_loi; gold Thiên Vương shield tw_70_jzz_b; Thầy Mo idle/Ultimate VFX/SFX replaced. Build adapter expands compact source into existing atlas layouts before all derivative/cache builders, preserves IDs/save/domain. New portrait and both detail idles are wired.
 
 39 focused tests pass; 16 replacement atlases built and cells inspected; raw production-owner fragment patches parse. npm test blocked by sparse checkout missing scripts/luc-anh-idle-asset.mjs. Full normal-game browser/audio/device verification and remote CI remain separate. Existing Ticket Board unavailable waiver retained; VibeLab full evidence gate incomplete. Details, exceptions and per-screen matrix: docs/qa/owner-refresh-20261018.md. No merge or production promotion authorized for this new PR.
+
+
+## Owner visual review — 18/10/2026, PR315 follow-up
+
+Recipient-relative Đình Lôi shield; ultimate content bounded by formation row midpoints; default legacy VFX mirror with explicit facing override; separate outlined Victory/Defeat words over existing animated wings; Cổ Nương character cast 2s, existing three waves and echo300ms preserved. 46 focused tests PASS; source seam parse and 2x SVG inspection done. Full local build/browser unavailable (sparse baseline and no browser executable); physical iPhone pending. See docs/qa/owner-refresh-20261018/visual-review.md. No merge or full-game PASS claimed.

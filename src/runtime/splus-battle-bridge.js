@@ -148,7 +148,7 @@ const coNuongImages=new Map(),coNuongMotion=new Map(),coNuongImpacts=[],coNuongA
 const coNuongClips=Object.freeze({
   idle:['assets/characters/co-nuong/idle.webp',30,8,480,440,100,224,432],
   basic:['assets/characters/co-nuong/basic.webp',18,6,480,440,720/18,215,431],
-  ultimate:['assets/characters/co-nuong/ultimate.webp',18,6,480,440,4000/18,228,428],
+  ultimate:['assets/characters/co-nuong/ultimate.webp',18,6,480,440,2000/18,228,428],
   run:['assets/characters/co-nuong/run.webp',18,6,480,440,4000/18,156,423],
   hit:['assets/characters/co-nuong/hit.webp',18,6,480,440,4000/18,223,424],
   'fall-die':['assets/characters/co-nuong/fall-die.webp',18,6,480,440,4000/18,278,418],
@@ -263,8 +263,8 @@ async function performCoNuongAction(actor,action,target,e,battleId){
     }
     if(!current())return;
     info.start=performance.now();
-    coNuongMotion.set(actor.id,{kind,start:info.start,duration:kind==='basic'?720:4500,speed});
-    setUnitState(actor,kind==='ultimate'?'ultimate':'attack',(kind==='basic'?720:4500)/speed);
+    coNuongMotion.set(actor.id,{kind,start:info.start,duration:kind==='basic'?720:2000,speed});
+    setUnitState(actor,kind==='ultimate'?'ultimate':'attack',(kind==='basic'?720:2000)/speed);
     setStatus(`${actor.name} · ${title}`);dom.phaseLabel.textContent=title;
     if(!await wait(kind==='ultimate'?1060:600))return;
     if(kind==='basic'&&!__hvIsSkipping()){

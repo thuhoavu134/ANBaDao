@@ -93,16 +93,26 @@ export function patchOwnerRefresh(input,kind){
   s=once(s,ready,ready+`\n      const ownerSoundId=String(actor.sourceId||actor.sourceHeroId||actor.id||'');
       const ownerCue=ownerSoundId==='dinh_loi'?'dinh-loi-'+(action==='ultimate'?'ultimate':action==='skill'?'skill':'atk'):ownerSoundId==='thay_mo'&&action==='ultimate'?'thay-mo-ultimate':null;
       if(ownerCue&&state.sound)await __hvSkipVisualAssets(()=>window.HonVietSfx?.prepare(ownerCue,{signal:__hvActionAssets.signal,timeoutMs:2000}),battleId);`);
-  // Keep the new authored VFX's aspect ratio. The compatibility portrait cell
-  // contains a centered landscape strip; uniform scaling restores that strip.
+  const visualRuntime=readFileSync(new URL('../src/runtime/owner-visual-review.js',import.meta.url),'utf8');
+  s=once(s,'function drawDinhLoiFx(',visualRuntime+'\nfunction drawDinhLoiFx(');
   for(const [x,y,pad] of [[170,45,340],[120,10,240]]){
-   const a=`cellW,cellH,${x},${y},WORLD.width-${pad},WORLD.height-${y*2}`;
-   s=once(s,a,`cellW,cellH,${x},WORLD.height/2-(WORLD.width-${pad})*cellH/cellW/2,WORLD.width-${pad},(WORLD.width-${pad})*cellH/cellW`);
+   s=once(s,`context.drawImage(image,sx,sy,cellW,cellH,${x},${y},WORLD.width-${pad},WORLD.height-${y*2})`,
+    'drawOwnerDinhUltimate(context,image,sx,sy,cellW,cellH,actor)');
   }
-  s=once(s,"unit.x,unit.y,330,186,{baseline:93,screen:true,alpha:.82}","unit.x,unit.y,620,348,{baseline:24,screen:true,alpha:.82}");
+  s=once(s,"__hvPersistentPages.draw(context,'dinh-shield',frame,unit.x,unit.y,330,186,{baseline:93,screen:true,alpha:.82})",
+   'drawOwnerDinhShield(context,unit,frame)');
   s=once(s,'drawW=Math.min(790,Math.max(710,bounds.w+270)),drawH=Math.min(430,Math.max(390,bounds.h+250))','drawW=Math.min(790,Math.max(710,bounds.w+270)),drawH=drawW*270/480');
   s=s.replaceAll("dinh_loi:'assets/heroes-concept/crops/guardian-00.png'","dinh_loi:'assets/characters/dinh-loi/owner-portrait.webp'");
   s=once(s,"${base}${victory?'victory-text-clean-smooth-v5.apng':'defeat-clean-loop.apng'}","assets/owner-refresh-20261018/${victory?'result-victory-animated.webp':'result-defeat-animated.webp'}");
+  s=once(s,'<div class="irv-hero-wrap">',`<img class="irv-word" alt="\${victory?'Victory':'Defeat'}" src="assets/owner-refresh-20261018/result-\${victory?'victory':'defeat'}-word.svg"><div class="irv-hero-wrap">`);
+  s=once(s,'</head>',`<style>
+/* Keep animated wings, remove only the old raster lettering above them. */
+.irv-victory .irv-title{clip-path:polygon(0 0,18% 0,18% 33%,82% 33%,82% 0,100% 0,100% 100%,0 100%)}
+.irv-defeat .irv-title{clip-path:polygon(0 0,27% 0,27% 28%,73% 28%,73% 0,100% 0,100% 100%,0 100%)}
+.irv-word{position:absolute;left:50%;transform:translateX(-50%);width:100%;top:0;z-index:4;pointer-events:none;aspect-ratio:16/9;object-fit:contain}
+.irv-defeat .irv-word{top:1.5%}
+</style></head>`);
+
  }else{
   const art={slug:'dinh-loi',displayName:'Đình Lôi — Vệ Binh Trống Đồng',identityVersion:'owner-20261018',reference:{master:'assets/characters/dinh-loi/owner-portrait.webp',runtime:true},assets:Object.fromEntries(['master','avatar','card','dialogue','icon'].map(k=>[k,'assets/characters/dinh-loi/owner-portrait.webp']))};
   s=once(s,'let P=null, MEMORY_ONLY=false;',`/* OWNER_REFRESH_20261018 */\nCHARACTER_MANIFEST.dinh_loi=${JSON.stringify(art)};\nlet P=null, MEMORY_ONLY=false;`);

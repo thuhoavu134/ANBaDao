@@ -103,7 +103,8 @@
         222.222
       ],
       "durationMs": 3999.996,
-      "kind": "character"
+      "kind": "character",
+      "runtimeDurationMs": 2000
     },
     "run": {
       "file": "run.webp",
@@ -300,7 +301,8 @@
       1535.0,
       1603.0,
       1705.0
-    ]
+    ],
+    "ultimateCastMs": 2000
   },
   "sfx": {
     "basic": "tm_shyy_c.wav",

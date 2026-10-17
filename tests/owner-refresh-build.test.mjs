@@ -8,11 +8,13 @@ import {patchOwnerRefresh} from '../scripts/owner-refresh-20261018.mjs';
 function finalBattle(){return [
  "const event=eventOverride||(action==='ultimate'?'ultimate':action==='skill'?'skill':'basic');",
  '__hvActionAssets=await __hvSkipVisualAssets(()=>__hvBattleAssets.prepare(actor,action,target,battleId),battleId);',
- 'cellW,cellH,170,45,WORLD.width-340,WORLD.height-90',
- 'cellW,cellH,120,10,WORLD.width-240,WORLD.height-20',
- 'unit.x,unit.y,330,186,{baseline:93,screen:true,alpha:.82}',
+ 'function drawDinhLoiFx(){}',
+ 'context.drawImage(image,sx,sy,cellW,cellH,170,45,WORLD.width-340,WORLD.height-90)',
+ 'context.drawImage(image,sx,sy,cellW,cellH,120,10,WORLD.width-240,WORLD.height-20)',
+ "__hvPersistentPages.draw(context,'dinh-shield',frame,unit.x,unit.y,330,186,{baseline:93,screen:true,alpha:.82})",
  'drawW=Math.min(790,Math.max(710,bounds.w+270)),drawH=Math.min(430,Math.max(390,bounds.h+250))',
  "${base}${victory?'victory-text-clean-smooth-v5.apng':'defeat-clean-loop.apng'}"
+ ,'<div class="irv-hero-wrap">','</head>'
 ].join('\n');}
 test('final installer composes with production instant-skip readiness owner',()=>{
  const output=patchOwnerRefresh(finalBattle(),'battle');
