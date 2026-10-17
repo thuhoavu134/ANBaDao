@@ -45,3 +45,13 @@ test('parasite uses dark falling-mist source with alpha compositing',()=>{
  const {c,ctx}=setup();c.coNuongAtlas(ctx,'vfx-parasite',0,0,100,1);assert.equal(ctx.globalCompositeOperation,'source-over');
  const meta=JSON.parse(readFileSync(new URL('../assets/vfx/co-nuong/vfx-parasite-smoke.source.json',import.meta.url),'utf8'));assert.equal(meta.code,'zgm_125_hmrx_a');
 });
+
+test('ultimate character completes its 18 poses in 2 seconds then returns idle',()=>{
+ const h=setup();h.c.drawUnitHud=()=>{};
+ vm.runInContext("coNuongMotion.set('a',{kind:'ultimate',start:0,duration:2000,speed:1});",h.c);
+ h.c.coNuongRender(h.ctx,h.actor,1999);
+ assert.equal(h.draws.find(d=>d[0]==='image')[2],5*480,'last source column');
+ h.draws.length=0;h.c.coNuongRender(h.ctx,h.actor,2000);
+ assert.equal(vm.runInContext("coNuongMotion.has('a')",h.c),false);
+ assert.ok(h.draws.find(d=>d[0]==='image')[1].src.endsWith('/idle.webp'));
+});

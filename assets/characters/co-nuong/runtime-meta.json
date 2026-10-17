@@ -103,7 +103,8 @@
         222.222
       ],
       "durationMs": 3999.996,
-      "kind": "character"
+      "kind": "character",
+      "runtimeDurationMs": 2000
     },
     "run": {
       "file": "run.webp",
@@ -269,7 +270,8 @@
         "padding": 24,
         "upscale": 2,
         "waves": 3,
-        "waveIntervalMs": 900
+        "waveIntervalMs": 900,
+        "copiesPerWave": 2
       }
     }
   },
@@ -284,11 +286,28 @@
       2280,
       3180
     ],
-    "ultimateRecoveryMs": 4200
+    "ultimateRecoveryMs": 4500,
+    "ultimateEchoDelayMs": 300,
+    "basicPierceMs": [
+      991.0,
+      1093.0,
+      1161.0,
+      1195.0,
+      1263.0,
+      1331.0,
+      1365.0,
+      1433.0,
+      1501.0,
+      1535.0,
+      1603.0,
+      1705.0
+    ],
+    "ultimateCastMs": 2000
   },
   "sfx": {
     "basic": "tm_shyy_c.wav",
-    "ultimate": "tm_bylh_f.wav"
+    "ultimate": "tm_bylh_f.wav",
+    "pierce": "pierce.wav"
   },
   "source": {
     "animationPack": "kiemthe-new-hero-idle30-seam-exception-20261017-184252.zip",

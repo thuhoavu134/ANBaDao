@@ -219,3 +219,11 @@ Dùng chuẩn thời gian đã được chủ dự án duyệt. Khung roster-wid
 5. Chỉ gọi bộ tướng hoàn tất khi mọi hạng mục áp dụng đã được kiểm ở lớp phù hợp và các ngoại lệ được chấp nhận. Merge/deploy vẫn theo quyền chủ dự án đã cấp; cập nhật PR không đồng nghĩa được merge.
 
 Mỗi lần nhận ZIP phải thực hiện lại ma trận theo revision mới, kể cả khi chỉ đổi một số clip. Có thể tái sử dụng bằng chứng còn hợp lệ cho phần không đổi, nhưng phải ghi revision và lý do.
+
+
+### Quy tắc VFX sau phản hồi 18/10/2026
+
+- Buff bọc thân phải dùng body bounds của **người nhận buff**, không dùng kích thước caster hoặc khung sân.
+- VFX directional dùng hướng mặt của caster; mặc định source hướng phải, phe địch mirror đúng một lần. Helper dùng chung `battleVfxMirror(actor, sourceFacing=1)` cho legacy; choreography đổi hướng phải cấp `visualFacing` hoặc `facing`. Source hướng trái truyền `sourceFacing=-1`. Không mirror thêm tại parent khi blitter đã mirror.
+- Kiểm riêng ATK, skill, cả hai pha ulti, projectile và impact của hai phe; các lệnh `drawImage` trực tiếp cũng phải qua direction owner. Với tướng authored độc lập, kiểm hợp đồng hướng riêng trước khi thay.
+- Chữ UI cần sắc nét tách thành vector/live text; không phóng raster chữ đi kèm VFX.

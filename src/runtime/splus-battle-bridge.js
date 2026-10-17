@@ -148,7 +148,7 @@ const coNuongImages=new Map(),coNuongMotion=new Map(),coNuongImpacts=[],coNuongA
 const coNuongClips=Object.freeze({
   idle:['assets/characters/co-nuong/idle.webp',30,8,480,440,100,224,432],
   basic:['assets/characters/co-nuong/basic.webp',18,6,480,440,720/18,215,431],
-  ultimate:['assets/characters/co-nuong/ultimate.webp',18,6,480,440,4000/18,228,428],
+  ultimate:['assets/characters/co-nuong/ultimate.webp',18,6,480,440,2000/18,228,428],
   run:['assets/characters/co-nuong/run.webp',18,6,480,440,4000/18,156,423],
   hit:['assets/characters/co-nuong/hit.webp',18,6,480,440,4000/18,223,424],
   'fall-die':['assets/characters/co-nuong/fall-die.webp',18,6,480,440,4000/18,278,418],
@@ -213,8 +213,8 @@ function drawCoNuongImpactOverlay(context,time){
   drawCoNuongParasites(context,time);
   for(let i=coNuongImpacts.length-1;i>=0;i--){
     const fx=coNuongImpacts[i],age=(time-fx.start)*(fx.speed||1);
-    if(age<0)continue;
     if(__hvIsSkipping()||(fx.battleId!=null&&fx.battleId!==state.battleId)||age>=fx.duration){coNuongImpacts.splice(i,1);continue;}
+    if(age<0)continue;
     if(fx.kind==='vfx-basic'){
       for(let blade=0;blade<3;blade++){
         const pose=coNuongSwordPose(fx,age,blade);if(!pose)continue;
@@ -231,14 +231,19 @@ function drawCoNuongImpactOverlay(context,time){
 // Use the existing visual waiter and shared audio bus, with one speed snapshot per cast.
 async function performCoNuongAction(actor,action,target,e,battleId){
   const kind=action==='ultimate'?'ultimate':'basic',speed=Math.max(1,Math.min(3,Number(state.speed)||1));
-  const info={actor,battleId,speed,start:0,abort:new AbortController()};coNuongActive.add(info);
+  const info={actor,battleId,speed,start:0,pierces:[],abort:new AbortController()};coNuongActive.add(info);
   const cue='co-nuong-'+(kind==='basic'?'atk':'ultimate');
   const current=()=>state.battleId===battleId&&!info.abort.signal.aborted;
   const wait=async at=>{
     while(current()){
-      const remaining=at-(performance.now()-info.start)*speed;
+      const elapsed=(performance.now()-info.start)*speed;
+      while(info.pierces.length&&info.pierces[0]<=elapsed+.001){
+        const marker=info.pierces.shift();
+        if(state.sound&&!__hvIsSkipping()&&elapsed-marker<120*speed)void window.HonVietSfx?.play('co-nuong-pierce',{group:'combat',signal:info.abort.signal,playbackRate:speed,maxDelayMs:120});
+      }
+      const remaining=Math.min(at,info.pierces[0]??Infinity)-elapsed;
       if(__hvIsSkipping()){info.abort.abort();return state.battleId===battleId;}
-      if(remaining<=.001)return true;
+      if(at-elapsed<=.001)return true;
       if(!await sleepVisualMilliseconds(Math.min(40,remaining/speed),battleId))return false;
     }
     return false;
@@ -254,16 +259,17 @@ async function performCoNuongAction(actor,action,target,e,battleId){
         new Promise(resolve=>{timer=setTimeout(resolve,2000);})
       ]);}finally{clearTimeout(timer);}
       if(!current())return;
-      if(state.sound)await window.HonVietSfx?.prepare(cue,{signal:info.abort.signal});
+      if(state.sound)await Promise.all([cue,...(kind==='basic'?['co-nuong-pierce']:[])].map(key=>window.HonVietSfx?.prepare(key,{signal:info.abort.signal})));
     }
     if(!current())return;
     info.start=performance.now();
-    coNuongMotion.set(actor.id,{kind,start:info.start,duration:kind==='basic'?720:4200,speed});
-    setUnitState(actor,kind==='ultimate'?'ultimate':'attack',(kind==='basic'?720:4200)/speed);
+    coNuongMotion.set(actor.id,{kind,start:info.start,duration:kind==='basic'?720:2000,speed});
+    setUnitState(actor,kind==='ultimate'?'ultimate':'attack',(kind==='basic'?720:2000)/speed);
     setStatus(`${actor.name} · ${title}`);dom.phaseLabel.textContent=title;
     if(!await wait(kind==='ultimate'?1060:600))return;
     if(kind==='basic'&&!__hvIsSkipping()){
       const victims=action==='basic'&&target?.hp>0?[target]:(e.targets?.(actor,action)||[target]).filter(Boolean);
+      info.pierces=Array.from({length:3},(_,blade)=>Array.from({length:4},(_,pass)=>600+.85*(blade*120+360+100+pass*200))).flat().sort((a,b)=>a-b);
       const body=coNuongBody(actor),dir=actor.team===TEAM_ENEMY?-1:1;
       for(const victim of victims)coNuongImpacts.push({kind:'vfx-basic',battleId,actor,target:victim,origin:{x:body.centerX+dir*body.height*.18,y:body.centerY+body.height*.02},start:performance.now(),duration:1292,speed});
     }
@@ -284,11 +290,11 @@ async function performCoNuongAction(actor,action,target,e,battleId){
       if(__hvIsSkipping())break;
       if(!await wait(1380+wave*900)){if(__hvIsSkipping()&&state.battleId===battleId)break;return;}
       if(!__hvIsSkipping()){
-        for(const victim of ultimateVictims)coNuongImpacts.push({kind:'vfx-ultimate',battleId,target:victim,start:performance.now(),duration:900,speed,mirror:actor.team===TEAM_ENEMY});
+        for(const victim of ultimateVictims)for(const delay of [0,300])coNuongImpacts.push({kind:'vfx-ultimate',battleId,target:victim,start:performance.now()+delay/speed,duration:900,speed,mirror:actor.team===TEAM_ENEMY});
         if(state.sound)void window.HonVietSfx?.play(cue,{group:'combat',signal:info.abort.signal,playbackRate:speed,maxDelayMs:120});
       }
     }
-    if(!await wait(kind==='ultimate'?4200:2000)&&!(__hvIsSkipping()&&state.battleId===battleId))return;
+    if(!await wait(kind==='ultimate'?4500:2000)&&!(__hvIsSkipping()&&state.battleId===battleId))return;
     if(state.battleId!==battleId)return;
     setUnitState(actor,'idle',800);state.currentId=null;state.locked=false;
     if(battleHasWinner()){if(!await waitForDefeatExit(battleId))return;if(checkBattleEnd()){splusStateView();return;}}

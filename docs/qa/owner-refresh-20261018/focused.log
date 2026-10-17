@@ -1,0 +1,47 @@
+✔ shared Cổ Nương bus decodes once, applies x1, cancels and respects mute (10.019831ms)
+✔ shared Cổ Nương bus decodes once, applies x2, cancels and respects mute (3.24507ms)
+✔ shared Cổ Nương bus decodes once, applies x3, cancels and respects mute (6.028914ms)
+✔ Cổ Nương mapping preserves the single canonical Ky Van/Tieu Phong source anchor (2.170196ms)
+✔ Cổ Nương impact VFX is painted separately, after all combatants (0.490025ms)
+✔ Cổ Nương keeps the late Tiêu Phong settlement anchor unique (0.29324ms)
+✔ late Kỷ Vân, Tiêu Phong and Tịch Dao installers compose with the new bridge (11.331421ms)
+✔ three swords launch from harp with stagger and each completes two round trips (6.842655ms)
+✔ parasite smoke follows live status and target, survives 1.2s, stops on cleanse/death (1.460085ms)
+✔ ultimate uses projected target body height, not fixed viewport multiplier (1.340517ms)
+✔ ATK reaches the final pulling frames by sword release (1.069677ms)
+✔ parasite uses dark falling-mist source with alpha compositing (1.731129ms)
+✔ Cổ Nương is registered in the real main-game catalogue and portrait registry (3.570158ms)
+✔ Existing player data remains intact and obtains the hero once (1.714194ms)
+✔ Build patch rejects duplicate installation or an unexpected owner shape (1.85056ms)
+✔ Cổ Nương registration survives save-contract-v1 migration header injection (2.199364ms)
+✔ Cổ Nương x1: authored impact/recovery, shared cue, all targets, no generic VFX (10.265977ms)
+✔ Cổ Nương x2: authored impact/recovery, shared cue, all targets, no generic VFX (5.913899ms)
+✔ Cổ Nương x3: authored impact/recovery, shared cue, all targets, no generic VFX (2.101491ms)
+✔ mute and skip do not create an independent audio player (4.833385ms)
+✔ cancel during readiness never settles damage or advances the next battle (4.844842ms)
+✔ active cast keeps its captured speed when the speed control changes (2.1196ms)
+✔ exit after release aborts the shared cue and cannot hit or advance (1.497419ms)
+✔ enemy VFX mirrors once, uses screen blend and expires on the captured clock (2.492297ms)
+✔ real combat domain: Basic single, Skill front row, Ultimate all enemies (40.24567ms)
+✔ real parasite status owns smoke; shield-only hits add no mark and Ultimate consumes own marks (13.530716ms)
+✔ leaving after first ultimate wave cancels remaining waves and turn advance (1.816841ms)
+✔ skipped ultimate settles once and advances with no waves or audio (1.214518ms)
+✔ all twelve sword crossings have audio x1 (1.854205ms)
+✔ all twelve sword crossings have audio x2 (1.439795ms)
+✔ all twelve sword crossings have audio x3 (1.305601ms)
+✔ each ultimate victim receives three pairs, echo delayed 300 authored ms (1.561816ms)
+✔ result registration resolves Co Nuong aliases and actual run/idle/fall atlases (4.849078ms)
+✔ Hong Thuong finale faces victim behind enemy line: player (2.783497ms)
+✔ Hong Thuong finale faces victim behind enemy line: enemy (4.287399ms)
+✔ timeline resampling includes final fall frame and preserves fractional idle holds (1.932179ms)
+✔ replacement plan covers six states, shield, all legacy VFX and both idle consumers (0.823935ms)
+✔ installer fails closed when final runtime owner is missing (1.261837ms)
+✔ Dinh hammer contact pose coincides with each existing release marker (0.573382ms)
+ℹ tests 39
+ℹ suites 0
+ℹ pass 39
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 263.543708
