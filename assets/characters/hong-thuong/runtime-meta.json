@@ -1,0 +1,635 @@
+{
+ "schema": "hong-thuong/runtime-v1",
+ "sourceCharacter": "Owner-supplied green-screen batch 2026-10-16 (chibi spear heroine; name pending)",
+ "sourcePackSha256": {
+  "basic": {
+   "file": "atk_2---16d8c557-3c30-4008-af73-f85289ada16f.mp4",
+   "sha256": "a4021d2e4381548a24b213623d397a3ed02448c2273db87556322e1bc0275e0b"
+  },
+  "ultimate": {
+   "file": "ulti_2---071c36d3-7610-4af3-a48d-40877387b921.mp4",
+   "sha256": "f20b5523852b671f1da31c7ef8537a957c6ba3012439f083fbcc417117a6135a"
+  },
+  "idle": {
+   "file": "idle_2---42f3850d-2c20-4171-958a-d56b5c27e953.mp4",
+   "sha256": "42686531cac2a6318d9c1dbedf59d188390cfe71ca34da904d1c07b39b0bef09"
+  },
+  "run": {
+   "file": "run_2---a5f83296-a2aa-425b-9371-3d0d2ad9d7a4.mp4",
+   "sha256": "c22c0facebecd2b9c6f06356e5cb8cd9ae26d0f8df8498a33d5b1f49368ee218"
+  },
+  "hit": {
+   "file": "Hit---9bdaf646-789a-478b-87f8-436fd46a04c4.mp4",
+   "sha256": "4f12ae6a01e3fbf2523333ff3d8dfe037d27335ab1afea0a84bbf1b97433c876"
+  },
+  "fall-die": {
+   "file": "fall_die---3e7a535b-12b7-4e0b-a351-53751f95799d.mp4",
+   "sha256": "a183f4eb8baa8670348cd8f9d2ae61cc39a8eea916f27c215cd57fcd1cd27a52"
+  }
+ },
+ "pending": [
+  "Tên hiển thị tạm \"Hồng Thương\" — chờ chủ dự án chốt",
+  "avatar.webp tạm cắt từ idle frame 21 — portrait authored chờ owner"
+ ],
+ "clips": {
+  "basic": {
+   "file": "basic.webp",
+   "cols": 5,
+   "rows": 3,
+   "frames": 14,
+   "cellW": 546,
+   "cellH": 474,
+   "durationMs": 1120,
+   "frameDurationsMs": [
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80,
+    80
+   ],
+   "content": {
+    "bodyCx": 195.306,
+    "footCellY": 454.25,
+    "bodyTop": 18,
+    "bodyHeightPx": 423,
+    "scale": 1
+   },
+   "sourceClip": "atk_2---16d8c557-3c30-4008-af73-f85289ada16f.mp4",
+   "sourceSampleIndices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    2,
+    3,
+    4,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ],
+   "sourceFrames": [
+    1,
+    9,
+    17,
+    25,
+    33,
+    17,
+    25,
+    33,
+    17,
+    25,
+    33,
+    41,
+    49,
+    57
+   ]
+  },
+  "ult-prep": {
+   "file": "ult-prep.webp",
+   "cols": 4,
+   "rows": 1,
+   "frames": 4,
+   "cellW": 618,
+   "cellH": 474,
+   "durationMs": 192,
+   "frameDurationsMs": [
+    48,
+    48,
+    48,
+    48
+   ],
+   "content": {
+    "bodyCx": 247.972,
+    "footCellY": 454.25,
+    "bodyTop": 18,
+    "bodyHeightPx": 423,
+    "scale": 1
+   },
+   "sourceClip": "ulti_2---071c36d3-7610-4af3-a48d-40877387b921.mp4",
+   "sourceSampleIndices": [
+    0,
+    1,
+    2,
+    3
+   ],
+   "sourceFrames": [
+    1,
+    9,
+    17,
+    25
+   ]
+  },
+  "ult-cluster": {
+   "file": "ult-cluster.webp",
+   "cols": 5,
+   "rows": 1,
+   "frames": 5,
+   "cellW": 618,
+   "cellH": 474,
+   "durationMs": 720,
+   "frameDurationsMs": [
+    144,
+    144,
+    144,
+    144,
+    144
+   ],
+   "content": {
+    "bodyCx": 247.972,
+    "footCellY": 454.25,
+    "bodyTop": 18,
+    "bodyHeightPx": 423,
+    "scale": 1
+   },
+   "sourceClip": "ulti_2---071c36d3-7610-4af3-a48d-40877387b921.mp4",
+   "sourceSampleIndices": [
+    4,
+    5,
+    6,
+    7,
+    8
+   ],
+   "sourceFrames": [
+    33,
+    41,
+    49,
+    57,
+    65
+   ]
+  },
+  "ult-finisher": {
+   "file": "ult-finisher.webp",
+   "cols": 5,
+   "rows": 2,
+   "frames": 9,
+   "cellW": 618,
+   "cellH": 474,
+   "durationMs": 864,
+   "frameDurationsMs": [
+    96,
+    96,
+    96,
+    96,
+    96,
+    96,
+    96,
+    96,
+    96
+   ],
+   "content": {
+    "bodyCx": 247.972,
+    "footCellY": 454.25,
+    "bodyTop": 18,
+    "bodyHeightPx": 423,
+    "scale": 1
+   },
+   "sourceClip": "ulti_2---071c36d3-7610-4af3-a48d-40877387b921.mp4",
+   "sourceSampleIndices": [
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17
+   ],
+   "sourceFrames": [
+    73,
+    81,
+    89,
+    97,
+    105,
+    113,
+    121,
+    129,
+    137
+   ]
+  },
+  "run": {
+   "file": "run.webp",
+   "cols": 5,
+   "rows": 4,
+   "frames": 18,
+   "cellW": 686,
+   "cellH": 474,
+   "durationMs": 864,
+   "frameDurationsMs": [
+    48,
+    48,
+    48,
+    48,
+    48,
+    48,
+    48,
+    48,
+    48,
+    48,
+    48,
+    48,
+    48,
+    48,
+    48,
+    48,
+    48,
+    48
+   ],
+   "content": {
+    "bodyCx": 228.661,
+    "footCellY": 454.25,
+    "bodyTop": 18,
+    "bodyHeightPx": 423,
+    "scale": 1
+   },
+   "sourceClip": "run_2---a5f83296-a2aa-425b-9371-3d0d2ad9d7a4.mp4",
+   "sourceSampleIndices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17
+   ],
+   "sourceFrames": [
+    1,
+    6,
+    12,
+    17,
+    22,
+    28,
+    33,
+    38,
+    44,
+    49,
+    54,
+    60,
+    65,
+    70,
+    76,
+    81,
+    86,
+    92
+   ]
+  },
+  "hit": {
+   "file": "hit.webp",
+   "cols": 5,
+   "rows": 4,
+   "frames": 18,
+   "cellW": 518,
+   "cellH": 474,
+   "durationMs": 648,
+   "frameDurationsMs": [
+    36,
+    36,
+    36,
+    36,
+    36,
+    36,
+    36,
+    36,
+    36,
+    36,
+    36,
+    36,
+    36,
+    36,
+    36,
+    36,
+    36,
+    36
+   ],
+   "content": {
+    "bodyCx": 237.439,
+    "footCellY": 454.25,
+    "bodyTop": 18,
+    "bodyHeightPx": 423,
+    "scale": 1
+   },
+   "sourceClip": "Hit---9bdaf646-789a-478b-87f8-436fd46a04c4.mp4",
+   "sourceSampleIndices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17
+   ],
+   "sourceFrames": [
+    1,
+    6,
+    12,
+    17,
+    22,
+    28,
+    33,
+    38,
+    44,
+    49,
+    54,
+    60,
+    65,
+    70,
+    76,
+    81,
+    86,
+    92
+   ]
+  },
+  "fall-die": {
+   "file": "fall-die.webp",
+   "cols": 5,
+   "rows": 4,
+   "frames": 18,
+   "cellW": 596,
+   "cellH": 474,
+   "durationMs": 1152,
+   "frameDurationsMs": [
+    64,
+    64,
+    64,
+    64,
+    64,
+    64,
+    64,
+    64,
+    64,
+    64,
+    64,
+    64,
+    64,
+    64,
+    64,
+    64,
+    64,
+    64
+   ],
+   "content": {
+    "bodyCx": 319.95,
+    "footCellY": 454.25,
+    "bodyTop": 18,
+    "bodyHeightPx": 423,
+    "scale": 1
+   },
+   "sourceClip": "fall_die---3e7a535b-12b7-4e0b-a351-53751f95799d.mp4",
+   "sourceSampleIndices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17
+   ],
+   "sourceFrames": [
+    1,
+    6,
+    12,
+    17,
+    22,
+    28,
+    33,
+    38,
+    44,
+    49,
+    54,
+    60,
+    65,
+    70,
+    76,
+    81,
+    86,
+    92
+   ]
+  },
+  "standing": {
+   "file": "idle-authored-0.webp",
+   "cols": 4,
+   "rows": 2,
+   "frames": 1,
+   "cellW": 468,
+   "cellH": 474,
+   "durationMs": 41.667,
+   "frameDurationsMs": [
+    41.667
+   ],
+   "content": {
+    "bodyCx": 191.794,
+    "footCellY": 454.25,
+    "bodyTop": 18,
+    "bodyHeightPx": 423,
+    "scale": 1
+   }
+  }
+ },
+ "idleVisual": {
+  "schema": "idle-pages-v1",
+  "frames": 81,
+  "pageFrames": 8,
+  "pages": 11,
+  "cols": 4,
+  "cellW": 468,
+  "cellH": 474,
+  "content": {
+   "bodyCx": 191.794,
+   "footCellY": 454.25,
+   "bodyTop": 18,
+   "bodyHeightPx": 423
+  },
+  "contentScale": 1,
+  "frameDurationsMs": [
+   41.667,
+   41.666,
+   41.667,
+   41.667,
+   41.666,
+   41.667,
+   41.667,
+   41.666,
+   41.667,
+   41.667,
+   41.666,
+   41.667,
+   41.667,
+   41.666,
+   41.667,
+   41.667,
+   41.666,
+   41.667,
+   41.667,
+   41.666,
+   41.667,
+   41.667,
+   41.666,
+   41.667,
+   41.667,
+   41.666,
+   41.667,
+   41.667,
+   41.666,
+   41.667,
+   41.667,
+   41.666,
+   41.667,
+   41.667,
+   41.666,
+   41.667,
+   41.667,
+   41.666,
+   41.667,
+   41.667,
+   41.666,
+   41.667,
+   41.667,
+   41.666,
+   41.667,
+   41.667,
+   41.666,
+   41.667,
+   41.667,
+   41.666,
+   41.667,
+   41.667,
+   41.666,
+   41.667,
+   41.667,
+   41.666,
+   41.667,
+   41.667,
+   41.666,
+   41.667,
+   41.667,
+   41.666,
+   41.667,
+   41.667,
+   41.666,
+   41.667,
+   41.667,
+   41.666,
+   41.667,
+   41.667,
+   41.666,
+   41.667,
+   41.667,
+   41.666,
+   41.667,
+   41.667,
+   41.666,
+   41.667,
+   41.667,
+   41.666,
+   41.667
+  ],
+  "durationMs": 3375.0
+ },
+ "ultimateTimeline": {
+  "schema": "modules-v1",
+  "prepMs": 192,
+  "clusterMs": 720,
+  "finisherMs": 864,
+  "clusterHitsAt": [
+   144,
+   432,
+   576
+  ],
+  "finisherHitAt": 432,
+  "hitMsBasic": [
+   240,
+   480,
+   720
+  ]
+ },
+ "vfx": {
+  "provenance": {
+   "approved": "Mẫu 22 — video 24-VFX-can-chien-co-SFX.mp4, duyệt 2026-10-16",
+   "vfxCode": "tw_90_zxzy_d",
+   "vfxSource": "SKILLPACK/vfx/tianwang/tw_90_zxzy_d (pak\\image_4.pak #43; 14 khung có nội dung, canvas gốc 128x128, giữ ox/oy từng khung)",
+   "sfxCode": "tw_zxzy_c",
+   "sfxSource": "SKILLPACK/sfx/tianwang/tw_zxzy_c.wav (22050Hz mono 16-bit 0.479s)",
+   "note": "Cặp dùng trong preview đã duyệt; KHÔNG tuyên bố cặp gốc đã xác minh từ bảng game."
+  },
+  "clips": {
+   "impact": {
+    "file": "impact-4x-bright.webp",
+    "frames": 14,
+    "cols": 5,
+    "cellW": 512,
+    "cellH": 512,
+    "fps": 16.666666666666668,
+    "blendMode": "screen"
+   }
+  }
+ },
+ "sfx": {
+  "cues": {
+   "hong-thuong-impact": "hong-thuong/impact.wav"
+  },
+  "provenance": {
+   "approved": "Mẫu 22 — video 24-VFX-can-chien-co-SFX.mp4, duyệt 2026-10-16",
+   "vfxCode": "tw_90_zxzy_d",
+   "vfxSource": "SKILLPACK/vfx/tianwang/tw_90_zxzy_d (pak\\image_4.pak #43; 14 khung có nội dung, canvas gốc 128x128, giữ ox/oy từng khung)",
+   "sfxCode": "tw_zxzy_c",
+   "sfxSource": "SKILLPACK/sfx/tianwang/tw_zxzy_c.wav (22050Hz mono 16-bit 0.479s)",
+   "note": "Cặp dùng trong preview đã duyệt; KHÔNG tuyên bố cặp gốc đã xác minh từ bảng game."
+  }
+ },
+ "idle": {
+  "frames": 81,
+  "durationMs": 3375.0
+ },
+ "ownerPack": {
+  "file": "kiemthe-six-state-package-v2-phase-aware.zip",
+  "sha256": "65c942da11bffac52c57be1275193be0e392c776c62f0a15d2cdd84200813d6b",
+  "policy": "Owner explicitly accepts 18 sampled frames per non-idle state to reduce size; preserve 81 idle frames."
+ },
+ "assetRevision": "rgba-v2-verified-24af7ff"
+}

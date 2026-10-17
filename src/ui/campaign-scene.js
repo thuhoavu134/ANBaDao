@@ -215,6 +215,7 @@ function imageForScene(src, spec = null) {
   return image;
 }
 function frameAt(spec, time) {
+  time *= spec.playbackRate ?? 1;
   if (reducedMotion.matches) return 0;
   if (spec.durations) {
     let elapsed = time % spec.durations.reduce((sum, ms) => sum + ms, 0);
@@ -229,7 +230,7 @@ function frameAt(spec, time) {
 function specForAfk(pick) {
   if (sceneState.draft) return spriteSpecs[campaignActorArtId(pick.id)];
   const run = runSpecs[campaignActorArtId(pick.id)] || window.HonVietCampaignRunSpecs?.[campaignActorArtId(pick.id)] || window.HonVietCampaignRunSpecs?.[pick.id];
-  if (run && run.src && Number(run.frames) > 0 && run.cellW && run.cellH && run.pivot && run.foot && run.body) return run;
+  if (run && run.src && Number(run.frames) > 0 && run.cellW && run.cellH && run.pivot && run.foot && run.body) return {...run, playbackRate:0.30};
   return spriteSpecs[campaignActorArtId(pick.id)];
 }
 const HOME_SLOT = [
@@ -985,4 +986,5 @@ function bootCampaignScene() {
   });
 }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bootCampaignScene, { once: true }); else bootCampaignScene();
+
 
