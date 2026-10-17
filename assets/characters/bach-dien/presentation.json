@@ -1,0 +1,36 @@
+{
+  "schema": "battle-hero-presentation/v1",
+  "heroId": "hero_splus_bach_dien",
+  "aliases": [
+    "bach-dien",
+    "bach_dien",
+    "hero_splus_bach_dien"
+  ],
+  "referenceBodyHeight": 395,
+  "footOffsetY": 39,
+  "registration": "pre-registered",
+  "clips": {
+    "idle": {},
+    "run": {},
+    "hurt": {},
+    "defeated": {},
+    "attack": {},
+    "ultimate": {}
+  },
+  "vfxClips": [
+    "skill1Vfx",
+    "ultimateVfx"
+  ],
+  "states": {
+    "idle": [
+      "idle"
+    ],
+    "attack": [
+      "attack"
+    ],
+    "ultimate": [
+      "ultimate"
+    ]
+  },
+  "evidence": "runtime-meta.json idle registrationPose top=20, bottom=415 gives the 395px reference body. The retained 440px draw height and baseline64 place its registered feet at -440+64+415=39. Existing clip.registration transforms remain the sole clip-scale owner; VFX keeps its independent destination sizing."
+}

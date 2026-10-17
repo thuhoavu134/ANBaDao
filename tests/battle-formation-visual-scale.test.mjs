@@ -83,13 +83,13 @@ test('desktop formation and global desktop scale are unchanged',()=>{
     enemy:[{x:1065,y:340},{x:1065,y:520},{x:1065,y:700},{x:1235,y:340},{x:1235,y:520},{x:1235,y:700}]
   });
   assert.equal(BATTLE_CHARACTER_SCALE.desktop,0.74);
-  assert.equal(battleCharacterScaleForViewport('dinh_loi',1280,528),0.74);
+  assert.equal(battleCharacterScaleForViewport('unregistered',1280,528),0.74);
 });
 
 test('special heroes use body-height calibration while preserving compact layout offsets',()=>{
   assert.equal(heroVisualScale('linh_dong'),310/335);
   assert.equal(heroVisualScale('hero_splus_bach_dien'),310/395);
-  assert.equal(heroVisualScale('dinh_loi'),1);
+  assert.equal(heroVisualScale('dinh_loi'),310/301.6);
   assert.equal(BATTLE_CHARACTER_SCALE.portrait,0.34);
   assert.equal(BATTLE_CHARACTER_SCALE.desktop,0.74);
   assert.equal(HERO_VISUAL_OFFSET_X.hero_splus_linh_dong,4.25);
@@ -130,8 +130,8 @@ context.scale(depthScale * identityScale, depthScale * identityScale);`;
   assert.match(patched,/frontOffsetX:70/);
   assert.match(patched,/backOffsetX:160/);
   assert.doesNotMatch(patched,/frontlineYOffset/);
-  assert.ok(patched.includes('const HERO_VISUAL_SCALE=Object.freeze('+JSON.stringify(HERO_VISUAL_SCALE)+');'));
-  assert.match(patched,/hero_splus_linh_dong:0\.9210526316/);
+  assert.ok(patched.includes('const HERO_VISUAL_SCALE=HERO_PRESENTATIONS.scales;'));
+  assert.ok(patched.includes('"hero_splus_linh_dong":0.9210526316'));
   assert.match(patched,/battleCharacterVisualOffsetX\(unit\)/);
   assert.match(patched,/battleCharacterHorizontalScale\(unit\)/);
   assert.match(patched,/context\.translate\(unit\.x \+ hurtJitter \+ dodgeRecoilX \+ battleCharacterVisualOffsetX\(unit\), unit\.y \+ idleBob \+ runBob\);/);

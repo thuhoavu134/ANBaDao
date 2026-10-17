@@ -11,11 +11,9 @@ if(globalThis.SPLUS42?.profiles){
 function isTichDao(u){return !!u&&[u.sourceId,u.sourceHeroId,u.id].some(x=>/^(?:hero_splus_)?tich[_-]dao$/i.test(String(x)));}
 function tichDaoClip(key){const c=TICH_DAO_META.clips[key],rows=c.rows??Math.ceil(c.frames/c.cols);return {...c,src:TICH_DAO_BASE+c.file,rows,decodedBytes:c.cols*c.cellW*rows*c.cellH*4};}
 function tichDaoImage(key,priority='visible'){return BACH_DIEN_LOADER.ensure(tichDaoClip(key),{scope:'battle',priority}).image;}
-function tichDaoPaint(ctx,key,frame,x,y,w,h){const c=TICH_DAO_META.clips[key],img=tichDaoImage(key);if(!img||img.complete===false||img.naturalWidth===0)return false;
- // Atk/ultimate/hit/run/fall cells carry a smaller body than idle — scale the
- // cell back to idle height, anchored bottom-center so feet stay planted.
- const k=(c.content&&c.content.scale)||1,dw=w*k,dh=h*k;
- ctx.save();ctx.drawImage(img,(frame%c.cols)*c.cellW,Math.floor(frame/c.cols)*c.cellH,c.cellW,c.cellH,(x+w/2)-dw/2,(y+h)-dh,dw,dh);ctx.restore();return true;}
+function tichDaoPaint(ctx,u,key,frame){
+ return battlePaintCharacter(ctx,u,key,TICH_DAO_META.clips[key],tichDaoImage(key),frame);
+}
 function tichDaoElapsed(info){return Math.max(0,(performance.now()-info.startedAt)*info.speed);}
 function tichDaoFrame(durations,elapsed,loop){
  const total=durations.reduce((a,b)=>a+b,0);let t=loop?elapsed%total:Math.min(elapsed,total-.001);
@@ -84,7 +82,7 @@ function drawTichDaoHero(ctx,u,time){
  // Keep a canonical, unscaled body frame in the shared visibility owner.
  // Idle pages share the 480x440 battle cell grid, so they use the same
  // bottom-center registration as every other authored clip of this pack.
- const paintBody=copy=>tichDaoPaint(copy,key,frame,-240,-440,480,440)||(u.hp>0&&tichDaoPaint(copy,'standing',0,-240,-440,480,440));
+ const paintBody=copy=>tichDaoPaint(copy,u,key,frame)||(u.hp>0&&tichDaoPaint(copy,u,'standing',0));
  const drawn=__hvHeroVisibility.finish(ctx,'tich-dao',u,time,paintBody(ctx),paintBody);
  ctx.restore();if(nextPage)tichDaoImage(nextPage,'prefetch');if(u.hp>0)drawUnitHud(ctx,u,time,1);return drawn;
 }
@@ -129,7 +127,7 @@ function tichDaoSfx(cue,info){
  if(!state.sound||__hvIsSkipping())return;
  try{void window.HonVietSfx?.play(cue,{group:'combat',signal:info.abort.signal,playbackRate:info.speed});}catch(error){}
 }
-function spawnTichDaoVfx(key,x,y,info,target){if(!TICH_DAO_META.vfx?.clips?.[key])return;tichDaoVfxImage(key);const waistY=target?target.y-310*battleCharacterDepthScale(target)*battleCharacterScale(target)/(typeof battleHeroVisualScale==='function'?battleHeroVisualScale(target):1)*.5:y;
+function spawnTichDaoVfx(key,x,y,info,target){if(!TICH_DAO_META.vfx?.clips?.[key])return;tichDaoVfxImage(key);const waistY=target?battleCharacterBody(target).centerY:y;
  tichDaoVfxLive.push({key,x,y,waistY,speed:info?.speed||state.speed||1,startedAt:performance.now(),battleId:state.battleId});}
 function drawTichDaoVfx(context,time){
  for(let i=tichDaoVfxLive.length-1;i>=0;i--){

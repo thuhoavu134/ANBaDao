@@ -1,3 +1,15 @@
+# 2026-10-17 — Quy chuẩn kích thước tướng trong trận (DRAFT / REVIEW)
+
+Yêu cầu hiện tại: mọi tướng dùng một chuẩn thân qua idle, ATK và Ultimate; tích hợp tướng mới không cần thêm hệ số riêng trong battle renderer. Bạch Diện là tham chiếu **310 world units trước viewport và độ sâu ô đội hình gốc**. Các pose cúi/nhảy/ngã vẫn giữ chuyển động authored; vũ khí và VFX không quyết định chiều cao thân.
+
+[Hợp đồng tích hợp](HERO-BATTLE-SIZE-CONTRACT.md) quy định `presentation.json` tự được phát hiện, hiện có 10 profile, shared body projection cho HUD/impact và normalization cho generic/procedural fallback. Manifest vẫn cần body/foot calibration đúng camera/source; không fit alpha bounds từng frame. Ba legacy Ông Phở/Đình Lôi/Thầy Mo chưa có runtime metadata để gate toàn bộ clip inventory; các foot proxy được ghi rõ trong contract.
+
+Baseline main `de5d425` đã chứa PR #310 được merge trước đó. Lát quy chuẩn này ở nhánh `fix/shared-hero-scale-contract-20261017`, **DRAFT / REVIEW**, chưa merge/phát hành. Lượt kiểm cuối có 67 test đạt/0 lỗi. [QA note](qa/shared-hero-scale-20261017.md) và [ảnh Canvas offline](qa/shared-hero-scale-20261017.png) ghi bằng chứng; chưa có full build/browser/physical-device proof cho thay đổi mới. Thẻ S+ chưa có art giữ HUD theo rectangle UI thực đến khi có profile authored. Waiver Ticket Board hiện có được giữ; không giả trạng thái ticket.
+
+Các mục bên dưới giữ lịch sử và trạng thái tại thời điểm của từng lát cắt.
+
+---
+
 # Current UI trial — 2026-10-08
 
 PR290 REVIEW only; baseline main fef053e includes previous entry/media merges. Runtime 5f677ad3670b6870d779873c043907f88a53c6a4. Full game preview: https://luc-than-lsqtxhayh-nyto1.vercel.app. Four-screen polish preserves original assets and all gameplay owners. Build,1684 tests and dedicated browser workflow37665868908 passed; owner aesthetics and physical Safari still pending. Details: docs/qa/ui-polish-20261008/README.md. DO NOT merge until owner approves this UI trial.

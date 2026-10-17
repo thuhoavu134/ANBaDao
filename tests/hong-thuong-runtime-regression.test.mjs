@@ -1,3 +1,4 @@
+import {installHeroPresentation} from './helpers/hero-presentation.mjs';
 import test from 'node:test';import assert from 'node:assert/strict';import vm from 'node:vm';import {readFileSync} from 'node:fs';
 import {createAssetLoader} from '../src/assets/asset-loader.mjs';
 const source=readFileSync(new URL('../src/runtime/hong-thuong.js',import.meta.url),'utf8');
@@ -9,7 +10,7 @@ function harness(){
  const ctx={save(){},restore(){},translate(){},scale(){},drawImage(...a){draws.push(a);}};
  const state={battleId:1,speed:1,sound:false};const actor={id:'h',sourceId:'hero_splus_hong_thuong',team:'player',x:300,y:500,hp:100,state:'idle'};
  const s={HONG_THUONG_META:meta,BACH_DIEN_LOADER:loader,performance:{now:()=>now},state,TEAM_ENEMY:'enemy',AbortController,console:{error(){}},window:{},battleCharacterScale:()=>1,battleCharacterDepthScale:()=>1,drawUnitHud(){},__hvHeroVisibility:{finish(c,h,u,t,drawn){return drawn;}},__hvIsSkipping:()=>false,__hvSkipVisualAssets:f=>f(),sleepVisualMilliseconds:async ms=>{now+=ms;return true;}};
- vm.createContext(s);vm.runInContext(source,s);return {s,ctx,actor,draws,errors,loader,setNow:n=>{now=n;}};
+ vm.createContext(s);installHeroPresentation(s);vm.runInContext(source,s);return {s,ctx,actor,draws,errors,loader,setNow:n=>{now=n;}};
 }
 test('standing alias acquires actual two-row idle atlas on a cold cache',async()=>{const h=harness();await h.loader.acquire([h.s.hongThuongClip('standing')]);assert.deepEqual(h.errors,[]);});
 test('last idle page loads its actual partial row',async()=>{const h=harness();await h.loader.acquire([h.s.hongThuongClip('idle-authored-'+(meta.idleVisual.pages-1))]);assert.deepEqual(h.errors,[]);});

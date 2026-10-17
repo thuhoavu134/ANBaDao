@@ -49,3 +49,9 @@ test('built regular and S+ render paths share scale, offsets and one enemy mirro
   assert.equal(context.battleCharacterScale({ sourceId: 'arena-0', sourceHeroId: 'linh_dong' }), scale.BATTLE_CHARACTER_SCALE.portrait * (310 / 335));
 });
 
+
+ test('body centers include the same compact horizontal translation as the rendered hero',()=>{
+  const unit={sourceId:'linh_dong',x:730,y:520,baseY:520,team:'player'};
+  assert.equal(scale.battleCharacterBodyForViewport(unit,390,739).centerX,734.25);
+  assert.equal(scale.battleCharacterBodyForViewport({...unit,team:'enemy'},390,739).centerX,725.75);
+ });

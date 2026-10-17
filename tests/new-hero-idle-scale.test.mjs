@@ -1,3 +1,4 @@
+import {installHeroPresentation} from './helpers/hero-presentation.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
@@ -13,7 +14,7 @@ for(const [slug,name,prefix,body,foot] of fixtures){
   let now=0,draws=[];
   const ctx={save(){},restore(){},translate(){},scale(){},drawImage(...args){draws.push(args.slice(-4));}};
   const sandbox={state:{battleId:1},TEAM_ENEMY:'enemy',getUnit:()=>null,performance:{now:()=>now},battleCharacterDepthScale:()=>.8,battleCharacterScale:()=>.5,drawUnitHud(){},BACH_DIEN_LOADER:{ensure:()=>({image:{complete:true,naturalWidth:1296}})},__hvHeroVisibility:{finish:(c,s,u,t,drawn)=>drawn},[prefix+'_META']:meta};
-  vm.createContext(sandbox);vm.runInContext(source+`;globalThis.render=draw${name}Hero;`,sandbox);
+  vm.createContext(sandbox);installHeroPresentation(sandbox);vm.runInContext(source+`;globalThis.render=draw${name}Hero;`,sandbox);
   for(const team of ['ally','enemy']){
    const u={sourceId:slug.replaceAll('-','_'),team,hp:100,x:200,y:300,state:'idle'};
    let time=0;

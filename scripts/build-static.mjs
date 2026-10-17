@@ -1,8 +1,11 @@
 import { cpSync, mkdirSync, rmSync, existsSync, copyFileSync, statSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { assembleLucAnhIdle } from './luc-anh-idle-asset.mjs';
+import { loadHeroPresentations } from './hero-presentation-registry.mjs';
 
 const root = process.cwd();
+// Validate new heroes and clip registration before producing any battle output.
+loadHeroPresentations(root);
 await assembleLucAnhIdle(root);
 const out = join(root, 'dist');
 rmSync(out, { recursive: true, force: true });

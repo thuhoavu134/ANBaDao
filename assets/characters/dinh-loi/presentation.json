@@ -1,0 +1,32 @@
+{
+  "schema": "battle-hero-presentation/v1",
+  "heroId": "dinh_loi",
+  "aliases": [
+    "dinh-loi"
+  ],
+  "referenceBodyHeight": 301.6,
+  "footOffsetY": 26.53333333333336,
+  "registration": "pre-registered",
+  "clips": {
+    "idle": {},
+    "run": {},
+    "hurt": {},
+    "defeated": {},
+    "attack": {},
+    "skill1": {},
+    "ultimate": {}
+  },
+  "vfxClips": [],
+  "states": {
+    "idle": [
+      "idle"
+    ],
+    "attack": [
+      "attack"
+    ],
+    "ultimate": [
+      "ultimate"
+    ]
+  },
+  "evidence": "Standing body y12..128 inclusive (117px) measured from the shipped campaign-lite idle frame, 240x135; the production source is exactly2x. Native drawH348 / equivalent cellH135 yields body301.6; footOffset=-348+42+129*348/135. The existing registered source density is fixed across actor clips; particle outside the body is excluded."
+}

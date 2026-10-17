@@ -12,7 +12,6 @@ export function patchTieuPhongBattle(input,runtime,meta){
  once('if(!kyAction&&!linhAction&&!bachAction)triggerImpactPresentation','if(!fanAction&&!kyAction&&!linhAction&&!bachAction)triggerImpactPresentation');
  once("  if(kyAction){\n    if(!await waitKyVanMarker(kyAction,'recovery:end',battleId))return;", "  if(fanAction){\n    if(!await waitTieuPhongMarker(fanAction,'recovery:end',battleId))return;\n    finishTieuPhongAction(fanAction);\n  }else if(kyAction){\n    if(!await waitKyVanMarker(kyAction,'recovery:end',battleId))return;");
  once('function drawSplusToken(context, unit, time) {','function drawSplusToken(context, unit, time) {\n  if(isTieuPhong(unit))return drawTieuPhongHero(context,unit,time);');
- once('isKyVan(unit)?battleCharacterScale(unit)*419', '(isKyVan(unit)||isTieuPhong(unit))?battleCharacterScale(unit)*419');
  once('drawKyVanFx(ctx,time);','drawKyVanFx(ctx,time);drawTieuPhongFx(ctx,time);');
  once('function splusReset(){','function splusReset(){cancelTieuPhongActions();');
  once('  async function performAction(actor, action, target) {',"  async function performAction(actor, action, target) {\n    if(typeof isTieuPhong==='function'&&isTieuPhong(actor)&&action==='skill')action='basic';");

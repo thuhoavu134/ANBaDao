@@ -1,0 +1,39 @@
+{
+  "schema": "battle-hero-presentation/v1",
+  "heroId": "luc_anh",
+  "aliases": [
+    "luc-anh",
+    "luc_anh"
+  ],
+  "referenceBodyHeight": 273.625,
+  "footOffsetY": 48,
+  "registration": "pre-registered",
+  "clips": {
+    "skill1": {},
+    "ultimate": {},
+    "idle": {},
+    "hit": {},
+    "fall": {},
+    "run": {},
+    "basic": {}
+  },
+  "vfxClips": [
+    "skill1_vfx",
+    "ultimate_vfx",
+    "basic_projectile",
+    "basic_impact"
+  ],
+  "states": {
+    "idle": [
+      "idle"
+    ],
+    "attack": [
+      "basic",
+      "skill1"
+    ],
+    "ultimate": [
+      "ultimate"
+    ]
+  },
+  "evidence": "Migrates the existing rendered-body calibration 330*199/240=273.625 from de5d425; the native draw owner remains 330x330 with baseline48. footOffsetY=48 preserves its documented bottom-cell registration anchor because the available metadata has no measured anatomical foot landmark. Native clip sizing/registration remains unchanged; VFX is explicitly excluded."
+}

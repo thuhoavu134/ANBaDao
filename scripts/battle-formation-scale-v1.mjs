@@ -1,5 +1,9 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { BATTLE_HERO_BODY_HEIGHT, heroPresentationRuntimeSource, projectBattleHeroBody } from '../src/render/hero-presentation.mjs';
+import { loadHeroPresentations } from './hero-presentation-registry.mjs';
+export { BATTLE_HERO_BODY_HEIGHT };
+export const HERO_PRESENTATIONS = loadHeroPresentations();
 
 export const BATTLE_WORLD = Object.freeze({ width: 1600, height: 870 });
 export const DESKTOP_FORMATION = Object.freeze({
@@ -21,31 +25,15 @@ export const PORTRAIT_FORMATION = Object.freeze({
   compactCropWidth: 1200
 });
 export const BATTLE_CHARACTER_SCALE = Object.freeze({ portrait:0.34, desktop:0.74 });
-// Match the standing body of Ông Phở (310 world px) and Đình Lôi (~300),
-// measured from real first-frame alpha at their production draw sizes. The
-// registered S+ bodies are 335/395 px; cell size or silhouette diagonal is not
-// a measure of character stature (Linh Đồng includes wide stray particles).
-export const BATTLE_HERO_BODY_HEIGHT = 310;
-export const HERO_VISUAL_SCALE = Object.freeze({
-  default:1,
-  hero_splus_tieu_phong:BATTLE_HERO_BODY_HEIGHT/419,
-  hero_splus_ky_van:BATTLE_HERO_BODY_HEIGHT/419,
-  hero_splus_tich_dao:BATTLE_HERO_BODY_HEIGHT/422,
-  luc_anh:BATTLE_HERO_BODY_HEIGHT/(330*199/240),
-  thay_mo:BATTLE_HERO_BODY_HEIGHT/(348*250/264),
-  hero_splus_linh_dong:BATTLE_HERO_BODY_HEIGHT/335,
-  hero_splus_bach_dien:BATTLE_HERO_BODY_HEIGHT/395
-});
-// Retain the existing compact horizontal/position calibration. The body-height
-// correction above scales both axes and applies to every registered clip.
-export const HERO_VISUAL_HORIZONTAL_SCALE = Object.freeze({
-  default:1,
-  hero_splus_linh_dong:0.9210526316
-});
-export const HERO_VISUAL_OFFSET_X = Object.freeze({
-  default:0,
-  hero_splus_linh_dong:4.25
-});
+// Calibration belongs to the asset contract. Adding a hero no longer changes
+// an ID-specific table here; the registry also validates all actor clips.
+export const HERO_VISUAL_SCALE = HERO_PRESENTATIONS.scales;
+export const HERO_VISUAL_HORIZONTAL_SCALE = Object.freeze(Object.fromEntries([
+  ['default', 1], ...Object.values(HERO_PRESENTATIONS.profiles).filter(p => p.compact).map(p => [p.heroId, p.compact.scaleX])
+]));
+export const HERO_VISUAL_OFFSET_X = Object.freeze(Object.fromEntries([
+  ['default', 0], ...Object.values(HERO_PRESENTATIONS.profiles).filter(p => p.compact).map(p => [p.heroId, p.compact.offsetX])
+]));
 
 export function battleWorldCropForViewport(width,height){
   const w=Math.max(1,Number(width)||BATTLE_WORLD.width);
@@ -80,12 +68,7 @@ export function battleFormationForViewport(width,height){
 }
 export function canonicalBattleHeroId(value){
   const raw=String(value??'').trim().toLowerCase();
-  if(/^(?:linh_dong|linh-dong|hero_splus_linh_dong)$/.test(raw)) return 'hero_splus_linh_dong';
-  if(/^(?:bach_dien|bach-dien|hero_splus_bach_dien)$/.test(raw)) return 'hero_splus_bach_dien';
-  if(/^(?:tieu_phong|tieu-phong|hero_splus_tieu_phong)$/.test(raw))return "hero_splus_tieu_phong";
-  if(/^(?:ky_van|ky-van|hero_splus_ky_van)$/.test(raw))return "hero_splus_ky_van";
-  if(/^(?:tich_dao|tich-dao|hero_splus_tich_dao)$/.test(raw))return "hero_splus_tich_dao";
-  return raw;
+  return Object.hasOwn(HERO_PRESENTATIONS.aliases,raw)?HERO_PRESENTATIONS.aliases[raw]:raw;
 }
 export function heroVisualScale(unitOrId){
   return HERO_VISUAL_SCALE[battleHeroVisualId(unitOrId)]??HERO_VISUAL_SCALE.default;
@@ -116,11 +99,18 @@ export function battleCharacterVisualOffsetXForViewport(unitOrId,team,width,heig
   return team==='enemy'?-amount:amount;
 }
 
+export function battleCharacterBodyForViewport(unit,width,height){
+  return projectBattleHeroBody(HERO_PRESENTATIONS,unit,
+    battleCharacterScaleForViewport(unit,width,height)*battleCharacterDepthScale(unit),
+    battleCharacterVisualOffsetXForViewport(unit,unit?.team,width,height));
+}
+
 const RUNTIME_LAYOUT=`const PORTRAIT_FORMATION=Object.freeze({rows:Object.freeze([340,520,700]),frontOffsetX:70,backOffsetX:160,compactCropWidth:1200});
   const BATTLE_CHARACTER_SCALE=Object.freeze({portrait:0.34,desktop:0.74});
-  const HERO_VISUAL_SCALE=Object.freeze(${JSON.stringify(HERO_VISUAL_SCALE)});
-  const HERO_VISUAL_HORIZONTAL_SCALE=Object.freeze({default:1,hero_splus_linh_dong:0.9210526316});
-  const HERO_VISUAL_OFFSET_X=Object.freeze({default:0,hero_splus_linh_dong:4.25});
+  ${heroPresentationRuntimeSource(HERO_PRESENTATIONS)}
+  const HERO_VISUAL_SCALE=HERO_PRESENTATIONS.scales;
+  const HERO_VISUAL_HORIZONTAL_SCALE=Object.freeze(${JSON.stringify(HERO_VISUAL_HORIZONTAL_SCALE)});
+  const HERO_VISUAL_OFFSET_X=Object.freeze(${JSON.stringify(HERO_VISUAL_OFFSET_X)});
   function battleWorldCropForViewport(width,height){
     const w=Math.max(1,Number(width)||WORLD.width),h=Math.max(1,Number(height)||WORLD.height);
     const scale=Math.max(w/WORLD.width,h/WORLD.height),offsetX=(w-WORLD.width*scale)/2,offsetY=(h-WORLD.height*scale)/2;
@@ -142,15 +132,7 @@ const RUNTIME_LAYOUT=`const PORTRAIT_FORMATION=Object.freeze({rows:Object.freeze
       enemy:[{x:rightFront,y:rows[0]},{x:rightFront,y:rows[1]},{x:rightFront,y:rows[2]},{x:rightBack,y:rows[0]},{x:rightBack,y:rows[1]},{x:rightBack,y:rows[2]}]
     };
   }
-  function canonicalBattleHeroId(value){
-    const raw=String(value??"").trim().toLowerCase();
-    if(/^(?:linh_dong|linh-dong|hero_splus_linh_dong)$/.test(raw))return "hero_splus_linh_dong";
-    if(/^(?:bach_dien|bach-dien|hero_splus_bach_dien)$/.test(raw))return "hero_splus_bach_dien";
-    if(/^(?:tieu_phong|tieu-phong|hero_splus_tieu_phong)$/.test(raw))return "hero_splus_tieu_phong";
-  if(/^(?:ky_van|ky-van|hero_splus_ky_van)$/.test(raw))return "hero_splus_ky_van";
-  if(/^(?:tich_dao|tich-dao|hero_splus_tich_dao)$/.test(raw))return "hero_splus_tich_dao";
-    return raw;
-  }
+  ${canonicalBattleHeroId.toString()}
   function battleHeroVisualScale(unit){
     const id=battleHeroVisualId(unit);
     return HERO_VISUAL_SCALE[id]??HERO_VISUAL_SCALE.default;
@@ -172,6 +154,12 @@ const RUNTIME_LAYOUT=`const PORTRAIT_FORMATION=Object.freeze({rows:Object.freeze
     const id=battleHeroVisualId(unit);
     const amount=HERO_VISUAL_OFFSET_X[id]??HERO_VISUAL_OFFSET_X.default;
     return unit?.team==="enemy"?-amount:amount;
+  }
+  function battleCharacterBody(unit){
+    return projectBattleHeroBody(HERO_PRESENTATIONS,unit,battleCharacterScale(unit)*battleCharacterDepthScale(unit),battleCharacterVisualOffsetX(unit));
+  }
+  function battlePaintCharacter(context,unit,key,clip,image,frame){
+    return paintHeroSprite(context,image,clip,frame,heroPresentationFor(HERO_PRESENTATIONS,unit),key);
   }
   ${battleHeroVisualId.toString()}
   ${battleCharacterDepthScale.toString()}
@@ -242,7 +230,7 @@ export function applyBattleFormationScale(source){
 export function patchCompactBattleHud(source){
   if(source.includes('/* compact-column-hud-v2 */'))return source;
   const edits=[
-    ['const y = unit.y - (compact ? 132 : 164);','/* compact-column-hud-v2 */ const y = unit.y - (compact ? battleCharacterScale(unit)*310*battleCharacterDepthScale(unit)+18 : 164);'],
+    ['const y = unit.y - (compact ? 132 : 164);','/* compact-column-hud-v2 */ const y = battleCharacterBody(unit).topY - 18;'],
     ['const iconSize=compact?21:23, signatureSize=compact?24:26, gap=compact?25:28;','const iconSize=compact?16:23, signatureSize=compact?18:26, gap=compact?18:28;'],
     ['const statusY=y-(compact?25:28);','const statusY=y-(compact?17:28);']
   ];

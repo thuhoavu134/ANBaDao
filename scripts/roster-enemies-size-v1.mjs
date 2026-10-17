@@ -31,12 +31,7 @@ export async function poseRegistration(bytes) {
   });
   return { cellW, cellH, poses };
 }
-export function patchRosterBattle(html, registrations) {
-  if (html.includes('/* HV_ROSTER_ENEMIES_SIZE_V1 */')) return html;
-  const start = html.indexOf('  function drawGeneratedHero(context, unit, time, progress) {');
-  if (start < 0) throw new Error('Generated roster renderer boundary missing');
-  // Replace only this function. Readiness/visibility owners inject declarations
-  // between it and drawUnit, so drawUnit is not a safe replacement boundary.
+function rendererEnd(html, start) {
   let end = html.indexOf('{', start), depth = 0, quote = '', comment = '';
   for (; end < html.length; end++) {
     const char=html[end],next=html[end+1];
@@ -49,7 +44,16 @@ export function patchRosterBattle(html, registrations) {
     if(char==='{')depth++;
     if(char==='}'&&--depth===0){end++;break;}
   }
-  if(depth!==0)throw new Error('Unclosed generated renderer');
+  if(depth!==0)throw new Error('Unclosed roster renderer');
+  return end;
+}
+export function patchRosterBattle(html, registrations) {
+  if (html.includes('/* HV_ROSTER_ENEMIES_SIZE_V1 */')) return html;
+  const start = html.indexOf('  function drawGeneratedHero(context, unit, time, progress) {');
+  if (start < 0) throw new Error('Generated roster renderer boundary missing');
+  // Replace only this function. Readiness/visibility owners inject declarations
+  // between it and drawUnit, so drawUnit is not a safe replacement boundary.
+  const end = rendererEnd(html, start);
   const runtime = `  /* HV_ROSTER_ENEMIES_SIZE_V1 */
   const ROSTER_POSE_REGISTRATION=${JSON.stringify(registrations)};
   function drawGeneratedHero(context,unit,time,progress){
@@ -58,7 +62,12 @@ export function patchRosterBattle(html, registrations) {
     if(!pack||!image?.complete||image.naturalWidth<1)return false;
     const column=unit.state==='run'?1:unit.state==='attack'?2:0;
     const release=unit.state==='attack'?Core.clamp((progress-.4)/.14,0,1):0;
-    const paint=(col,alpha)=>{if(alpha<=0)return;const pose=pack.poses[col],scale=310/pose.body;
+    // Keep the idle body's source-pixel density for the whole action. A crouch
+    // or extended weapon changes the silhouette, not the actor's stature.
+    // The outer owner may already have scaled an unavailable authored hero.
+    // This painter supplies its own body reference; retain only viewport/depth.
+    const scale=BATTLE_HERO_BODY_HEIGHT/(pack.poses[0].body*battleHeroVisualScale(unit));
+    const paint=(col,alpha)=>{if(alpha<=0)return;const pose=pack.poses[col];
       context.save();context.globalAlpha*=alpha;
       context.drawImage(image,col*pack.cellW,0,pack.cellW,pose.foot,-pack.cellW*scale/2,-pose.foot*scale,pack.cellW*scale,pose.foot*scale);
       context.restore();};
@@ -68,6 +77,17 @@ export function patchRosterBattle(html, registrations) {
 
 `;
   html = html.slice(0, start) + runtime + html.slice(end);
+  const unitStart = html.indexOf('  function drawUnit(context, unit, time) {');
+  if (unitStart < 0) throw new Error('Procedural roster renderer boundary missing');
+  const unitEnd = rendererEnd(html, unitStart);
+  const unitSource = html.slice(unitStart, unitEnd);
+  const normalizedUnit = replaceOne(unitSource, '    context.strokeStyle = "#2b2520";', `    // The final body fallback uses the shared skeleton's skull-to-sole height.
+    // Translate in source units after scaling so its +0.5 sole lands at zero.
+    const proceduralScale=BATTLE_HERO_BODY_HEIGHT/PROCEDURAL_HERO_BODY.height/battleHeroVisualScale(unit);
+    context.scale(proceduralScale,proceduralScale);
+    context.translate(0,-PROCEDURAL_HERO_BODY.footOffsetY);
+    context.strokeStyle = "#2b2520";`);
+  html = html.slice(0, unitStart) + normalizedUnit + html.slice(unitEnd);
   // Old hunt inferencer can recognize legacy instance IDs even after roster conversion.
   html = replaceOne(html, 'if (unit && typeof honVietDrawHuntUnit === "function") {',
     'if (unit && !unit.sourceId && typeof honVietDrawHuntUnit === "function") {');
@@ -113,3 +133,4 @@ function drawCampaignFarm(ctx, farm, w, h, layer = 'effects') {`);
   host = replaceOne(host, 'ctx.drawImage(image,-monster.pivot*scale,-monster.foot*scale,monster.width*scale,monster.height*scale);ctx.restore();', 'ctx.drawImage(image,0,0,monster.cellW,monster.cellH,-monster.pivot*scale,-monster.foot*scale,monster.width*scale,monster.height*scale);ctx.restore();');
   writeFileSync(hostPath, patchRosterEnemySlots(host));
 }
+

@@ -1,0 +1,42 @@
+{
+  "schema": "battle-hero-presentation/v1",
+  "heroId": "hero_splus_linh_dong",
+  "aliases": [
+    "linh-dong",
+    "linh_dong",
+    "hero_splus_linh_dong"
+  ],
+  "referenceBodyHeight": 335,
+  "footOffsetY": 48,
+  "registration": "pre-registered",
+  "clips": {
+    "idle": {},
+    "run": {},
+    "hit": {},
+    "fall": {},
+    "attack": {},
+    "skill1": {},
+    "ultimate": {}
+  },
+  "vfxClips": [
+    "skill1Vfx",
+    "ultimateVfx"
+  ],
+  "states": {
+    "idle": [
+      "idle"
+    ],
+    "attack": [
+      "attack",
+      "skill1"
+    ],
+    "ultimate": [
+      "ultimate"
+    ]
+  },
+  "evidence": "Migrates the existing 335px body calibration from de5d425. runtime-meta.json keeps source-crop registration against idle with bottom-center packing and padding16: the reference packing anchor is y=440-16=424, so baseline64 gives local y=-440+64+424=48. This is the documented packing anchor, not a newly measured anatomical foot; existing registration and compact layout corrections are retained.",
+  "compact": {
+    "scaleX": 0.9210526316,
+    "offsetX": 4.25
+  }
+}

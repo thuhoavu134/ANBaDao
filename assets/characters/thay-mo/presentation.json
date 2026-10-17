@@ -1,0 +1,31 @@
+{
+  "schema": "battle-hero-presentation/v1",
+  "heroId": "thay_mo",
+  "aliases": [
+    "thay-mo",
+    "hero_thay_mo"
+  ],
+  "referenceBodyHeight": 329.54545454545456,
+  "footOffsetY": 28,
+  "registration": "pre-registered",
+  "clips": {
+    "idle": {},
+    "basic": {},
+    "hit": {},
+    "skill1": {},
+    "ultimate": {}
+  },
+  "vfxClips": [],
+  "states": {
+    "idle": [
+      "idle"
+    ],
+    "attack": [
+      "basic"
+    ],
+    "ultimate": [
+      "ultimate"
+    ]
+  },
+  "evidence": "Migrate the existing calibrated250px body in the264px idle cell through production drawH348, giving348*250/264 local units. The authored production cell painter owns clip density. footOffset28 retains its cell-bottom registration anchor; the asset has no separate anatomical-foot landmark here. This change does not claim a new binary body measurement."
+}

@@ -1,3 +1,15 @@
+## 2026-10-17 — Shared battle hero size: điểm tiếp tục (DRAFT / REVIEW)
+
+Owner yêu cầu một chuẩn vóc dáng cho mọi tướng qua idle/ATK/Ultimate, tránh sửa runtime scale từng lần tích hợp. Bạch Diện là tham chiếu **310 world units trước viewport và home-slot depth**. Baseline `de5d425e11719cd275112953d539339e2eb4b77a` đã chứa PR #310 được merge; thay đổi mới trên `fix/shared-hero-scale-contract-20261017` vẫn **DRAFT / REVIEW**, chưa có merge/live claim.
+
+Điểm vào: [HERO-BATTLE-SIZE-CONTRACT.md](HERO-BATTLE-SIZE-CONTRACT.md). Shared math/painter/projection ở `src/render/hero-presentation.mjs`; build-discovered metadata ở `assets/characters/*/presentation.json`, hiện 10 profile. Loader gate trước build output và formation owner chèn helpers trước fallback/direct runtimes. Không thêm bảng scale theo hero ID hoặc chiều cao HUD riêng; source-body đo body/feet cố định theo camera/clip, pre-registered giữ owner cũ, VFX tách riêng. Generic/procedural fallback đã nằm trong cùng chuẩn.
+
+Giới hạn cần giữ khi bàn giao: manifest vẫn cần calibration thân thực, không suy ra từ alpha chứa vũ khí; Linh Đồng/Lục Ảnh/Thầy Mo có foot packing/cell proxy được ghi rõ. Ông Phở/Đình Lôi/Thầy Mo chưa có `runtime-meta.json` để cross-check toàn bộ clip inventory. Không gọi schema validation là đã kiểm landmark pixel hoặc mọi clip legacy tương lai.
+
+Ngoại lệ có chủ đích: thẻ UI `splus-pending-art` khi chưa có profile giữ projection 126/foot -4/scale 1 theo rectangle thật; profile authored luôn thắng cờ pending-art cũ. Lượt kiểm cuối **67 đạt/0 lỗi** (50 focused +17 targeted runtime); registry 10 family. [QA note](qa/shared-hero-scale-20261017.md) ghi phạm vi; [ảnh Canvas offline từ sprite thật](qa/shared-hero-scale-20261017.png) hỗ trợ review hình ảnh. Không suy ra full build, browser gameplay hay physical Safari/iPhone/iPad từ bằng chứng này. Checkout thưa thiếu assets cho full build. Waiver Ticket Board/workflow đã có vẫn áp dụng; không giả claim/DONE/merge. Các mục dưới là lịch sử, không phải trạng thái phát hành mới của lát này.
+
+---
+
 ## 2026-10-15 — Tích Đạo authored S+ integration (REVIEW)
 
 Branch `feat/tich-dao-integration-20261015` from main `0aa0c86`. Draft PR; no merge, no production promotion. Owner-approved six-state pack (SHA `3a4c6a…eab`): battle cells 480×440 match the Kỷ Vân action grid; the 77-frame idle is repaginated losslessly into nine 3×3 pages (≤7.3 MB decoded/page). Ultimate keeps the authored 4.0s nine-phase timeline; phases 03/05 hide the entire body (no frame, no standing fallback, visibility cache untouched) while the HUD stays anchored; strikes land at 1083/1750/2917 ms (phase-04/06/08 starts). Basic retimed 900 ms, hit 350 ms, run 750 ms (Tiêu Phong precedent); fall stays 4000 ms in meta and compresses to 900 ms/speed at runtime. Kit review defaults: assassin Basic (weakest back-line), 3-strike ultimate 0.7/0.9/1.0× with 35%/×1.8 final crit and one recipient-turn stealth on any kill, passive Ảnh Bộ once-per-battle stealth below 40% HP; no Skill 1 (canUse gate + performAction rewrite, #307 lesson).
