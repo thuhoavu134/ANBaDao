@@ -1,3 +1,11 @@
+# 2026-10-17 — Kỷ Vân / Thầy Mo follow-up (DRAFT / REVIEW)
+
+Baseline main `6fa9267` đã chứa PR #311 được merge theo yêu cầu owner. Lát mới trên `fix/ky-van-lightning-thay-mo-damage-20261017`: Kỷ Vân gọi sét từ trên mục tiêu xuống, Ultimate theo cột trước → từng hàng → cột sau; Thầy Mo gây damage đủ ba đường ATK đang hiển thị, gồm nhánh nội tại chuyển Basic thành Skill. Chuẩn thân 310 của PR #311 tiếp tục là nguồn tham chiếu.
+
+[QA note](qa/ky-van-thay-mo-20261017.md) ghi lựa chọn thứ tự từ ảnh tĩnh, owner source, RED→GREEN và giới hạn. **40 focused tests PASS**; có [ảnh](qa/ky-van-lightning-20261017.png) và [video](qa/ky-van-lightning-20261017.mp4) từ runtime/asset thật trên Canvas offline. Bản mới chưa merge/phát hành; full build/browser/device chưa được chứng minh. Waiver Ticket Board hiện có giữ nguyên. Các mục dưới ghi trạng thái lịch sử của từng lát.
+
+---
+
 # 2026-10-17 — Quy chuẩn kích thước tướng trong trận (DRAFT / REVIEW)
 
 Yêu cầu hiện tại: mọi tướng dùng một chuẩn thân qua idle, ATK và Ultimate; tích hợp tướng mới không cần thêm hệ số riêng trong battle renderer. Bạch Diện là tham chiếu **310 world units trước viewport và độ sâu ô đội hình gốc**. Các pose cúi/nhảy/ngã vẫn giữ chuyển động authored; vũ khí và VFX không quyết định chiều cao thân.

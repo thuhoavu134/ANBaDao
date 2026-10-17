@@ -70,7 +70,12 @@
       "cellH": 628,
       "durationMs": 900,
       "ms": 60,
-      "blendMode": "screen"
+      "blendMode": "screen",
+      "strike": {
+        "contactFrame": 5,
+        "anchorX": 130,
+        "anchorY": 540
+      }
     },
     "impact": {
       "file": "impact.webp",

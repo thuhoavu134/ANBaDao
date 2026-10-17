@@ -71,6 +71,28 @@ const runtime = `
     const row=target?thayMoSkill1RowTargets(target):[];
     return (row.length?row:(target?[target]:[])).map(u=>u.id);
   }
+  function thayMoAuthoredAttackTargets(actor,target,action="basic"){
+    const item=actor._thayMoAuthoredAction;
+    const ids=item?.action===action&&Array.isArray(item.targetIds)
+      ?item.targetIds:thayMoAuthoredTargetIds(actor,target,"skill1");
+    // Settle the same cast snapshot as the three visible lines. A unit that
+    // died or changed sides before impact must not receive a new damage hit.
+    const targets=[...new Set(ids)].map(id=>getUnit(id)).filter(unit=>unit&&unit.hp>0&&unit.team!==actor.team);
+    const primary=targets.find(unit=>unit.id===target?.id);
+    // Keep the original primary hit first, including its seeded damage rolls.
+    return primary?[primary,...targets.filter(unit=>unit!==primary)]:targets;
+  }
+  function applyThayMoAuthoredSkillAuxiliaryDamage(actor,target,multiplier,action){
+    if(action!=="skill"||!isThayMoAuthored(actor))return;
+    const item=actor._thayMoAuthoredAction;
+    if(item&&(item.action!==action||item.visualAction!=="skill1"))return;
+    // A legacy talent can promote Basic to the same three-line Skill cast.
+    // Its original primary fear/control has already settled; extra lines own
+    // damage only and must not repeat that status, proc, cost or rage grant.
+    for(const hit of thayMoAuthoredAttackTargets(actor,target,action)){
+      if(hit.id!==target?.id)applyDamage(actor,hit,multiplier);
+    }
+  }
   function thayMoAuthoredBounds(ids){
     const list=ids.map(id=>getUnit(id)).filter(Boolean);if(!list.length)return null;
     const minX=Math.min(...list.map(u=>u.x)),maxX=Math.max(...list.map(u=>u.x));
@@ -202,6 +224,32 @@ html = replaceOnce(
   '    drawBachDienFx(ctx,time);\n    drawThayMoAuthoredFx(ctx,time);\n    drawThayMoRangedFx(ctx,time);',
   'vfx-owner'
 );
+
+// The early 3Q installer renames the real settlement function and leaves a
+// recording wrapper named resolveAction. Patch only the settlement owner so
+// all contacts remain inside one action, one rage grant and one result record.
+const resolveName = html.includes('  function __hvResolveAction3qAdapter(actor, action, target) {')
+  ? '__hvResolveAction3qAdapter' : 'resolveAction';
+const resolveStart = html.indexOf(`  function ${resolveName}(actor, action, target) {`);
+const resolveEnd = html.indexOf('\n  function ', resolveStart + 1);
+if (resolveStart < 0 || resolveEnd < 0) throw new Error('THAY_MO_PRODUCTION resolveAction boundary missing');
+let resolve = html.slice(resolveStart, resolveEnd);
+resolve = replaceOnce(resolve,
+  '      const amount = applyDamage(actor, target, isVersionedBasic(actor) ? multiplier : 1);',
+  `      const basicTargets = isThayMoAuthored(actor) ? thayMoAuthoredAttackTargets(actor, target) : [target];
+      const amount = basicTargets.reduce((total, hit) => total + applyDamage(actor, hit, isVersionedBasic(actor) ? multiplier : 1), 0);`,
+  'basic-row-damage');
+resolve = replaceOnce(resolve,
+  '      addLog(`${actor.name} đánh ${target.name}, gây ${amount} sát thương. +${15+tempoBonus} nộ.`);',
+  '      addLog(`${actor.name} đánh ${isThayMoAuthored(actor) ? basicTargets.map(hit => hit.name).join(", ") : target.name}, gây ${amount} sát thương. +${15+tempoBonus} nộ.`);',
+  'basic-row-result');
+resolve = replaceOnce(resolve,
+  '      addLog(`${actor.name} gieo sợ hãi lên ${target.name}, gây ${amount} sát thương.`); return;',
+  `      addLog(\`\${actor.name} gieo sợ hãi lên \${target.name}, gây \${amount} sát thương.\`);
+      applyThayMoAuthoredSkillAuxiliaryDamage(actor, target, multiplier, action);
+      return;`,
+  'skill-row-damage');
+html = html.slice(0, resolveStart) + resolve + html.slice(resolveEnd);
 
 const performStart = html.indexOf('  async function performAction(actor, action, target) {');
 const performEnd = html.indexOf('\n  function statusLabel(status)', performStart);
