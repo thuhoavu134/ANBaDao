@@ -98,6 +98,10 @@ export function patchOwnerRefresh(input,kind){
  if(input.includes('/* OWNER_REFRESH_20261018 */'))return input;
  let s=input;
  if(kind==='battle'){
+  s=s.replace(/if \(!alive && !isOngPho\(unit\)([^\n]*?)\) \{/g,(_,rest)=>'if (!alive && !isThayMoAuthored(unit) && !isOngPho(unit)'+rest+') {');
+  s=s.replace('const idleBob = REDUCED_MOTION ||','const idleBob = REDUCED_MOTION || isThayMoAuthored(unit) ||');
+  s=s.replace('const runBob = unit.state === "run" ?', 'const runBob = !isThayMoAuthored(unit) && unit.state === "run" ?');
+  s=s.replace(/if \(!isOngPho\(unit\)([^\n]*?)\) context.rotate\(lean/g,(_,rest)=>'if (!isThayMoAuthored(unit) && !isOngPho(unit)'+rest+') context.rotate(lean');
   const event="const event=eventOverride||(action==='ultimate'?'ultimate':action==='skill'?'skill':'basic');";
   s=once(s,event,"const event=eventOverride||ownerRefreshSoundEvent(actor,action)||(action==='ultimate'?'ultimate':action==='skill'?'skill':'basic'); /* OWNER_REFRESH_20261018 */");
   // This final installer runs AFTER battle-instant-skip-v1, which wraps every
@@ -131,12 +135,11 @@ export function patchOwnerRefresh(input,kind){
    'drawOwnerDinhShield(context,unit,frame)');
   s=once(s,'drawW=Math.min(790,Math.max(710,bounds.w+270)),drawH=Math.min(430,Math.max(390,bounds.h+250))','drawW=Math.min(790,Math.max(710,bounds.w+270)),drawH=drawW*270/480');
   s=s.replaceAll("dinh_loi:'assets/heroes-concept/crops/guardian-00.png'","dinh_loi:'assets/characters/dinh-loi/owner-portrait.webp'");
-  s=once(s,"${base}${victory?'victory-text-clean-smooth-v5.apng':'defeat-clean-loop.apng'}","assets/owner-refresh-20261018/${victory?'result-victory-animated.webp':'result-defeat-animated.webp'}");
-  s=once(s,'<div class="irv-hero-wrap">',`<img class="irv-word" alt="\${victory?'Victory':'Defeat'}" src="assets/owner-refresh-20261018/result-\${victory?'victory':'defeat'}-word.svg"><div class="irv-hero-wrap">`);
+  s=once(s,"${base}${victory?'victory-text-clean-smooth-v5.apng':'defeat-clean-loop.apng'}","assets/owner-refresh-20261018/${victory?'result-victory-wings.png':'result-defeat-wings.png'}");
+  s=once(s,'<div class="irv-hero-wrap">',`<img class="irv-word" alt="\${victory?'Victory':'Defeat'}" src="assets/owner-refresh-20261018/result-\${victory?'victory':'defeat'}-letters.png"><div class="irv-hero-wrap">`);
   s=once(s,'</head>',`<style>
-/* Keep animated wings, remove only the old raster lettering above them. */
-.irv-victory .irv-title{clip-path:polygon(0 0,18% 0,18% 33%,82% 33%,82% 0,100% 0,100% 100%,0 100%)}
-.irv-defeat .irv-title{clip-path:polygon(0 0,27% 0,27% 28%,73% 28%,73% 0,100% 0,100% 100%,0 100%)}
+/* Letter pixels are a separate lower layer; never crop the wing animation. */
+.irv-title{clip-path:none!important;z-index:3}
 .irv-word{position:absolute;left:50%;transform:translateX(-50%);width:100%;top:0;z-index:2;pointer-events:none;aspect-ratio:16/9;object-fit:contain}
 .irv-defeat .irv-word{top:1.5%}
 </style></head>`);

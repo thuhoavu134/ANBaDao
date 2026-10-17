@@ -20,9 +20,9 @@ test('Cổ Nương resolves each contact once, with one parasite and one rage ga
  assert.equal(e.finishCoNuongCast(a.id,cast.castId),true);assert.equal(a.energy,15);
  assert.equal(e.finishCoNuongCast(a.id,cast.castId),false);assert.equal(a.energy,15);
 });
-test('Cổ Nương ultimate pays once, each of six pulses damages, dead victims cannot be hit again',()=>{
+test('Cổ Nương ultimate pays once, each of three pulses damages, dead victims cannot be hit again',()=>{
  const {e,a,t}=combat(),cast=e.act(a.id,'ultimate',t.id,{deferCoNuong:true});assert.equal(a.energy,40);
- for(let i=0;i<6;i++){const before=t.hp;e.resolveCoNuongImpact(a.id,cast.castId,t.id,i);assert.ok(t.hp<before);}
+ for(let i=0;i<3;i++){const before=t.hp;e.resolveCoNuongImpact(a.id,cast.castId,t.id,i);assert.ok(t.hp<before);}
  e.finishCoNuongCast(a.id,cast.castId);assert.equal(a.energy,40);
  const next=e.act(a.id,'basic',t.id,{deferCoNuong:true});t.hp=0;const count=e.events.filter(x=>x.type==='damage').length;
  e.resolveCoNuongImpact(a.id,next.castId,t.id,0);assert.equal(e.events.filter(x=>x.type==='damage').length,count);
@@ -38,4 +38,23 @@ test('Đình Lôi basic targets enemy, deals damage and grants both guards in th
   c.resolveAction(a,'basic',enemy,'hit1');assert.equal(enemy.hp,80);assert.equal(a.shield,20);assert.equal(ally.shield,20);assert.equal(a.energy,15);
   c.resolveAction(a,'basic',enemy,'hit1');assert.equal(enemy.hp,80);assert.equal(a.energy,15);
  }
+});
+test('Cổ Nương splits stored true poison over three audible waves, without an extra final damage tick',()=>{
+ const {e,a,t}=combat();
+ for(let i=0;i<3;i++)e.act(a.id,'basic',t.id);
+ const parasite=t.statuses.find(s=>s.type==='parasite');
+ assert.equal(parasite.stacks,3);
+ assert.equal(parasite.rawPerTick,50); // min(2% max HP, 50% ATK)
+ const stored=e.storedDotDamage(t.id,parasite);assert.equal(stored,450);
+ const cast=e.act(a.id,'ultimate',t.id,{deferCoNuong:true});
+ let poison=0;
+ for(let i=0;i<3;i++){
+  const before=t.hp,result=e.resolveCoNuongImpact(a.id,cast.castId,t.id,i);
+  assert.ok(result.ok);assert.ok(before-t.hp>=150);
+  const dot=result.events.filter(x=>x.type==='damage'&&x.dot);
+  poison+=dot.reduce((n,x)=>n+x.amount,0);
+ }
+ assert.equal(poison,stored);
+ const before=t.hp;e.finishCoNuongCast(a.id,cast.castId);assert.equal(t.hp,before);
+ assert.equal(t.statuses.filter(s=>s.type==='parasite').length,0);
 });

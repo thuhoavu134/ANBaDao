@@ -273,7 +273,7 @@ async function performCoNuongAction(actor,action,target,e,battleId){
     }else{
       for(let wave=0;wave<3;wave++)for(let echo=0;echo<2;echo++){
         events.push({at:1380+wave*900+echo*300,release:true,wave,echo});
-        events.push({at:1380+wave*900+echo*300+180,hit:wave*2+echo});
+        if(!echo)events.push({at:1380+wave*900+180,hit:wave});
       }
     }
     events.sort((a,b)=>a.at-b.at);
@@ -281,10 +281,10 @@ async function performCoNuongAction(actor,action,target,e,battleId){
       if(!await wait(event.at)||!current())return;
       if(event.release){
         if(!__hvIsSkipping())for(const victim of victims.filter(u=>u.hp>0))coNuongImpacts.push({kind:'vfx-ultimate',battleId,target:victim,start:info.start+event.at/speed,duration:900,speed,mirror:actor.team===TEAM_ENEMY});
-        if(!event.echo)sound(cue);
+
       }else{
         for(const victim of victims)present(()=>e.resolveCoNuongImpact(actor.id,cast.castId,victim.id,event.hit));
-        if(kind==='basic')sound('co-nuong-pierce');
+        sound(kind==='basic'?'co-nuong-pierce':cue);
       }
     }
     present(()=>e.finishCoNuongCast(actor.id,cast.castId));

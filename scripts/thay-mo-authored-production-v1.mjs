@@ -32,6 +32,7 @@ const runtime = `
   }
   async function prepareThayMoAuthoredAssets(action,signal){
     const aborted=()=>Object.assign(new Error('Thay Mo asset preparation cancelled'),{name:'AbortError'});
+    battleLegacyImage('assets/owner-refresh-20261018/thay-fall-die.webp');
     const getters=action==='ultimate'
       ?[THAY_MO_IDLE_IMAGE,THAY_MO_ULTIMATE_CAST_IMAGE,THAY_MO_ULTIMATE_VFX_IMAGE]
       :[THAY_MO_IDLE_IMAGE,THAY_MO_SKILL1_CAST_IMAGE,THAY_MO_SKILL1_WAVE_IMAGE,THAY_MO_SKILL1_IMPACT_IMAGE];
@@ -126,7 +127,15 @@ const runtime = `
     return true;
   }
   function drawThayMoAuthoredHero(context,unit,time){
-    if(!isThayMoAuthored(unit)||unit.hp<=0)return false;
+    if(!isThayMoAuthored(unit))return false;
+    if(unit.hp<=0||unit.state==='run'||unit.state==='move'){
+      const dead=unit.hp<=0,key=dead?'fall-die':'run';
+      const image=battleLegacyImage('assets/owner-refresh-20261018/thay-'+key+'.webp');
+      const elapsed=Math.max(0,time-(dead?unit.defeatedAt:unit.stateStarted));
+      const duration=dead?(unit.defeatFallDuration||4000):4000;
+      const frame=dead?Math.min(17,Math.floor(elapsed/duration*18)):Math.floor(elapsed/(4000/18))%18;
+      return drawThayMoAuthoredCell(context,image,frame,6,480,440,0,480,440);
+    }
     context.save();context.shadowColor="rgba(239,190,90,.20)";context.shadowBlur=4;
     if(unit.state==="hurt"&&THAY_MO_HIT_IMAGE()?.complete&&THAY_MO_HIT_IMAGE().naturalWidth>1){
       const e=Math.max(0,time-(unit.stateStarted||time));
@@ -149,6 +158,7 @@ const runtime = `
         context.restore();if(ok)return true;context.save();
       }
     }
+    battleLegacyImage('assets/owner-refresh-20261018/thay-fall-die.webp');
     const idle=THAY_MO_IDLE_IMAGE();
     const frame=thayMoIdleFrameAt(time);
     const ok=drawThayMoAuthoredCell(context,idle,frame,THAY_MO_IDLE_COLS,THAY_MO_IDLE_STRIDE_W,THAY_MO_IDLE_STRIDE_H,THAY_MO_IDLE_PAD,THAY_MO_IDLE_CELL_W,THAY_MO_IDLE_CELL_H);
@@ -317,4 +327,5 @@ perform=replaceOnce(perform,
 html = html.slice(0, performStart) + perform + html.slice(performEnd);
 writeFileSync(path, html);
 console.log('Thay Mo authored production VFX restored: v2 Basic uses Skill1 cast/wave/impact; Ultimate uses cast/full-team VFX.');
+
 

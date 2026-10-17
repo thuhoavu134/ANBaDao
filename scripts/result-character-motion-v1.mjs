@@ -62,18 +62,12 @@ const manifest = {
   ky_van:newHeroMotion('ky-van'),
   tieu_phong:newHeroMotion('tieu-phong'),
   tich_dao:newHeroMotion('tich-dao'),
-  // No authored Run/Fall exists in Thầy Mo's pack. Keep his real transparent
-  // animated body for the entrance; never substitute the opaque portrait or
-  // another hero's running pose. Authored Run clips remain used where present.
   thay_mo: {
     aliases: ['thay_mo', 'thay-mo', 'hero_thay_mo'],
-    entryMotion: 'idle-translation',
-    run: clip('assets/characters/thay-mo/idle-v3193-atlas.png', 96, 12, 235, 264, 62.5,
-      { strideW: 241, strideH: 270, pad: 3, durations: Array.from({length:96},(_,i)=>i%4===1?70:60) }),
+    run: clip('assets/owner-refresh-20261018/thay-run.webp',18,6,480,440,4000/18,{playbackRate:1}),
     idle: clip('assets/characters/thay-mo/idle-v3193-atlas.png', 96, 12, 235, 264, 62.5,
       { strideW: 241, strideH: 270, pad: 3, durations: Array.from({length:96},(_,i)=>i%4===1?70:60) }),
-    fall: clip('assets/characters/thay-mo/idle-v3193-atlas.png', 96, 12, 235, 264, 62.5,
-      { strideW: 241, strideH: 270, pad: 3, frameEnd: 0, syntheticFall: true })
+    fall: clip('assets/owner-refresh-20261018/thay-fall-die.webp',18,6,480,440,4000/18)
   },
   luc_anh: {
     aliases: ['luc_anh', 'luc-anh', 'hero_splus_luc_anh'],
@@ -184,6 +178,7 @@ if (!battle.includes('</body>')) throw new Error('Result motion: body boundary m
 battle = battle.replace('</body>', runtime + '\n</body>');
 writeFileSync(battlePath, battle);
 console.log('Result character motion v1 applied: authored Victory entry -> Idle and one-shot Defeat Fall -> final-frame hold');
+
 
 
 

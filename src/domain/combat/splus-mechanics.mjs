@@ -495,7 +495,7 @@ export function createSplusMechanics(options={}) {
         const cast={id:currentAction.id,action:currentAction,kind:action,targets:(action==='basic'?[target]:legal).map(t=>t.id),resolved:[],marked:[],dealt:0};
         actor.splus.memory.harpCast=cast;
         if(settings.deferCoNuong)return {ok:true,castId:cast.id,targetIds:cast.targets.slice(),events:events.slice(startIndex)};
-        const count=action==='ultimate'?6:12;
+        const count=action==='ultimate'?3:12;
         for(let hit=0;hit<count;hit++)for(const id of cast.targets)resolveCoNuongImpact(actor.id,cast.id,id,hit);
         finishCoNuongCast(actor.id,cast.id);
         return {ok:true,events:events.slice(startIndex)};
@@ -540,7 +540,7 @@ export function createSplusMechanics(options={}) {
   }
   function resolveCoNuongImpact(actorId,castId,targetId,hitIndex){
     const actor=unit(actorId),cast=actor?.splus?.memory?.harpCast,target=unit(targetId);
-    const count=cast?.kind==='ultimate'?6:12,token=targetId+':'+hitIndex;
+    const count=cast?.kind==='ultimate'?3:12,token=targetId+':'+hitIndex;
     if(!cast||cast.id!==castId||!Number.isInteger(hitIndex)||hitIndex<0||hitIndex>=count||!cast.targets.includes(targetId)||cast.resolved.includes(token))return {ok:false,events:[]};
     cast.resolved.push(token);
     if(!alive(actor)||!alive(target))return {ok:true,events:[]};
@@ -548,6 +548,16 @@ export function createSplusMechanics(options={}) {
     try{
       const multiplier=cast.kind==='basic'?1:n(rules(actor,cast.kind).multiplier,cast.kind==='skill'?.8:1.2);
       cast.dealt+=damage(actor,target,{multiplier,contactFraction:1/count,action:cast.kind,type:'elemental'});
+      // Each audible ultimate wave settles its share of stored poison together
+      // with direct damage. The presentation aggregates both into one HP tick.
+      if(cast.kind==='ultimate'){
+        cast.poison ||= {};
+        if(!Object.hasOwn(cast.poison,target.id)){
+          cast.poison[target.id]=statuses(target).filter(s=>s.type==='parasite'&&s.sourceId===actor.id).map(s=>({...s}));
+          remove(target,s=>s.type==='parasite'&&s.sourceId===actor.id,'detonate');
+        }
+        for(const s of cast.poison[target.id])if(alive(target))cast.dealt+=tickDot(target,s,Math.max(0,n(s.ticksLeft))/count,1,false);
+      }
       return {ok:true,events:events.slice(startIndex)};
     }finally{currentAction=previous;}
   }
@@ -558,7 +568,6 @@ export function createSplusMechanics(options={}) {
     try{
       if(alive(actor)){
         if(cast.kind==='ultimate'){
-          for(const id of cast.targets){const t=unit(id);if(alive(t))cast.dealt+=detonate(t,s=>s.type==='parasite'&&s.sourceId===actor.id,1,false);}
           const recipients=friends(actor).filter(t=>t!==actor&&alive(t));
           for(const t of recipients)heal(actor,t,cast.dealt*n(rules(actor,'ultimate').teamDrain,.3)/Math.max(1,recipients.length));
         }else energy(actor,actor,defaults.basicRage,'basic');

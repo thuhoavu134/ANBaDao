@@ -19,7 +19,7 @@ export function patchBattleDefeatExit(html) {
     // Play the fall once at full opacity, then remove the battlefield body.
     return { visible: elapsed < duration, fallProgress: Core.clamp(elapsed / duration, 0, 1), alpha: 1 };`);
   once("    const authoredFallMs=isOngPho(unit)?ONG_PHO_FALL_MS:isDinhLoi(unit)?DINH_LOI_FALL_MS:isLinhDong(unit)?linhDongActionMs('fall'):isBachDien(unit)?bachDienActionMs('fall'):DEFEAT_FALL_MS;", `    unit.defeatFallPlaybackRate = isLucAnh(unit) ? lucAnhPlaybackRate() : 1;
-    const authoredFallMs=isOngPho(unit)?ONG_PHO_FALL_MS:isDinhLoi(unit)?DINH_LOI_FALL_MS:isLinhDong(unit)?linhDongActionMs('fall'):isBachDien(unit)?bachDienActionMs('fall'):isLucAnh(unit)?LUC_ANH_META.defeated.frames*LUC_ANH_META.defeated.ms/unit.defeatFallPlaybackRate:DEFEAT_FALL_MS;`);
+    const authoredFallMs=isOngPho(unit)?ONG_PHO_FALL_MS:isDinhLoi(unit)?DINH_LOI_FALL_MS:isLinhDong(unit)?linhDongActionMs('fall'):isBachDien(unit)?bachDienActionMs('fall'):isThayMoAuthored(unit)?4000:isLucAnh(unit)?LUC_ANH_META.defeated.frames*LUC_ANH_META.defeated.ms/unit.defeatFallPlaybackRate:DEFEAT_FALL_MS;`);
   once('    unit.defeatHideDuration = defeatDuration((isOngPho(unit)||isDinhLoi(unit)) ? authoredFallMs + 180 : DEFEAT_HIDE_MS);',
     '    unit.defeatHideDuration = defeatDuration(authoredFallMs);');
   // Lục Ảnh's painter uses a speed multiplier. Freeze it for this fall so a
@@ -33,3 +33,4 @@ export function installBattleDefeatExit(root) {
   const file = join(root, 'dist', 'battle.html');
   writeFileSync(file, patchBattleDefeatExit(readFileSync(file, 'utf8')));
 }
+
