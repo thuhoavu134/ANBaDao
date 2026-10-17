@@ -599,11 +599,11 @@
   },
   "clips": {
    "impact": {
-    "file": "impact-2x.webp",
+    "file": "impact-4x-bright.webp",
     "frames": 14,
     "cols": 5,
-    "cellW": 256,
-    "cellH": 256,
+    "cellW": 512,
+    "cellH": 512,
     "fps": 16.666666666666668,
     "blendMode": "screen"
    }

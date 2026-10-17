@@ -146,8 +146,11 @@ function hongThuongSfx(info){
  try{void window.HonVietSfx?.play('hong-thuong-impact',{group:'combat',signal:info.abort.signal,playbackRate:info.speed});}catch(error){}
 }
 function spawnHongThuongVfx(x,y,info,target){hongThuongVfxImage('impact');
- const waistY=target?target.y-310*battleCharacterDepthScale(target)*battleCharacterScale(target)/(typeof battleHeroVisualScale==='function'?battleHeroVisualScale(target):1)*.5:y;
- hongThuongVfxLive.push({x,y,waistY,speed:info?.speed||state.speed||1,startedAt:performance.now(),battleId:state.battleId});}
+ const authored=target&&[isHongThuong,typeof isKyVan==='function'?isKyVan:()=>false,typeof isTieuPhong==='function'?isTieuPhong:()=>false,typeof isTichDao==='function'?isTichDao:()=>false].some(fn=>fn(target));
+ const bodyHeight=target?(authored?419:310)*battleCharacterDepthScale(target)*battleCharacterScale(target):0;
+ const centerX=target?target.x:x,centerY=target?target.y-bodyHeight*.5:y;
+ hongThuongVfxLive.push({x:centerX,y:centerY,speed:info?.speed||state.speed||1,startedAt:performance.now(),battleId:state.battleId});}
+
 function drawHongThuongVfx(context,time){
  const clip=HONG_THUONG_META.vfx.clips.impact;
  for(let i=hongThuongVfxLive.length-1;i>=0;i--){
@@ -160,9 +163,9 @@ function drawHongThuongVfx(context,time){
   context.imageSmoothingEnabled=true;context.imageSmoothingQuality='high';
   // Two co-timed layers share one event, sprite and SFX. Small separation
   // thickens the slash without replaying damage or creating a second cast.
-  for(const layer of [{dx:-2,dy:0,alpha:1},{dx:2,dy:-2,alpha:.65}]){
+  for(const layer of [{dx:-8,dy:5,alpha:1},{dx:8,dy:-5,alpha:.85}]){
    context.globalAlpha=layer.alpha;
-   context.drawImage(img,(frame%clip.cols)*clip.cellW,Math.floor(frame/clip.cols)*clip.cellH,clip.cellW,clip.cellH,v.x-w/2+layer.dx,v.y-dh*.6+layer.dy,w,dh);
+   context.drawImage(img,(frame%clip.cols)*clip.cellW,Math.floor(frame/clip.cols)*clip.cellH,clip.cellW,clip.cellH,v.x-w/2+layer.dx,v.y-dh*.5+layer.dy,w,dh);
   }
   context.restore();
  }

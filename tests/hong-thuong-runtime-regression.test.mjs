@@ -49,5 +49,13 @@ test('one impact event draws two synchronized VFX layers',async()=>{
  const h=harness();await h.loader.acquire([h.s.hongThuongVfxClip('impact')]);
  h.s.spawnHongThuongVfx(600,400,{speed:1});h.s.drawHongThuongVfx(h.ctx,60);
  assert.equal(h.draws.length,2);assert.deepEqual(h.draws[0].slice(0,5),h.draws[1].slice(0,5));
- assert.equal(h.draws[1][5]-h.draws[0][5],4);
+ assert.equal(h.draws[1][5]-h.draws[0][5],16);
+});
+
+test('impact layers are centered on the enemy body, not caller feet offset',async()=>{
+ const h=harness();await h.loader.acquire([h.s.hongThuongVfxClip('impact')]);
+ h.s.spawnHongThuongVfx(5,5,{speed:1},{x:600,y:500,hp:100});h.s.drawHongThuongVfx(h.ctx,0);
+ const centers=h.draws.map(d=>[d[5]+d[7]/2,d[6]+d[8]/2]);
+ assert.equal((centers[0][0]+centers[1][0])/2,600);
+ assert.equal((centers[0][1]+centers[1][1])/2,345);
 });
