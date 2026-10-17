@@ -136,9 +136,9 @@ export async function convertHongThuong(){
       frameDurationsMs:Array(frames.length).fill(plan.ms),pageFrames:plan.pageFrames,pages,cols:plan.cols,
       cellW:cw,cellH:474,content:{bodyCx:m.bodyCx,bodyTop:m.bodyTop,footCellY:m.bodyBottom,bodyHeightPx:m.bodyBottom-m.bodyTop},
       contentScale:Math.round(423/Math.max(1,m.bodyBottom-m.bodyTop)*1000)/1000};
-    meta.clips.standing={file:'idle-authored-0.webp',cols:plan.cols,rows:1,frames:1,cellW:cw,cellH:474,durationMs:plan.ms,
+    meta.clips.standing={file:'idle-authored-0.webp',cols:plan.cols,rows:Math.ceil(Math.min(plan.pageFrames,frames.length)/plan.cols),frames:1,cellW:cw,cellH:474,durationMs:plan.ms,
       frameDurationsMs:[plan.ms],sourceFrames:[frames[0]],sourceClip:SOURCES.idle,
-      content:{bodyCx:m.bodyCx,bodyTop:m.bodyTop,footCellY:m.bodyBottom,bodyHeightPx:m.bodyBottom-m.bodyTop,scale:1}};
+      content:{bodyCx:m.bodyCx,bodyTop:m.bodyTop,footCellY:m.bodyBottom,bodyHeightPx:m.bodyBottom-m.bodyTop,scale:meta.idleVisual.contentScale}};
     // temporary avatar from a mid idle frame (art.pending)
     const avatarFrame=await keyFrame(sharp,join(STAGING,'idle','f021.png'),plan.window);
     const ab=avatarFrame.data,acw=avatarFrame.info.width;
@@ -183,3 +183,4 @@ export async function convertHongThuong(){
   console.log('hong-thuong convert done:',Object.keys(meta.clips).join(','));
 }
 if(process.argv[1]&&process.argv[1].endsWith('hong-thuong-convert-v1.mjs'))convertHongThuong().catch(e=>{console.error(e);process.exit(1);});
+

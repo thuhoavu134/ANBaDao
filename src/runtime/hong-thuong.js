@@ -13,9 +13,18 @@ if(globalThis.SPLUS42?.profiles){
 function isHongThuong(u){return !!u&&[u.sourceId,u.sourceHeroId,u.id].some(x=>/^(?:hero_splus_)?hong[_-]thuong$/i.test(String(x)));}
 // Idle pages live under idleVisual, not clips — resolve both shapes.
 function hongThuongClipMeta(key){
+ const iv=HONG_THUONG_META.idleVisual;
+ // Standing is a frame of page zero, not a different one-row image. The
+ // shared loader keys by URL, so all aliases must declare identical dimensions.
+ if(key==='standing'||String(key).startsWith('idle-authored-')){
+  const page=key==='standing'?0:Number(key.slice('idle-authored-'.length));
+  if(!Number.isInteger(page)||page<0||page>=iv.pages)return null;
+  const frames=Math.min(iv.pageFrames,iv.frames-page*iv.pageFrames);
+  return {file:`idle-authored-${page}.webp`,cols:iv.cols,rows:Math.ceil(frames/iv.cols),frames,
+   cellW:iv.cellW,cellH:iv.cellH,content:{...iv.content,scale:iv.contentScale||1}};
+ }
  const c=HONG_THUONG_META.clips[key];
  if(c)return c;
- if(String(key).startsWith('idle-authored-')){const iv=HONG_THUONG_META.idleVisual;return {file:key+'.webp',cols:iv.cols,frames:iv.pageFrames,cellW:iv.cellW,cellH:iv.cellH};}
  return null;
 }
 function hongThuongClip(key){const c=hongThuongClipMeta(key);if(!c)return null;const rows=c.rows??Math.ceil(c.frames/c.cols);return {...c,src:HONG_THUONG_BASE+c.file,rows,decodedBytes:c.cols*c.cellW*rows*c.cellH*4};}
@@ -86,7 +95,7 @@ function drawHongThuongHero(ctx,u,time){
  }
  const bodyPos=hongThuongBodyPos(u,elapsed,info&&info.action);
  ctx.save();ctx.translate(bodyPos?bodyPos.x:u.x,bodyPos?bodyPos.y:u.y);const scale=battleCharacterDepthScale(u)*battleCharacterScale(u);ctx.scale(scale*(u.team===TEAM_ENEMY?-1:1),scale);
- const paintBody=copy=>{const c=hongThuongClipMeta(key);return c&&hongThuongPaint(copy,key,frame,-c.cellW/2,0)||key!=='idle-authored-0'&&(u.hp>0&&hongThuongPaint(copy,'standing',0,-HONG_THUONG_META.clips.standing.cellW/2,0));};
+ const paintBody=copy=>{const c=hongThuongClipMeta(key);return c&&hongThuongPaint(copy,key,frame,0,0)||key!=='idle-authored-0'&&(u.hp>0&&hongThuongPaint(copy,'standing',0,0,0));};
  const drawn=__hvHeroVisibility.finish(ctx,'hong-thuong',u,time,paintBody(ctx),paintBody);
  ctx.restore();if(nextPage)hongThuongImage(nextPage,'prefetch');if(u.hp>0)drawUnitHud(ctx,u,time,1);return drawn;
 }
@@ -98,7 +107,7 @@ async function beginHongThuongAction(actor,action,target,battleId,engine){
  try{
   if(!__hvIsSkipping()){
    const clips=normalized==='ultimate'
-    ?['ult-prep','ult-cluster','ult-finisher','standing'].map(hongThuongClip)
+    ?['ult-prep','ult-cluster','ult-finisher','run','standing'].map(hongThuongClip)
     :[...['basic','standing'].map(hongThuongClip)];
    clips.push(hongThuongVfxClip('impact'));
    info.lease=await __hvSkipVisualAssets(()=>BACH_DIEN_LOADER.acquire(clips,{scope:'battle',owner:'hong-thuong:'+actor.id,signal:info.abort.signal}),battleId);
@@ -173,36 +182,26 @@ function drawHongThuongVfx(context,time){
  // Read-only cast plan (engine legal-target list) — the authoritative per-hit
  // sequencing stays in the engine via struckIds as markers resolve below.
  const victims=e.targets(actor.id,'ultimate').filter(Boolean);
- // Segment plan (authored clocks; travel time is presentation between modules
- // and never gates damage, which resolves at each cluster's hit markers).
+ // Travel and authored clips occupy disjoint intervals. Damage markers use
+ // these same cluster starts, so movement cannot hide the opening thrust.
  const seg=[];let cursor=tl.prepMs,from=info.home;
  const spotOf=v=>hongThuongSpotFor(actor,getUnit(v?.id)||v);
- // Segment plan mirrors the playback clock exactly: cluster k runs
- // [prepMs+k*(clusterMs+140), +clusterMs] — its hits land inside the clip —
- // with a 220ms glide onto the victim and a 140ms hold between clusters.
+ const clusterStarts=[];
  seg.push({start:0,dur:tl.prepMs,from:info.home,to:info.home,clip:'ult-prep'});
- for(let k=0;k<victims.length;k++){
-  const spot=spotOf(victims[k]);
-  seg.push({start:cursor-220,dur:220,from,to:spot,clip:'ult-cluster'});
+ for(const v of victims){
+  const spot=spotOf(v);
+  seg.push({start:cursor,dur:220,from,to:spot,clip:'run'});cursor+=220;
+  clusterStarts.push(cursor);
   seg.push({start:cursor,dur:tl.clusterMs,from:spot,to:spot,clip:'ult-cluster'});
-  seg.push({start:cursor+tl.clusterMs,dur:140,from:spot,to:spot,clip:'ult-cluster'});
-  cursor+=tl.clusterMs+140;
-  from=spot;
+  cursor+=tl.clusterMs;from=spot;
  }
- const finaleVictim=e.nextHongThuongFinale(actor.id,result.castId);
- const finaleSpot=finaleVictim?hongThuongSpotFor(actor,getUnit(finaleVictim.id)||finaleVictim,'spear'):null;
- if(finaleSpot){
-  seg.push({start:cursor,dur:260,from,to:finaleSpot,clip:'ult-finisher'});cursor+=260;
-  seg.push({start:cursor,dur:tl.finisherMs,from:finaleSpot,to:finaleSpot,clip:'ult-finisher'});cursor+=tl.finisherMs;
- }
- seg.push({start:cursor,dur:420,from:finaleSpot||from,to:null,clip:'run'}); // return home
  info.segments=seg;
- info.actionTotalMs=cursor+420;
+ info.actionTotalMs=cursor+260+tl.finisherMs+420;
  // Playback: prep → per-foe cluster → Hồi Mã Thương → glide home.
  if(!await hitAt(tl.prepMs))return {ok:false};
  for(const v of victims){
   const spot=spotOf(v);info.clip='ult-cluster';
-  const base=tl.prepMs+victims.indexOf(v)*(tl.clusterMs+140);
+  const base=clusterStarts[victims.indexOf(v)];
   for(let i=0;i<3;i++){
    const at=base+(tl.clusterHitsAt?.[i]??[96,384,672][i]);
    if(!await hitAt(at))return {ok:false};
@@ -213,16 +212,27 @@ function drawHongThuongVfx(context,time){
   }
   if(!await hitAt(base+tl.clusterMs))return {ok:false};
  }
- if(finaleVictim){
+ // Select after all cluster damage, matching the engine's living-target rule.
+ const finaleVictim=e.nextHongThuongFinale(actor.id,result.castId);
+ const finaleSpot=finaleVictim?hongThuongSpotFor(actor,getUnit(finaleVictim.id)||finaleVictim,'spear'):null;
+ if(finaleSpot){
+  seg.push({start:cursor,dur:260,from,to:finaleSpot,clip:'run'});cursor+=260;
+  const finaleStart=cursor;
+  seg.push({start:cursor,dur:tl.finisherMs,from:finaleSpot,to:finaleSpot,clip:'ult-finisher'});
+  cursor+=tl.finisherMs;from=finaleSpot;
+  seg.push({start:cursor,dur:420,from,to:info.home,clip:'run'});
+  info.actionTotalMs=cursor+420;
+  if(!await hitAt(finaleStart+tl.finisherHitAt))return {ok:false};
   const unit=getUnit(finaleVictim.id);
-  info.clip='ult-finisher';
-  const at=tl.prepMs+victims.length*(tl.clusterMs+140)+260+tl.finisherHitAt;
-  if(!await hitAt(at))return {ok:false};
   e.resolveHongThuongFinale(actor.id,result.castId);
-  if(unit&&unit.hp>0)spawnHongThuongVfx(unit.x,unit.y-60,info,unit);
+  if(unit)spawnHongThuongVfx(unit.x,unit.y-60,info,unit);
   hongThuongSfx(info);flush();
+ }else{
+  seg.push({start:cursor,dur:420,from,to:info.home,clip:'run'});
+  info.actionTotalMs=cursor+420;
  }
  if(!await hitAt(info.actionTotalMs))return {ok:false};
  e.finishHongThuongCast(actor.id,result.castId);flush();
  return result;
 }
+

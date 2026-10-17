@@ -522,7 +522,7 @@
   "standing": {
    "file": "idle-authored-0.webp",
    "cols": 4,
-   "rows": 1,
+   "rows": 2,
    "frames": 1,
    "cellW": 492,
    "cellH": 474,
@@ -539,7 +539,7 @@
     "bodyTop": 14,
     "footCellY": 454,
     "bodyHeightPx": 440,
-    "scale": 1
+    "scale": 0.961
    }
   }
  },
