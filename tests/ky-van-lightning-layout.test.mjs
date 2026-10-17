@@ -72,8 +72,8 @@ test('ultimate uses a deterministic front, row-sweep and back sequence regardles
   assert.deepEqual(plan(one),plan(two));
   assert.deepEqual(plan(one),[[0,1730],[1,1805],[2,1880],[0,2180],[3,2235],[1,2290],[4,2345],[2,2400],[5,2455],[3,2860],[4,2935],[5,3010]]);
   const visible=bolts(a.render(1900));
-  assert.equal(visible.length,3);
-  assert.deepEqual(visible.map(d=>[Math.round(d.x+d.w/2),Math.round(d.y+d.w/260*540)]),a.targets.slice(0,3).map(t=>[hround(a.body(t).centerX),hround(a.body(t).footY)]));
+  assert.equal(visible.length,9,'three columns for each of the three front targets');
+  assert.deepEqual(visible.filter((_,i)=>i%3===1).map(d=>[Math.round(d.x+d.w/2),Math.round(d.y+d.w/260*540)]),a.targets.slice(0,3).map(t=>[hround(a.body(t).centerX),hround(a.body(t).footY)]));
  }
 });
 const hround=Math.round;
@@ -81,20 +81,46 @@ const hround=Math.round;
 test('each ultimate strike reveals from the sky before opening its ground-contact pose',async()=>{
  const h=harness();await h.c.beginKyVanAction(h.actor,'ultimate',h.targets[0],1);
  for(const age of [1731,1745,1760,1789,1790]){
-  const d=bolts(h.render(age))[0],body=h.body(h.targets[0]);
-  assert.equal(frame(d),5);
-  close(d.sh,age<1790?540*(age-1730)/60:628,'ultimate source reveal');
-  close(d.h/d.sh,d.w/d.sw,'ultimate crop preserves aspect ratio');
-  if(age<1790){assert.ok(d.y+d.h<body.footY);assert.equal(impacts(h.render(age)).length,0);}
-  else assert.equal(impacts(h.render(age)).length,1);
+  const ds=bolts(h.render(age)),body=h.body(h.targets[0]);
+  assert.equal(ds.length,3,'all three bolts share the same downward reveal');
+  for(const d of ds){
+   assert.equal(frame(d),5);
+   close(d.sh,age<1790?540*(age-1730)/60:628,'ultimate source reveal');
+   close(d.h/d.sh,d.w/d.sw,'ultimate crop preserves aspect ratio');
+   if(age<1790)assert.ok(d.y+d.h<body.footY);
+  }
+  assert.equal(impacts(h.render(age)).length,age<1790?0:1,'one impact per target group');
  }
 });
 
-test('ultimate keeps one column per occupied target, bounded atlas frames and no tail beyond recovery',async()=>{
+test('ultimate staggers three bolt heads and horizontal gaps while anchoring every target on both teams and viewports',async()=>{
+ for(const team of ['player','enemy'])for(const viewport of [[390,739],[1280,528]]){
+  const h=harness({team,viewport});await h.c.beginKyVanAction(h.actor,'ultimate',h.targets[0],1);
+  const ds=bolts(h.render(2520));assert.equal(ds.length,18);
+  assert.equal(impacts(h.render(2520)).length,6,'impact intensity is per target, not per bolt');
+  for(const target of h.targets){
+   const b=h.body(target),group=ds.filter(d=>Math.abs(d.y+d.w/260*540-b.footY)<1e-7&&Math.abs(d.x+d.w/2-b.centerX)<=36.001);
+   assert.equal(group.length,3,'exactly three bolts belong to this target');
+   const xs=group.map(d=>d.x+d.w/2).sort((a,b)=>a-b);
+   const gaps=[xs[1]-xs[0],xs[2]-xs[1]];
+   assert.ok(Math.min(...gaps)>=13,'three visible, distinct paths');
+   assert.ok(Math.abs(gaps[0]-gaps[1])>=4,'unequal horizontal spacing avoids a rigid parallel cluster');
+   close(xs[1],b.centerX,'middle strike stays anchored to the hero');
+   assert.ok(Math.abs(xs.reduce((a,b)=>a+b,0)/3-b.centerX)<4,'asymmetric group stays close to the target center');
+   const heads=group.map(d=>d.y).sort((a,b)=>a-b);
+   assert.ok(heads[1]-heads[0]>b.height*.15&&heads[2]-heads[1]>b.height*.15,'all three origins have visibly different heights');
+   for(const d of group){close(d.matrix.b,0,'upright');close(d.matrix.c,0,'upright');close(d.h/d.sh,d.w/d.sw,'undistorted bolt');assert.ok(d.y<b.topY,'origin above the head');}
+  }
+ }
+});
+
+test('ultimate keeps one triple group per occupied target, bounded atlas frames and no tail beyond recovery',async()=>{
  const h=harness({slots:[0,2,3,5]});await h.c.beginKyVanAction(h.actor,'ultimate',h.targets[0],1);
  for(let age=0;age<=meta.clips.ultimate.durationMs+100;age+=25){
   const ds=bolts(h.render(age)),keys=ds.map(d=>Math.round(d.x+d.w/2)+':'+Math.round(d.y+d.w/260*540));
   assert.equal(new Set(keys).size,keys.length,'old and new waves cannot stack at the same target');
+  assert.equal(ds.length%3,0,'a target always receives a complete group');
+  assert.ok(ds.length<=h.targets.length*3,'no duplicate groups from overlapping waves');
   for(const d of ds)assert.ok(frame(d)>=0&&frame(d)<15);
  }
  assert.equal(h.render(meta.clips.ultimate.durationMs).length,0);

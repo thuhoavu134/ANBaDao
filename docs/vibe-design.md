@@ -1,3 +1,11 @@
+# 2026-10-17 — Cụm ba tia Ultimate Kỷ Vân (DRAFT / REVIEW)
+
+Sau phản hồi owner về ba tia song song quá đều, PR #313 dùng ba đầu tia cao thấp khác nhau: height factors 0.78/1.00/0.90 xoay thứ tự theo hàng slot%3, cố định qua các frame. X = tâm thân + [-1,0,0.75]×spread; spread = 14% chiều cao thân đã project, giới hạn 18–36 world units. Mỗi sprite scale đồng nhất hai chiều quanh foot anchor, giữ một tia giữa đúng tâm; cả ba chung contact và tail. Một target có một cụm, một impact; wave sau thay cụm cũ. Sáu target ở đợt giữa cho 18 bolt/6 impact. Basic vẫn một tia; nhóm VFX không tạo thêm damage.
+
+SFX phát một bản phối đủ tụ lực và ba đợt sét qua audio bus hiện có, chọn file đã bake ×1/×2/×3 từ speed lúc bắt đầu. Không nhân voice theo số tia. [Thiết kế/bằng chứng](qa/ky-van-triple-lightning-20261017.md) có 34 test PASS, preview offline có âm thanh và ảnh cận đủ ba đầu tia. Baseline `642dd78` đã merge PR #312; bản ba tia còn REVIEW. Các mục bên dưới giữ trạng thái lịch sử.
+
+---
+
 # 2026-10-17 — Sét giáng và ba đường sát thương (DRAFT / REVIEW)
 
 Kỷ Vân dùng sprite sét vàng/trắng gốc thành một cột đứng trên mỗi mục tiêu, neo theo body projection chung. Basic reveal cùng contact pose từ trên xuống bằng source crop, giữ mật độ pixel; chạm đất ở 1050 ms. Ultimate đi cột trước 0→1→2, quét từng hàng 0→3→1→4→2→5, rồi cột sau 3→4→5. Ảnh tĩnh cho hình dáng tham chiếu; thứ tự này là lựa chọn để review. Mỗi vị trí chỉ có một cột ở một thời điểm; tail hết trước recovery.

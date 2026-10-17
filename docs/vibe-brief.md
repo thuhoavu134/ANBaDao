@@ -1,3 +1,11 @@
+# 2026-10-17 — Ultimate Kỷ Vân: ba tia mỗi mục tiêu (DRAFT / REVIEW)
+
+PR #312 đã merge theo yêu cầu owner vào main `642dd78e3174dca902e4ea0deeebe009dfd6e83b`. Lát tiếp theo trên `fix/ky-van-triple-lightning-sfx-20261017`, PR #313, tăng mỗi mục tiêu Ultimate thành cụm ba tia. Theo phản hồi mới, đầu ba tia cao thấp khác nhau, khoảng ngang bất đối xứng và vị trí tia cao nhất thay đổi theo hàng mục tiêu để cụm sét tự nhiên hơn. Thứ tự cột trước → từng hàng → cột sau vẫn giữ; ATK là một tia giáng xuống.
+
+SFX dùng đầy đủ mix đã duyệt cho ×1/×2/×3, một voice xuyên suốt chiêu. [QA note](qa/ky-van-triple-lightning-20261017.md): **34/34 focused PASS**, [ảnh đã xem](qa/ky-van-triple-lightning-20261017.png), [video có tiếng](qa/ky-van-triple-lightning-20261017.mp4) và hash/waveform audio thật. Đây là bằng chứng Canvas/source, chưa chứng minh full-game browser/device hoặc deployment. Bản mới DRAFT / REVIEW; waiver workflow cũ giữ nguyên. Các mục dưới là lịch sử.
+
+---
+
 # 2026-10-17 — Kỷ Vân / Thầy Mo follow-up (DRAFT / REVIEW)
 
 Baseline main `6fa9267` đã chứa PR #311 được merge theo yêu cầu owner. Lát mới trên `fix/ky-van-lightning-thay-mo-damage-20261017`: Kỷ Vân gọi sét từ trên mục tiêu xuống, Ultimate theo cột trước → từng hàng → cột sau; Thầy Mo gây damage đủ ba đường ATK đang hiển thị, gồm nhánh nội tại chuyển Basic thành Skill. Chuẩn thân 310 của PR #311 tiếp tục là nguồn tham chiếu.

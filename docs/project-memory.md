@@ -1,3 +1,13 @@
+## 2026-10-17 — Điểm tiếp tục: Ultimate Kỷ Vân ba tia (DRAFT / REVIEW)
+
+Owner đã cho merge PR #312; main hiện `642dd78e3174dca902e4ea0deeebe009dfd6e83b`. Source mới trên `fix/ky-van-triple-lightning-sfx-20261017`, PR #313: `kyVanUltimateLightning` vẽ ba tia sau latest-strike dedupe. Owner đã phản hồi ba tia song song/equal-height trông giả; revision hiện dùng height factors [.78,1,.90] xoay theo slot%3 và offsets [-spread,0,.75spread], với spread clamp(height×0.14,18,36). Scale cả width/height quanh anchor gốc giúp ba đầu tia cao thấp khác nhau, còn contact vẫn đúng foot. Một group/target, một impact, không thêm damage. Basic giữ heightFactor=1, offset0/một cột. Last visual tail vẫn 3670 < recovery3900.024.
+
+Audio owner vẫn `src/ui/audio-sfx-runtime.js`; các approved `ultimate-x1/x2/x3.m4a` đã có đủ cast và ba waves, nên giữ nguyên bytes/gain0.38 và một voice/cast. Speed chụp đầu chiêu, không thêm playbackRate; abort/mute/skip giữ owner cũ. Sáu audio test mới dùng bus/actor/registry/bytes thật, mock Web Audio device; ffmpeg waveform audit riêng. Prepare vẫn budget2s, không khẳng định cải thiện timeout hoặc nghe trên iPhone.
+
+[QA note](qa/ky-van-triple-lightning-20261017.md) có **34/34 PASS**, hashes/audio metrics, ảnh cận đủ ba đầu tia và MP4 đã render lại với full SFX. Revision đầu lệch có RED1fail/6pass, GREEN7/7 layout. Canvas fixture thật không phải full-game/browser/device certification. Cập nhật cùng PR #313, chưa merge/deploy; review PR/preview rồi owner duyệt tiếp. Waiver Ticket Board giữ nguyên. Các mục bên dưới là lịch sử của các lát trước.
+
+---
+
 ## 2026-10-17 — Kỷ Vân / Thầy Mo: điểm tiếp tục (DRAFT / REVIEW)
 
 PR #311 đã merge theo yêu cầu owner; main `6fa926747059757de9a9d5072ec643bbcf1d1bd8`. Quy chuẩn thân hiện hành vẫn là Bạch Diện 310 theo [HERO-BATTLE-SIZE-CONTRACT.md](HERO-BATTLE-SIZE-CONTRACT.md). Lát mới ở `fix/ky-van-lightning-thay-mo-damage-20261017`, chưa merge/phát hành.

@@ -1,0 +1,246 @@
+{
+  "ref": "642dd78e3174dca902e4ea0deeebe009dfd6e83b",
+  "method": "ffprobe AAC stream metadata; ffmpeg f32le mono downmix at 48kHz; RMS/peak over authored wave windows divided by captured cast speed; audible tail threshold is individual samples above -45dBFS. This is decoded waveform inspection, not device listening.",
+  "authoredActionDurationMs": 3900.024,
+  "registryGitBlobSha": "6df2a2270e1be91ab34fa9357062eaf6be48484f",
+  "sourceProvenance": "docs/qa/ky-van-20261009/README.md: approved kl_hff_c, kl_qff_h, kl_axxf_c plus generated low thunder; original stem files are not present in the repo tree.",
+  "test": {
+    "path": "tests/ky-van-audio.test.mjs",
+    "command": "node --test --test-isolation=none tests/ky-van-audio.test.mjs",
+    "pass": 6,
+    "fail": 0,
+    "scope": "Real audio bus and actor runtime in one VM; actual committed M4A mapping/bytes/container durations; Web Audio device/decoder mocked. Normal readiness, speed snapshot, one voice across waves, mute, skip, abort."
+  },
+  "files": [
+    {
+      "path": "assets/audio/sfx/ky-van/ultimate-x1.m4a",
+      "speed": 1,
+      "bytes": 68707,
+      "gitBlobSha": "a47ab461942a5c5b843607fa2598399070b987ba",
+      "sha256": "98e3a0ca704b3f14090efd6acc622d5828cef23696d54211bd507e16c3168dc3",
+      "stream": {
+        "codec_name": "aac",
+        "sample_rate": "48000",
+        "channels": 2,
+        "duration": "3.889000"
+      },
+      "decodedDurationMs": 3904.0,
+      "monoPeakDbFS": -0.33,
+      "firstAboveMinus45DbMs": 698.25,
+      "lastAboveMinus45DbMs": 3773.5416666666665,
+      "waves": [
+        {
+          "name": "front",
+          "authoredWindowMs": [
+            1730,
+            1940
+          ],
+          "playbackWindowMs": [
+            1730.0,
+            1940.0
+          ],
+          "monoRmsDbFS": -13.44,
+          "monoPeakDbFS": -4.13
+        },
+        {
+          "name": "all",
+          "authoredWindowMs": [
+            2180,
+            2515
+          ],
+          "playbackWindowMs": [
+            2180.0,
+            2515.0
+          ],
+          "monoRmsDbFS": -12.93,
+          "monoPeakDbFS": -2.74
+        },
+        {
+          "name": "back",
+          "authoredWindowMs": [
+            2860,
+            3070
+          ],
+          "playbackWindowMs": [
+            2860.0,
+            3070.0
+          ],
+          "monoRmsDbFS": -10.05,
+          "monoPeakDbFS": -0.33
+        },
+        {
+          "name": "tail",
+          "authoredWindowMs": [
+            3200,
+            3900
+          ],
+          "playbackWindowMs": [
+            3200.0,
+            3900.0
+          ],
+          "monoRmsDbFS": -23.36,
+          "monoPeakDbFS": -8.45
+        }
+      ]
+    },
+    {
+      "path": "assets/audio/sfx/ky-van/ultimate-x2.m4a",
+      "speed": 2,
+      "bytes": 34993,
+      "gitBlobSha": "0bd07bd5779a66365a7ea466f951e08af787f7d6",
+      "sha256": "03d8ef54c7474c1079545757dee666ea116edb975f826141a0f4751920994859",
+      "stream": {
+        "codec_name": "aac",
+        "sample_rate": "48000",
+        "channels": 2,
+        "duration": "1.941000"
+      },
+      "decodedDurationMs": 1941.3333333333333,
+      "monoPeakDbFS": -0.38,
+      "firstAboveMinus45DbMs": 350.3958333333333,
+      "lastAboveMinus45DbMs": 1890.4375,
+      "waves": [
+        {
+          "name": "front",
+          "authoredWindowMs": [
+            1730,
+            1940
+          ],
+          "playbackWindowMs": [
+            865.0,
+            970.0
+          ],
+          "monoRmsDbFS": -14.61,
+          "monoPeakDbFS": -5.09
+        },
+        {
+          "name": "all",
+          "authoredWindowMs": [
+            2180,
+            2515
+          ],
+          "playbackWindowMs": [
+            1090.0,
+            1257.5
+          ],
+          "monoRmsDbFS": -13.65,
+          "monoPeakDbFS": -3.99
+        },
+        {
+          "name": "back",
+          "authoredWindowMs": [
+            2860,
+            3070
+          ],
+          "playbackWindowMs": [
+            1430.0,
+            1535.0
+          ],
+          "monoRmsDbFS": -10.21,
+          "monoPeakDbFS": -0.38
+        },
+        {
+          "name": "tail",
+          "authoredWindowMs": [
+            3200,
+            3900
+          ],
+          "playbackWindowMs": [
+            1600.0,
+            1950.0
+          ],
+          "monoRmsDbFS": -24.1,
+          "monoPeakDbFS": -9.46
+        }
+      ]
+    },
+    {
+      "path": "assets/audio/sfx/ky-van/ultimate-x3.m4a",
+      "speed": 3,
+      "bytes": 24860,
+      "gitBlobSha": "e652f642b70b680aadb99562b8f73ec96a6b812f",
+      "sha256": "44352f9a8d74d5637fefa2559b4e3368d18f4f92598e0053c8ff4db0dffb12f2",
+      "stream": {
+        "codec_name": "aac",
+        "sample_rate": "48000",
+        "channels": 2,
+        "duration": "1.298000"
+      },
+      "decodedDurationMs": 1301.3333333333333,
+      "monoPeakDbFS": -2.32,
+      "firstAboveMinus45DbMs": 224.97916666666666,
+      "lastAboveMinus45DbMs": 1257.2291666666667,
+      "waves": [
+        {
+          "name": "front",
+          "authoredWindowMs": [
+            1730,
+            1940
+          ],
+          "playbackWindowMs": [
+            576.6666666666666,
+            646.6666666666666
+          ],
+          "monoRmsDbFS": -15.5,
+          "monoPeakDbFS": -5.82
+        },
+        {
+          "name": "all",
+          "authoredWindowMs": [
+            2180,
+            2515
+          ],
+          "playbackWindowMs": [
+            726.6666666666666,
+            838.3333333333334
+          ],
+          "monoRmsDbFS": -14.58,
+          "monoPeakDbFS": -4.17
+        },
+        {
+          "name": "back",
+          "authoredWindowMs": [
+            2860,
+            3070
+          ],
+          "playbackWindowMs": [
+            953.3333333333334,
+            1023.3333333333334
+          ],
+          "monoRmsDbFS": -12.4,
+          "monoPeakDbFS": -2.32
+        },
+        {
+          "name": "tail",
+          "authoredWindowMs": [
+            3200,
+            3900
+          ],
+          "playbackWindowMs": [
+            1066.6666666666667,
+            1300.0
+          ],
+          "monoRmsDbFS": -24.19,
+          "monoPeakDbFS": -8.52
+        }
+      ]
+    }
+  ],
+  "preview": {
+    "path": "docs/qa/ky-van-triple-lightning-20261017.mp4",
+    "width": 1280,
+    "height": 768,
+    "fps": 30,
+    "videoDurationSeconds": 3.933333,
+    "audioDurationSeconds": 3.889,
+    "audioPacketSha256": "019fbd683139b2123a1d17e87331150b46aec043d1a8eec37af313ccb1aa8652",
+    "sourceAudioPacketSha256": "019fbd683139b2123a1d17e87331150b46aec043d1a8eec37af313ccb1aa8652",
+    "audioCopiedWithoutReencoding": true,
+    "scope": "Offline production drawKyVanHero/drawKyVanFx and original sprites on a neutral six-target fixture. Audio is the unmodified approved x1 mix, not a device loopback recording."
+  },
+  "focusedSuite": {
+    "pass": 34,
+    "fail": 0,
+    "files": 6
+  }
+}

@@ -1,3 +1,11 @@
+## 2026-10-17 — Ba tia Ultimate Kỷ Vân và xác minh đầy đủ SFX (DRAFT / REVIEW)
+
+Merge PR #312 theo owner: main `642dd78`. Follow-up PR #313 bổ sung helper cụm ba tia trong `src/runtime/ky-van.js`; chỉ mở rộng Ultimate sau bước chọn latest strike/target. Theo phản hồi owner mới, thay ba tia đều nhau bằng ba đầu cao thấp khác nhau và khoảng ngang lệch tự nhiên: height [.78,1,.90] xoay theo hàng, x offsets [-1,0,.75]×spread. Basic, chuẩn thân, damage/status và các mốc chiêu tiếp tục giữ owner hiện có. Không đổi atlas hoặc audio đã duyệt.
+
+RED ban đầu 5 fail/9 pass khóa số tia; GREEN cùng nhóm 14/14. Revision đầu lệch: RED 1 fail/6 pass trên layout cũ, GREEN 7/7 layout. Tổng cuối **34/34 focused PASS**, gồm sáu test mới chạy audio bus + actor thật với registry/bytes M4A thật, kiểm speed/readiness/mute/skip/abort/one voice. Decode waveform đủ ba đợt ở ×1/×2/×3; [video render lại](qa/ky-van-triple-lightning-20261017.mp4) chứa nguyên stream SFX x1. [QA và giới hạn](qa/ky-van-triple-lightning-20261017.md), [contact sheet](qa/ky-van-triple-lightning-20261017.png), [ảnh cận ba đầu tia](qa/ky-van-triple-lightning-20261017-detail.png). Chưa merge bản ba tia, chưa có full build/browser/device/deploy cho revision mới. Waiver Ticket Board cũ giữ nguyên.
+
+---
+
 ## 2026-10-17 — Kỷ Vân lightning / Thầy Mo three-line damage (DRAFT / REVIEW)
 
 Sau main `6fa9267` (PR #311 đã merge), sửa nguồn runtime Kỷ Vân và installer damage Thầy Mo. Sét dùng một cột đứng, slot order cố định, cùng frame contact reveal từ trên xuống để tránh source frames co/rút và chạm đất sớm. Mốc Basic 650/1050, Ultimate 1730/2240, sound/scheduler giữ nguyên. Tail không wrap hoặc vượt recovery; mô tả Basic được cập nhật.

@@ -23,14 +23,22 @@ function kyVanLightningFrame(elapsed,contactDelay){
  // After contact, retain the source's 60ms tail without wrapping its frames.
  return Math.min(clip.frames-1,contact+Math.floor(Math.max(0,elapsed-contactDelay)/clip.ms));
 }
-function kyVanLightningColumn(ctx,frame,target,reveal=1){
+function kyVanLightningColumn(ctx,frame,target,reveal=1,offsetX=0,heightFactor=1){
  const body=target.body||battleCharacterBody(target),clip=KY_VAN_META.clips.bolt;
- const height=Math.max(320,body.height*2.25),scale=height/clip.cellH;
+ const height=Math.max(320,body.height*2.25)*heightFactor,scale=height/clip.cellH;
  // One existing gold/white branching sprite stands above each target. The
  // source is cropped downward at fixed pixel density until the hit marker;
  // ground sparks appear only at contact. No actor travel or rotated fan.
  const cropHeight=reveal<1?clip.strike.anchorY*Math.max(0,reveal):clip.cellH;
- return kyVanPaint(ctx,'bolt',frame,body.centerX-clip.strike.anchorX*scale,body.footY-clip.strike.anchorY*scale,clip.cellW*scale,height,cropHeight);
+ return kyVanPaint(ctx,'bolt',frame,body.centerX+offsetX-clip.strike.anchorX*scale,body.footY-clip.strike.anchorY*scale,clip.cellW*scale,height,cropHeight);
+}
+function kyVanUltimateLightning(ctx,frame,target,reveal){
+ const body=target.body||battleCharacterBody(target),spread=Math.max(18,Math.min(36,body.height*.14));
+ // Uneven heads and gaps break up the repeated parallel silhouette. Scale
+ // each whole sprite uniformly around its foot contact, not by stretching.
+ // Rotate the height order by formation row; keep it stable across frames.
+ const heights=[.78,1,.90],row=Number.isInteger(target.slot)&&target.slot>=0?target.slot%3:0;
+ for(const [i,offsetX]of [-spread,0,spread*.75].entries())kyVanLightningColumn(ctx,frame,target,reveal,offsetX,heights[(i+row)%3]);
 }
 function kyVanLightningImpact(ctx,elapsed,target){
  const clip=KY_VAN_META.clips.impact;if(elapsed<0||elapsed>=clip.durationMs)return;
@@ -103,13 +111,13 @@ function drawKyVanFx(ctx){
    if(frame!==null)kyVanLightningColumn(ctx,frame,t,(age-650)/400);
    kyVanLightningImpact(ctx,age-1050,t);
   }else{
-   // A later wave replaces the earlier column at that position, rather than
-   // multiplying branches. These visual strikes never resolve combat damage.
+   // A later wave replaces the earlier triple group at that position. These
+   // visual columns share one impact and never resolve combat damage.
    const latest=new Map();
    for(const strike of info.lightningStrikes)if(age>=strike.at)latest.set(strike.target.id,strike);
    for(const {target,at} of latest.values()){
     const frame=kyVanLightningFrame(age-at,60);
-    if(frame!==null)kyVanLightningColumn(ctx,frame,target,(age-at)/60);
+    if(frame!==null)kyVanUltimateLightning(ctx,frame,target,(age-at)/60);
     kyVanLightningImpact(ctx,age-at-60,target);
    }
   }
