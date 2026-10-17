@@ -1,3 +1,15 @@
+## 2026-10-17 — Kỷ Vân / Thầy Mo: điểm tiếp tục (DRAFT / REVIEW)
+
+PR #311 đã merge theo yêu cầu owner; main `6fa926747059757de9a9d5072ec643bbcf1d1bd8`. Quy chuẩn thân hiện hành vẫn là Bạch Diện 310 theo [HERO-BATTLE-SIZE-CONTRACT.md](HERO-BATTLE-SIZE-CONTRACT.md). Lát mới ở `fix/ky-van-lightning-thay-mo-damage-20261017`, chưa merge/phát hành.
+
+Owner sét: `src/runtime/ky-van.js` + `runtime-meta.json` của Kỷ Vân. Atlas cũ frame 0–4 co/rút nên dùng crop tăng dần cùng frame 5 trước hit, anchor 130/540; source density giữ nguyên. Basic từ trời xuống mục tiêu; Ultimate cột trước → quét cặp hàng → cột sau, không chồng nhiều cột tại một target, không tạo thêm damage Ultimate. Demo là iframe dùng battle thật.
+
+Owner Thầy Mo: `scripts/thay-mo-authored-production-v1.mjs`, sửa resolver production đã đổi tên `__hvResolveAction3qAdapter`, không chỉ wrapper ghi kết quả. Snapshot VFX cho đúng ba damage target; primary trước, nộ/record một lần. Free talent Skill/fear thêm hai hit sau primary status; canonical AoE và Ultimate không thêm hit. Final versioned Basic dispatcher vẫn sửa chữ ký late đúng thứ tự build.
+
+[QA note](qa/ky-van-thay-mo-20261017.md): 40/40 focused PASS, fixture dùng adapter/settlement thật với raw formula kiểm soát; ảnh/video Canvas offline từ asset thật đã đọc. Bốn test rage-rotation cũ bị subprocess EPERM, không tính pass. Checkout thưa chưa có full build/browser/device; không gọi ảnh offline là game preview. Waiver Ticket Board cũ giữ nguyên. Bước sau là review PR/normal preview khi hạ tầng cho phép và owner chốt hình ảnh; không suy approval merge mới từ PR #311. Các mục dưới giữ lịch sử.
+
+---
+
 ## 2026-10-17 — Shared battle hero size: điểm tiếp tục (DRAFT / REVIEW)
 
 Owner yêu cầu một chuẩn vóc dáng cho mọi tướng qua idle/ATK/Ultimate, tránh sửa runtime scale từng lần tích hợp. Bạch Diện là tham chiếu **310 world units trước viewport và home-slot depth**. Baseline `de5d425e11719cd275112953d539339e2eb4b77a` đã chứa PR #310 được merge; thay đổi mới trên `fix/shared-hero-scale-contract-20261017` vẫn **DRAFT / REVIEW**, chưa có merge/live claim.

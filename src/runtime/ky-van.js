@@ -4,15 +4,38 @@ const kyVanActive=new Set();
 function isKyVan(u){return !!u&&[u.sourceId,u.sourceHeroId,u.id].some(x=>/^(?:hero_splus_)?ky[_-]van$/i.test(String(x)));}
 function kyVanClip(key){const c=KY_VAN_META.clips[key],rows=c.rows??Math.ceil(c.frames/c.cols);return {...c,src:KY_VAN_BASE+c.file,rows,decodedBytes:c.cols*c.cellW*rows*c.cellH*4};}
 function kyVanImage(key,priority='visible'){return BACH_DIEN_LOADER.ensure(kyVanClip(key),{scope:'battle',priority}).image;}
-function kyVanPaint(ctx,key,frame,x,y,w,h){const c=KY_VAN_META.clips[key],img=kyVanImage(key);if(!img||img.complete===false||img.naturalWidth===0)return false;ctx.save();ctx.globalCompositeOperation=c.blendMode;ctx.drawImage(img,(frame%c.cols)*c.cellW,Math.floor(frame/c.cols)*c.cellH,c.cellW,c.cellH,x,y,w,h);ctx.restore();return true;}
-function kyVanBoltBurst(ctx,frame,x,y){
- // Five parallel authored lightning sprites form one broad hit, with staggered
- // branches. The combat clock, authored frame rate, and target are unchanged.
- const beams=[[0,0,120,292,0],[ -45,-12,66,222,-.27],[-22,9,64,208,-.13],[23,-9,64,208,.13],[46,12,66,222,.27]];
- for(let i=0;i<beams.length;i++){
-  const [dx,dy,w,h,angle]=beams[i];ctx.save();ctx.translate(x+dx,y+dy);ctx.rotate(angle);
-  kyVanPaint(ctx,'bolt',(frame+i*2)%15,-w/2,-h/2,w,h);ctx.restore();
- }
+function kyVanPaint(ctx,key,frame,x,y,w,h,cropHeight){const c=KY_VAN_META.clips[key],sourceHeight=cropHeight??c.cellH;if(sourceHeight<=0)return false;const img=kyVanImage(key);if(!img||img.complete===false||img.naturalWidth===0)return false;ctx.save();ctx.globalCompositeOperation=c.blendMode;ctx.drawImage(img,(frame%c.cols)*c.cellW,Math.floor(frame/c.cols)*c.cellH,c.cellW,sourceHeight,x,y,w,h*sourceHeight/c.cellH);ctx.restore();return true;}
+function kyVanLightningPlan(targets){
+ // Front column, then paired rows from top to bottom, then back column.
+ // Slot order is identical for both teams and independent of the units array.
+ const order=[0,3,1,4,2,5],rank=t=>{const i=order.indexOf(t.slot);return i<0?order.length:i;};
+ const sorted=[...new Map(targets.map(t=>[t.id,t])).values()].sort((a,b)=>rank(a)-rank(b)||String(a.id).localeCompare(String(b.id)));
+ const front=sorted.filter(t=>t.slot>=0&&t.slot<3).sort((a,b)=>a.slot-b.slot);
+ const back=sorted.filter(t=>t.slot>=3&&t.slot<6).sort((a,b)=>a.slot-b.slot);
+ return [...front.map((target,i)=>({target,at:1730+i*75})),...sorted.map((target,i)=>({target,at:2180+i*55})),...back.map((target,i)=>({target,at:2860+i*75}))];
+}
+function kyVanLightningFrame(elapsed,contactDelay){
+ const clip=KY_VAN_META.clips.bolt,contact=clip.strike.contactFrame;
+ const end=contactDelay+(clip.frames-contact)*clip.ms;
+ if(elapsed<0||elapsed>=end)return null;
+ // Reveal one contact pose before impact: the source's earlier frames flicker
+ // in length, so playing them in order would touch the ground prematurely.
+ // After contact, retain the source's 60ms tail without wrapping its frames.
+ return Math.min(clip.frames-1,contact+Math.floor(Math.max(0,elapsed-contactDelay)/clip.ms));
+}
+function kyVanLightningColumn(ctx,frame,target,reveal=1){
+ const body=target.body||battleCharacterBody(target),clip=KY_VAN_META.clips.bolt;
+ const height=Math.max(320,body.height*2.25),scale=height/clip.cellH;
+ // One existing gold/white branching sprite stands above each target. The
+ // source is cropped downward at fixed pixel density until the hit marker;
+ // ground sparks appear only at contact. No actor travel or rotated fan.
+ const cropHeight=reveal<1?clip.strike.anchorY*Math.max(0,reveal):clip.cellH;
+ return kyVanPaint(ctx,'bolt',frame,body.centerX-clip.strike.anchorX*scale,body.footY-clip.strike.anchorY*scale,clip.cellW*scale,height,cropHeight);
+}
+function kyVanLightningImpact(ctx,elapsed,target){
+ const clip=KY_VAN_META.clips.impact;if(elapsed<0||elapsed>=clip.durationMs)return;
+ const body=target.body||battleCharacterBody(target);
+ kyVanPaint(ctx,'impact',Math.min(clip.frames-1,Math.floor(elapsed/clip.ms)),body.centerX-100,body.centerY-105,200,210);
 }
 function kyVanElapsed(info){return Math.max(0,(performance.now()-info.startedAt)*info.speed);}
 function kyVanFrame(durations,elapsed,loop){
@@ -56,7 +79,8 @@ async function beginKyVanAction(actor,action,target,battleId){
   info.startedAt=performance.now();actor._kyVanAction=info;
   actor.state=normalized==='ultimate'?'ultimate':'attack';actor.stateStarted=info.startedAt;
   actor.stateDuration=KY_VAN_META.clips[normalized].durationMs/speed;
-  info.targets=units.filter(u=>u.team!==actor.team&&u.hp>0).map(u=>({id:u.id,x:u.x,y:u.y,slot:u.slot}));
+  info.targets=units.filter(u=>u.team!==actor.team&&u.hp>0).map(u=>({id:u.id,x:u.x,y:u.y,slot:u.slot,body:battleCharacterBody(u)}));
+  if(normalized==='ultimate')info.lightningStrikes=kyVanLightningPlan(info.targets);
   if(state.sound&&!__hvIsSkipping())void window.HonVietSfx?.play('ky-van-'+normalized+'-x'+speed,{group:'combat',signal:info.abort.signal});
   return info;
  }catch(error){finishKyVanAction(info);if(error.name!=='AbortError')console.error('Kỷ Vân asset readiness failed',error);return null;}
@@ -71,17 +95,22 @@ function cancelKyVanActions(){for(const info of [...kyVanActive])finishKyVanActi
 function drawKyVanFx(ctx){
  for(const info of kyVanActive){
   if(info.battleId!==state.battleId){finishKyVanAction(info);continue;}if(!info.startedAt||__hvIsSkipping())continue;
-  const age=kyVanElapsed(info),actor=info.actor;
+  const age=kyVanElapsed(info);
+  if(age>=KY_VAN_META.clips[info.action].durationMs)continue;
   if(info.action==='basic'){
    const t=info.target;if(!t)continue;
-   if(age>=650&&age<1050){const p=(age-650)/400,x=actor.x+(t.x-actor.x)*p,y=actor.y-80+(t.y-actor.y)*p;kyVanBoltBurst(ctx,Math.min(14,Math.floor(p*15)),x,y);}
-   if(age>=1050&&age<1650)kyVanPaint(ctx,'impact',Math.floor((age-1050)/60),t.x-100,t.y-160,200,210);
+   const frame=kyVanLightningFrame(age-650,400);
+   if(frame!==null)kyVanLightningColumn(ctx,frame,t,(age-650)/400);
+   kyVanLightningImpact(ctx,age-1050,t);
   }else{
-   // Same three waves as the approved clip, with three bolts per position.
-   const spots=info.targets,first=new Set([0,3,4]),last=new Set([1,2,5]);
-   const clusters=[...spots.filter(t=>first.has(t.slot)).map(t=>({t,at:1730})),...spots.map((t,i)=>({t,at:2180+i*55})),...spots.filter(t=>last.has(t.slot)).map((t,i)=>({t,at:2860+i*75}))];
-   for(const {t,at} of clusters){for(const [j,dx,dy] of [[0,-20,0],[1,0,6],[2,20,-3]]){const dt=age-at-j*45;if(dt>=0&&dt<900)kyVanBoltBurst(ctx,Math.floor(dt/60),t.x+dx,t.y+dy-120);}
-    const dt=age-at-60;if(dt>=0&&dt<600)kyVanPaint(ctx,'impact',Math.floor(dt/60),t.x-100,t.y-160,200,210);
+   // A later wave replaces the earlier column at that position, rather than
+   // multiplying branches. These visual strikes never resolve combat damage.
+   const latest=new Map();
+   for(const strike of info.lightningStrikes)if(age>=strike.at)latest.set(strike.target.id,strike);
+   for(const {target,at} of latest.values()){
+    const frame=kyVanLightningFrame(age-at,60);
+    if(frame!==null)kyVanLightningColumn(ctx,frame,target,(age-at)/60);
+    kyVanLightningImpact(ctx,age-at-60,target);
    }
   }
  }

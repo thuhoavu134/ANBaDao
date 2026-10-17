@@ -1,3 +1,11 @@
+# 2026-10-17 — Sét giáng và ba đường sát thương (DRAFT / REVIEW)
+
+Kỷ Vân dùng sprite sét vàng/trắng gốc thành một cột đứng trên mỗi mục tiêu, neo theo body projection chung. Basic reveal cùng contact pose từ trên xuống bằng source crop, giữ mật độ pixel; chạm đất ở 1050 ms. Ultimate đi cột trước 0→1→2, quét từng hàng 0→3→1→4→2→5, rồi cột sau 3→4→5. Ảnh tĩnh cho hình dáng tham chiếu; thứ tự này là lựa chọn để review. Mỗi vị trí chỉ có một cột ở một thời điểm; tail hết trước recovery.
+
+Thầy Mo dùng chính snapshot ba mục tiêu của VFX để tính ba hit, primary trước. Một action có một lần cộng nộ/ghi kết quả; nhánh Skill từ nội tại giữ fear/control/drain trên primary và không cộng nộ Basic. AoE hiện có không nhận hit trùng. [Chi tiết và bằng chứng](qa/ky-van-thay-mo-20261017.md): 40 test PASS, Canvas offline đã đọc; full browser/device chưa xác minh. Baseline `6fa9267` đã merge PR #311; trạng thái DRAFT ở các mục cũ là lịch sử.
+
+---
+
 # 2026-10-17 — Chuẩn vóc dáng trong trận (DRAFT / REVIEW)
 
 Thân tướng dùng chuẩn **310 world units**, theo Bạch Diện, trước viewport và home-slot depth. Idle/ATK/Ultimate cùng một tỷ lệ cơ thể, còn pose và quỹ đạo authored được giữ. Chiều cao bounding box từng frame không phải tiêu chí đồng đều; tóc, vũ khí, khoảng trong suốt và VFX không được kéo giãn hoặc thu nhỏ thân.

@@ -1,3 +1,11 @@
+## 2026-10-17 — Kỷ Vân lightning / Thầy Mo three-line damage (DRAFT / REVIEW)
+
+Sau main `6fa9267` (PR #311 đã merge), sửa nguồn runtime Kỷ Vân và installer damage Thầy Mo. Sét dùng một cột đứng, slot order cố định, cùng frame contact reveal từ trên xuống để tránh source frames co/rút và chạm đất sớm. Mốc Basic 650/1050, Ultimate 1730/2240, sound/scheduler giữ nguyên. Tail không wrap hoặc vượt recovery; mô tả Basic được cập nhật.
+
+Thầy Mo settlement đọc snapshot VFX, damage primary và hai enemy còn lại qua owner hiện có; cộng nộ/record một lần. Nhánh talent Skill/fear có hai hit phụ sau primary status; Skill AoE/Ultimate không thêm hit trùng. RED xác nhận thiếu hai hit; GREEN **40/40 focused tests**. [QA note](qa/ky-van-thay-mo-20261017.md), [ảnh](qa/ky-van-lightning-20261017.png), [video offline](qa/ky-van-lightning-20261017.mp4). Bốn rage-rotation test cũ bị EPERM trước assertion, không tính pass. Chưa có full build/browser/device hoặc deployment cho lát mới; waiver workflow cũ giữ nguyên. Các mục bên dưới là lịch sử.
+
+---
+
 ## 2026-10-17 — Shared battle hero size contract (DRAFT / REVIEW)
 
 Baseline main `de5d425` sau PR #310 đã merge; branch mới `fix/shared-hero-scale-contract-20261017` chưa merge hoặc phát hành. Quy chuẩn thân 310 world units theo Bạch Diện được giữ trước viewport/home-depth. Mười `presentation.json` thay bảng scale theo hero ID; bốn direct runtime dùng shared body registration, HUD/impact dùng shared projection. Generic/procedural fallback cùng chuẩn và không nhân authored correction hai lần.
