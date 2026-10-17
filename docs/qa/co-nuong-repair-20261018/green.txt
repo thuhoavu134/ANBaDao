@@ -1,0 +1,28 @@
+✔ shared Cổ Nương bus decodes once, applies x1, cancels and respects mute (4.267139ms)
+✔ shared Cổ Nương bus decodes once, applies x2, cancels and respects mute (1.333732ms)
+✔ shared Cổ Nương bus decodes once, applies x3, cancels and respects mute (1.163184ms)
+✔ Cổ Nương mapping preserves the single canonical Ky Van/Tieu Phong source anchor (2.122731ms)
+✔ Cổ Nương impact VFX is painted separately, after all combatants (0.55574ms)
+✔ Cổ Nương keeps the late Tiêu Phong settlement anchor unique (0.338835ms)
+✔ late Kỷ Vân, Tiêu Phong and Tịch Dao installers compose with the new bridge (7.726557ms)
+✔ Cổ Nương is registered in the real main-game catalogue and portrait registry (5.067377ms)
+✔ Existing player data remains intact and obtains the hero once (1.21088ms)
+✔ Build patch rejects duplicate installation or an unexpected owner shape (1.200212ms)
+✔ Cổ Nương registration survives save-contract-v1 migration header injection (0.942574ms)
+✔ Cổ Nương x1: authored impact/recovery, shared cue, all targets, no generic VFX (7.921111ms)
+✔ Cổ Nương x2: authored impact/recovery, shared cue, all targets, no generic VFX (3.732346ms)
+✔ Cổ Nương x3: authored impact/recovery, shared cue, all targets, no generic VFX (1.329279ms)
+✔ mute and skip do not create an independent audio player (2.722231ms)
+✔ cancel during readiness never settles damage or advances the next battle (0.94392ms)
+✔ active cast keeps its captured speed when the speed control changes (1.972863ms)
+✔ exit after release aborts the shared cue and cannot hit or advance (1.167316ms)
+✔ enemy VFX mirrors once, uses screen blend and expires on the captured clock (2.884029ms)
+✔ real combat domain: Basic single, Skill front row, Ultimate all enemies (20.783359ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 183.246815

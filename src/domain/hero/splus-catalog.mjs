@@ -541,14 +541,16 @@ export const SPLUS_HEROES = Object.freeze(rows.map(([number,key,name,element,rol
   const skill=(slot,id,cost,cooldown)=>Object.freeze({...p.skills[slot],id,cost,cooldown});
   const art=key==='linh_dong'
     ? Object.freeze({status:'authored-rgba-v1',facing:'three-quarter-right',feet:'flat-clean-floor',portrait:'assets/characters/linh-dong/avatar.webp',atlas:'assets/characters/linh-dong/idle-atlas.webp'})
-    : Object.freeze({status:'awaiting-authored-assets',facing:'three-quarter-right',feet:'flat-clean-floor',portrait:null,atlas:null});
+    : key==='co_nuong'
+      ? Object.freeze({status:'authored-rgba-v1',facing:'three-quarter-right',feet:'flat-clean-floor',portrait:'assets/characters/co-nuong/avatar.webp',atlas:'assets/characters/co-nuong/idle.webp'})
+      : Object.freeze({status:'awaiting-authored-assets',facing:'three-quarter-right',feet:'flat-clean-floor',portrait:null,atlas:null});
   return Object.freeze({id:`hero_splus_${key}`,key,number,name,rarity:'S+',element,elementName:SPLUS_ELEMENTS[element],role,
     recommendedSlots:Object.freeze(slots.map(slot=>slot-1)),weapon,profileVersion:SPLUS_PROFILE_VERSION,
     gender:p.gender,age:p.age,introduction:p.introduction,voice:Object.freeze(p.voice),
     art,
     iconId:`splus.${key}.passive`,passiveName,
-    actions:Object.freeze({basic:Object.freeze({id:`${key}.basic`,name:'Đánh thường',description:'Đòn đánh thường kích hoạt nội tại khi trúng.',cost:0}),
-      skill:skill('skill',`${key}.skill1`,25,2),ultimate:skill('ultimate',`${key}.ultimate`,60,0)}),
+    actions:Object.freeze({basic:Object.freeze({id:`${key}.basic`,name:key==='co_nuong'?'Cầm Âm Gieo Cổ':'Đánh thường',description:key==='co_nuong'?'Gây 100% Công sát thương Âm Hồn lên kẻ có Máu Tối Đa cao nhất ở hàng trước hợp lệ; nếu mục tiêu mất Máu, gieo 1 tầng Trùng Hồn.':'Đòn đánh thường kích hoạt nội tại khi trúng.',cost:0}),
+      skill:skill('skill',`${key}.skill1`,key==='co_nuong'?0:25,2),ultimate:skill('ultimate',`${key}.ultimate`,60,0)}),
     passive:skill('passive',`${key}.passive`,0,0),reviewDefaults:SPLUS_REVIEW_DEFAULTS});
 }));
 export const SPLUS_HERO_BY_ID = Object.freeze(Object.fromEntries(SPLUS_HEROES.map(hero=>[hero.id,hero])));

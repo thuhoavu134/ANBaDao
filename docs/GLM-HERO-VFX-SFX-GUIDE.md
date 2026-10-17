@@ -159,3 +159,63 @@ Commit source/asset/metadata/test cùng tài liệu đủ tái tạo. Ghi revisi
 ## 10. Prompt khởi động để dùng với GLM
 
 > Đọc AGENTS.md và docs/GLM-HERO-VFX-SFX-GUIDE.md trước. Kiểm tra main mới nhất, trạng thái Git và nguồn asset có thật. Tích hợp tướng [tên] theo bộ kỹ năng [đã chốt], animation [đường dẫn]. Tìm VFX/SFX Kiếm Thế theo bảng nguồn khi có; ghi rõ cặp gốc hay tiếng mix. Trình GIF và MP4 có tiếng để duyệt asset chưa duyệt. Sau khi được duyệt, giữ đúng hash, nối domain → runtime → build → HUD/audio trong game 6v6 thật. Kiểm nộ, scale theo Bạch Diện, timeline x1/x2/x3 và huỷ trận. Báo đúng test/browser/device/deploy đã kiểm; không thay asset hoặc mở rộng luật ngầm.
+
+## 11. Quy định bắt buộc: một ZIP là một lần tích hợp tướng trọn bộ
+
+Bổ sung theo yêu cầu chủ dự án ngày 18/10/2026 sau lỗi Cổ Nương thiếu animation ở Victory và Hồng Thương sai hướng ở cú đâm sau lưng. Áp dụng cho mọi lần nhận ZIP tướng mới hoặc cập nhật ZIP tướng cũ. Không coi tích hợp battle riêng lẻ là hoàn tất bộ tướng.
+
+### A. Kiểm kê và lập hồ sơ trước khi sửa runtime
+
+- Ghi tên ZIP, SHA-256, revision nguồn, canonical hero ID và các alias. Kiểm kê tất cả animation, VFX, SFX và metadata; liệt kê file thiếu, lỗi hoặc chưa xác định vai trò.
+- Xem contact sheet và chuyển động thật của từng clip; ghi frame count, frame durations, cell/atlas/page, alpha/blend, pivot/chân, hướng gốc và các phase ẩn. Không đoán hướng vũ khí hoặc mốc nhả chiêu từ tên file hay tỷ lệ frame.
+- Đọc skill từ domain và yêu cầu đã chốt; lập mapping action → animation → release/impact/recovery → VFX → SFX → trạng thái. Phân biệt số hit logic với số kiếm/đợt trình diễn.
+- Với ZIP cập nhật, đối chiếu hồ sơ và hash bản đã duyệt; giữ identity/save và các asset không thuộc yêu cầu thay đổi.
+- Thiếu Run, Hit, Fall hoặc tiếng phải ghi rõ. Không âm thầm dùng tướng mẫu, portrait tĩnh hoặc tiếng khác rồi báo hoàn tất. Phần chưa có chỉ được đánh dấu thiếu/chờ duyệt; ngoại lệ cần dựa vào chỉ dẫn đã có của chủ dự án.
+
+### B. Ma trận bắt buộc cho mỗi tướng
+
+Tạo hồ sơ tại `docs/qa/<hero>-integration-<date>.md`. Điền từng dòng dưới đây với file/revision, trạng thái và bằng chứng; không chỉ đánh dấu chung “đã tích hợp”.
+
+| Hạng mục | Nội dung phải kiểm |
+|---|---|
+| Tướng / Đồ Giám / hồ sơ | Canonical ID, alias, avatar/card/icon, idle động, tên và skill; không trùng entry |
+| Bày trận / đội hình | Đúng tướng, kích thước thân, pivot/chân, hướng theo phe, save đội hình cũ |
+| AFK / Chinh chiến | Idle, run và ATK đúng trạng thái; không rơi về hình mặc định |
+| Battle | Idle, run, ATK, Ultimate, hit, fall/die và chuyển tiếp; không mất hình/crop/nhảy scale |
+| Victory | MVP đúng identity; dùng Run thật đi vào rồi chuyển Idle thật; kiểm cache lạnh và mở lại |
+| Defeat | Fall thật phát một lần rồi giữ frame cuối; không trở về idle hay tướng mặc định |
+| VFX | Nguồn phát, mục tiêu, hướng bay/đâm, neo thân/chân, scale, số đợt, thứ tự lớp và thời gian tồn tại |
+| SFX | File thật, nghe riêng và trong trận; release/impact/từng đợt khớp hình, không phát đôi |
+| Skill / HUD | Nộ, mục tiêu, sát thương, dấu ấn, số tầng/lượt, hồi máu, tiêu thụ/xóa trạng thái đúng domain |
+| Hai phe / vị trí đặc biệt | Cận chiến, tầm xa, đứng trước/sau địch, cú quay người, di chuyển về home; hướng mặt phải đúng từng phase |
+| Clock / vòng đời | x1/x2/x3, đổi tốc độ giữa chiêu, mute/unlock, skip, hủy trận và mở lại; không sót cue/VFX/khóa lượt |
+| Thiết bị | Desktop và mobile; báo riêng Chromium responsive và Safari/iPhone thật |
+
+Trạng thái chỉ dùng: **ĐÃ KIỂM**, **CHƯA KIỂM**, **BỊ CHẶN**, **KHÔNG ÁP DỤNG**. Mỗi “ĐÃ KIỂM” ghi rõ lớp kiểm chứng (source/unit/build/browser/device), revision và bằng chứng. “KHÔNG ÁP DỤNG” phải có lý do theo bộ tướng/ngoại lệ đã chốt. Unit pass không thay thế kiểm hình hoặc nghe tiếng trong game.
+
+### C. Đăng ký đầy đủ, dùng chung dữ liệu
+
+- Hồ sơ asset/timeline của tướng là nguồn dữ liệu chung. Các màn lấy cùng canonical ID, alias, revision và clip descriptor; tránh chép số frame/pivot/thời lượng thành các bộ không đồng nhất.
+- Với kiến trúc hiện tại còn nhiều registry, bắt buộc rà tất cả owner trước khi bàn giao. Đặc biệt kiểm `scripts/result-character-motion-v1.mjs` cho Victory/Defeat; đăng ký battle không tự đăng ký màn kết quả.
+- Kiểm cấu trúc single-atlas và paged-atlas đúng metadata; không ép tướng mới theo cấu trúc tướng mẫu.
+- Viết kiểm tra hồi quy tại chỗ nối thực tế: identity → manifest → clip được chọn, chuyển Run → Idle, Fall giữ cuối, và mirror theo phase cho cả hai phe. Test chỉ tìm chuỗi tên tướng trong source chưa đủ.
+- Hướng quay người phải nằm trong dữ liệu/phase diễn hoạt khi phù hợp; đừng áp một hướng theo phe cho toàn bộ combo có đâm sau lưng. Kết thúc phase phải trả đúng trạng thái.
+- Đây là quy định tích hợp; chưa có nghĩa repo đã được refactor thành một registry duy nhất. Không tuyên bố kiểm tự động toàn bộ màn nếu chưa triển khai.
+
+### D. Ngân sách thời gian và đồng bộ
+
+Ghi riêng thời lượng clip nhân vật và tổng thời lượng action x1, tính từ bắt đầu đến khi có thể chuyển lượt, gồm di chuyển, kiếm bay, mọi đợt VFX và thu chiêu. Ghi riêng thời gian chờ tải asset.
+
+Dùng chuẩn thời gian đã được chủ dự án duyệt. Khung roster-wide tại `docs/combat-timing-x1-review.md` hiện là đề xuất để duyệt, không tự áp lên toàn bộ tướng đã duyệt. Khi duyệt chuẩn mới, cập nhật nguồn chuẩn và kiểm giới hạn thay vì tự đặt thời gian riêng ở mỗi renderer.
+
+Đặt release theo tư thế tay/vũ khí thật; impact theo tiếp xúc thật. Animation, VFX, SFX và damage marker phải cùng clock. Tăng tốc không được resolve hit hai lần, mất hit cuối hoặc cắt đợt cuối. Hiệu ứng trạng thái tồn tại theo trạng thái combat, không theo timeout tùy ý.
+
+### E. Điều kiện bàn giao
+
+1. Có kiểm kê ZIP và ma trận đầy đủ; không bỏ dòng Victory/Defeat hoặc hướng hai phe.
+2. Có preview chuyển động kèm âm thanh để duyệt asset/diễn hoạt; ghi rõ nếu dùng mốc thân hoặc fixture.
+3. Có kiểm chứng trên game thật từ nộ 0 tới Ultimate, màn kết quả và quay lại game; kiểm lỗi asset/console, lifecycle và save. Thiếu môi trường thì ghi BỊ CHẶN, vẫn bàn giao phần đã làm bằng PR nhưng không gọi là “tích hợp hoàn chỉnh”.
+4. PR nêu phần sửa, test đã chạy, bằng chứng hình/tiếng và phần còn thiếu. Không lấy số lượng unit test làm bằng chứng nhìn/nghe đúng.
+5. Chỉ gọi bộ tướng hoàn tất khi mọi hạng mục áp dụng đã được kiểm ở lớp phù hợp và các ngoại lệ được chấp nhận. Merge/deploy vẫn theo quyền chủ dự án đã cấp; cập nhật PR không đồng nghĩa được merge.
+
+Mỗi lần nhận ZIP phải thực hiện lại ma trận theo revision mới, kể cả khi chỉ đổi một số clip. Có thể tái sử dụng bằng chứng còn hợp lệ cho phần không đổi, nhưng phải ghi revision và lý do.

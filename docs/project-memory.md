@@ -557,3 +557,19 @@ Domain `tower-progress` + màn leo tầng sơn mài. Hub landmark Tháp. Giữ c
 ## 11/09/2026 — HUD trận sơn mài gọn (TKT-0011)
 
 Trận nhúng ẩn topbar; ribbon 48px đêm/đồng; tốc độ và tua chip tròn 44px trên dock.
+
+
+## 2026-10-18 — Cổ Nương source repair, PR314 draft
+
+Continuation at 340c6eb on verified main fac1d5f. Replaced independent Cổ Nương Audio with shared prepare/play at release, speed snapshot and cancellation; separated authored action from generic projectile fallback; matches VFX to real damage recipients with screen blend/enemy mirror. Combat rules/asset bytes unchanged. Repaired existing migration test harness without weakening assertions. 20 focused tests pass, including real domain targets and actual bus with WAV bytes; late installers compose. Full build blocked by sparse source, browser/device/listening NOT_RUN. See docs/qa/co-nuong-repair-20261018/. Existing board waiver retained; no merge, production or complete VibeLab gate claim. Next: remote CI/full normal-game browser QA before owner merge review.
+
+Delivery correction: automatic approval review rejected GitHub create_tree for insufficient explicit authorization to upload the source/docs payload. No remote commit/ref update succeeded, no CI triggered. Local patch only; ask owner for explicit push authorization to PR314, not merge permission.
+Owner subsequently explicitly approved pushing the prepared patch to PR314 (2026-10-18). Merge remains out of scope; remote CI and browser validation remain separate gates.
+
+## 2026-10-18 — Owner corrected Cổ Nương sword/smoke/Ultimate choreography
+
+Prior patch misunderstood Basic VFX as a stationary impact. Implemented three staggered harp-origin swords with two full out/back passes each, right-facing atlas shimmer group rotated to path; no additional damage or parasite stacks. Replaced star-like parasite art with Cổ Mộ purple cloud zgm_110_hqps_b, loops while actual own parasite status exists. Ultimate scales to target body using fixed luminous source bounds. Cổ Nương renderer shares body scale with launch projection. 24 focused tests pass, including real domain stack/HP-damage/Ultimate removal. Offline motion study and provenance: docs/qa/co-nuong-choreography-20261018/. Actual instrument attachment/full-game/device validation still pending; keep PR314 draft. Owner authorized push, no merge.
+
+- 2026-10-18 owner refinement (PR314 only): ATK 720ms, release600ms at frame16/18, impact991ms/recovery2000ms. Ultimate 2x per-frame upscale, body-height display, 3 visual/audio waves1380/2280/3180ms, one domain action, recovery4200ms. Parasite now dark falling Cổ Mộ zgm_125_hmrx_a with source-over blend. Evidence docs/qa/co-nuong-refinement-20261018 (28 focused tests + audio study). Actual hand pose/harp anchor and full-game execution remain unverified; original character archive unavailable through current retrieval. Existing owner Ticket Board waiver retained; do not merge main.
+
+- 2026-10-18 PR314 owner regressions: register Co Nuong single-atlas run/idle/fall with result-screen motion (no generic Victory substitute); mirror Hong Thuong only during ult-finisher so rear thrust faces into victim for both teams. 31 focused tests pass, full-game visual confirmation pending. Details docs/qa/co-nuong-victory-hong-thuong-facing-20261018.md. Review only, no merge.

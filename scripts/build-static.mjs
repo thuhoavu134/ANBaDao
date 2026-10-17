@@ -319,3 +319,6 @@ console.log(`Static preview written to ${out}`);
 
 const { finalizeSummonShowcase } = await import('./summon-showcase-assets-v1.mjs');
 await finalizeSummonShowcase(root);
+// Final host DATA/save registration for the authored Cổ Nương hero.
+const {installCoNuongMain}=await import('./co-nuong-main-integration.mjs');
+installCoNuongMain(root);

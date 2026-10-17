@@ -5,6 +5,8 @@ let splusPresentation = null;
 let splusSkillUI=null;
 let splusRuntimeDisabled=false;
 function splusReset(){
+  for(const info of coNuongActive)info.abort.abort();coNuongActive.clear();
+  coNuongImpacts.length=0;coNuongMotion.clear();
   try{splusSkillUI?.destroy();}catch(error){console.warn('S+ optional UI cleanup skipped; battle continues.',error);}
   splusSkillUI=null;splusEngine=null;splusPresentation=null;splusRuntimeDisabled=false;
   document.getElementById('splus-battle-skills')?.remove();
@@ -70,13 +72,17 @@ function splusCombat() {
   return splusEngine;
 }
 function splusHeroConfig(raw, index) {
+  if(raw&&/^(?:co_nuong|co-nuong)$/i.test(raw.sourceId||raw.id||''))raw={...raw,sourceId:'hero_splus_co_nuong'};
   const h=normalizeConfiguredHero(raw,index),kit=globalThis.SPLUS42.catalog.find(c=>c.id===h.sourceId);
   if(!kit)return h;
-  return {...h,name:kit.name,title:kit.elementName,initial:String(kit.number),archetype:kit.role,roleClass:kit.role,kitVersion:'splus42-v2',skillKit:null,passive:kit.passive.description,passiveIds:[kit.passive.id],basicId:kit.actions.basic.id,basicName:kit.actions.basic.name,basicDetail:kit.actions.basic.description,basicKind:'damage',skillName:kit.actions.skill.name,skillDetail:kit.actions.skill.description,skillKind:['healer','support'].includes(kit.role)?'heal':'damage',ultimateId:kit.actions.ultimate.id,ultimateName:kit.actions.ultimate.name,ultimateDetail:kit.actions.ultimate.description,ultimateKind:'aoe',visualId:kit.id,visualSource:kit.key==='linh_dong'?'linh-dong-authored':kit.key==='bach_dien'?'bach-dien-authored':'splus-pending-art'};
+  return {...h,name:kit.name,title:kit.elementName,initial:String(kit.number),archetype:kit.role,roleClass:kit.role,kitVersion:'splus42-v2',skillKit:null,passive:kit.passive.description,passiveIds:[kit.passive.id],basicId:kit.actions.basic.id,basicName:kit.actions.basic.name,basicDetail:kit.actions.basic.description,basicKind:'damage',skillName:kit.actions.skill.name,skillDetail:kit.actions.skill.description,skillKind:['healer','support'].includes(kit.role)?'heal':'damage',ultimateId:kit.actions.ultimate.id,ultimateName:kit.actions.ultimate.name,ultimateDetail:kit.actions.ultimate.description,ultimateKind:'aoe',visualId:kit.id,visualSource:kit.key==='linh_dong'?'linh-dong-authored':kit.key==='bach_dien'?'bach-dien-authored':kit.key==='co_nuong'?'co-nuong-authored':'splus-pending-art'};
 }
 function splusEvent(event) {
+  // Persistent parasite art is derived from the combat HUD status, never a timed burst.
   const t=getUnit(event.targetId),a=getUnit(event.sourceId);
   if(t&&event.type==='damage'&&!event.legacyImpact){splusFloater(t,event.amount,false,event.critical);t.hpTween=null;const rec=intelUnit(t);if(rec)rec.damageTaken+=event.amount;const ar=intelUnit(a);if(ar)ar.damage+=event.amount;if(typeof isLinhDong==='function'&&isLinhDong(t)&&t.hp>0&&typeof linhDongActionMs==='function'){const hurtMs=linhDongActionMs('hurt');setUnitState(t,'hurt',hurtMs);setTimeout(()=>{ if(t.hp>0&&t.state==='hurt') setUnitState(t,'idle',800); }, hurtMs);}else if(typeof isBachDien==='function'&&isBachDien(t)&&t.hp>0&&typeof bachDienActionMs==='function'){const hurtMs=bachDienActionMs('hurt');setUnitState(t,'hurt',hurtMs);setTimeout(()=>{ if(t.hp>0&&t.state==='hurt') setUnitState(t,'idle',800); }, hurtMs);}}
+  if(t?.sourceId==='hero_splus_co_nuong'&&event.type==='damage'&&t.hp>0)coNuongMotion.set(t.id,{kind:'hit',start:performance.now(),duration:850});
+  if(t?.sourceId==='hero_splus_co_nuong'&&event.type==='death')coNuongMotion.set(t.id,{kind:'fall-die',start:performance.now(),duration:4000});
   if(t&&event.type==='heal'&&!event.legacyImpact){splusFloater(t,event.amount,true);t.hpTween=null;const ar=intelUnit(a);if(ar)ar.healing+=event.amount;}
   if(t&&event.type==='death'&&!event.legacyImpact)markDefeated(t);
   if(t&&event.type==='resurrect'){t.defeatedAt=0;t.displayHp=t.hp;setUnitState(t,'idle',800);}
@@ -137,8 +143,161 @@ function splusStateView() {
     return false;
   }
 }
+// Cổ Nương authored atlas player. Decode once; fixed foot registration prevents frame jitter.
+const coNuongImages=new Map(),coNuongMotion=new Map(),coNuongImpacts=[],coNuongActive=new Set();
+const coNuongClips=Object.freeze({
+  idle:['assets/characters/co-nuong/idle.webp',30,8,480,440,100,224,432],
+  basic:['assets/characters/co-nuong/basic.webp',18,6,480,440,720/18,215,431],
+  ultimate:['assets/characters/co-nuong/ultimate.webp',18,6,480,440,4000/18,228,428],
+  run:['assets/characters/co-nuong/run.webp',18,6,480,440,4000/18,156,423],
+  hit:['assets/characters/co-nuong/hit.webp',18,6,480,440,4000/18,223,424],
+  'fall-die':['assets/characters/co-nuong/fall-die.webp',18,6,480,440,4000/18,278,418],
+  'vfx-basic':['assets/vfx/co-nuong/vfx-basic.webp',48,8,212,162,60,106,81],
+  'vfx-ultimate':['assets/vfx/co-nuong/vfx-ultimate.webp',15,5,400,420,60,200,202],
+  'vfx-parasite':['assets/vfx/co-nuong/vfx-parasite-smoke.webp',15,5,224,224,60,112,112]
+});
+function coNuongImage(src){
+  if(!coNuongImages.has(src)){const image=new Image();image.decoding='async';image.src=src;coNuongImages.set(src,image);}
+  return coNuongImages.get(src);
+}
+function coNuongAtlas(context,kind,x,y,elapsed,scale=1,mirror=false,once=false,frameIndex=null){
+  const spec=coNuongClips[kind];if(!spec)return false;
+  const [src,count,cols,w,h,ms,pivot,foot]=spec,image=coNuongImage(src);
+  if(!image.complete||!image.naturalWidth)return false;
+  const tick=Math.max(0,Math.floor(elapsed/ms)),index=frameIndex==null?(once?Math.min(count-1,tick):tick%count):frameIndex;
+  context.save();context.translate(x,y);context.scale(mirror?-scale:scale,scale);
+  if(kind.startsWith('vfx-'))context.globalCompositeOperation=kind==='vfx-parasite'?'source-over':'screen';
+  context.drawImage(image,(index%cols)*w,Math.floor(index/cols)*h,w,h,-pivot,-foot,w,h);context.restore();
+  return true;
+}
+function coNuongRender(context,unit,time){
+  const motion=coNuongMotion.get(unit.id),elapsed=motion?Math.max(0,time-motion.start)*(motion.speed||1):0;
+  if(motion&&elapsed>=motion.duration&&motion.kind!=='fall-die')coNuongMotion.delete(unit.id);
+  const kind=unit.hp<=0?'fall-die':unit.state==='run'?'run':motion&&elapsed<motion.duration?motion.kind:'idle';
+  const scale=typeof battleCharacterScale==='function'&&typeof battleCharacterDepthScale==='function'?battleCharacterScale(unit)*battleCharacterDepthScale(unit):(innerWidth<600?0.25:0.34)*(0.83+(unit.y-290)/1500);
+  coNuongAtlas(context,kind,unit.x,unit.y,kind==='idle'?time:elapsed,scale,unit.team===TEAM_ENEMY,kind!=='idle');
+  if(unit.hp>0)drawUnitHud(context,unit,time,1);
+}
+// Choreography is presentation-only: three blades, two complete out/back cycles each.
+// The inspected 48-cell source contains 16 headings x 3 shimmer frames.
+// Cells 36..38 face right; rotate those cells to the path tangent, never cycle headings.
+function coNuongBody(unit){
+  if(typeof battleCharacterBody==='function')return battleCharacterBody(unit);
+  const height=unit.sourceId==='hero_splus_co_nuong'?409*(innerWidth<600?.25:.34)*(.83+(unit.y-290)/1500):310*(innerWidth<600?.34:.74);
+  return {centerX:unit.x,centerY:unit.y-height/2,footY:unit.y,height};
+}
+function coNuongSwordPose(fx,age,blade){
+  const t=age/.85-blade*120;if(t<0||t>1280)return null;
+  const body=coNuongBody(fx.target),caster=coNuongBody(fx.actor),dir=fx.actor.team===TEAM_ENEMY?-1:1;
+  const origin=fx.origin||{x:caster.centerX+dir*caster.height*.18,y:caster.centerY+caster.height*.02};
+  const near={x:body.centerX-dir*body.height*.38,y:body.centerY+(blade-1)*body.height*.14};
+  const far={x:body.centerX+dir*body.height*.38,y:body.centerY-(blade-1)*body.height*.14};
+  let from=origin,to=near,u=t/360;
+  if(t>=360){const pass=Math.min(3,Math.floor((t-360)/200));from=pass%2?far:near;to=pass%2?near:far;u=Math.min(1,(t-360-pass*200)/200);}
+  return {x:from.x+(to.x-from.x)*u,y:from.y+(to.y-from.y)*u,angle:Math.atan2(to.y-from.y,to.x-from.x),scale:body.height*.52/188,alpha:t>1160?Math.max(0,1-(t-1160)/120):1,frame:36+Math.floor(Math.max(0,t)/60)%3};
+}
+function drawCoNuongParasites(context,time){
+  if(__hvIsSkipping())return;
+  const combat=splusCombat();if(!combat)return;
+  for(const target of units){
+    if(target.hp<=0)continue;
+    const marks=combat.hud(target).filter(mark=>mark.type==='parasite'&&getUnit(mark.sourceId)?.sourceId==='hero_splus_co_nuong');
+    if(!marks.length)continue;
+    const body=coNuongBody(target);
+    // One cloud per victim even with multiple stacks/sources. HUD remains the stack owner.
+    coNuongAtlas(context,'vfx-parasite',body.centerX,body.centerY,time,body.height/200,false,false);
+  }
+}
+// Render AFTER all actors. Follow live target coordinates; no detached screen-space stamps.
+function drawCoNuongImpactOverlay(context,time){
+  drawCoNuongParasites(context,time);
+  for(let i=coNuongImpacts.length-1;i>=0;i--){
+    const fx=coNuongImpacts[i],age=(time-fx.start)*(fx.speed||1);
+    if(age<0)continue;
+    if(__hvIsSkipping()||(fx.battleId!=null&&fx.battleId!==state.battleId)||age>=fx.duration){coNuongImpacts.splice(i,1);continue;}
+    if(fx.kind==='vfx-basic'){
+      for(let blade=0;blade<3;blade++){
+        const pose=coNuongSwordPose(fx,age,blade);if(!pose)continue;
+        context.save();context.translate(pose.x,pose.y);context.rotate(pose.angle);context.globalAlpha=pose.alpha;
+        coNuongAtlas(context,'vfx-basic',0,0,age,pose.scale,false,true,pose.frame);context.restore();
+      }
+    }else{
+      const body=fx.target?coNuongBody(fx.target):null;
+      // 2x atlas: fixed luminous union y=40..364 (324px), never fit each frame.
+      coNuongAtlas(context,fx.kind,body?.centerX??fx.x,body?.centerY??fx.y,age,body?body.height/324:fx.scale,!!fx.mirror,true);
+    }
+  }
+}
+// Use the existing visual waiter and shared audio bus, with one speed snapshot per cast.
+async function performCoNuongAction(actor,action,target,e,battleId){
+  const kind=action==='ultimate'?'ultimate':'basic',speed=Math.max(1,Math.min(3,Number(state.speed)||1));
+  const info={actor,battleId,speed,start:0,abort:new AbortController()};coNuongActive.add(info);
+  const cue='co-nuong-'+(kind==='basic'?'atk':'ultimate');
+  const current=()=>state.battleId===battleId&&!info.abort.signal.aborted;
+  const wait=async at=>{
+    while(current()){
+      const remaining=at-(performance.now()-info.start)*speed;
+      if(__hvIsSkipping()){info.abort.abort();return state.battleId===battleId;}
+      if(remaining<=.001)return true;
+      if(!await sleepVisualMilliseconds(Math.min(40,remaining/speed),battleId))return false;
+    }
+    return false;
+  };
+  state.locked=true;state.selectedAction=action;clearTargets();updateActorHud(actor);
+  const title=globalThis.SPLUS42.catalog.find(h=>h.id===actor.sourceId)?.actions[action]?.name||action;
+  try{
+    if(!__hvIsSkipping()){
+      // Decode only this cast's pages; a missing asset must not hold the battle forever.
+      let timer;
+      try{await Promise.race([
+        Promise.all([kind,'vfx-'+kind,'vfx-parasite'].map(key=>coNuongImage(coNuongClips[key][0]).decode().catch(()=>{}))),
+        new Promise(resolve=>{timer=setTimeout(resolve,2000);})
+      ]);}finally{clearTimeout(timer);}
+      if(!current())return;
+      if(state.sound)await window.HonVietSfx?.prepare(cue,{signal:info.abort.signal});
+    }
+    if(!current())return;
+    info.start=performance.now();
+    coNuongMotion.set(actor.id,{kind,start:info.start,duration:kind==='basic'?720:4200,speed});
+    setUnitState(actor,kind==='ultimate'?'ultimate':'attack',(kind==='basic'?720:4200)/speed);
+    setStatus(`${actor.name} · ${title}`);dom.phaseLabel.textContent=title;
+    if(!await wait(kind==='ultimate'?1060:600))return;
+    if(kind==='basic'&&!__hvIsSkipping()){
+      const victims=action==='basic'&&target?.hp>0?[target]:(e.targets?.(actor,action)||[target]).filter(Boolean);
+      const body=coNuongBody(actor),dir=actor.team===TEAM_ENEMY?-1:1;
+      for(const victim of victims)coNuongImpacts.push({kind:'vfx-basic',battleId,actor,target:victim,origin:{x:body.centerX+dir*body.height*.18,y:body.centerY+body.height*.02},start:performance.now(),duration:1292,speed});
+    }
+    if(kind==='basic'&&state.sound&&!__hvIsSkipping())void window.HonVietSfx?.play(cue,{group:'combat',signal:info.abort.signal,playbackRate:speed,maxDelayMs:120});
+    if(!await wait(kind==='ultimate'?1380:991)&&!(__hvIsSkipping()&&state.battleId===battleId))return;
+    if(state.battleId!==battleId)return;
+    const totals=new Map();let result;splusPresentation=totals;
+    try{result = e.act(actor.id,action,target?.id);}finally{splusPresentation=null;}
+    const ultimateVictims=[];
+    for(const hit of totals.values()){
+      splusFloater(hit.target,hit.amount,hit.healing,hit.critical);
+      if(kind==='ultimate'&&!hit.healing&&hit.target.team!==actor.team)ultimateVictims.push(hit.target);
+    }
+    if(result.ok){state.actionCount++;state.actionBreakdown[action]=(state.actionBreakdown[action]||0)+1;const rec=intelUnit(actor);if(rec){rec.actions++;if(action==='ultimate')rec.ultimates++;}addLog(`${actor.name} · ${title}`);}
+    updateTeamCounters();splusStateView();updateActorHud(actor);
+    // Three visual/audio waves, one domain action: no repeated damage or mark detonation.
+    if(kind==='ultimate')for(let wave=0;wave<3;wave++){
+      if(__hvIsSkipping())break;
+      if(!await wait(1380+wave*900)){if(__hvIsSkipping()&&state.battleId===battleId)break;return;}
+      if(!__hvIsSkipping()){
+        for(const victim of ultimateVictims)coNuongImpacts.push({kind:'vfx-ultimate',battleId,target:victim,start:performance.now(),duration:900,speed,mirror:actor.team===TEAM_ENEMY});
+        if(state.sound)void window.HonVietSfx?.play(cue,{group:'combat',signal:info.abort.signal,playbackRate:speed,maxDelayMs:120});
+      }
+    }
+    if(!await wait(kind==='ultimate'?4200:2000)&&!(__hvIsSkipping()&&state.battleId===battleId))return;
+    if(state.battleId!==battleId)return;
+    setUnitState(actor,'idle',800);state.currentId=null;state.locked=false;
+    if(battleHasWinner()){if(!await waitForDefeatExit(battleId))return;if(checkBattleEnd()){splusStateView();return;}}
+    void advanceTurn();
+  }finally{info.abort.abort();coNuongActive.delete(info);if(coNuongMotion.get(actor.id)?.start===info.start)coNuongMotion.delete(actor.id);}
+}
 async function performSplusAction(actor, action, target) {
   const e=splusCombat(),battleId=state.battleId;
+  if(actor.sourceId==='hero_splus_co_nuong')return performCoNuongAction(actor,action,target,e,battleId);
   const linh=typeof isLinhDong==='function'&&isLinhDong(actor);
   const bach=typeof isBachDien==='function'&&isBachDien(actor);
   if(linh){
@@ -230,6 +389,7 @@ async function performSplusAction(actor, action, target) {
   void advanceTurn();
 }
 function drawSplusToken(context, unit, time) {
+  if(unit.sourceId==='hero_splus_co_nuong'){coNuongRender(context,unit,time);return;}
   if(typeof isLinhDong==='function'&&isLinhDong(unit)&&typeof drawLinhDongHero==='function'){
     const lift=unit.splusAirborneUntil>time?Math.sin((1-(unit.splusAirborneUntil-time)/1000)*Math.PI)*40:0;
     const depthScale=0.83+(unit.y-290)/1500;
@@ -258,4 +418,5 @@ function drawSplusToken(context, unit, time) {
   context.fillStyle='#fff1d5';context.font='bold 15px sans-serif';context.fillText(unit.name,0,-48);context.font='11px sans-serif';context.fillStyle='#aec4ce';context.fillText('S+ · Đang thử cơ chế',0,-24);context.restore();
   drawUnitHud(context,unit,time,1);
 }
+
 

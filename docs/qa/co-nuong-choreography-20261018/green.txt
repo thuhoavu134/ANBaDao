@@ -1,0 +1,32 @@
+✔ shared Cổ Nương bus decodes once, applies x1, cancels and respects mute (5.741094ms)
+✔ shared Cổ Nương bus decodes once, applies x2, cancels and respects mute (1.416752ms)
+✔ shared Cổ Nương bus decodes once, applies x3, cancels and respects mute (1.434223ms)
+✔ Cổ Nương mapping preserves the single canonical Ky Van/Tieu Phong source anchor (1.443613ms)
+✔ Cổ Nương impact VFX is painted separately, after all combatants (0.421984ms)
+✔ Cổ Nương keeps the late Tiêu Phong settlement anchor unique (0.254876ms)
+✔ late Kỷ Vân, Tiêu Phong and Tịch Dao installers compose with the new bridge (5.597036ms)
+✔ three swords launch from harp with stagger and each completes two round trips (5.151436ms)
+✔ parasite smoke follows live status and target, survives 1.2s, stops on cleanse/death (1.657438ms)
+✔ ultimate uses projected target body height, not fixed viewport multiplier (1.643884ms)
+✔ Cổ Nương is registered in the real main-game catalogue and portrait registry (2.709234ms)
+✔ Existing player data remains intact and obtains the hero once (1.243331ms)
+✔ Build patch rejects duplicate installation or an unexpected owner shape (2.000342ms)
+✔ Cổ Nương registration survives save-contract-v1 migration header injection (1.355274ms)
+✔ Cổ Nương x1: authored impact/recovery, shared cue, all targets, no generic VFX (7.313281ms)
+✔ Cổ Nương x2: authored impact/recovery, shared cue, all targets, no generic VFX (3.553891ms)
+✔ Cổ Nương x3: authored impact/recovery, shared cue, all targets, no generic VFX (1.276184ms)
+✔ mute and skip do not create an independent audio player (3.674104ms)
+✔ cancel during readiness never settles damage or advances the next battle (1.131021ms)
+✔ active cast keeps its captured speed when the speed control changes (1.905879ms)
+✔ exit after release aborts the shared cue and cannot hit or advance (1.253643ms)
+✔ enemy VFX mirrors once, uses screen blend and expires on the captured clock (4.264333ms)
+✔ real combat domain: Basic single, Skill front row, Ultimate all enemies (24.313552ms)
+✔ real parasite status owns smoke; shield-only hits add no mark and Ultimate consumes own marks (9.490719ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 168.147666

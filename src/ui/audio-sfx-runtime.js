@@ -4,6 +4,8 @@
   const files = {
     'tich-dao-blink':'tich-dao/blink.wav','tich-dao-slash':'tich-dao/slash.wav','tich-dao-sword-rain':'tich-dao/sword-rain.wav','tich-dao-execute-impact':'tich-dao/execute-impact.wav',
     'hong-thuong-impact':'hong-thuong/impact.wav',
+    'co-nuong-atk':'co-nuong/tm_shyy_c.wav',
+    'co-nuong-ultimate':'co-nuong/tm_bylh_f.wav',
 'tieu-phong-basic-x1':'tieu-phong/basic-x1.m4a','tieu-phong-basic-x2':'tieu-phong/basic-x2.m4a','tieu-phong-basic-x3':'tieu-phong/basic-x3.m4a','tieu-phong-ultimate-x1':'tieu-phong/ultimate-x1.m4a','tieu-phong-ultimate-x2':'tieu-phong/ultimate-x2.m4a','tieu-phong-ultimate-x3':'tieu-phong/ultimate-x3.m4a',
     'ky-van-basic-x1':'ky-van/basic-x1.m4a','ky-van-basic-x2':'ky-van/basic-x2.m4a','ky-van-basic-x3':'ky-van/basic-x3.m4a','ky-van-ultimate-x1':'ky-van/ultimate-x1.m4a','ky-van-ultimate-x2':'ky-van/ultimate-x2.m4a','ky-van-ultimate-x3':'ky-van/ultimate-x3.m4a',
     ui: 'se_button_click.mp3', select: 'se_icon_click.wav',
@@ -273,7 +275,7 @@
         ? Number(options.cuePerformanceMs)
         : Number.isFinite(Number(options.audibleAtPerformanceMs)) ? Number(options.audibleAtPerformanceMs) : null;
       const sampleCue = options.sampleCue === 'dominant' ? 'dominant' : 'onset';
-      const playbackRate=event.startsWith('tich-dao-')||event.startsWith('hong-thuong-')?Math.max(1,Math.min(3,Number(options.playbackRate)||1)):1;
+      const playbackRate=event.startsWith('tich-dao-')||event.startsWith('hong-thuong-')||event.startsWith('co-nuong-')?Math.max(1,Math.min(3,Number(options.playbackRate)||1)):1;
       const sampleCueOffsetMs = (sampleCue === 'dominant' ? analysis.dominantCueMs : analysis.audibleLeadInMs)/playbackRate;
       const source = c.createBufferSource(), gain = c.createGain();
       source.buffer = buffer;
@@ -378,6 +380,7 @@
   window.addEventListener('pagehide', parentBus ? dispose : endBattle);
   stamp('sfxVersion', 'forge-isolation-v3');
 })();
+
 
 
 

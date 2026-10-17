@@ -2,6 +2,10 @@
 
 Khi làm tướng hoặc asset Kiếm Thế, đọc [docs/GLM-HERO-VFX-SFX-GUIDE.md](docs/GLM-HERO-VFX-SFX-GUIDE.md). Hướng dẫn chứa bản đồ source, chọn/duyệt asset có tiếng, timeline, HUD, kiểm thử và hợp đồng Tịch Dao hiện hành. Không lấy các bộ asset tạm trong lịch sử QA làm bản đã duyệt.
 
+## ZIP tướng — bàn giao trọn bộ (18/10/2026)
+
+Mỗi ZIP tướng phải thực hiện mục 11 của `docs/GLM-HERO-VFX-SFX-GUIDE.md`: kiểm kê → hồ sơ skill/asset/timeline → ma trận tất cả màn → bằng chứng → PR. Bắt buộc kiểm Victory Run → Idle, Defeat Fall, đủ animation/VFX/SFX, hướng hai phe và phase trước/sau lưng địch. Thiếu asset hoặc chưa kiểm game thật phải ghi rõ; không dùng hình mặc định để báo hoàn tất. Giữ hồ sơ dùng chung, rà mọi registry hiện có và thêm test tại các điểm nối bị thiếu. Không tự retime tướng đã duyệt theo khung thời gian còn đang đề xuất.
+
 ## Owner direction — 2026-10-06
 Every merge requires explicit owner approval on GitHub. Work from a real branch of current main, preserve every existing feature and actual game logic. PR283/284 prototypes were rejected; do not integrate their simplified shells, fixtures, hidden features or mock dialogs. Preview must use the full normal game build, not a substitute application. Audit each existing screen before UI changes. No production promotion before approval.
 

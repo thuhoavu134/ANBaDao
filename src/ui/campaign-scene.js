@@ -78,9 +78,10 @@ const sceneRewards = [
 const sceneDock = [['hub', 'hub', 'Thành Chính'], ['heroes', 'heroes', 'Tướng'], ['team', 'team', 'Trợ trận'], ['daily', 'daily', 'Lịch Luyện'], ['campaign', 'expedition', 'Chinh chiến']];
 function campaignActorArtId(value) {
   const id=String(value||'').replace(/-/g,'_');
-  return id==='hero_splus_linh_dong'?'linh_dong':id==='hero_splus_bach_dien'?'bach_dien':id;
+  return id==='hero_splus_co_nuong'?'co_nuong':id==='hero_splus_linh_dong'?'linh_dong':id==='hero_splus_bach_dien'?'bach_dien':id;
 }
 const spriteSpecs = {
+  co_nuong: { src:'assets/characters/co-nuong/idle.webp',frames:30,cols:8,cellW:480,cellH:440,ms:100,pivot:224,foot:432,body:409 },
   // Same fixed cell and bottom-center pivot as the authored combat pack.
   // Idle occupies 240px of the 320px cell; portrait/master is a bust, not a body.
   // Native-size Blender atlas: render down to the same body footprint instead of upscaling a 347×320 cell.
@@ -111,6 +112,7 @@ const farmAttackPacks = {};
 const farmVfxPacks = {};
 const farmRunPacks = {};
 const farmAttackSpecs = {
+  co_nuong: { src:'assets/characters/co-nuong/basic.webp',frames:18,cols:6,cellW:480,cellH:440,ms:4000/18,pivot:215,foot:431,body:409 },
   linh_dong: {src:'assets/characters/linh-dong/basic-atlas.webp',frames:44,cols:8,cellW:480,cellH:440,ms:34,pivot:240,foot:424,body:335,moveToTarget:true},
   bach_dien: {src:'assets/characters/bach-dien/basic-atlas.webp',frames:30,cols:6,cellW:480,cellH:440,ms:1000/30,pivot:253.5,foot:415,body:395,moveToTarget:true},
   ong_hang_pho: { src:'assets/battle-runtime/embedded-11.png', frames:61, cols:10, cellW:240, cellH:135, ms:2500/61, pivot:100, foot:125, body:119 },
@@ -120,6 +122,7 @@ const farmAttackSpecs = {
 };
 
 const farmBasicVfxSpecs = {
+  co_nuong: { src:'assets/vfx/co-nuong/vfx-basic.webp',frames:48,cols:8,cellW:212,cellH:162,ms:60,pivot:106,foot:81,body:190 },
   linh_dong:{src:'assets/characters/linh-dong/skill1_vfx-atlas.webp',frames:120,cols:10,cellW:440,cellH:248,ms:33,pivot:220,foot:124,body:248},
   bach_dien:{src:'assets/characters/bach-dien/skill1_vfx-atlas.webp',frames:36,cols:6,cellW:440,cellH:248,ms:1000/30,pivot:220,foot:124,body:248},
   luc_anh:{src:'assets/characters/luc-anh/basic_projectile-atlas.webp',frames:64,cols:8,cellW:320,cellH:220,ms:28,pivot:160,foot:110,body:220},
@@ -135,6 +138,7 @@ function campaignPagedSprite(base, pack, time) {
   return {spec:{...base,...pack.pages[page],frameIndex:frame%pack.pageFrames},poster:pack.poster?{...base,...pack.poster,frameIndex:0}:null};
 }
 const runSpecs = {
+  co_nuong: { src:'assets/characters/co-nuong/run.webp',frames:18,cols:6,cellW:480,cellH:440,ms:4000/18,pivot:156,foot:423,body:409 },
   luc_anh: { src: 'assets/characters/luc-anh/run-atlas.webp', frames:61, cols:8, cellW:240, cellH:240, ms:28, pivot:120, foot:213.5, body:199 },
   dinh_loi: { src:'assets/characters/dinh-loi/run-atlas.png', frames:64, cols:8, cellW:480, cellH:270, ms:63, pivot:265, foot:258, body:233 },
   ong_hang_pho: { src:'assets/battle-runtime/embedded-11.png', frames:9, startFrame:28, cols:10, cellW:240, cellH:135, ms:41, pivot:100, foot:125, body:119 },
@@ -143,7 +147,7 @@ const runSpecs = {
 };
 
 function currentCheckpoint() { return campaignCheckpoint(P, DATA.chapters, chapterBattleSequence); }
-function ownedSceneHeroIds() { return OFFICIAL_ROSTER_12_IDS.filter(id => DATA.heroes[id] && P.heroes[id]?.owned); }
+function ownedSceneHeroIds() { return [...new Set([...OFFICIAL_ROSTER_12_IDS, ...Object.keys(DATA.heroes)])].filter(id => DATA.heroes[id] && P.heroes[id]?.owned).slice(0,24); }
 function savedSceneSquad() {
   const picks = normalizeSquad(P.squad, P, false).map(pick => ({ ...pick }));
   // Combat copies may fill missing slots; keep authored holes when slot is unique.

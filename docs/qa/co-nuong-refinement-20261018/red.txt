@@ -1,0 +1,221 @@
+✔ shared Cổ Nương bus decodes once, applies x1, cancels and respects mute (9.916754ms)
+✔ shared Cổ Nương bus decodes once, applies x2, cancels and respects mute (5.909381ms)
+✔ shared Cổ Nương bus decodes once, applies x3, cancels and respects mute (4.431503ms)
+✔ Cổ Nương mapping preserves the single canonical Ky Van/Tieu Phong source anchor (4.126619ms)
+✔ Cổ Nương impact VFX is painted separately, after all combatants (1.051365ms)
+✔ Cổ Nương keeps the late Tiêu Phong settlement anchor unique (1.085055ms)
+✔ late Kỷ Vân, Tiêu Phong and Tịch Dao installers compose with the new bridge (19.820205ms)
+✔ three swords launch from harp with stagger and each completes two round trips (4.637565ms)
+✔ parasite smoke follows live status and target, survives 1.2s, stops on cleanse/death (1.843696ms)
+✖ ultimate uses projected target body height, not fixed viewport multiplier (7.944019ms)
+✖ ATK reaches the final pulling frames by sword release (3.209022ms)
+✖ parasite uses dark falling-mist source with alpha compositing (2.097298ms)
+✔ Cổ Nương is registered in the real main-game catalogue and portrait registry (2.888195ms)
+✔ Existing player data remains intact and obtains the hero once (1.809544ms)
+✔ Build patch rejects duplicate installation or an unexpected owner shape (1.393748ms)
+✔ Cổ Nương registration survives save-contract-v1 migration header injection (2.09873ms)
+✖ Cổ Nương x1: authored impact/recovery, shared cue, all targets, no generic VFX (19.519121ms)
+✖ Cổ Nương x2: authored impact/recovery, shared cue, all targets, no generic VFX (3.634554ms)
+✖ Cổ Nương x3: authored impact/recovery, shared cue, all targets, no generic VFX (1.944728ms)
+✔ mute and skip do not create an independent audio player (6.519924ms)
+✔ cancel during readiness never settles damage or advances the next battle (1.465006ms)
+✖ active cast keeps its captured speed when the speed control changes (7.191222ms)
+✔ exit after release aborts the shared cue and cannot hit or advance (1.179887ms)
+✖ enemy VFX mirrors once, uses screen blend and expires on the captured clock (2.353638ms)
+✖ real combat domain: Basic single, Skill front row, Ultimate all enemies (28.711504ms)
+✔ real parasite status owns smoke; shield-only hits add no mark and Ultimate consumes own marks (14.619916ms)
+✖ leaving after first ultimate wave cancels remaining waves and turn advance (1.611634ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 17
+ℹ fail 10
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 263.598612
+
+✖ failing tests:
+
+test at luc-than/tests/co-nuong-choreography.test.mjs:34:1
+✖ ultimate uses projected target body height, not fixed viewport multiplier (7.944019ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(h.draws.some(d=>d[0]==='scale'&&Math.abs(d[2]-200/324)<1e-8))
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/cfd0be23cbe3/luc-than/tests/co-nuong-choreography.test.mjs:37:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at luc-than/tests/co-nuong-choreography.test.mjs:41:1
+✖ ATK reaches the final pulling frames by sword release (3.209022ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  4000 !== 720
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/cfd0be23cbe3/luc-than/tests/co-nuong-choreography.test.mjs:42:78)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 4000,
+    expected: 720,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at luc-than/tests/co-nuong-choreography.test.mjs:44:1
+✖ parasite uses dark falling-mist source with alpha compositing (2.097298ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'screen'
+  - 'source-over'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/cfd0be23cbe3/luc-than/tests/co-nuong-choreography.test.mjs:45:76)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'screen',
+    expected: 'source-over',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at luc-than/tests/co-nuong-timeline.test.mjs:22:28
+✖ Cổ Nương x1: authored impact/recovery, shared cue, all targets, no generic VFX (19.519121ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(Math.abs(f.calls.find(x=>x.type==='next').at-4600/speed)<.01)
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/cfd0be23cbe3/luc-than/tests/co-nuong-timeline.test.mjs:25:9)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at luc-than/tests/co-nuong-timeline.test.mjs:22:28
+✖ Cổ Nương x2: authored impact/recovery, shared cue, all targets, no generic VFX (3.634554ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(Math.abs(f.calls.find(x=>x.type==='next').at-4600/speed)<.01)
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/cfd0be23cbe3/luc-than/tests/co-nuong-timeline.test.mjs:25:9)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at luc-than/tests/co-nuong-timeline.test.mjs:22:28
+✖ Cổ Nương x3: authored impact/recovery, shared cue, all targets, no generic VFX (1.944728ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(Math.abs(f.calls.find(x=>x.type==='next').at-4600/speed)<.01)
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/cfd0be23cbe3/luc-than/tests/co-nuong-timeline.test.mjs:25:9)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at luc-than/tests/co-nuong-timeline.test.mjs:32:1
+✖ active cast keeps its captured speed when the speed control changes (7.191222ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(Math.abs(f.hits[0]-530)<.01)
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/cfd0be23cbe3/luc-than/tests/co-nuong-timeline.test.mjs:32:259)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at luc-than/tests/co-nuong-timeline.test.mjs:34:1
+✖ enemy VFX mirrors once, uses screen blend and expires on the captured clock (2.353638ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  3 !== 9
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/cfd0be23cbe3/luc-than/tests/co-nuong-timeline.test.mjs:34:229)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 3,
+    expected: 9,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at luc-than/tests/co-nuong-timeline.test.mjs:36:1
+✖ real combat domain: Basic single, Skill front row, Ultimate all enemies (28.711504ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  3 !== 9
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/cfd0be23cbe3/luc-than/tests/co-nuong-timeline.test.mjs:44:103)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 3,
+    expected: 9,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at luc-than/tests/co-nuong-timeline.test.mjs:61:1
+✖ leaving after first ultimate wave cancels remaining waves and turn advance (1.611634ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/cfd0be23cbe3/luc-than/tests/co-nuong-timeline.test.mjs:63:33)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,94 @@
+✖ Cổ Nương x1: authored impact/recovery, shared cue, all targets, no generic VFX (4.822381ms)
+✖ Cổ Nương x2: authored impact/recovery, shared cue, all targets, no generic VFX (1.610493ms)
+✖ Cổ Nương x3: authored impact/recovery, shared cue, all targets, no generic VFX (0.94969ms)
+✖ mute and skip do not create an independent audio player (1.540961ms)
+✖ cancel during readiness never settles damage or advances the next battle (1.264857ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 0
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 176.370648
+
+✖ failing tests:
+
+test at tests/co-nuong-timeline.test.mjs:22:28
+✖ Cổ Nương x1: authored impact/recovery, shared cue, all targets, no generic VFX (4.822381ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/cfd0be23cbe3/luc-than/tests/co-nuong-timeline.test.mjs:26:56)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/co-nuong-timeline.test.mjs:22:28
+✖ Cổ Nương x2: authored impact/recovery, shared cue, all targets, no generic VFX (1.610493ms)
+  AssertionError [ERR_ASSERTION]: impact 1270
+      at TestContext.<anonymous> (file:///workspace/scratch/cfd0be23cbe3/luc-than/tests/co-nuong-timeline.test.mjs:24:9)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/co-nuong-timeline.test.mjs:22:28
+✖ Cổ Nương x3: authored impact/recovery, shared cue, all targets, no generic VFX (0.94969ms)
+  AssertionError [ERR_ASSERTION]: impact 938.5185185185185
+      at TestContext.<anonymous> (file:///workspace/scratch/cfd0be23cbe3/luc-than/tests/co-nuong-timeline.test.mjs:24:9)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/co-nuong-timeline.test.mjs:30:1
+✖ mute and skip do not create an independent audio player (1.540961ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/cfd0be23cbe3/luc-than/tests/co-nuong-timeline.test.mjs:30:199)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/co-nuong-timeline.test.mjs:31:1
+✖ cancel during readiness never settles damage or advances the next battle (1.264857ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/cfd0be23cbe3/luc-than/tests/co-nuong-timeline.test.mjs:31:219)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

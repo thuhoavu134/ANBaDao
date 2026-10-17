@@ -22,7 +22,7 @@
 
   renderHeroes = function renderPlayerRoster() {
     const view = buildRosterView({
-      ids: ['bach_dien', 'linh_dong', ...OFFICIAL_ROSTER_12_IDS.filter(id => id !== 'linh_dong' && id !== 'bach_dien')],
+      ids: [...new Set(['bach_dien', 'linh_dong', ...OFFICIAL_ROSTER_12_IDS, ...Object.keys(DATA.heroes)])].filter(id => DATA.heroes[id]).slice(0,24),
       heroes: DATA.heroes, player: P,
       powerFor: heroPower, portraitFor: id => portraitSrc(id, 'card'),
       ...state });
@@ -76,7 +76,7 @@
       state.scrollTop = 0; renderHeroes(); return;
     }
     const id = button.dataset.heroId;
-    if (!OFFICIAL_ROSTER_12_IDS.includes(id)) return;
+    if (!DATA.heroes[id]) return;
     if (!P.heroes[id]?.owned) { toast('Chưa sở hữu tướng này.'); return; }
     state.selectedId = id; rememberScroll();
     renderHeroDetail(id); showScreen('heroDetail');

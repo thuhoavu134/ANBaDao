@@ -1,0 +1,78 @@
+✖ three swords launch from harp with stagger and each completes two round trips (3.974322ms)
+✖ parasite smoke follows live status and target, survives 1.2s, stops on cleanse/death (1.009584ms)
+✖ ultimate uses projected target body height, not fixed viewport multiplier (5.537364ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 0
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 119.721765
+
+✖ failing tests:
+
+test at tests/co-nuong-choreography.test.mjs:13:1
+✖ three swords launch from harp with stagger and each completes two round trips (3.974322ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/cfd0be23cbe3/luc-than/tests/co-nuong-choreography.test.mjs:15:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/co-nuong-choreography.test.mjs:27:1
+✖ parasite smoke follows live status and target, survives 1.2s, stops on cleanse/death (1.009584ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/cfd0be23cbe3/luc-than/tests/co-nuong-choreography.test.mjs:28:25)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/co-nuong-choreography.test.mjs:34:1
+✖ ultimate uses projected target body height, not fixed viewport multiplier (5.537364ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(h.draws.some(d=>d[0]==='scale'&&Math.abs(d[2]-200/186)<1e-8))
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/cfd0be23cbe3/luc-than/tests/co-nuong-choreography.test.mjs:37:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

@@ -1,0 +1,59 @@
+name: Co Nuong integration QA
+on:
+  pull_request:
+    paths:
+      - 'scripts/co-nuong-main-integration.mjs'
+      - 'scripts/build-static.mjs'
+      - 'src/ui/campaign-scene.js'
+      - 'src/ui/hero-roster-runtime.js'
+      - 'src/runtime/splus-battle-bridge.js'
+      - 'tests/co-nuong-main-registration.test.mjs'
+      - 'tests/co-nuong-bridge-contract.test.mjs'
+      - 'tests/co-nuong-timeline.test.mjs'
+      - 'tests/co-nuong-choreography.test.mjs'
+      - 'assets/vfx/co-nuong/**'
+      - 'assets/characters/co-nuong/runtime-meta.json'
+      - 'tests/co-nuong-audio.test.mjs'
+      - 'src/ui/audio-sfx-runtime.js'
+      - '.github/workflows/co-nuong-qa.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  co-nuong:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Start QA log
+        run: mkdir -p evidence && echo "QA_RUNNER_STARTED" > evidence/co-nuong-build.txt
+      - run: npm install
+      - name: Unit registration and save migration
+        run: node --test tests/co-nuong*.test.mjs
+      - name: Build playable game
+        shell: bash
+        run: |
+          mkdir -p evidence
+          set -o pipefail
+          npm run build 2>&1 | tee evidence/co-nuong-build.txt
+      - name: Verify built roster and combat source
+        run: |
+          node --input-type=module -e '
+          import {readFileSync,existsSync} from "node:fs";
+          const host=readFileSync("dist/index.html","utf8");
+          const battle=readFileSync("dist/battle.html","utf8");
+          for(const name of ["DATA.heroes.co_nuong=","CHARACTER_MANIFEST.co_nuong=","heroes.co_nuong.owned=true"])if(!host.includes(name))throw Error("Host missing "+name);
+          for(const name of ["hero_splus_co_nuong","coNuongRender","vfx-parasite"])if(!battle.includes(name))throw Error("Battle missing "+name);
+          for(const p of ["dist/assets/characters/co-nuong/avatar.webp","dist/assets/characters/co-nuong/idle.webp","dist/assets/audio/sfx/co-nuong/tm_shyy_c.wav","dist/assets/audio/sfx/co-nuong/tm_bylh_f.wav"])if(!existsSync(p))throw Error("Missing "+p);
+          console.log("CO_NUONG_BUILT_ASSETS_AND_BRIDGES_PASS");
+          '
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: co-nuong-qa-log
+          path: evidence/co-nuong-build.txt
+          retention-days: 7
+

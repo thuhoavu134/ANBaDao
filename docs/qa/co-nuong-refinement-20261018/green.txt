@@ -1,0 +1,36 @@
+✔ shared Cổ Nương bus decodes once, applies x1, cancels and respects mute (4.303801ms)
+✔ shared Cổ Nương bus decodes once, applies x2, cancels and respects mute (2.396519ms)
+✔ shared Cổ Nương bus decodes once, applies x3, cancels and respects mute (1.089504ms)
+✔ Cổ Nương mapping preserves the single canonical Ky Van/Tieu Phong source anchor (1.864298ms)
+✔ Cổ Nương impact VFX is painted separately, after all combatants (1.131273ms)
+✔ Cổ Nương keeps the late Tiêu Phong settlement anchor unique (0.426553ms)
+✔ late Kỷ Vân, Tiêu Phong and Tịch Dao installers compose with the new bridge (9.151239ms)
+✔ three swords launch from harp with stagger and each completes two round trips (3.582691ms)
+✔ parasite smoke follows live status and target, survives 1.2s, stops on cleanse/death (1.360701ms)
+✔ ultimate uses projected target body height, not fixed viewport multiplier (1.291487ms)
+✔ ATK reaches the final pulling frames by sword release (1.619657ms)
+✔ parasite uses dark falling-mist source with alpha compositing (1.295826ms)
+✔ Cổ Nương is registered in the real main-game catalogue and portrait registry (3.292764ms)
+✔ Existing player data remains intact and obtains the hero once (2.039811ms)
+✔ Build patch rejects duplicate installation or an unexpected owner shape (1.728935ms)
+✔ Cổ Nương registration survives save-contract-v1 migration header injection (1.500627ms)
+✔ Cổ Nương x1: authored impact/recovery, shared cue, all targets, no generic VFX (7.66585ms)
+✔ Cổ Nương x2: authored impact/recovery, shared cue, all targets, no generic VFX (4.539371ms)
+✔ Cổ Nương x3: authored impact/recovery, shared cue, all targets, no generic VFX (2.297239ms)
+✔ mute and skip do not create an independent audio player (3.751705ms)
+✔ cancel during readiness never settles damage or advances the next battle (1.57986ms)
+✔ active cast keeps its captured speed when the speed control changes (1.848244ms)
+✔ exit after release aborts the shared cue and cannot hit or advance (3.556997ms)
+✔ enemy VFX mirrors once, uses screen blend and expires on the captured clock (2.036778ms)
+✔ real combat domain: Basic single, Skill front row, Ultimate all enemies (26.705355ms)
+✔ real parasite status owns smoke; shield-only hits add no mark and Ultimate consumes own marks (11.225744ms)
+✔ leaving after first ultimate wave cancels remaining waves and turn advance (1.361114ms)
+✔ skipped ultimate settles once and advances with no waves or audio (0.853655ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 184.247609

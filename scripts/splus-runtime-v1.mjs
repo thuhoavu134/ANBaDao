@@ -66,6 +66,8 @@ export function patchSplusBattleHtml(input) {
   once('  function updateActorHud(actor) {',`  function updateActorHud(actor) {
     if(splusCombat()){const button=document.querySelector('[data-action="skill"]');button.hidden=false;button.removeAttribute('aria-hidden');document.querySelector('[data-action="ultimate"] .action-key').textContent='3';splusStateView();}`);
   once('  function drawUnit(context, unit, time) {','  function drawUnit(context, unit, time) {\n    if(unit.kitVersion===\'splus42-v2\')return drawSplusToken(context,unit,time);');
+  // All authored impact effects must paint over combatants, never under enemy bodies.
+  once('    drawEffects(ctx, time);','    drawCoNuongImpactOverlay(ctx,time);\n    drawEffects(ctx, time);');
   once('  function gainEnergy(unit, amount){','  function gainEnergy(unit, amount){\n    if(splusCombat())return splusCombat().gainRage(unit,unit,amount);');
   once('    const visibleStatuses=[];','    const visibleStatuses=splusCombat()?splusCombat().hud(unit).slice(0,4):[];');
   // 2026-09-28: legacy statuses must still surface when the S+ engine is active

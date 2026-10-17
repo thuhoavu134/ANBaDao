@@ -92,7 +92,8 @@ function drawHongThuongHero(ctx,u,time){
   key=clipKey;
  }
  const bodyPos=hongThuongBodyPos(u,elapsed,info&&info.action);
- ctx.save();ctx.translate(bodyPos?bodyPos.x:u.x,bodyPos?bodyPos.y:u.y);const scale=battleCharacterDepthScale(u)*battleCharacterScale(u);ctx.scale(scale*(u.team===TEAM_ENEMY?-1:1),scale);
+ ctx.save();ctx.translate(bodyPos?bodyPos.x:u.x,bodyPos?bodyPos.y:u.y);const scale=battleCharacterDepthScale(u)*battleCharacterScale(u);// Behind-target finisher faces back into the victim; other clips keep team facing.
+ const facing=(u.team===TEAM_ENEMY?-1:1)*(key==='ult-finisher'?-1:1);ctx.scale(scale*facing,scale);
  const paintBody=copy=>{const c=hongThuongClipMeta(key);return c&&hongThuongPaint(copy,u,key,frame)||key!=='idle-authored-0'&&(u.hp>0&&hongThuongPaint(copy,u,'standing',0));};
  const drawn=__hvHeroVisibility.finish(ctx,'hong-thuong',u,time,paintBody(ctx),paintBody);
  ctx.restore();if(nextPage)hongThuongImage(nextPage,'prefetch');if(u.hp>0)drawUnitHud(ctx,u,time,1);return drawn;
@@ -244,4 +245,5 @@ function drawHongThuongVfx(context,time){
  e.finishHongThuongCast(actor.id,result.castId);flush();
  return result;
 }
+
 

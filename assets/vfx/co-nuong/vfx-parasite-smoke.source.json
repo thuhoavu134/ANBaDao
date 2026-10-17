@@ -1,0 +1,149 @@
+{
+  "archive": "KIEMTHE-VFX-SFX-FULL-20261017.zip",
+  "source": "SKILLPACK/vfx/gumu/zgm_125_hmrx_a/info.json",
+  "code": "zgm_125_hmrx_a",
+  "frameCount": 15,
+  "intervalMs": 60,
+  "cols": 5,
+  "cellW": 224,
+  "cellH": 224,
+  "padding": 12,
+  "upscale": 1,
+  "blend": "source-over",
+  "processing": "Original RGBA",
+  "sourceInfo": {
+    "ma": "zgm_125_hmrx_a",
+    "phai": "gumu",
+    "phai_ten": "Cổ Mộ",
+    "hanh": "Thủy",
+    "frames_n": 15,
+    "interval_ms": 60,
+    "dirs": null,
+    "nguon": "\\image\\effect\\fightskill\\gumupai\\zgm_125_hmrx_a.spr (update03.pak)",
+    "dung_boi": [],
+    "sfx": [],
+    "conf": "anim",
+    "frames": [
+      {
+        "f": 0,
+        "png": "f00.png",
+        "w": 200,
+        "h": 200,
+        "ox": 0,
+        "oy": 0
+      },
+      {
+        "f": 1,
+        "png": "f01.png",
+        "w": 200,
+        "h": 200,
+        "ox": 0,
+        "oy": 0
+      },
+      {
+        "f": 2,
+        "png": "f02.png",
+        "w": 200,
+        "h": 200,
+        "ox": 0,
+        "oy": 0
+      },
+      {
+        "f": 3,
+        "png": "f03.png",
+        "w": 200,
+        "h": 200,
+        "ox": 0,
+        "oy": 0
+      },
+      {
+        "f": 4,
+        "png": "f04.png",
+        "w": 200,
+        "h": 200,
+        "ox": 0,
+        "oy": 0
+      },
+      {
+        "f": 5,
+        "png": "f05.png",
+        "w": 200,
+        "h": 200,
+        "ox": 0,
+        "oy": 0
+      },
+      {
+        "f": 6,
+        "png": "f06.png",
+        "w": 200,
+        "h": 200,
+        "ox": 0,
+        "oy": 0
+      },
+      {
+        "f": 7,
+        "png": "f07.png",
+        "w": 200,
+        "h": 200,
+        "ox": 0,
+        "oy": 0
+      },
+      {
+        "f": 8,
+        "png": "f08.png",
+        "w": 200,
+        "h": 200,
+        "ox": 0,
+        "oy": 0
+      },
+      {
+        "f": 9,
+        "png": "f09.png",
+        "w": 200,
+        "h": 200,
+        "ox": 0,
+        "oy": 0
+      },
+      {
+        "f": 10,
+        "png": "f10.png",
+        "w": 200,
+        "h": 200,
+        "ox": 0,
+        "oy": 0
+      },
+      {
+        "f": 11,
+        "png": "f11.png",
+        "w": 200,
+        "h": 200,
+        "ox": 0,
+        "oy": 0
+      },
+      {
+        "f": 12,
+        "png": "f12.png",
+        "w": 200,
+        "h": 200,
+        "ox": 0,
+        "oy": 0
+      },
+      {
+        "f": 13,
+        "png": "f13.png",
+        "w": 200,
+        "h": 200,
+        "ox": 0,
+        "oy": 0
+      },
+      {
+        "f": 14,
+        "png": "f14.png",
+        "w": 200,
+        "h": 200,
+        "ox": 0,
+        "oy": 0
+      }
+    ]
+  }
+}

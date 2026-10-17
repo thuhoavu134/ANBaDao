@@ -1,0 +1,61 @@
+{
+  "schema": "battle-hero-presentation/v1",
+  "heroId": "hero_splus_co_nuong",
+  "aliases": [
+    "co-nuong",
+    "co_nuong",
+    "hero_splus_co_nuong"
+  ],
+  "referenceBodyHeight": 409,
+  "footOffsetY": 0,
+  "registration": "source-body",
+  "clips": {
+    "idle": {
+      "bodyHeight": 409,
+      "footX": 224,
+      "footY": 432
+    },
+    "basic": {
+      "bodyHeight": 409,
+      "footX": 215,
+      "footY": 431
+    },
+    "ultimate": {
+      "bodyHeight": 409,
+      "footX": 228,
+      "footY": 428
+    },
+    "run": {
+      "bodyHeight": 409,
+      "footX": 156,
+      "footY": 423
+    },
+    "hit": {
+      "bodyHeight": 409,
+      "footX": 223,
+      "footY": 424
+    },
+    "fall-die": {
+      "bodyHeight": 409,
+      "footX": 278,
+      "footY": 418
+    }
+  },
+  "vfxClips": [
+    "vfx-basic",
+    "vfx-parasite",
+    "vfx-ultimate"
+  ],
+  "states": {
+    "idle": [
+      "idle"
+    ],
+    "attack": [
+      "basic"
+    ],
+    "ultimate": [
+      "ultimate"
+    ]
+  },
+  "evidence": "Owner-supplied keyed 480x440 cells. Standing head top is approximately y=22 and shoe sole y=431; 409px body reference excludes the upright instrument/ribbon overhang. Each clip uses one fixed source foot registration; no per-frame fitting."
+}
