@@ -40,7 +40,8 @@ export function patchHongThuongBattle(input,runtime,meta){
 export async function buildHongThuongCampaignAssets(root){
  const {default:sharp}=await import('sharp');
  const base=join(root,'assets/characters/hong-thuong'),out=join(root,'dist/assets/characters/hong-thuong/campaign');mkdirSync(out,{recursive:true});
- for(const key of ['idle-authored-0','idle-authored-1','idle-authored-2','idle-authored-3','idle-authored-4','idle-authored-5','run','basic']){
+ const meta=JSON.parse(readFileSync(join(base,'runtime-meta.json'),'utf8'));
+ for(const key of [...Array.from({length:meta.idleVisual.pages},(_,i)=>'idle-authored-'+i),'run','basic']){
   const source=sharp(join(base,key+'.webp')),info=await source.metadata();
   await source.resize(Math.round(info.width/2),Math.round(info.height/2)).webp({quality:90,alphaQuality:100}).toFile(join(out,key+'.webp'));
  }

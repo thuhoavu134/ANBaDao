@@ -1,0 +1,101 @@
+{
+  "pack": "Kiếm Thế complete animation set",
+  "version": "20261016-223358",
+  "stateCount": 6,
+  "states": [
+    {
+      "state": "idle",
+      "source": "idle_2---42f3850d-2c20-4171-958a-d56b5c27e953.mp4",
+      "sourceSha256": "42686531cac2a6318d9c1dbedf59d188390cfe71ca34da904d1c07b39b0bef09",
+      "frameCount": 81,
+      "metadata": "idle/metadata.json",
+      "contactSheet": "idle/idle-loop-contact-12.png",
+      "preview": "idle/preview/idle-loop-review-2cycles.mp4"
+    },
+    {
+      "state": "run",
+      "source": "run_2---a5f83296-a2aa-425b-9371-3d0d2ad9d7a4.mp4",
+      "sourceSha256": "c22c0facebecd2b9c6f06356e5cb8cd9ae26d0f8df8498a33d5b1f49368ee218",
+      "frameCount": 18,
+      "metadata": "run/metadata.json",
+      "contactSheet": "run/run-18-contact.png",
+      "preview": "run/preview/run-18frames.mp4"
+    },
+    {
+      "state": "fall-die",
+      "source": "fall_die---3e7a535b-12b7-4e0b-a351-53751f95799d.mp4",
+      "sourceSha256": "a183f4eb8baa8670348cd8f9d2ae61cc39a8eea916f27c215cd57fcd1cd27a52",
+      "frameCount": 18,
+      "metadata": "fall-die/metadata.json",
+      "contactSheet": "fall-die/fall-die-18-contact.png",
+      "preview": "fall-die/preview/fall-die-18frames.mp4"
+    },
+    {
+      "state": "hit",
+      "source": "Hit---9bdaf646-789a-478b-87f8-436fd46a04c4.mp4",
+      "sourceSha256": "4f12ae6a01e3fbf2523333ff3d8dfe037d27335ab1afea0a84bbf1b97433c876",
+      "frameCount": 18,
+      "metadata": "hit/metadata.json",
+      "contactSheet": "hit/hit-18-contact.png",
+      "preview": "hit/preview/hit-18frames.mp4"
+    },
+    {
+      "state": "atk",
+      "source": "atk_2---16d8c557-3c30-4008-af73-f85289ada16f.mp4",
+      "sourceSha256": "a4021d2e4381548a24b213623d397a3ed02448c2273db87556322e1bc0275e0b",
+      "frameCount": 18,
+      "metadata": "atk/metadata.json",
+      "contactSheet": "atk/atk-18-contact.png",
+      "preview": "atk/preview/atk-18frames.mp4",
+      "phaseMap": "atk/phases/phase-segments.json",
+      "phaseCount": 5
+    },
+    {
+      "state": "ultimate",
+      "source": "ulti_2---071c36d3-7610-4af3-a48d-40877387b921.mp4",
+      "sourceSha256": "f20b5523852b671f1da31c7ef8537a957c6ba3012439f083fbcc417117a6135a",
+      "frameCount": 18,
+      "metadata": "ultimate/metadata.json",
+      "contactSheet": "ultimate/ultimate-18-contact.png",
+      "preview": "ultimate/preview/ultimate-18frames.mp4",
+      "phaseMap": "ultimate/phases/phase-segments.json",
+      "phaseCount": 6
+    }
+  ],
+  "rules": {
+    "idle": "smooth source-timed loop; do not reduce to 18 frames",
+    "nonIdle": "exactly 18 PTS-spaced frames per state",
+    "geminiIcon": "detached bottom-right icon excluded by largest connected character component crop; visually verify contact sheets",
+    "noisyAnimation": "excluded",
+    "gameSource": "unchanged"
+  },
+  "phaseAwareStates": {
+    "atk": {
+      "state": "atk",
+      "phaseCount": 5,
+      "sourceFramesCovered": 144,
+      "samplesMapped": 18,
+      "phaseIds": [
+        "atk-01-windup",
+        "atk-02-single-thrust",
+        "atk-03-follow-through",
+        "atk-04-loop-settle",
+        "atk-05-source-tail-not-looped"
+      ]
+    },
+    "ultimate": {
+      "state": "ultimate",
+      "phaseCount": 6,
+      "sourceFramesCovered": 144,
+      "samplesMapped": 18,
+      "phaseIds": [
+        "ultimate-01-preparation",
+        "ultimate-02-explosive-entry",
+        "ultimate-03-triple-thrust-assault",
+        "ultimate-04-break-through",
+        "ultimate-05-returning-finisher",
+        "ultimate-06-controlled-exit"
+      ]
+    }
+  }
+}

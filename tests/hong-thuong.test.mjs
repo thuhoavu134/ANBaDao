@@ -223,13 +223,14 @@ test('Asset/meta: VFX mẫu 22 + SFX tw_zxzy_c + provenance + marker timeline t�
  assert.equal(v.provenance.sfxCode,'tw_zxzy_c');
  assert.match(v.provenance.note,/KHÔNG tuyên bố cặp gốc/);
  // timeline đo từ clip: 3 hit basic + 3 hit cluster + 1 hồi mã
- assert.deepEqual(meta.ultimateTimeline.hitMsBasic,[384,816,864],'nhịp đo từ atk_2 (f18/f36/f38 bước 2)');
- assert.deepEqual(meta.ultimateTimeline.clusterHitsAt,[96,384,672]);
- assert.equal(meta.ultimateTimeline.finisherHitAt,720);
+ assert.deepEqual(meta.ultimateTimeline.hitMsBasic,[240,480,720],'ba lần phát pha single-thrust của gói v2');
+ assert.deepEqual(meta.ultimateTimeline.clusterHitsAt,[144,432,576]);
+ assert.equal(meta.ultimateTimeline.finisherHitAt,432);
  // scale chuẩn hoá thân về mốc authored ~423px, cùng hệ mọi clip
  for(const k of ['basic','ult-prep','ult-cluster','ult-finisher','run','hit','fall-die']){
   const c=meta.clips[k];
   assert.ok(c.content.scale>0.9&&c.content.scale<1.1,k+' scale đồng nhất (không phập phồng)');
  }
- assert.ok(meta.pending?.some(p=>p.includes('2 cú đâm')),'ghi rõ clip ATK chỉ có 2 cú đâm riêng biệt');
+ assert.deepEqual(meta.clips.basic.sourceSampleIndices.slice(2,11),[2,3,4,2,3,4,2,3,4],'tái dùng pha chọc, không bịa frame');
 });
+
