@@ -126,3 +126,24 @@ test('unsupported Web Audio keeps the original media fallback usable',async()=>{
 
 test('iOS playback routing is requested before playback and restored on gesture without a second context',async()=>{const session={type:'ambient'};const f=fixture({audioSession:session,blocked:true});assert.equal(session.type,'playback');session.type='ambient';await f.gesture();assert.equal(session.type,'playback');assert.equal(f.contexts.length,1);assert.equal(f.bus.isUnlocked(),true);});
 test('unsupported or read-only AudioSession does not break normal unlock',async()=>{const session={set type(v){throw new Error('unsupported');}};const f=fixture({audioSession:session});assert.equal(await f.bus.unlock(),true);});
+
+
+
+test('combat mix stays quiet across repeats and slider updates, restoring lobby and result levels',async()=>{
+  const f=routeFixture();await f.bus.unlock();
+  await f.c.playBgm('combat');assert.equal(f.bus.music().gain.gain.value,.085);
+  await f.c.playBgm('combat');assert.equal(f.bus.music().gain.gain.value,.085);
+  f.c.bgmPlayer.volume=.6;f.bus.setMusicVolume(.6);
+  assert.equal(f.bus.music().gain.gain.value,.15);
+  await f.c.playBgm('hero');assert.equal(f.bus.music().gain.gain.value,.6);
+  await f.bus.playMusic('defeat.mp3',{category:'result',volume:.9,loop:false});
+  assert.equal(f.bus.music().gain.gain.value,.9);
+  f.bus.setMusicVolume(.2);assert.equal(f.bus.music().gain.gain.value,.9);
+});
+
+test('HTML fallback combat volume does not compound and restores the lobby preference',async()=>{
+  const f=routeFixture();f.window.HonVietAudio=null;
+  await f.c.playBgm('combat');assert.equal(f.c.bgmPlayer.volume,.085);
+  await f.c.playBgm('combat');assert.equal(f.c.bgmPlayer.volume,.085);
+  await f.c.playBgm('hero');assert.equal(f.c.bgmPlayer.volume,.34);
+});

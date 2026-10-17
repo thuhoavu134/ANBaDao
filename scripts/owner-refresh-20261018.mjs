@@ -1,5 +1,6 @@
-import {readFileSync,writeFileSync,mkdirSync} from 'node:fs';
-import {join,dirname} from 'node:path';
+import {readFileSync,writeFileSync,mkdirSync,existsSync,copyFileSync} from 'node:fs';
+import {join,dirname,basename,extname} from 'node:path';
+import {createHash} from 'node:crypto';
 
 // Source atlases remain compact; expand into the established layouts BEFORE
 // readiness, preparation, visibility-backup and result-page builders run.
@@ -20,8 +21,8 @@ export function makeReplacementPlan(){
  add(d+'skill1-wave-atlas.png','dinh-fx-vfx-atk',{range:[0,700/1600]});
  add(d+'skill1-impact-atlas.png','dinh-fx-vfx-atk',{range:[700/1600,1]});
  add(d+'skill1-shield-atlas.png','dinh-shield');
- add(d+'ultimate-vfx-atlas.png','dinh-fx-vfx-ultimate',{w:270,h:480,range:[0,1900/2750]});
- add(d+'ultimate-impact-atlas.png','dinh-fx-vfx-ultimate',{w:270,h:480,range:[1900/2750,1]});
+ add(d+'ultimate-vfx-atlas.png','dinh-fx-vfx-ultimate',{range:[0,1900/2750]});
+ add(d+'ultimate-impact-atlas.png','dinh-fx-vfx-ultimate',{range:[1900/2750,1]});
  add(t+'idle-v3193-atlas.png','thay-idle',{count:96,cols:12,w:235,h:264,pad:3,character:true,pivot:117.5,foot:260,body:250});
  add(t+'ultimate-vfx-v3212-atlas.png','thay-vfx-ultimate',{pad:4});
  return plan;
@@ -86,15 +87,29 @@ export function patchOwnerRefresh(input,kind){
  let s=input;
  if(kind==='battle'){
   const event="const event=eventOverride||(action==='ultimate'?'ultimate':action==='skill'?'skill':'basic');";
-  s=once(s,event,"const ownerId=String(actor?.sourceId||actor?.sourceHeroId||actor?.id||'');\n    const event=eventOverride||(ownerId==='dinh_loi'?'dinh-loi-'+(action==='ultimate'?'ultimate':action==='skill'?'skill':'atk'):ownerId==='thay_mo'&&action==='ultimate'?'thay-mo-ultimate':(action==='ultimate'?'ultimate':action==='skill'?'skill':'basic')); /* OWNER_REFRESH_20261018 */");
+  s=once(s,event,"const event=eventOverride||ownerRefreshSoundEvent(actor,action)||(action==='ultimate'?'ultimate':action==='skill'?'skill':'basic'); /* OWNER_REFRESH_20261018 */");
   // This final installer runs AFTER battle-instant-skip-v1, which wraps every
   // readiness await. Bind to that production owner and share its cancellation.
   const ready='__hvActionAssets=await __hvSkipVisualAssets(()=>__hvBattleAssets.prepare(actor,action,target,battleId),battleId);';
-  s=once(s,ready,ready+`\n      const ownerSoundId=String(actor.sourceId||actor.sourceHeroId||actor.id||'');
-      const ownerCue=ownerSoundId==='dinh_loi'?'dinh-loi-'+(action==='ultimate'?'ultimate':action==='skill'?'skill':'atk'):ownerSoundId==='thay_mo'&&action==='ultimate'?'thay-mo-ultimate':null;
+  s=once(s,ready,ready+`\n      const ownerCue=ownerRefreshSoundEvent(actor,action);
       if(ownerCue&&state.sound)await __hvSkipVisualAssets(()=>window.HonVietSfx?.prepare(ownerCue,{signal:__hvActionAssets.signal,timeoutMs:2000}),battleId);`);
   const visualRuntime=readFileSync(new URL('../src/runtime/owner-visual-review.js',import.meta.url),'utf8');
   s=once(s,'function drawDinhLoiFx(',visualRuntime+'\nfunction drawDinhLoiFx(');
+  // Patch the final descriptor before any action can prepare these new cells.
+  s=once(s,'function dinhLoiImage(key){',`for(const key of ['ultimateVfx','ultimateImpact']){const c=DINH_LOI_CLIPS[key];const scale=c.cellW/270;c.cellW=480*scale;c.cellH=270*scale;c.atlasWidth=c.cellW*8;c.atlasHeight=c.cellH*8;}
+  function dinhLoiImage(key){`);
+  s=once(s,'const protectedAlly=target&&target.team===actor.team?target:Core.lowestHealth(friends)||actor;',
+   'const protectedAlly=ownerDinhProtectedAlly(actor,target,friends);');
+  const attackStart=s.indexOf('    if(fx.kind==="basicProjectile"&&target)');
+  const attackEnd=s.indexOf('    else if(fx.kind==="skill1Wave"',attackStart);
+  if(attackStart<0||attackEnd<0)throw new Error('Owner ATK phase owner missing');
+  s=s.slice(0,attackStart)+`    if((fx.kind==="basicProjectile"||fx.kind==="basicImpact")&&target)drawOwnerDinhAttack(context,DINH_LOI_IMAGES[fx.kind],frame,actor,target);
+`+s.slice(attackEnd);
+  // The authored contact is sufficient: do not add a generic impact ring.
+  const genericImpact=s.match(/if\(([^\n]*!usesLucAnh[^\n]*)\) triggerImpactPresentation\(actor, target, action\);/g)||[];
+  if(genericImpact.length!==1)throw new Error('Owner generic impact guard missing');
+  s=s.replace(genericImpact[0],genericImpact[0].replace('if(','if(!usesDinhLoi && '));
+
   for(const [x,y,pad] of [[170,45,340],[120,10,240]]){
    s=once(s,`context.drawImage(image,sx,sy,cellW,cellH,${x},${y},WORLD.width-${pad},WORLD.height-${y*2})`,
     'drawOwnerDinhUltimate(context,image,sx,sy,cellW,cellH,actor)');
@@ -109,7 +124,7 @@ export function patchOwnerRefresh(input,kind){
 /* Keep animated wings, remove only the old raster lettering above them. */
 .irv-victory .irv-title{clip-path:polygon(0 0,18% 0,18% 33%,82% 33%,82% 0,100% 0,100% 100%,0 100%)}
 .irv-defeat .irv-title{clip-path:polygon(0 0,27% 0,27% 28%,73% 28%,73% 0,100% 0,100% 100%,0 100%)}
-.irv-word{position:absolute;left:50%;transform:translateX(-50%);width:100%;top:0;z-index:4;pointer-events:none;aspect-ratio:16/9;object-fit:contain}
+.irv-word{position:absolute;left:50%;transform:translateX(-50%);width:100%;top:0;z-index:2;pointer-events:none;aspect-ratio:16/9;object-fit:contain}
 .irv-defeat .irv-word{top:1.5%}
 </style></head>`);
 
@@ -124,4 +139,35 @@ export function patchOwnerRefresh(input,kind){
 }
 export function installOwnerRefresh(root=process.cwd()){
  for(const [file,kind] of [['index.html','host'],['battle.html','battle']]){const p=join(root,'dist',file);writeFileSync(p,patchOwnerRefresh(readFileSync(p,'utf8'),kind));}
+ fingerprintOwnerAssets(root);
+}
+
+
+// These legacy asset URLs are served immutable for a year. Keep old files for
+// compatibility, but point every final host/battle consumer at content hashes.
+export function fingerprintOwnerAssets(root,paths){
+ const out=join(root,'dist'),mapping={};
+ paths=paths||[...makeReplacementPlan().map(p=>p.output),
+  'assets/characters/dinh-loi/campaign-lite/idle-atlas.webp',
+  ...['atk','skill','ultimate'].map(k=>'assets/audio/sfx/dinh-loi/'+k+'.m4a'),
+  'assets/audio/sfx/thay-mo/ultimate.m4a'];
+ for(const source of paths){
+  if(!existsSync(join(out,source)))throw new Error('Owner asset missing: '+source);
+  const hash=createHash('sha256').update(readFileSync(join(out,source))).digest('hex').slice(0,16);
+  const ext=extname(source),dest=source.slice(0,-ext.length)+'.'+hash+ext;
+  copyFileSync(join(out,source),join(out,dest));mapping[source]=dest;
+ }
+ for(const file of ['index.html','battle.html']){
+  const path=join(out,file);let html=readFileSync(path,'utf8');
+  for(const [source,dest] of Object.entries(mapping)){
+   html=html.replaceAll(source,dest);
+   if(source.startsWith('assets/audio/sfx/'))html=html.replaceAll(source.slice(17),dest.slice(17));
+   if(dirname(source)==='assets/characters/dinh-loi'){
+    // Dinh's lazy owner concatenates a base directory and bare filenames.
+    html=html.replace(/const DINH_LOI_ASSET_NAMES=Object.freeze\(\{[^\n]*\}\);/,block=>block.replaceAll('"'+basename(source)+'"','"'+basename(dest)+'"'));
+   }
+  }
+  writeFileSync(path,html);
+ }
+ return mapping;
 }

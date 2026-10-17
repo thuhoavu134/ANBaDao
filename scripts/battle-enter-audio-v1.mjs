@@ -94,7 +94,7 @@ battle = replaceOnce(
       } else {
         const bgm = window.__HV_BATTLE_BGM || new Audio("assets/audio/bgm-combat-new.mp3");
         bgm.loop = true;
-        bgm.volume = 0.42;
+        bgm.volume = 0.105;
         bgm.setAttribute("playsinline", "");
         bgm.onerror = () => {
           if (!bgm.dataset.fallback) {
@@ -115,3 +115,4 @@ battle = replaceOnce(
 writeFileSync(battlePath, battle);
 
 console.log('TKT-0158: host combat BGM on Xuất chiến; iframe skips HTMLAudio when parent owns it');
+

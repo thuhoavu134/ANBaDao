@@ -21,7 +21,8 @@ const parentScript=String.raw`<script id="honviet-result-audio-v1">
   async function play(kind){
     const src=tracks[kind];if(!src)return false;
     try{
-      stop({keepCurrent:true});
+      stop({fadeMs:120});
+      try{if(typeof bgmPlayer!=='undefined')bgmPlayer.pause();}catch(_e){}
       const ticket=epoch;
       active=kind;
       const bus=window.HonVietAudio;
@@ -66,3 +67,4 @@ if(!battle.includes('battle-result-audio')){
 }
 writeFileSync(battlePath,battle);
 console.log('Victory/defeat result audio integrated');
+
