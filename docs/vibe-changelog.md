@@ -1060,3 +1060,10 @@ Snapshot [HANDOFF-2026-09-11.md](HANDOFF-2026-09-11.md): live, PR #18–#25, bá
 ## 11/09/2026 — CI/CD tự động (TKT-0025)
 
 GitHub Actions: mỗi PR và mỗi lần đẩy `main` chạy cài đặt → build → test. Vercel vẫn tự deploy live. Job production xác nhận luc-than.vercel.app trả 200. Cổng CI 537/537 PASS.
+
+
+## 2026-10-18 — Owner ZIP refresh (review only)
+
+Baseline main 1b271d4 (PR314 merged). Branch feat/owner-asset-refresh-20261018: Cổ Nương adds 12 shared-bus piercing cues and 300ms Ultimate echoes (one settlement, recovery4500ms); replaces Victory/Defeat title assets; full supplied Đình Đồng pack maps to canonical dinh_loi; gold Thiên Vương shield tw_70_jzz_b; Thầy Mo idle/Ultimate VFX/SFX replaced. Build adapter expands compact source into existing atlas layouts before all derivative/cache builders, preserves IDs/save/domain. New portrait and both detail idles are wired.
+
+39 focused tests pass; 16 replacement atlases built and cells inspected; raw production-owner fragment patches parse. npm test blocked by sparse checkout missing scripts/luc-anh-idle-asset.mjs. Full normal-game browser/audio/device verification and remote CI remain separate. Existing Ticket Board unavailable waiver retained; VibeLab full evidence gate incomplete. Details, exceptions and per-screen matrix: docs/qa/owner-refresh-20261018.md. No merge or production promotion authorized for this new PR.

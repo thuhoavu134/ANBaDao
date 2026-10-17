@@ -12,4 +12,7 @@ for(const speed of [1,2,3])test(`shared Cổ Nương bus decodes once, applies x
  assert.equal(await bus.prepare('co-nuong-ultimate'),true);assert.equal(await bus.play('co-nuong-ultimate',{playbackRate:speed,signal:abort.signal}),true);
  assert.equal(requests.length,1);assert.equal(requests[0],'assets/audio/sfx/co-nuong/tm_bylh_f.wav');assert.equal(sources[0].playbackRate.value,speed);assert.equal(sources[0].started,true);
  abort.abort();assert.equal(sources[0].stopped,true);bus.setCombatEnabled(false);assert.equal(await bus.play('co-nuong-atk'),false);assert.equal(sources.length,1);
+ bus.setCombatEnabled(true);assert.equal(await bus.prepare('co-nuong-pierce'),true);
+ for(let i=0;i<12;i++)assert.equal(await bus.play('co-nuong-pierce',{playbackRate:speed}),true,'pierce cooldown must not swallow close crossings');
+ assert.equal(sources.length,13);assert.ok(sources.slice(1).every(s=>s.started&&s.playbackRate.value===speed));
 });

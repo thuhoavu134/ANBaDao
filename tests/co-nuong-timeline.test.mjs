@@ -22,16 +22,16 @@ function fixture(speed=1,sound=true){
 for(const speed of [1,2,3])test(`Cổ Nương x${speed}: authored impact/recovery, shared cue, all targets, no generic VFX`,async()=>{
  const f=fixture(speed);await f.run('ultimate');
  assert.ok(Math.abs(f.hits[0]-1380/speed)<.01,`impact ${f.hits[0]}`);
- assert.ok(Math.abs(f.calls.find(x=>x.type==='next').at-4200/speed)<.01);
+ assert.ok(Math.abs(f.calls.find(x=>x.type==='next').at-4500/speed)<.01);
  const cues=f.calls.filter(x=>x.type==='audio');assert.equal(cues.length,3);assert.equal(cues[0].key,'co-nuong-ultimate');assert.ok(Math.abs(cues[0].at-1380/speed)<.01);assert.equal(cues[0].options.playbackRate,speed);
- assert.equal(f.effects().filter(x=>x.kind==='vfx-ultimate').length,9);assert.equal(f.hits.length,1);for(let i=0;i<3;i++)assert.ok(Math.abs(cues[i].at-(1380+i*900)/speed)<.01);
+ assert.equal(f.effects().filter(x=>x.kind==='vfx-ultimate').length,18);assert.equal(f.hits.length,1);for(let i=0;i<3;i++)assert.ok(Math.abs(cues[i].at-(1380+i*900)/speed)<.01);
  assert.equal(f.calls.filter(x=>['fallback','raw-audio'].includes(x.type)).length,0);
 });
 test('mute and skip do not create an independent audio player',async()=>{for(const mode of ['mute','skip']){const f=fixture(1,mode!=='mute');if(mode==='skip')f.setSkip();await f.run('basic');assert.equal(f.calls.filter(x=>/audio/.test(x.type)).length,0);if(mode==='skip')assert.equal(f.effects().length,0);}});
 test('cancel during readiness never settles damage or advances the next battle',async()=>{const f=fixture();f.context.window.HonVietSfx.prepare=async()=>{f.state.battleId=2;return true;};await f.run('ultimate');assert.equal(f.hits.length,0);assert.equal(f.calls.filter(x=>x.type==='next').length,0);});
 test('active cast keeps its captured speed when the speed control changes',async()=>{const f=fixture(2);const sleep=f.context.sleepVisualMilliseconds;f.context.sleepVisualMilliseconds=async ms=>{f.state.speed=3;return sleep(ms);};await f.run('basic');assert.ok(Math.abs(f.hits[0]-495.5)<.01);assert.ok(Math.abs(f.calls.find(x=>x.type==='next').at-1000)<.01);});
 test('exit after release aborts the shared cue and cannot hit or advance',async()=>{const f=fixture();f.context.window.HonVietSfx.play=(key,options)=>{f.calls.push({type:'audio',options});f.state.battleId=2;};await f.run('basic');assert.equal(f.hits.length,0);assert.equal(f.calls[0].options.signal.aborted,true);assert.equal(f.calls.filter(x=>x.type==='next').length,0);});
-test('enemy VFX mirrors once, uses screen blend and expires on the captured clock',async()=>{const f=fixture(3);f.actor.team='enemy';for(const t of f.foes)t.team='player';await f.run('ultimate');const effects=f.effects();assert.equal(effects.length,9);assert.ok(effects.every(x=>x.mirror&&x.speed===3));let mirrored=false,blend;const ctx={save(){},restore(){},translate(){},scale(x){mirrored=x<0;},drawImage(){blend=this.globalCompositeOperation;}};f.context.coNuongAtlas(ctx,'vfx-ultimate',0,0,100,.7,true,true);assert.equal(mirrored,true);assert.equal(blend,'screen');f.context.drawCoNuongImpactOverlay(ctx,effects[effects.length-1].start+301);assert.equal(effects.length,0);});
+test('enemy VFX mirrors once, uses screen blend and expires on the captured clock',async()=>{const f=fixture(3);f.actor.team='enemy';for(const t of f.foes)t.team='player';await f.run('ultimate');const effects=f.effects();assert.equal(effects.length,18);assert.ok(effects.every(x=>x.mirror&&x.speed===3));let mirrored=false,blend;const ctx={save(){},restore(){},translate(){},scale(x){mirrored=x<0;},drawImage(){blend=this.globalCompositeOperation;}};f.context.coNuongAtlas(ctx,'vfx-ultimate',0,0,100,.7,true,true);assert.equal(mirrored,true);assert.equal(blend,'screen');f.context.drawCoNuongImpactOverlay(ctx,effects[effects.length-1].start+301);assert.equal(effects.length,0);});
 
 test('real combat domain: Basic single, Skill front row, Ultimate all enemies',async()=>{
  const {createSplusCombat}=await import('../src/domain/combat/splus-mechanics.mjs');
@@ -41,7 +41,7 @@ test('real combat domain: Basic single, Skill front row, Ultimate all enemies',a
   const e=createSplusCombat({units:[f.actor,...f.foes],mutate:true,rng:()=>.99,onEvent:event=>f.context.splusEvent(event)});e.start();f.context.engine=e;
   await f.run(action);
   const hurt=f.foes.filter(t=>t.hp<100000);assert.equal(hurt.length,action==='basic'?1:action==='skill'?2:3);
-  const impact=f.effects().filter(x=>x.kind==='vfx-'+(action==='ultimate'?'ultimate':'basic'));assert.equal(impact.length,hurt.length*(action==='ultimate'?3:1));
+  const impact=f.effects().filter(x=>x.kind==='vfx-'+(action==='ultimate'?'ultimate':'basic'));assert.equal(impact.length,hurt.length*(action==='ultimate'?6:1));
   assert.equal(f.state.actionCount,1);
  }
 });
@@ -64,3 +64,6 @@ test('leaving after first ultimate wave cancels remaining waves and turn advance
 });
 
 test('skipped ultimate settles once and advances with no waves or audio',async()=>{const f=fixture();f.setSkip();await f.run('ultimate');assert.equal(f.hits.length,1);assert.equal(f.effects().length,0);assert.equal(f.calls.filter(c=>c.type==='audio').length,0);assert.equal(f.calls.filter(c=>c.type==='next').length,1);});
+
+for(const speed of [1,2,3])test(`all twelve sword crossings have audio x${speed}`,async()=>{const f=fixture(speed);await f.run('basic');const cues=f.calls.filter(c=>c.key==='co-nuong-pierce');assert.equal(cues.length,12);const expected=Array.from({length:3},(_,blade)=>Array.from({length:4},(_,pass)=>600+.85*(blade*120+360+100+pass*200))).flat().sort((a,b)=>a-b);for(let i=0;i<12;i++)assert.ok(Math.abs(cues[i].at-expected[i]/speed)<.01);assert.equal(f.hits.length,1);});
+test('each ultimate victim receives three pairs, echo delayed 300 authored ms',async()=>{const f=fixture(3);await f.run('ultimate');for(const victim of f.foes){const fx=f.effects().filter(x=>x.target===victim).sort((a,b)=>a.start-b.start);assert.equal(fx.length,6);for(let i=0;i<6;i+=2)assert.ok(Math.abs(fx[i+1].start-fx[i].start-100)<.01);}});

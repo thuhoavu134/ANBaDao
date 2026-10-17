@@ -31,6 +31,9 @@ for (const entry of entries) {
   else { mkdirSync(join(dest, '..'), { recursive: true }); copyFileSync(src, dest); }
 }
 
+const {buildOwnerRefreshAssets,installOwnerRefresh}=await import('./owner-refresh-20261018.mjs');
+await buildOwnerRefreshAssets(root);
+
 const { buildOngPhoPngRecovery } = await import('./ong-pho-original-png-recovery.mjs');
 buildOngPhoPngRecovery(out);
 // TKT-0161: HonVietCore single-source. Keep FIRST among battle.html patches —
@@ -322,3 +325,6 @@ await finalizeSummonShowcase(root);
 // Final host DATA/save registration for the authored Cổ Nương hero.
 const {installCoNuongMain}=await import('./co-nuong-main-integration.mjs');
 installCoNuongMain(root);
+
+
+installOwnerRefresh(root);

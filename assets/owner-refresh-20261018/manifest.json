@@ -1,0 +1,3711 @@
+{
+  "schema": "owner-refresh/v1",
+  "baseline": "1b271d439b3effd46e34e33e13701f7998d7ffde",
+  "archives": [
+    {
+      "file": "kiemthe-victory-defeat-preview-20261017-204347.zip",
+      "sha256": "4047ec34692a718b7e834548b458dd55e111c146239e9f2dd5518390ff009b7e"
+    },
+    {
+      "file": "Đình Đồng 6st.zip",
+      "sha256": "265e7a41f930de0c61572fcba3a9407d713d93fd5d03b3b625f8e265ddf53006"
+    },
+    {
+      "file": "vfxdinhdong.zip",
+      "sha256": "874ae92c472047a8644288ae9b233af4ee4a1c2d58db026d284654dc209562dd"
+    },
+    {
+      "file": "idle vfx ulti Thầy Mo.zip",
+      "sha256": "ea4af64b49bee14394ed0e4507957f7ca32ffb6e185541120553e9ee7a3fc5cf"
+    },
+    {
+      "file": "sfxdinhdong.zip",
+      "sha256": "1642f94aa8534c1c69f1ee93678082d2a0703166586f594cba04ea8bdd80da91"
+    },
+    {
+      "file": "sfx ulti thầy mo.zip",
+      "sha256": "d13c4b5347af2c25dfae23543ddadc6b5c5b5fd3741e4f8459b51517be63e676"
+    }
+  ],
+  "clips": {
+    "result-defeat": {
+      "file": "result-defeat.webp",
+      "frames": 18,
+      "cols": 6,
+      "cellW": 480,
+      "cellH": 440,
+      "durations": [
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222
+      ],
+      "sourceMetadata": {
+        "state": "defeat",
+        "sourceName": "defeat---4a015d5d-030a-4803-b805-58b0bf99e52f.mp4",
+        "sourceSha256": "1c3bf2ccf4ee4b76c41ad4d1fbf502e80bc99987655845ac59bfbafe8bd4938e",
+        "sourceResolution": [
+          1920,
+          1080
+        ],
+        "sourceFrameCount": 96,
+        "sourceDurationSeconds": 4.0,
+        "keyColorLinear": [
+          0.013702,
+          0.42869,
+          0.039546,
+          1.0
+        ],
+        "keyingSettings": {
+          "engine": "Blender 5.1.2 compositor Keying v2",
+          "clipBlack": 0.28,
+          "clipWhite": 0.68,
+          "dilateSize": -2,
+          "featherSize": 2,
+          "despillStrength": 1.2,
+          "despillBalance": 0.5,
+          "blurPre": 1,
+          "blurPost": 1
+        },
+        "crop": {
+          "method": "largest connected alpha component union plus 16px margin; detached corner icon excluded when separate",
+          "sourceRect": [
+            219,
+            295,
+            1711,
+            1080
+          ],
+          "cell": [
+            480,
+            440
+          ],
+          "contentSizeNoUpscale": [
+            480,
+            253
+          ],
+          "contentOffset": [
+            0,
+            187
+          ],
+          "pivot": "bottom-center"
+        },
+        "atlasPages": [
+          {
+            "file": "sprite_sheets/defeat-18frames-6x3.png",
+            "frameCount": 18,
+            "columns": 6,
+            "rows": 3,
+            "canvas": [
+              2880,
+              1320
+            ],
+            "firstFrameIndex": 0
+          }
+        ],
+        "frameCount": 18,
+        "frames": [
+          {
+            "sampleIndex": 0,
+            "sourceFrameIndex": 0,
+            "sourceFrameNumber": 1,
+            "sourcePtsSeconds": 0.0,
+            "targetTimeSeconds": 0.0,
+            "durationMs": 222.222,
+            "atlasCellIndex": 0
+          },
+          {
+            "sampleIndex": 1,
+            "sourceFrameIndex": 5,
+            "sourceFrameNumber": 6,
+            "sourcePtsSeconds": 0.208333,
+            "targetTimeSeconds": 0.222222,
+            "durationMs": 222.222,
+            "atlasCellIndex": 1
+          },
+          {
+            "sampleIndex": 2,
+            "sourceFrameIndex": 11,
+            "sourceFrameNumber": 12,
+            "sourcePtsSeconds": 0.458333,
+            "targetTimeSeconds": 0.444444,
+            "durationMs": 222.222,
+            "atlasCellIndex": 2
+          },
+          {
+            "sampleIndex": 3,
+            "sourceFrameIndex": 16,
+            "sourceFrameNumber": 17,
+            "sourcePtsSeconds": 0.666667,
+            "targetTimeSeconds": 0.666667,
+            "durationMs": 222.222,
+            "atlasCellIndex": 3
+          },
+          {
+            "sampleIndex": 4,
+            "sourceFrameIndex": 21,
+            "sourceFrameNumber": 22,
+            "sourcePtsSeconds": 0.875,
+            "targetTimeSeconds": 0.888889,
+            "durationMs": 222.222,
+            "atlasCellIndex": 4
+          },
+          {
+            "sampleIndex": 5,
+            "sourceFrameIndex": 27,
+            "sourceFrameNumber": 28,
+            "sourcePtsSeconds": 1.125,
+            "targetTimeSeconds": 1.111111,
+            "durationMs": 222.222,
+            "atlasCellIndex": 5
+          },
+          {
+            "sampleIndex": 6,
+            "sourceFrameIndex": 32,
+            "sourceFrameNumber": 33,
+            "sourcePtsSeconds": 1.333333,
+            "targetTimeSeconds": 1.333333,
+            "durationMs": 222.222,
+            "atlasCellIndex": 6
+          },
+          {
+            "sampleIndex": 7,
+            "sourceFrameIndex": 37,
+            "sourceFrameNumber": 38,
+            "sourcePtsSeconds": 1.541667,
+            "targetTimeSeconds": 1.555556,
+            "durationMs": 222.222,
+            "atlasCellIndex": 7
+          },
+          {
+            "sampleIndex": 8,
+            "sourceFrameIndex": 43,
+            "sourceFrameNumber": 44,
+            "sourcePtsSeconds": 1.791667,
+            "targetTimeSeconds": 1.777778,
+            "durationMs": 222.222,
+            "atlasCellIndex": 8
+          },
+          {
+            "sampleIndex": 9,
+            "sourceFrameIndex": 48,
+            "sourceFrameNumber": 49,
+            "sourcePtsSeconds": 2.0,
+            "targetTimeSeconds": 2.0,
+            "durationMs": 222.222,
+            "atlasCellIndex": 9
+          },
+          {
+            "sampleIndex": 10,
+            "sourceFrameIndex": 53,
+            "sourceFrameNumber": 54,
+            "sourcePtsSeconds": 2.208333,
+            "targetTimeSeconds": 2.222222,
+            "durationMs": 222.222,
+            "atlasCellIndex": 10
+          },
+          {
+            "sampleIndex": 11,
+            "sourceFrameIndex": 59,
+            "sourceFrameNumber": 60,
+            "sourcePtsSeconds": 2.458333,
+            "targetTimeSeconds": 2.444444,
+            "durationMs": 222.222,
+            "atlasCellIndex": 11
+          },
+          {
+            "sampleIndex": 12,
+            "sourceFrameIndex": 64,
+            "sourceFrameNumber": 65,
+            "sourcePtsSeconds": 2.666667,
+            "targetTimeSeconds": 2.666667,
+            "durationMs": 222.222,
+            "atlasCellIndex": 12
+          },
+          {
+            "sampleIndex": 13,
+            "sourceFrameIndex": 69,
+            "sourceFrameNumber": 70,
+            "sourcePtsSeconds": 2.875,
+            "targetTimeSeconds": 2.888889,
+            "durationMs": 222.222,
+            "atlasCellIndex": 13
+          },
+          {
+            "sampleIndex": 14,
+            "sourceFrameIndex": 75,
+            "sourceFrameNumber": 76,
+            "sourcePtsSeconds": 3.125,
+            "targetTimeSeconds": 3.111111,
+            "durationMs": 222.222,
+            "atlasCellIndex": 14
+          },
+          {
+            "sampleIndex": 15,
+            "sourceFrameIndex": 80,
+            "sourceFrameNumber": 81,
+            "sourcePtsSeconds": 3.333333,
+            "targetTimeSeconds": 3.333333,
+            "durationMs": 222.222,
+            "atlasCellIndex": 15
+          },
+          {
+            "sampleIndex": 16,
+            "sourceFrameIndex": 85,
+            "sourceFrameNumber": 86,
+            "sourcePtsSeconds": 3.541667,
+            "targetTimeSeconds": 3.555556,
+            "durationMs": 222.222,
+            "atlasCellIndex": 16
+          },
+          {
+            "sampleIndex": 17,
+            "sourceFrameIndex": 91,
+            "sourceFrameNumber": 92,
+            "sourcePtsSeconds": 3.791667,
+            "targetTimeSeconds": 3.777778,
+            "durationMs": 222.222,
+            "atlasCellIndex": 17
+          }
+        ],
+        "contactSheet": "defeat-18-contact.png",
+        "preview": {
+          "file": "preview/defeat-18frames.mp4",
+          "fps": 30,
+          "frames": 120,
+          "durationSeconds": 4.0,
+          "cycles": 1
+        },
+        "originalSourceCopy": "original-source/defeat-source.mp4",
+        "reviewPurpose": "Preview-only two-state package; source-speed original is included for smoothness comparison."
+      },
+      "sourceAtlasSha256": "48ecbf194dcbb274f43b71695dfb0f8357b639937a39bdf681efd06a781b5bcd",
+      "runtimeSha256": "3f78a80540d5b3b703e1cca91100d60171c016a29a392cb49de7fe4398b9e7ee"
+    },
+    "result-victory": {
+      "file": "result-victory.webp",
+      "frames": 18,
+      "cols": 6,
+      "cellW": 480,
+      "cellH": 440,
+      "durations": [
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222
+      ],
+      "sourceMetadata": {
+        "state": "victory",
+        "sourceName": "Victory---7bccd70c-7d48-4ef2-b8bb-e29158d4d591.mp4",
+        "sourceSha256": "704f7ff4adbec6822134a343108aad35d882e7b0cafac147bb457ddd59c61b1f",
+        "sourceResolution": [
+          1920,
+          1080
+        ],
+        "sourceFrameCount": 96,
+        "sourceDurationSeconds": 4.0,
+        "keyColorLinear": [
+          0.006512,
+          0.361307,
+          0.028426,
+          1.0
+        ],
+        "keyingSettings": {
+          "engine": "Blender 5.1.2 compositor Keying v2",
+          "clipBlack": 0.28,
+          "clipWhite": 0.68,
+          "dilateSize": -2,
+          "featherSize": 2,
+          "despillStrength": 1.2,
+          "despillBalance": 0.5,
+          "blurPre": 1,
+          "blurPost": 1
+        },
+        "crop": {
+          "method": "largest connected alpha component union plus 16px margin; detached corner icon excluded when separate",
+          "sourceRect": [
+            359,
+            95,
+            1523,
+            791
+          ],
+          "cell": [
+            480,
+            440
+          ],
+          "contentSizeNoUpscale": [
+            480,
+            287
+          ],
+          "contentOffset": [
+            0,
+            153
+          ],
+          "pivot": "bottom-center"
+        },
+        "atlasPages": [
+          {
+            "file": "sprite_sheets/victory-18frames-6x3.png",
+            "frameCount": 18,
+            "columns": 6,
+            "rows": 3,
+            "canvas": [
+              2880,
+              1320
+            ],
+            "firstFrameIndex": 0
+          }
+        ],
+        "frameCount": 18,
+        "frames": [
+          {
+            "sampleIndex": 0,
+            "sourceFrameIndex": 0,
+            "sourceFrameNumber": 1,
+            "sourcePtsSeconds": 0.0,
+            "targetTimeSeconds": 0.0,
+            "durationMs": 222.222,
+            "atlasCellIndex": 0
+          },
+          {
+            "sampleIndex": 1,
+            "sourceFrameIndex": 5,
+            "sourceFrameNumber": 6,
+            "sourcePtsSeconds": 0.208333,
+            "targetTimeSeconds": 0.222222,
+            "durationMs": 222.222,
+            "atlasCellIndex": 1
+          },
+          {
+            "sampleIndex": 2,
+            "sourceFrameIndex": 11,
+            "sourceFrameNumber": 12,
+            "sourcePtsSeconds": 0.458333,
+            "targetTimeSeconds": 0.444444,
+            "durationMs": 222.222,
+            "atlasCellIndex": 2
+          },
+          {
+            "sampleIndex": 3,
+            "sourceFrameIndex": 16,
+            "sourceFrameNumber": 17,
+            "sourcePtsSeconds": 0.666667,
+            "targetTimeSeconds": 0.666667,
+            "durationMs": 222.222,
+            "atlasCellIndex": 3
+          },
+          {
+            "sampleIndex": 4,
+            "sourceFrameIndex": 21,
+            "sourceFrameNumber": 22,
+            "sourcePtsSeconds": 0.875,
+            "targetTimeSeconds": 0.888889,
+            "durationMs": 222.222,
+            "atlasCellIndex": 4
+          },
+          {
+            "sampleIndex": 5,
+            "sourceFrameIndex": 27,
+            "sourceFrameNumber": 28,
+            "sourcePtsSeconds": 1.125,
+            "targetTimeSeconds": 1.111111,
+            "durationMs": 222.222,
+            "atlasCellIndex": 5
+          },
+          {
+            "sampleIndex": 6,
+            "sourceFrameIndex": 32,
+            "sourceFrameNumber": 33,
+            "sourcePtsSeconds": 1.333333,
+            "targetTimeSeconds": 1.333333,
+            "durationMs": 222.222,
+            "atlasCellIndex": 6
+          },
+          {
+            "sampleIndex": 7,
+            "sourceFrameIndex": 37,
+            "sourceFrameNumber": 38,
+            "sourcePtsSeconds": 1.541667,
+            "targetTimeSeconds": 1.555556,
+            "durationMs": 222.222,
+            "atlasCellIndex": 7
+          },
+          {
+            "sampleIndex": 8,
+            "sourceFrameIndex": 43,
+            "sourceFrameNumber": 44,
+            "sourcePtsSeconds": 1.791667,
+            "targetTimeSeconds": 1.777778,
+            "durationMs": 222.222,
+            "atlasCellIndex": 8
+          },
+          {
+            "sampleIndex": 9,
+            "sourceFrameIndex": 48,
+            "sourceFrameNumber": 49,
+            "sourcePtsSeconds": 2.0,
+            "targetTimeSeconds": 2.0,
+            "durationMs": 222.222,
+            "atlasCellIndex": 9
+          },
+          {
+            "sampleIndex": 10,
+            "sourceFrameIndex": 53,
+            "sourceFrameNumber": 54,
+            "sourcePtsSeconds": 2.208333,
+            "targetTimeSeconds": 2.222222,
+            "durationMs": 222.222,
+            "atlasCellIndex": 10
+          },
+          {
+            "sampleIndex": 11,
+            "sourceFrameIndex": 59,
+            "sourceFrameNumber": 60,
+            "sourcePtsSeconds": 2.458333,
+            "targetTimeSeconds": 2.444444,
+            "durationMs": 222.222,
+            "atlasCellIndex": 11
+          },
+          {
+            "sampleIndex": 12,
+            "sourceFrameIndex": 64,
+            "sourceFrameNumber": 65,
+            "sourcePtsSeconds": 2.666667,
+            "targetTimeSeconds": 2.666667,
+            "durationMs": 222.222,
+            "atlasCellIndex": 12
+          },
+          {
+            "sampleIndex": 13,
+            "sourceFrameIndex": 69,
+            "sourceFrameNumber": 70,
+            "sourcePtsSeconds": 2.875,
+            "targetTimeSeconds": 2.888889,
+            "durationMs": 222.222,
+            "atlasCellIndex": 13
+          },
+          {
+            "sampleIndex": 14,
+            "sourceFrameIndex": 75,
+            "sourceFrameNumber": 76,
+            "sourcePtsSeconds": 3.125,
+            "targetTimeSeconds": 3.111111,
+            "durationMs": 222.222,
+            "atlasCellIndex": 14
+          },
+          {
+            "sampleIndex": 15,
+            "sourceFrameIndex": 80,
+            "sourceFrameNumber": 81,
+            "sourcePtsSeconds": 3.333333,
+            "targetTimeSeconds": 3.333333,
+            "durationMs": 222.222,
+            "atlasCellIndex": 15
+          },
+          {
+            "sampleIndex": 16,
+            "sourceFrameIndex": 85,
+            "sourceFrameNumber": 86,
+            "sourcePtsSeconds": 3.541667,
+            "targetTimeSeconds": 3.555556,
+            "durationMs": 222.222,
+            "atlasCellIndex": 16
+          },
+          {
+            "sampleIndex": 17,
+            "sourceFrameIndex": 91,
+            "sourceFrameNumber": 92,
+            "sourcePtsSeconds": 3.791667,
+            "targetTimeSeconds": 3.777778,
+            "durationMs": 222.222,
+            "atlasCellIndex": 17
+          }
+        ],
+        "contactSheet": "victory-18-contact.png",
+        "preview": {
+          "file": "preview/victory-18frames.mp4",
+          "fps": 30,
+          "frames": 120,
+          "durationSeconds": 4.0,
+          "cycles": 1
+        },
+        "originalSourceCopy": "original-source/victory-source.mp4",
+        "reviewPurpose": "Preview-only two-state package; source-speed original is included for smoothness comparison."
+      },
+      "sourceAtlasSha256": "e52f2e4f2f8c8999019c501574b84aff927434a023dd8f11cf2b4bbed94f04e8",
+      "runtimeSha256": "0f0ac5036baaae29a2de4825b6f21fe5e0b71b80233e27c465008c70585a3bfa"
+    },
+    "dinh-atk": {
+      "file": "dinh-atk.webp",
+      "frames": 18,
+      "cols": 6,
+      "cellW": 300,
+      "cellH": 275,
+      "durations": [
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222
+      ],
+      "sourceMetadata": {
+        "state": "atk",
+        "sourceName": "atk4---91bc4b6f-f5e4-4506-8650-6a43d9e03ebd.mp4",
+        "sourceSha256": "5941b10bfe7b9d4c5c0afdbcecfd5e657a5fddd6515afdbd833b8b854886e767",
+        "sourceResolution": [
+          1920,
+          1080
+        ],
+        "sourceFrameCount": 96,
+        "sourceDurationSeconds": 4.0,
+        "keyColorLinear": [
+          0.042311,
+          0.768151,
+          0.088656,
+          1.0
+        ],
+        "keyingSettings": {
+          "engine": "Blender 5.1.2 compositor Keying v2",
+          "clipBlack": 0.28,
+          "clipWhite": 0.68,
+          "dilateSize": -2,
+          "featherSize": 2,
+          "despillStrength": 1.2,
+          "despillBalance": 0.5,
+          "blurPre": 1,
+          "blurPost": 1
+        },
+        "crop": {
+          "method": "largest connected alpha component union plus 16px margin; detached corner icon excluded when separate",
+          "sourceRect": [
+            259,
+            59,
+            1419,
+            1039
+          ],
+          "cell": [
+            480,
+            440
+          ],
+          "contentSizeNoUpscale": [
+            480,
+            406
+          ],
+          "contentOffset": [
+            0,
+            34
+          ],
+          "pivot": "bottom-center"
+        },
+        "atlasPages": [
+          {
+            "file": "sprite_sheets/atk-18frames-6x3.png",
+            "frameCount": 18,
+            "columns": 6,
+            "rows": 3,
+            "canvas": [
+              2880,
+              1320
+            ],
+            "firstFrameIndex": 0
+          }
+        ],
+        "frameCount": 18,
+        "frames": [
+          {
+            "sampleIndex": 0,
+            "sourceFrameIndex": 0,
+            "sourceFrameNumber": 1,
+            "sourcePtsSeconds": 0.0,
+            "targetTimeSeconds": 0.0,
+            "durationMs": 222.222,
+            "atlasCellIndex": 0
+          },
+          {
+            "sampleIndex": 1,
+            "sourceFrameIndex": 5,
+            "sourceFrameNumber": 6,
+            "sourcePtsSeconds": 0.208333,
+            "targetTimeSeconds": 0.222222,
+            "durationMs": 222.222,
+            "atlasCellIndex": 1
+          },
+          {
+            "sampleIndex": 2,
+            "sourceFrameIndex": 11,
+            "sourceFrameNumber": 12,
+            "sourcePtsSeconds": 0.458333,
+            "targetTimeSeconds": 0.444444,
+            "durationMs": 222.222,
+            "atlasCellIndex": 2
+          },
+          {
+            "sampleIndex": 3,
+            "sourceFrameIndex": 16,
+            "sourceFrameNumber": 17,
+            "sourcePtsSeconds": 0.666667,
+            "targetTimeSeconds": 0.666667,
+            "durationMs": 222.222,
+            "atlasCellIndex": 3
+          },
+          {
+            "sampleIndex": 4,
+            "sourceFrameIndex": 21,
+            "sourceFrameNumber": 22,
+            "sourcePtsSeconds": 0.875,
+            "targetTimeSeconds": 0.888889,
+            "durationMs": 222.222,
+            "atlasCellIndex": 4
+          },
+          {
+            "sampleIndex": 5,
+            "sourceFrameIndex": 27,
+            "sourceFrameNumber": 28,
+            "sourcePtsSeconds": 1.125,
+            "targetTimeSeconds": 1.111111,
+            "durationMs": 222.222,
+            "atlasCellIndex": 5
+          },
+          {
+            "sampleIndex": 6,
+            "sourceFrameIndex": 32,
+            "sourceFrameNumber": 33,
+            "sourcePtsSeconds": 1.333333,
+            "targetTimeSeconds": 1.333333,
+            "durationMs": 222.222,
+            "atlasCellIndex": 6
+          },
+          {
+            "sampleIndex": 7,
+            "sourceFrameIndex": 37,
+            "sourceFrameNumber": 38,
+            "sourcePtsSeconds": 1.541667,
+            "targetTimeSeconds": 1.555556,
+            "durationMs": 222.222,
+            "atlasCellIndex": 7
+          },
+          {
+            "sampleIndex": 8,
+            "sourceFrameIndex": 43,
+            "sourceFrameNumber": 44,
+            "sourcePtsSeconds": 1.791667,
+            "targetTimeSeconds": 1.777778,
+            "durationMs": 222.222,
+            "atlasCellIndex": 8
+          },
+          {
+            "sampleIndex": 9,
+            "sourceFrameIndex": 48,
+            "sourceFrameNumber": 49,
+            "sourcePtsSeconds": 2.0,
+            "targetTimeSeconds": 2.0,
+            "durationMs": 222.222,
+            "atlasCellIndex": 9
+          },
+          {
+            "sampleIndex": 10,
+            "sourceFrameIndex": 53,
+            "sourceFrameNumber": 54,
+            "sourcePtsSeconds": 2.208333,
+            "targetTimeSeconds": 2.222222,
+            "durationMs": 222.222,
+            "atlasCellIndex": 10
+          },
+          {
+            "sampleIndex": 11,
+            "sourceFrameIndex": 59,
+            "sourceFrameNumber": 60,
+            "sourcePtsSeconds": 2.458333,
+            "targetTimeSeconds": 2.444444,
+            "durationMs": 222.222,
+            "atlasCellIndex": 11
+          },
+          {
+            "sampleIndex": 12,
+            "sourceFrameIndex": 64,
+            "sourceFrameNumber": 65,
+            "sourcePtsSeconds": 2.666667,
+            "targetTimeSeconds": 2.666667,
+            "durationMs": 222.222,
+            "atlasCellIndex": 12
+          },
+          {
+            "sampleIndex": 13,
+            "sourceFrameIndex": 69,
+            "sourceFrameNumber": 70,
+            "sourcePtsSeconds": 2.875,
+            "targetTimeSeconds": 2.888889,
+            "durationMs": 222.222,
+            "atlasCellIndex": 13
+          },
+          {
+            "sampleIndex": 14,
+            "sourceFrameIndex": 75,
+            "sourceFrameNumber": 76,
+            "sourcePtsSeconds": 3.125,
+            "targetTimeSeconds": 3.111111,
+            "durationMs": 222.222,
+            "atlasCellIndex": 14
+          },
+          {
+            "sampleIndex": 15,
+            "sourceFrameIndex": 80,
+            "sourceFrameNumber": 81,
+            "sourcePtsSeconds": 3.333333,
+            "targetTimeSeconds": 3.333333,
+            "durationMs": 222.222,
+            "atlasCellIndex": 15
+          },
+          {
+            "sampleIndex": 16,
+            "sourceFrameIndex": 85,
+            "sourceFrameNumber": 86,
+            "sourcePtsSeconds": 3.541667,
+            "targetTimeSeconds": 3.555556,
+            "durationMs": 222.222,
+            "atlasCellIndex": 16
+          },
+          {
+            "sampleIndex": 17,
+            "sourceFrameIndex": 91,
+            "sourceFrameNumber": 92,
+            "sourcePtsSeconds": 3.791667,
+            "targetTimeSeconds": 3.777778,
+            "durationMs": 222.222,
+            "atlasCellIndex": 17
+          }
+        ],
+        "contactSheet": "atk-18-contact.png",
+        "preview": {
+          "file": "preview/atk-18frames.mp4",
+          "fps": 30,
+          "frames": 120,
+          "durationSeconds": 4.0,
+          "cycles": 1
+        }
+      },
+      "sourceAtlasSha256": "5a5d838c7d3811d39f8dca477b0082ad2da0d9253c4f7398b550af609805f355",
+      "runtimeDensity": 0.625,
+      "runtimeSha256": "2052aa1802d2306671578b06088c5ad66b056a573d58500eba8d885dfdda129d"
+    },
+    "dinh-fall-die": {
+      "file": "dinh-fall-die.webp",
+      "frames": 18,
+      "cols": 6,
+      "cellW": 300,
+      "cellH": 275,
+      "durations": [
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222
+      ],
+      "sourceMetadata": {
+        "state": "fall-die",
+        "sourceName": "falldie4---c412b8da-0cec-4f6e-98e1-6b5f0123221f.mp4",
+        "sourceSha256": "55e4ef6b0d93d69370a021db570568549c70498ac8250a8c064e04ae0f1a3845",
+        "sourceResolution": [
+          1920,
+          1080
+        ],
+        "sourceFrameCount": 96,
+        "sourceDurationSeconds": 4.0,
+        "keyColorLinear": [
+          0.008568,
+          0.57758,
+          0.014444,
+          1.0
+        ],
+        "keyingSettings": {
+          "engine": "Blender 5.1.2 compositor Keying v2",
+          "clipBlack": 0.28,
+          "clipWhite": 0.68,
+          "dilateSize": -2,
+          "featherSize": 2,
+          "despillStrength": 1.2,
+          "despillBalance": 0.5,
+          "blurPre": 1,
+          "blurPost": 1
+        },
+        "crop": {
+          "method": "largest connected alpha component union plus 16px margin; detached corner icon excluded when separate",
+          "sourceRect": [
+            79,
+            87,
+            1651,
+            1080
+          ],
+          "cell": [
+            480,
+            440
+          ],
+          "contentSizeNoUpscale": [
+            480,
+            303
+          ],
+          "contentOffset": [
+            0,
+            137
+          ],
+          "pivot": "bottom-center"
+        },
+        "atlasPages": [
+          {
+            "file": "sprite_sheets/fall-die-18frames-6x3.png",
+            "frameCount": 18,
+            "columns": 6,
+            "rows": 3,
+            "canvas": [
+              2880,
+              1320
+            ],
+            "firstFrameIndex": 0
+          }
+        ],
+        "frameCount": 18,
+        "frames": [
+          {
+            "sampleIndex": 0,
+            "sourceFrameIndex": 0,
+            "sourceFrameNumber": 1,
+            "sourcePtsSeconds": 0.0,
+            "targetTimeSeconds": 0.0,
+            "durationMs": 222.222,
+            "atlasCellIndex": 0
+          },
+          {
+            "sampleIndex": 1,
+            "sourceFrameIndex": 5,
+            "sourceFrameNumber": 6,
+            "sourcePtsSeconds": 0.208333,
+            "targetTimeSeconds": 0.222222,
+            "durationMs": 222.222,
+            "atlasCellIndex": 1
+          },
+          {
+            "sampleIndex": 2,
+            "sourceFrameIndex": 11,
+            "sourceFrameNumber": 12,
+            "sourcePtsSeconds": 0.458333,
+            "targetTimeSeconds": 0.444444,
+            "durationMs": 222.222,
+            "atlasCellIndex": 2
+          },
+          {
+            "sampleIndex": 3,
+            "sourceFrameIndex": 16,
+            "sourceFrameNumber": 17,
+            "sourcePtsSeconds": 0.666667,
+            "targetTimeSeconds": 0.666667,
+            "durationMs": 222.222,
+            "atlasCellIndex": 3
+          },
+          {
+            "sampleIndex": 4,
+            "sourceFrameIndex": 21,
+            "sourceFrameNumber": 22,
+            "sourcePtsSeconds": 0.875,
+            "targetTimeSeconds": 0.888889,
+            "durationMs": 222.222,
+            "atlasCellIndex": 4
+          },
+          {
+            "sampleIndex": 5,
+            "sourceFrameIndex": 27,
+            "sourceFrameNumber": 28,
+            "sourcePtsSeconds": 1.125,
+            "targetTimeSeconds": 1.111111,
+            "durationMs": 222.222,
+            "atlasCellIndex": 5
+          },
+          {
+            "sampleIndex": 6,
+            "sourceFrameIndex": 32,
+            "sourceFrameNumber": 33,
+            "sourcePtsSeconds": 1.333333,
+            "targetTimeSeconds": 1.333333,
+            "durationMs": 222.222,
+            "atlasCellIndex": 6
+          },
+          {
+            "sampleIndex": 7,
+            "sourceFrameIndex": 37,
+            "sourceFrameNumber": 38,
+            "sourcePtsSeconds": 1.541667,
+            "targetTimeSeconds": 1.555556,
+            "durationMs": 222.222,
+            "atlasCellIndex": 7
+          },
+          {
+            "sampleIndex": 8,
+            "sourceFrameIndex": 43,
+            "sourceFrameNumber": 44,
+            "sourcePtsSeconds": 1.791667,
+            "targetTimeSeconds": 1.777778,
+            "durationMs": 222.222,
+            "atlasCellIndex": 8
+          },
+          {
+            "sampleIndex": 9,
+            "sourceFrameIndex": 48,
+            "sourceFrameNumber": 49,
+            "sourcePtsSeconds": 2.0,
+            "targetTimeSeconds": 2.0,
+            "durationMs": 222.222,
+            "atlasCellIndex": 9
+          },
+          {
+            "sampleIndex": 10,
+            "sourceFrameIndex": 53,
+            "sourceFrameNumber": 54,
+            "sourcePtsSeconds": 2.208333,
+            "targetTimeSeconds": 2.222222,
+            "durationMs": 222.222,
+            "atlasCellIndex": 10
+          },
+          {
+            "sampleIndex": 11,
+            "sourceFrameIndex": 59,
+            "sourceFrameNumber": 60,
+            "sourcePtsSeconds": 2.458333,
+            "targetTimeSeconds": 2.444444,
+            "durationMs": 222.222,
+            "atlasCellIndex": 11
+          },
+          {
+            "sampleIndex": 12,
+            "sourceFrameIndex": 64,
+            "sourceFrameNumber": 65,
+            "sourcePtsSeconds": 2.666667,
+            "targetTimeSeconds": 2.666667,
+            "durationMs": 222.222,
+            "atlasCellIndex": 12
+          },
+          {
+            "sampleIndex": 13,
+            "sourceFrameIndex": 69,
+            "sourceFrameNumber": 70,
+            "sourcePtsSeconds": 2.875,
+            "targetTimeSeconds": 2.888889,
+            "durationMs": 222.222,
+            "atlasCellIndex": 13
+          },
+          {
+            "sampleIndex": 14,
+            "sourceFrameIndex": 75,
+            "sourceFrameNumber": 76,
+            "sourcePtsSeconds": 3.125,
+            "targetTimeSeconds": 3.111111,
+            "durationMs": 222.222,
+            "atlasCellIndex": 14
+          },
+          {
+            "sampleIndex": 15,
+            "sourceFrameIndex": 80,
+            "sourceFrameNumber": 81,
+            "sourcePtsSeconds": 3.333333,
+            "targetTimeSeconds": 3.333333,
+            "durationMs": 222.222,
+            "atlasCellIndex": 15
+          },
+          {
+            "sampleIndex": 16,
+            "sourceFrameIndex": 85,
+            "sourceFrameNumber": 86,
+            "sourcePtsSeconds": 3.541667,
+            "targetTimeSeconds": 3.555556,
+            "durationMs": 222.222,
+            "atlasCellIndex": 16
+          },
+          {
+            "sampleIndex": 17,
+            "sourceFrameIndex": 91,
+            "sourceFrameNumber": 92,
+            "sourcePtsSeconds": 3.791667,
+            "targetTimeSeconds": 3.777778,
+            "durationMs": 222.222,
+            "atlasCellIndex": 17
+          }
+        ],
+        "contactSheet": "fall-die-18-contact.png",
+        "preview": {
+          "file": "preview/fall-die-18frames.mp4",
+          "fps": 30,
+          "frames": 120,
+          "durationSeconds": 4.0,
+          "cycles": 1
+        }
+      },
+      "sourceAtlasSha256": "47b0b8c4f6d3b90f299524b71864f27f07b7a75c76fd3ed10f984f8add9a774a",
+      "runtimeDensity": 0.625,
+      "runtimeSha256": "65c8141fa22484699a8a4c81bf714603083bd6832a886387f6c52ceda94337b1"
+    },
+    "dinh-hit": {
+      "file": "dinh-hit.webp",
+      "frames": 18,
+      "cols": 6,
+      "cellW": 300,
+      "cellH": 275,
+      "durations": [
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222
+      ],
+      "sourceMetadata": {
+        "state": "hit",
+        "sourceName": "Hit4---9b66be71-ff75-496d-a941-f6b9d46d3c0b.mp4",
+        "sourceSha256": "6518cf97b2657aaddaf47890b885d492d4928e59cef53fa814dac7d6c533c820",
+        "sourceResolution": [
+          1920,
+          1080
+        ],
+        "sourceFrameCount": 96,
+        "sourceDurationSeconds": 4.0,
+        "keyColorLinear": [
+          0.005605,
+          0.57758,
+          0.012286,
+          1.0
+        ],
+        "keyingSettings": {
+          "engine": "Blender 5.1.2 compositor Keying v2",
+          "clipBlack": 0.28,
+          "clipWhite": 0.68,
+          "dilateSize": -2,
+          "featherSize": 2,
+          "despillStrength": 1.2,
+          "despillBalance": 0.5,
+          "blurPre": 1,
+          "blurPost": 1
+        },
+        "crop": {
+          "method": "largest connected alpha component union plus 16px margin; detached corner icon excluded when separate",
+          "sourceRect": [
+            179,
+            87,
+            1343,
+            1039
+          ],
+          "cell": [
+            480,
+            440
+          ],
+          "contentSizeNoUpscale": [
+            480,
+            393
+          ],
+          "contentOffset": [
+            0,
+            47
+          ],
+          "pivot": "bottom-center"
+        },
+        "atlasPages": [
+          {
+            "file": "sprite_sheets/hit-18frames-6x3.png",
+            "frameCount": 18,
+            "columns": 6,
+            "rows": 3,
+            "canvas": [
+              2880,
+              1320
+            ],
+            "firstFrameIndex": 0
+          }
+        ],
+        "frameCount": 18,
+        "frames": [
+          {
+            "sampleIndex": 0,
+            "sourceFrameIndex": 0,
+            "sourceFrameNumber": 1,
+            "sourcePtsSeconds": 0.0,
+            "targetTimeSeconds": 0.0,
+            "durationMs": 222.222,
+            "atlasCellIndex": 0
+          },
+          {
+            "sampleIndex": 1,
+            "sourceFrameIndex": 5,
+            "sourceFrameNumber": 6,
+            "sourcePtsSeconds": 0.208333,
+            "targetTimeSeconds": 0.222222,
+            "durationMs": 222.222,
+            "atlasCellIndex": 1
+          },
+          {
+            "sampleIndex": 2,
+            "sourceFrameIndex": 11,
+            "sourceFrameNumber": 12,
+            "sourcePtsSeconds": 0.458333,
+            "targetTimeSeconds": 0.444444,
+            "durationMs": 222.222,
+            "atlasCellIndex": 2
+          },
+          {
+            "sampleIndex": 3,
+            "sourceFrameIndex": 16,
+            "sourceFrameNumber": 17,
+            "sourcePtsSeconds": 0.666667,
+            "targetTimeSeconds": 0.666667,
+            "durationMs": 222.222,
+            "atlasCellIndex": 3
+          },
+          {
+            "sampleIndex": 4,
+            "sourceFrameIndex": 21,
+            "sourceFrameNumber": 22,
+            "sourcePtsSeconds": 0.875,
+            "targetTimeSeconds": 0.888889,
+            "durationMs": 222.222,
+            "atlasCellIndex": 4
+          },
+          {
+            "sampleIndex": 5,
+            "sourceFrameIndex": 27,
+            "sourceFrameNumber": 28,
+            "sourcePtsSeconds": 1.125,
+            "targetTimeSeconds": 1.111111,
+            "durationMs": 222.222,
+            "atlasCellIndex": 5
+          },
+          {
+            "sampleIndex": 6,
+            "sourceFrameIndex": 32,
+            "sourceFrameNumber": 33,
+            "sourcePtsSeconds": 1.333333,
+            "targetTimeSeconds": 1.333333,
+            "durationMs": 222.222,
+            "atlasCellIndex": 6
+          },
+          {
+            "sampleIndex": 7,
+            "sourceFrameIndex": 37,
+            "sourceFrameNumber": 38,
+            "sourcePtsSeconds": 1.541667,
+            "targetTimeSeconds": 1.555556,
+            "durationMs": 222.222,
+            "atlasCellIndex": 7
+          },
+          {
+            "sampleIndex": 8,
+            "sourceFrameIndex": 43,
+            "sourceFrameNumber": 44,
+            "sourcePtsSeconds": 1.791667,
+            "targetTimeSeconds": 1.777778,
+            "durationMs": 222.222,
+            "atlasCellIndex": 8
+          },
+          {
+            "sampleIndex": 9,
+            "sourceFrameIndex": 48,
+            "sourceFrameNumber": 49,
+            "sourcePtsSeconds": 2.0,
+            "targetTimeSeconds": 2.0,
+            "durationMs": 222.222,
+            "atlasCellIndex": 9
+          },
+          {
+            "sampleIndex": 10,
+            "sourceFrameIndex": 53,
+            "sourceFrameNumber": 54,
+            "sourcePtsSeconds": 2.208333,
+            "targetTimeSeconds": 2.222222,
+            "durationMs": 222.222,
+            "atlasCellIndex": 10
+          },
+          {
+            "sampleIndex": 11,
+            "sourceFrameIndex": 59,
+            "sourceFrameNumber": 60,
+            "sourcePtsSeconds": 2.458333,
+            "targetTimeSeconds": 2.444444,
+            "durationMs": 222.222,
+            "atlasCellIndex": 11
+          },
+          {
+            "sampleIndex": 12,
+            "sourceFrameIndex": 64,
+            "sourceFrameNumber": 65,
+            "sourcePtsSeconds": 2.666667,
+            "targetTimeSeconds": 2.666667,
+            "durationMs": 222.222,
+            "atlasCellIndex": 12
+          },
+          {
+            "sampleIndex": 13,
+            "sourceFrameIndex": 69,
+            "sourceFrameNumber": 70,
+            "sourcePtsSeconds": 2.875,
+            "targetTimeSeconds": 2.888889,
+            "durationMs": 222.222,
+            "atlasCellIndex": 13
+          },
+          {
+            "sampleIndex": 14,
+            "sourceFrameIndex": 75,
+            "sourceFrameNumber": 76,
+            "sourcePtsSeconds": 3.125,
+            "targetTimeSeconds": 3.111111,
+            "durationMs": 222.222,
+            "atlasCellIndex": 14
+          },
+          {
+            "sampleIndex": 15,
+            "sourceFrameIndex": 80,
+            "sourceFrameNumber": 81,
+            "sourcePtsSeconds": 3.333333,
+            "targetTimeSeconds": 3.333333,
+            "durationMs": 222.222,
+            "atlasCellIndex": 15
+          },
+          {
+            "sampleIndex": 16,
+            "sourceFrameIndex": 85,
+            "sourceFrameNumber": 86,
+            "sourcePtsSeconds": 3.541667,
+            "targetTimeSeconds": 3.555556,
+            "durationMs": 222.222,
+            "atlasCellIndex": 16
+          },
+          {
+            "sampleIndex": 17,
+            "sourceFrameIndex": 91,
+            "sourceFrameNumber": 92,
+            "sourcePtsSeconds": 3.791667,
+            "targetTimeSeconds": 3.777778,
+            "durationMs": 222.222,
+            "atlasCellIndex": 17
+          }
+        ],
+        "contactSheet": "hit-18-contact.png",
+        "preview": {
+          "file": "preview/hit-18frames.mp4",
+          "fps": 30,
+          "frames": 120,
+          "durationSeconds": 4.0,
+          "cycles": 1
+        }
+      },
+      "sourceAtlasSha256": "95fa0ceab8d7ab84033be7987717479d0cb940d19614e341c40896daf20fdf2d",
+      "runtimeDensity": 0.625,
+      "runtimeSha256": "e0029da8f829f3c76bdea4245604f14109ea6126621e510a65b51e1247b07650"
+    },
+    "dinh-idle": {
+      "file": "dinh-idle.webp",
+      "frames": 30,
+      "cols": 8,
+      "cellW": 300,
+      "cellH": 275,
+      "durations": [
+        83.333,
+        125.0,
+        83.334,
+        125.0,
+        83.333,
+        125.0,
+        83.333,
+        125.0,
+        83.334,
+        83.333,
+        125.0,
+        83.333,
+        125.0,
+        83.334,
+        125.0,
+        83.333,
+        125.0,
+        83.333,
+        125.0,
+        83.334,
+        83.333,
+        125.0,
+        83.333,
+        125.0,
+        83.334,
+        125.0,
+        83.333,
+        125.0,
+        83.333,
+        41.667
+      ],
+      "sourceMetadata": {
+        "state": "idle",
+        "sourceName": "idle4---b105dd82-0d68-4fbc-b9c9-dc84dc5ffbc6.mp4",
+        "sourceSha256": "f7ade3fc1e39b6d2b9b01fca4f6c0d7d9275d27a09514dc9075661e41d464f23",
+        "sourceResolution": [
+          1920,
+          1080
+        ],
+        "sourceFrameCount": 96,
+        "sourceDurationSeconds": 4.0,
+        "keyColorLinear": [
+          0.012983,
+          0.545724,
+          0.01096,
+          1.0
+        ],
+        "keyingSettings": {
+          "engine": "Blender 5.1.2 compositor Keying v2",
+          "clipBlack": 0.28,
+          "clipWhite": 0.68,
+          "dilateSize": -2,
+          "featherSize": 2,
+          "despillStrength": 1.2,
+          "despillBalance": 0.5,
+          "blurPre": 1,
+          "blurPost": 1
+        },
+        "crop": {
+          "method": "largest connected alpha component union plus 16px margin; detached corner icon excluded when separate",
+          "sourceRect": [
+            487,
+            79,
+            1323,
+            1039
+          ],
+          "cell": [
+            480,
+            440
+          ],
+          "contentSizeNoUpscale": [
+            383,
+            440
+          ],
+          "contentOffset": [
+            48,
+            0
+          ],
+          "pivot": "bottom-center"
+        },
+        "atlasPages": [
+          {
+            "file": "sprite_sheets/idle-atlas-01.png",
+            "frameCount": 30,
+            "columns": 8,
+            "rows": 4,
+            "canvas": [
+              3840,
+              1760
+            ],
+            "firstFrameIndex": 0
+          }
+        ],
+        "frameCount": 30,
+        "frames": [
+          {
+            "loopIndex": 0,
+            "sourceFrameIndex": 12,
+            "sourceFrameNumber": 13,
+            "sourcePtsSeconds": 0.5,
+            "durationMs": 83.333,
+            "sourceFramesRepresented": 2,
+            "atlasCellIndex": 0
+          },
+          {
+            "loopIndex": 1,
+            "sourceFrameIndex": 14,
+            "sourceFrameNumber": 15,
+            "sourcePtsSeconds": 0.583333,
+            "durationMs": 125.0,
+            "sourceFramesRepresented": 3,
+            "atlasCellIndex": 1
+          },
+          {
+            "loopIndex": 2,
+            "sourceFrameIndex": 17,
+            "sourceFrameNumber": 18,
+            "sourcePtsSeconds": 0.708333,
+            "durationMs": 83.334,
+            "sourceFramesRepresented": 2,
+            "atlasCellIndex": 2
+          },
+          {
+            "loopIndex": 3,
+            "sourceFrameIndex": 19,
+            "sourceFrameNumber": 20,
+            "sourcePtsSeconds": 0.791667,
+            "durationMs": 125.0,
+            "sourceFramesRepresented": 3,
+            "atlasCellIndex": 3
+          },
+          {
+            "loopIndex": 4,
+            "sourceFrameIndex": 22,
+            "sourceFrameNumber": 23,
+            "sourcePtsSeconds": 0.916667,
+            "durationMs": 83.333,
+            "sourceFramesRepresented": 2,
+            "atlasCellIndex": 4
+          },
+          {
+            "loopIndex": 5,
+            "sourceFrameIndex": 24,
+            "sourceFrameNumber": 25,
+            "sourcePtsSeconds": 1.0,
+            "durationMs": 125.0,
+            "sourceFramesRepresented": 3,
+            "atlasCellIndex": 5
+          },
+          {
+            "loopIndex": 6,
+            "sourceFrameIndex": 27,
+            "sourceFrameNumber": 28,
+            "sourcePtsSeconds": 1.125,
+            "durationMs": 83.333,
+            "sourceFramesRepresented": 2,
+            "atlasCellIndex": 6
+          },
+          {
+            "loopIndex": 7,
+            "sourceFrameIndex": 29,
+            "sourceFrameNumber": 30,
+            "sourcePtsSeconds": 1.208333,
+            "durationMs": 125.0,
+            "sourceFramesRepresented": 3,
+            "atlasCellIndex": 7
+          },
+          {
+            "loopIndex": 8,
+            "sourceFrameIndex": 32,
+            "sourceFrameNumber": 33,
+            "sourcePtsSeconds": 1.333333,
+            "durationMs": 83.334,
+            "sourceFramesRepresented": 2,
+            "atlasCellIndex": 8
+          },
+          {
+            "loopIndex": 9,
+            "sourceFrameIndex": 34,
+            "sourceFrameNumber": 35,
+            "sourcePtsSeconds": 1.416667,
+            "durationMs": 83.333,
+            "sourceFramesRepresented": 2,
+            "atlasCellIndex": 9
+          },
+          {
+            "loopIndex": 10,
+            "sourceFrameIndex": 36,
+            "sourceFrameNumber": 37,
+            "sourcePtsSeconds": 1.5,
+            "durationMs": 125.0,
+            "sourceFramesRepresented": 3,
+            "atlasCellIndex": 10
+          },
+          {
+            "loopIndex": 11,
+            "sourceFrameIndex": 39,
+            "sourceFrameNumber": 40,
+            "sourcePtsSeconds": 1.625,
+            "durationMs": 83.333,
+            "sourceFramesRepresented": 2,
+            "atlasCellIndex": 11
+          },
+          {
+            "loopIndex": 12,
+            "sourceFrameIndex": 41,
+            "sourceFrameNumber": 42,
+            "sourcePtsSeconds": 1.708333,
+            "durationMs": 125.0,
+            "sourceFramesRepresented": 3,
+            "atlasCellIndex": 12
+          },
+          {
+            "loopIndex": 13,
+            "sourceFrameIndex": 44,
+            "sourceFrameNumber": 45,
+            "sourcePtsSeconds": 1.833333,
+            "durationMs": 83.334,
+            "sourceFramesRepresented": 2,
+            "atlasCellIndex": 13
+          },
+          {
+            "loopIndex": 14,
+            "sourceFrameIndex": 46,
+            "sourceFrameNumber": 47,
+            "sourcePtsSeconds": 1.916667,
+            "durationMs": 125.0,
+            "sourceFramesRepresented": 3,
+            "atlasCellIndex": 14
+          },
+          {
+            "loopIndex": 15,
+            "sourceFrameIndex": 49,
+            "sourceFrameNumber": 50,
+            "sourcePtsSeconds": 2.041667,
+            "durationMs": 83.333,
+            "sourceFramesRepresented": 2,
+            "atlasCellIndex": 15
+          },
+          {
+            "loopIndex": 16,
+            "sourceFrameIndex": 51,
+            "sourceFrameNumber": 52,
+            "sourcePtsSeconds": 2.125,
+            "durationMs": 125.0,
+            "sourceFramesRepresented": 3,
+            "atlasCellIndex": 16
+          },
+          {
+            "loopIndex": 17,
+            "sourceFrameIndex": 54,
+            "sourceFrameNumber": 55,
+            "sourcePtsSeconds": 2.25,
+            "durationMs": 83.333,
+            "sourceFramesRepresented": 2,
+            "atlasCellIndex": 17
+          },
+          {
+            "loopIndex": 18,
+            "sourceFrameIndex": 56,
+            "sourceFrameNumber": 57,
+            "sourcePtsSeconds": 2.333333,
+            "durationMs": 125.0,
+            "sourceFramesRepresented": 3,
+            "atlasCellIndex": 18
+          },
+          {
+            "loopIndex": 19,
+            "sourceFrameIndex": 59,
+            "sourceFrameNumber": 60,
+            "sourcePtsSeconds": 2.458333,
+            "durationMs": 83.334,
+            "sourceFramesRepresented": 2,
+            "atlasCellIndex": 19
+          },
+          {
+            "loopIndex": 20,
+            "sourceFrameIndex": 61,
+            "sourceFrameNumber": 62,
+            "sourcePtsSeconds": 2.541667,
+            "durationMs": 83.333,
+            "sourceFramesRepresented": 2,
+            "atlasCellIndex": 20
+          },
+          {
+            "loopIndex": 21,
+            "sourceFrameIndex": 63,
+            "sourceFrameNumber": 64,
+            "sourcePtsSeconds": 2.625,
+            "durationMs": 125.0,
+            "sourceFramesRepresented": 3,
+            "atlasCellIndex": 21
+          },
+          {
+            "loopIndex": 22,
+            "sourceFrameIndex": 66,
+            "sourceFrameNumber": 67,
+            "sourcePtsSeconds": 2.75,
+            "durationMs": 83.333,
+            "sourceFramesRepresented": 2,
+            "atlasCellIndex": 22
+          },
+          {
+            "loopIndex": 23,
+            "sourceFrameIndex": 68,
+            "sourceFrameNumber": 69,
+            "sourcePtsSeconds": 2.833333,
+            "durationMs": 125.0,
+            "sourceFramesRepresented": 3,
+            "atlasCellIndex": 23
+          },
+          {
+            "loopIndex": 24,
+            "sourceFrameIndex": 71,
+            "sourceFrameNumber": 72,
+            "sourcePtsSeconds": 2.958333,
+            "durationMs": 83.334,
+            "sourceFramesRepresented": 2,
+            "atlasCellIndex": 24
+          },
+          {
+            "loopIndex": 25,
+            "sourceFrameIndex": 73,
+            "sourceFrameNumber": 74,
+            "sourcePtsSeconds": 3.041667,
+            "durationMs": 125.0,
+            "sourceFramesRepresented": 3,
+            "atlasCellIndex": 25
+          },
+          {
+            "loopIndex": 26,
+            "sourceFrameIndex": 76,
+            "sourceFrameNumber": 77,
+            "sourcePtsSeconds": 3.166667,
+            "durationMs": 83.333,
+            "sourceFramesRepresented": 2,
+            "atlasCellIndex": 26
+          },
+          {
+            "loopIndex": 27,
+            "sourceFrameIndex": 78,
+            "sourceFrameNumber": 79,
+            "sourcePtsSeconds": 3.25,
+            "durationMs": 125.0,
+            "sourceFramesRepresented": 3,
+            "atlasCellIndex": 27
+          },
+          {
+            "loopIndex": 28,
+            "sourceFrameIndex": 81,
+            "sourceFrameNumber": 82,
+            "sourcePtsSeconds": 3.375,
+            "durationMs": 83.333,
+            "sourceFramesRepresented": 2,
+            "atlasCellIndex": 28
+          },
+          {
+            "loopIndex": 29,
+            "sourceFrameIndex": 83,
+            "sourceFrameNumber": 84,
+            "sourcePtsSeconds": 3.458333,
+            "durationMs": 41.667,
+            "sourceFramesRepresented": 1,
+            "atlasCellIndex": 29
+          }
+        ],
+        "contactSheet": "idle-loop-contact-12.png",
+        "preview": {
+          "file": "preview/idle-loop-review-2cycles.mp4",
+          "fps": 30,
+          "frames": 180,
+          "durationSeconds": 6.0,
+          "cycles": 2
+        },
+        "loop": {
+          "startSourceFrame": 13,
+          "endSourceFrameInclusive": 84,
+          "startPtsSeconds": 0.5,
+          "durationSeconds": 3.0,
+          "alphaSilhouetteIoUStartEnd": 0.93,
+          "minimumAlphaSilhouetteIoU": 0.92,
+          "seamOverride": {
+            "ownerApproved": false,
+            "minimumIoU": 0.92,
+            "reason": ""
+          }
+        }
+      },
+      "sourceAtlasSha256": "a9b9aec20735786d0974bb335a92f78a2c08422f8d9591ee054b818ddb8fa72d",
+      "runtimeDensity": 0.625,
+      "runtimeSha256": "70d4024dc4d855fe35de55eeae125f1ae97fb7bc9c95e97fca8ad068f17d3a9d"
+    },
+    "dinh-run": {
+      "file": "dinh-run.webp",
+      "frames": 18,
+      "cols": 6,
+      "cellW": 300,
+      "cellH": 275,
+      "durations": [
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222
+      ],
+      "sourceMetadata": {
+        "state": "run",
+        "sourceName": "run4---912c871c-18da-4a73-9e95-f4e22774e00a.mp4",
+        "sourceSha256": "8824214e1ab830b0e225247f4c390e8783685e42e6326c3309d93142fbd1275f",
+        "sourceResolution": [
+          1920,
+          1080
+        ],
+        "sourceFrameCount": 96,
+        "sourceDurationSeconds": 4.0,
+        "keyColorLinear": [
+          0.006512,
+          0.597202,
+          0.007499,
+          1.0
+        ],
+        "keyingSettings": {
+          "engine": "Blender 5.1.2 compositor Keying v2",
+          "clipBlack": 0.28,
+          "clipWhite": 0.68,
+          "dilateSize": -2,
+          "featherSize": 2,
+          "despillStrength": 1.2,
+          "despillBalance": 0.5,
+          "blurPre": 1,
+          "blurPost": 1
+        },
+        "crop": {
+          "method": "largest connected alpha component union plus 16px margin; detached corner icon excluded when separate",
+          "sourceRect": [
+            467,
+            95,
+            1239,
+            1031
+          ],
+          "cell": [
+            480,
+            440
+          ],
+          "contentSizeNoUpscale": [
+            363,
+            440
+          ],
+          "contentOffset": [
+            58,
+            0
+          ],
+          "pivot": "bottom-center"
+        },
+        "atlasPages": [
+          {
+            "file": "sprite_sheets/run-18frames-6x3.png",
+            "frameCount": 18,
+            "columns": 6,
+            "rows": 3,
+            "canvas": [
+              2880,
+              1320
+            ],
+            "firstFrameIndex": 0
+          }
+        ],
+        "frameCount": 18,
+        "frames": [
+          {
+            "sampleIndex": 0,
+            "sourceFrameIndex": 0,
+            "sourceFrameNumber": 1,
+            "sourcePtsSeconds": 0.0,
+            "targetTimeSeconds": 0.0,
+            "durationMs": 222.222,
+            "atlasCellIndex": 0
+          },
+          {
+            "sampleIndex": 1,
+            "sourceFrameIndex": 5,
+            "sourceFrameNumber": 6,
+            "sourcePtsSeconds": 0.208333,
+            "targetTimeSeconds": 0.222222,
+            "durationMs": 222.222,
+            "atlasCellIndex": 1
+          },
+          {
+            "sampleIndex": 2,
+            "sourceFrameIndex": 11,
+            "sourceFrameNumber": 12,
+            "sourcePtsSeconds": 0.458333,
+            "targetTimeSeconds": 0.444444,
+            "durationMs": 222.222,
+            "atlasCellIndex": 2
+          },
+          {
+            "sampleIndex": 3,
+            "sourceFrameIndex": 16,
+            "sourceFrameNumber": 17,
+            "sourcePtsSeconds": 0.666667,
+            "targetTimeSeconds": 0.666667,
+            "durationMs": 222.222,
+            "atlasCellIndex": 3
+          },
+          {
+            "sampleIndex": 4,
+            "sourceFrameIndex": 21,
+            "sourceFrameNumber": 22,
+            "sourcePtsSeconds": 0.875,
+            "targetTimeSeconds": 0.888889,
+            "durationMs": 222.222,
+            "atlasCellIndex": 4
+          },
+          {
+            "sampleIndex": 5,
+            "sourceFrameIndex": 27,
+            "sourceFrameNumber": 28,
+            "sourcePtsSeconds": 1.125,
+            "targetTimeSeconds": 1.111111,
+            "durationMs": 222.222,
+            "atlasCellIndex": 5
+          },
+          {
+            "sampleIndex": 6,
+            "sourceFrameIndex": 32,
+            "sourceFrameNumber": 33,
+            "sourcePtsSeconds": 1.333333,
+            "targetTimeSeconds": 1.333333,
+            "durationMs": 222.222,
+            "atlasCellIndex": 6
+          },
+          {
+            "sampleIndex": 7,
+            "sourceFrameIndex": 37,
+            "sourceFrameNumber": 38,
+            "sourcePtsSeconds": 1.541667,
+            "targetTimeSeconds": 1.555556,
+            "durationMs": 222.222,
+            "atlasCellIndex": 7
+          },
+          {
+            "sampleIndex": 8,
+            "sourceFrameIndex": 43,
+            "sourceFrameNumber": 44,
+            "sourcePtsSeconds": 1.791667,
+            "targetTimeSeconds": 1.777778,
+            "durationMs": 222.222,
+            "atlasCellIndex": 8
+          },
+          {
+            "sampleIndex": 9,
+            "sourceFrameIndex": 48,
+            "sourceFrameNumber": 49,
+            "sourcePtsSeconds": 2.0,
+            "targetTimeSeconds": 2.0,
+            "durationMs": 222.222,
+            "atlasCellIndex": 9
+          },
+          {
+            "sampleIndex": 10,
+            "sourceFrameIndex": 53,
+            "sourceFrameNumber": 54,
+            "sourcePtsSeconds": 2.208333,
+            "targetTimeSeconds": 2.222222,
+            "durationMs": 222.222,
+            "atlasCellIndex": 10
+          },
+          {
+            "sampleIndex": 11,
+            "sourceFrameIndex": 59,
+            "sourceFrameNumber": 60,
+            "sourcePtsSeconds": 2.458333,
+            "targetTimeSeconds": 2.444444,
+            "durationMs": 222.222,
+            "atlasCellIndex": 11
+          },
+          {
+            "sampleIndex": 12,
+            "sourceFrameIndex": 64,
+            "sourceFrameNumber": 65,
+            "sourcePtsSeconds": 2.666667,
+            "targetTimeSeconds": 2.666667,
+            "durationMs": 222.222,
+            "atlasCellIndex": 12
+          },
+          {
+            "sampleIndex": 13,
+            "sourceFrameIndex": 69,
+            "sourceFrameNumber": 70,
+            "sourcePtsSeconds": 2.875,
+            "targetTimeSeconds": 2.888889,
+            "durationMs": 222.222,
+            "atlasCellIndex": 13
+          },
+          {
+            "sampleIndex": 14,
+            "sourceFrameIndex": 75,
+            "sourceFrameNumber": 76,
+            "sourcePtsSeconds": 3.125,
+            "targetTimeSeconds": 3.111111,
+            "durationMs": 222.222,
+            "atlasCellIndex": 14
+          },
+          {
+            "sampleIndex": 15,
+            "sourceFrameIndex": 80,
+            "sourceFrameNumber": 81,
+            "sourcePtsSeconds": 3.333333,
+            "targetTimeSeconds": 3.333333,
+            "durationMs": 222.222,
+            "atlasCellIndex": 15
+          },
+          {
+            "sampleIndex": 16,
+            "sourceFrameIndex": 85,
+            "sourceFrameNumber": 86,
+            "sourcePtsSeconds": 3.541667,
+            "targetTimeSeconds": 3.555556,
+            "durationMs": 222.222,
+            "atlasCellIndex": 16
+          },
+          {
+            "sampleIndex": 17,
+            "sourceFrameIndex": 91,
+            "sourceFrameNumber": 92,
+            "sourcePtsSeconds": 3.791667,
+            "targetTimeSeconds": 3.777778,
+            "durationMs": 222.222,
+            "atlasCellIndex": 17
+          }
+        ],
+        "contactSheet": "run-18-contact.png",
+        "preview": {
+          "file": "preview/run-18frames.mp4",
+          "fps": 30,
+          "frames": 120,
+          "durationSeconds": 4.0,
+          "cycles": 1
+        }
+      },
+      "sourceAtlasSha256": "6efaf0d4b92a59fa012aead5ff248f3537276bc4bcf821ca3cb5c56dec3da7fb",
+      "runtimeDensity": 0.625,
+      "runtimeSha256": "5ed46be0114cc975f1f58be62a1b1e5018b499322ad4a91e91854b6a4dc3fbaf"
+    },
+    "dinh-ultimate": {
+      "file": "dinh-ultimate.webp",
+      "frames": 18,
+      "cols": 6,
+      "cellW": 300,
+      "cellH": 275,
+      "durations": [
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222
+      ],
+      "sourceMetadata": {
+        "state": "ultimate",
+        "sourceName": "ulti4---4bd8a65b-957f-4e48-9e1b-0b2560666564.mp4",
+        "sourceSha256": "7e463d7b28fd8870e7d2d883e74c4b54847d37ed30655031ffb1c6858d25515d",
+        "sourceResolution": [
+          1920,
+          1080
+        ],
+        "sourceFrameCount": 96,
+        "sourceDurationSeconds": 4.0,
+        "keyColorLinear": [
+          0.008023,
+          0.651406,
+          0.019382,
+          1.0
+        ],
+        "keyingSettings": {
+          "engine": "Blender 5.1.2 compositor Keying v2",
+          "clipBlack": 0.28,
+          "clipWhite": 0.68,
+          "dilateSize": -2,
+          "featherSize": 2,
+          "despillStrength": 1.2,
+          "despillBalance": 0.5,
+          "blurPre": 1,
+          "blurPost": 1
+        },
+        "crop": {
+          "method": "largest connected alpha component union plus 16px margin; detached corner icon excluded when separate",
+          "sourceRect": [
+            319,
+            83,
+            1375,
+            1027
+          ],
+          "cell": [
+            480,
+            440
+          ],
+          "contentSizeNoUpscale": [
+            480,
+            429
+          ],
+          "contentOffset": [
+            0,
+            11
+          ],
+          "pivot": "bottom-center"
+        },
+        "atlasPages": [
+          {
+            "file": "sprite_sheets/ultimate-18frames-6x3.png",
+            "frameCount": 18,
+            "columns": 6,
+            "rows": 3,
+            "canvas": [
+              2880,
+              1320
+            ],
+            "firstFrameIndex": 0
+          }
+        ],
+        "frameCount": 18,
+        "frames": [
+          {
+            "sampleIndex": 0,
+            "sourceFrameIndex": 0,
+            "sourceFrameNumber": 1,
+            "sourcePtsSeconds": 0.0,
+            "targetTimeSeconds": 0.0,
+            "durationMs": 222.222,
+            "atlasCellIndex": 0
+          },
+          {
+            "sampleIndex": 1,
+            "sourceFrameIndex": 5,
+            "sourceFrameNumber": 6,
+            "sourcePtsSeconds": 0.208333,
+            "targetTimeSeconds": 0.222222,
+            "durationMs": 222.222,
+            "atlasCellIndex": 1
+          },
+          {
+            "sampleIndex": 2,
+            "sourceFrameIndex": 11,
+            "sourceFrameNumber": 12,
+            "sourcePtsSeconds": 0.458333,
+            "targetTimeSeconds": 0.444444,
+            "durationMs": 222.222,
+            "atlasCellIndex": 2
+          },
+          {
+            "sampleIndex": 3,
+            "sourceFrameIndex": 16,
+            "sourceFrameNumber": 17,
+            "sourcePtsSeconds": 0.666667,
+            "targetTimeSeconds": 0.666667,
+            "durationMs": 222.222,
+            "atlasCellIndex": 3
+          },
+          {
+            "sampleIndex": 4,
+            "sourceFrameIndex": 21,
+            "sourceFrameNumber": 22,
+            "sourcePtsSeconds": 0.875,
+            "targetTimeSeconds": 0.888889,
+            "durationMs": 222.222,
+            "atlasCellIndex": 4
+          },
+          {
+            "sampleIndex": 5,
+            "sourceFrameIndex": 27,
+            "sourceFrameNumber": 28,
+            "sourcePtsSeconds": 1.125,
+            "targetTimeSeconds": 1.111111,
+            "durationMs": 222.222,
+            "atlasCellIndex": 5
+          },
+          {
+            "sampleIndex": 6,
+            "sourceFrameIndex": 32,
+            "sourceFrameNumber": 33,
+            "sourcePtsSeconds": 1.333333,
+            "targetTimeSeconds": 1.333333,
+            "durationMs": 222.222,
+            "atlasCellIndex": 6
+          },
+          {
+            "sampleIndex": 7,
+            "sourceFrameIndex": 37,
+            "sourceFrameNumber": 38,
+            "sourcePtsSeconds": 1.541667,
+            "targetTimeSeconds": 1.555556,
+            "durationMs": 222.222,
+            "atlasCellIndex": 7
+          },
+          {
+            "sampleIndex": 8,
+            "sourceFrameIndex": 43,
+            "sourceFrameNumber": 44,
+            "sourcePtsSeconds": 1.791667,
+            "targetTimeSeconds": 1.777778,
+            "durationMs": 222.222,
+            "atlasCellIndex": 8
+          },
+          {
+            "sampleIndex": 9,
+            "sourceFrameIndex": 48,
+            "sourceFrameNumber": 49,
+            "sourcePtsSeconds": 2.0,
+            "targetTimeSeconds": 2.0,
+            "durationMs": 222.222,
+            "atlasCellIndex": 9
+          },
+          {
+            "sampleIndex": 10,
+            "sourceFrameIndex": 53,
+            "sourceFrameNumber": 54,
+            "sourcePtsSeconds": 2.208333,
+            "targetTimeSeconds": 2.222222,
+            "durationMs": 222.222,
+            "atlasCellIndex": 10
+          },
+          {
+            "sampleIndex": 11,
+            "sourceFrameIndex": 59,
+            "sourceFrameNumber": 60,
+            "sourcePtsSeconds": 2.458333,
+            "targetTimeSeconds": 2.444444,
+            "durationMs": 222.222,
+            "atlasCellIndex": 11
+          },
+          {
+            "sampleIndex": 12,
+            "sourceFrameIndex": 64,
+            "sourceFrameNumber": 65,
+            "sourcePtsSeconds": 2.666667,
+            "targetTimeSeconds": 2.666667,
+            "durationMs": 222.222,
+            "atlasCellIndex": 12
+          },
+          {
+            "sampleIndex": 13,
+            "sourceFrameIndex": 69,
+            "sourceFrameNumber": 70,
+            "sourcePtsSeconds": 2.875,
+            "targetTimeSeconds": 2.888889,
+            "durationMs": 222.222,
+            "atlasCellIndex": 13
+          },
+          {
+            "sampleIndex": 14,
+            "sourceFrameIndex": 75,
+            "sourceFrameNumber": 76,
+            "sourcePtsSeconds": 3.125,
+            "targetTimeSeconds": 3.111111,
+            "durationMs": 222.222,
+            "atlasCellIndex": 14
+          },
+          {
+            "sampleIndex": 15,
+            "sourceFrameIndex": 80,
+            "sourceFrameNumber": 81,
+            "sourcePtsSeconds": 3.333333,
+            "targetTimeSeconds": 3.333333,
+            "durationMs": 222.222,
+            "atlasCellIndex": 15
+          },
+          {
+            "sampleIndex": 16,
+            "sourceFrameIndex": 85,
+            "sourceFrameNumber": 86,
+            "sourcePtsSeconds": 3.541667,
+            "targetTimeSeconds": 3.555556,
+            "durationMs": 222.222,
+            "atlasCellIndex": 16
+          },
+          {
+            "sampleIndex": 17,
+            "sourceFrameIndex": 91,
+            "sourceFrameNumber": 92,
+            "sourcePtsSeconds": 3.791667,
+            "targetTimeSeconds": 3.777778,
+            "durationMs": 222.222,
+            "atlasCellIndex": 17
+          }
+        ],
+        "contactSheet": "ultimate-18-contact.png",
+        "preview": {
+          "file": "preview/ultimate-18frames.mp4",
+          "fps": 30,
+          "frames": 120,
+          "durationSeconds": 4.0,
+          "cycles": 1
+        }
+      },
+      "sourceAtlasSha256": "c02186c55c867f8d40314339b083fa6ed62743e26017de912cf670d67b30fa06",
+      "runtimeDensity": 0.625,
+      "runtimeSha256": "2c41a50e9cbc678d8df1b24a8e30b83a814d8495b2fa0888b6411b2125ff4e1a"
+    },
+    "dinh-fx-vfx-atk": {
+      "file": "dinh-fx-vfx-atk.webp",
+      "frames": 18,
+      "cols": 6,
+      "cellW": 480,
+      "cellH": 440,
+      "durations": [
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222
+      ],
+      "sourceMetadata": {
+        "state": "vfx-atk",
+        "sourceName": "vfx_atk---61497274-9456-45dc-a8f1-a8c5e7ab8475.mp4",
+        "sourceSha256": "eeaa7df71cfb5516a734b7473ebe820232fc1ab0292570bee1a1a1bc9add4063",
+        "sourceResolution": [
+          1920,
+          1080
+        ],
+        "sourceFrameCount": 96,
+        "sourceDurationSeconds": 4.0,
+        "keyColorLinear": [
+          0.015996,
+          0.64448,
+          0.013702,
+          1.0
+        ],
+        "keyingSettings": {
+          "engine": "Blender 5.1.2 compositor Keying v2",
+          "clipBlack": 0.28,
+          "clipWhite": 0.68,
+          "dilateSize": -2,
+          "featherSize": 2,
+          "despillStrength": 1.2,
+          "despillBalance": 0.5,
+          "blurPre": 1,
+          "blurPost": 1
+        },
+        "crop": {
+          "method": "largest connected alpha component union plus 16px margin; detached corner icon excluded when separate",
+          "sourceRect": [
+            47,
+            99,
+            1920,
+            1003
+          ],
+          "cell": [
+            480,
+            440
+          ],
+          "contentSizeNoUpscale": [
+            480,
+            232
+          ],
+          "contentOffset": [
+            0,
+            208
+          ],
+          "pivot": "bottom-center"
+        },
+        "atlasPages": [
+          {
+            "file": "sprite_sheets/vfx-atk-18frames-6x3.png",
+            "frameCount": 18,
+            "columns": 6,
+            "rows": 3,
+            "canvas": [
+              2880,
+              1320
+            ],
+            "firstFrameIndex": 0
+          }
+        ],
+        "frameCount": 18,
+        "frames": [
+          {
+            "sampleIndex": 0,
+            "sourceFrameIndex": 0,
+            "sourceFrameNumber": 1,
+            "sourcePtsSeconds": 0.0,
+            "targetTimeSeconds": 0.0,
+            "durationMs": 222.222,
+            "atlasCellIndex": 0
+          },
+          {
+            "sampleIndex": 1,
+            "sourceFrameIndex": 5,
+            "sourceFrameNumber": 6,
+            "sourcePtsSeconds": 0.208333,
+            "targetTimeSeconds": 0.222222,
+            "durationMs": 222.222,
+            "atlasCellIndex": 1
+          },
+          {
+            "sampleIndex": 2,
+            "sourceFrameIndex": 11,
+            "sourceFrameNumber": 12,
+            "sourcePtsSeconds": 0.458333,
+            "targetTimeSeconds": 0.444444,
+            "durationMs": 222.222,
+            "atlasCellIndex": 2
+          },
+          {
+            "sampleIndex": 3,
+            "sourceFrameIndex": 16,
+            "sourceFrameNumber": 17,
+            "sourcePtsSeconds": 0.666667,
+            "targetTimeSeconds": 0.666667,
+            "durationMs": 222.222,
+            "atlasCellIndex": 3
+          },
+          {
+            "sampleIndex": 4,
+            "sourceFrameIndex": 21,
+            "sourceFrameNumber": 22,
+            "sourcePtsSeconds": 0.875,
+            "targetTimeSeconds": 0.888889,
+            "durationMs": 222.222,
+            "atlasCellIndex": 4
+          },
+          {
+            "sampleIndex": 5,
+            "sourceFrameIndex": 27,
+            "sourceFrameNumber": 28,
+            "sourcePtsSeconds": 1.125,
+            "targetTimeSeconds": 1.111111,
+            "durationMs": 222.222,
+            "atlasCellIndex": 5
+          },
+          {
+            "sampleIndex": 6,
+            "sourceFrameIndex": 32,
+            "sourceFrameNumber": 33,
+            "sourcePtsSeconds": 1.333333,
+            "targetTimeSeconds": 1.333333,
+            "durationMs": 222.222,
+            "atlasCellIndex": 6
+          },
+          {
+            "sampleIndex": 7,
+            "sourceFrameIndex": 37,
+            "sourceFrameNumber": 38,
+            "sourcePtsSeconds": 1.541667,
+            "targetTimeSeconds": 1.555556,
+            "durationMs": 222.222,
+            "atlasCellIndex": 7
+          },
+          {
+            "sampleIndex": 8,
+            "sourceFrameIndex": 43,
+            "sourceFrameNumber": 44,
+            "sourcePtsSeconds": 1.791667,
+            "targetTimeSeconds": 1.777778,
+            "durationMs": 222.222,
+            "atlasCellIndex": 8
+          },
+          {
+            "sampleIndex": 9,
+            "sourceFrameIndex": 48,
+            "sourceFrameNumber": 49,
+            "sourcePtsSeconds": 2.0,
+            "targetTimeSeconds": 2.0,
+            "durationMs": 222.222,
+            "atlasCellIndex": 9
+          },
+          {
+            "sampleIndex": 10,
+            "sourceFrameIndex": 53,
+            "sourceFrameNumber": 54,
+            "sourcePtsSeconds": 2.208333,
+            "targetTimeSeconds": 2.222222,
+            "durationMs": 222.222,
+            "atlasCellIndex": 10
+          },
+          {
+            "sampleIndex": 11,
+            "sourceFrameIndex": 59,
+            "sourceFrameNumber": 60,
+            "sourcePtsSeconds": 2.458333,
+            "targetTimeSeconds": 2.444444,
+            "durationMs": 222.222,
+            "atlasCellIndex": 11
+          },
+          {
+            "sampleIndex": 12,
+            "sourceFrameIndex": 64,
+            "sourceFrameNumber": 65,
+            "sourcePtsSeconds": 2.666667,
+            "targetTimeSeconds": 2.666667,
+            "durationMs": 222.222,
+            "atlasCellIndex": 12
+          },
+          {
+            "sampleIndex": 13,
+            "sourceFrameIndex": 69,
+            "sourceFrameNumber": 70,
+            "sourcePtsSeconds": 2.875,
+            "targetTimeSeconds": 2.888889,
+            "durationMs": 222.222,
+            "atlasCellIndex": 13
+          },
+          {
+            "sampleIndex": 14,
+            "sourceFrameIndex": 75,
+            "sourceFrameNumber": 76,
+            "sourcePtsSeconds": 3.125,
+            "targetTimeSeconds": 3.111111,
+            "durationMs": 222.222,
+            "atlasCellIndex": 14
+          },
+          {
+            "sampleIndex": 15,
+            "sourceFrameIndex": 80,
+            "sourceFrameNumber": 81,
+            "sourcePtsSeconds": 3.333333,
+            "targetTimeSeconds": 3.333333,
+            "durationMs": 222.222,
+            "atlasCellIndex": 15
+          },
+          {
+            "sampleIndex": 16,
+            "sourceFrameIndex": 85,
+            "sourceFrameNumber": 86,
+            "sourcePtsSeconds": 3.541667,
+            "targetTimeSeconds": 3.555556,
+            "durationMs": 222.222,
+            "atlasCellIndex": 16
+          },
+          {
+            "sampleIndex": 17,
+            "sourceFrameIndex": 91,
+            "sourceFrameNumber": 92,
+            "sourcePtsSeconds": 3.791667,
+            "targetTimeSeconds": 3.777778,
+            "durationMs": 222.222,
+            "atlasCellIndex": 17
+          }
+        ],
+        "contactSheet": "vfx-atk-18-contact.png",
+        "preview": {
+          "file": "preview/vfx-atk-18frames.mp4",
+          "fps": 30,
+          "frames": 120,
+          "durationSeconds": 4.0,
+          "cycles": 1
+        },
+        "assetType": "vfx",
+        "originalSourceCopy": "original-source/vfx-atk-source.mp4",
+        "sfxExtraction": "separate deliverable; source AAC retained in original source only"
+      },
+      "sourceAtlasSha256": "31fc97eeabc6006a536c4dd34d8bca8be77de734ec169e72e825f6891b46fc1e",
+      "runtimeSha256": "e4d46d9ca40b800e34811af2c8616b24d4f388d99a0b741438a005afc368575f"
+    },
+    "dinh-fx-vfx-ultimate": {
+      "file": "dinh-fx-vfx-ultimate.webp",
+      "frames": 18,
+      "cols": 6,
+      "cellW": 480,
+      "cellH": 440,
+      "durations": [
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222,
+        222.222
+      ],
+      "sourceMetadata": {
+        "state": "vfx-ultimate",
+        "sourceName": "vfx_ulti---ccf4a7b4-7c41-4a4e-b85a-77e388b31947.mp4",
+        "sourceSha256": "6d53282c7b59b9ebd0369d1708f27a1e470cc7098f639289774f6aed84f58b76",
+        "sourceResolution": [
+          1920,
+          1080
+        ],
+        "sourceFrameCount": 96,
+        "sourceDurationSeconds": 4.0,
+        "keyColorLinear": [
+          0.006049,
+          0.533276,
+          0.009721,
+          1.0
+        ],
+        "keyingSettings": {
+          "engine": "Blender 5.1.2 compositor Keying v2",
+          "clipBlack": 0.28,
+          "clipWhite": 0.68,
+          "dilateSize": -2,
+          "featherSize": 2,
+          "despillStrength": 1.2,
+          "despillBalance": 0.5,
+          "blurPre": 1,
+          "blurPost": 1
+        },
+        "crop": {
+          "method": "largest connected alpha component union plus 16px margin; detached corner icon excluded when separate",
+          "sourceRect": [
+            0,
+            0,
+            1920,
+            1080
+          ],
+          "cell": [
+            480,
+            440
+          ],
+          "contentSizeNoUpscale": [
+            480,
+            270
+          ],
+          "contentOffset": [
+            0,
+            170
+          ],
+          "pivot": "bottom-center"
+        },
+        "atlasPages": [
+          {
+            "file": "sprite_sheets/vfx-ultimate-18frames-6x3.png",
+            "frameCount": 18,
+            "columns": 6,
+            "rows": 3,
+            "canvas": [
+              2880,
+              1320
+            ],
+            "firstFrameIndex": 0
+          }
+        ],
+        "frameCount": 18,
+        "frames": [
+          {
+            "sampleIndex": 0,
+            "sourceFrameIndex": 0,
+            "sourceFrameNumber": 1,
+            "sourcePtsSeconds": 0.0,
+            "targetTimeSeconds": 0.0,
+            "durationMs": 222.222,
+            "atlasCellIndex": 0
+          },
+          {
+            "sampleIndex": 1,
+            "sourceFrameIndex": 5,
+            "sourceFrameNumber": 6,
+            "sourcePtsSeconds": 0.208333,
+            "targetTimeSeconds": 0.222222,
+            "durationMs": 222.222,
+            "atlasCellIndex": 1
+          },
+          {
+            "sampleIndex": 2,
+            "sourceFrameIndex": 11,
+            "sourceFrameNumber": 12,
+            "sourcePtsSeconds": 0.458333,
+            "targetTimeSeconds": 0.444444,
+            "durationMs": 222.222,
+            "atlasCellIndex": 2
+          },
+          {
+            "sampleIndex": 3,
+            "sourceFrameIndex": 16,
+            "sourceFrameNumber": 17,
+            "sourcePtsSeconds": 0.666667,
+            "targetTimeSeconds": 0.666667,
+            "durationMs": 222.222,
+            "atlasCellIndex": 3
+          },
+          {
+            "sampleIndex": 4,
+            "sourceFrameIndex": 21,
+            "sourceFrameNumber": 22,
+            "sourcePtsSeconds": 0.875,
+            "targetTimeSeconds": 0.888889,
+            "durationMs": 222.222,
+            "atlasCellIndex": 4
+          },
+          {
+            "sampleIndex": 5,
+            "sourceFrameIndex": 27,
+            "sourceFrameNumber": 28,
+            "sourcePtsSeconds": 1.125,
+            "targetTimeSeconds": 1.111111,
+            "durationMs": 222.222,
+            "atlasCellIndex": 5
+          },
+          {
+            "sampleIndex": 6,
+            "sourceFrameIndex": 32,
+            "sourceFrameNumber": 33,
+            "sourcePtsSeconds": 1.333333,
+            "targetTimeSeconds": 1.333333,
+            "durationMs": 222.222,
+            "atlasCellIndex": 6
+          },
+          {
+            "sampleIndex": 7,
+            "sourceFrameIndex": 37,
+            "sourceFrameNumber": 38,
+            "sourcePtsSeconds": 1.541667,
+            "targetTimeSeconds": 1.555556,
+            "durationMs": 222.222,
+            "atlasCellIndex": 7
+          },
+          {
+            "sampleIndex": 8,
+            "sourceFrameIndex": 43,
+            "sourceFrameNumber": 44,
+            "sourcePtsSeconds": 1.791667,
+            "targetTimeSeconds": 1.777778,
+            "durationMs": 222.222,
+            "atlasCellIndex": 8
+          },
+          {
+            "sampleIndex": 9,
+            "sourceFrameIndex": 48,
+            "sourceFrameNumber": 49,
+            "sourcePtsSeconds": 2.0,
+            "targetTimeSeconds": 2.0,
+            "durationMs": 222.222,
+            "atlasCellIndex": 9
+          },
+          {
+            "sampleIndex": 10,
+            "sourceFrameIndex": 53,
+            "sourceFrameNumber": 54,
+            "sourcePtsSeconds": 2.208333,
+            "targetTimeSeconds": 2.222222,
+            "durationMs": 222.222,
+            "atlasCellIndex": 10
+          },
+          {
+            "sampleIndex": 11,
+            "sourceFrameIndex": 59,
+            "sourceFrameNumber": 60,
+            "sourcePtsSeconds": 2.458333,
+            "targetTimeSeconds": 2.444444,
+            "durationMs": 222.222,
+            "atlasCellIndex": 11
+          },
+          {
+            "sampleIndex": 12,
+            "sourceFrameIndex": 64,
+            "sourceFrameNumber": 65,
+            "sourcePtsSeconds": 2.666667,
+            "targetTimeSeconds": 2.666667,
+            "durationMs": 222.222,
+            "atlasCellIndex": 12
+          },
+          {
+            "sampleIndex": 13,
+            "sourceFrameIndex": 69,
+            "sourceFrameNumber": 70,
+            "sourcePtsSeconds": 2.875,
+            "targetTimeSeconds": 2.888889,
+            "durationMs": 222.222,
+            "atlasCellIndex": 13
+          },
+          {
+            "sampleIndex": 14,
+            "sourceFrameIndex": 75,
+            "sourceFrameNumber": 76,
+            "sourcePtsSeconds": 3.125,
+            "targetTimeSeconds": 3.111111,
+            "durationMs": 222.222,
+            "atlasCellIndex": 14
+          },
+          {
+            "sampleIndex": 15,
+            "sourceFrameIndex": 80,
+            "sourceFrameNumber": 81,
+            "sourcePtsSeconds": 3.333333,
+            "targetTimeSeconds": 3.333333,
+            "durationMs": 222.222,
+            "atlasCellIndex": 15
+          },
+          {
+            "sampleIndex": 16,
+            "sourceFrameIndex": 85,
+            "sourceFrameNumber": 86,
+            "sourcePtsSeconds": 3.541667,
+            "targetTimeSeconds": 3.555556,
+            "durationMs": 222.222,
+            "atlasCellIndex": 16
+          },
+          {
+            "sampleIndex": 17,
+            "sourceFrameIndex": 91,
+            "sourceFrameNumber": 92,
+            "sourcePtsSeconds": 3.791667,
+            "targetTimeSeconds": 3.777778,
+            "durationMs": 222.222,
+            "atlasCellIndex": 17
+          }
+        ],
+        "contactSheet": "vfx-ultimate-18-contact.png",
+        "preview": {
+          "file": "preview/vfx-ultimate-18frames.mp4",
+          "fps": 30,
+          "frames": 120,
+          "durationSeconds": 4.0,
+          "cycles": 1
+        },
+        "assetType": "vfx",
+        "originalSourceCopy": "original-source/vfx-ultimate-source.mp4",
+        "sfxExtraction": "separate deliverable; source AAC retained in original source only"
+      },
+      "sourceAtlasSha256": "b5b83ad7dbee7061aa950f8a34b79d7649f18594ccc37fc1e20aee61db70359d",
+      "runtimeSha256": "e37426c04bf5b5435b570e141d4092738918d717dc25fd497886ed60284b0e42"
+    },
+    "thay-idle": {
+      "file": "thay-idle.webp",
+      "frames": 30,
+      "cols": 8,
+      "cellW": 300,
+      "cellH": 275,
+      "durations": [
+        125.0,
+        125.0,
+        166.667,
+        125.0,
+        125.0,
+        125.0,
+        125.0,
+        166.666,
+        125.0,
+        125.0,
+        125.0,
+        125.0,
+        166.667,
+        125.0,
+        125.0,
+        125.0,
+        166.667,
+        125.0,
+        125.0,
+        125.0,
+        125.0,
+        166.666,
+        125.0,
+        125.0,
+        125.0,
+        125.0,
+        166.667,
+        125.0,
+        125.0,
+        41.667
+      ],
+      "sourceMetadata": {
+        "state": "idle",
+        "sourceName": "idle5---b3ecee01-4171-48ab-8766-7c1ccd39a05e.mp4",
+        "sourceSha256": "771be16af378dd17f5424325e2ced0cdf37a0e6aedaf2807312c61303bd3af73",
+        "sourceResolution": [
+          1920,
+          1080
+        ],
+        "sourceFrameCount": 96,
+        "sourceDurationSeconds": 4.0,
+        "keyColorLinear": [
+          0.007499,
+          0.467784,
+          0.025187,
+          1.0
+        ],
+        "keyingSettings": {
+          "engine": "Blender 5.1.2 compositor Keying v2",
+          "clipBlack": 0.28,
+          "clipWhite": 0.68,
+          "dilateSize": -2,
+          "featherSize": 2,
+          "despillStrength": 1.2,
+          "despillBalance": 0.5,
+          "blurPre": 1,
+          "blurPost": 1
+        },
+        "crop": {
+          "method": "largest connected alpha component union plus 16px margin; detached corner icon excluded when separate",
+          "sourceRect": [
+            447,
+            11,
+            1387,
+            1079
+          ],
+          "cell": [
+            480,
+            440
+          ],
+          "contentSizeNoUpscale": [
+            387,
+            440
+          ],
+          "contentOffset": [
+            46,
+            0
+          ],
+          "pivot": "bottom-center"
+        },
+        "atlasPages": [
+          {
+            "file": "sprite_sheets/idle-atlas-01.png",
+            "frameCount": 30,
+            "columns": 8,
+            "rows": 4,
+            "canvas": [
+              3840,
+              1760
+            ],
+            "firstFrameIndex": 0
+          }
+        ],
+        "frameCount": 30,
+        "frames": [
+          {
+            "loopIndex": 0,
+            "sourceFrameIndex": 0,
+            "sourceFrameNumber": 1,
+            "sourcePtsSeconds": 0.0,
+            "durationMs": 125.0,
+            "sourceFramesRepresented": 3,
+            "atlasCellIndex": 0
+          },
+          {
+            "loopIndex": 1,
+            "sourceFrameIndex": 3,
+            "sourceFrameNumber": 4,
+            "sourcePtsSeconds": 0.125,
+            "durationMs": 125.0,
+            "sourceFramesRepresented": 3,
+            "atlasCellIndex": 1
+          },
+          {
+            "loopIndex": 2,
+            "sourceFrameIndex": 6,
+            "sourceFrameNumber": 7,
+            "sourcePtsSeconds": 0.25,
+            "durationMs": 166.667,
+            "sourceFramesRepresented": 4,
+            "atlasCellIndex": 2
+          },
+          {
+            "loopIndex": 3,
+            "sourceFrameIndex": 10,
+            "sourceFrameNumber": 11,
+            "sourcePtsSeconds": 0.416667,
+            "durationMs": 125.0,
+            "sourceFramesRepresented": 3,
+            "atlasCellIndex": 3
+          },
+          {
+            "loopIndex": 4,
+            "sourceFrameIndex": 13,
+            "sourceFrameNumber": 14,
+            "sourcePtsSeconds": 0.541667,
+            "durationMs": 125.0,
+            "sourceFramesRepresented": 3,
+            "atlasCellIndex": 4
+          },
+          {
+            "loopIndex": 5,
+            "sourceFrameIndex": 16,
+            "sourceFrameNumber": 17,
+            "sourcePtsSeconds": 0.666667,
+            "durationMs": 125.0,
+            "sourceFramesRepresented": 3,
+            "atlasCellIndex": 5
+          },
+          {
+            "loopIndex": 6,
+            "sourceFrameIndex": 19,
+            "sourceFrameNumber": 20,
+            "sourcePtsSeconds": 0.791667,
+            "durationMs": 125.0,
+            "sourceFramesRepresented": 3,
+            "atlasCellIndex": 6
+          },
+          {
+            "loopIndex": 7,
+            "sourceFrameIndex": 22,
+            "sourceFrameNumber": 23,
+            "sourcePtsSeconds": 0.916667,
+            "durationMs": 166.666,
+            "sourceFramesRepresented": 4,
+            "atlasCellIndex": 7
+          },
+          {
+            "loopIndex": 8,
+            "sourceFrameIndex": 26,
+            "sourceFrameNumber": 27,
+            "sourcePtsSeconds": 1.083333,
+            "durationMs": 125.0,
+            "sourceFramesRepresented": 3,
+            "atlasCellIndex": 8
+          },
+          {
+            "loopIndex": 9,
+            "sourceFrameIndex": 29,
+            "sourceFrameNumber": 30,
+            "sourcePtsSeconds": 1.208333,
+            "durationMs": 125.0,
+            "sourceFramesRepresented": 3,
+            "atlasCellIndex": 9
+          },
+          {
+            "loopIndex": 10,
+            "sourceFrameIndex": 32,
+            "sourceFrameNumber": 33,
+            "sourcePtsSeconds": 1.333333,
+            "durationMs": 125.0,
+            "sourceFramesRepresented": 3,
+            "atlasCellIndex": 10
+          },
+          {
+            "loopIndex": 11,
+            "sourceFrameIndex": 35,
+            "sourceFrameNumber": 36,
+            "sourcePtsSeconds": 1.458333,
+            "durationMs": 125.0,
+            "sourceFramesRepresented": 3,
+            "atlasCellIndex": 11
+          },
+          {
+            "loopIndex": 12,
+            "sourceFrameIndex": 38,
+            "sourceFrameNumber": 39,
+            "sourcePtsSeconds": 1.583333,
+            "durationMs": 166.667,
+            "sourceFramesRepresented": 4,
+            "atlasCellIndex": 12
+          },
+          {
+            "loopIndex": 13,
+            "sourceFrameIndex": 42,
+            "sourceFrameNumber": 43,
+            "sourcePtsSeconds": 1.75,
+            "durationMs": 125.0,
+            "sourceFramesRepresented": 3,
+            "atlasCellIndex": 13
+          },
+          {
+            "loopIndex": 14,
+            "sourceFrameIndex": 45,
+            "sourceFrameNumber": 46,
+            "sourcePtsSeconds": 1.875,
+            "durationMs": 125.0,
+            "sourceFramesRepresented": 3,
+            "atlasCellIndex": 14
+          },
+          {
+            "loopIndex": 15,
+            "sourceFrameIndex": 48,
+            "sourceFrameNumber": 49,
+            "sourcePtsSeconds": 2.0,
+            "durationMs": 125.0,
+            "sourceFramesRepresented": 3,
+            "atlasCellIndex": 15
+          },
+          {
+            "loopIndex": 16,
+            "sourceFrameIndex": 51,
+            "sourceFrameNumber": 52,
+            "sourcePtsSeconds": 2.125,
+            "durationMs": 166.667,
+            "sourceFramesRepresented": 4,
+            "atlasCellIndex": 16
+          },
+          {
+            "loopIndex": 17,
+            "sourceFrameIndex": 55,
+            "sourceFrameNumber": 56,
+            "sourcePtsSeconds": 2.291667,
+            "durationMs": 125.0,
+            "sourceFramesRepresented": 3,
+            "atlasCellIndex": 17
+          },
+          {
+            "loopIndex": 18,
+            "sourceFrameIndex": 58,
+            "sourceFrameNumber": 59,
+            "sourcePtsSeconds": 2.416667,
+            "durationMs": 125.0,
+            "sourceFramesRepresented": 3,
+            "atlasCellIndex": 18
+          },
+          {
+            "loopIndex": 19,
+            "sourceFrameIndex": 61,
+            "sourceFrameNumber": 62,
+            "sourcePtsSeconds": 2.541667,
+            "durationMs": 125.0,
+            "sourceFramesRepresented": 3,
+            "atlasCellIndex": 19
+          },
+          {
+            "loopIndex": 20,
+            "sourceFrameIndex": 64,
+            "sourceFrameNumber": 65,
+            "sourcePtsSeconds": 2.666667,
+            "durationMs": 125.0,
+            "sourceFramesRepresented": 3,
+            "atlasCellIndex": 20
+          },
+          {
+            "loopIndex": 21,
+            "sourceFrameIndex": 67,
+            "sourceFrameNumber": 68,
+            "sourcePtsSeconds": 2.791667,
+            "durationMs": 166.666,
+            "sourceFramesRepresented": 4,
+            "atlasCellIndex": 21
+          },
+          {
+            "loopIndex": 22,
+            "sourceFrameIndex": 71,
+            "sourceFrameNumber": 72,
+            "sourcePtsSeconds": 2.958333,
+            "durationMs": 125.0,
+            "sourceFramesRepresented": 3,
+            "atlasCellIndex": 22
+          },
+          {
+            "loopIndex": 23,
+            "sourceFrameIndex": 74,
+            "sourceFrameNumber": 75,
+            "sourcePtsSeconds": 3.083333,
+            "durationMs": 125.0,
+            "sourceFramesRepresented": 3,
+            "atlasCellIndex": 23
+          },
+          {
+            "loopIndex": 24,
+            "sourceFrameIndex": 77,
+            "sourceFrameNumber": 78,
+            "sourcePtsSeconds": 3.208333,
+            "durationMs": 125.0,
+            "sourceFramesRepresented": 3,
+            "atlasCellIndex": 24
+          },
+          {
+            "loopIndex": 25,
+            "sourceFrameIndex": 80,
+            "sourceFrameNumber": 81,
+            "sourcePtsSeconds": 3.333333,
+            "durationMs": 125.0,
+            "sourceFramesRepresented": 3,
+            "atlasCellIndex": 25
+          },
+          {
+            "loopIndex": 26,
+            "sourceFrameIndex": 83,
+            "sourceFrameNumber": 84,
+            "sourcePtsSeconds": 3.458333,
+            "durationMs": 166.667,
+            "sourceFramesRepresented": 4,
+            "atlasCellIndex": 26
+          },
+          {
+            "loopIndex": 27,
+            "sourceFrameIndex": 87,
+            "sourceFrameNumber": 88,
+            "sourcePtsSeconds": 3.625,
+            "durationMs": 125.0,
+            "sourceFramesRepresented": 3,
+            "atlasCellIndex": 27
+          },
+          {
+            "loopIndex": 28,
+            "sourceFrameIndex": 90,
+            "sourceFrameNumber": 91,
+            "sourcePtsSeconds": 3.75,
+            "durationMs": 125.0,
+            "sourceFramesRepresented": 3,
+            "atlasCellIndex": 28
+          },
+          {
+            "loopIndex": 29,
+            "sourceFrameIndex": 93,
+            "sourceFrameNumber": 94,
+            "sourcePtsSeconds": 3.875,
+            "durationMs": 41.667,
+            "sourceFramesRepresented": 1,
+            "atlasCellIndex": 29
+          }
+        ],
+        "contactSheet": "idle-loop-contact-12.png",
+        "preview": {
+          "file": "preview/idle-loop-review-2cycles.mp4",
+          "fps": 30,
+          "frames": 235,
+          "durationSeconds": 7.833333,
+          "cycles": 2
+        },
+        "loop": {
+          "startSourceFrame": 1,
+          "endSourceFrameInclusive": 94,
+          "startPtsSeconds": 0.0,
+          "durationSeconds": 3.916667,
+          "alphaSilhouetteIoUStartEnd": 0.9638,
+          "minimumAlphaSilhouetteIoU": 0.92,
+          "seamOverride": {
+            "ownerApproved": false,
+            "minimumIoU": 0.92,
+            "reason": ""
+          }
+        },
+        "assetType": "idle-preview",
+        "originalSourceCopy": "original-source/idle-source.mp4"
+      },
+      "sourceAtlasSha256": "2c21586585983597855ef8b10350e7cbc2cc6562e855d3b4cfd1849d1c823614",
+      "runtimeDensity": 0.625,
+      "runtimeSha256": "fc6e6f6112a48030948d4b8a84f38cdd7ecf2e73e6c54a96e275167d9b710bf4"
+    },
+    "thay-vfx-ultimate": {
+      "file": "thay-vfx-ultimate.webp",
+      "frames": 18,
+      "cols": 6,
+      "cellW": 480,
+      "cellH": 440,
+      "durations": [
+        222.778,
+        222.778,
+        222.778,
+        222.778,
+        222.778,
+        222.778,
+        222.778,
+        222.778,
+        222.778,
+        222.778,
+        222.778,
+        222.778,
+        222.778,
+        222.778,
+        222.778,
+        222.778,
+        222.778,
+        222.778
+      ],
+      "sourceMetadata": {
+        "state": "vfx-ultimate",
+        "sourceName": "vfx_ulti5---82462ff9-52c7-41cf-ac98-7e051ca16c0d.mp4",
+        "sourceSha256": "94842821d5bc5e403fd3bc854343cc447948c7805ebd45d97318a53a1a6fe572",
+        "sourceResolution": [
+          1280,
+          720
+        ],
+        "sourceFrameCount": 96,
+        "sourceDurationSeconds": 4.01,
+        "keyColorLinear": [
+          0.003677,
+          0.381326,
+          0.011612,
+          1.0
+        ],
+        "keyingSettings": {
+          "engine": "Blender 5.1.2 compositor Keying v2",
+          "clipBlack": 0.28,
+          "clipWhite": 0.68,
+          "dilateSize": -2,
+          "featherSize": 2,
+          "despillStrength": 1.2,
+          "despillBalance": 0.5,
+          "blurPre": 1,
+          "blurPost": 1
+        },
+        "crop": {
+          "method": "largest connected alpha component union plus 16px margin; detached corner icon excluded when separate",
+          "sourceRect": [
+            47,
+            23,
+            1223,
+            720
+          ],
+          "cell": [
+            480,
+            440
+          ],
+          "contentSizeNoUpscale": [
+            480,
+            284
+          ],
+          "contentOffset": [
+            0,
+            156
+          ],
+          "pivot": "bottom-center"
+        },
+        "atlasPages": [
+          {
+            "file": "sprite_sheets/vfx-ultimate-18frames-6x3.png",
+            "frameCount": 18,
+            "columns": 6,
+            "rows": 3,
+            "canvas": [
+              2880,
+              1320
+            ],
+            "firstFrameIndex": 0
+          }
+        ],
+        "frameCount": 18,
+        "frames": [
+          {
+            "sampleIndex": 0,
+            "sourceFrameIndex": 0,
+            "sourceFrameNumber": 1,
+            "sourcePtsSeconds": 0.0,
+            "targetTimeSeconds": 0.0,
+            "durationMs": 222.778,
+            "atlasCellIndex": 0
+          },
+          {
+            "sampleIndex": 1,
+            "sourceFrameIndex": 5,
+            "sourceFrameNumber": 6,
+            "sourcePtsSeconds": 0.208333,
+            "targetTimeSeconds": 0.222778,
+            "durationMs": 222.778,
+            "atlasCellIndex": 1
+          },
+          {
+            "sampleIndex": 2,
+            "sourceFrameIndex": 11,
+            "sourceFrameNumber": 12,
+            "sourcePtsSeconds": 0.458333,
+            "targetTimeSeconds": 0.445556,
+            "durationMs": 222.778,
+            "atlasCellIndex": 2
+          },
+          {
+            "sampleIndex": 3,
+            "sourceFrameIndex": 16,
+            "sourceFrameNumber": 17,
+            "sourcePtsSeconds": 0.666667,
+            "targetTimeSeconds": 0.668333,
+            "durationMs": 222.778,
+            "atlasCellIndex": 3
+          },
+          {
+            "sampleIndex": 4,
+            "sourceFrameIndex": 21,
+            "sourceFrameNumber": 22,
+            "sourcePtsSeconds": 0.875,
+            "targetTimeSeconds": 0.891111,
+            "durationMs": 222.778,
+            "atlasCellIndex": 4
+          },
+          {
+            "sampleIndex": 5,
+            "sourceFrameIndex": 27,
+            "sourceFrameNumber": 28,
+            "sourcePtsSeconds": 1.125,
+            "targetTimeSeconds": 1.113889,
+            "durationMs": 222.778,
+            "atlasCellIndex": 5
+          },
+          {
+            "sampleIndex": 6,
+            "sourceFrameIndex": 32,
+            "sourceFrameNumber": 33,
+            "sourcePtsSeconds": 1.333333,
+            "targetTimeSeconds": 1.336667,
+            "durationMs": 222.778,
+            "atlasCellIndex": 6
+          },
+          {
+            "sampleIndex": 7,
+            "sourceFrameIndex": 37,
+            "sourceFrameNumber": 38,
+            "sourcePtsSeconds": 1.541667,
+            "targetTimeSeconds": 1.559444,
+            "durationMs": 222.778,
+            "atlasCellIndex": 7
+          },
+          {
+            "sampleIndex": 8,
+            "sourceFrameIndex": 43,
+            "sourceFrameNumber": 44,
+            "sourcePtsSeconds": 1.791667,
+            "targetTimeSeconds": 1.782222,
+            "durationMs": 222.778,
+            "atlasCellIndex": 8
+          },
+          {
+            "sampleIndex": 9,
+            "sourceFrameIndex": 48,
+            "sourceFrameNumber": 49,
+            "sourcePtsSeconds": 2.0,
+            "targetTimeSeconds": 2.005,
+            "durationMs": 222.778,
+            "atlasCellIndex": 9
+          },
+          {
+            "sampleIndex": 10,
+            "sourceFrameIndex": 53,
+            "sourceFrameNumber": 54,
+            "sourcePtsSeconds": 2.208333,
+            "targetTimeSeconds": 2.227778,
+            "durationMs": 222.778,
+            "atlasCellIndex": 10
+          },
+          {
+            "sampleIndex": 11,
+            "sourceFrameIndex": 59,
+            "sourceFrameNumber": 60,
+            "sourcePtsSeconds": 2.458333,
+            "targetTimeSeconds": 2.450556,
+            "durationMs": 222.778,
+            "atlasCellIndex": 11
+          },
+          {
+            "sampleIndex": 12,
+            "sourceFrameIndex": 64,
+            "sourceFrameNumber": 65,
+            "sourcePtsSeconds": 2.666667,
+            "targetTimeSeconds": 2.673333,
+            "durationMs": 222.778,
+            "atlasCellIndex": 12
+          },
+          {
+            "sampleIndex": 13,
+            "sourceFrameIndex": 70,
+            "sourceFrameNumber": 71,
+            "sourcePtsSeconds": 2.916667,
+            "targetTimeSeconds": 2.896111,
+            "durationMs": 222.778,
+            "atlasCellIndex": 13
+          },
+          {
+            "sampleIndex": 14,
+            "sourceFrameIndex": 75,
+            "sourceFrameNumber": 76,
+            "sourcePtsSeconds": 3.125,
+            "targetTimeSeconds": 3.118889,
+            "durationMs": 222.778,
+            "atlasCellIndex": 14
+          },
+          {
+            "sampleIndex": 15,
+            "sourceFrameIndex": 80,
+            "sourceFrameNumber": 81,
+            "sourcePtsSeconds": 3.333333,
+            "targetTimeSeconds": 3.341667,
+            "durationMs": 222.778,
+            "atlasCellIndex": 15
+          },
+          {
+            "sampleIndex": 16,
+            "sourceFrameIndex": 86,
+            "sourceFrameNumber": 87,
+            "sourcePtsSeconds": 3.583333,
+            "targetTimeSeconds": 3.564444,
+            "durationMs": 222.778,
+            "atlasCellIndex": 16
+          },
+          {
+            "sampleIndex": 17,
+            "sourceFrameIndex": 91,
+            "sourceFrameNumber": 92,
+            "sourcePtsSeconds": 3.791667,
+            "targetTimeSeconds": 3.787222,
+            "durationMs": 222.778,
+            "atlasCellIndex": 17
+          }
+        ],
+        "contactSheet": "vfx-ultimate-18-contact.png",
+        "preview": {
+          "file": "preview/vfx-ultimate-18frames.mp4",
+          "fps": 30,
+          "frames": 120,
+          "durationSeconds": 4.0,
+          "cycles": 1
+        },
+        "assetType": "vfx",
+        "originalSourceCopy": "original-source/vfx-ultimate-source.mp4"
+      },
+      "sourceAtlasSha256": "26e638cb1f6037939036dbec7da534c70d715faa2d765127f95f4d351b42afca",
+      "runtimeSha256": "d22f64caaec146324765984e6c0c4cb795fd2c621c8024e0c10fd0f0efbf2c82"
+    },
+    "dinh-shield": {
+      "file": "dinh-shield.webp",
+      "frames": 15,
+      "cols": 5,
+      "cellW": 128,
+      "cellH": 160,
+      "durations": [
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60,
+        60
+      ],
+      "sourceMetadata": {
+        "ma": "tw_70_jzz_b",
+        "phai": "tianwang",
+        "phai_ten": "Thiên Vương",
+        "hanh": "Kim",
+        "frames_n": 15,
+        "interval_ms": 60,
+        "dirs": null,
+        "nguon": "pak\\image_4.pak #436",
+        "dung_boi": [],
+        "sfx": [],
+        "frames": [
+          {
+            "f": 0,
+            "png": "f00.png",
+            "w": 111,
+            "h": 139,
+            "ox": 8,
+            "oy": 13
+          },
+          {
+            "f": 1,
+            "png": "f01.png",
+            "w": 111,
+            "h": 139,
+            "ox": 8,
+            "oy": 13
+          },
+          {
+            "f": 2,
+            "png": "f02.png",
+            "w": 111,
+            "h": 139,
+            "ox": 8,
+            "oy": 13
+          },
+          {
+            "f": 3,
+            "png": "f03.png",
+            "w": 113,
+            "h": 139,
+            "ox": 7,
+            "oy": 13
+          },
+          {
+            "f": 4,
+            "png": "f04.png",
+            "w": 111,
+            "h": 139,
+            "ox": 8,
+            "oy": 13
+          },
+          {
+            "f": 5,
+            "png": "f05.png",
+            "w": 111,
+            "h": 139,
+            "ox": 8,
+            "oy": 13
+          },
+          {
+            "f": 6,
+            "png": "f06.png",
+            "w": 111,
+            "h": 139,
+            "ox": 8,
+            "oy": 13
+          },
+          {
+            "f": 7,
+            "png": "f07.png",
+            "w": 113,
+            "h": 138,
+            "ox": 7,
+            "oy": 13
+          },
+          {
+            "f": 8,
+            "png": "f08.png",
+            "w": 111,
+            "h": 139,
+            "ox": 8,
+            "oy": 13
+          },
+          {
+            "f": 9,
+            "png": "f09.png",
+            "w": 111,
+            "h": 139,
+            "ox": 8,
+            "oy": 13
+          },
+          {
+            "f": 10,
+            "png": "f10.png",
+            "w": 111,
+            "h": 139,
+            "ox": 8,
+            "oy": 13
+          },
+          {
+            "f": 11,
+            "png": "f11.png",
+            "w": 113,
+            "h": 138,
+            "ox": 7,
+            "oy": 13
+          },
+          {
+            "f": 12,
+            "png": "f12.png",
+            "w": 111,
+            "h": 139,
+            "ox": 8,
+            "oy": 13
+          },
+          {
+            "f": 13,
+            "png": "f13.png",
+            "w": 111,
+            "h": 139,
+            "ox": 8,
+            "oy": 13
+          },
+          {
+            "f": 14,
+            "png": "f14.png",
+            "w": 111,
+            "h": 139,
+            "ox": 8,
+            "oy": 13
+          }
+        ]
+      },
+      "blend": "screen",
+      "runtimeSha256": "390e93b3cb75155022903f23dd5e124803ce093edfc01bca8ba7e99a97450c4c"
+    }
+  },
+  "audio": {
+    "dinh-atk": {
+      "file": "dinh-atk-source.wav",
+      "source": "kiemthe-vfx-sfx-20261017-214658/audio/vfx-atk-preview-48k-stereo.wav",
+      "sha256": "9dfedf2124d2a873a027ea91c58aef5117b451744d3a3ebaf84026c87b28fd61"
+    },
+    "dinh-ultimate": {
+      "file": "dinh-ultimate-source.wav",
+      "source": "kiemthe-vfx-sfx-20261017-214658/audio/vfx-ultimate-preview-48k-stereo.wav",
+      "sha256": "456bf51174b28968fbe1cbd926770fe31d0a2e5643924ba66b44be6552fadabe"
+    },
+    "thay-ultimate": {
+      "file": "thay-ultimate-source.wav",
+      "source": "kiemthe-vfx-ulti5-sfx-20261017-221301/audio/vfx-ultimate5-preview-48k-stereo.wav",
+      "sha256": "8fdcf7fef909a4e75b560aed96d3887656b15d431116108eeccf5cc1431a877d"
+    }
+  },
+  "pierce": {
+    "source": "SKILLPACK/sfx/tangmen/tm_shyy_c.wav",
+    "rangeMs": [
+      40,
+      180
+    ],
+    "fadeOutMs": 40,
+    "description": "Reused/trimmed cue, not claimed to be original sword hit pairing"
+  },
+  "adaptation": {
+    "layout": "Legacy consumer layouts retained, generated before readiness/preparation/result paging. RGBA; fixed transform per clip from first standing pose. No keying.",
+    "clock": "Existing Dinh 4000ms casts / idle and Thay 6000ms idle retained; source holds resampled onto those clocks. Detail idle uses source durations. No roster-wide retiming.",
+    "skill1": "Six-state pack has no separate skill1: explicit reuse of new ultimate cast and new attack VFX for existing ally shield skill.",
+    "dinhReleasePose": {
+      "basic": {
+        "markerMs": 1550,
+        "sourceFrame": 9
+      },
+      "skill": {
+        "markerMs": 1500,
+        "sourceFrame": 13
+      },
+      "ultimate": {
+        "markerMs": 1250,
+        "sourceFrame": 13
+      }
+    },
+    "audio": {
+      "dinh-atk": 1073,
+      "dinh-skill": 1184,
+      "dinh-ultimate": 2035,
+      "thay-ultimate": 1536
+    },
+    "audioProcessing": "ffmpeg atempo without pitch shift; source four seconds fitted to existing VFX clocks (.74 Dinh visual factor), 40ms end fade."
+  }
+}

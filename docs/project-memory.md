@@ -573,3 +573,10 @@ Prior patch misunderstood Basic VFX as a stationary impact. Implemented three st
 - 2026-10-18 owner refinement (PR314 only): ATK 720ms, release600ms at frame16/18, impact991ms/recovery2000ms. Ultimate 2x per-frame upscale, body-height display, 3 visual/audio waves1380/2280/3180ms, one domain action, recovery4200ms. Parasite now dark falling Cổ Mộ zgm_125_hmrx_a with source-over blend. Evidence docs/qa/co-nuong-refinement-20261018 (28 focused tests + audio study). Actual hand pose/harp anchor and full-game execution remain unverified; original character archive unavailable through current retrieval. Existing owner Ticket Board waiver retained; do not merge main.
 
 - 2026-10-18 PR314 owner regressions: register Co Nuong single-atlas run/idle/fall with result-screen motion (no generic Victory substitute); mirror Hong Thuong only during ult-finisher so rear thrust faces into victim for both teams. 31 focused tests pass, full-game visual confirmation pending. Details docs/qa/co-nuong-victory-hong-thuong-facing-20261018.md. Review only, no merge.
+
+
+## 2026-10-18 — Owner ZIP refresh (review only)
+
+Baseline main 1b271d4 (PR314 merged). Branch feat/owner-asset-refresh-20261018: Cổ Nương adds 12 shared-bus piercing cues and 300ms Ultimate echoes (one settlement, recovery4500ms); replaces Victory/Defeat title assets; full supplied Đình Đồng pack maps to canonical dinh_loi; gold Thiên Vương shield tw_70_jzz_b; Thầy Mo idle/Ultimate VFX/SFX replaced. Build adapter expands compact source into existing atlas layouts before all derivative/cache builders, preserves IDs/save/domain. New portrait and both detail idles are wired.
+
+39 focused tests pass; 16 replacement atlases built and cells inspected; raw production-owner fragment patches parse. npm test blocked by sparse checkout missing scripts/luc-anh-idle-asset.mjs. Full normal-game browser/audio/device verification and remote CI remain separate. Existing Ticket Board unavailable waiver retained; VibeLab full evidence gate incomplete. Details, exceptions and per-screen matrix: docs/qa/owner-refresh-20261018.md. No merge or production promotion authorized for this new PR.

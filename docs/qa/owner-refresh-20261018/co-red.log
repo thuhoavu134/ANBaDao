@@ -1,0 +1,179 @@
+✖ Cổ Nương x1: authored impact/recovery, shared cue, all targets, no generic VFX (13.235682ms)
+✖ Cổ Nương x2: authored impact/recovery, shared cue, all targets, no generic VFX (4.005773ms)
+✖ Cổ Nương x3: authored impact/recovery, shared cue, all targets, no generic VFX (1.823467ms)
+✔ mute and skip do not create an independent audio player (4.773522ms)
+✔ cancel during readiness never settles damage or advances the next battle (1.595801ms)
+✔ active cast keeps its captured speed when the speed control changes (3.726464ms)
+✔ exit after release aborts the shared cue and cannot hit or advance (2.425143ms)
+✖ enemy VFX mirrors once, uses screen blend and expires on the captured clock (2.290947ms)
+✖ real combat domain: Basic single, Skill front row, Ultimate all enemies (29.002441ms)
+✔ real parasite status owns smoke; shield-only hits add no mark and Ultimate consumes own marks (11.282874ms)
+✔ leaving after first ultimate wave cancels remaining waves and turn advance (1.623176ms)
+✔ skipped ultimate settles once and advances with no waves or audio (1.332621ms)
+✖ all twelve sword crossings have audio x1 (2.360819ms)
+✖ all twelve sword crossings have audio x2 (2.919847ms)
+✖ all twelve sword crossings have audio x3 (3.038565ms)
+✖ each ultimate victim receives three pairs, echo delayed 300 authored ms (1.277722ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 7
+ℹ fail 9
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 211.627457
+
+✖ failing tests:
+
+test at tests/co-nuong-timeline.test.mjs:22:28
+✖ Cổ Nương x1: authored impact/recovery, shared cue, all targets, no generic VFX (13.235682ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(Math.abs(f.calls.find(x=>x.type==='next').at-4500/speed)<.01)
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/cfd0be23cbe3/luc-than/tests/co-nuong-timeline.test.mjs:25:9)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/co-nuong-timeline.test.mjs:22:28
+✖ Cổ Nương x2: authored impact/recovery, shared cue, all targets, no generic VFX (4.005773ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(Math.abs(f.calls.find(x=>x.type==='next').at-4500/speed)<.01)
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/cfd0be23cbe3/luc-than/tests/co-nuong-timeline.test.mjs:25:9)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/co-nuong-timeline.test.mjs:22:28
+✖ Cổ Nương x3: authored impact/recovery, shared cue, all targets, no generic VFX (1.823467ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(Math.abs(f.calls.find(x=>x.type==='next').at-4500/speed)<.01)
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/cfd0be23cbe3/luc-than/tests/co-nuong-timeline.test.mjs:25:9)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/co-nuong-timeline.test.mjs:34:1
+✖ enemy VFX mirrors once, uses screen blend and expires on the captured clock (2.290947ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  9 !== 18
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/cfd0be23cbe3/luc-than/tests/co-nuong-timeline.test.mjs:34:229)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 9,
+    expected: 18,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/co-nuong-timeline.test.mjs:36:1
+✖ real combat domain: Basic single, Skill front row, Ultimate all enemies (29.002441ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  9 !== 18
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/cfd0be23cbe3/luc-than/tests/co-nuong-timeline.test.mjs:44:103)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 9,
+    expected: 18,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/co-nuong-timeline.test.mjs:68:28
+✖ all twelve sword crossings have audio x1 (2.360819ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 12
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/cfd0be23cbe3/luc-than/tests/co-nuong-timeline.test.mjs:68:200)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 12,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/co-nuong-timeline.test.mjs:68:28
+✖ all twelve sword crossings have audio x2 (2.919847ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 12
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/cfd0be23cbe3/luc-than/tests/co-nuong-timeline.test.mjs:68:200)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 12,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/co-nuong-timeline.test.mjs:68:28
+✖ all twelve sword crossings have audio x3 (3.038565ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 12
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/cfd0be23cbe3/luc-than/tests/co-nuong-timeline.test.mjs:68:200)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 12,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/co-nuong-timeline.test.mjs:69:1
+✖ each ultimate victim receives three pairs, echo delayed 300 authored ms (1.277722ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  3 !== 6
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/cfd0be23cbe3/luc-than/tests/co-nuong-timeline.test.mjs:69:247)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 3,
+    expected: 6,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

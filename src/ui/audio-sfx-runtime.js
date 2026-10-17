@@ -4,6 +4,11 @@
   const files = {
     'tich-dao-blink':'tich-dao/blink.wav','tich-dao-slash':'tich-dao/slash.wav','tich-dao-sword-rain':'tich-dao/sword-rain.wav','tich-dao-execute-impact':'tich-dao/execute-impact.wav',
     'hong-thuong-impact':'hong-thuong/impact.wav',
+    'co-nuong-pierce':'co-nuong/pierce.wav',
+    'dinh-loi-atk':'dinh-loi/atk.m4a',
+    'dinh-loi-skill':'dinh-loi/skill.m4a',
+    'dinh-loi-ultimate':'dinh-loi/ultimate.m4a',
+    'thay-mo-ultimate':'thay-mo/ultimate.m4a',
     'co-nuong-atk':'co-nuong/tm_shyy_c.wav',
     'co-nuong-ultimate':'co-nuong/tm_bylh_f.wav',
 'tieu-phong-basic-x1':'tieu-phong/basic-x1.m4a','tieu-phong-basic-x2':'tieu-phong/basic-x2.m4a','tieu-phong-basic-x3':'tieu-phong/basic-x3.m4a','tieu-phong-ultimate-x1':'tieu-phong/ultimate-x1.m4a','tieu-phong-ultimate-x2':'tieu-phong/ultimate-x2.m4a','tieu-phong-ultimate-x3':'tieu-phong/ultimate-x3.m4a',
@@ -253,7 +258,7 @@
     stamp('sfxState', c?.state || 'unsupported');
     if (!c || c.state !== 'running') return false;
     const now = performance.now(), key = group + ':' + event;
-    if (now - (last.get(key) ?? -Infinity) < (event === 'forge-reveal' ? 120 : 70)) return false;
+    if (now - (last.get(key) ?? -Infinity) < (event === 'co-nuong-pierce' ? 0 : event === 'forge-reveal' ? 120 : 70)) return false;
     last.set(key, now);
     const ticket = combatEpoch;
     try {
@@ -275,12 +280,12 @@
         ? Number(options.cuePerformanceMs)
         : Number.isFinite(Number(options.audibleAtPerformanceMs)) ? Number(options.audibleAtPerformanceMs) : null;
       const sampleCue = options.sampleCue === 'dominant' ? 'dominant' : 'onset';
-      const playbackRate=event.startsWith('tich-dao-')||event.startsWith('hong-thuong-')||event.startsWith('co-nuong-')?Math.max(1,Math.min(3,Number(options.playbackRate)||1)):1;
+      const playbackRate=event.startsWith('tich-dao-')||event.startsWith('hong-thuong-')||event.startsWith('co-nuong-')||event.startsWith('dinh-loi-')||event.startsWith('thay-mo-')?Math.max(1,Math.min(3,Number(options.playbackRate)||1)):1;
       const sampleCueOffsetMs = (sampleCue === 'dominant' ? analysis.dominantCueMs : analysis.audibleLeadInMs)/playbackRate;
       const source = c.createBufferSource(), gain = c.createGain();
       source.buffer = buffer;
       if(source.playbackRate)source.playbackRate.value=playbackRate;
-      gain.gain.value = event === 'forge-reveal' ? 0.4 : group === 'ui' ? 0.3 : 0.38;
+      gain.gain.value = event === 'co-nuong-pierce' ? .20 : event === 'forge-reveal' ? 0.4 : group === 'ui' ? 0.3 : 0.38;
       source.connect(gain); gain.connect(c.destination);
       const voice = { source, group, cleanup: null, cancelled: false, timingEvent: null };
       let cancel = null;
