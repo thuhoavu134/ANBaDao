@@ -138,6 +138,7 @@ function campaignPagedSprite(base, pack, time) {
   return {spec:{...base,...pack.pages[page],frameIndex:frame%pack.pageFrames},poster:pack.poster?{...base,...pack.poster,frameIndex:0}:null};
 }
 const runSpecs = {
+  thay_mo: {src:'assets/owner-refresh-20261018/thay-run.webp',frames:18,cols:6,cellW:480,cellH:440,ms:4000/18,pivot:240,foot:440,body:420,playbackRate:1},
   co_nuong: { src:'assets/characters/co-nuong/run.webp',frames:18,cols:6,cellW:480,cellH:440,ms:4000/18,pivot:156,foot:423,body:409 },
   luc_anh: { src: 'assets/characters/luc-anh/run-atlas.webp', frames:61, cols:8, cellW:240, cellH:240, ms:28, pivot:120, foot:213.5, body:199 },
   dinh_loi: { src:'assets/characters/dinh-loi/run-atlas.png', frames:64, cols:8, cellW:480, cellH:270, ms:63, pivot:265, foot:258, body:233 },
@@ -234,7 +235,7 @@ function frameAt(spec, time) {
 function specForAfk(pick) {
   if (sceneState.draft) return spriteSpecs[campaignActorArtId(pick.id)];
   const run = runSpecs[campaignActorArtId(pick.id)] || window.HonVietCampaignRunSpecs?.[campaignActorArtId(pick.id)] || window.HonVietCampaignRunSpecs?.[pick.id];
-  if (run && run.src && Number(run.frames) > 0 && run.cellW && run.cellH && run.pivot && run.foot && run.body) return {...run, playbackRate:0.30};
+  if (run && run.src && Number(run.frames) > 0 && run.cellW && run.cellH && run.pivot && run.foot && run.body) return {...run, playbackRate:run.playbackRate??0.30};
   return spriteSpecs[campaignActorArtId(pick.id)];
 }
 const HOME_SLOT = [
@@ -990,5 +991,6 @@ function bootCampaignScene() {
   });
 }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bootCampaignScene, { once: true }); else bootCampaignScene();
+
 
 

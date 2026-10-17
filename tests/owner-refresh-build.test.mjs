@@ -8,7 +8,16 @@ import {patchOwnerRefresh} from '../scripts/owner-refresh-20261018.mjs';
 function finalBattle(){return [
  "const event=eventOverride||(action==='ultimate'?'ultimate':action==='skill'?'skill':'basic');",
  '__hvActionAssets=await __hvSkipVisualAssets(()=>__hvBattleAssets.prepare(actor,action,target,battleId),battleId);',
+ 'function dinhLoiImage(key){}',
+ readFileSync(new URL('../battle.html',import.meta.url),'utf8').match(/    if\(isDinhLoi\(actor\)&&action==="skill"\)\{[\s\S]*?(?=    if\(isDinhLoi\(actor\)&&action==="ultimate")/)[0],
+ '    if(isDinhLoi(actor)&&action==="ultimate"){',
+ '    if (action === "basic" && !(isVersionedSkillKit(actor) && isOngPhoCarry(actor))) {',
+ '  async function performAction(actor, action, target) {',
  'function drawDinhLoiFx(){}',
+ '    if(fx.kind==="basicProjectile"&&target){}',
+ '    else if(fx.kind==="skill1Wave"&&target){}',
+ 'if(!usesLucAnh) triggerImpactPresentation(actor, target, action);',
+
  'context.drawImage(image,sx,sy,cellW,cellH,170,45,WORLD.width-340,WORLD.height-90)',
  'context.drawImage(image,sx,sy,cellW,cellH,120,10,WORLD.width-240,WORLD.height-20)',
  "__hvPersistentPages.draw(context,'dinh-shield',frame,unit.x,unit.y,330,186,{baseline:93,screen:true,alpha:.82})",
@@ -32,3 +41,4 @@ test('build installs owner refresh after instant skip',()=>{
  const build=readFileSync(new URL('../scripts/build-static.mjs',import.meta.url),'utf8');
  assert.ok(build.indexOf('installBattleInstantSkip(root)')<build.indexOf('installOwnerRefresh(root)'));
 });
+

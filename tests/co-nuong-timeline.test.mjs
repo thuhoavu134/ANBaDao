@@ -15,16 +15,16 @@ function fixture(speed=1,sound=true){
  combatPresentationProfileFor:()=> 'ranged',COMBAT_PRESENTATION_STANDARD:{profiles:{ranged:{}}},approachPoint:()=>({}),weaponFlightDuration:()=>100,TIMING:{windup:200,turnRest:100},queueChargeEffect:()=>calls.push({type:'fallback'}),queueWeaponAnticipation(){},playActionSound(){},launchWeaponEffect:async()=>{calls.push({type:'fallback'});return true;},triggerImpactPresentation:()=>calls.push({type:'fallback'})};
  context.globalThis=context;context.SPLUS42={catalog:[{id:actor.sourceId,actions:{basic:{name:'basic'},ultimate:{name:'ult'}}}]};
  vm.createContext(context);vm.runInContext(source,context);
- context.engine={hud:()=>[],act:()=>{hits.push(now);for(const t of foes)vm.runInContext(`splusFloater(getUnit('${t.id}'),10)`,context);return {ok:true};}};
+ context.engine={hud:()=>[],act:()=>({ok:true,castId:'test-cast',targetIds:foes.map(t=>t.id)}),resolveCoNuongImpact:(a,c,id,hit)=>{hits.push(now);vm.runInContext(`splusFloater(getUnit('${id}'),10)`,context);return {ok:true};},finishCoNuongCast:()=>true};
  vm.runInContext('splusCombat=()=>engine;splusStateView=()=>{};',context);
  return {context,actor,foes,calls,hits,state,run:action=>context.performSplusAction(actor,action,foes[0]),effects:()=>vm.runInContext('coNuongImpacts',context),setSkip:()=>{skip=true;}};
 }
 for(const speed of [1,2,3])test(`Cổ Nương x${speed}: authored impact/recovery, shared cue, all targets, no generic VFX`,async()=>{
  const f=fixture(speed);await f.run('ultimate');
- assert.ok(Math.abs(f.hits[0]-1380/speed)<.01,`impact ${f.hits[0]}`);
+ assert.ok(Math.abs(f.hits[0]-1560/speed)<.01,`impact ${f.hits[0]}`);
  assert.ok(Math.abs(f.calls.find(x=>x.type==='next').at-4500/speed)<.01);
- const cues=f.calls.filter(x=>x.type==='audio');assert.equal(cues.length,3);assert.equal(cues[0].key,'co-nuong-ultimate');assert.ok(Math.abs(cues[0].at-1380/speed)<.01);assert.equal(cues[0].options.playbackRate,speed);
- assert.equal(f.effects().filter(x=>x.kind==='vfx-ultimate').length,18);assert.equal(f.hits.length,1);for(let i=0;i<3;i++)assert.ok(Math.abs(cues[i].at-(1380+i*900)/speed)<.01);
+ const cues=f.calls.filter(x=>x.type==='audio');assert.equal(cues.length,3);assert.equal(cues[0].key,'co-nuong-ultimate');assert.ok(Math.abs(cues[0].at-1560/speed)<.01);assert.equal(cues[0].options.playbackRate,speed);
+ assert.equal(f.effects().filter(x=>x.kind==='vfx-ultimate').length,18);assert.equal(f.hits.length,9);for(let i=0;i<3;i++)assert.ok(Math.abs(cues[i].at-(1560+i*900)/speed)<.01);
  assert.equal(f.calls.filter(x=>['fallback','raw-audio'].includes(x.type)).length,0);
 });
 test('mute and skip do not create an independent audio player',async()=>{for(const mode of ['mute','skip']){const f=fixture(1,mode!=='mute');if(mode==='skip')f.setSkip();await f.run('basic');assert.equal(f.calls.filter(x=>/audio/.test(x.type)).length,0);if(mode==='skip')assert.equal(f.effects().length,0);}});
@@ -60,10 +60,11 @@ test('real parasite status owns smoke; shield-only hits add no mark and Ultimate
 
 test('leaving after first ultimate wave cancels remaining waves and turn advance',async()=>{
  const f=fixture();const sleep=f.context.sleepVisualMilliseconds;f.context.sleepVisualMilliseconds=async ms=>{const result=await sleep(ms);if(f.calls.some(c=>c.type==='audio'))f.state.battleId=2;return result;};
- await f.run('ultimate');assert.equal(f.hits.length,1);assert.equal(f.calls.filter(c=>c.type==='audio').length,1);assert.equal(f.calls.filter(c=>c.type==='next').length,0);assert.ok(f.calls.find(c=>c.type==='audio').options.signal.aborted);
+ await f.run('ultimate');assert.equal(f.hits.length,3);assert.equal(f.calls.filter(c=>c.type==='audio').length,1);assert.equal(f.calls.filter(c=>c.type==='next').length,0);assert.ok(f.calls.find(c=>c.type==='audio').options.signal.aborted);
 });
 
-test('skipped ultimate settles once and advances with no waves or audio',async()=>{const f=fixture();f.setSkip();await f.run('ultimate');assert.equal(f.hits.length,1);assert.equal(f.effects().length,0);assert.equal(f.calls.filter(c=>c.type==='audio').length,0);assert.equal(f.calls.filter(c=>c.type==='next').length,1);});
+test('skipped ultimate resolves all contact tokens and advances once with no waves or audio',async()=>{const f=fixture();f.setSkip();await f.run('ultimate');assert.equal(f.hits.length,9);assert.equal(f.effects().length,0);assert.equal(f.calls.filter(c=>c.type==='audio').length,0);assert.equal(f.calls.filter(c=>c.type==='next').length,1);});
 
-for(const speed of [1,2,3])test(`all twelve sword crossings have audio x${speed}`,async()=>{const f=fixture(speed);await f.run('basic');const cues=f.calls.filter(c=>c.key==='co-nuong-pierce');assert.equal(cues.length,12);const expected=Array.from({length:3},(_,blade)=>Array.from({length:4},(_,pass)=>600+.85*(blade*120+360+100+pass*200))).flat().sort((a,b)=>a-b);for(let i=0;i<12;i++)assert.ok(Math.abs(cues[i].at-expected[i]/speed)<.01);assert.equal(f.hits.length,1);});
+for(const speed of [1,2,3])test(`all twelve sword crossings have audio x${speed}`,async()=>{const f=fixture(speed);await f.run('basic');const cues=f.calls.filter(c=>c.key==='co-nuong-pierce');assert.equal(cues.length,12);const expected=Array.from({length:3},(_,blade)=>Array.from({length:4},(_,pass)=>600+.85*(blade*120+360+100+pass*200))).flat().sort((a,b)=>a-b);for(let i=0;i<12;i++)assert.ok(Math.abs(cues[i].at-expected[i]/speed)<.01);assert.equal(f.hits.length,36);});
 test('each ultimate victim receives three pairs, echo delayed 300 authored ms',async()=>{const f=fixture(3);await f.run('ultimate');for(const victim of f.foes){const fx=f.effects().filter(x=>x.target===victim).sort((a,b)=>a.start-b.start);assert.equal(fx.length,6);for(let i=0;i<6;i+=2)assert.ok(Math.abs(fx[i+1].start-fx[i].start-100)<.01);}});
+

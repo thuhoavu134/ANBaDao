@@ -134,7 +134,7 @@ const manager = String.raw`<script id="honviet-ios-audio-unlock">
   function setMusicVolume(value){
     musicVolume=clampVolume(value);
     const track=musicCurrent;
-    if(track&&track.category==='bgm')try{track.gain.gain.value=musicVolume;}catch(_e){}
+    if(track&&track.category==='bgm')try{track.gain.gain.cancelScheduledValues?.(Number(getCtx()?.currentTime)||0);track.gain.gain.value=musicVolume*track.mixGain;}catch(_e){}
     return musicVolume;
   }
   function fadeTrack(track,fadeMs,now){
@@ -153,6 +153,7 @@ const manager = String.raw`<script id="honviet-ios-audio-unlock">
     if(!src)return false;
     const loop=options.loop!==false,category=options.category||'bgm';
     const volume=category==='bgm'?(options.volume==null?musicVolume:clampVolume(options.volume)):clampVolume(options.volume==null?1:options.volume);
+    const mixGain=category==='bgm'?clampVolume(options.mixGain??1):1;
     const fadeMs=Math.max(0,Math.min(1500,Number(options.fadeMs??260)||0));
     musicUrls.add(src);
     musicIntent={src,options:{...options},pending:true};
@@ -161,7 +162,7 @@ const manager = String.raw`<script id="honviet-ios-audio-unlock">
     if(!c||!unlocked||c.state!=='running')return false;
     if(musicCurrent?.url===src&&musicCurrent.loop===loop&&musicCurrent.category===category){
       musicIntent.pending=false;
-      if(category==='bgm')setMusicVolume(volume);
+      if(category==='bgm'){musicCurrent.mixGain=mixGain;setMusicVolume(volume);}
       return true;
     }
     let buffer;
@@ -177,7 +178,7 @@ const manager = String.raw`<script id="honviet-ios-audio-unlock">
     }
     const source=c.createBufferSource(),gain=c.createGain(),old=musicCurrent;
     const now=Number(c.currentTime)||0,seconds=fadeMs/1000;
-    const startVolume=category==='bgm'?musicVolume:volume;
+    const startVolume=category==='bgm'?musicVolume*mixGain:volume;
     source.buffer=buffer;source.loop=loop;gain.gain.value=0;
     source.connect(gain);gain.connect(c.destination);
     try{
@@ -185,7 +186,7 @@ const manager = String.raw`<script id="honviet-ios-audio-unlock">
       if(seconds)gain.gain.linearRampToValueAtTime?.(startVolume,now+seconds);
       else gain.gain.value=startVolume;
     }catch(_e){gain.gain.value=startVolume;}
-    const track={source,gain,url:src,loop,category,volume};
+    const track={source,gain,url:src,loop,category,volume,mixGain};
     source.onended=()=>{
       try{source.disconnect();gain.disconnect();}catch(_e){}
       if(musicCurrent===track)musicCurrent=null;
@@ -266,5 +267,6 @@ battle=battle.replace(/function playLucAnhUltimateVoice\(\)\{[\s\S]*?\}\s*(?=fun
 `);
 writeFileSync(battlePath,battle);
 console.log('iOS audio unlock on first real interaction applied; no blocking gate');
+
 
 

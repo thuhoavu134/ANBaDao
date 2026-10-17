@@ -8,10 +8,10 @@ test('shield follows each recipient body, not fixed caster/world dimensions',()=
  for(const height of [90,180])c.drawOwnerDinhShield(ctx,{team:'enemy',body:{centerX:700,centerY:500,height}},4);
  assert.equal(draws[0][3],700);assert.equal(draws[0][4],500);assert.equal(draws[1][6]/draws[0][6],2);assert.ok(draws[0][7].flip);assert.ok(draws[0][6]<130);
 });
-test('Dinh ultimate occupies only row-midpoint band and mirrors once',()=>{
+test('Dinh ultimate uses authored landscape dimensions and mirrors once',()=>{
  for(const enemy of [false,true]){const calls=[];const ctx={save(){},restore(){},translate(...a){calls.push(['translate',...a]);},scale(...a){calls.push(['scale',...a]);},drawImage(...a){calls.push(['draw',...a]);}};
- const c={PORTRAIT_FORMATION:{rows:[340,520,700]},WORLD:{width:1600},battleVfxMirror:()=>enemy};vm.createContext(c);vm.runInContext(source(),c);c.drawOwnerDinhUltimate(ctx,{},0,0,135,240,{});
- const d=calls.find(x=>x[0]==='draw');assert.equal(d[7],-90);assert.equal(d[9],180);assert.equal(d[8],320);assert.deepEqual(calls.find(x=>x[0]==='scale'),['scale',enemy?-1:1,1]);}
+ const c={PORTRAIT_FORMATION:{rows:[340,520,700]},WORLD:{width:1600},battleVfxMirror:()=>enemy};vm.createContext(c);vm.runInContext(source(),c);c.drawOwnerDinhUltimate(ctx,{},0,0,240,135,{});
+ const d=calls.find(x=>x[0]==='draw');assert.equal(d[7],-135);assert.equal(d[9],270);assert.equal(d[8],480);assert.deepEqual(calls.find(x=>x[0]==='scale'),['scale',enemy?-1:1,1]);}
 });
 
 test('default VFX mirror follows team, explicit facing, and source orientation',async()=>{
@@ -22,3 +22,4 @@ test('default VFX mirror follows team, explicit facing, and source orientation',
  assert.equal(battleVfxMirror({team:'player',visualFacing:-1}),true);
  assert.equal(battleVfxMirror({team:'enemy'},-1),false);
 });
+

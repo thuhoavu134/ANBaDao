@@ -282,10 +282,10 @@ const THACH_QUYEN_KIT = makeKit({
 });
 const DINH_LOI_KIT = makeKit({
   heroId: 'dinh_loi', basicSlug: 'hoi-van-ho-tran', ultSlug: 'dong-son-loi-tran', passiveSlug: 'ho-tran',
-  basicName: 'Hồi Văn Hộ Trận', basicKind: 'shield', basicMult: 0.2, basicTarget: 'ally',
+  basicName: 'Hồi Văn Hộ Trận', basicKind: 'damage', basicMult: 1, basicTarget: 'single_enemy',
   ultName: 'Đông Sơn Lôi Trận', ultKind: 'shield', ultMult: 0.28, ultTarget: 'all_allies', ultCost: 60,
-  animation: 'dinh-loi.skill', basicVfx: 'dinh-loi.bronze-shield', ultVfx: 'dinh-loi.bronze-drum', sfx: 'combat-drum',
-  basicDesc: 'Cấp khiên cho đồng minh yếu nhất và bản thân, dựng thế phản vệ.',
+  animation: 'dinh-loi.basic', basicVfx: 'dinh-loi.basic-projectile-impact', ultVfx: 'dinh-loi.bronze-drum', sfx: 'combat-drum',
+  basicDesc: 'Đánh một kẻ địch, đồng thời cấp khiên 20% HP cho đồng minh yếu nhất và bản thân, dựng thế phản vệ.',
   ultDesc: 'Gióng trống đồng, dựng khiên toàn đội và chấn động quân địch.',
   passiveName: 'Hộ Trận', passiveTrigger: 'on_basic_cast',
   passiveEffect: 'Basic khiên đồng minh yếu; Ultimate khiên toàn đội.',
@@ -411,3 +411,4 @@ export function resolveSkillProgression(heroId, progression = {}) {
     mapping: { ...kit.legacySkillMap }
   };
 }
+

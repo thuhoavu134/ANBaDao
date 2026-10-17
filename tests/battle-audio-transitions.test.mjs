@@ -78,7 +78,8 @@ test('result audio delegates to the host shared bus and close can preserve music
   vm.runInNewContext(source, { window, Audio, document: { getElementById: () => null }, location: { origin: 'https://game.example' } });
   assert.equal(await window.__HV_RESULT_AUDIO.play('victory'), true);
   assert.equal(calls[0][0], 'stop');
-  assert.equal(calls[0][1].keepCurrent, true);
+  assert.equal(calls[0][1].fadeMs, 120);
+  assert.equal(calls[0][1].keepCurrent, undefined);
   assert.equal(calls[1][0], 'play');
   assert.equal(calls[1][1], 'assets/audio/bgm-victory.mp3');
   assert.equal(calls[1][2].loop, false);
@@ -101,3 +102,4 @@ test('built BGM routes use shared Web Audio and retain a media fallback only wit
   assert.match(routed, /bgmPlayer\.onerror/);
   assert.match(patch, /__HV_BGM_RETRY/);
 });
+

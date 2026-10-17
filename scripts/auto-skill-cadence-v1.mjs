@@ -31,7 +31,7 @@ const branch = [
   // Thay Mo's authored non-Ultimate cast is also his Basic presentation.
   // Do not auto-buy the legacy 25-rage Skill behind that same animation.
   // His Basic keeps the existing +15 rage; free talent intent remains below.
-  '    if(!(typeof isThayMoAuthored==="function"&&isThayMoAuthored(actor))&&!actor._autoSkillSinceUltimate&&Number.isFinite(skillCost)&&actor.energy>=skillCost&&Core.canUseAction(actor,"skill")&&!(isOngPhoCarry(actor)&&actor.energy<70)){',
+  '    if(!isDinhLoi(actor)&&!(typeof isThayMoAuthored==="function"&&isThayMoAuthored(actor))&&!actor._autoSkillSinceUltimate&&Number.isFinite(skillCost)&&actor.energy>=skillCost&&Core.canUseAction(actor,"skill")&&!(isOngPhoCarry(actor)&&actor.energy<70)){',
   '      const skillTarget=adaptiveTarget(actor,"skill",preferredTargetFor(actor,"skill"));',
   '      if(skillTarget)return {action:"skill",target:skillTarget};',
   '    }'
@@ -49,4 +49,5 @@ html = html.replace(debit, debit + '\n    if(action==="ultimate")actor._autoSkil
 
 writeFileSync(p, html);
 console.log('Auto skill cadence installed: decideAi casts the regular Skill when rage allows (target-aware, carry pacing preserved)');
+
 

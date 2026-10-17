@@ -1,0 +1,10 @@
+{
+  "victory": {
+    "frames": 18,
+    "changedAlphaOutsideGlyphs": 0
+  },
+  "defeat": {
+    "frames": 18,
+    "changedAlphaOutsideGlyphs": 0
+  }
+}
