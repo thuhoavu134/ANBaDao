@@ -156,7 +156,15 @@ function drawHongThuongVfx(context,time){
   const img=hongThuongVfxImage('impact');if(!img||img.complete===false||img.naturalWidth===0)continue;
   const frame=Math.min(clip.frames-1,Math.floor(elapsed/1000*clip.fps));
   const d=clip.display||{},dh=d.heightPx||160,w=dh*(clip.cellW/clip.cellH);
-  context.save();context.globalCompositeOperation=clip.blendMode||'screen';context.drawImage(img,(frame%clip.cols)*clip.cellW,Math.floor(frame/clip.cols)*clip.cellH,clip.cellW,clip.cellH,v.x-w/2,v.y-dh*.6,w,dh);context.restore();
+  context.save();context.globalCompositeOperation=clip.blendMode||'screen';
+  context.imageSmoothingEnabled=true;context.imageSmoothingQuality='high';
+  // Two co-timed layers share one event, sprite and SFX. Small separation
+  // thickens the slash without replaying damage or creating a second cast.
+  for(const layer of [{dx:-2,dy:0,alpha:1},{dx:2,dy:-2,alpha:.65}]){
+   context.globalAlpha=layer.alpha;
+   context.drawImage(img,(frame%clip.cols)*clip.cellW,Math.floor(frame/clip.cols)*clip.cellH,clip.cellW,clip.cellH,v.x-w/2+layer.dx,v.y-dh*.6+layer.dy,w,dh);
+  }
+  context.restore();
  }
 }
 /* ---- Authored playback per hit; damage resolves ONLY at the marker. ---- */

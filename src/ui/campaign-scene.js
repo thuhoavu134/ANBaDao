@@ -230,7 +230,7 @@ function frameAt(spec, time) {
 function specForAfk(pick) {
   if (sceneState.draft) return spriteSpecs[campaignActorArtId(pick.id)];
   const run = runSpecs[campaignActorArtId(pick.id)] || window.HonVietCampaignRunSpecs?.[campaignActorArtId(pick.id)] || window.HonVietCampaignRunSpecs?.[pick.id];
-  if (run && run.src && Number(run.frames) > 0 && run.cellW && run.cellH && run.pivot && run.foot && run.body) return {...run, playbackRate:0.65};
+  if (run && run.src && Number(run.frames) > 0 && run.cellW && run.cellH && run.pivot && run.foot && run.body) return {...run, playbackRate:0.30};
   return spriteSpecs[campaignActorArtId(pick.id)];
 }
 const HOME_SLOT = [

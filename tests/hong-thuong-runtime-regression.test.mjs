@@ -5,7 +5,7 @@ const meta=JSON.parse(readFileSync(new URL('../assets/characters/hong-thuong/run
 const dimensions=JSON.parse(readFileSync(new URL('../assets/characters/hong-thuong/v2-atlas-dimensions.json',import.meta.url),'utf8'));
 function harness(){
  let now=0;const draws=[],errors=[];
- const loader=createAssetLoader({maxLoading:1,log:m=>errors.push(m),makeImage(){return {complete:false,set src(value){if(!value)return;const f=value.split('/').pop().split('?')[0];let w,h;if(f==='impact.webp'){w=640;h=384;}else{[w,h]=dimensions[f];}queueMicrotask(()=>{this.naturalWidth=w;this.naturalHeight=h;this.complete=true;this.onload?.();});}};}});
+ const loader=createAssetLoader({maxLoading:1,log:m=>errors.push(m),makeImage(){return {complete:false,set src(value){if(!value)return;const f=value.split('/').pop().split('?')[0];let w,h;if(f===meta.vfx.clips.impact.file){w=meta.vfx.clips.impact.cols*meta.vfx.clips.impact.cellW;h=Math.ceil(meta.vfx.clips.impact.frames/meta.vfx.clips.impact.cols)*meta.vfx.clips.impact.cellH;}else{[w,h]=dimensions[f];}queueMicrotask(()=>{this.naturalWidth=w;this.naturalHeight=h;this.complete=true;this.onload?.();});}};}});
  const ctx={save(){},restore(){},translate(){},scale(){},drawImage(...a){draws.push(a);}};
  const state={battleId:1,speed:1,sound:false};const actor={id:'h',sourceId:'hero_splus_hong_thuong',team:'player',x:300,y:500,hp:100,state:'idle'};
  const s={HONG_THUONG_META:meta,BACH_DIEN_LOADER:loader,performance:{now:()=>now},state,TEAM_ENEMY:'enemy',AbortController,console:{error(){}},window:{},battleCharacterScale:()=>1,battleCharacterDepthScale:()=>1,drawUnitHud(){},__hvHeroVisibility:{finish(c,h,u,t,drawn){return drawn;}},__hvIsSkipping:()=>false,__hvSkipVisualAssets:f=>f(),sleepVisualMilliseconds:async ms=>{now+=ms;return true;}};
@@ -44,4 +44,10 @@ test('a failed legacy atlas URL cannot poison the versioned basic cast',async()=
  h.setNow(320);h.s.drawHongThuongHero(h.ctx,h.actor,320);
  assert.notEqual(h.draws.at(-2)[1],h.draws.at(-1)[1]);
  assert.equal(h.s.window.__HV_HONG_THUONG_ACTION.phase,'playing');h.s.finishHongThuongAction(action);
+});
+test('one impact event draws two synchronized VFX layers',async()=>{
+ const h=harness();await h.loader.acquire([h.s.hongThuongVfxClip('impact')]);
+ h.s.spawnHongThuongVfx(600,400,{speed:1});h.s.drawHongThuongVfx(h.ctx,60);
+ assert.equal(h.draws.length,2);assert.deepEqual(h.draws[0].slice(0,5),h.draws[1].slice(0,5));
+ assert.equal(h.draws[1][5]-h.draws[0][5],4);
 });
