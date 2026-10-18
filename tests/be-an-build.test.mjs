@@ -25,8 +25,10 @@ test('host composes after all authored hero owners; migration grants once withou
 
 test('Bé An formation uses native paged idle cells instead of half-resolution campaign atlas',()=>{
  const desc=beAnCampaignDescriptor(meta,'idle'),pack=beAnIdlePages(meta);
- assert.equal(desc.cellW,352);assert.equal(desc.cellH,224);assert.equal(desc.body,160);
+ assert.equal(desc.cellW,1056);assert.equal(desc.cellH,672);assert.equal(desc.body,480);
  assert.equal(pack.pageFrames,24);assert.equal(pack.pages.length,4);assert.equal(pack.pages[0].src,'assets/characters/be-an/idle-0.webp');
- assert.equal(pack.pages[3].cellW,352);assert.equal(pack.pages[3].cellH,224);
+ assert.equal(pack.pages[3].cellW,1056);assert.equal(pack.pages[3].cellH,672);
  assert.equal(pack.poster,null);
 });
+
+test('Bé An full hi-res metadata, impact timing and untouched Kiếm Thế shield survive conversion',()=>{const required=['idle','run','basic','ultimate','hit','fall-die','special','vfx-basic','vfx-ultimate','shield'];for(const k of required)assert.ok(meta.clips[k],`missing ${k}`);for(const k of required.slice(0,7)){assert.equal(meta.clips[k].cellW,1056);assert.equal(meta.clips[k].cellH,672);assert.equal(meta.clips[k].body,480);}assert.equal(meta.clips.shield.cellW,224);assert.equal(meta.clips.shield.sourceInfo.frames.length,25);assert.equal(meta.timeline.basic.hits.length,2);assert.equal(meta.timeline.ultimate.hits.length,3);});
