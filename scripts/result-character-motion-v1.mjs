@@ -56,7 +56,13 @@ function newHeroMotion(slug) {
     fall:make('fall-die')};
 }
 
+function beAnMotion(){
+ const m=JSON.parse(readFileSync(new URL('../assets/characters/be-an/runtime-meta.json',import.meta.url),'utf8'));
+ const make=key=>{const c=m.clips[key];return {...c,ms:1000/24,pages:c.pages.map(p=>({...p,src:'assets/characters/be-an/'+p.file,ms:1000/24}))};};
+ return {aliases:['be_an','be-an','hero_splus_be_an'],run:{...make('run'),playbackRate:1},idle:make('idle'),fall:make('fall-die')};
+}
 const manifest = {
+  be_an:beAnMotion(),
   co_nuong:newHeroMotion('co-nuong'),
   hong_thuong:newHeroMotion('hong-thuong'),
   ky_van:newHeroMotion('ky-van'),
@@ -178,6 +184,7 @@ if (!battle.includes('</body>')) throw new Error('Result motion: body boundary m
 battle = battle.replace('</body>', runtime + '\n</body>');
 writeFileSync(battlePath, battle);
 console.log('Result character motion v1 applied: authored Victory entry -> Idle and one-shot Defeat Fall -> final-frame hold');
+
 
 
 

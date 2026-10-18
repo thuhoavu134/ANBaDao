@@ -330,6 +330,9 @@ installCoNuongMain(root);
 installOwnerRefresh(root);
 
 
+const {installBeAn}=await import('./be-an-integration.mjs');
+installBeAn(root);
+
 // Final shared hit/shadow owner, after all per-hero and owner refresh patches.
 const {installBattleHitFeedback}=await import('./battle-hit-feedback-v1.mjs');
 installBattleHitFeedback(root);

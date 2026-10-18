@@ -7,7 +7,7 @@ export function patchMixedDamageSettlement(html){
  if(html.includes('/* HV_MIXED_DAMAGE_SETTLEMENT_V1 */'))return html;
  const start=html.indexOf('  function __hvApplyDamage3qAdapter('),end=html.indexOf('  function applyHeal(',start);if(start<0||end<0)throw new Error('Mixed damage adapter owner missing');
  let adapter=html.slice(start,end);const a=adapter.indexOf('    if(target.shield>0){ const absorbed='),b=adapter.indexOf('    target.hp-=amount;',a);if(a<0||b<0)throw new Error('Legacy direct HP settlement anchor missing');
- adapter=adapter.slice(0,a)+`    const impact=settleLegacyDamage(actor,target,amount,{combat:typeof splusCombat==='function'?splusCombat():null,action:tacticalAction,critical});
+ adapter=adapter.slice(0,a)+`    const impact=settleLegacyDamage(actor,target,amount,{combat:typeof splusCombat==='function'?splusCombat():null,action:tacticalAction,critical,actionId:'legacy:'+state.battleId+':'+state.actionCount+':'+actor.id});
     amount=impact.amount;
     if(impact.shieldAbsorbed>0)addFloater(target,\`⛊\${impact.shieldAbsorbed}\`,"#7de3d0");
     if(impact.blocked){addFloater(target,impact.blockReason==='immune'?'MIỄN':impact.blockReason==='basicReflected'?'PHẢN':'CHẶN',"#9fe8ff",true);return 0;}
@@ -154,3 +154,4 @@ export function patchReactionStatusOwnership(html){
  return html.replace(owner,'/* HV_REACTION_STATUS_OWNERSHIP_V1 */\n'+legacyReactionEffects.toString()+'\n'+owner);
 }
 export function installMixedDamageSettlement(root){const p=join(root,'dist','battle.html');writeFileSync(p,patchReactionStatusOwnership(patchPrimerRecoveryOwnership(patchPlanRecoverySettlement(patchLegacyStatusOwnership(patchTacticalShieldSettlement(patchSkillShieldSettlement(patchSupportBenefitSettlement(patchSupportDamageSettlement(patchTeamReactionSettlement(patchLegacyCounterAndCritical(patchMixedDamageSettlement(readFileSync(p,'utf8')))))))))))));}
+

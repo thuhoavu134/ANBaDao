@@ -1,3 +1,4 @@
+import {BE_AN_HERO} from './be-an.mjs';
 import {TIEU_PHONG_HERO} from './tieu-phong.mjs';
 import {KY_VAN_HERO} from './ky-van.mjs';
 import {TICH_DAO_HERO} from './tich-dao.mjs';
@@ -81,7 +82,7 @@ export const SPLUS_EXTRA_HEROES = Object.freeze([
     }),
     passive: skill('passive', 'bach_dien.passive', 0, 0)
   }),
-  KY_VAN_HERO, TIEU_PHONG_HERO, TICH_DAO_HERO, HONG_THUONG_HERO
+  KY_VAN_HERO, TIEU_PHONG_HERO, TICH_DAO_HERO, HONG_THUONG_HERO, BE_AN_HERO
 ]);
 
 export const SPLUS_EXTRA_BY_ID = Object.freeze(Object.fromEntries(SPLUS_EXTRA_HEROES.map(h => [h.id, h])));
@@ -95,6 +96,7 @@ export const BACH_DIEN_ALIASES = Object.freeze({
 export function resolveSplusExtraId(id) {
   const raw = String(id || '').trim();
   if (!raw) return '';
+  if (/^(?:hero_splus_)?be[_-]an$/i.test(raw)) return 'hero_splus_be_an';
   if (/^(?:hero_splus_)?tieu[_-]phong$/i.test(raw)) return 'hero_splus_tieu_phong';
   if (/^(?:hero_splus_)?ky[_-]van$/i.test(raw)) return 'hero_splus_ky_van';
   if (/^(?:hero_splus_)?tich[_-]dao$/i.test(raw)) return 'hero_splus_tich_dao';
@@ -106,4 +108,5 @@ export function resolveSplusExtraId(id) {
   if (Object.hasOwn(BACH_DIEN_ALIASES, underscored)) return BACH_DIEN_ALIASES[underscored];
   return raw;
 }
+
 

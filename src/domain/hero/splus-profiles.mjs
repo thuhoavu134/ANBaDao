@@ -1,3 +1,4 @@
+import {BE_AN_HERO} from './be-an.mjs';
 import { SPLUS_HEROES } from './splus-catalog.mjs';
 import { SPLUS_PROFILE_VERSION } from './splus-profile-data.mjs';
 import { SPLUS_BUTTON_BRIEFS } from './splus-skill-art.mjs';
@@ -28,5 +29,6 @@ export const SPLUS_PROFILES=Object.freeze(SPLUS_HEROES.map(h=>Object.freeze({...
 const profiles=new Map(SPLUS_PROFILES.map(p=>[p.id,p]));
 export function getSplusSkill(heroId,slot){return slots.includes(slot)?profiles.get(heroId)?.skills[slot]??null:null;}
 // Runtime needs descriptions and UVs, not artist prompts or source paths.
-export function splusProfilePayload(){return {version:SPLUS_PROFILE_VERSION,profiles:SPLUS_PROFILES,
-  skillIcons:SPLUS_SKILL_ICONS.map(({prompt,description,generation,status,...icon})=>icon)};}
+export function splusProfilePayload(){return {version:SPLUS_PROFILE_VERSION,profiles:[...SPLUS_PROFILES,{...BE_AN_HERO,skills:Object.fromEntries(slots.map(slot=>{const skill=slot==='passive'?BE_AN_HERO.passive:BE_AN_HERO.actions[slot];return [slot,{...skill,shortName:skill.name,effects:skill.effects||[],slot,iconId:'splus.button.be_an.'+slot}];}))}],
+  skillIcons:[...slots.map(slot=>({id:'splus.button.be_an.'+slot,heroId:BE_AN_HERO.id,slot,atlas:'assets/characters/be-an/avatar.webp',width:352,height:224,rect:[90,40,172,166]})),...SPLUS_SKILL_ICONS.map(({prompt,description,generation,status,...icon})=>icon)]};}
+

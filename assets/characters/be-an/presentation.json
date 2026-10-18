@@ -1,0 +1,66 @@
+{
+  "schema": "battle-hero-presentation/v1",
+  "heroId": "hero_splus_be_an",
+  "aliases": [
+    "be_an",
+    "be-an",
+    "hero_splus_be_an"
+  ],
+  "referenceBodyHeight": 160,
+  "footOffsetY": 0,
+  "registration": "source-body",
+  "clips": {
+    "idle": {
+      "bodyHeight": 160,
+      "footX": 176,
+      "footY": 202
+    },
+    "run": {
+      "bodyHeight": 160,
+      "footX": 176,
+      "footY": 202
+    },
+    "basic": {
+      "bodyHeight": 160,
+      "footX": 176,
+      "footY": 202
+    },
+    "ultimate": {
+      "bodyHeight": 160,
+      "footX": 176,
+      "footY": 202
+    },
+    "hit": {
+      "bodyHeight": 160,
+      "footX": 176,
+      "footY": 202
+    },
+    "fall-die": {
+      "bodyHeight": 160,
+      "footX": 176,
+      "footY": 202
+    },
+    "special": {
+      "bodyHeight": 160,
+      "footX": 176,
+      "footY": 202
+    }
+  },
+  "vfxClips": [
+    "vfx-basic",
+    "vfx-ultimate",
+    "shield"
+  ],
+  "states": {
+    "idle": [
+      "idle"
+    ],
+    "attack": [
+      "basic"
+    ],
+    "ultimate": [
+      "ultimate"
+    ]
+  },
+  "evidence": "Source 24 fps; fixed first-pose registration per clip. Special contains the body and replaces it."
+}
