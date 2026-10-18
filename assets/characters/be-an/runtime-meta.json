@@ -2,6 +2,118 @@
   "schema": "be-an-assets/v1",
   "assetRevision": "source24-20261018-hires3x",
   "clips": {
+    "special": {
+      "file": "special-0.webp",
+      "frames": 96,
+      "cols": 6,
+      "cellW": 1056,
+      "cellH": 672,
+      "durationMs": 4000.0,
+      "pageFrames": 24,
+      "pages": [
+        {
+          "file": "special-0.webp",
+          "frames": 24,
+          "cols": 6,
+          "cellW": 1056,
+          "cellH": 672,
+          "durationMs": 1000.0
+        },
+        {
+          "file": "special-1.webp",
+          "frames": 24,
+          "cols": 6,
+          "cellW": 1056,
+          "cellH": 672,
+          "durationMs": 1000.0
+        },
+        {
+          "file": "special-2.webp",
+          "frames": 24,
+          "cols": 6,
+          "cellW": 1056,
+          "cellH": 672,
+          "durationMs": 1000.0
+        },
+        {
+          "file": "special-3.webp",
+          "frames": 24,
+          "cols": 6,
+          "cellW": 1056,
+          "cellH": 672,
+          "durationMs": 1000.0
+        }
+      ],
+      "pivot": 528.0,
+      "foot": 606,
+      "body": 480,
+      "sourceFacing": 1,
+      "registrationScale": 1.1428571428571428
+    },
+    "vfx-basic": {
+      "file": "vfx-basic-0.webp",
+      "frames": 144,
+      "cols": 6,
+      "cellW": 1152,
+      "cellH": 672,
+      "durationMs": 6000.0,
+      "pageFrames": 24,
+      "pages": [
+        {
+          "file": "vfx-basic-0.webp",
+          "frames": 24,
+          "cols": 6,
+          "cellW": 1152,
+          "cellH": 672,
+          "durationMs": 1000.0
+        },
+        {
+          "file": "vfx-basic-1.webp",
+          "frames": 24,
+          "cols": 6,
+          "cellW": 1152,
+          "cellH": 672,
+          "durationMs": 1000.0
+        },
+        {
+          "file": "vfx-basic-2.webp",
+          "frames": 24,
+          "cols": 6,
+          "cellW": 1152,
+          "cellH": 672,
+          "durationMs": 1000.0
+        },
+        {
+          "file": "vfx-basic-3.webp",
+          "frames": 24,
+          "cols": 6,
+          "cellW": 1152,
+          "cellH": 672,
+          "durationMs": 1000.0
+        },
+        {
+          "file": "vfx-basic-4.webp",
+          "frames": 24,
+          "cols": 6,
+          "cellW": 1152,
+          "cellH": 672,
+          "durationMs": 1000.0
+        },
+        {
+          "file": "vfx-basic-5.webp",
+          "frames": 24,
+          "cols": 6,
+          "cellW": 1152,
+          "cellH": 672,
+          "durationMs": 1000.0
+        }
+      ],
+      "pivot": 576.0,
+      "foot": 606,
+      "body": 480,
+      "sourceFacing": 1,
+      "registrationScale": 1
+    },
     "vfx-ultimate": {
       "file": "vfx-ultimate-0.webp",
       "frames": 144,
@@ -68,8 +180,20 @@
     }
   },
   "sources": {
+    "special": {
+      "file": "vfx_special_An---6088ee32-1705-4d1f-a0a9-4f66928692f9.mp4",
+      "sha256": "ec061c340f7ede4e4f961b31ec6f460368bb063d0e0382163dd7a7b681b4e84a",
+      "frames": 96,
+      "fps": 24
+    },
+    "vfx-basic": {
+      "file": "vfx_sfx_atk---a7c94b12-c7b2-4908-9e69-01abe6ba8228.mp4",
+      "sha256": "510c337e896e7ef07720ca83bcb3809ed19b4ecd6fde2d1a951c6d6e1b20484b",
+      "frames": 144,
+      "fps": 24
+    },
     "vfx-ultimate": {
-      "file": "Giant_seal_falling.mp4",
+      "file": "vfx_sfx_ulti---3f176666-a49c-4211-a6b7-900d059419b4.mp4",
       "sha256": "63ddbcb577792d7f6504faf888c987b35e72dbe6aebe2890f0475255f5625da9",
       "frames": 144,
       "fps": 24
