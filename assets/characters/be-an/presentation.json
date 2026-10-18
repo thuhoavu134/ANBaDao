@@ -1,0 +1,66 @@
+{
+  "schema": "battle-hero-presentation/v1",
+  "heroId": "hero_splus_be_an",
+  "aliases": [
+    "be_an",
+    "be-an",
+    "hero_splus_be_an"
+  ],
+  "referenceBodyHeight": 480,
+  "footOffsetY": 0,
+  "registration": "source-body",
+  "clips": {
+    "idle": {
+      "bodyHeight": 480,
+      "footX": 528,
+      "footY": 606
+    },
+    "run": {
+      "bodyHeight": 480,
+      "footX": 528,
+      "footY": 606
+    },
+    "basic": {
+      "bodyHeight": 480,
+      "footX": 528,
+      "footY": 606
+    },
+    "ultimate": {
+      "bodyHeight": 480,
+      "footX": 528,
+      "footY": 606
+    },
+    "hit": {
+      "bodyHeight": 480,
+      "footX": 528,
+      "footY": 606
+    },
+    "fall-die": {
+      "bodyHeight": 480,
+      "footX": 528,
+      "footY": 606
+    },
+    "special": {
+      "bodyHeight": 480,
+      "footX": 528,
+      "footY": 606
+    }
+  },
+  "vfxClips": [
+    "vfx-basic",
+    "vfx-ultimate",
+    "shield"
+  ],
+  "states": {
+    "idle": [
+      "idle"
+    ],
+    "attack": [
+      "basic"
+    ],
+    "ultimate": [
+      "ultimate"
+    ]
+  },
+  "evidence": "Source 24 fps; smooth 30-frame PTS loop (IoU 0.9774); 3x source-body registration."
+}

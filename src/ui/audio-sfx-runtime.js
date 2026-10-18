@@ -4,6 +4,9 @@
   const files = {
     'tich-dao-blink':'tich-dao/blink.wav','tich-dao-slash':'tich-dao/slash.wav','tich-dao-sword-rain':'tich-dao/sword-rain.wav','tich-dao-execute-impact':'tich-dao/execute-impact.wav',
     'hong-thuong-impact':'hong-thuong/impact.wav',
+    'be-an-basic':'be-an/basic.m4a',
+    'be-an-ultimate':'be-an/ultimate.m4a',
+    'be-an-special':'be-an/special.m4a',
     'co-nuong-pierce':'co-nuong/pierce.wav',
     'dinh-loi-atk':'dinh-loi/atk.m4a',
     'dinh-loi-skill':'dinh-loi/skill.m4a',
@@ -280,7 +283,7 @@
         ? Number(options.cuePerformanceMs)
         : Number.isFinite(Number(options.audibleAtPerformanceMs)) ? Number(options.audibleAtPerformanceMs) : null;
       const sampleCue = options.sampleCue === 'dominant' ? 'dominant' : 'onset';
-      const playbackRate=event.startsWith('tich-dao-')||event.startsWith('hong-thuong-')||event.startsWith('co-nuong-')||event.startsWith('dinh-loi-')||event.startsWith('thay-mo-')?Math.max(1,Math.min(3,Number(options.playbackRate)||1)):1;
+      const playbackRate=event.startsWith('be-an-')?Math.max(1,Math.min(4.2,Number(options.playbackRate)||1)):event.startsWith('tich-dao-')||event.startsWith('hong-thuong-')||event.startsWith('co-nuong-')||event.startsWith('dinh-loi-')||event.startsWith('thay-mo-')?Math.max(1,Math.min(3,Number(options.playbackRate)||1)):1;
       const sampleCueOffsetMs = (sampleCue === 'dominant' ? analysis.dominantCueMs : analysis.audibleLeadInMs)/playbackRate;
       const source = c.createBufferSource(), gain = c.createGain();
       source.buffer = buffer;
@@ -385,6 +388,7 @@
   window.addEventListener('pagehide', parentBus ? dispose : endBattle);
   stamp('sfxVersion', 'forge-isolation-v3');
 })();
+
 
 
 

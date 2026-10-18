@@ -1,0 +1,52 @@
+{
+  "idle": {
+    "frames": 96,
+    "pages": 4,
+    "edgeFrames": []
+  },
+  "run": {
+    "frames": 96,
+    "pages": 4,
+    "edgeFrames": []
+  },
+  "basic": {
+    "frames": 96,
+    "pages": 4,
+    "edgeFrames": []
+  },
+  "ultimate": {
+    "frames": 96,
+    "pages": 4,
+    "edgeFrames": []
+  },
+  "hit": {
+    "frames": 96,
+    "pages": 4,
+    "edgeFrames": []
+  },
+  "fall-die": {
+    "frames": 96,
+    "pages": 4,
+    "edgeFrames": []
+  },
+  "special": {
+    "frames": 96,
+    "pages": 4,
+    "edgeFrames": []
+  },
+  "vfx-basic": {
+    "frames": 144,
+    "pages": 6,
+    "edgeFrames": []
+  },
+  "vfx-ultimate": {
+    "frames": 144,
+    "pages": 6,
+    "edgeFrames": []
+  },
+  "shield": {
+    "frames": 25,
+    "pages": 1,
+    "edgeFrames": []
+  }
+}
