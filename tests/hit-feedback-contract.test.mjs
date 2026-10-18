@@ -43,8 +43,8 @@ test('rapid hits stay in one ordered column without six-hit lane reuse',()=>{
   for(let i=1;i<=12;i++){vm.runInContext(`addBattleHitFloater(unit,'−${i}','yellow')`,c);tick(30);}
   assert.equal(c.floaters.length,12);
   for(let i=1;i<c.floaters.length;i++){
-    assert.equal(c.floaters[i].x,300);
-    assert.ok(c.floaters[i].y-c.floaters[i-1].y>=28);
+    assert.equal(c.floaters[i].x-c.floaters[i-1].x,3);
+    assert.equal(c.floaters[i].y-c.floaters[i-1].y,14);
   }
   assert.equal(c.floaters.at(-1).y,240,'uses head bounds, not a hard-coded foot offset');
 });
@@ -77,4 +77,29 @@ test('counter and reaction damage use numeric style, but shield/rage/status labe
   const {c}=feedbackContext();
   for(const text of ['PHẢN 1','⚗ −12','VIỆN KÍCH −3','BIẾN CỐ −4','⛊2','−12 NỘ','HỘ TƯỚNG −15%'])c.addBattleHitFloater(c.unit,text,'white');
   assert.deepEqual(Array.from(c.floaters,f=>f.isDamage),[true,true,true,true,false,false,false]);
+});
+
+test('spaced hits reflow tightly after travel and mirror inward on the enemy side',()=>{
+  const {c}=feedbackContext();c.TEAM_ENEMY='enemy';c.unit.team='enemy';
+  c.addBattleHitFloater(c.unit,'−1','yellow');
+  c.updateBattleHitFloater(c.floaters[0],.6);
+  c.unit.x+=20;c.unit.y-=10;
+  c.addBattleHitFloater(c.unit,'BẠO KÍCH 27','red');
+  assert.equal(c.floaters[0].y,c.floaters[1].y-14);
+  assert.equal(c.floaters[0].x,c.floaters[1].x+3);
+  const before=c.floaters.map(f=>({x:f.x,y:f.y}));
+  c.floaters.forEach(f=>c.updateBattleHitFloater(f,0));
+  assert.deepEqual(c.floaters.map(f=>({x:f.x,y:f.y})),before,'reflow must not apply victim movement twice');
+  c.floaters.forEach(f=>c.updateBattleHitFloater(f,.1));
+  assert.ok(Math.abs(c.floaters[1].y-c.floaters[0].y-14)<1e-9);
+});
+
+test('generated painter preserves status order but paints earlier damage over later damage',async()=>{
+  const {patchCompactDamageFloaters}=await import('../scripts/compact-damage-floaters-v1.mjs');
+  const input='    for (const floater of floaters) {\n      if(floater.isDamage){\n        let pop=1;\n      }else{\n        const weight=floater.large?900:800;\nconst baseSize=floater.large?25:18;\ncontext.lineWidth=5;\n        context.strokeStyle="rgba(5,18,16,.85)";\n}}';
+  const html=patchCompactDamageFloaters(input,'');
+  const loop=html.match(/for \(const floater of (.*?)\) \{/)[1];
+  const order=vm.runInNewContext(loop,{floaters:[{id:'heal1'},{id:'old',isDamage:true},{id:'heal2'},{id:'new',isDamage:true}]});
+  assert.deepEqual(Array.from(order,f=>f.id),['heal1','heal2','new','old']);
+  assert.equal(patchCompactDamageFloaters(html,''),html);
 });
