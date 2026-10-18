@@ -59,7 +59,7 @@ function beAnBodyFrame(m,elapsed){
 function drawBeAnHero(ctx,u,time){
  let m=beAnMotions.get(u.id),elapsed=m?(time-m.start)*m.speed:time;
  if(m&&elapsed>=m.duration&&m.kind!=='fall-die'){m.abort?.abort();beAnMotions.delete(u.id);m=null;elapsed=time;}
- const kind=m?.kind||'idle',frame=m?beAnBodyFrame(m,elapsed):Math.floor(time*.024)%96,scale=beAnScale(u);
+ const kind=m?.kind||'idle',frame=m?beAnBodyFrame(m,elapsed):Math.floor(time*(BE_AN_META.clips.idle?.durationMs ? (BE_AN_META.clips.idle.frames / BE_AN_META.clips.idle.durationMs) : .024)) % (BE_AN_META.clips.idle?.frames || 30),scale=beAnScale(u);
  if(u.hp<=0&&kind!=='fall-die')return;
  const painted=beAnSprite(ctx,kind,frame,u.x,u.y,scale,u.team===TEAM_ENEMY);
  if(!painted&&u.hp>0){const backup=beAnImage('assets/characters/be-an/avatar.webp');if(backup.complete&&backup.naturalWidth){ctx.save();ctx.translate(u.x,u.y);const idle=BE_AN_META.clips.idle;ctx.scale(u.team===TEAM_ENEMY?-scale:scale,scale);ctx.drawImage(backup,-idle.pivot,-idle.foot,idle.cellW,idle.cellH);ctx.restore();}}
