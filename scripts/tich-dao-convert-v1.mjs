@@ -87,12 +87,8 @@ for(let p=0;p<Math.ceil(77/IDLE_PAGE_FRAMES);p++){
     durationMs:cells.length*1000/24,frameDurationsMs:uniform(1000/24,cells.length)};
 }
 
-// ---- temporary avatar: the opaque idle frame, trimmed to its alpha bounds
-let avatarFrame=0,best=-1;
-for(let i=0;i<idleCells.length;i++){
-  const stat=await sharp(idleCells[i]).stats();
-  if(stat.channels[3].mean>best){best=stat.channels[3].mean;avatarFrame=i;}
-}
+// Reviewed representative pose: frame 0 has open eyes; alpha area does not detect blinking.
+const avatarFrame=0;
 const idleMeta0=idleMeta.frames?idleMeta.frames[avatarFrame]:null;
 const avatarImage=sharp(idleCells[avatarFrame]).trim({threshold:8});
 const avatarInfo=await avatarImage.toBuffer({resolveWithObject:true});
@@ -127,7 +123,7 @@ const meta={
   sourceCharacter:'tich-dao-six-state-phase-aware.zip',sourcePackSha256:packSha,
   sourceVfx:null,
   pending:[
-    'avatar.webp là ảnh tạm cắt từ idle frame '+avatarFrame+' — portrait authored chờ owner',
+    'avatar.webp cắt từ idle frame '+avatarFrame+' mở mắt; bố cục thẻ dùng roster portrait owner',
     'chưa có SFX authored cho basic/ultimate/hit'
   ],
   clips,
@@ -146,3 +142,4 @@ for(let p=0;p<meta.idleVisual.pages;p++){
     .png().toFile(join(outRoot,'review-idle-page-'+p+'.png'));
 }
 console.log('TICH_DAO_CONVERT_OK avatarFrame='+avatarFrame+' avatar='+(avatarInfo.info.width+'x'+avatarInfo.info.height)+' pages='+meta.idleVisual.pages+' strikes='+JSON.stringify(clips.ultimate.strikeMs));
+

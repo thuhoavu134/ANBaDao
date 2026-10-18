@@ -24,7 +24,7 @@
     const view = buildRosterView({
       ids: [...new Set(['bach_dien', 'linh_dong', ...OFFICIAL_ROSTER_12_IDS, ...Object.keys(DATA.heroes)])].filter(id => DATA.heroes[id]).slice(0,24),
       heroes: DATA.heroes, player: P,
-      powerFor: heroPower, portraitFor: id => portraitSrc(id, 'card'),
+      powerFor: heroPower, portraitFor: id => rosterPortraitSource(id, portraitSrc(id, 'card')),
       ...state });
     root.innerHTML = `<header class="v4-top"><div class="v4-profile">
       <button class="v4-avatar" data-roster-nav="hub" aria-label="Về Thành Chính">‹</button>
@@ -48,7 +48,7 @@
         const starN = Math.max(0, Math.min(5, card.stars || 0));
         const stars = Array.from({ length: 5 }, (_, i) => '<i class="' + (i < starN ? 'on' : '') + '">★</i>').join('');
         return `<button class="v4-card r-${grade === 'S+' ? 'splus' : grade.toLowerCase()} ${card.owned ? '' : 'is-locked'}" data-hero-id="${esc(card.id)}" aria-label="${esc(card.name)}${card.owned ? ', cấp ' + card.level + ', ' + card.stars + ' sao, lực chiến ' + card.power : ', chưa sở hữu'}">
-        <div class="v4-art"><img src="${esc(card.portrait)}" alt="" loading="lazy" decoding="async"></div>
+        <div class="v4-art"><img src="${esc(card.portrait)}" style="${rosterPortraitStyle(card.portrait)}" data-portrait-reviewed="${Boolean(ROSTER_PORTRAIT_LANDMARKS[card.portrait])}" alt="" loading="lazy" decoding="async"></div>
         <div class="v4-grade"><img src="assets/ui/heroes/grade-${gradeFile}.png" alt="${grade}"></div><div class="v4-level">${card.owned ? 'Lv.' + card.level : '🔒'}</div>
         <div class="v4-veil">
           <div class="v4-element">${card.element === 'soul' ? '🎭' : (HE[card.element]?.ic || '')}</div>
@@ -163,4 +163,5 @@
   root.classList.toggle('is-open', ST.screen === 'heroes');
   if (ST.screen === 'heroes') renderHeroes();
 })();
+
 

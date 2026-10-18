@@ -1,3 +1,7 @@
+## Chân dung màn Tướng — quy chuẩn chung 18/10/2026
+
+Đọc `docs/ROSTER-PORTRAIT-STANDARD.md` khi sửa ảnh đại diện hoặc thẻ tướng. Cùng tỷ lệ mặt và cao độ mắt; giữ tỷ lệ ảnh. Frame đại diện phải mở mắt và được xem thật, không chọn theo diện tích alpha. Tướng/ảnh mới cần landmark và bằng chứng; ảnh thiếu QA không được coi là đã đạt. Không sửa thiết kế mặt nạ/che mắt authored.
+
 ## Tích hợp tướng / VFX / SFX — GLM 5.3 Flash và các coding agent
 
 Khi làm tướng hoặc asset Kiếm Thế, đọc [docs/GLM-HERO-VFX-SFX-GUIDE.md](docs/GLM-HERO-VFX-SFX-GUIDE.md). Hướng dẫn chứa bản đồ source, chọn/duyệt asset có tiếng, timeline, HUD, kiểm thử và hợp đồng Tịch Dao hiện hành. Không lấy các bộ asset tạm trong lịch sử QA làm bản đã duyệt.
