@@ -1,11 +1,12 @@
 // Injected in the existing battle closure. Domain alone owns damage and statuses.
 const beAnImages=new Map(),beAnMotions=new Map(),beAnActions=new Set(),beAnBursts=[];
+const beAnAtlasRatio=key=>{const c=BE_AN_META.clips[key];return c&&c.body?160/c.body:1;};
 const isBeAn=u=>u?.sourceId==='hero_splus_be_an';
 function beAnImage(src){
  let im=beAnImages.get(src);if(!im){im=new Image();im.decoding='async';im.src=src;beAnImages.set(src,im);}
- // Small pages, bounded at eight decoded pages (~61 MiB). Reinsert on access.
+ // High-resolution atlases: keep at most three live pages to bound decoded texture residency.
  beAnImages.delete(src);beAnImages.set(src,im);
- while(beAnImages.size>8){const first=beAnImages.keys().next().value;beAnImages.delete(first);}
+ while(beAnImages.size>3){const first=beAnImages.keys().next().value;beAnImages.delete(first);}
  return im;
 }
 function beAnSprite(ctx,key,frame,x,y,scale=1,mirror=false){
@@ -15,7 +16,7 @@ function beAnSprite(ctx,key,frame,x,y,scale=1,mirror=false){
  const next=c.pages[(Math.floor(frame/c.pageFrames)+1)%c.pages.length];beAnImage('assets/characters/be-an/'+next.file);
  const image=beAnImage('assets/characters/be-an/'+page.file);
  if(!image.complete||!image.naturalWidth)return false;
- ctx.save();ctx.translate(x,y);ctx.scale(mirror?-scale:scale,scale);
+ ctx.save();ctx.translate(x,y);const drawScale=scale*beAnAtlasRatio(key);ctx.scale(mirror?-drawScale:drawScale,drawScale);
  if(c.blend)ctx.globalCompositeOperation=c.blend;
  ctx.drawImage(image,local%page.cols*c.cellW,Math.floor(local/page.cols)*c.cellH,c.cellW,c.cellH,-c.pivot,-c.foot,c.cellW,c.cellH);ctx.restore();return true;
 }
@@ -34,7 +35,7 @@ function drawBeAnHero(ctx,u,time){
  const kind=m?.kind||'idle',frame=m?beAnBodyFrame(m,elapsed):Math.floor(time*.024)%96,scale=beAnScale(u);
  if(u.hp<=0&&kind!=='fall-die')return;
  const painted=beAnSprite(ctx,kind,frame,u.x,u.y,scale,u.team===TEAM_ENEMY);
- if(!painted&&u.hp>0){const backup=beAnImage('assets/characters/be-an/avatar.webp');if(backup.complete&&backup.naturalWidth){ctx.save();ctx.translate(u.x,u.y);ctx.scale(u.team===TEAM_ENEMY?-scale:scale,scale);ctx.drawImage(backup,-176,-202,352,224);ctx.restore();}}
+ if(!painted&&u.hp>0){const backup=beAnImage('assets/characters/be-an/avatar.webp');if(backup.complete&&backup.naturalWidth){ctx.save();ctx.translate(u.x,u.y);const idle=BE_AN_META.clips.idle,r=beAnAtlasRatio('idle');ctx.scale(u.team===TEAM_ENEMY?-scale*r:scale*r,scale*r);ctx.drawImage(backup,-idle.pivot,-idle.foot,idle.cellW,idle.cellH);ctx.restore();}}
  if(u.hp>0){
   if(u.shield>0)beAnSprite(ctx,'shield',Math.floor(time/60)%25,u.x,u.y+5,scale*.9,false);
   drawUnitHud(ctx,u,time,1);
