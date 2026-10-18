@@ -61,8 +61,13 @@ function drawBeAnVfx(ctx,time){
   const victims=info.targets.map(getUnit).filter(Boolean);if(!victims.length)continue;
   const u=info.actor,mirror=u.team===TEAM_ENEMY,scale=beAnScale(u);
   if(info.kind==='basic'){
-   const target=victims[0],p=Math.min(1,(age-info.release)/310),x=u.x+(target.x-u.x)*p,y=u.y-75*scale+(target.y-u.y)*p;
-   beAnSprite(ctx,'vfx-basic',(age-info.release)/1500*144,x,y+100*scale,scale*1.25,mirror);
+   const target=victims[0],p=Math.max(0,Math.min(1,(age-info.release)/310));
+   // World-space throw anchor: begins by the casting hand and finishes on target.
+   // Do not add a second static offset at impact (the old +100*scale missed).
+   const handX=u.x+(mirror?-1:1)*36*scale,handY=u.y-75*scale;
+   const x=handX+(target.x-handX)*p;
+   const y=handY+(target.y-handY)*p-32*scale*4*p*(1-p);
+   beAnSprite(ctx,'vfx-basic',(age-info.release)/1500*144,x,y,scale*1.25,mirror);
   }else{
    const t=age-info.release,wave=Math.min(2,Math.floor(t/800)),local=t-wave*800;
    // Each living target gets an independent seal anchored to its formation slot.
