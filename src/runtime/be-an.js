@@ -1,6 +1,7 @@
 // Injected in the existing battle closure. Domain alone owns damage and statuses.
 const beAnImages=new Map(),beAnMotions=new Map(),beAnActions=new Set(),beAnBursts=[];
-const beAnAtlasRatio=key=>{const c=BE_AN_META.clips[key];return c&&c.body?160/c.body:1;};
+// The shared battleCharacterScale already applies 310 / presentation.referenceBodyHeight.
+// Do not multiply 160 / 480 again: that rendered the 3x source at one-third size.
 const isBeAn=u=>u?.sourceId==='hero_splus_be_an';
 // Tempo snapshots follow Cổ Nương's compact action cadence without altering domain hit count.
 const beAnTempo=kind=>kind==='ultimate'?1.40:1.25;
@@ -10,11 +11,12 @@ function beAnUltimateDropY(target,local,wave,targetScale){
  const contactMs=hits[wave]-release-wave*800;
  const progress=Math.max(0,Math.min(1,local/Math.max(1,contactMs)));
  // The seal starts two enemy body-heights above its landing anchor; gravity accelerates to contact.
- return target.y-2*160*targetScale*(1-progress*progress*progress);
+ const enemyHeight=typeof battleCharacterBody==='function'?battleCharacterBody(target).height:BE_AN_META.clips.idle.body*targetScale;
+ return target.y-2*enemyHeight*(1-progress*progress*progress);
 }
 function drawBeAnWaterShield(ctx,u,time,scale){
  if(!beAnPassiveShield(u))return false;
- const height=160*scale,centerY=u.y-height*.50,pulse=.5+.5*Math.sin(time*.006);
+ const height=BE_AN_META.clips.idle.body*scale,centerY=u.y-height*.50,pulse=.5+.5*Math.sin(time*.006);
  ctx.save();ctx.globalCompositeOperation='screen';
  ctx.fillStyle='rgba(62,175,238,0.10)';ctx.strokeStyle='rgba(100,225,252,'+(.64+.19*pulse)+')';
  ctx.lineWidth=Math.max(1.5,2.6*scale);
@@ -23,7 +25,8 @@ function drawBeAnWaterShield(ctx,u,time,scale){
  ctx.beginPath();ctx.ellipse(u.x,centerY,height*.42,height*.54,0,0,Math.PI*2);ctx.stroke();
  ctx.restore();
  // Keep the original Kiếm Thế water-shield clip intact and playing during shield lifetime.
- beAnSprite(ctx,'shield',Math.floor(time/60)%25,u.x,u.y+5,scale*.90,false);
+ // Kiếm Thế shield is still the original 224px asset; compensate only its packing scale.
+ beAnSprite(ctx,'shield',Math.floor(time/60)%25,u.x,u.y+5,scale*(BE_AN_META.clips.idle.body/160)*.90,false);
  return true;
 }
 function beAnImage(src){
@@ -40,11 +43,11 @@ function beAnSprite(ctx,key,frame,x,y,scale=1,mirror=false){
  const next=c.pages[(Math.floor(frame/c.pageFrames)+1)%c.pages.length];beAnImage('assets/characters/be-an/'+next.file);
  const image=beAnImage('assets/characters/be-an/'+page.file);
  if(!image.complete||!image.naturalWidth)return false;
- ctx.save();ctx.translate(x,y);const drawScale=scale*beAnAtlasRatio(key);ctx.scale(mirror?-drawScale:drawScale,drawScale);
+ ctx.save();ctx.translate(x,y);ctx.scale(mirror?-scale:scale,scale);
  if(c.blend)ctx.globalCompositeOperation=c.blend;
  ctx.drawImage(image,local%page.cols*c.cellW,Math.floor(local/page.cols)*c.cellH,c.cellW,c.cellH,-c.pivot,-c.foot,c.cellW,c.cellH);ctx.restore();return true;
 }
-function beAnScale(u){return typeof battleCharacterScale==='function'&&typeof battleCharacterDepthScale==='function'?battleCharacterScale(u)*battleCharacterDepthScale(u):(310/160)*(innerWidth<600?.34:.74)*(.83+(u.y-290)/1500);}
+function beAnScale(u){return typeof battleCharacterScale==='function'&&typeof battleCharacterDepthScale==='function'?battleCharacterScale(u)*battleCharacterDepthScale(u):(310/BE_AN_META.clips.idle.body)*(innerWidth<600?.34:.74)*(.83+((u.baseY??u.homeAnchor?.y??u.y)-290)/1500);}
 function beAnBodyFrame(m,elapsed){
  if(m.kind==='ultimate'){
   if(elapsed<3200)return elapsed*.024;
@@ -59,7 +62,7 @@ function drawBeAnHero(ctx,u,time){
  const kind=m?.kind||'idle',frame=m?beAnBodyFrame(m,elapsed):Math.floor(time*.024)%96,scale=beAnScale(u);
  if(u.hp<=0&&kind!=='fall-die')return;
  const painted=beAnSprite(ctx,kind,frame,u.x,u.y,scale,u.team===TEAM_ENEMY);
- if(!painted&&u.hp>0){const backup=beAnImage('assets/characters/be-an/avatar.webp');if(backup.complete&&backup.naturalWidth){ctx.save();ctx.translate(u.x,u.y);const idle=BE_AN_META.clips.idle,r=beAnAtlasRatio('idle');ctx.scale(u.team===TEAM_ENEMY?-scale*r:scale*r,scale*r);ctx.drawImage(backup,-idle.pivot,-idle.foot,idle.cellW,idle.cellH);ctx.restore();}}
+ if(!painted&&u.hp>0){const backup=beAnImage('assets/characters/be-an/avatar.webp');if(backup.complete&&backup.naturalWidth){ctx.save();ctx.translate(u.x,u.y);const idle=BE_AN_META.clips.idle;ctx.scale(u.team===TEAM_ENEMY?-scale:scale,scale);ctx.drawImage(backup,-idle.pivot,-idle.foot,idle.cellW,idle.cellH);ctx.restore();}}
  if(u.hp>0){
   drawBeAnWaterShield(ctx,u,time,scale);
   drawUnitHud(ctx,u,time,1);
@@ -89,9 +92,10 @@ function drawBeAnVfx(ctx,time){
    const target=victims[0],p=Math.max(0,Math.min(1,(age-info.release)/310));
    // World-space throw anchor: begins by the casting hand and finishes on target.
    // Do not add a second static offset at impact (the old +100*scale missed).
-   const handX=u.x+(mirror?-1:1)*36*scale,handY=u.y-75*scale;
+   const sourceRatio=BE_AN_META.clips.idle.body/160;
+   const handX=u.x+(mirror?-1:1)*36*sourceRatio*scale,handY=u.y-75*sourceRatio*scale;
    const x=handX+(target.x-handX)*p;
-   const y=handY+(target.y-handY)*p-32*scale*4*p*(1-p);
+   const y=handY+(target.y-handY)*p-32*sourceRatio*scale*4*p*(1-p);
    beAnSprite(ctx,'vfx-basic',(age-info.release)/1500*144,x,y,scale*1.25,mirror);
   }else{
    const t=age-info.release,wave=Math.min(2,Math.floor(t/800)),local=t-wave*800;
