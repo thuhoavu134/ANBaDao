@@ -2,6 +2,12 @@
 
 Đọc `docs/ROSTER-PORTRAIT-STANDARD.md` khi sửa ảnh đại diện hoặc thẻ tướng. Cùng tỷ lệ mặt và cao độ mắt; giữ tỷ lệ ảnh. Frame đại diện phải mở mắt và được xem thật, không chọn theo diện tích alpha. Tướng/ảnh mới cần landmark và bằng chứng; ảnh thiếu QA không được coi là đã đạt. Không sửa thiết kế mặt nạ/che mắt authored.
 
+## Damage và bóng chân — quy định chung 18/10/2026
+
+Đọc `docs/COMBAT-HIT-FEEDBACK-STANDARD.md` khi sửa tướng, combat, VFX/SFX hoặc renderer. Mỗi hit gây mất HP, kể cả 1, phải hiện đúng số trên đầu người nhận ngay marker trúng đòn. Không gom cả combo, không xóa số trong lúc flush, không nhân đôi damage. Damage thường vàng; chí mạng đỏ đô kèm ký hiệu vector trước số; chữ đậm nghiêng có viền và các dòng cách đều. Mọi renderer tướng dùng bóng oval nhẹ cùng owner, bám chân thật kể cả di chuyển authored, ẩn khi nhân vật biến mất. Thêm hồi quy cho tướng mới ở đường nối thật; unit pass không thay browser/thiết bị.
+
+Trong tác vụ này, chủ dự án đã đồng ý dùng skill `vibelab-build` hiện có thay hai skill cũ `vibe-builder` và `vibe-lab`. Giữ test, kiểm hình và báo rõ phần chưa kiểm; không thay điều kiện merge/deploy.
+
 ## Tích hợp tướng / VFX / SFX — GLM 5.3 Flash và các coding agent
 
 Khi làm tướng hoặc asset Kiếm Thế, đọc [docs/GLM-HERO-VFX-SFX-GUIDE.md](docs/GLM-HERO-VFX-SFX-GUIDE.md). Hướng dẫn chứa bản đồ source, chọn/duyệt asset có tiếng, timeline, HUD, kiểm thử và hợp đồng Tịch Dao hiện hành. Không lấy các bộ asset tạm trong lịch sử QA làm bản đã duyệt.
