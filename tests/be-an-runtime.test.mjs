@@ -17,3 +17,16 @@ for(const team of ['player','enemy'])test('body and VFX mirror exactly once: '+t
  const h=harness(1,'basic'),scales=[],draws=[];const ctx={save(){},restore(){},translate(){},scale:(x,y)=>scales.push([x,y]),drawImage:(...a)=>draws.push(a)};
  h.c.beAnSprite(ctx,'basic',49,100,400,1,team==='enemy');assert.equal(scales.length,1);assert.equal(scales[0][0],team==='enemy'?-1:1);assert.equal(draws.length,1);assert.ok(draws[0][1]>=0&&draws[0][2]>=0);
 });
+
+test('ultimate renders one independent giant seal for each living target',()=>{
+ const h=harness(1,'ultimate'),calls=[];
+ const ctx={save(){},restore(){},translate(){},scale(){},drawImage(){}};
+ h.c.beAnSprite=(context,key,frame,x,y,scale,mirror)=>{calls.push({key,x,y,scale,mirror});return true;};
+ const info={actor:h.actor,kind:'ultimate',battleId:1,speed:1,start:0,release:meta.timeline.ultimate.release,vfxEnd:meta.timeline.ultimate.vfxEnd,targets:Array.from({length:6},(_,i)=>'e'+i)};
+ h.c.info=info;vm.runInContext('beAnActions.add(info)',h.c);
+ h.c.drawBeAnVfx(ctx,meta.timeline.ultimate.hits[0]);
+ const seals=calls.filter(c=>c.key==='vfx-ultimate');
+ assert.equal(seals.length,6);
+ assert.equal(new Set(seals.map(c=>c.y)).size,6);
+ assert.ok(seals.every(c=>c.scale>0));
+});
