@@ -9,7 +9,7 @@ export const ROSTER_PORTRAIT_LANDMARKS = Object.freeze({
   'assets/characters/ky-van/avatar.webp':[73,25,31],
   'assets/characters/tieu-phong/avatar.webp':[71,26,29],
   'assets/characters/hong-thuong/avatar.webp':[50,41,23],
-  'assets/characters/be-an/avatar.webp':[51,45,12],
+  'assets/characters/be-an/avatar.webp':[51,45,23], // FIX 20261018: was 12 (~316% zoom on a low-res source); re-measured against the hi-res 3x avatar re-export, matches hong-thuong's cheek-width scale.
   'assets/characters/co-nuong/avatar.webp':[58,33,17],
   'assets/characters/tich-dao/roster-open-eyes.webp':[64,33,22],
   'assets/heroes-concept/crops/duelist-00.png':[71,21,13],
