@@ -1,54 +1,70 @@
 {
   "schema": "be-an-assets/v1",
-  "assetRevision": "source24-20261018-hires3x",
+  "assetRevision": "idle-smooth30-20261019+source24-20261018-hires3x",
   "clips": {
     "idle": {
-      "file": "idle-0.webp",
-      "frames": 96,
-      "cols": 6,
-      "cellW": 1056,
-      "cellH": 672,
-      "durationMs": 4000,
-      "pageFrames": 24,
+      "file": "idle-smooth-0.webp",
+      "frames": 30,
+      "cols": 5,
+      "cellW": 480,
+      "cellH": 440,
+      "durationMs": 2833.334,
+      "pageFrames": 15,
       "pages": [
         {
-          "file": "idle-0.webp",
-          "frames": 24,
-          "cols": 6,
-          "cellW": 1056,
-          "cellH": 672,
-          "durationMs": 1000
+          "file": "idle-smooth-0.webp",
+          "frames": 15,
+          "cols": 5,
+          "cellW": 480,
+          "cellH": 440,
+          "durationMs": 1458.3340000000003
         },
         {
-          "file": "idle-1.webp",
-          "frames": 24,
-          "cols": 6,
-          "cellW": 1056,
-          "cellH": 672,
-          "durationMs": 1000
-        },
-        {
-          "file": "idle-2.webp",
-          "frames": 24,
-          "cols": 6,
-          "cellW": 1056,
-          "cellH": 672,
-          "durationMs": 1000
-        },
-        {
-          "file": "idle-3.webp",
-          "frames": 24,
-          "cols": 6,
-          "cellW": 1056,
-          "cellH": 672,
-          "durationMs": 1000
+          "file": "idle-smooth-1.webp",
+          "frames": 15,
+          "cols": 5,
+          "cellW": 480,
+          "cellH": 440,
+          "durationMs": 1375
         }
       ],
-      "pivot": 528,
-      "foot": 606,
-      "body": 480,
+      "pivot": 240,
+      "foot": 440,
+      "body": 440,
       "sourceFacing": 1,
-      "registrationScale": 0.903954802259887
+      "registrationScale": 1.0909090909090908,
+      "frameDurationsMs": [
+        83.334,
+        125,
+        83.333,
+        83.333,
+        125,
+        83.334,
+        83.333,
+        83.333,
+        125,
+        83.334,
+        83.333,
+        125,
+        83.333,
+        83.334,
+        125,
+        83.333,
+        83.333,
+        125,
+        83.334,
+        83.333,
+        125,
+        83.333,
+        83.334,
+        83.333,
+        125,
+        83.333,
+        83.334,
+        125,
+        83.333,
+        41.667
+      ]
     },
     "run": {
       "file": "run-0.webp",
@@ -705,10 +721,11 @@
   },
   "sources": {
     "idle": {
-      "file": "Character_standing_idle_green_sc…_20261018164037.mp4",
+      "file": "kiemthe-an-idle-smooth-30frames.zip",
       "sha256": "dd96a33d48301873a47557e0d51f5ecd2a41b7bfcba9cda8b80a571e0ce9a05b",
-      "frames": 96,
-      "fps": 24
+      "frames": 30,
+      "durationMs": 2833.334,
+      "format": "authored RGBA 480x440; 5x3 WebP pages"
     },
     "run": {
       "file": "Tạo_video_nhân_vật_chạy_20261018164245.mp4",
@@ -793,5 +810,6 @@
         ]
       ]
     }
-  }
+  },
+  "referenceBodyHeight": 480
 }
