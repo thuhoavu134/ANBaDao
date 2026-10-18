@@ -22,7 +22,8 @@ export function patchBeAnBattle(input,runtime,meta){
       if(isNemVi){`);
  return s;
 }
-export function beAnCampaignDescriptor(meta,key){const c=meta.clips[key];return {src:'assets/characters/be-an/'+key+'-campaign.webp',frames:c.frames,cols:8,cellW:176,cellH:112,ms:1000/24,pivot:88,foot:101,body:80,playbackRate:1};}
+export function beAnCampaignDescriptor(meta,key){const c=meta.clips[key];return {src:'assets/characters/be-an/'+c.pages[0].file,frames:c.frames,cols:c.cols,cellW:c.cellW,cellH:c.cellH,ms:1000/24,pivot:c.pivot,foot:c.foot,body:c.body,playbackRate:1};}
+export function beAnIdlePages(meta){const c=meta.clips.idle;return {pageFrames:c.pageFrames,poster:null,pages:c.pages.map(p=>({src:'assets/characters/be-an/'+p.file,cols:p.cols,cellW:c.cellW,cellH:c.cellH,pivot:c.pivot,foot:c.foot,body:c.body,rows:4}))};}
 export function patchBeAnHost(input,meta){
  if(input.includes('/* BE_AN_HOST_V1 */'))return input;
  const h=BE_AN_HERO,hero={he:h.element,faction:'hu_mong',archetype:h.role,rarity:'ssr',name:h.name,role:'Hải cẩu / Phản kích / Hộ mệnh',col:'#e8dfc6',stats:{hp:1050,mp:60,atk:145,def:55,spd:112},passive:{name:h.passive.name,desc:h.passive.description},skill:{name:h.actions.basic.name,cost:0,desc:h.actions.basic.description,fx:{kind:'damage',target:'enemy',power:1.4}},ultimate:{name:h.actions.ultimate.name,cost:60,desc:h.actions.ultimate.description,fx:{kind:'damage',target:'aoe_enemy',power:3}}};
@@ -34,17 +35,17 @@ export function patchBeAnHost(input,meta){
  s=once(s,mig,mig+'\nif(!p.flags?.beAnStarter20261018){p.heroes.be_an.owned=true;p.flags=p.flags||{};p.flags.beAnStarter20261018=true;}');
  s=s.replace(/("hong_thuong"(?:,"co_nuong")?)\]/g,'$1,"be_an"]');
  s=once(s,"const id=String(value||'').replace(/-/g,'_');","const id=String(value||'').replace(/-/g,'_');if(id==='hero_splus_be_an')return 'be_an';");
- s=once(s,'function preparationSpriteFor(pick, time) {','Object.assign(spriteSpecs,{be_an:'+JSON.stringify(beAnCampaignDescriptor(meta,'idle'))+'});\nfunction preparationSpriteFor(pick, time) {');
+ s=once(s,'function preparationSpriteFor(pick, time) {','Object.assign(spriteSpecs,{be_an:'+JSON.stringify(beAnCampaignDescriptor(meta,'idle'))+'});\nObject.assign(preparationIdlePacks,{be_an:'+JSON.stringify(beAnIdlePages(meta))+'});\nfunction preparationSpriteFor(pick, time) {');
  s=once(s,'function frameAt(spec, time) {','Object.assign(runSpecs,{be_an:'+JSON.stringify(beAnCampaignDescriptor(meta,'run'))+'});\nObject.assign(farmAttackSpecs,{be_an:'+JSON.stringify(beAnCampaignDescriptor(meta,'basic'))+'});\nfunction frameAt(spec, time) {');
  s=once(s,"if(id==='bach_dien'){ startBachDienDetailIdle(); }","if(id==='bach_dien'){ startBachDienDetailIdle(); }\nif(id==='be_an')startBeAnDetailIdle();");
  s=once(s,"id==='bach_dien'?'<canvas id=","id==='be_an'?'<canvas id=\"beAnDetailIdle\" width=\"352\" height=\"224\" aria-label=\"Bé An idle\"></canvas>':id==='bach_dien'?'<canvas id=");
  s=once(s,'function startBachDienDetailIdle(){',`function startBeAnDetailIdle(){
  cancelAnimationFrame(_lucDetailRaf);const cv=document.getElementById('beAnDetailIdle');if(!cv)return;
- const ctx=cv.getContext('2d'),images=Array.from({length:4},(_,i)=>{const im=new Image();im.src='assets/characters/be-an/idle-'+i+'.webp';return im;});const start=performance.now();
+ const ctx=cv.getContext('2d'),images=Array.from({length:4},(_,i)=>{const im=new Image();im.decoding='async';im.src='assets/characters/be-an/idle-'+i+'.webp';return im;});const start=performance.now();ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';
  function tick(){if(!cv.isConnected){for(const image of images)image.src='';return;}const frame=Math.floor((performance.now()-start)*.024)%96,page=Math.floor(frame/24),local=frame%24,image=images[page];if(image.complete&&image.naturalWidth){ctx.clearRect(0,0,352,224);ctx.imageSmoothingQuality='high';ctx.drawImage(image,local%6*352,Math.floor(local/6)*224,352,224,0,0,352,224);}_lucDetailRaf=requestAnimationFrame(tick);}tick();
  }
  function startBachDienDetailIdle(){`);
- s=once(s,'</head>','<style>#hdBody .hstage[data-hero-id="be_an"]{position:relative!important;padding-top:420px!important}#hdBody .hstage[data-hero-id="be_an"]>.hsava{display:none!important}#beAnDetailIdle{position:absolute;top:20px;left:50%;transform:translateX(-50%);width:600px;height:382px;max-width:none;pointer-events:none}</style></head>');
+ s=once(s,'</head>','<style>#hdBody .hstage[data-hero-id="be_an"]{position:relative!important;padding-top:420px!important}#hdBody .hstage[data-hero-id="be_an"]>.hsava{display:none!important}#beAnDetailIdle{position:absolute;top:20px;left:50%;transform:translateX(-50%);width:min(352px,94vw);height:auto;aspect-ratio:352/224;max-width:none;pointer-events:none}</style></head>');
  return s;
 }
 export function installBeAn(root){
