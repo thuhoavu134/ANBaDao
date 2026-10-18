@@ -11,9 +11,9 @@
   "registration": "source-body",
   "clips": {
     "idle": {
-      "bodyHeight": 440,
-      "footX": 240,
-      "footY": 440
+      "bodyHeight": 480,
+      "footX": 528,
+      "footY": 606
     },
     "run": {
       "bodyHeight": 480,
@@ -62,5 +62,5 @@
       "ultimate"
     ]
   },
-  "evidence": "Source 24 fps; fixed first-pose registration per clip. Special contains the body and replaces it. 3x source-resolution export retains identical local registration. User-authored 30-frame RGBA idle at 480x440, registered to 480 shared body units."
+  "evidence": "Source 24 fps; smooth 30-frame PTS loop (IoU 0.9774); 3x source-body registration."
 }
