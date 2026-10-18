@@ -41,6 +41,8 @@ export async function buildTichDaoCampaignAssets(root){
   const source=sharp(join(base,key+'.webp')),info=await source.metadata();
   await source.resize(Math.round(info.width/2),Math.round(info.height/2)).webp({quality:90,alphaQuality:100}).toFile(join(out,key+'.webp'));
  }
+ // Reviewed idle frame 0: eyes open. Preserve the full cell for stable portrait landmarks.
+ await sharp(join(base,'idle-authored-0.webp')).extract({left:0,top:0,width:480,height:440}).webp({quality:92,alphaQuality:100}).toFile(join(base,'roster-open-eyes.webp'));
  await sharp(join(base,'idle-authored-0.webp')).extract({left:0,top:0,width:480,height:440}).resize(240,220).webp({quality:90,alphaQuality:100}).toFile(join(out,'idle-poster.webp'));
 }
 export async function installTichDao(root){await buildTichDaoCampaignAssets(root);const out=join(root,'dist'),p=join(out,'battle.html');writeFileSync(p,patchTichDaoBattle(readFileSync(p,'utf8'),readFileSync(join(root,'src/runtime/tich-dao.js'),'utf8'),JSON.parse(readFileSync(join(root,'assets/characters/tich-dao/runtime-meta.json'),'utf8'))));const host=join(out,'index.html');writeFileSync(host,patchTichDaoHost(readFileSync(host,'utf8'),JSON.parse(readFileSync(join(root,'assets/characters/tich-dao/runtime-meta.json'),'utf8')),readFileSync(join(root,'src/ui/tich-dao-detail.js'),'utf8')));copyFileSync(join(root,'tich-dao-test.html'),join(out,'tich-dao-test.html'));}
@@ -78,4 +80,5 @@ export function patchTichDaoHost(input,meta,detailRuntime){
  }
  return s.split(roster).join('"linh_dong","bach_dien","ky_van","tieu_phong","tich_dao"]');
 }
+
 

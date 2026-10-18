@@ -19,7 +19,7 @@ const css = `<style id="hero-roster-phase-a-v4-css">
 #hvHeroRosterV4 .v4-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;padding:8px 7px 16px;flex:1 1 auto;min-height:0;min-width:0;overflow:auto;-webkit-overflow-scrolling:touch}
 #hvHeroRosterV4 .v4-card{position:relative;aspect-ratio:.68;min-height:150px;border:2px solid #e8c56a;border-radius:10px;background:#c9a050;box-shadow:0 0 0 2px #7a4a14,inset 0 0 0 2px #fff4d0,0 4px 10px rgba(70,40,8,.3);overflow:hidden;padding:0;margin:0;color:inherit;min-width:0;touch-action:manipulation}
 #hvHeroRosterV4 .v4-art{position:absolute;left:3px;right:3px;top:3px;bottom:3px;border-radius:7px;overflow:hidden;background:linear-gradient(180deg,#cde9df,#acd2c1);border:0}
-#hvHeroRosterV4 .v4-art img{width:168%;max-width:none;height:130%;object-fit:cover;object-position:50% 8%;margin-left:-34%;margin-top:-2%;display:block}
+#hvHeroRosterV4 .v4-art img{position:absolute;left:50%;top:34%;width:var(--portrait-width,100%);max-width:none;height:auto;margin:0;transform:translate(var(--portrait-x,-50%),var(--portrait-y,-34%));display:block}
 #hvHeroRosterV4 .v4-grade{position:absolute;left:2px;top:2px;z-index:5;width:34px;height:34px;padding:0;border:0;background:none;box-shadow:none;display:block}
 #hvHeroRosterV4 .v4-grade img{width:34px;height:34px;object-fit:contain;display:block;filter:drop-shadow(0 1px 2px rgba(0,0,0,.45))}
 #hvHeroRosterV4 .v4-card.r-splus .v4-grade,#hvHeroRosterV4 .v4-card.r-s .v4-grade,#hvHeroRosterV4 .v4-card.r-a .v4-grade,#hvHeroRosterV4 .v4-card.r-b .v4-grade{background:none}
@@ -40,7 +40,8 @@ const moduleSource = planSource + '\n' + readFileSync(join(process.cwd(), 'src/d
   .replace("import { summarizeRosterCapacity } from './roster-plan.mjs';", '')
   .replace(/^export\s+/gm, '');
 const runtimeSource = readFileSync(join(process.cwd(), 'src/ui/hero-roster-runtime.js'), 'utf8');
-const jsBody = '(()=>{\n' + moduleSource + '\n' + runtimeSource + '\n})();';
+const portraitSource = readFileSync(join(process.cwd(), 'src/domain/hero/roster-portrait.mjs'), 'utf8').replace(/^export\s+/gm, '');
+const jsBody = '(()=>{\n' + portraitSource + '\n' + moduleSource + '\n' + runtimeSource + '\n})();';
 new Function(jsBody);
 const cssState = `<style id="hero-roster-state-v1-css">
 /* Body overlay like #hvGearRoot. Overflow auto so iOS cannot clip the 12 cards. */
@@ -74,3 +75,4 @@ if (bodyEnd < 0) throw new Error('Roster shell body end missing');
 html = html.slice(0, bodyEnd) + js + '\n' + html.slice(bodyEnd);
 writeFileSync(p, html);
 console.log('State-backed roster installed: official identities, live stats, one route owner');
+

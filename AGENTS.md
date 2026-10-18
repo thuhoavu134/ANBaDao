@@ -1,3 +1,7 @@
+## Chân dung màn Tướng — quy chuẩn chung 18/10/2026
+
+Đọc `docs/ROSTER-PORTRAIT-STANDARD.md` khi sửa ảnh đại diện hoặc thẻ tướng. Cùng tỷ lệ mặt và cao độ mắt; giữ tỷ lệ ảnh. Frame đại diện phải mở mắt và được xem thật, không chọn theo diện tích alpha. Tướng/ảnh mới cần landmark và bằng chứng; ảnh thiếu QA không được coi là đã đạt. Không sửa thiết kế mặt nạ/che mắt authored.
+
 ## Damage và bóng chân — quy định chung 18/10/2026
 
 Đọc `docs/COMBAT-HIT-FEEDBACK-STANDARD.md` khi sửa tướng, combat, VFX/SFX hoặc renderer. Mỗi hit gây mất HP, kể cả 1, phải hiện đúng số trên đầu người nhận ngay marker trúng đòn. Không gom cả combo, không xóa số trong lúc flush, không nhân đôi damage. Damage thường vàng; chí mạng đỏ đô kèm ký hiệu vector trước số; chữ đậm nghiêng có viền và các dòng cách đều. Mọi renderer tướng dùng bóng oval nhẹ cùng owner, bám chân thật kể cả di chuyển authored, ẩn khi nhân vật biến mất. Thêm hồi quy cho tướng mới ở đường nối thật; unit pass không thay browser/thiết bị.
@@ -88,4 +92,3 @@ Khi tiếp tục phát triển game, đọc docs/VIBE-WORKFLOW-RULES.md và tuâ
 - **vibe-lab** là gate bắt buộc cho thay đổi runtime: contract → ticket/claim/lock → RED → GREEN → REFACTOR → evidence → REVIEW/handoff.
 - ticket-board là nguồn sự thật cho trạng thái ticket. Builder không tự chuyển ticket sang MERGED hoặc DONE.
 - Docs-only có thể kiểm tra thông thường; thay đổi code/UI/data/behavior/migration/release phải qua đầy đủ gate. Không âm thầm bỏ qua blocker, không force-push, không báo PASS chỉ từ build.
-
