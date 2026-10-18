@@ -1,0 +1,138 @@
+{
+  "schema": "khaos-assets/v1",
+  "assetRevision": "source24-20261019-kiemthe",
+  "clips": {
+    "idle": {
+      "file": "idle-0.webp",
+      "frames": 30,
+      "cols": 8,
+      "cellW": 480,
+      "cellH": 440,
+      "durationMs": 2416.666,
+      "pageFrames": 30,
+      "pages": [
+        {
+          "file": "idle-0.webp",
+          "frames": 30,
+          "cols": 8,
+          "cellW": 480,
+          "cellH": 440,
+          "durationMs": 2416.666
+        }
+      ],
+      "pivot": 240,
+      "foot": 440,
+      "body": 310
+    },
+    "run": {
+      "file": "run-0.webp",
+      "frames": 18,
+      "cols": 6,
+      "cellW": 480,
+      "cellH": 440,
+      "durationMs": 4000.0,
+      "pageFrames": 18,
+      "pages": [
+        {
+          "file": "run-0.webp",
+          "frames": 18,
+          "cols": 6,
+          "cellW": 480,
+          "cellH": 440,
+          "durationMs": 4000.0
+        }
+      ],
+      "pivot": 240,
+      "foot": 440,
+      "body": 310
+    },
+    "basic": {
+      "file": "basic-0.webp",
+      "frames": 18,
+      "cols": 6,
+      "cellW": 480,
+      "cellH": 440,
+      "durationMs": 4000.0,
+      "pageFrames": 18,
+      "pages": [
+        {
+          "file": "basic-0.webp",
+          "frames": 18,
+          "cols": 6,
+          "cellW": 480,
+          "cellH": 440,
+          "durationMs": 4000.0
+        }
+      ],
+      "pivot": 240,
+      "foot": 440,
+      "body": 310
+    },
+    "ultimate": {
+      "file": "ultimate-0.webp",
+      "frames": 18,
+      "cols": 6,
+      "cellW": 480,
+      "cellH": 440,
+      "durationMs": 3966.667,
+      "pageFrames": 18,
+      "pages": [
+        {
+          "file": "ultimate-0.webp",
+          "frames": 18,
+          "cols": 6,
+          "cellW": 480,
+          "cellH": 440,
+          "durationMs": 3966.667
+        }
+      ],
+      "pivot": 240,
+      "foot": 440,
+      "body": 310
+    },
+    "hit": {
+      "file": "hit-0.webp",
+      "frames": 18,
+      "cols": 6,
+      "cellW": 480,
+      "cellH": 440,
+      "durationMs": 4000.0,
+      "pageFrames": 18,
+      "pages": [
+        {
+          "file": "hit-0.webp",
+          "frames": 18,
+          "cols": 6,
+          "cellW": 480,
+          "cellH": 440,
+          "durationMs": 4000.0
+        }
+      ],
+      "pivot": 240,
+      "foot": 440,
+      "body": 310
+    },
+    "fall-die": {
+      "file": "fall-die-0.webp",
+      "frames": 18,
+      "cols": 6,
+      "cellW": 480,
+      "cellH": 440,
+      "durationMs": 4000.0,
+      "pageFrames": 18,
+      "pages": [
+        {
+          "file": "fall-die-0.webp",
+          "frames": 18,
+          "cols": 6,
+          "cellW": 480,
+          "cellH": 440,
+          "durationMs": 4000.0
+        }
+      ],
+      "pivot": 240,
+      "foot": 440,
+      "body": 310
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "schema": "battle-hero-presentation/v1",
+  "heroId": "hero_splus_khaos",
+  "aliases": [
+    "khaos",
+    "hero_splus_khaos"
+  ],
+  "referenceBodyHeight": 310,
+  "footOffsetY": 0,
+  "registration": "source-body",
+  "clips": {
+    "idle": {
+      "bodyHeight": 310,
+      "footX": 240,
+      "footY": 440
+    },
+    "run": {
+      "bodyHeight": 310,
+      "footX": 240,
+      "footY": 440
+    },
+    "basic": {
+      "bodyHeight": 310,
+      "footX": 240,
+      "footY": 440
+    },
+    "ultimate": {
+      "bodyHeight": 310,
+      "footX": 240,
+      "footY": 440
+    },
+    "hit": {
+      "bodyHeight": 310,
+      "footX": 240,
+      "footY": 440
+    },
+    "fall-die": {
+      "bodyHeight": 310,
+      "footX": 240,
+      "footY": 440
+    }
+  },
+  "vfxClips": [],
+  "states": {
+    "idle": [
+      "idle"
+    ],
+    "attack": [
+      "basic"
+    ],
+    "ultimate": [
+      "ultimate"
+    ]
+  },
+  "evidence": "Khaos Kiếm Thế six-state package."
+}
