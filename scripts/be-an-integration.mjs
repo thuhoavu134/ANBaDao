@@ -40,8 +40,8 @@ export function patchBeAnHost(input,meta){
  s=once(s,"id==='bach_dien'?'<canvas id=","id==='be_an'?'<canvas id=\"beAnDetailIdle\" width=\"352\" height=\"224\" aria-label=\"Bé An idle\"></canvas>':id==='bach_dien'?'<canvas id=");
  s=once(s,'function startBachDienDetailIdle(){',`function startBeAnDetailIdle(){
  cancelAnimationFrame(_lucDetailRaf);const cv=document.getElementById('beAnDetailIdle');if(!cv)return;
- const ctx=cv.getContext('2d'),image=new Image();image.src='assets/characters/be-an/idle-campaign.webp';const start=performance.now();
- function tick(){if(!cv.isConnected){image.src='';return;}if(image.complete&&image.naturalWidth){const frame=Math.floor((performance.now()-start)*.024)%96;ctx.clearRect(0,0,352,224);ctx.drawImage(image,frame%8*176,Math.floor(frame/8)*112,176,112,0,0,352,224);}_lucDetailRaf=requestAnimationFrame(tick);}tick();
+ const ctx=cv.getContext('2d'),image=new Image();image.src='assets/characters/be-an/idle-0.webp';const start=performance.now();
+ function tick(){if(!cv.isConnected){image.src='';return;}if(image.complete&&image.naturalWidth){const frame=Math.floor((performance.now()-start)*.024)%24;ctx.clearRect(0,0,352,224);ctx.imageSmoothingQuality='high';ctx.drawImage(image,frame%6*352,Math.floor(frame/6)*224,352,224,0,0,352,224);}_lucDetailRaf=requestAnimationFrame(tick);}tick();
  }
  function startBachDienDetailIdle(){`);
  s=once(s,'</head>','<style>#hdBody .hstage[data-hero-id="be_an"]{position:relative!important;padding-top:420px!important}#hdBody .hstage[data-hero-id="be_an"]>.hsava{display:none!important}#beAnDetailIdle{position:absolute;top:20px;left:50%;transform:translateX(-50%);width:600px;height:382px;max-width:none;pointer-events:none}</style></head>');
