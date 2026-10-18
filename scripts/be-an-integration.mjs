@@ -38,11 +38,12 @@ export function patchBeAnHost(input,meta){
  s=once(s,'function preparationSpriteFor(pick, time) {','Object.assign(spriteSpecs,{be_an:'+JSON.stringify(beAnCampaignDescriptor(meta,'idle'))+'});\nObject.assign(preparationIdlePacks,{be_an:'+JSON.stringify(beAnIdlePages(meta))+'});\nfunction preparationSpriteFor(pick, time) {');
  s=once(s,'function frameAt(spec, time) {','Object.assign(runSpecs,{be_an:'+JSON.stringify(beAnCampaignDescriptor(meta,'run'))+'});\nObject.assign(farmAttackSpecs,{be_an:'+JSON.stringify(beAnCampaignDescriptor(meta,'basic'))+'});\nfunction frameAt(spec, time) {');
  s=once(s,"if(id==='bach_dien'){ startBachDienDetailIdle(); }","if(id==='bach_dien'){ startBachDienDetailIdle(); }\nif(id==='be_an')startBeAnDetailIdle();");
- s=once(s,"id==='bach_dien'?'<canvas id=","id==='be_an'?'<canvas id=\"beAnDetailIdle\" width=\"352\" height=\"224\" aria-label=\"Bé An idle\"></canvas>':id==='bach_dien'?'<canvas id=");
- s=once(s,'function startBachDienDetailIdle(){',`function startBeAnDetailIdle(){
+ s=once(s,"id==='bach_dien'?'<canvas id=","id==='be_an'?'<canvas id=\"beAnDetailIdle\" width=\"1056\" height=\"672\" aria-label=\"Bé An idle\"></canvas>':id==='bach_dien'?'<canvas id=");
+ s=once(s,'function startBachDienDetailIdle(){',`const BE_AN_META_DETAIL={"cellW":1056,"cellH":672};
+ function startBeAnDetailIdle(){
  cancelAnimationFrame(_lucDetailRaf);const cv=document.getElementById('beAnDetailIdle');if(!cv)return;
- const ctx=cv.getContext('2d'),images=Array.from({length:4},(_,i)=>{const im=new Image();im.decoding='async';im.src='assets/characters/be-an/idle-'+i+'.webp';return im;});const start=performance.now();ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';
- function tick(){if(!cv.isConnected){for(const image of images)image.src='';return;}const frame=Math.floor((performance.now()-start)*.024)%96,page=Math.floor(frame/24),local=frame%24,image=images[page];if(image.complete&&image.naturalWidth){ctx.clearRect(0,0,352,224);ctx.imageSmoothingQuality='high';ctx.drawImage(image,local%6*352,Math.floor(local/6)*224,352,224,0,0,352,224);}_lucDetailRaf=requestAnimationFrame(tick);}tick();
+ const cellW=BE_AN_META_DETAIL.cellW,cellH=BE_AN_META_DETAIL.cellH,ctx=cv.getContext('2d'),images=Array.from({length:4},(_,i)=>{const im=new Image();im.decoding='async';im.src='assets/characters/be-an/idle-'+i+'.webp';return im;});const start=performance.now();ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';
+ function tick(){if(!cv.isConnected){for(const image of images)image.src='';return;}const frame=Math.floor((performance.now()-start)*.024)%96,page=Math.floor(frame/24),local=frame%24,image=images[page];if(image.complete&&image.naturalWidth){ctx.clearRect(0,0,cellW,cellH);ctx.imageSmoothingQuality='high';ctx.drawImage(image,local%6*cellW,Math.floor(local/6)*cellH,cellW,cellH,0,0,cellW,cellH);}_lucDetailRaf=requestAnimationFrame(tick);}tick();
  }
  function startBachDienDetailIdle(){`);
  s=once(s,'</head>','<style>#hdBody .hstage[data-hero-id="be_an"]{position:relative!important;padding-top:420px!important}#hdBody .hstage[data-hero-id="be_an"]>.hsava{display:none!important}#beAnDetailIdle{position:absolute;top:20px;left:50%;transform:translateX(-50%);width:min(352px,94vw);height:auto;aspect-ratio:352/224;max-width:none;pointer-events:none}</style></head>');
