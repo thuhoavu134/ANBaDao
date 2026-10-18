@@ -10,7 +10,7 @@ function harness(speed,action,cancelAt=Infinity){
  return {c,e,actor,played,totals,state,run:()=>c.performBeAnAction(actor,action,e.unit('e0'),e,1),advanced:()=>advanced,now:()=>now};
 }
 for(const speed of [1,2,3])for(const action of ['basic','ultimate'])test(`${action} at x${speed}: exact hits, one cue, total and next turn`,async()=>{
- const h=harness(speed,action);await h.run();assert.equal(h.e.events.filter(x=>x.type==='damage').length,action==='basic'?2:18);assert.equal(h.played.length,1);assert.equal(h.played[0][1],speed);assert.equal(h.advanced(),1);assert.equal(h.state.locked,false);assert.equal(h.totals[0],h.e.events.filter(x=>x.type==='damage').reduce((s,x)=>s+x.amount,0));assert.ok(Math.abs(h.now()-(action==='basic'?4000:6650)/speed)<1);
+ const h=harness(speed,action);await h.run();assert.equal(h.e.events.filter(x=>x.type==='damage').length,action==='basic'?2:18);assert.equal(h.played.length,1);assert.equal(h.played[0][1],speed*(action==='basic'?1.25:1.4));assert.equal(h.advanced(),1);assert.equal(h.state.locked,false);assert.equal(h.totals[0],h.e.events.filter(x=>x.type==='damage').reduce((s,x)=>s+x.amount,0));assert.ok(Math.abs(h.now()-(action==='basic'?4000/1.25:6650/1.4)/speed)<1);
 });
 test('scene change cancels remaining contacts and does not advance the new battle',async()=>{const h=harness(1,'ultimate',4100);await h.run();assert.equal(h.e.events.filter(x=>x.type==='damage').length,6);assert.equal(h.advanced(),0);assert.equal(h.totals.length,0);});
 for(const team of ['player','enemy'])test('body and VFX mirror exactly once: '+team,()=>{
@@ -30,3 +30,6 @@ test('ultimate renders one independent giant seal for each living target',()=>{
  assert.equal(new Set(seals.map(c=>c.y)).size,6);
  assert.ok(seals.every(c=>c.scale>0));
 });
+
+test('ultimate seal starts two body heights above every target and reaches contact with acceleration',()=>{const h=harness(1,'ultimate'),calls=[];h.c.beAnSprite=(ctx,key,frame,x,y,scale,mirror)=>{calls.push({key,x,y,scale,mirror});return true;};const ctx={};const info={actor:h.actor,kind:'ultimate',battleId:1,speed:1,start:0,release:meta.timeline.ultimate.release,vfxEnd:meta.timeline.ultimate.vfxEnd,targets:['e0']};h.c.info=info;vm.runInContext('beAnActions.add(info)',h.c);h.c.drawBeAnVfx(ctx,info.release);const target=h.e.unit('e0'),start=calls.find(x=>x.key==='vfx-ultimate');assert.ok(start);assert.ok(Math.abs(start.y-(target.y-2*160*h.c.beAnScale(target)))<1e-6);calls.length=0;h.c.drawBeAnVfx(ctx,meta.timeline.ultimate.hits[0]);assert.ok(Math.abs(calls[0].y-target.y)<1e-6);});
+test('passive shield visual stays active only while owned shield layer remains',()=>{const h=harness(1,'basic'),ctx={save(){},restore(){},beginPath(){},ellipse(){},fill(){},stroke(){}};const u=h.actor;u.shield=150;u.statuses=[{splus:true,type:'shieldLayer',sourceId:u.id,shieldRemaining:150}];assert.equal(h.c.beAnPassiveShield(u),true);assert.equal(h.c.drawBeAnWaterShield(ctx,u,100,1),true);u.statuses[0].shieldRemaining=0;assert.equal(h.c.beAnPassiveShield(u),false);});
