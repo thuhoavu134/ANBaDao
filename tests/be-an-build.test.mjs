@@ -19,7 +19,7 @@ test('host composes after all authored hero owners; migration grants once withou
  const c={DATA:{heroes:{}},CHARACTER_MANIFEST:{}};vm.runInNewContext(registration,c);assert.equal(c.DATA.heroes.be_an.name,'Bé An');assert.equal(c.CHARACTER_MANIFEST.be_an.assets.avatar,'assets/characters/be-an/avatar.webp');
  assert.match(s,/"co_nuong","be_an"\]/);assert.match(s,/Object.assign\(runSpecs,\{be_an:/);
  assert.match(s,/Object.assign\(preparationIdlePacks,\{be_an:/);
- assert.match(s,/width:min\(352px,94vw\)/);assert.match(s,/Object.assign\(farmAttackSpecs,\{be_an:/);
+ assert.match(s,/width:600px/);assert.match(s,/aspect-ratio:1056\/672/);assert.match(s,/Object.assign\(farmAttackSpecs,\{be_an:/);
  const migration=s.match(/if\(!p.flags\?\.beAnStarter20261018\)\{.*?p.flags.beAnStarter20261018=true;\}/)[0];const p={heroes:{be_an:{owned:false},co_nuong:{level:7}},gold:100,squad:[{id:'co_nuong'}]};vm.runInNewContext(migration,{p});assert.equal(p.heroes.be_an.owned,true);assert.equal(p.gold,100);assert.equal(p.heroes.co_nuong.level,7);p.heroes.be_an.owned=false;vm.runInNewContext(migration,{p});assert.equal(p.heroes.be_an.owned,false);
 });
 
