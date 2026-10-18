@@ -2,6 +2,30 @@
 const beAnImages=new Map(),beAnMotions=new Map(),beAnActions=new Set(),beAnBursts=[];
 const beAnAtlasRatio=key=>{const c=BE_AN_META.clips[key];return c&&c.body?160/c.body:1;};
 const isBeAn=u=>u?.sourceId==='hero_splus_be_an';
+// Tempo snapshots follow Cổ Nương's compact action cadence without altering domain hit count.
+const beAnTempo=kind=>kind==='ultimate'?1.40:1.25;
+const beAnPassiveShield=u=>u?.shield>0&&u.statuses?.some(s=>s.splus===true&&s.type==='shieldLayer'&&s.sourceId===u.id&&s.shieldRemaining>0);
+function beAnUltimateDropY(target,local,wave,targetScale){
+ const hits=BE_AN_META.timeline.ultimate.hits,release=BE_AN_META.timeline.ultimate.release;
+ const contactMs=hits[wave]-release-wave*800;
+ const progress=Math.max(0,Math.min(1,local/Math.max(1,contactMs)));
+ // The seal starts two enemy body-heights above its landing anchor; gravity accelerates to contact.
+ return target.y-2*160*targetScale*(1-progress*progress*progress);
+}
+function drawBeAnWaterShield(ctx,u,time,scale){
+ if(!beAnPassiveShield(u))return false;
+ const height=160*scale,centerY=u.y-height*.50,pulse=.5+.5*Math.sin(time*.006);
+ ctx.save();ctx.globalCompositeOperation='screen';
+ ctx.fillStyle='rgba(62,175,238,0.10)';ctx.strokeStyle='rgba(100,225,252,'+(.64+.19*pulse)+')';
+ ctx.lineWidth=Math.max(1.5,2.6*scale);
+ ctx.beginPath();ctx.ellipse(u.x,centerY,height*.46,height*.59,0,0,Math.PI*2);ctx.fill();ctx.stroke();
+ ctx.strokeStyle='rgba(213,249,255,0.60)';ctx.lineWidth=Math.max(1,1.2*scale);
+ ctx.beginPath();ctx.ellipse(u.x,centerY,height*.42,height*.54,0,0,Math.PI*2);ctx.stroke();
+ ctx.restore();
+ // Keep the original Kiếm Thế water-shield clip intact and playing during shield lifetime.
+ beAnSprite(ctx,'shield',Math.floor(time/60)%25,u.x,u.y+5,scale*.90,false);
+ return true;
+}
 function beAnImage(src){
  let im=beAnImages.get(src);if(!im){im=new Image();im.decoding='async';im.src=src;beAnImages.set(src,im);}
  // High-resolution atlases: keep at most three live pages to bound decoded texture residency.
@@ -37,7 +61,7 @@ function drawBeAnHero(ctx,u,time){
  const painted=beAnSprite(ctx,kind,frame,u.x,u.y,scale,u.team===TEAM_ENEMY);
  if(!painted&&u.hp>0){const backup=beAnImage('assets/characters/be-an/avatar.webp');if(backup.complete&&backup.naturalWidth){ctx.save();ctx.translate(u.x,u.y);const idle=BE_AN_META.clips.idle,r=beAnAtlasRatio('idle');ctx.scale(u.team===TEAM_ENEMY?-scale*r:scale*r,scale*r);ctx.drawImage(backup,-idle.pivot,-idle.foot,idle.cellW,idle.cellH);ctx.restore();}}
  if(u.hp>0){
-  if(u.shield>0)beAnSprite(ctx,'shield',Math.floor(time/60)%25,u.x,u.y+5,scale*.9,false);
+  drawBeAnWaterShield(ctx,u,time,scale);
   drawUnitHud(ctx,u,time,1);
  }
 }
@@ -78,14 +102,15 @@ function drawBeAnVfx(ctx,time){
     if(target.hp<=0)continue;
     const targetScale=beAnScale(target),giantScale=Math.min(scale*1.45,targetScale*1.12);
     const x=target.x-(mirror?-1:1)*55*giantScale;
-    beAnSprite(ctx,'vfx-ultimate',frame,x,target.y,giantScale,mirror);
+    const y=beAnUltimateDropY(target,local,wave,targetScale);
+    beAnSprite(ctx,'vfx-ultimate',frame,x,y,giantScale,mirror);
    }
   }
  }
 }
 function cancelBeAn(){for(const i of beAnActions)i.abort.abort();beAnActions.clear();for(const m of beAnMotions.values())m.abort?.abort();beAnMotions.clear();beAnBursts.length=0;beAnImages.clear();}
 async function performBeAnAction(actor,action,target,e,battleId){
- const kind=action==='ultimate'?'ultimate':'basic',speed=Math.max(1,Math.min(3,Number(state.speed)||1));
+ const kind=action==='ultimate'?'ultimate':'basic',speed=Math.max(1,Math.min(3,Number(state.speed)||1))*beAnTempo(kind);
  const info={actor,kind,battleId,speed,start:0,release:BE_AN_META.timeline[kind].release,vfxEnd:BE_AN_META.timeline[kind].vfxEnd,targets:[],abort:new AbortController()};
  const current=()=>state.battleId===battleId&&!info.abort.signal.aborted;
  const wait=async at=>{while(current()){if(__hvIsSkipping())return true;const left=at-(performance.now()-info.start)*speed;if(left<=0)return true;if(!await sleepVisualMilliseconds(Math.min(40,left/speed),battleId))return false;}return false;};
@@ -104,10 +129,12 @@ async function performBeAnAction(actor,action,target,e,battleId){
   setUnitState(actor,kind==='basic'?'attack':'ultimate',duration/speed);
   const title=globalThis.SPLUS42.catalog.find(h=>h.id===actor.sourceId)?.actions[kind]?.name;
   setStatus(actor.name+' · '+title);dom.phaseLabel.textContent=title;
+  // Audio uses the source-derived M4A and the captured animation tempo.
+  // Begin slightly before visual release so the authored transient lands on the first contact.
+  if(!await wait(Math.max(0,info.release-(kind==='basic'?180:320))))return;
+  if(state.sound&&!__hvIsSkipping())void window.HonVietSfx?.play(cue,{group:'combat',signal:info.abort.signal,playbackRate:speed,maxDelayMs:180});
   if(!await wait(info.release))return;
   trace?.marker('release',{actionId:presentationId});
-  // Basic audio follows the same compression as the supplied two-contact movie.
-  if(state.sound&&!__hvIsSkipping())void window.HonVietSfx?.play(cue,{group:'combat',signal:info.abort.signal,playbackRate:speed,maxDelayMs:120});
   const hits=BE_AN_META.timeline[kind].hits;
   for(let hit=0;hit<hits.length;hit++){
    if(!await wait(hits[hit]))return;
