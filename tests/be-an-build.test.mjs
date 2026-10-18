@@ -1,5 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';import vm from'node:vm';import{readFileSync}from'node:fs';
-import{patchSplusBattleHtml}from'../scripts/splus-runtime-v1.mjs';import{patchBeAnBattle,patchBeAnHost}from'../scripts/be-an-integration.mjs';
+import{patchSplusBattleHtml}from'../scripts/splus-runtime-v1.mjs';import{patchBeAnBattle,patchBeAnHost,beAnCampaignDescriptor,beAnIdlePages}from'../scripts/be-an-integration.mjs';
 import{patchKyVanHost}from'../scripts/ky-van-runtime-v1.mjs';import{patchTieuPhongHost}from'../scripts/tieu-phong-runtime-v1.mjs';import{patchTichDaoHost}from'../scripts/tich-dao-runtime-v1.mjs';import{patchHongThuongHost}from'../scripts/hong-thuong-runtime-v1.mjs';import{patchCoNuongMainIndex}from'../scripts/co-nuong-main-integration.mjs';
 const read=p=>readFileSync(new URL('../'+p,import.meta.url),'utf8'),meta=JSON.parse(read('assets/characters/be-an/runtime-meta.json'));
 test('real base battle + S+ + Bé An installer parse and retain one scheduler',()=>{
@@ -17,6 +17,16 @@ test('host composes after all authored hero owners; migration grants once withou
  s=patchBeAnHost(patchCoNuongMainIndex(s),meta);
  const registration=s.slice(s.indexOf('/* BE_AN_HOST_V1 */'),s.indexOf('let P=null, MEMORY_ONLY=false;'));
  const c={DATA:{heroes:{}},CHARACTER_MANIFEST:{}};vm.runInNewContext(registration,c);assert.equal(c.DATA.heroes.be_an.name,'Bé An');assert.equal(c.CHARACTER_MANIFEST.be_an.assets.avatar,'assets/characters/be-an/avatar.webp');
- assert.match(s,/"co_nuong","be_an"\]/);assert.match(s,/Object.assign\(runSpecs,\{be_an:/);assert.match(s,/Object.assign\(farmAttackSpecs,\{be_an:/);
+ assert.match(s,/"co_nuong","be_an"\]/);assert.match(s,/Object.assign\(runSpecs,\{be_an:/);
+ assert.match(s,/Object.assign\(preparationIdlePacks,\{be_an:/);
+ assert.match(s,/width:min\(352px,94vw\)/);assert.match(s,/Object.assign\(farmAttackSpecs,\{be_an:/);
  const migration=s.match(/if\(!p.flags\?\.beAnStarter20261018\)\{.*?p.flags.beAnStarter20261018=true;\}/)[0];const p={heroes:{be_an:{owned:false},co_nuong:{level:7}},gold:100,squad:[{id:'co_nuong'}]};vm.runInNewContext(migration,{p});assert.equal(p.heroes.be_an.owned,true);assert.equal(p.gold,100);assert.equal(p.heroes.co_nuong.level,7);p.heroes.be_an.owned=false;vm.runInNewContext(migration,{p});assert.equal(p.heroes.be_an.owned,false);
+});
+
+test('Bé An formation uses native paged idle cells instead of half-resolution campaign atlas',()=>{
+ const desc=beAnCampaignDescriptor(meta,'idle'),pack=beAnIdlePages(meta);
+ assert.equal(desc.cellW,352);assert.equal(desc.cellH,224);assert.equal(desc.body,160);
+ assert.equal(pack.pageFrames,24);assert.equal(pack.pages.length,4);assert.equal(pack.pages[0].src,'assets/characters/be-an/idle-0.webp');
+ assert.equal(pack.pages[3].cellW,352);assert.equal(pack.pages[3].cellH,224);
+ assert.equal(pack.poster,null);
 });
