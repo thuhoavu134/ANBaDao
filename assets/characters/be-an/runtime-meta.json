@@ -2,6 +2,277 @@
   "schema": "be-an-assets/v1",
   "assetRevision": "source24-20261018-hires3x",
   "clips": {
+    "idle": {
+      "file": "idle-0.webp",
+      "frames": 30,
+      "cols": 6,
+      "cellW": 1056,
+      "cellH": 672,
+      "durationMs": 2833.333,
+      "pageFrames": 30,
+      "pages": [
+        {
+          "file": "idle-0.webp",
+          "frames": 30,
+          "cols": 6,
+          "cellW": 1056,
+          "cellH": 672,
+          "durationMs": 2833.333
+        }
+      ],
+      "pivot": 528,
+      "foot": 606,
+      "body": 480,
+      "sourceFacing": 1,
+      "registrationScale": 0.917782,
+      "loop": {
+        "startSourceFrame": 12,
+        "endSourceFrameInclusive": 79,
+        "startPtsSeconds": 0.458333,
+        "durationSeconds": 2.833334,
+        "alphaSilhouetteIoUStartEnd": 0.9774
+      }
+    },
+    "run": {
+      "file": "run-0.webp",
+      "frames": 96,
+      "cols": 6,
+      "cellW": 1056,
+      "cellH": 672,
+      "durationMs": 4000,
+      "pageFrames": 24,
+      "pages": [
+        {
+          "file": "run-0.webp",
+          "frames": 24,
+          "cols": 6,
+          "cellW": 1056,
+          "cellH": 672,
+          "durationMs": 1000
+        },
+        {
+          "file": "run-1.webp",
+          "frames": 24,
+          "cols": 6,
+          "cellW": 1056,
+          "cellH": 672,
+          "durationMs": 1000
+        },
+        {
+          "file": "run-2.webp",
+          "frames": 24,
+          "cols": 6,
+          "cellW": 1056,
+          "cellH": 672,
+          "durationMs": 1000
+        },
+        {
+          "file": "run-3.webp",
+          "frames": 24,
+          "cols": 6,
+          "cellW": 1056,
+          "cellH": 672,
+          "durationMs": 1000
+        }
+      ],
+      "pivot": 528,
+      "foot": 606,
+      "body": 480,
+      "sourceFacing": 1,
+      "registrationScale": 0.9937888198757764
+    },
+    "basic": {
+      "file": "basic-0.webp",
+      "frames": 96,
+      "cols": 6,
+      "cellW": 1056,
+      "cellH": 672,
+      "durationMs": 4000,
+      "pageFrames": 24,
+      "pages": [
+        {
+          "file": "basic-0.webp",
+          "frames": 24,
+          "cols": 6,
+          "cellW": 1056,
+          "cellH": 672,
+          "durationMs": 1000
+        },
+        {
+          "file": "basic-1.webp",
+          "frames": 24,
+          "cols": 6,
+          "cellW": 1056,
+          "cellH": 672,
+          "durationMs": 1000
+        },
+        {
+          "file": "basic-2.webp",
+          "frames": 24,
+          "cols": 6,
+          "cellW": 1056,
+          "cellH": 672,
+          "durationMs": 1000
+        },
+        {
+          "file": "basic-3.webp",
+          "frames": 24,
+          "cols": 6,
+          "cellW": 1056,
+          "cellH": 672,
+          "durationMs": 1000
+        }
+      ],
+      "pivot": 528,
+      "foot": 606,
+      "body": 480,
+      "sourceFacing": 1,
+      "registrationScale": 0.9937888198757764
+    },
+    "ultimate": {
+      "file": "ultimate-0.webp",
+      "frames": 96,
+      "cols": 6,
+      "cellW": 1056,
+      "cellH": 672,
+      "durationMs": 4000,
+      "pageFrames": 24,
+      "pages": [
+        {
+          "file": "ultimate-0.webp",
+          "frames": 24,
+          "cols": 6,
+          "cellW": 1056,
+          "cellH": 672,
+          "durationMs": 1000
+        },
+        {
+          "file": "ultimate-1.webp",
+          "frames": 24,
+          "cols": 6,
+          "cellW": 1056,
+          "cellH": 672,
+          "durationMs": 1000
+        },
+        {
+          "file": "ultimate-2.webp",
+          "frames": 24,
+          "cols": 6,
+          "cellW": 1056,
+          "cellH": 672,
+          "durationMs": 1000
+        },
+        {
+          "file": "ultimate-3.webp",
+          "frames": 24,
+          "cols": 6,
+          "cellW": 1056,
+          "cellH": 672,
+          "durationMs": 1000
+        }
+      ],
+      "pivot": 528,
+      "foot": 606,
+      "body": 480,
+      "sourceFacing": 1,
+      "registrationScale": 1.0666666666666667
+    },
+    "hit": {
+      "file": "hit-0.webp",
+      "frames": 96,
+      "cols": 6,
+      "cellW": 1056,
+      "cellH": 672,
+      "durationMs": 4000,
+      "pageFrames": 24,
+      "pages": [
+        {
+          "file": "hit-0.webp",
+          "frames": 24,
+          "cols": 6,
+          "cellW": 1056,
+          "cellH": 672,
+          "durationMs": 1000
+        },
+        {
+          "file": "hit-1.webp",
+          "frames": 24,
+          "cols": 6,
+          "cellW": 1056,
+          "cellH": 672,
+          "durationMs": 1000
+        },
+        {
+          "file": "hit-2.webp",
+          "frames": 24,
+          "cols": 6,
+          "cellW": 1056,
+          "cellH": 672,
+          "durationMs": 1000
+        },
+        {
+          "file": "hit-3.webp",
+          "frames": 24,
+          "cols": 6,
+          "cellW": 1056,
+          "cellH": 672,
+          "durationMs": 1000
+        }
+      ],
+      "pivot": 528,
+      "foot": 606,
+      "body": 480,
+      "sourceFacing": 1,
+      "registrationScale": 0.935672514619883
+    },
+    "fall-die": {
+      "file": "fall-die-0.webp",
+      "frames": 96,
+      "cols": 6,
+      "cellW": 1056,
+      "cellH": 672,
+      "durationMs": 4000,
+      "pageFrames": 24,
+      "pages": [
+        {
+          "file": "fall-die-0.webp",
+          "frames": 24,
+          "cols": 6,
+          "cellW": 1056,
+          "cellH": 672,
+          "durationMs": 1000
+        },
+        {
+          "file": "fall-die-1.webp",
+          "frames": 24,
+          "cols": 6,
+          "cellW": 1056,
+          "cellH": 672,
+          "durationMs": 1000
+        },
+        {
+          "file": "fall-die-2.webp",
+          "frames": 24,
+          "cols": 6,
+          "cellW": 1056,
+          "cellH": 672,
+          "durationMs": 1000
+        },
+        {
+          "file": "fall-die-3.webp",
+          "frames": 24,
+          "cols": 6,
+          "cellW": 1056,
+          "cellH": 672,
+          "durationMs": 1000
+        }
+      ],
+      "pivot": 528,
+      "foot": 606,
+      "body": 480,
+      "sourceFacing": 1,
+      "registrationScale": 1.0126582278481013
+    },
     "special": {
       "file": "special-0.webp",
       "frames": 96,
@@ -178,39 +449,78 @@
       "sourceFacing": 1,
       "registrationScale": 1
     },
-    "idle": {
-      "file": "idle-0.webp",
-      "frames": 30,
-      "cols": 6,
-      "cellW": 1056,
-      "cellH": 672,
-      "durationMs": 2833.333,
-      "pageFrames": 30,
+    "shield": {
+      "frames": 25,
+      "pageFrames": 25,
+      "cols": 5,
+      "cellW": 224,
+      "cellH": 224,
+      "pivot": 112,
+      "foot": 202,
+      "durationMs": 1500,
+      "blend": "screen",
       "pages": [
         {
-          "file": "idle-0.webp",
-          "frames": 30,
-          "cols": 6,
-          "cellW": 1056,
-          "cellH": 672,
-          "durationMs": 2833.333
+          "file": "shield.webp",
+          "frames": 25,
+          "cols": 5
         }
       ],
-      "pivot": 528,
-      "foot": 606,
-      "body": 480,
-      "sourceFacing": 1,
-      "registrationScale": 0.917782,
-      "loop": {
-        "startSourceFrame": 12,
-        "endSourceFrameInclusive": 79,
-        "startPtsSeconds": 0.458333,
-        "durationSeconds": 2.833334,
-        "alphaSilhouetteIoUStartEnd": 0.9774
+      "source": "KIEMTHE-VFX-SFX-FULL-20261017.zip:cy_50_bhcs_a",
+      "sourceSha256": "c91480b159063263881859823c7eacbff0047daad651764663c7aa537e458586",
+      "sourceInfo": {
+        "ma": "cy_50_bhcs_a",
+        "phai": "cuiyan",
+        "phai_ten": "Thúy Yên",
+        "hanh": "Thủy",
+        "frames_n": 25,
+        "interval_ms": 60,
+        "dirs": null,
+        "nguon": "pak\\image_4.pak #430",
+        "dung_boi": [],
+        "sfx": [
+          "sfx/tangmen/tm_csc_h.wav"
+        ]
       }
     }
   },
   "sources": {
+    "idle": {
+      "file": "Character_standing_idle_green_sc…_20261018164037.mp4",
+      "sha256": "dd96a33d48301873a47557e0d51f5ecd2a41b7bfcba9cda8b80a571e0ce9a05b",
+      "frames": 96,
+      "fps": 24
+    },
+    "run": {
+      "file": "Tạo_video_nhân_vật_chạy_20261018164245.mp4",
+      "sha256": "718f6e9ce2d38f17e9b6a2535fccd06fbacf2dbd1ee9bb2ab0555b3ef3ba8fee",
+      "frames": 96,
+      "fps": 24
+    },
+    "basic": {
+      "file": "Character_throwing_seal_animation_1080p_20261018164450.mp4",
+      "sha256": "15ee2f7754c0f55cdeb9833780fb90fa3db341238e1228061a2c7631f6e40eb7",
+      "frames": 96,
+      "fps": 24
+    },
+    "ultimate": {
+      "file": "Animated_character_adjusts_glasses_1080p_20261018164904.mp4",
+      "sha256": "c7c45edb64d5c75b3473afc4fe3e4ef54954734e3dad23ba011f34f1dd7f0281",
+      "frames": 96,
+      "fps": 24
+    },
+    "hit": {
+      "file": "Character_hit_reaction_animation…_1080p_20261018164342.mp4",
+      "sha256": "497344ceaafde990b04655d3a2965f9cd943837175f7d791422402d2e43674dd",
+      "frames": 96,
+      "fps": 24
+    },
+    "fall-die": {
+      "file": "Character_falling_backwards_gree…_1080p_20261018164143.mp4",
+      "sha256": "01afd583e0fd099454f2427f3c0f2fc0f867ac28a5bafeca2fc878169df88fcf",
+      "frames": 96,
+      "fps": 24
+    },
     "special": {
       "file": "vfx_special_An---6088ee32-1705-4d1f-a0a9-4f66928692f9.mp4",
       "sha256": "ec061c340f7ede4e4f961b31ec6f460368bb063d0e0382163dd7a7b681b4e84a",
@@ -228,6 +538,41 @@
       "sha256": "63ddbcb577792d7f6504faf888c987b35e72dbe6aebe2890f0475255f5625da9",
       "frames": 144,
       "fps": 24
+    }
+  },
+  "timeline": {
+    "basic": {
+      "release": 1791.6666666666667,
+      "hits": [
+        2104.166666666667,
+        2947.916666666667
+      ],
+      "vfxEnd": 3291.666666666667,
+      "recovery": 4000
+    },
+    "ultimate": {
+      "release": 3166.6666666666665,
+      "hits": [
+        3802.3809523809523,
+        4412.820512820513,
+        5212.820512820512
+      ],
+      "vfxEnd": 5566.666666666666,
+      "recovery": 6650,
+      "sourcePhases": [
+        [
+          0,
+          112
+        ],
+        [
+          60,
+          112
+        ],
+        [
+          60,
+          112
+        ]
+      ]
     }
   }
 }
