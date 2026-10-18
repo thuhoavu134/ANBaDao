@@ -283,7 +283,7 @@
         ? Number(options.cuePerformanceMs)
         : Number.isFinite(Number(options.audibleAtPerformanceMs)) ? Number(options.audibleAtPerformanceMs) : null;
       const sampleCue = options.sampleCue === 'dominant' ? 'dominant' : 'onset';
-      const playbackRate=event.startsWith('be-an-')||event.startsWith('tich-dao-')||event.startsWith('hong-thuong-')||event.startsWith('co-nuong-')||event.startsWith('dinh-loi-')||event.startsWith('thay-mo-')?Math.max(1,Math.min(3,Number(options.playbackRate)||1)):1;
+      const playbackRate=event.startsWith('be-an-')?Math.max(1,Math.min(4.2,Number(options.playbackRate)||1)):event.startsWith('tich-dao-')||event.startsWith('hong-thuong-')||event.startsWith('co-nuong-')||event.startsWith('dinh-loi-')||event.startsWith('thay-mo-')?Math.max(1,Math.min(3,Number(options.playbackRate)||1)):1;
       const sampleCueOffsetMs = (sampleCue === 'dominant' ? analysis.dominantCueMs : analysis.audibleLeadInMs)/playbackRate;
       const source = c.createBufferSource(), gain = c.createGain();
       source.buffer = buffer;
