@@ -34,6 +34,11 @@ function addBattleHitFloater(unit,text,color,large=false){
   // Reflow on contact, including rows that have already risen, so slow hits do not
   // leave holes. Preserve each row's lifetime and value; never aggregate damage.
   const rows=floaters.filter(f=>f.unitId===unit.id&&f.isDamage===isDamage&&f.life>0);
+  // The visible queue is capped, not the combat/event history.
+  if(isDamage)while(rows.length>2){
+    const retired=rows.shift(),index=floaters.indexOf(retired);
+    if(index>=0)floaters.splice(index,1);
+  }
   const gap=isDamage?14:22;
   const inward=typeof TEAM_ENEMY!=='undefined'&&unit.team===TEAM_ENEMY?-1:1;
   let ceiling=y-gap;

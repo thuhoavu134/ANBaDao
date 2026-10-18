@@ -1,3 +1,4 @@
+import {patchActionDamageTotal,actionDamageTotalSources} from './action-damage-total-v1.mjs';
 import {readFileSync,writeFileSync} from 'node:fs';
 import {join} from 'node:path';
 
@@ -22,5 +23,6 @@ export function patchBattleHitFeedback(html,runtime){
 }
 export function installBattleHitFeedback(root){
   const path=join(root,'dist/battle.html');
-  writeFileSync(path,patchBattleHitFeedback(readFileSync(path,'utf8'),readFileSync(join(root,'src/runtime/battle-hit-feedback.js'),'utf8')));
+  const feedback=patchBattleHitFeedback(readFileSync(path,'utf8'),readFileSync(join(root,'src/runtime/battle-hit-feedback.js'),'utf8'));
+  writeFileSync(path,patchActionDamageTotal(feedback,...actionDamageTotalSources(root))); 
 }

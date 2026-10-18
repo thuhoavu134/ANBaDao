@@ -41,7 +41,8 @@ function feedbackContext(){
 test('rapid hits stay in one ordered column without six-hit lane reuse',()=>{
   const {c,tick}=feedbackContext();
   for(let i=1;i<=12;i++){vm.runInContext(`addBattleHitFloater(unit,'−${i}','yellow')`,c);tick(30);}
-  assert.equal(c.floaters.length,12);
+  assert.equal(c.floaters.length,3);
+  assert.deepEqual(Array.from(c.floaters,f=>f.text),['−10','−11','−12']);
   for(let i=1;i<c.floaters.length;i++){
     assert.equal(c.floaters[i].x-c.floaters[i-1].x,3);
     assert.equal(c.floaters[i].y-c.floaters[i-1].y,14);
@@ -76,7 +77,7 @@ test('authored shadow follows the painted spear pose and disappears during shado
 test('counter and reaction damage use numeric style, but shield/rage/status labels do not',()=>{
   const {c}=feedbackContext();
   for(const text of ['PHẢN 1','⚗ −12','VIỆN KÍCH −3','BIẾN CỐ −4','⛊2','−12 NỘ','HỘ TƯỚNG −15%'])c.addBattleHitFloater(c.unit,text,'white');
-  assert.deepEqual(Array.from(c.floaters,f=>f.isDamage),[true,true,true,true,false,false,false]);
+  assert.deepEqual(Array.from(c.floaters,f=>f.isDamage),[true,true,true,false,false,false]);
 });
 
 test('spaced hits reflow tightly after travel and mirror inward on the enemy side',()=>{
@@ -102,4 +103,13 @@ test('generated painter preserves status order but paints earlier damage over la
   const order=vm.runInNewContext(loop,{floaters:[{id:'heal1'},{id:'old',isDamage:true},{id:'heal2'},{id:'new',isDamage:true}]});
   assert.deepEqual(Array.from(order,f=>f.id),['heal1','heal2','new','old']);
   assert.equal(patchCompactDamageFloaters(html,''),html);
+});
+
+test('three-row cap is per victim and leaves healing/status feedback intact',()=>{
+  const {c}=feedbackContext();const other={id:'other',x:500,y:400,hp:100};
+  for(let i=1;i<=8;i++){c.addBattleHitFloater(c.unit,'−'+i,'yellow');c.addBattleHitFloater(other,'−'+i,'yellow');}
+  c.addBattleHitFloater(c.unit,'+27','green');
+  assert.equal(c.floaters.filter(f=>f.unitId==='victim'&&f.isDamage).length,3);
+  assert.equal(c.floaters.filter(f=>f.unitId==='other'&&f.isDamage).length,3);
+  assert.equal(c.floaters.filter(f=>!f.isDamage).length,1);
 });
