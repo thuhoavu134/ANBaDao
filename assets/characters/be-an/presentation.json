@@ -6,44 +6,44 @@
     "be-an",
     "hero_splus_be_an"
   ],
-  "referenceBodyHeight": 160,
+  "referenceBodyHeight": 480,
   "footOffsetY": 0,
   "registration": "source-body",
   "clips": {
     "idle": {
-      "bodyHeight": 160,
-      "footX": 176,
-      "footY": 202
+      "bodyHeight": 480,
+      "footX": 528,
+      "footY": 606
     },
     "run": {
-      "bodyHeight": 160,
-      "footX": 176,
-      "footY": 202
+      "bodyHeight": 480,
+      "footX": 528,
+      "footY": 606
     },
     "basic": {
-      "bodyHeight": 160,
-      "footX": 176,
-      "footY": 202
+      "bodyHeight": 480,
+      "footX": 528,
+      "footY": 606
     },
     "ultimate": {
-      "bodyHeight": 160,
-      "footX": 176,
-      "footY": 202
+      "bodyHeight": 480,
+      "footX": 528,
+      "footY": 606
     },
     "hit": {
-      "bodyHeight": 160,
-      "footX": 176,
-      "footY": 202
+      "bodyHeight": 480,
+      "footX": 528,
+      "footY": 606
     },
     "fall-die": {
-      "bodyHeight": 160,
-      "footX": 176,
-      "footY": 202
+      "bodyHeight": 480,
+      "footX": 528,
+      "footY": 606
     },
     "special": {
-      "bodyHeight": 160,
-      "footX": 176,
-      "footY": 202
+      "bodyHeight": 480,
+      "footX": 528,
+      "footY": 606
     }
   },
   "vfxClips": [
@@ -62,5 +62,5 @@
       "ultimate"
     ]
   },
-  "evidence": "Source 24 fps; fixed first-pose registration per clip. Special contains the body and replaces it."
+  "evidence": "Source 24 fps; fixed first-pose registration per clip. Special contains the body and replaces it. 3x source-resolution export retains identical local registration."
 }
