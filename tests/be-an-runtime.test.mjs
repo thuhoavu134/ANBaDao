@@ -15,7 +15,7 @@ for(const speed of [1,2,3])for(const action of ['basic','ultimate'])test(`${acti
 test('scene change cancels remaining contacts and does not advance the new battle',async()=>{const h=harness(1,'ultimate',4100);await h.run();assert.equal(h.e.events.filter(x=>x.type==='damage').length,6);assert.equal(h.advanced(),0);assert.equal(h.totals.length,0);});
 for(const team of ['player','enemy'])test('body and VFX mirror exactly once: '+team,()=>{
  const h=harness(1,'basic'),scales=[],draws=[];const ctx={save(){},restore(){},translate(){},scale:(x,y)=>scales.push([x,y]),drawImage:(...a)=>draws.push(a)};
- h.c.beAnSprite(ctx,'basic',49,100,400,1,team==='enemy');assert.equal(scales.length,1);assert.equal(scales[0][0],team==='enemy'?-1:1);assert.equal(draws.length,1);assert.ok(draws[0][1]>=0&&draws[0][2]>=0);
+ h.c.beAnSprite(ctx,'basic',49,100,400,1,team==='enemy');assert.equal(scales.length,1);assert.ok(Math.abs(scales[0][0]-(team==='enemy'?-1:1)/3)<1e-9);assert.equal(draws.length,1);assert.ok(draws[0][1]>=0&&draws[0][2]>=0);
 });
 
 test('ultimate renders one independent giant seal for each living target',()=>{
