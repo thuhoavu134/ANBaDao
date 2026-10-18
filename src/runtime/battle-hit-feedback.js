@@ -30,14 +30,26 @@ function addBattleHitFloater(unit,text,color,large=false){
   const damage=critical||raw.match(/^(?:[−-]\s*\d[\d.,]*|(?:PHẢN|VIỆN KÍCH|BIẾN CỐ|⚗)\s*[−-]?\s*\d[\d.,]*)$/i);
   const isDamage=Boolean(damage),isCrit=Boolean(critical),now=performance.now();
   const body=battleFeedbackBody(unit),x=body.centerX,y=body.topY-20;
-  // Push older rows upward from the newest hit. No modulo lanes or random drift:
-  // a seventh hit must not overwrite the first, and a 1-damage hit is not filtered.
+  // Compact overlapping staircase: newest at the head, earlier hits above/outward.
+  // Reflow on contact, including rows that have already risen, so slow hits do not
+  // leave holes. Preserve each row's lifetime and value; never aggregate damage.
   const rows=floaters.filter(f=>f.unitId===unit.id&&f.isDamage===isDamage&&f.life>0);
-  const gap=isDamage?28:22;
+  // The visible queue is capped, not the combat/event history.
+  if(isDamage)while(rows.length>2){
+    const retired=rows.shift(),index=floaters.indexOf(retired);
+    if(index>=0)floaters.splice(index,1);
+  }
+  const gap=isDamage?14:22;
+  const inward=typeof TEAM_ENEMY!=='undefined'&&unit.team===TEAM_ENEMY?-1:1;
   let ceiling=y-gap;
   for(let i=rows.length-1;i>=0;i--){
-    const row=rows[i];
-    row.y=Math.min(row.y,ceiling);ceiling=row.y-gap;
+    const row=rows[i],rank=rows.length-i;
+    row.y=isDamage?y-rank*gap:Math.min(row.y,ceiling);
+    if(isDamage){
+      row.x=x-inward*rank*3;
+      row.anchorX=x;row.anchorY=body.topY;
+    }
+    ceiling=row.y-gap;
   }
   const normalized=critical?'BẠO KÍCH '+critical[1]:isDamage?'−'+raw.match(/\d[\d.,]*$/)[0]:raw;
   floaters.push({unitId:unit.id,createdAt:now,x,y,text:normalized,color,large,isDamage,isCrit,

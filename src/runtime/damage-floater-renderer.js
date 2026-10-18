@@ -5,7 +5,8 @@ function drawCompactDamageFloater(context,floater,age,visibleFloaterBounds){
   else if(age<.30)pop=1.02+Math.sin((age-.18)/.12*Math.PI)*.03;
   const fontPx=floater.isCrit?22:18;
   const critical=String(floater.text).match(/^(?:BẠO KÍCH|BAO KICH|CRIT)\s*([−-]?\d[\d.,]*)$/i);
-  const number=critical?critical[1]:String(floater.text);
+  const rawNumber=critical?critical[1]:String(floater.text);
+  const number=rawNumber.replace(/^([−-]?)(\d+)$/,(_,sign,digits)=>sign+digits.padStart(3,'0')); 
   const font=size=>'900 italic '+size+'px "Arial","DejaVu Sans",system-ui,sans-serif';
   context.font=font(fontPx);const numberWidth=context.measureText(number).width;
   const labelWidth=floater.isCrit?17:0;

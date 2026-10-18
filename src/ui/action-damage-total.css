@@ -1,0 +1,7 @@
+/* Shared existing HUD, including the campaign iframe. Text stays live. */
+#actionTotal.action-total:not([hidden]){display:flex!important;align-items:center;justify-content:center;gap:10px;left:50%;bottom:max(76px,env(safe-area-inset-bottom));width:min(320px,76%);min-width:0;box-sizing:border-box;padding:8px 18px;border:0;border-radius:0;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(54,24,8,.88) 20%,rgba(54,24,8,.88) 80%,transparent);box-shadow:none;z-index:24;}
+#actionTotal::before,#actionTotal::after{content:"";position:absolute;left:5%;right:5%;height:2px;background:linear-gradient(90deg,transparent,#dc8b1b,#ffe6a0,#dc8b1b,transparent);box-shadow:0 0 8px #e29c39;}
+#actionTotal::before{top:0}#actionTotal::after{bottom:0}
+#actionTotal #actionTotalLabel{flex:0 0 94px;max-width:94px;white-space:normal;text-align:right;letter-spacing:0;color:#ffd55b;font:900 italic 19px/1.04 Arial,sans-serif;-webkit-text-stroke:1px #492000;paint-order:stroke fill;text-shadow:1px 2px 0 #361500;}
+#actionTotal #actionTotalValue{min-width:0;margin:0;color:#ffe071;font:900 italic clamp(24px,7vw,36px)/1 Arial,sans-serif;-webkit-text-stroke:2px #492000;paint-order:stroke fill;text-shadow:1px 2px 0 #361500;overflow-wrap:anywhere;}
+@media(max-width:360px){#actionTotal.action-total:not([hidden]){gap:6px;padding-inline:10px}#actionTotal #actionTotalLabel{font-size:16px;flex-basis:78px}}
