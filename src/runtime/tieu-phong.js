@@ -104,9 +104,10 @@ async function resolveTieuPhongCast(e,info,actor,action,target,battleId){
   if(!await waitTieuPhongMarker(info,hit.at,battleId))return {ok:false};
   e.resolveTieuPhongImpact(actor,result.castId,hit.wave,hit.targetId);
   // Show each pass as it contacts its own target, never aggregate all three.
-  if(splusPresentation){for(const entry of splusPresentation.values())splusFloater(entry.target,entry.amount,entry.healing,entry.critical);splusPresentation.clear();}
+  
   updateTeamCounters();splusStateView();
  }
  e.finishTieuPhongCast(actor,result.castId);return result;
 }
+
 

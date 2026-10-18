@@ -171,7 +171,7 @@ function drawHongThuongVfx(context,time){
 /* ---- Authored playback per hit; damage resolves ONLY at the marker. ---- */
  async function resolveHongThuongCast(e,info,actor,action,target,battleId){
  const hitAt=async ms=>{if(!await waitHongThuongMarker(info,ms,battleId))return false;return state.battleId===battleId;};
- const flush=()=>{if(splusPresentation){for(const entry of splusPresentation.values())splusFloater(entry.target,entry.amount,entry.healing,entry.critical);splusPresentation.clear();}updateTeamCounters();splusStateView();};
+ const flush=()=>{updateTeamCounters();splusStateView();};
  if(action!=='ultimate'){
   const result=e.act(actor.id,action,target?.id,{deferHongThuong:true});if(!result.ok)return result;
   const victimUnit=getUnit(target?.id)||actor;
@@ -245,5 +245,6 @@ function drawHongThuongVfx(context,time){
  e.finishHongThuongCast(actor.id,result.castId);flush();
  return result;
 }
+
 
 

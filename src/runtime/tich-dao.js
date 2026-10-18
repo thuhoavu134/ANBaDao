@@ -180,19 +180,19 @@ async function resolveTichDaoCast(e,info,actor,action,target,battleId){
  if(!await at(1083)){return {ok:false};}
  strikeVfx(0);
  e.resolveTichDaoImpact(actor,result.castId,0);
- if(splusPresentation){for(const entry of splusPresentation.values())splusFloater(entry.target,entry.amount,entry.healing,entry.critical);splusPresentation.clear();}
+ 
  updateTeamCounters();splusStateView();
  if(!await at(1500)){return {ok:false};}
  {const spot=info.spot||actor;spawnTichDaoVfx('vanish',spot.x,spot.y,info);}
  if(!await at(1750)){return {ok:false};}
  strikeVfx(1);
  e.resolveTichDaoImpact(actor,result.castId,1);
- if(splusPresentation){for(const entry of splusPresentation.values())splusFloater(entry.target,entry.amount,entry.healing,entry.critical);splusPresentation.clear();}
+ 
  updateTeamCounters();splusStateView();
  if(!await at(2917)){return {ok:false};}
  strikeVfx(2);
  e.resolveTichDaoImpact(actor,result.castId,2);
- if(splusPresentation){for(const entry of splusPresentation.values())splusFloater(entry.target,entry.amount,entry.healing,entry.critical);splusPresentation.clear();}
+ 
  updateTeamCounters();splusStateView();
  // Mưa kiếm kết liễu trong phase-08 (2917-3292ms), tối đa 2 mục tiêu.
  if(!await at(3150)){return {ok:false};}
@@ -205,13 +205,14 @@ async function resolveTichDaoCast(e,info,actor,action,target,battleId){
   if(!await at(atMs+250))return {ok:false};
   const ex=e.resolveTichDaoExecution(actor,result.castId,victim.id);
   if(ex.executed.length)tichDaoSfx('tich-dao-execute-impact',info);
-  if(splusPresentation){for(const entry of splusPresentation.values())splusFloater(entry.target,entry.amount,entry.healing,entry.critical);splusPresentation.clear();}
+  
   updateTeamCounters();splusStateView();
   if(!await at(atMs+600))return {ok:false};
   if(!ex.killed)break;
  }
- if(splusPresentation){for(const entry of splusPresentation.values())splusFloater(entry.target,entry.amount,entry.healing,entry.critical);splusPresentation.clear();}
+ 
  updateTeamCounters();splusStateView();
  e.finishTichDaoCast(actor,result.castId);return result;
 }
+
 

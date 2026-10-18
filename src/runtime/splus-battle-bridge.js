@@ -45,8 +45,16 @@ function splusSkillBar(){
 }
 function splusFloater(target,amount,healing=false,critical=false) {
   if(!(amount>0))return;
-  if(splusPresentation){const id=target.id+':'+healing,previous=splusPresentation.get(id);splusPresentation.set(id,{target,amount:amount+(previous?.amount||0),healing,critical:critical||previous?.critical});return;}
-  addFloater(target,`${healing?'+':'−'}${amount}`,healing?'#8fe7bd':critical?'#ffd76f':'#ff9688',critical);
+  // Damage is emitted at the engine's actual impact, including a single HP.
+  // Only healing may coalesce; batching damage loses multi-contact feedback.
+  if(splusPresentation&&healing){const id=target.id+':heal',previous=splusPresentation.get(id);splusPresentation.set(id,{target,amount:amount+(previous?.amount||0),healing:true,critical:false});return;}
+  addFloater(target,`${!healing&&critical?'BẠO KÍCH ':''}${healing?'+':'−'}${amount}`,healing?'#8fe7bd':critical?'#9e2345':'#ffd34b',critical);
+}
+function flushSplusPresentation(){
+  const batch=splusPresentation;if(!batch?.size)return;
+  const hits=[...batch.values()];batch.clear();splusPresentation=null;
+  try{for(const hit of hits)splusFloater(hit.target,hit.amount,hit.healing,hit.critical);}
+  finally{splusPresentation=batch;}
 }
 function splusOwnsActor(actor){
   return !!actor&&actor.kitVersion==='splus42-v2';
@@ -243,7 +251,7 @@ async function performCoNuongAction(actor,action,target,e,battleId){
     }
     return false;
   };
-  const present=fn=>{const totals=new Map();splusPresentation=totals;try{return fn();}finally{splusPresentation=null;for(const hit of totals.values())splusFloater(hit.target,hit.amount,hit.healing,hit.critical);updateTeamCounters();splusStateView();}};
+  const present=fn=>{const totals=new Map();splusPresentation=totals;try{return fn();}finally{flushSplusPresentation();splusPresentation=null;updateTeamCounters();splusStateView();}};
   const sound=key=>{if(state.sound&&!__hvIsSkipping())void window.HonVietSfx?.play(key,{group:'combat',signal:info.abort.signal,playbackRate:speed,maxDelayMs:120});};
   state.locked=true;state.selectedAction=action;clearTargets();updateActorHud(actor);
   const title=globalThis.SPLUS42.catalog.find(h=>h.id===actor.sourceId)?.actions[action]?.name||action;
@@ -357,11 +365,10 @@ async function performSplusAction(actor, action, target) {
   }
   const totals=new Map();let result;splusPresentation=totals;
   presentationTrace?.marker('impact',{actionId:presentationId,targetId:target?.id||null});
-  try{result=e.act(actor.id,action,target?.id);}finally{splusPresentation=null;}
+  try{result=e.act(actor.id,action,target?.id);}finally{flushSplusPresentation();splusPresentation=null;}
   if(linhAction)linhAction.impactResolved=true;
   if(bachAction)bachAction.impactResolved=true;
   if(!linhAction&&!bachAction)triggerImpactPresentation(actor,target,action);
-  for(const hit of totals.values())splusFloater(hit.target,hit.amount,hit.healing,hit.critical);
   if(result.ok){state.actionCount++;state.actionBreakdown[action]=(state.actionBreakdown[action]||0)+1;const rec=intelUnit(actor);if(rec){rec.actions++;if(action==='ultimate')rec.ultimates++;}addLog(`${actor.name} · ${title}`);}
   updateTeamCounters();splusStateView();updateActorHud(actor);
   if(linhAction){
@@ -419,6 +426,7 @@ function drawSplusToken(context, unit, time) {
   context.fillStyle='#fff1d5';context.font='bold 15px sans-serif';context.fillText(unit.name,0,-48);context.font='11px sans-serif';context.fillStyle='#aec4ce';context.fillText('S+ · Đang thử cơ chế',0,-24);context.restore();
   drawUnitHud(context,unit,time,1);
 }
+
 
 
 
