@@ -64,11 +64,16 @@ function drawBeAnVfx(ctx,time){
    const target=victims[0],p=Math.min(1,(age-info.release)/310),x=u.x+(target.x-u.x)*p,y=u.y-75*scale+(target.y-u.y)*p;
    beAnSprite(ctx,'vfx-basic',(age-info.release)/1500*144,x,y+100*scale,scale*1.25,mirror);
   }else{
-   const x=victims.reduce((s,t)=>s+t.x,0)/victims.length,y=victims.reduce((s,t)=>s+t.y,0)/victims.length;
    const t=age-info.release,wave=Math.min(2,Math.floor(t/800)),local=t-wave*800;
-   // Three complete rise/contact/rebound phases; frame 89 is the ground contact.
+   // Each living target gets an independent seal anchored to its formation slot.
+   // Reuse the authored rise/contact/rebound source section for all three hits.
    const frame=wave===0?local/800*112:60+local/800*52;
-   const giantScale=scale*1.45;beAnSprite(ctx,'vfx-ultimate',frame,x-(mirror?-1:1)*55*giantScale,y,giantScale,mirror);
+   for(const target of victims){
+    if(target.hp<=0)continue;
+    const targetScale=beAnScale(target),giantScale=Math.min(scale*1.45,targetScale*1.12);
+    const x=target.x-(mirror?-1:1)*55*giantScale;
+    beAnSprite(ctx,'vfx-ultimate',frame,x,target.y,giantScale,mirror);
+   }
   }
  }
 }
