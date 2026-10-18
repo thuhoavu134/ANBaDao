@@ -1,6 +1,6 @@
 {
   "schema": "khaos-assets/v1",
-  "assetRevision": "source24-20261019-kiemthe",
+  "assetRevision": "v1-20261019-kiemthe-full",
   "clips": {
     "idle": {
       "file": "idle-0.webp",
@@ -8,7 +8,7 @@
       "cols": 8,
       "cellW": 480,
       "cellH": 440,
-      "durationMs": 2416.666,
+      "durationMs": 2291.667,
       "pageFrames": 30,
       "pages": [
         {
@@ -17,12 +17,21 @@
           "cols": 8,
           "cellW": 480,
           "cellH": 440,
-          "durationMs": 2416.666
+          "durationMs": 2291.667
         }
       ],
       "pivot": 240,
       "foot": 440,
-      "body": 310
+      "body": 310,
+      "sourceFacing": 1,
+      "registrationScale": 1.0,
+      "loop": {
+        "startSourceFrame": 10,
+        "endSourceFrameInclusive": 64,
+        "startPtsSeconds": 0.375,
+        "durationSeconds": 2.291667,
+        "alphaSilhouetteIoUStartEnd": 0.9538
+      }
     },
     "run": {
       "file": "run-0.webp",
@@ -44,7 +53,9 @@
       ],
       "pivot": 240,
       "foot": 440,
-      "body": 310
+      "body": 310,
+      "sourceFacing": 1,
+      "registrationScale": 1.0
     },
     "basic": {
       "file": "basic-0.webp",
@@ -66,7 +77,9 @@
       ],
       "pivot": 240,
       "foot": 440,
-      "body": 310
+      "body": 310,
+      "sourceFacing": 1,
+      "registrationScale": 1.0
     },
     "ultimate": {
       "file": "ultimate-0.webp",
@@ -88,7 +101,9 @@
       ],
       "pivot": 240,
       "foot": 440,
-      "body": 310
+      "body": 310,
+      "sourceFacing": 1,
+      "registrationScale": 1.0
     },
     "hit": {
       "file": "hit-0.webp",
@@ -110,7 +125,9 @@
       ],
       "pivot": 240,
       "foot": 440,
-      "body": 310
+      "body": 310,
+      "sourceFacing": 1,
+      "registrationScale": 1.0
     },
     "fall-die": {
       "file": "fall-die-0.webp",
@@ -132,7 +149,88 @@
       ],
       "pivot": 240,
       "foot": 440,
-      "body": 310
+      "body": 310,
+      "sourceFacing": 1,
+      "registrationScale": 1.0
+    },
+    "vfx-basic": {
+      "file": "vfx-basic.webp",
+      "frames": 80,
+      "cols": 10,
+      "cellW": 240,
+      "cellH": 240,
+      "durationMs": 1500.0,
+      "pageFrames": 80,
+      "pages": [
+        {
+          "file": "vfx-basic.webp",
+          "frames": 80,
+          "cols": 10,
+          "cellW": 240,
+          "cellH": 240
+        }
+      ],
+      "pivot": 120,
+      "foot": 120
+    },
+    "vfx-ultimate": {
+      "file": "vfx-ultimate.webp",
+      "frames": 22,
+      "cols": 5,
+      "cellW": 360,
+      "cellH": 360,
+      "durationMs": 2000.0,
+      "pageFrames": 22,
+      "pages": [
+        {
+          "file": "vfx-ultimate.webp",
+          "frames": 22,
+          "cols": 5,
+          "cellW": 360,
+          "cellH": 360
+        }
+      ],
+      "pivot": 180,
+      "foot": 180
+    },
+    "vfx-talisman": {
+      "file": "vfx-talisman.webp",
+      "frames": 13,
+      "cols": 5,
+      "cellW": 240,
+      "cellH": 240,
+      "durationMs": 1000.0,
+      "pageFrames": 13,
+      "pages": [
+        {
+          "file": "vfx-talisman.webp",
+          "frames": 13,
+          "cols": 5,
+          "cellW": 240,
+          "cellH": 240
+        }
+      ],
+      "pivot": 120,
+      "foot": 120
+    }
+  },
+  "timeline": {
+    "basic": {
+      "release": 1500,
+      "hits": [
+        1800
+      ],
+      "vfxEnd": 2500,
+      "recovery": 3000
+    },
+    "ultimate": {
+      "release": 2000,
+      "hits": [
+        2500,
+        3200
+      ],
+      "vfxEnd": 4500,
+      "recovery": 5000
     }
   }
 }

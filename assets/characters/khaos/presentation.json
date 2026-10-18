@@ -40,7 +40,11 @@
       "footY": 440
     }
   },
-  "vfxClips": [],
+  "vfxClips": [
+    "vfx-basic",
+    "vfx-ultimate",
+    "vfx-talisman"
+  ],
   "states": {
     "idle": [
       "idle"
@@ -52,5 +56,5 @@
       "ultimate"
     ]
   },
-  "evidence": "Khaos Kiếm Thế six-state package."
+  "evidence": "Khaos six-state animation package + Kiếm Thế VFX (wu_10_xdds_c, gb_50_hbls_a, kl_10_hff_d)."
 }
