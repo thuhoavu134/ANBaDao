@@ -131,7 +131,8 @@ const manifest = {
 const css = [
   '<style id="hv-result-character-motion-v1">',
   '@media (max-width:699px){#integratedResultV6.irv-defeat .irv-card{height:calc(100% - min(56.25vw,31.640625vh));object-fit:cover;object-position:center top}#integratedResultV6.irv-authored-motion.irv-defeat .irv-hero-wrap{top:11.5%}}',
-  '#integratedResultV6.irv-authored-motion.irv-victory .irv-hero-wrap{top:13.5%}',
+  '#integratedResultV6.irv-authored-motion.irv-victory .irv-hero-wrap{top:31.5%;height:10.4%;width:auto;aspect-ratio:16/9}',
+  '@media (min-width:700px){#integratedResultV6.irv-authored-motion.irv-victory .irv-hero-wrap{top:32.4%;height:10%}}',
   '#integratedResultV6.irv-authored-motion .irv-hero{image-rendering:auto;will-change:transform,opacity;transition:none}',
   '#integratedResultV6.irv-authored-motion.irv-victory .irv-hero.run{opacity:1;transform:translateX(var(--irv-run-start,-118%));animation:none}',
   '#integratedResultV6.irv-authored-motion.irv-victory.irv-motion-run-active .irv-hero.run{animation:hvResultRunIn 1.6s .12s linear forwards}',

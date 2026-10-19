@@ -87,7 +87,8 @@ test('Victory Run waits for its atlas before starting the visible entry timer', 
 
 
 test('result heroes stay in the wing focus across victory and mobile defeat', () => {
-  assert.ok(patch.includes('irv-authored-motion.irv-victory .irv-hero-wrap{top:13.5%}'));
+  // Victory chibi sits BELOW the VICTORY banner/wings (owner report: banner was covering the hero).
+  assert.ok(patch.includes('irv-authored-motion.irv-victory .irv-hero-wrap{top:31.5%;height:10.4%;width:auto;aspect-ratio:16/9}'));
   assert.ok(patch.includes('irv-authored-motion.irv-defeat .irv-hero-wrap{top:11.5%}'));
 });
 

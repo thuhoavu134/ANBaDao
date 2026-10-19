@@ -201,15 +201,38 @@ function drawBachDienFx(context,time){
     const face=actor.team===TEAM_ENEMY?-1:1,body=u=>typeof authoredBodyHeight==='function'?authoredBodyHeight(u):150;
     const bh=body(actor),th=body(foe),travelFrames=Number(clip?.travelFrames)||13,frames=Number(clip?.frames)||18;
     const sx=actor.x+face*bh*.36,sy=actor.y-bh*.86,ex=foe.x,ey=foe.y-th*.55;
-    const t=Math.min(1,p*frames/travelFrames),ease=1-(1-t)*(1-t);
-    const w=bh*1.45,h=w*220/240,burst=frame>=travelFrames;
-    const mx=burst?ex:sx+(ex-sx)*ease,my=burst?ey:sy+(ey-sy)*ease-bh*.18*4*t*(1-t);
+    const w=bh*1.45,h=w*220/240;
+    // Haunting route (owner request): hand -> stops in the target's face -> pierces straight through
+    // -> loops over the head back to the front -> wraps round to the nape -> bursts there and vanishes.
+    // Phases are fractions of the VFX clock; the nape arrival (.72) lines up with the gameplay impact marker.
+    const fr=ex-face*th*.42, bk=ex+face*th*.5, napeX=ex+face*th*.22, napeY=ey-th*.22;
+    const lerp=(a,b,k)=>a+(b-a)*k, sm=k=>k*k*(3-2*k);
+    function route(q){
+      if(q<.30){const k=1-(1-q/.30)**2;return [lerp(sx,fr,k),lerp(sy,ey,k)-bh*.18*4*k*(1-k)];}
+      if(q<.42){const k=sm((q-.30)/.12);return [lerp(fr,bk,k),ey+th*.04*Math.sin(k*Math.PI)];}
+      if(q<.58){const k=sm((q-.42)/.16),a=Math.PI*k;return [lerp(bk,fr,k),ey-th*.62*Math.sin(a)];}
+      if(q<.72){const k=sm((q-.58)/.14),a=Math.PI*k;return [lerp(fr,napeX,k),lerp(ey,napeY,k)+th*.28*Math.sin(a)];}
+      return [napeX,napeY];
+    }
     // Where the mask sits inside each authored cell (0..1 across the cell, measured on the contact sheet);
-    // the cell is shifted so the MASK - not the cell centre - rides the hand -> target path.
+    // the cell is shifted so the MASK - not the cell centre - rides the route.
     const MASK_U=[.22,.22,.2,.3,.5,.72,.8,.82,.82,.8,.82,.82,.8];
-    const u=burst?.5:(MASK_U[Math.min(frame,MASK_U.length-1)]??.5);
-    const cx=mx-face*(u-.5)*w;
-    drawBachDienAtlas(context,fx.kind,frame,cx,my,w,h,{baseline:h/2,blend:'source-over',alpha:.97});
+    const flightFrame=q=>q<.30?Math.min(travelFrames-1,Math.floor(q/.30*travelFrames)):6+Math.floor(q*60)%6;
+    const drawMask=(q,alpha)=>{
+      const [mx,my]=route(q),[px]=route(Math.max(0,q-.012)),dir=mx>=px?1:-1,f=flightFrame(q);
+      const u=MASK_U[Math.min(f,MASK_U.length-1)]??.5;
+      drawBachDienAtlas(context,fx.kind,f,mx-dir*(u-.5)*w,my,w,h,{baseline:h/2,flip:dir<0,blend:'source-over',alpha});
+    };
+    if(p<.72){
+      // Ghost afterimages sell the panic of a mask circling the victim.
+      if(p>.30){drawMask(Math.max(.30,p-.05),.22);drawMask(Math.max(.30,p-.025),.4);}
+      drawMask(p,.97);
+      // Flash as the mask passes through the body.
+      if(p>.33&&p<.40)drawBachDienAtlas(context,fx.kind,travelFrames,ex,ey,w*.7,h*.7,{baseline:h*.35,blend:'lighter',alpha:.55});
+    }else{
+      const k=(p-.72)/.28,bf=Math.min(frames-1,travelFrames+Math.floor(k*(frames-travelFrames)));
+      drawBachDienAtlas(context,fx.kind,bf,napeX,napeY,w,h,{baseline:h/2,blend:'source-over',alpha:.97*(1-Math.max(0,k-.6)/.4)});
+    }
   }
 }
 window.drawBachDienHero=drawBachDienHero;window.drawBachDienFx=drawBachDienFx;window.isBachDien=isBachDien;window.startBachDienFx=startBachDienFx;window.playBachDienSfx=playBachDienSfx;window.beginBachDienAction=beginBachDienAction;window.waitBachDienMarker=waitBachDienMarker;window.emitBachDienRelease=emitBachDienRelease;window.finishBachDienAction=finishBachDienAction;window.normalizeBachDienAction=normalizeBachDienAction;window.bachDienActionMs=bachDienActionMs;

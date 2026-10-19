@@ -37,6 +37,24 @@ export function loadAuthoredHeroes(root) {
   return heroes;
 }
 
+// Per-kind art: a hero folder may ship art tuned for each surface (card.webp is a vertical
+// full-body cut for roster/formation cards, hud-icon.webp a square crop for badges). Falling back
+// to the avatar for every kind made cards show a face-only crop — the bug this function fixes.
+// `exists` is injected so this stays pure and testable. Declaration order matters: `portrait` is
+// the authored default and must stay first for hero.json round-trips.
+export function perKindArt(hero, exists = () => false) {
+  const dir = (hero.art.portrait || '').replace(/[^/]+$/, '');
+  const pick = (name, fallback) => {
+    const candidate = `${dir}${name}.webp`;
+    return fallback && exists(candidate) ? candidate : fallback;
+  };
+  const master = hero.art.master || pick('master', hero.art.portrait);
+  const avatar = hero.art.avatar || pick('avatar', hero.art.portrait);
+  const card = hero.art.card || pick('card', hero.art.portrait);
+  const icon = hero.art.icon || pick('hud-icon', avatar);
+  return { master, avatar, card, icon, portrait: hero.art.portrait };
+}
+
 // Battle-side descriptor: absolute-ish asset paths + pages, consumed by src/runtime/authored-hero.js.
 export function battleDescriptor({ hero, meta, vfx, base }) {
   const clips = {};
@@ -101,18 +119,24 @@ export function patchAuthoredBattle(input, runtime, descriptors) {
   return s;
 }
 
+// Host canvases (Bày trận / campaign) draw with `-spec.pivot*scale`; runtime-meta may author the
+// pivot as {x,y}, which turned into NaN and left the hero's formation slot blank. Host specs take
+// a numeric x-pivot; the y anchor is already carried by `foot`.
+export function hostPivot(pivot) {
+  return pivot && typeof pivot === 'object' ? Number(pivot.x) : pivot;
+}
 function campaignDescriptor(d, key) {
   const c = d.clips[key], p = c.pages[0];
   return { src: p.src, frames: c.frames, cols: p.cols, cellW: c.cellW, cellH: c.cellH, ms: c.durationMs / c.frames,
-    pivot: c.pivot, foot: c.foot, body: c.body, playbackRate: 1 };
+    pivot: hostPivot(c.pivot), foot: c.foot, body: c.body, playbackRate: 1 };
 }
 function idlePack(d) {
   const c = d.clips.idle;
   return { pageFrames: c.pageFrames, poster: null, pages: c.pages.map(p => ({ src: p.src, cols: p.cols, rows: p.rows,
-    cellW: c.cellW, cellH: c.cellH, pivot: c.pivot, foot: c.foot, body: c.body })) };
+    cellW: c.cellW, cellH: c.cellH, pivot: hostPivot(c.pivot), foot: c.foot, body: c.body })) };
 }
 
-export function patchAuthoredHost(input, heroes) {
+export function patchAuthoredHost(input, heroes, root = process.cwd()) {
   if (input.includes(MARK_HOST)) return input;
   const descriptors = heroes.map(battleDescriptor);
   const data = {}, manifest = {}, idle = {}, prep = {}, run = {}, farm = {}, ids = {}, detail = {};
@@ -121,10 +145,11 @@ export function patchAuthoredHost(input, heroes) {
     if (!legacy) data[hero.id] = { ...hero.host, passive: { name: k.passive.name, desc: k.passive.desc },
       skill: { name: k.basic.name, cost: 0, desc: k.basic.desc, fx: k.basic.fx },
       ultimate: { name: k.ultimate.name, cost: k.ultimate.cost, desc: k.ultimate.desc, fx: k.ultimate.fx } };
+    const art = perKindArt(hero, path => existsSync(join(root, path)));
     if (!legacy) manifest[hero.id] = { slug: hero.slug, displayName: hero.host.name, identityVersion: hero.identityVersion,
-      reference: { master: hero.art.portrait, runtime: true },
-      assets: { master: hero.art.portrait, avatar: hero.art.portrait, card: hero.art.portrait, dialogue: hero.art.portrait,
-        icon: hero.art.portrait, idle: d.clips.idle.pages[0].src }, surfaces: hero.surfaces };
+      reference: { master: art.master, runtime: true },
+      assets: { master: art.master, avatar: art.avatar, card: art.card, dialogue: art.avatar,
+        icon: art.icon, idle: d.clips.idle.pages[0].src }, surfaces: hero.surfaces };
     idle[hero.id] = campaignDescriptor(d, 'idle');
     prep[hero.id] = idlePack(d);
     if (d.clips.run) run[hero.id] = campaignDescriptor(d, 'run');
@@ -191,6 +216,6 @@ export function installAuthoredHeroes(root) {
   // runtime-meta atlases); the shared authored runtime must not also drive its actions.
   const battleDescriptors = descriptors.filter((_, i) => heroes[i].hero.battle?.owner !== 'legacy');
   writeFileSync(battle, patchAuthoredSfx(patchAuthoredBattle(readFileSync(battle, 'utf8'), runtime, battleDescriptors), sfx));
-  writeFileSync(host, patchAuthoredSfx(patchAuthoredHost(readFileSync(host, 'utf8'), heroes), sfx));
+  writeFileSync(host, patchAuthoredSfx(patchAuthoredHost(readFileSync(host, 'utf8'), heroes, root), sfx));
   return heroes.map(h => h.hero.id);
 }
