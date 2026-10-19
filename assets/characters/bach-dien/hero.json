@@ -47,12 +47,7 @@
     }
   },
   "art": {
-    "portrait": "assets/characters/bach-dien/avatar.webp",
-    "landmark": [
-      55,
-      17,
-      13
-    ]
+    "portrait": "assets/characters/bach-dien/portrait-9cb630ce.webp"
   },
   "clipsMeta": "runtime-meta.json",
   "vfxBase": "assets/vfx/bach-dien/",
@@ -63,7 +58,7 @@
       "ultimate": 1.2
     },
     "victory": {
-      "runVisualScale": 1.0,
+      "runVisualScale": 1,
       "reason": "Bạch Diện run height (417px) matches idle height (426px) naturally (1.02 ratio)"
     },
     "actions": {
@@ -81,7 +76,7 @@
             0.4,
             0.55
           ],
-          "scale": 1.0
+          "scale": 1
         },
         "sfx": [
           {

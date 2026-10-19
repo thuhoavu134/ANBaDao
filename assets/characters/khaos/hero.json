@@ -47,12 +47,7 @@
     }
   },
   "art": {
-    "portrait": "assets/characters/khaos/avatar.webp",
-    "landmark": [
-      70,
-      58,
-      26
-    ]
+    "portrait": "assets/characters/khaos/portrait-fe909164.webp"
   },
   "clipsMeta": "runtime-meta.json",
   "vfxBase": "assets/vfx/khaos/",

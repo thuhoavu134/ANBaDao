@@ -6,6 +6,19 @@ Cập nhật 19/10/2026. Tướng mẫu đã chạy thật trên game: **Khaos**
 
 ---
 
+
+## QUY ĐỊNH ẢNH ĐẠI DIỆN (bắt buộc từ 2026-10-20)
+
+**Ảnh đại diện của tướng = FRAME ĐẦU TIÊN (frame 0) CỦA IDLE.** Áp dụng cho mọi bề mặt: thẻ tướng ở màn Tướng,
+ô Bày trận/dự bị, avatar, dialogue, icon. Không dùng `avatar.webp` / `card.webp` / `hud-icon.webp` vẽ riêng nữa.
+
+- Sinh ảnh: `node scripts/hero-portrait-from-idle.mjs <slug>` → cắt frame 0 từ atlas idle độ phân giải cao nhất
+  (`runtime-meta.detail` nếu có, không thì idle page 0), trim viền trong suốt, ghi `portrait-<sha8>.webp` và trỏ
+  `hero.json` → `art.portrait`.
+- Đổi idle ⇒ chạy lại script.
+- `hero-doctor` FAIL nếu `art.portrait` không phải `portrait-<sha8>.webp`.
+- Chỉ khai báo `art.card` / `art.avatar` / `art.icon` riêng khi anh Cường Đức duyệt ngoại lệ.
+
 ## 0. Vì sao có chuẩn này
 
 Trước đây, mỗi lần thêm tướng mới thì các lỗi dưới đây lại quay lại. Toàn bộ đều đã được tìm ra nguyên nhân trong code:

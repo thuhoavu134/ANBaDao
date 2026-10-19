@@ -59,7 +59,7 @@ function newHeroMotion(slug) {
 
 function beAnMotion(){
  const m=JSON.parse(readFileSync(new URL('../assets/characters/be-an/runtime-meta.json',import.meta.url),'utf8'));
- const make=key=>{const c=m.clips[key];return {...c,ms:1000/24,pages:c.pages.map(p=>({...p,src:'assets/characters/be-an/'+p.file,ms:1000/24}))};};
+ const make=key=>{const c=m.clips[key];return {...c,src:'assets/characters/be-an/'+c.pages[0].file,ms:1000/24,pages:c.pages.map(p=>({...p,cellW:c.cellW,cellH:c.cellH,src:'assets/characters/be-an/'+p.file,ms:1000/24}))};};
  return {aliases:['be_an','be-an','hero_splus_be_an'],run:{...make('run'),playbackRate:1},idle:make('idle'),fall:make('fall-die')};
 }
 // Every hero described by assets/characters/<slug>/hero.json gets its Victory/Defeat motion here
@@ -131,8 +131,7 @@ const manifest = {
 const css = [
   '<style id="hv-result-character-motion-v1">',
   '@media (max-width:699px){#integratedResultV6.irv-defeat .irv-card{height:calc(100% - min(56.25vw,31.640625vh));object-fit:cover;object-position:center top}#integratedResultV6.irv-authored-motion.irv-defeat .irv-hero-wrap{top:11.5%}}',
-  '#integratedResultV6.irv-authored-motion.irv-victory .irv-hero-wrap{top:31.5%;height:10.4%;width:auto;aspect-ratio:16/9}',
-  '@media (min-width:700px){#integratedResultV6.irv-authored-motion.irv-victory .irv-hero-wrap{top:32.4%;height:10%}}',
+  '#integratedResultV6.irv-authored-motion.irv-victory .irv-hero-wrap{top:calc(min(100vw,56.25vh)*.5);height:calc(42.5% - min(100vw,56.25vh)*.5);width:auto;max-width:88%;aspect-ratio:16/9}',
   '#integratedResultV6.irv-authored-motion .irv-hero{image-rendering:auto;will-change:transform,opacity;transition:none}',
   '#integratedResultV6.irv-authored-motion.irv-victory .irv-hero.run{opacity:1;transform:translateX(var(--irv-run-start,-118%));animation:none}',
   '#integratedResultV6.irv-authored-motion.irv-victory.irv-motion-run-active .irv-hero.run{animation:hvResultRunIn 1.6s .12s linear forwards}',

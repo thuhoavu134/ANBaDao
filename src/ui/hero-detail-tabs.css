@@ -53,7 +53,7 @@
 /* Authored detail idle: the atlas cell is 480x440 with the painted figure hugging the frame
    (opaque bbox 101..379 x 4..435), so a square/contain box shrinks the art far below its cell and
    clips the feet against the stage floor. Give it its own cell-ratio box and zero padding. */
-#heroDetailScreen .hv-detail-tabs-layout #authoredDetailIdle{width:min(340px,100%)!important;height:auto!important;aspect-ratio:480/440;object-fit:contain!important;display:block!important;margin:0 auto!important;padding:0!important;border:0!important;background-color:transparent!important;box-shadow:none!important}
+#heroDetailScreen .hv-detail-tabs-layout #authoredDetailIdle{position:static!important;transform:none!important;flex-shrink:0;width:min(340px,100%)!important;height:auto!important;aspect-ratio:480/440;object-fit:contain!important;display:block!important;margin:0 auto!important;padding:0!important;border:0!important;background-color:transparent!important;box-shadow:none!important}
 @media(max-width:620px){#heroDetailScreen .hv-detail-tabs-layout #authoredDetailIdle{width:min(300px,100%)!important}}
 #heroDetailScreen .hv-detail-tabs-layout .hshe{color:#e9dbb7!important;font-size:12px}
 #heroDetailScreen .hv-detail-tabs-layout .hspow{color:var(--scene-gold)!important;font-size:23px!important;margin:4px 0 8px!important}

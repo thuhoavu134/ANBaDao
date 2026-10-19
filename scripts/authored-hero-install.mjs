@@ -42,17 +42,13 @@ export function loadAuthoredHeroes(root) {
 // to the avatar for every kind made cards show a face-only crop — the bug this function fixes.
 // `exists` is injected so this stays pure and testable. Declaration order matters: `portrait` is
 // the authored default and must stay first for hero.json round-trips.
-export function perKindArt(hero, exists = () => false) {
-  const dir = (hero.art.portrait || '').replace(/[^/]+$/, '');
-  const pick = (name, fallback) => {
-    const candidate = `${dir}${name}.webp`;
-    return fallback && exists(candidate) ? candidate : fallback;
-  };
-  const master = hero.art.master || pick('master', hero.art.portrait);
-  const avatar = hero.art.avatar || pick('avatar', hero.art.portrait);
-  const card = hero.art.card || pick('card', hero.art.portrait);
-  const icon = hero.art.icon || pick('hud-icon', avatar);
-  return { master, avatar, card, icon, portrait: hero.art.portrait };
+// RULE (owner, 2026-10-20): every portrait surface — roster card, avatar, master, dialogue, icon — shows the
+// hero's IDLE FRAME 0 (`art.portrait`, produced by scripts/hero-portrait-from-idle.mjs). Loose files such as
+// avatar.webp / card.webp / hud-icon.webp in the folder are ignored; only an explicit art.<kind> overrides.
+export function perKindArt(hero) {
+  const p = hero.art.portrait;
+  return { master: hero.art.master || p, avatar: hero.art.avatar || p, card: hero.art.card || p,
+    icon: hero.art.icon || p, portrait: p };
 }
 
 // Battle-side descriptor: absolute-ish asset paths + pages, consumed by src/runtime/authored-hero.js.
@@ -145,7 +141,7 @@ export function patchAuthoredHost(input, heroes, root = process.cwd()) {
     if (!legacy) data[hero.id] = { ...hero.host, passive: { name: k.passive.name, desc: k.passive.desc },
       skill: { name: k.basic.name, cost: 0, desc: k.basic.desc, fx: k.basic.fx },
       ultimate: { name: k.ultimate.name, cost: k.ultimate.cost, desc: k.ultimate.desc, fx: k.ultimate.fx } };
-    const art = perKindArt(hero, path => existsSync(join(root, path)));
+    const art = perKindArt(hero);
     if (!legacy) manifest[hero.id] = { slug: hero.slug, displayName: hero.host.name, identityVersion: hero.identityVersion,
       reference: { master: art.master, runtime: true },
       assets: { master: art.master, avatar: art.avatar, card: art.card, dialogue: art.avatar,
@@ -162,11 +158,14 @@ export function patchAuthoredHost(input, heroes, root = process.cwd()) {
       ? { src: heroes[i].base + full.file, cols: full.cols, frames: full.frames, cellW: full.cellW, cellH: full.cellH, durationMs: full.durationMs, name: hero.host.name }
       : { src: c.pages[0].src, cols: c.pages[0].cols, frames: c.frames, cellW: c.cellW, cellH: c.cellH, durationMs: c.durationMs, name: hero.host.name };
   }
+  // Owner rule 2026-10-20: idle frame 0 is the portrait on every surface, legacy-owned heroes included
+  // (their CHARACTER_MANIFEST entry predates the rule, so portraitSrc consults this map first).
+  const idlePortraits = Object.fromEntries(heroes.map(({ hero }) => [hero.id, hero.art.portrait]));
   const list = Object.keys(data);
   let s = once(input, 'let P=null, MEMORY_ONLY=false;',
     // Canonical shape `Object.assign(DATA.heroes,{\n...\n});` — content audits (campaign-progression-audit)
     // evaluate exactly that block in isolation, so nothing else may share it.
-    `${MARK_HOST}\nObject.assign(DATA.heroes,{\n${JSON.stringify(data).slice(1, -1)}\n});\nObject.assign(CHARACTER_MANIFEST,${JSON.stringify(manifest)});\nvar AUTHORED_DETAIL_IDLE=${JSON.stringify(detail)};\nlet P=null, MEMORY_ONLY=false;`);
+    `${MARK_HOST}\nObject.assign(DATA.heroes,{\n${JSON.stringify(data).slice(1, -1)}\n});\nObject.assign(CHARACTER_MANIFEST,${JSON.stringify(manifest)});\nvar AUTHORED_DETAIL_IDLE=${JSON.stringify(detail)};\nvar HV_IDLE_PORTRAIT=${JSON.stringify(idlePortraits)};\nlet P=null, MEMORY_ONLY=false;`);
   const init = 'const heroes={}; for(const id in DATA.heroes) heroes[id]={owned:false,level:1,stars:1};';
   s = once(s, init, `${init}\n${JSON.stringify(list)}.forEach(id=>{if(heroes[id])heroes[id].owned=true;});`);
   const mig = 'for(const id in DATA.heroes) if(!p.heroes[id]) p.heroes[id]={owned:false,level:1,stars:1};';
@@ -200,8 +199,10 @@ export function patchAuthoredHost(input, heroes, root = process.cwd()) {
  tick();
 }
 function startBachDienDetailIdle(){`);
-  const css = list.map(id => `#hdBody .hstage[data-hero-id="${id}"]{position:relative!important;padding-top:400px!important}#hdBody .hstage[data-hero-id="${id}"]>.hsava{display:none!important}`).join('');
-  s = once(s, '</head>', `<style id="authored-hero-detail">${css}#authoredDetailIdle{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:420px;max-width:100%;height:auto;pointer-events:none}</style></head>`);
+  s = once(s, "function portraitSrc(heroId,kind='card'){",
+    "function portraitSrc(heroId,kind='card'){if(typeof HV_IDLE_PORTRAIT!=='undefined'&&HV_IDLE_PORTRAIT[heroId])return HV_IDLE_PORTRAIT[heroId];");
+  const css = list.map(id => `#hdBody .hstage[data-hero-id="${id}"]{position:relative!important}#hdBody .hstage[data-hero-id="${id}"]>.hsava{display:none!important}`).join('');
+  s = once(s, '</head>', `<style id="authored-hero-detail">${css}#authoredDetailIdle{position:static!important;transform:none!important;display:block;flex-shrink:0;width:min(340px,100%);height:auto;aspect-ratio:480/440;margin:0 auto 10px;pointer-events:none}</style></head>`);
   return s;
 }
 
