@@ -29,12 +29,21 @@ function drawBeAnWaterShield(ctx,u,time,scale){
  beAnSprite(ctx,'shield',Math.floor(time/60)%25,u.x,u.y+5,scale*(BE_AN_META.clips.idle.body/160)*.90,false);
  return true;
 }
+// Pages go through the battle-wide decoded-byte cache. The former private 3-page LRU
+// recreated Image objects every frame once >3 pages were in use (2 Bé An, VFX, prefetch),
+// so no page ever finished loading and Bé An disappeared from the field.
 function beAnImage(src){
+ const cache=window.__HV_NATIVE_ATLAS_CACHE,clip=beAnPageClip(src);
+ if(cache&&clip){const im=cache.ensure('be-an:'+src,clip);if(im)return im;}
  let im=beAnImages.get(src);if(!im){im=new Image();im.decoding='async';im.src=src;beAnImages.set(src,im);}
- // High-resolution atlases: keep at most three live pages to bound decoded texture residency.
- beAnImages.delete(src);beAnImages.set(src,im);
- while(beAnImages.size>3){const first=beAnImages.keys().next().value;beAnImages.delete(first);}
  return im;
+}
+function beAnPageClip(src){
+ for(const c of Object.values(BE_AN_META.clips))for(const p of c.pages||[])if('assets/characters/be-an/'+p.file===src){
+  const cols=p.cols||c.cols,rows=p.rows||Math.ceil((p.frames||c.pageFrames)/cols);
+  return {src,cols,rows,cellW:c.cellW,cellH:c.cellH,atlasWidth:p.atlasWidth||cols*c.cellW,atlasHeight:p.atlasHeight||rows*c.cellH};
+ }
+ return null;
 }
 function beAnSprite(ctx,key,frame,x,y,scale=1,mirror=false){
  const c=BE_AN_META.clips[key];if(!c)return false;
@@ -56,7 +65,12 @@ function beAnBodyFrame(m,elapsed){
  }
  return Math.min(95,elapsed*.024);
 }
+function warmBeAnBattle(){
+ if(warmBeAnBattle.battle===state.battleId)return;warmBeAnBattle.battle=state.battleId;
+ for(const cue of ['be-an-basic','be-an-ultimate','be-an-special'])void window.HonVietSfx?.prepare?.(cue,{timeoutMs:8000});
+}
 function drawBeAnHero(ctx,u,time){
+ warmBeAnBattle();
  let m=beAnMotions.get(u.id),elapsed=m?(time-m.start)*m.speed:time;
  if(m&&elapsed>=m.duration&&m.kind!=='fall-die'){m.abort?.abort();beAnMotions.delete(u.id);m=null;elapsed=time;}
  const kind=m?.kind||'idle',frame=m?beAnBodyFrame(m,elapsed):Math.floor(time*(BE_AN_META.clips.idle?.durationMs ? (BE_AN_META.clips.idle.frames / BE_AN_META.clips.idle.durationMs) : .024)) % (BE_AN_META.clips.idle?.frames || 30),scale=beAnScale(u);
@@ -77,7 +91,7 @@ function beAnEvent(event){
  const speed=Math.max(1,Math.min(3,Number(state.speed)||1)),start=performance.now();
  if(event.type==='sealRescue'){
   const abort=new AbortController();beAnMotions.set(u.id,{kind:'special',start,speed,duration:4000,abort});
-  if(state.sound&&!__hvIsSkipping())void window.HonVietSfx?.play('be-an-special',{group:'combat',signal:abort.signal,playbackRate:speed,maxDelayMs:150});
+  if(state.sound&&!__hvIsSkipping())void window.HonVietSfx?.play('be-an-special',{group:'combat',signal:abort.signal,playbackRate:speed,maxDelayMs:600});
  }else if(event.type==='death')beAnMotions.set(u.id,{kind:'fall-die',start,speed,duration:4000});
  else if(event.type==='damage'&&u.hp>0&&!beAnMotions.has(u.id))beAnMotions.set(u.id,{kind:'hit',start,speed,duration:4000});
 }
@@ -112,7 +126,7 @@ function drawBeAnVfx(ctx,time){
   }
  }
 }
-function cancelBeAn(){for(const i of beAnActions)i.abort.abort();beAnActions.clear();for(const m of beAnMotions.values())m.abort?.abort();beAnMotions.clear();beAnBursts.length=0;beAnImages.clear();}
+function cancelBeAn(){for(const i of beAnActions)i.abort.abort();beAnActions.clear();for(const m of beAnMotions.values())m.abort?.abort();beAnMotions.clear();beAnBursts.length=0;}
 async function performBeAnAction(actor,action,target,e,battleId){
  const kind=action==='ultimate'?'ultimate':'basic',speed=Math.max(1,Math.min(3,Number(state.speed)||1))*beAnTempo(kind);
  const info={actor,kind,battleId,speed,start:0,release:BE_AN_META.timeline[kind].release,vfxEnd:BE_AN_META.timeline[kind].vfxEnd,targets:[],abort:new AbortController()};

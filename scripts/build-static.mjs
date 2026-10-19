@@ -332,6 +332,12 @@ installOwnerRefresh(root);
 
 const {installBeAn}=await import('./be-an-integration.mjs');
 installBeAn(root);
+// Every hero described by assets/characters/<slug>/hero.json: one installer, one runtime, one doctor.
+const {installAuthoredHeroes}=await import('./authored-hero-install.mjs');
+const {runHeroDoctor}=await import('./hero-doctor.mjs');
+await runHeroDoctor(root);
+console.log('Authored heroes installed: '+installAuthoredHeroes(root).join(', '));
+console.log('HERO DOCTOR PASS '+JSON.stringify(await runHeroDoctor(root,{dist:true})));
 
 // Final shared hit/shadow owner, after all per-hero and owner refresh patches.
 const {installBattleHitFeedback}=await import('./battle-hit-feedback-v1.mjs');

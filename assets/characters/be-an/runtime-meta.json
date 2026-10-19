@@ -3,26 +3,28 @@
   "assetRevision": "source24-20261018-hires3x",
   "clips": {
     "idle": {
-      "file": "idle-0.webp",
+      "file": "idle-0-35de8825.webp",
       "frames": 30,
       "cols": 6,
-      "cellW": 1056,
-      "cellH": 672,
+      "cellW": 264,
+      "cellH": 168,
       "durationMs": 2833.333,
       "pageFrames": 30,
       "pages": [
         {
-          "file": "idle-0.webp",
+          "file": "idle-0-35de8825.webp",
           "frames": 30,
           "cols": 6,
           "cellW": 1056,
           "cellH": 672,
-          "durationMs": 2833.333
+          "durationMs": 2833.333,
+          "atlasWidth": 1584,
+          "atlasHeight": 840
         }
       ],
-      "pivot": 528,
-      "foot": 606,
-      "body": 480,
+      "pivot": 132,
+      "foot": 151.5,
+      "body": 120,
       "sourceFacing": 1,
       "registrationScale": 0.917782,
       "loop": {
@@ -31,423 +33,504 @@
         "startPtsSeconds": 0.458333,
         "durationSeconds": 2.833334,
         "alphaSilhouetteIoUStartEnd": 0.9774
-      }
+      },
+      "budgetScale": 0.25
     },
     "run": {
-      "file": "run-0.webp",
+      "file": "run-0-fb3123ce.webp",
       "frames": 96,
       "cols": 6,
-      "cellW": 1056,
-      "cellH": 672,
+      "cellW": 264,
+      "cellH": 168,
       "durationMs": 4000,
       "pageFrames": 24,
       "pages": [
         {
-          "file": "run-0.webp",
+          "file": "run-0-fb3123ce.webp",
           "frames": 24,
           "cols": 6,
           "cellW": 1056,
           "cellH": 672,
-          "durationMs": 1000
+          "durationMs": 1000,
+          "atlasWidth": 1584,
+          "atlasHeight": 672
         },
         {
-          "file": "run-1.webp",
+          "file": "run-1-a5c09fc0.webp",
           "frames": 24,
           "cols": 6,
           "cellW": 1056,
           "cellH": 672,
-          "durationMs": 1000
+          "durationMs": 1000,
+          "atlasWidth": 1584,
+          "atlasHeight": 672
         },
         {
-          "file": "run-2.webp",
+          "file": "run-2-dee26eac.webp",
           "frames": 24,
           "cols": 6,
           "cellW": 1056,
           "cellH": 672,
-          "durationMs": 1000
+          "durationMs": 1000,
+          "atlasWidth": 1584,
+          "atlasHeight": 672
         },
         {
-          "file": "run-3.webp",
+          "file": "run-3-6a0f65f8.webp",
           "frames": 24,
           "cols": 6,
           "cellW": 1056,
           "cellH": 672,
-          "durationMs": 1000
+          "durationMs": 1000,
+          "atlasWidth": 1584,
+          "atlasHeight": 672
         }
       ],
-      "pivot": 528,
-      "foot": 606,
-      "body": 480,
+      "pivot": 132,
+      "foot": 151.5,
+      "body": 120,
       "sourceFacing": 1,
-      "registrationScale": 0.9937888198757764
+      "registrationScale": 0.9937888198757764,
+      "budgetScale": 0.25
     },
     "basic": {
-      "file": "basic-0.webp",
+      "file": "basic-0-e1cea864.webp",
       "frames": 96,
       "cols": 6,
-      "cellW": 1056,
-      "cellH": 672,
+      "cellW": 264,
+      "cellH": 168,
       "durationMs": 4000,
       "pageFrames": 24,
       "pages": [
         {
-          "file": "basic-0.webp",
+          "file": "basic-0-e1cea864.webp",
           "frames": 24,
           "cols": 6,
           "cellW": 1056,
           "cellH": 672,
-          "durationMs": 1000
+          "durationMs": 1000,
+          "atlasWidth": 1584,
+          "atlasHeight": 672
         },
         {
-          "file": "basic-1.webp",
+          "file": "basic-1-02cffbd6.webp",
           "frames": 24,
           "cols": 6,
           "cellW": 1056,
           "cellH": 672,
-          "durationMs": 1000
+          "durationMs": 1000,
+          "atlasWidth": 1584,
+          "atlasHeight": 672
         },
         {
-          "file": "basic-2.webp",
+          "file": "basic-2-4270dada.webp",
           "frames": 24,
           "cols": 6,
           "cellW": 1056,
           "cellH": 672,
-          "durationMs": 1000
+          "durationMs": 1000,
+          "atlasWidth": 1584,
+          "atlasHeight": 672
         },
         {
-          "file": "basic-3.webp",
+          "file": "basic-3-5c8af256.webp",
           "frames": 24,
           "cols": 6,
           "cellW": 1056,
           "cellH": 672,
-          "durationMs": 1000
+          "durationMs": 1000,
+          "atlasWidth": 1584,
+          "atlasHeight": 672
         }
       ],
-      "pivot": 528,
-      "foot": 606,
-      "body": 480,
+      "pivot": 132,
+      "foot": 151.5,
+      "body": 120,
       "sourceFacing": 1,
-      "registrationScale": 0.9937888198757764
+      "registrationScale": 0.9937888198757764,
+      "budgetScale": 0.25
     },
     "ultimate": {
-      "file": "ultimate-0.webp",
+      "file": "ultimate-0-1c9cdd76.webp",
       "frames": 96,
       "cols": 6,
-      "cellW": 1056,
-      "cellH": 672,
+      "cellW": 264,
+      "cellH": 168,
       "durationMs": 4000,
       "pageFrames": 24,
       "pages": [
         {
-          "file": "ultimate-0.webp",
+          "file": "ultimate-0-1c9cdd76.webp",
           "frames": 24,
           "cols": 6,
           "cellW": 1056,
           "cellH": 672,
-          "durationMs": 1000
+          "durationMs": 1000,
+          "atlasWidth": 1584,
+          "atlasHeight": 672
         },
         {
-          "file": "ultimate-1.webp",
+          "file": "ultimate-1-792c1dac.webp",
           "frames": 24,
           "cols": 6,
           "cellW": 1056,
           "cellH": 672,
-          "durationMs": 1000
+          "durationMs": 1000,
+          "atlasWidth": 1584,
+          "atlasHeight": 672
         },
         {
-          "file": "ultimate-2.webp",
+          "file": "ultimate-2-cc59b0e4.webp",
           "frames": 24,
           "cols": 6,
           "cellW": 1056,
           "cellH": 672,
-          "durationMs": 1000
+          "durationMs": 1000,
+          "atlasWidth": 1584,
+          "atlasHeight": 672
         },
         {
-          "file": "ultimate-3.webp",
+          "file": "ultimate-3-c60532bb.webp",
           "frames": 24,
           "cols": 6,
           "cellW": 1056,
           "cellH": 672,
-          "durationMs": 1000
+          "durationMs": 1000,
+          "atlasWidth": 1584,
+          "atlasHeight": 672
         }
       ],
-      "pivot": 528,
-      "foot": 606,
-      "body": 480,
+      "pivot": 132,
+      "foot": 151.5,
+      "body": 120,
       "sourceFacing": 1,
-      "registrationScale": 1.0666666666666667
+      "registrationScale": 1.0666666666666667,
+      "budgetScale": 0.25
     },
     "hit": {
-      "file": "hit-0.webp",
+      "file": "hit-0-acc95b27.webp",
       "frames": 96,
       "cols": 6,
-      "cellW": 1056,
-      "cellH": 672,
+      "cellW": 264,
+      "cellH": 168,
       "durationMs": 4000,
       "pageFrames": 24,
       "pages": [
         {
-          "file": "hit-0.webp",
+          "file": "hit-0-acc95b27.webp",
           "frames": 24,
           "cols": 6,
           "cellW": 1056,
           "cellH": 672,
-          "durationMs": 1000
+          "durationMs": 1000,
+          "atlasWidth": 1584,
+          "atlasHeight": 672
         },
         {
-          "file": "hit-1.webp",
+          "file": "hit-1-150e7c5b.webp",
           "frames": 24,
           "cols": 6,
           "cellW": 1056,
           "cellH": 672,
-          "durationMs": 1000
+          "durationMs": 1000,
+          "atlasWidth": 1584,
+          "atlasHeight": 672
         },
         {
-          "file": "hit-2.webp",
+          "file": "hit-2-437073d2.webp",
           "frames": 24,
           "cols": 6,
           "cellW": 1056,
           "cellH": 672,
-          "durationMs": 1000
+          "durationMs": 1000,
+          "atlasWidth": 1584,
+          "atlasHeight": 672
         },
         {
-          "file": "hit-3.webp",
+          "file": "hit-3-2b7bd5d7.webp",
           "frames": 24,
           "cols": 6,
           "cellW": 1056,
           "cellH": 672,
-          "durationMs": 1000
+          "durationMs": 1000,
+          "atlasWidth": 1584,
+          "atlasHeight": 672
         }
       ],
-      "pivot": 528,
-      "foot": 606,
-      "body": 480,
+      "pivot": 132,
+      "foot": 151.5,
+      "body": 120,
       "sourceFacing": 1,
-      "registrationScale": 0.935672514619883
+      "registrationScale": 0.935672514619883,
+      "budgetScale": 0.25
     },
     "fall-die": {
-      "file": "fall-die-0.webp",
+      "file": "fall-die-0-f7e83044.webp",
       "frames": 96,
       "cols": 6,
-      "cellW": 1056,
-      "cellH": 672,
+      "cellW": 264,
+      "cellH": 168,
       "durationMs": 4000,
       "pageFrames": 24,
       "pages": [
         {
-          "file": "fall-die-0.webp",
+          "file": "fall-die-0-f7e83044.webp",
           "frames": 24,
           "cols": 6,
           "cellW": 1056,
           "cellH": 672,
-          "durationMs": 1000
+          "durationMs": 1000,
+          "atlasWidth": 1584,
+          "atlasHeight": 672
         },
         {
-          "file": "fall-die-1.webp",
+          "file": "fall-die-1-9f7564f7.webp",
           "frames": 24,
           "cols": 6,
           "cellW": 1056,
           "cellH": 672,
-          "durationMs": 1000
+          "durationMs": 1000,
+          "atlasWidth": 1584,
+          "atlasHeight": 672
         },
         {
-          "file": "fall-die-2.webp",
+          "file": "fall-die-2-2d9bf514.webp",
           "frames": 24,
           "cols": 6,
           "cellW": 1056,
           "cellH": 672,
-          "durationMs": 1000
+          "durationMs": 1000,
+          "atlasWidth": 1584,
+          "atlasHeight": 672
         },
         {
-          "file": "fall-die-3.webp",
+          "file": "fall-die-3-d79acd75.webp",
           "frames": 24,
           "cols": 6,
           "cellW": 1056,
           "cellH": 672,
-          "durationMs": 1000
+          "durationMs": 1000,
+          "atlasWidth": 1584,
+          "atlasHeight": 672
         }
       ],
-      "pivot": 528,
-      "foot": 606,
-      "body": 480,
+      "pivot": 132,
+      "foot": 151.5,
+      "body": 120,
       "sourceFacing": 1,
-      "registrationScale": 1.0126582278481013
+      "registrationScale": 1.0126582278481013,
+      "budgetScale": 0.25
     },
     "special": {
-      "file": "special-0.webp",
+      "file": "special-0-9d2773a1.webp",
       "frames": 96,
       "cols": 6,
-      "cellW": 1056,
-      "cellH": 672,
+      "cellW": 264,
+      "cellH": 168,
       "durationMs": 4000.0,
       "pageFrames": 24,
       "pages": [
         {
-          "file": "special-0.webp",
+          "file": "special-0-9d2773a1.webp",
           "frames": 24,
           "cols": 6,
           "cellW": 1056,
           "cellH": 672,
-          "durationMs": 1000.0
+          "durationMs": 1000.0,
+          "atlasWidth": 1584,
+          "atlasHeight": 672
         },
         {
-          "file": "special-1.webp",
+          "file": "special-1-f004873d.webp",
           "frames": 24,
           "cols": 6,
           "cellW": 1056,
           "cellH": 672,
-          "durationMs": 1000.0
+          "durationMs": 1000.0,
+          "atlasWidth": 1584,
+          "atlasHeight": 672
         },
         {
-          "file": "special-2.webp",
+          "file": "special-2-29f2ed16.webp",
           "frames": 24,
           "cols": 6,
           "cellW": 1056,
           "cellH": 672,
-          "durationMs": 1000.0
+          "durationMs": 1000.0,
+          "atlasWidth": 1584,
+          "atlasHeight": 672
         },
         {
-          "file": "special-3.webp",
+          "file": "special-3-4ee0deb7.webp",
           "frames": 24,
           "cols": 6,
           "cellW": 1056,
           "cellH": 672,
-          "durationMs": 1000.0
+          "durationMs": 1000.0,
+          "atlasWidth": 1584,
+          "atlasHeight": 672
         }
       ],
-      "pivot": 528.0,
-      "foot": 606,
-      "body": 480,
+      "pivot": 132.0,
+      "foot": 151.5,
+      "body": 120,
       "sourceFacing": 1,
-      "registrationScale": 1.1428571428571428
+      "registrationScale": 1.1428571428571428,
+      "budgetScale": 0.25
     },
     "vfx-basic": {
-      "file": "vfx-basic-0.webp",
+      "file": "vfx-basic-0-9aa75e26.webp",
       "frames": 144,
       "cols": 6,
-      "cellW": 1152,
-      "cellH": 672,
+      "cellW": 288,
+      "cellH": 168,
       "durationMs": 6000.0,
       "pageFrames": 24,
       "pages": [
         {
-          "file": "vfx-basic-0.webp",
+          "file": "vfx-basic-0-9aa75e26.webp",
           "frames": 24,
           "cols": 6,
           "cellW": 1152,
           "cellH": 672,
-          "durationMs": 1000.0
+          "durationMs": 1000.0,
+          "atlasWidth": 1728,
+          "atlasHeight": 672
         },
         {
-          "file": "vfx-basic-1.webp",
+          "file": "vfx-basic-1-65b1d6a0.webp",
           "frames": 24,
           "cols": 6,
           "cellW": 1152,
           "cellH": 672,
-          "durationMs": 1000.0
+          "durationMs": 1000.0,
+          "atlasWidth": 1728,
+          "atlasHeight": 672
         },
         {
-          "file": "vfx-basic-2.webp",
+          "file": "vfx-basic-2-61eb0ca4.webp",
           "frames": 24,
           "cols": 6,
           "cellW": 1152,
           "cellH": 672,
-          "durationMs": 1000.0
+          "durationMs": 1000.0,
+          "atlasWidth": 1728,
+          "atlasHeight": 672
         },
         {
-          "file": "vfx-basic-3.webp",
+          "file": "vfx-basic-3-7da28130.webp",
           "frames": 24,
           "cols": 6,
           "cellW": 1152,
           "cellH": 672,
-          "durationMs": 1000.0
+          "durationMs": 1000.0,
+          "atlasWidth": 1728,
+          "atlasHeight": 672
         },
         {
-          "file": "vfx-basic-4.webp",
+          "file": "vfx-basic-4-4651e0a1.webp",
           "frames": 24,
           "cols": 6,
           "cellW": 1152,
           "cellH": 672,
-          "durationMs": 1000.0
+          "durationMs": 1000.0,
+          "atlasWidth": 1728,
+          "atlasHeight": 672
         },
         {
-          "file": "vfx-basic-5.webp",
+          "file": "vfx-basic-5-33db307e.webp",
           "frames": 24,
           "cols": 6,
           "cellW": 1152,
           "cellH": 672,
-          "durationMs": 1000.0
+          "durationMs": 1000.0,
+          "atlasWidth": 1728,
+          "atlasHeight": 672
         }
       ],
-      "pivot": 576.0,
-      "foot": 606,
-      "body": 480,
+      "pivot": 144.0,
+      "foot": 151.5,
+      "body": 120,
       "sourceFacing": 1,
-      "registrationScale": 1
+      "registrationScale": 1,
+      "budgetScale": 0.25
     },
     "vfx-ultimate": {
-      "file": "vfx-ultimate-0.webp",
+      "file": "vfx-ultimate-0-f4048242.webp",
       "frames": 144,
       "cols": 6,
-      "cellW": 1152,
-      "cellH": 672,
+      "cellW": 288,
+      "cellH": 168,
       "durationMs": 6000.0,
       "pageFrames": 24,
       "pages": [
         {
-          "file": "vfx-ultimate-0.webp",
+          "file": "vfx-ultimate-0-f4048242.webp",
           "frames": 24,
           "cols": 6,
           "cellW": 1152,
           "cellH": 672,
-          "durationMs": 1000.0
+          "durationMs": 1000.0,
+          "atlasWidth": 1728,
+          "atlasHeight": 672
         },
         {
-          "file": "vfx-ultimate-1.webp",
+          "file": "vfx-ultimate-1-dc9dba8e.webp",
           "frames": 24,
           "cols": 6,
           "cellW": 1152,
           "cellH": 672,
-          "durationMs": 1000.0
+          "durationMs": 1000.0,
+          "atlasWidth": 1728,
+          "atlasHeight": 672
         },
         {
-          "file": "vfx-ultimate-2.webp",
+          "file": "vfx-ultimate-2-8a48d68a.webp",
           "frames": 24,
           "cols": 6,
           "cellW": 1152,
           "cellH": 672,
-          "durationMs": 1000.0
+          "durationMs": 1000.0,
+          "atlasWidth": 1728,
+          "atlasHeight": 672
         },
         {
-          "file": "vfx-ultimate-3.webp",
+          "file": "vfx-ultimate-3-97c80d67.webp",
           "frames": 24,
           "cols": 6,
           "cellW": 1152,
           "cellH": 672,
-          "durationMs": 1000.0
+          "durationMs": 1000.0,
+          "atlasWidth": 1728,
+          "atlasHeight": 672
         },
         {
-          "file": "vfx-ultimate-4.webp",
+          "file": "vfx-ultimate-4-404a5dc5.webp",
           "frames": 24,
           "cols": 6,
           "cellW": 1152,
           "cellH": 672,
-          "durationMs": 1000.0
+          "durationMs": 1000.0,
+          "atlasWidth": 1728,
+          "atlasHeight": 672
         },
         {
-          "file": "vfx-ultimate-5.webp",
+          "file": "vfx-ultimate-5-9e237fb7.webp",
           "frames": 24,
           "cols": 6,
           "cellW": 1152,
           "cellH": 672,
-          "durationMs": 1000.0
+          "durationMs": 1000.0,
+          "atlasWidth": 1728,
+          "atlasHeight": 672
         }
       ],
-      "pivot": 576.0,
-      "foot": 606,
-      "body": 480,
+      "pivot": 144.0,
+      "foot": 151.5,
+      "body": 120,
       "sourceFacing": 1,
-      "registrationScale": 1
+      "registrationScale": 1,
+      "budgetScale": 0.25
     },
     "shield": {
       "frames": 25,
@@ -461,7 +544,7 @@
       "blend": "screen",
       "pages": [
         {
-          "file": "shield.webp",
+          "file": "shield-afd97a5a.webp",
           "frames": 25,
           "cols": 5
         }
@@ -574,5 +657,20 @@
         ]
       ]
     }
+  },
+  "budget": {
+    "reason": "iOS battle working set: idle page <= 8 MiB, any page <= 12 MiB (hero:doctor)",
+    "date": "2026-10-19"
+  },
+  "detail": {
+    "file": "detail-8bded80b.webp",
+    "frames": 30,
+    "cols": 6,
+    "cellW": 528,
+    "cellH": 336,
+    "durationMs": 2833.333,
+    "atlasWidth": 3168,
+    "atlasHeight": 1680,
+    "note": "hero-detail screen only (full resolution); battle uses clips.idle"
   }
 }

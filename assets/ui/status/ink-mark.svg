@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <title>Mặc Tích</title>
+  <circle cx="32" cy="32" r="29" fill="#eef3f7" stroke="#1d2a36" stroke-width="4"/>
+  <path d="M32 10c6 10 15 18 15 28a15 15 0 0 1-30 0c0-10 9-18 15-28z" fill="#151b22"/>
+  <path d="M26 38c0 4 3 7 7 7" fill="none" stroke="#6fa8d6" stroke-width="3" stroke-linecap="round"/>
+  <path d="M18 52l28-28" stroke="#b8322c" stroke-width="3" stroke-linecap="round" opacity=".85"/>
+</svg>

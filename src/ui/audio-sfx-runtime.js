@@ -23,6 +23,9 @@
     'linh-dong-atk': 'linh-dong/atk.wav', 'linh-dong-ult': 'linh-dong/ult.wav',
     'bach-dien-atk': 'bach-dien/atk.wav', 'bach-dien-ult': 'bach-dien/ult.wav'
   };
+  // Cues of heroes described by assets/characters/*/hero.json; filled by scripts/authored-hero-install.mjs.
+  const authoredFiles = /*HV_AUTHORED_SFX*/{}/*HV_AUTHORED_SFX_END*/;
+  Object.assign(files, authoredFiles);
   const assetBase = new URL('assets/audio/sfx/', document.baseURI).href;
   let parentBus = null, parentPerformanceOffsetMs = 0;
   try {
@@ -283,7 +286,7 @@
         ? Number(options.cuePerformanceMs)
         : Number.isFinite(Number(options.audibleAtPerformanceMs)) ? Number(options.audibleAtPerformanceMs) : null;
       const sampleCue = options.sampleCue === 'dominant' ? 'dominant' : 'onset';
-      const playbackRate=event.startsWith('be-an-')?Math.max(1,Math.min(4.2,Number(options.playbackRate)||1)):event.startsWith('tich-dao-')||event.startsWith('hong-thuong-')||event.startsWith('co-nuong-')||event.startsWith('dinh-loi-')||event.startsWith('thay-mo-')?Math.max(1,Math.min(3,Number(options.playbackRate)||1)):1;
+      const playbackRate=Object.hasOwn(authoredFiles,event)?Math.max(1,Math.min(3,Number(options.playbackRate)||1)):event.startsWith('be-an-')?Math.max(1,Math.min(4.2,Number(options.playbackRate)||1)):event.startsWith('tich-dao-')||event.startsWith('hong-thuong-')||event.startsWith('co-nuong-')||event.startsWith('dinh-loi-')||event.startsWith('thay-mo-')?Math.max(1,Math.min(3,Number(options.playbackRate)||1)):1;
       const sampleCueOffsetMs = (sampleCue === 'dominant' ? analysis.dominantCueMs : analysis.audibleLeadInMs)/playbackRate;
       const source = c.createBufferSource(), gain = c.createGain();
       source.buffer = buffer;

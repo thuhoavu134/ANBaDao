@@ -1,3 +1,12 @@
+## Quy chuẩn tích hợp tướng mới (Bắt buộc từ 19/10/2026)
+
+Khi nhận yêu cầu tích hợp tướng mới vào Lục Thần (hoặc "thêm tướng mới", "tích hợp tướng", "làm tướng mới"), agent bắt buộc đọc và làm theo **`docs/HERO-INTEGRATION-STANDARD.md`**.
+- Mỗi tướng là 1 thư mục `assets/characters/<slug>/hero.json` (tự động đăng ký roster, save, trận, chi tiết, Victory/Defeat).
+- **CẤM** viết script vá riêng (`scripts/*-integration.mjs`), cấm chèn regex thủ công vào `index.html`/`battle.html`, cấm tạo cache ảnh riêng (phải dùng chung `window.__HV_NATIVE_ATLAS_CACHE`).
+- Ngân sách ảnh: idle trong trận ≤ 8 MiB, trang khác ≤ 12 MiB, ảnh `detail` màn chi tiết ≤ 32 MiB. Bắt buộc tên file mang mã băm nội dung `name-<sha8>.webp`.
+- Bắt buộc kiểm tra tự động bằng `node scripts/hero-doctor.mjs` (nằm trong `npm test`).
+- Bắt buộc đẩy commit qua GitHub GraphQL verified bằng `node scripts/tools/verified-push.mjs` để Vercel không chặn deploy.
+
 ## Chân dung màn Tướng — quy chuẩn chung 18/10/2026
 
 Đọc `docs/ROSTER-PORTRAIT-STANDARD.md` khi sửa ảnh đại diện hoặc thẻ tướng. Cùng tỷ lệ mặt và cao độ mắt; giữ tỷ lệ ảnh. Frame đại diện phải mở mắt và được xem thật, không chọn theo diện tích alpha. Tướng/ảnh mới cần landmark và bằng chứng; ảnh thiếu QA không được coi là đã đạt. Không sửa thiết kế mặt nạ/che mắt authored.

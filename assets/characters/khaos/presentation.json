@@ -5,46 +5,42 @@
     "khaos",
     "hero_splus_khaos"
   ],
-  "referenceBodyHeight": 310,
+  "referenceBodyHeight": 143,
   "footOffsetY": 0,
   "registration": "source-body",
   "clips": {
     "idle": {
-      "bodyHeight": 310,
-      "footX": 240,
-      "footY": 440
+      "bodyHeight": 143,
+      "footX": 120,
+      "footY": 215
     },
     "run": {
-      "bodyHeight": 310,
-      "footX": 240,
-      "footY": 440
+      "bodyHeight": 143,
+      "footX": 120,
+      "footY": 215
     },
     "basic": {
-      "bodyHeight": 310,
-      "footX": 240,
-      "footY": 440
+      "bodyHeight": 143,
+      "footX": 120,
+      "footY": 215
     },
     "ultimate": {
-      "bodyHeight": 310,
-      "footX": 240,
-      "footY": 440
+      "bodyHeight": 143,
+      "footX": 120,
+      "footY": 215
     },
     "hit": {
-      "bodyHeight": 310,
-      "footX": 240,
-      "footY": 440
+      "bodyHeight": 143,
+      "footX": 120,
+      "footY": 215
     },
     "fall-die": {
-      "bodyHeight": 310,
-      "footX": 240,
-      "footY": 440
+      "bodyHeight": 143,
+      "footX": 120,
+      "footY": 215
     }
   },
-  "vfxClips": [
-    "vfx-basic",
-    "vfx-ultimate",
-    "vfx-talisman"
-  ],
+  "vfxClips": [],
   "states": {
     "idle": [
       "idle"
@@ -56,5 +52,5 @@
       "ultimate"
     ]
   },
-  "evidence": "Khaos six-state animation package + Kiếm Thế VFX (wu_10_xdds_c, gb_50_hbls_a, kl_10_hff_d)."
+  "evidence": "Kiếm Thế six-state package 20261019 (validator PASS); idle B 30f PTS loop, IoU 0.9538; body measured from alpha (top 144, foot 430)."
 }

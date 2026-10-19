@@ -26,15 +26,17 @@ test('42 unique identities, seven per element, no replacement art',()=>{
 });
 
 // Each row asserts an observable authored effect, not merely successful dispatch.
-const skills={co_trong:['shield',2,1],cuong_dong:['stun',1,2],lac_an:['damage',1],hac_pha:['armorDown',3,2],thiet_lanh:['disarm',1,2],minh_toa:['shieldBan',1,2],thiem_ngan:['heal',2,1],linh_dong:['confusion',1,2],tieu_hon:['rageBan',1,2],thach_kinh:['attackDown',3,2],han_nuong:['damage',2],vong_co:['silence',1,2],co_nuong:['armorDown',3,2],muc_chieu:['heal',3,1],thuy_co:['heal',1,1],ha_lang:['displacement',1,2],giang_quan:['airborne',1,2],thuy_ngoc:['shield',1,1],hai_phong:['stun',1,2],tram_chau:['bubble',1,1],da_xoa:['rageSlow',1,2],nung:['stun',1,2],hoa_tieu:['blind',1,2],hoa_khieu:['attackUp',2,1],cuu_tinh:['shieldBan',1,2],hoa_bai:['blind',3,2],hac_dao:['shieldBan',1,2],hoa_duc:['attackUp',2,1],mien_nuong:['statusRemove',2,1],tram_tue:['sleep',1,2],hac_hoa:['disarm',1,2],tam_nuong:['entangle',2,2],son_cuong:['bleed',2,2],tue_y:['regen',3,1],mang_xa:['armorDown',3,2],khaos:['swap',1,2],kinh_nuong:['blind',1,2],hoi_anh:['forcedBasic',1,2],van_phap:['attackUp',2,1],cuu_trieu:['damage',4],thach_mong:['taunted',3,2],to_linh:['speedDown',3,2]};
-const ultimates={co_trong:['reflectPhysical',6,1],cuong_dong:['taunted',6,2],lac_an:['damage',7],hac_pha:['damage',3],thiet_lanh:['stun',3,2],minh_toa:['hardSilence',1,2],thiem_ngan:['deathWard',6,1],linh_dong:['silence',6,2],tieu_hon:['damage',1],thach_kinh:['magicResist',6,1],han_nuong:['armorDown',6,2],vong_co:['damageDown',6,2],co_nuong:['heal',6,1],muc_chieu:['healthEqualize',5,1],thuy_co:['speedUp',6,1],ha_lang:['attackDown',6,2],giang_quan:['root',3,2],thuy_ngoc:['heal',3,1],hai_phong:['armorDown',6,2],tram_chau:['critDown',6,2],da_xoa:['damage',1],nung:['armorUp',1,1],hoa_tieu:['damage',18],hoa_khieu:['assist',2,2],cuu_tinh:['damage',6],hoa_bai:['stun',6,2],hac_dao:['antiHeal',3,2],hoa_duc:['critUp',6,1],mien_nuong:['resistUp',6,1],tram_tue:['attackDown',6,2],hac_hoa:['antiHeal',3,2],tam_nuong:['paralysis',3,2],son_cuong:['damage',2],tue_y:['heal',6,1],mang_xa:['blind',6,2],khaos:['damage',18],kinh_nuong:['reflectSkills',6,1],hoi_anh:['stun',2,2],van_phap:['airborne',6,2],cuu_trieu:['damage',54],thach_mong:['shield',6,1],to_linh:['timeFreeze',6,2]};
+const skills={co_trong:['shield',2,1],cuong_dong:['stun',1,2],lac_an:['damage',1],hac_pha:['armorDown',3,2],thiet_lanh:['disarm',1,2],minh_toa:['shieldBan',1,2],thiem_ngan:['heal',2,1],linh_dong:['confusion',1,2],tieu_hon:['rageBan',1,2],thach_kinh:['attackDown',3,2],han_nuong:['damage',2],vong_co:['silence',1,2],co_nuong:['armorDown',3,2],muc_chieu:['heal',3,1],thuy_co:['heal',1,1],ha_lang:['displacement',1,2],giang_quan:['airborne',1,2],thuy_ngoc:['shield',1,1],hai_phong:['stun',1,2],tram_chau:['bubble',1,1],da_xoa:['rageSlow',1,2],nung:['stun',1,2],hoa_tieu:['blind',1,2],hoa_khieu:['attackUp',2,1],cuu_tinh:['shieldBan',1,2],hoa_bai:['blind',3,2],hac_dao:['shieldBan',1,2],hoa_duc:['attackUp',2,1],mien_nuong:['statusRemove',2,1],tram_tue:['sleep',1,2],hac_hoa:['disarm',1,2],tam_nuong:['entangle',2,2],son_cuong:['bleed',2,2],tue_y:['regen',3,1],mang_xa:['armorDown',3,2],khaos:['inkMark',1,2],kinh_nuong:['blind',1,2],hoi_anh:['forcedBasic',1,2],van_phap:['attackUp',2,1],cuu_trieu:['damage',4],thach_mong:['taunted',3,2],to_linh:['speedDown',3,2]};
+const ultimates={co_trong:['reflectPhysical',6,1],cuong_dong:['taunted',6,2],lac_an:['damage',7],hac_pha:['damage',3],thiet_lanh:['stun',3,2],minh_toa:['hardSilence',1,2],thiem_ngan:['deathWard',6,1],linh_dong:['silence',6,2],tieu_hon:['damage',1],thach_kinh:['magicResist',6,1],han_nuong:['armorDown',6,2],vong_co:['damageDown',6,2],co_nuong:['heal',6,1],muc_chieu:['healthEqualize',5,1],thuy_co:['speedUp',6,1],ha_lang:['attackDown',6,2],giang_quan:['root',3,2],thuy_ngoc:['heal',3,1],hai_phong:['armorDown',6,2],tram_chau:['critDown',6,2],da_xoa:['damage',1],nung:['armorUp',1,1],hoa_tieu:['damage',18],hoa_khieu:['assist',2,2],cuu_tinh:['damage',6],hoa_bai:['stun',6,2],hac_dao:['antiHeal',3,2],hoa_duc:['critUp',6,1],mien_nuong:['resistUp',6,1],tram_tue:['attackDown',6,2],hac_hoa:['antiHeal',3,2],tam_nuong:['paralysis',3,2],son_cuong:['damage',2],tue_y:['heal',6,1],mang_xa:['blind',6,2],khaos:['damage',12],kinh_nuong:['reflectSkills',6,1],hoi_anh:['stun',2,2],van_phap:['airborne',6,2],cuu_trieu:['damage',54],thach_mong:['shield',6,1],to_linh:['timeFreeze',6,2]};
 for(const h of SPLUS_HEROES)for(const action of ['skill','ultimate'])test(`${h.name}: ${action} resolves authored target/effect`,()=>{
   const key=h.id.replace('hero_splus_',''),e=fixture(key);
   if(key==='mien_nuong')for(const u of e.units.filter(u=>u.team===1&&u.slot<3))e.addStatus('2:0',u,{type:'blind',power:0.3});
   if(key==='van_phap')for(const u of e.units.filter(u=>u.team===2))e.addStatus(u,u,{type:'attackUp',power:0.2});
   if(key==='hoa_bai')for(const u of e.units.filter(u=>u.team===2))e.addStatus('1:0',u,{type:'burn',percentMaxHp:0.03});
   const [type,count,team]=(action==='skill'?skills:ultimates)[key];
-  e.events.length=0;assert.equal(e.act('1:0',action).ok,true);
+  // Basic + Ultimate kits (hero.json authored heroes) expose the Basic through the skill row.
+  const performed=key==='khaos'&&action==='skill'?(assert.equal(e.canUse('1:0','skill'),false),'basic'):action;
+  e.events.length=0;assert.equal(e.act('1:0',performed).ok,true);
   const actual=type==='damage'?damage(e):['shield','heal','airborne','displacement','statusRemove','healthEqualize','assist','swap','forcedBasic'].includes(type)?e.events.filter(x=>x.type===type&&(team==null||e.unit(x.targetId)?.team===team)):status(e,type,team);
   assert.equal(actual.length,count,`${type}: expected ${count}`);
   for(const u of e.units){assert.ok(Number.isFinite(u.hp)&&u.hp>=0&&u.hp<=u.maxHp);assert.ok(u.energy>=0&&u.energy<=100);}
@@ -114,8 +116,30 @@ test('Miên Nương HoT and Hỏa Dực burn conversion heal weakest ally',()=>{
 test('Thạch Mộng intercepts 30%, then reduces shared damage by 35%',()=>{
   const e=fixture('thach_mong');e.damage('2:0','1:1',{raw:1000});assert.equal(e.unit('1:1').hp,49300);assert.equal(e.unit('1:0').hp,49805);assert.equal(e.unit('1:0').splus.memory.intercepted,300);
 });
-test('Khaos clone absorbs half damage until its finite pool is exhausted',()=>{
-  const e=fixture('khaos');e.damage('2:0','1:0',{raw:1000});assert.equal(e.unit('1:0').hp,49500);assert.equal(e.unit('1:0').splus.memory.cloneHp,49500);
+test('Khaos Mặc Tích: 3 basics stun once, consume the marks and never keep a clone pool',()=>{
+  const e=fixture('khaos');e.damage('2:0','1:0',{raw:1000});assert.equal(e.unit('1:0').hp,49000);assert.equal(e.unit('1:0').splus.memory.cloneHp,undefined);
+  const ink=()=>e.unit('2:0').statuses.find(s=>s.type==='inkMark')?.stacks||0;
+  e.act('1:0','basic','2:0');assert.equal(ink(),1);assert.ok(e.modifiers('2:0').speed<=-0.15+1e-9);assert.ok(e.modifiers('2:0').defense<=-0.10+1e-9);
+  e.act('1:0','basic','2:0');assert.equal(ink(),2);
+  e.act('1:0','basic','2:0');assert.equal(ink(),0);
+  assert.equal(e.events.filter(x=>x.type==='inkBind').length,1);
+  assert.ok(e.unit('2:0').statuses.some(s=>s.type==='stun'));
+  assert.equal(e.unit('2:0').statuses.filter(s=>['speedDown','armorDown'].includes(s.type)&&s.sourceId==='1:0').length,0);
+});
+test('Khaos ultimate: deferred hits resolve once each; final wave detonates marks and lowers magic defence',()=>{
+  const e=fixture('khaos');e.unit('1:0').energy=100;
+  e.act('1:0','basic','2:0');assert.equal(e.unit('2:0').statuses.find(s=>s.type==='inkMark')?.stacks,1);
+  e.unit('1:0').energy=100;
+  const cast=e.act('1:0','ultimate',null,{deferAuthored:true});assert.equal(cast.ok,true);assert.equal(cast.targetIds.length,6);
+  const hp=e.unit('2:3').hp;
+  assert.equal(e.resolveAuthoredImpact('1:0',cast.castId,'2:3',0).ok,true);
+  assert.equal(e.resolveAuthoredImpact('1:0',cast.castId,'2:3',0).ok,false);
+  assert.ok(e.unit('2:3').hp<hp);
+  for(const id of cast.targetIds)for(const hit of [0,1])e.resolveAuthoredImpact('1:0',cast.castId,id,hit);
+  assert.equal(e.resolveAuthoredImpact('1:0',cast.castId,'2:0',2).ok,false);
+  assert.ok(e.events.some(x=>x.type==='inkDetonate'&&x.targetId==='2:0'));
+  for(const id of cast.targetIds)assert.ok(e.unit(id).statuses.some(s=>s.type==='magicArmorDown'));
+  assert.equal(e.finishAuthoredCast('1:0',cast.castId),true);assert.equal(e.finishAuthoredCast('1:0',cast.castId),false);
 });
 test('Hồi Ảnh swaps rows after two rounds without duplicate slots',()=>{
   const e=fixture('hoi_anh',()=>0.3);e.finishRound();assert.equal(e.events.filter(x=>x.type==='swap').length,0);e.beginRound(2);e.finishRound();assert.equal(e.events.filter(x=>x.type==='swap').length,1);assert.equal(new Set(e.units.map(u=>`${u.team}:${u.slot}`)).size,12);

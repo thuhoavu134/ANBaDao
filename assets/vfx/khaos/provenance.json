@@ -1,0 +1,131 @@
+{
+  "source": {
+    "archive": "KIEMTHE-VFX-SFX-FULL-20261017.zip",
+    "archiveBytes": 324801730
+  },
+  "clips": {
+    "vfx-basic": {
+      "file": "vfx-basic-847fd71d.webp",
+      "frames": 1,
+      "cols": 1,
+      "rows": 1,
+      "cellW": 210,
+      "cellH": 210,
+      "atlasWidth": 210,
+      "atlasHeight": 210,
+      "frameMs": 60,
+      "blend": "screen",
+      "pivot": 105,
+      "foot": 105,
+      "sourceCode": "cy_90_bzwy_c1",
+      "sourceFrames": [
+        12
+      ],
+      "role": "projectile; frame 12 = blade facing right (16-direction sprite)",
+      "sha256": "847fd71de273f8597eb9e2dd9d3e804d2589cee6a2dc85c273e16d331b1a6f91",
+      "bytes": 8160
+    },
+    "vfx-impact": {
+      "file": "vfx-impact-135f3d58.webp",
+      "frames": 14,
+      "cols": 8,
+      "rows": 2,
+      "cellW": 190,
+      "cellH": 197,
+      "atlasWidth": 1520,
+      "atlasHeight": 394,
+      "frameMs": 60,
+      "blend": "screen",
+      "pivot": 95,
+      "foot": 98,
+      "sourceCode": "cy_90_bxxz_d",
+      "sourceFrames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "role": "hit burst on target (basic hit + Mac Phuoc)",
+      "sha256": "135f3d587475e450600005774d9a151fd366157e15307a2fdd9b1e90521b887e",
+      "bytes": 151136
+    },
+    "vfx-ultimate": {
+      "file": "vfx-ultimate-6068b3be.webp",
+      "frames": 19,
+      "cols": 8,
+      "rows": 3,
+      "cellW": 183,
+      "cellH": 197,
+      "atlasWidth": 1464,
+      "atlasHeight": 591,
+      "frameMs": 60,
+      "blend": "screen",
+      "pivot": 91,
+      "foot": 98,
+      "sourceCode": "cy_90_bzwy_a",
+      "sourceFrames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18
+      ],
+      "role": "vortex engulfing each enemy (ultimate)",
+      "sha256": "6068b3be126e7177bfd4cc69da57ad271b33d2cd861d5ac4fa6ca0081460ff30",
+      "bytes": 166312
+    }
+  },
+  "sfx": {
+    "khaos-basic": {
+      "file": "khaos/basic.wav",
+      "source": "SKILLPACK/sfx/cuiyan/cy_bzwy_c.wav",
+      "sha256": "50164412b59699a67e56ecb495164b3615422a5561b2063cdb751dca907c99ab",
+      "durationMs": 472,
+      "sampleRate": 22050,
+      "channels": 1,
+      "provenance": "Thúy Yên SKILLPACK pair (Băng Tung Vô Ảnh / Băng Tâm Tiên Tử) reused for Khaos; awaiting owner listening approval"
+    },
+    "khaos-impact": {
+      "file": "khaos/impact.wav",
+      "source": "SKILLPACK/sfx/cuiyan/cy_bxxz_c.wav",
+      "sha256": "3f694f7e00f1d6ba9522e4d85b6406ca2ee9cb7874d94a2f9a0dc008a17a2309",
+      "durationMs": 338,
+      "sampleRate": 22050,
+      "channels": 1,
+      "provenance": "Thúy Yên SKILLPACK pair (Băng Tung Vô Ảnh / Băng Tâm Tiên Tử) reused for Khaos; awaiting owner listening approval"
+    },
+    "khaos-ultimate": {
+      "file": "khaos/ultimate.wav",
+      "source": "SKILLPACK/sfx/cuiyan/cy_bxxz_f.wav",
+      "sha256": "9e7f1e999658600513c245c2040470df685a7214b8028333a3ee75dcc615d336",
+      "durationMs": 1312,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "Thúy Yên SKILLPACK pair (Băng Tung Vô Ảnh / Băng Tâm Tiên Tử) reused for Khaos; awaiting owner listening approval"
+    }
+  }
+}

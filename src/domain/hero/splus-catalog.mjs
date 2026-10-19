@@ -453,12 +453,14 @@ const rows = [
     "khaos",
     "Khaos",
     "dream",
-    "duelist",
+    "mystic",
     [
-      3
+      3,
+      4,
+      5
     ],
-    "Ảnh Ảo Hư Không",
-    "Vô Ảnh Hư Trúc Phiến"
+    "Mặc Nhãn Phù Lục",
+    "Đại Bút Thủy Mặc"
   ],
   [
     12,

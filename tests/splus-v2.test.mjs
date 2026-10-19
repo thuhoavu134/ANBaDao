@@ -102,10 +102,11 @@ test('V2 Kinh Nuong successful basic reflection negates damage and cannot bounce
  const e=make([H('kinh_nuong'),H('enemy',2)],()=>0);e.damage('2:enemy','1:kinh_nuong',{raw:1000,action:'basic'});
  assert.equal(e.unit('1:kinh_nuong').hp,10000);assert.equal(e.unit('2:enemy').hp,9000);assert.equal(e.events.filter(x=>x.type==='damage').length,1);
 });
-test('V2 Khaos clone explodes and respawns after 3 rounds; ultimate bypasses shield',()=>{
- const e=make([H('khaos'),H('enemy',2,0,{maxHp:1e6,hp:1e6,shield:5000}),H('other',2,1)]);
- e.damage('2:enemy','1:khaos',{raw:10000});assert.ok(e.events.some(x=>x.type==='cloneDestroyed'));e.beginRound(4);assert.ok(e.unit('1:khaos').splus.memory.cloneHp>0);
- const before=e.unit('2:enemy').hp,shieldBefore=e.unit('2:enemy').shield;e.act('1:khaos','ultimate');assert.ok(e.unit('2:enemy').hp<before);assert.equal(e.unit('2:enemy').shield,shieldBefore);
+test('V2 Khaos Thủy Mặc: no clone; ultimate damages every enemy and lowers magic defence',()=>{
+ const e=make([H('khaos'),H('enemy',2,0,{maxHp:1e6,hp:1e6}),H('other',2,1)]);
+ e.damage('2:enemy','1:khaos',{raw:1000});assert.ok(!e.events.some(x=>x.type==='cloneAbsorb'||x.type==='cloneDestroyed'));
+ const before=e.unit('2:enemy').hp,other=e.unit('2:other').hp;e.act('1:khaos','ultimate');
+ assert.ok(e.unit('2:enemy').hp<before);assert.ok(e.unit('2:other').hp<other);assert.ok(status(e,'2:enemy','magicArmorDown'));
 });
 test('V2 Hoi Anh forces an immediate friendly strike; Van ward rolls 35% after action',()=>{
  const e=make([H('hoi_anh'),H('enemy',2,0),H('friend',2,1)]);e.act('1:hoi_anh','skill');assert.ok(e.unit('2:friend').hp<10000);

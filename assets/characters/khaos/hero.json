@@ -1,0 +1,160 @@
+{
+  "schema": "luc-than-authored-hero/v1",
+  "id": "khaos",
+  "sourceId": "hero_splus_khaos",
+  "slug": "khaos",
+  "identityVersion": "kiemthe-sixstate-20261019",
+  "host": {
+    "he": "thuy",
+    "faction": "hu_mong",
+    "archetype": "mystic",
+    "rarity": "ssr",
+    "name": "Khaos",
+    "role": "Pháp sư / Khống chế / Thủy Mặc",
+    "col": "#3c5a78",
+    "stats": {
+      "hp": 1080,
+      "mp": 60,
+      "atk": 148,
+      "def": 52,
+      "spd": 110
+    }
+  },
+  "kit": {
+    "passive": {
+      "name": "Mặc Nhãn Phù Lục",
+      "desc": "Mỗi đòn trúng găm 1 tầng Mặc Tích (3 lượt, tối đa 3). Mỗi tầng giảm 15% tốc độ và 10% phòng thủ. Đủ 3 tầng: Mặc Phược, choáng 1 lượt rồi tiêu thụ dấu."
+    },
+    "basic": {
+      "name": "Điểm Mặc Tiễn",
+      "cost": 0,
+      "desc": "Phóng một mũi mực vào một địch, gây 140% sát thương phép và cộng 1 tầng Mặc Tích.",
+      "fx": {
+        "kind": "damage",
+        "target": "enemy",
+        "power": 1.4
+      }
+    },
+    "ultimate": {
+      "name": "Vạn Tượng Thủy Mặc",
+      "cost": 60,
+      "desc": "Sóng mực nhấn chìm toàn bộ địch: 2 đợt, mỗi đợt 150% sát thương phép. Đợt cuối kích nổ mọi Mặc Tích (thêm 25% mỗi tầng) và giảm 30% phòng thủ phép trong 2 lượt.",
+      "fx": {
+        "kind": "damage",
+        "target": "aoe_enemy",
+        "power": 3
+      }
+    }
+  },
+  "art": {
+    "portrait": "assets/characters/khaos/avatar.webp",
+    "landmark": [
+      70,
+      58,
+      26
+    ]
+  },
+  "clipsMeta": "runtime-meta.json",
+  "vfxBase": "assets/vfx/khaos/",
+  "vfxMeta": "assets/vfx/khaos/provenance.json",
+  "battle": {
+    "tempo": {
+      "basic": 1.33,
+      "ultimate": 1.2
+    },
+    "actions": {
+      "basic": {
+        "clip": "basic",
+        "release": 1800,
+        "hits": [
+          2300
+        ],
+        "vfxEnd": 2300,
+        "recovery": 4000,
+        "projectile": {
+          "vfx": "vfx-basic",
+          "from": [
+            0.35,
+            0.55
+          ],
+          "scale": 0.9
+        },
+        "impact": {
+          "vfx": "vfx-impact",
+          "anchor": "body",
+          "scale": 0.9
+        },
+        "sfx": [
+          {
+            "cue": "khaos-basic",
+            "at": "release",
+            "lead": 120
+          },
+          {
+            "cue": "khaos-impact",
+            "at": "hit"
+          }
+        ]
+      },
+      "ultimate": {
+        "clip": "ultimate",
+        "release": 2000,
+        "hits": [
+          2300,
+          2800
+        ],
+        "vfxEnd": 3500,
+        "recovery": 3958,
+        "area": {
+          "vfx": "vfx-ultimate",
+          "anchor": "body",
+          "scale": 1.15
+        },
+        "sfx": [
+          {
+            "cue": "khaos-ultimate",
+            "at": "release",
+            "lead": 200
+          },
+          {
+            "cue": "khaos-impact",
+            "at": "hit"
+          }
+        ]
+      }
+    },
+    "reactions": {
+      "hit": "hit",
+      "death": "fall-die",
+      "durationMs": 4000
+    },
+    "events": {
+      "inkBind": {
+        "vfx": "vfx-impact",
+        "anchor": "body",
+        "scale": 1.1,
+        "sfx": "khaos-impact"
+      }
+    },
+    "victory": {
+      "runVisualScale": 1.35,
+      "reason": "Khaos run sprite occupies 48% cell height while idle occupies 65%; 1.35x visualScale matches character height seamlessly on the Victory screen"
+    }
+  },
+  "sfx": {
+    "khaos-basic": "khaos/basic.wav",
+    "khaos-impact": "khaos/impact.wav",
+    "khaos-ultimate": "khaos/ultimate.wav"
+  },
+  "surfaces": [
+    "roster",
+    "formation",
+    "hero-detail",
+    "battle"
+  ],
+  "approval": {
+    "animation": "owner approved idle B 2026-10-19 (msg 42886); six-state package validator PASS",
+    "vfx": "pending owner review: Thúy Yên Băng Tung Vô Ảnh / Băng Tâm Tiên Tử replaces earlier unsuitable picks",
+    "sfx": "pending owner listening review"
+  }
+}

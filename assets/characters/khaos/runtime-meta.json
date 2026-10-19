@@ -1,236 +1,154 @@
 {
-  "schema": "khaos-assets/v1",
-  "assetRevision": "v1-20261019-kiemthe-full",
+  "schema": "khaos-assets/v2",
+  "assetRevision": "kiemthe-sixstate-20261019-idleB",
+  "source": "outputs/kiemthe-khaos-sixstate-v1 (validate_package PASS); idle re-rendered from source frames 9-63, 30 PTS-spaced frames",
   "clips": {
     "idle": {
-      "file": "idle-0.webp",
       "frames": 30,
       "cols": 8,
-      "cellW": 480,
-      "cellH": 440,
+      "cellW": 240,
+      "cellH": 220,
       "durationMs": 2291.667,
       "pageFrames": 30,
+      "pivot": 120,
+      "foot": 215,
+      "body": 143,
       "pages": [
         {
-          "file": "idle-0.webp",
+          "file": "idle-0-52f8ddff.webp",
           "frames": 30,
           "cols": 8,
-          "cellW": 480,
-          "cellH": 440,
-          "durationMs": 2291.667
+          "rows": 4,
+          "atlasWidth": 1920,
+          "atlasHeight": 880
         }
       ],
-      "pivot": 240,
-      "foot": 440,
-      "body": 310,
-      "sourceFacing": 1,
-      "registrationScale": 1.0,
-      "loop": {
-        "startSourceFrame": 10,
-        "endSourceFrameInclusive": 64,
-        "startPtsSeconds": 0.375,
-        "durationSeconds": 2.291667,
-        "alphaSilhouetteIoUStartEnd": 0.9538
-      }
+      "budgetScale": 0.5
     },
     "run": {
-      "file": "run-0.webp",
       "frames": 18,
       "cols": 6,
-      "cellW": 480,
-      "cellH": 440,
-      "durationMs": 4000.0,
+      "cellW": 240,
+      "cellH": 220,
+      "durationMs": 4000,
       "pageFrames": 18,
+      "pivot": 120,
+      "foot": 215,
+      "body": 143,
       "pages": [
         {
-          "file": "run-0.webp",
+          "file": "run-0-269cae68.webp",
           "frames": 18,
           "cols": 6,
-          "cellW": 480,
-          "cellH": 440,
-          "durationMs": 4000.0
+          "rows": 3,
+          "atlasWidth": 1440,
+          "atlasHeight": 660
         }
       ],
-      "pivot": 240,
-      "foot": 440,
-      "body": 310,
-      "sourceFacing": 1,
-      "registrationScale": 1.0
+      "budgetScale": 0.5
     },
     "basic": {
-      "file": "basic-0.webp",
       "frames": 18,
       "cols": 6,
-      "cellW": 480,
-      "cellH": 440,
-      "durationMs": 4000.0,
+      "cellW": 240,
+      "cellH": 220,
+      "durationMs": 4000,
       "pageFrames": 18,
+      "pivot": 120,
+      "foot": 215,
+      "body": 143,
       "pages": [
         {
-          "file": "basic-0.webp",
+          "file": "basic-0-1fed071b.webp",
           "frames": 18,
           "cols": 6,
-          "cellW": 480,
-          "cellH": 440,
-          "durationMs": 4000.0
+          "rows": 3,
+          "atlasWidth": 1440,
+          "atlasHeight": 660
         }
       ],
-      "pivot": 240,
-      "foot": 440,
-      "body": 310,
-      "sourceFacing": 1,
-      "registrationScale": 1.0
+      "budgetScale": 0.5
     },
     "ultimate": {
-      "file": "ultimate-0.webp",
       "frames": 18,
       "cols": 6,
-      "cellW": 480,
-      "cellH": 440,
-      "durationMs": 3966.667,
+      "cellW": 240,
+      "cellH": 220,
+      "durationMs": 3958,
       "pageFrames": 18,
+      "pivot": 120,
+      "foot": 215,
+      "body": 143,
       "pages": [
         {
-          "file": "ultimate-0.webp",
+          "file": "ultimate-0-8f0f45af.webp",
           "frames": 18,
           "cols": 6,
-          "cellW": 480,
-          "cellH": 440,
-          "durationMs": 3966.667
+          "rows": 3,
+          "atlasWidth": 1440,
+          "atlasHeight": 660
         }
       ],
-      "pivot": 240,
-      "foot": 440,
-      "body": 310,
-      "sourceFacing": 1,
-      "registrationScale": 1.0
+      "budgetScale": 0.5
     },
     "hit": {
-      "file": "hit-0.webp",
       "frames": 18,
       "cols": 6,
-      "cellW": 480,
-      "cellH": 440,
-      "durationMs": 4000.0,
+      "cellW": 240,
+      "cellH": 220,
+      "durationMs": 4000,
       "pageFrames": 18,
+      "pivot": 120,
+      "foot": 215,
+      "body": 143,
       "pages": [
         {
-          "file": "hit-0.webp",
+          "file": "hit-0-17bfbe7d.webp",
           "frames": 18,
           "cols": 6,
-          "cellW": 480,
-          "cellH": 440,
-          "durationMs": 4000.0
+          "rows": 3,
+          "atlasWidth": 1440,
+          "atlasHeight": 660
         }
       ],
-      "pivot": 240,
-      "foot": 440,
-      "body": 310,
-      "sourceFacing": 1,
-      "registrationScale": 1.0
+      "budgetScale": 0.5
     },
     "fall-die": {
-      "file": "fall-die-0.webp",
       "frames": 18,
       "cols": 6,
-      "cellW": 480,
-      "cellH": 440,
-      "durationMs": 4000.0,
+      "cellW": 240,
+      "cellH": 220,
+      "durationMs": 4000,
       "pageFrames": 18,
+      "pivot": 120,
+      "foot": 215,
+      "body": 143,
       "pages": [
         {
-          "file": "fall-die-0.webp",
+          "file": "fall-die-0-782de1bc.webp",
           "frames": 18,
           "cols": 6,
-          "cellW": 480,
-          "cellH": 440,
-          "durationMs": 4000.0
+          "rows": 3,
+          "atlasWidth": 1440,
+          "atlasHeight": 660
         }
       ],
-      "pivot": 240,
-      "foot": 440,
-      "body": 310,
-      "sourceFacing": 1,
-      "registrationScale": 1.0
-    },
-    "vfx-basic": {
-      "file": "vfx-basic.webp",
-      "frames": 80,
-      "cols": 10,
-      "cellW": 240,
-      "cellH": 240,
-      "durationMs": 1500.0,
-      "pageFrames": 80,
-      "pages": [
-        {
-          "file": "vfx-basic.webp",
-          "frames": 80,
-          "cols": 10,
-          "cellW": 240,
-          "cellH": 240
-        }
-      ],
-      "pivot": 120,
-      "foot": 120
-    },
-    "vfx-ultimate": {
-      "file": "vfx-ultimate.webp",
-      "frames": 22,
-      "cols": 5,
-      "cellW": 360,
-      "cellH": 360,
-      "durationMs": 2000.0,
-      "pageFrames": 22,
-      "pages": [
-        {
-          "file": "vfx-ultimate.webp",
-          "frames": 22,
-          "cols": 5,
-          "cellW": 360,
-          "cellH": 360
-        }
-      ],
-      "pivot": 180,
-      "foot": 180
-    },
-    "vfx-talisman": {
-      "file": "vfx-talisman.webp",
-      "frames": 13,
-      "cols": 5,
-      "cellW": 240,
-      "cellH": 240,
-      "durationMs": 1000.0,
-      "pageFrames": 13,
-      "pages": [
-        {
-          "file": "vfx-talisman.webp",
-          "frames": 13,
-          "cols": 5,
-          "cellW": 240,
-          "cellH": 240
-        }
-      ],
-      "pivot": 120,
-      "foot": 120
+      "budgetScale": 0.5
     }
   },
-  "timeline": {
-    "basic": {
-      "release": 1500,
-      "hits": [
-        1800
-      ],
-      "vfxEnd": 2500,
-      "recovery": 3000
-    },
-    "ultimate": {
-      "release": 2000,
-      "hits": [
-        2500,
-        3200
-      ],
-      "vfxEnd": 4500,
-      "recovery": 5000
-    }
+  "budget": {
+    "reason": "iOS battle working set: idle page <= 8 MiB, any page <= 12 MiB (hero:doctor)",
+    "date": "2026-10-19"
+  },
+  "detail": {
+    "file": "detail-23332d21.webp",
+    "frames": 30,
+    "cols": 8,
+    "cellW": 480,
+    "cellH": 440,
+    "durationMs": 2291.667,
+    "atlasWidth": 3840,
+    "atlasHeight": 1760,
+    "note": "hero-detail screen only (full resolution); battle uses clips.idle"
   }
 }

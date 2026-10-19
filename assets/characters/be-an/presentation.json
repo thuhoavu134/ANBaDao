@@ -6,44 +6,44 @@
     "be-an",
     "hero_splus_be_an"
   ],
-  "referenceBodyHeight": 480,
+  "referenceBodyHeight": 120,
   "footOffsetY": 0,
   "registration": "source-body",
   "clips": {
     "idle": {
-      "bodyHeight": 480,
-      "footX": 528,
-      "footY": 606
+      "bodyHeight": 120,
+      "footX": 132,
+      "footY": 151.5
     },
     "run": {
-      "bodyHeight": 480,
-      "footX": 528,
-      "footY": 606
+      "bodyHeight": 120,
+      "footX": 132,
+      "footY": 151.5
     },
     "basic": {
-      "bodyHeight": 480,
-      "footX": 528,
-      "footY": 606
+      "bodyHeight": 120,
+      "footX": 132,
+      "footY": 151.5
     },
     "ultimate": {
-      "bodyHeight": 480,
-      "footX": 528,
-      "footY": 606
+      "bodyHeight": 120,
+      "footX": 132,
+      "footY": 151.5
     },
     "hit": {
-      "bodyHeight": 480,
-      "footX": 528,
-      "footY": 606
+      "bodyHeight": 120,
+      "footX": 132,
+      "footY": 151.5
     },
     "fall-die": {
-      "bodyHeight": 480,
-      "footX": 528,
-      "footY": 606
+      "bodyHeight": 120,
+      "footX": 132,
+      "footY": 151.5
     },
     "special": {
-      "bodyHeight": 480,
-      "footX": 528,
-      "footY": 606
+      "bodyHeight": 120,
+      "footX": 132,
+      "footY": 151.5
     }
   },
   "vfxClips": [
@@ -62,5 +62,5 @@
       "ultimate"
     ]
   },
-  "evidence": "Source 24 fps; smooth 30-frame PTS loop (IoU 0.9774); 3x source-body registration."
+  "evidence": "Source 24 fps; smooth 30-frame PTS loop (IoU 0.9774); 3x source-body registration. Budget repack 0.5x (2026-10-19): body 240, foot 264/303."
 }

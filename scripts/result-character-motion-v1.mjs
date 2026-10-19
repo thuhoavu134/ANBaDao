@@ -1,6 +1,7 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { LUC_ANH_IDLE_BATTLE } from '../src/domain/character/luc-anh-idle.mjs';
+import { loadAuthoredHeroes } from './authored-hero-install.mjs';
 
 const out = join(process.cwd(), 'dist');
 const battlePath = join(out, 'battle.html');
@@ -61,7 +62,32 @@ function beAnMotion(){
  const make=key=>{const c=m.clips[key];return {...c,ms:1000/24,pages:c.pages.map(p=>({...p,src:'assets/characters/be-an/'+p.file,ms:1000/24}))};};
  return {aliases:['be_an','be-an','hero_splus_be_an'],run:{...make('run'),playbackRate:1},idle:make('idle'),fall:make('fall-die')};
 }
+// Every hero described by assets/characters/<slug>/hero.json gets its Victory/Defeat motion here
+// automatically (Victory showed a generic portrait for Khaos, 19/10/2026). Idle uses the
+// full-resolution detail atlas when shipped; run/fall use the battle atlases.
+function authoredResultMotions(){
+ const out={};
+ for(const {hero,meta,base} of loadAuthoredHeroes(process.cwd())){
+  const make=key=>{
+   const c=meta.clips[key];if(!c)return null;
+   const ms=c.durationMs/c.frames;
+   if(!c.pages||c.pages.length<=1){
+    const file=c.pages?.[0]?.file||c.file;
+    return {src:base+file,frames:c.frames,cols:c.cols,cellW:c.cellW,cellH:c.cellH,ms,pivot:c.pivot,foot:c.foot};
+   }
+   const pages=c.pages.map(p=>({cellW:c.cellW,cellH:c.cellH,cols:p.cols||c.cols,frames:p.frames,src:base+p.file,ms}));
+   return {...c,src:pages[0].src,ms,pages,pageFrames:c.pageFrames||c.frames};
+  };
+  const d=meta.detail;
+  const idle=d?{src:base+d.file,frames:d.frames,cols:d.cols,cellW:d.cellW,cellH:d.cellH,durationMs:d.durationMs,ms:d.durationMs/d.frames,
+    pivot:meta.clips.idle.pivot*d.cellW/meta.clips.idle.cellW,foot:meta.clips.idle.foot*d.cellH/meta.clips.idle.cellH}:make('idle');
+  const runVisualScale=Number(hero.battle?.victory?.runVisualScale)||1;
+  out[hero.id]={aliases:[hero.id,hero.slug,hero.sourceId],run:{...make('run'),playbackRate:1,visualScale:runVisualScale},idle,fall:make('fall-die')};
+ }
+ return out;
+}
 const manifest = {
+  ...authoredResultMotions(),
   be_an:beAnMotion(),
   co_nuong:newHeroMotion('co-nuong'),
   hong_thuong:newHeroMotion('hong-thuong'),
@@ -166,7 +192,7 @@ const runtimeLines = [
   'function cancelAll(){epoch++;for(const stop of animationStops){try{stop();}catch(_e){}}for(const id of timers)clearTimeout(id);animationStops.clear();timers.clear();for(const record of imageCache.values()){record.waiters.clear();record.image.onload=null;record.image.onerror=null;record.image.removeAttribute?.("src");}imageCache.clear();}',
   'function later(fn,ms){const id=setTimeout(()=>{timers.delete(id);fn();},ms);timers.add(id);return id;}',
   'function imageFor(src,onReady){let record=imageCache.get(src);if(!record){const image=new Image();image.decoding="async";record={image,ready:false,error:false,waiters:new Set()};imageCache.set(src,record);image.onload=()=>{record.ready=true;const jobs=[...record.waiters];record.waiters.clear();jobs.forEach(job=>{try{job();}catch(_e){}});};image.onerror=()=>{record.error=true;record.waiters.clear();};image.src=src;if(image.complete&&image.naturalWidth>1)record.ready=true;}if(record.ready&&onReady)queueMicrotask(onReady);else if(!record.error&&onReady)record.waiters.add(onReady);return record;}',
-  'function drawFrame(canvas,clip,frame){if(clip.pages){const pageIndex=Math.min(clip.pages.length-1,Math.floor(frame/clip.pageFrames)),page=clip.pages[pageIndex];const painted=drawFrame(canvas,page,frame%clip.pageFrames);imageFor(clip.pages[(pageIndex+1)%clip.pages.length].src);return painted;}const record=imageFor(clip.src);const image=record?.image;if(!canvas||!image||!record.ready||image.naturalWidth<2)return false;const ctx=canvas.getContext("2d");if(!ctx)return false;const first=Math.max(0,Number(clip.frameStart)||0),last=Math.min(clip.frames-1,Number.isFinite(clip.frameEnd)?clip.frameEnd:clip.frames-1),safe=Math.max(first,Math.min(last,frame));const sx=(safe%clip.cols)*(clip.strideW||clip.cellW)+(clip.pad||0),sy=Math.floor(safe/clip.cols)*(clip.strideH||clip.cellH)+(clip.pad||0);ctx.clearRect(0,0,canvas.width,canvas.height);ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality="high";const scale=Math.min(canvas.width/clip.cellW,canvas.height/clip.cellH),w=clip.cellW*scale,h=clip.cellH*scale;ctx.drawImage(image,sx,sy,clip.cellW,clip.cellH,(canvas.width-w)/2,canvas.height-h,w,h);return true;}',
+  'function drawFrame(canvas,clip,frame){if(clip.pages){const pageIndex=Math.min(clip.pages.length-1,Math.floor(frame/clip.pageFrames)),page=clip.pages[pageIndex];const pageWithDims={cellW:clip.cellW,cellH:clip.cellH,cols:clip.cols,strideW:clip.strideW,strideH:clip.strideH,pad:clip.pad,...page};const painted=drawFrame(canvas,pageWithDims,frame%clip.pageFrames);imageFor(clip.pages[(pageIndex+1)%clip.pages.length].src);return painted;}const record=imageFor(clip.src);const image=record?.image;if(!canvas||!image||!record.ready||image.naturalWidth<2)return false;const ctx=canvas.getContext("2d");if(!ctx)return false;const first=Math.max(0,Number(clip.frameStart)||0),last=Math.min(clip.frames-1,Number.isFinite(clip.frameEnd)?clip.frameEnd:clip.frames-1),safe=Math.max(first,Math.min(last,frame));const sx=(safe%clip.cols)*(clip.strideW||clip.cellW)+(clip.pad||0),sy=Math.floor(safe/clip.cols)*(clip.strideH||clip.cellH)+(clip.pad||0);ctx.clearRect(0,0,canvas.width,canvas.height);ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality="high";const visualScale=Number(clip.visualScale)||1;const scale=Math.min(canvas.width/clip.cellW,canvas.height/clip.cellH)*visualScale,w=clip.cellW*scale,h=clip.cellH*scale;ctx.drawImage(image,sx,sy,clip.cellW,clip.cellH,(canvas.width-w)/2,canvas.height-h,w,h);return true;}',
   'function drawGenericPose(canvas,generic,column){const record=imageFor(generic.src);const image=record?.image;if(!canvas||!image||!record.ready||image.naturalWidth<4)return false;const ctx=canvas.getContext("2d");if(!ctx)return false;const cellW=image.naturalWidth/4,cellH=image.naturalHeight/2,sx=Math.max(0,Math.min(3,column))*cellW,sy=0;ctx.clearRect(0,0,canvas.width,canvas.height);ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality="high";const scale=Math.min((canvas.width*.92)/cellW,(canvas.height*.94)/cellH),w=cellW*scale,h=cellH*scale;ctx.drawImage(image,sx,sy,cellW,cellH,(canvas.width-w)/2,canvas.height-h,w,h);return true;}',
   'function animateGeneric(canvas,generic,column,options){if(!canvas||!generic)return ()=>{};const kind=options.kind,ticket=options.ticket;let active=true,raf=0;const stop=()=>{if(!active)return;active=false;if(raf)cancelAnimationFrame(raf);animationStops.delete(stop);};animationStops.add(stop);const start=()=>{if(!active||ticket!==epoch||!canvas.isConnected){stop();return;}const tick=()=>{if(!active||ticket!==epoch||!canvas.isConnected){stop();return;}const painted=drawGenericPose(canvas,generic,column);if(painted){if(kind==="run"){qa.runFrames++;qa.lastRunFrame=column;}if(kind==="idle"){qa.idleFrames++;qa.lastIdleFrame=column;}if(kind==="fall"){qa.fallFrames++;qa.lastFallFrame=qa.phase==="fall-hold"?1:0;}}raf=requestAnimationFrame(tick);};raf=requestAnimationFrame(tick);};imageFor(generic.src,start);return stop;}',
   'function animate(canvas,clip,options){if(!canvas||!clip)return ()=>{};const loop=options.loop,kind=options.kind,ticket=options.ticket,onDone=options.onDone,first=Math.max(0,Number(clip.frameStart)||0),last=Math.min(clip.frames-1,Number.isFinite(clip.frameEnd)?clip.frameEnd:clip.frames-1),count=Math.max(1,last-first+1);let active=true,raf=0,begin=0;const stop=()=>{if(!active)return;active=false;if(raf)cancelAnimationFrame(raf);animationStops.delete(stop);};animationStops.add(stop);const start=()=>{if(!active||ticket!==epoch||!canvas.isConnected){stop();return;}begin=performance.now()-(options.offsetMs||0);const tick=now=>{if(!active||ticket!==epoch||!canvas.isConnected){stop();return;}let elapsed=Math.max(0,now-begin)*(kind==="run"?(clip.playbackRate??0.30):1),raw=Math.floor(elapsed/Math.max(1,clip.ms));if(clip.durations?.length){const total=clip.durations.reduce((a,b)=>a+b,0);if(loop)elapsed%=total;raw=0;while(raw<clip.frames-1&&elapsed>=clip.durations[raw]){elapsed-=clip.durations[raw];raw++;}}const frame=loop?first+(raw%count):Math.min(last,first+raw),painted=drawFrame(canvas,clip,frame);if(painted){if(kind==="run"){qa.runFrames++;qa.lastRunFrame=frame;}if(kind==="idle"){qa.idleFrames++;qa.lastIdleFrame=frame;}if(kind==="fall"){qa.fallFrames++;qa.lastFallFrame=frame;}}if(!loop&&frame>=last){if(kind==="fall")qa.phase="fall-hold";stop();if(onDone)onDone(frame);return;}raf=requestAnimationFrame(tick);};raf=requestAnimationFrame(tick);};imageFor(clip.src,start);return stop;}',

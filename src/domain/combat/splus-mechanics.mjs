@@ -46,7 +46,7 @@ export function createSplusMechanics(options={}) {
   const random=list=>{const result=list.slice();for(let i=result.length-1;i>0;i--){const j=Math.min(i,Math.floor(clamp(rng('splus.targets'),0,0.999999999)*(i+1)));[result[i],result[j]]=[result[j],result[i]];}return result;};
   const hardCC=new Set(['stun','sleep','paralysis','timeFreeze','stasis']);
   const control=new Set([...hardCC,'root','disarm','silence','hardSilence','confusion','entangle']);
-  const harmful=new Set([...control,'healDown','antiHeal','armorDown','magicArmorDown','attackDown','speedDown','moveSlow','blind','rageSlow','rageBan','shieldBan','buffBan','stealthBan','noExtraTurn','coldSteel','bloodDebt','resinBleed','resinPoison','viperPoison','parasite','ink','burn','poison','bleed','brimstone','thornsDot','wound','damageDown','critDown','resistDown','sealPaw','cooldownDelay','actionSlow']);
+  const harmful=new Set([...control,'healDown','antiHeal','armorDown','magicArmorDown','attackDown','speedDown','moveSlow','blind','rageSlow','rageBan','shieldBan','buffBan','stealthBan','noExtraTurn','coldSteel','bloodDebt','resinBleed','resinPoison','viperPoison','parasite','ink','burn','poison','bleed','brimstone','thornsDot','wound','damageDown','critDown','resistDown','sealPaw','inkMark','cooldownDelay','actionSlow']);
   const dots=new Set(['burn','poison','bleed','brimstone','thornsDot','parasite','resinBleed','viperPoison','wound']);
   const isBurn=s=>s.type==='burn'||s.type==='brimstone';
   const active=s=>s.splus===true&&(s.expiresRound==null||s.expiresRound>round)&&(s.charges==null||s.charges>0);
@@ -136,6 +136,35 @@ export function createSplusMechanics(options={}) {
   }
   const buff=(a,t,type,powerValue=0,turns=defaults.duration,extra={})=>addStatus(a,t,{type,power:powerValue,turns,...extra});
   const mark=(a,t,type,powerValue,extra={})=>buff(a,t,type,powerValue,defaults.markDuration,extra);
+  // Shared cast API for heroes described by assets/characters/<slug>/hero.json
+  // (scripts/authored-hero-install.mjs + src/runtime/authored-hero.js). A new authored
+  // hero adds one AUTHORED_KITS entry and one AUTHORED_HIT rule; the runtime resolves each
+  // hit on its animation marker through resolveAuthoredImpact, exactly once per target/hit.
+  const AUTHORED_KITS={khaos:{basic:{hits:1,area:false},ultimate:{hits:2,area:true}}};
+  const INK_SET=new Set(['inkMark','speedDown','armorDown']);
+  function khaosInk(actor,target){
+    mark(actor,target,'inkMark',0,{turns:3,stack:true,maxStacks:3,polarity:'debuff',iconId:'inkMark'});
+    buff(actor,target,'speedDown',.15,3,{stack:true,maxStacks:3,inkBound:true});
+    buff(actor,target,'armorDown',.10,3,{stack:true,maxStacks:3,inkBound:true});
+    const stacks=n(statuses(target).find(s=>s.type==='inkMark'&&s.sourceId===actor.id)?.stacks);
+    if(stacks>=3){
+      remove(target,s=>INK_SET.has(s.type)&&s.sourceId===actor.id&&(s.type==='inkMark'||s.inkBound),'ink-bind');
+      buff(actor,target,'stun',0,null,{remainingTurns:1});emit('inkBind',actor,target);
+    }
+  }
+  const AUTHORED_HIT={
+    khaos(actor,target,cast,index){
+      const final=cast.kind==='ultimate'&&index===cast.hits-1;
+      const stacks=final?n(statuses(target).find(s=>s.type==='inkMark'&&s.sourceId===actor.id)?.stacks):0;
+      const dealt=damage(actor,target,{multiplier:cast.kind==='basic'?1.4:1.5+stacks*.25,action:cast.kind,type:'elemental'});
+      if(!(dealt>0)||!alive(target))return;
+      if(final){
+        if(stacks>0){remove(target,s=>INK_SET.has(s.type)&&s.sourceId===actor.id&&(s.type==='inkMark'||s.inkBound),'detonate');emit('inkDetonate',actor,target,{stacks});}
+        buff(actor,target,'magicArmorDown',.3,2);return;
+      }
+      if(passive(actor))khaosInk(actor,target);
+    }
+  };
   function modifiers(targetId) {
     const u=unit(targetId);const m={attack:0,defense:0,magicDefense:0,speed:0,crit:0,critDamage:0,resist:0,lifesteal:0,mitigation:0};
     if(!u)return m;
@@ -450,7 +479,7 @@ export function createSplusMechanics(options={}) {
     if(action!=='basic'&&['guardian','striker','duelist','ranger'].includes(def(u)?.role)&&statuses(u).some(s=>s.type==='disarm'&&s.weaponSkills))return false;
     if(melee(u)&&statuses(u).some(s=>s.type==='root'&&s.blocksMelee))return false;
     if(action!=='basic'&&(has(u,'silence')||has(u,'hardSilence')||legacyEffects(u).some(s=>s.type==='silence'||s.type==='hardSilence')))return false;
-    if(['ky_van','tieu_phong','tich_dao','hong_thuong','be_an'].includes(key(u))&&action==='skill')return false;
+    if((['ky_van','tieu_phong','tich_dao','hong_thuong','be_an'].includes(key(u))||AUTHORED_KITS[key(u)])&&action==='skill')return false;
     const cost=actionCost(u,action);
     return u.energy>=cost&&n(u.splus.cooldowns[action])<=round;
   }
@@ -509,6 +538,14 @@ export function createSplusMechanics(options={}) {
       const killsBefore=n(actor.kills);
       // Hồng Thương's authored three-thrust basic: one action, three distinct
       // hit resolutions at the animation markers, rage granted once per action.
+      if(AUTHORED_KITS[key(actor)]?.[action]){
+        const kit=AUTHORED_KITS[key(actor)][action];
+        const cast={id:currentAction.id,action:currentAction,kind:action,hits:kit.hits,targets:(kit.area?legal:[target]).map(t=>t.id),resolved:[]};
+        actor.splus.memory.authoredCast=cast;
+        if(settings.deferAuthored)return {ok:true,castId:cast.id,targetIds:cast.targets.slice(),events:events.slice(startIndex)};
+        for(let hit=0;hit<cast.hits;hit++)for(const id of cast.targets)resolveAuthoredImpact(actor.id,cast.id,id,hit);
+        finishAuthoredCast(actor.id,cast.id);return {ok:true,events:events.slice(startIndex)};
+      }
       if(key(actor)==='be_an'){
         const cast={id:currentAction.id,action:currentAction,kind:action,targets:(action==='basic'?[target]:legal).map(t=>t.id),resolved:[]};
         actor.splus.memory.sealCast=cast;
@@ -562,6 +599,20 @@ export function createSplusMechanics(options={}) {
       if(action==='ultimate'&&key(actor)==='cuu_trieu'&&n(actor.kills)>killsBefore&&actor.splus.memory.extraRound!==round&&!has(actor,'noExtraTurn')&&alive(actor)){actor.splus.memory.extraRound=round;emit('extraTurn',actor,actor);}
       afterAction(actor,action);return {ok:true,events:events.slice(startIndex),extraTurn:events.slice(startIndex).some(e=>e.type==='extraTurn')};
     }finally{currentAction=previous;}
+  }
+  function resolveAuthoredImpact(actorId,castId,targetId,index){
+    const actor=unit(actorId),target=unit(targetId),cast=actor?.splus?.memory?.authoredCast,token=targetId+':'+index;
+    if(!cast||cast.id!==castId||!Number.isInteger(index)||index<0||index>=cast.hits||!cast.targets.includes(targetId)||cast.resolved.includes(token))return {ok:false,events:[]};
+    cast.resolved.push(token);if(!alive(actor)||!alive(target))return {ok:true,events:[]};
+    const previous=currentAction,startIndex=events.length;currentAction=cast.action;
+    try{AUTHORED_HIT[key(actor)](actor,target,cast,index);return {ok:true,events:events.slice(startIndex)};}
+    finally{currentAction=previous;}
+  }
+  function finishAuthoredCast(actorId,castId){
+    const actor=unit(actorId),cast=actor?.splus?.memory?.authoredCast;if(!cast||cast.id!==castId)return false;
+    const previous=currentAction;currentAction=cast.action;
+    try{delete actor.splus.memory.authoredCast;if(alive(actor)){if(cast.kind==='basic')energy(actor,actor,defaults.basicRage,'basic');afterAction(actor,cast.kind);}return true;}
+    finally{currentAction=previous;}
   }
   function sealMark(actor,target){return mark(actor,target,'sealPaw',0,{turns:2,stack:true,maxStacks:3,polarity:'debuff',iconId:'sealPaw'});}
   function resolveBeAnImpact(actorId,castId,targetId,index){
@@ -865,7 +916,6 @@ export function createSplusMechanics(options={}) {
   function start() {
     if(started)return;started=true;
     for(const actor of units.filter(passive)){
-      if(key(actor)==='khaos')actor.splus.memory.cloneHp=actor.maxHp*0.5;
       if(key(actor)==='tam_nuong'){
         const other=weakest(friends(actor).filter(u=>u!==actor))[0];
         for(const t of [actor,other].filter(Boolean)){buff(actor,t,'cocoon',0,2,{charges:2});buff(actor,t,'armorUp',0.3,2);}
@@ -920,7 +970,6 @@ export function createSplusMechanics(options={}) {
       for(const actor of units.filter(passive)){
         if(key(actor)==='vong_co'){const t=strongest(foes(actor))[0];for(const u of foes(actor))remove(u,s=>s.type==='cooldownDelay'&&s.sourceId===actor.id,'retarget');if(t)buff(actor,t,'cooldownDelay',1,1);}
         if(key(actor)==='tam_nuong'&&(round-1)%2===0){const other=weakest(friends(actor).filter(t=>t!==actor))[0];for(const t of [actor,other].filter(Boolean)){buff(actor,t,'cocoon',0,2,{charges:2});buff(actor,t,'armorUp',.3,2);}}
-        if(key(actor)==='khaos'&&actor.splus.memory.cloneReady&&actor.splus.memory.cloneReady<=round){actor.splus.memory.cloneReady=null;actor.splus.memory.cloneHp=actor.maxHp*.5;emit('cloneCreated',actor,actor);}
       }
       emit('roundStart',null,null);
     }
@@ -959,7 +1008,9 @@ export function createSplusMechanics(options={}) {
       case 'son_cuong':return enemies.filter(u=>u.slot%3===actor.slot%3);
       case 'tue_y':return weakest(allies).slice(0,r.count||3);
       case 'mang_xa':return enemies;
-      case 'khaos':return unique([front(enemies)[0],back(enemies)[0]]);
+      // Khaos (Thủy Mặc kit) has no rage skill; the old front/back swap returned [x,undefined]
+      // once a row emptied and crashed updateActorHud -> the battle froze on his turn.
+      case 'khaos':return null;
       case 'hoi_anh':return one(oppositeTarget);
       case 'cuu_trieu':return unique([...enemyFront,...back(enemies).filter(u=>u.slot%3===actor.slot%3).slice(0,1)]);
       default:return null;
@@ -1010,7 +1061,6 @@ export function createSplusMechanics(options={}) {
       if(key(target)==='hac_pha'&&ratio(target)<0.5)aura(target,'berserk');
       if(key(target)==='thach_kinh')aura(target,'resentment',n(target.splus.memory.resentment));
       if(key(target)==='cuu_trieu')aura(target,'cadence',n(target.splus.memory.cadence));
-      if(key(target)==='khaos'&&target.splus.memory.cloneHp>0)aura(target,'clone',1,{amount:target.splus.memory.cloneHp});
     }
     for(const s of holders(target,'thach_mong'))aura(s,'interception');
     for(const s of holders(target,'tram_chau'))if(s===target||back(friends(s)).sort((a,b)=>near(s,a)-near(s,b)||bySlot(a,b)).slice(0,2).includes(target))aura(s,'antiCrit');
@@ -1068,7 +1118,6 @@ export function createSplusMechanics(options={}) {
         case 'son_cuong':{const list=all.filter(t=>t.slot%3===actor.slot%3);D(list,base,{critBonus:0.4});B(list,'bleed',0.04,2,{percentMaxHp:0.04});return;}
         case 'tue_y':{const list=weakest(ours).slice(0,3);H(list,0.2);B(list,'regen',0.06,2);return;}
         case 'mang_xa':{const list=random(all).slice(0,3);for(const t of list)breakShield(actor,t);D(list);B(list,'armorDown',0.25,2);return;}
-        case 'khaos':{const a=random(front(all))[0],b=random(back(all))[0];if(a&&b&&canMove(a)&&canMove(b)){const from=a.slot;a.slot=b.slot;b.slot=from;syncZones();emit('swap',actor,a,{otherId:b.id,from,to:a.slot});}return;}
         case 'kinh_nuong':D(strongestEnemy);B(strongestEnemy,'blind',1,2,{charges:1});return;
         case 'hoi_anh':{const victim=opp,friend=victim&&adjacent(victim,friends(victim))[0];if(victim&&friend){emit('forcedBasic',actor,victim,{victimId:friend.id});damage(victim,friend,{multiplier:1,action:'basic'});}return;}
         case 'van_phap':{
@@ -1152,7 +1201,6 @@ export function createSplusMechanics(options={}) {
         D(all);for(const t of all)for(const s of statuses(t).filter(s=>s.type==='viperPoison'||s.type==='poison')){const raw=n(s.rawPerTick,t.maxHp*n(s.percentMaxHp,s.power))*s.stacks*Math.max(0,n(s.ticksLeft));remove(t,x=>x===s,'detonate');D(t,0,{raw,type:'true',secondary:true,noTriggers:true});}
         B(all,'blind',0.4,2,{charges:1});return;
       }
-      case 'khaos':hits(all,3,base,{type:'true',bypassShield:true});B(all,'moveSlow',.3,2);return;
       case 'kinh_nuong':B(ours,'reflectSkills',0.35,1);return;
       case 'hoi_anh':{
         D(all);const movable=all.filter(canMove),slots=random(movable.map(t=>t.slot));for(let i=0;i<movable.length;i++){const t=movable[i],old=t.slot;t.slot=slots[i];emit('displacement',actor,t,{from:old,to:t.slot});}
@@ -1178,7 +1226,7 @@ export function createSplusMechanics(options={}) {
       default:D(target,defaults.singleUltimateMultiplier);return;
     }
   }
-  return {schema:'luc-than-splus-combat/v2',profileVersion:'splus-profile/2026-09-08-v2',units,events,unit,start,beginTurn,beginRound,finishRound,consumeTurnStatuses,act,resolveBeAnImpact,finishBeAnCast,resolveCoNuongImpact,finishCoNuongCast,resolveTieuPhongImpact,finishTieuPhongCast,resolveTichDaoImpact,resolveTichDaoExecute,nextTichDaoExecution,resolveTichDaoExecution,tichDaoOpeningTarget,tichDaoStrikeTarget,finishTichDaoCast,resolveHongThuongHit,nextHongThuongCluster,nextHongThuongFinale,resolveHongThuongFinale,finishHongThuongCast,hongThuongStacks,damage,consumeHitAttempt,heal,shield,gainRage:energy,addStatus,restoreStatus,extendStatus,storedDotDamage,cleanse,hasStatus:(targetId,type)=>has(unit(targetId),type),modifiers,stat,canUse,canMove,targets,chooseAction,hud,get round(){return round;}};
+  return {schema:'luc-than-splus-combat/v2',profileVersion:'splus-profile/2026-09-08-v2',units,events,unit,start,beginTurn,beginRound,finishRound,consumeTurnStatuses,act,resolveAuthoredImpact,finishAuthoredCast,resolveBeAnImpact,finishBeAnCast,resolveCoNuongImpact,finishCoNuongCast,resolveTieuPhongImpact,finishTieuPhongCast,resolveTichDaoImpact,resolveTichDaoExecute,nextTichDaoExecution,resolveTichDaoExecution,tichDaoOpeningTarget,tichDaoStrikeTarget,finishTichDaoCast,resolveHongThuongHit,nextHongThuongCluster,nextHongThuongFinale,resolveHongThuongFinale,finishHongThuongCast,hongThuongStacks,damage,consumeHitAttempt,heal,shield,gainRage:energy,addStatus,restoreStatus,extendStatus,storedDotDamage,cleanse,hasStatus:(targetId,type)=>has(unit(targetId),type),modifiers,stat,canUse,canMove,targets,chooseAction,hud,get round(){return round;}};
 }
 
 
