@@ -22,6 +22,8 @@ export function once(text, anchor, replacement, label = anchor.slice(0, 80)) {
 export function loadAuthoredHeroes(root) {
   const dir = join(root, 'assets/characters');
   const heroes = [];
+  // Partial fixtures (e.g. result-screen tests) ship no character folder: nothing authored to load.
+  if (!existsSync(dir)) return heroes;
   for (const entry of readdirSync(dir, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
     const file = join(dir, entry.name, 'hero.json');
     if (!entry.isDirectory() || !existsSync(file)) continue;
@@ -115,11 +117,11 @@ export function patchAuthoredHost(input, heroes) {
   const descriptors = heroes.map(battleDescriptor);
   const data = {}, manifest = {}, idle = {}, prep = {}, run = {}, farm = {}, ids = {}, detail = {};
   for (const [i, { hero }] of heroes.entries()) {
-    const d = descriptors[i], k = hero.kit;
-    data[hero.id] = { ...hero.host, passive: { name: k.passive.name, desc: k.passive.desc },
+    const d = descriptors[i], k = hero.kit, legacy = hero.battle?.owner === 'legacy';
+    if (!legacy) data[hero.id] = { ...hero.host, passive: { name: k.passive.name, desc: k.passive.desc },
       skill: { name: k.basic.name, cost: 0, desc: k.basic.desc, fx: k.basic.fx },
       ultimate: { name: k.ultimate.name, cost: k.ultimate.cost, desc: k.ultimate.desc, fx: k.ultimate.fx } };
-    manifest[hero.id] = { slug: hero.slug, displayName: hero.host.name, identityVersion: hero.identityVersion,
+    if (!legacy) manifest[hero.id] = { slug: hero.slug, displayName: hero.host.name, identityVersion: hero.identityVersion,
       reference: { master: hero.art.portrait, runtime: true },
       assets: { master: hero.art.portrait, avatar: hero.art.portrait, card: hero.art.portrait, dialogue: hero.art.portrait,
         icon: hero.art.portrait, idle: d.clips.idle.pages[0].src }, surfaces: hero.surfaces };
@@ -146,12 +148,14 @@ export function patchAuthoredHost(input, heroes) {
   // One starter flag per hero so later heroes are granted to existing saves exactly once.
   s = once(s, mig, `${mig}\n${JSON.stringify(list)}.forEach(id=>{const flag='authoredStarter:'+id;p.flags=p.flags||{};if(!p.flags[flag]&&p.heroes[id]){p.heroes[id].owned=true;p.flags[flag]=true;}});`);
   // Official roster lists: JS array literals ending with the last registered legacy id.
-  const tail = '"be_an"]';
   const arrays = [...s.matchAll(/\[(?:"[a-z0-9_]+",)+"be_an"\]/g)];
   if (arrays.length < 3) throw new Error(`AUTHORED_HERO_ROSTER_ARRAYS ${arrays.length}`);
-  s = s.replace(/\[((?:"[a-z0-9_]+",)+"be_an")\]/g, (_, body) => `[${body},${list.map(id => JSON.stringify(id)).join(',')}]`);
-  if (!s.includes(`"be_an",${JSON.stringify(list[0])}]`)) throw new Error('AUTHORED_HERO_ROSTER_PATCH');
-  void tail;
+  // Only append heroes not already present in the roster array (e.g. bach_dien was already legacy slot 14)
+  const toAppend = list.filter(id => !arrays[0][0].includes(`"${id}"`));
+  if (toAppend.length) {
+    s = s.replace(/\[((?:"[a-z0-9_]+",)+"be_an")\]/g, (_, body) => `[${body},${toAppend.map(id => JSON.stringify(id)).join(',')}]`);
+    if (!s.includes(`"be_an",${JSON.stringify(toAppend[0])}]`)) throw new Error('AUTHORED_HERO_ROSTER_PATCH');
+  }
   // Inline literal: tests and other owners evaluate this normalizer standalone.
   s = once(s, "if(id==='hero_splus_be_an')return 'be_an';", `if(id==='hero_splus_be_an')return 'be_an';{const authoredIds=${JSON.stringify(ids)};if(authoredIds[id])return authoredIds[id];}`);
   s = once(s, 'function preparationSpriteFor(pick, time) {',
@@ -159,7 +163,7 @@ export function patchAuthoredHost(input, heroes) {
   s = once(s, 'function frameAt(spec, time) {',
     `Object.assign(runSpecs,${JSON.stringify(run)});\nObject.assign(farmAttackSpecs,${JSON.stringify(farm)});\nfunction frameAt(spec, time) {`);
   s = once(s, "if(id==='bach_dien'){ startBachDienDetailIdle(); }",
-    "if(id==='bach_dien'){ startBachDienDetailIdle(); }\nif(typeof AUTHORED_DETAIL_IDLE!=='undefined'&&AUTHORED_DETAIL_IDLE[id])startAuthoredDetailIdle(id);");
+    "if(id==='bach_dien'){ if(typeof AUTHORED_DETAIL_IDLE!=='undefined'&&AUTHORED_DETAIL_IDLE.bach_dien)startAuthoredDetailIdle('bach_dien');else startBachDienDetailIdle(); }\nelse if(typeof AUTHORED_DETAIL_IDLE!=='undefined'&&AUTHORED_DETAIL_IDLE[id])startAuthoredDetailIdle(id);");
   s = once(s, "id==='be_an'?'<canvas id=",
     "(typeof AUTHORED_DETAIL_IDLE!=='undefined'&&AUTHORED_DETAIL_IDLE[id])?'<canvas id=\"authoredDetailIdle\" data-hero-id=\"'+id+'\" width=\"'+AUTHORED_DETAIL_IDLE[id].cellW+'\" height=\"'+AUTHORED_DETAIL_IDLE[id].cellH+'\" aria-label=\"'+AUTHORED_DETAIL_IDLE[id].name+' idle\"></canvas>':id==='be_an'?'<canvas id=");
   s = once(s, 'function startBachDienDetailIdle(){', `function startAuthoredDetailIdle(id){
@@ -183,7 +187,10 @@ export function installAuthoredHeroes(root) {
   const runtime = readFileSync(join(root, 'src/runtime/authored-hero.js'), 'utf8');
   const sfx = authoredSfxMap(heroes);
   const battle = join(root, 'dist/battle.html'), host = join(root, 'dist/index.html');
-  writeFileSync(battle, patchAuthoredSfx(patchAuthoredBattle(readFileSync(battle, 'utf8'), runtime, descriptors), sfx));
+  // battle.owner === 'legacy': the hero keeps its existing battle runtime (which now reads the new
+  // runtime-meta atlases); the shared authored runtime must not also drive its actions.
+  const battleDescriptors = descriptors.filter((_, i) => heroes[i].hero.battle?.owner !== 'legacy');
+  writeFileSync(battle, patchAuthoredSfx(patchAuthoredBattle(readFileSync(battle, 'utf8'), runtime, battleDescriptors), sfx));
   writeFileSync(host, patchAuthoredSfx(patchAuthoredHost(readFileSync(host, 'utf8'), heroes), sfx));
   return heroes.map(h => h.hero.id);
 }

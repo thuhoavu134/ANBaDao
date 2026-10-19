@@ -56,10 +56,10 @@ const clips = Object.fromEntries(Object.entries(bachDienMeta.clips).map(([key, c
   blendMode: clip.blendMode,
   decodedBytes: clip.decodedBytes
 }]));
-clips.hit = clips.hurt;
-clips.fall = clips.defeated;
+clips.hit = clips.hit || clips.hurt;
+clips.fall = clips.fall || clips.defeated;
 clips.atkVfx = clips.skill1Vfx;
-clips.attack = { ...clips.attack, ms: 22.667, fps: 44.1176470588, durationMs: 680 };
+clips.attack = { ...clips.attack, ms: 680 / clips.attack.frames, fps: clips.attack.frames / 0.68, durationMs: 680 };
 
 const runtime = `${marker}
 const BACH_DIEN_CANONICAL_ID=${JSON.stringify(BACH_DIEN_CANONICAL_ID)};
@@ -194,10 +194,22 @@ function drawBachDienFx(context,time){
     const travel=Math.min(1,p*1.35),x=actor.x+(foe.x-actor.x)*travel,y=actor.y-70+(foe.y-actor.y)*travel;
     drawBachDienAtlas(context,fx.kind,frame,x,y,360,202,{baseline:101,flip:actor.team===TEAM_ENEMY,blend:'source-over',alpha:.94});
   }else{
-    const enemyTeam=actor.team===TEAM_PLAYER?TEAM_ENEMY:TEAM_PLAYER,slots=units.filter(unit=>unit.team===enemyTeam&&unit.hp>0);
-    const cx=slots.length?slots.reduce((sum,unit)=>sum+unit.x,0)/slots.length:(actor.team===TEAM_PLAYER?WORLD.width*.72:WORLD.width*.28);
-    const cy=slots.length?slots.reduce((sum,unit)=>sum+unit.y,0)/slots.length:WORLD.height*.52;
-    drawBachDienAtlas(context,fx.kind,frame,cx,cy,720,405,{baseline:202,blend:'source-over',alpha:.96});
+    // Ly Hồn Đoạt Phách: the mask leaves Bạch Diện's raised hand and flies to the struck hero,
+    // then bursts on it. Cell layout of vfx-ultimate: mask sits at u≈0.82 of the cell while in flight
+    // (trail behind it), the burst is centred from travelFrames on.
+    const foe=target||units.find(unit=>unit.team!==actor.team&&unit.hp>0);if(!foe)return;
+    const face=actor.team===TEAM_ENEMY?-1:1,body=u=>typeof authoredBodyHeight==='function'?authoredBodyHeight(u):150;
+    const bh=body(actor),th=body(foe),travelFrames=Number(clip?.travelFrames)||13,frames=Number(clip?.frames)||18;
+    const sx=actor.x+face*bh*.36,sy=actor.y-bh*.86,ex=foe.x,ey=foe.y-th*.55;
+    const t=Math.min(1,p*frames/travelFrames),ease=1-(1-t)*(1-t);
+    const w=bh*1.45,h=w*220/240,burst=frame>=travelFrames;
+    const mx=burst?ex:sx+(ex-sx)*ease,my=burst?ey:sy+(ey-sy)*ease-bh*.18*4*t*(1-t);
+    // Where the mask sits inside each authored cell (0..1 across the cell, measured on the contact sheet);
+    // the cell is shifted so the MASK - not the cell centre - rides the hand -> target path.
+    const MASK_U=[.22,.22,.2,.3,.5,.72,.8,.82,.82,.8,.82,.82,.8];
+    const u=burst?.5:(MASK_U[Math.min(frame,MASK_U.length-1)]??.5);
+    const cx=mx-face*(u-.5)*w;
+    drawBachDienAtlas(context,fx.kind,frame,cx,my,w,h,{baseline:h/2,blend:'source-over',alpha:.97});
   }
 }
 window.drawBachDienHero=drawBachDienHero;window.drawBachDienFx=drawBachDienFx;window.isBachDien=isBachDien;window.startBachDienFx=startBachDienFx;window.playBachDienSfx=playBachDienSfx;window.beginBachDienAction=beginBachDienAction;window.waitBachDienMarker=waitBachDienMarker;window.emitBachDienRelease=emitBachDienRelease;window.finishBachDienAction=finishBachDienAction;window.normalizeBachDienAction=normalizeBachDienAction;window.bachDienActionMs=bachDienActionMs;

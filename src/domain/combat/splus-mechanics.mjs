@@ -44,7 +44,7 @@ export function createSplusMechanics(options={}) {
   const enraged=list=>list.slice().sort((a,b)=>b.energy-a.energy||bySlot(a,b));
   const enragedBack=list=>enraged(back(list).length?back(list):list)[0];
   const random=list=>{const result=list.slice();for(let i=result.length-1;i>0;i--){const j=Math.min(i,Math.floor(clamp(rng('splus.targets'),0,0.999999999)*(i+1)));[result[i],result[j]]=[result[j],result[i]];}return result;};
-  const hardCC=new Set(['stun','sleep','paralysis','timeFreeze','stasis']);
+  const hardCC=new Set(['stun','sleep','paralysis','timeFreeze','stasis','fear']);
   const control=new Set([...hardCC,'root','disarm','silence','hardSilence','confusion','entangle']);
   const harmful=new Set([...control,'healDown','antiHeal','armorDown','magicArmorDown','attackDown','speedDown','moveSlow','blind','rageSlow','rageBan','shieldBan','buffBan','stealthBan','noExtraTurn','coldSteel','bloodDebt','resinBleed','resinPoison','viperPoison','parasite','ink','burn','poison','bleed','brimstone','thornsDot','wound','damageDown','critDown','resistDown','sealPaw','inkMark','cooldownDelay','actionSlow']);
   const dots=new Set(['burn','poison','bleed','brimstone','thornsDot','parasite','resinBleed','viperPoison','wound']);
@@ -1222,7 +1222,7 @@ export function createSplusMechanics(options={}) {
         }
         return;
       }
-      case 'bach_dien':{const t=target||strongestEnemy,r=rules(actor,action);D(t,n(r.multiplier,4.2),{type:'elemental'});if(t&&alive(t)){const stolen=n(t.atk)*n(r.stealAtk,.25);B(t,'attackDown',n(r.stealAtk,.25),n(r.turns,2));B(actor,'attackUp',stolen/Math.max(1,n(actor.atk)),n(r.turns,2));B(t,'stun',0,n(r.lockTurns,1));B(t,'antiHeal',1,n(r.lockTurns,1));B(t,'buffBan',0,n(r.lockTurns,1));}return;}
+      case 'bach_dien':{const t=target||strongestEnemy,r=rules(actor,action);const mates=t?friends(t).filter(u=>u!==t&&alive(u)):[];D(t,n(r.multiplier,4.2),{type:'elemental'});if(t&&alive(t)){const stolen=n(t.atk)*n(r.stealAtk,.25);B(t,'attackDown',n(r.stealAtk,.25),n(r.turns,2));B(actor,'attackUp',stolen/Math.max(1,n(actor.atk)),n(r.turns,2));B(t,'fear',0,n(r.lockTurns,1));B(t,'antiHeal',1,n(r.lockTurns,1));B(t,'buffBan',0,n(r.lockTurns,1));}else if(t){for(const u of mates.filter(alive)){if(rng('splus.bach-dien-panic')<n(r.panicSkipChance,.7))B(u,'fear',0,1);else B(u,'confusion',0,1,{chance:1});}emit('massPanic',actor,t,{count:mates.length});}return;}
       default:D(target,defaults.singleUltimateMultiplier);return;
     }
   }

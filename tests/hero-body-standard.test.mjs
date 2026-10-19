@@ -9,7 +9,7 @@ import {
 // Fixed standing-body measurements, not current-pose alpha bounds. These
 // heights are the painters' common local body space after clip registration.
 const authored = [
-  ['bach_dien', 395], ['linh_dong', 335], ['ky_van', 413],
+  ['bach_dien', 426], ['linh_dong', 335], ['ky_van', 413],
   ['tieu_phong', 413], ['tich_dao', 423], ['hong_thuong', 423],
   ['luc_anh',330*199/240], ['thay_mo',348*250/264],
   ['ong_hang_pho',103*348.75/135], ['dinh_loi',117*348/135]

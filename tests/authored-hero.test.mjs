@@ -19,7 +19,7 @@ test('hero.json heroes are discovered from assets/characters without a per-hero 
   for (const key of ['idle', 'run', 'basic', 'ultimate', 'hit', 'fall-die', 'vfx-basic', 'vfx-impact', 'vfx-ultimate']) assert.ok(d.clips[key], key);
   assert.equal(d.clips.idle.frames, 30);
   assert.equal(d.clips['vfx-ultimate'].blend, 'screen');
-  assert.deepEqual(Object.keys(authoredSfxMap(heroes)).sort(), ['khaos-basic', 'khaos-impact', 'khaos-ultimate']);
+  assert.deepEqual(Object.keys(authoredSfxMap(heroes)).sort(), ['bach-dien-atk', 'bach-dien-ult', 'khaos-basic', 'khaos-impact', 'khaos-ultimate']);
 });
 
 test('shared battle installer composes after Bé An, parses, and is idempotent', () => {

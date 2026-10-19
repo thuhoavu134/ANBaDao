@@ -71,16 +71,17 @@ function authoredResultMotions(){
   const make=key=>{
    const c=meta.clips[key];if(!c)return null;
    const ms=c.durationMs/c.frames;
+   const px=typeof c.pivot==='object'?c.pivot.x:c.pivot,py=c.foot??(typeof c.pivot==='object'?c.pivot.y:c.cellH);
    if(!c.pages||c.pages.length<=1){
     const file=c.pages?.[0]?.file||c.file;
-    return {src:base+file,frames:c.frames,cols:c.cols,cellW:c.cellW,cellH:c.cellH,ms,pivot:c.pivot,foot:c.foot};
+    return {src:base+file,frames:c.frames,cols:c.cols,cellW:c.cellW,cellH:c.cellH,ms,pivot:px,foot:py};
    }
    const pages=c.pages.map(p=>({cellW:c.cellW,cellH:c.cellH,cols:p.cols||c.cols,frames:p.frames,src:base+p.file,ms}));
    return {...c,src:pages[0].src,ms,pages,pageFrames:c.pageFrames||c.frames};
   };
   const d=meta.detail;
   const idle=d?{src:base+d.file,frames:d.frames,cols:d.cols,cellW:d.cellW,cellH:d.cellH,durationMs:d.durationMs,ms:d.durationMs/d.frames,
-    pivot:meta.clips.idle.pivot*d.cellW/meta.clips.idle.cellW,foot:meta.clips.idle.foot*d.cellH/meta.clips.idle.cellH}:make('idle');
+    pivot:(typeof meta.clips.idle.pivot==='object'?meta.clips.idle.pivot.x:meta.clips.idle.pivot)*d.cellW/meta.clips.idle.cellW,foot:(meta.clips.idle.foot??meta.clips.idle.pivot?.y)*d.cellH/meta.clips.idle.cellH}:make('idle');
   const runVisualScale=Number(hero.battle?.victory?.runVisualScale)||1;
   out[hero.id]={aliases:[hero.id,hero.slug,hero.sourceId],run:{...make('run'),playbackRate:1,visualScale:runVisualScale},idle,fall:make('fall-die')};
  }
@@ -112,12 +113,6 @@ const manifest = {
     run: clip('assets/characters/linh-dong/run-atlas.webp', 96, 8, 480, 440, 42),
     idle: clip('assets/characters/linh-dong/idle-atlas.webp', 96, 8, 480, 440, 42),
     fall: clip('assets/characters/linh-dong/fall-atlas.webp', 96, 8, 480, 440, 42)
-  },
-  bach_dien: {
-    aliases: ['bach_dien', 'bach-dien', 'hero_splus_bach_dien'],
-    run: clip('assets/characters/bach-dien/run-atlas.webp', 94, 8, 480, 440, 34),
-    idle: clip('assets/characters/bach-dien/idle-atlas.webp', 94, 8, 480, 440, 34),
-    fall: clip('assets/characters/bach-dien/fall-atlas.webp', 94, 8, 480, 440, 34)
   },
   dinh_loi: {
     aliases: ['dinh_loi', 'dinh-loi'],

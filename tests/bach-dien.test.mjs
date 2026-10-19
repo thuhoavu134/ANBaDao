@@ -138,7 +138,9 @@ test('L152-T5 Ult costs 100, hits highest ATK, steals and locks', () => {
   assert.equal(hits[0].damageType, 'elemental');
   assert.equal(e.unit('2:0').statuses.find(s => s.type === 'attackDown').power, 0.25);
   assert.equal(e.modifiers('1:0').attack, 1.25);
-  assert.equal(e.unit('2:0').statuses.some(s => s.type === 'stun'), true);
+  // Survivor of Ly Hồn Đoạt Phách panics (Hoảng loạn): loses its next turn.
+  assert.equal(e.unit('2:0').statuses.some(s => s.type === 'fear'), true);
+  assert.equal(e.canUse('2:0', 'basic'), false);
   assert.equal(e.unit('2:0').statuses.find(s => s.type === 'antiHeal').power, 1);
   assert.equal(e.unit('2:0').statuses.some(s => s.type === 'buffBan'), true);
   assert.equal(e.canUse('2:0', 'basic'), false);
@@ -178,4 +180,34 @@ test('L152-T7 encyclopedia 42 stays closed; playable roster now includes Bạch 
   const encyclopedia = read('src/ui/splus-encyclopedia.js');
   assert.match(encyclopedia, /data\.profiles\?\.length!==42/);
   assert.match(encyclopedia, /data\.skillIcons\?\.length!==126/);
+});
+
+function killFixture(roll) {
+  const units = [
+    { id: '1:0', sourceId: 'hero_splus_bach_dien', team: 1, slot: 4, maxHp: 100000, hp: 100000, atk: 1000, def: 0, speed: 100, energy: 100, crit: 0, critDamage: 1.5, accuracy: 100, evasion: 0, statuses: [] },
+    { id: '2:0', sourceId: 'dummy', team: 2, slot: 0, maxHp: 100000, hp: 100, atk: 5000, def: 0, speed: 80, energy: 40, crit: 0, critDamage: 1.5, accuracy: 100, evasion: 0, statuses: [] },
+    { id: '2:1', sourceId: 'dummy', team: 2, slot: 1, maxHp: 100000, hp: 100000, atk: 1000, def: 0, speed: 80, energy: 40, crit: 0, critDamage: 1.5, accuracy: 100, evasion: 0, statuses: [] },
+    { id: '2:2', sourceId: 'dummy', team: 2, slot: 5, maxHp: 100000, hp: 100000, atk: 2000, def: 0, speed: 80, energy: 40, crit: 0, critDamage: 1.5, accuracy: 100, evasion: 0, statuses: [] }
+  ];
+  const e = createSplusCombat({ units, rng: label => label === 'splus.bach-dien-panic' ? roll : 0.5 });
+  e.start();
+  return e;
+}
+
+test('Ly Hồn Đoạt Phách kill: every surviving ally panics — 70% loses the turn, 30% strikes its own side', () => {
+  const skip = killFixture(0.69);
+  assert.equal(skip.act('1:0', 'ultimate').ok, true);
+  assert.equal(skip.unit('2:0').hp, 0);
+  for (const id of ['2:1', '2:2']) {
+    assert.equal(skip.unit(id).statuses.some(s => s.type === 'fear'), true, id);
+    assert.equal(skip.canUse(id, 'basic'), false, id);
+  }
+  assert.equal(skip.events.some(x => x.type === 'massPanic'), true);
+  const betray = killFixture(0.7);
+  assert.equal(betray.act('1:0', 'ultimate').ok, true);
+  for (const id of ['2:1', '2:2']) {
+    const c = betray.unit(id).statuses.find(s => s.type === 'confusion');
+    assert.ok(c, id); assert.equal(c.chance, 1);
+    assert.equal(betray.unit(id).statuses.some(s => s.type === 'fear'), false, id);
+  }
 });

@@ -45,5 +45,5 @@ test('Skill 1 action clocks keep damage inside the faster visual beat', () => {
   assert.match(linhPresentation, /releaseMs: 160,[\s\S]*impactMs: 500,[\s\S]*recoveryEndMs: 720/);
   assert.match(bachPresentation, /releaseMs: 140,[\s\S]*impactMs: 430,[\s\S]*recoveryEndMs: 680/);
   assert.match(linh, /attack:\{file:"basic-atlas\.webp",frames:44,cols:8,w:480,h:440,ms:16\.364,loop:false,durationMs:720\}/);
-  assert.match(bach, /clips\.attack = \{ \.\.\.clips\.attack, ms: 22\.667, fps: 44\.1176470588, durationMs: 680 \}/);
+  assert.match(bach, /clips\.attack = \{ \.\.\.clips\.attack, ms: 680 \/ clips\.attack\.frames, fps: clips\.attack\.frames \/ 0\.68, durationMs: 680 \}/);
 });

@@ -1,0 +1,41 @@
+{
+  "character": "bach-dien",
+  "revision": "vfx-authored-20261019",
+  "clips": {
+    "vfx-basic": {
+      "file": "vfx-basic-0-7a1450bf.webp",
+      "frames": 18,
+      "cols": 6,
+      "rows": 3,
+      "cellW": 240,
+      "cellH": 220,
+      "atlasWidth": 1440,
+      "atlasHeight": 660,
+      "frameMs": 66.66666666666667,
+      "blend": null,
+      "pivot": 120,
+      "foot": 216.5,
+      "sourceCode": "vfxatkbd---8a38ebd6-ca23-4c03-b83e-bd07cd0963cf.mp4",
+      "role": "projectile + impact burst",
+      "durationMs": 1200
+    },
+    "vfx-ultimate": {
+      "file": "vfx-ultimate-0-94500b4c.webp",
+      "frames": 18,
+      "cols": 6,
+      "rows": 3,
+      "cellW": 240,
+      "cellH": 220,
+      "atlasWidth": 1440,
+      "atlasHeight": 660,
+      "frameMs": 72.22222222222223,
+      "blend": null,
+      "pivot": 120,
+      "foot": 216.5,
+      "sourceCode": "vfxultibd---da1ca516-030d-4134-b440-fc5efb60f398.mp4",
+      "role": "mask projectile: frames 0-12 in flight (mask at u~0.82), 13-17 burst on the target",
+      "durationMs": 1300,
+      "travelFrames": 13
+    }
+  }
+}

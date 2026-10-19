@@ -1,340 +1,474 @@
 {
   "schema": "canvas-sprite-runtime/v2",
+  "assetRevision": "kiemthe-sixstate-20261019-v2",
+  "source": "outputs/kiemthe-bach-dien-sixstate-v1 (Blender 5.1 composite pass 100%)",
+  "clips": {
+    "idle": {
+      "file": "idle-0-ca54eed7.webp",
+      "frames": 30,
+      "cols": 8,
+      "cellW": 240,
+      "cellH": 220,
+      "durationMs": 2708.334,
+      "pageFrames": 30,
+      "pivot": {
+        "x": 120,
+        "y": 216.5
+      },
+      "foot": 216.5,
+      "body": 213,
+      "pages": [
+        {
+          "file": "idle-0-ca54eed7.webp",
+          "frames": 30,
+          "cols": 8,
+          "rows": 4,
+          "atlasWidth": 1920,
+          "atlasHeight": 880,
+          "decodedBytes": 6758400,
+          "sha256": "ca54eed7024c253ac9f4e13e31c43180e765b151bfe24661097a984a1e8ada09"
+        }
+      ],
+      "sha256": "ca54eed7024c253ac9f4e13e31c43180e765b151bfe24661097a984a1e8ada09",
+      "atlasWidth": 1920,
+      "atlasHeight": 880,
+      "decodedBytes": 6758400,
+      "ms": 90.2778,
+      "registration": {
+        "scale": 1,
+        "offsetX": 0,
+        "offsetY": 0
+      },
+      "src": "assets/characters/bach-dien/idle-0-ca54eed7.webp"
+    },
+    "run": {
+      "file": "run-0-332a5b51.webp",
+      "frames": 18,
+      "cols": 6,
+      "cellW": 240,
+      "cellH": 220,
+      "durationMs": 4000,
+      "pageFrames": 18,
+      "pivot": {
+        "x": 120,
+        "y": 216.5
+      },
+      "foot": 216.5,
+      "body": 213,
+      "pages": [
+        {
+          "file": "run-0-332a5b51.webp",
+          "frames": 18,
+          "cols": 6,
+          "rows": 3,
+          "atlasWidth": 1440,
+          "atlasHeight": 660,
+          "decodedBytes": 3801600,
+          "sha256": "332a5b516b8755d6877fd9012bcedf2368974cd37b5544287fb09a9177e28dee"
+        }
+      ],
+      "sha256": "332a5b516b8755d6877fd9012bcedf2368974cd37b5544287fb09a9177e28dee",
+      "atlasWidth": 1440,
+      "atlasHeight": 660,
+      "decodedBytes": 3801600,
+      "ms": 222.22222222222223,
+      "registration": {
+        "scale": 1,
+        "offsetX": 0,
+        "offsetY": 0
+      },
+      "src": "assets/characters/bach-dien/run-0-332a5b51.webp"
+    },
+    "basic": {
+      "file": "basic-0-9f056b62.webp",
+      "frames": 18,
+      "cols": 6,
+      "cellW": 240,
+      "cellH": 220,
+      "durationMs": 4000,
+      "pageFrames": 18,
+      "pivot": {
+        "x": 120,
+        "y": 216.5
+      },
+      "foot": 216.5,
+      "body": 213,
+      "pages": [
+        {
+          "file": "basic-0-9f056b62.webp",
+          "frames": 18,
+          "cols": 6,
+          "rows": 3,
+          "atlasWidth": 1440,
+          "atlasHeight": 660,
+          "decodedBytes": 3801600,
+          "sha256": "9f056b62475ada81d4dda4bb13ad301231896b6ea671f46437f1b0a763dc4046"
+        }
+      ],
+      "sha256": "9f056b62475ada81d4dda4bb13ad301231896b6ea671f46437f1b0a763dc4046",
+      "atlasWidth": 1440,
+      "atlasHeight": 660,
+      "decodedBytes": 3801600,
+      "ms": 222.22222222222223,
+      "registration": {
+        "scale": 1,
+        "offsetX": 0,
+        "offsetY": 0
+      },
+      "src": "assets/characters/bach-dien/basic-0-9f056b62.webp"
+    },
+    "ultimate": {
+      "file": "ultimate-0-e8e54733.webp",
+      "frames": 18,
+      "cols": 6,
+      "cellW": 240,
+      "cellH": 220,
+      "durationMs": 2000,
+      "pageFrames": 18,
+      "pivot": {
+        "x": 120,
+        "y": 216.5
+      },
+      "foot": 216.5,
+      "body": 213,
+      "pages": [
+        {
+          "file": "ultimate-0-e8e54733.webp",
+          "frames": 18,
+          "cols": 6,
+          "rows": 3,
+          "atlasWidth": 1440,
+          "atlasHeight": 660,
+          "decodedBytes": 3801600,
+          "sha256": "e8e547339448e5999ccce1b3915ae7ef929c25874e401221ce4f591a547c8116"
+        }
+      ],
+      "sha256": "e8e547339448e5999ccce1b3915ae7ef929c25874e401221ce4f591a547c8116",
+      "atlasWidth": 1440,
+      "atlasHeight": 660,
+      "decodedBytes": 3801600,
+      "ms": 111.11111111111111,
+      "registration": {
+        "scale": 1,
+        "offsetX": 0,
+        "offsetY": 0
+      },
+      "src": "assets/characters/bach-dien/ultimate-0-e8e54733.webp"
+    },
+    "hit": {
+      "file": "hit-0-dc1773c9.webp",
+      "frames": 18,
+      "cols": 6,
+      "cellW": 240,
+      "cellH": 220,
+      "durationMs": 4000,
+      "pageFrames": 18,
+      "pivot": {
+        "x": 120,
+        "y": 216.5
+      },
+      "foot": 216.5,
+      "body": 213,
+      "pages": [
+        {
+          "file": "hit-0-dc1773c9.webp",
+          "frames": 18,
+          "cols": 6,
+          "rows": 3,
+          "atlasWidth": 1440,
+          "atlasHeight": 660,
+          "decodedBytes": 3801600,
+          "sha256": "dc1773c901a84eb7ff42ea7aa82195761cf866f3c2a7b3fc74aee5a4d76d66d6"
+        }
+      ],
+      "sha256": "dc1773c901a84eb7ff42ea7aa82195761cf866f3c2a7b3fc74aee5a4d76d66d6",
+      "atlasWidth": 1440,
+      "atlasHeight": 660,
+      "decodedBytes": 3801600,
+      "ms": 222.22222222222223,
+      "registration": {
+        "scale": 1,
+        "offsetX": 0,
+        "offsetY": 0
+      },
+      "src": "assets/characters/bach-dien/hit-0-dc1773c9.webp"
+    },
+    "fall-die": {
+      "file": "fall-die-0-1f5f2081.webp",
+      "frames": 18,
+      "cols": 6,
+      "cellW": 240,
+      "cellH": 220,
+      "durationMs": 4000,
+      "pageFrames": 18,
+      "pivot": {
+        "x": 120,
+        "y": 216.5
+      },
+      "foot": 216.5,
+      "body": 213,
+      "pages": [
+        {
+          "file": "fall-die-0-1f5f2081.webp",
+          "frames": 18,
+          "cols": 6,
+          "rows": 3,
+          "atlasWidth": 1440,
+          "atlasHeight": 660,
+          "decodedBytes": 3801600,
+          "sha256": "1f5f20815a4d2b6286cab66bb0747beff99025bc3d46d0bcbd8f22a105a2fb02"
+        }
+      ],
+      "sha256": "1f5f20815a4d2b6286cab66bb0747beff99025bc3d46d0bcbd8f22a105a2fb02",
+      "atlasWidth": 1440,
+      "atlasHeight": 660,
+      "decodedBytes": 3801600,
+      "ms": 222.22222222222223,
+      "registration": {
+        "scale": 1,
+        "offsetX": 0,
+        "offsetY": 0
+      },
+      "src": "assets/characters/bach-dien/fall-die-0-1f5f2081.webp"
+    },
+    "hurt": {
+      "file": "hit-0-dc1773c9.webp",
+      "frames": 18,
+      "cols": 6,
+      "cellW": 240,
+      "cellH": 220,
+      "durationMs": 4000,
+      "pageFrames": 18,
+      "pivot": {
+        "x": 120,
+        "y": 216.5
+      },
+      "foot": 216.5,
+      "body": 213,
+      "pages": [
+        {
+          "file": "hit-0-dc1773c9.webp",
+          "frames": 18,
+          "cols": 6,
+          "rows": 3,
+          "atlasWidth": 1440,
+          "atlasHeight": 660,
+          "decodedBytes": 3801600,
+          "sha256": "dc1773c901a84eb7ff42ea7aa82195761cf866f3c2a7b3fc74aee5a4d76d66d6"
+        }
+      ],
+      "sha256": "dc1773c901a84eb7ff42ea7aa82195761cf866f3c2a7b3fc74aee5a4d76d66d6",
+      "atlasWidth": 1440,
+      "atlasHeight": 660,
+      "decodedBytes": 3801600,
+      "ms": 222.22222222222223,
+      "registration": {
+        "scale": 1,
+        "offsetX": 0,
+        "offsetY": 0
+      },
+      "kind": "character",
+      "src": "assets/characters/bach-dien/hit-0-dc1773c9.webp"
+    },
+    "defeated": {
+      "file": "fall-die-0-1f5f2081.webp",
+      "frames": 18,
+      "cols": 6,
+      "cellW": 240,
+      "cellH": 220,
+      "durationMs": 4000,
+      "pageFrames": 18,
+      "pivot": {
+        "x": 120,
+        "y": 216.5
+      },
+      "foot": 216.5,
+      "body": 213,
+      "pages": [
+        {
+          "file": "fall-die-0-1f5f2081.webp",
+          "frames": 18,
+          "cols": 6,
+          "rows": 3,
+          "atlasWidth": 1440,
+          "atlasHeight": 660,
+          "decodedBytes": 3801600,
+          "sha256": "1f5f20815a4d2b6286cab66bb0747beff99025bc3d46d0bcbd8f22a105a2fb02"
+        }
+      ],
+      "sha256": "1f5f20815a4d2b6286cab66bb0747beff99025bc3d46d0bcbd8f22a105a2fb02",
+      "atlasWidth": 1440,
+      "atlasHeight": 660,
+      "decodedBytes": 3801600,
+      "ms": 222.22222222222223,
+      "registration": {
+        "scale": 1,
+        "offsetX": 0,
+        "offsetY": 0
+      },
+      "kind": "character",
+      "src": "assets/characters/bach-dien/fall-die-0-1f5f2081.webp"
+    },
+    "attack": {
+      "file": "basic-0-9f056b62.webp",
+      "frames": 18,
+      "cols": 6,
+      "cellW": 240,
+      "cellH": 220,
+      "durationMs": 4000,
+      "pageFrames": 18,
+      "pivot": {
+        "x": 120,
+        "y": 216.5
+      },
+      "foot": 216.5,
+      "body": 213,
+      "pages": [
+        {
+          "file": "basic-0-9f056b62.webp",
+          "frames": 18,
+          "cols": 6,
+          "rows": 3,
+          "atlasWidth": 1440,
+          "atlasHeight": 660,
+          "decodedBytes": 3801600,
+          "sha256": "9f056b62475ada81d4dda4bb13ad301231896b6ea671f46437f1b0a763dc4046"
+        }
+      ],
+      "sha256": "9f056b62475ada81d4dda4bb13ad301231896b6ea671f46437f1b0a763dc4046",
+      "atlasWidth": 1440,
+      "atlasHeight": 660,
+      "decodedBytes": 3801600,
+      "ms": 222.22222222222223,
+      "registration": {
+        "scale": 1,
+        "offsetX": 0,
+        "offsetY": 0
+      },
+      "kind": "character",
+      "src": "assets/characters/bach-dien/basic-0-9f056b62.webp"
+    },
+    "skill1Vfx": {
+      "file": "vfx-basic-0-7a1450bf.webp",
+      "src": "assets/characters/bach-dien/vfx-basic-0-7a1450bf.webp",
+      "kind": "vfx",
+      "blendMode": "source-over",
+      "frames": 18,
+      "cols": 6,
+      "rows": 3,
+      "cellW": 240,
+      "cellH": 220,
+      "atlasWidth": 1440,
+      "atlasHeight": 660,
+      "decodedBytes": 3801600,
+      "sha256": "7a1450bf67d2e6df0ff507fce8f74fe05c2b291c3b32e2fa25224961218616b8",
+      "durationMs": 1200,
+      "ms": 66.66666666666667,
+      "loop": false,
+      "pivot": {
+        "x": 120,
+        "y": 110
+      },
+      "pages": [
+        {
+          "file": "vfx-basic-0-7a1450bf.webp",
+          "frames": 18,
+          "cols": 6,
+          "rows": 3,
+          "atlasWidth": 1440,
+          "atlasHeight": 660,
+          "decodedBytes": 3801600,
+          "sha256": "7a1450bf67d2e6df0ff507fce8f74fe05c2b291c3b32e2fa25224961218616b8"
+        }
+      ],
+      "source": "vfxatkbd---8a38ebd6-ca23-4c03-b83e-bd07cd0963cf.mp4"
+    },
+    "ultimateVfx": {
+      "file": "vfx-ultimate-0-94500b4c.webp",
+      "src": "assets/characters/bach-dien/vfx-ultimate-0-94500b4c.webp",
+      "kind": "vfx",
+      "blendMode": "source-over",
+      "frames": 18,
+      "cols": 6,
+      "rows": 3,
+      "cellW": 240,
+      "cellH": 220,
+      "atlasWidth": 1440,
+      "atlasHeight": 660,
+      "decodedBytes": 3801600,
+      "sha256": "94500b4ccb8447c3050c0356a5b7abeeb74f1d2d710c2c6c820b6a5c9721c64f",
+      "durationMs": 1300,
+      "ms": 72.22222222222223,
+      "loop": false,
+      "pivot": {
+        "x": 120,
+        "y": 110
+      },
+      "pages": [
+        {
+          "file": "vfx-ultimate-0-94500b4c.webp",
+          "frames": 18,
+          "cols": 6,
+          "rows": 3,
+          "atlasWidth": 1440,
+          "atlasHeight": 660,
+          "decodedBytes": 3801600,
+          "sha256": "94500b4ccb8447c3050c0356a5b7abeeb74f1d2d710c2c6c820b6a5c9721c64f"
+        }
+      ],
+      "source": "vfxultibd---da1ca516-030d-4134-b440-fc5efb60f398.mp4",
+      "travelFrames": 13
+    },
+    "atkVfx": {
+      "file": "vfx-basic-0-7a1450bf.webp",
+      "src": "assets/characters/bach-dien/vfx-basic-0-7a1450bf.webp",
+      "kind": "vfx",
+      "blendMode": "source-over",
+      "frames": 18,
+      "cols": 6,
+      "rows": 3,
+      "cellW": 240,
+      "cellH": 220,
+      "atlasWidth": 1440,
+      "atlasHeight": 660,
+      "decodedBytes": 3801600,
+      "sha256": "7a1450bf67d2e6df0ff507fce8f74fe05c2b291c3b32e2fa25224961218616b8",
+      "durationMs": 1200,
+      "ms": 66.66666666666667,
+      "loop": false,
+      "pivot": {
+        "x": 120,
+        "y": 110
+      },
+      "pages": [
+        {
+          "file": "vfx-basic-0-7a1450bf.webp",
+          "frames": 18,
+          "cols": 6,
+          "rows": 3,
+          "atlasWidth": 1440,
+          "atlasHeight": 660,
+          "decodedBytes": 3801600,
+          "sha256": "7a1450bf67d2e6df0ff507fce8f74fe05c2b291c3b32e2fa25224961218616b8"
+        }
+      ],
+      "source": "vfxatkbd---8a38ebd6-ca23-4c03-b83e-bd07cd0963cf.mp4"
+    }
+  },
+  "detail": {
+    "file": "detail-59a40240.webp",
+    "frames": 30,
+    "cols": 8,
+    "cellW": 480,
+    "cellH": 440,
+    "durationMs": 2708.334,
+    "atlasWidth": 3840,
+    "atlasHeight": 1760,
+    "note": "hero-detail screen full resolution"
+  },
   "heroId": "hero_splus_bach_dien",
   "aliases": [
     "bach_dien",
     "bach-dien"
-  ],
-  "quality": {
-    "desktop": "native",
-    "mobile": "native"
-  },
-  "source": "Blender/cropped v1 frames, Ultra v5 sampling",
-  "deliveryEncoding": "webp-lossy-rgba-atlas-ultra-v5",
-  "package": "assets/characters/bach-dien/",
-  "version": "ultra-v5",
-  "clips": {
-    "idle": {
-      "file": "idle-atlas.webp",
-      "src": "assets/characters/bach-dien/idle-atlas.webp",
-      "kind": "character",
-      "frames": 32,
-      "cols": 6,
-      "rows": 6,
-      "cellW": 480,
-      "cellH": 440,
-      "w": 480,
-      "h": 440,
-      "fps": 30,
-      "ms": 33.333333333333336,
-      "durationMs": 1066.6666666666667,
-      "loop": true,
-      "pivot": {
-        "x": 240,
-        "y": 440
-      },
-      "logicalSize": {
-        "w": 480,
-        "h": 440
-      },
-      "trimMode": "stable-union",
-      "blendMode": "source-over",
-      "atlasWidth": 2880,
-      "atlasHeight": 2640,
-      "decodedBytes": 30412800,
-      "compressedBytes": 1811722,
-      "sha256": "3b32a8d34d740758edcc6aa2f957f743e280d01c43870de983b97c2823a3009f",
-      "registrationPose": {
-        "top": 20,
-        "bottom": 415,
-        "footX": 253.5
-      },
-      "registration": {
-        "scale": 1.0,
-        "offsetX": 0.0,
-        "offsetY": 0.0
-      }
-    },
-    "run": {
-      "file": "run-atlas.webp",
-      "src": "assets/characters/bach-dien/run-atlas.webp",
-      "kind": "character",
-      "frames": 45,
-      "cols": 6,
-      "rows": 8,
-      "cellW": 480,
-      "cellH": 440,
-      "w": 480,
-      "h": 440,
-      "fps": 30,
-      "ms": 33.333333333333336,
-      "durationMs": 1500.0,
-      "loop": true,
-      "pivot": {
-        "x": 240,
-        "y": 440
-      },
-      "logicalSize": {
-        "w": 480,
-        "h": 440
-      },
-      "trimMode": "stable-union",
-      "blendMode": "source-over",
-      "atlasWidth": 2880,
-      "atlasHeight": 3520,
-      "decodedBytes": 40550400,
-      "compressedBytes": 2446254,
-      "sha256": "87510127088dba2baa57adb0f0cd90ab8ac47100853e7746686e1833cbe025b0",
-      "registrationPose": {
-        "top": 32,
-        "bottom": 414,
-        "footX": 262.5
-      },
-      "registration": {
-        "scale": 1.0340314136125655,
-        "offsetX": -0.037360929319371766,
-        "offsetY": -0.029747739171822926
-      }
-    },
-    "hurt": {
-      "file": "hit-atlas.webp",
-      "src": "assets/characters/bach-dien/hit-atlas.webp",
-      "kind": "character",
-      "frames": 18,
-      "cols": 5,
-      "rows": 4,
-      "cellW": 480,
-      "cellH": 440,
-      "w": 480,
-      "h": 440,
-      "fps": 30,
-      "ms": 33.333333333333336,
-      "durationMs": 600.0,
-      "loop": false,
-      "pivot": {
-        "x": 240,
-        "y": 440
-      },
-      "logicalSize": {
-        "w": 480,
-        "h": 440
-      },
-      "trimMode": "stable-union",
-      "blendMode": "source-over",
-      "atlasWidth": 2400,
-      "atlasHeight": 1760,
-      "decodedBytes": 16896000,
-      "compressedBytes": 1074546,
-      "sha256": "d70291eddbf144eb98e19a7de59fbe384d9cecf38d7650c16cb446e30062aae4",
-      "registrationPose": {
-        "top": 20,
-        "bottom": 415,
-        "footX": 259.5
-      },
-      "registration": {
-        "scale": 1.0,
-        "offsetX": -0.0125,
-        "offsetY": 0.0
-      }
-    },
-    "defeated": {
-      "file": "fall-atlas.webp",
-      "src": "assets/characters/bach-dien/fall-atlas.webp",
-      "kind": "character",
-      "frames": 24,
-      "cols": 6,
-      "rows": 5,
-      "cellW": 480,
-      "cellH": 440,
-      "w": 480,
-      "h": 440,
-      "fps": 30,
-      "ms": 33.333333333333336,
-      "durationMs": 800.0,
-      "loop": false,
-      "pivot": {
-        "x": 240,
-        "y": 440
-      },
-      "logicalSize": {
-        "w": 480,
-        "h": 440
-      },
-      "trimMode": "stable-union",
-      "blendMode": "source-over",
-      "atlasWidth": 2880,
-      "atlasHeight": 2200,
-      "decodedBytes": 25344000,
-      "compressedBytes": 1194914,
-      "sha256": "fe395f556a19b2cfec13cbf92705735f0ba25a2462c2265378f7eb709bf78520",
-      "registrationPose": {
-        "top": 34,
-        "bottom": 404,
-        "footX": 340.5
-      },
-      "registration": {
-        "scale": 1.0675675675675675,
-        "offsetX": -0.22918074324324328,
-        "offsetY": -0.037039312039312024
-      }
-    },
-    "attack": {
-      "file": "basic-atlas.webp",
-      "src": "assets/characters/bach-dien/basic-atlas.webp",
-      "kind": "character",
-      "frames": 30,
-      "cols": 6,
-      "rows": 5,
-      "cellW": 480,
-      "cellH": 440,
-      "w": 480,
-      "h": 440,
-      "fps": 30,
-      "ms": 33.333333333333336,
-      "durationMs": 1000.0,
-      "loop": false,
-      "pivot": {
-        "x": 240,
-        "y": 440
-      },
-      "logicalSize": {
-        "w": 480,
-        "h": 440
-      },
-      "trimMode": "stable-union",
-      "blendMode": "source-over",
-      "atlasWidth": 2880,
-      "atlasHeight": 2200,
-      "decodedBytes": 25344000,
-      "compressedBytes": 1399418,
-      "sha256": "4c2dddceb08e448fc8dfea39449ce1c77f8dc497b94b2ed82afd4558feedb018",
-      "registrationPose": {
-        "top": 70,
-        "bottom": 416,
-        "footX": 216.5
-      },
-      "registration": {
-        "scale": 1.1416184971098267,
-        "offsetX": 0.013207490366088592,
-        "offsetY": -0.13616657908565435
-      }
-    },
-    "ultimate": {
-      "file": "ultimate-atlas.webp",
-      "src": "assets/characters/bach-dien/ultimate-atlas.webp",
-      "kind": "character",
-      "frames": 36,
-      "cols": 6,
-      "rows": 6,
-      "cellW": 480,
-      "cellH": 440,
-      "w": 480,
-      "h": 440,
-      "fps": 30,
-      "ms": 33.333333333333336,
-      "durationMs": 1200.0,
-      "loop": false,
-      "pivot": {
-        "x": 240,
-        "y": 440
-      },
-      "logicalSize": {
-        "w": 480,
-        "h": 440
-      },
-      "trimMode": "stable-union",
-      "blendMode": "source-over",
-      "atlasWidth": 2880,
-      "atlasHeight": 2640,
-      "decodedBytes": 30412800,
-      "compressedBytes": 2020280,
-      "sha256": "537a4fd133e995453b3c687b184af3f8a249f2093c4ed00d2c68b56d8625c28e",
-      "registrationPose": {
-        "top": 19,
-        "bottom": 416,
-        "footX": 246.5
-      },
-      "registration": {
-        "scale": 0.9949622166246851,
-        "offsetX": 0.017170445004198183,
-        "offsetY": 0.002490267918479493
-      }
-    },
-    "skill1Vfx": {
-      "file": "skill1_vfx-atlas.webp",
-      "src": "assets/characters/bach-dien/skill1_vfx-atlas.webp",
-      "kind": "vfx",
-      "frames": 36,
-      "cols": 6,
-      "rows": 6,
-      "cellW": 440,
-      "cellH": 248,
-      "w": 440,
-      "h": 248,
-      "fps": 30,
-      "ms": 33.333333333333336,
-      "durationMs": 1200.0,
-      "loop": false,
-      "pivot": {
-        "x": 220,
-        "y": 248
-      },
-      "logicalSize": {
-        "w": 440,
-        "h": 248
-      },
-      "trimMode": "stable-union",
-      "blendMode": "source-over",
-      "atlasWidth": 2640,
-      "atlasHeight": 1488,
-      "decodedBytes": 15713280,
-      "compressedBytes": 1087208,
-      "sha256": "cd194d7f443db76ba99fd14d7b7b2410de16a48b370d13c8f963da274e997f77"
-    },
-    "ultimateVfx": {
-      "file": "ultimate_vfx-atlas.webp",
-      "src": "assets/characters/bach-dien/ultimate_vfx-atlas.webp",
-      "kind": "vfx",
-      "frames": 48,
-      "cols": 8,
-      "rows": 6,
-      "cellW": 440,
-      "cellH": 248,
-      "w": 440,
-      "h": 248,
-      "fps": 30,
-      "ms": 33.333333333333336,
-      "durationMs": 1600.0,
-      "loop": false,
-      "pivot": {
-        "x": 220,
-        "y": 248
-      },
-      "logicalSize": {
-        "w": 440,
-        "h": 248
-      },
-      "trimMode": "stable-union",
-      "blendMode": "source-over",
-      "atlasWidth": 3520,
-      "atlasHeight": 1488,
-      "decodedBytes": 20951040,
-      "compressedBytes": 1982204,
-      "sha256": "8d5b1c52028a0e143aa6fbe73733d1a16663d9ee69532741bf7033795b606e2e"
-    }
-  },
-  "totalFrames": 269,
-  "totalCompressedBytes": 13016546,
-  "registrationEvidence": {
-    "referenceClip": "idle",
-    "frame": 0,
-    "alphaThreshold": 100,
-    "footBandPx": 15,
-    "method": "Fixed first-pose body-height and foot-anchor registration; never per-frame normalization.",
-    "referenceBodyHeight": 395,
-    "referenceFoot": {
-      "x": 253.5,
-      "y": 415
-    }
-  }
+  ]
 }

@@ -88,7 +88,7 @@ test('desktop formation and global desktop scale are unchanged',()=>{
 
 test('special heroes use body-height calibration while preserving compact layout offsets',()=>{
   assert.equal(heroVisualScale('linh_dong'),310/335);
-  assert.equal(heroVisualScale('hero_splus_bach_dien'),310/395);
+  assert.equal(heroVisualScale('hero_splus_bach_dien'),310/426);
   assert.equal(heroVisualScale('dinh_loi'),310/301.6);
   assert.equal(BATTLE_CHARACTER_SCALE.portrait,0.34);
   assert.equal(BATTLE_CHARACTER_SCALE.desktop,0.74);

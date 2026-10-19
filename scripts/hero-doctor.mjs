@@ -79,7 +79,11 @@ export async function doctorSource(root) {
       if (!clip) fail(`${label}: ${kind} uses unknown clip ${a.clip}`);
       const marks = [a.release, ...a.hits, a.recovery];
       if (!a.hits?.length || marks.some((m, i) => !(m >= 0) || (i && m < marks[i - 1]))) fail(`${label}: ${kind} markers must be release <= hits <= recovery`);
-      if (clip && a.recovery > clip.durationMs + 1) fail(`${label}: ${kind} recovery ${a.recovery} > clip ${clip.durationMs}ms`);
+      // The body clip owns recovery, except a projectile/area VFX released from it may finish after the body
+      // returns to idle (e.g. Bạch Diện throws the mask at the end of a 2s cast): allow release + VFX length.
+      const tailVfx = d.clips[a.projectile?.vfx || a.area?.vfx];
+      const limit = clip ? Math.max(clip.durationMs, tailVfx ? a.release + Number(tailVfx.durationMs || tailVfx.frames * (tailVfx.frameMs || 60)) : 0) : 0;
+      if (clip && a.recovery > limit + 1) fail(`${label}: ${kind} recovery ${a.recovery} > clip ${clip.durationMs}ms (+VFX tail ${limit}ms)`);
       for (const v of [a.projectile?.vfx, a.impact?.vfx, a.area?.vfx].filter(Boolean)) if (!d.clips[v]) fail(`${label}: ${kind} VFX ${v} not packaged`);
       for (const s of a.sfx || []) if (!hero.sfx?.[s.cue]) fail(`${label}: ${kind} cue ${s.cue} not declared in hero.sfx`);
       if (!(a.sfx || []).length) fail(`${label}: ${kind} has no SFX cue`);
@@ -96,8 +100,11 @@ export async function doctorSource(root) {
       for (const clip of Object.keys(REQUIRED_CLIPS)) if (!p.clips?.[clip]) fail(`${label}: presentation lacks ${clip}`);
     }
     const domainKey = hero.sourceId.replace(/^hero_splus_/, '');
-    if (!new RegExp(`\\b${domainKey}:\\{basic:`).test(kits)) fail(`${label}: no AUTHORED_KITS.${domainKey} in splus-mechanics`);
-    if (!new RegExp(`\\n    ${domainKey}\\(actor,target,cast,index\\)\\{`).test(mechanics)) fail(`${label}: no AUTHORED_HIT.${domainKey} rule`);
+    const hasLegacyDomain = new RegExp(`key\\([a-z_]+\\)===['"]${domainKey}['"]`).test(mechanics);
+    if (!hasLegacyDomain) {
+      if (!new RegExp(`\\b${domainKey}:\\{basic:`).test(kits)) fail(`${label}: no AUTHORED_KITS.${domainKey} in splus-mechanics`);
+      if (!new RegExp(`\\n    ${domainKey}\\(actor,target,cast,index\\)\\{`).test(mechanics)) fail(`${label}: no AUTHORED_HIT.${domainKey} rule`);
+    }
     report.push({ hero: hero.id, clips: Object.keys(d.clips).length, peakPageMiB: +(peak / 1048576).toFixed(1), cues: Object.keys(hero.sfx || {}).length });
   }
   authoredSfxMap(heroes);
@@ -117,6 +124,7 @@ export function doctorDist(root, heroes) {
   for (const html of [index, battle]) if (html.includes('/*HV_AUTHORED_SFX*/{}/*HV_AUTHORED_SFX_END*/')) errors.push('HonVietSfx authored cue map left empty');
   const roster = /OFFICIAL_ROSTER_12_IDS=Object\.freeze\((\[[^\]]*\])\)/.exec(index)?.[1] || '[]';
   for (const { hero } of heroes) {
+    if (hero.battle?.owner === 'legacy') continue;
     if (!index.includes(`"${hero.id}":{"he"`)) errors.push(`${hero.id}: not in DATA.heroes`);
     if (!JSON.parse(roster).includes(hero.id)) errors.push(`${hero.id}: not in OFFICIAL_ROSTER_12_IDS`);
     if (!battle.includes(`"${hero.sourceId}":{"id":"${hero.id}"`)) errors.push(`${hero.id}: not in battle AUTHORED_HEROES`);

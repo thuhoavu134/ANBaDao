@@ -1,0 +1,140 @@
+{
+  "schema": "luc-than-authored-hero/v1",
+  "id": "bach_dien",
+  "sourceId": "hero_splus_bach_dien",
+  "slug": "bach-dien",
+  "identityVersion": "kiemthe-sixstate-20261019-v2",
+  "host": {
+    "he": "soul",
+    "faction": "am_hon",
+    "archetype": "mystic",
+    "rarity": "ssr",
+    "name": "Bạch Diện",
+    "role": "Sát thủ / Đổi mặt / Đoạt Phách",
+    "col": "#9855b8",
+    "stats": {
+      "hp": 1050,
+      "mp": 60,
+      "atk": 155,
+      "def": 50,
+      "spd": 115
+    }
+  },
+  "kit": {
+    "passive": {
+      "name": "Diện Khúc Luân Hồi",
+      "desc": "Đổi mặt Hỷ/Nộ khi tung chiêu hoặc né đòn. Thế Thân Chi Diện khi bị chí mạng."
+    },
+    "basic": {
+      "name": "Nhát Quạt Đoạn Trần Duyên",
+      "cost": 0,
+      "desc": "Đòn đánh thường của Bạch Diện (luật cũ giữ nguyên).",
+      "fx": {
+        "kind": "damage",
+        "target": "enemy",
+        "power": 1.4
+      }
+    },
+    "ultimate": {
+      "name": "Ly Hồn Đoạt Phách",
+      "cost": 100,
+      "desc": "Ném mặt nạ chính diện, gây 420% Công, cắp 25% Công. Nếu mục tiêu sống: Hoảng loạn, mất 1 lượt. Nếu mục tiêu chết: cả đội địch hoảng loạn 1 lượt (70% mất lượt, 30% đánh đồng đội).",
+      "fx": {
+        "kind": "damage",
+        "target": "aoe_enemy",
+        "power": 3.2
+      }
+    }
+  },
+  "art": {
+    "portrait": "assets/characters/bach-dien/avatar.webp",
+    "landmark": [
+      55,
+      17,
+      13
+    ]
+  },
+  "clipsMeta": "runtime-meta.json",
+  "vfxBase": "assets/vfx/bach-dien/",
+  "vfxMeta": "assets/vfx/bach-dien/provenance.json",
+  "battle": {
+    "tempo": {
+      "basic": 1.25,
+      "ultimate": 1.2
+    },
+    "victory": {
+      "runVisualScale": 1.0,
+      "reason": "Bạch Diện run height (417px) matches idle height (426px) naturally (1.02 ratio)"
+    },
+    "actions": {
+      "basic": {
+        "clip": "basic",
+        "release": 1300,
+        "hits": [
+          1800
+        ],
+        "vfxEnd": 2400,
+        "recovery": 4000,
+        "projectile": {
+          "vfx": "vfx-basic",
+          "from": [
+            0.4,
+            0.55
+          ],
+          "scale": 1.0
+        },
+        "sfx": [
+          {
+            "cue": "bach-dien-atk",
+            "at": "release",
+            "lead": 100
+          }
+        ]
+      },
+      "ultimate": {
+        "clip": "ultimate",
+        "release": 1450,
+        "hits": [
+          2389
+        ],
+        "vfxEnd": 2750,
+        "recovery": 2750,
+        "sfx": [
+          {
+            "cue": "bach-dien-ult",
+            "at": "release",
+            "lead": 180
+          }
+        ],
+        "projectile": {
+          "vfx": "vfx-ultimate",
+          "from": "mask",
+          "to": "target",
+          "travelFrames": 13
+        }
+      }
+    },
+    "reactions": {
+      "hit": "hit",
+      "death": "fall-die",
+      "durationMs": 4000
+    },
+    "owner": "legacy",
+    "ownerNote": "Combat rules + battle renderer stay in the existing Bạch Diện canvas runtime (splus-mechanics key bach_dien); it reads the new Kiếm Thế atlases and VFX from runtime-meta.json. SFX unchanged."
+  },
+  "sfx": {
+    "bach-dien-atk": "bach-dien/atk.wav",
+    "bach-dien-ult": "bach-dien/ult.wav"
+  },
+  "surfaces": [
+    "roster",
+    "formation",
+    "hero-detail",
+    "battle"
+  ],
+  "approval": {
+    "animation": "owner sent 6 clips 2026-10-19; Kiếm Thế six-state package validator PASS (idle seam IoU 0.9866)",
+    "vfx": "owner sent 2 new VFX clips (vfxatkbd, vfxultibd); Blender 5.1 keying composite pass",
+    "sfx": "owner instruction: keep existing bach-dien SFX unchanged"
+  }
+}

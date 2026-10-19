@@ -44,22 +44,25 @@ export const BACH_DIEN_TIMELINE = Object.freeze({
     recoveryEndMs: 680
   }),
   ultimate: Object.freeze({
+    // Kiếm Thế six-state pack: 18 frames compressed to a 2.0s cast (shared ~2s ultimate standard).
     character: Object.freeze({
-      file: 'ultimate-atlas.webp',
-      frames: PACK_FRAMES,
-      frameMs: PACK_MS,
-      durationMs: PACK_DURATION_MS
+      file: 'ultimate-0-e8e54733.webp',
+      frames: 18,
+      frameMs: 111.1111,
+      durationMs: 2000
     }),
+    // Mask projectile: leaves the raised mask on the lunge, flies 13 frames, bursts 5 frames on the target.
     combinedVfx: Object.freeze({
-      file: 'ultimate_vfx-atlas.webp',
-      frames: PACK_FRAMES,
-      frameMs: PACK_MS,
-      sourceDurationMs: PACK_DURATION_MS
+      file: 'vfx-ultimate-0-94500b4c.webp',
+      frames: 18,
+      frameMs: 72.2222,
+      sourceDurationMs: 1300,
+      travelFrames: 13
     }),
     sfx: 'assets/audio/sfx/bach-dien/ult.wav',
-    releaseMs: 800,
-    impactMs: 1600,
-    recoveryEndMs: PACK_DURATION_MS
+    releaseMs: 1450,
+    impactMs: 2389,
+    recoveryEndMs: 2750
   })
 });
 

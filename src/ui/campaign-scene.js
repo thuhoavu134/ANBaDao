@@ -124,7 +124,7 @@ const farmAttackSpecs = {
 const farmBasicVfxSpecs = {
   co_nuong: { src:'assets/vfx/co-nuong/vfx-basic.webp',frames:48,cols:8,cellW:212,cellH:162,ms:60,pivot:106,foot:81,body:190 },
   linh_dong:{src:'assets/characters/linh-dong/skill1_vfx-atlas.webp',frames:120,cols:10,cellW:440,cellH:248,ms:33,pivot:220,foot:124,body:248},
-  bach_dien:{src:'assets/characters/bach-dien/skill1_vfx-atlas.webp',frames:36,cols:6,cellW:440,cellH:248,ms:1000/30,pivot:220,foot:124,body:248},
+  bach_dien:{src:'assets/characters/bach-dien/vfx-basic-0-7a1450bf.webp',frames:18,cols:6,cellW:240,cellH:220,ms:1200/18,pivot:120,foot:110,body:220},
   luc_anh:{src:'assets/characters/luc-anh/basic_projectile-atlas.webp',frames:64,cols:8,cellW:320,cellH:220,ms:28,pivot:160,foot:110,body:220},
   dinh_loi:{src:'assets/characters/dinh-loi/basic-projectile-atlas.png',frames:64,cols:8,cellW:480,cellH:270,ms:62.5,pivot:240,foot:135,body:270},
   thay_mo:{src:'assets/characters/thay-mo/projectile-v3201-atlas.png',frames:24,cols:6,cellW:480,cellH:90,strideW:488,strideH:98,pad:4,ms:60,pivot:240,foot:45,body:90}

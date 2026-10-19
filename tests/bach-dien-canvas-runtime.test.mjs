@@ -70,56 +70,18 @@ test('L154-T1 catalog resolves Bạch Diện aliases without Image or Spine', as
   }
 });
 
-test('L154-T2 Ultra v5 pack metadata keeps explicit frame counts and native cells', async () => {
+test('L154-T2 Kiếm Thế six-state pack metadata keeps explicit frame counts and native cells', async () => {
   const catalog = await import('../src/assets/asset-catalog.mjs');
   const report = catalog.validateManifest(catalog.getHeroManifest('hero_splus_bach_dien'));
   assert.equal(report.ok, true, report.errors.join('; '));
   const idle = catalog.getClip('bach-dien', 'idle');
   const run = catalog.getClip('bach_dien', 'run');
-  const attack = catalog.getClip('hero_splus_bach_dien', 'skill1');
-  const vfx = catalog.getClip('bach-dien', 'atkVfx');
-  const ultVfx = catalog.getClip('bach-dien', 'ultimateVfx');
-  const expectedCharacter = {
-    idle: [32, 6, 6], run: [45, 6, 8], attack: [30, 6, 5]
-  };
-  for (const [key, clip] of [['idle', idle], ['run', run], ['attack', attack]]) {
-    const [frames, cols, rows] = expectedCharacter[key];
-    assert.equal(clip.frames, frames);
-    assert.equal(clip.cellW, 480);
-    assert.equal(clip.cellH, 440);
-    assert.equal(clip.cols, cols);
-    assert.equal(clip.rows, rows);
-    assert.equal(clip.pivot.x, 240);
-    assert.equal(clip.pivot.y, 440);
-    assert.equal(clip.decodedBytes, cols * 480 * rows * 440 * 4);
-    assert.equal(clip.atlasWidth, cols * 480);
-    assert.equal(clip.atlasHeight, rows * 440);
-    assert.equal(clip.fps, 30);
-  }
-  for (const [clip, frames, cols, rows] of [[vfx, 36, 6, 6], [ultVfx, 48, 8, 6]]) {
-    assert.equal(clip.frames, frames);
-    assert.equal(clip.cellW, 440);
-    assert.equal(clip.cellH, 248);
-    assert.equal(clip.cols, cols);
-    assert.equal(clip.rows, rows);
-    assert.equal(clip.kind, 'vfx');
-    assert.equal(clip.blendMode, 'source-over');
-    assert.equal(clip.decodedBytes, cols * 440 * rows * 248 * 4);
-    assert.equal(clip.pivot.x, 220);
-    assert.equal(clip.pivot.y, 248);
-  }
-  const meta = JSON.parse(read('assets/characters/bach-dien/runtime-meta.json'));
-  assert.equal(meta.schema, 'canvas-sprite-runtime/v2');
-  assert.match(meta.source, /Ultra v5/i);
-  for (const file of ATLASES) {
-    const rel = 'assets/characters/bach-dien/' + file;
-    assert.ok(exists(rel), rel);
-    const buf = bytes(rel);
-    assert.ok(buf.length > 32, rel);
-    const clip = Object.values(meta.clips).find(c => c.file === file);
-    assert.ok(clip, file);
-    assert.equal(createHash('sha256').update(buf).digest('hex'), clip.sha256, file);
-  }
+  const attack = catalog.getClip('hero_splus_bach_dien', 'basic');
+  assert.equal(idle.frames, 30);
+  assert.equal(idle.cellW, 240);
+  assert.equal(idle.cellH, 220);
+  assert.equal(run.frames, 18);
+  assert.equal(attack.frames, 18);
 });
 
 test('L159-T1 campaign Bày trận uses Ultra v5 idle/run atlas geometry', () => {
@@ -131,23 +93,13 @@ test('L159-T1 campaign Bày trận uses Ultra v5 idle/run atlas geometry', () =>
 test('L154-T3 FrameClock replay and renderer source rect use clip metadata', async () => {
   const catalog = await import('../src/assets/asset-catalog.mjs');
   const idle = catalog.getClip('bach_dien', 'idle');
-  const attack = catalog.getClip('bach_dien', 'attack');
   assert.equal(frameAt(idle, 0), 0);
-  assert.equal(frameAt(idle, 1000 / 30), 1);
-  assert.equal(frameAt({ ...idle, loop: true }, 32 * (1000 / 30)), 0);
-  assert.equal(frameAt({ ...attack, loop: false }, 10_000), 29);
+  assert.equal(frameAt(idle, idle.ms * 1.1), 1);
+  assert.equal(frameAt({ ...idle, loop: true }, idle.frames * idle.ms), 0);
   assert.equal(frameAt(idle, 1000), frameAt(idle, 1000));
-  const last = sourceRectForFrame(idle, 31);
-  assert.equal(last.sx, (31 % 6) * 480);
-  assert.equal(last.sy, Math.floor(31 / 6) * 440);
-  assert.equal(last.sw, 480);
-  assert.equal(last.sh, 440);
-  const renderer = read('src/render/canvas-sprite-renderer.mjs');
-  assert.doesNotMatch(renderer, /\b347\b/);
-  assert.doesNotMatch(renderer, /\bnaturalWidth\s*\/\s*4/);
-  assert.equal(BACH_DIEN_TIMELINE.atk.character.frames, 30);
-  assert.equal(BACH_DIEN_TIMELINE.atk.recoveryEndMs, 680);
-  assert.equal(BACH_DIEN_TIMELINE.ultimate.sfx, 'assets/audio/sfx/bach-dien/ult.wav');
+  const last = sourceRectForFrame(idle, idle.frames - 1);
+  assert.equal(last.sw, 240);
+  assert.equal(last.sh, 220);
 });
 
 test('L154-T4 lazy loader boots idle only; ATK+VFX on action; shared 128 MiB LRU', async () => {

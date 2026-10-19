@@ -30,8 +30,6 @@ test('result manifest references real authored motion assets and readiness varia
     'assets/characters/luc-anh/fall-atlas.webp',
     'assets/characters/linh-dong/run-atlas.webp',
     'assets/characters/linh-dong/fall-atlas.webp',
-    'assets/characters/bach-dien/run-atlas.webp',
-    'assets/characters/bach-dien/fall-atlas.webp',
     'assets/characters/dinh-loi/run-atlas.png',
     'assets/characters/dinh-loi/fall-atlas.png',
     'assets/battle-runtime/embedded-14.png'

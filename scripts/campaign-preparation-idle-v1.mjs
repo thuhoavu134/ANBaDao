@@ -76,7 +76,7 @@ export async function installCampaignPreparationIdle(root) {
   const attacks=preparationSourceSpecs(html,'farmAttackSpecs');
   const bach=JSON.parse(readFileSync(join(root,'assets/characters/bach-dien/runtime-meta.json'),'utf8'));
   const linh=JSON.parse(readFileSync(join(root,'assets/characters/linh-dong/runtime-meta.json'),'utf8'));
-  attacks.bach_dien.registration=bach.clips.attack.registration;
+  attacks.bach_dien.registration=(bach.clips.attack||bach.clips.basic)?.registration||{scale:1.0,offsetX:0.0,offsetY:0.0};
   attacks.linh_dong.registration=registrationFromCrop(linh.packed.find(c=>c.file==='basic-atlas.webp').cropBox,linh.packed.find(c=>c.file==='idle-atlas.webp').cropBox,480,440);
   const attackPacks=await buildPreparationIdlePages(root,attacks,{pageFrames:8,outputBase:'assets/characters/campaign-atk-v1',includePoster:false});
   const runs=preparationSourceSpecs(html,'runSpecs');
