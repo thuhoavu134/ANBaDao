@@ -1,0 +1,241 @@
+{
+  "source": {
+    "vfx": "owner-supplied green-screen clips vfxatk7 / vfxulti7 / vfxnoitai7 (2026-10-20)",
+    "sfx": "audio tracks of the same owner clips"
+  },
+  "clips": {
+    "vfx-basic": {
+      "file": "vfx-basic-25c62961.webp",
+      "frames": 16,
+      "cols": 8,
+      "rows": 2,
+      "cellW": 300,
+      "cellH": 169,
+      "atlasWidth": 2400,
+      "atlasHeight": 338,
+      "frameMs": 60,
+      "blend": "source-over",
+      "pivot": 150,
+      "foot": 84,
+      "sourceClip": "vfxatk7---286eb1e6-a9dd-483b-b2eb-4902e0a3f5e1.mp4",
+      "sourceFrames": [
+        0,
+        6,
+        13,
+        19,
+        25,
+        32,
+        38,
+        44,
+        51,
+        57,
+        63,
+        70,
+        76,
+        82,
+        89,
+        95
+      ],
+      "sourceFrameCount": 96,
+      "sourceRect": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "keying": "difference matte vs border green, alpha 40..130, unmix + spill clamp, Gemini corner masked",
+      "role": "basic VFX (owner clip vfxatk7)",
+      "sha256": "25c629613b0d224363b36c28d735730304c948496a384847abd30fc974654499",
+      "bytes": 290588
+    },
+    "vfx-ultimate": {
+      "file": "vfx-ultimate-556ce1df.webp",
+      "frames": 24,
+      "cols": 8,
+      "rows": 3,
+      "cellW": 202,
+      "cellH": 360,
+      "atlasWidth": 1616,
+      "atlasHeight": 1080,
+      "frameMs": 60,
+      "blend": "source-over",
+      "pivot": 101,
+      "foot": 180,
+      "sourceClip": "vfxulti7---d27b2b29-aa88-47e8-ae01-587df97b902b.mp4",
+      "sourceFrames": [
+        0,
+        4,
+        8,
+        12,
+        17,
+        21,
+        25,
+        29,
+        33,
+        37,
+        41,
+        45,
+        50,
+        54,
+        58,
+        62,
+        66,
+        70,
+        74,
+        78,
+        83,
+        87,
+        91,
+        95
+      ],
+      "sourceFrameCount": 96,
+      "sourceRect": [
+        0,
+        0,
+        1080,
+        1920
+      ],
+      "keying": "difference matte vs border green, alpha 40..130, unmix + spill clamp, Gemini corner masked",
+      "role": "ultimate VFX (owner clip vfxulti7, portrait 1080x1920)",
+      "sha256": "556ce1df874a3e110d3c4a8ee1081c751213ce57987fc478122ffd844da92a90",
+      "bytes": 545092
+    },
+    "vfx-passive": {
+      "file": "vfx-passive-f1a0b25b.webp",
+      "frames": 20,
+      "cols": 8,
+      "rows": 3,
+      "cellW": 300,
+      "cellH": 169,
+      "atlasWidth": 2400,
+      "atlasHeight": 507,
+      "frameMs": 60,
+      "blend": "source-over",
+      "pivot": 150,
+      "foot": 84,
+      "sourceClip": "vfxnoitai7---35a9f0fd-6f37-4cac-82ab-82c2f121cfd1.mp4",
+      "sourceFrames": [
+        0,
+        5,
+        10,
+        15,
+        20,
+        25,
+        30,
+        35,
+        40,
+        45,
+        50,
+        55,
+        60,
+        65,
+        70,
+        75,
+        80,
+        85,
+        90,
+        95
+      ],
+      "sourceFrameCount": 96,
+      "sourceRect": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "keying": "difference matte vs border green, alpha 40..130, unmix + spill clamp, Gemini corner masked",
+      "role": "passive VFX (owner clip vfxnoitai7)",
+      "sha256": "f1a0b25b0d1ca570e6cd38d89835f9018c61f2a84aba28b865d4c278db968da7",
+      "bytes": 383250
+    }
+  },
+  "sfx": {
+    "nguyet-diep-basic": {
+      "file": "nguyet-diep/basic.wav",
+      "source": "vfxatk7.mp4 (owner clip 2026-10-20)",
+      "trim": [
+        1.0,
+        0.75
+      ],
+      "sha256": "8ba9a0c5bd98c7e12fe36350d220f7cb2a942383fa5fc9d70c808170ca0b1af1",
+      "durationMs": 750,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "vfxatk7 âm thanh gốc 1.00-1.75s: hồn lao vút (phát lúc hồn bay ra)"
+    },
+    "nguyet-diep-ultimate": {
+      "file": "nguyet-diep/ultimate.wav",
+      "source": "Ulti7.mp4 (owner clip 2026-10-20)",
+      "trim": [
+        0.0,
+        3.05
+      ],
+      "sha256": "62767f63bfb6d7abf0e8387584b73099363895ac8abd950760b3d08516de04c5",
+      "durationMs": 3050,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "âm thanh gốc clip Ulti7, cắt tới lúc chân chạm đất + kiếm cắm xuống"
+    },
+    "nguyet-diep-ultimate-vfx": {
+      "file": "nguyet-diep/ultimate-vfx.wav",
+      "source": "vfxulti7.mp4 (owner clip 2026-10-20)",
+      "trim": [
+        1.1,
+        0.95
+      ],
+      "sha256": "a51dff80326dfb58fddff8a9f545268a8523d6b2731a277c5702204f27047b61",
+      "durationMs": 950,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "vfxulti7 âm thanh gốc 1.10-2.05s: kiếm từ trời lao xuống"
+    },
+    "nguyet-diep-passive": {
+      "file": "nguyet-diep/passive.wav",
+      "source": "vfxnoitai7.mp4 (owner clip 2026-10-20)",
+      "trim": [
+        0.0,
+        2.2
+      ],
+      "sha256": "86fdcbc2cbe3a8f6581f3b8d6d749528fc70192babfd8f6121fa1ff8500903b2",
+      "durationMs": 2200,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "âm thanh gốc clip vfxnoitai7 (Âm Dương Linh Kính)"
+    },
+    "nguyet-diep-basic-hit": {
+      "file": "nguyet-diep/basic-hit.wav",
+      "source": "vfxatk7.mp4 (owner clip 2026-10-20)",
+      "trim": [
+        1.85,
+        1.15
+      ],
+      "sha256": "c1772dbd6d1ac828e1488038f74a51ad00f295485966e3c54854be97bf6b59b1",
+      "durationMs": 1150,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "vfxatk7 âm thanh gốc 1.85-3.00s: kiếm khí nổ + bùa (phát đúng lúc mỗi hồn nổ ở địch)"
+    },
+    "nguyet-diep-ultimate-hit": {
+      "file": "nguyet-diep/ultimate-hit.wav",
+      "durationMs": 558,
+      "sampleRate": 44100,
+      "channels": 1,
+      "sha256": "60ca836ff0cf76886b29c899c19b87a9fe4baaf0f9d9cf4852a1a71f3d6d51fc",
+      "layers": [
+        {
+          "source": "SKILLPACK/sfx/wudang/wd_bjef_f.wav",
+          "note": "Kiếm Thế Võ Đang - kiếm khí trúng"
+        },
+        {
+          "source": "pixabay",
+          "title": "Hit Rock 02",
+          "page": "https://pixabay.com/sound-effects/film-special-effects-hit-rock-02-266304/",
+          "author": "u_xjrmmgxfru",
+          "url": "https://cdn.pixabay.com/download/audio/2024/11/19/audio_98ba777c64.mp3",
+          "sha256": "1e3d12a5204b7a65cfcd22434be3320005e65fe2dd23f4e14e0efd82ed0d79f2"
+        }
+      ],
+      "provenance": "kiếm cắm xuống đất: kim loại Võ Đang + tiếng đá vỡ (Pixabay, không bắt buộc ghi công); phát mỗi lần kiếm rơi"
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "schema": "battle-hero-presentation/v1",
+  "heroId": "hero_splus_nguyet_diep",
+  "aliases": [
+    "nguyet-diep",
+    "hero_splus_nguyet_diep",
+    "nguyet_diep"
+  ],
+  "referenceBodyHeight": 187,
+  "footOffsetY": 0,
+  "registration": "source-body",
+  "clips": {
+    "idle": {
+      "bodyHeight": 187,
+      "footX": 120,
+      "footY": 203.3
+    },
+    "run": {
+      "bodyHeight": 187,
+      "footX": 120,
+      "footY": 203.3
+    },
+    "basic": {
+      "bodyHeight": 187,
+      "footX": 204,
+      "footY": 203.3
+    },
+    "ultimate": {
+      "bodyHeight": 187,
+      "footX": 216,
+      "footY": 203.3
+    },
+    "hit": {
+      "bodyHeight": 187,
+      "footX": 120,
+      "footY": 203.3
+    },
+    "fall-die": {
+      "bodyHeight": 187,
+      "footX": 128,
+      "footY": 203.3
+    }
+  },
+  "vfxClips": [],
+  "states": {
+    "idle": [
+      "idle"
+    ],
+    "attack": [
+      "basic"
+    ],
+    "ultimate": [
+      "ultimate"
+    ]
+  },
+  "evidence": "Uniform-framed six-state pack 20261020-201147: one shared scale for every state; body 373px / foot line 406.665px measured from idle alpha at full cell, x0.5."
+}

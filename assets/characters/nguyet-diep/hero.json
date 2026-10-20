@@ -1,0 +1,205 @@
+{
+  "schema": "luc-than-authored-hero/v1",
+  "id": "nguyet_diep",
+  "sourceId": "hero_splus_nguyet_diep",
+  "slug": "nguyet-diep",
+  "identityVersion": "kiemthe-sixstate-20261020-uniform-wide",
+  "host": {
+    "he": "soul",
+    "faction": "am_hon",
+    "archetype": "mystic",
+    "rarity": "ssr",
+    "name": "Nguyệt Diệp",
+    "role": "Pháp sư / Trảm kích / Thanh tẩy",
+    "col": "#5f8fb8",
+    "stats": {
+      "hp": 1040,
+      "mp": 60,
+      "atk": 150,
+      "def": 54,
+      "spd": 112
+    }
+  },
+  "kit": {
+    "passive": {
+      "name": "Âm Dương Linh Kính",
+      "desc": "Đầu mỗi hiệp, Linh Kính xóa tối đa 2 hiệu ứng bất lợi cho 2 đồng minh đang bị khống chế hoặc ít máu nhất; đồng minh được thanh tẩy +15% Né tránh 1 hiệp và hồi máu bằng 60% Công của Nguyệt Diệp. Bản thân kháng 30% khống chế."
+    },
+    "basic": {
+      "name": "Thừa Phong Xuất Hồn",
+      "cost": 0,
+      "desc": "Hai hồn kiếm nối đuôi xuyên cả hàng địch (trước rồi sau), mỗi hồn nổ ở 1 địch: 100% sát thương phép, giảm 15% Tốc độ và 10% Giáp 2 hiệp.",
+      "fx": {
+        "kind": "damage",
+        "target": "enemy",
+        "power": 1
+      }
+    },
+    "ultimate": {
+      "name": "Nhân Kiếm Hợp Nhất",
+      "cost": 60,
+      "desc": "Kiếm từ trời rơi lần lượt xuống vị trí 1-2-3-6-5-4, lặp 3 vòng, vòng sau bằng nửa vòng trước (tổng 185% sát thương phép); bỏ qua 30% phòng ngự địch đang bị giảm giáp; 40% Câm Lặng 1 hiệp. Linh Kính hồi 100 Nộ cho đồng minh gây nhiều sát thương nhất.",
+      "fx": {
+        "kind": "damage",
+        "target": "aoe_enemy",
+        "power": 1.85
+      }
+    }
+  },
+  "art": {
+    "portrait": "assets/characters/nguyet-diep/portrait-be8c9ab1.webp"
+  },
+  "clipsMeta": "runtime-meta.json",
+  "vfxBase": "assets/vfx/nguyet-diep/",
+  "vfxMeta": "assets/vfx/nguyet-diep/provenance.json",
+  "battle": {
+    "tempo": {
+      "basic": 1.2,
+      "ultimate": 1
+    },
+    "actions": {
+      "basic": {
+        "clip": "basic",
+        "release": 1300,
+        "hits": [
+          1700,
+          2050
+        ],
+        "vfxEnd": 2050,
+        "recovery": 2708,
+        "hitTargets": "sequential",
+        "projectile": {
+          "vfx": "vfx-basic",
+          "from": [
+            0.3,
+            0.55
+          ],
+          "scale": 1.35,
+          "arc": 0,
+          "frames": [
+            4,
+            7
+          ],
+          "perTarget": true,
+          "flight": 400
+        },
+        "impact": {
+          "vfx": "vfx-basic",
+          "anchor": "body",
+          "scale": 1.35,
+          "startFrame": 8,
+          "shake": 4
+        },
+        "sfx": [
+          {
+            "cue": "nguyet-diep-basic",
+            "at": "release",
+            "lead": 0
+          },
+          {
+            "cue": "nguyet-diep-basic-hit",
+            "at": "hit"
+          }
+        ]
+      },
+      "ultimate": {
+        "clip": "ultimate",
+        "release": 2620,
+        "hits": [
+          2950,
+          3120,
+          3290,
+          3460,
+          3630,
+          3800,
+          3970,
+          4140,
+          4310,
+          4480,
+          4650,
+          4820,
+          4990,
+          5160,
+          5330,
+          5500,
+          5670,
+          5840
+        ],
+        "vfxEnd": 6500,
+        "recovery": 6500,
+        "hitTargets": "slotOrder",
+        "waves": 3,
+        "area": {
+          "vfx": "vfx-ultimate",
+          "anchor": "body",
+          "scale": 1.9,
+          "shake": 5,
+          "drop": {
+            "ms": 420,
+            "fallFrames": [
+              7,
+              11
+            ],
+            "landFrame": 13
+          }
+        },
+        "sfx": [
+          {
+            "cue": "nguyet-diep-ultimate",
+            "at": "release",
+            "lead": 2620
+          },
+          {
+            "cue": "nguyet-diep-ultimate-vfx",
+            "at": "release",
+            "lead": 0
+          },
+          {
+            "cue": "nguyet-diep-ultimate-hit",
+            "at": "hit"
+          }
+        ],
+        "order": [
+          0,
+          1,
+          2,
+          5,
+          4,
+          3
+        ]
+      }
+    },
+    "reactions": {
+      "hit": "hit",
+      "death": "fall-die",
+      "durationMs": 4000
+    },
+    "events": {
+      "linhKinh": {
+        "vfx": "vfx-passive",
+        "anchor": "body",
+        "scale": 1.3,
+        "sfx": "nguyet-diep-passive"
+      }
+    }
+  },
+  "sfx": {
+    "nguyet-diep-basic": "nguyet-diep/basic.wav",
+    "nguyet-diep-basic-hit": "nguyet-diep/basic-hit.wav",
+    "nguyet-diep-ultimate": "nguyet-diep/ultimate.wav",
+    "nguyet-diep-ultimate-vfx": "nguyet-diep/ultimate-vfx.wav",
+    "nguyet-diep-ultimate-hit": "nguyet-diep/ultimate-hit.wav",
+    "nguyet-diep-passive": "nguyet-diep/passive.wav"
+  },
+  "surfaces": [
+    "roster",
+    "formation",
+    "hero-detail",
+    "battle"
+  ],
+  "approval": {
+    "animation": "six-state pack 20261020-193216 (--framing uniform, wide cells for atk/ulti); atk cut at frame 64 (hồn bay về trước), ulti cut at frame 72 (chân + kiếm chạm đất) per owner",
+    "vfx": "owner clips keyed; owner review pending",
+    "sfx": "owner clip audio; owner review pending"
+  }
+}
