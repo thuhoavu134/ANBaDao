@@ -64,7 +64,9 @@ for (const [state, clip] of Object.entries(STATE_TO_CLIP)) {
 const pivot = Math.round(clips.idle.cellW / 2);
 const foot = Math.round(footFull * budgetScale * 10) / 10;
 const body = Math.round(bodyFull * budgetScale);
-for (const c of Object.values(clips)) Object.assign(c, { pivot, foot, body });
+// Wide states (clones, long slashes) get a wider cell from the packager with the body centred,
+// so the pivot is per clip; scale, foot line and body height are shared by every state.
+for (const c of Object.values(clips)) Object.assign(c, { pivot: Math.round(c.cellW / 2), foot, body });
 
 const pm = JSON.parse(readFileSync(join(packDir, 'PACK-MANIFEST.json'), 'utf8'));
 const runtime = {
@@ -76,7 +78,7 @@ writeFileSync(join(outDir, 'runtime-meta.json'), JSON.stringify(runtime, null, 2
 const presentation = {
   schema: 'battle-hero-presentation/v1', heroId, aliases: [slug, heroId, heroId.replace(/^hero_splus_/, '')],
   referenceBodyHeight: body, footOffsetY: 0, registration: 'source-body',
-  clips: Object.fromEntries(Object.keys(clips).map(k => [k, { bodyHeight: body, footX: pivot, footY: foot }])),
+  clips: Object.fromEntries(Object.entries(clips).map(([k, c]) => [k, { bodyHeight: body, footX: c.pivot, footY: foot }])),
   vfxClips: [], states: { idle: ['idle'], attack: ['basic'], ultimate: ['ultimate'] },
   evidence: `Uniform-framed six-state pack ${pm.version}: one shared scale for every state; body ${bodyFull}px / foot line ${footFull}px measured from idle alpha at full cell, x${budgetScale}.`
 };

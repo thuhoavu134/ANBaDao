@@ -100,6 +100,25 @@ function authoredHeroEvent(event){
  if(event.type==='death')authoredMotions.set(target.id,{kind:'fall-die',start:performance.now(),speed,duration:def.clips['fall-die']?.durationMs||1});
  else if(event.type==='damage'&&target.hp>0&&!authoredMotions.has(target.id))authoredMotions.set(target.id,{kind:'hit',start:performance.now(),speed,duration:def.clips.hit?.durationMs||1});
 }
+// hero.json hitTargets: 'sequential' = hit i lands on target i only (chained projectiles);
+// 'rows' = targets split front row then back row, spec.waves hits per row; default = every target every hit.
+function authoredHitPlan(spec,targetIds){
+ const n=spec.hits.length,mode=spec.hitTargets;
+ if(mode==='sequential')return spec.hits.map((_,i)=>({targets:targetIds[i]?[targetIds[i]]:[],index:0}));
+ // 'slotOrder': swords fall one by one in spec.order (formation slots), repeated spec.waves times;
+ // occupied slots are packed first so no beat is spent on an empty slot.
+ if(mode==='slotOrder'){
+  const waves=Math.max(1,Number(spec.waves)||1),order=spec.order||[0,1,2,5,4,3],units=targetIds.map(getUnit).filter(Boolean),steps=[];
+  for(let w=0;w<waves;w++)for(const slot of order){const u=units.find(x=>x.slot===slot);if(u)steps.push({targets:[u.id],index:w});}
+  return spec.hits.map((_,i)=>steps[i]||{targets:[],index:0});
+ }
+ if(mode==='rows'){
+  const waves=Math.max(1,Number(spec.waves)||1),units=targetIds.map(getUnit).filter(Boolean);
+  const groups=[units.filter(u=>u.slot<3),units.filter(u=>u.slot>=3)].filter(g=>g.length).map(g=>g.map(u=>u.id));
+  return spec.hits.map((_,i)=>({targets:groups[Math.floor(i/waves)]||[],index:i%waves}));
+ }
+ return spec.hits.map((_,i)=>({targets:targetIds.slice(),index:i}));
+}
 function drawAuthoredVfxClip(ctx,def,key,age,x,y,heightPx,opts={}){
  const c=def.clips[key];if(!c)return;
  const frame=c.frames<=1?0:Math.min(c.frames-1,Math.floor(age/(c.frameMs||60)));
@@ -114,20 +133,28 @@ function drawAuthoredHeroVfx(ctx,time){
  for(const info of authoredActions){
   const age=(time-info.start)*info.speed;if(info.battleId!==state.battleId)continue;
   const def=info.def,spec=info.spec,u=info.actor,victims=info.targets.map(getUnit).filter(Boolean);
-  if(spec.projectile&&age>=spec.release&&age<=spec.hits[0]&&victims[0]){
-   const t=victims[0],p=Math.max(0,Math.min(1,(age-spec.release)/Math.max(1,spec.hits[0]-spec.release)));
+  const flights=spec.projectile?(spec.projectile.perTarget&&info.plan?spec.hits.map((h,i)=>({t:getUnit(info.plan[i].targets[0]),from:h-(Number(spec.projectile.flight)||400),to:h})):[{t:victims[0],from:spec.release,to:spec.hits[0]}]):[];
+  for(const fl of flights)if(fl.t&&age>=fl.from&&age<=fl.to){
+   const t=fl.t,p=Math.max(0,Math.min(1,(age-fl.from)/Math.max(1,fl.to-fl.from)));
    const bh=authoredBodyHeight(u),th=authoredBodyHeight(t),f=authoredFacing(u);
    const sx=u.x+f*bh*spec.projectile.from[0],sy=u.y-bh*spec.projectile.from[1],ex=t.x,ey=t.y-th*.5;
    const x=sx+(ex-sx)*p,y=sy+(ey-sy)*p-bh*.25*4*p*(1-p),dx=ex-sx,dy=ey-sy;
    const mirror=dx<0,angle=Math.atan2(dy,Math.abs(dx))*(mirror?-1:1);
    drawAuthoredVfxClip(ctx,def,spec.projectile.vfx,0,x,y,bh*(spec.projectile.scale||1),{mirror,rotate:angle});
   }
-  if(spec.area&&age>=spec.release&&age<=spec.vfxEnd)for(const t of victims){
+  if(spec.area?.drop&&info.plan){const a=spec.area,c=def.clips[a.vfx],fm=c?.frameMs||60,dms=Number(a.drop.ms)||380,ff=a.drop.fallFrames||[0,0],land=Number(a.drop.landFrame)||0;
+   for(let i=0;i<spec.hits.length;i++){const local=age-spec.hits[i];if(!c||local<-dms||local>(c.frames-land)*fm)continue;
+    for(const id of info.plan[i].targets){const t=getUnit(id);if(!t)continue;const h=authoredBodyHeight(t),size=h*(a.scale||1),gy=t.y-h*.5;
+     if(local<0){const q=1+local/dms,fy=-size*.6+(gy+size*.6)*q*q;drawAuthoredVfxClip(ctx,def,a.vfx,(ff[0]+(ff[1]-ff[0])*q)*fm,t.x,fy,size);}
+     else drawAuthoredVfxClip(ctx,def,a.vfx,land*fm+local,t.x,gy,size);}}
+  }
+  else if(spec.area&&age>=spec.release&&age<=spec.vfxEnd)for(const t of victims){
    if(t.hp<=0)continue;const h=authoredBodyHeight(t);drawAuthoredVfxClip(ctx,def,spec.area.vfx,age-spec.release,t.x,t.y-h*.5,h*(spec.area.scale||1),{mirror:u.team===TEAM_ENEMY});
   }
   if(spec.impact)for(const hit of spec.hits){
    const local=age-hit,c=def.clips[spec.impact.vfx];if(!c||local<0||local>c.frames*(c.frameMs||60))continue;
-   for(const t of victims){const h=authoredBodyHeight(t);drawAuthoredVfxClip(ctx,def,spec.impact.vfx,local,t.x,t.y-h*.5,h*(spec.impact.scale||1));}
+   const hitIdx=spec.hits.indexOf(hit),onto=info.plan&&spec.hitTargets?info.plan[hitIdx].targets.map(getUnit).filter(Boolean):victims;
+   for(const t of onto){const h=authoredBodyHeight(t);drawAuthoredVfxClip(ctx,def,spec.impact.vfx,local,t.x,t.y-h*.5,h*(spec.impact.scale||1));}
   }
  }
 }
@@ -164,7 +191,7 @@ async function performAuthoredAction(actor,action,target,e,battleId){
   if(!current())return;
   authoredTrace(info,'act');
   cast=e.act(actor.id,kind,target?.id,{deferAuthored:true});if(!cast.ok){authoredTrace(info,'act-failed:'+(cast.reason||''));return;}
-  info.targets=cast.targetIds;trace?.begin({actionId:presentationId,roundId:state.round,actorId:actor.id,targetIds:info.targets,skillId:kind,position:{x:actor.x,y:actor.y}});
+  info.targets=cast.targetIds;info.plan=authoredHitPlan(spec,info.targets);trace?.begin({actionId:presentationId,roundId:state.round,actorId:actor.id,targetIds:info.targets,skillId:kind,position:{x:actor.x,y:actor.y}});
   info.start=performance.now();authoredActions.add(info);
   const duration=spec.recovery;authoredMotions.set(actor.id,{kind:spec.clip,start:info.start,speed,duration});
   setUnitState(actor,kind==='basic'?'attack':'ultimate',duration/speed);
@@ -179,11 +206,12 @@ async function performAuthoredAction(actor,action,target,e,battleId){
   for(let hit=0;hit<spec.hits.length;hit++){
    if(!await wait(spec.hits[hit]))return;
    trace?.marker('impact',{actionId:presentationId,hit});
+   if(info.plan&&spec.hitTargets&&!info.plan[hit].targets.length)continue;
    for(const s of hitCues)authoredPlay(s.cue,info.abort.signal,speed);
    // hero.json impact.shake (px): short canvas jolt so a heavy hit lands with weight.
    const jolt=Number(spec.impact?.shake||spec.area?.shake)||0,cv=jolt&&!(typeof REDUCED_MOTION!=='undefined'&&REDUCED_MOTION)?document.querySelector('canvas'):null;
    if(cv?.animate)cv.animate([{transform:'translate(0,0)'},{transform:`translate(${jolt}px,${-jolt*.6}px)`},{transform:`translate(${-jolt*.8}px,${jolt*.5}px)`},{transform:`translate(${jolt*.4}px,0)`},{transform:'translate(0,0)'}],{duration:190,easing:'ease-out'});
-   for(const id of info.targets)e.resolveAuthoredImpact(actor.id,cast.castId,id,hit);
+   const step=info.plan[hit];for(const id of step.targets)e.resolveAuthoredImpact(actor.id,cast.castId,id,step.index);
    updateTeamCounters();splusStateView();
   }
   e.finishAuthoredCast(actor.id,cast.castId);state.actionCount++;state.actionBreakdown[kind]=(state.actionBreakdown[kind]||0)+1;

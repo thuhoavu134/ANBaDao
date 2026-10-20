@@ -12,7 +12,8 @@ const P = (sid, slot) => ({ id: 'p-' + sid, sourceId: sid, team: 'player', slot 
 const E = (sid, slot) => ({ id: 'e-' + sid + slot, sourceId: sid, team: 'enemy', slot, accent: '#ed806b' });
 const cfg = { heroes: [
   P(id, 1), P(id === 'khaos' ? 'van_phong' : 'khaos', 0), P('bach_dien', 4),
-  E('hero_splus_cuong_dong', 0), E('hero_splus_hac_pha', 1), E('hero_splus_lac_an', 3), E('hero_splus_thiem_ngan', 4)
+  E('hero_splus_cuong_dong', 0), E('hero_splus_hac_pha', 1), E('hero_splus_lac_an', 3), E('hero_splus_thiem_ngan', 4),
+  ...(process.env.QA_FULL ? [E('hero_splus_co_trong', 2), E('hero_splus_thiet_lanh', 5)] : [])
 ], timingScale: 1 };
 const b = await launch({ width: 390, height: 844 });
 const c = await attach((await (await fetch(b.base + '/json/list')).json()).find(t => t.type === 'page').webSocketDebuggerUrl);
@@ -34,6 +35,10 @@ while (Date.now() - t0 < 75000) {
   if (keys.includes('vfx-basic') && !seen.__burst) {
     seen.__burst = 1;
     for (let i = 0; i < 5; i++) { const f = `${OUT}/battle-${tag}-burst-${i}.png`; await c.shot(f); copyFileSync(f, `${PUB}/vp-${tag}-burst-${i}.png`); await new Promise(r => setTimeout(r, 70)); }
+  }
+  if (keys.includes('vfx-ultimate') && !seen.__ultBurst) {
+    seen.__ultBurst = 1;
+    for (let i = 0; i < 8; i++) { const f = `${OUT}/battle-${tag}-ult-${i}.png`; await c.shot(f); copyFileSync(f, `${PUB}/vp-${tag}-ult-${i}.png`); await new Promise(r => setTimeout(r, 260)); }
   }
   if (fresh) {
     const file = `${OUT}/battle-${tag}-${shots.length}-${fresh}.png`;

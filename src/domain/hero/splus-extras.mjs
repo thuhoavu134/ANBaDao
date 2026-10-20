@@ -4,6 +4,7 @@ import {KY_VAN_HERO} from './ky-van.mjs';
 import {TICH_DAO_HERO} from './tich-dao.mjs';
 import {HONG_THUONG_HERO} from './hong-thuong.mjs';
 import {VAN_PHONG_HERO} from './van-phong.mjs';
+import {NGUYET_DIEP_HERO} from './nguyet-diep.mjs';
 // Authored S+ extras live outside the locked 42-hero / 7-per-element grid.
 // Bạch Diện is Tướng 03 S+ by owner bible 15/09; Canvas Sprite Runtime pack TKT-0154.
 
@@ -83,7 +84,7 @@ export const SPLUS_EXTRA_HEROES = Object.freeze([
     }),
     passive: skill('passive', 'bach_dien.passive', 0, 0)
   }),
-  KY_VAN_HERO, TIEU_PHONG_HERO, TICH_DAO_HERO, HONG_THUONG_HERO, BE_AN_HERO, VAN_PHONG_HERO
+  KY_VAN_HERO, TIEU_PHONG_HERO, TICH_DAO_HERO, HONG_THUONG_HERO, BE_AN_HERO, VAN_PHONG_HERO, NGUYET_DIEP_HERO
 ]);
 
 export const SPLUS_EXTRA_BY_ID = Object.freeze(Object.fromEntries(SPLUS_EXTRA_HEROES.map(h => [h.id, h])));
@@ -103,6 +104,7 @@ export function resolveSplusExtraId(id) {
   if (/^(?:hero_splus_)?tich[_-]dao$/i.test(raw)) return 'hero_splus_tich_dao';
   if (/^(?:hero_splus_)?hong[_-]thuong$/i.test(raw)) return 'hero_splus_hong_thuong';
   if (/^(?:hero_splus_)?(?:bach[_-]y[_-])?van[_-]phong$/i.test(raw)) return 'hero_splus_van_phong';
+  if (/^(?:hero_splus_)?nguyet[_-]diep$/i.test(raw)) return 'hero_splus_nguyet_diep';
   if (Object.hasOwn(BACH_DIEN_ALIASES, raw)) return BACH_DIEN_ALIASES[raw];
   const lower = raw.toLowerCase();
   if (Object.hasOwn(BACH_DIEN_ALIASES, lower)) return BACH_DIEN_ALIASES[lower];

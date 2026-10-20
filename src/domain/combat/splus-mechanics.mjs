@@ -140,7 +140,7 @@ export function createSplusMechanics(options={}) {
   // (scripts/authored-hero-install.mjs + src/runtime/authored-hero.js). A new authored
   // hero adds one AUTHORED_KITS entry and one AUTHORED_HIT rule; the runtime resolves each
   // hit on its animation marker through resolveAuthoredImpact, exactly once per target/hit.
-  const AUTHORED_KITS={khaos:{basic:{hits:1,area:false},ultimate:{hits:2,area:true}},van_phong:{basic:{hits:1,area:false},ultimate:{hits:1,area:true}}};
+  const AUTHORED_KITS={khaos:{basic:{hits:1,area:false},ultimate:{hits:2,area:true}},van_phong:{basic:{hits:1,area:false},ultimate:{hits:1,area:true}},nguyet_diep:{basic:{hits:1,area:true},ultimate:{hits:3,area:true}}};
   const INK_SET=new Set(['inkMark','speedDown','armorDown']);
   function khaosInk(actor,target){
     mark(actor,target,'inkMark',0,{turns:3,stack:true,maxStacks:3,polarity:'debuff',iconId:'inkMark'});
@@ -165,7 +165,35 @@ export function createSplusMechanics(options={}) {
     try{emit('vanPhongCounter',hero,victim,{trigger:attacker?.id||null});damage(hero,victim,{multiplier:.6,action:'passive',type:'elemental',secondary:true,forceHit:true,noTriggers:true});energy(hero,hero,15,'vanPhongDodge');}
     finally{hero.splus.memory.vpCountering=false;}
   }
+  // Nguyet Diep (owner kit 2026-10-20): Thua Phong Xuat Hon / Nhan Kiem Hop Nhat / Am Duong Linh Kinh.
+  function nguyetDiepMirror(hero){
+    const allies=friends(hero).filter(t=>statuses(t).some(s=>s.polarity==='debuff'));
+    const ranked=allies.sort((a,b)=>Number(statuses(b).some(s=>control.has(s.type)))-Number(statuses(a).some(s=>control.has(s.type)))||ratio(a)-ratio(b)).slice(0,2);
+    for(const t of ranked){
+      const removed=cleanse(t,2);
+      if(!removed.length)continue;
+      buff(hero,t,'evasionUp',.15,1,{iconId:'linhKinh'});heal(hero,t,stat(hero,'atk')*.6);
+      emit('linhKinh',hero,t,{removed:removed.map(x=>x.type)});
+    }
+  }
+  function damageDealtBy(u){let sum=0;for(const ev of events)if(ev.type==='damage'&&ev.sourceId===u.id)sum+=n(ev.amount);return sum;}
   const AUTHORED_HIT={
+    nguyet_diep(actor,target,cast,index){
+      if(cast.kind==='basic'){
+        const dealt=damage(actor,target,{multiplier:1,action:'basic',type:'elemental'});
+        if(dealt>0&&alive(target)){buff(actor,target,'speedDown',.15,2);buff(actor,target,'armorDown',.10,2);}
+        return;
+      }
+      const broken=statuses(target).some(s=>s.type==='armorDown');
+      // Three sword waves per row, each half the previous; the three add up to 185%.
+      const dealt=damage(actor,target,{multiplier:[1.0571,.5286,.2643][index]??.2643,action:'ultimate',type:'elemental',armorPierce:broken?.3:0});
+      if(index===0&&dealt>0&&alive(target)&&rng('splus.nguyet-diep-seal')<.4)buff(actor,target,'silence',0,1);
+      if(!cast.nguyetDiepRage){
+        cast.nguyetDiepRage=true;
+        const ally=friends(actor).filter(t=>t!==actor).sort((a,b)=>damageDealtBy(b)-damageDealtBy(a)||stat(b,'atk')-stat(a,'atk'))[0];
+        if(ally){energy(actor,ally,100,'nguyetDiepMirror');emit('linhKinhRage',actor,ally,{amount:100});}
+      }
+    },
     van_phong(actor,target,cast,index){
       if(cast.kind==='basic'){
         const dealt=damage(actor,target,{multiplier:1,action:'basic',type:'elemental'});
@@ -224,6 +252,7 @@ export function createSplusMechanics(options={}) {
       if(key(u)==='tram_chau')m.defense+=Math.min(5,n(u.splus.memory.pearlArmor))*rules(u).armor;
       if(key(u)==='thach_kinh')m.magicDefense+=n(u.splus.memory.resentment)*rules(u).magicArmor;
       if(key(u)==='van_phong')m.resist+=0.15;
+      if(key(u)==='nguyet_diep')m.resist+=0.3;
     }
     return m;
   }
@@ -1001,6 +1030,7 @@ export function createSplusMechanics(options={}) {
       for(const u of units)remove(u,s=>s.expiresRound!=null&&s.expiresRound<=round,'expired');
       for(let i=zones.length-1;i>=0;i--)if(zones[i].expiresRound<=round)zones.splice(i,1);syncZones();
       for(const actor of units.filter(passive)){
+        if(key(actor)==='nguyet_diep')nguyetDiepMirror(actor);
         if(key(actor)==='vong_co'){const t=strongest(foes(actor))[0];for(const u of foes(actor))remove(u,s=>s.type==='cooldownDelay'&&s.sourceId===actor.id,'retarget');if(t)buff(actor,t,'cooldownDelay',1,1);}
         if(key(actor)==='tam_nuong'&&(round-1)%2===0){const other=weakest(friends(actor).filter(t=>t!==actor))[0];for(const t of [actor,other].filter(Boolean)){buff(actor,t,'cocoon',0,2,{charges:2});buff(actor,t,'armorUp',.3,2);}}
       }
@@ -1019,6 +1049,8 @@ export function createSplusMechanics(options={}) {
     if(action==='basic'){
       if(k==='tich_dao')return one(farthestFrom(actor)(backOrAll(enemies))[0]);
       if(k==='co_nuong')return one(tankiest(enemyFront)[0]);
+      // Two astral souls pierce the whole lane: the front foe, then the one behind it.
+      if(k==='nguyet_diep'){const lane=oppositeTarget?.slot%3;return enemies.filter(t=>t.slot%3===lane).sort(bySlot);}
       return null;
     }
     if(action==='skill')switch(k){
@@ -1043,7 +1075,7 @@ export function createSplusMechanics(options={}) {
       case 'mang_xa':return enemies;
       // Khaos (Thủy Mặc kit) has no rage skill; the old front/back swap returned [x,undefined]
       // once a row emptied and crashed updateActorHud -> the battle froze on his turn.
-      case 'khaos':case 'van_phong':return null;
+      case 'khaos':case 'van_phong':case 'nguyet_diep':return null;
       case 'hoi_anh':return one(oppositeTarget);
       case 'cuu_trieu':return unique([...enemyFront,...back(enemies).filter(u=>u.slot%3===actor.slot%3).slice(0,1)]);
       default:return null;
@@ -1062,7 +1094,7 @@ export function createSplusMechanics(options={}) {
       case 'hac_dao':{const target=tankiest(enemies)[0];return target?unique([target,...adjacent(target,enemies).slice(0,4)]):[];}
       case 'tieu_phong':{const lane=oppositeTarget?.slot%3;return enemies.filter(t=>t.slot%3===lane);}
       case 'tich_dao':case 'hong_thuong':return enemies;
-      case 'be_an':case 'ky_van':case 'to_linh':case 'linh_dong':case 'cuong_dong':case 'han_nuong':case 'vong_co':case 'co_nuong':case 'ha_lang':case 'hai_phong':case 'hoa_tieu':case 'tram_tue':case 'hoi_anh':case 'cuu_trieu':case 'khaos':case 'van_phong':return enemies;
+      case 'be_an':case 'ky_van':case 'to_linh':case 'linh_dong':case 'cuong_dong':case 'han_nuong':case 'vong_co':case 'co_nuong':case 'ha_lang':case 'hai_phong':case 'hoa_tieu':case 'tram_tue':case 'hoi_anh':case 'cuu_trieu':case 'khaos':case 'van_phong':case 'nguyet_diep':return enemies;
       default:return null;
     }
   }

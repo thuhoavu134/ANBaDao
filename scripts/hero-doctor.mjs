@@ -84,7 +84,9 @@ export async function doctorSource(root) {
       // The body clip owns recovery, except a projectile/area VFX released from it may finish after the body
       // returns to idle (e.g. Bạch Diện throws the mask at the end of a 2s cast): allow release + VFX length.
       const tailVfx = d.clips[a.projectile?.vfx || a.area?.vfx];
-      const limit = clip ? Math.max(clip.durationMs, tailVfx ? a.release + Number(tailVfx.durationMs || tailVfx.frames * (tailVfx.frameMs || 60)) : 0) : 0;
+      // A sky-drop area (area.drop) lands on every hit: its tail is the last hit + the landing frames.
+      const dropTail = a.area?.drop && tailVfx ? a.hits[a.hits.length - 1] + (tailVfx.frames - (Number(a.area.drop.landFrame) || 0)) * (tailVfx.frameMs || 60) : 0;
+      const limit = clip ? Math.max(clip.durationMs, dropTail, tailVfx ? a.release + Number(tailVfx.durationMs || tailVfx.frames * (tailVfx.frameMs || 60)) : 0) : 0;
       if (clip && a.recovery > limit + 1) fail(`${label}: ${kind} recovery ${a.recovery} > clip ${clip.durationMs}ms (+VFX tail ${limit}ms)`);
       for (const v of [a.projectile?.vfx, a.impact?.vfx, a.area?.vfx].filter(Boolean)) if (!d.clips[v]) fail(`${label}: ${kind} VFX ${v} not packaged`);
       for (const s of a.sfx || []) if (!hero.sfx?.[s.cue]) fail(`${label}: ${kind} cue ${s.cue} not declared in hero.sfx`);
