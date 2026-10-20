@@ -1,0 +1,143 @@
+{
+  "schema": "luc-than-authored-hero/v1",
+  "id": "van_phong",
+  "sourceId": "hero_splus_van_phong",
+  "slug": "bach-y-van-phong",
+  "identityVersion": "kiemthe-sixstate-20261020-uniform",
+  "host": {
+    "he": "moc",
+    "faction": "hu_mong",
+    "archetype": "mystic",
+    "rarity": "ssr",
+    "name": "Bạch Y Vân Phong",
+    "role": "Pháp sư / Khống chế / Tiêu dao",
+    "col": "#7fb8c9",
+    "stats": {
+      "hp": 1020,
+      "mp": 60,
+      "atk": 146,
+      "def": 50,
+      "spd": 118
+    }
+  },
+  "kit": {
+    "passive": {
+      "name": "Tiêu Dao Bất Nhiễm",
+      "desc": "Vĩnh viễn +20% Né tránh, +15% Kháng khống chế. Né đòn thành công: hóa khói mực phản kích ngẫu nhiên 1 địch 60% sát thương và hồi 15 Nộ khí. Đồng minh cùng hàng bị chí mạng: đỡ bớt 30% sát thương (1 lần/trận)."
+    },
+    "basic": {
+      "name": "Lạc Diệp Phong Trảm",
+      "cost": 0,
+      "desc": "Phóng luồng gió xoáy hòa khói mực, gây 100% sát thương phép. 30% gắn ấn Thất Phong 2 hiệp: −15% Tốc độ, −10% Tấn công.",
+      "fx": {
+        "kind": "damage",
+        "target": "enemy",
+        "power": 1
+      }
+    },
+    "ultimate": {
+      "name": "Cửu Tiêu Vân Loạn",
+      "cost": 60,
+      "desc": "Bão mực và lông vũ quét toàn bộ địch, 185% sát thương phép. 50% gây Mù Mịt 2 hiệp (35% đánh trượt); mục tiêu có Thất Phong bị Câm Lặng 1 hiệp. Tạo Vân Phong Vực: đồng minh +20% Tốc độ, +15% Né tránh 2 hiệp.",
+      "fx": {
+        "kind": "damage",
+        "target": "aoe_enemy",
+        "power": 1.85
+      }
+    }
+  },
+  "art": {
+    "portrait": "assets/characters/bach-y-van-phong/portrait-fcf4cd75.webp"
+  },
+  "clipsMeta": "runtime-meta.json",
+  "vfxBase": "assets/vfx/bach-y-van-phong/",
+  "vfxMeta": "assets/vfx/bach-y-van-phong/provenance.json",
+  "battle": {
+    "tempo": {
+      "basic": 1.33,
+      "ultimate": 1.2
+    },
+    "actions": {
+      "basic": {
+        "clip": "basic",
+        "release": 1700,
+        "hits": [
+          2200
+        ],
+        "vfxEnd": 2200,
+        "recovery": 4000,
+        "impact": {
+          "vfx": "vfx-basic",
+          "anchor": "body",
+          "scale": 1.4
+        },
+        "sfx": [
+          {
+            "cue": "van-phong-basic",
+            "at": "release",
+            "lead": 120
+          },
+          {
+            "cue": "van-phong-impact",
+            "at": "hit"
+          }
+        ]
+      },
+      "ultimate": {
+        "clip": "ultimate",
+        "release": 2000,
+        "hits": [
+          2500
+        ],
+        "vfxEnd": 3900,
+        "recovery": 3967,
+        "area": {
+          "vfx": "vfx-ultimate",
+          "anchor": "body",
+          "scale": 1.6
+        },
+        "sfx": [
+          {
+            "cue": "van-phong-ultimate",
+            "at": "release",
+            "lead": 200
+          },
+          {
+            "cue": "van-phong-ultimate-hit",
+            "at": "hit"
+          }
+        ]
+      }
+    },
+    "reactions": {
+      "hit": "hit",
+      "death": "fall-die",
+      "durationMs": 4000
+    },
+    "events": {
+      "vanPhongCounter": {
+        "vfx": "vfx-basic",
+        "anchor": "body",
+        "scale": 1.1,
+        "sfx": "van-phong-impact"
+      }
+    }
+  },
+  "sfx": {
+    "van-phong-basic": "bach-y-van-phong/basic.wav",
+    "van-phong-impact": "bach-y-van-phong/impact.wav",
+    "van-phong-ultimate": "bach-y-van-phong/ultimate.wav",
+    "van-phong-ultimate-hit": "bach-y-van-phong/ultimate-hit.wav"
+  },
+  "surfaces": [
+    "roster",
+    "formation",
+    "hero-detail",
+    "battle"
+  ],
+  "approval": {
+    "animation": "six-state pack 20261020-093936 (--framing uniform), validator PASS; owner review pending",
+    "vfx": "owner-supplied clips keyed (difference matte); owner review pending",
+    "sfx": "Kiếm Thế SKILLPACK Côn Lôn wind set (owner allowed Pixabay or Kiếm Thế); owner listening review pending"
+  }
+}

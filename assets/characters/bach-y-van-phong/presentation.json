@@ -1,0 +1,57 @@
+{
+  "schema": "battle-hero-presentation/v1",
+  "heroId": "hero_splus_van_phong",
+  "aliases": [
+    "bach-y-van-phong",
+    "hero_splus_van_phong",
+    "van_phong"
+  ],
+  "referenceBodyHeight": 142,
+  "footOffsetY": 0,
+  "registration": "source-body",
+  "clips": {
+    "idle": {
+      "bodyHeight": 142,
+      "footX": 120,
+      "footY": 189.7
+    },
+    "run": {
+      "bodyHeight": 142,
+      "footX": 120,
+      "footY": 189.7
+    },
+    "basic": {
+      "bodyHeight": 142,
+      "footX": 120,
+      "footY": 189.7
+    },
+    "ultimate": {
+      "bodyHeight": 142,
+      "footX": 120,
+      "footY": 189.7
+    },
+    "hit": {
+      "bodyHeight": 142,
+      "footX": 120,
+      "footY": 189.7
+    },
+    "fall-die": {
+      "bodyHeight": 142,
+      "footX": 120,
+      "footY": 189.7
+    }
+  },
+  "vfxClips": [],
+  "states": {
+    "idle": [
+      "idle"
+    ],
+    "attack": [
+      "basic"
+    ],
+    "ultimate": [
+      "ultimate"
+    ]
+  },
+  "evidence": "Uniform-framed six-state pack 20261020-093936: one shared scale for every state; body 284px / foot line 379.357px measured from idle alpha at full cell, x0.5."
+}

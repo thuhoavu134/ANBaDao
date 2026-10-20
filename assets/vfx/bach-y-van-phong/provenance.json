@@ -1,0 +1,146 @@
+{
+  "source": {
+    "vfx": "owner-supplied green-screen clips vfxatk6 / vfxulti6 (2026-10-20)",
+    "sfxArchive": "KIEMTHE-VFX-SFX-FULL-20261017.zip (Côn Lôn wind set)"
+  },
+  "clips": {
+    "vfx-basic": {
+      "file": "vfx-basic-72130a11.webp",
+      "frames": 16,
+      "cols": 8,
+      "rows": 2,
+      "cellW": 300,
+      "cellH": 161,
+      "atlasWidth": 2400,
+      "atlasHeight": 322,
+      "frameMs": 60,
+      "blend": "source-over",
+      "pivot": 150,
+      "foot": 80,
+      "sourceClip": "vfxatk6---3d7c315d-2429-45ac-b8f2-fb648549fe4a.mp4",
+      "sourceFrames": [
+        0,
+        6,
+        13,
+        19,
+        25,
+        32,
+        38,
+        44,
+        51,
+        57,
+        63,
+        70,
+        76,
+        82,
+        89,
+        95
+      ],
+      "sourceFrameCount": 96,
+      "sourceRect": [
+        0,
+        0,
+        1920,
+        1028
+      ],
+      "keying": "difference matte vs border green, alpha 40..130, unmix + spill clamp, Gemini corner masked",
+      "role": "basic: gió xoáy + khói mực bắn vào mục tiêu (impact on target)",
+      "sha256": "72130a114b701372956a2a06af9af7d5feb5a502b1b56a5e6dedf52717a5d280",
+      "bytes": 268566
+    },
+    "vfx-ultimate": {
+      "file": "vfx-ultimate-a4567e2f.webp",
+      "frames": 24,
+      "cols": 8,
+      "rows": 3,
+      "cellW": 360,
+      "cellH": 202,
+      "atlasWidth": 2880,
+      "atlasHeight": 606,
+      "frameMs": 80,
+      "blend": "source-over",
+      "pivot": 180,
+      "foot": 101,
+      "sourceClip": "vfxulti6---20dc6796-0968-44c6-abfa-2c16c9f95f58.mp4",
+      "sourceFrames": [
+        0,
+        6,
+        12,
+        19,
+        25,
+        31,
+        37,
+        44,
+        50,
+        56,
+        62,
+        68,
+        75,
+        81,
+        87,
+        93,
+        99,
+        106,
+        112,
+        118,
+        124,
+        131,
+        137,
+        143
+      ],
+      "sourceFrameCount": 144,
+      "sourceRect": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "keying": "difference matte vs border green, alpha 40..130, unmix + spill clamp, Gemini corner masked",
+      "role": "ultimate: bão mực + lông vũ cuốn từng kẻ địch",
+      "sha256": "a4567e2f1950978568b126bbea60af0968922d58a8c999bbccde72b9a2807bb1",
+      "bytes": 859308
+    }
+  },
+  "sfx": {
+    "van-phong-basic": {
+      "file": "bach-y-van-phong/basic.wav",
+      "source": "SKILLPACK/sfx/kunlun/kl_hff_c.wav",
+      "code": "kl_hff_c",
+      "sha256": "181bef49c2110cb65313200cc09decd687cdb3ecad40283e961c3cd020c15331",
+      "durationMs": 1056,
+      "sampleRate": 22050,
+      "channels": 1,
+      "provenance": "Hô Phong Pháp (Côn Lôn) - tiếng phất gió khi tung đòn"
+    },
+    "van-phong-impact": {
+      "file": "bach-y-van-phong/impact.wav",
+      "source": "SKILLPACK/sfx/kunlun/kl_hff_f.wav",
+      "code": "kl_hff_f",
+      "sha256": "816a1a55ab83983195a6ec287c816f783afc8d48eea08922e8c71a7be8fdec2c",
+      "durationMs": 2229,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "Hô Phong Pháp (Côn Lôn) - gió quất trúng mục tiêu"
+    },
+    "van-phong-ultimate": {
+      "file": "bach-y-van-phong/ultimate.wav",
+      "source": "SKILLPACK/sfx/kunlun/kl_axxf_c.wav",
+      "code": "kl_axxf_c",
+      "sha256": "450cc8ab08106f7b0055db782d2a5ff057a2f7554ab75dcf156c27147837b83f",
+      "durationMs": 1000,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "Ngạo Tuyết Tiếu Phong (Côn Lôn) - trận lốc phạm vi lớn"
+    },
+    "van-phong-ultimate-hit": {
+      "file": "bach-y-van-phong/ultimate-hit.wav",
+      "source": "SKILLPACK/sfx/tangmen/tm_shb_f.wav",
+      "code": "tm_shb_f",
+      "sha256": "89cac31fdbde9b191a0326c70a3aec8edc000a2c333fd7325f5982176128064f",
+      "durationMs": 477,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "Đường Môn ám khí trúng đích (5 nhịp phập dồn dập) - lông vũ cuối ulti cắm vào địch; owner yêu cầu 2026-10-20"
+    }
+  }
+}

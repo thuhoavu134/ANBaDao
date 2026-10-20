@@ -258,3 +258,18 @@ Script dùng GraphQL `createCommitOnBranch` (cần `gh` đã đăng nhập), chi
 - [ ] Đo chiều cao nhân vật trong ô `run` vs `idle`, đặt `runVisualScale` nếu có độ lệch
 - [ ] Kiểm game thật đủ 6 bước ở mục 9, kể cả giả lập iPhone và màn Victory chuyển tiếp mượt
 - [ ] PR có ảnh bằng chứng, danh sách phần chưa kiểm, Vercel preview deploy thành công
+
+## QUY TRÌNH ẢNH 6 STATE (bắt buộc từ 2026-10-20, áp dụng từ Bạch Y Vân Phong)
+
+1. Đóng gói bằng skill `kiemthe-animation-packager` với **`--framing uniform`**:
+   `python package_six_states.py --manifest <manifest.json> --framing uniform`.
+   Một tỉ lệ chung cho cả 6 state, đường chân cố định, căn ngang theo chân từng frame (chạy tại chỗ).
+   Cấm dùng lại chế độ fit riêng từng state: run/atk/ulti sẽ teo (Khaos từng phải vá `runVisualScale`).
+2. Nhập vào game bằng **một importer chung**:
+   `node scripts/import-sixstate-pack.mjs <packDir> <slug> <heroId>`
+   → atlas `-<sha8>.webp` (x0.5 cho trận), `detail-<sha8>.webp` (full), `runtime-meta.json`, `presentation.json`
+   (body/foot đo từ alpha idle, giống nhau cho mọi clip). Importer từ chối pack không phải `uniform`.
+3. `node scripts/hero-portrait-from-idle.mjs <slug>` rồi viết `hero.json` (kit/battle/sfx) và luật trong
+   `splus-mechanics.mjs` (`AUTHORED_KITS` + `AUTHORED_HIT`).
+4. QA trong trận thật: `node scripts/qa-authored-battle.mjs <heroKey> <slug> <tag>` (server `scripts/qa-static-server.mjs`
+   phục vụ `dist/`) — tự chụp ảnh lúc basic/ultimate/VFX được vẽ và báo lỗi JS.
