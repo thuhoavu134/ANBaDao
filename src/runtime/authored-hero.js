@@ -180,6 +180,9 @@ async function performAuthoredAction(actor,action,target,e,battleId){
    if(!await wait(spec.hits[hit]))return;
    trace?.marker('impact',{actionId:presentationId,hit});
    for(const s of hitCues)authoredPlay(s.cue,info.abort.signal,speed);
+   // hero.json impact.shake (px): short canvas jolt so a heavy hit lands with weight.
+   const jolt=Number(spec.impact?.shake||spec.area?.shake)||0,cv=jolt&&!(typeof REDUCED_MOTION!=='undefined'&&REDUCED_MOTION)?document.querySelector('canvas'):null;
+   if(cv?.animate)cv.animate([{transform:'translate(0,0)'},{transform:`translate(${jolt}px,${-jolt*.6}px)`},{transform:`translate(${-jolt*.8}px,${jolt*.5}px)`},{transform:`translate(${jolt*.4}px,0)`},{transform:'translate(0,0)'}],{duration:190,easing:'ease-out'});
    for(const id of info.targets)e.resolveAuthoredImpact(actor.id,cast.castId,id,hit);
    updateTeamCounters();splusStateView();
   }

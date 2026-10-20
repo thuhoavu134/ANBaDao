@@ -141,6 +141,16 @@
       "sampleRate": 44100,
       "channels": 1,
       "provenance": "Đường Môn ám khí trúng đích (5 nhịp phập dồn dập) - lông vũ cuối ulti cắm vào địch; owner yêu cầu 2026-10-20"
+    },
+    "van-phong-ultimate-wind": {
+      "file": "bach-y-van-phong/ultimate-wind.wav",
+      "source": "SKILLPACK/sfx/kunlun/kl_kfzd_f.wav",
+      "code": "kl_kfzd_f",
+      "sha256": "22a4641a7c2100924086e630526b7a967b4fa420b063d2b485054db044d5470d",
+      "durationMs": 2104,
+      "sampleRate": 22050,
+      "channels": 1,
+      "provenance": "Cuồng Phong Sậu Điện (Côn Lôn) - gió xoáy cực mạnh, lớp gió lốc phủ suốt bão ulti; owner yêu cầu 2026-10-20"
     }
   }
 }

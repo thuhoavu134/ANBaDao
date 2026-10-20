@@ -69,7 +69,8 @@
         "impact": {
           "vfx": "vfx-basic",
           "anchor": "body",
-          "scale": 1.4
+          "scale": 1.25,
+          "startFrame": 10
         },
         "sfx": [
           {
@@ -81,7 +82,20 @@
             "cue": "van-phong-impact",
             "at": "hit"
           }
-        ]
+        ],
+        "projectile": {
+          "vfx": "vfx-basic",
+          "from": [
+            0.35,
+            0.55
+          ],
+          "scale": 1.25,
+          "arc": 0.06,
+          "frames": [
+            2,
+            10
+          ]
+        }
       },
       "ultimate": {
         "clip": "ultimate",
@@ -101,6 +115,11 @@
             "cue": "van-phong-ultimate",
             "at": "release",
             "lead": 200
+          },
+          {
+            "cue": "van-phong-ultimate-wind",
+            "at": "release",
+            "lead": 0
           },
           {
             "cue": "van-phong-ultimate-hit",
@@ -127,7 +146,8 @@
     "van-phong-basic": "bach-y-van-phong/basic.wav",
     "van-phong-impact": "bach-y-van-phong/impact.wav",
     "van-phong-ultimate": "bach-y-van-phong/ultimate.wav",
-    "van-phong-ultimate-hit": "bach-y-van-phong/ultimate-hit.wav"
+    "van-phong-ultimate-hit": "bach-y-van-phong/ultimate-hit.wav",
+    "van-phong-ultimate-wind": "bach-y-van-phong/ultimate-wind.wav"
   },
   "surfaces": [
     "roster",

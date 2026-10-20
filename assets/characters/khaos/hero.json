@@ -54,7 +54,7 @@
   "vfxMeta": "assets/vfx/khaos/provenance.json",
   "battle": {
     "tempo": {
-      "basic": 1.33,
+      "basic": 1.8,
       "ultimate": 1.2
     },
     "actions": {
@@ -62,9 +62,9 @@
         "clip": "basic",
         "release": 1800,
         "hits": [
-          2300
+          2050
         ],
-        "vfxEnd": 2300,
+        "vfxEnd": 2050,
         "recovery": 4000,
         "projectile": {
           "vfx": "vfx-basic",
@@ -72,12 +72,15 @@
             0.35,
             0.55
           ],
-          "scale": 0.9
+          "scale": 1.45,
+          "arc": 0,
+          "trail": 3
         },
         "impact": {
           "vfx": "vfx-impact",
           "anchor": "body",
-          "scale": 0.9
+          "scale": 1.55,
+          "shake": 7
         },
         "sfx": [
           {

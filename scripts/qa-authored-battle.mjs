@@ -11,7 +11,7 @@ mkdirSync(OUT, { recursive: true }); mkdirSync(PUB, { recursive: true });
 const P = (sid, slot) => ({ id: 'p-' + sid, sourceId: sid, team: 'player', slot });
 const E = (sid, slot) => ({ id: 'e-' + sid + slot, sourceId: sid, team: 'enemy', slot, accent: '#ed806b' });
 const cfg = { heroes: [
-  P(id, 1), P('khaos', 0), P('bach_dien', 4),
+  P(id, 1), P(id === 'khaos' ? 'van_phong' : 'khaos', 0), P('bach_dien', 4),
   E('hero_splus_cuong_dong', 0), E('hero_splus_hac_pha', 1), E('hero_splus_lac_an', 3), E('hero_splus_thiem_ngan', 4)
 ], timingScale: 1 };
 const b = await launch({ width: 390, height: 844 });
@@ -31,6 +31,10 @@ while (Date.now() - t0 < 75000) {
   const keys = JSON.parse(draws).filter(k => k !== 'idle-0' && k !== 'portrait');
   for (const k of keys) seen[k] = (seen[k] || 0) + 1;
   const fresh = keys.find(k => (seen[k] === 1 || seen[k] === 4) && shots.length < 10);
+  if (keys.includes('vfx-basic') && !seen.__burst) {
+    seen.__burst = 1;
+    for (let i = 0; i < 5; i++) { const f = `${OUT}/battle-${tag}-burst-${i}.png`; await c.shot(f); copyFileSync(f, `${PUB}/vp-${tag}-burst-${i}.png`); await new Promise(r => setTimeout(r, 70)); }
+  }
   if (fresh) {
     const file = `${OUT}/battle-${tag}-${shots.length}-${fresh}.png`;
     await c.shot(file); copyFileSync(file, `${PUB}/vp-${tag}-${shots.length}-${fresh}.png`);
