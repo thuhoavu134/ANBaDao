@@ -140,7 +140,7 @@ export function createSplusMechanics(options={}) {
   // (scripts/authored-hero-install.mjs + src/runtime/authored-hero.js). A new authored
   // hero adds one AUTHORED_KITS entry and one AUTHORED_HIT rule; the runtime resolves each
   // hit on its animation marker through resolveAuthoredImpact, exactly once per target/hit.
-  const AUTHORED_KITS={khaos:{basic:{hits:1,area:false},ultimate:{hits:2,area:true}}};
+  const AUTHORED_KITS={khaos:{basic:{hits:1,area:false},ultimate:{hits:2,area:true}},van_phong:{basic:{hits:1,area:false},ultimate:{hits:1,area:true}}};
   const INK_SET=new Set(['inkMark','speedDown','armorDown']);
   function khaosInk(actor,target){
     mark(actor,target,'inkMark',0,{turns:3,stack:true,maxStacks:3,polarity:'debuff',iconId:'inkMark'});
@@ -152,7 +152,37 @@ export function createSplusMechanics(options={}) {
       buff(actor,target,'stun',0,null,{remainingTurns:1});emit('inkBind',actor,target);
     }
   }
+  // Bach Y Van Phong (owner kit 2026-10-20): Lac Diep Phong Tram / Cuu Tieu Van Loan / Tieu Dao Bat Nhiem.
+  function vanPhongSeal(actor,target){
+    mark(actor,target,'windSeal',0,{turns:2,polarity:'debuff',iconId:'windSeal'});
+    buff(actor,target,'speedDown',.15,2,{windBound:true});
+    buff(actor,target,'attackDown',.10,2,{windBound:true});
+  }
+  function vanPhongCounter(hero,attacker){
+    if(!alive(hero)||hero.splus.memory.vpCountering)return;
+    const pool=foes(hero);if(!pool.length)return;
+    const victim=random(pool)[0];hero.splus.memory.vpCountering=true;
+    try{emit('vanPhongCounter',hero,victim,{trigger:attacker?.id||null});damage(hero,victim,{multiplier:.6,action:'passive',type:'elemental',secondary:true,forceHit:true,noTriggers:true});energy(hero,hero,15,'vanPhongDodge');}
+    finally{hero.splus.memory.vpCountering=false;}
+  }
   const AUTHORED_HIT={
+    van_phong(actor,target,cast,index){
+      if(cast.kind==='basic'){
+        const dealt=damage(actor,target,{multiplier:1,action:'basic',type:'elemental'});
+        if(dealt>0&&alive(target)&&rng('splus.van-phong-seal')<.3)vanPhongSeal(actor,target);
+        return;
+      }
+      const sealed=statuses(target).some(s=>s.type==='windSeal'&&s.sourceId===actor.id);
+      if(!cast.vanPhongDomain){
+        cast.vanPhongDomain=true;
+        for(const ally of friends(actor)){buff(actor,ally,'speedUp',.2,2);buff(actor,ally,'evasionUp',.15,2,{iconId:'vanPhongDomain'});}
+        emit('vanPhongDomain',actor,actor,{turns:2});
+      }
+      const dealt=damage(actor,target,{multiplier:1.85,action:'ultimate',type:'elemental'});
+      if(!(dealt>0)||!alive(target))return;
+      if(rng('splus.van-phong-blind')<.5)buff(actor,target,'blind',.35,2);
+      if(sealed)buff(actor,target,'silence',0,1);
+    },
     khaos(actor,target,cast,index){
       const final=cast.kind==='ultimate'&&index===cast.hits-1;
       const stacks=final?n(statuses(target).find(s=>s.type==='inkMark'&&s.sourceId===actor.id)?.stacks):0;
@@ -193,10 +223,11 @@ export function createSplusMechanics(options={}) {
       if(key(u)==='thach_mong')m.mitigation=Math.max(m.mitigation,0.35);
       if(key(u)==='tram_chau')m.defense+=Math.min(5,n(u.splus.memory.pearlArmor))*rules(u).armor;
       if(key(u)==='thach_kinh')m.magicDefense+=n(u.splus.memory.resentment)*rules(u).magicArmor;
+      if(key(u)==='van_phong')m.resist+=0.15;
     }
     return m;
   }
-  function stat(targetId,name) {const u=unit(targetId),m=modifiers(u);if(name==='accuracy')return Math.max(0,legacyStat(u,name,n(u?.accuracy,100))-power(u,'blind')*100);if(name==='evasion')return Math.max(0,legacyStat(u,name,n(u?.evasion))); return Math.max(0,n(u?.[name])*(1+(name==='atk'?m.attack:name==='def'?m.defense:name==='speed'?m.speed:0)));}
+  function stat(targetId,name) {const u=unit(targetId),m=modifiers(u);if(name==='accuracy')return Math.max(0,legacyStat(u,name,n(u?.accuracy,100))-power(u,'blind')*100);if(name==='evasion')return Math.max(0,legacyStat(u,name,n(u?.evasion))+power(u,'evasionUp')*100+(key(u)==='van_phong'&&passive(u)?20:0)); return Math.max(0,n(u?.[name])*(1+(name==='atk'?m.attack:name==='def'?m.defense:name==='speed'?m.speed:0)));}
   function energy(sourceId,targetId,amount,reason='gain') {
     const source=unit(sourceId),target=unit(targetId);if(!alive(target))return 0;
     if(amount>0&&(has(target,'rageBan')||has(target,'timeFreeze'))){emit('energyBlocked',source,target,{reason});return 0;}
@@ -287,7 +318,7 @@ export function createSplusMechanics(options={}) {
       if(!specifiedRaw){
         const accuracy=clamp(stat(source,'accuracy')/100-stat(target,'evasion')/100,0,1);
         consumeHitAttempt(source);
-        if(!options.forceHit&&rng('splus.hit')>=accuracy){emit('miss',source,target,{action});if(key(target)==='bach_dien')swapBachDienMask(target);return 0;}
+        if(!options.forceHit&&rng('splus.hit')>=accuracy){emit('miss',source,target,{action});if(key(target)==='bach_dien')swapBachDienMask(target);if(key(target)==='van_phong'&&passive(target)&&!options.secondary&&!options.reflection)vanPhongCounter(target,source);return 0;}
         let critChance=legacyStat(source,'crit',n(source.crit))/100+sm.crit-legacyStat(target,'critRes',n(target.critRes))/100;
         let critBonus=sm.critDamage+power(target,'bloodDebt');
         if(key(source)==='tieu_hon'&&source.splus.memory.rageCritReady){critBonus+=.3;source.splus.memory.rageCritReady=false;}
@@ -322,6 +353,8 @@ export function createSplusMechanics(options={}) {
       if(critical){
         const pearl=holders(target,'tram_chau').find(h=>h===target||back(friends(h)).sort((a,b)=>near(h,a)-near(h,b)||bySlot(a,b)).slice(0,2).includes(target));
         if(pearl){amount*=0.5;pearl.splus.memory.pearlArmor=Math.min(5,n(pearl.splus.memory.pearlArmor)+1);}
+        const windGuard=!options.dot&&holders(target,'van_phong').find(h=>h!==target&&Math.floor(h.slot/3)===Math.floor(target.slot/3)&&!h.splus.memory.vanPhongGuardUsed);
+        if(windGuard){amount*=0.7;windGuard.splus.memory.vanPhongGuardUsed=true;emit('vanPhongGuard',windGuard,target,{reduced:.3});}
       }
       if(critical&&key(target)==='hai_phong'&&passive(target)&&amount>target.maxHp*0.2){amount=target.maxHp*0.2;buff(target,target,'attackUp',0.25);buff(target,target,'lifesteal',0.2);}
       if(amount<=0)return 0;
@@ -1010,7 +1043,7 @@ export function createSplusMechanics(options={}) {
       case 'mang_xa':return enemies;
       // Khaos (Thủy Mặc kit) has no rage skill; the old front/back swap returned [x,undefined]
       // once a row emptied and crashed updateActorHud -> the battle froze on his turn.
-      case 'khaos':return null;
+      case 'khaos':case 'van_phong':return null;
       case 'hoi_anh':return one(oppositeTarget);
       case 'cuu_trieu':return unique([...enemyFront,...back(enemies).filter(u=>u.slot%3===actor.slot%3).slice(0,1)]);
       default:return null;
@@ -1029,7 +1062,7 @@ export function createSplusMechanics(options={}) {
       case 'hac_dao':{const target=tankiest(enemies)[0];return target?unique([target,...adjacent(target,enemies).slice(0,4)]):[];}
       case 'tieu_phong':{const lane=oppositeTarget?.slot%3;return enemies.filter(t=>t.slot%3===lane);}
       case 'tich_dao':case 'hong_thuong':return enemies;
-      case 'be_an':case 'ky_van':case 'to_linh':case 'linh_dong':case 'cuong_dong':case 'han_nuong':case 'vong_co':case 'co_nuong':case 'ha_lang':case 'hai_phong':case 'hoa_tieu':case 'tram_tue':case 'hoi_anh':case 'cuu_trieu':case 'khaos':return enemies;
+      case 'be_an':case 'ky_van':case 'to_linh':case 'linh_dong':case 'cuong_dong':case 'han_nuong':case 'vong_co':case 'co_nuong':case 'ha_lang':case 'hai_phong':case 'hoa_tieu':case 'tram_tue':case 'hoi_anh':case 'cuu_trieu':case 'khaos':case 'van_phong':return enemies;
       default:return null;
     }
   }

@@ -178,7 +178,8 @@ export function patchAuthoredHost(input, heroes, root = process.cwd()) {
   const toAppend = list.filter(id => !arrays[0][0].includes(`"${id}"`));
   if (toAppend.length) {
     s = s.replace(/\[((?:"[a-z0-9_]+",)+"be_an")\]/g, (_, body) => `[${body},${toAppend.map(id => JSON.stringify(id)).join(',')}]`);
-    if (!s.includes(`"be_an",${JSON.stringify(toAppend[0])}]`)) throw new Error('AUTHORED_HERO_ROSTER_PATCH');
+    // Check the whole appended tail: the old toAppend[0]+"]" probe only held for exactly one new hero.
+    if (!s.includes(`"be_an",${toAppend.map(id => JSON.stringify(id)).join(',')}]`)) throw new Error('AUTHORED_HERO_ROSTER_PATCH');
   }
   // Inline literal: tests and other owners evaluate this normalizer standalone.
   s = once(s, "if(id==='hero_splus_be_an')return 'be_an';", `if(id==='hero_splus_be_an')return 'be_an';{const authoredIds=${JSON.stringify(ids)};if(authoredIds[id])return authoredIds[id];}`);
