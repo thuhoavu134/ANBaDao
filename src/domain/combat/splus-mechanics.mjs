@@ -46,7 +46,7 @@ export function createSplusMechanics(options={}) {
   const random=list=>{const result=list.slice();for(let i=result.length-1;i>0;i--){const j=Math.min(i,Math.floor(clamp(rng('splus.targets'),0,0.999999999)*(i+1)));[result[i],result[j]]=[result[j],result[i]];}return result;};
   const hardCC=new Set(['stun','sleep','paralysis','timeFreeze','stasis','fear']);
   const control=new Set([...hardCC,'root','disarm','silence','hardSilence','confusion','entangle']);
-  const harmful=new Set([...control,'healDown','antiHeal','armorDown','magicArmorDown','attackDown','speedDown','moveSlow','blind','rageSlow','rageBan','shieldBan','buffBan','stealthBan','noExtraTurn','coldSteel','bloodDebt','resinBleed','resinPoison','viperPoison','parasite','ink','burn','poison','bleed','brimstone','thornsDot','wound','damageDown','critDown','resistDown','sealPaw','inkMark','cooldownDelay','actionSlow']);
+  const harmful=new Set([...control,'healDown','antiHeal','armorDown','magicArmorDown','attackDown','speedDown','moveSlow','blind','rageSlow','rageBan','shieldBan','buffBan','stealthBan','noExtraTurn','coldSteel','bloodDebt','resinBleed','resinPoison','viperPoison','parasite','ink','burn','poison','bleed','brimstone','thornsDot','wound','damageDown','critDown','resistDown','sealPaw','inkMark','soulRend','cooldownDelay','actionSlow']);
   const dots=new Set(['burn','poison','bleed','brimstone','thornsDot','parasite','resinBleed','viperPoison','wound']);
   const isBurn=s=>s.type==='burn'||s.type==='brimstone';
   const active=s=>s.splus===true&&(s.expiresRound==null||s.expiresRound>round)&&(s.charges==null||s.charges>0);
@@ -73,6 +73,8 @@ export function createSplusMechanics(options={}) {
     const type=String(effect.type||'');if(!type)throw new Error('STATUS_TYPE_REQUIRED');
     if(!harmful.has(type)&&effect.polarity!=='debuff'&&has(target,'buffBan')){emit('buffBlocked',source,target,{effect:type});return null;}
     if(type==='stealth'&&has(target,'stealthBan')){emit('immune',source,target,{effect:type});return null;}
+    // Tịnh Mặc Tâm Nhãn: blindfolded, he cannot be blinded or lose accuracy.
+    if((type==='blind'||type==='accuracyDown')&&key(target)==='tinh_mac'&&passive(target)){emit('immune',source,target,{effect:type});return null;}
     if(['bleed','resinBleed','thornsDot','wound'].includes(type)&&has(target,'bubble')){emit('immune',source,target,{effect:type});return null;}
     if(control.has(type)){
       if(has(target,'controlImmune')||(hardCC.has(type)&&has(target,'hardControlImmune'))){emit('immune',source,target,{effect:type});return null;}
@@ -140,7 +142,7 @@ export function createSplusMechanics(options={}) {
   // (scripts/authored-hero-install.mjs + src/runtime/authored-hero.js). A new authored
   // hero adds one AUTHORED_KITS entry and one AUTHORED_HIT rule; the runtime resolves each
   // hit on its animation marker through resolveAuthoredImpact, exactly once per target/hit.
-  const AUTHORED_KITS={khaos:{basic:{hits:1,area:false},ultimate:{hits:2,area:true}},van_phong:{basic:{hits:1,area:false},ultimate:{hits:1,area:true}},nguyet_diep:{basic:{hits:1,area:true},ultimate:{hits:3,area:true}}};
+  const AUTHORED_KITS={khaos:{basic:{hits:1,area:false},ultimate:{hits:2,area:true}},van_phong:{basic:{hits:1,area:false},ultimate:{hits:1,area:true}},nguyet_diep:{basic:{hits:1,area:true},ultimate:{hits:3,area:true}},tinh_mac:{basic:{hits:1,area:false},ultimate:{hits:1,area:true}}};
   const INK_SET=new Set(['inkMark','speedDown','armorDown']);
   function khaosInk(actor,target){
     mark(actor,target,'inkMark',0,{turns:3,stack:true,maxStacks:3,polarity:'debuff',iconId:'inkMark'});
@@ -176,8 +178,41 @@ export function createSplusMechanics(options={}) {
       emit('linhKinh',hero,t,{removed:removed.map(x=>x.type)});
     }
   }
+  // Tinh Mac (owner kit 2026-10-21): Tram Nghiep Doan Hon / Pha An Hoang Tuyen Dao Vuc / Tam Nhan Tinh Hon.
+  // U Hon: +1 stack (max 5) the first time an enemy drops to 70% HP, and again when it dies.
+  function tinhMacSoul(target,before){
+    if(!target||!target.maxHp)return;
+    const mem=target.splus.memory,crossed=!mem.uHonCrossed&&before/target.maxHp>.7&&target.hp/target.maxHp<=.7,died=!mem.uHonDied&&!alive(target);
+    if(!crossed&&!died)return;
+    const reapers=holders(target,'tinh_mac',true);if(!reapers.length)return;
+    if(crossed)mem.uHonCrossed=true;if(died)mem.uHonDied=true;
+    const gain=Number(crossed)+Number(died);
+    for(const h of reapers){
+      const before=Math.min(5,n(h.splus.memory.uHon)),after=Math.min(5,before+gain);if(after===before)continue;
+      h.splus.memory.uHon=after;emit('uHon',h,target,{stacks:after});
+    }
+  }
   function damageDealtBy(u){let sum=0;for(const ev of events)if(ev.type==='damage'&&ev.sourceId===u.id)sum+=n(ev.amount);return sum;}
   const AUTHORED_HIT={
+    tinh_mac(actor,target,cast,index){
+      if(cast.kind==='basic'){
+        const dealt=damage(actor,target,{multiplier:1.1,action:'basic',type:'elemental'});
+        if(dealt>0&&alive(target)){buff(actor,target,'healDown',.2,2);buff(actor,target,'soulRend',.15,2,{polarity:'debuff',iconId:'soulRend'});}
+        return;
+      }
+      if(cast.tinhMacStacks==null){
+        cast.tinhMacStacks=Math.min(5,n(actor.splus.memory.uHon));actor.splus.memory.uHon=0;
+        if(cast.tinhMacStacks>0)emit('uHonConsume',actor,actor,{stacks:cast.tinhMacStacks});
+      }
+      const stacks=cast.tinhMacStacks;
+      damage(actor,target,{multiplier:2,action:'ultimate',type:'elemental',armorPierce:stacks*.08});
+      if(stacks>0&&alive(target))damage(actor,target,{multiplier:.15*stacks,action:'ultimate',type:'true',bypassShield:true,forceHit:true,secondary:true,noTriggers:true});
+      if(alive(target)&&target.hp/target.maxHp<(stacks>=5?.3:.2)){
+        emit('tramQuyet',actor,target,{stacks});
+        damage(actor,target,{raw:target.maxHp*10,action:'ultimate',type:'true',bypassShield:true,bypassGuard:true,forceHit:true,secondary:true,noTriggers:true});
+        if(!alive(target)&&!cast.tinhMacRage){cast.tinhMacRage=true;energy(actor,actor,50,'tramQuyet');}
+      }
+    },
     nguyet_diep(actor,target,cast,index){
       if(cast.kind==='basic'){
         const dealt=damage(actor,target,{multiplier:1,action:'basic',type:'elemental'});
@@ -253,6 +288,7 @@ export function createSplusMechanics(options={}) {
       if(key(u)==='thach_kinh')m.magicDefense+=n(u.splus.memory.resentment)*rules(u).magicArmor;
       if(key(u)==='van_phong')m.resist+=0.15;
       if(key(u)==='nguyet_diep')m.resist+=0.3;
+      if(key(u)==='tinh_mac')m.lifesteal+=Math.min(5,n(u.splus.memory.uHon))*.05;
     }
     return m;
   }
@@ -345,7 +381,7 @@ export function createSplusMechanics(options={}) {
       if(key(source)==='cuu_trieu'&&passive(source)&&source.splus.memory.cadence>=8)type='true';
       let amount=Math.max(0,n(options.raw));
       if(!specifiedRaw){
-        const accuracy=clamp(stat(source,'accuracy')/100-stat(target,'evasion')/100,0,1);
+        const accuracy=clamp(stat(source,'accuracy')/100-stat(target,'evasion')/100*(key(source)==='tinh_mac'&&passive(source)?.5:1),0,1);
         consumeHitAttempt(source);
         if(!options.forceHit&&rng('splus.hit')>=accuracy){emit('miss',source,target,{action});if(key(target)==='bach_dien')swapBachDienMask(target);if(key(target)==='van_phong'&&passive(target)&&!options.secondary&&!options.reflection)vanPhongCounter(target,source);return 0;}
         let critChance=legacyStat(source,'crit',n(source.crit))/100+sm.crit-legacyStat(target,'critRes',n(target.critRes))/100;
@@ -358,7 +394,7 @@ export function createSplusMechanics(options={}) {
         critChance+=n(options.critBonus)+(has(target,'resinPoison')?0.2:0);
         critical=critical||rng('splus.crit')<clamp(options.critChanceOverride??critChance);
         if(has(target,'bubble'))critical=false;
-        const armor=type==='true'?0:Math.max(0,n(target.def)*(1+(type==='elemental'?tm.magicDefense:tm.defense)))*(1-clamp(Math.max(n(options.armorPierce),focusTarget ? rules(source).controlPierce : 0)));
+        const armor=type==='true'?0:Math.max(0,n(target.def)*(1+(type==='elemental'?tm.magicDefense:tm.defense)))*(1-clamp(Math.max(n(options.armorPierce)+(key(source)==='tinh_mac'&&passive(source)?Math.min(5,n(source.splus.memory.uHon))*.08:0),focusTarget ? rules(source).controlPierce : 0)));
         amount=Math.max(12,stat(source,'atk')*n(options.multiplier,1)*(100/(100+armor*0.82))*(0.94+clamp(rng('splus.variance'))*0.12)*1.22);
         if(critical)amount*=Math.max(1,options.critMultiplierOverride??(n(source.critDamage,1.5)+critBonus));
       }
@@ -372,6 +408,8 @@ export function createSplusMechanics(options={}) {
         emit('basicReflected',target,source,{amount:Math.round(amount)});damage(target,source,{raw:amount,type,reflection:true,secondary:true,noTriggers:true});return 0;
       }
       amount*=1-clamp(power(source,'damageDown'));
+      // Hồn Xiêu Phách Lạc: the rent soul takes +15% from the applier's side.
+      amount*=1+statuses(target).filter(s=>s.type==='soulRend'&&unit(s.sourceId)?.team===source.team).reduce((v,s)=>v+n(s.power),0);
       const suppression=action!=='basic'&&!options.secondary&&!options.dot&&holders(source,'minh_toa',true).find(h=>strongest(foes(h))[0]===source);
       if(suppression)amount*=0.75;
       amount*=1-clamp(tm.mitigation);
@@ -412,6 +450,7 @@ export function createSplusMechanics(options={}) {
         target.hp=0;target.dead=true;target.splus.memory.deathSequence=events.length;source.kills=n(source.kills)+1;
         emit('death',source,target,options.legacyImpact?{legacyImpact:true}:{});energy(source,source,12,'kill');
       } else rescueLow(target);
+      if(dealt>0)tinhMacSoul(target,before);
       // Hoa Ấn: every landed Tịch Dao basic carve stamps one mark (max 3) on
       // the victim; the ultimate consumes them for bonus damage per strike.
       if(key(source)==='tich_dao'&&passive(source)&&action==='basic'&&dealt>0&&alive(target)){
@@ -1075,7 +1114,7 @@ export function createSplusMechanics(options={}) {
       case 'mang_xa':return enemies;
       // Khaos (Thủy Mặc kit) has no rage skill; the old front/back swap returned [x,undefined]
       // once a row emptied and crashed updateActorHud -> the battle froze on his turn.
-      case 'khaos':case 'van_phong':case 'nguyet_diep':return null;
+      case 'khaos':case 'van_phong':case 'nguyet_diep':case 'tinh_mac':return null;
       case 'hoi_anh':return one(oppositeTarget);
       case 'cuu_trieu':return unique([...enemyFront,...back(enemies).filter(u=>u.slot%3===actor.slot%3).slice(0,1)]);
       default:return null;
@@ -1094,7 +1133,7 @@ export function createSplusMechanics(options={}) {
       case 'hac_dao':{const target=tankiest(enemies)[0];return target?unique([target,...adjacent(target,enemies).slice(0,4)]):[];}
       case 'tieu_phong':{const lane=oppositeTarget?.slot%3;return enemies.filter(t=>t.slot%3===lane);}
       case 'tich_dao':case 'hong_thuong':return enemies;
-      case 'be_an':case 'ky_van':case 'to_linh':case 'linh_dong':case 'cuong_dong':case 'han_nuong':case 'vong_co':case 'co_nuong':case 'ha_lang':case 'hai_phong':case 'hoa_tieu':case 'tram_tue':case 'hoi_anh':case 'cuu_trieu':case 'khaos':case 'van_phong':case 'nguyet_diep':return enemies;
+      case 'be_an':case 'ky_van':case 'to_linh':case 'linh_dong':case 'cuong_dong':case 'han_nuong':case 'vong_co':case 'co_nuong':case 'ha_lang':case 'hai_phong':case 'hoa_tieu':case 'tram_tue':case 'hoi_anh':case 'cuu_trieu':case 'khaos':case 'van_phong':case 'nguyet_diep':case 'tinh_mac':return enemies;
       default:return null;
     }
   }

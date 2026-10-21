@@ -1,0 +1,197 @@
+{
+  "source": {
+    "vfx": "owner-supplied green-screen clips vfxatk / vfxulti (2026-10-21)",
+    "sfx": "audio tracks of the same owner clips (atk_3 / ulti / vfxatk / vfxulti / Hit_3), trimmed, not mixed"
+  },
+  "clips": {
+    "vfx-basic": {
+      "file": "vfx-basic-7eaf34f6.webp",
+      "frames": 16,
+      "cols": 8,
+      "rows": 2,
+      "cellW": 300,
+      "cellH": 169,
+      "atlasWidth": 2400,
+      "atlasHeight": 338,
+      "frameMs": 250,
+      "blend": "source-over",
+      "pivot": 150,
+      "foot": 84,
+      "sourceClip": "vfxatk---162ad73e-bf34-4db5-ac4e-0733e83ed587.mp4",
+      "sourceFrames": [
+        0,
+        6,
+        13,
+        19,
+        25,
+        32,
+        38,
+        44,
+        51,
+        57,
+        63,
+        70,
+        76,
+        82,
+        89,
+        95
+      ],
+      "sourceFrameCount": 96,
+      "sourceRect": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "keying": "difference matte vs border green, alpha 55..150, unmix + spill clamp, Gemini corner masked",
+      "role": "basic VFX (owner clip vfxatk: crescent blue soul-flame slash wave)",
+      "sha256": "7eaf34f6c142af9017637b5352132fc4990690243bf6338253412678774e339b",
+      "bytes": 317402
+    },
+    "vfx-ultimate": {
+      "file": "vfx-ultimate-3f863825.webp",
+      "frames": 24,
+      "cols": 8,
+      "rows": 3,
+      "cellW": 360,
+      "cellH": 202,
+      "atlasWidth": 2880,
+      "atlasHeight": 606,
+      "frameMs": 167,
+      "blend": "source-over",
+      "pivot": 180,
+      "foot": 101,
+      "sourceClip": "vfxulti---78a46fdd-82f9-46ab-a8fa-6f831ce96692.mp4",
+      "sourceFrames": [
+        0,
+        6,
+        12,
+        19,
+        25,
+        31,
+        37,
+        44,
+        50,
+        56,
+        62,
+        68,
+        75,
+        81,
+        87,
+        93,
+        99,
+        106,
+        112,
+        118,
+        124,
+        131,
+        137,
+        143
+      ],
+      "sourceFrameCount": 144,
+      "sourceRect": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "keying": "difference matte vs border green, alpha 55..150, unmix + spill clamp, Gemini corner masked",
+      "role": "ultimate VFX (owner clip vfxulti: 12 rotating yellow talisman circle)",
+      "sha256": "3f863825550beff172935437595c2a7c527dc1139b5c21993824241fbe134d84",
+      "bytes": 543416
+    }
+  },
+  "sfx": {
+    "tinh-mac-basic": {
+      "file": "tinh-mac/basic.wav",
+      "source": "atk_3---6df82568-eefd-4e98-a5a5-8964ac70eebc.mp4 (owner clip 2026-10-21)",
+      "trim": [
+        1.6,
+        0.75
+      ],
+      "sha256": "574d31d9b80a3527e8a837c48bb2b346ad52d2a678a1d29cec321c48068af2b1",
+      "durationMs": 750,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "atk_3 1.60-2.35s: tieng vung dai dao + tieng giong"
+    },
+    "tinh-mac-basic-hit": {
+      "file": "tinh-mac/basic-hit.wav",
+      "source": "vfxatk---162ad73e-bf34-4db5-ac4e-0733e83ed587.mp4 (owner clip 2026-10-21)",
+      "trim": [
+        2.05,
+        1
+      ],
+      "sha256": "6bc7e2976b06c6d32375880a839394579048066317eb3f91df4a83b7f65cba99",
+      "durationMs": 1000,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "vfxatk 2.05-3.05s: vet lua xanh cham truc"
+    },
+    "tinh-mac-passive": {
+      "file": "tinh-mac/passive.wav",
+      "source": "vfxatk---162ad73e-bf34-4db5-ac4e-0733e83ed587.mp4 (owner clip 2026-10-21)",
+      "trim": [
+        1.05,
+        0.9
+      ],
+      "sha256": "412bb707876c80578179754bf79dcb6664a1603e2bdbf261778789abcf1d221a",
+      "durationMs": 900,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "vfxatk 1.05-1.95s: dot lua xanh nap tich (mo nội Tam Nhan)"
+    },
+    "tinh-mac-ultimate": {
+      "file": "tinh-mac/ultimate.wav",
+      "source": "ulti---ab918426-bb76-4108-9417-5be588455548.mp4 (owner clip 2026-10-21)",
+      "trim": [
+        2.35,
+        0.75
+      ],
+      "sha256": "cbf03b2170b97656b3dd42b8c515b6231cfe4c6dfe5aa094a8dc7db0a2b86a8c",
+      "durationMs": 750,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "ulti 2.35-3.10s: nhan vat cham lien + am hon"
+    },
+    "tinh-mac-ultimate-vfx": {
+      "file": "tinh-mac/ultimate-vfx.wav",
+      "source": "vfxulti---78a46fdd-82f9-46ab-a8fa-6f831ce96692.mp4 (owner clip 2026-10-21)",
+      "trim": [
+        1.25,
+        1.35
+      ],
+      "sha256": "320af482dbb6f55c1127bd2ef72d512873fdfd81fa7eef0d66e00d2283c09d40",
+      "durationMs": 1350,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "vfxulti 1.25-2.60s: 12 la bua xoay tran phap"
+    },
+    "tinh-mac-ultimate-hit": {
+      "file": "tinh-mac/ultimate-hit.wav",
+      "source": "vfxulti---78a46fdd-82f9-46ab-a8fa-6f831ce96692.mp4 (owner clip 2026-10-21)",
+      "trim": [
+        3.2,
+        1.4
+      ],
+      "sha256": "bcf68ba7eb1f6a63f38cc66c4c047a6803d50d306ba946f0cd97b4b5728a0181",
+      "durationMs": 1400,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "vfxulti 3.20-4.60s: am hon no detone"
+    },
+    "tinh-mac-hit": {
+      "file": "tinh-mac/hit.wav",
+      "source": "Hit_3---5c8d9bca-f9c7-46f5-b942-779fc8886fd6.mp4 (owner clip 2026-10-21)",
+      "trim": [
+        1.1,
+        0.55
+      ],
+      "sha256": "9dc3c630588bfc6d252d14e5278707b25f0e41307ec2f5d730ff1dcfa0285140",
+      "durationMs": 550,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "Hit_3 1.10-1.65s: tieng trung don"
+    }
+  }
+}
