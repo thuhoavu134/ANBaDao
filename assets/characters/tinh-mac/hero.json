@@ -1,0 +1,240 @@
+{
+  "schema": "luc-than-authored-hero/v1",
+  "id": "tinh_mac",
+  "sourceId": "hero_splus_tinh_mac",
+  "slug": "tinh-mac",
+  "identityVersion": "kiemthe-sixstate-20261021-uniform",
+  "host": {
+    "he": "soul",
+    "faction": "am_hon",
+    "archetype": "mystic",
+    "rarity": "ssr",
+    "name": "Tịnh Mặc",
+    "role": "Đấu sĩ / Trảm hồn / Thu hoạch",
+    "col": "#3fa7c9",
+    "stats": {
+      "hp": 1180,
+      "mp": 60,
+      "atk": 158,
+      "def": 62,
+      "spd": 104
+    }
+  },
+  "kit": {
+    "passive": {
+      "name": "Tâm Nhãn Tịnh Hồn",
+      "desc": "Bịt mắt dùng tâm nhãn: miễn nhiễm 100% Mù / Giảm chính xác, đòn đánh bỏ qua 50% Né tránh của địch. Mỗi khi một kẻ địch mất 30% máu (lần đầu) hoặc tử trận, gảy 1 hạt châu nhận 1 tầng U Hồn (tối đa 5): mỗi tầng +8% Xuyên giáp và +5% Hút máu."
+    },
+    "basic": {
+      "name": "Trảm Nghiệp Đoạn Hồn",
+      "cost": 0,
+      "desc": "Bổ đao khí lửa xanh U Minh vào 1 địch hàng trước: 110% sát thương phép. Gây Hồn Xiêu Phách Lạc 2 hiệp: giảm 20% hồi máu nhận vào và chịu thêm 15% sát thương từ phe ta.",
+      "fx": {
+        "kind": "damage",
+        "target": "enemy",
+        "power": 1.1
+      }
+    },
+    "ultimate": {
+      "name": "Phá Ấn: Hoàng Tuyền Đao Vực",
+      "cost": 60,
+      "desc": "Xé bùa phong ấn, bổ một nhát xuống giữa đội hình: 200% sát thương toàn bộ địch. Tiêu hao toàn bộ U Hồn, mỗi tầng thêm 15% sát thương chuẩn bỏ qua khiên. Án Tử Hoàng Tuyền: địch dưới 20% máu (30% khi đủ 5 tầng) bị Trảm Quyết kết liễu ngay, hồi 50 Nộ cho Tịnh Mặc (1 lần mỗi chiêu).",
+      "fx": {
+        "kind": "damage",
+        "target": "aoe_enemy",
+        "power": 2
+      }
+    }
+  },
+  "art": {
+    "portrait": "assets/characters/tinh-mac/portrait-4b812b66.webp"
+  },
+  "clipsMeta": "runtime-meta.json",
+  "vfxBase": "assets/vfx/tinh-mac/",
+  "vfxMeta": "assets/vfx/tinh-mac/provenance.json",
+  "battle": {
+    "tempo": {
+      "basic": 1.7,
+      "ultimate": 1.4
+    },
+    "actions": {
+      "basic": {
+        "clip": "basic",
+        "release": 1700,
+        "hits": [
+          2050,
+          2450,
+          2850
+        ],
+        "vfxEnd": 3300,
+        "recovery": 3800,
+        "projectile": {
+          "vfx": "vfx-basic",
+          "passes": 3,
+          "angle": 42,
+          "reach": 1,
+          "overshoot": 0.5,
+          "flight": 330,
+          "scale": 1.3,
+          "frames": [
+            3,
+            10
+          ]
+        },
+        "impact": {
+          "vfx": "vfx-basic",
+          "anchor": "body",
+          "scale": 0.75,
+          "shake": 4
+        },
+        "sfx": [
+          {
+            "cue": "tinh-mac-basic",
+            "at": "release",
+            "lead": 0
+          },
+          {
+            "cue": "tinh-mac-slash-1",
+            "at": "hit",
+            "hit": 0,
+            "lead": 270
+          },
+          {
+            "cue": "tinh-mac-blade-hit",
+            "at": "hit",
+            "hit": 0
+          },
+          {
+            "cue": "tinh-mac-slash-2",
+            "at": "hit",
+            "hit": 1,
+            "lead": 90
+          },
+          {
+            "cue": "tinh-mac-blade-hit-2",
+            "at": "hit",
+            "hit": 1
+          },
+          {
+            "cue": "tinh-mac-slash-3",
+            "at": "hit",
+            "hit": 2,
+            "lead": 160
+          },
+          {
+            "cue": "tinh-mac-blade-hit",
+            "at": "hit",
+            "hit": 2
+          },
+          {
+            "cue": "tinh-mac-soul-drain",
+            "at": "hit",
+            "hit": 2
+          },
+          {
+            "cue": "tinh-mac-soul-burst",
+            "at": "hit",
+            "hit": 2
+          }
+        ]
+      },
+      "ultimate": {
+        "clip": "ultimate",
+        "release": 2300,
+        "hits": [
+          2900
+        ],
+        "vfxEnd": 4000,
+        "recovery": 4000,
+        "area": {
+          "vfx": "vfx-ultimate",
+          "anchor": "body",
+          "scale": 1.35,
+          "shake": 8,
+          "drop": {
+            "ms": 520,
+            "fallFrames": [
+              6,
+              8
+            ],
+            "landFrame": 9
+          }
+        },
+        "sfx": [
+          {
+            "cue": "tinh-mac-ultimate",
+            "at": "release",
+            "lead": 2300
+          },
+          {
+            "cue": "tinh-mac-ult-fall",
+            "at": "hit",
+            "lead": 640
+          },
+          {
+            "cue": "tinh-mac-ult-slam",
+            "at": "hit",
+            "lead": 700
+          },
+          {
+            "cue": "tinh-mac-ult-boom",
+            "at": "hit"
+          },
+          {
+            "cue": "tinh-mac-ultimate-hit",
+            "at": "hit"
+          }
+        ]
+      }
+    },
+    "reactions": {
+      "hit": "hit",
+      "death": "fall-die",
+      "durationMs": 4000
+    },
+    "events": {
+      "uHon": {
+        "vfx": "vfx-basic",
+        "anchor": "body",
+        "scale": 0.7,
+        "sfx": "tinh-mac-passive"
+      },
+      "tramQuyet": {
+        "vfx": "vfx-ultimate",
+        "anchor": "body",
+        "scale": 1.1,
+        "sfx": "tinh-mac-ultimate-hit"
+      }
+    }
+  },
+  "sfx": {
+    "tinh-mac-basic": "tinh-mac/basic.wav",
+    "tinh-mac-basic-hit": "tinh-mac/basic-hit.wav",
+    "tinh-mac-passive": "tinh-mac/passive.wav",
+    "tinh-mac-ultimate": "tinh-mac/ultimate.wav",
+    "tinh-mac-ultimate-vfx": "tinh-mac/ultimate-vfx.wav",
+    "tinh-mac-ultimate-hit": "tinh-mac/ultimate-hit.wav",
+    "tinh-mac-hit": "tinh-mac/hit.wav",
+    "tinh-mac-slash-1": "tinh-mac/slash-1.wav",
+    "tinh-mac-slash-2": "tinh-mac/slash-2.wav",
+    "tinh-mac-slash-3": "tinh-mac/slash-3.wav",
+    "tinh-mac-blade-hit": "tinh-mac/blade-hit.wav",
+    "tinh-mac-blade-hit-2": "tinh-mac/blade-hit-2.wav",
+    "tinh-mac-soul-drain": "tinh-mac/soul-drain.wav",
+    "tinh-mac-soul-burst": "tinh-mac/soul-burst.wav",
+    "tinh-mac-ult-fall": "tinh-mac/ult-fall.wav",
+    "tinh-mac-ult-slam": "tinh-mac/ult-slam.wav",
+    "tinh-mac-ult-boom": "tinh-mac/ult-boom.wav"
+  },
+  "surfaces": [
+    "roster",
+    "formation",
+    "hero-detail",
+    "battle"
+  ],
+  "approval": {
+    "animation": "six-state pack 20261021-203254 (--framing uniform); lửa xanh + bùa giấy bake trong clip nhân vật (identity, giữ có chủ đích); watermark 4 cánh đã loại",
+    "vfx": "owner clips vfxatk/vfxulti keyed; owner review pending",
+    "sfx": "basic/ultimate: Kiếm Thế SKILLPACK nguyên file (Thiên Vương đao, Thiên Nhẫn đoạt hồn, Côn Lôn) + audio clip chủ dự án; owner review pending"
+  }
+}

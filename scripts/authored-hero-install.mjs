@@ -109,7 +109,7 @@ export function patchAuthoredBattle(input, runtime, descriptors) {
   s = once(s, 'const authoredFallMs=', 'const authoredFallMs=isAuthoredHero(unit)?authoredHeroFallMs(unit)/Math.max(1,state.speed):');
   s = once(s, 'unit.defeatHideDuration = ', 'unit.defeatHideDuration = isAuthoredHero(unit)?authoredFallMs+120/Math.max(1,state.speed):');
   s = once(s, 'const STATUS_ICON_SOURCES = Object.freeze({',
-    'const STATUS_ICON_SOURCES = Object.freeze({\n inkMark:"assets/ui/status/ink-mark.svg",');
+    'const STATUS_ICON_SOURCES = Object.freeze({\n inkMark:"assets/ui/status/ink-mark.svg",soulRend:"assets/ui/status/soul-rend.svg",');
   s = once(s, "      if(status.type==='sealPaw'||status.type==='sealSulks'){",
     "      if(status.type==='inkMark'){context.fillStyle='#fff';context.font='bold 11px sans-serif';context.textAlign='center';context.fillText(String(status.stacks||1),sx+size*.3,sy+size*.4);}\n      if(status.type==='sealPaw'||status.type==='sealSulks'){");
   return s;

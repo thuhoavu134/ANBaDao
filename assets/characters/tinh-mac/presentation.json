@@ -1,0 +1,57 @@
+{
+  "schema": "battle-hero-presentation/v1",
+  "heroId": "hero_splus_tinh_mac",
+  "aliases": [
+    "tinh-mac",
+    "hero_splus_tinh_mac",
+    "tinh_mac"
+  ],
+  "referenceBodyHeight": 197,
+  "footOffsetY": 0,
+  "registration": "source-body",
+  "clips": {
+    "idle": {
+      "bodyHeight": 197,
+      "footX": 128,
+      "footY": 209.9
+    },
+    "run": {
+      "bodyHeight": 197,
+      "footX": 124,
+      "footY": 209.9
+    },
+    "basic": {
+      "bodyHeight": 197,
+      "footX": 164,
+      "footY": 209.9
+    },
+    "ultimate": {
+      "bodyHeight": 197,
+      "footX": 152,
+      "footY": 209.9
+    },
+    "hit": {
+      "bodyHeight": 197,
+      "footX": 136,
+      "footY": 209.9
+    },
+    "fall-die": {
+      "bodyHeight": 197,
+      "footX": 152,
+      "footY": 209.9
+    }
+  },
+  "vfxClips": [],
+  "states": {
+    "idle": [
+      "idle"
+    ],
+    "attack": [
+      "basic"
+    ],
+    "ultimate": [
+      "ultimate"
+    ]
+  },
+  "evidence": "Uniform-framed six-state pack 20261021-203254: one shared scale for every state; body 394px / foot line 419.764px measured from idle alpha at full cell, x0.5."
+}
