@@ -142,7 +142,7 @@ export function createSplusMechanics(options={}) {
   // (scripts/authored-hero-install.mjs + src/runtime/authored-hero.js). A new authored
   // hero adds one AUTHORED_KITS entry and one AUTHORED_HIT rule; the runtime resolves each
   // hit on its animation marker through resolveAuthoredImpact, exactly once per target/hit.
-  const AUTHORED_KITS={khaos:{basic:{hits:1,area:false},ultimate:{hits:2,area:true}},van_phong:{basic:{hits:1,area:false},ultimate:{hits:1,area:true}},nguyet_diep:{basic:{hits:1,area:true},ultimate:{hits:3,area:true}},tinh_mac:{basic:{hits:1,area:false},ultimate:{hits:1,area:true}}};
+  const AUTHORED_KITS={khaos:{basic:{hits:1,area:false},ultimate:{hits:2,area:true}},van_phong:{basic:{hits:1,area:false},ultimate:{hits:1,area:true}},nguyet_diep:{basic:{hits:1,area:true},ultimate:{hits:3,area:true}},tinh_mac:{basic:{hits:3,area:false},ultimate:{hits:1,area:true}}};
   const INK_SET=new Set(['inkMark','speedDown','armorDown']);
   function khaosInk(actor,target){
     mark(actor,target,'inkMark',0,{turns:3,stack:true,maxStacks:3,polarity:'debuff',iconId:'inkMark'});
@@ -196,8 +196,8 @@ export function createSplusMechanics(options={}) {
   const AUTHORED_HIT={
     tinh_mac(actor,target,cast,index){
       if(cast.kind==='basic'){
-        const dealt=damage(actor,target,{multiplier:1.1,action:'basic',type:'elemental'});
-        if(dealt>0&&alive(target)){buff(actor,target,'healDown',.2,2);buff(actor,target,'soulRend',.15,2,{polarity:'debuff',iconId:'soulRend'});}
+        const dealt=damage(actor,target,{multiplier:[.4,.35,.35][index]??.35,action:'basic',type:'elemental'});
+        if(index===cast.hits-1&&dealt>0&&alive(target)){buff(actor,target,'healDown',.2,2);buff(actor,target,'soulRend',.15,2,{polarity:'debuff',iconId:'soulRend'});}
         return;
       }
       if(cast.tinhMacStacks==null){

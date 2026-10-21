@@ -54,33 +54,37 @@
   "vfxMeta": "assets/vfx/tinh-mac/provenance.json",
   "battle": {
     "tempo": {
-      "basic": 1.15,
-      "ultimate": 1
+      "basic": 1.7,
+      "ultimate": 1.4
     },
     "actions": {
       "basic": {
         "clip": "basic",
-        "release": 1780,
+        "release": 1700,
         "hits": [
-          2220
+          2050,
+          2450,
+          2850
         ],
-        "vfxEnd": 2900,
+        "vfxEnd": 3300,
         "recovery": 3800,
         "projectile": {
           "vfx": "vfx-basic",
-          "from": [
-            0.55,
-            0.5
-          ],
-          "scale": 1.25,
-          "arc": 0,
-          "flight": 380
+          "passes": 3,
+          "angle": 42,
+          "reach": 1,
+          "overshoot": 0.5,
+          "flight": 330,
+          "scale": 1.3,
+          "frames": [
+            3,
+            10
+          ]
         },
         "impact": {
           "vfx": "vfx-basic",
           "anchor": "body",
-          "scale": 1.25,
-          "startFrame": 8,
+          "scale": 0.75,
           "shake": 4
         },
         "sfx": [
@@ -90,35 +94,92 @@
             "lead": 0
           },
           {
-            "cue": "tinh-mac-basic-hit",
-            "at": "hit"
+            "cue": "tinh-mac-slash-1",
+            "at": "hit",
+            "hit": 0,
+            "lead": 270
+          },
+          {
+            "cue": "tinh-mac-blade-hit",
+            "at": "hit",
+            "hit": 0
+          },
+          {
+            "cue": "tinh-mac-slash-2",
+            "at": "hit",
+            "hit": 1,
+            "lead": 90
+          },
+          {
+            "cue": "tinh-mac-blade-hit-2",
+            "at": "hit",
+            "hit": 1
+          },
+          {
+            "cue": "tinh-mac-slash-3",
+            "at": "hit",
+            "hit": 2,
+            "lead": 160
+          },
+          {
+            "cue": "tinh-mac-blade-hit",
+            "at": "hit",
+            "hit": 2
+          },
+          {
+            "cue": "tinh-mac-soul-drain",
+            "at": "hit",
+            "hit": 2
+          },
+          {
+            "cue": "tinh-mac-soul-burst",
+            "at": "hit",
+            "hit": 2
           }
         ]
       },
       "ultimate": {
         "clip": "ultimate",
-        "release": 2440,
+        "release": 2300,
         "hits": [
-          2670
+          2900
         ],
-        "vfxEnd": 3700,
-        "recovery": 3800,
+        "vfxEnd": 4000,
+        "recovery": 4000,
         "area": {
           "vfx": "vfx-ultimate",
           "anchor": "body",
-          "scale": 1.6,
-          "shake": 7
+          "scale": 3.4,
+          "shake": 9,
+          "drop": {
+            "center": true,
+            "ms": 560,
+            "fallFrames": [
+              6,
+              8
+            ],
+            "landFrame": 9
+          }
         },
         "sfx": [
           {
             "cue": "tinh-mac-ultimate",
             "at": "release",
-            "lead": 2440
+            "lead": 2300
           },
           {
-            "cue": "tinh-mac-ultimate-vfx",
-            "at": "release",
-            "lead": 900
+            "cue": "tinh-mac-ult-fall",
+            "at": "hit",
+            "lead": 640
+          },
+          {
+            "cue": "tinh-mac-ult-slam",
+            "at": "hit",
+            "lead": 700
+          },
+          {
+            "cue": "tinh-mac-ult-boom",
+            "at": "hit"
           },
           {
             "cue": "tinh-mac-ultimate-hit",
@@ -154,7 +215,17 @@
     "tinh-mac-ultimate": "tinh-mac/ultimate.wav",
     "tinh-mac-ultimate-vfx": "tinh-mac/ultimate-vfx.wav",
     "tinh-mac-ultimate-hit": "tinh-mac/ultimate-hit.wav",
-    "tinh-mac-hit": "tinh-mac/hit.wav"
+    "tinh-mac-hit": "tinh-mac/hit.wav",
+    "tinh-mac-slash-1": "tinh-mac/slash-1.wav",
+    "tinh-mac-slash-2": "tinh-mac/slash-2.wav",
+    "tinh-mac-slash-3": "tinh-mac/slash-3.wav",
+    "tinh-mac-blade-hit": "tinh-mac/blade-hit.wav",
+    "tinh-mac-blade-hit-2": "tinh-mac/blade-hit-2.wav",
+    "tinh-mac-soul-drain": "tinh-mac/soul-drain.wav",
+    "tinh-mac-soul-burst": "tinh-mac/soul-burst.wav",
+    "tinh-mac-ult-fall": "tinh-mac/ult-fall.wav",
+    "tinh-mac-ult-slam": "tinh-mac/ult-slam.wav",
+    "tinh-mac-ult-boom": "tinh-mac/ult-boom.wav"
   },
   "surfaces": [
     "roster",
@@ -165,6 +236,6 @@
   "approval": {
     "animation": "six-state pack 20261021-203254 (--framing uniform); lửa xanh + bùa giấy bake trong clip nhân vật (identity, giữ có chủ đích); watermark 4 cánh đã loại",
     "vfx": "owner clips vfxatk/vfxulti keyed; owner review pending",
-    "sfx": "owner clip audio trimmed; owner review pending"
+    "sfx": "basic/ultimate: Kiếm Thế SKILLPACK nguyên file (Thiên Vương đao, Thiên Nhẫn đoạt hồn, Côn Lôn) + audio clip chủ dự án; owner review pending"
   }
 }

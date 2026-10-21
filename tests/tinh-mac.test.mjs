@@ -6,10 +6,10 @@ const make=(heroes,rng=()=>.5)=>{const e=createSplusCombat({units:heroes,rng});e
 const status=(e,id,type)=>e.unit(id).statuses.find(s=>s.type===type&&(s.expiresRound==null||s.expiresRound>e.round));
 const hits=(e,src,tgt,action)=>e.events.filter(x=>x.type==='damage'&&x.sourceId===src&&x.targetId===tgt&&(!action||x.action===action));
 
-test('Tinh Mac basic: one target, Hon Xieu Phach Lac (healDown 20% + soulRend 15%) for 2 rounds',()=>{
+test('Tinh Mac basic: one target, 3 passes (40/35/35%), Hon Xieu Phach Lac (healDown 20% + soulRend 15%) for 2 rounds',()=>{
   const e=make([H('tinh_mac',1,0),H('a',2,0,{maxHp:1e6,hp:1e6}),H('b',2,1,{maxHp:1e6,hp:1e6})]);
   e.act('1:tinh_mac','basic','2:a');
-  assert.equal(hits(e,'1:tinh_mac','2:a','basic').length,1);
+  assert.equal(hits(e,'1:tinh_mac','2:a','basic').length,3,'three diagonal passes');
   assert.equal(e.unit('2:b').hp,1e6,'single target');
   assert.equal(status(e,'2:a','healDown').power,.2);
   assert.equal(status(e,'2:a','soulRend').power,.15);
