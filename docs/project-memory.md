@@ -585,3 +585,29 @@ Baseline main 1b271d4 (PR314 merged). Branch feat/owner-asset-refresh-20261018: 
 ## Owner visual review — 18/10/2026, PR315 follow-up
 
 Recipient-relative Đình Lôi shield; ultimate content bounded by formation row midpoints; default legacy VFX mirror with explicit facing override; separate outlined Victory/Defeat words over existing animated wings; Cổ Nương character cast 2s, existing three waves and echo300ms preserved. 46 focused tests PASS; source seam parse and 2x SVG inspection done. Full local build/browser unavailable (sparse baseline and no browser executable); physical iPhone pending. See docs/qa/owner-refresh-20261018/visual-review.md. No merge or full-game PASS claimed.
+
+## 2026-10-22 - Hero-detail idle anchoring (PR #329, cho owner merge)
+
+**Van de (owner report):** idle trong tran muot nhung o man chi tiet tuong bi rung/giat, khong neo co dinh.
+
+**4 nguyen nhan do duoc tren atlas that (detail 3840x1760, 30 frame):**
+1. Duong chan (alpha bottom) dao dong 13-14px voi khaos / nguyet_diep / bach_y_van_phong; bach_dien va tinh_mac chi 1px. Packager "uniform framing" canh theo mot duong chan chung, nhung source idle nhac chan giua cac frame.
+2. `startAuthoredDetailIdle` chia deu `frames/durationMs` (125 hoac 83ms) trong khi `frameDurationsMs` that la 41.7-166.7ms (lech toi 67%) -> nhip khong deu, khung o diem loop.
+3. CSS `#authoredDetailIdle{aspect-ratio:480/440}` cung, trong khi tinh_mac co cell 512x440 -> bop ngang 6.7%.
+4. Guard chong restart idle chi ap cho 5 tuong legacy (lucAnh/linhDong/bachDien/kyVan/tieuPhong); tuong authored moi bi restart loop moi lan `renderHeroDetail`.
+
+**Da sua (PR #329, branch feat/hero-detail-idle-anchor):**
+- `scripts/hero-idle-anchor.mjs` (moi): do alpha foot line tung frame -> `footOffsets[]` ghi vao `runtime-meta.json` (ca `detail` va `clips.idle`), export `footOffsetsFor()`/`anchorHero()`.
+- `scripts/import-sixstate-pack.mjs`: neo idle la buoc cua importer -> tuong import moi tu dong co offset.
+- `scripts/hero-doctor.mjs`: luat moi — thieu `footOffsets`, sai do dai, hoac ap offset xong chan con nhieu > 2px -> HERO DOCTOR FAIL (da kiem am).
+- `scripts/authored-hero-install.mjs`: timeline cong don `frameDurationsMs`; bu `footOffsets`; guard `__AUTHORED_DETAIL_IDLE_STATE`; ve o `devicePixelRatio` (truoc do 1x roi CSS thu 0.63); payload detail co them `pivot`/`foot`.
+- `src/ui/hero-detail-tabs.css`: `aspect-ratio: var(--authored-idle-ar, 480/440)` set tu cellW/cellH tung tuong.
+- QA moi: `scripts/qa-idle-motion.mjs` (do canvas that: bbox, jumps, canvas swaps), `scripts/qa-idle-frames.mjs` (dump frame -> GIF).
+
+**Ket qua do (canvas that, 60 mau/tuong):** tinh_mac foot 2px / khaos 0px / nguyet_diep 2px; bigJumps 0; canvasSwaps 0. Truoc do 13-14px.
+**Test:** npm test 2078 pass / 89 fail = baseline main; build EXIT=0; HERO DOCTOR PASS 5/5.
+**Evidence:** docs/qa/idle-anchor/ (strip truoc/sau, GIF canvas that, anh man hinh).
+
+**Blocker deploy (khong phai code):** Vercel tra `"Git author bktimmy247 must have access to the project on Vercel to create deployments"` cho ca commit PR va commit head cua `main` (bed18cde) -> preview/production dung o ban cu. Can owner merge bang tai khoan `cuonggmn`, hoac moi `bktimmy247` vao team Vercel.
+
+**Chua lam:** do net/DPR tren iPhone that (headless dpr=1); battle renderer khong doi (van dung clip 0.5x, chan nhieu ~7px nhu cu — co y giu nguyen scope).
