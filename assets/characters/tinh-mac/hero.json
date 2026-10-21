@@ -149,11 +149,10 @@
         "area": {
           "vfx": "vfx-ultimate",
           "anchor": "body",
-          "scale": 3.4,
-          "shake": 9,
+          "scale": 1.35,
+          "shake": 8,
           "drop": {
-            "center": true,
-            "ms": 560,
+            "ms": 520,
             "fallFrames": [
               6,
               8
