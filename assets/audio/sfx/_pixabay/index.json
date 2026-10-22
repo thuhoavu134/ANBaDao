@@ -1,4 +1,49 @@
 {
   "_help": "SFX tải từ Pixabay. Mỗi mục: file (tên file trong thư mục này), tags (từ khóa để scripts/hero/sfx-source.mjs khớp với vai), source (link trang), license, author.",
-  "items": []
+  "items": [
+    {
+      "file": "sword-slash-476148.mp3",
+      "tags": [
+        "dao",
+        "kiem",
+        "sword",
+        "slash",
+        "tram"
+      ],
+      "source": "https://pixabay.com/sound-effects/sword-slash-476148/",
+      "license": "Pixabay Content License",
+      "author": "54427377",
+      "previewUrl": "https://cdn.pixabay.com/audio/2026/01/29/audio_573798665f.mp3",
+      "sha256": "ca772bf2e8742b0644062f3b1e7a9f03344a3b1c9b5546d01d7d21cb9ae708db"
+    },
+    {
+      "file": "armor-impact-393843.mp3",
+      "tags": [
+        "impact",
+        "trung",
+        "hit",
+        "va cham",
+        "sword"
+      ],
+      "source": "https://pixabay.com/sound-effects/film-special-effects-armor-impact-from-sword-393843/",
+      "license": "Pixabay Content License",
+      "author": "freesound_community",
+      "previewUrl": "https://cdn.pixabay.com/audio/2025/08/23/audio_3bbe5ce786.mp3",
+      "sha256": "f63a4614bd81ea5bd22ba5974f6022e19818e823cd29d40843f84a82068d6d60"
+    },
+    {
+      "file": "supernatural-explosion-104295.mp3",
+      "tags": [
+        "explosion",
+        "no",
+        "bung no",
+        "tuyet ky"
+      ],
+      "source": "https://pixabay.com/sound-effects/film-special-effects-supernatural-explosion-104295/",
+      "license": "Pixabay Content License",
+      "author": "freesound_community",
+      "previewUrl": "https://cdn.pixabay.com/audio/2022/03/24/audio_0b59172194.mp3",
+      "sha256": "8d78dc4e5cd7e3d9fa0a75e2c312b0a8dc3367b6613f738cd4b8dcf0d9c7e5a8"
+    }
+  ]
 }

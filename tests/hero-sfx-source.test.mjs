@@ -1,7 +1,7 @@
 // SFX sourcing rules (scripts/hero/sfx-lib.mjs): source priority, brief pins, keyword matching, todo rows.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { ROLES, sectFor, pinnedCode, keywordsFor, kiemtheCandidates, pickFromPixabay, planRole, todoRows, coverage } from '../scripts/hero/sfx-lib.mjs';
+import { ROLES, sectFor, pinnedCode, keywordsFor, kiemtheCandidates, pickFromPixabay, planRole, todoRows, coverage, downloadUrlFrom } from '../scripts/hero/sfx-lib.mjs';
 
 const sects = { cuiyan: { ten: 'Thúy Yên', hanh: 'Thủy' }, shaolin: { ten: 'Thiếu Lâm', hanh: 'Kim' }, public: { ten: 'Chung', hanh: '' } };
 const skillpack = { sfx: [
@@ -81,4 +81,11 @@ test('sfx: coverage needs one basic and one ultimate cue for hero-doctor', () =>
   assert.equal(coverage({ 'x-basic-hit': {}, 'x-ultimate-vfx': {} }).ok, true);
   assert.equal(coverage({ 'x-basic': {} }).ok, false);
   assert.equal(coverage({}).ok, false);
+});
+test('sfx: a preview URL becomes the CDN download URL, and an already-download URL is left alone', () => {
+  assert.equal(downloadUrlFrom('https://cdn.pixabay.com/audio/2026/01/29/audio_573798665f.mp3'),
+    'https://cdn.pixabay.com/download/audio/2026/01/29/audio_573798665f.mp3');
+  assert.equal(downloadUrlFrom('https://cdn.pixabay.com/download/audio/2022/03/10/audio_cf23a04678.mp3'),
+    'https://cdn.pixabay.com/download/audio/2022/03/10/audio_cf23a04678.mp3');
+  assert.equal(downloadUrlFrom(''), '');
 });

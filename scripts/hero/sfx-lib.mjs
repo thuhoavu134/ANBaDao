@@ -91,6 +91,13 @@ export function planRole(role, { have, brief, sects, skillpack, pixabayIndex, us
   return { action: 'todo', keywords: keywordsFor(brief, role).slice(0, 4), why: 'không nguồn nào có' };
 }
 
+/** The CDN download URL for a Pixabay preview URL (pressing Play gives the preview; /download/ is the file). */
+export function downloadUrlFrom(url) {
+  const u = String(url || '').trim();
+  if (/cdn\.pixabay\.com\/download\/audio\//.test(u)) return u;
+  return u.replace('cdn.pixabay.com/audio/', 'cdn.pixabay.com/download/audio/');
+}
+
 /** Rows for C:/lt/packs/<slug>/sfx-todo.json — what the agent must download through the browser. */
 export function todoRows(plans) {
   return Object.entries(plans).filter(([, p]) => p.action === 'todo')

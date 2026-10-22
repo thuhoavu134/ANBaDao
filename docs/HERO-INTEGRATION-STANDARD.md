@@ -224,8 +224,11 @@ ultimate-vfx, ultimate-hit, hit, passive):
    agent; file lấy từ `KIEMTHE-VFX-SFX-FULL-20261017.zip`. Chọn phái theo `he` của brief (kim→Thiếu Lâm/Thiên Vương,
    thủy→Thúy Yên, …; `soul`/`mong` → phái `public`), rồi chọn mã trong phái đó theo vai.
 3. **Thư viện Pixabay** — `assets/audio/sfx/_pixabay/` + `index.json` (mỗi mục: `file`, `tags`, `source`, `license`).
-   **Pipeline không có trình duyệt**, nên phần tải là việc của agent: mở pixabay.com bằng browser, tải file, bỏ vào
-   thư mục đó rồi ghi `tags` vào `index.json`. Pixabay đòi đăng nhập mới cho tải → cần owner đăng nhập một lần.
+   Trang web chặn HTTP thường và **nút Download của nó đòi đăng nhập**, nhưng **file trên CDN tải trực tiếp được** —
+   dùng đúng cách đã chạy từ 20/10 (`C:\lt\hero7\sword_sfx.py`):
+   browser mở trang tìm kiếm → bấm **Play** → đọc `document.querySelector('audio').src` (URL `cdn.pixabay.com/audio/...`)
+   → `node scripts/hero/pixabay-get.mjs --preview "<url>" --name <tên>.mp3 --tags "a,b,c" --source "<trang>" --author "<tác giả>"`
+   (script tự đổi sang `.../download/audio/...`, tải file, ghi `index.json`). **Không cần đăng nhập, không cần API key.**
 4. **Còn thiếu** → ghi `C:/lt/packs/<slug>/sfx-todo.json` (kèm từ khóa gợi ý) và **FAIL**, không im lặng bỏ qua.
 
 **Ghim mã trong brief khi cần chắc** (đường tin cậy nhất, bỏ qua bước chọn tự động):
