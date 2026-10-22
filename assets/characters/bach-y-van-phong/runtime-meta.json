@@ -1,7 +1,7 @@
 {
   "schema": "authored-hero-assets/v1",
-  "assetRevision": "kiemthe-sixstate-20261020-093936-uniform",
-  "source": "kiemthe-animation-packager 20261020-093936 (--framing uniform, validate_package PASS)",
+  "assetRevision": "kiemthe-sixstate-20261022-160933-uniform",
+  "source": "kiemthe-animation-packager 20261022-160933 (--framing uniform, validate_package PASS)",
   "clips": {
     "idle": {
       "frames": 30,
@@ -12,7 +12,7 @@
       "pageFrames": 30,
       "pages": [
         {
-          "file": "idle-0-7b651145.webp",
+          "file": "idle-0-09775368.webp",
           "frames": 30,
           "cols": 8,
           "rows": 4,
@@ -56,43 +56,7 @@
       ],
       "pivot": 120,
       "foot": 189.7,
-      "body": 142,
-      "footOffsets": [
-        6,
-        7,
-        7,
-        7,
-        6,
-        6,
-        6,
-        5,
-        5,
-        4,
-        3,
-        2,
-        2,
-        1,
-        1,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        1,
-        1,
-        2,
-        3,
-        3,
-        4,
-        5,
-        5,
-        5
-      ],
-      "idleWindow": {
-        "start": 11,
-        "count": 13
-      }
+      "body": 142
     },
     "run": {
       "frames": 18,
@@ -312,10 +276,10 @@
   },
   "budget": {
     "reason": "iOS battle working set: idle page <= 8 MiB, any page <= 12 MiB (hero:doctor)",
-    "date": "2026-10-20"
+    "date": "2026-10-22"
   },
   "detail": {
-    "file": "detail-f12a18c0.webp",
+    "file": "detail-d22c22fa.webp",
     "frames": 30,
     "cols": 8,
     "cellW": 480,
@@ -323,42 +287,6 @@
     "durationMs": 2625,
     "atlasWidth": 3840,
     "atlasHeight": 1760,
-    "note": "hero-detail screen only (full resolution); battle uses clips.idle",
-    "footOffsets": [
-      13,
-      13,
-      14,
-      13,
-      13,
-      13,
-      12,
-      11,
-      10,
-      8,
-      7,
-      5,
-      4,
-      3,
-      2,
-      1,
-      0,
-      0,
-      0,
-      0,
-      1,
-      2,
-      3,
-      4,
-      5,
-      6,
-      8,
-      9,
-      10,
-      11
-    ],
-    "idleWindow": {
-      "start": 13,
-      "count": 10
-    }
+    "note": "hero-detail screen only (full resolution); battle uses clips.idle"
   }
 }

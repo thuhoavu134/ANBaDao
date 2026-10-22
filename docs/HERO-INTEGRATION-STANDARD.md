@@ -1,8 +1,58 @@
 # Hướng dẫn tích hợp tướng mới từ A đến Z (chuẩn duy nhất)
 
-Cập nhật 19/10/2026. Tướng mẫu đã chạy thật trên game: **Khaos** (`assets/characters/khaos/`).
+Cập nhật 22/10/2026 (quy trình 1 lệnh ở ngay dưới). Tướng mẫu đã chạy thật trên game: **Khaos** (`assets/characters/khaos/`).
 
 Đây là cách **duy nhất** để đưa tướng mới vào game. Không viết `scripts/<tướng>-integration.mjs` riêng. Không chèn regex vào `index.html`/`battle.html`. Không tạo cache ảnh hay bộ điều khiển âm thanh riêng. Các tướng cũ (Bé An, Cổ Nương, Tịch Dao…) vẫn còn script riêng do làm trước khi có chuẩn này; khi sửa tướng nào thì chuyển tướng đó sang chuẩn này.
+
+
+## ⚡ QUY TRÌNH 1 LỆNH (agent nào cũng làm đúng thế này — đọc trước mọi phần khác)
+
+Cập nhật 22/10/2026. Tướng nghiệm thu: **Bạch Y Vân Phong**, **Nguyệt Diệp**, **Tịnh Mặc**.
+
+**Đầu vào owner gửi:** 6 video nền xanh 1920×1080: `idle`, `run`, `atk`, `ultimate`, `hit`, `fall-die`.
+
+**Bước A — manifest pack** (UTF-8 **không BOM**: ghi bằng Python/Node, KHÔNG dùng PowerShell `Set-Content`/`ConvertTo-Json`):
+```json
+{
+  "states": { "idle": "<idle.mp4>", "run": "<run.mp4>", "atk": "<atk.mp4>",
+              "ultimate": "<ulti.mp4>", "hit": "<hit.mp4>", "fall-die": "<fall.mp4>" },
+  "packName": "<slug>-6state",
+  "outputRoot": "C:\\lt\\pack-<slug>\\out",
+  "blenderExecutable": "C:\\Program Files\\Blender Foundation\\Blender 5.1\\blender.exe",
+  "fixedAnchorStates": ["atk"]
+}
+```
+`idle` luôn được packager khoá anchor (không cần ghi). Thêm `atk` khi đòn đánh có phân thân/hồn văng ra trước.
+
+**Bước B — tướng mới hoàn toàn:** viết `assets/characters/<slug>/hero.json` (luật, sfx, battle) theo mục 2 trở đi. Tướng cũ thì giữ nguyên `hero.json`.
+
+**Bước C — chạy đúng 1 lệnh:**
+```
+node scripts/integrate-hero.mjs --manifest <manifest.json> --slug <slug> --id hero_splus_<x> [--detail-id <x>]
+```
+(Đã có pack thì dùng `--pack <packDir>` thay cho `--manifest`.)
+
+Lệnh tự chạy theo thứ tự và **dừng ngay ở bước lỗi**:
+
+| # | Bước | Script | Chặn lỗi gì |
+|---|---|---|---|
+| 1 | pack | `kiemthe-animation-packager/package_six_states.py --framing uniform` | khung chung, foot line cố định, idle khoá anchor, loop seam IoU ≥ 0.92 |
+| 2 | validate | `validate_package.py` | pack thiếu/hỏng |
+| 3 | parity | `scripts/qa-idle-source-parity.mjs` | **idle rung hơn video gốc** (>1.5 lần) |
+| 4 | import | `scripts/import-sixstate-pack.mjs` | từ chối pack có anchor idle lệch giữa các frame |
+| 5 | portrait | `scripts/hero-portrait-from-idle.mjs` | ảnh đại diện = frame 0 idle |
+| 6 | build | `scripts/build-static.mjs` (có HERO DOCTOR) | dung lượng trang, tên hash, đăng ký tướng |
+| 7 | detail | `scripts/qa-detail-probe.mjs` | màn chi tiết không có idle chạy |
+| 8 | evidence | `scripts/qa-idle-frames.mjs` → GIF | bằng chứng canvas thật cho PR |
+
+Kết quả: `INTEGRATE PASS` + báo cáo `docs/qa/integrate/<slug>.md` + GIF `docs/qa/idle-anchor/detail-<x>.gif`.
+
+**Bước D — giao:** `npm test` phải bằng baseline `main`; commit lên **nhánh mới** + mở PR, đính GIF vào PR. Không push/merge `main`. Owner duyệt bằng mắt rồi mới merge.
+
+**Cấm (đã từng gây lỗi thật):**
+- Sửa idle ở khâu render: bù vị trí chân, đổi nhịp từng frame, cắt đoạn rồi chạy tới–lui. Màn chi tiết vẽ y hệt trận (`authoredBodyFrame`: nhịp đều, một anchor).
+- Pack lại tướng cũ bằng packager khác phiên bản rồi để kích thước trong trận đổi mà owner không yêu cầu. Pack lại thì phải so hash các clip trận; nếu đổi thì dùng đúng phiên bản packager đã tạo pack cũ (`KIEMTHE_PACKAGER_DIR=<thư mục>`).
+- Tin ảnh thu nhỏ hoặc nhận xét của model thị giác về độ rung. Phải đo bằng `qa-idle-source-parity.mjs`.
 
 ---
 
@@ -33,6 +83,8 @@ Trước đây, mỗi lần thêm tướng mới thì các lỗi dưới đây l
 | Màn Tướng mờ | Màn chi tiết phóng to ảnh trong trận (đã bị giảm kích thước) | Ảnh `detail` riêng ở độ phân giải gốc |
 | Màn Victory không phải tướng mới | Màn kết quả có danh sách diễn hoạt khai tay | Màn kết quả tự lấy mọi tướng có `hero.json` |
 | Lúc chạy ra Victory bé hơn lúc đứng idle | Clip chạy sải bước dài làm khung bao phủ rộng, khi ép vào ô thì nhân vật bị nhỏ hơn clip idle | Khai báo `battle.victory.runVisualScale = chiều_cao_idle / chiều_cao_run` trong `hero.json` để cân bằng 100% |
+| Idle rung giật ở màn chi tiết dù video gốc mượt (Nguyệt Diệp, Tịnh Mặc) | Packager `--framing uniform` tính anchor ngang riêng từng frame theo dải đáy; kiếm/tua/vạt áo đung đưa kéo cả người lệch | Packager luôn khoá anchor idle; importer từ chối anchor lệch; `qa-idle-source-parity.mjs` FAIL nếu rung > 1.5 lần video |
+| Tướng cũ không có idle ở màn chi tiết (Cổ Nương) | Tích hợp trước chuẩn `hero.json`, chưa từng đăng ký canvas chi tiết | `LEGACY_DETAIL_IDLE` trong `authored-hero-install.mjs`; bước `detail` của `integrate-hero.mjs` |
 
 ---
 

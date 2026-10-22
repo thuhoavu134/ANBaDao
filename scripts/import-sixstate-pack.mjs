@@ -36,10 +36,25 @@ async function alphaBoxes(png, cols, cellW, cellH, frames) {
 }
 const median = a => { const s = [...a].sort((x, y) => x - y); return s[Math.floor(s.length / 2)]; };
 
+// Owner rule 2026-10-22 (root cause of the Nguyệt Diệp / Tịnh Mặc hero-detail shake): the idle of a uniform
+// pack must use ONE body anchor for every frame. A per-frame anchor follows whatever swings in the bottom band
+// (sword, tassel, hem) and shifts the whole character sideways although the source video is smooth.
+// Packs from the fixed packager carry crop.anchor.locked=true; older packs are checked on the anchors themselves.
+export function assertIdleAnchorLocked(meta) {
+  const rows = (meta.crop?.frames || []).map(f => f.anchorXSourcePx).filter(v => typeof v === 'number');
+  const spread = rows.length ? Math.max(...rows) - Math.min(...rows) : 0;
+  if (meta.crop?.anchor?.locked === false || spread > 0.5) {
+    throw new Error(`idle: body anchor moves ${spread.toFixed(1)}px across frames (per-frame anchor => shaking idle). ` +
+      'Re-pack with the current kiemthe-animation-packager (idle is always anchor-locked), ' +
+      'or add "idle" to fixedAnchorStates in the manifest. See docs/HERO-INTEGRATION-STANDARD.md.');
+  }
+}
+
 const clips = {}; let detail = null; let bodyFull = null, footFull = null;
 for (const [state, clip] of Object.entries(STATE_TO_CLIP)) {
   const meta = JSON.parse(readFileSync(join(packDir, state, 'metadata.json'), 'utf8'));
   if (!/uniform/.test(meta.crop?.method || '')) throw new Error(`${state}: pack must be built with --framing uniform`);
+  if (state === 'idle') assertIdleAnchorLocked(meta);
   const page = meta.atlasPages[0], [cellW, cellH] = meta.crop.cell, frames = meta.frameCount;
   const png = join(packDir, state, page.file);
   const durationMs = state === 'idle'
