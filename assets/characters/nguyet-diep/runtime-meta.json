@@ -1,7 +1,7 @@
 {
   "schema": "authored-hero-assets/v1",
-  "assetRevision": "kiemthe-sixstate-20261022-090352-uniform",
-  "source": "kiemthe-animation-packager 20261022-090352 (--framing uniform, validate_package PASS)",
+  "assetRevision": "kiemthe-sixstate-20261022-104915-uniform",
+  "source": "kiemthe-animation-packager 20261022-104915 (--framing uniform, validate_package PASS)",
   "clips": {
     "idle": {
       "frames": 30,
@@ -12,7 +12,7 @@
       "pageFrames": 30,
       "pages": [
         {
-          "file": "idle-0-e4c0d95e.webp",
+          "file": "idle-0-51676eb2.webp",
           "frames": 30,
           "cols": 8,
           "rows": 4,
@@ -279,7 +279,7 @@
     "date": "2026-10-22"
   },
   "detail": {
-    "file": "detail-9a018c65.webp",
+    "file": "detail-f82fced5.webp",
     "frames": 30,
     "cols": 8,
     "cellW": 480,

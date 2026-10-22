@@ -273,3 +273,13 @@ Script dùng GraphQL `createCommitOnBranch` (cần `gh` đã đăng nhập), chi
    `splus-mechanics.mjs` (`AUTHORED_KITS` + `AUTHORED_HIT`).
 4. QA trong trận thật: `node scripts/qa-authored-battle.mjs <heroKey> <slug> <tag>` (server `scripts/qa-static-server.mjs`
    phục vụ `dist/`) — tự chụp ảnh lúc basic/ultimate/VFX được vẽ và báo lỗi JS.
+
+## Idle phải khoá anchor khi pack (bắt buộc từ 2026-10-22)
+
+**Sự cố:** Nguyệt Diệp và Tịnh Mặc rung giật ở màn chi tiết dù video idle gốc mượt. Nguyên nhân: `package_six_states.py --framing uniform` mặc định tính `anchorX` **riêng từng frame** theo trọng tâm alpha của 20% dải đáy (`bottom-band alpha centroid`, làm mượt 3 frame). Với tướng có kiếm / tua / vạt áo đung đưa ở dải đáy, mỗi frame bị dời ngang vài px → rung mà video gốc không có (đo: Nguyệt Diệp mép phải gấp 5.9 lần video, Tịnh Mặc tâm thân gấp 2.6 lần). Các tướng pack kiểu cũ (một khung cắt chung — Bạch Diện, Khaos, Bé An, Cổ Nương) không bị.
+
+**Luật:** manifest pack phải có `"fixedAnchorStates": ["atk", "idle"]` (giữ thêm state nào đã khoá trước đó). Idle là chu kỳ tại chỗ, anchor khoá một lần thì atlas là bản thu nhỏ y nguyên video gốc.
+
+**Kiểm:** so atlas với video gốc trên cùng các frame loop — tổng dao động mép trái/phải/tâm thân của atlas không được vượt quá ~1.5 lần video. Script: `C:\lt\tmp\jitter-any.py <video idle> <pack cũ> <pack mới>`.
+
+**Màn chi tiết** vẽ idle y hệt trận (`authoredBodyFrame`: nhịp đều, một anchor cố định). Không bù vị trí chân, không đổi nhịp từng frame ở khâu render.
