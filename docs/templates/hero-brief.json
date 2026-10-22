@@ -1,5 +1,5 @@
 {
-  "_help": "Brief tướng mới cho scripts/hero/scaffold.mjs. Chỉ điền phần luật chơi; animation, VFX, SFX, marker thời gian do pipeline tự sinh. Xem docs/HERO-INTEGRATION-STANDARD.md mục 'Quy trình 1 lệnh'.",
+  "_help": "Brief tướng mới cho scripts/hero/scaffold.mjs. Chỉ điền luật chơi; animation, VFX, SFX, marker thời gian do pipeline tự sinh. Mỗi hiệu ứng khai trong 'effects' sẽ được engine chạy thật và có test tự sinh chứng minh. Bảng giá trị hợp lệ: docs/HERO-INTEGRATION-STANDARD.md mục 'Cơ chế khai báo trong brief'.",
   "key": "vi_du_hero",
   "slug": "vi-du-hero",
   "name": "Ví Dụ",
@@ -9,37 +9,139 @@
   "archetype": "mystic",
   "rarity": "ssr",
   "color": "#5f8fb8",
-  "role": "Sát thương đơn mục tiêu, mở đầu bằng đòn đánh thường",
+  "role": "Sát thương đơn mục tiêu",
   "weapon": "Trường đao",
   "gender": "Nam",
   "age": "Thanh niên",
-  "recommendedSlots": [0, 1, 2],
+  "recommendedSlots": [
+    0,
+    1,
+    2
+  ],
   "introduction": "Một hai câu giới thiệu hiển thị ở màn chi tiết tướng.",
   "voice": {
     "lobby": "Câu nói khi vào sảnh.",
     "ultimate": "Câu hô khi tung tuyệt kỹ!"
   },
-  "stats": { "hp": 1150, "mp": 60, "atk": 150, "def": 65, "spd": 102 },
+  "stats": {
+    "hp": 1150,
+    "mp": 60,
+    "atk": 150,
+    "def": 65,
+    "spd": 102
+  },
   "kit": {
     "passive": {
       "name": "Tên Nội Tại",
-      "desc": "Mô tả đầy đủ nội tại: điều kiện kích hoạt, con số cụ thể.",
-      "effects": ["Hiệu ứng 1", "Hiệu ứng 2"]
+      "desc": "Mô tả đầy đủ nội tại cho người chơi đọc.",
+      "effects": [
+        {
+          "when": "immune",
+          "status": [
+            "blind"
+          ]
+        },
+        {
+          "when": "always",
+          "do": "stat",
+          "stat": "resist",
+          "value": 0.1
+        },
+        {
+          "when": "hit",
+          "action": "basic",
+          "do": "stack",
+          "name": "nghiepLuc",
+          "max": 5
+        },
+        {
+          "when": "always",
+          "do": "stat",
+          "stat": "attack",
+          "value": 0.04,
+          "perStack": "nghiepLuc"
+        },
+        {
+          "when": "kill",
+          "do": "heal",
+          "who": "self",
+          "pctMaxHp": 0.1
+        },
+        {
+          "when": "receive",
+          "do": "status",
+          "who": "target",
+          "status": "attackDown",
+          "value": 0.1,
+          "turns": 2,
+          "chance": 0.3
+        },
+        {
+          "when": "roundStart",
+          "do": "energy",
+          "who": "self",
+          "value": 5
+        }
+      ]
     },
     "basic": {
       "name": "Tên Đòn Thường",
-      "desc": "Mô tả đòn thường: bao nhiêu % sát thương, mục tiêu, hiệu ứng kèm theo.",
       "power": 1.1,
       "target": "enemy",
-      "hits": 1
+      "hits": 1,
+      "desc": "Mô tả đòn thường cho người chơi đọc.",
+      "effects": [
+        {
+          "do": "status",
+          "who": "target",
+          "status": "armorDown",
+          "value": 0.15,
+          "turns": 2
+        },
+        {
+          "do": "status",
+          "who": "target",
+          "status": "burn",
+          "pctAtk": 0.2,
+          "turns": 2
+        }
+      ]
     },
     "ultimate": {
       "name": "Tên Tuyệt Kỹ",
-      "desc": "Mô tả tuyệt kỹ: % sát thương, phạm vi, hiệu ứng, chi phí nộ.",
       "power": 2,
       "target": "aoe_enemy",
       "hits": 1,
-      "effects": ["200% sát thương toàn bộ địch"]
+      "desc": "Mô tả tuyệt kỹ cho người chơi đọc.",
+      "effects": [
+        {
+          "do": "status",
+          "who": "target",
+          "status": "stun",
+          "turns": 1,
+          "chance": 0.3
+        },
+        {
+          "do": "execute",
+          "belowHp": 0.2
+        },
+        {
+          "do": "shield",
+          "who": "allies",
+          "pctMaxHp": 0.1,
+          "turns": 2
+        },
+        {
+          "do": "cleanse",
+          "who": "lowestAlly",
+          "count": 1
+        },
+        {
+          "do": "energy",
+          "who": "self",
+          "value": 20
+        }
+      ]
     }
   }
 }

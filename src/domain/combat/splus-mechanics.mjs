@@ -1,7 +1,10 @@
 import { SPLUS_HEROES, SPLUS_EXTRA_HEROES, SPLUS_REVIEW_DEFAULTS } from '../hero/splus-catalog.mjs';
+import { AUTHORED_EFFECTS } from './authored-effects-registry.mjs';
+import { createAuthoredEffects } from './authored-effects.mjs';
 
 export function createSplusCombat(options={}) {
-  return createSplusMechanics({...options,catalog:options.catalog||[...SPLUS_HEROES,...SPLUS_EXTRA_HEROES],defaults:SPLUS_REVIEW_DEFAULTS});
+  return createSplusMechanics({...options,catalog:options.catalog||[...SPLUS_HEROES,...SPLUS_EXTRA_HEROES],defaults:SPLUS_REVIEW_DEFAULTS,
+    authoredEffects:options.authoredEffects||AUTHORED_EFFECTS,createAuthoredEffects});
 }
 
 /** S+ effect owner. No DOM, storage, timers, audio or action scheduler.
@@ -75,6 +78,7 @@ export function createSplusMechanics(options={}) {
     if(type==='stealth'&&has(target,'stealthBan')){emit('immune',source,target,{effect:type});return null;}
     // Tịnh Mặc Tâm Nhãn: blindfolded, he cannot be blinded or lose accuracy.
     if((type==='blind'||type==='accuracyDown')&&key(target)==='tinh_mac'&&passive(target)){emit('immune',source,target,{effect:type});return null;}
+    if(fx.immune(target,type)){emit('immune',source,target,{effect:type});return null;}
     if(['bleed','resinBleed','thornsDot','wound'].includes(type)&&has(target,'bubble')){emit('immune',source,target,{effect:type});return null;}
     if(control.has(type)){
       if(has(target,'controlImmune')||(hardCC.has(type)&&has(target,'hardControlImmune'))){emit('immune',source,target,{effect:type});return null;}
@@ -138,6 +142,10 @@ export function createSplusMechanics(options={}) {
   }
   const buff=(a,t,type,powerValue=0,turns=defaults.duration,extra={})=>addStatus(a,t,{type,power:powerValue,turns,...extra});
   const mark=(a,t,type,powerValue,extra={})=>buff(a,t,type,powerValue,defaults.markDuration,extra);
+  // Brief-declared mechanics (authored-effects.mjs): no-op for heroes without an AUTHORED_EFFECTS entry.
+  // createSplusMechanics is serialized into battle.html, so the interpreter and registry come in through options.
+  const fx=options.createAuthoredEffects?options.createAuthoredEffects(options.authoredEffects||{},{buff,heal,shield,energy,cleanse,damage,stat,ratio,friends,foes,alive,weakest,emit,rng,key,passive})
+    :{onAction(){},modifiers(){},immune(){return false;},onKill(){},onHit(){},onReceive(){},onRoundStart(){}};
   // Shared cast API for heroes described by assets/characters/<slug>/hero.json
   // (scripts/authored-hero-install.mjs + src/runtime/authored-hero.js). A new authored
   // hero adds one AUTHORED_KITS entry and one AUTHORED_HIT rule; the runtime resolves each
@@ -288,6 +296,7 @@ export function createSplusMechanics(options={}) {
       if(key(u)==='thach_kinh')m.magicDefense+=n(u.splus.memory.resentment)*rules(u).magicArmor;
       if(key(u)==='van_phong')m.resist+=0.15;
       if(key(u)==='nguyet_diep')m.resist+=0.3;
+      fx.modifiers(u,m);
       if(key(u)==='tinh_mac')m.lifesteal+=Math.min(5,n(u.splus.memory.uHon))*.05;
     }
     return m;
@@ -448,7 +457,7 @@ export function createSplusMechanics(options={}) {
       if(dealt>0&&!options.dot&&has(target,'sleep'))remove(target,s=>s.type==='sleep','awaken');
       if(target.hp<=0&&!preventDeath(target,source)){
         target.hp=0;target.dead=true;target.splus.memory.deathSequence=events.length;source.kills=n(source.kills)+1;
-        emit('death',source,target,options.legacyImpact?{legacyImpact:true}:{});energy(source,source,12,'kill');
+        emit('death',source,target,options.legacyImpact?{legacyImpact:true}:{});energy(source,source,12,'kill');fx.onKill(source,target);
       } else rescueLow(target);
       if(dealt>0)tinhMacSoul(target,before);
       // Hoa Ấn: every landed Tịch Dao basic carve stamps one mark (max 3) on
@@ -482,6 +491,7 @@ export function createSplusMechanics(options={}) {
 
   function onHit(source,target,hit) {
     if(!passive(source))return;
+    fx.onHit(source,target,hit);
     if(key(source)==='lac_an')source.splus.memory.focus=Math.min(8,n(source.splus.memory.focus)+1);
     if(key(source)==='ha_lang'||(hit.action==='basic'&&key(source)==='hoa_tieu')){
       const count=key(source)==='ha_lang'?1:2;
@@ -524,6 +534,7 @@ export function createSplusMechanics(options={}) {
   }
   function onReceive(target,source,dealt,incomingMelee,externalActionId) {
     if(!passive(target))return;
+    fx.onReceive(target,source,dealt);
     switch(key(target)){
       case 'be_an':{
         if(dealt<=0||source.team===target.team)return;
@@ -706,7 +717,7 @@ export function createSplusMechanics(options={}) {
     if(!cast||cast.id!==castId||!Number.isInteger(index)||index<0||index>=cast.hits||!cast.targets.includes(targetId)||cast.resolved.includes(token))return {ok:false,events:[]};
     cast.resolved.push(token);if(!alive(actor)||!alive(target))return {ok:true,events:[]};
     const previous=currentAction,startIndex=events.length;currentAction=cast.action;
-    try{AUTHORED_HIT[key(actor)](actor,target,cast,index);return {ok:true,events:events.slice(startIndex)};}
+    try{AUTHORED_HIT[key(actor)](actor,target,cast,index);fx.onAction(actor,target,cast,index);return {ok:true,events:events.slice(startIndex)};}
     finally{currentAction=previous;}
   }
   function finishAuthoredCast(actorId,castId){
@@ -1069,6 +1080,7 @@ export function createSplusMechanics(options={}) {
       for(const u of units)remove(u,s=>s.expiresRound!=null&&s.expiresRound<=round,'expired');
       for(let i=zones.length-1;i>=0;i--)if(zones[i].expiresRound<=round)zones.splice(i,1);syncZones();
       for(const actor of units.filter(passive)){
+        fx.onRoundStart(actor);
         if(key(actor)==='nguyet_diep')nguyetDiepMirror(actor);
         if(key(actor)==='vong_co'){const t=strongest(foes(actor))[0];for(const u of foes(actor))remove(u,s=>s.type==='cooldownDelay'&&s.sourceId===actor.id,'retarget');if(t)buff(actor,t,'cooldownDelay',1,1);}
         if(key(actor)==='tam_nuong'&&(round-1)%2===0){const other=weakest(friends(actor).filter(t=>t!==actor))[0];for(const t of [actor,other].filter(Boolean)){buff(actor,t,'cocoon',0,2,{charges:2});buff(actor,t,'armorUp',.3,2);}}

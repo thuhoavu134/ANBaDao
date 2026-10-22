@@ -17,7 +17,7 @@ import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join, resolve, dirname } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import sharp from 'sharp';
-import { ELEMENT, TARGETS, validateBrief, markers, cueAt, domainModule, heroTest } from './scaffold-lib.mjs';
+import { ELEMENT, TARGETS, validateBrief, markers, cueAt, domainModule, heroTest, effectsSpec } from './scaffold-lib.mjs';
 
 const ROOT = resolve(dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1')), '..', '..');
 async function medianBodyHeight(file, cols, cellW, cellH, frames) {
@@ -120,6 +120,11 @@ export function register(b, slug) {
     `    ${key}(actor,target,cast,index){\n      const power=cast.kind==='basic'?${b.kit.basic.power}:${b.kit.ultimate.power};\n` +
     `      damage(actor,target,{multiplier:power/cast.hits,action:cast.kind,type:'elemental'});\n    },\n`;
   done.hit = patchOnce(M, '    tinh_mac(actor,target,cast,index){', rule, new RegExp(`\\n    ${key}\\(actor,target,cast,index\\)\\{`));
+  // Brief-declared mechanics: one AUTHORED_EFFECTS entry, executed by src/domain/combat/authored-effects.mjs.
+  const spec = effectsSpec(b);
+  if (spec) done.effects = patchOnce('src/domain/combat/authored-effects-registry.mjs', '  /* @scaffold:effects',
+    `  ${key}: ${JSON.stringify(spec)},\n`, new RegExp(`\\n  ${key}: \\{`));
+  else done.effects = 'none declared';
   return done;
 }
 
