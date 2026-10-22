@@ -1,7 +1,7 @@
 {
   "schema": "authored-hero-assets/v1",
-  "assetRevision": "kiemthe-sixstate-20261021-203254-uniform",
-  "source": "kiemthe-animation-packager 20261021-203254 (--framing uniform, validate_package PASS)",
+  "assetRevision": "kiemthe-sixstate-20261022-110128-uniform",
+  "source": "kiemthe-animation-packager 20261022-110128 (--framing uniform, validate_package PASS)",
   "clips": {
     "idle": {
       "frames": 30,
@@ -12,7 +12,7 @@
       "pageFrames": 30,
       "pages": [
         {
-          "file": "idle-0-78813f77.webp",
+          "file": "idle-0-408fe946.webp",
           "frames": 30,
           "cols": 8,
           "rows": 4,
@@ -276,10 +276,10 @@
   },
   "budget": {
     "reason": "iOS battle working set: idle page <= 8 MiB, any page <= 12 MiB (hero:doctor)",
-    "date": "2026-10-21"
+    "date": "2026-10-22"
   },
   "detail": {
-    "file": "detail-e281f702.webp",
+    "file": "detail-89665bcf.webp",
     "frames": 30,
     "cols": 8,
     "cellW": 512,

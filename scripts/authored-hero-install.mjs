@@ -132,6 +132,8 @@ function idlePack(d) {
     cellW: c.cellW, cellH: c.cellH, pivot: hostPivot(c.pivot), foot: c.foot, body: c.body })) };
 }
 
+// [slug, DATA id, display name] of pre-standard heroes whose detail idle comes from runtime-meta clips.idle.
+const LEGACY_DETAIL_IDLE = [['co-nuong', 'co_nuong', 'Cổ Nương']];
 export function patchAuthoredHost(input, heroes, root = process.cwd()) {
   if (input.includes(MARK_HOST)) return input;
   const descriptors = heroes.map(battleDescriptor);
@@ -155,8 +157,19 @@ export function patchAuthoredHost(input, heroes, root = process.cwd()) {
     // (battle atlases are budget-scaled and looked blurry when enlarged here).
     const c = d.clips.idle, full = heroes[i].meta.detail;
     detail[hero.id] = full
-      ? { src: heroes[i].base + full.file, cols: full.cols, frames: full.frames, cellW: full.cellW, cellH: full.cellH, durationMs: full.durationMs, name: hero.host.name }
-      : { src: c.pages[0].src, cols: c.pages[0].cols, frames: c.frames, cellW: c.cellW, cellH: c.cellH, durationMs: c.durationMs, name: hero.host.name };
+      ? { src: heroes[i].base + full.file, cols: full.cols, frames: full.frames, cellW: full.cellW, cellH: full.cellH, durationMs: full.durationMs, pivot: c.pivot, foot: c.foot, footOffsets: full.footOffsets || null, frameDurationsMs: full.frameDurationsMs || c.frameDurationsMs || null, name: hero.host.name }
+      : { src: c.pages[0].src, cols: c.pages[0].cols, frames: c.frames, cellW: c.cellW, cellH: c.cellH, durationMs: c.durationMs, pivot: c.pivot, foot: c.foot, footOffsets: c.footOffsets || null, frameDurationsMs: c.frameDurationsMs || null, name: hero.host.name };
+  }
+  // Heroes integrated before the shared hero.json standard (Cổ Nương, co-nuong-main-integration.mjs) own a
+  // full-resolution idle atlas in runtime-meta.json but never got a hero-detail canvas, so their detail
+  // screen showed a static avatar. Register them with the same detail renderer, data-driven from runtime-meta.
+  for (const [slug, id, name] of LEGACY_DETAIL_IDLE) {
+    if (detail[id]) continue;
+    const mp = join(root, 'assets/characters', slug, 'runtime-meta.json');
+    if (!existsSync(mp)) continue;
+    const c = JSON.parse(readFileSync(mp, 'utf8')).clips?.idle;
+    if (!c?.file || !c.cols || !c.frames || !c.cellW || !c.cellH || !c.durationMs) continue;
+    detail[id] = { src: `assets/characters/${slug}/${c.file}`, cols: c.cols, frames: c.frames, cellW: c.cellW, cellH: c.cellH, durationMs: c.durationMs, name };
   }
   // Owner rule 2026-10-20: idle frame 0 is the portrait on every surface, legacy-owned heroes included
   // (their CHARACTER_MANIFEST entry predates the rule, so portraitSrc consults this map first).
@@ -192,18 +205,36 @@ export function patchAuthoredHost(input, heroes, root = process.cwd()) {
   s = once(s, "id==='be_an'?'<canvas id=",
     "(typeof AUTHORED_DETAIL_IDLE!=='undefined'&&AUTHORED_DETAIL_IDLE[id])?'<canvas id=\"authoredDetailIdle\" data-hero-id=\"'+id+'\" width=\"'+AUTHORED_DETAIL_IDLE[id].cellW+'\" height=\"'+AUTHORED_DETAIL_IDLE[id].cellH+'\" aria-label=\"'+AUTHORED_DETAIL_IDLE[id].name+' idle\"></canvas>':id==='be_an'?'<canvas id=");
   s = once(s, 'function startBachDienDetailIdle(){', `function startAuthoredDetailIdle(id){
+ if(window.__AUTHORED_DETAIL_IDLE_STATE&&window.__AUTHORED_DETAIL_IDLE_STATE.id===id){const prevCv=document.getElementById('authoredDetailIdle');if(prevCv&&window.__AUTHORED_DETAIL_IDLE_STATE.cv===prevCv&&prevCv.isConnected)return;}
  cancelAnimationFrame(_lucDetailRaf);const cv=document.getElementById('authoredDetailIdle'),m=AUTHORED_DETAIL_IDLE[id];if(!cv||!m)return;
- const ctx=cv.getContext('2d'),image=new Image();image.decoding='async';image.src=m.src;const start=performance.now();
- function tick(){if(!cv.isConnected){image.src='';return;}const frame=Math.floor((performance.now()-start)*m.frames/m.durationMs)%m.frames;
-  if(image.complete&&image.naturalWidth){ctx.clearRect(0,0,m.cellW,m.cellH);ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';ctx.drawImage(image,(frame%m.cols)*m.cellW,Math.floor(frame/m.cols)*m.cellH,m.cellW,m.cellH,0,0,m.cellW,m.cellH);}
+ cv.style.setProperty('--authored-idle-ar',m.cellW+'/'+m.cellH);
+ // Same rendering contract as the battle renderer: anchor the cell on pivot/foot instead of
+ // painting from the cell corner, and draw at devicePixelRatio so the art stays sharp.
+ const dpr=Math.min(3,Math.max(1,Math.round(window.devicePixelRatio||1)));
+ cv.width=Math.round(m.cellW*dpr);cv.height=Math.round(m.cellH*dpr);
+ const pivot=(typeof m.pivot==='number')?m.pivot:m.cellW/2;
+ const foot=(typeof m.foot==='number')?m.foot:m.cellH;
+ // The pack's uniform cell already places pivot at cellW/2 and the foot line inside the cell, so
+ // the cell coordinate system IS the battle anchor: paint at the origin and only add the measured
+ // per-frame foot offset. (Shifting by -pivot/-foot here would double-apply the anchor.)
+ void pivot; void foot;
+ const ox=0, oy=0;
+ const ctx=cv.getContext('2d'),image=new Image();image.decoding='async';image.src=m.src;
+ // Battle parity (owner 2026-10-22: the battle idle is smooth, do exactly the same): authoredBodyFrame
+ // picks frame = floor(progress*frames) with a uniform clock and paints the cell on one fixed anchor.
+ const total=m.durationMs;
+ const start=performance.now();window.__AUTHORED_DETAIL_IDLE_STATE={id:id,cv:cv,start:start};
+ function tick(){if(!cv.isConnected){image.src='';window.__AUTHORED_DETAIL_IDLE_STATE=null;return;}
+  const el=(performance.now()-start)%total;const frame=Math.min(m.frames-1,Math.floor(el/total*m.frames));
+  if(image.complete&&image.naturalWidth){const dy=0;ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,cv.width,cv.height);ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';ctx.drawImage(image,(frame%m.cols)*m.cellW,Math.floor(frame/m.cols)*m.cellH,m.cellW,m.cellH,ox,oy+dy,m.cellW*dpr,m.cellH*dpr);}
   _lucDetailRaf=requestAnimationFrame(tick);}
  tick();
 }
 function startBachDienDetailIdle(){`);
   s = once(s, "function portraitSrc(heroId,kind='card'){",
     "function portraitSrc(heroId,kind='card'){if(typeof HV_IDLE_PORTRAIT!=='undefined'&&HV_IDLE_PORTRAIT[heroId])return HV_IDLE_PORTRAIT[heroId];");
-  const css = list.map(id => `#hdBody .hstage[data-hero-id="${id}"]{position:relative!important}#hdBody .hstage[data-hero-id="${id}"]>.hsava{display:none!important}`).join('');
-  s = once(s, '</head>', `<style id="authored-hero-detail">${css}#authoredDetailIdle{position:static!important;transform:none!important;display:block;flex-shrink:0;width:min(340px,100%);height:auto;aspect-ratio:480/440;margin:0 auto 10px;pointer-events:none}</style></head>`);
+  const css = Object.keys(detail).map(id => `#hdBody .hstage[data-hero-id="${id}"]{position:relative!important}#hdBody .hstage[data-hero-id="${id}"]>.hsava{display:none!important}`).join('');
+  s = once(s, '</head>', `<style id="authored-hero-detail">${css}#authoredDetailIdle{position:static!important;transform:none!important;display:block;flex-shrink:0;width:min(340px,100%);height:auto;aspect-ratio:var(--authored-idle-ar,480/440);margin:0 auto 10px;pointer-events:none}</style></head>`);
   return s;
 }
 
