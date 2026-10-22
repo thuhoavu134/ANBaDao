@@ -40,7 +40,7 @@ node scripts/integrate-hero.mjs --slug <slug> --id hero_splus_<x> --pack <packDi
 
 Thêm `--allow-reuse` khi bộ video đó **đã từng pack cho tướng khác** (dùng để nghiệm thu, hoặc owner cố ý dùng lại).
 
-### Bước C — lệnh tự chạy 15 bước, dừng ngay ở bước lỗi
+### Bước C — lệnh tự chạy 16 bước, dừng ngay ở bước lỗi
 
 | # | Bước | Công cụ | Chặn lỗi gì |
 |---|---|---|---|
@@ -51,7 +51,8 @@ Thêm `--allow-reuse` khi bộ video đó **đã từng pack cho tướng khác*
 | 4b | seam | `scripts/qa-idle-loop-seam.mjs` | **mối nối idle khựng**: bước nhảy ở chỗ nối lớn hơn nhịp thường của bản pack |
 | 5 | import | `scripts/import-sixstate-pack.mjs` | từ chối pack có anchor idle lệch giữa các frame |
 | 6 | vfx | `scripts/hero/key_vfx.py` | VFX key hỏng, atlas vượt ngân sách ảnh |
-| 7 | sfx | `scripts/hero/extract_sfx.py` | thiếu cue cho đòn thường/tuyệt kỹ (hero-doctor sẽ FAIL) |
+| 7 | sfx | `scripts/hero/extract_sfx.py` | cắt tiếng từ audio clip anh gửi (chạy `--allow-missing`, phần thiếu để bước 7b lo) |
+| 7b | sfx-source | `scripts/hero/sfx-source.mjs` | vai nào clip không có tiếng → lấy kho Kiếm Thế → thư viện Pixabay; vẫn thiếu thì ghi `sfx-todo.json` và FAIL |
 | 8 | scaffold | `scripts/hero/scaffold.mjs` | brief thiếu trường, tướng chưa đăng ký, thiếu test |
 | 9 | portrait | `scripts/hero-portrait-from-idle.mjs` | ảnh đại diện không phải frame 0 của idle |
 | 10 | build | `scripts/build-static.mjs` (có HERO DOCTOR) | dung lượng trang, tên hash, đăng ký tướng, marker, cue |
@@ -213,17 +214,33 @@ Thực tế với ô 480×440: idle 30 frame (lưới 8×4) nặng 25.8 MiB, nê
 
 ---
 
-## 4. Chọn VFX/SFX từ kho SKILLPACK
+## 4. Chọn SFX từ kho SKILLPACK và Pixabay
 
-- Tra cứu: `python scripts/search-skillpack.py <từ khóa> [--sect <phái>] [--extract <mã> --out <thư mục>]` (công cụ trong workspace của agent; kho gốc là `KIEMTHE-VFX-SFX-FULL-20261017.zip`).
-- **Xem frame thật trước khi chọn**, không chọn theo tên mã. Mỗi PNG đã bị cắt viền: phải dán lên canvas `w×h` tại vị trí `ox/oy` lấy từ `info.json`, nếu không hiệu ứng sẽ bị nhảy.
-- Nhiều sprite là **sprite 16 hướng**, không phải chuỗi hoạt ảnh. Với projectile loại này chỉ lấy đúng 1 frame hướng phải; runtime tự xoay theo đường bay.
-- Ưu tiên cặp VFX+SFX đi cùng nhau trong bảng skill gốc. SFX giữ nguyên file WAV gốc, không cắt, không mix.
-- Đóng gói vào `assets/vfx/<slug>/vfx-<vai trò>-<sha8>.webp`. Ghi `assets/vfx/<slug>/provenance.json` gồm: mã nguồn, frame dùng, `frameMs`, `blend: "screen"`, SHA-256, vai trò.
-- SFX đặt ở `assets/audio/sfx/<slug>/*.wav`.
-- Gửi preview có tiếng cho chủ dự án duyệt. Chưa duyệt thì ghi `pending` trong `hero.json > approval`.
+Bước 7b (`scripts/hero/sfx-source.mjs`) tự lo, theo đúng thứ tự này cho **từng vai** (basic, basic-hit, ultimate,
+ultimate-vfx, ultimate-hit, hit, passive):
 
----
+1. **Tiếng trong clip anh gửi** — `scripts/hero/extract_sfx.py` cắt theo envelope RMS. Có thì giữ, không đụng tới.
+2. **Kho Kiếm Thế** — `knowledge/kiemthe-skillpack/data/skillpack.json` (193 SFX + 342 chưa đặt tên) trong workspace
+   agent; file lấy từ `KIEMTHE-VFX-SFX-FULL-20261017.zip`. Chọn phái theo `he` của brief (kim→Thiếu Lâm/Thiên Vương,
+   thủy→Thúy Yên, …; `soul`/`mong` → phái `public`), rồi chọn mã trong phái đó theo vai.
+3. **Thư viện Pixabay** — `assets/audio/sfx/_pixabay/` + `index.json` (mỗi mục: `file`, `tags`, `source`, `license`).
+   **Pipeline không có trình duyệt**, nên phần tải là việc của agent: mở pixabay.com bằng browser, tải file, bỏ vào
+   thư mục đó rồi ghi `tags` vào `index.json`. Pixabay đòi đăng nhập mới cho tải → cần owner đăng nhập một lần.
+4. **Còn thiếu** → ghi `C:/lt/packs/<slug>/sfx-todo.json` (kèm từ khóa gợi ý) và **FAIL**, không im lặng bỏ qua.
+
+**Ghim mã trong brief khi cần chắc** (đường tin cậy nhất, bỏ qua bước chọn tự động):
+
+```json
+"kit": {
+  "basic":    { "...": "...", "sfx": "cy_bhcs_c" },
+  "ultimate": { "...": "...", "sfx": "tw_zxzy_c" }
+},
+"sfx": { "hit": "sb013", "sect": "cuiyan" }
+```
+
+Mọi cue ghi vào `assets/vfx/<slug>/provenance.json["sfx"]` với `source` (`SKILLPACK/...` hoặc `pixabay:...`) và
+`owner review pending`. Tra tay khi cần: `python scripts/search-skillpack.py <từ khóa> [--sect <phái>] [--element <hành>]`
+(công cụ trong workspace agent). **VFX từ kho/Pixabay chưa nối tự động** — VFX vẫn key từ clip `vfxatk`/`vfxulti`.
 
 ## 5. Cấu trúc thư mục của một tướng
 

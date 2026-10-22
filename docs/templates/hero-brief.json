@@ -1,5 +1,5 @@
 {
-  "_help": "Brief tướng mới cho scripts/hero/scaffold.mjs. Chỉ điền luật chơi; animation, VFX, SFX, marker thời gian do pipeline tự sinh. Mỗi hiệu ứng khai trong 'effects' sẽ được engine chạy thật và có test tự sinh chứng minh. Bảng giá trị hợp lệ: docs/HERO-INTEGRATION-STANDARD.md mục 'Cơ chế khai báo trong brief'.",
+  "_help": "Brief tướng mới cho scripts/hero/scaffold.mjs. Chỉ điền luật chơi; animation, VFX, SFX, marker thời gian do pipeline tự sinh. Mỗi hiệu ứng khai trong 'effects' sẽ được engine chạy thật và có test tự sinh chứng minh. Bảng giá trị hợp lệ: docs/HERO-INTEGRATION-STANDARD.md mục 'Cơ chế khai báo trong brief'. Có thể ghim mã SFX cho từng vai để khỏi chọn tự động: \"sfx\": {\"basic\":\"cy_bhcs_c\", \"hit\":\"sb013\", \"sect\":\"cuiyan\"} — xem docs/HERO-INTEGRATION-STANDARD.md mục 4.",
   "key": "vi_du_hero",
   "slug": "vi-du-hero",
   "name": "Ví Dụ",
@@ -143,5 +143,12 @@
         }
       ]
     }
+  },
+  "sfx": {
+    "_help": "Tùy chọn. Ghim mã SFX lấy từ kho Kiếm Thế (tra: python scripts/search-skillpack.py <từ khóa>) hoặc chọn phái. Bỏ trống thì pipeline tự chọn theo hệ → phái → vai, rồi tới thư viện Pixabay.",
+    "sect": "cuiyan",
+    "basic": "cy_bhcs_c",
+    "ultimate": "cy_bxxl_c",
+    "hit": "sb013"
   }
 }

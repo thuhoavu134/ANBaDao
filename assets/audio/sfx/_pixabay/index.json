@@ -1,0 +1,4 @@
+{
+  "_help": "SFX tải từ Pixabay. Mỗi mục: file (tên file trong thư mục này), tags (từ khóa để scripts/hero/sfx-source.mjs khớp với vai), source (link trang), license, author.",
+  "items": []
+}
