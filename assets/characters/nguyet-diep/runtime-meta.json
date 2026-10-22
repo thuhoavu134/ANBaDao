@@ -315,46 +315,50 @@
     "date": "2026-10-20"
   },
   "detail": {
-    "file": "detail-0d5ac1f0.webp",
-    "frames": 26,
+    "file": "detail-4d34aec9.webp",
+    "frames": 30,
     "cols": 8,
     "cellW": 480,
     "cellH": 440,
-    "durationMs": 1083.333,
+    "durationMs": 1250,
     "atlasWidth": 3840,
     "atlasHeight": 1760,
-    "note": "hero-detail screen only; rebuilt from the standing window of the source animation (source frames 57-82 @ 24fps), feet pinned by construction",
+    "note": "hero-detail only; rebuilt from source frames 57-82 @ 24fps as a ping-pong loop, feet pinned by construction",
     "footOffsets": [
       0,
       0,
       0,
       0,
       0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
       0,
       0,
       0,
-      0,
-      0,
-      0,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1
+      0
     ],
     "idleWindow": {
-      "start": 11,
-      "count": 12
+      "start": 0,
+      "count": 30
     },
     "frameDurationsMs": [
       41.667,
@@ -382,7 +386,16 @@
       41.667,
       41.667,
       41.667,
+      41.667,
+      41.667,
+      41.667,
+      41.667,
       41.667
-    ]
+    ],
+    "loop": {
+      "mode": "pingpong",
+      "forwardFrames": 16,
+      "note": "source idle does not self-loop (best IoU 0.75 with feet still); forward+reverse gives a zero-pop seam"
+    }
   }
 }
