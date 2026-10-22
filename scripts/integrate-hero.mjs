@@ -124,6 +124,9 @@ if (!packDir || !existsSync(join(packDir, 'idle', 'metadata.json'))) {
 // 3..5
 step('validate', PY, [join(SKILL, 'validate_package.py'), packDir], { tail: 2 });
 step('parity', 'node', ['scripts/qa-idle-source-parity.mjs', packDir], { tail: 5, expect: /IDLE PARITY PASS/ });
+// The idle keeps every 3rd frame of a 24 fps clip: a wrap that moves the picture much more than an ordinary packed
+// step is the hitch the owner sees at the seam ("nó bị khựng ở đoạn nối").
+step('seam', 'node', ['scripts/qa-idle-loop-seam.mjs', packDir], { tail: 4, expect: /LOOP SEAM PASS/ });
 step('import', 'node', ['scripts/import-sixstate-pack.mjs', packDir, slug, heroId], { tail: 1 });
 
 // 6..7 owner VFX + SFX (only when the clips are known, i.e. a bundle exists)

@@ -48,6 +48,7 @@ Thêm `--allow-reuse` khi bộ video đó **đã từng pack cho tướng khác*
 | 2 | pack | `kiemthe-animation-packager --framing uniform` | khung chung, foot line cố định, idle khoá anchor, loop seam IoU ≥ 0.92 |
 | 3 | validate | `validate_package.py` | pack thiếu/hỏng |
 | 4 | parity | `scripts/qa-idle-source-parity.mjs` | **idle rung hơn video gốc** (>1.5 lần) |
+| 4b | seam | `scripts/qa-idle-loop-seam.mjs` | **mối nối idle khựng**: bước nhảy ở chỗ nối lớn hơn nhịp thường của bản pack |
 | 5 | import | `scripts/import-sixstate-pack.mjs` | từ chối pack có anchor idle lệch giữa các frame |
 | 6 | vfx | `scripts/hero/key_vfx.py` | VFX key hỏng, atlas vượt ngân sách ảnh |
 | 7 | sfx | `scripts/hero/extract_sfx.py` | thiếu cue cho đòn thường/tuyệt kỹ (hero-doctor sẽ FAIL) |
@@ -67,6 +68,7 @@ Kết quả: `INTEGRATE PASS` + báo cáo `docs/qa/integrate/<slug>.md` + GIF `d
 | Thứ tự làm tay trước đây | Nay do đâu |
 |---|---|
 | đọc tên clip, gõ đường dẫn vào manifest | intake đọc nhãn từ tên file, tự ghi `bundle.json` + `manifest.json` |
+| chọn điểm cắt vòng lặp idle bằng cảm giác | packager chấm mối nối theo **độ lệch thị giác so với nhịp thường của bản pack** (không chỉ IoU silhouette); cổng `seam` chặn nếu mối nối lệch > 1.6 lần |
 | chọn cửa sổ cắt SFX bằng mắt trên đường bao RMS | `extract_sfx.py` tự tìm sự kiện âm thanh (đỉnh, ngưỡng, gộp khoảng lặng) |
 | đặt `release` / `hits` / `vfxEnd` / `recovery` | scaffold suy từ **thời điểm bắt đầu tiếng vung đao trong chính clip**; không có tiếng thì 45% độ dài clip |
 | đặt `lead` cho từng cue | scaffold tính `lead = marker − lúc tiếng bắt đầu`, nên tiếng khớp đúng khung hình |
