@@ -7,55 +7,104 @@ Cập nhật 22/10/2026 (quy trình 1 lệnh ở ngay dưới). Tướng mẫu �
 
 ## ⚡ QUY TRÌNH 1 LỆNH (agent nào cũng làm đúng thế này — đọc trước mọi phần khác)
 
-Cập nhật 22/10/2026. Tướng nghiệm thu: **Bạch Y Vân Phong**, **Nguyệt Diệp**, **Tịnh Mặc**.
+Cập nhật 22/10/2026. Tướng đã đi qua quy trình này: **Bạch Y Vân Phong**, **Nguyệt Diệp**, **Tịnh Mặc**, và tướng nghiệm thu **Thử Nghiệm**.
+Toàn bộ đường đi từ video owner gửi tới PR nằm trong `scripts/integrate-hero.mjs`. Không viết script riêng cho từng tướng.
 
-**Đầu vào owner gửi:** 6 video nền xanh 1920×1080: `idle`, `run`, `atk`, `ultimate`, `hit`, `fall-die`.
+### Đầu vào owner gửi
 
-**Bước A — manifest pack** (UTF-8 **không BOM**: ghi bằng Python/Node, KHÔNG dùng PowerShell `Set-Content`/`ConvertTo-Json`):
-```json
-{
-  "states": { "idle": "<idle.mp4>", "run": "<run.mp4>", "atk": "<atk.mp4>",
-              "ultimate": "<ulti.mp4>", "hit": "<hit.mp4>", "fall-die": "<fall.mp4>" },
-  "packName": "<slug>-6state",
-  "outputRoot": "C:\\lt\\pack-<slug>\\out",
-  "blenderExecutable": "C:\\Program Files\\Blender Foundation\\Blender 5.1\\blender.exe",
-  "fixedAnchorStates": ["atk"]
-}
+| Loại | Bắt buộc | Ghi chú |
+|---|---|---|
+| 6 clip nền xanh 1920×1080: `idle`, `run`, `atk`, `ultimate`, `hit`, `fall-die` | có | tên file giữ nhãn ở đầu (`idle…`, `run…`, `falldie…`, `Hit_…`, `atk…`, `ulti…`) |
+| Clip VFX: `vfxatk`, `vfxulti` (tuỳ chọn `vfxnoitai`) | có | cùng chuẩn nền xanh, có tiếng |
+| **Brief luật chơi** (`docs/templates/hero-brief.json`) | có | nội tại + đánh thường + tuyệt kỹ: %, số hit, mục tiêu, hiệu ứng |
+
+Brief chỉ chứa **luật chơi**. Không điền thời gian, không điền đường dẫn ảnh/âm thanh, không điền marker — pipeline tự suy.
+
+### Bước A — chép bộ video vào một chỗ
+
+Để nguyên tên file. Không đổi tên, không cắt ghép, không xuất lại qua app khác.
+
+### Bước B — chạy đúng 1 lệnh
+
+```powershell
+# Tướng mới hoàn toàn: video + brief
+node scripts/integrate-hero.mjs --slug <slug> --id hero_splus_<x> --brief docs/templates/<brief>.json \
+     --files <idle.mp4> <run.mp4> <atk.mp4> <ulti.mp4> <hit.mp4> <fall.mp4> <vfxatk.mp4> <vfxulti.mp4>
+
+# Bộ video đã nằm trong thư mục inbound của agent (tự chọn bản mới nhất, chặn clip cũ)
+node scripts/integrate-hero.mjs --slug <slug> --id hero_splus_<x> --brief <brief.json>
+
+# Đã có pack sẵn (tích hợp lại tướng cũ), không cần video
+node scripts/integrate-hero.mjs --slug <slug> --id hero_splus_<x> --pack <packDir>
 ```
-`idle` luôn được packager khoá anchor (không cần ghi). Thêm `atk` khi đòn đánh có phân thân/hồn văng ra trước.
 
-**Bước B — tướng mới hoàn toàn:** viết `assets/characters/<slug>/hero.json` (luật, sfx, battle) theo mục 2 trở đi. Tướng cũ thì giữ nguyên `hero.json`.
+Thêm `--allow-reuse` khi bộ video đó **đã từng pack cho tướng khác** (dùng để nghiệm thu, hoặc owner cố ý dùng lại).
 
-**Bước C — chạy đúng 1 lệnh:**
-```
-node scripts/integrate-hero.mjs --manifest <manifest.json> --slug <slug> --id hero_splus_<x> [--detail-id <x>]
-```
-(Đã có pack thì dùng `--pack <packDir>` thay cho `--manifest`.)
+### Bước C — lệnh tự chạy 15 bước, dừng ngay ở bước lỗi
 
-Lệnh tự chạy theo thứ tự và **dừng ngay ở bước lỗi**:
-
-| # | Bước | Script | Chặn lỗi gì |
+| # | Bước | Công cụ | Chặn lỗi gì |
 |---|---|---|---|
-| 1 | pack | `kiemthe-animation-packager/package_six_states.py --framing uniform` | khung chung, foot line cố định, idle khoá anchor, loop seam IoU ≥ 0.92 |
-| 2 | validate | `validate_package.py` | pack thiếu/hỏng |
-| 3 | parity | `scripts/qa-idle-source-parity.mjs` | **idle rung hơn video gốc** (>1.5 lần) |
-| 4 | import | `scripts/import-sixstate-pack.mjs` | từ chối pack có anchor idle lệch giữa các frame |
-| 5 | portrait | `scripts/hero-portrait-from-idle.mjs` | ảnh đại diện = frame 0 idle |
-| 6 | build | `scripts/build-static.mjs` (có HERO DOCTOR) | dung lượng trang, tên hash, đăng ký tướng |
-| 7 | detail | `scripts/qa-detail-probe.mjs` | màn chi tiết không có idle chạy |
-| 8 | evidence | `scripts/qa-idle-frames.mjs` → GIF | bằng chứng canvas thật cho PR |
+| 1 | intake | `scripts/hero/intake.mjs` | bộ thiếu clip, clip cũ lẫn vào, sai 1920×1080, không có phông xanh, file đã pack cho tướng khác |
+| 2 | pack | `kiemthe-animation-packager --framing uniform` | khung chung, foot line cố định, idle khoá anchor, loop seam IoU ≥ 0.92 |
+| 3 | validate | `validate_package.py` | pack thiếu/hỏng |
+| 4 | parity | `scripts/qa-idle-source-parity.mjs` | **idle rung hơn video gốc** (>1.5 lần) |
+| 5 | import | `scripts/import-sixstate-pack.mjs` | từ chối pack có anchor idle lệch giữa các frame |
+| 6 | vfx | `scripts/hero/key_vfx.py` | VFX key hỏng, atlas vượt ngân sách ảnh |
+| 7 | sfx | `scripts/hero/extract_sfx.py` | thiếu cue cho đòn thường/tuyệt kỹ (hero-doctor sẽ FAIL) |
+| 8 | scaffold | `scripts/hero/scaffold.mjs` | brief thiếu trường, tướng chưa đăng ký, thiếu test |
+| 9 | portrait | `scripts/hero-portrait-from-idle.mjs` | ảnh đại diện không phải frame 0 của idle |
+| 10 | build | `scripts/build-static.mjs` (có HERO DOCTOR) | dung lượng trang, tên hash, đăng ký tướng, marker, cue |
+| 11 | test | `npm test` + `scripts/hero/compare-test-fails.mjs` | **test fail mới** so với baseline `origin/main` |
+| 12 | battle | `scripts/qa-authored-battle.mjs` | trận thật không vẽ atlas của tướng, hoặc có lỗi JS |
+| 13 | detail | `scripts/qa-detail-probe.mjs` | màn chi tiết không có idle chạy |
+| 14 | evidence | `scripts/qa-idle-frames.mjs` → GIF | bằng chứng canvas thật cho PR |
+| 15 | deliver | `--deliver` | nhánh mới + commit + verified push + PR (không bao giờ đẩy `main`) |
 
-Kết quả: `INTEGRATE PASS` + báo cáo `docs/qa/integrate/<slug>.md` + GIF `docs/qa/idle-anchor/detail-<x>.gif`.
+Kết quả: `INTEGRATE PASS` + báo cáo `docs/qa/integrate/<slug>.md` + GIF `docs/qa/idle-anchor/detail-<x>.gif` + ảnh trận `docs/qa/<slug>/battle-*.png`.
 
-**Bước D — giao:** `npm test` phải bằng baseline `main`; commit lên **nhánh mới** + mở PR, đính GIF vào PR. Không push/merge `main`. Owner duyệt bằng mắt rồi mới merge.
+### Pipeline tự suy những gì (đừng làm tay)
 
-**Cấm (đã từng gây lỗi thật):**
+| Thứ tự làm tay trước đây | Nay do đâu |
+|---|---|
+| đọc tên clip, gõ đường dẫn vào manifest | intake đọc nhãn từ tên file, tự ghi `bundle.json` + `manifest.json` |
+| chọn cửa sổ cắt SFX bằng mắt trên đường bao RMS | `extract_sfx.py` tự tìm sự kiện âm thanh (đỉnh, ngưỡng, gộp khoảng lặng) |
+| đặt `release` / `hits` / `vfxEnd` / `recovery` | scaffold suy từ **thời điểm bắt đầu tiếng vung đao trong chính clip**; không có tiếng thì 45% độ dài clip |
+| đặt `lead` cho từng cue | scaffold tính `lead = marker − lúc tiếng bắt đầu`, nên tiếng khớp đúng khung hình |
+| khai `victory.runVisualScale` | scaffold đo chiều cao thân idle vs run từ atlas |
+| đăng ký tướng vào 3 file code | scaffold chèn qua marker `@scaffold`, `AUTHORED_KITS`, `AUTHORED_HIT` |
+| viết test cho tướng | scaffold sinh `tests/<slug>.test.mjs` (đăng ký, số hit, mục tiêu) |
+
+### Cơ chế đặc biệt của tướng
+
+Sinh ra trong `AUTHORED_HIT.<key>` (file `src/domain/combat/splus-mechanics.mjs`) đã có sẵn một rule mặc định.
+Viết stack / trạng thái / kết liễu / hồi máu… **vào đúng hàm đó**, rồi thêm test vào `tests/<slug>.test.mjs`.
+Không sửa `scaffold.mjs`, không vá `hero.json` sau khi pipeline đã chạy xong.
+
+### Bước D — giao cho owner duyệt
+
+```powershell
+# tự làm: nhánh mới + commit + verified push + PR
+node scripts/integrate-hero.mjs ... --deliver --branch feat/<slug> --title "feat(hero): <slug>"
+
+# hoặc làm tay
+git checkout -b feat/<slug>
+git add <đúng file của tướng>
+git commit -m "feat(hero): <slug>"
+node scripts/tools/verified-push.mjs <origin/main> HEAD feat/<slug>
+gh pr create --base main --head feat/<slug>
+```
+
+Đính GIF + ảnh trận vào PR. Owner duyệt bằng mắt và nghe tiếng rồi **owner merge**. Agent không push/merge `main`.
+
+### Cấm (đã từng gây lỗi thật)
+
 - Sửa idle ở khâu render: bù vị trí chân, đổi nhịp từng frame, cắt đoạn rồi chạy tới–lui. Màn chi tiết vẽ y hệt trận (`authoredBodyFrame`: nhịp đều, một anchor).
 - Pack lại tướng cũ bằng packager khác phiên bản rồi để kích thước trong trận đổi mà owner không yêu cầu. Pack lại thì phải so hash các clip trận; nếu đổi thì dùng đúng phiên bản packager đã tạo pack cũ (`KIEMTHE_PACKAGER_DIR=<thư mục>`).
 - Tin ảnh thu nhỏ hoặc nhận xét của model thị giác về độ rung. Phải đo bằng `qa-idle-source-parity.mjs`.
+- Chạy `--deliver` khi owner chưa đồng ý mở PR, hoặc bỏ qua bước 11–14 vì "chắc là ổn".
+- Commit những thư mục QA cũ và script debug có sẵn trong repo. Bước deliver chỉ stage đúng file của tướng.
 
 ---
-
 
 ## QUY ĐỊNH ẢNH ĐẠI DIỆN (bắt buộc từ 2026-10-20)
 

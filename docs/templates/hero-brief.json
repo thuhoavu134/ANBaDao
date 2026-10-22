@@ -1,0 +1,45 @@
+{
+  "_help": "Brief tướng mới cho scripts/hero/scaffold.mjs. Chỉ điền phần luật chơi; animation, VFX, SFX, marker thời gian do pipeline tự sinh. Xem docs/HERO-INTEGRATION-STANDARD.md mục 'Quy trình 1 lệnh'.",
+  "key": "vi_du_hero",
+  "slug": "vi-du-hero",
+  "name": "Ví Dụ",
+  "fullName": "Ví Dụ — Đao Khách Thử Nghiệm",
+  "he": "soul",
+  "faction": "am_hon",
+  "archetype": "mystic",
+  "rarity": "ssr",
+  "color": "#5f8fb8",
+  "role": "Sát thương đơn mục tiêu, mở đầu bằng đòn đánh thường",
+  "weapon": "Trường đao",
+  "gender": "Nam",
+  "age": "Thanh niên",
+  "recommendedSlots": [0, 1, 2],
+  "introduction": "Một hai câu giới thiệu hiển thị ở màn chi tiết tướng.",
+  "voice": {
+    "lobby": "Câu nói khi vào sảnh.",
+    "ultimate": "Câu hô khi tung tuyệt kỹ!"
+  },
+  "stats": { "hp": 1150, "mp": 60, "atk": 150, "def": 65, "spd": 102 },
+  "kit": {
+    "passive": {
+      "name": "Tên Nội Tại",
+      "desc": "Mô tả đầy đủ nội tại: điều kiện kích hoạt, con số cụ thể.",
+      "effects": ["Hiệu ứng 1", "Hiệu ứng 2"]
+    },
+    "basic": {
+      "name": "Tên Đòn Thường",
+      "desc": "Mô tả đòn thường: bao nhiêu % sát thương, mục tiêu, hiệu ứng kèm theo.",
+      "power": 1.1,
+      "target": "enemy",
+      "hits": 1
+    },
+    "ultimate": {
+      "name": "Tên Tuyệt Kỹ",
+      "desc": "Mô tả tuyệt kỹ: % sát thương, phạm vi, hiệu ứng, chi phí nộ.",
+      "power": 2,
+      "target": "aoe_enemy",
+      "hits": 1,
+      "effects": ["200% sát thương toàn bộ địch"]
+    }
+  }
+}

@@ -33,5 +33,13 @@ for (const slug of slugs) {
   hero.art = { ...hero.art, portrait: `assets/characters/${slug}/${name}` };
   delete hero.art.landmark; // landmark belonged to the old avatar crop
   writeFileSync(heroPath, JSON.stringify(hero, null, 2) + '\n');
+  // The S+ profile module carries its own art.portrait (roster / detail surfaces read it). Scaffold generates a
+  // placeholder there before the portrait exists, so keep the two in step or the roster shows a missing image.
+  const modPath = join(root, 'src', 'domain', 'hero', `${slug}.mjs`);
+  if (existsSync(modPath)) {
+    const src = readFileSync(modPath, 'utf8');
+    const next = src.replace(/portrait-[0-9a-f]{8}\.webp/g, name);
+    if (next !== src) writeFileSync(modPath, next);
+  }
   console.log(slug, '->', hero.art.portrait, buf.length, 'bytes');
 }

@@ -1092,6 +1092,9 @@ export function createSplusMechanics(options={}) {
       if(k==='nguyet_diep'){const lane=oppositeTarget?.slot%3;return enemies.filter(t=>t.slot%3===lane).sort(bySlot);}
       return null;
     }
+    // Heroes in AUTHORED_KITS have no rage skill (canUse blocks the slot). Return null, never a list with
+    // holes: Khaos' old front/back swap returned [x,undefined] and froze the battle on his turn.
+    if(action==='skill'&&AUTHORED_KITS[k])return null;
     if(action==='skill')switch(k){
       case 'co_trong':return allyFront.slice(0,r.count||2);
       case 'cuong_dong':case 'thiet_lanh':case 'minh_toa':case 'linh_dong':case 'ha_lang':case 'giang_quan':case 'hac_dao':case 'hac_hoa':case 'nung':return one(oppositeTarget);
@@ -1112,13 +1115,12 @@ export function createSplusMechanics(options={}) {
       case 'son_cuong':return enemies.filter(u=>u.slot%3===actor.slot%3);
       case 'tue_y':return weakest(allies).slice(0,r.count||3);
       case 'mang_xa':return enemies;
-      // Khaos (Thủy Mặc kit) has no rage skill; the old front/back swap returned [x,undefined]
-      // once a row emptied and crashed updateActorHud -> the battle froze on his turn.
-      case 'khaos':case 'van_phong':case 'nguyet_diep':case 'tinh_mac':return null;
       case 'hoi_anh':return one(oppositeTarget);
       case 'cuu_trieu':return unique([...enemyFront,...back(enemies).filter(u=>u.slot%3===actor.slot%3).slice(0,1)]);
       default:return null;
     }
+    // AUTHORED_KITS ultimates target the enemy team; AUTHORED_KITS[k].ultimate.area picks all vs one.
+    if(AUTHORED_KITS[k])return enemies;
     switch(k){
       case 'co_trong':case 'thiem_ngan':case 'muc_chieu':case 'thuy_co':case 'tram_chau':case 'hoa_duc':case 'mien_nuong':case 'kinh_nuong':case 'thach_mong':return allies;
       case 'thuy_ngoc':return allyBack;
@@ -1133,7 +1135,7 @@ export function createSplusMechanics(options={}) {
       case 'hac_dao':{const target=tankiest(enemies)[0];return target?unique([target,...adjacent(target,enemies).slice(0,4)]):[];}
       case 'tieu_phong':{const lane=oppositeTarget?.slot%3;return enemies.filter(t=>t.slot%3===lane);}
       case 'tich_dao':case 'hong_thuong':return enemies;
-      case 'be_an':case 'ky_van':case 'to_linh':case 'linh_dong':case 'cuong_dong':case 'han_nuong':case 'vong_co':case 'co_nuong':case 'ha_lang':case 'hai_phong':case 'hoa_tieu':case 'tram_tue':case 'hoi_anh':case 'cuu_trieu':case 'khaos':case 'van_phong':case 'nguyet_diep':case 'tinh_mac':return enemies;
+      case 'be_an':case 'ky_van':case 'to_linh':case 'linh_dong':case 'cuong_dong':case 'han_nuong':case 'vong_co':case 'co_nuong':case 'ha_lang':case 'hai_phong':case 'hoa_tieu':case 'tram_tue':case 'hoi_anh':case 'cuu_trieu':return enemies;
       default:return null;
     }
   }
