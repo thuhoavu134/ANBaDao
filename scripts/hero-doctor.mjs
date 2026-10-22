@@ -12,7 +12,7 @@ import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 import { createHash } from 'node:crypto';
 import { loadAuthoredHeroes, battleDescriptor, authoredSfxMap } from './authored-hero-install.mjs';
-import { frameFootLines } from './hero-idle-anchor.mjs';
+import { frameFootPoints } from './hero-idle-anchor.mjs';
 
 // iOS battle cache is 64 MiB minus persistent pages (~44 MiB) shared by all 12 units, with one decode
 // at a time. A 26 MiB idle page left Khaos as a placeholder on iPhone (19/10/2026), so the limit is per
@@ -77,8 +77,8 @@ export async function doctorSource(root) {
       if (!Array.isArray(offs) || offs.length !== meta.detail.frames) {
         fail(`${label}: detail idle not anchored — run node scripts/hero-idle-anchor.mjs ${label}`);
       } else {
-        const lines = await frameFootLines(join(root, entry.base, meta.detail.file), meta.detail.cols, meta.detail.cellW, meta.detail.cellH, meta.detail.frames);
-        const moved = lines.map((v, i) => (v < 0 ? -1 : v + (offs[i] || 0))).filter((v) => v >= 0);
+        const pts = await frameFootPoints(join(root, entry.base, meta.detail.file), meta.detail.cols, meta.detail.cellW, meta.detail.cellH, meta.detail.frames);
+        const moved = pts.map((p, i) => (p ? p.y + (offs[i] || 0) : null)).filter((v) => v !== null);
         const span = Math.max(...moved) - Math.min(...moved);
         if (span > 2) fail(`${label}: detail idle foot line still moves ${span}px (max 2) — re-run node scripts/hero-idle-anchor.mjs ${label}`);
       }
