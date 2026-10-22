@@ -76,11 +76,45 @@ Kết quả: `INTEGRATE PASS` + báo cáo `docs/qa/integrate/<slug>.md` + GIF `d
 | đăng ký tướng vào 3 file code | scaffold chèn qua marker `@scaffold`, `AUTHORED_KITS`, `AUTHORED_HIT` |
 | viết test cho tướng | scaffold sinh `tests/<slug>.test.mjs` (đăng ký, số hit, mục tiêu) |
 
-### Cơ chế đặc biệt của tướng
+### Cơ chế khai báo trong brief (không viết code cho hiệu ứng thường gặp)
 
-Sinh ra trong `AUTHORED_HIT.<key>` (file `src/domain/combat/splus-mechanics.mjs`) đã có sẵn một rule mặc định.
-Viết stack / trạng thái / kết liễu / hồi máu… **vào đúng hàm đó**, rồi thêm test vào `tests/<slug>.test.mjs`.
-Không sửa `scaffold.mjs`, không vá `hero.json` sau khi pipeline đã chạy xong.
+Mỗi kỹ năng trong brief có mảng `effects`. Scaffold kiểm từng dòng (sai tên/giá trị là **dừng và chỉ đúng trường sai**),
+ghi vào `src/domain/combat/authored-effects-registry.mjs`, và **sinh 1 test cho mỗi hiệu ứng** trong `tests/<slug>.test.mjs`.
+Engine chạy chúng bằng `src/domain/combat/authored-effects.mjs` qua 7 móc chung; tướng không khai effects chạy y như cũ.
+
+**Đòn đánh** (`kit.basic.effects`, `kit.ultimate.effects`) chạy sau hit cuối: `who: target` áp cho từng mục tiêu bị đánh,
+còn `self / allies / lowestAlly / enemies` chỉ áp **1 lần mỗi chiêu** (kể cả tuyệt kỹ đánh toàn bộ).
+
+| `do` | Tham số | Ví dụ |
+|---|---|---|
+| `status` | `status`, `value` (sức mạnh), `turns` 1..5, `maxStacks` | `{"do":"status","status":"armorDown","value":0.15,"turns":2}` |
+| `status` (DOT) | `burn` / `poison` / `bleed` + `pctAtk` hoặc `pctMaxHp` mỗi lượt | `{"do":"status","status":"burn","pctAtk":0.2,"turns":2}` |
+| `heal` / `shield` | `pctAtk` hoặc `pctMaxHp`, `who` | `{"do":"shield","who":"allies","pctMaxHp":0.1}` |
+| `energy` | `value` (Nộ, âm được) | `{"do":"energy","who":"self","value":20}` |
+| `cleanse` | `count` | `{"do":"cleanse","who":"lowestAlly","count":1}` |
+| `execute` | `belowHp` | `{"do":"execute","belowHp":0.2}` kết liễu kẻ dưới 20% máu |
+| `damage` | `pctAtk` / `pctMaxHp`, `type` (mặc định `true`) | `{"do":"damage","who":"enemies","pctMaxHp":0.02}` |
+| `stack` | `name`, `max`, `add` | `{"do":"stack","name":"uHon","max":5}` |
+
+Mọi dòng nhận thêm `chance` (0..1). `who`: `target | self | allies | lowestAlly | enemies`.
+
+Trạng thái hỗ trợ — tốt: `attackUp armorUp magicArmorUp speedUp critUp critDamage resistUp evasionUp lifesteal mitigation`;
+khống chế: `stun sleep paralysis fear root disarm silence confusion`; xấu: `healDown antiHeal armorDown magicArmorDown attackDown speedDown blind rageSlow rageBan shieldBan buffBan damageDown critDown resistDown`; DOT: `burn poison bleed`.
+
+**Nội tại** (`kit.passive.effects`) thêm `when`:
+
+| `when` | Nghĩa | Ví dụ |
+|---|---|---|
+| `always` + `do:"stat"` | chỉ số luôn có: `attack defense magicDefense speed crit critDamage resist lifesteal mitigation`; `perStack` nhân theo bộ đếm | `{"when":"always","do":"stat","stat":"attack","value":0.04,"perStack":"nghiepLuc"}` |
+| `immune` | miễn nhiễm trạng thái | `{"when":"immune","status":["blind","stun"]}` |
+| `kill` | khi hạ gục (`target` là kẻ vừa chết) | `{"when":"kill","do":"heal","pctMaxHp":0.1}` |
+| `hit` | khi đánh trúng (`action` lọc basic/ultimate) | `{"when":"hit","action":"basic","do":"stack","name":"nghiepLuc","max":5}` |
+| `receive` | khi bị đánh (`target` là kẻ tấn công) | `{"when":"receive","do":"status","status":"attackDown","value":0.1,"chance":0.3}` |
+| `roundStart` | đầu mỗi hiệp | `{"when":"roundStart","do":"energy","value":5}` |
+
+Cơ chế lạ ngoài bảng này (triệu hồi, đổi vị trí, phản đòn có điều kiện, đếm theo sự kiện của đồng minh…) vẫn viết tay
+trong `AUTHORED_HIT.<key>` (`src/domain/combat/splus-mechanics.mjs`) và thêm test vào `tests/<slug>.test.mjs`.
+`desc` trong brief là chữ cho người chơi đọc — **phải khớp với `effects`**; người duyệt PR so hai phần này.
 
 ### Bước D — giao cho owner duyệt
 

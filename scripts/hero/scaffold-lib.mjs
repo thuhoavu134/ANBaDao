@@ -1,5 +1,7 @@
 // Pure parts of the hero scaffold (no file access): brief validation, battle markers, cue placement and the
 // generated domain module / test source. scripts/hero/scaffold.mjs does the file work.
+import { validateSpec } from '../../src/domain/combat/authored-effects.mjs';
+
 const constName = key => key.toUpperCase();
 const js = v => JSON.stringify(v);
 
@@ -20,6 +22,7 @@ export function validateBrief(b) {
     need(`kit.${slot}.target`, v => Object.hasOwn(TARGETS, v));
     need(`kit.${slot}.hits`, v => v == null || (Number.isInteger(v) && v >= 1 && v <= 6));
   }
+  if (b.kit) errs.push(...validateSpec(b.kit));
   if (errs.length) throw new Error(`brief thiếu/sai: ${errs.join(', ')} (mẫu: docs/templates/hero-brief.json)`);
   return b;
 }
@@ -95,7 +98,7 @@ import {createSplusCombat} from '../src/domain/combat/splus-mechanics.mjs';
 import {SPLUS_EXTRA_BY_ID, resolveSplusExtraId} from '../src/domain/hero/splus-extras.mjs';
 const H=(key,team=1,slot=0,extra={})=>({id:\`\${team}:\${key}\`,sourceId:\`hero_splus_\${key}\`,team,slot,hp:1e6,maxHp:1e6,atk:1000,def:200,speed:100,energy:100,crit:0,accuracy:100,statuses:[],...extra});
 const make=units=>{const e=createSplusCombat({units,rng:()=>.5});e.start();return e;};
-const hits=(e,src,tgt,action)=>e.events.filter(x=>x.type==='damage'&&x.sourceId===src&&x.targetId===tgt&&x.action===action);
+const hits=(e,src,tgt,action)=>e.events.filter(x=>x.type==='damage'&&x.sourceId===src&&x.targetId===tgt&&x.action===action&&!x.secondary);
 
 test(${js(`${b.name}: registered as an S+ extra and resolvable by key / slug`)},()=>{
   assert.ok(SPLUS_EXTRA_BY_ID.hero_splus_${key});
@@ -115,6 +118,96 @@ test(${js(`${b.name} ultimate: ${hu} hit(s), ${areaU ? 'every enemy' : 'one targ
   assert.equal(hits(e,'1:${key}','2:a','ultimate').length,${hu});
   assert.equal(hits(e,'1:${key}','2:b','ultimate').length,${areaU ? hu : 0});
 });
-`;
+${effectTests(b)}`;
 }
 
+// ---- brief effects -> registry spec + one generated test per declared effect --------------------------------
+/** The AUTHORED_EFFECTS entry for this brief, or null when the brief declares no effects. */
+export function effectsSpec(b) {
+  const spec = {};
+  for (const slot of ['passive', 'basic', 'ultimate']) if (b.kit?.[slot]?.effects?.length) spec[slot] = { effects: b.kit[slot].effects };
+  return Object.keys(spec).length ? spec : null;
+}
+
+const defaultWho = fx => (['heal', 'shield', 'energy', 'cleanse', 'stack'].includes(fx.do) ? 'self' : 'target');
+
+/**
+ * One node:test per declared effect, driven through the real engine (rng 0, so every `chance` lands).
+ * The owner's brief becomes executable proof: an effect that silently does nothing fails its own test.
+ */
+export function effectTests(b) {
+  const spec = effectsSpec(b);
+  if (!spec) return '';
+  const key = b.key, HERO = `1:${key}`;
+  const ids = { self: HERO, allies: '1:ally', lowestAlly: '1:ally', enemies: '2:b' };
+  const slotOf = id => ({ [HERO]: 'HERO', '1:ally': 'ALLY', '2:a': 'A', '2:b': 'B' })[id];
+  const out = [`
+// ---- brief effects (generated): every declared effect must actually happen in the engine ----
+const make0=units=>{const e=createSplusCombat({units,rng:()=>0});e.start();return e;};
+const U=(o={})=>[H('${key}',1,0,o.HERO),H('ally',1,1,o.ALLY),H('a',2,0,o.A),H('b',2,1,o.B)];
+`];
+  const emit = (label, setup, pre, trigger, asserts) => out.push(`test(${js(`${b.name} effect: ${label}`)},()=>{
+  const e=make0(U(${js(setup)}));
+${pre.map(l => '  ' + l).join('\n')}${pre.length ? '\n' : ''}  ${trigger}
+${asserts.map(l => '  ' + l).join('\n')}
+});
+`);
+
+  const check = (fx, R) => {
+    switch (fx.do) {
+      case 'status': return [`assert.ok(e.hasStatus('${R}','${fx.status}'),'${fx.status} on ${R}');`];
+      case 'heal': return [`assert.ok(e.events.some(x=>x.type==='heal'&&x.targetId==='${R}'&&x.amount>0),'healed ${R}');`];
+      case 'shield': return [`assert.ok(e.events.some(x=>x.type==='shield'&&x.targetId==='${R}'&&x.amount>0),'shield on ${R}');`];
+      case 'energy': return [`assert.ok(e.events.some(x=>x.type==='energy'&&x.reason==='authored-fx'&&x.targetId==='${R}'),'energy to ${R}');`];
+      case 'cleanse': return [`assert.equal(e.hasStatus('${R}','speedDown'),false,'debuff cleansed from ${R}');`];
+      case 'execute': return [`assert.equal(e.unit('2:a').hp,0,'executed under ${fx.belowHp * 100}% HP');`];
+      case 'damage': return [`assert.ok(e.events.some(x=>x.type==='damage'&&x.sourceId==='${HERO}'&&x.targetId==='${R}'&&x.secondary&&x.amount>0),'bonus damage on ${R}');`];
+      case 'stack': return [`assert.ok((e.unit('${HERO}').splus.memory.fx?.${fx.name}||0)>=1,'stack ${fx.name}');`];
+    }
+    return [];
+  };
+
+  const one = (label, fx, trigger, other, baseSetup = {}) => {
+    const who = fx.who || defaultWho(fx);
+    const R = who === 'target' ? other : ids[who];
+    if (!R && fx.do !== 'stack') return;   // e.g. an effect aimed at the (dead) victim of a kill: nothing to observe
+    const setup = { ...baseSetup }, pre = [];
+    const rs = slotOf(R);
+    if (who === 'lowestAlly') setup.ALLY = { ...(setup.ALLY || {}), hp: 4e5 };   // ties go to the lower slot (the hero)
+    if (fx.do === 'heal' && rs) setup[rs] = { ...(setup[rs] || {}), hp: 4e5 };
+    if (fx.do === 'cleanse') pre.push(`e.addStatus('2:b','${R}',{type:'speedDown',power:.1,turns:3});`);
+    if (fx.do === 'execute') setup.A = { ...(setup.A || {}), hp: Math.round(1e6 * (fx.belowHp - 0.05)) };
+    emit(label, setup, pre, trigger, check(fx, R));
+  };
+
+  for (const kind of ['basic', 'ultimate']) (spec[kind]?.effects || []).forEach((fx, i) =>
+    one(`${kind} #${i + 1} ${fx.do} ${fx.status || fx.name || ''} -> ${fx.who || defaultWho(fx)}`, fx, `e.act('${HERO}','${kind}','2:a');`, '2:a'));
+
+  const passive = spec.passive?.effects || [];
+  passive.forEach((fx, i) => {
+    const label = `passive #${i + 1} ${fx.when} ${fx.do || ''} ${fx.status || fx.stat || fx.name || ''}`.replace(/\s+/g, ' ').trim();
+    switch (fx.when) {
+      case 'immune': {
+        const list = Array.isArray(fx.status) ? fx.status : [fx.status];
+        emit(label, {}, [], `const blocked=${js(list)}.map(type=>e.addStatus('2:a','${HERO}',{type,power:.1,turns:2}));`,
+          [`assert.deepEqual(blocked,${js(list.map(() => null))},'immune to ${list.join(', ')}');`]);
+        break;
+      }
+      case 'kill': one(label, fx, `e.damage('${HERO}','2:a',{multiplier:1,forceHit:true});`, null, { A: { hp: 1 } }); break;
+      case 'hit': one(label, fx, `e.damage('${HERO}','2:a',{multiplier:1,forceHit:true,action:'${fx.action || 'basic'}'});`, '2:a'); break;
+      case 'receive': one(label, fx, `e.damage('2:a','${HERO}',{multiplier:1,forceHit:true});`, '2:a'); break;
+      case 'roundStart': one(label, fx, `e.beginRound(2);`, null); break;
+    }
+  });
+
+  // Always-on stats, all together: every per-stack counter is set to 2, so the expected total is exact.
+  const always = passive.filter(fx => fx.when === 'always');
+  if (always.length) {
+    const want = {};
+    for (const fx of always) want[fx.stat] = (want[fx.stat] || 0) + fx.value * (fx.perStack ? 2 : 1);
+    const counters = Object.fromEntries(always.filter(fx => fx.perStack).map(fx => [fx.perStack, 2]));
+    emit('passive always-on stats', {}, [`e.unit('${HERO}').splus.memory.fx=${js(counters)};`], `const m=e.modifiers('${HERO}');`,
+      Object.entries(want).map(([stat, v]) => `assert.ok(Math.abs(m.${stat}-(${v}))<1e-9,'${stat} = ${v}');`));
+  }
+  return out.join('\n');
+}
