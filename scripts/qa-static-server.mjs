@@ -3,7 +3,9 @@ import { createServer } from 'node:http';
 import { readFileSync, statSync } from 'node:fs';
 import { join, extname } from 'node:path';
 
-const dist = 'C:/lt/luc-than-main/dist';
+// Serve the dist/ of the checkout being tested. Was hard-coded to C:/lt/luc-than-main/dist, so every QA run in a
+// git worktree (or any second checkout) silently verified the MAIN tree's build instead of its own.
+const dist = process.env.QA_DIST || join(process.cwd(), 'dist');
 const port = Number(process.argv[2] || 18091);
 const mime = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.jpg': 'image/jpeg', '.png': 'image/png', '.webp': 'image/webp', '.json': 'application/json', '.svg': 'image/svg+xml', '.woff2': 'font/woff2', '.mp3': 'audio/mpeg', '.apng': 'image/apng', '.webm': 'video/webm' };
 

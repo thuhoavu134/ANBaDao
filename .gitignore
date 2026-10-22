@@ -16,3 +16,7 @@ data/
 
 # screencast intermediate frames (mp4 kept as evidence)
 evidence/**/*-frames/
+
+# Python bytecode from the hero pipeline tools (scripts/hero/*.py)
+__pycache__/
+*.pyc

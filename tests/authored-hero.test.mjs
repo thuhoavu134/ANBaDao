@@ -19,7 +19,12 @@ test('hero.json heroes are discovered from assets/characters without a per-hero 
   for (const key of ['idle', 'run', 'basic', 'ultimate', 'hit', 'fall-die', 'vfx-basic', 'vfx-impact', 'vfx-ultimate']) assert.ok(d.clips[key], key);
   assert.equal(d.clips.idle.frames, 30);
   assert.equal(d.clips['vfx-ultimate'].blend, 'screen');
-  assert.deepEqual(Object.keys(authoredSfxMap(heroes)).sort(), ['bach-dien-atk', 'bach-dien-ult', 'khaos-basic', 'khaos-impact', 'khaos-ultimate', 'nguyet-diep-basic', 'nguyet-diep-basic-hit', 'nguyet-diep-passive', 'nguyet-diep-ultimate', 'nguyet-diep-ultimate-hit', 'nguyet-diep-ultimate-vfx', 'tinh-mac-basic', 'tinh-mac-basic-hit', 'tinh-mac-blade-hit', 'tinh-mac-blade-hit-2', 'tinh-mac-hit', 'tinh-mac-passive', 'tinh-mac-slash-1', 'tinh-mac-slash-2', 'tinh-mac-slash-3', 'tinh-mac-soul-burst', 'tinh-mac-soul-drain', 'tinh-mac-ult-boom', 'tinh-mac-ult-fall', 'tinh-mac-ult-slam', 'tinh-mac-ultimate', 'tinh-mac-ultimate-hit', 'tinh-mac-ultimate-vfx', 'van-phong-basic', 'van-phong-impact', 'van-phong-ultimate', 'van-phong-ultimate-hit', 'van-phong-ultimate-wind']);
+  // Every cue declared in any hero.json reaches the shared map, prefixed by its hero and never shared.
+  const declared = heroes.flatMap(h => Object.keys(h.hero.sfx || {}));
+  assert.deepEqual(Object.keys(authoredSfxMap(heroes)).sort(), [...new Set(declared)].sort());
+  assert.equal(new Set(declared).size, declared.length, 'two heroes declare the same SFX cue');
+  for (const h of heroes) for (const cue of Object.keys(h.hero.sfx || {})) assert.ok(cue.startsWith(h.hero.id.replace(/_/g, '-') + '-'), `${h.hero.id}: cue ${cue} must start with ${h.hero.id.replace(/_/g, '-')}-`);
+  for (const cue of ['khaos-basic', 'tinh-mac-basic', 'van-phong-basic', 'nguyet-diep-basic', 'bach-dien-atk']) assert.ok(declared.includes(cue), cue);
 });
 
 test('shared battle installer composes after Bé An, parses, and is idempotent', () => {
