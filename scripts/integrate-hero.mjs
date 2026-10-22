@@ -186,17 +186,22 @@ try {
   const live = (row.live || []).find(l => l.animating && l.opaque > 0);
   if (!live) { report.at(-1).ok = false; report.at(-1).tail = `no animating idle canvas on the hero-detail screen: ${JSON.stringify(row)}`; finish(false); }
 
-  // 14 evidence GIF from real canvas frames
-  step('frames', 'node', ['scripts/qa-idle-frames.mjs', detailId, '24', '105'], { tail: 1 });
+  // 14 evidence GIF from real canvas frames: one capture per authored idle frame, so the GIF is exactly one
+  // cycle of the 30-frame idle (3750ms / 30 = 125ms per frame), not a drifting timed sample.
+  step('frames', 'node', ['scripts/qa-idle-frames.mjs', detailId], { tail: 3 });
   const fdir = join(root, 'docs', 'qa', 'idle-anchor', 'frames', detailId);
   const pngs = readdirSync(fdir).filter(f => /^f\d+\.png$/.test(f)).sort();
   const first = await sharp(join(fdir, pngs[0])).metadata();
   const w = Math.round(first.width / 2), h = Math.round(first.height / 2);
   const tiles = await Promise.all(pngs.map(f => sharp(join(fdir, f)).resize(w, h).flatten({ background: '#161a24' }).raw().toBuffer()));
+  // Delay = the clip's own frame duration, so the GIF plays at the real speed of the idle.
+  const meta = JSON.parse(readFileSync(join(root, 'assets', 'characters', slug, 'runtime-meta.json'), 'utf8'));
+  const idle = meta.detail || meta.clips.idle;
+  const delay = Math.max(20, Math.round((idle.durationMs || pngs.length * 125) / pngs.length));
   await sharp(Buffer.concat(tiles), { raw: { width: w, height: h * tiles.length, channels: 3, pageHeight: h } })
-    .gif({ delay: Array(tiles.length).fill(105), loop: 0 })
+    .gif({ delay: Array(tiles.length).fill(delay), loop: 0 })
     .toFile(join(root, 'docs', 'qa', 'idle-anchor', `detail-${detailId}.gif`));
-  report.push({ name: 'evidence', ok: true, sec: 0, tail: `docs/qa/idle-anchor/detail-${detailId}.gif (${tiles.length} frames)` });
+  report.push({ name: 'evidence', ok: true, sec: 0, tail: `docs/qa/idle-anchor/detail-${detailId}.gif (${tiles.length} frames, ${delay}ms each = one full loop)` });
 } finally { if (server) server.kill(); }
 
 // 15 deliver (opt-in): branch, commit, verified push, PR. Never main, never a merge — the owner reviews.
