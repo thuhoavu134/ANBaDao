@@ -6,7 +6,6 @@ import { readFileSync, writeFileSync, mkdirSync, readdirSync, unlinkSync, exists
 import { join, resolve } from 'node:path';
 import { createHash } from 'node:crypto';
 import sharp from 'sharp';
-import { footOffsetsFor } from './hero-idle-anchor.mjs';
 
 const [packDir, slug, heroId, scaleArg] = process.argv.slice(2);
 if (!packDir || !slug || !heroId) { console.error('usage: <packDir> <slug> <heroId> [budgetScale]'); process.exit(2); }
@@ -53,9 +52,6 @@ for (const [state, clip] of Object.entries(STATE_TO_CLIP)) {
     const buf = await sharp(png).webp({ quality: 92, alphaQuality: 100, effort: 5 }).toBuffer();
     const file = `detail-${sha8(buf)}.webp`; writeFileSync(join(outDir, file), buf);
     detail = { file, frames, cols: page.columns, cellW, cellH, durationMs, atlasWidth: page.canvas[0], atlasHeight: page.canvas[1], note: 'hero-detail screen only (full resolution); battle uses clips.idle' };
-    // Idle anchoring is part of the pack contract: the source idle lifts the feet between frames,
-    // so store a per-frame offset that the renderer adds back (hero-detail idle must not bob).
-    detail.footOffsets = await footOffsetsFor({ file: join(outDir, file), cols: page.columns, cellW, cellH, frames });
   }
   const w = Math.round(page.canvas[0] * budgetScale), h = Math.round(page.canvas[1] * budgetScale);
   const buf = await sharp(png).resize(w, h, { kernel: 'lanczos3' }).webp({ quality: 90, alphaQuality: 100, effort: 5 }).toBuffer();

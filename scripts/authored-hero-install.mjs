@@ -207,13 +207,13 @@ export function patchAuthoredHost(input, heroes, root = process.cwd()) {
  void pivot; void foot;
  const ox=0, oy=0;
  const ctx=cv.getContext('2d'),image=new Image();image.decoding='async';image.src=m.src;
- const offs=m.footOffsets||null,durs=(m.frameDurationsMs&&m.frameDurationsMs.length===m.frames)?m.frameDurationsMs:null;
- const cum=[];let total=m.durationMs;if(durs){total=0;for(const dd of durs){cum.push(total);total+=dd;}}
+ // Battle parity (owner 2026-10-22: the battle idle is smooth, do exactly the same): authoredBodyFrame
+ // picks frame = floor(progress*frames) with a uniform clock and paints the cell on one fixed anchor.
+ const total=m.durationMs;
  const start=performance.now();window.__AUTHORED_DETAIL_IDLE_STATE={id:id,cv:cv,start:start};
  function tick(){if(!cv.isConnected){image.src='';window.__AUTHORED_DETAIL_IDLE_STATE=null;return;}
-  const el=(performance.now()-start)%total;let frame=0;
-  if(durs){for(let i=0;i<cum.length;i++){if(el>=cum[i])frame=i;else break;}}else{frame=Math.floor(el*m.frames/m.durationMs)%m.frames;}
-  if(image.complete&&image.naturalWidth){const dy=((offs&&offs[frame])||0)*dpr;ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,cv.width,cv.height);ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';ctx.drawImage(image,(frame%m.cols)*m.cellW,Math.floor(frame/m.cols)*m.cellH,m.cellW,m.cellH,ox,oy+dy,m.cellW*dpr,m.cellH*dpr);}
+  const el=(performance.now()-start)%total;const frame=Math.min(m.frames-1,Math.floor(el/total*m.frames));
+  if(image.complete&&image.naturalWidth){const dy=0;ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,cv.width,cv.height);ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';ctx.drawImage(image,(frame%m.cols)*m.cellW,Math.floor(frame/m.cols)*m.cellH,m.cellW,m.cellH,ox,oy+dy,m.cellW*dpr,m.cellH*dpr);}
   _lucDetailRaf=requestAnimationFrame(tick);}
  tick();
 }
