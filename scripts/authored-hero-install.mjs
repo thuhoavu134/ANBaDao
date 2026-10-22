@@ -132,6 +132,8 @@ function idlePack(d) {
     cellW: c.cellW, cellH: c.cellH, pivot: hostPivot(c.pivot), foot: c.foot, body: c.body })) };
 }
 
+// [slug, DATA id, display name] of pre-standard heroes whose detail idle comes from runtime-meta clips.idle.
+const LEGACY_DETAIL_IDLE = [['co-nuong', 'co_nuong', 'Cổ Nương']];
 export function patchAuthoredHost(input, heroes, root = process.cwd()) {
   if (input.includes(MARK_HOST)) return input;
   const descriptors = heroes.map(battleDescriptor);
@@ -157,6 +159,17 @@ export function patchAuthoredHost(input, heroes, root = process.cwd()) {
     detail[hero.id] = full
       ? { src: heroes[i].base + full.file, cols: full.cols, frames: full.frames, cellW: full.cellW, cellH: full.cellH, durationMs: full.durationMs, pivot: c.pivot, foot: c.foot, footOffsets: full.footOffsets || null, frameDurationsMs: full.frameDurationsMs || c.frameDurationsMs || null, name: hero.host.name }
       : { src: c.pages[0].src, cols: c.pages[0].cols, frames: c.frames, cellW: c.cellW, cellH: c.cellH, durationMs: c.durationMs, pivot: c.pivot, foot: c.foot, footOffsets: c.footOffsets || null, frameDurationsMs: c.frameDurationsMs || null, name: hero.host.name };
+  }
+  // Heroes integrated before the shared hero.json standard (Cổ Nương, co-nuong-main-integration.mjs) own a
+  // full-resolution idle atlas in runtime-meta.json but never got a hero-detail canvas, so their detail
+  // screen showed a static avatar. Register them with the same detail renderer, data-driven from runtime-meta.
+  for (const [slug, id, name] of LEGACY_DETAIL_IDLE) {
+    if (detail[id]) continue;
+    const mp = join(root, 'assets/characters', slug, 'runtime-meta.json');
+    if (!existsSync(mp)) continue;
+    const c = JSON.parse(readFileSync(mp, 'utf8')).clips?.idle;
+    if (!c?.file || !c.cols || !c.frames || !c.cellW || !c.cellH || !c.durationMs) continue;
+    detail[id] = { src: `assets/characters/${slug}/${c.file}`, cols: c.cols, frames: c.frames, cellW: c.cellW, cellH: c.cellH, durationMs: c.durationMs, name };
   }
   // Owner rule 2026-10-20: idle frame 0 is the portrait on every surface, legacy-owned heroes included
   // (their CHARACTER_MANIFEST entry predates the rule, so portraitSrc consults this map first).
@@ -220,7 +233,7 @@ export function patchAuthoredHost(input, heroes, root = process.cwd()) {
 function startBachDienDetailIdle(){`);
   s = once(s, "function portraitSrc(heroId,kind='card'){",
     "function portraitSrc(heroId,kind='card'){if(typeof HV_IDLE_PORTRAIT!=='undefined'&&HV_IDLE_PORTRAIT[heroId])return HV_IDLE_PORTRAIT[heroId];");
-  const css = list.map(id => `#hdBody .hstage[data-hero-id="${id}"]{position:relative!important}#hdBody .hstage[data-hero-id="${id}"]>.hsava{display:none!important}`).join('');
+  const css = Object.keys(detail).map(id => `#hdBody .hstage[data-hero-id="${id}"]{position:relative!important}#hdBody .hstage[data-hero-id="${id}"]>.hsava{display:none!important}`).join('');
   s = once(s, '</head>', `<style id="authored-hero-detail">${css}#authoredDetailIdle{position:static!important;transform:none!important;display:block;flex-shrink:0;width:min(340px,100%);height:auto;aspect-ratio:var(--authored-idle-ar,480/440);margin:0 auto 10px;pointer-events:none}</style></head>`);
   return s;
 }
