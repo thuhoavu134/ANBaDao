@@ -140,7 +140,9 @@ if (existsSync(bundle)) {
     report.push({ name: 'vfx', ok: true, sec: 0, tail: 'skipped (--no-vfx): attack VFX is baked into the state clips' });
     console.log('[vfx] skipped (--no-vfx): attack VFX is baked into the state clips');
   } else step('vfx', PY, ['scripts/hero/key_vfx.py', '--bundle', bundle, '--slug', slug, '--root', root], { tail: 4 });
-  step('sfx', PY, ['scripts/hero/extract_sfx.py', '--bundle', bundle, '--slug', slug, '--key', key, '--root', root], { tail: 8 });
+  step('sfx', PY, ['scripts/hero/extract_sfx.py', '--bundle', bundle, '--slug', slug, '--key', key, '--root', root, '--allow-missing'], { tail: 8 });
+  // Roles the clip audio could not supply come from the Kiếm Thế SKILLPACK, then the local Pixabay library.
+  step('sfx-source', 'node', ['scripts/hero/sfx-source.mjs', '--bundle', bundle, '--slug', slug, '--key', key, '--root', root, '--brief', brief], { tail: 12, expect: /SFX SOURCE PASS/ });
 } else {
   console.log('[vfx] skipped (no bundle.json); [sfx] skipped (no bundle.json)');
   report.push({ name: 'vfx', ok: true, sec: 0, tail: 'skipped: no bundle (existing pack)' });

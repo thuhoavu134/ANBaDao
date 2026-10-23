@@ -96,6 +96,7 @@ def main():
     ap.add_argument('--slug', required=True)
     ap.add_argument('--key', required=True, help='domain key, e.g. tinh_mac (cue prefix tinh-mac-)')
     ap.add_argument('--root', default=str(Path(__file__).resolve().parents[2]))
+    ap.add_argument('--allow-missing', action='store_true', help='write what the clips can supply and exit 0; scripts/hero/sfx-source.mjs fills the rest from the libraries')
     a = ap.parse_args()
     bundle = json.loads(Path(a.bundle).read_text(encoding='utf-8'))
     prefix = a.key.replace('_', '-')
@@ -140,8 +141,12 @@ def main():
     basic_ok = any(c.endswith(('-basic', '-basic-hit')) for c in rows)
     ult_ok = any(c.endswith(('-ultimate', '-ultimate-vfx', '-ultimate-hit')) for c in rows)
     if not (basic_ok and ult_ok):
-        print('EXTRACT SFX FAIL: basic and ultimate each need at least one cue (hero-doctor). Add SKILLPACK WAVs by hand.')
-        raise SystemExit(1)
+        msg = 'basic and ultimate each need at least one cue (hero-doctor).'
+        if a.allow_missing:
+            print('EXTRACT SFX: ' + msg + ' Continuing - scripts/hero/sfx-source.mjs fills the rest from the libraries.')
+        else:
+            print('EXTRACT SFX FAIL: ' + msg + ' Add SKILLPACK WAVs by hand, or run with --allow-missing.')
+            raise SystemExit(1)
     print(f'EXTRACT SFX PASS: {len(rows)} cues -> {out_dir}')
 
 
