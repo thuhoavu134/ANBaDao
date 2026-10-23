@@ -5,6 +5,7 @@
     'tich-dao-blink':'tich-dao/blink.wav','tich-dao-slash':'tich-dao/slash.wav','tich-dao-sword-rain':'tich-dao/sword-rain.wav','tich-dao-execute-impact':'tich-dao/execute-impact.wav',
     'hong-thuong-impact':'hong-thuong/impact.wav',
     'be-an-basic':'be-an/basic.wav',
+'be-an-basic-hit':'be-an/basic-hit.wav',
     'be-an-ultimate':'be-an/ultimate.wav',
     'be-an-special':'be-an/special.wav',
     'co-nuong-pierce':'co-nuong/pierce.wav',

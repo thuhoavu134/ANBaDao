@@ -67,7 +67,7 @@ function beAnBodyFrame(m,elapsed){
 }
 function warmBeAnBattle(){
  if(warmBeAnBattle.battle===state.battleId)return;warmBeAnBattle.battle=state.battleId;
- for(const cue of ['be-an-basic','be-an-ultimate','be-an-special'])void window.HonVietSfx?.prepare?.(cue,{timeoutMs:8000});
+ for(const cue of ['be-an-basic','be-an-basic-hit','be-an-ultimate','be-an-special'])void window.HonVietSfx?.prepare?.(cue,{timeoutMs:8000});
 }
 function drawBeAnHero(ctx,u,time){
  warmBeAnBattle();
@@ -160,6 +160,9 @@ async function performBeAnAction(actor,action,target,e,battleId){
    if(!await wait(hits[hit]))return;
    trace?.marker('impact',{actionId:presentationId,hit});
    for(const id of info.targets)e.resolveBeAnImpact(actor.id,cast.castId,id,hit);
+   // Owner 2026-10-23: the thrown seal touches the enemy twice, so the second contact needs its own impact sound
+   // (the main cue only covers the throw / first contact).
+   if(kind==='basic'&&hit>0&&state.sound&&!__hvIsSkipping())void window.HonVietSfx?.play('be-an-basic-hit',{group:'combat',signal:info.abort.signal,playbackRate:speed,maxDelayMs:180});
    updateTeamCounters();splusStateView();
   }
   e.finishBeAnCast(actor.id,cast.castId);state.actionCount++;state.actionBreakdown[kind]=(state.actionBreakdown[kind]||0)+1;

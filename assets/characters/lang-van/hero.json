@@ -86,25 +86,25 @@
   "vfxMeta": "assets/vfx/lang-van/provenance.json",
   "battle": {
     "tempo": {
-      "basic": 1.3,
-      "ultimate": 1.2
+      "basic": 2.3,
+      "ultimate": 2.2
     },
     "actions": {
       "basic": {
         "clip": "basic",
-        "release": 5600,
+        "release": 1300,
         "hits": [
-          5600,
-          6400,
-          7600
+          2667,
+          4000,
+          7111
         ],
-        "vfxEnd": 7900,
+        "vfxEnd": 7800,
         "recovery": 8000,
         "sfx": [
           {
             "cue": "lang-van-basic",
             "at": "hit",
-            "lead": 40
+            "lead": 60
           },
           {
             "cue": "lang-van-basic-hit",
@@ -117,17 +117,22 @@
       },
       "ultimate": {
         "clip": "ultimate",
-        "release": 4200,
+        "release": 1700,
         "hits": [
-          4600
+          2000
         ],
-        "vfxEnd": 5300,
+        "vfxEnd": 5600,
         "recovery": 6000,
         "sfx": [
           {
-            "cue": "lang-van-ultimate",
+            "cue": "lang-van-ultimate-vortex",
             "at": "release",
-            "lead": 100
+            "lead": 0
+          },
+          {
+            "cue": "lang-van-ultimate",
+            "at": "hit",
+            "lead": 90
           },
           {
             "cue": "lang-van-ultimate-vfx",
@@ -165,7 +170,8 @@
     "lang-van-basic-hit": "lang-van/basic-hit.wav",
     "lang-van-ultimate-vfx": "lang-van/ultimate-vfx.wav",
     "lang-van-ultimate-hit": "lang-van/ultimate-hit.wav",
-    "lang-van-passive": "lang-van/passive.wav"
+    "lang-van-passive": "lang-van/passive.wav",
+    "lang-van-ultimate-vortex": "lang-van/ultimate-vortex.wav"
   },
   "surfaces": [
     "roster",
