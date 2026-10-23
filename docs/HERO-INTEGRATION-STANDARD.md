@@ -175,7 +175,17 @@ Một frame video chỉ được dùng khi **chỉ còn nhân vật**. Ảnh ch�
 logo/ngôi sao Gemini (góc dưới-phải), chữ chú thích kiểu `#00FF00` (góc trên-trái vùng phông xanh),
 con trỏ chuột, phông xanh, và **nền đen của màn hình khi anh chụp** (không phải một phần của frame).
 
-Chạy trước bước pack:
+**Tự chạy trong lệnh 1 bước** (từ 2026-10-23): packer `kiemthe-animation-packager/scripts/package_six_states.py` gọi
+`scrub_strays()` ngay sau khi Blender key phông, TRƯỚC khi đo/cắt khung. Kết quả nằm ở `PACK-MANIFEST.json → states[].strayScrub`.
+
+Luật nhận diện: **mảnh rời nhỏ đứng YÊN cùng một chỗ ở ≥80% số frame** = chữ in sẵn / logo AI / con trỏ → xoá;
+mảnh rời **bay** (cánh hoa, khói, tia lửa) → giữ. Mảnh nằm hẳn ngoài khung nhân vật → xoá như vụn.
+(Đã thử luật theo màu: hoặc sót `#00`, hoặc xoá nhầm cánh hoa đào — vì sau khi key, cánh hoa nhạt như chữ trắng.)
+
+Kiểm chứng trên clip idle_7 của owner (144 frame): xoá 526 mảnh tĩnh (chữ `#00FF00` + logo Gemini) + 39 vụn,
+**0 pixel bị xoá trong khung nhân vật**.
+
+Với ảnh lẻ (không phải video), dùng script độc lập:
 
 ```bash
 python scripts/hero/frame-clean.py --in <thư_mục_frame_hoặc_1_file> --out <thư_mục_sạch> --report <file.json>
