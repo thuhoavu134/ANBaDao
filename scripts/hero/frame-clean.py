@@ -73,6 +73,13 @@ def _longest_run(flags: np.ndarray) -> tuple[int, int]:
     return best
 
 
+def _label_scale(h: int, w: int) -> int:
+    """Downsample factor for the component search. The flood fill is pure python; at 1920x1080 one frame took 8 s,
+    which makes a 144-frame clip a 19-minute job. Artifacts are blobs of tens of pixels, so finding them on a smaller
+    grid and painting their boxes back at full resolution is exact enough and ~20x faster."""
+    return max(1, int(round(max(h, w) / 640.0)))
+
+
 def _border_touch(component: np.ndarray, green: np.ndarray) -> float:
     """Share of the component's outer border that touches the chroma area."""
     grown = np.zeros_like(component)
@@ -90,7 +97,7 @@ def _border_touch(component: np.ndarray, green: np.ndarray) -> float:
     return float((ring & green).sum()) / total
 
 
-def clean_array(rgb: np.ndarray, tolerance: int = GREEN_TOLERANCE_DEFAULT) -> tuple[np.ndarray, dict]:
+def clean_array(rgb: np.ndarray, tolerance: int = GREEN_TOLERANCE_DEFAULT, erode: int = 1) -> tuple[np.ndarray, dict]:
     """Return (RGBA uint8 image, report dict)."""
     h, w, _ = rgb.shape
     a = rgb.astype(np.int16)
@@ -125,27 +132,37 @@ def clean_array(rgb: np.ndarray, tolerance: int = GREEN_TOLERANCE_DEFAULT) -> tu
     # 3) foreign ink inside the chroma area: small islands painted out (text, sparkles, cursor)
     ink = ~green
     ink &= a.max(axis=2) > 10                     # a dark cursor is ink too; only true black holes are skipped
-    labels, count = _label(ink)
+    step = _label_scale(h, w)
+    small = ink[::step, ::step]
+    small_green = green[::step, ::step]
+    labels, count = _label(small)
     removed = []
     fill = np.zeros((h, w), bool)
     frame_area = h * w
+    sh, sw = small.shape
+    small_area = sh * sw
+    # nearest-neighbour back to full resolution: gives the exact pixel set of every component
+    labels_up = np.repeat(np.repeat(labels, step, axis=0), step, axis=1)[:h, :w]
     for idx in range(1, count + 1):
         comp = labels == idx
         area = int(comp.sum())
-        if area < 6 or area > frame_area * MAX_ARTIFACT_AREA:
+        if area < 4 or area > small_area * MAX_ARTIFACT_AREA:
             continue                              # the character itself is big
         ys, xs = np.nonzero(comp)
         # A small island whose bounding box sits in an overlay corner is a watermark/label even when it is not fully
         # ringed by green (the Gemini sparkles touch the body, the "#00FF00" label touches the frame edge).
-        in_corner = (xs.min() > w * 0.72 and ys.min() > h * 0.45) or (ys.max() < h * 0.22) or (xs.max() < w * 0.30 and ys.max() < h * 0.25)
-        if _border_touch(comp, green) < 0.5 and not in_corner:
+        in_corner = ((xs.min() > sw * 0.72 and ys.min() > sh * 0.45) or (ys.max() < sh * 0.22)
+                     or (xs.max() < sw * 0.30 and ys.max() < sh * 0.25))
+        if _border_touch(comp, small_green) < 0.5 and not in_corner:
             continue                              # sits inside the character, keep it
-        ys, xs = np.nonzero(comp)
+        # Paint the component's OWN pixels, not its bounding box: a box around a watermark that touches the character
+        # erased a rectangular patch of hair (a real defect seen on the first 1080p run).
+        paint = (labels_up == idx) & ink
+        fill |= paint
         removed.append({
-            "x": int(xs.mean()), "y": int(ys.mean()), "area": area,
-            "kind": "cursor" if area <= frame_area * CURSOR_MAX_AREA else "textOrLogo",
+            "x": int(xs.mean()) * step, "y": int(ys.mean()) * step, "area": area * step * step,
+            "kind": "cursor" if area * step * step <= frame_area * CURSOR_MAX_AREA else "textOrLogo",
         })
-        fill |= comp
     if fill.any():
         a[fill] = key
 
@@ -159,16 +176,18 @@ def clean_array(rgb: np.ndarray, tolerance: int = GREEN_TOLERANCE_DEFAULT) -> tu
     zone = np.zeros((h, w), bool)
     zone[:max(1, int(h * 0.24)), :max(1, int(w * 0.45))] = True        # top-left: "#00FF00"-style label
     zone[int(h * 0.52):, int(w * 0.68):] = True                        # bottom-right: Gemini sparkles
-    labels2, count2 = _label(overlay_ink & zone)
+    ov_small = (overlay_ink & zone)[::step, ::step]
+    labels2, count2 = _label(ov_small)
     overlays = []
     for idx in range(1, count2 + 1):
         comp = labels2 == idx
         area = int(comp.sum())
-        if area < 8 or area > frame_area * 0.02:
+        if area < 3 or area > small_area * 0.02:
             continue
         ys, xs = np.nonzero(comp)
-        fill |= comp
-        overlays.append({"x": int(xs.mean()), "y": int(ys.mean()), "area": area, "kind": "overlay"})
+        labels2_up = np.repeat(np.repeat(labels2 == idx, step, axis=0), step, axis=1)[:h, :w]
+        fill |= labels2_up & (overlay_ink | ink)   # exactly the overlay's own pixels
+        overlays.append({"x": int(xs.mean()) * step, "y": int(ys.mean()) * step, "area": area * step * step, "kind": "overlay"})
     if overlays:
         a[fill] = key
 
@@ -187,7 +206,20 @@ def clean_array(rgb: np.ndarray, tolerance: int = GREEN_TOLERANCE_DEFAULT) -> tu
         keyed = keyed | (bright_green & zone)
     except NameError:
         pass
-    out = np.dstack([a.astype(np.uint8), np.where(keyed, 0, 255).astype(np.uint8)])
+    alpha = np.where(keyed, 0, 255).astype(np.uint8)
+    # Chroma leaves a one-pixel green rim on the silhouette: erode the alpha once so the rim (and its despilled
+    # halo) disappears with it.
+    if erode > 0:
+        solid = alpha > 0
+        for _ in range(erode):
+            shrunk = solid.copy()
+            shrunk[1:, :] &= solid[:-1, :]
+            shrunk[:-1, :] &= solid[1:, :]
+            shrunk[:, 1:] &= solid[:, :-1]
+            shrunk[:, :-1] &= solid[:, 1:]
+            solid = shrunk
+        alpha = np.where(solid, 255, 0).astype(np.uint8)
+    out = np.dstack([a.astype(np.uint8), alpha])
     despill = g2 & ~keyed
     if despill.any():
         out[..., 1][despill] = np.minimum(out[..., 1][despill], 200)
@@ -209,9 +241,9 @@ def _to_rgba(a: np.ndarray) -> np.ndarray:
     return np.dstack([a.astype(np.uint8), np.full(a.shape[:2], 255, np.uint8)])
 
 
-def clean_file(src: Path, dst: Path, tolerance: int) -> dict:
+def clean_file(src: Path, dst: Path, tolerance: int, erode: int = 1) -> dict:
     img = Image.open(src).convert("RGB")
-    out, report = clean_array(np.asarray(img), tolerance)
+    out, report = clean_array(np.asarray(img), tolerance, erode)
     dst.parent.mkdir(parents=True, exist_ok=True)
     Image.fromarray(out, "RGBA").save(dst)
     report["file"] = src.name
@@ -249,6 +281,7 @@ def main() -> int:
     ap.add_argument("--out", dest="out")
     ap.add_argument("--report")
     ap.add_argument("--tolerance", type=int, default=GREEN_TOLERANCE_DEFAULT)
+    ap.add_argument("--erode", type=int, default=1, help="co alpha bao nhiêu pixel để bỏ viền xanh")
     ap.add_argument("--selftest", action="store_true")
     args = ap.parse_args()
     if args.selftest:
@@ -264,7 +297,7 @@ def main() -> int:
     reports, bad = [], 0
     for f in targets:
         dst = out / (f.stem + ".png")
-        rep = clean_file(f, dst, args.tolerance)
+        rep = clean_file(f, dst, args.tolerance, args.erode)
         reports.append(rep)
         if rep.get("remainingGreen"):
             bad += 1
