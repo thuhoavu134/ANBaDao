@@ -35,15 +35,41 @@ const [cellW, cellH] = meta.crop.cell;
 const page = meta.atlasPages[0];
 const cols = page.columns;
 
+// Horizontal span of the LARGEST connected blob of a mask (grid cells of GRID px). Burnt-in overlays (the "#00FF00"
+// caption at the left edge, the Gemini icon at the right) are detached blobs: counting every non-green pixel made the
+// video side measure the caption instead of the hero (left edge "video 0.0px"), so the gate failed on a clean pack.
+// Both sides must be quantised at the SAME scale: the atlas is already at pack scale, the video is not.
+function largestSpan(isInk, width, height, GRID = 1) {
+  const tw = Math.ceil(width / GRID), th = Math.ceil(height / GRID);
+  const ink = new Uint8Array(tw * th);
+  for (let y = 0; y < th; y++) for (let x = 0; x < tw; x++) ink[y * tw + x] = isInk(x * GRID, y * GRID) ? 1 : 0;
+  const seen = new Uint8Array(tw * th);
+  let best = null;
+  for (let s = 0; s < tw * th; s++) {
+    if (!ink[s] || seen[s]) continue;
+    const q = [s]; seen[s] = 1; let area = 0, l = Infinity, r = -1;
+    while (q.length) {
+      const j = q.pop(); area++; const x = j % tw, y = (j - x) / tw;
+      if (x < l) l = x; if (x > r) r = x;
+      for (let yy = y - 1; yy <= y + 1; yy++) for (let xx = x - 1; xx <= x + 1; xx++) {
+        if (yy < 0 || yy >= th || xx < 0 || xx >= tw) continue;
+        const k = yy * tw + xx; if (ink[k] && !seen[k]) { seen[k] = 1; q.push(k); }
+      }
+    }
+    if (!best || area > best.area) best = { area, l, r };
+  }
+  if (!best) return [0, 0, 0];
+  const L = best.l * GRID, R = best.r * GRID + GRID - 1;
+  return [L, R, (L + R) / 2];
+}
+
 async function boxAtlas() {
   const { data, info } = await sharp(join(packDir, 'idle', page.file)).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
   return meta.frames.map((_, i) => {
     const ox = (i % cols) * cellW, oy = Math.floor(i / cols) * cellH;
-    let l = Infinity, r = -1;
-    for (let y = 0; y < cellH; y++) for (let x = 0; x < cellW; x++) {
-      if (data[((oy + y) * info.width + ox + x) * 4 + 3] > 24) { if (x < l) l = x; if (x > r) r = x; }
-    }
-    return [l, r, (l + r) / 2];
+    // Solid body only: semi-transparent smoke / petals over a green screen still read as green on the video side,
+    // so counting them on the atlas side compared two different things (idle_7: left edge x3.0 from smoke alone).
+    return largestSpan((x, y) => data[((oy + y) * info.width + ox + x) * 4 + 3] > 200, cellW, cellH, 1);
   });
 }
 
@@ -56,12 +82,11 @@ async function boxVideo() {
     for (const f of meta.frames) {
       const file = join(dir, files[f.sourceFrameIndex]);
       const { data, info } = await sharp(file).removeAlpha().raw().toBuffer({ resolveWithObject: true });
-      let l = Infinity, r = -1;
-      for (let y = 0; y < info.height; y += 2) for (let x = 0; x < info.width; x++) {
+      const [l, r] = largestSpan((x, y) => {
         const k = (y * info.width + x) * 3, R = data[k], G = data[k + 1], B = data[k + 2];
-        const green = G > 90 && G > R + 40 && G > B + 40;
-        if (!green) { if (x < l) l = x; if (x > r) r = x; }
-      }
+        const dark = R < 14 && G < 14 && B < 14;            // capture padding is not the hero either
+        return !(G > 90 && G > R + 40 && G > B + 40) && !dark;
+      }, info.width, info.height, Math.max(1, Math.round(1 / scale)));
       out.push([l * scale, r * scale, (l + r) / 2 * scale]);
     }
     return out;

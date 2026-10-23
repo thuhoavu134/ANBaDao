@@ -463,6 +463,24 @@ Script dùng GraphQL `createCommitOnBranch` (cần `gh` đã đăng nhập), chi
 4. QA trong trận thật: `node scripts/qa-authored-battle.mjs <heroKey> <slug> <tag>` (server `scripts/qa-static-server.mjs`
    phục vụ `dist/`) — tự chụp ảnh lúc basic/ultimate/VFX được vẽ và báo lỗi JS.
 
+## Idle loop: chọn theo độ êm chỗ nối + hoà 4 frame (bắt buộc từ 2026-10-23)
+
+Clip idle do AI làm gần như **không bao giờ quay về đúng tư thế đầu** (idle_7: frame gần nhất vẫn lệch 3.3 so với
+bước thường 2.2), nên không có đoạn cắt nào nối khít tuyệt đối. Luật cũ "hình bóng trùng ≥ 0.92" còn ép packer chọn
+đoạn **tệ hơn**: cánh hoa/khói bay quanh người làm hình bóng lệch dù thân không lệch (idle_7: chỗ nối gấp 1.89 lần
+một bước thường → giật thấy rõ).
+
+Packer (`kiemthe-animation-packager`) giờ:
+1. **Xếp hạng đoạn theo độ êm chỗ nối** (bước cuối→đầu chia cho bước điển hình); hình bóng chỉ còn là **sàn 0.85**.
+2. Ưu tiên đoạn có đủ frame **trước** frame đầu, rồi **hoà 4 frame cuối** vào các frame dẫn tới frame đầu
+   (trọng số 0.2 / 0.4 / 0.6 / 0.8, alpha nhân trước nên không viền xám). Ghi ở `metadata.frames[].crossfade`
+   và `metadata.loop.seamCrossfade`.
+3. idle_7: chỗ nối **×1.89 → ×0.81** (cổng `qa-idle-loop-seam` PASS).
+
+Cổng `qa-idle-source-parity` đã sửa để đo **khối nhân vật lớn nhất** ở cả hai phía (chữ `#00FF00` và logo là mảnh rời),
+phía atlas chỉ tính **thân đặc** (alpha > 200, vì khói mờ trên phông xanh vẫn bị video coi là xanh), và hai phía
+dùng **cùng độ mịn** (atlas đã ở tỉ lệ pack). Lăng Vân (đã PASS trước đây) vẫn PASS ×0.9.
+
 ## Idle phải khoá anchor khi pack (bắt buộc từ 2026-10-22)
 
 **Sự cố:** Nguyệt Diệp và Tịnh Mặc rung giật ở màn chi tiết dù video idle gốc mượt. Nguyên nhân: `package_six_states.py --framing uniform` mặc định tính `anchorX` **riêng từng frame** theo trọng tâm alpha của 20% dải đáy (`bottom-band alpha centroid`, làm mượt 3 frame). Với tướng có kiếm / tua / vạt áo đung đưa ở dải đáy, mỗi frame bị dời ngang vài px → rung mà video gốc không có (đo: Nguyệt Diệp mép phải gấp 5.9 lần video, Tịnh Mặc tâm thân gấp 2.6 lần). Các tướng pack kiểu cũ (một khung cắt chung — Bạch Diện, Khaos, Bé An, Cổ Nương) không bị.
