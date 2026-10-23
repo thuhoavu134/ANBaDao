@@ -185,30 +185,7 @@ mảnh rời **bay** (cánh hoa, khói, tia lửa) → giữ. Mảnh nằm hẳn
 Kiểm chứng trên clip idle_7 của owner (144 frame): xoá 526 mảnh tĩnh (chữ `#00FF00` + logo Gemini) + 39 vụn,
 **0 pixel bị xoá trong khung nhân vật**.
 
-Với ảnh lẻ (không phải video), dùng script độc lập:
-
-```bash
-python scripts/hero/frame-clean.py --in <thư_mục_frame_hoặc_1_file> --out <thư_mục_sạch> --report <file.json>
-```
-
-Nó làm, theo thứ tự:
-
-1. **Cắt nền chụp màn hình**: lấy khối nội dung liên tục lớn nhất (một đường sáng ở đáy ảnh không kéo cả dải đen vào).
-2. **Tìm màu phông xanh** theo *tông màu* (không theo độ sáng), lấy percentile 75 để phông bị tối/JPEG vẫn tách được.
-3. **Xoá vật lạ**: đảo nhỏ nằm trong vùng phông (chữ, logo, con trỏ) → tô bằng màu phông để bước tách nền cuối lấy luôn;
-   thêm lượt **vùng overlay** (góc trên-trái, góc dưới-phải) cho những thứ dính vào nhân vật nên không tách được thành đảo.
-4. **Tách phông ra alpha** + khử viền xanh (despill).
-5. **Báo cáo**: mỗi vật bị xoá (toạ độ, diện tích, loại `cursor`/`textOrLogo`/`overlay`), tỉ lệ còn đục, số pixel xanh sót.
-
-Quy tắc:
-- Vật < 6 px coi là nhiễu, bỏ qua.
-- Đảo lớn hơn 2% khung được coi là **nhân vật**, không xoá.
-- Còn pixel xanh sót → script trả mã lỗi 1, **không được pack**.
-- `--selftest` dựng một frame giả có đủ dấu đen + phông xanh + chữ + logo + con trỏ và khẳng định xử lý sạch; test
-  `tests/frame-clean.test.mjs` chạy chính selftest đó.
-
-**Bài học (2026-10-23)**: đừng tin "ảnh trông sạch" bằng mắt — đo pixel. Một frame bị coi là sạch chỉ khi
-`report.json` không còn `remainingGreen` và không còn mục `cursor`/`overlay` nào ở vùng nhân vật.
+Không có script làm sạch riêng: việc tách phông là của Blender, việc xoá vật lạ là của packer.
 
 ## 0. Vì sao có chuẩn này
 
