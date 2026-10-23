@@ -71,6 +71,25 @@ function authoredBodyFrame(def,m,elapsed){
  const progress=elapsed/(c.durationMs||1);
  return Math.min(c.frames-1,Math.floor(progress*c.frames));
 }
+// A melee hero walks up to the target BEFORE acting, the way Đinh Lỗi does: the anchor sits one formation gap in
+// front of the target (the spacing between two teammates), so the body reads as standing face to face with it.
+function authoredTeamSpacing(u){
+ // One formation gap: the typical horizontal distance between two teammates. Teammates stacked in the same column
+ // give a ~0 gap, so only real column steps count (and the median keeps one odd pair from skewing it).
+ const list=(typeof state!=='undefined'&&Array.isArray(state.units))?state.units:[];
+ const steps=[];
+ for(const m of list){if(m===u||m.team!==u.team||!Number.isFinite(m.x))continue;const d=Math.abs(m.x-u.x);if(d>24)steps.push(d);}
+ if(!steps.length)return Math.max(96,(typeof WORLD!=='undefined'?WORLD.width:600)*0.12);
+ steps.sort((a,b)=>a-b);
+ return steps[Math.floor(steps.length/2)];
+}
+function authoredMeleeAnchor(actor,target){
+ // Stand one formation gap in front of the target, never closer than ~56 px (sprites would overlap) and never
+ // further than 160 px (that would read as standing off).
+ const spacing=Math.max(56,Math.min(160,authoredTeamSpacing(actor)));
+ const forward=target.x>=actor.x?1:-1;
+ return {x:target.x-forward*spacing,y:target.y};
+}
 function drawAuthoredHero(ctx,u,time){
  warmAuthoredBattle();
  const def=authoredDef(u);
@@ -209,6 +228,17 @@ async function performAuthoredAction(actor,action,target,e,battleId){
   authoredTrace(info,'act');
   cast=e.act(actor.id,kind,target?.id,{deferAuthored:true});if(!cast.ok){authoredTrace(info,'act-failed:'+(cast.reason||''));return;}
   info.targets=cast.targetIds;info.plan=authoredHitPlan(spec,info.targets);trace?.begin({actionId:presentationId,roundId:state.round,actorId:actor.id,targetIds:info.targets,skillId:kind,position:{x:actor.x,y:actor.y}});
+  // Walk up to the target first, then the action animation plays from there.
+  const lungeSpec=spec.lunge,lungeTarget=lungeSpec&&info.targets[0]?getUnit(info.targets[0]):null;
+  let lungeOrigin=null;
+  if(lungeTarget){
+   const anchor=authoredMeleeAnchor(actor,lungeTarget);
+   lungeOrigin={x:actor.x,y:actor.y};
+   const dashMs=Math.max(120,Number(lungeSpec.dashMs??240));
+   authoredTrace(info,'lunge');
+   if(!await tweenUnit(actor,anchor.x,anchor.y,dashMs,battleId)){actor.x=lungeOrigin.x;actor.y=lungeOrigin.y;return;}
+   if(!current()){actor.x=lungeOrigin.x;actor.y=lungeOrigin.y;return;}
+  }
   info.start=performance.now();authoredActions.add(info);
   const duration=spec.recovery;authoredMotions.set(actor.id,{kind:spec.clip,start:info.start,speed,duration});
   setUnitState(actor,kind==='basic'?'attack':'ultimate',duration/speed);
@@ -240,6 +270,7 @@ async function performAuthoredAction(actor,action,target,e,battleId){
   if(!await wait(duration))return;
   if(typeof showActionTotal==='function')showActionTotal(Math.max(0,(Number(intelUnit(actor)?.damage)||0)-before));
   // Own action total above; keep the spaced form so action-damage-total-v1 only owns legacy/Co Nuong.
+  if(lungeOrigin&&state.battleId===battleId)await tweenUnit(actor,lungeOrigin.x,lungeOrigin.y,180,battleId);
   setUnitState(actor, 'idle', 800);state.currentId=null;state.locked=false;
   if(battleHasWinner()){if(!await waitForDefeatExit(battleId))return;if(checkBattleEnd()){splusStateView();return;}}
   trace?.marker('recovery',{actionId:presentationId,position:{x:actor.x,y:actor.y}});trace?.complete({actionId:presentationId,position:{x:actor.x,y:actor.y}});

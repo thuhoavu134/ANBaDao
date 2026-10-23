@@ -57,12 +57,14 @@ export async function buildHeroJson({ slug, brief, meta, prov, sfxRows, today })
   if (has('ultimate')) sfxUlt.push(cueAt(`${prefix}-ultimate`, cueStart('ultimate'), mu));
   if (has('ultimate-vfx')) sfxUlt.push({ cue: `${prefix}-ultimate-vfx`, at: 'release', lead: 0 });
   if (has('ultimate-hit')) sfxUlt.push({ cue: `${prefix}-ultimate-hit`, at: 'hit' });
-  const basic = { clip: 'basic', ...mb, sfx: sfxBasic };
+  // Melee heroes (duelist/striker/guardian) close the distance on every action; ranged ones stay put.
+  const lunge = ['duelist', 'striker', 'guardian'].includes(String(brief.archetype || '').toLowerCase()) ? { dashMs: 240 } : null;
+  const basic = { clip: 'basic', ...mb, sfx: sfxBasic, ...(lunge ? { lunge } : {}) };
   if (vfx['vfx-basic']) {
     if (b.kit.basic.target === 'enemy') basic.projectile = { vfx: 'vfx-basic', from: [0.55, 0.5], scale: 1.25, arc: 0, flight: Math.max(200, Math.min(500, mb.hits[0] - mb.release)) };
     basic.impact = { vfx: 'vfx-basic', anchor: 'body', scale: 1, shake: 4 };
   }
-  const ultimate = { clip: 'ultimate', ...mu, sfx: sfxUlt };
+  const ultimate = { clip: 'ultimate', ...mu, sfx: sfxUlt, ...(lunge ? { lunge } : {}) };
   if (vfx['vfx-ultimate']) ultimate.area = { vfx: 'vfx-ultimate', anchor: 'body', scale: 1.6, shake: 7 };
   const battle = { tempo: { basic: 1.3, ultimate: 1.2 }, actions: { basic, ultimate }, reactions: { ...(has('hit') ? { hitCue: `${prefix}-hit` } : {}),  hit: 'hit', death: 'fall-die', durationMs: meta.clips.hit.durationMs } };
   // Victory: the run clip is boxed with a long stride and can come out smaller than idle.
