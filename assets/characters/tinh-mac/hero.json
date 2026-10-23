@@ -135,6 +135,10 @@
             "cue": "tinh-mac-soul-burst",
             "at": "hit",
             "hit": 2
+          },
+          {
+            "cue": "tinh-mac-basic-hit",
+            "at": "hit"
           }
         ]
       },
@@ -183,6 +187,11 @@
           {
             "cue": "tinh-mac-ultimate-hit",
             "at": "hit"
+          },
+          {
+            "cue": "tinh-mac-ultimate-vfx",
+            "at": "release",
+            "lead": 0
           }
         ]
       }
@@ -190,7 +199,8 @@
     "reactions": {
       "hit": "hit",
       "death": "fall-die",
-      "durationMs": 4000
+      "durationMs": 4000,
+      "hitCue": "tinh-mac-hit"
     },
     "events": {
       "uHon": {
