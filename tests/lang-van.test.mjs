@@ -100,3 +100,16 @@ test('lang_van ultimate: the vortex pulls them in, the ground freezes, the final
   const burst = e.events.filter(x => x.type === 'damage' && x.action === 'ultimate' && x.secondary);
   assert.ok(burst.length >= 3, 'burst damage on every enemy');
 });
+
+test('lang_van sfx: every registered cue has a trigger (no dead sounds)', async () => {
+  const { readFileSync } = await import('node:fs');
+  const hero = JSON.parse(readFileSync(new URL('../assets/characters/lang-van/hero.json', import.meta.url), 'utf8'));
+  const b = hero.battle;
+  const used = new Set();
+  for (const a of Object.values(b.actions || {})) for (const e of a.sfx || []) used.add(e.cue);
+  for (const v of Object.values(b.events || {})) if (v?.sfx) used.add(v.sfx);
+  if (b.reactions?.hitCue) used.add(b.reactions.hitCue);
+  const dead = Object.keys(hero.sfx).filter(c => !used.has(c));
+  assert.deepEqual(dead, [], `registered but never played: ${dead.join(', ')}`);
+  assert.ok(Object.keys(hero.sfx).length >= 7, 'seven cues');
+});

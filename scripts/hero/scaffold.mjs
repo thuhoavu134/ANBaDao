@@ -64,7 +64,7 @@ export async function buildHeroJson({ slug, brief, meta, prov, sfxRows, today })
   }
   const ultimate = { clip: 'ultimate', ...mu, sfx: sfxUlt };
   if (vfx['vfx-ultimate']) ultimate.area = { vfx: 'vfx-ultimate', anchor: 'body', scale: 1.6, shake: 7 };
-  const battle = { tempo: { basic: 1.3, ultimate: 1.2 }, actions: { basic, ultimate }, reactions: { hit: 'hit', death: 'fall-die', durationMs: meta.clips.hit.durationMs } };
+  const battle = { tempo: { basic: 1.3, ultimate: 1.2 }, actions: { basic, ultimate }, reactions: { ...(has('hit') ? { hitCue: `${prefix}-hit` } : {}),  hit: 'hit', death: 'fall-die', durationMs: meta.clips.hit.durationMs } };
   // Victory: the run clip is boxed with a long stride and can come out smaller than idle.
   const base = join(ROOT, 'assets', 'characters', slug);
   const h = async c => medianBodyHeight(join(base, meta.clips[c].pages[0].file), meta.clips[c].pages[0].cols, meta.clips[c].cellW, meta.clips[c].cellH, meta.clips[c].frames);

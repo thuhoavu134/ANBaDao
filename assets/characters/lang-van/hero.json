@@ -112,7 +112,13 @@
     "reactions": {
       "hit": "hit",
       "death": "fall-die",
-      "durationMs": 4000
+      "durationMs": 4000,
+      "hitCue": "lang-van-hit"
+    },
+    "events": {
+      "hanBangPha": {
+        "sfx": "lang-van-passive"
+      }
     }
   },
   "sfx": {
