@@ -150,7 +150,7 @@ export function createSplusMechanics(options={}) {
   // (scripts/authored-hero-install.mjs + src/runtime/authored-hero.js). A new authored
   // hero adds one AUTHORED_KITS entry and one AUTHORED_HIT rule; the runtime resolves each
   // hit on its animation marker through resolveAuthoredImpact, exactly once per target/hit.
-  const AUTHORED_KITS={khaos:{basic:{hits:1,area:false},ultimate:{hits:2,area:true}},van_phong:{basic:{hits:1,area:false},ultimate:{hits:1,area:true}},nguyet_diep:{basic:{hits:1,area:true},ultimate:{hits:3,area:true}},tinh_mac:{basic:{hits:3,area:false},ultimate:{hits:1,area:true}}};
+  const AUTHORED_KITS={khaos:{basic:{hits:1,area:false},ultimate:{hits:2,area:true}},van_phong:{basic:{hits:1,area:false},ultimate:{hits:1,area:true}},nguyet_diep:{basic:{hits:1,area:true},ultimate:{hits:3,area:true}},tinh_mac:{basic:{hits:3,area:false},ultimate:{hits:1,area:true}},lang_van:{basic:{hits:4,area:false},ultimate:{hits:1,area:true}}};
   const INK_SET=new Set(['inkMark','speedDown','armorDown']);
   function khaosInk(actor,target){
     mark(actor,target,'inkMark',0,{turns:3,stack:true,maxStacks:3,polarity:'debuff',iconId:'inkMark'});
@@ -202,6 +202,12 @@ export function createSplusMechanics(options={}) {
   }
   function damageDealtBy(u){let sum=0;for(const ev of events)if(ev.type==='damage'&&ev.sourceId===u.id)sum+=n(ev.amount);return sum;}
   const AUTHORED_HIT={
+    // Lăng Vân (scaffold): default rule 115% / 200% elemental damage split over the hits.
+    // Write this hero's special mechanics HERE and extend tests/lang-van.test.mjs.
+    lang_van(actor,target,cast,index){
+      const power=cast.kind==='basic'?1.15:2;
+      damage(actor,target,{multiplier:power/cast.hits,action:cast.kind,type:'elemental'});
+    },
     tinh_mac(actor,target,cast,index){
       if(cast.kind==='basic'){
         const dealt=damage(actor,target,{multiplier:[.4,.35,.35][index]??.35,action:'basic',type:'elemental'});
