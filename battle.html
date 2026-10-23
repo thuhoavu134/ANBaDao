@@ -6954,7 +6954,13 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     drawBackground(ctx, time);
     renderBattlefieldZone();
     maybeResolveThayMoUltimateFull(time);
-    units.slice().sort((a, b) => a.y - b.y).forEach((unit) => drawUnit(ctx, unit, time));
+    // A hero who is mid-action can ask to be painted in FRONT of the others (owner 2026-10-23: Lăng Vân's
+    // animation was hidden behind the enemy she stands next to). Priority first, then the usual y order.
+    units.slice().sort((a, b) => {
+      const fa = typeof authoredDrawPriority === 'function' ? authoredDrawPriority(a) : 0;
+      const fb = typeof authoredDrawPriority === 'function' ? authoredDrawPriority(b) : 0;
+      return (fa - fb) || (a.y - b.y);
+    }).forEach((unit) => drawUnit(ctx, unit, time));
     // Authored heroes that split into copies (Lang Van's storm) paint on top of the roster.
     if (typeof drawAuthoredClones === 'function') drawAuthoredClones(ctx, time);
     drawDinhLoiPersistentShields(ctx,time);

@@ -9,8 +9,8 @@ function harness(speed,action,cancelAt=Infinity){
  vm.createContext(c);vm.runInContext(read('src/runtime/be-an.js'),c);
  return {c,e,actor,played,totals,state,run:()=>c.performBeAnAction(actor,action,e.unit('e0'),e,1),advanced:()=>advanced,now:()=>now};
 }
-for(const speed of [1,2,3])for(const action of ['basic','ultimate'])test(`${action} at x${speed}: exact hits, one cue, total and next turn`,async()=>{
- const h=harness(speed,action);await h.run();assert.equal(h.e.events.filter(x=>x.type==='damage').length,action==='basic'?2:18);assert.equal(h.played.length,1);assert.equal(h.played[0][1],speed*(action==='basic'?1.25:1.4));assert.equal(h.advanced(),1);assert.equal(h.state.locked,false);assert.equal(h.totals[0],h.e.events.filter(x=>x.type==='damage').reduce((s,x)=>s+x.amount,0));assert.ok(Math.abs(h.now()-(action==='basic'?4000/1.25:6650/1.4)/speed)<1);
+for(const speed of [1,2,3])for(const action of ['basic','ultimate'])test(`${action} at x${speed}: exact hits, cue count, total and next turn`,async()=>{
+ const h=harness(speed,action);await h.run();assert.equal(h.e.events.filter(x=>x.type==='damage').length,action==='basic'?2:18);assert.equal(h.played.length,action==='basic'?2:1);assert.equal(h.played[0][1],speed*(action==='basic'?1.25:1.4));if(action==='basic'){assert.equal(h.played[1][0],'be-an-basic-hit');assert.equal(h.played[1][1],speed*1.25);}assert.equal(h.advanced(),1);assert.equal(h.state.locked,false);assert.equal(h.totals[0],h.e.events.filter(x=>x.type==='damage').reduce((s,x)=>s+x.amount,0));assert.ok(Math.abs(h.now()-(action==='basic'?4000/1.25:6650/1.4)/speed)<1);
 });
 test('scene change cancels remaining contacts and does not advance the new battle',async()=>{const h=harness(1,'ultimate',4100);await h.run();assert.equal(h.e.events.filter(x=>x.type==='damage').length,6);assert.equal(h.advanced(),0);assert.equal(h.totals.length,0);});
 for(const team of ['player','enemy'])test('body and VFX mirror exactly once: '+team,()=>{

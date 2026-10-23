@@ -14,6 +14,14 @@
 var authoredMotions=new Map(),authoredActions=new Set(),authoredBursts=[],authoredWarmBattles=new Set();
 function isAuthoredHero(u){return !!(u&&AUTHORED_HEROES&&AUTHORED_HEROES[u.sourceId]);}
 function authoredDef(u){return u&&AUTHORED_HEROES&&AUTHORED_HEROES[u.sourceId]||null;}
+// Some action clips were rendered from a slightly wider camera than the idle one, so the hero shrank during the
+// action (Lăng Vân: idle 193 px tall, basic 174 px, ultimate 170 px — the owner saw the ultimate "bé hơn bình thường").
+// runtime-meta may carry `scaleFix` per clip to cancel that; 1 means "same as idle".
+function authoredClipFix(def,kind){
+ const c=def&&def.clips?def.clips[kind]:null;
+ const f=Number(c?.scaleFix);
+ return Number.isFinite(f)&&f>0?f:1;
+}
 function authoredSpeed(){return Math.max(1,Math.min(3,Number(state.speed)||1));}
 function authoredCache(){return window.__HV_NATIVE_ATLAS_CACHE||null;}
 function authoredPage(def,key,index){
@@ -84,8 +92,11 @@ function authoredTeamSpacing(u){
  return steps[Math.floor(steps.length/2)];
 }
 function authoredMeleeAnchor(actor,target){
- // The owner wants her ON the target, not one gap away: the body travels to the victim's own slot.
- return {x:target.x,y:target.y};
+ // Owner 2026-10-23 (Hồng Thương reference): standing exactly ON the enemy hides the whole animation, so she
+ // stops one shoulder-width to the side — beside the victim, not inside it.
+ const gap=authoredBodyHeight(target)*0.45;
+ const forward=target.x>=actor.x?1:-1;
+ return {x:target.x-forward*gap,y:target.y};
 }
 function drawAuthoredHero(ctx,u,time){
  warmAuthoredBattle();
@@ -96,7 +107,7 @@ function drawAuthoredHero(ctx,u,time){
  const idle=def.clips.idle,scale=authoredScale(u),mirror=u.team===TEAM_ENEMY;
  const kind=m?m.kind:'idle';
  const frame=m?authoredBodyFrame(def,m,elapsed):Math.floor(time*idle.frames/idle.durationMs)%idle.frames;
- let painted=authoredSprite(ctx,def,def.clips[kind]?kind:'idle',frame,u.x,u.y,scale,mirror);
+ let painted=authoredSprite(ctx,def,def.clips[kind]?kind:'idle',frame,u.x,u.y,scale*authoredClipFix(def,kind),mirror);
  // While an action page is still decoding keep the idle pose instead of an empty slot.
  if(!painted&&kind!=='idle')painted=authoredSprite(ctx,def,'idle',Math.floor(time*idle.frames/idle.durationMs)%idle.frames,u.x,u.y,scale,mirror);
  // No opaque portrait fallback (it rendered as a white card on iPhone). While the idle page
@@ -117,6 +128,15 @@ function authoredCloneTargets(u){
 // Drawn once per frame AFTER every unit (see drawAuthoredClones call in the battle render loop): a copy of the hero
 // at each standing enemy, playing the same ultimate clip. Drawing it inside drawAuthoredHero put the copies behind
 // the enemy sprites, which is why they were invisible on screen.
+// 1 = paint after every normal unit (front layer). Opt-in per hero through battle.drawOnTop, and only while that
+// hero is actually performing, so idle positioning keeps the normal depth order.
+function authoredDrawPriority(u){
+ const def=authoredDef(u);
+ if(!def||def.battle?.drawOnTop!==true)return 0;
+ const m=authoredMotions.get(u.id);
+ if(!m)return 0;
+ return (m.kind==='idle'||m.kind==='hit'||m.kind==='fall-die')?0:1;
+}
 function drawAuthoredClones(ctx,time){
  const list=(typeof units!=='undefined'&&Array.isArray(units))?units:[];
  for(const u of list){
@@ -128,7 +148,8 @@ function drawAuthoredClones(ctx,time){
   const elapsed=(time-m.start)*m.speed;
   if(elapsed<0||elapsed>=m.duration)continue;
   const frame=authoredBodyFrame(def,m,elapsed),mirror=u.team===TEAM_ENEMY;
-  for(const v of authoredCloneTargets(u))authoredSprite(ctx,def,'ultimate',frame,v.x,v.y,authoredScale(v),mirror);
+  // The enemy she is actually attacking already has HER standing next to it — a copy there would fight itself.
+  for(const v of authoredCloneTargets(u))if(v.id!==m.lungeId)authoredSprite(ctx,def,'ultimate',frame,v.x,v.y,authoredScale(v)*authoredClipFix(def,'ultimate'),mirror);
  }
 }
 function authoredHeroEvent(event){
@@ -257,14 +278,15 @@ async function performAuthoredAction(actor,action,target,e,battleId){
   let lungeOrigin=null;
   if(lungeTarget){
    const anchor=authoredMeleeAnchor(actor,lungeTarget);
-   lungeOrigin={x:actor.x,y:actor.y};
+   lungeOrigin={x:actor.x,y:actor.y};info.lungeTargetId=lungeTarget.id;
    const dashMs=Math.max(120,Number(lungeSpec.dashMs??240));
    authoredTrace(info,'lunge');
    if(!await tweenUnit(actor,anchor.x,anchor.y,dashMs,battleId)){actor.x=lungeOrigin.x;actor.y=lungeOrigin.y;return;}
    if(!current()){actor.x=lungeOrigin.x;actor.y=lungeOrigin.y;return;}
   }
   info.start=performance.now();authoredActions.add(info);
-  const duration=spec.recovery;authoredMotions.set(actor.id,{kind:spec.clip,start:info.start,speed,duration});
+  const duration=spec.recovery;authoredMotions.set(actor.id,{kind:spec.clip,start:info.start,speed,duration,
+   lungeId:info.lungeTargetId||null});
   setUnitState(actor,kind==='basic'?'attack':'ultimate',duration/speed);
   const title=(globalThis.SPLUS42?.catalog||[]).find(h=>h.id===actor.sourceId)?.actions?.[kind]?.name||kind;
   setStatus(actor.name+' · '+title);dom.phaseLabel.textContent=title;
