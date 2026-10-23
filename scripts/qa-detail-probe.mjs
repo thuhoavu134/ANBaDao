@@ -13,7 +13,7 @@ for (const id of ids) {
     'let card=document.querySelector(\'[data-hero-id="\'+id+\'"]\');' +
     'if(!card){const sc=document.querySelector("#heroList,.hero-list,.hlist,.scroll,.content")||document.scrollingElement;' +
     'for(let i=0;i<16&&!card;i++){sc.scrollTop=sc.scrollHeight;window.scrollBy(0,600);await new Promise(r=>setTimeout(r,200));card=document.querySelector(\'[data-hero-id="\'+id+\'"]\');}}' +
-    'if(!card)return {id,card:false};card.click();await new Promise(r=>setTimeout(r,2500));' +
+    'if(!card)return {id,card:false,idsOnPage:[...document.querySelectorAll(\'[data-hero-id]\')].map(e=>e.getAttribute(\'data-hero-id\'))};card.click();await new Promise(r=>setTimeout(r,2500));' +
     'const stage=document.querySelector("#hdBody .hstage")||document.querySelector(".hstage");' +
     'const cvs=[...(stage?stage.querySelectorAll("canvas"):[])].map(cv=>({id:cv.id,w:cv.width,h:cv.height,vis:cv.getBoundingClientRect().width>0&&getComputedStyle(cv).display!=="none"}));' +
     'const imgs=[...(stage?stage.querySelectorAll("img"):[])].map(i=>({src:(i.currentSrc||i.src||"").split("/").slice(-2).join("/"),vis:i.getBoundingClientRect().width>0&&getComputedStyle(i).display!=="none"}));' +
