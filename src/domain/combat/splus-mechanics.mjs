@@ -259,6 +259,17 @@ export function createSplusMechanics(options={}) {
           if(wasFrozen.has(t.id)){
             damage(actor,t,{raw:Math.round(stat(actor,'atk')*1.5),type:'true',action:'ultimate',secondary:true,noTriggers:true});
             buff(actor,t,'cooldownDelay',1,1);
+            // The shatter breaks the ice: the freeze ends here (no melt payout, the 150% replaces it), otherwise the
+            // victim is still stunned and displace() would refuse to move it.
+            remove(t,x=>x.type==='stun','vo-bang');
+            // Knockback: an empty slot behind means the victim is thrown back; if an ally stands there (or it is
+            // already the back row) the body slams into it and the victim is stunned for a turn instead of swapping.
+            const desired=(t.slot%3)+3;
+            const wall=t.slot>=3?friends(t).find(v=>v.slot===t.slot&&v.id!==t.id):friends(t).find(v=>v.slot===desired&&v.id!==t.id);
+            if(t.slot>=3||wall){
+              buff(actor,t,'stun',0,1,{iconId:'stun'});
+              emit('wallSlam',actor,t,{blockedBy:wall?.id||null,row:t.slot>=3?'back':'front'});
+            } else displace(actor,t,'push');
             emit('voBang',actor,t,{});
           }
         }

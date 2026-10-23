@@ -134,3 +134,34 @@ test('lang_van: every registered cue has a trigger (no dead sounds)', () => {
   if (b.reactions?.hitCue) used.add(b.reactions.hitCue);
   assert.deepEqual(Object.keys(h.sfx).filter(c => !used.has(c)), []);
 });
+
+// ---- knockback: push into an empty slot, stun when something is in the way ---------------------------
+test('lang_van shatter: a frozen enemy in the front row is thrown to the back when that slot is empty', () => {
+  const e = make([H('lang_van'), H('a', 2, 0)]);
+  e.addStatus(hero, '2:a', { type: 'stun', power: 0, turns: 1 });
+  e.act(hero, 'ultimate', '2:a');
+  assert.equal(e.unit('2:a').slot, 3, 'pushed back to the empty slot behind');
+  assert.ok(e.events.some(x => x.type === 'displacement' && x.from === 0 && x.to === 3));
+});
+
+test('lang_van shatter: an ally standing behind becomes a wall — the victim is stunned, not swapped', () => {
+  const e = make([H('lang_van'), H('a', 2, 0), H('b', 2, 3)]);
+  e.addStatus(hero, '2:a', { type: 'stun', power: 0, turns: 1 });
+  e.act(hero, 'ultimate', '2:a');
+  const slam = e.events.filter(x => x.type === 'wallSlam');
+  assert.equal(slam.length, 1, 'wall slam fired');
+  assert.equal(slam[0].blockedBy, '2:b', 'the ally behind is the wall');
+  assert.equal(e.unit('2:a').slot, 0, 'nobody swapped slots');
+  assert.equal(e.unit('2:b').slot, 3, 'the ally stays put');
+  assert.ok(e.hasStatus('2:a', 'stun'), 'the victim is stunned instead');
+});
+
+test('lang_van shatter: an enemy already in the back row cannot be pushed further and is stunned', () => {
+  const e = make([H('lang_van'), H('a', 2, 3)]);
+  e.addStatus(hero, '2:a', { type: 'stun', power: 0, turns: 1 });
+  e.act(hero, 'ultimate', '2:a');
+  assert.equal(e.unit('2:a').slot, 3);
+  assert.ok(e.events.some(x => x.type === 'wallSlam' && x.row === 'back'));
+  assert.ok(e.hasStatus('2:a', 'stun'));
+});
+
