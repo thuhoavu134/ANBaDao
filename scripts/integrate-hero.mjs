@@ -4,6 +4,7 @@
 // New hero (bundle of green-screen clips + a brief):
 //   node scripts/integrate-hero.mjs --slug <slug> --id hero_splus_<x> --brief <brief.json> \
 //        [--files idle.mp4 run.mp4 ...] | [--bundle C:/lt/packs/<slug>/bundle.json]
+// Add --no-vfx when the hero's attack VFX is baked into the atk/ultimate clips (no vfx clips supplied).
 // Re-integrate an existing hero from a pack that is already built:
 //   node scripts/integrate-hero.mjs --slug <slug> --id hero_splus_<x> --pack <packDir>
 //   node scripts/integrate-hero.mjs --slug <slug> --id hero_splus_<x> --manifest <pack-manifest.json>
@@ -34,6 +35,8 @@ const root = resolve(new URL('..', import.meta.url).pathname.replace(/^\/([A-Za-
 const argv = process.argv.slice(2);
 const arg = (k, d = null) => { const i = argv.indexOf(k); return i >= 0 && argv[i + 1] && !argv[i + 1].startsWith('--') ? argv[i + 1] : d; };
 const flag = k => argv.includes(k);
+// A melee hero may carry its attack VFX inside the state clips; then there is no VFX clip to key.
+const noVfx = flag('--no-vfx');
 const slug = arg('--slug'), heroId = arg('--id') || (slug ? `hero_splus_${slug.replace(/-/g, '_')}` : null);
 const key = (arg('--key') || (heroId || '').replace(/^hero_splus_/, '') || '');
 const detailId = arg('--detail-id') || (heroId || '').replace(/^hero_splus_/, '');
@@ -100,8 +103,8 @@ function staticServer() {
 if (!packDir && !manifestArg && (files || existsSync(bundle))) {
   // --allow-reuse: the clip was already packed for another hero (acceptance runs reuse the same owner videos).
   const reuse = flag('--allow-reuse') ? ['--allow-reuse'] : [];
-  if (files) step('intake', 'node', ['scripts/hero/intake.mjs', '--slug', slug, '--files', ...files, ...reuse], { tail: 3, expect: /INTAKE PASS/ });
-  else step('intake', 'node', ['scripts/hero/intake.mjs', '--slug', slug, '--from', arg('--from') || '', ...reuse], { tail: 3, expect: /INTAKE PASS/ });
+  if (files) step('intake', 'node', ['scripts/hero/intake.mjs', '--slug', slug, '--files', ...files, ...reuse, ...(noVfx ? ['--no-vfx'] : [])], { tail: 3, expect: /INTAKE PASS/ });
+  else step('intake', 'node', ['scripts/hero/intake.mjs', '--slug', slug, '--from', arg('--from') || '', ...reuse, ...(noVfx ? ['--no-vfx'] : [])], { tail: 3, expect: /INTAKE PASS/ });
 }
 
 // 2 pack
@@ -123,7 +126,9 @@ if (!packDir || !existsSync(join(packDir, 'idle', 'metadata.json'))) {
 
 // 3..5
 step('validate', PY, [join(SKILL, 'validate_package.py'), packDir], { tail: 2 });
-step('parity', 'node', ['scripts/qa-idle-source-parity.mjs', packDir], { tail: 5, expect: /IDLE PARITY PASS/ });
+// The idle source clip may live anywhere (the owner's inbox or a temp dir), so pass its path from the bundle.
+const idleSrc = existsSync(bundle) ? (JSON.parse(readFileSync(bundle, 'utf8').replace(/^\uFEFF/, '')).sources?.idle?.path || null) : null;
+step('parity', 'node', ['scripts/qa-idle-source-parity.mjs', packDir, ...(idleSrc && existsSync(idleSrc) ? [idleSrc] : [])], { tail: 5, expect: /IDLE PARITY PASS/ });
 // The idle keeps every 3rd frame of a 24 fps clip: a wrap that moves the picture much more than an ordinary packed
 // step is the hitch the owner sees at the seam ("nó bị khựng ở đoạn nối").
 step('seam', 'node', ['scripts/qa-idle-loop-seam.mjs', packDir], { tail: 4, expect: /LOOP SEAM PASS/ });
@@ -131,10 +136,13 @@ step('import', 'node', ['scripts/import-sixstate-pack.mjs', packDir, slug, heroI
 
 // 6..7 owner VFX + SFX (only when the clips are known, i.e. a bundle exists)
 if (existsSync(bundle)) {
-  step('vfx', PY, ['scripts/hero/key_vfx.py', '--bundle', bundle, '--slug', slug, '--root', root], { tail: 4 });
+  if (noVfx) {
+    report.push({ name: 'vfx', ok: true, sec: 0, tail: 'skipped (--no-vfx): attack VFX is baked into the state clips' });
+    console.log('[vfx] skipped (--no-vfx): attack VFX is baked into the state clips');
+  } else step('vfx', PY, ['scripts/hero/key_vfx.py', '--bundle', bundle, '--slug', slug, '--root', root], { tail: 4 });
   step('sfx', PY, ['scripts/hero/extract_sfx.py', '--bundle', bundle, '--slug', slug, '--key', key, '--root', root, '--allow-missing'], { tail: 8 });
- // Roles the clip audio could not supply come from the Kiếm Thế SKILLPACK, then the local Pixabay library.
- step('sfx-source', 'node', ['scripts/hero/sfx-source.mjs', '--bundle', bundle, '--slug', slug, '--key', key, '--root', root, '--brief', brief], { tail: 12, expect: /SFX SOURCE PASS/ });
+  // Roles the clip audio could not supply come from the Kiếm Thế SKILLPACK, then the local Pixabay library.
+  step('sfx-source', 'node', ['scripts/hero/sfx-source.mjs', '--bundle', bundle, '--slug', slug, '--key', key, '--root', root, '--brief', brief], { tail: 12, expect: /SFX SOURCE PASS/ });
 } else {
   console.log('[vfx] skipped (no bundle.json); [sfx] skipped (no bundle.json)');
   report.push({ name: 'vfx', ok: true, sec: 0, tail: 'skipped: no bundle (existing pack)' });
