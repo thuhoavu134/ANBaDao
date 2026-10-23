@@ -128,6 +128,15 @@ function authoredCloneTargets(u){
 // Drawn once per frame AFTER every unit (see drawAuthoredClones call in the battle render loop): a copy of the hero
 // at each standing enemy, playing the same ultimate clip. Drawing it inside drawAuthoredHero put the copies behind
 // the enemy sprites, which is why they were invisible on screen.
+// 1 = paint after every normal unit (front layer). Opt-in per hero through battle.drawOnTop, and only while that
+// hero is actually performing, so idle positioning keeps the normal depth order.
+function authoredDrawPriority(u){
+ const def=authoredDef(u);
+ if(!def||def.battle?.drawOnTop!==true)return 0;
+ const m=authoredMotions.get(u.id);
+ if(!m)return 0;
+ return (m.kind==='idle'||m.kind==='hit'||m.kind==='fall-die')?0:1;
+}
 function drawAuthoredClones(ctx,time){
  const list=(typeof units!=='undefined'&&Array.isArray(units))?units:[];
  for(const u of list){

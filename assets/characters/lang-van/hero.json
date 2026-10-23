@@ -161,7 +161,8 @@
       "hanBangPha": {
         "sfx": "lang-van-passive"
       }
-    }
+    },
+    "drawOnTop": true
   },
   "sfx": {
     "lang-van-basic": "lang-van/basic.wav",
