@@ -1,0 +1,57 @@
+{
+  "schema": "battle-hero-presentation/v1",
+  "heroId": "hero_splus_lang_van",
+  "aliases": [
+    "lang-van",
+    "hero_splus_lang_van",
+    "lang_van"
+  ],
+  "referenceBodyHeight": 194,
+  "footOffsetY": 0,
+  "registration": "source-body",
+  "clips": {
+    "idle": {
+      "bodyHeight": 194,
+      "footX": 120,
+      "footY": 202.8
+    },
+    "run": {
+      "bodyHeight": 194,
+      "footX": 120,
+      "footY": 202.8
+    },
+    "basic": {
+      "bodyHeight": 194,
+      "footX": 212,
+      "footY": 202.8
+    },
+    "ultimate": {
+      "bodyHeight": 194,
+      "footX": 196,
+      "footY": 202.8
+    },
+    "hit": {
+      "bodyHeight": 194,
+      "footX": 120,
+      "footY": 202.8
+    },
+    "fall-die": {
+      "bodyHeight": 194,
+      "footX": 120,
+      "footY": 202.8
+    }
+  },
+  "vfxClips": [],
+  "states": {
+    "idle": [
+      "idle"
+    ],
+    "attack": [
+      "basic"
+    ],
+    "ultimate": [
+      "ultimate"
+    ]
+  },
+  "evidence": "Uniform-framed six-state pack 20261023-080750: one shared scale for every state; body 387px / foot line 405.608px measured from idle alpha at full cell, x0.5."
+}

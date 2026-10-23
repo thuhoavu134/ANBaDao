@@ -1,0 +1,122 @@
+{
+  "schema": "luc-than-authored-hero/v1",
+  "id": "lang_van",
+  "sourceId": "hero_splus_lang_van",
+  "slug": "lang-van",
+  "identityVersion": "kiemthe-sixstate-20261023-080750-uniform",
+  "host": {
+    "he": "thuy",
+    "faction": "thuy",
+    "archetype": "duelist",
+    "rarity": "ssr",
+    "name": "Lăng Vân",
+    "role": "Cận chiến song thương, dồn sát thương và khống chế bằng băng–thủy",
+    "col": "#5fb8d8",
+    "stats": {
+      "hp": 1150,
+      "mp": 60,
+      "atk": 150,
+      "def": 65,
+      "spd": 102
+    }
+  },
+  "kit": {
+    "passive": {
+      "name": "Song Thần Tiễn Ảnh",
+      "desc": "Mỗi đòn đánh thường tích 1 tầng Thủy Chú lên mục tiêu, giảm 10% tốc chạy, tối đa 3 tầng."
+    },
+    "basic": {
+      "name": "Thủy Triều Trảm Kích",
+      "cost": 0,
+      "desc": "Chuỗi 4 đòn song thương: chém chéo, quét nước, đâm xuống đất; mỗi đòn tích 1 tầng Thủy Chú.",
+      "fx": {
+        "kind": "damage",
+        "target": "enemy",
+        "power": 1.15
+      }
+    },
+    "ultimate": {
+      "name": "Song Thương Loạn Vân Phá",
+      "cost": 60,
+      "desc": "Bão băng quét toàn bộ địch: làm chậm 20% trong 2 lượt và gây thêm 2% máu tối đa sát thương chuẩn.",
+      "fx": {
+        "kind": "damage",
+        "target": "aoe_enemy",
+        "power": 2
+      }
+    }
+  },
+  "art": {
+    "portrait": "assets/characters/lang-van/portrait-43908036.webp"
+  },
+  "clipsMeta": "runtime-meta.json",
+  "vfxBase": "assets/vfx/lang-van/",
+  "vfxMeta": "assets/vfx/lang-van/provenance.json",
+  "battle": {
+    "tempo": {
+      "basic": 1.3,
+      "ultimate": 1.2
+    },
+    "actions": {
+      "basic": {
+        "clip": "basic",
+        "release": 5600,
+        "hits": [
+          6000,
+          6400,
+          6800,
+          7200
+        ],
+        "vfxEnd": 7900,
+        "recovery": 8000,
+        "sfx": [
+          {
+            "cue": "lang-van-basic",
+            "at": "hit",
+            "hit": 1,
+            "lead": 40
+          }
+        ]
+      },
+      "ultimate": {
+        "clip": "ultimate",
+        "release": 4200,
+        "hits": [
+          4600
+        ],
+        "vfxEnd": 5300,
+        "recovery": 6000,
+        "sfx": [
+          {
+            "cue": "lang-van-ultimate",
+            "at": "hit",
+            "hit": 0,
+            "lead": 100
+          }
+        ]
+      }
+    },
+    "reactions": {
+      "hit": "hit",
+      "death": "fall-die",
+      "durationMs": 4000
+    }
+  },
+  "sfx": {
+    "lang-van-basic": "lang-van/basic.wav",
+    "lang-van-ultimate": "lang-van/ultimate.wav",
+    "lang-van-hit": "lang-van/hit.wav"
+  },
+  "surfaces": [
+    "roster",
+    "formation",
+    "hero-detail",
+    "battle"
+  ],
+  "approval": {
+    "animation": "six-state pack kiemthe-sixstate-20261023-080750-uniform (--framing uniform, idle anchor locked); owner review pending",
+    "vfx": "no VFX clip supplied",
+    "sfx": "cut from the owner clip audio by scripts/hero/extract_sfx.py; owner review pending",
+    "timing": "markers derived from the clip audio by scripts/hero/scaffold.mjs (2026-10-23); owner review pending"
+  }
+}

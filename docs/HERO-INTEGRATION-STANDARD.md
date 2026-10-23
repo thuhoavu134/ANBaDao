@@ -63,6 +63,20 @@ Thêm `--allow-reuse` khi bộ video đó **đã từng pack cho tướng khác*
 
 Kết quả: `INTEGRATE PASS` + báo cáo `docs/qa/integrate/<slug>.md` + GIF `docs/qa/idle-anchor/detail-<x>.gif` + ảnh trận `docs/qa/<slug>/battle-*.png`.
 
+### Tướng có VFX nằm sẵn trong clip (không có clip VFX riêng)
+
+Tướng **cận chiến** thường đã có hiệu ứng nằm ngay trong clip `atk`/`ulti` (kiếm, băng, lửa… bay ra từ chính khung
+hình nhân vật). Khi đó **không cần clip `vfxatk`/`vfxulti` riêng** — thêm cờ `--no-vfx`:
+
+```bash
+node scripts/integrate-hero.mjs --slug <slug> --id hero_splus_<x> --brief <brief.json> \
+     --files idle.mp4 run.mp4 hit.mp4 fall.mp4 atk.mp4 ult.mp4 --no-vfx
+```
+
+Pipeline bỏ bước 6 (không key atlas VFX), `scaffold` ghi `no VFX clip supplied` và không khai projectile/area VFX,
+còn `hero-doctor` chỉ FAIL khi kit **khai** VFX mà thiếu atlas — nên vẫn qua. Hiệu ứng hiển thị vì **nằm trong khung
+animation** của đòn đó. Muốn tách VFX riêng để game vẽ đè thì vẫn phải có clip VFX sạch (không có nhân vật).
+
 ### Pipeline tự suy những gì (đừng làm tay)
 
 | Thứ tự làm tay trước đây | Nay do đâu |

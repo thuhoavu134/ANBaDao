@@ -1,0 +1,47 @@
+{
+  "source": {
+    "sfx": "audio tracks of the owner clips, auto-cut by scripts/hero/extract_sfx.py (trimmed, not mixed)"
+  },
+  "clips": {},
+  "sfx": {
+    "lang-van-basic": {
+      "file": "lang-van/basic.wav",
+      "source": "atk_4.mp4",
+      "trim": [
+        6.36,
+        1.58
+      ],
+      "sha256": "5ec83714b499ae99f930cecbb6aff166bcd2b7a69bed200d30e97470cc4734bc",
+      "durationMs": 1580,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "audio of owner clip atk, auto-picked strongest sound event, trimmed (not mixed); owner review pending"
+    },
+    "lang-van-ultimate": {
+      "file": "lang-van/ultimate.wav",
+      "source": "ulti_3.mp4",
+      "trim": [
+        4.5,
+        1.37
+      ],
+      "sha256": "bab04671bbe29d376df5e082fd895720685e3cc05fe839eb60d815b1c3a43c35",
+      "durationMs": 1370,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "audio of owner clip ultimate, auto-picked strongest sound event, trimmed (not mixed); owner review pending"
+    },
+    "lang-van-hit": {
+      "file": "lang-van/hit.wav",
+      "source": "hit_2.mp4",
+      "trim": [
+        0.74,
+        0.25
+      ],
+      "sha256": "541bbfea63ffd812d7adf13afce7c4f621bd52ff533e4c85ae4e5404f1252225",
+      "durationMs": 250,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "audio of owner clip hit, auto-picked strongest sound event, trimmed (not mixed); owner review pending"
+    }
+  }
+}
