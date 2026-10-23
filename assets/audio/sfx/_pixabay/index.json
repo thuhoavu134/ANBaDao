@@ -44,6 +44,24 @@
       "author": "freesound_community",
       "previewUrl": "https://cdn.pixabay.com/audio/2022/03/24/audio_0b59172194.mp3",
       "sha256": "8d78dc4e5cd7e3d9fa0a75e2c312b0a8dc3367b6613f738cd4b8dcf0d9c7e5a8"
+    },
+    {
+      "file": "water-splash-02-352021.mp3",
+      "tags": [
+        "nuoc",
+        "water",
+        "splash",
+        "bong nuoc",
+        "splash nuoc",
+        "thuy",
+        "be-an"
+      ],
+      "source": "https://pixabay.com/sound-effects/nature-water-splash-02-352021/",
+      "license": "Pixabay Content License",
+      "author": "Universfield",
+      "previewUrl": "https://cdn.pixabay.com/audio/2025/05/30/audio_40604e6a89.mp3",
+      "sha256": "ab3e3d531eda3c00a5353a21e1e83fea1a3542c5c690ac17cf21325481e15430",
+      "note": "Nguồn cho be-an/basic.wav (nguyên bản) và be-an/ultimate.wav (hạ tông + lớp boom trầm, tự xử lý bằng ffmpeg)"
     }
   ]
 }
