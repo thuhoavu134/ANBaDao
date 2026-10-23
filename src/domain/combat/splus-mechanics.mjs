@@ -104,7 +104,9 @@ export function createSplusMechanics(options={}) {
     const target=unit(targetId);if(!target)return [];
     const removed=target.statuses.filter(s=>s.splus&&predicate(s));
     target.statuses=target.statuses.filter(s=>!removed.includes(s));
-    for(const s of removed){if(s.shieldRemaining>0)target.shield=Math.max(0,target.shield-s.shieldRemaining);emit('statusRemove',unit(s.sourceId),target,{effect:s.type,reason,iconId:s.iconId});}
+    for(const s of removed){if(s.shieldRemaining>0)target.shield=Math.max(0,target.shield-s.shieldRemaining);// A status may carry a burst that goes off when it runs out — the ice melting deals its stored damage.
+      if(reason==='expired'&&n(s.burstOnExpire)>0){const src=unit(s.sourceId)||target;emit('burstOnExpire',src,target,{effect:s.type,amount:n(s.burstOnExpire),iconId:s.iconId||null});damage(src,target,{raw:n(s.burstOnExpire),type:s.burstType||'elemental',action:'passive',secondary:true,noTriggers:true});}
+      emit('statusRemove',unit(s.sourceId),target,{effect:s.type,reason,iconId:s.iconId});}
     return removed;
   }
   function cleanse(targetId,count=Infinity,filter=s=>s.polarity==='debuff') {
@@ -144,13 +146,13 @@ export function createSplusMechanics(options={}) {
   const mark=(a,t,type,powerValue,extra={})=>buff(a,t,type,powerValue,defaults.markDuration,extra);
   // Brief-declared mechanics (authored-effects.mjs): no-op for heroes without an AUTHORED_EFFECTS entry.
   // createSplusMechanics is serialized into battle.html, so the interpreter and registry come in through options.
-  const fx=options.createAuthoredEffects?options.createAuthoredEffects(options.authoredEffects||{},{buff,heal,shield,energy,cleanse,damage,stat,ratio,friends,foes,alive,weakest,emit,rng,key,passive})
+  const fx=options.createAuthoredEffects?options.createAuthoredEffects(options.authoredEffects||{},{buff,heal,shield,energy,cleanse,damage,stat,ratio,friends,foes,alive,weakest,emit,rng,key,passive,round:()=>round,has:(u,t)=>has(u,t)})
     :{onAction(){},modifiers(){},immune(){return false;},onKill(){},onHit(){},onReceive(){},onRoundStart(){}};
   // Shared cast API for heroes described by assets/characters/<slug>/hero.json
   // (scripts/authored-hero-install.mjs + src/runtime/authored-hero.js). A new authored
   // hero adds one AUTHORED_KITS entry and one AUTHORED_HIT rule; the runtime resolves each
   // hit on its animation marker through resolveAuthoredImpact, exactly once per target/hit.
-  const AUTHORED_KITS={khaos:{basic:{hits:1,area:false},ultimate:{hits:2,area:true}},van_phong:{basic:{hits:1,area:false},ultimate:{hits:1,area:true}},nguyet_diep:{basic:{hits:1,area:true},ultimate:{hits:3,area:true}},tinh_mac:{basic:{hits:3,area:false},ultimate:{hits:1,area:true}},lang_van:{basic:{hits:4,area:false},ultimate:{hits:1,area:true}}};
+  const AUTHORED_KITS={khaos:{basic:{hits:1,area:false},ultimate:{hits:2,area:true}},van_phong:{basic:{hits:1,area:false},ultimate:{hits:1,area:true}},nguyet_diep:{basic:{hits:1,area:true},ultimate:{hits:3,area:true}},tinh_mac:{basic:{hits:3,area:false},ultimate:{hits:1,area:true}},lang_van:{basic:{hits:3,area:false},ultimate:{hits:1,area:true}}};
   const INK_SET=new Set(['inkMark','speedDown','armorDown']);
   function khaosInk(actor,target){
     mark(actor,target,'inkMark',0,{turns:3,stack:true,maxStacks:3,polarity:'debuff',iconId:'inkMark'});
@@ -204,59 +206,67 @@ export function createSplusMechanics(options={}) {
   const AUTHORED_HIT={
     // Lăng Vân (scaffold): default rule 115% / 200% elemental damage split over the hits.
     // Write this hero's special mechanics HERE and extend tests/lang-van.test.mjs.
-    // Lang Van (owner kit 2026-10-23): Song Than Tien Anh / Thuy Trieu Tram Kich / Song Thuong Loan Van Pha.
-    // Thuy Chu stacks are applied by the brief's declared effects AFTER this rule runs for the same hit, so the
-    // freeze reads the stacks the victim already carried — it fires on the strike that FOLLOWS the third stack.
+    // Lang Van (owner kit 2026-10-23, second revision): Thuy Chu stacks, Dong Bang, Thu The counter, and the
+    // ultimate that freezes whoever is soaked and shatters whoever is already frozen.
     lang_van(actor,target,cast,index){
-      const hanBangPha=()=>{
-        const s=status(target,'speedDown');
-        if(!alive(target)||!s||s.sourceId!==actor.id||n(s.stacks)<3)return false;
-        const missing=Math.max(0,target.maxHp-target.hp);
-        // Consume the marks, or every later strike would freeze again.
-        remove(target,x=>x.type==='speedDown'&&x.sourceId===actor.id,'han-bang-pha');
-        buff(actor,target,'stun',0,null,{remainingTurns:1,iconId:'stun'});
-        // Extra physical damage scales with the health the victim has already lost.
-        damage(actor,target,{raw:Math.round(missing*.12),type:'physical',action:cast.kind,secondary:true,noTriggers:true});
-        emit('hanBangPha',actor,target,{missing:Math.round(missing),ratio:.12});
-        return true;
-      };
-      if(cast.kind==='basic'){
-        damage(actor,target,{multiplier:[.34,.28,.28,.25][index]??.28,action:'basic',type:'elemental'});
-        // Thuy Luu: the second strike of the chain washes over the neighbours.
-        if(index===1){
-          const splash=adjacent(target,foes(actor)).slice(0,2);
-          for(const t of splash)damage(actor,t,{multiplier:.18,action:'basic',type:'elemental',secondary:true});
-          if(splash.length)emit('thuyLuu',actor,target,{targets:splash.map(t=>t.id)});
+      const MAX=3,STACK_TURNS=2,burst=()=>Math.round(stat(actor,'atk')*1.2);
+      // one Thuy Chu stack (-10% speed, max 3). The third stack freezes the victim for a turn and stores the
+      // melt damage, which the engine pays out when that status expires.
+      const chu=t=>{
+        buff(actor,t,'speedDown',.1,STACK_TURNS,{stack:true,maxStacks:MAX,iconId:'thuyChu'});
+        const stacks=n(status(t,'speedDown')?.stacks);
+        if(stacks>=MAX&&alive(t)){
+          remove(t,x=>x.type==='speedDown'&&x.sourceId===actor.id,'dong-bang');
+          buff(actor,t,'stun',0,1,{iconId:'frozen',burstOnExpire:burst(),burstType:'elemental'});
+          emit('dongBang',actor,t,{burst:burst()});
         }
-        hanBangPha();
+        return stacks;
+      };
+      // Thu The: at the end of her own action she braces until her next turn (+25% damage reduction; the counter
+      // itself lives in the declared passive, which fires on 'receive').
+      const brace=()=>{buff(actor,actor,'mitigation',.25,1,{iconId:'thuThe'});emit('thuThe',actor,actor,{});};
+      if(cast.kind==='basic'){
+        // three beats: two slashes on the main target, then the sweep
+        const last=index===cast.hits-1, frozen=has(target,'stun');
+        const dealt=damage(actor,target,{multiplier:last?.3:.35,action:'basic',type:'elemental',
+          ...(last&&frozen?{critBonus:.5}:{})});
+        // every landed strike soaks the target (kit: "mỗi khi tấn công trúng kẻ địch")
+        if(dealt>0)chu(target);
+        if(last){
+          const splash=adjacent(target,foes(actor)).slice(0,2);
+          for(const t of splash)damage(actor,t,{multiplier:.4,action:'basic',type:'elemental',secondary:true,noTriggers:true});
+          if(splash.length)emit('thuyLuu',actor,target,{targets:splash.map(t=>t.id)});
+          // Thua Thang: a frozen target is an opening — extra crit (above) and 30% lifesteal
+          if(frozen&&dealt>0)heal(actor,actor,dealt*.3);
+          energy(actor,actor,20,'lang-van-basic');
+          brace();
+        }
         return;
       }
-      // Ultimate: the vortex gathers them, the ice holds them, the finale shatters.
-      if(index===0){
-        const pulled=foes(actor).filter(alive);
-        for(const t of pulled){
-          displace(actor,t,'pull');
-          buff(actor,t,'confusion',0,2,{iconId:'confusion'});
-        }
-        // The whole enemy field freezes, not just the slots they stood in: the finale throws them backwards and
-        // they must still be standing on ice.
-        const enemyTeam=pulled[0]?.team;
-        if(enemyTeam!=null)for(let slot=0;slot<6;slot++){
-          let z=zones.find(z=>z.team===enemyTeam&&z.slot===slot&&z.sourceId===actor.id);
-          if(!z){z={team:enemyTeam,slot,sourceId:actor.id};zones.push(z);}
-          z.expiresRound=round+3;
-        }
-        syncZones();
-        emit('loanVanPha',actor,actor,{pulled:pulled.length,zoneRounds:3});
-      }
+      // Ultimate: the vortex hits the target in front of her...
       damage(actor,target,{multiplier:2/cast.hits,action:'ultimate',type:'elemental'});
-      if(index===cast.hits-1){
-        // Nhat Kich Tat Sat: the ice bursts, throwing them back over the frozen ground.
-        for(const t of foes(actor).filter(alive)){
-          damage(actor,t,{raw:Math.round(t.maxHp*.04),type:'true',action:'ultimate',secondary:true,noTriggers:true});
-          displace(actor,t,'push');
+      // The storm itself runs ONCE per cast (an AoE cast calls this rule once per target), the main hit is per target.
+      if(index===cast.hits-1&&!cast.langVanStorm){
+        cast.langVanStorm=true;
+        const all=foes(actor).filter(alive);
+        const pre=new Map(all.map(t=>[t.id,n(status(t,'speedDown')?.stacks)]));
+        const wasFrozen=new Set(all.filter(t=>has(t,'stun')).map(t=>t.id));
+        for(const t of all){
+          if(!alive(t))continue;
+          const had=pre.get(t.id)||0;
+          chu(t);                       // the storm soaks everyone it hits
+          if(had>=2&&!has(t,'stun'))chu(t);   // two stacks before + this one = frozen by the third
+          if(wasFrozen.has(t.id)){
+            damage(actor,t,{raw:Math.round(stat(actor,'atk')*1.5),type:'true',action:'ultimate',secondary:true,noTriggers:true});
+            buff(actor,t,'cooldownDelay',1,1);
+            emit('voBang',actor,t,{});
+          }
         }
-        emit('bangShatter',actor,actor,{});
+        // Han Bang Ho Giap: 2 turns of +30% defence and up to two counters per turn
+        buff(actor,actor,'armorUp',.3,2,{iconId:'hanBangGiap'});
+        buff(actor,actor,'counterCap2',0,2,{polarity:'buff',iconId:'hanBangGiap'});
+        emit('loanVanPha',actor,actor,{enemies:all.length});
+        brace();
       }
     },
     tinh_mac(actor,target,cast,index){

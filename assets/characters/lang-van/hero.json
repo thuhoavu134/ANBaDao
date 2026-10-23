@@ -23,22 +23,54 @@
   "kit": {
     "passive": {
       "name": "Song Thần Tiễn Ảnh",
-      "desc": "Mỗi đòn đánh thường tích 1 tầng Thủy Chú lên mục tiêu, giảm 10% tốc chạy, tối đa 3 tầng. Khi mục tiêu đã đủ 3 tầng, đòn kế tiếp kích hoạt Hàn Băng phá: đóng băng 1 lượt và gây thêm sát thương vật lý bằng 12% máu đã mất của mục tiêu, sau đó xoá sạch tầng."
+      "desc": "Mỗi đòn trúng (kể cả phản đòn) gắn 1 tầng Thủy Chú lên mục tiêu: giảm 10% tốc, tối đa 3 tầng, 2 hiệp. Đủ 3 tầng: tiêu hết tầng, đóng băng mục tiêu 1 hiệp; khi tan băng chịu thêm 120% Công. Cuối mỗi lượt của mình, Lăng Vân vào Thủ Thế: giảm 25% sát thương phải chịu và phản đòn kẻ đầu tiên đánh mình (80% Công + 1 tầng Thủy Chú), 1 lần mỗi hiệp.",
+      "effects": [
+        {
+          "when": "receive",
+          "do": "counter",
+          "pctAtk": 0.8,
+          "perTurn": 1,
+          "capFrom": "counterCap2",
+          "capTo": 2,
+          "apply": {
+            "do": "status",
+            "who": "target",
+            "status": "speedDown",
+            "value": 0.1,
+            "turns": 2,
+            "stack": true,
+            "maxStacks": 3
+          }
+        }
+      ]
     },
     "basic": {
       "name": "Thủy Triều Trảm Kích",
       "cost": 0,
-      "desc": "Chuỗi 4 đòn song thương: chém chéo, quét nước, đâm xuống đất; mỗi đòn tích 1 tầng Thủy Chú. Đòn thứ 2 quét nước sang 1-2 kẻ địch đứng cạnh mục tiêu.",
+      "desc": "Ba nhịp song thương: hai nhát chém rồi quét. 110% Công lên mục tiêu chính và 40% Công lan sang 2 địch liền kề; hồi 20 Nộ; gắn 1 tầng Thủy Chú. Nếu mục tiêu đang đóng băng: +50% tỉ lệ bạo kích và hút máu 30% sát thương gây ra.",
       "fx": {
         "kind": "damage",
         "target": "enemy",
         "power": 1.15
-      }
+      },
+      "effects": [
+        {
+          "when": "hit",
+          "action": "basic",
+          "do": "status",
+          "who": "target",
+          "status": "speedDown",
+          "value": 0.1,
+          "turns": 2,
+          "stack": true,
+          "maxStacks": 3
+        }
+      ]
     },
     "ultimate": {
       "name": "Song Thương Loạn Vân Phá",
-      "cost": 60,
-      "desc": "Bão băng quét toàn bộ địch: hút tất cả về hàng trước, làm chậm 20% và gây lẫn lộn (trơn trượt) 2 lượt, để lại vùng băng 3 lượt gây sát thương duy trì. Kết thúc chiêu nổ băng: thêm 4% máu tối đa sát thương chuẩn và hất văng ra hàng sau.",
+      "cost": 100,
+      "desc": "Lao vào giữa đội hình địch, xoáy song thương: 200% Công toàn địch, gắn 1 tầng Thủy Chú cho tất cả. Ai đã có từ 2 tầng trước đó bị đóng băng ngay; ai đang đóng băng thì vỡ băng, chịu thêm 150% Công chuẩn và bị đẩy lùi hành động. Sau đó Lăng Vân nhận Hàn Băng Hộ Giáp 2 hiệp: +30% Thủ và phản đòn tối đa 2 lần/hiệp.",
       "fx": {
         "kind": "damage",
         "target": "aoe_enemy",
@@ -62,10 +94,9 @@
         "clip": "basic",
         "release": 5600,
         "hits": [
-          6000,
+          5600,
           6400,
-          6800,
-          7200
+          7600
         ],
         "vfxEnd": 7900,
         "recovery": 8000,
@@ -112,7 +143,8 @@
         ],
         "lunge": {
           "dashMs": 240
-        }
+        },
+        "cost": 100
       }
     },
     "reactions": {
