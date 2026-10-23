@@ -1,0 +1,165 @@
+{
+  "schema": "luc-than-authored-hero/v1",
+  "id": "tieu_linh",
+  "sourceId": "hero_splus_tieu_linh",
+  "slug": "tieu-linh",
+  "identityVersion": "kiemthe-sixstate-20261024-004427-uniform",
+  "host": {
+    "he": "moc",
+    "faction": "moc",
+    "archetype": "support",
+    "rarity": "ssr",
+    "name": "Tiểu Linh",
+    "role": "Hỗ trợ hồi máu và rút độc: hồ lô cứu đồng đội yếu nhất, bùa độc chuyển thành máu cho cả đội",
+    "col": "#e08cc0",
+    "stats": {
+      "hp": 1180,
+      "mp": 60,
+      "atk": 132,
+      "def": 70,
+      "spd": 100
+    }
+  },
+  "kit": {
+    "passive": {
+      "name": "Tà Hoa Diệu Thuật & Bảo Hiệp Thoát Thân",
+      "desc": "Đầu mỗi lượt của mình: hồ lô hồi 6% HP tối đa cho đồng đội yếu nhất và giải 1 hiệu ứng xấu trên người đó. Mỗi đòn gây sát thương gắn 1 tầng Độc Mộc Chú (2 hiệp, tối đa 3): đầu hiệp của địch chịu 35% Công mỗi tầng, một nửa lượng đó hồi cho cả đội. Khi bị đánh (1 lần mỗi vòng): bản thân nhận Khói Ẩn 1 hiệp (giảm 30% sát thương nhận, tăng 25% né) và được đẩy 15% thanh hành động; kẻ đánh bị giảm 20% chính xác và gắn thêm 1 tầng Độc Mộc Chú."
+    },
+    "basic": {
+      "name": "Khô Mộc Đập Đất & Phóng Khói",
+      "cost": 0,
+      "desc": "Đập gậy xuống đất rồi phóng sương bùa: 90% Công, gắn 1 tầng Độc Mộc Chú, hồi 20 Nộ. 40% tỉ lệ giảm 15% tốc mục tiêu trong 1 hiệp.",
+      "fx": {
+        "kind": "damage",
+        "target": "enemy",
+        "power": 0.9
+      }
+    },
+    "ultimate": {
+      "name": "Vạn Cổ Hồ Lô - Loạn Thế Hồi Xuân Trận",
+      "cost": 60,
+      "desc": "Hồ lô phun bão khói đào: hồi 22% HP tối đa của Tiểu Linh cho cả đội, giải sạch hiệu ứng xấu cho đồng đội dưới 50% HP, ban Hưng Phấn 2 hiệp (+20% Công, +10% bạo kích). Với địch: kích nổ toàn bộ sát thương độc còn lại (không mất tầng) và gây Hỗn Loạn 1 hiệp (giảm 30% kháng hiệu ứng, giảm 20% sát thương gây ra).",
+      "fx": {
+        "kind": "damage",
+        "target": "aoe_enemy",
+        "power": 2.1
+      }
+    }
+  },
+  "art": {
+    "portrait": "assets/characters/tieu-linh/portrait-025e4a34.webp"
+  },
+  "clipsMeta": "runtime-meta.json",
+  "vfxBase": "assets/vfx/tieu-linh/",
+  "vfxMeta": "assets/vfx/tieu-linh/provenance.json",
+  "battle": {
+    "tempo": {
+      "basic": 1.6,
+      "ultimate": 1.4
+    },
+    "actions": {
+      "basic": {
+        "clip": "basic",
+        "release": 1440,
+        "hits": [
+          1840
+        ],
+        "vfxEnd": 2400,
+        "recovery": 4000,
+        "sfx": [
+          {
+            "cue": "tieu-linh-basic",
+            "at": "release",
+            "lead": 0
+          },
+          {
+            "cue": "tieu-linh-basic-hit",
+            "at": "hit"
+          }
+        ],
+        "projectile": {
+          "vfx": "vfx-basic",
+          "from": [
+            0.55,
+            0.5
+          ],
+          "scale": 1.25,
+          "arc": 0,
+          "flight": 400
+        },
+        "impact": {
+          "vfx": "vfx-basic",
+          "anchor": "body",
+          "scale": 1,
+          "shake": 4
+        }
+      },
+      "ultimate": {
+        "clip": "ultimate",
+        "release": 2740,
+        "hits": [
+          3140
+        ],
+        "vfxEnd": 4900,
+        "recovery": 6000,
+        "sfx": [
+          {
+            "cue": "tieu-linh-ultimate",
+            "at": "release",
+            "lead": 0
+          },
+          {
+            "cue": "tieu-linh-ultimate-vfx",
+            "at": "release",
+            "lead": 0
+          },
+          {
+            "cue": "tieu-linh-ultimate-hit",
+            "at": "hit"
+          }
+        ],
+        "area": {
+          "vfx": "vfx-ultimate",
+          "anchor": "body",
+          "scale": 1.6,
+          "shake": 7
+        }
+      }
+    },
+    "reactions": {
+      "hitCue": "tieu-linh-hit",
+      "hit": "hit",
+      "death": "fall-die",
+      "durationMs": 4000
+    },
+    "victory": {
+      "runVisualScale": 1.16
+    },
+    "events": {
+      "hoiXuan": {
+        "sfx": "tieu-linh-passive"
+      }
+    }
+  },
+  "sfx": {
+    "tieu-linh-basic": "tieu-linh/basic.wav",
+    "tieu-linh-basic-hit": "tieu-linh/basic-hit.wav",
+    "tieu-linh-ultimate": "tieu-linh/ultimate.wav",
+    "tieu-linh-ultimate-vfx": "tieu-linh/ultimate-vfx.wav",
+    "tieu-linh-ultimate-hit": "tieu-linh/ultimate-hit.wav",
+    "tieu-linh-hit": "tieu-linh/hit.wav",
+    "tieu-linh-passive": "tieu-linh/passive.wav"
+  },
+  "surfaces": [
+    "roster",
+    "formation",
+    "hero-detail",
+    "battle"
+  ],
+  "approval": {
+    "animation": "six-state pack kiemthe-sixstate-20261024-004427-uniform (--framing uniform, idle anchor locked); owner review pending",
+    "vfx": "owner VFX clips keyed by scripts/hero/key_vfx.py; owner review pending",
+    "sfx": "cut from the owner clip audio by scripts/hero/extract_sfx.py; owner review pending",
+    "timing": "markers derived from the clip audio by scripts/hero/scaffold.mjs (2026-10-23); owner review pending"
+  }
+}

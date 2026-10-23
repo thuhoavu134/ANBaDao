@@ -1,0 +1,193 @@
+{
+  "source": {
+    "vfx": "owner-supplied green-screen clips vfxatk_4 / vfxulti_4",
+    "sfx": "clip audio (extract_sfx.py) + Kiếm Thế SKILLPACK + Pixabay library (sfx-source.mjs)"
+  },
+  "clips": {
+    "vfx-basic": {
+      "file": "vfx-basic-444629dd.webp",
+      "frames": 16,
+      "cols": 8,
+      "rows": 2,
+      "cellW": 300,
+      "cellH": 169,
+      "atlasWidth": 2400,
+      "atlasHeight": 338,
+      "frameMs": 60,
+      "blend": "source-over",
+      "pivot": 150,
+      "foot": 84,
+      "sourceClip": "vfxatk_4---375e0bb2-3ded-47e0-acfe-84b7a300bc8f.mp4",
+      "sourceFrames": [
+        0,
+        6,
+        13,
+        19,
+        25,
+        32,
+        38,
+        44,
+        51,
+        57,
+        63,
+        70,
+        76,
+        82,
+        89,
+        95
+      ],
+      "sourceFrameCount": 96,
+      "sourceRect": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "keying": "difference matte vs border green, alpha 55..150, unmix + spill clamp, Gemini corner masked",
+      "role": "basic VFX (owner clip vfxatk)",
+      "sha256": "444629ddd101802663d34d0772ead661002d05be965adf236df5f75516a3cdce",
+      "bytes": 259124
+    },
+    "vfx-ultimate": {
+      "file": "vfx-ultimate-0d737d0d.webp",
+      "frames": 24,
+      "cols": 8,
+      "rows": 3,
+      "cellW": 360,
+      "cellH": 202,
+      "atlasWidth": 2880,
+      "atlasHeight": 606,
+      "frameMs": 90,
+      "blend": "source-over",
+      "pivot": 180,
+      "foot": 101,
+      "sourceClip": "vfxulti_4---7f9ec8b6-9cee-42e5-9aad-712613810904.mp4",
+      "sourceFrames": [
+        0,
+        6,
+        12,
+        19,
+        25,
+        31,
+        37,
+        44,
+        50,
+        56,
+        62,
+        68,
+        75,
+        81,
+        87,
+        93,
+        99,
+        106,
+        112,
+        118,
+        124,
+        131,
+        137,
+        143
+      ],
+      "sourceFrameCount": 144,
+      "sourceRect": [
+        0,
+        0,
+        1920,
+        1080
+      ],
+      "keying": "difference matte vs border green, alpha 55..150, unmix + spill clamp, Gemini corner masked",
+      "role": "ultimate VFX (owner clip vfxulti)",
+      "sha256": "0d737d0dc9ba930df26c52128e9bae84146a75eea07e80596b75603a08960d57",
+      "bytes": 775720
+    }
+  },
+  "sfx": {
+    "tieu-linh-basic": {
+      "file": "tieu-linh/basic.wav",
+      "source": "atk_7---68df1488-ad6c-48a4-b355-5b49a48e8894.mp4",
+      "trim": [
+        1.44,
+        0.25
+      ],
+      "sha256": "ac5674f9dd56fe3d145f1c6b85817308a61b134a8eff9591a0295b3f842a10f8",
+      "durationMs": 250,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "audio of owner clip atk, auto-picked strongest sound event, trimmed (not mixed); owner review pending"
+    },
+    "tieu-linh-basic-hit": {
+      "file": "tieu-linh/basic-hit.wav",
+      "source": "vfxatk_4---375e0bb2-3ded-47e0-acfe-84b7a300bc8f.mp4",
+      "trim": [
+        2.06,
+        0.85
+      ],
+      "sha256": "bf6b825c5d8b74339f03fd9de823d3d272cf8e9c8fc11357dc2617d66c42d15a",
+      "durationMs": 850,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "audio of owner clip vfx-basic, auto-picked strongest sound event, trimmed (not mixed); owner review pending"
+    },
+    "tieu-linh-ultimate": {
+      "file": "tieu-linh/ultimate.wav",
+      "source": "ulti_5---d8290cd4-3edb-4b3d-98dc-1891f25fb15b.mp4",
+      "trim": [
+        2.74,
+        1.51
+      ],
+      "sha256": "9f126be1b34afc47352378d4124e8c22bb0f3cc7a1016eea0d3bbb1bca89b7aa",
+      "durationMs": 1510,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "audio of owner clip ultimate, auto-picked strongest sound event, trimmed (not mixed); owner review pending"
+    },
+    "tieu-linh-ultimate-vfx": {
+      "file": "tieu-linh/ultimate-vfx.wav",
+      "source": "vfxulti_4---7f9ec8b6-9cee-42e5-9aad-712613810904.mp4",
+      "trim": [
+        0.34,
+        0.56
+      ],
+      "sha256": "3b8c5f45016a205bd03eda729682ad46b925b97c8ba64d68da930fcc501c5e9c",
+      "durationMs": 560,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "audio of owner clip vfx-ultimate, auto-picked first sound event, trimmed (not mixed); owner review pending"
+    },
+    "tieu-linh-ultimate-hit": {
+      "file": "tieu-linh/ultimate-hit.wav",
+      "source": "vfxulti_4---7f9ec8b6-9cee-42e5-9aad-712613810904.mp4",
+      "trim": [
+        1.08,
+        0.99
+      ],
+      "sha256": "b683d8a270091000aa8b8ba23324159762360b1c5760158e05ac23d78bb2b810",
+      "durationMs": 990,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "audio of owner clip vfx-ultimate, auto-picked last sound event, trimmed (not mixed); owner review pending"
+    },
+    "tieu-linh-hit": {
+      "file": "tieu-linh/hit.wav",
+      "source": "hit_4---b19461cb-d087-4a5f-8788-4ad2bf8bc493.mp4",
+      "trim": [
+        1.12,
+        1.22
+      ],
+      "sha256": "fa501be5cc0640481e5b50060aad042535053b4bfe92a1b9d5d8437bd7e5a710",
+      "durationMs": 1220,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "audio of owner clip hit, auto-picked strongest sound event, trimmed (not mixed); owner review pending"
+    },
+    "tieu-linh-passive": {
+      "file": "tieu-linh/passive.wav",
+      "source": "SKILLPACK/sfx/public/sb013.wav",
+      "sha256": "0761edeeea0a5756a095bb185a5019bf602b533187cfd5458a9c67559bd1b9ee",
+      "durationMs": 211,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "Kiếm Thế SKILLPACK sb013 (kho Kiếm Thế, phái mingjiao); owner review pending"
+    }
+  }
+}
