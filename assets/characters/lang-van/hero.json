@@ -104,7 +104,6 @@
           {
             "cue": "lang-van-basic",
             "at": "hit",
-            "hit": 1,
             "lead": 40
           },
           {
@@ -127,8 +126,7 @@
         "sfx": [
           {
             "cue": "lang-van-ultimate",
-            "at": "hit",
-            "hit": 0,
+            "at": "release",
             "lead": 100
           },
           {

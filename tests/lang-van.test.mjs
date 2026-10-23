@@ -165,3 +165,15 @@ test('lang_van shatter: an enemy already in the back row cannot be pushed furthe
   assert.ok(e.hasStatus('2:a', 'stun'));
 });
 
+// ---- SFX must follow the animation, beat by beat ------------------------------------------------------
+test('lang_van basic: the swing cue is not pinned to one hit, so every beat plays its own sound', () => {
+  const h = JSON.parse(readFileSync(new URL('../assets/characters/lang-van/hero.json', import.meta.url), 'utf8'));
+  const beats = h.battle.actions.basic.hits.length;
+  assert.ok(beats >= 3, 'three beats');
+  const swing = h.battle.actions.basic.sfx.filter(s => s.cue === 'lang-van-basic');
+  assert.equal(swing.length, 1, 'one swing cue entry');
+  // `hit: N` would lock the cue to that single beat (the bug: the swing only sounded on beat 1).
+  assert.equal(swing[0].hit, undefined, 'no hit pin -> the runtime plays it on every beat');
+  assert.equal(swing[0].at, 'hit');
+});
+
