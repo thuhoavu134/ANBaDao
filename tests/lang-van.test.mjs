@@ -48,3 +48,68 @@ test("Lăng Vân effect: passive #1 hit status speedDown",()=>{
   e.damage('1:lang_van','2:a',{multiplier:1,forceHit:true,action:'basic'});
   assert.ok(e.hasStatus('2:a','speedDown'),'speedDown on 2:a');
 });
+
+// ---- owner kit mechanics (2026-10-23) ---------------------------------------------------------------
+const statusOf = (e, id, type) => (e.unit(id).statuses || []).find(s => s.type === type);
+
+test('lang_van basic: the second strike washes over the neighbours', () => {
+  const e = make([H('lang_van', 1, 0), H('a', 2, 0), H('b', 2, 1)]);
+  e.act('1:lang_van', 'basic', '2:a');
+  const splash = e.events.filter(x => x.type === 'damage' && x.targetId === '2:b' && x.action === 'basic');
+  assert.ok(splash.length >= 1, 'hit 2 splashes to the neighbour');
+  assert.ok(splash.every(x => x.secondary), 'splash is secondary damage');
+  assert.ok(e.events.some(x => x.type === 'thuyLuu'));
+});
+
+// One act() plays the whole 4-strike chain, so these tests read the chain, not a single strike.
+test('lang_van basic: the chain freezes on the strike after the third stack, and consumes it', () => {
+  const e = make([H('lang_van', 1, 0), H('a', 2, 0)]);
+  e.act('1:lang_van', 'basic', '2:a');
+  assert.equal(e.events.filter(x => x.type === 'hanBangPha').length, 1, 'exactly one freeze per chain');
+  assert.ok(e.hasStatus('2:a', 'stun'), 'frozen');
+  assert.ok((statusOf(e, '2:a', 'speedDown')?.stacks || 0) <= 1, 'the stacks were consumed (only the last strike rebuilt one)');
+  const before = e.events.filter(x => x.type === 'hanBangPha').length;
+  e.act('1:lang_van', 'basic', '2:a');
+  assert.ok(e.events.filter(x => x.type === 'hanBangPha').length > before, 'fires again only after the stacks are rebuilt');
+});
+
+test('lang_van basic: the freeze lands after three strikes, never on the first', () => {
+  const e = make([H('lang_van', 1, 0), H('a', 2, 0)]);
+  e.act('1:lang_van', 'basic', '2:a');
+  const at = e.events.findIndex(x => x.type === 'hanBangPha');
+  assert.ok(at > 0, 'the freeze happened');
+  const strikesBefore = e.events.slice(0, at).filter(x => x.type === 'damage' && x.targetId === '2:a').length;
+  assert.ok(strikesBefore >= 3, `needs three stacks first (strikes before: ${strikesBefore})`);
+});
+
+test('lang_van basic: the freeze pays extra physical damage for the health already lost', () => {
+  const e = make([H('lang_van', 1, 0), H('a', 2, 0, { hp: 4e5 })]);
+  for (let i = 0; i < 4; i++) e.act('1:lang_van', 'basic', '2:a');
+  const bonus = e.events.filter(x => x.type === 'damage' && x.damageType === 'physical' && x.secondary);
+  assert.ok(bonus.length >= 1, 'physical bonus damage');
+});
+
+test('lang_van ultimate: the vortex pulls them in, the ground freezes, the finale bursts', () => {
+  const e = make([H('lang_van', 1, 0), H('a', 2, 0), H('b', 2, 1), H('c', 2, 2)]);
+  e.act('1:lang_van', 'ultimate', '2:a');
+  assert.ok(e.events.some(x => x.type === 'loanVanPha'), 'vortex event');
+  assert.ok(e.events.some(x => x.type === 'displacement'), 'enemies were pulled');
+  assert.ok(e.events.some(x => x.type === 'bangShatter'), 'ice burst');
+  const frozen = ['2:a', '2:b', '2:c'].filter(id => e.hasStatus(id, 'brimstone'));
+  assert.ok(frozen.length >= 1, 'frozen ground ticks on the enemies standing in it');
+  const burst = e.events.filter(x => x.type === 'damage' && x.action === 'ultimate' && x.secondary);
+  assert.ok(burst.length >= 3, 'burst damage on every enemy');
+});
+
+test('lang_van sfx: every registered cue has a trigger (no dead sounds)', async () => {
+  const { readFileSync } = await import('node:fs');
+  const hero = JSON.parse(readFileSync(new URL('../assets/characters/lang-van/hero.json', import.meta.url), 'utf8'));
+  const b = hero.battle;
+  const used = new Set();
+  for (const a of Object.values(b.actions || {})) for (const e of a.sfx || []) used.add(e.cue);
+  for (const v of Object.values(b.events || {})) if (v?.sfx) used.add(v.sfx);
+  if (b.reactions?.hitCue) used.add(b.reactions.hitCue);
+  const dead = Object.keys(hero.sfx).filter(c => !used.has(c));
+  assert.deepEqual(dead, [], `registered but never played: ${dead.join(', ')}`);
+  assert.ok(Object.keys(hero.sfx).length >= 7, 'seven cues');
+});

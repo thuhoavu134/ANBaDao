@@ -23,12 +23,12 @@
   "kit": {
     "passive": {
       "name": "Song Thần Tiễn Ảnh",
-      "desc": "Mỗi đòn đánh thường tích 1 tầng Thủy Chú lên mục tiêu, giảm 10% tốc chạy, tối đa 3 tầng."
+      "desc": "Mỗi đòn đánh thường tích 1 tầng Thủy Chú lên mục tiêu, giảm 10% tốc chạy, tối đa 3 tầng. Khi mục tiêu đã đủ 3 tầng, đòn kế tiếp kích hoạt Hàn Băng phá: đóng băng 1 lượt và gây thêm sát thương vật lý bằng 12% máu đã mất của mục tiêu, sau đó xoá sạch tầng."
     },
     "basic": {
       "name": "Thủy Triều Trảm Kích",
       "cost": 0,
-      "desc": "Chuỗi 4 đòn song thương: chém chéo, quét nước, đâm xuống đất; mỗi đòn tích 1 tầng Thủy Chú.",
+      "desc": "Chuỗi 4 đòn song thương: chém chéo, quét nước, đâm xuống đất; mỗi đòn tích 1 tầng Thủy Chú. Đòn thứ 2 quét nước sang 1-2 kẻ địch đứng cạnh mục tiêu.",
       "fx": {
         "kind": "damage",
         "target": "enemy",
@@ -38,7 +38,7 @@
     "ultimate": {
       "name": "Song Thương Loạn Vân Phá",
       "cost": 60,
-      "desc": "Bão băng quét toàn bộ địch: làm chậm 20% trong 2 lượt và gây thêm 2% máu tối đa sát thương chuẩn.",
+      "desc": "Bão băng quét toàn bộ địch: hút tất cả về hàng trước, làm chậm 20% và gây lẫn lộn (trơn trượt) 2 lượt, để lại vùng băng 3 lượt gây sát thương duy trì. Kết thúc chiêu nổ băng: thêm 4% máu tối đa sát thương chuẩn và hất văng ra hàng sau.",
       "fx": {
         "kind": "damage",
         "target": "aoe_enemy",
@@ -75,6 +75,10 @@
             "at": "hit",
             "hit": 1,
             "lead": 40
+          },
+          {
+            "cue": "lang-van-basic-hit",
+            "at": "hit"
           }
         ]
       },
@@ -92,6 +96,15 @@
             "at": "hit",
             "hit": 0,
             "lead": 100
+          },
+          {
+            "cue": "lang-van-ultimate-vfx",
+            "at": "release",
+            "lead": 0
+          },
+          {
+            "cue": "lang-van-ultimate-hit",
+            "at": "hit"
           }
         ]
       }
@@ -99,13 +112,23 @@
     "reactions": {
       "hit": "hit",
       "death": "fall-die",
-      "durationMs": 4000
+      "durationMs": 4000,
+      "hitCue": "lang-van-hit"
+    },
+    "events": {
+      "hanBangPha": {
+        "sfx": "lang-van-passive"
+      }
     }
   },
   "sfx": {
     "lang-van-basic": "lang-van/basic.wav",
     "lang-van-ultimate": "lang-van/ultimate.wav",
-    "lang-van-hit": "lang-van/hit.wav"
+    "lang-van-hit": "lang-van/hit.wav",
+    "lang-van-basic-hit": "lang-van/basic-hit.wav",
+    "lang-van-ultimate-vfx": "lang-van/ultimate-vfx.wav",
+    "lang-van-ultimate-hit": "lang-van/ultimate-hit.wav",
+    "lang-van-passive": "lang-van/passive.wav"
   },
   "surfaces": [
     "roster",

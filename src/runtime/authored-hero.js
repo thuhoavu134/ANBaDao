@@ -98,7 +98,11 @@ function authoredHeroEvent(event){
  if(!isAuthoredHero(target))return;
  const def=authoredDef(target),tempo=Math.max(1,Number(def.battle.reactions?.tempo)||2),speed=authoredSpeed()*tempo;
  if(event.type==='death')authoredMotions.set(target.id,{kind:'fall-die',start:performance.now(),speed,duration:def.clips['fall-die']?.durationMs||1});
- else if(event.type==='damage'&&target.hp>0&&!authoredMotions.has(target.id))authoredMotions.set(target.id,{kind:'hit',start:performance.now(),speed,duration:def.clips.hit?.durationMs||1});
+ else if(event.type==='damage'&&target.hp>0&&!authoredMotions.has(target.id)){
+  authoredMotions.set(target.id,{kind:'hit',start:performance.now(),speed,duration:def.clips.hit?.durationMs||1});
+  // The reaction clip is a motion, not a cue: play the hero's own hit sound once per reaction.
+  if(def.battle.reactions?.hitCue)authoredPlay(def.battle.reactions.hitCue,null,speed);
+ }
 }
 // hero.json hitTargets: 'sequential' = hit i lands on target i only (chained projectiles);
 // 'rows' = targets split front row then back row, spec.waves hits per row; default = every target every hit.

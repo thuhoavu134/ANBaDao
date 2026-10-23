@@ -1,6 +1,6 @@
 {
   "source": {
-    "sfx": "audio tracks of the owner clips, auto-cut by scripts/hero/extract_sfx.py (trimmed, not mixed)"
+    "sfx": "clip audio (extract_sfx.py) + Kiếm Thế SKILLPACK + Pixabay library (sfx-source.mjs)"
   },
   "clips": {},
   "sfx": {
@@ -42,6 +42,42 @@
       "sampleRate": 44100,
       "channels": 1,
       "provenance": "audio of owner clip hit, auto-picked strongest sound event, trimmed (not mixed); owner review pending"
+    },
+    "lang-van-basic-hit": {
+      "file": "lang-van/basic-hit.wav",
+      "source": "SKILLPACK/sfx/emei/em_fxsy_f.wav",
+      "sha256": "48e7a9dcf23e928638d980decb68026f978a65d35738f3d7dc227f7a0e56a3c1",
+      "durationMs": 1283,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "Kiếm Thế SKILLPACK em_fxsy_f (kho Kiếm Thế, phái emei); owner review pending"
+    },
+    "lang-van-ultimate-vfx": {
+      "file": "lang-van/ultimate-vfx.wav",
+      "source": "SKILLPACK/sfx/emei/em_jdfg_f.wav",
+      "sha256": "cfe4a302c52cc0d32025fc9806e2c40cdf5f677db6a9834594b00f1b88a4470e",
+      "durationMs": 547,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "Kiếm Thế SKILLPACK em_jdfg_f (kho Kiếm Thế, phái emei); owner review pending"
+    },
+    "lang-van-ultimate-hit": {
+      "file": "lang-van/ultimate-hit.wav",
+      "source": "SKILLPACK/sfx/emei/em_jyfg_f.wav",
+      "sha256": "22c08e118e80b5c325b29f2e3268ed343d6c32bbc10c93284a14630857944906",
+      "durationMs": 807,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "Kiếm Thế SKILLPACK em_jyfg_f (kho Kiếm Thế, phái emei); owner review pending"
+    },
+    "lang-van-passive": {
+      "file": "lang-van/passive.wav",
+      "source": "SKILLPACK/sfx/cuiyan/cy_fjcx_c.wav",
+      "sha256": "77e281f970ec179507bdcd6e380a3d209033a7c5d94582a250b2145f270276e7",
+      "durationMs": 768,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "Kiếm Thế SKILLPACK cy_fjcx_c (kho Kiếm Thế, phái emei); owner review pending"
     }
   }
 }
