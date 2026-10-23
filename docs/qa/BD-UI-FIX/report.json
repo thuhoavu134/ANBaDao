@@ -1,0 +1,70 @@
+{
+  "victory_p": {
+    "ok": true,
+    "vp": [
+      390,
+      844
+    ],
+    "titleBottomPct": 25.99,
+    "canvasTopPct": 13.5,
+    "canvasBottomPct": 32.21,
+    "artTopPct": 13.92,
+    "artBottomPct": 31.94,
+    "resTopPct": 20
+  },
+  "victory-p": "ok",
+  "victory_d": {
+    "ok": true,
+    "vp": [
+      405,
+      720
+    ],
+    "titleBottomPct": 31.64,
+    "canvasTopPct": 13.5,
+    "canvasBottomPct": 36.28,
+    "artTopPct": 14,
+    "artBottomPct": 35.94,
+    "resTopPct": 20
+  },
+  "victory-d": "ok",
+  "detail_nav_p": {
+    "clicked": null,
+    "hash": "",
+    "views": [
+      "v293-layered-hero-team-css",
+      "v275-hero-formation-overhaul-css",
+      "hero-roster-phase-a-v4-css",
+      "hero-roster-state-v1-css",
+      "hero-detail-tabs-css",
+      "hero-skill-kit-runtime-v1",
+      "hv-hero-detail-hall-css",
+      "authored-hero-detail",
+      "heroesScreen",
+      "heroDetailScreen"
+    ]
+  },
+  "detail_p": {
+    "ok": false
+  },
+  "detail-p": "ok",
+  "detail_nav_d": {
+    "clicked": null,
+    "hash": "",
+    "views": [
+      "v293-layered-hero-team-css",
+      "v275-hero-formation-overhaul-css",
+      "hero-roster-phase-a-v4-css",
+      "hero-roster-state-v1-css",
+      "hero-detail-tabs-css",
+      "hero-skill-kit-runtime-v1",
+      "hv-hero-detail-hall-css",
+      "authored-hero-detail",
+      "heroesScreen",
+      "heroDetailScreen"
+    ]
+  },
+  "detail_d": {
+    "ok": false
+  },
+  "detail-d": "ok"
+}

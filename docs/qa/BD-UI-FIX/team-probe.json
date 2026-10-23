@@ -1,0 +1,21 @@
+{
+  "gate": {
+    "consent": false,
+    "play": true,
+    "after": [
+      "hubScreen"
+    ]
+  },
+  "probe": {
+    "visible": [
+      "teamScreen"
+    ],
+    "screenVisible": "block",
+    "htmlLen": 0,
+    "bachMentions": 0,
+    "imgCount": 0,
+    "imgs": [],
+    "canvasCount": 0,
+    "slots": []
+  }
+}

@@ -1,0 +1,174 @@
+{
+  "schema": "luc-than-authored-hero/v1",
+  "id": "lang_tieu",
+  "sourceId": "hero_splus_lang_tieu",
+  "slug": "lang-tieu",
+  "identityVersion": "kiemthe-sixstate-20261023-231649-uniform",
+  "host": {
+    "he": "kim",
+    "faction": "kim",
+    "archetype": "striker",
+    "rarity": "ssr",
+    "name": "Lăng Tiêu",
+    "role": "Tầm xa, tích Lôi Ấn rồi kích nổ Lôi Giáng để choáng và làm chậm cả đội hình địch",
+    "col": "#8f6bff",
+    "stats": {
+      "hp": 1080,
+      "mp": 60,
+      "atk": 158,
+      "def": 58,
+      "spd": 108
+    }
+  },
+  "kit": {
+    "passive": {
+      "name": "Thiên Lôi Ấn",
+      "desc": "Mỗi đòn gây sát thương gắn 1 tầng Lôi Ấn (2 hiệp, tối đa 4): mỗi tầng giảm 5% tốc và tăng 8% sát thương Lôi phải chịu. Đủ 4 tầng: tiêu hết tầng, gọi Lôi Giáng — 160% Công lên mục tiêu, 80% Công lan sang địch kề, mục tiêu bị Tê Liệt 1 lượt, Lăng Tiêu hồi 20 Nộ."
+    },
+    "basic": {
+      "name": "Lôi Phong Kiếm Ảnh",
+      "cost": 0,
+      "desc": "Phóng kiếm khí lôi: 100% Công, gắn 1 tầng Lôi Ấn, hồi 20 Nộ. Nếu bạo kích: bản thân được đẩy 15% thanh hành động và gắn thêm 1 tầng.",
+      "fx": {
+        "kind": "damage",
+        "target": "enemy",
+        "power": 1
+      }
+    },
+    "ultimate": {
+      "name": "Vạn Kiếp Tử Lôi Trảm",
+      "cost": 60,
+      "desc": "Bão sét toàn sân: 220% Công lên toàn địch, gắn ngay 2 tầng Lôi Ấn (ai đã có 2 tầng thì kích nổ Lôi Giáng ngay). Để lại Vực Sấm Sét 2 hiệp: mỗi khi địch bắt đầu lượt, sét đánh 60% Công và gắn thêm 1 tầng.",
+      "fx": {
+        "kind": "damage",
+        "target": "aoe_enemy",
+        "power": 2.2
+      }
+    }
+  },
+  "art": {
+    "portrait": "assets/characters/lang-tieu/portrait-df50026e.webp"
+  },
+  "clipsMeta": "runtime-meta.json",
+  "vfxBase": "assets/vfx/lang-tieu/",
+  "vfxMeta": "assets/vfx/lang-tieu/provenance.json",
+  "battle": {
+    "tempo": {
+      "basic": 1.6,
+      "ultimate": 1.4
+    },
+    "actions": {
+      "basic": {
+        "clip": "basic",
+        "release": 1800,
+        "hits": [
+          2200
+        ],
+        "vfxEnd": 2760,
+        "recovery": 6000,
+        "sfx": [
+          {
+            "cue": "lang-tieu-basic",
+            "at": "release",
+            "lead": 210
+          },
+          {
+            "cue": "lang-tieu-basic-hit",
+            "at": "hit"
+          }
+        ],
+        "lunge": {
+          "dashMs": 240
+        },
+        "projectile": {
+          "vfx": "vfx-basic",
+          "from": [
+            0.55,
+            0.5
+          ],
+          "scale": 1.25,
+          "arc": 0,
+          "flight": 400
+        },
+        "impact": {
+          "vfx": "vfx-basic",
+          "anchor": "body",
+          "scale": 1,
+          "shake": 4
+        }
+      },
+      "ultimate": {
+        "clip": "ultimate",
+        "release": 4200,
+        "hits": [
+          4600
+        ],
+        "vfxEnd": 6000,
+        "recovery": 6000,
+        "sfx": [
+          {
+            "cue": "lang-tieu-ultimate",
+            "at": "hit",
+            "hit": 0
+          },
+          {
+            "cue": "lang-tieu-ultimate-vfx",
+            "at": "release",
+            "lead": 0
+          },
+          {
+            "cue": "lang-tieu-ultimate-hit",
+            "at": "hit"
+          }
+        ],
+        "lunge": {
+          "dashMs": 240
+        },
+        "area": {
+          "vfx": "vfx-ultimate",
+          "anchor": "body",
+          "scale": 1.6,
+          "shake": 7
+        }
+      }
+    },
+    "reactions": {
+      "hitCue": "lang-tieu-hit",
+      "hit": "hit",
+      "death": "fall-die",
+      "durationMs": 4000
+    },
+    "victory": {
+      "runVisualScale": 1.06
+    },
+    "events": {
+      "loiGiang": {
+        "sfx": "lang-tieu-passive"
+      },
+      "loiTruong": {
+        "sfx": "lang-tieu-ultimate-vfx"
+      }
+    }
+  },
+  "sfx": {
+    "lang-tieu-basic": "lang-tieu/basic.wav",
+    "lang-tieu-basic-hit": "lang-tieu/basic-hit.wav",
+    "lang-tieu-ultimate": "lang-tieu/ultimate.wav",
+    "lang-tieu-ultimate-vfx": "lang-tieu/ultimate-vfx.wav",
+    "lang-tieu-ultimate-hit": "lang-tieu/ultimate-hit.wav",
+    "lang-tieu-hit": "lang-tieu/hit.wav",
+    "lang-tieu-passive": "lang-tieu/passive.wav"
+  },
+  "surfaces": [
+    "roster",
+    "formation",
+    "hero-detail",
+    "battle"
+  ],
+  "approval": {
+    "animation": "six-state pack kiemthe-sixstate-20261023-231649-uniform (--framing uniform, idle anchor locked); owner review pending",
+    "vfx": "owner VFX clips keyed by scripts/hero/key_vfx.py; owner review pending",
+    "sfx": "cut from the owner clip audio by scripts/hero/extract_sfx.py; owner review pending",
+    "timing": "markers derived from the clip audio by scripts/hero/scaffold.mjs (2026-10-23); owner review pending"
+  }
+}

@@ -152,7 +152,7 @@ export function createSplusMechanics(options={}) {
   // (scripts/authored-hero-install.mjs + src/runtime/authored-hero.js). A new authored
   // hero adds one AUTHORED_KITS entry and one AUTHORED_HIT rule; the runtime resolves each
   // hit on its animation marker through resolveAuthoredImpact, exactly once per target/hit.
-  const AUTHORED_KITS={khaos:{basic:{hits:1,area:false},ultimate:{hits:2,area:true}},van_phong:{basic:{hits:1,area:false},ultimate:{hits:1,area:true}},nguyet_diep:{basic:{hits:1,area:true},ultimate:{hits:3,area:true}},tinh_mac:{basic:{hits:3,area:false},ultimate:{hits:1,area:true}},lang_van:{basic:{hits:3,area:false},ultimate:{hits:1,area:true}}};
+  const AUTHORED_KITS={khaos:{basic:{hits:1,area:false},ultimate:{hits:2,area:true}},van_phong:{basic:{hits:1,area:false},ultimate:{hits:1,area:true}},nguyet_diep:{basic:{hits:1,area:true},ultimate:{hits:3,area:true}},tinh_mac:{basic:{hits:3,area:false},ultimate:{hits:1,area:true}},lang_van:{basic:{hits:3,area:false},ultimate:{hits:1,area:true}},lang_tieu:{basic:{hits:1,area:false},ultimate:{hits:1,area:true}}};
   const INK_SET=new Set(['inkMark','speedDown','armorDown']);
   function khaosInk(actor,target){
     mark(actor,target,'inkMark',0,{turns:3,stack:true,maxStacks:3,polarity:'debuff',iconId:'inkMark'});
@@ -278,6 +278,46 @@ export function createSplusMechanics(options={}) {
         buff(actor,actor,'counterCap2',0,2,{polarity:'buff',iconId:'hanBangGiap'});
         emit('loanVanPha',actor,actor,{enemies:all.length});
         brace();
+      }
+    },
+    // Lăng Tiêu (scaffold): default rule 100% / 220% elemental damage split over the hits.
+    // Write this hero's special mechanics HERE and extend tests/lang-tieu.test.mjs.
+    // Lăng Tiêu (Tử Lôi) — kit chuẩn hoá 2026-10-23: Lôi Ấn 4 tầng -> Lôi Giáng (160% + 80% lan + Tê Liệt + 20 Nộ),
+    // bạo kích trên đòn thường gắn thêm 1 tầng (engine không có thanh hành động nên phần "đẩy 15% lượt" trả bằng 15 Nộ),
+    // tuyệt kỹ 220% toàn địch + 2 tầng + Vực Sấm Sét (60% Công mỗi đầu hiệp của địch, 2 hiệp).
+    lang_tieu(actor,target,cast,index){
+      const MAX=4;
+      const crit=()=>{for(let i=events.length-1;i>=0;i--){const e=events[i];if(e.type==='damage'&&e.sourceId===actor.id&&!e.secondary)return !!e.critical;}return false;};
+      const loiGiang=t=>{
+        remove(t,x=>x.type==='speedDown'&&x.sourceId===actor.id,'loi-giang');
+        damage(actor,t,{raw:Math.round(stat(actor,'atk')*1.6),type:'elemental',action:'passive',forceHit:true,noTriggers:true});
+        for(const v of adjacent(t,foes(actor)).slice(0,2))damage(actor,v,{multiplier:.8,action:'passive',type:'elemental',secondary:true,noTriggers:true});
+        if(alive(t))buff(actor,t,'stun',0,1,{iconId:'stun'});
+        if(alive(actor))energy(actor,actor,20,'lang-tieu-loi-giang');
+        emit('loiGiang',actor,t,{});
+      };
+      const mark=t=>{
+        buff(actor,t,'speedDown',.05,2,{stack:true,maxStacks:MAX,iconId:'loiAn'});
+        if(n(status(t,'speedDown')?.stacks)>=MAX&&alive(t))loiGiang(t);
+      };
+      if(cast.kind==='basic'){
+        const dealt=damage(actor,target,{multiplier:1,action:'basic',type:'elemental'});
+        if(dealt>0&&alive(target)){
+          mark(target);
+          if(crit()&&alive(target)){mark(target);if(alive(actor))energy(actor,actor,15,'lang-tieu-crit');}
+        }
+        return;
+      }
+      damage(actor,target,{multiplier:2.2/cast.hits,action:'ultimate',type:'elemental'});
+      if(!cast.langTieuStorm){
+        cast.langTieuStorm=true;
+        const all=foes(actor).filter(alive);
+        for(const t of all){
+          if(!alive(t))continue;
+          mark(t); if(alive(t))mark(t);                                  // +2 tầng ngay
+          if(alive(t))buff(actor,t,'burn',0,2,{pctAtk:.6,iconId:'loiTruong'});  // Vực Sấm Sét 2 hiệp
+        }
+        emit('loiTruong',actor,actor,{enemies:all.length});
       }
     },
     tinh_mac(actor,target,cast,index){

@@ -1,0 +1,44 @@
+{
+  "probe": {
+    "screens": [
+      "hubScreen",
+      "journeyScreen",
+      "vaultScreen",
+      "campaignScreen",
+      "expeditionScreen",
+      "teamScreen",
+      "heroesScreen",
+      "heroDetailScreen",
+      "dailyScreen",
+      "netScreen",
+      "bagScreen",
+      "mailScreen",
+      "chatScreen",
+      "guildScreen",
+      "clanScreen",
+      "friendsScreen",
+      "forgeScreen",
+      "festivalScreen",
+      "arenaScreen",
+      "huntScreen",
+      "jobsScreen",
+      "towerScreen",
+      "shopScreen",
+      "summonScreen",
+      "storyScreen",
+      "battleScreen",
+      "endScreen"
+    ],
+    "heroCardImgs": []
+  },
+  "formation": {
+    "tries": [
+      "formation",
+      "team",
+      "squad",
+      "heroes"
+    ],
+    "tiles": 0,
+    "detail": []
+  }
+}
