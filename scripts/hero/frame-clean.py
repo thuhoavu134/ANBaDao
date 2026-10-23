@@ -27,7 +27,7 @@ from pathlib import Path
 import numpy as np
 from PIL import Image
 
-MAX_ARTIFACT_AREA = 0.02      # >2% of the frame is treated as part of the character, not as an artifact
+MAX_ARTIFACT_AREA = 0.004     # 2% of a 1080p frame is 41k px — enough to swallow a hat; 0.4% is a label/logo
 CURSOR_MAX_AREA = 0.0015      # a cursor is tiny; text/logo blobs are bigger than this
 GREEN_TOLERANCE_DEFAULT = 60
 
@@ -143,18 +143,31 @@ def clean_array(rgb: np.ndarray, tolerance: int = GREEN_TOLERANCE_DEFAULT, erode
     small_area = sh * sw
     # nearest-neighbour back to full resolution: gives the exact pixel set of every component
     labels_up = np.repeat(np.repeat(labels, step, axis=0), step, axis=1)[:h, :w]
+    areas = np.bincount(labels.ravel())
+    areas[0] = 0
+    subject = int(areas.argmax()) if count else 0   # the biggest non-green blob is the character
     for idx in range(1, count + 1):
+        if idx == subject:
+            continue                              # never touch the subject, however small it looks on the reduced grid
         comp = labels == idx
         area = int(comp.sum())
-        if area < 4 or area > small_area * MAX_ARTIFACT_AREA:
-            continue                              # the character itself is big
+        if area < 4 or area > max(4, small_area * MAX_ARTIFACT_AREA):
+            continue
         ys, xs = np.nonzero(comp)
         # A small island whose bounding box sits in an overlay corner is a watermark/label even when it is not fully
         # ringed by green (the Gemini sparkles touch the body, the "#00FF00" label touches the frame edge).
         in_corner = ((xs.min() > sw * 0.72 and ys.min() > sh * 0.45) or (ys.max() < sh * 0.22)
                      or (xs.max() < sw * 0.30 and ys.max() < sh * 0.25))
-        if _border_touch(comp, small_green) < 0.5 and not in_corner:
-            continue                              # sits inside the character, keep it
+        full_area = area * step * step
+        if full_area > 2500:                       # a real label/logo is a few hundred px, never thousands
+            continue
+        enclosed = _border_touch(comp, small_green)
+        # A label, a logo or a cursor is WRAPPED by the background (>=85% of its ring); a piece of the character is
+        # attached to the body, so part of its ring is the body itself. Using 0.5 here painted faces and robes with
+        # the key colour — 36k character pixels vanished on the real clip.
+        tiny_overlay = in_corner and area <= small_area * 0.0006
+        if enclosed < 0.85 and not tiny_overlay:
+            continue
         # Paint the component's OWN pixels, not its bounding box: a box around a watermark that touches the character
         # erased a rectangular patch of hair (a real defect seen on the first 1080p run).
         paint = (labels_up == idx) & ink
@@ -182,7 +195,9 @@ def clean_array(rgb: np.ndarray, tolerance: int = GREEN_TOLERANCE_DEFAULT, erode
     for idx in range(1, count2 + 1):
         comp = labels2 == idx
         area = int(comp.sum())
-        if area < 3 or area > small_area * 0.02:
+        # A watermark or an annotation is a SMALL blob. 2% of the reduced grid is thousands of pixels at 1080p and
+        # painted the character's face and hat with the key colour on the real clip.
+        if area < 3 or area > small_area * 0.0006:
             continue
         ys, xs = np.nonzero(comp)
         labels2_up = np.repeat(np.repeat(labels2 == idx, step, axis=0), step, axis=1)[:h, :w]
@@ -210,14 +225,21 @@ def clean_array(rgb: np.ndarray, tolerance: int = GREEN_TOLERANCE_DEFAULT, erode
     # Chroma leaves a one-pixel green rim on the silhouette: erode the alpha once so the rim (and its despilled
     # halo) disappears with it.
     if erode > 0:
+        # Smart erosion: only GREEN pixels on the silhouette edge go. A plain 1-px erosion also shaved 1.87% of the
+        # frame — thin smoke wisps and ribbons — which is character art, not background.
         solid = alpha > 0
+        greenish = (a[..., 1] >= a[..., 0]) & (a[..., 1] >= a[..., 2]) & ((a.max(axis=2) - a.min(axis=2)) > 12)
         for _ in range(erode):
-            shrunk = solid.copy()
-            shrunk[1:, :] &= solid[:-1, :]
-            shrunk[:-1, :] &= solid[1:, :]
-            shrunk[:, 1:] &= solid[:, :-1]
-            shrunk[:, :-1] &= solid[:, 1:]
-            solid = shrunk
+            edge = solid.copy()
+            edge[1:, :] &= solid[:-1, :]
+            edge[:-1, :] &= solid[1:, :]
+            edge[:, 1:] &= solid[:, :-1]
+            edge[:, :-1] &= solid[:, 1:]
+            edge = ~edge                      # pixels with at least one transparent neighbour
+            drop = solid & greenish & edge
+            if not drop.any():
+                break
+            solid = solid & ~drop
         alpha = np.where(solid, 255, 0).astype(np.uint8)
     out = np.dstack([a.astype(np.uint8), alpha])
     despill = g2 & ~keyed
