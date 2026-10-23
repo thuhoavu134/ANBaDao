@@ -84,11 +84,8 @@ function authoredTeamSpacing(u){
  return steps[Math.floor(steps.length/2)];
 }
 function authoredMeleeAnchor(actor,target){
- // Stand one formation gap in front of the target, never closer than ~56 px (sprites would overlap) and never
- // further than 160 px (that would read as standing off).
- const spacing=Math.max(56,Math.min(160,authoredTeamSpacing(actor)));
- const forward=target.x>=actor.x?1:-1;
- return {x:target.x-forward*spacing,y:target.y};
+ // The owner wants her ON the target, not one gap away: the body travels to the victim's own slot.
+ return {x:target.x,y:target.y};
 }
 function drawAuthoredHero(ctx,u,time){
  warmAuthoredBattle();
@@ -99,6 +96,8 @@ function drawAuthoredHero(ctx,u,time){
  const idle=def.clips.idle,scale=authoredScale(u),mirror=u.team===TEAM_ENEMY;
  const kind=m?m.kind:'idle';
  const frame=m?authoredBodyFrame(def,m,elapsed):Math.floor(time*idle.frames/idle.durationMs)%idle.frames;
+ if(m&&m.kind==='ultimate'&&def.battle.actions?.ultimate?.clones)for(const v of authoredCloneTargets(u))
+  authoredSprite(ctx,def,'ultimate',frame,v.x,v.y,authoredScale(v),mirror);
  let painted=authoredSprite(ctx,def,def.clips[kind]?kind:'idle',frame,u.x,u.y,scale,mirror);
  // While an action page is still decoding keep the idle pose instead of an empty slot.
  if(!painted&&kind!=='idle')painted=authoredSprite(ctx,def,'idle',Math.floor(time*idle.frames/idle.durationMs)%idle.frames,u.x,u.y,scale,mirror);
@@ -106,6 +105,12 @@ function drawAuthoredHero(ctx,u,time){
  // is still decoding the slot shows only its HUD; pages are small enough to arrive in <1 s.
  if(!painted)window.__HV_AUTHORED_UNPAINTED=(window.__HV_AUTHORED_UNPAINTED||0)+1;
  if(u.hp>0)drawUnitHud(ctx,u,time,1);
+}
+// Ultimate clones: some heroes split into a copy of themselves at every standing enemy and play the same clip
+// there (Lang Van's storm). Opt-in per hero through battle.actions.ultimate.clones.
+function authoredCloneTargets(u){
+ const list=(typeof state!=='undefined'&&Array.isArray(state.units))?state.units:[];
+ return list.filter(v=>v&&v.team!==u.team&&v.hp>0);
 }
 function authoredHeroEvent(event){
  if(!authoredBursts)return;
