@@ -122,7 +122,10 @@
           "vfx": "vfx-ultimate",
           "anchor": "body",
           "scale": 1.6,
-          "shake": 7
+          "shake": 7,
+          "single": true,
+          "heightFactor": 2.2,
+          "loop": true
         }
       }
     },

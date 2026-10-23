@@ -48,6 +48,8 @@ test('L03a records receipt absence instead of treating direct persist as atomic'
 test('L03a audit source hash is stable for the captured active runtime', () => {
   const hash = crypto.createHash('sha256').update(source).digest('hex');
   // Re-pinned 2026-09-27: index.html changed only in the header version comment
-  // (1.0.2 → 3.26.0); the L03a command inventory assertions above still pass.
-  assert.equal(hash, '464ca35caed4f7bb085c45375e9066f2f19f4539eed11845015082f72f53aa75');
+  // Re-pinned 2026-10-24: migrateSave now grants catalog heroes the save does not know yet, so a hero shipped
+  // after a save was created (Tiểu Linh) appears in the roster. The L03a mutation inventory (levelUp /
+  // questProgress / chapterClear / receipts) is untouched and its assertions above still pass.
+  assert.equal(hash, 'a53597f4c2e96c098283f497ab047f3e8d76c781080249d327f7f24acd757653');
 });

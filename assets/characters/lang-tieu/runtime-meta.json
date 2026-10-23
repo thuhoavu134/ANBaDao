@@ -56,7 +56,8 @@
       ],
       "pivot": 128,
       "foot": 208.2,
-      "body": 202
+      "body": 202,
+      "scaleFix": 1.0
     },
     "run": {
       "frames": 18,
@@ -99,7 +100,8 @@
       ],
       "pivot": 140,
       "foot": 208.2,
-      "body": 202
+      "body": 202,
+      "scaleFix": 1.0585
     },
     "basic": {
       "frames": 18,
@@ -142,7 +144,8 @@
       ],
       "pivot": 164,
       "foot": 208.2,
-      "body": 202
+      "body": 202,
+      "scaleFix": 1.0529
     },
     "ultimate": {
       "frames": 18,
@@ -185,7 +188,8 @@
       ],
       "pivot": 164,
       "foot": 208.2,
-      "body": 202
+      "body": 202,
+      "scaleFix": 1.0529
     },
     "hit": {
       "frames": 18,
@@ -228,7 +232,8 @@
       ],
       "pivot": 172,
       "foot": 208.2,
-      "body": 202
+      "body": 202,
+      "scaleFix": 0.9851
     },
     "fall-die": {
       "frames": 18,
@@ -271,7 +276,8 @@
       ],
       "pivot": 160,
       "foot": 208.2,
-      "body": 202
+      "body": 202,
+      "scaleFix": 1.0051
     }
   },
   "budget": {

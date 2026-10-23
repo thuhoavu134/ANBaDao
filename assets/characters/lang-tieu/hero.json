@@ -7,7 +7,7 @@
   "host": {
     "he": "kim",
     "faction": "kim",
-    "archetype": "striker",
+    "archetype": "marksman",
     "rarity": "ssr",
     "name": "Lăng Tiêu",
     "role": "Tầm xa, tích Lôi Ấn rồi kích nổ Lôi Giáng để choáng và làm chậm cả đội hình địch",
@@ -77,9 +77,6 @@
             "at": "hit"
           }
         ],
-        "lunge": {
-          "dashMs": 240
-        },
         "projectile": {
           "vfx": "vfx-basic",
           "from": [
@@ -121,13 +118,12 @@
             "at": "hit"
           }
         ],
-        "lunge": {
-          "dashMs": 240
-        },
         "area": {
           "vfx": "vfx-ultimate",
           "anchor": "body",
-          "scale": 1.6,
+          "single": true,
+          "heightFactor": 3,
+          "loop": true,
           "shake": 7
         }
       }

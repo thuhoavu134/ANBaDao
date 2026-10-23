@@ -229,8 +229,19 @@ function drawAuthoredHeroVfx(ctx,time){
      if(local<0){const q=1+local/dms,fy=-size*.6+(gy+size*.6)*q*q;drawAuthoredVfxClip(ctx,def,a.vfx,(ff[0]+(ff[1]-ff[0])*q)*fm,t.x,fy,size);}
      else drawAuthoredVfxClip(ctx,def,a.vfx,land*fm+local,t.x,gy,size);}}
   }
-  else if(spec.area&&age>=spec.release&&age<=spec.vfxEnd)for(const t of victims){
-   if(t.hp<=0)continue;const h=authoredBodyHeight(t);drawAuthoredVfxClip(ctx,def,spec.area.vfx,age-spec.release,t.x,t.y-h*.5,h*(spec.area.scale||1),{mirror:u.team===TEAM_ENEMY});
+  else if(spec.area&&age>=spec.release&&age<=spec.vfxEnd){
+   const a=spec.area;
+   if(a.single&&victims.length){
+    // One storm for the whole enemy team (owner 2026-10-24: "chỉ cần 1 vfx để phủ chung cả team địch"), centred on
+    // their formation and sized by heightFactor (3 = three bodies tall). `loop` keeps it alive for the whole window.
+    const h=Math.max(...victims.map(authoredBodyHeight)),xs=victims.map(t=>t.x),ys=victims.map(t=>t.y);
+    const cx=(Math.min(...xs)+Math.max(...xs))/2,cy=Math.min(...ys),c=def.clips[a.vfx],dur=c?c.frames*(c.frameMs||60):0;
+    let f=age-spec.release;
+    if(a.loop&&dur>0)f=f%dur;
+    drawAuthoredVfxClip(ctx,def,a.vfx,f,cx,cy-h*.5,h*(a.heightFactor||a.scale||1),{mirror:u.team===TEAM_ENEMY});
+   }else for(const t of victims){
+    if(t.hp<=0)continue;const h=authoredBodyHeight(t);drawAuthoredVfxClip(ctx,def,a.vfx,age-spec.release,t.x,t.y-h*.5,h*(a.scale||1),{mirror:u.team===TEAM_ENEMY});
+   }
   }
   if(spec.impact)for(const hit of spec.hits){
    const local=age-hit,c=def.clips[spec.impact.vfx];if(!c||local<0||local>c.frames*(c.frameMs||60))continue;
