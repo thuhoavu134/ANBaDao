@@ -10,6 +10,7 @@ import {LANG_VAN_HERO} from './lang-van.mjs';
 import {LANG_TIEU_HERO} from './lang-tieu.mjs';
 import {LANG_NGUYET_HERO} from './lang-nguyet.mjs';
 import {TIEU_LINH_HERO} from './tieu-linh.mjs';
+import {LANG_CHAN_HERO} from './lang-chan.mjs';
 /* @scaffold:import (scripts/hero/scaffold.mjs adds one import per new hero above this line) */
 // Authored S+ extras live outside the locked 42-hero / 7-per-element grid.
 // Bạch Diện is Tướng 03 S+ by owner bible 15/09; Canvas Sprite Runtime pack TKT-0154.
@@ -90,7 +91,7 @@ export const SPLUS_EXTRA_HEROES = Object.freeze([
     }),
     passive: skill('passive', 'bach_dien.passive', 0, 0)
   }),
-  KY_VAN_HERO, TIEU_PHONG_HERO, TICH_DAO_HERO, HONG_THUONG_HERO, BE_AN_HERO, VAN_PHONG_HERO, NGUYET_DIEP_HERO, TINH_MAC_HERO, LANG_VAN_HERO, LANG_TIEU_HERO, LANG_NGUYET_HERO, TIEU_LINH_HERO
+  KY_VAN_HERO, TIEU_PHONG_HERO, TICH_DAO_HERO, HONG_THUONG_HERO, BE_AN_HERO, VAN_PHONG_HERO, NGUYET_DIEP_HERO, TINH_MAC_HERO, LANG_VAN_HERO, LANG_TIEU_HERO, LANG_NGUYET_HERO, TIEU_LINH_HERO, LANG_CHAN_HERO
   /* @scaffold:hero (one entry per new hero above this line) */
 ]);
 

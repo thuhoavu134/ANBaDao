@@ -152,7 +152,7 @@ export function createSplusMechanics(options={}) {
   // (scripts/authored-hero-install.mjs + src/runtime/authored-hero.js). A new authored
   // hero adds one AUTHORED_KITS entry and one AUTHORED_HIT rule; the runtime resolves each
   // hit on its animation marker through resolveAuthoredImpact, exactly once per target/hit.
-  const AUTHORED_KITS={khaos:{basic:{hits:1,area:false},ultimate:{hits:2,area:true}},van_phong:{basic:{hits:1,area:false},ultimate:{hits:1,area:true}},nguyet_diep:{basic:{hits:1,area:true},ultimate:{hits:3,area:true}},tinh_mac:{basic:{hits:3,area:false},ultimate:{hits:1,area:true}},lang_van:{basic:{hits:3,area:false},ultimate:{hits:1,area:true}},lang_tieu:{basic:{hits:1,area:false},ultimate:{hits:1,area:true}},lang_nguyet:{basic:{hits:1,area:false},ultimate:{hits:1,area:true}},tieu_linh:{basic:{hits:1,area:false},ultimate:{hits:1,area:true}}};
+  const AUTHORED_KITS={khaos:{basic:{hits:1,area:false},ultimate:{hits:2,area:true}},van_phong:{basic:{hits:1,area:false},ultimate:{hits:1,area:true}},nguyet_diep:{basic:{hits:1,area:true},ultimate:{hits:3,area:true}},tinh_mac:{basic:{hits:3,area:false},ultimate:{hits:1,area:true}},lang_van:{basic:{hits:3,area:false},ultimate:{hits:1,area:true}},lang_tieu:{basic:{hits:1,area:false},ultimate:{hits:1,area:true}},lang_nguyet:{basic:{hits:1,area:false},ultimate:{hits:1,area:true}},tieu_linh:{basic:{hits:1,area:false},ultimate:{hits:1,area:true}},lang_chan:{basic:{hits:1,area:false},ultimate:{hits:1,area:true}}};
   const INK_SET=new Set(['inkMark','speedDown','armorDown']);
   function khaosInk(actor,target){
     mark(actor,target,'inkMark',0,{turns:3,stack:true,maxStacks:3,polarity:'debuff',iconId:'inkMark'});
@@ -650,6 +650,19 @@ export function createSplusMechanics(options={}) {
     tieu_linh(actor,target,cast,index){
       const power=cast.kind==='basic'?0.9:2.1;
       damage(actor,target,{multiplier:power/cast.hits,action:cast.kind,type:'elemental'});
+    },
+    // Lăng Chân (scaffold): default rule 120% / 220% elemental damage split over the hits.
+    // Write this hero's special mechanics HERE and extend tests/lang-chan.test.mjs.
+    // Lăng Chân (Vô Cực Kiếm Tử) — cận chiến burst: đòn thường lao tới chém (lunge 260ms, vòng xoáy Âm Dương nổ tại
+    // mục tiêu), tuyệt kỹ cắm kiếm xuống đất khai mở bát quái phủ cả sân. Trạng thái (giảm tốc, phong tỏa) do effects
+    // trong brief chạy sau hit; ở đây chỉ thêm sự kiện để cue nội tại có tiếng.
+    lang_chan(actor,target,cast,index){
+      const power=cast.kind==='basic'?1.2:2.2;
+      damage(actor,target,{multiplier:power/cast.hits,action:cast.kind,type:'elemental'});
+      if(cast.kind==='ultimate'&&!cast.langChanBatQuai){
+        cast.langChanBatQuai=true;
+        emit('batQuai',actor,actor,{enemies:foes(actor).filter(alive).length});
+      }
     },
     tinh_mac(actor,target,cast,index){
       if(cast.kind==='basic'){
