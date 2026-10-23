@@ -169,6 +169,24 @@ gh pr create --base main --head feat/<slug>
 - `hero-doctor` FAIL nếu `art.portrait` không phải `portrait-<sha8>.webp`.
 - Chỉ khai báo `art.card` / `art.avatar` / `art.icon` riêng khi anh Cường Đức duyệt ngoại lệ.
 
+## LÀM SẠCH FRAME TRƯỚC KHI PACK (bắt buộc từ 2026-10-23)
+
+Một frame video chỉ được dùng khi **chỉ còn nhân vật**. Ảnh chụp màn hình từ công cụ AI thường mang thêm:
+logo/ngôi sao Gemini (góc dưới-phải), chữ chú thích kiểu `#00FF00` (góc trên-trái vùng phông xanh),
+con trỏ chuột, phông xanh, và **nền đen của màn hình khi anh chụp** (không phải một phần của frame).
+
+**Tự chạy trong lệnh 1 bước** (từ 2026-10-23): packer `kiemthe-animation-packager/scripts/package_six_states.py` gọi
+`scrub_strays()` ngay sau khi Blender key phông, TRƯỚC khi đo/cắt khung. Kết quả nằm ở `PACK-MANIFEST.json → states[].strayScrub`.
+
+Luật nhận diện: **mảnh rời nhỏ đứng YÊN cùng một chỗ ở ≥80% số frame** = chữ in sẵn / logo AI / con trỏ → xoá;
+mảnh rời **bay** (cánh hoa, khói, tia lửa) → giữ. Mảnh nằm hẳn ngoài khung nhân vật → xoá như vụn.
+(Đã thử luật theo màu: hoặc sót `#00`, hoặc xoá nhầm cánh hoa đào — vì sau khi key, cánh hoa nhạt như chữ trắng.)
+
+Kiểm chứng trên clip idle_7 của owner (144 frame): xoá 526 mảnh tĩnh (chữ `#00FF00` + logo Gemini) + 39 vụn,
+**0 pixel bị xoá trong khung nhân vật**.
+
+Không có script làm sạch riêng: việc tách phông là của Blender, việc xoá vật lạ là của packer.
+
 ## 0. Vì sao có chuẩn này
 
 Trước đây, mỗi lần thêm tướng mới thì các lỗi dưới đây lại quay lại. Toàn bộ đều đã được tìm ra nguyên nhân trong code:
