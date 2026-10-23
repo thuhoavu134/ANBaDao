@@ -96,8 +96,6 @@ function drawAuthoredHero(ctx,u,time){
  const idle=def.clips.idle,scale=authoredScale(u),mirror=u.team===TEAM_ENEMY;
  const kind=m?m.kind:'idle';
  const frame=m?authoredBodyFrame(def,m,elapsed):Math.floor(time*idle.frames/idle.durationMs)%idle.frames;
- if(m&&m.kind==='ultimate'&&def.battle.actions?.ultimate?.clones)for(const v of authoredCloneTargets(u))
-  authoredSprite(ctx,def,'ultimate',frame,v.x,v.y,authoredScale(v),mirror);
  let painted=authoredSprite(ctx,def,def.clips[kind]?kind:'idle',frame,u.x,u.y,scale,mirror);
  // While an action page is still decoding keep the idle pose instead of an empty slot.
  if(!painted&&kind!=='idle')painted=authoredSprite(ctx,def,'idle',Math.floor(time*idle.frames/idle.durationMs)%idle.frames,u.x,u.y,scale,mirror);
@@ -109,8 +107,29 @@ function drawAuthoredHero(ctx,u,time){
 // Ultimate clones: some heroes split into a copy of themselves at every standing enemy and play the same clip
 // there (Lang Van's storm). Opt-in per hero through battle.actions.ultimate.clones.
 function authoredCloneTargets(u){
- const list=(typeof state!=='undefined'&&Array.isArray(state.units))?state.units:[];
+ // The battle keeps its roster in `units` (a page-level let). `state` has no units field at all — reading
+ // state.units silently produced an empty list, which is why the clones never appeared.
+ let list=[];
+ try{if(typeof units!=='undefined'&&Array.isArray(units))list=units;}catch{}
+ if(!list.length){try{if(Array.isArray(state?.units))list=state.units;}catch{}}
  return list.filter(v=>v&&v.team!==u.team&&v.hp>0);
+}
+// Drawn once per frame AFTER every unit (see drawAuthoredClones call in the battle render loop): a copy of the hero
+// at each standing enemy, playing the same ultimate clip. Drawing it inside drawAuthoredHero put the copies behind
+// the enemy sprites, which is why they were invisible on screen.
+function drawAuthoredClones(ctx,time){
+ const list=(typeof units!=='undefined'&&Array.isArray(units))?units:[];
+ for(const u of list){
+  if(!u||u.hp<=0)continue;
+  const def=authoredDef(u);
+  if(!def||!def.battle.actions?.ultimate?.clones)continue;
+  const m=authoredMotions.get(u.id);
+  if(!m||m.kind!=='ultimate')continue;
+  const elapsed=(time-m.start)*m.speed;
+  if(elapsed<0||elapsed>=m.duration)continue;
+  const frame=authoredBodyFrame(def,m,elapsed),mirror=u.team===TEAM_ENEMY;
+  for(const v of authoredCloneTargets(u))authoredSprite(ctx,def,'ultimate',frame,v.x,v.y,authoredScale(v),mirror);
+ }
 }
 function authoredHeroEvent(event){
  if(!authoredBursts)return;
