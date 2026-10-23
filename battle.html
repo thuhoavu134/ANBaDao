@@ -6955,6 +6955,8 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     renderBattlefieldZone();
     maybeResolveThayMoUltimateFull(time);
     units.slice().sort((a, b) => a.y - b.y).forEach((unit) => drawUnit(ctx, unit, time));
+    // Authored heroes that split into copies (Lang Van's storm) paint on top of the roster.
+    if (typeof drawAuthoredClones === 'function') drawAuthoredClones(ctx, time);
     drawDinhLoiPersistentShields(ctx,time);
     drawDinhLoiFx(ctx,time);
     drawLucAnhFx(ctx,time);

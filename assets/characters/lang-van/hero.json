@@ -70,7 +70,7 @@
     "ultimate": {
       "name": "Song Thương Loạn Vân Phá",
       "cost": 100,
-      "desc": "Lao vào giữa đội hình địch, xoáy song thương: 200% Công toàn địch, gắn 1 tầng Thủy Chú cho tất cả. Ai đã có từ 2 tầng trước đó bị đóng băng ngay; ai đang đóng băng thì vỡ băng, chịu thêm 150% Công chuẩn và bị đẩy lùi hành động. Mục tiêu vỡ băng còn bị đẩy lùi: nếu ô phía sau trống thì bị hất về hàng sau, nếu có tướng đứng sau (hoặc đã ở hàng sau) thì đâm sầm vào và bị choáng 1 lượt. Sau đó Lăng Vân nhận Hàn Băng Hộ Giáp 2 hiệp: +30% Thủ và phản đòn tối đa 2 lần/hiệp.",
+      "desc": "Phân thân ra mọi slot có địch, mỗi bản sao xoáy song thương tại chỗ: 200% Công toàn địch, gắn 1 tầng Thủy Chú cho tất cả. Ai đã có từ 2 tầng trước đó bị đóng băng ngay; ai đang đóng băng thì vỡ băng, chịu thêm 150% Công chuẩn và bị đẩy lùi hành động. Mục tiêu vỡ băng còn bị đẩy lùi: nếu ô phía sau trống thì bị hất về hàng sau, nếu có tướng đứng sau (hoặc đã ở hàng sau) thì đâm sầm vào và bị choáng 1 lượt. Sau đó Lăng Vân nhận Hàn Băng Hộ Giáp 2 hiệp: +30% Thủ và phản đòn tối đa 2 lần/hiệp.",
       "fx": {
         "kind": "damage",
         "target": "aoe_enemy",
@@ -104,7 +104,6 @@
           {
             "cue": "lang-van-basic",
             "at": "hit",
-            "hit": 1,
             "lead": 40
           },
           {
@@ -127,8 +126,7 @@
         "sfx": [
           {
             "cue": "lang-van-ultimate",
-            "at": "hit",
-            "hit": 0,
+            "at": "release",
             "lead": 100
           },
           {
@@ -144,7 +142,8 @@
         "lunge": {
           "dashMs": 240
         },
-        "cost": 100
+        "cost": 100,
+        "clones": true
       }
     },
     "reactions": {
