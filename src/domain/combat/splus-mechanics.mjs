@@ -224,7 +224,7 @@ export function createSplusMechanics(options={}) {
       };
       // Thu The: at the end of her own action she braces until her next turn (+25% damage reduction; the counter
       // itself lives in the declared passive, which fires on 'receive').
-      const brace=()=>{buff(actor,actor,'mitigation',.25,1,{iconId:'thuThe'});emit('thuThe',actor,actor,{});};
+      const brace=()=>{buff(actor,actor,'mitigation',.20,1,{iconId:'thuThe'});emit('thuThe',actor,actor,{});};
       if(cast.kind==='basic'){
         // three beats: two slashes on the main target, then the sweep
         const last=index===cast.hits-1, frozen=has(target,'stun');
@@ -257,7 +257,7 @@ export function createSplusMechanics(options={}) {
           chu(t);                       // the storm soaks everyone it hits
           if(had>=2&&!has(t,'stun'))chu(t);   // two stacks before + this one = frozen by the third
           if(wasFrozen.has(t.id)){
-            damage(actor,t,{raw:Math.round(stat(actor,'atk')*1.5),type:'true',action:'ultimate',secondary:true,noTriggers:true});
+            damage(actor,t,{raw:Math.round(stat(actor,'atk')*1.2),type:'true',action:'ultimate',secondary:true,noTriggers:true});
             buff(actor,t,'cooldownDelay',1,1);
             // The shatter breaks the ice: the freeze ends here (no melt payout, the 150% replaces it), otherwise the
             // victim is still stunned and displace() would refuse to move it.
