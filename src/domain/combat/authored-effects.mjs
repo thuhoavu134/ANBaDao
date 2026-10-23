@@ -7,7 +7,7 @@
 //   per target for who=target, once per cast for self / allies / lowestAlly / enemies.
 // Passive effects (kit.passive.effects) carry `when`: always | immune | kill | hit | receive | roundStart.
 
-export const DO = Object.freeze(['status', 'heal', 'shield', 'energy', 'cleanse', 'execute', 'damage', 'stack']);
+export const DO = Object.freeze(['status', 'heal', 'shield', 'energy', 'cleanse', 'execute', 'damage', 'stack', 'counter']);
 export const WHO = Object.freeze(['target', 'self', 'allies', 'lowestAlly', 'enemies']);
 export const WHEN = Object.freeze(['always', 'immune', 'kill', 'hit', 'receive', 'roundStart']);
 export const STATS = Object.freeze(['attack', 'defense', 'magicDefense', 'speed', 'crit', 'critDamage', 'resist', 'lifesteal', 'mitigation']);
@@ -68,6 +68,11 @@ export function validateEffects(list, path, { passive = false } = {}) {
       case 'execute':
         if (!between(fx.belowHp, 0.01, 0.9)) bad('belowHp', 'ngưỡng máu 0.01..0.9 (0.2 = dưới 20%)');
         break;
+      case 'counter':
+        if (fx.pctAtk != null && !between(fx.pctAtk, 0.05, 3)) bad('pctAtk', 'hệ số Công 0.05..3');
+        if (fx.perTurn != null && !(Number.isInteger(fx.perTurn) && fx.perTurn >= 1 && fx.perTurn <= 3)) bad('perTurn', 'số nguyên 1..3');
+        if (fx.apply) errs.push(...validateEffects([fx.apply], `${p}.apply`));
+        break;
       case 'stack':
         if (typeof fx.name !== 'string' || !/^[a-zA-Z][\w]*$/.test(fx.name)) bad('name', 'tên bộ đếm, vd "uHon"');
         if (fx.max != null && !(Number.isInteger(fx.max) && fx.max >= 1)) bad('max', 'số nguyên ≥ 1');
@@ -113,6 +118,24 @@ export function createAuthoredEffects(registry, api) {
 
   function apply(fx, actor, target, action) {
     if (fx.chance != null && api.rng('authored.fx') >= fx.chance) return;
+    if (fx.do === 'counter') {
+      // Retaliation (passive, when: 'receive'): hit the attacker for a share of attack, hand them the hero's mark, and
+      // respect a per-turn cap that a status can raise (the ultimate's guard turns 1 counter per turn into 2).
+      const mem = (actor.splus.memory.fx ||= {});
+      const turn = api.round();
+      if (mem.counterRound !== turn) { mem.counterRound = turn; mem.counterCount = 0; }
+      const cap = api.has(actor, fx.capFrom || '\u0000') ? (fx.capTo ?? 2) : (fx.perTurn ?? 1);
+      if (mem.counterCount >= cap) return;
+      if (fx.chance != null && api.rng('authored.counter') >= fx.chance) return;
+      const src = target;
+      if (!src || !api.alive(src)) return;
+      mem.counterCount++;
+      api.emit('counterattack', actor, src, { counters: mem.counterCount, cap });
+      api.damage(actor, src, { raw: api.stat(actor, 'atk') * (num(fx.pctAtk) ? fx.pctAtk : 0.8), type: 'elemental',
+        action: 'passive', forceHit: true, secondary: true, noTriggers: true });
+      if (fx.apply) apply(fx.apply, actor, src, 'passive');
+      return;
+    }
     if (fx.do === 'execute') {
       if (target && api.alive(target) && api.ratio(target) < fx.belowHp) {
         api.emit('authoredExecute', actor, target, { belowHp: fx.belowHp });
