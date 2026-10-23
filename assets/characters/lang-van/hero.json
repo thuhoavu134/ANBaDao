@@ -80,7 +80,10 @@
             "cue": "lang-van-basic-hit",
             "at": "hit"
           }
-        ]
+        ],
+        "lunge": {
+          "gap": 0.12
+        }
       },
       "ultimate": {
         "clip": "ultimate",
@@ -106,7 +109,10 @@
             "cue": "lang-van-ultimate-hit",
             "at": "hit"
           }
-        ]
+        ],
+        "lunge": {
+          "gap": 0.12
+        }
       }
     },
     "reactions": {

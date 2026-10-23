@@ -113,3 +113,13 @@ test('lang_van sfx: every registered cue has a trigger (no dead sounds)', async 
   assert.deepEqual(dead, [], `registered but never played: ${dead.join(', ')}`);
   assert.ok(Object.keys(hero.sfx).length >= 7, 'seven cues');
 });
+
+test('lang_van is melee: both actions close the distance (lunge) so the sprite reaches the target', async () => {
+  const { readFileSync } = await import('node:fs');
+  const hero = JSON.parse(readFileSync(new URL('../assets/characters/lang-van/hero.json', import.meta.url), 'utf8'));
+  for (const action of ['basic', 'ultimate']) {
+    const l = hero.battle.actions[action].lunge;
+    assert.ok(l, `${action} needs lunge`);
+    assert.ok(Number(l.gap) > 0 && Number(l.gap) < 0.8, `${action} gap stays sane`);
+  }
+});
