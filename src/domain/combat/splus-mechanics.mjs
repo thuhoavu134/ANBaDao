@@ -204,9 +204,60 @@ export function createSplusMechanics(options={}) {
   const AUTHORED_HIT={
     // Lăng Vân (scaffold): default rule 115% / 200% elemental damage split over the hits.
     // Write this hero's special mechanics HERE and extend tests/lang-van.test.mjs.
+    // Lang Van (owner kit 2026-10-23): Song Than Tien Anh / Thuy Trieu Tram Kich / Song Thuong Loan Van Pha.
+    // Thuy Chu stacks are applied by the brief's declared effects AFTER this rule runs for the same hit, so the
+    // freeze reads the stacks the victim already carried — it fires on the strike that FOLLOWS the third stack.
     lang_van(actor,target,cast,index){
-      const power=cast.kind==='basic'?1.15:2;
-      damage(actor,target,{multiplier:power/cast.hits,action:cast.kind,type:'elemental'});
+      const hanBangPha=()=>{
+        const s=status(target,'speedDown');
+        if(!alive(target)||!s||s.sourceId!==actor.id||n(s.stacks)<3)return false;
+        const missing=Math.max(0,target.maxHp-target.hp);
+        // Consume the marks, or every later strike would freeze again.
+        remove(target,x=>x.type==='speedDown'&&x.sourceId===actor.id,'han-bang-pha');
+        buff(actor,target,'stun',0,null,{remainingTurns:1,iconId:'stun'});
+        // Extra physical damage scales with the health the victim has already lost.
+        damage(actor,target,{raw:Math.round(missing*.12),type:'physical',action:cast.kind,secondary:true,noTriggers:true});
+        emit('hanBangPha',actor,target,{missing:Math.round(missing),ratio:.12});
+        return true;
+      };
+      if(cast.kind==='basic'){
+        damage(actor,target,{multiplier:[.34,.28,.28,.25][index]??.28,action:'basic',type:'elemental'});
+        // Thuy Luu: the second strike of the chain washes over the neighbours.
+        if(index===1){
+          const splash=adjacent(target,foes(actor)).slice(0,2);
+          for(const t of splash)damage(actor,t,{multiplier:.18,action:'basic',type:'elemental',secondary:true});
+          if(splash.length)emit('thuyLuu',actor,target,{targets:splash.map(t=>t.id)});
+        }
+        hanBangPha();
+        return;
+      }
+      // Ultimate: the vortex gathers them, the ice holds them, the finale shatters.
+      if(index===0){
+        const pulled=foes(actor).filter(alive);
+        for(const t of pulled){
+          displace(actor,t,'pull');
+          buff(actor,t,'confusion',0,2,{iconId:'confusion'});
+        }
+        // The whole enemy field freezes, not just the slots they stood in: the finale throws them backwards and
+        // they must still be standing on ice.
+        const enemyTeam=pulled[0]?.team;
+        if(enemyTeam!=null)for(let slot=0;slot<6;slot++){
+          let z=zones.find(z=>z.team===enemyTeam&&z.slot===slot&&z.sourceId===actor.id);
+          if(!z){z={team:enemyTeam,slot,sourceId:actor.id};zones.push(z);}
+          z.expiresRound=round+3;
+        }
+        syncZones();
+        emit('loanVanPha',actor,actor,{pulled:pulled.length,zoneRounds:3});
+      }
+      damage(actor,target,{multiplier:2/cast.hits,action:'ultimate',type:'elemental'});
+      if(index===cast.hits-1){
+        // Nhat Kich Tat Sat: the ice bursts, throwing them back over the frozen ground.
+        for(const t of foes(actor).filter(alive)){
+          damage(actor,t,{raw:Math.round(t.maxHp*.04),type:'true',action:'ultimate',secondary:true,noTriggers:true});
+          displace(actor,t,'push');
+        }
+        emit('bangShatter',actor,actor,{});
+      }
     },
     tinh_mac(actor,target,cast,index){
       if(cast.kind==='basic'){
