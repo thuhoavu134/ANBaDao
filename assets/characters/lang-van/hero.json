@@ -75,6 +75,10 @@
             "at": "hit",
             "hit": 1,
             "lead": 40
+          },
+          {
+            "cue": "lang-van-basic-hit",
+            "at": "hit"
           }
         ]
       },
@@ -92,6 +96,15 @@
             "at": "hit",
             "hit": 0,
             "lead": 100
+          },
+          {
+            "cue": "lang-van-ultimate-vfx",
+            "at": "release",
+            "lead": 0
+          },
+          {
+            "cue": "lang-van-ultimate-hit",
+            "at": "hit"
           }
         ]
       }
