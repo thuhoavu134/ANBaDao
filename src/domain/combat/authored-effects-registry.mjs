@@ -4,5 +4,6 @@
 export const AUTHORED_EFFECTS = Object.freeze({
   lang_van: {passive:{effects:[{when:"receive",do:"counter",pctAtk:0.8,perTurn:1,capFrom:"counterCap2",capTo:2,apply:{do:"status",who:"target",status:"speedDown",value:0.1,turns:2,stack:true,maxStacks:3}}]}},
   lang_tieu: {"passive":{"effects":[{"when":"hit","action":"basic","do":"status","who":"target","status":"speedDown","value":0.05,"turns":2,"stack":true,"maxStacks":4}]},"basic":{"effects":[{"when":"hit","action":"basic","do":"status","who":"target","status":"speedDown","value":0.05,"turns":2,"stack":true,"maxStacks":4}]},"ultimate":{"effects":[{"when":"hit","action":"ultimate","do":"status","who":"target","status":"speedDown","value":0.05,"turns":2,"stack":true,"maxStacks":4}]}},
+  lang_nguyet: {"passive":{"effects":[{"do":"status","who":"target","status":"armorDown","value":0.12,"turns":2,"stack":true,"maxStacks":3,"when":"hit","action":"basic"}]},"basic":{"effects":[{"do":"status","who":"target","status":"armorDown","value":0.12,"turns":2,"stack":true,"maxStacks":3,"when":"hit","action":"basic"}]},"ultimate":{"effects":[{"do":"status","who":"target","status":"armorDown","value":0.12,"turns":2,"stack":true,"maxStacks":3,"when":"hit","action":"ultimate"}]}},
   /* @scaffold:effects (one entry per hero above this line) */
 });

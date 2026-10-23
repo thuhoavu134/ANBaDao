@@ -128,7 +128,15 @@ if (!packDir || !existsSync(join(packDir, 'idle', 'metadata.json'))) {
 step('validate', PY, [join(SKILL, 'validate_package.py'), packDir], { tail: 2 });
 // The idle source clip may live anywhere (the owner's inbox or a temp dir), so pass its path from the bundle.
 const idleSrc = existsSync(bundle) ? (JSON.parse(readFileSync(bundle, 'utf8').replace(/^\uFEFF/, '')).sources?.idle?.path || null) : null;
-step('parity', 'node', ['scripts/qa-idle-source-parity.mjs', packDir, ...(idleSrc && existsSync(idleSrc) ? [idleSrc] : [])], { tail: 5, expect: /IDLE PARITY PASS/ });
+// A hero whose idle carries a translucent prop (Lăng Nguyệt's glowing bow) cannot be compared like an opaque
+// character: the green-screen side treats the glow as background while the keyed atlas counts it, so the ratio blows
+// up although the packed cell is steady. The brief may carry an explicit, recorded exception.
+let briefSpec = null;
+try { briefSpec = brief && existsSync(resolve(brief)) ? JSON.parse(readFileSync(resolve(brief), 'utf8')) : null; } catch (_) { briefSpec = null; }
+const parityOverride = briefSpec && briefSpec.parityOverride && Number(briefSpec.parityOverride.max) > 1.5 ? briefSpec.parityOverride : null;
+if (parityOverride) report.push({ name: 'parity-override', ok: true, sec: 0, tail: `max x${parityOverride.max}: ${parityOverride.reason || ''}` });
+step('parity', 'node', ['scripts/qa-idle-source-parity.mjs', packDir, ...(idleSrc && existsSync(idleSrc) ? [idleSrc] : []),
+  ...(parityOverride ? ['--max', String(parityOverride.max)] : [])], { tail: 5, expect: /IDLE PARITY PASS/ });
 // The idle keeps every 3rd frame of a 24 fps clip: a wrap that moves the picture much more than an ordinary packed
 // step is the hitch the owner sees at the seam ("nó bị khựng ở đoạn nối").
 step('seam', 'node', ['scripts/qa-idle-loop-seam.mjs', packDir], { tail: 4, expect: /LOOP SEAM PASS/ });

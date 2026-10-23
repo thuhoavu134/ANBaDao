@@ -152,7 +152,7 @@ export function createSplusMechanics(options={}) {
   // (scripts/authored-hero-install.mjs + src/runtime/authored-hero.js). A new authored
   // hero adds one AUTHORED_KITS entry and one AUTHORED_HIT rule; the runtime resolves each
   // hit on its animation marker through resolveAuthoredImpact, exactly once per target/hit.
-  const AUTHORED_KITS={khaos:{basic:{hits:1,area:false},ultimate:{hits:2,area:true}},van_phong:{basic:{hits:1,area:false},ultimate:{hits:1,area:true}},nguyet_diep:{basic:{hits:1,area:true},ultimate:{hits:3,area:true}},tinh_mac:{basic:{hits:3,area:false},ultimate:{hits:1,area:true}},lang_van:{basic:{hits:3,area:false},ultimate:{hits:1,area:true}},lang_tieu:{basic:{hits:1,area:false},ultimate:{hits:1,area:true}}};
+  const AUTHORED_KITS={khaos:{basic:{hits:1,area:false},ultimate:{hits:2,area:true}},van_phong:{basic:{hits:1,area:false},ultimate:{hits:1,area:true}},nguyet_diep:{basic:{hits:1,area:true},ultimate:{hits:3,area:true}},tinh_mac:{basic:{hits:3,area:false},ultimate:{hits:1,area:true}},lang_van:{basic:{hits:3,area:false},ultimate:{hits:1,area:true}},lang_tieu:{basic:{hits:1,area:false},ultimate:{hits:1,area:true}},lang_nguyet:{basic:{hits:1,area:false},ultimate:{hits:1,area:true}}};
   const INK_SET=new Set(['inkMark','speedDown','armorDown']);
   function khaosInk(actor,target){
     mark(actor,target,'inkMark',0,{turns:3,stack:true,maxStacks:3,polarity:'debuff',iconId:'inkMark'});
@@ -319,6 +319,89 @@ export function createSplusMechanics(options={}) {
         }
         emit('loiTruong',actor,actor,{enemies:all.length});
       }
+    },
+    // Lăng Nguyệt (scaffold): default rule 110% / 210% elemental damage split over the hits.
+    // Write this hero's special mechanics HERE and extend tests/lang-nguyet.test.mjs.
+    // Lăng Nguyệt (Phong Linh Cung Thủ) — kit chuẩn hoá 2026-10-23: Phong Khắc 3 tầng (-12% giáp/tầng),
+    // đòn thường 110% xuyên 20% giáp, bạo kích đẩy lùi lượt, tuyệt kỹ 210% toàn địch + 1 tầng + -25% tốc 2 hiệp.
+    // Tật Phong Xạ (bắn truy kích 80% + 10 Nộ) bắn ngay khi mục tiêu đủ 3 tầng — engine chưa có hook "đồng đội đánh",
+    // nên cò bắn tại chính thời điểm đủ tầng.
+    lang_nguyet(actor,target,cast,index){
+      const MAX=3;
+      const crit=()=>{for(let i=events.length-1;i>=0;i--){const e=events[i];if(e.type==='damage'&&e.sourceId===actor.id&&!e.secondary)return !!e.critical;}return false;};
+      const mark=t=>{
+        buff(actor,t,'armorDown',.12,2,{stack:true,maxStacks:MAX,iconId:'phongKhac'});
+        const st=n(status(t,'armorDown')?.stacks);
+        if(st>=MAX&&alive(t)&&alive(actor)){
+          damage(actor,t,{multiplier:.8,action:'passive',type:'elemental',forceHit:true,secondary:true,noTriggers:true});
+          energy(actor,actor,10,'lang-nguyet-passive');
+          emit('tatPhongXa',actor,t,{stacks:st});
+        }
+        return st;
+      };
+      if(cast.kind==='basic'){
+        // Xuyên Tâm: bỏ qua 20% giáp của mục tiêu
+        buff(actor,target,'armorDown',.2,1,{iconId:'xuyenTam'});
+        const dealt=damage(actor,target,{multiplier:1.1,action:'basic',type:'elemental'});
+        if(dealt>0&&alive(target)){
+          mark(target);
+          if(crit()&&alive(target))buff(actor,target,'cooldownDelay',1,1);   // bạo kích: đẩy lùi thanh hành động
+        }
+        return;
+      }
+      damage(actor,target,{multiplier:2.1/cast.hits,action:'ultimate',type:'elemental'});
+      if(!cast.langNguyetStorm){
+        cast.langNguyetStorm=true;
+        const all=foes(actor).filter(alive);
+        for(const t of all){
+          if(!alive(t))continue;
+          buff(actor,t,'speedDown',.25,2,{iconId:'phongKhac'});
+          mark(t);
+        }
+        if(alive(actor))energy(actor,actor,20,'lang-nguyet-thuan-phong');   // Thuận Phong: engine không có thanh hành động
+        emit('thuanPhong',actor,actor,{enemies:all.length});
+      }
+    },
+    lang_tieu(actor,target,cast,index){
+      const MAX=4;
+      const crit=()=>{for(let i=events.length-1;i>=0;i--){const e=events[i];if(e.type==='damage'&&e.sourceId===actor.id&&!e.secondary)return !!e.critical;}return false;};
+      const loiGiang=t=>{
+        remove(t,x=>x.type==='speedDown'&&x.sourceId===actor.id,'loi-giang');
+        damage(actor,t,{raw:Math.round(stat(actor,'atk')*1.6),type:'elemental',action:'passive',forceHit:true,noTriggers:true});
+        for(const v of adjacent(t,foes(actor)).slice(0,2))damage(actor,v,{multiplier:.8,action:'passive',type:'elemental',secondary:true,noTriggers:true});
+        if(alive(t))buff(actor,t,'stun',0,1,{iconId:'stun'});
+        if(alive(actor))energy(actor,actor,20,'lang-tieu-loi-giang');
+        emit('loiGiang',actor,t,{});
+      };
+      const mark=t=>{
+        buff(actor,t,'speedDown',.05,2,{stack:true,maxStacks:MAX,iconId:'loiAn'});
+        if(n(status(t,'speedDown')?.stacks)>=MAX&&alive(t))loiGiang(t);
+      };
+      if(cast.kind==='basic'){
+        const dealt=damage(actor,target,{multiplier:1,action:'basic',type:'elemental'});
+        if(dealt>0&&alive(target)){
+          mark(target);
+          if(crit()&&alive(target)){mark(target);if(alive(actor))energy(actor,actor,15,'lang-tieu-crit');}
+        }
+        return;
+      }
+      damage(actor,target,{multiplier:2.2/cast.hits,action:'ultimate',type:'elemental'});
+      if(!cast.langTieuStorm){
+        cast.langTieuStorm=true;
+        const all=foes(actor).filter(alive);
+        for(const t of all){
+          if(!alive(t))continue;
+          mark(t); if(alive(t))mark(t);                                  // +2 tầng ngay
+          if(alive(t))buff(actor,t,'burn',0,2,{pctAtk:.6,iconId:'loiTruong'});  // Vực Sấm Sét 2 hiệp
+        }
+        emit('loiTruong',actor,actor,{enemies:all.length});
+      }
+    },
+    // Lăng Nguyệt (scaffold): default rule 110% / 210% elemental damage split over the hits.
+    // Write this hero's special mechanics HERE and extend tests/lang-nguyet.test.mjs.
+    lang_nguyet(actor,target,cast,index){
+      const power=cast.kind==='basic'?1.1:2.1;
+      damage(actor,target,{multiplier:power/cast.hits,action:cast.kind,type:'elemental'});
     },
     tinh_mac(actor,target,cast,index){
       if(cast.kind==='basic'){
