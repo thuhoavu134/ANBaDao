@@ -23,7 +23,7 @@
   "kit": {
     "passive": {
       "name": "Song Thần Tiễn Ảnh",
-      "desc": "Mỗi đòn trúng (kể cả phản đòn) gắn 1 tầng Thủy Chú lên mục tiêu: giảm 10% tốc, tối đa 3 tầng, 2 hiệp. Đủ 3 tầng: tiêu hết tầng, đóng băng mục tiêu 1 hiệp; khi tan băng chịu thêm 120% Công. Cuối mỗi lượt của mình, Lăng Vân vào Thủ Thế: giảm 25% sát thương phải chịu và phản đòn kẻ đầu tiên đánh mình (80% Công + 1 tầng Thủy Chú), 1 lần mỗi hiệp.",
+      "desc": "Mỗi đòn đánh trúng địch — chuỗi 3 nhịp tính là MỘT đòn — hoặc mỗi lần phản đòn trúng, gắn 1 tầng Thủy Chú: giảm 10% tốc, tối đa 3 tầng, 2 hiệp. Đủ 3 tầng: tiêu hết tầng, đóng băng mục tiêu 1 hiệp; khi tan băng chịu thêm 120% Công. Cuối mỗi lượt của mình, Lăng Vân vào Thủ Thế: giảm 25% sát thương phải chịu và phản đòn kẻ đầu tiên đánh mình (80% Công + 1 tầng Thủy Chú), 1 lần mỗi hiệp.",
       "effects": [
         {
           "when": "receive",

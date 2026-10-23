@@ -40,12 +40,17 @@ test('lang_van basic: recolts 20 energy and braces (Thủ Thế) at the end of t
   assert.ok(e.events.some(x => x.type === 'thuThe'));
 });
 
-test('lang_van Thủy Chú: every landed strike soaks, and the third stack freezes in the same action', () => {
+test('lang_van Thủy Chú: the three beats count as ONE stack, so a single action does not freeze', () => {
   const e = make([H('lang_van'), H('a', 2, 0)]);
   e.act(hero, 'basic', '2:a');
-  assert.ok(e.events.some(x => x.type === 'dongBang'), 'three beats = three stacks = frozen');
-  assert.ok(e.hasStatus('2:a', 'stun'), 'frozen: the target loses the turn');
-  assert.equal(stacks(e, '2:a'), 0, 'the stacks are spent on the freeze');
+  assert.equal(stacks(e, '2:a'), 1, 'one stack per action, not one per beat');
+  assert.equal(e.events.filter(x => x.type === 'dongBang').length, 0, 'not frozen yet');
+  e.act(hero, 'basic', '2:a');
+  assert.equal(stacks(e, '2:a'), 2);
+  e.act(hero, 'basic', '2:a');
+  assert.ok(e.events.some(x => x.type === 'dongBang'), 'third action freezes');
+  assert.ok(e.hasStatus('2:a', 'stun'), 'frozen');
+  assert.equal(stacks(e, '2:a'), 0, 'the stacks are spent');
 });
 
 test('lang_van Đóng Băng: melting pays 120% attack when the freeze expires', () => {

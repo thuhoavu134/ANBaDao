@@ -230,8 +230,8 @@ export function createSplusMechanics(options={}) {
         const last=index===cast.hits-1, frozen=has(target,'stun');
         const dealt=damage(actor,target,{multiplier:last?.3:.35,action:'basic',type:'elemental',
           ...(last&&frozen?{critBonus:.5}:{})});
-        // every landed strike soaks the target (kit: "mỗi khi tấn công trúng kẻ địch")
-        if(dealt>0)chu(target);
+        // The three beats are ONE attack, so they soak the target once (owner: "3 nhịp nhưng chỉ tính 1 tầng").
+        if(dealt>0&&!cast.langVanSoaked){cast.langVanSoaked=true;chu(target);}
         if(last){
           const splash=adjacent(target,foes(actor)).slice(0,2);
           for(const t of splash)damage(actor,t,{multiplier:.4,action:'basic',type:'elemental',secondary:true,noTriggers:true});
