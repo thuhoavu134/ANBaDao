@@ -120,6 +120,7 @@ test('lang_van is melee: both actions close the distance (lunge) so the sprite r
   for (const action of ['basic', 'ultimate']) {
     const l = hero.battle.actions[action].lunge;
     assert.ok(l, `${action} needs lunge`);
-    assert.ok(Number(l.gap) > 0 && Number(l.gap) < 0.8, `${action} gap stays sane`);
+    // The dash happens BEFORE the animation (the runtime tweens the unit, then starts the clip).
+    assert.ok(Number(l.dashMs) >= 120 && Number(l.dashMs) <= 600, `${action} dash stays quick`);
   }
 });

@@ -11,7 +11,7 @@
 //  * Clip pages needed by an action are decoded before the engine resolves the action.
 // var + function declarations only: earlier battle code may call these hooks (reset, config,
 // draw) before this block runs, and a const would throw from its temporal dead zone.
-var authoredMotions=new Map(),authoredActions=new Set(),authoredBursts=[],authoredWarmBattles=new Set(),authoredLunges=new Map();
+var authoredMotions=new Map(),authoredActions=new Set(),authoredBursts=[],authoredWarmBattles=new Set();
 function isAuthoredHero(u){return !!(u&&AUTHORED_HEROES&&AUTHORED_HEROES[u.sourceId]);}
 function authoredDef(u){return u&&AUTHORED_HEROES&&AUTHORED_HEROES[u.sourceId]||null;}
 function authoredSpeed(){return Math.max(1,Math.min(3,Number(state.speed)||1));}
@@ -71,19 +71,24 @@ function authoredBodyFrame(def,m,elapsed){
  const progress=elapsed/(c.durationMs||1);
  return Math.min(c.frames-1,Math.floor(progress*c.frames));
 }
-// A melee hero closes the distance: while its action plays the body is drawn toward the target, then walks back to
-// its slot. Purely presentational — unit.x/y (targeting, HUD, hit maths) never move.
-function authoredLungePos(u,time){
- const g=authoredLunges.get(u.id);
- if(!g)return u;
- const el=(time-g.start)*g.speed, smooth=t=>{const k=Math.max(0,Math.min(1,t));return k*k*(3-2*k);};
- let e;
- if(el<0)return u;
- else if(el<=g.arrive)e=smooth(g.arrive>0?el/g.arrive:1);
- else if(el<=g.hold)e=1;
- else if(el<=g.back)e=1-smooth((el-g.hold)/Math.max(1,g.back-g.hold));
- else {authoredLunges.delete(u.id);return u;}
- return {x:u.x+(g.tx-u.x)*e,y:u.y+(g.ty-u.y)*e};
+// A melee hero walks up to the target BEFORE acting, the way Đinh Lỗi does: the anchor sits one formation gap in
+// front of the target (the spacing between two teammates), so the body reads as standing face to face with it.
+function authoredTeamSpacing(u){
+ // One formation gap: the typical horizontal distance between two teammates. Teammates stacked in the same column
+ // give a ~0 gap, so only real column steps count (and the median keeps one odd pair from skewing it).
+ const list=(typeof state!=='undefined'&&Array.isArray(state.units))?state.units:[];
+ const steps=[];
+ for(const m of list){if(m===u||m.team!==u.team||!Number.isFinite(m.x))continue;const d=Math.abs(m.x-u.x);if(d>24)steps.push(d);}
+ if(!steps.length)return Math.max(96,(typeof WORLD!=='undefined'?WORLD.width:600)*0.12);
+ steps.sort((a,b)=>a-b);
+ return steps[Math.floor(steps.length/2)];
+}
+function authoredMeleeAnchor(actor,target){
+ // Stand one formation gap in front of the target, never closer than ~56 px (sprites would overlap) and never
+ // further than 160 px (that would read as standing off).
+ const spacing=Math.max(56,Math.min(160,authoredTeamSpacing(actor)));
+ const forward=target.x>=actor.x?1:-1;
+ return {x:target.x-forward*spacing,y:target.y};
 }
 function drawAuthoredHero(ctx,u,time){
  warmAuthoredBattle();
@@ -94,10 +99,9 @@ function drawAuthoredHero(ctx,u,time){
  const idle=def.clips.idle,scale=authoredScale(u),mirror=u.team===TEAM_ENEMY;
  const kind=m?m.kind:'idle';
  const frame=m?authoredBodyFrame(def,m,elapsed):Math.floor(time*idle.frames/idle.durationMs)%idle.frames;
- const lp=authoredLungePos(u,time);
- let painted=authoredSprite(ctx,def,def.clips[kind]?kind:'idle',frame,lp.x,lp.y,scale,mirror);
+ let painted=authoredSprite(ctx,def,def.clips[kind]?kind:'idle',frame,u.x,u.y,scale,mirror);
  // While an action page is still decoding keep the idle pose instead of an empty slot.
- if(!painted&&kind!=='idle')painted=authoredSprite(ctx,def,'idle',Math.floor(time*idle.frames/idle.durationMs)%idle.frames,lp.x,lp.y,scale,mirror);
+ if(!painted&&kind!=='idle')painted=authoredSprite(ctx,def,'idle',Math.floor(time*idle.frames/idle.durationMs)%idle.frames,u.x,u.y,scale,mirror);
  // No opaque portrait fallback (it rendered as a white card on iPhone). While the idle page
  // is still decoding the slot shows only its HUD; pages are small enough to arrive in <1 s.
  if(!painted)window.__HV_AUTHORED_UNPAINTED=(window.__HV_AUTHORED_UNPAINTED||0)+1;
@@ -204,7 +208,7 @@ async function authoredSkipTurn(actor){
  addLog(actor.name+' bị khống chế, mất lượt.');if(typeof addFloater==='function')addFloater(actor,'MẤT LƯỢT','#ffd36e',true);
  if(checkBattleEnd())return;if(await sleep(TIMING.turnRest,battleId))void advanceTurn();
 }
-function cancelAuthoredHeroes(){if(!authoredActions)return;for(const i of authoredActions)i.abort.abort();authoredActions.clear();authoredMotions.clear();authoredLunges.clear();authoredBursts.length=0;}
+function cancelAuthoredHeroes(){if(!authoredActions)return;for(const i of authoredActions)i.abort.abort();authoredActions.clear();authoredMotions.clear();authoredBursts.length=0;}
 async function performAuthoredAction(actor,action,target,e,battleId){
  const def=authoredDef(actor),kind=action==='ultimate'?'ultimate':'basic',spec=def.battle.actions[kind];
  const speed=authoredSpeed()*(Number(def.battle.tempo?.[kind])||1);
@@ -224,18 +228,18 @@ async function performAuthoredAction(actor,action,target,e,battleId){
   authoredTrace(info,'act');
   cast=e.act(actor.id,kind,target?.id,{deferAuthored:true});if(!cast.ok){authoredTrace(info,'act-failed:'+(cast.reason||''));return;}
   info.targets=cast.targetIds;info.plan=authoredHitPlan(spec,info.targets);trace?.begin({actionId:presentationId,roundId:state.round,actorId:actor.id,targetIds:info.targets,skillId:kind,position:{x:actor.x,y:actor.y}});
-  info.start=performance.now();authoredActions.add(info);
-  // spec.lunge (hero.json): close the distance to the first target, arrive just before release, walk back after the hits.
-  if(spec.lunge&&info.targets[0]){
-   const t=getUnit(info.targets[0]);
-   if(t&&!(typeof REDUCED_MOTION!=='undefined'&&REDUCED_MOTION)){
-    const gap=Math.max(0,Math.min(.8,Number(spec.lunge.gap??.32)));
-    const lastHit=Math.max(...(spec.hits.length?spec.hits:[spec.release]));
-    authoredLunges.set(actor.id,{start:info.start,speed,tx:t.x+(actor.x-t.x)*gap,ty:t.y+(actor.y-t.y)*gap*.85,
-     arrive:Math.max(90,Number(spec.release)||200),hold:lastHit+140,
-     back:Math.max(lastHit+320,Number(spec.recovery)||1000)});
-   }
+  // Walk up to the target first, then the action animation plays from there.
+  const lungeSpec=spec.lunge,lungeTarget=lungeSpec&&info.targets[0]?getUnit(info.targets[0]):null;
+  let lungeOrigin=null;
+  if(lungeTarget){
+   const anchor=authoredMeleeAnchor(actor,lungeTarget);
+   lungeOrigin={x:actor.x,y:actor.y};
+   const dashMs=Math.max(120,Number(lungeSpec.dashMs??240));
+   authoredTrace(info,'lunge');
+   if(!await tweenUnit(actor,anchor.x,anchor.y,dashMs,battleId)){actor.x=lungeOrigin.x;actor.y=lungeOrigin.y;return;}
+   if(!current()){actor.x=lungeOrigin.x;actor.y=lungeOrigin.y;return;}
   }
+  info.start=performance.now();authoredActions.add(info);
   const duration=spec.recovery;authoredMotions.set(actor.id,{kind:spec.clip,start:info.start,speed,duration});
   setUnitState(actor,kind==='basic'?'attack':'ultimate',duration/speed);
   const title=(globalThis.SPLUS42?.catalog||[]).find(h=>h.id===actor.sourceId)?.actions?.[kind]?.name||kind;
@@ -266,7 +270,7 @@ async function performAuthoredAction(actor,action,target,e,battleId){
   if(!await wait(duration))return;
   if(typeof showActionTotal==='function')showActionTotal(Math.max(0,(Number(intelUnit(actor)?.damage)||0)-before));
   // Own action total above; keep the spaced form so action-damage-total-v1 only owns legacy/Co Nuong.
-  authoredLunges.delete(actor.id);
+  if(lungeOrigin&&state.battleId===battleId)await tweenUnit(actor,lungeOrigin.x,lungeOrigin.y,180,battleId);
   setUnitState(actor, 'idle', 800);state.currentId=null;state.locked=false;
   if(battleHasWinner()){if(!await waitForDefeatExit(battleId))return;if(checkBattleEnd()){splusStateView();return;}}
   trace?.marker('recovery',{actionId:presentationId,position:{x:actor.x,y:actor.y}});trace?.complete({actionId:presentationId,position:{x:actor.x,y:actor.y}});

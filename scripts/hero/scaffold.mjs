@@ -58,7 +58,7 @@ export async function buildHeroJson({ slug, brief, meta, prov, sfxRows, today })
   if (has('ultimate-vfx')) sfxUlt.push({ cue: `${prefix}-ultimate-vfx`, at: 'release', lead: 0 });
   if (has('ultimate-hit')) sfxUlt.push({ cue: `${prefix}-ultimate-hit`, at: 'hit' });
   // Melee heroes (duelist/striker/guardian) close the distance on every action; ranged ones stay put.
-  const lunge = ['duelist', 'striker', 'guardian'].includes(String(brief.archetype || '').toLowerCase()) ? { gap: .12 } : null;
+  const lunge = ['duelist', 'striker', 'guardian'].includes(String(brief.archetype || '').toLowerCase()) ? { dashMs: 240 } : null;
   const basic = { clip: 'basic', ...mb, sfx: sfxBasic, ...(lunge ? { lunge } : {}) };
   if (vfx['vfx-basic']) {
     if (b.kit.basic.target === 'enemy') basic.projectile = { vfx: 'vfx-basic', from: [0.55, 0.5], scale: 1.25, arc: 0, flight: Math.max(200, Math.min(500, mb.hits[0] - mb.release)) };
