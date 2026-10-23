@@ -139,7 +139,8 @@ function drawAuthoredClones(ctx,time){
   const elapsed=(time-m.start)*m.speed;
   if(elapsed<0||elapsed>=m.duration)continue;
   const frame=authoredBodyFrame(def,m,elapsed),mirror=u.team===TEAM_ENEMY;
-  for(const v of authoredCloneTargets(u))authoredSprite(ctx,def,'ultimate',frame,v.x,v.y,authoredScale(v)*authoredClipFix(def,'ultimate'),mirror);
+  // The enemy she is actually attacking already has HER standing next to it — a copy there would fight itself.
+  for(const v of authoredCloneTargets(u))if(v.id!==m.lungeId)authoredSprite(ctx,def,'ultimate',frame,v.x,v.y,authoredScale(v)*authoredClipFix(def,'ultimate'),mirror);
  }
 }
 function authoredHeroEvent(event){
@@ -268,14 +269,15 @@ async function performAuthoredAction(actor,action,target,e,battleId){
   let lungeOrigin=null;
   if(lungeTarget){
    const anchor=authoredMeleeAnchor(actor,lungeTarget);
-   lungeOrigin={x:actor.x,y:actor.y};
+   lungeOrigin={x:actor.x,y:actor.y};info.lungeTargetId=lungeTarget.id;
    const dashMs=Math.max(120,Number(lungeSpec.dashMs??240));
    authoredTrace(info,'lunge');
    if(!await tweenUnit(actor,anchor.x,anchor.y,dashMs,battleId)){actor.x=lungeOrigin.x;actor.y=lungeOrigin.y;return;}
    if(!current()){actor.x=lungeOrigin.x;actor.y=lungeOrigin.y;return;}
   }
   info.start=performance.now();authoredActions.add(info);
-  const duration=spec.recovery;authoredMotions.set(actor.id,{kind:spec.clip,start:info.start,speed,duration});
+  const duration=spec.recovery;authoredMotions.set(actor.id,{kind:spec.clip,start:info.start,speed,duration,
+   lungeId:info.lungeTargetId||null});
   setUnitState(actor,kind==='basic'?'attack':'ultimate',duration/speed);
   const title=(globalThis.SPLUS42?.catalog||[]).find(h=>h.id===actor.sourceId)?.actions?.[kind]?.name||kind;
   setStatus(actor.name+' · '+title);dom.phaseLabel.textContent=title;

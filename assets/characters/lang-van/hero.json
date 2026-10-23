@@ -86,8 +86,8 @@
   "vfxMeta": "assets/vfx/lang-van/provenance.json",
   "battle": {
     "tempo": {
-      "basic": 2.3,
-      "ultimate": 2.2
+      "basic": 3.0,
+      "ultimate": 2.4
     },
     "actions": {
       "basic": {
