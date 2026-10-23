@@ -115,7 +115,9 @@ function drawBeAnVfx(ctx,time){
    const t=age-info.release,wave=Math.min(2,Math.floor(t/800)),local=t-wave*800;
    // Each living target gets an independent seal anchored to its formation slot.
    // Reuse the authored rise/contact/rebound source section for all three hits.
-   const frame=wave===0?local/800*112:60+local/800*52;
+   // The seal drops three times (the ultimate lands three hits), so every wave replays the SAME full
+   // rise -> contact -> rebound section; waves 2-3 used to play only the tail, which read as no new drop.
+   const frame=local/800*112;
    for(const target of victims){
     if(target.hp<=0)continue;
     const targetScale=beAnScale(target),giantScale=Math.min(scale*1.45,targetScale*1.12);
