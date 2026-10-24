@@ -364,7 +364,14 @@ async function performAuthoredAction(actor,action,target,e,battleId){
   setStatus(actor.name+' · '+title);dom.phaseLabel.textContent=title;
   // Ultimate name banner (see drawAuthoredBanner): stacks the skill name over the battlefield like the reference
   // clip the owner sent - brush-ish calligraphy, off-white strong glow, no panel, fading out by itself.
-  if(kind==='ultimate'&&title&&typeof authorBanner==='function')authorBanner(title,info.start+spec.release,speed);
+  // The catalog does not always carry a display name (Bạch Y Vân Phong fell back to the raw kind), so prefer the
+  // hero definition's own kit name and only then the catalog label.
+  if(kind==='ultimate'&&typeof authorBanner==='function'){
+   const skillName=(def.kit&&def.kit.ultimate&&def.kit.ultimate.name)||title;
+   // release is measured in action time; the banner clock runs in real time, so divide by the playing speed or the
+   // name lands after the hit instead of on it.
+   if(skillName)authorBanner(skillName,info.start+spec.release/Math.max(0.2,speed),speed);
+  }
   const releaseCues=(spec.sfx||[]).filter(s=>s.at==='release'),hitCues=(spec.sfx||[]).filter(s=>s.at==='hit');
   const lead=Math.max(0,...releaseCues.map(s=>Number(s.lead)||0));
   if(!await wait(Math.max(0,spec.release-lead)))return;
