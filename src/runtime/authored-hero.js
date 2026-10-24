@@ -214,9 +214,13 @@ function drawAuthoredHeroVfx(ctx,time){
    const t=fl.t,p=Math.max(0,Math.min(1,(age-fl.from)/Math.max(1,fl.to-fl.from)));
    const bh=authoredBodyHeight(u),th=authoredBodyHeight(t),f=authoredFacing(u);
    const sx=u.x+f*bh*spec.projectile.from[0],sy=u.y-bh*spec.projectile.from[1],ex=t.x,ey=t.y-th*.5;
-   const x=sx+(ex-sx)*p,y=sy+(ey-sy)*p-bh*.25*4*p*(1-p),dx=ex-sx,dy=ey-sy;
-   const mirror=dx<0,angle=Math.atan2(dy,Math.abs(dx))*(mirror?-1:1);
-   drawAuthoredVfxClip(ctx,def,spec.projectile.vfx,0,x,y,bh*(spec.projectile.scale||1),{mirror,rotate:angle});
+   // hero.json projectile.arc: 0 = straight line (owner 2026-10-24, Lăng Tiêu "1 đường thẳng bay về phía địch").
+   // The runtime used to ignore it and always hop .25 body heights. `animate` plays the VFX clip along the flight
+   // instead of freezing frame 0.
+   const pr=spec.projectile,arcK=Number.isFinite(Number(pr.arc))?Number(pr.arc):.25;
+   const x=sx+(ex-sx)*p,y=sy+(ey-sy)*p-bh*arcK*4*p*(1-p),dx=ex-sx,dy=ey-sy;
+   const mirror=dx<0,angle=Math.atan2(dy-bh*arcK*4*(1-2*p),Math.abs(dx))*(mirror?-1:1);
+   drawAuthoredVfxClip(ctx,def,pr.vfx,pr.animate?Math.max(0,age-fl.from):0,x,y,bh*(pr.scale||1),{mirror,rotate:angle});
   }
   if(spec.area?.drop?.center&&victims.length){const a=spec.area,c=def.clips[a.vfx],fm=c?.frameMs||60,dms=Number(a.drop.ms)||380,ff=a.drop.fallFrames||[0,0],land=Number(a.drop.landFrame)||0,local=age-spec.hits[0];
    if(c&&local>=-dms&&local<=(c.frames-land)*fm){const h=Math.max(...victims.map(authoredBodyHeight)),size=h*(a.scale||1),cx=victims.reduce((v,t)=>v+t.x,0)/victims.length,gy=victims.reduce((v,t)=>v+t.y,0)/victims.length-h*.5;

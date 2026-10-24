@@ -19,6 +19,7 @@
 //   7 sfx       scripts/hero/extract_sfx.py      SFX cut from the owner clips' own audio
 //   8 scaffold  scripts/hero/scaffold.mjs        hero.json + domain module + registration + tests (brief required)
 //   9 portrait  scripts/hero-portrait-from-idle.mjs  portrait = idle frame 0
+//  9b landmark scripts/hero/portrait-landmark-check.mjs  roster card needs a reviewed face landmark (grid sheet on fail)
 //  10 build     scripts/build-static.mjs         includes HERO DOCTOR
 //  11 test      npm test                         must not add failing tests vs the cached baseline
 //  12 battle    scripts/qa-authored-battle.mjs   real battle draws the hero's atlases, no JS errors
@@ -136,7 +137,8 @@ try { briefSpec = brief && existsSync(resolve(brief)) ? JSON.parse(readFileSync(
 const parityOverride = briefSpec && briefSpec.parityOverride && Number(briefSpec.parityOverride.max) > 1.5 ? briefSpec.parityOverride : null;
 if (parityOverride) report.push({ name: 'parity-override', ok: true, sec: 0, tail: `max x${parityOverride.max}: ${parityOverride.reason || ''}` });
 step('parity', 'node', ['scripts/qa-idle-source-parity.mjs', packDir, ...(idleSrc && existsSync(idleSrc) ? [idleSrc] : []),
-  ...(parityOverride ? ['--max', String(parityOverride.max)] : [])], { tail: 5, expect: /IDLE PARITY PASS/ });
+  ...(parityOverride ? ['--max', String(parityOverride.max)] : []),
+  ...(parityOverride && parityOverride.alpha ? ['--alpha', String(parityOverride.alpha)] : [])], { tail: 5, expect: /IDLE PARITY PASS/ });
 // The idle keeps every 3rd frame of a 24 fps clip: a wrap that moves the picture much more than an ordinary packed
 // step is the hitch the owner sees at the seam ("nó bị khựng ở đoạn nối").
 step('seam', 'node', ['scripts/qa-idle-loop-seam.mjs', packDir], { tail: 4, expect: /LOOP SEAM PASS/ });
@@ -165,6 +167,8 @@ else if (!existsSync(join(root, 'assets', 'characters', slug, 'hero.json'))) {
 
 // 9..10
 step('portrait', 'node', ['scripts/hero-portrait-from-idle.mjs', slug], { tail: 1 });
+// 9b: no roster card ships without a reviewed face landmark (from Bé An on, nine heroes did and showed tiny).
+step('landmark', 'node', ['scripts/hero/portrait-landmark-check.mjs', slug], { tail: 6, expect: /LANDMARK PASS/ });
 step('build', 'node', ['scripts/build-static.mjs'], { tail: 1, expect: /HERO DOCTOR PASS/ });
 
 // 11 test gate: no NEW failing test vs the cached baseline (the baseline itself may already have older failures).
