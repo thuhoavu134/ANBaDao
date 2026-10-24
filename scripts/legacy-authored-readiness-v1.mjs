@@ -5,25 +5,12 @@ const once=(from,to)=>{if(html.split(from).length!==2)throw new Error('LEGACY_RE
 // Extend the current native atlas owner with action pins. Keep its normal
 // memory cap. A native action working set may temporarily need more on iOS:
 // Đình Lôi's three original 2x sheets total 94.92 MiB. No rescaling is added.
-// Owner 2026-10-24: idle pages of the heroes on the field are RESIDENT (pinned for the whole battle, otherwise
-// re-packed heroes flickered on iPhone). Resident bytes are added on top of the largest action lease, never
-// compared with it: with max() a 39 MiB resident set left an ultimate + VFX no room and the action failed with
-// 'Không tải đủ hình và hiệu ứng'. Without residents the budget is exactly what it was.
-once('    const cost=clip=>',`    const pins=new Map(),leases=new Map(),residents=new Map();
-    const RESIDENT_HEADROOM=16*1024*1024;
-    const residentBytes=()=>{let n=0;for(const v of residents.values())n+=v;return n};
-    const budget=()=>{const lease=Math.max(0,...leases.values()),base=Math.max(maxBytes,lease),r=residentBytes();return r?Math.max(base,r+Math.max(RESIDENT_HEADROOM,lease)):base};
-    const pinKeys=keys=>{for(const key of keys)pins.set(key,(pins.get(key)||0)+1)};
-    const unpinKeys=keys=>{for(const key of keys){const n=(pins.get(key)||1)-1;if(n)pins.set(key,n);else pins.delete(key);}};
+once('    const cost=clip=>',`    const pins=new Map(),leases=new Map();
+    const budget=()=>Math.max(maxBytes,...leases.values());
     const retain=(keys,workingBytes)=>{
       const token=Symbol('authored-action');leases.set(token,workingBytes);
-      pinKeys(keys);
-      let released=false;return ()=>{if(released)return;released=true;leases.delete(token);unpinKeys(keys);evict(0);};
-    };
-    const retainResident=(keys,residentSize)=>{
-      const token=Symbol('resident');residents.set(token,residentSize);
-      pinKeys(keys);
-      let released=false;return ()=>{if(released)return;released=true;residents.delete(token);unpinKeys(keys);evict(0);};
+      for(const key of keys)pins.set(key,(pins.get(key)||0)+1);
+      let released=false;return ()=>{if(released)return;released=true;leases.delete(token);for(const key of keys){const n=(pins.get(key)||1)-1;if(n)pins.set(key,n);else pins.delete(key);}evict(0);};
     };
     const cost=clip=>`);
 once('while(bytes+need>maxBytes){const ready=[...entries.values()].filter(e=>!e.loading)',
@@ -33,8 +20,8 @@ once('need>maxBytes||loading>=maxLoading','need>budget()||loading>=maxLoading');
 // requested admission impossible anyway. Keep the action's existing budget.
 once('const evict=need=>{while(bytes+need>budget())',
   'const evict=need=>{const reclaimable=[...entries.values()].filter(e=>!e.loading&&!pins.has(e.key)).reduce((sum,e)=>sum+e.bytes,0);if(bytes+need-budget()>reclaimable)return false;while(bytes+need>budget())');
-once('return {ensure,release,clear,inspect};','return {ensure,release,clear,inspect,retain,retainResident};');
-once('return {bytes,maxBytes,loading,entries:','return {bytes,maxBytes:budget(),configuredMaxBytes:maxBytes,residentBytes:residentBytes(),pinnedKeys:[...pins.keys()],loading,entries:');
+once('return {ensure,release,clear,inspect};','return {ensure,release,clear,inspect,retain};');
+once('return {bytes,maxBytes,loading,entries:','return {bytes,maxBytes:budget(),configuredMaxBytes:maxBytes,pinnedKeys:[...pins.keys()],loading,entries:');
 const runtime=`
   // LEGACY_AUTHORED_READINESS_V1
   const __hvLegacyAuthored=(${createLegacyAuthoredReadiness.toString()})({

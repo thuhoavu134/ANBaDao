@@ -50,29 +50,9 @@ function authoredBodyHeight(u){
 }
 function authoredFacing(u){return u.team===TEAM_ENEMY?-1:1;}
 // Decode everything the side can need before it is needed: idle/hit/fall pages and all SFX cues.
-// Owner 2026-10-24: every re-packed hero flickered all battle long on iPhone. WebKit measurement: the shared atlas
-// cache gets ~44.7 MiB on iOS, six authored idle pages alone take ~39 MiB, so each action page evicted the idle page
-// of a hero standing on the field; the next frame reloaded it and skipped the draw while it decoded (idle pages
-// reloaded 2-5 times in 20 s, 1-2 frames lost each time). Pin the idle pages of every authored hero in the battle
-// through the shared cache's retain() and lease room for them plus the action pages; action pages still rotate.
-let authoredIdleRelease=null;
-const AUTHORED_ACTION_HEADROOM=16*1024*1024;
-function pinAuthoredIdle(defs){
- try{authoredIdleRelease?.();}catch(_){}
- authoredIdleRelease=null;
- const cache=authoredCache();if(!cache||typeof cache.retain!=='function')return;
- const keys=[];let bytes=0;
- for(const d of defs){const c=d&&d.clips&&d.clips.idle;if(!c)continue;
-  for(const pg of c.pages){keys.push('authored:'+pg.src);bytes+=(pg.atlasWidth||pg.cols*c.cellW)*(pg.atlasHeight||pg.rows*c.cellH)*4;}}
- if(!keys.length)return;
- // retainResident adds these bytes on top of whatever an action leases; plain retain() would only raise the cap to
- // max(idle, action) and starve the action (owner saw 'Không tải đủ hình và hiệu ứng' on the PR preview).
- authoredIdleRelease=typeof cache.retainResident==='function'?cache.retainResident(keys,bytes):cache.retain(keys,bytes+AUTHORED_ACTION_HEADROOM);
-}
 function warmAuthoredBattle(){
  const battleId=state.battleId;if(authoredWarmBattles.has(battleId))return;authoredWarmBattles.add(battleId);
  const defs=[...new Set(units.filter(isAuthoredHero).map(u=>u.sourceId))].map(id=>AUTHORED_HEROES[id]);
- pinAuthoredIdle(defs);
  for(const d of defs)authoredPage(d,'idle',0);
  const cues=[...new Set(defs.flatMap(d=>d.sfxCues))];
  for(const cue of cues)void window.HonVietSfx?.prepare?.(cue,{timeoutMs:8000});
@@ -248,7 +228,7 @@ function drawAuthoredBanner(ctx,time){
   if(age<0)continue;
   if(!b.spoken){
    b.spoken=true;
-   if(state.sound&&!__hvIsSkipping())void window.HonVietSfx?.play('ulti-name',{group:'combat',playbackRate:1,maxDelayMs:200});
+   if(state.sound&&!(typeof __hvIsSkipping==='function'&&__hvIsSkipping()))void window.HonVietSfx?.play('ulti-name',{group:'combat',playbackRate:1,maxDelayMs:200});
   }
   const W=ctx.canvas.width,H=ctx.canvas.height;
   // The box never reaches the heroes: its bottom stops above the highest head on screen (with the HP bar),
