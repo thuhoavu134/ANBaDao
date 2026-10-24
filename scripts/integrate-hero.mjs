@@ -137,7 +137,8 @@ try { briefSpec = brief && existsSync(resolve(brief)) ? JSON.parse(readFileSync(
 const parityOverride = briefSpec && briefSpec.parityOverride && Number(briefSpec.parityOverride.max) > 1.5 ? briefSpec.parityOverride : null;
 if (parityOverride) report.push({ name: 'parity-override', ok: true, sec: 0, tail: `max x${parityOverride.max}: ${parityOverride.reason || ''}` });
 step('parity', 'node', ['scripts/qa-idle-source-parity.mjs', packDir, ...(idleSrc && existsSync(idleSrc) ? [idleSrc] : []),
-  ...(parityOverride ? ['--max', String(parityOverride.max)] : [])], { tail: 5, expect: /IDLE PARITY PASS/ });
+  ...(parityOverride ? ['--max', String(parityOverride.max)] : []),
+  ...(parityOverride && parityOverride.alpha ? ['--alpha', String(parityOverride.alpha)] : [])], { tail: 5, expect: /IDLE PARITY PASS/ });
 // The idle keeps every 3rd frame of a 24 fps clip: a wrap that moves the picture much more than an ordinary packed
 // step is the hitch the owner sees at the seam ("nó bị khựng ở đoạn nối").
 step('seam', 'node', ['scripts/qa-idle-loop-seam.mjs', packDir], { tail: 4, expect: /LOOP SEAM PASS/ });
