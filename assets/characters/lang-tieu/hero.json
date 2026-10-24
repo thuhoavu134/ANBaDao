@@ -85,7 +85,8 @@
           ],
           "scale": 1.25,
           "arc": 0,
-          "flight": 400
+          "flight": 400,
+          "animate": true
         },
         "impact": {
           "vfx": "vfx-basic",

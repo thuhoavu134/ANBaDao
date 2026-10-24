@@ -134,7 +134,8 @@
       "batQuai": {
         "sfx": "lang-chan-passive"
       }
-    }
+    },
+    "drawOnTop": true
   },
   "sfx": {
     "lang-chan-basic": "lang-chan/basic.wav",
