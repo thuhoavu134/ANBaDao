@@ -209,49 +209,35 @@ try{document.fonts?.load('700 64px "HV Brush"').catch(()=>{});}catch(_){}
  if(authoredBanners.length>6)authoredBanners.shift();
 }
 function drawAuthoredBanner(ctx,time){
+ // Owner 2026-10-24: keep the name inside the HUD strip (next to HIỆP x/15) so the fight stays visible, and drop the
+ // full-screen version that used to sit over the battlefield. The wave still runs on this clock, so the label and the
+ // cue stay lined up with the release.
  if(typeof REDUCED_MOTION!=='undefined'&&REDUCED_MOTION){authoredBanners.length=0;return;}
  for(let i=authoredBanners.length-1;i>=0;i--){
   const b=authoredBanners[i];
   if(b.battleId!==state.battleId){authoredBanners.splice(i,1);continue;}
-  const age=(time-b.start)*b.speed,total=BANNER_STAGGER*b.lines.length+BANNER_IN+BANNER_HOLD+BANNER_OUT;
-  if(age>total){authoredBanners.splice(i,1);continue;}
+  const total=BANNER_STAGGER*b.lines.length+BANNER_IN+BANNER_HOLD+BANNER_OUT;
+  const age=(time-b.start)*b.speed;
+  if(age>total){
+   authoredBanners.splice(i,1);
+   const el=document.getElementById('phaseLabel');
+   if(el&&el.dataset.hvUlti==='1'){el.textContent=b.previous||el.textContent;delete el.dataset.hvUlti;el.classList.remove('hv-ulti-name');}
+   continue;
+  }
   if(age<0)continue;
-  // The name has its own sound (owner 2026-10-24): it fires exactly when the first line appears, not at the cast.
   if(!b.spoken){
    b.spoken=true;
    if(state.sound&&!__hvIsSkipping())void window.HonVietSfx?.play('ulti-name',{group:'combat',playbackRate:1,maxDelayMs:200});
+   const el=document.getElementById('phaseLabel');
+   if(el){
+    if(el.dataset.hvUlti!=='1')b.previous=el.textContent;
+    el.textContent=b.lines.join(' ');
+    el.dataset.hvUlti='1';
+    el.classList.remove('hv-ulti-name');
+    void el.offsetWidth;              // restart the animation when two ultimates chain
+    el.classList.add('hv-ulti-name');
+   }
   }
-  const W=ctx.canvas.width,H=ctx.canvas.height;
-  const size=Math.max(18,Math.min(H*0.1,W/(Math.max(...b.lines.map(l=>l.length))*0.6)));
-  const lh=size*1.0,blockH=lh*b.lines.length;
-  const cx=W*0.5,top=H*0.14;
-  const outAlpha=age>total-BANNER_OUT?Math.max(0,1-(age-(total-BANNER_OUT))/BANNER_OUT):1;
-  ctx.save();
-  // The battle canvas carries the camera transform (scale/translate) when units are drawn; text must be placed in
-  // screen pixels or it lands outside the viewport (that is why the banner was invisible while it was being drawn).
-  ctx.setTransform(1,0,0,1,0,0);
-  ctx.textAlign='center';ctx.textBaseline='middle';
-  ctx.font=`700 ${size}px "HV Brush", "Times New Roman", Georgia, serif`;
-  b.lines.forEach((line,idx)=>{
-   const local=age-idx*BANNER_STAGGER;
-   if(local<0)return;
-   const a=Math.min(1,local/BANNER_IN)*outAlpha;
-   const rise=(1-Math.min(1,local/BANNER_IN))*(-size*0.28);
-   const y=top+idx*lh+lh*0.5+rise;
-   ctx.globalAlpha=a;
-   // dark halo + stroke first: the battlefield behind the name is often a bright VFX, and the reference clip reads
-   // its calligraphy on black.
-   ctx.shadowColor='rgba(6,8,12,0.9)';ctx.shadowBlur=size*0.34;
-   ctx.lineWidth=Math.max(3,size*0.10);ctx.strokeStyle='rgba(6,8,12,0.92)';ctx.lineJoin='round';ctx.miterLimit=2;
-   ctx.strokeText(line,cx,y);
-   ctx.fillStyle='rgba(6,8,12,0.55)';
-   ctx.fillText(line,cx,y);
-   // then the ink and its soft glow
-   ctx.shadowColor='rgba(255,250,235,0.85)';ctx.shadowBlur=size*0.42;
-   ctx.fillStyle='rgba(252,248,238,1)';
-   ctx.fillText(line,cx,y);
-  });
-  ctx.restore();
  }
 }
 function drawAuthoredHeroVfx(ctx,time){
