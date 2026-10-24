@@ -258,34 +258,8 @@ function drawAuthoredBanner(ctx,time){
   // The battle canvas carries the camera transform while units are drawn; the box is in screen pixels.
   ctx.setTransform(1,0,0,1,0,0);
   ctx.textAlign='center';ctx.textBaseline='middle';
-  // Owner 2026-10-25: 'cho nó có nền là sương đen để người chơi dễ nhìn rõ chữ hơn'. A soft dark mist sits behind the
-  // whole block: three nested radial gradients at low alpha read as smoke on the canvas (no ctx.filter, which older
-  // Safari lacks). It fades in with the first word and out with the last.
-  const mistIn=Math.min(1,age/(BANNER_IN*2.2));
-  const mx0=bx0-W*.02,mx1=bx1+W*.02,my0=by0-size*.75,my1=by1+size*.75;
-  const mcx=(mx0+mx1)/2,mcy=(my0+my1)/2,mrx=(mx1-mx0)/2,mry=(my1-my0)/2;
-  ctx.save();
-  ctx.globalAlpha=1*mistIn*outAlpha;
-  ctx.translate(mcx,mcy);ctx.scale(1,Math.max(.4,mry/mrx));
-  // dense core + two haloes: at these alphas it reads as smoke, not as a panel edge
-  for(const [stop,alpha] of [[1,.62],[.86,.58],[.68,.6],[.5,.54]]){
-   const g=ctx.createRadialGradient(0,0,mrx*.1,0,0,mrx*stop);
-   g.addColorStop(0,`rgba(3,6,9,${alpha})`);
-   g.addColorStop(.6,`rgba(3,6,9,${alpha*.82})`);
-   g.addColorStop(1,'rgba(3,6,9,0)');
-   ctx.fillStyle=g;
-   ctx.beginPath();ctx.arc(0,0,mrx*stop,0,Math.PI*2);ctx.fill();
-  }
-  // a few drifting puffs so the edge is irregular, like ink smoke
-  const puffs=[[-.55,-.35,.34],[.52,-.3,.3],[-.3,.42,.32],[.38,.3,.26],[0,-.55,.24]];
-  for(const [px,py,pr] of puffs){
-   const g=ctx.createRadialGradient(mrx*px,mrx*py,mrx*pr*.15,mrx*px,mrx*py,mrx*pr);
-   g.addColorStop(0,'rgba(3,6,9,.38)');
-   g.addColorStop(1,'rgba(3,6,9,0)');
-   ctx.fillStyle=g;
-   ctx.beginPath();ctx.arc(mrx*px,mrx*py,mrx*pr,0,Math.PI*2);ctx.fill();
-  }
-  ctx.restore();
+  // Owner 2026-10-25 (b): 'sau chữ tuyệt kỹ ko để sương đen nữa' - the mist is gone; the text keeps its
+  // heavier outline + double fill, which is what makes it readable.
   ctx.font=`400 ${size}px "HV Brush", "Times New Roman", Georgia, serif`;
   ctx.lineJoin='round';ctx.miterLimit=2;
   let n=0;
