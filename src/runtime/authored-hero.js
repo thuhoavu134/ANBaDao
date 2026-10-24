@@ -205,7 +205,7 @@ try{document.fonts?.load('700 64px "HV Brush"').catch(()=>{});}catch(_){}
  // "A — B" reads as two phrases; the dash is a separator, not a line of its own.
  const phrases=String(text).split(/\s*[—–-]\s*/).filter(x=>x.trim());
  const lines=(phrases.length>1?phrases.join(' '):phrases[0]||'').split(/\s+/).filter(Boolean).slice(0,6);
- authoredBanners.push({lines,start,speed:Math.max(.4,Number(speed)||1),battleId:state.battleId});
+ authoredBanners.push({lines,start,speed:Math.max(.4,Number(speed)||1),battleId:state.battleId,spoken:false});
  if(authoredBanners.length>6)authoredBanners.shift();
 }
 function drawAuthoredBanner(ctx,time){
@@ -216,6 +216,11 @@ function drawAuthoredBanner(ctx,time){
   const age=(time-b.start)*b.speed,total=BANNER_STAGGER*b.lines.length+BANNER_IN+BANNER_HOLD+BANNER_OUT;
   if(age>total){authoredBanners.splice(i,1);continue;}
   if(age<0)continue;
+  // The name has its own sound (owner 2026-10-24): it fires exactly when the first line appears, not at the cast.
+  if(!b.spoken){
+   b.spoken=true;
+   if(state.sound&&!__hvIsSkipping())void window.HonVietSfx?.play('ulti-name',{group:'combat',playbackRate:1,maxDelayMs:200});
+  }
   const W=ctx.canvas.width,H=ctx.canvas.height;
   const size=Math.max(18,Math.min(H*0.1,W/(Math.max(...b.lines.map(l=>l.length))*0.6)));
   const lh=size*1.0,blockH=lh*b.lines.length;
