@@ -258,6 +258,34 @@ function drawAuthoredBanner(ctx,time){
   // The battle canvas carries the camera transform while units are drawn; the box is in screen pixels.
   ctx.setTransform(1,0,0,1,0,0);
   ctx.textAlign='center';ctx.textBaseline='middle';
+  // Owner 2026-10-25: 'cho nó có nền là sương đen để người chơi dễ nhìn rõ chữ hơn'. A soft dark mist sits behind the
+  // whole block: three nested radial gradients at low alpha read as smoke on the canvas (no ctx.filter, which older
+  // Safari lacks). It fades in with the first word and out with the last.
+  const mistIn=Math.min(1,age/(BANNER_IN*2.2));
+  const mx0=bx0-W*.02,mx1=bx1+W*.02,my0=by0-size*.75,my1=by1+size*.75;
+  const mcx=(mx0+mx1)/2,mcy=(my0+my1)/2,mrx=(mx1-mx0)/2,mry=(my1-my0)/2;
+  ctx.save();
+  ctx.globalAlpha=1*mistIn*outAlpha;
+  ctx.translate(mcx,mcy);ctx.scale(1,Math.max(.4,mry/mrx));
+  // dense core + two haloes: at these alphas it reads as smoke, not as a panel edge
+  for(const [stop,alpha] of [[1,.62],[.86,.58],[.68,.6],[.5,.54]]){
+   const g=ctx.createRadialGradient(0,0,mrx*.1,0,0,mrx*stop);
+   g.addColorStop(0,`rgba(3,6,9,${alpha})`);
+   g.addColorStop(.6,`rgba(3,6,9,${alpha*.82})`);
+   g.addColorStop(1,'rgba(3,6,9,0)');
+   ctx.fillStyle=g;
+   ctx.beginPath();ctx.arc(0,0,mrx*stop,0,Math.PI*2);ctx.fill();
+  }
+  // a few drifting puffs so the edge is irregular, like ink smoke
+  const puffs=[[-.55,-.35,.34],[.52,-.3,.3],[-.3,.42,.32],[.38,.3,.26],[0,-.55,.24]];
+  for(const [px,py,pr] of puffs){
+   const g=ctx.createRadialGradient(mrx*px,mrx*py,mrx*pr*.15,mrx*px,mrx*py,mrx*pr);
+   g.addColorStop(0,'rgba(3,6,9,.38)');
+   g.addColorStop(1,'rgba(3,6,9,0)');
+   ctx.fillStyle=g;
+   ctx.beginPath();ctx.arc(mrx*px,mrx*py,mrx*pr,0,Math.PI*2);ctx.fill();
+  }
+  ctx.restore();
   ctx.font=`400 ${size}px "HV Brush", "Times New Roman", Georgia, serif`;
   ctx.lineJoin='round';ctx.miterLimit=2;
   let n=0;
@@ -270,15 +298,14 @@ function drawAuthoredBanner(ctx,time){
     const k=Math.min(1,local/BANNER_IN),a=k*outAlpha;
     const y=top+lineH*(li+.5)-(1-k)*size*.25;
     ctx.globalAlpha=a;
-    // soft dark halo keeps it readable over the roof tiles without a panel
-    ctx.shadowColor='rgba(10,6,2,.85)';ctx.shadowBlur=size*.32;
-    ctx.lineWidth=Math.max(2,size*.09);ctx.strokeStyle='rgba(20,10,2,.88)';
+    // Owner 2026-10-25: 'cho nét chữ đậm hơn chút'. At this size the brush face is thin, so the outline is heavier
+    // and the ink itself is stroked as well as filled: bolder letters, same brush edge.
+    ctx.shadowColor='rgba(8,5,2,.9)';ctx.shadowBlur=size*.36;
+    ctx.lineWidth=Math.max(2,size*.055);ctx.strokeStyle='rgba(12,6,2,.92)';
     ctx.strokeText(word,cx,y);
-    // cream ink with a soft warm glow, as in the reference; the brush face is thinner than the sample so a
-    // stroke in the ink colour thickens it (faux bold) without changing the letter shapes
-    ctx.shadowColor='rgba(255,236,190,.7)';ctx.shadowBlur=size*.4;
-    ctx.lineWidth=Math.max(1,size*.045);ctx.strokeStyle='#f4ecd6';ctx.strokeText(word,cx,y);
-    ctx.fillStyle='#f8f2e2';ctx.fillText(word,cx,y);
+    ctx.shadowColor='rgba(255,236,190,.75)';ctx.shadowBlur=size*.42;
+    ctx.lineWidth=Math.max(1,size*.032);ctx.strokeStyle='#f6efdb';ctx.strokeText(word,cx,y);
+    ctx.fillStyle='#fdf9ee';ctx.fillText(word,cx,y);ctx.fillText(word,cx,y);
    });
   });
   ctx.restore();
