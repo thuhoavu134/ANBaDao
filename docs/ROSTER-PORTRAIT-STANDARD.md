@@ -25,3 +25,15 @@ Tịch Dao dùng `roster-open-eyes.webp`, sinh bởi `buildTichDaoCampaignAssets
 - Chạy thêm suite Tịch Dao: tổng 13/15 PASS; 2 case bị chặn bởi thiếu `assets/audio/sfx/tich-dao/blink.wav` và `dist/battle.html`. Không coi suite đầy đủ đã xanh.
 - Full build BLOCKED: thiếu `asset-sources/luc-anh/idle-rgba-v1-atlas.webp.part01` trong workspace phục hồi. Browser desktop/mobile, physical Safari và deployment chưa kiểm. Chưa chứng nhận độ nét khi phóng nguồn role độ phân giải thấp hoặc va chạm huy hiệu ở mọi viewport.
 - Trước merge: lấy ảnh Thầy Mo, đo/kiểm landmark; chạy full build/test và QA màn thật, chụp/đọc ảnh sau đổi layout. Cần owner duyệt merge theo AGENTS.
+
+## Cập nhật 24/10/2026 — tướng từ Bé An trở đi
+
+- Đo lại trên lưới 1% của chính file đang dùng: Bé An `avatar.webp` [54,45,9] (số cũ 23 sai bề rộng mặt, thẻ hiện cả người nhỏ);
+  9 tướng pipeline (Vân Phong, Khaos, Nguyệt Diệp, Tịnh Mặc, Lăng Vân, Lăng Tiêu, Lăng Nguyệt, Tiểu Linh, Lăng Chân) khoá theo
+  `portrait-*.webp`. Vân Phong, Khaos, Tịnh Mặc bịt mắt authored: dùng tâm dải băng.
+- `rosterPortraitLandmark()` tra đường dẫn chính xác trước, sau đó mới tra theo mẫu `portrait-*.webp`; cả style lẫn cờ
+  `data-portrait-reviewed` đi qua hàm này.
+- Đã chụp thẻ thật trên màn Tướng: cả 10 thẻ `reviewed=true`, mặt cùng vị trí và cùng cỡ với các tướng cũ.
+- Pipeline có cổng 9b landmark để tướng sau không lặp lại. Còn thiếu landmark từ trước: Thầy Mo (`master-reference-v1.png`),
+  Đinh Lôi (`owner-portrait.webp`).
+

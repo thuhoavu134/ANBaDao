@@ -1,7 +1,7 @@
 {
   "schema": "authored-hero-assets/v1",
-  "assetRevision": "kiemthe-sixstate-20261023-080750-uniform",
-  "source": "kiemthe-animation-packager 20261023-080750 (--framing uniform, validate_package PASS)",
+  "assetRevision": "kiemthe-sixstate-20261024-084005-uniform",
+  "source": "kiemthe-animation-packager 20261024-084005 (--framing uniform, validate_package PASS)",
   "clips": {
     "idle": {
       "frames": 30,
@@ -12,7 +12,7 @@
       "pageFrames": 30,
       "pages": [
         {
-          "file": "idle-0-bb6cb621.webp",
+          "file": "idle-0-c0f73d47.webp",
           "frames": 30,
           "cols": 8,
           "rows": 4,
@@ -68,7 +68,7 @@
       "pageFrames": 18,
       "pages": [
         {
-          "file": "run-0-b8a10829.webp",
+          "file": "run-0-f6081403.webp",
           "frames": 18,
           "cols": 6,
           "rows": 3,
@@ -101,7 +101,7 @@
       "pivot": 120,
       "foot": 202.8,
       "body": 194,
-      "scaleFix": 1.0
+      "scaleFix": 1.0435
     },
     "basic": {
       "frames": 18,
@@ -112,7 +112,7 @@
       "pageFrames": 18,
       "pages": [
         {
-          "file": "basic-0-c7fe811b.webp",
+          "file": "basic-0-c5cc0035.webp",
           "frames": 18,
           "cols": 4,
           "rows": 5,
@@ -145,7 +145,7 @@
       "pivot": 212,
       "foot": 202.8,
       "body": 194,
-      "scaleFix": 1.1092
+      "scaleFix": 1.1163
     },
     "ultimate": {
       "frames": 18,
@@ -156,7 +156,7 @@
       "pageFrames": 18,
       "pages": [
         {
-          "file": "ultimate-0-e0586ce6.webp",
+          "file": "ultimate-0-110bb440.webp",
           "frames": 18,
           "cols": 5,
           "rows": 4,
@@ -189,7 +189,7 @@
       "pivot": 196,
       "foot": 202.8,
       "body": 194,
-      "scaleFix": 1.1353
+      "scaleFix": 1.0909
     },
     "hit": {
       "frames": 18,
@@ -200,7 +200,7 @@
       "pageFrames": 18,
       "pages": [
         {
-          "file": "hit-0-bf01213d.webp",
+          "file": "hit-0-2b086161.webp",
           "frames": 18,
           "cols": 6,
           "rows": 3,
@@ -233,7 +233,7 @@
       "pivot": 120,
       "foot": 202.8,
       "body": 194,
-      "scaleFix": 1.0
+      "scaleFix": 1.0492
     },
     "fall-die": {
       "frames": 18,
@@ -244,7 +244,7 @@
       "pageFrames": 18,
       "pages": [
         {
-          "file": "fall-die-0-9ef32cf6.webp",
+          "file": "fall-die-0-4141aab8.webp",
           "frames": 18,
           "cols": 6,
           "rows": 3,
@@ -277,15 +277,15 @@
       "pivot": 120,
       "foot": 202.8,
       "body": 194,
-      "scaleFix": 1.0
+      "scaleFix": 1.1098
     }
   },
   "budget": {
     "reason": "iOS battle working set: idle page <= 8 MiB, any page <= 12 MiB (hero:doctor)",
-    "date": "2026-10-23"
+    "date": "2026-10-24"
   },
   "detail": {
-    "file": "detail-56e8b689.webp",
+    "file": "detail-6bfedffb.webp",
     "frames": 30,
     "cols": 8,
     "cellW": 480,

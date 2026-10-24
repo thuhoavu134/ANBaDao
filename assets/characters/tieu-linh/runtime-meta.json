@@ -1,7 +1,7 @@
 {
   "schema": "authored-hero-assets/v1",
-  "assetRevision": "kiemthe-sixstate-20261024-004427-uniform",
-  "source": "kiemthe-animation-packager 20261024-004427 (--framing uniform, validate_package PASS)",
+  "assetRevision": "kiemthe-sixstate-20261024-095905-uniform",
+  "source": "kiemthe-animation-packager 20261024-095905 (--framing uniform, validate_package PASS)",
   "clips": {
     "idle": {
       "frames": 30,
@@ -12,7 +12,7 @@
       "pageFrames": 30,
       "pages": [
         {
-          "file": "idle-0-4aecc86a.webp",
+          "file": "idle-0-5fe4001f.webp",
           "frames": 30,
           "cols": 7,
           "rows": 5,
@@ -56,7 +56,8 @@
       ],
       "pivot": 132,
       "foot": 207.1,
-      "body": 202
+      "body": 202,
+      "scaleFix": 1.0
     },
     "run": {
       "frames": 18,
@@ -67,7 +68,7 @@
       "pageFrames": 18,
       "pages": [
         {
-          "file": "run-0-9c76226f.webp",
+          "file": "run-0-08b67114.webp",
           "frames": 18,
           "cols": 4,
           "rows": 5,
@@ -99,7 +100,8 @@
       ],
       "pivot": 220,
       "foot": 207.1,
-      "body": 202
+      "body": 202,
+      "scaleFix": 1.1118
     },
     "basic": {
       "frames": 18,
@@ -110,7 +112,7 @@
       "pageFrames": 18,
       "pages": [
         {
-          "file": "basic-0-af73caa5.webp",
+          "file": "basic-0-fd2674e0.webp",
           "frames": 18,
           "cols": 5,
           "rows": 4,
@@ -142,7 +144,8 @@
       ],
       "pivot": 176,
       "foot": 207.1,
-      "body": 202
+      "body": 202,
+      "scaleFix": 1.0272
     },
     "ultimate": {
       "frames": 18,
@@ -153,7 +156,7 @@
       "pageFrames": 18,
       "pages": [
         {
-          "file": "ultimate-0-2064c90e.webp",
+          "file": "ultimate-0-4073820c.webp",
           "frames": 18,
           "cols": 4,
           "rows": 5,
@@ -185,7 +188,8 @@
       ],
       "pivot": 228,
       "foot": 207.1,
-      "body": 202
+      "body": 202,
+      "scaleFix": 1.125
     },
     "hit": {
       "frames": 18,
@@ -196,7 +200,7 @@
       "pageFrames": 18,
       "pages": [
         {
-          "file": "hit-0-e9f07088.webp",
+          "file": "hit-0-dfbd8c86.webp",
           "frames": 18,
           "cols": 4,
           "rows": 5,
@@ -228,7 +232,8 @@
       ],
       "pivot": 232,
       "foot": 207.1,
-      "body": 202
+      "body": 202,
+      "scaleFix": 1.0053
     },
     "fall-die": {
       "frames": 18,
@@ -239,7 +244,7 @@
       "pageFrames": 18,
       "pages": [
         {
-          "file": "fall-die-0-d1eadd24.webp",
+          "file": "fall-die-0-a283ae53.webp",
           "frames": 18,
           "cols": 6,
           "rows": 3,
@@ -271,15 +276,16 @@
       ],
       "pivot": 144,
       "foot": 207.1,
-      "body": 202
+      "body": 202,
+      "scaleFix": 1.0107
     }
   },
   "budget": {
     "reason": "iOS battle working set: idle page <= 8 MiB, any page <= 12 MiB (hero:doctor)",
-    "date": "2026-10-23"
+    "date": "2026-10-24"
   },
   "detail": {
-    "file": "detail-18f5cdea.webp",
+    "file": "detail-63e61cb6.webp",
     "frames": 30,
     "cols": 7,
     "cellW": 528,

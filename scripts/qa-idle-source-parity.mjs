@@ -18,6 +18,9 @@ const args = process.argv.slice(2);
 const packDir = args[0];
 if (!packDir) { console.error('usage: <packDir> [videoPath] [--max 1.5]'); process.exit(2); }
 const maxIdx = args.indexOf('--max');
+// --alpha: atlas mask threshold. Default 200 (solid core). A hero whose idle carries a translucent prop
+// (Lăng Nguyệt's glowing bow) measures steadier at 60; it is a per-hero value, never a blanket lowering.
+const ALPHA = Number((() => { const i = process.argv.indexOf('--alpha'); return i > 0 ? process.argv[i + 1] : 200; })());
 const MAX = maxIdx >= 0 ? Number(args[maxIdx + 1]) : 1.5;
 const SLACK_PX = 2;
 const meta = JSON.parse(readFileSync(join(packDir, 'idle', 'metadata.json'), 'utf8'));
@@ -61,6 +64,8 @@ function largestSpan(isInk, width, height, GRID = 1) {
     if (!best || area > best.area) best = { area, l, r };
   }
   if (!best) return [0, 0, 0];
+  // Solid core (alpha>200): a feathered edge makes the bbox wobble with the mask instead of the character (Lăng Tiêu
+  // measured x2.3 of 'shake' on a pack whose alpha was byte-identical to the previous, passing one).
   // The hero can be split into several blobs (body + a big glowing bow). Taking only the largest made the measurement
   // hop between them from frame to frame (Lăng Nguyệt: atlas "moved x19" while the pack was actually still). Union
   // every blob that is at least 15% of the largest; tiny strays stay ignored.
@@ -77,7 +82,7 @@ async function boxAtlas() {
     const ox = (i % cols) * cellW, oy = Math.floor(i / cols) * cellH;
     // Solid body only: semi-transparent smoke / petals over a green screen still read as green on the video side,
     // so counting them on the atlas side compared two different things (idle_7: left edge x3.0 from smoke alone).
-    return largestSpan((x, y) => data[((oy + y) * info.width + ox + x) * 4 + 3] > 60, cellW, cellH, 1);
+    return largestSpan((x, y) => data[((oy + y) * info.width + ox + x) * 4 + 3] > ALPHA, cellW, cellH, 1);
   });
 }
 

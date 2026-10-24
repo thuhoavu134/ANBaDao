@@ -47,7 +47,7 @@
     }
   },
   "art": {
-    "portrait": "assets/characters/lang-tieu/portrait-df50026e.webp"
+    "portrait": "assets/characters/lang-tieu/portrait-58e340a1.webp"
   },
   "clipsMeta": "runtime-meta.json",
   "vfxBase": "assets/vfx/lang-tieu/",
@@ -85,7 +85,8 @@
           ],
           "scale": 1.25,
           "arc": 0,
-          "flight": 400
+          "flight": 400,
+          "animate": true
         },
         "impact": {
           "vfx": "vfx-basic",

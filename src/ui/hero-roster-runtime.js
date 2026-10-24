@@ -61,7 +61,7 @@
         const starN = Math.max(0, Math.min(5, card.stars || 0));
         const stars = Array.from({ length: 5 }, (_, i) => '<i class="' + (i < starN ? 'on' : '') + '">★</i>').join('');
         return `<button class="v4-card r-${grade === 'S+' ? 'splus' : grade.toLowerCase()} ${card.owned ? '' : 'is-locked'}" data-hero-id="${esc(card.id)}" aria-label="${esc(card.name)}${card.owned ? ', cấp ' + card.level + ', ' + card.stars + ' sao, lực chiến ' + card.power : ', chưa sở hữu'}">
-        <div class="v4-art"><img src="${esc(card.portrait)}" style="${rosterPortraitStyle(card.portrait)}" data-portrait-reviewed="${Boolean(ROSTER_PORTRAIT_LANDMARKS[card.portrait])}" alt="" loading="lazy" decoding="async"></div>
+        <div class="v4-art"><img src="${esc(card.portrait)}" style="${rosterPortraitStyle(card.portrait)}" data-portrait-reviewed="${Boolean(rosterPortraitLandmark(card.portrait))}" alt="" loading="lazy" decoding="async"></div>
         <div class="v4-grade"><img src="assets/ui/heroes/grade-${gradeFile}.png" alt="${grade}"></div><div class="v4-level">${card.owned ? 'Lv.' + card.level : '🔒'}</div>
         <div class="v4-veil">
           <div class="v4-element">${card.element === 'soul' ? '🎭' : (HE[card.element]?.ic || '')}</div>

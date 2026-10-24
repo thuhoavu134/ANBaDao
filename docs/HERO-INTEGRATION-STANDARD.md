@@ -490,3 +490,26 @@ dùng **cùng độ mịn** (atlas đã ở tỉ lệ pack). Lăng Vân (đã PA
 **Kiểm:** so atlas với video gốc trên cùng các frame loop — tổng dao động mép trái/phải/tâm thân của atlas không được vượt quá ~1.5 lần video. Script: `C:\lt\tmp\jitter-any.py <video idle> <pack cũ> <pack mới>`.
 
 **Màn chi tiết** vẽ idle y hệt trận (`authoredBodyFrame`: nhịp đều, một anchor cố định). Không bù vị trí chân, không đổi nhịp từng frame ở khâu render.
+
+## Màu tướng phải giữ đúng clip gốc (bắt buộc từ 2026-10-24)
+
+Owner thấy các tướng gần đây "hút màu xong rất nhợt nhạt". Nguyên nhân đã đo: packer gọi Blender 5.1 với `--factory-startup`
+mà không đặt view transform, nên Blender dùng **AgX** — nó tone lại mọi pixel. Cùng một frame Lăng Chân: AgX lệch 8.6/255 so với
+clip gốc (độ sáng -24%, tương phản -21%); **Standard** chỉ lệch 2.0/255 (kênh R, B khớp tuyệt đối).
+
+- Packer (`package_six_states.py`, `blender_script`) đặt `view_transform="Standard"`, `look="None"`, `exposure=0`, `gamma=1`.
+  Không bỏ những dòng này, không tăng saturation/contrast sau để "bù".
+- Kiểm sau mỗi lần pack: `C:/lt/.venvs/pack/Scripts/python.exe C:/lt/tmp/color-compare.py <slug> --repo <repo>` — độ sáng và
+  tương phản của idle phải nằm trong khoảng ±6% so với clip gốc.
+- Pack lại một tướng (`--allow-reuse`) sẽ ghi đè `runtime-meta.json`: phải chạy lại
+  `C:/lt/tmp/apply-scalefix.py <slug> --repo <repo>` để đo và gắn lại `scaleFix` từng clip (Tiểu Linh từng mất scaleFix vì bước này).
+
+## Ảnh đại diện màn Tướng phải có landmark mặt (bắt buộc từ 2026-10-24)
+
+Bước `portrait` sinh `portrait-<hash>.webp` = khung idle 0 toàn thân nhưng không biết mặt nằm đâu. Từ Bé An trở đi 9 tướng lên
+game không có landmark nên thẻ hiện cả người nhỏ xíu. Từ nay `integrate-hero` có bước **9b landmark**
+(`scripts/hero/portrait-landmark-check.mjs`): thiếu landmark là FAIL và sinh `docs/qa/integrate/<slug>-portrait-grid.png`
+(lưới 1% trên ảnh gốc). Đọc tâm mắt (x,y %) và bề rộng má-má (%), thêm vào `ROSTER_PORTRAIT_LANDMARKS` dạng
+`'assets/characters/<slug>/portrait-*.webp':[x,y,w]` (khoá theo mẫu vì hash đổi mỗi lần pack lại, hình dạng khung idle 0 thì không),
+rồi chạy lại. Tướng bịt mắt/đeo mặt nạ authored: lấy tâm dải băng, không vẽ thêm mắt. Duyệt bằng ảnh chụp thẻ thật trên màn Tướng.
+

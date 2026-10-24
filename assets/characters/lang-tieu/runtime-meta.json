@@ -1,7 +1,7 @@
 {
   "schema": "authored-hero-assets/v1",
-  "assetRevision": "kiemthe-sixstate-20261023-231649-uniform",
-  "source": "kiemthe-animation-packager 20261023-231649 (--framing uniform, validate_package PASS)",
+  "assetRevision": "kiemthe-sixstate-20261024-090504-uniform",
+  "source": "kiemthe-animation-packager 20261024-090504 (--framing uniform, validate_package PASS)",
   "clips": {
     "idle": {
       "frames": 30,
@@ -12,7 +12,7 @@
       "pageFrames": 30,
       "pages": [
         {
-          "file": "idle-0-d87a7f2d.webp",
+          "file": "idle-0-2c7cb439.webp",
           "frames": 30,
           "cols": 8,
           "rows": 4,
@@ -68,7 +68,7 @@
       "pageFrames": 18,
       "pages": [
         {
-          "file": "run-0-8687b1bb.webp",
+          "file": "run-0-30de9c6d.webp",
           "frames": 18,
           "cols": 6,
           "rows": 3,
@@ -112,7 +112,7 @@
       "pageFrames": 18,
       "pages": [
         {
-          "file": "basic-0-af9bcf02.webp",
+          "file": "basic-0-0691d8be.webp",
           "frames": 18,
           "cols": 6,
           "rows": 3,
@@ -156,7 +156,7 @@
       "pageFrames": 18,
       "pages": [
         {
-          "file": "ultimate-0-5062671e.webp",
+          "file": "ultimate-0-b117f690.webp",
           "frames": 18,
           "cols": 6,
           "rows": 3,
@@ -200,7 +200,7 @@
       "pageFrames": 18,
       "pages": [
         {
-          "file": "hit-0-cb0cae68.webp",
+          "file": "hit-0-9598444e.webp",
           "frames": 18,
           "cols": 5,
           "rows": 4,
@@ -244,7 +244,7 @@
       "pageFrames": 18,
       "pages": [
         {
-          "file": "fall-die-0-8ba9389b.webp",
+          "file": "fall-die-0-bd3f2f82.webp",
           "frames": 18,
           "cols": 6,
           "rows": 3,
@@ -282,10 +282,10 @@
   },
   "budget": {
     "reason": "iOS battle working set: idle page <= 8 MiB, any page <= 12 MiB (hero:doctor)",
-    "date": "2026-10-23"
+    "date": "2026-10-24"
   },
   "detail": {
-    "file": "detail-eba81748.webp",
+    "file": "detail-f557ec79.webp",
     "frames": 30,
     "cols": 8,
     "cellW": 512,

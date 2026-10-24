@@ -15,7 +15,7 @@ export const LANG_TIEU_HERO = Object.freeze({
   profileVersion: 'lang-tieu/2026-10-23-scaffold', gender: "Nam", age: "Thiếu niên",
   introduction: "Kiếm sĩ lôi điện, mỗi nhát chém gieo một ấn sét; đủ bốn ấn thì trời giáng xuống.",
   voice: Object.freeze({ lobby: "", ultimate: "Vạn Kiếp Tử Lôi Trảm!" }),
-  art: Object.freeze({ status: 'canvas-sprite-runtime-review', portrait: 'assets/characters/lang-tieu/portrait-df50026e.webp' }),
+  art: Object.freeze({ status: 'canvas-sprite-runtime-review', portrait: 'assets/characters/lang-tieu/portrait-58e340a1.webp' }),
   iconId: 'splus.lang_tieu.ultimate', passiveName: "Thiên Lôi Ấn",
   passive: Object.freeze({ id: 'lang_tieu.passive', name: "Thiên Lôi Ấn", target: 'Bản thân',
     description: "Mỗi đòn gây sát thương gắn 1 tầng Lôi Ấn (2 hiệp, tối đa 4): mỗi tầng giảm 5% tốc và tăng 8% sát thương Lôi phải chịu. Đủ 4 tầng: tiêu hết tầng, gọi Lôi Giáng — 160% Công lên mục tiêu, 80% Công lan sang địch kề, mục tiêu bị Tê Liệt 1 lượt, Lăng Tiêu hồi 20 Nộ.",
