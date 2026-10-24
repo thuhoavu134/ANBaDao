@@ -16,7 +16,7 @@ export const NGUYET_DIEP_HERO = Object.freeze({
   profileVersion: 'nguyet-diep/2026-10-20-owner-kit', gender: 'Nam', age: 'Thiếu niên',
   introduction: 'Đệ tử Võ Đang xuất hồn cầm kiếm lướt xuyên địch, tay giữ Âm Dương Linh Kính thanh tẩy tà khí cho cả đội.',
   voice: Object.freeze({ lobby: 'Âm dương có đạo, kiếm ý tự thông.', ultimate: 'Nhân Kiếm Hợp Nhất!' }),
-  art: Object.freeze({ status: 'canvas-sprite-runtime-review', portrait: 'assets/characters/nguyet-diep/portrait-be8c9ab1.webp' }),
+  art: Object.freeze({ status: 'canvas-sprite-runtime-review', portrait: 'assets/characters/nguyet-diep/portrait-468de591.webp' }),
   iconId: 'splus.nguyet_diep.ultimate', passiveName: 'Âm Dương Linh Kính',
   passive: Object.freeze({ id: 'nguyet_diep.passive', name: 'Âm Dương Linh Kính', target: '2 đồng minh yếu nhất / đang bị khống chế',
     description: 'Đầu mỗi hiệp, Linh Kính xóa tối đa 2 hiệu ứng bất lợi cho 2 đồng minh đang bị khống chế hoặc ít máu nhất. Đồng minh được thanh tẩy +15% Né tránh 1 hiệp và hồi máu bằng 60% Công của Nguyệt Diệp. Bản thân vĩnh viễn kháng 30% khống chế.',

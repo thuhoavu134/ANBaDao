@@ -6,39 +6,39 @@
     "hero_splus_van_phong",
     "van_phong"
   ],
-  "referenceBodyHeight": 142,
+  "referenceBodyHeight": 178,
   "footOffsetY": 0,
   "registration": "source-body",
   "clips": {
     "idle": {
-      "bodyHeight": 142,
+      "bodyHeight": 178,
       "footX": 120,
-      "footY": 189.7
+      "footY": 182.5
     },
     "run": {
-      "bodyHeight": 142,
+      "bodyHeight": 178,
       "footX": 120,
-      "footY": 189.7
+      "footY": 182.5
     },
     "basic": {
-      "bodyHeight": 142,
-      "footX": 120,
-      "footY": 189.7
+      "bodyHeight": 178,
+      "footX": 152,
+      "footY": 182.5
     },
     "ultimate": {
-      "bodyHeight": 142,
-      "footX": 120,
-      "footY": 189.7
+      "bodyHeight": 178,
+      "footX": 144,
+      "footY": 182.5
     },
     "hit": {
-      "bodyHeight": 142,
+      "bodyHeight": 178,
       "footX": 120,
-      "footY": 189.7
+      "footY": 182.5
     },
     "fall-die": {
-      "bodyHeight": 142,
-      "footX": 120,
-      "footY": 189.7
+      "bodyHeight": 178,
+      "footX": 132,
+      "footY": 182.5
     }
   },
   "vfxClips": [],
@@ -53,5 +53,5 @@
       "ultimate"
     ]
   },
-  "evidence": "Uniform-framed six-state pack 20261022-160933: one shared scale for every state; body 284px / foot line 379.357px measured from idle alpha at full cell, x0.5."
+  "evidence": "Uniform-framed six-state pack 20261024-193742: one shared scale for every state; body 355px / foot line 365.053px measured from idle alpha at full cell, x0.5."
 }

@@ -17,7 +17,7 @@ export const TINH_MAC_HERO = Object.freeze({
   profileVersion: 'tinh-mac/2026-10-21-owner-kit', gender: 'Nam', age: 'Thanh niên',
   introduction: 'Đao khách bịt mắt không nhìn người sống mà nhìn nghiệp chướng; thanh đại đao quá tà ác nên phải dán bùa phong ấn, chỉ khi xé bùa mới chém thẳng vào linh hồn.',
   voice: Object.freeze({ lobby: 'Mắt ta đã mù, nhưng hồn ngươi thì ta thấy rõ.', ultimate: 'Phá Ấn — Hoàng Tuyền Đao Vực!' }),
-  art: Object.freeze({ status: 'canvas-sprite-runtime-review', portrait: 'assets/characters/tinh-mac/portrait-4b812b66.webp' }),
+  art: Object.freeze({ status: 'canvas-sprite-runtime-review', portrait: 'assets/characters/tinh-mac/portrait-6bf9e439.webp' }),
   iconId: 'splus.tinh_mac.ultimate', passiveName: 'Tâm Nhãn Tịnh Hồn',
   passive: Object.freeze({ id: 'tinh_mac.passive', name: 'Tâm Nhãn Tịnh Hồn', target: 'Bản thân',
     description: 'Miễn nhiễm 100% Mù / Giảm chính xác, đòn đánh bỏ qua 50% Né tránh. Mỗi khi một kẻ địch mất 30% máu (lần đầu) hoặc tử trận, nhận 1 tầng U Hồn (tối đa 5): mỗi tầng +8% Xuyên giáp, +5% Hút máu.',
