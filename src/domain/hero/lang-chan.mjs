@@ -15,7 +15,7 @@ export const LANG_CHAN_HERO = Object.freeze({
   profileVersion: 'lang-chan/2026-10-23-scaffold', gender: "Nam", age: "Thiếu niên",
   introduction: "Truyền nhân Võ Đang, kiếm khí Thái Cực lam bạch. Hắn không đánh nhiều — hắn chỉ cần một nhát đúng lúc.",
   voice: Object.freeze({ lobby: "Kiếm tại tâm, tâm tại vô cực.", ultimate: "Bát Quái Kiếm Trận — Vạn Kiếm Quy Tông!" }),
-  art: Object.freeze({ status: 'canvas-sprite-runtime-review', portrait: 'assets/characters/lang-chan/portrait-590d357d.webp' }),
+  art: Object.freeze({ status: 'canvas-sprite-runtime-review', portrait: 'assets/characters/lang-chan/portrait-9fd6b6ba.webp' }),
   iconId: 'splus.lang_chan.ultimate', passiveName: "Thái Cực Hóa Kiếm",
   passive: Object.freeze({ id: 'lang_chan.passive', name: "Thái Cực Hóa Kiếm", target: 'Bản thân',
     description: "Dưới chân luôn có trận đồ Âm Dương Ngư xoay chậm. Khi áp sát hoặc tấn công, trận đồ hấp thu chấn động: nhận thêm 15% Tốc độ và chuyển 10% sát thương gây ra thành giáp khí hộ thể.",

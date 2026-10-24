@@ -1,18 +1,18 @@
 {
   "schema": "authored-hero-assets/v1",
-  "assetRevision": "kiemthe-sixstate-20261024-050254-uniform",
-  "source": "kiemthe-animation-packager 20261024-050254 (--framing uniform, validate_package PASS)",
+  "assetRevision": "kiemthe-sixstate-20261024-102320-uniform",
+  "source": "kiemthe-animation-packager 20261024-102320 (--framing uniform, validate_package PASS)",
   "clips": {
     "idle": {
       "frames": 30,
       "cols": 8,
       "cellW": 240,
       "cellH": 220,
-      "durationMs": 2625,
+      "durationMs": 2666.667,
       "pageFrames": 30,
       "pages": [
         {
-          "file": "idle-0-690b4d54.webp",
+          "file": "idle-0-0204ee30.webp",
           "frames": 30,
           "cols": 8,
           "rows": 4,
@@ -25,17 +25,7 @@
       "frameDurationsMs": [
         83.334,
         83.333,
-        83.333,
         125,
-        83.334,
-        83.333,
-        83.333,
-        83.334,
-        83.333,
-        83.333,
-        125,
-        83.334,
-        83.333,
         83.333,
         83.334,
         83.333,
@@ -47,16 +37,27 @@
         83.334,
         83.333,
         83.333,
+        125,
+        83.334,
+        83.333,
+        83.333,
+        83.334,
+        83.333,
+        125,
+        83.333,
+        83.334,
+        83.333,
+        83.333,
         83.334,
         125,
         83.333,
         83.333,
-        83.334,
-        41.666
+        41.667
       ],
       "pivot": 120,
       "foot": 193.5,
-      "body": 183
+      "body": 183,
+      "scaleFix": 1.0
     },
     "run": {
       "frames": 18,
@@ -67,7 +68,7 @@
       "pageFrames": 18,
       "pages": [
         {
-          "file": "run-0-5943a030.webp",
+          "file": "run-0-d0ab3593.webp",
           "frames": 18,
           "cols": 6,
           "rows": 3,
@@ -99,7 +100,8 @@
       ],
       "pivot": 120,
       "foot": 193.5,
-      "body": 183
+      "body": 183,
+      "scaleFix": 1.1166
     },
     "basic": {
       "frames": 18,
@@ -110,7 +112,7 @@
       "pageFrames": 18,
       "pages": [
         {
-          "file": "basic-0-21b004f5.webp",
+          "file": "basic-0-d5648798.webp",
           "frames": 18,
           "cols": 6,
           "rows": 3,
@@ -142,7 +144,8 @@
       ],
       "pivot": 164,
       "foot": 193.5,
-      "body": 183
+      "body": 183,
+      "scaleFix": 1.1974
     },
     "ultimate": {
       "frames": 18,
@@ -153,7 +156,7 @@
       "pageFrames": 18,
       "pages": [
         {
-          "file": "ultimate-0-cde87fd8.webp",
+          "file": "ultimate-0-31a4d76d.webp",
           "frames": 18,
           "cols": 6,
           "rows": 3,
@@ -185,7 +188,8 @@
       ],
       "pivot": 152,
       "foot": 193.5,
-      "body": 183
+      "body": 183,
+      "scaleFix": 1.1447
     },
     "hit": {
       "frames": 18,
@@ -196,7 +200,7 @@
       "pageFrames": 18,
       "pages": [
         {
-          "file": "hit-0-6c9993d7.webp",
+          "file": "hit-0-7b0d9d74.webp",
           "frames": 18,
           "cols": 6,
           "rows": 3,
@@ -228,7 +232,8 @@
       ],
       "pivot": 144,
       "foot": 193.5,
-      "body": 183
+      "body": 183,
+      "scaleFix": 1.0341
     },
     "fall-die": {
       "frames": 18,
@@ -239,7 +244,7 @@
       "pageFrames": 18,
       "pages": [
         {
-          "file": "fall-die-0-a863e068.webp",
+          "file": "fall-die-0-7cf03191.webp",
           "frames": 18,
           "cols": 5,
           "rows": 4,
@@ -271,20 +276,21 @@
       ],
       "pivot": 180,
       "foot": 193.5,
-      "body": 183
+      "body": 183,
+      "scaleFix": 1.0341
     }
   },
   "budget": {
     "reason": "iOS battle working set: idle page <= 8 MiB, any page <= 12 MiB (hero:doctor)",
-    "date": "2026-10-23"
+    "date": "2026-10-24"
   },
   "detail": {
-    "file": "detail-746fe017.webp",
+    "file": "detail-ebf50e62.webp",
     "frames": 30,
     "cols": 8,
     "cellW": 480,
     "cellH": 440,
-    "durationMs": 2625,
+    "durationMs": 2666.667,
     "atlasWidth": 3840,
     "atlasHeight": 1760,
     "note": "hero-detail screen only (full resolution); battle uses clips.idle"
