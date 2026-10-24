@@ -1,7 +1,8 @@
 {
   "source": {
-    "vfx": "owner-supplied green-screen clips vfxatk6 / vfxulti6 (2026-10-20)",
-    "sfxArchive": "KIEMTHE-VFX-SFX-FULL-20261017.zip (Côn Lôn wind set)"
+    "vfx": "owner-supplied green-screen clips vfxatk6 / vfxulti6",
+    "sfxArchive": "KIEMTHE-VFX-SFX-FULL-20261017.zip (Côn Lôn wind set)",
+    "sfx": "clip audio (extract_sfx.py) + Kiếm Thế SKILLPACK + Pixabay library (sfx-source.mjs)"
   },
   "clips": {
     "vfx-basic": {
@@ -43,8 +44,8 @@
         1920,
         1028
       ],
-      "keying": "difference matte vs border green, alpha 40..130, unmix + spill clamp, Gemini corner masked",
-      "role": "basic: gió xoáy + khói mực bắn vào mục tiêu (impact on target)",
+      "keying": "difference matte vs border green, alpha 55..150, unmix + spill clamp, Gemini corner masked",
+      "role": "basic VFX (owner clip vfxatk)",
       "sha256": "72130a114b701372956a2a06af9af7d5feb5a502b1b56a5e6dedf52717a5d280",
       "bytes": 268566
     },
@@ -57,7 +58,7 @@
       "cellH": 202,
       "atlasWidth": 2880,
       "atlasHeight": 606,
-      "frameMs": 80,
+      "frameMs": 90,
       "blend": "source-over",
       "pivot": 180,
       "foot": 101,
@@ -95,8 +96,8 @@
         1920,
         1080
       ],
-      "keying": "difference matte vs border green, alpha 40..130, unmix + spill clamp, Gemini corner masked",
-      "role": "ultimate: bão mực + lông vũ cuốn từng kẻ địch",
+      "keying": "difference matte vs border green, alpha 55..150, unmix + spill clamp, Gemini corner masked",
+      "role": "ultimate VFX (owner clip vfxulti)",
       "sha256": "a4567e2f1950978568b126bbea60af0968922d58a8c999bbccde72b9a2807bb1",
       "bytes": 859308
     }
@@ -104,53 +105,90 @@
   "sfx": {
     "van-phong-basic": {
       "file": "bach-y-van-phong/basic.wav",
-      "source": "SKILLPACK/sfx/kunlun/kl_hff_c.wav",
-      "code": "kl_hff_c",
-      "sha256": "181bef49c2110cb65313200cc09decd687cdb3ecad40283e961c3cd020c15331",
-      "durationMs": 1056,
-      "sampleRate": 22050,
-      "channels": 1,
-      "provenance": "Hô Phong Pháp (Côn Lôn) - tiếng phất gió khi tung đòn"
-    },
-    "van-phong-impact": {
-      "file": "bach-y-van-phong/impact.wav",
-      "source": "SKILLPACK/sfx/kunlun/kl_hff_f.wav",
-      "code": "kl_hff_f",
-      "sha256": "816a1a55ab83983195a6ec287c816f783afc8d48eea08922e8c71a7be8fdec2c",
-      "durationMs": 2229,
+      "source": "Atk6---da12943e-79bb-4873-8d19-c8d63ee26cdf.mp4",
+      "trim": [
+        1.9,
+        0.25
+      ],
+      "sha256": "990ab3fa84a8110ef42757cc6378f74cfb1665ba5fa1c5ceac7a97e013593aeb",
+      "durationMs": 250,
       "sampleRate": 44100,
       "channels": 1,
-      "provenance": "Hô Phong Pháp (Côn Lôn) - gió quất trúng mục tiêu"
+      "provenance": "audio of owner clip atk, auto-picked strongest sound event, trimmed (not mixed); owner review pending"
+    },
+    "van-phong-basic-hit": {
+      "file": "bach-y-van-phong/basic-hit.wav",
+      "source": "vfxatk6---3d7c315d-2429-45ac-b8f2-fb648549fe4a.mp4",
+      "trim": [
+        0.97,
+        0.95
+      ],
+      "sha256": "e804d59e9dd0457176b76ac3bf6d57f2419f97a60656b5bec2c6334105adb0a3",
+      "durationMs": 950,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "audio of owner clip vfx-basic, auto-picked strongest sound event, trimmed (not mixed); owner review pending"
     },
     "van-phong-ultimate": {
       "file": "bach-y-van-phong/ultimate.wav",
-      "source": "SKILLPACK/sfx/kunlun/kl_axxf_c.wav",
-      "code": "kl_axxf_c",
-      "sha256": "450cc8ab08106f7b0055db782d2a5ff057a2f7554ab75dcf156c27147837b83f",
-      "durationMs": 1000,
+      "source": "ulti6---bdc16984-4fcb-47f9-b27b-f68645947e8a.mp4",
+      "trim": [
+        1.73,
+        0.51
+      ],
+      "sha256": "732662c7e3ccb7cb9d4cc847e84f2835b8370b8622350d0ff206560d583e92d4",
+      "durationMs": 510,
       "sampleRate": 44100,
       "channels": 1,
-      "provenance": "Ngạo Tuyết Tiếu Phong (Côn Lôn) - trận lốc phạm vi lớn"
+      "provenance": "audio of owner clip ultimate, auto-picked strongest sound event, trimmed (not mixed); owner review pending"
+    },
+    "van-phong-ultimate-vfx": {
+      "file": "bach-y-van-phong/ultimate-vfx.wav",
+      "source": "vfxulti6---20dc6796-0968-44c6-abfa-2c16c9f95f58.mp4",
+      "trim": [
+        1.04,
+        1.49
+      ],
+      "sha256": "a3ba1896fd28c0d6e318c3c91bdb05d8b8c3d1408209937197536df71d236913",
+      "durationMs": 1490,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "audio of owner clip vfx-ultimate, auto-picked first sound event, trimmed (not mixed); owner review pending"
     },
     "van-phong-ultimate-hit": {
       "file": "bach-y-van-phong/ultimate-hit.wav",
-      "source": "SKILLPACK/sfx/tangmen/tm_shb_f.wav",
-      "code": "tm_shb_f",
-      "sha256": "89cac31fdbde9b191a0326c70a3aec8edc000a2c333fd7325f5982176128064f",
-      "durationMs": 477,
+      "source": "vfxulti6---20dc6796-0968-44c6-abfa-2c16c9f95f58.mp4",
+      "trim": [
+        3.95,
+        1.6
+      ],
+      "sha256": "5fcb2528c164b5fe8e180a9f002cca26ae8ac11f7726a9d5d7ac1f15e5c4ff57",
+      "durationMs": 1600,
       "sampleRate": 44100,
       "channels": 1,
-      "provenance": "Đường Môn ám khí trúng đích (5 nhịp phập dồn dập) - lông vũ cuối ulti cắm vào địch; owner yêu cầu 2026-10-20"
+      "provenance": "audio of owner clip vfx-ultimate, auto-picked last sound event, trimmed (not mixed); owner review pending"
     },
-    "van-phong-ultimate-wind": {
-      "file": "bach-y-van-phong/ultimate-wind.wav",
-      "source": "SKILLPACK/sfx/kunlun/kl_kfzd_f.wav",
-      "code": "kl_kfzd_f",
-      "sha256": "22a4641a7c2100924086e630526b7a967b4fa420b063d2b485054db044d5470d",
-      "durationMs": 2104,
-      "sampleRate": 22050,
+    "van-phong-hit": {
+      "file": "bach-y-van-phong/hit.wav",
+      "source": "hit6---48cd3041-38d4-45e3-b53f-89a5ebb57f5d.mp4",
+      "trim": [
+        1.35,
+        0.31
+      ],
+      "sha256": "1c95c68b77e4ef41e2e16a2348cb1d7cc84c7182a8e5bdda2f292f5e4fe3a8b4",
+      "durationMs": 310,
+      "sampleRate": 44100,
       "channels": 1,
-      "provenance": "Cuồng Phong Sậu Điện (Côn Lôn) - gió xoáy cực mạnh, lớp gió lốc phủ suốt bão ulti; owner yêu cầu 2026-10-20"
+      "provenance": "audio of owner clip hit, auto-picked strongest sound event, trimmed (not mixed); owner review pending"
+    },
+    "van-phong-passive": {
+      "file": "bach-y-van-phong/passive.wav",
+      "source": "SKILLPACK/sfx/public/sb013.wav",
+      "sha256": "0761edeeea0a5756a095bb185a5019bf602b533187cfd5458a9c67559bd1b9ee",
+      "durationMs": 211,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "Kiếm Thế SKILLPACK sb013 (kho Kiếm Thế, phái public); owner review pending"
     }
   }
 }

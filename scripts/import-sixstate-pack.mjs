@@ -66,14 +66,21 @@ for (const [state, clip] of Object.entries(STATE_TO_CLIP)) {
     footFull = meta.crop.footLineCellY;
 // smartSubsample: full-resolution chroma. Default 4:2:0 halves colour resolution and cost ~4% saturation on the
 // downscaled hero atlases (Lăng Vân: -8% -> -4% vs source, same pixels) for +2% file size (owner 2026-10-24: nhợt nhạt).
-    const buf = await sharp(png).webp({ quality: 92, alphaQuality: 100, effort: 5, smartSubsample: true }).toBuffer();
+    const DETAIL_MAX_MIB = 30;                       // doctor limit is 32 MiB decoded; keep headroom
+    const srcW = page.canvas[0], srcH = page.canvas[1];
+    const fit = Math.min(1, Math.sqrt((DETAIL_MAX_MIB * 1024 * 1024) / (srcW * srcH * 4)));
+    const detailImg = fit < 1 ? sharp(png).resize(Math.floor(srcW * fit), Math.floor(srcH * fit), { kernel: 'lanczos3' }) : sharp(png);
+    const buf = await detailImg.webp({ quality: 92, alphaQuality: 100, effort: 5, smartSubsample: true }).toBuffer();
     const file = `detail-${sha8(buf)}.webp`; writeFileSync(join(outDir, file), buf);
     detail = { file, frames, cols: page.columns, cellW, cellH, durationMs, atlasWidth: page.canvas[0], atlasHeight: page.canvas[1], note: 'hero-detail screen only (full resolution); battle uses clips.idle' };
   }
-  const w = Math.round(page.canvas[0] * budgetScale), h = Math.round(page.canvas[1] * budgetScale);
+  // Cell and atlas must agree exactly: deriving both from the same rounded cell keeps cols*cellW == atlas width
+  // (importing at an odd budget scale left Khaos 2 px short of his metadata and the doctor refused the build).
+  const cw = Math.max(1, Math.floor(page.canvas[0] * budgetScale / page.columns));
+  const ch = Math.max(1, Math.floor(page.canvas[1] * budgetScale / page.rows));
+  const w = cw * page.columns, h = ch * page.rows;
   const buf = await sharp(png).resize(w, h, { kernel: 'lanczos3' }).webp({ quality: 90, alphaQuality: 100, effort: 5, smartSubsample: true }).toBuffer();
   const file = `${clip}-0-${sha8(buf)}.webp`; writeFileSync(join(outDir, file), buf);
-  const cw = Math.round(cellW * budgetScale), ch = Math.round(cellH * budgetScale);
   clips[clip] = { frames, cols: page.columns, cellW: cw, cellH: ch, durationMs, pageFrames: frames,
     pages: [{ file, frames, cols: page.columns, rows: page.rows, atlasWidth: cw * page.columns, atlasHeight: ch * page.rows }],
     budgetScale, sourceState: state, frameDurationsMs: meta.frames.map(f => f.durationMs) };

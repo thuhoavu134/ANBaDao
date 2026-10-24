@@ -1,7 +1,7 @@
 {
   "source": {
     "vfx": "owner-supplied green-screen clips vfxatk / vfxulti (2026-10-21)",
-    "sfx": "audio tracks of the same owner clips (atk_3 / ulti / vfxatk / vfxulti / Hit_3), trimmed, not mixed"
+    "sfx": "clip audio (extract_sfx.py) + Kiếm Thế SKILLPACK + Pixabay library (sfx-source.mjs)"
   },
   "clips": {
     "vfx-basic": {
@@ -104,154 +104,78 @@
   "sfx": {
     "tinh-mac-basic": {
       "file": "tinh-mac/basic.wav",
-      "source": "atk_3---6df82568-eefd-4e98-a5a5-8964ac70eebc.mp4 (owner clip 2026-10-21)",
+      "source": "atk_3---6df82568-eefd-4e98-a5a5-8964ac70eebc.mp4",
       "trim": [
-        1.6,
-        0.75
+        1.8,
+        0.46
       ],
-      "sha256": "574d31d9b80a3527e8a837c48bb2b346ad52d2a678a1d29cec321c48068af2b1",
-      "durationMs": 750,
+      "sha256": "b42fd8e43a23f88807d015754d4af521bd889193c4805367e6e363e03cc48d94",
+      "durationMs": 460,
       "sampleRate": 44100,
       "channels": 1,
-      "provenance": "atk_3 1.60-2.35s: tieng vung dai dao + tieng giong"
-    },
-    "tinh-mac-basic-hit": {
-      "file": "tinh-mac/basic-hit.wav",
-      "source": "vfxatk---162ad73e-bf34-4db5-ac4e-0733e83ed587.mp4 (owner clip 2026-10-21)",
-      "trim": [
-        2.05,
-        1
-      ],
-      "sha256": "6bc7e2976b06c6d32375880a839394579048066317eb3f91df4a83b7f65cba99",
-      "durationMs": 1000,
-      "sampleRate": 44100,
-      "channels": 1,
-      "provenance": "vfxatk 2.05-3.05s: vet lua xanh cham truc"
-    },
-    "tinh-mac-passive": {
-      "file": "tinh-mac/passive.wav",
-      "source": "vfxatk---162ad73e-bf34-4db5-ac4e-0733e83ed587.mp4 (owner clip 2026-10-21)",
-      "trim": [
-        1.05,
-        0.9
-      ],
-      "sha256": "412bb707876c80578179754bf79dcb6664a1603e2bdbf261778789abcf1d221a",
-      "durationMs": 900,
-      "sampleRate": 44100,
-      "channels": 1,
-      "provenance": "vfxatk 1.05-1.95s: dot lua xanh nap tich (mo nội Tam Nhan)"
+      "provenance": "audio of owner clip atk, auto-picked strongest sound event, trimmed (not mixed); owner review pending"
     },
     "tinh-mac-ultimate": {
       "file": "tinh-mac/ultimate.wav",
-      "source": "ulti---ab918426-bb76-4108-9417-5be588455548.mp4 (owner clip 2026-10-21)",
+      "source": "ulti---ab918426-bb76-4108-9417-5be588455548.mp4",
       "trim": [
-        2.35,
-        0.75
+        2.36,
+        0.88
       ],
-      "sha256": "cbf03b2170b97656b3dd42b8c515b6231cfe4c6dfe5aa094a8dc7db0a2b86a8c",
-      "durationMs": 750,
+      "sha256": "a1127dadd4012640fba96781af08f542a6e9302c28d7e998ae65a250cdf17e3c",
+      "durationMs": 880,
       "sampleRate": 44100,
       "channels": 1,
-      "provenance": "ulti 2.35-3.10s: nhan vat cham lien + am hon"
-    },
-    "tinh-mac-ultimate-vfx": {
-      "file": "tinh-mac/ultimate-vfx.wav",
-      "source": "vfxulti---78a46fdd-82f9-46ab-a8fa-6f831ce96692.mp4 (owner clip 2026-10-21)",
-      "trim": [
-        1.25,
-        1.35
-      ],
-      "sha256": "320af482dbb6f55c1127bd2ef72d512873fdfd81fa7eef0d66e00d2283c09d40",
-      "durationMs": 1350,
-      "sampleRate": 44100,
-      "channels": 1,
-      "provenance": "vfxulti 1.25-2.60s: 12 la bua xoay tran phap"
-    },
-    "tinh-mac-ultimate-hit": {
-      "file": "tinh-mac/ultimate-hit.wav",
-      "source": "vfxulti---78a46fdd-82f9-46ab-a8fa-6f831ce96692.mp4 (owner clip 2026-10-21)",
-      "trim": [
-        3.2,
-        1.4
-      ],
-      "sha256": "bcf68ba7eb1f6a63f38cc66c4c047a6803d50d306ba946f0cd97b4b5728a0181",
-      "durationMs": 1400,
-      "sampleRate": 44100,
-      "channels": 1,
-      "provenance": "vfxulti 3.20-4.60s: am hon no detone"
+      "provenance": "audio of owner clip ultimate, auto-picked strongest sound event, trimmed (not mixed); owner review pending"
     },
     "tinh-mac-hit": {
       "file": "tinh-mac/hit.wav",
-      "source": "Hit_3---5c8d9bca-f9c7-46f5-b942-779fc8886fd6.mp4 (owner clip 2026-10-21)",
+      "source": "Hit_3---5c8d9bca-f9c7-46f5-b942-779fc8886fd6.mp4",
       "trim": [
-        1.1,
-        0.55
+        1.17,
+        0.39
       ],
-      "sha256": "9dc3c630588bfc6d252d14e5278707b25f0e41307ec2f5d730ff1dcfa0285140",
-      "durationMs": 550,
+      "sha256": "622e64f703a780000aa2c3db5d2eecf4ecf60f2a66e6e7fde50c478cca2bf016",
+      "durationMs": 390,
       "sampleRate": 44100,
       "channels": 1,
-      "provenance": "Hit_3 1.10-1.65s: tieng trung don"
+      "provenance": "audio of owner clip hit, auto-picked strongest sound event, trimmed (not mixed); owner review pending"
     },
-    "tinh-mac-slash-1": {
-      "file": "tinh-mac/slash-1.wav",
-      "source": "SKILLPACK/sfx/tianwang/tw_zxzy_c.wav",
-      "sha256": "3c3d35e3775eee81ca64c5eb4f01f65f599567682d3c9347a5befa9e16deca4a",
-      "provenance": "Kiếm Thế SKILLPACK, nguyên file WAV (không cắt, không mix)"
+    "tinh-mac-basic-hit": {
+      "file": "tinh-mac/basic-hit.wav",
+      "source": "SKILLPACK/sfx/public/sb013.wav",
+      "sha256": "0761edeeea0a5756a095bb185a5019bf602b533187cfd5458a9c67559bd1b9ee",
+      "durationMs": 211,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "Kiếm Thế SKILLPACK sb013 (kho Kiếm Thế, phái public); owner review pending"
     },
-    "tinh-mac-slash-2": {
-      "file": "tinh-mac/slash-2.wav",
-      "source": "SKILLPACK/sfx/tianwang/tw_ptz_c.wav",
-      "sha256": "e51abf9d8898910687d26a85643b2a4cadcf2e901e1975d15de6a526c95e4fb9",
-      "provenance": "Kiếm Thế SKILLPACK, nguyên file WAV (không cắt, không mix)"
+    "tinh-mac-ultimate-vfx": {
+      "file": "tinh-mac/ultimate-vfx.wav",
+      "source": "SKILLPACK/sfx/public/sb014.wav",
+      "sha256": "fd4e81dd9a3926f44174aff8a23d5fd1bcb5c09e5183a67ee738aa11f63761ee",
+      "durationMs": 296,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "Kiếm Thế SKILLPACK sb014 (kho Kiếm Thế, phái public); owner review pending"
     },
-    "tinh-mac-slash-3": {
-      "file": "tinh-mac/slash-3.wav",
-      "source": "SKILLPACK/sfx/tianwang/tw_clj_c.wav",
-      "sha256": "b3ea3decf52eb64e94152b07a6487620ee725c0e2a26bfaacb8c18ed08b611f9",
-      "provenance": "Kiếm Thế SKILLPACK, nguyên file WAV (không cắt, không mix)"
+    "tinh-mac-ultimate-hit": {
+      "file": "tinh-mac/ultimate-hit.wav",
+      "source": "SKILLPACK/sfx/public/sb015.wav",
+      "sha256": "a3b26a08b4e5656b2e80a718734555efb8ca2a3e6fe22db52b43cbe6f75632a7",
+      "durationMs": 296,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "Kiếm Thế SKILLPACK sb015 (kho Kiếm Thế, phái public); owner review pending"
     },
-    "tinh-mac-blade-hit": {
-      "file": "tinh-mac/blade-hit.wav",
-      "source": "SKILLPACK/sfx/tianwang/tw_dhc_fm.wav",
-      "sha256": "777355f0fd532b3d99c6512c2234782b1972e58e22f7448b7b60db0ff3a34e59",
-      "provenance": "Kiếm Thế SKILLPACK, nguyên file WAV (không cắt, không mix)"
-    },
-    "tinh-mac-blade-hit-2": {
-      "file": "tinh-mac/blade-hit-2.wav",
-      "source": "SKILLPACK/sfx/tianwang/tw_dhc_m.wav",
-      "sha256": "abf52d72b8ffb4a738ce97f74910d77c1e84dfe4d97bd87a432add21bf6d99f9",
-      "provenance": "Kiếm Thế SKILLPACK, nguyên file WAV (không cắt, không mix)"
-    },
-    "tinh-mac-soul-drain": {
-      "file": "tinh-mac/soul-drain.wav",
-      "source": "SKILLPACK/sfx/tianren/tr_lmdh_h.wav",
-      "sha256": "696b051ed6b1cd10b3e440152321a6a7dcff0d5495b6e6f5e236105e4ec79395",
-      "provenance": "Kiếm Thế SKILLPACK, nguyên file WAV (không cắt, không mix)"
-    },
-    "tinh-mac-soul-burst": {
-      "file": "tinh-mac/soul-burst.wav",
-      "source": "SKILLPACK/sfx/tianren/tr_hlfh_h.wav",
-      "sha256": "5317bab0a3d1c1d200e20546ab165af39509660c12d898a2852478827608d402",
-      "provenance": "Kiếm Thế SKILLPACK, nguyên file WAV (không cắt, không mix)"
-    },
-    "tinh-mac-ult-fall": {
-      "file": "tinh-mac/ult-fall.wav",
-      "source": "SKILLPACK/sfx/tianren/tr_hyfh_c.wav",
-      "sha256": "0ef46b2ee42618b15a8c6815a7e955325c5101fcf71098a616c1327f5a3ff2f9",
-      "provenance": "Kiếm Thế SKILLPACK, nguyên file WAV (không cắt, không mix)"
-    },
-    "tinh-mac-ult-slam": {
-      "file": "tinh-mac/ult-slam.wav",
-      "source": "SKILLPACK/sfx/kunlun/kl_zhkl_c.wav",
-      "sha256": "98da001c63e66e292bb57e3231403bed95cfd15ce00b31ab7007412b98889777",
-      "provenance": "Kiếm Thế SKILLPACK, nguyên file WAV (không cắt, không mix)"
-    },
-    "tinh-mac-ult-boom": {
-      "file": "tinh-mac/ult-boom.wav",
-      "source": "SKILLPACK/sfx/tianren/tr_tzly_v.wav",
-      "sha256": "d650ad2cada47056374146ae701ecc0e248c7d29005a910b5ff7ae7ede5c6e9a",
-      "provenance": "Kiếm Thế SKILLPACK, nguyên file WAV (không cắt, không mix)"
+    "tinh-mac-passive": {
+      "file": "tinh-mac/passive.wav",
+      "source": "SKILLPACK/sfx/public/sb016.wav",
+      "sha256": "d0af13a62f4b5104829187f55c4a1981f1419dcc75ec0574003be0911ea1d70f",
+      "durationMs": 241,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "Kiếm Thế SKILLPACK sb016 (kho Kiếm Thế, phái public); owner review pending"
     }
   }
 }

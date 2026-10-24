@@ -1,7 +1,7 @@
 {
   "source": {
     "vfx": "owner-supplied green-screen clips vfxatk7 / vfxulti7 / vfxnoitai7 (2026-10-20)",
-    "sfx": "audio tracks of the same owner clips"
+    "sfx": "clip audio (extract_sfx.py) + Kiếm Thế SKILLPACK + Pixabay library (sfx-source.mjs)"
   },
   "clips": {
     "vfx-basic": {
@@ -152,90 +152,78 @@
   "sfx": {
     "nguyet-diep-basic": {
       "file": "nguyet-diep/basic.wav",
-      "source": "vfxatk7.mp4 (owner clip 2026-10-20)",
+      "source": "atk7---921d1c4b-0d14-44f3-9d7a-1db418905fa4.mp4",
       "trim": [
-        1.0,
-        0.75
+        2.68,
+        0.97
       ],
-      "sha256": "8ba9a0c5bd98c7e12fe36350d220f7cb2a942383fa5fc9d70c808170ca0b1af1",
-      "durationMs": 750,
+      "sha256": "f346398fd6776ae332bc95ee06970b3e34d244741751c95b2e1b25f5c2c96005",
+      "durationMs": 970,
       "sampleRate": 44100,
       "channels": 1,
-      "provenance": "vfxatk7 âm thanh gốc 1.00-1.75s: hồn lao vút (phát lúc hồn bay ra)"
+      "provenance": "audio of owner clip atk, auto-picked strongest sound event, trimmed (not mixed); owner review pending"
     },
     "nguyet-diep-ultimate": {
       "file": "nguyet-diep/ultimate.wav",
-      "source": "Ulti7.mp4 (owner clip 2026-10-20)",
+      "source": "Ulti7---94c21a0f-5fb0-4b54-a7a2-1873cd25603c.mp4",
       "trim": [
-        0.0,
-        3.05
+        2.61,
+        0.81
       ],
-      "sha256": "62767f63bfb6d7abf0e8387584b73099363895ac8abd950760b3d08516de04c5",
-      "durationMs": 3050,
+      "sha256": "aa0682b5f32ea2a9ba7c0ca804d5b384fa53f90f15282b8bf3b306292f867219",
+      "durationMs": 810,
       "sampleRate": 44100,
       "channels": 1,
-      "provenance": "âm thanh gốc clip Ulti7, cắt tới lúc chân chạm đất + kiếm cắm xuống"
+      "provenance": "audio of owner clip ultimate, auto-picked strongest sound event, trimmed (not mixed); owner review pending"
     },
-    "nguyet-diep-ultimate-vfx": {
-      "file": "nguyet-diep/ultimate-vfx.wav",
-      "source": "vfxulti7.mp4 (owner clip 2026-10-20)",
+    "nguyet-diep-hit": {
+      "file": "nguyet-diep/hit.wav",
+      "source": "hit7---37588bae-49af-4755-b0bb-1b03772deb2d.mp4",
       "trim": [
-        1.1,
-        0.95
+        1.31,
+        0.25
       ],
-      "sha256": "a51dff80326dfb58fddff8a9f545268a8523d6b2731a277c5702204f27047b61",
-      "durationMs": 950,
+      "sha256": "19f7b257e9a811c93df4dc468eb4e20028f09a6071b0633b876570219f41bc96",
+      "durationMs": 250,
       "sampleRate": 44100,
       "channels": 1,
-      "provenance": "vfxulti7 âm thanh gốc 1.10-2.05s: kiếm từ trời lao xuống"
-    },
-    "nguyet-diep-passive": {
-      "file": "nguyet-diep/passive.wav",
-      "source": "vfxnoitai7.mp4 (owner clip 2026-10-20)",
-      "trim": [
-        0.0,
-        2.2
-      ],
-      "sha256": "86fdcbc2cbe3a8f6581f3b8d6d749528fc70192babfd8f6121fa1ff8500903b2",
-      "durationMs": 2200,
-      "sampleRate": 44100,
-      "channels": 1,
-      "provenance": "âm thanh gốc clip vfxnoitai7 (Âm Dương Linh Kính)"
+      "provenance": "audio of owner clip hit, auto-picked strongest sound event, trimmed (not mixed); owner review pending"
     },
     "nguyet-diep-basic-hit": {
       "file": "nguyet-diep/basic-hit.wav",
-      "source": "vfxatk7.mp4 (owner clip 2026-10-20)",
-      "trim": [
-        1.85,
-        1.15
-      ],
-      "sha256": "c1772dbd6d1ac828e1488038f74a51ad00f295485966e3c54854be97bf6b59b1",
-      "durationMs": 1150,
+      "source": "SKILLPACK/sfx/public/sb013.wav",
+      "sha256": "0761edeeea0a5756a095bb185a5019bf602b533187cfd5458a9c67559bd1b9ee",
+      "durationMs": 211,
       "sampleRate": 44100,
       "channels": 1,
-      "provenance": "vfxatk7 âm thanh gốc 1.85-3.00s: kiếm khí nổ + bùa (phát đúng lúc mỗi hồn nổ ở địch)"
+      "provenance": "Kiếm Thế SKILLPACK sb013 (kho Kiếm Thế, phái public); owner review pending"
+    },
+    "nguyet-diep-ultimate-vfx": {
+      "file": "nguyet-diep/ultimate-vfx.wav",
+      "source": "SKILLPACK/sfx/public/sb014.wav",
+      "sha256": "fd4e81dd9a3926f44174aff8a23d5fd1bcb5c09e5183a67ee738aa11f63761ee",
+      "durationMs": 296,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "Kiếm Thế SKILLPACK sb014 (kho Kiếm Thế, phái public); owner review pending"
     },
     "nguyet-diep-ultimate-hit": {
       "file": "nguyet-diep/ultimate-hit.wav",
-      "durationMs": 558,
+      "source": "SKILLPACK/sfx/public/sb015.wav",
+      "sha256": "a3b26a08b4e5656b2e80a718734555efb8ca2a3e6fe22db52b43cbe6f75632a7",
+      "durationMs": 296,
       "sampleRate": 44100,
       "channels": 1,
-      "sha256": "60ca836ff0cf76886b29c899c19b87a9fe4baaf0f9d9cf4852a1a71f3d6d51fc",
-      "layers": [
-        {
-          "source": "SKILLPACK/sfx/wudang/wd_bjef_f.wav",
-          "note": "Kiếm Thế Võ Đang - kiếm khí trúng"
-        },
-        {
-          "source": "pixabay",
-          "title": "Hit Rock 02",
-          "page": "https://pixabay.com/sound-effects/film-special-effects-hit-rock-02-266304/",
-          "author": "u_xjrmmgxfru",
-          "url": "https://cdn.pixabay.com/download/audio/2024/11/19/audio_98ba777c64.mp3",
-          "sha256": "1e3d12a5204b7a65cfcd22434be3320005e65fe2dd23f4e14e0efd82ed0d79f2"
-        }
-      ],
-      "provenance": "kiếm cắm xuống đất: kim loại Võ Đang + tiếng đá vỡ (Pixabay, không bắt buộc ghi công); phát mỗi lần kiếm rơi"
+      "provenance": "Kiếm Thế SKILLPACK sb015 (kho Kiếm Thế, phái public); owner review pending"
+    },
+    "nguyet-diep-passive": {
+      "file": "nguyet-diep/passive.wav",
+      "source": "SKILLPACK/sfx/public/sb016.wav",
+      "sha256": "d0af13a62f4b5104829187f55c4a1981f1419dcc75ec0574003be0911ea1d70f",
+      "durationMs": 241,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "Kiếm Thế SKILLPACK sb016 (kho Kiếm Thế, phái public); owner review pending"
     }
   }
 }

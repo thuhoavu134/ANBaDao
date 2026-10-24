@@ -1,18 +1,18 @@
 {
   "schema": "authored-hero-assets/v1",
-  "assetRevision": "kiemthe-sixstate-20261022-160933-uniform",
-  "source": "kiemthe-animation-packager 20261022-160933 (--framing uniform, validate_package PASS)",
+  "assetRevision": "kiemthe-sixstate-20261024-193742-uniform",
+  "source": "kiemthe-animation-packager 20261024-193742 (--framing uniform, validate_package PASS)",
   "clips": {
     "idle": {
       "frames": 30,
       "cols": 8,
       "cellW": 240,
       "cellH": 220,
-      "durationMs": 2625,
+      "durationMs": 2500,
       "pageFrames": 30,
       "pages": [
         {
-          "file": "idle-0-09775368.webp",
+          "file": "idle-0-aced9b77.webp",
           "frames": 30,
           "cols": 8,
           "rows": 4,
@@ -26,37 +26,38 @@
         83.333,
         83.333,
         83.334,
-        125,
         83.333,
         83.333,
         83.334,
         83.333,
         83.333,
         83.334,
-        125,
         83.333,
         83.333,
         83.334,
         83.333,
-        83.333,
-        83.334,
         83.333,
         125,
+        83.334,
+        83.333,
+        83.333,
+        83.334,
+        83.333,
         83.333,
         83.334,
         83.333,
         83.333,
         83.334,
         83.333,
-        125,
         83.333,
         83.334,
         83.333,
         41.667
       ],
       "pivot": 120,
-      "foot": 189.7,
-      "body": 142
+      "foot": 182.5,
+      "body": 178,
+      "scaleFix": 1.0
     },
     "run": {
       "frames": 18,
@@ -67,7 +68,7 @@
       "pageFrames": 18,
       "pages": [
         {
-          "file": "run-0-c4f05127.webp",
+          "file": "run-0-42006783.webp",
           "frames": 18,
           "cols": 6,
           "rows": 3,
@@ -98,23 +99,24 @@
         222.222
       ],
       "pivot": 120,
-      "foot": 189.7,
-      "body": 142
+      "foot": 182.5,
+      "body": 178,
+      "scaleFix": 1.0414
     },
     "basic": {
       "frames": 18,
       "cols": 6,
-      "cellW": 240,
+      "cellW": 304,
       "cellH": 220,
       "durationMs": 4000,
       "pageFrames": 18,
       "pages": [
         {
-          "file": "basic-0-392b968d.webp",
+          "file": "basic-0-97f30d88.webp",
           "frames": 18,
           "cols": 6,
           "rows": 3,
-          "atlasWidth": 1440,
+          "atlasWidth": 1824,
           "atlasHeight": 660
         }
       ],
@@ -140,24 +142,25 @@
         222.222,
         222.222
       ],
-      "pivot": 120,
-      "foot": 189.7,
-      "body": 142
+      "pivot": 152,
+      "foot": 182.5,
+      "body": 178,
+      "scaleFix": 1.0414
     },
     "ultimate": {
       "frames": 18,
       "cols": 6,
-      "cellW": 240,
+      "cellW": 288,
       "cellH": 220,
       "durationMs": 3968,
       "pageFrames": 18,
       "pages": [
         {
-          "file": "ultimate-0-e1ccfe83.webp",
+          "file": "ultimate-0-1bb3809f.webp",
           "frames": 18,
           "cols": 6,
           "rows": 3,
-          "atlasWidth": 1440,
+          "atlasWidth": 1728,
           "atlasHeight": 660
         }
       ],
@@ -183,9 +186,10 @@
         220.444,
         220.444
       ],
-      "pivot": 120,
-      "foot": 189.7,
-      "body": 142
+      "pivot": 144,
+      "foot": 182.5,
+      "body": 178,
+      "scaleFix": 1.0414
     },
     "hit": {
       "frames": 18,
@@ -196,7 +200,7 @@
       "pageFrames": 18,
       "pages": [
         {
-          "file": "hit-0-6f61db2b.webp",
+          "file": "hit-0-65194fc4.webp",
           "frames": 18,
           "cols": 6,
           "rows": 3,
@@ -227,23 +231,24 @@
         222.222
       ],
       "pivot": 120,
-      "foot": 189.7,
-      "body": 142
+      "foot": 182.5,
+      "body": 178,
+      "scaleFix": 1.0414
     },
     "fall-die": {
       "frames": 18,
       "cols": 6,
-      "cellW": 240,
+      "cellW": 264,
       "cellH": 220,
       "durationMs": 4000,
       "pageFrames": 18,
       "pages": [
         {
-          "file": "fall-die-0-df5e8209.webp",
+          "file": "fall-die-0-cf958ec7.webp",
           "frames": 18,
           "cols": 6,
           "rows": 3,
-          "atlasWidth": 1440,
+          "atlasWidth": 1584,
           "atlasHeight": 660
         }
       ],
@@ -269,22 +274,23 @@
         222.222,
         222.222
       ],
-      "pivot": 120,
-      "foot": 189.7,
-      "body": 142
+      "pivot": 132,
+      "foot": 182.5,
+      "body": 178,
+      "scaleFix": 1.0539
     }
   },
   "budget": {
     "reason": "iOS battle working set: idle page <= 8 MiB, any page <= 12 MiB (hero:doctor)",
-    "date": "2026-10-22"
+    "date": "2026-10-24"
   },
   "detail": {
-    "file": "detail-d22c22fa.webp",
+    "file": "detail-dc629c44.webp",
     "frames": 30,
     "cols": 8,
     "cellW": 480,
     "cellH": 440,
-    "durationMs": 2625,
+    "durationMs": 2500,
     "atlasWidth": 3840,
     "atlasHeight": 1760,
     "note": "hero-detail screen only (full resolution); battle uses clips.idle"

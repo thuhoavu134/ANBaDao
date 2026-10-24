@@ -3,41 +3,42 @@
   "heroId": "hero_splus_khaos",
   "aliases": [
     "khaos",
-    "hero_splus_khaos"
+    "hero_splus_khaos",
+    "khaos"
   ],
-  "referenceBodyHeight": 143,
+  "referenceBodyHeight": 127,
   "footOffsetY": 0,
   "registration": "source-body",
   "clips": {
     "idle": {
-      "bodyHeight": 143,
-      "footX": 120,
-      "footY": 215
+      "bodyHeight": 127,
+      "footX": 121,
+      "footY": 165.8
     },
     "run": {
-      "bodyHeight": 143,
-      "footX": 120,
-      "footY": 215
+      "bodyHeight": 127,
+      "footX": 114,
+      "footY": 165.8
     },
     "basic": {
-      "bodyHeight": 143,
-      "footX": 120,
-      "footY": 215
+      "bodyHeight": 127,
+      "footX": 121,
+      "footY": 165.8
     },
     "ultimate": {
-      "bodyHeight": 143,
-      "footX": 120,
-      "footY": 215
+      "bodyHeight": 127,
+      "footX": 181,
+      "footY": 165.8
     },
     "hit": {
-      "bodyHeight": 143,
-      "footX": 120,
-      "footY": 215
+      "bodyHeight": 127,
+      "footX": 128,
+      "footY": 165.8
     },
     "fall-die": {
-      "bodyHeight": 143,
-      "footX": 120,
-      "footY": 215
+      "bodyHeight": 127,
+      "footX": 148,
+      "footY": 165.8
     }
   },
   "vfxClips": [],
@@ -52,5 +53,5 @@
       "ultimate"
     ]
   },
-  "evidence": "Kiếm Thế six-state package 20261019 (validator PASS); idle B 30f PTS loop, IoU 0.9538; body measured from alpha (top 144, foot 430)."
+  "evidence": "Uniform-framed six-state pack 20261024-201657: one shared scale for every state; body 302px / foot line 394.737px measured from idle alpha at full cell, x0.42."
 }

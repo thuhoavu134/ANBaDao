@@ -1,7 +1,8 @@
 {
   "source": {
     "archive": "KIEMTHE-VFX-SFX-FULL-20261017.zip",
-    "archiveBytes": 324801730
+    "archiveBytes": 324801730,
+    "sfx": "clip audio (extract_sfx.py) + Kiếm Thế SKILLPACK + Pixabay library (sfx-source.mjs)"
   },
   "clips": {
     "vfx-basic": {
@@ -102,30 +103,78 @@
   "sfx": {
     "khaos-basic": {
       "file": "khaos/basic.wav",
-      "source": "SKILLPACK/sfx/cuiyan/cy_bzwy_c.wav",
-      "sha256": "50164412b59699a67e56ecb495164b3615422a5561b2063cdb751dca907c99ab",
-      "durationMs": 472,
-      "sampleRate": 22050,
+      "source": "atkkhao---69505622-7afd-42c2-9d29-9167ff2dd43f.mp4",
+      "trim": [
+        1.36,
+        0.6
+      ],
+      "sha256": "6e368721987948e99694c49422343a244454af936508d627f0b650fc1a2621ba",
+      "durationMs": 600,
+      "sampleRate": 44100,
       "channels": 1,
-      "provenance": "Thúy Yên SKILLPACK pair (Băng Tung Vô Ảnh / Băng Tâm Tiên Tử) reused for Khaos; awaiting owner listening approval"
-    },
-    "khaos-impact": {
-      "file": "khaos/impact.wav",
-      "source": "SKILLPACK/sfx/cuiyan/cy_bxxz_c.wav",
-      "sha256": "3f694f7e00f1d6ba9522e4d85b6406ca2ee9cb7874d94a2f9a0dc008a17a2309",
-      "durationMs": 338,
-      "sampleRate": 22050,
-      "channels": 1,
-      "provenance": "Thúy Yên SKILLPACK pair (Băng Tung Vô Ảnh / Băng Tâm Tiên Tử) reused for Khaos; awaiting owner listening approval"
+      "provenance": "audio of owner clip atk, auto-picked strongest sound event, trimmed (not mixed); owner review pending"
     },
     "khaos-ultimate": {
       "file": "khaos/ultimate.wav",
-      "source": "SKILLPACK/sfx/cuiyan/cy_bxxz_f.wav",
-      "sha256": "9e7f1e999658600513c245c2040470df685a7214b8028333a3ee75dcc615d336",
-      "durationMs": 1312,
+      "source": "ultikhao---2a3b7cc1-c40d-4f4e-a6ad-26944afb75d2.mp4",
+      "trim": [
+        1.89,
+        1.29
+      ],
+      "sha256": "3d53e03dff3cf4d9dfb14c26781c7f9971f8706462fe4b665cb20ff18af50bf3",
+      "durationMs": 1290,
       "sampleRate": 44100,
       "channels": 1,
-      "provenance": "Thúy Yên SKILLPACK pair (Băng Tung Vô Ảnh / Băng Tâm Tiên Tử) reused for Khaos; awaiting owner listening approval"
+      "provenance": "audio of owner clip ultimate, auto-picked strongest sound event, trimmed (not mixed); owner review pending"
+    },
+    "khaos-hit": {
+      "file": "khaos/hit.wav",
+      "source": "Hitkhao---a0c5d86c-9a71-4cf5-9d73-94bff5d6fcfa.mp4",
+      "trim": [
+        1.18,
+        0.37
+      ],
+      "sha256": "93c4af4836542569615ab7fd33f52c22e86659b24c9ff65551890722330fab63",
+      "durationMs": 370,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "audio of owner clip hit, auto-picked strongest sound event, trimmed (not mixed); owner review pending"
+    },
+    "khaos-basic-hit": {
+      "file": "khaos/basic-hit.wav",
+      "source": "SKILLPACK/sfx/public/sb013.wav",
+      "sha256": "0761edeeea0a5756a095bb185a5019bf602b533187cfd5458a9c67559bd1b9ee",
+      "durationMs": 211,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "Kiếm Thế SKILLPACK sb013 (kho Kiếm Thế, phái public); owner review pending"
+    },
+    "khaos-ultimate-vfx": {
+      "file": "khaos/ultimate-vfx.wav",
+      "source": "SKILLPACK/sfx/public/sb014.wav",
+      "sha256": "fd4e81dd9a3926f44174aff8a23d5fd1bcb5c09e5183a67ee738aa11f63761ee",
+      "durationMs": 296,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "Kiếm Thế SKILLPACK sb014 (kho Kiếm Thế, phái public); owner review pending"
+    },
+    "khaos-ultimate-hit": {
+      "file": "khaos/ultimate-hit.wav",
+      "source": "SKILLPACK/sfx/public/sb015.wav",
+      "sha256": "a3b26a08b4e5656b2e80a718734555efb8ca2a3e6fe22db52b43cbe6f75632a7",
+      "durationMs": 296,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "Kiếm Thế SKILLPACK sb015 (kho Kiếm Thế, phái public); owner review pending"
+    },
+    "khaos-passive": {
+      "file": "khaos/passive.wav",
+      "source": "SKILLPACK/sfx/public/sb016.wav",
+      "sha256": "d0af13a62f4b5104829187f55c4a1981f1419dcc75ec0574003be0911ea1d70f",
+      "durationMs": 241,
+      "sampleRate": 44100,
+      "channels": 1,
+      "provenance": "Kiếm Thế SKILLPACK sb016 (kho Kiếm Thế, phái public); owner review pending"
     }
   }
 }
