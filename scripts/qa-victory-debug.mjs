@@ -1,0 +1,22 @@
+import { launch, attach } from './qa-run.mjs';
+const b = await launch({ width: 390, height: 844 });
+const c = await attach((await (await fetch(b.base + '/json/list')).json()).find(t => t.type === 'page').webSocketDebuggerUrl);
+await c.send('Runtime.enable');
+const logs = [];
+c.send('Log.enable').catch(() => {});
+await c.resize(390, 844);
+await c.goto('http://127.0.0.1:18091/battle.html', 4500);
+const r = await c.eval(`(async()=>{
+  const man = window.__HV_RESULT_MOTION_QA.manifest();
+  const be = man.be_an; const out = { keys: Object.keys(man), run: be && { frames: be.run.frames, cellW: be.run.cellW, page0: be.run.pages && be.run.pages[0] } };
+  const test = src => new Promise(r => { const i = new Image(); i.onload = () => r([i.naturalWidth, i.naturalHeight]); i.onerror = () => r('FAIL'); i.src = src; });
+  if (be && be.run.pages) out.load = await test(be.run.pages[0].src);
+  window.__showIntegratedResultV6(true,{player:[{id:'be_an',sourceId:'be_an',name:'Bé An',damage:1,kills:1,hp:1,maxHp:1,alive:true,slot:0}],enemy:[],rewards:[]});
+  await new Promise(r => setTimeout(r, 2500));
+  out.qa = window.__HV_RESULT_MOTION_QA.state();
+  const cv = document.querySelector('#integratedResultV6 .irv-hero.run'); out.cls = document.getElementById('integratedResultV6').className;
+  out.canvas = cv && [cv.width, cv.height, getComputedStyle(cv).opacity, getComputedStyle(cv).transform];
+  return out;
+})()`);
+console.log(JSON.stringify(r, null, 1).slice(0, 2500));
+await b.kill();

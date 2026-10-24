@@ -45,6 +45,7 @@ function largestSpan(isInk, width, height, GRID = 1) {
   for (let y = 0; y < th; y++) for (let x = 0; x < tw; x++) ink[y * tw + x] = isInk(x * GRID, y * GRID) ? 1 : 0;
   const seen = new Uint8Array(tw * th);
   let best = null;
+  const parts = [];
   for (let s = 0; s < tw * th; s++) {
     if (!ink[s] || seen[s]) continue;
     const q = [s]; seen[s] = 1; let area = 0, l = Infinity, r = -1;
@@ -56,10 +57,17 @@ function largestSpan(isInk, width, height, GRID = 1) {
         const k = yy * tw + xx; if (ink[k] && !seen[k]) { seen[k] = 1; q.push(k); }
       }
     }
+    parts.push({ area, l, r });
     if (!best || area > best.area) best = { area, l, r };
   }
   if (!best) return [0, 0, 0];
-  const L = best.l * GRID, R = best.r * GRID + GRID - 1;
+  // The hero can be split into several blobs (body + a big glowing bow). Taking only the largest made the measurement
+  // hop between them from frame to frame (Lăng Nguyệt: atlas "moved x19" while the pack was actually still). Union
+  // every blob that is at least 15% of the largest; tiny strays stay ignored.
+  const keep = parts.filter(p => p.area >= best.area * 0.15);
+  let l = Infinity, r = -1;
+  for (const p of keep) { if (p.l < l) l = p.l; if (p.r > r) r = p.r; }
+  const L = l * GRID, R = r * GRID + GRID - 1;
   return [L, R, (L + R) / 2];
 }
 
@@ -69,7 +77,7 @@ async function boxAtlas() {
     const ox = (i % cols) * cellW, oy = Math.floor(i / cols) * cellH;
     // Solid body only: semi-transparent smoke / petals over a green screen still read as green on the video side,
     // so counting them on the atlas side compared two different things (idle_7: left edge x3.0 from smoke alone).
-    return largestSpan((x, y) => data[((oy + y) * info.width + ox + x) * 4 + 3] > 200, cellW, cellH, 1);
+    return largestSpan((x, y) => data[((oy + y) * info.width + ox + x) * 4 + 3] > 60, cellW, cellH, 1);
   });
 }
 

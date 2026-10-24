@@ -33,6 +33,7 @@ const opened = await c.eval(`(async () => {
     await new Promise(r => setTimeout(r, 900));
     const card = document.querySelector('[data-hero-id="${id}"]');
     if (card) card.click();
+    else if (typeof renderHeroDetail === 'function') renderHeroDetail("${id}");
     for (let i = 0; i < 10; i++) {
       await new Promise(r => setTimeout(r, 400));
       const cv = document.getElementById('authoredDetailIdle');

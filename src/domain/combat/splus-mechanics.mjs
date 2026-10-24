@@ -152,7 +152,7 @@ export function createSplusMechanics(options={}) {
   // (scripts/authored-hero-install.mjs + src/runtime/authored-hero.js). A new authored
   // hero adds one AUTHORED_KITS entry and one AUTHORED_HIT rule; the runtime resolves each
   // hit on its animation marker through resolveAuthoredImpact, exactly once per target/hit.
-  const AUTHORED_KITS={khaos:{basic:{hits:1,area:false},ultimate:{hits:2,area:true}},van_phong:{basic:{hits:1,area:false},ultimate:{hits:1,area:true}},nguyet_diep:{basic:{hits:1,area:true},ultimate:{hits:3,area:true}},tinh_mac:{basic:{hits:3,area:false},ultimate:{hits:1,area:true}},lang_van:{basic:{hits:3,area:false},ultimate:{hits:1,area:true}}};
+  const AUTHORED_KITS={khaos:{basic:{hits:1,area:false},ultimate:{hits:2,area:true}},van_phong:{basic:{hits:1,area:false},ultimate:{hits:1,area:true}},nguyet_diep:{basic:{hits:1,area:true},ultimate:{hits:3,area:true}},tinh_mac:{basic:{hits:3,area:false},ultimate:{hits:1,area:true}},lang_van:{basic:{hits:3,area:false},ultimate:{hits:1,area:true}},lang_tieu:{basic:{hits:1,area:false},ultimate:{hits:1,area:true}},lang_nguyet:{basic:{hits:1,area:false},ultimate:{hits:1,area:true}},tieu_linh:{basic:{hits:1,area:false},ultimate:{hits:1,area:true}},lang_chan:{basic:{hits:1,area:false},ultimate:{hits:1,area:true}}};
   const INK_SET=new Set(['inkMark','speedDown','armorDown']);
   function khaosInk(actor,target){
     mark(actor,target,'inkMark',0,{turns:3,stack:true,maxStacks:3,polarity:'debuff',iconId:'inkMark'});
@@ -224,7 +224,7 @@ export function createSplusMechanics(options={}) {
       };
       // Thu The: at the end of her own action she braces until her next turn (+25% damage reduction; the counter
       // itself lives in the declared passive, which fires on 'receive').
-      const brace=()=>{buff(actor,actor,'mitigation',.25,1,{iconId:'thuThe'});emit('thuThe',actor,actor,{});};
+      const brace=()=>{buff(actor,actor,'mitigation',.20,1,{iconId:'thuThe'});emit('thuThe',actor,actor,{});};
       if(cast.kind==='basic'){
         // three beats: two slashes on the main target, then the sweep
         const last=index===cast.hits-1, frozen=has(target,'stun');
@@ -257,7 +257,7 @@ export function createSplusMechanics(options={}) {
           chu(t);                       // the storm soaks everyone it hits
           if(had>=2&&!has(t,'stun'))chu(t);   // two stacks before + this one = frozen by the third
           if(wasFrozen.has(t.id)){
-            damage(actor,t,{raw:Math.round(stat(actor,'atk')*1.5),type:'true',action:'ultimate',secondary:true,noTriggers:true});
+            damage(actor,t,{raw:Math.round(stat(actor,'atk')*1.2),type:'true',action:'ultimate',secondary:true,noTriggers:true});
             buff(actor,t,'cooldownDelay',1,1);
             // The shatter breaks the ice: the freeze ends here (no melt payout, the 150% replaces it), otherwise the
             // victim is still stunned and displace() would refuse to move it.
@@ -278,6 +278,390 @@ export function createSplusMechanics(options={}) {
         buff(actor,actor,'counterCap2',0,2,{polarity:'buff',iconId:'hanBangGiap'});
         emit('loanVanPha',actor,actor,{enemies:all.length});
         brace();
+      }
+    },
+    // Lăng Tiêu (scaffold): default rule 100% / 220% elemental damage split over the hits.
+    // Write this hero's special mechanics HERE and extend tests/lang-tieu.test.mjs.
+    // Lăng Tiêu (Tử Lôi) — kit chuẩn hoá 2026-10-23: Lôi Ấn 4 tầng -> Lôi Giáng (160% + 80% lan + Tê Liệt + 20 Nộ),
+    // bạo kích trên đòn thường gắn thêm 1 tầng (engine không có thanh hành động nên phần "đẩy 15% lượt" trả bằng 15 Nộ),
+    // tuyệt kỹ 220% toàn địch + 2 tầng + Vực Sấm Sét (60% Công mỗi đầu hiệp của địch, 2 hiệp).
+    lang_tieu(actor,target,cast,index){
+      const MAX=4;
+      const crit=()=>{for(let i=events.length-1;i>=0;i--){const e=events[i];if(e.type==='damage'&&e.sourceId===actor.id&&!e.secondary)return !!e.critical;}return false;};
+      const loiGiang=t=>{
+        remove(t,x=>x.type==='speedDown'&&x.sourceId===actor.id,'loi-giang');
+        damage(actor,t,{raw:Math.round(stat(actor,'atk')*1.6),type:'elemental',action:'passive',forceHit:true,noTriggers:true});
+        for(const v of adjacent(t,foes(actor)).slice(0,2))damage(actor,v,{multiplier:.8,action:'passive',type:'elemental',secondary:true,noTriggers:true});
+        if(alive(t))buff(actor,t,'stun',0,1,{iconId:'stun'});
+        if(alive(actor))energy(actor,actor,20,'lang-tieu-loi-giang');
+        emit('loiGiang',actor,t,{});
+      };
+      const mark=t=>{
+        buff(actor,t,'speedDown',.05,2,{stack:true,maxStacks:MAX,iconId:'loiAn'});
+        if(n(status(t,'speedDown')?.stacks)>=MAX&&alive(t))loiGiang(t);
+      };
+      if(cast.kind==='basic'){
+        const dealt=damage(actor,target,{multiplier:1,action:'basic',type:'elemental'});
+        if(dealt>0&&alive(target)){
+          mark(target);
+          if(crit()&&alive(target)){mark(target);if(alive(actor))energy(actor,actor,15,'lang-tieu-crit');}
+        }
+        return;
+      }
+      damage(actor,target,{multiplier:2.2/cast.hits,action:'ultimate',type:'elemental'});
+      if(!cast.langTieuStorm){
+        cast.langTieuStorm=true;
+        const all=foes(actor).filter(alive);
+        for(const t of all){
+          if(!alive(t))continue;
+          mark(t); if(alive(t))mark(t);                                  // +2 tầng ngay
+          if(alive(t))buff(actor,t,'burn',0,2,{pctAtk:.6,iconId:'loiTruong'});  // Vực Sấm Sét 2 hiệp
+        }
+        emit('loiTruong',actor,actor,{enemies:all.length});
+      }
+    },
+    // Lăng Nguyệt (scaffold): default rule 110% / 210% elemental damage split over the hits.
+    // Write this hero's special mechanics HERE and extend tests/lang-nguyet.test.mjs.
+    // Lăng Nguyệt (Phong Linh Cung Thủ) — kit chuẩn hoá 2026-10-23: Phong Khắc 3 tầng (-12% giáp/tầng),
+    // đòn thường 110% xuyên 20% giáp, bạo kích đẩy lùi lượt, tuyệt kỹ 210% toàn địch + 1 tầng + -25% tốc 2 hiệp.
+    // Tật Phong Xạ (bắn truy kích 80% + 10 Nộ) bắn ngay khi mục tiêu đủ 3 tầng — engine chưa có hook "đồng đội đánh",
+    // nên cò bắn tại chính thời điểm đủ tầng.
+    lang_nguyet(actor,target,cast,index){
+      const MAX=3;
+      const crit=()=>{for(let i=events.length-1;i>=0;i--){const e=events[i];if(e.type==='damage'&&e.sourceId===actor.id&&!e.secondary)return !!e.critical;}return false;};
+      const mark=t=>{
+        buff(actor,t,'armorDown',.12,2,{stack:true,maxStacks:MAX,iconId:'phongKhac'});
+        const st=n(status(t,'armorDown')?.stacks);
+        if(st>=MAX&&alive(t)&&alive(actor)){
+          damage(actor,t,{multiplier:.8,action:'passive',type:'elemental',forceHit:true,secondary:true,noTriggers:true});
+          energy(actor,actor,10,'lang-nguyet-passive');
+          emit('tatPhongXa',actor,t,{stacks:st});
+        }
+        return st;
+      };
+      if(cast.kind==='basic'){
+        // Xuyên Tâm: bỏ qua 20% giáp của mục tiêu
+        buff(actor,target,'armorDown',.2,1,{iconId:'xuyenTam'});
+        const dealt=damage(actor,target,{multiplier:1.1,action:'basic',type:'elemental'});
+        if(dealt>0&&alive(target)){
+          mark(target);
+          if(crit()&&alive(target))buff(actor,target,'cooldownDelay',1,1);   // bạo kích: đẩy lùi thanh hành động
+        }
+        return;
+      }
+      damage(actor,target,{multiplier:2.1/cast.hits,action:'ultimate',type:'elemental'});
+      if(!cast.langNguyetStorm){
+        cast.langNguyetStorm=true;
+        const all=foes(actor).filter(alive);
+        for(const t of all){
+          if(!alive(t))continue;
+          buff(actor,t,'speedDown',.25,2,{iconId:'phongKhac'});
+          mark(t);
+        }
+        if(alive(actor))energy(actor,actor,20,'lang-nguyet-thuan-phong');   // Thuận Phong: engine không có thanh hành động
+        emit('thuanPhong',actor,actor,{enemies:all.length});
+      }
+    },
+    lang_tieu(actor,target,cast,index){
+      const MAX=4;
+      const crit=()=>{for(let i=events.length-1;i>=0;i--){const e=events[i];if(e.type==='damage'&&e.sourceId===actor.id&&!e.secondary)return !!e.critical;}return false;};
+      const loiGiang=t=>{
+        remove(t,x=>x.type==='speedDown'&&x.sourceId===actor.id,'loi-giang');
+        damage(actor,t,{raw:Math.round(stat(actor,'atk')*1.6),type:'elemental',action:'passive',forceHit:true,noTriggers:true});
+        for(const v of adjacent(t,foes(actor)).slice(0,2))damage(actor,v,{multiplier:.8,action:'passive',type:'elemental',secondary:true,noTriggers:true});
+        if(alive(t))buff(actor,t,'stun',0,1,{iconId:'stun'});
+        if(alive(actor))energy(actor,actor,20,'lang-tieu-loi-giang');
+        emit('loiGiang',actor,t,{});
+      };
+      const mark=t=>{
+        buff(actor,t,'speedDown',.05,2,{stack:true,maxStacks:MAX,iconId:'loiAn'});
+        if(n(status(t,'speedDown')?.stacks)>=MAX&&alive(t))loiGiang(t);
+      };
+      if(cast.kind==='basic'){
+        const dealt=damage(actor,target,{multiplier:1,action:'basic',type:'elemental'});
+        if(dealt>0&&alive(target)){
+          mark(target);
+          if(crit()&&alive(target)){mark(target);if(alive(actor))energy(actor,actor,15,'lang-tieu-crit');}
+        }
+        return;
+      }
+      damage(actor,target,{multiplier:2.2/cast.hits,action:'ultimate',type:'elemental'});
+      if(!cast.langTieuStorm){
+        cast.langTieuStorm=true;
+        const all=foes(actor).filter(alive);
+        for(const t of all){
+          if(!alive(t))continue;
+          mark(t); if(alive(t))mark(t);                                  // +2 tầng ngay
+          if(alive(t))buff(actor,t,'burn',0,2,{pctAtk:.6,iconId:'loiTruong'});  // Vực Sấm Sét 2 hiệp
+        }
+        emit('loiTruong',actor,actor,{enemies:all.length});
+      }
+    },
+    // Lăng Nguyệt (scaffold): default rule 110% / 210% elemental damage split over the hits.
+    // Write this hero's special mechanics HERE and extend tests/lang-nguyet.test.mjs.
+    lang_nguyet(actor,target,cast,index){
+      const power=cast.kind==='basic'?1.1:2.1;
+      damage(actor,target,{multiplier:power/cast.hits,action:cast.kind,type:'elemental'});
+    },
+    // Tiểu Linh (scaffold): default rule 90% / 210% elemental damage split over the hits.
+    // Write this hero's special mechanics HERE and extend tests/tieu-linh.test.mjs.
+    // Tiểu Linh (Tiểu Quái Y) — kit chuẩn hoá 2026-10-23: hồi máu đầu hiệp cho đồng đội yếu nhất, Độc Mộc Chú 3 tầng
+    // (35% Công mỗi tầng mỗi đầu hiệp địch), đòn thường 90% + 1 tầng, tuyệt kỹ hồi 22% HP tối đa toàn đội + buff
+    // Hưng Phấn 2 hiệp + kích nổ độc + Hỗn Loạn. Nửa lượng sát thương độc chuyển thành máu cho cả đội: engine chưa có
+    // hook "đầu hiệp của địch" trong rule nên phần hút máu được trả ngay khi gây độc (50% của 35% Công).
+    tieu_linh(actor,target,cast,index){
+      const MAX=3;
+      const lowestAlly=()=>friends(actor).filter(alive).sort((a,b)=>(a.hp/a.maxHp)-(b.hp/b.maxHp))[0]||actor;
+      const poison=t=>{
+        buff(actor,t,'poison',0,2,{pctAtk:.35,stack:true,maxStacks:MAX,iconId:'docMoc'});
+        // 50% sát thương độc chuyển thành máu chia cho cả đội
+        const back=Math.round(stat(actor,'atk')*.35*.5);
+        for(const a of friends(actor).filter(alive))heal(actor,a,Math.round(back/Math.max(1,friends(actor).filter(alive).length)));
+      };
+      if(cast.kind==='basic'){
+        const dealt=damage(actor,target,{multiplier:.9,action:'basic',type:'elemental'});
+        if(dealt>0&&alive(target)){
+          poison(target);
+          if(rng('tieu-linh-slow')<.4)buff(actor,target,'speedDown',.15,1,{iconId:'docMoc'});
+        }
+        return;
+      }
+      // Tuyệt kỹ: hồi máu + giải bùa cho đồng đội, buff Hưng Phấn, kích nổ độc của địch
+      if(!cast.tieuLinhBloom){
+        cast.tieuLinhBloom=true;
+        const healAmount=Math.round(actor.maxHp*.22);
+        for(const a of friends(actor).filter(alive)){
+          heal(actor,a,healAmount);
+          if(a.hp<a.maxHp*.5)cleanse(actor,a);
+          buff(actor,a,'attackUp',.2,2,{iconId:'hungPhan'});
+          buff(actor,a,'critUp',.1,2,{iconId:'hungPhan'});
+        }
+        emit('hoiXuan',actor,actor,{team:friends(actor).filter(alive).length});
+        for(const t of foes(actor).filter(alive)){
+          const st=status(t,'poison');
+          if(st){
+            const stacks=n(st.stacks)||1;
+            damage(actor,t,{raw:Math.round(stat(actor,'atk')*.35*stacks),type:'elemental',action:'ultimate',secondary:true,noTriggers:true});
+          }
+          buff(actor,t,'confusion',0,1,{iconId:'honLoan'});
+          buff(actor,t,'resistDown',.3,1,{iconId:'honLoan'});
+          buff(actor,t,'damageDown',.2,1,{iconId:'honLoan'});
+        }
+        emit('honLoan',actor,actor,{});
+      }
+    },
+    lang_van(actor,target,cast,index){
+      const MAX=3,STACK_TURNS=2,burst=()=>Math.round(stat(actor,'atk')*1.2);
+      // one Thuy Chu stack (-10% speed, max 3). The third stack freezes the victim for a turn and stores the
+      // melt damage, which the engine pays out when that status expires.
+      const chu=t=>{
+        buff(actor,t,'speedDown',.1,STACK_TURNS,{stack:true,maxStacks:MAX,iconId:'thuyChu'});
+        const stacks=n(status(t,'speedDown')?.stacks);
+        if(stacks>=MAX&&alive(t)){
+          remove(t,x=>x.type==='speedDown'&&x.sourceId===actor.id,'dong-bang');
+          buff(actor,t,'stun',0,1,{iconId:'frozen',burstOnExpire:burst(),burstType:'elemental'});
+          emit('dongBang',actor,t,{burst:burst()});
+        }
+        return stacks;
+      };
+      // Thu The: at the end of her own action she braces until her next turn (+25% damage reduction; the counter
+      // itself lives in the declared passive, which fires on 'receive').
+      const brace=()=>{buff(actor,actor,'mitigation',.20,1,{iconId:'thuThe'});emit('thuThe',actor,actor,{});};
+      if(cast.kind==='basic'){
+        // three beats: two slashes on the main target, then the sweep
+        const last=index===cast.hits-1, frozen=has(target,'stun');
+        const dealt=damage(actor,target,{multiplier:last?.3:.35,action:'basic',type:'elemental',
+          ...(last&&frozen?{critBonus:.5}:{})});
+        // The three beats are ONE attack, so they soak the target once (owner: "3 nhịp nhưng chỉ tính 1 tầng").
+        if(dealt>0&&!cast.langVanSoaked){cast.langVanSoaked=true;chu(target);}
+        if(last){
+          const splash=adjacent(target,foes(actor)).slice(0,2);
+          for(const t of splash)damage(actor,t,{multiplier:.4,action:'basic',type:'elemental',secondary:true,noTriggers:true});
+          if(splash.length)emit('thuyLuu',actor,target,{targets:splash.map(t=>t.id)});
+          // Thua Thang: a frozen target is an opening — extra crit (above) and 30% lifesteal
+          if(frozen&&dealt>0)heal(actor,actor,dealt*.3);
+          energy(actor,actor,20,'lang-van-basic');
+          brace();
+        }
+        return;
+      }
+      // Ultimate: the vortex hits the target in front of her...
+      damage(actor,target,{multiplier:2/cast.hits,action:'ultimate',type:'elemental'});
+      // The storm itself runs ONCE per cast (an AoE cast calls this rule once per target), the main hit is per target.
+      if(index===cast.hits-1&&!cast.langVanStorm){
+        cast.langVanStorm=true;
+        const all=foes(actor).filter(alive);
+        const pre=new Map(all.map(t=>[t.id,n(status(t,'speedDown')?.stacks)]));
+        const wasFrozen=new Set(all.filter(t=>has(t,'stun')).map(t=>t.id));
+        for(const t of all){
+          if(!alive(t))continue;
+          const had=pre.get(t.id)||0;
+          chu(t);                       // the storm soaks everyone it hits
+          if(had>=2&&!has(t,'stun'))chu(t);   // two stacks before + this one = frozen by the third
+          if(wasFrozen.has(t.id)){
+            damage(actor,t,{raw:Math.round(stat(actor,'atk')*1.2),type:'true',action:'ultimate',secondary:true,noTriggers:true});
+            buff(actor,t,'cooldownDelay',1,1);
+            // The shatter breaks the ice: the freeze ends here (no melt payout, the 150% replaces it), otherwise the
+            // victim is still stunned and displace() would refuse to move it.
+            remove(t,x=>x.type==='stun','vo-bang');
+            // Knockback: an empty slot behind means the victim is thrown back; if an ally stands there (or it is
+            // already the back row) the body slams into it and the victim is stunned for a turn instead of swapping.
+            const desired=(t.slot%3)+3;
+            const wall=t.slot>=3?friends(t).find(v=>v.slot===t.slot&&v.id!==t.id):friends(t).find(v=>v.slot===desired&&v.id!==t.id);
+            if(t.slot>=3||wall){
+              buff(actor,t,'stun',0,1,{iconId:'stun'});
+              emit('wallSlam',actor,t,{blockedBy:wall?.id||null,row:t.slot>=3?'back':'front'});
+            } else displace(actor,t,'push');
+            emit('voBang',actor,t,{});
+          }
+        }
+        // Han Bang Ho Giap: 2 turns of +30% defence and up to two counters per turn
+        buff(actor,actor,'armorUp',.3,2,{iconId:'hanBangGiap'});
+        buff(actor,actor,'counterCap2',0,2,{polarity:'buff',iconId:'hanBangGiap'});
+        emit('loanVanPha',actor,actor,{enemies:all.length});
+        brace();
+      }
+    },
+    // Lăng Tiêu (scaffold): default rule 100% / 220% elemental damage split over the hits.
+    // Write this hero's special mechanics HERE and extend tests/lang-tieu.test.mjs.
+    // Lăng Tiêu (Tử Lôi) — kit chuẩn hoá 2026-10-23: Lôi Ấn 4 tầng -> Lôi Giáng (160% + 80% lan + Tê Liệt + 20 Nộ),
+    // bạo kích trên đòn thường gắn thêm 1 tầng (engine không có thanh hành động nên phần "đẩy 15% lượt" trả bằng 15 Nộ),
+    // tuyệt kỹ 220% toàn địch + 2 tầng + Vực Sấm Sét (60% Công mỗi đầu hiệp của địch, 2 hiệp).
+    lang_tieu(actor,target,cast,index){
+      const MAX=4;
+      const crit=()=>{for(let i=events.length-1;i>=0;i--){const e=events[i];if(e.type==='damage'&&e.sourceId===actor.id&&!e.secondary)return !!e.critical;}return false;};
+      const loiGiang=t=>{
+        remove(t,x=>x.type==='speedDown'&&x.sourceId===actor.id,'loi-giang');
+        damage(actor,t,{raw:Math.round(stat(actor,'atk')*1.6),type:'elemental',action:'passive',forceHit:true,noTriggers:true});
+        for(const v of adjacent(t,foes(actor)).slice(0,2))damage(actor,v,{multiplier:.8,action:'passive',type:'elemental',secondary:true,noTriggers:true});
+        if(alive(t))buff(actor,t,'stun',0,1,{iconId:'stun'});
+        if(alive(actor))energy(actor,actor,20,'lang-tieu-loi-giang');
+        emit('loiGiang',actor,t,{});
+      };
+      const mark=t=>{
+        buff(actor,t,'speedDown',.05,2,{stack:true,maxStacks:MAX,iconId:'loiAn'});
+        if(n(status(t,'speedDown')?.stacks)>=MAX&&alive(t))loiGiang(t);
+      };
+      if(cast.kind==='basic'){
+        const dealt=damage(actor,target,{multiplier:1,action:'basic',type:'elemental'});
+        if(dealt>0&&alive(target)){
+          mark(target);
+          if(crit()&&alive(target)){mark(target);if(alive(actor))energy(actor,actor,15,'lang-tieu-crit');}
+        }
+        return;
+      }
+      damage(actor,target,{multiplier:2.2/cast.hits,action:'ultimate',type:'elemental'});
+      if(!cast.langTieuStorm){
+        cast.langTieuStorm=true;
+        const all=foes(actor).filter(alive);
+        for(const t of all){
+          if(!alive(t))continue;
+          mark(t); if(alive(t))mark(t);                                  // +2 tầng ngay
+          if(alive(t))buff(actor,t,'burn',0,2,{pctAtk:.6,iconId:'loiTruong'});  // Vực Sấm Sét 2 hiệp
+        }
+        emit('loiTruong',actor,actor,{enemies:all.length});
+      }
+    },
+    // Lăng Nguyệt (scaffold): default rule 110% / 210% elemental damage split over the hits.
+    // Write this hero's special mechanics HERE and extend tests/lang-nguyet.test.mjs.
+    // Lăng Nguyệt (Phong Linh Cung Thủ) — kit chuẩn hoá 2026-10-23: Phong Khắc 3 tầng (-12% giáp/tầng),
+    // đòn thường 110% xuyên 20% giáp, bạo kích đẩy lùi lượt, tuyệt kỹ 210% toàn địch + 1 tầng + -25% tốc 2 hiệp.
+    // Tật Phong Xạ (bắn truy kích 80% + 10 Nộ) bắn ngay khi mục tiêu đủ 3 tầng — engine chưa có hook "đồng đội đánh",
+    // nên cò bắn tại chính thời điểm đủ tầng.
+    lang_nguyet(actor,target,cast,index){
+      const MAX=3;
+      const crit=()=>{for(let i=events.length-1;i>=0;i--){const e=events[i];if(e.type==='damage'&&e.sourceId===actor.id&&!e.secondary)return !!e.critical;}return false;};
+      const mark=t=>{
+        buff(actor,t,'armorDown',.12,2,{stack:true,maxStacks:MAX,iconId:'phongKhac'});
+        const st=n(status(t,'armorDown')?.stacks);
+        if(st>=MAX&&alive(t)&&alive(actor)){
+          damage(actor,t,{multiplier:.8,action:'passive',type:'elemental',forceHit:true,secondary:true,noTriggers:true});
+          energy(actor,actor,10,'lang-nguyet-passive');
+          emit('tatPhongXa',actor,t,{stacks:st});
+        }
+        return st;
+      };
+      if(cast.kind==='basic'){
+        // Xuyên Tâm: bỏ qua 20% giáp của mục tiêu
+        buff(actor,target,'armorDown',.2,1,{iconId:'xuyenTam'});
+        const dealt=damage(actor,target,{multiplier:1.1,action:'basic',type:'elemental'});
+        if(dealt>0&&alive(target)){
+          mark(target);
+          if(crit()&&alive(target))buff(actor,target,'cooldownDelay',1,1);   // bạo kích: đẩy lùi thanh hành động
+        }
+        return;
+      }
+      damage(actor,target,{multiplier:2.1/cast.hits,action:'ultimate',type:'elemental'});
+      if(!cast.langNguyetStorm){
+        cast.langNguyetStorm=true;
+        const all=foes(actor).filter(alive);
+        for(const t of all){
+          if(!alive(t))continue;
+          buff(actor,t,'speedDown',.25,2,{iconId:'phongKhac'});
+          mark(t);
+        }
+        if(alive(actor))energy(actor,actor,20,'lang-nguyet-thuan-phong');   // Thuận Phong: engine không có thanh hành động
+        emit('thuanPhong',actor,actor,{enemies:all.length});
+      }
+    },
+    lang_tieu(actor,target,cast,index){
+      const MAX=4;
+      const crit=()=>{for(let i=events.length-1;i>=0;i--){const e=events[i];if(e.type==='damage'&&e.sourceId===actor.id&&!e.secondary)return !!e.critical;}return false;};
+      const loiGiang=t=>{
+        remove(t,x=>x.type==='speedDown'&&x.sourceId===actor.id,'loi-giang');
+        damage(actor,t,{raw:Math.round(stat(actor,'atk')*1.6),type:'elemental',action:'passive',forceHit:true,noTriggers:true});
+        for(const v of adjacent(t,foes(actor)).slice(0,2))damage(actor,v,{multiplier:.8,action:'passive',type:'elemental',secondary:true,noTriggers:true});
+        if(alive(t))buff(actor,t,'stun',0,1,{iconId:'stun'});
+        if(alive(actor))energy(actor,actor,20,'lang-tieu-loi-giang');
+        emit('loiGiang',actor,t,{});
+      };
+      const mark=t=>{
+        buff(actor,t,'speedDown',.05,2,{stack:true,maxStacks:MAX,iconId:'loiAn'});
+        if(n(status(t,'speedDown')?.stacks)>=MAX&&alive(t))loiGiang(t);
+      };
+      if(cast.kind==='basic'){
+        const dealt=damage(actor,target,{multiplier:1,action:'basic',type:'elemental'});
+        if(dealt>0&&alive(target)){
+          mark(target);
+          if(crit()&&alive(target)){mark(target);if(alive(actor))energy(actor,actor,15,'lang-tieu-crit');}
+        }
+        return;
+      }
+      damage(actor,target,{multiplier:2.2/cast.hits,action:'ultimate',type:'elemental'});
+      if(!cast.langTieuStorm){
+        cast.langTieuStorm=true;
+        const all=foes(actor).filter(alive);
+        for(const t of all){
+          if(!alive(t))continue;
+          mark(t); if(alive(t))mark(t);                                  // +2 tầng ngay
+          if(alive(t))buff(actor,t,'burn',0,2,{pctAtk:.6,iconId:'loiTruong'});  // Vực Sấm Sét 2 hiệp
+        }
+        emit('loiTruong',actor,actor,{enemies:all.length});
+      }
+    },
+    // Lăng Nguyệt (scaffold): default rule 110% / 210% elemental damage split over the hits.
+    // Write this hero's special mechanics HERE and extend tests/lang-nguyet.test.mjs.
+    lang_nguyet(actor,target,cast,index){
+      const power=cast.kind==='basic'?1.1:2.1;
+      damage(actor,target,{multiplier:power/cast.hits,action:cast.kind,type:'elemental'});
+    },
+    // Tiểu Linh (scaffold): default rule 90% / 210% elemental damage split over the hits.
+    // Write this hero's special mechanics HERE and extend tests/tieu-linh.test.mjs.
+    tieu_linh(actor,target,cast,index){
+      const power=cast.kind==='basic'?0.9:2.1;
+      damage(actor,target,{multiplier:power/cast.hits,action:cast.kind,type:'elemental'});
+    },
+    // Lăng Chân (scaffold): default rule 120% / 220% elemental damage split over the hits.
+    // Write this hero's special mechanics HERE and extend tests/lang-chan.test.mjs.
+    // Lăng Chân (Vô Cực Kiếm Tử) — cận chiến burst: đòn thường lao tới chém (lunge 260ms, vòng xoáy Âm Dương nổ tại
+    // mục tiêu), tuyệt kỹ cắm kiếm xuống đất khai mở bát quái phủ cả sân. Trạng thái (giảm tốc, phong tỏa) do effects
+    // trong brief chạy sau hit; ở đây chỉ thêm sự kiện để cue nội tại có tiếng.
+    lang_chan(actor,target,cast,index){
+      const power=cast.kind==='basic'?1.2:2.2;
+      damage(actor,target,{multiplier:power/cast.hits,action:cast.kind,type:'elemental'});
+      if(cast.kind==='ultimate'&&!cast.langChanBatQuai){
+        cast.langChanBatQuai=true;
+        emit('batQuai',actor,actor,{enemies:foes(actor).filter(alive).length});
       }
     },
     tinh_mac(actor,target,cast,index){

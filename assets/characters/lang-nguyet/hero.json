@@ -1,0 +1,168 @@
+{
+  "schema": "luc-than-authored-hero/v1",
+  "id": "lang_nguyet",
+  "sourceId": "hero_splus_lang_nguyet",
+  "slug": "lang-nguyet",
+  "identityVersion": "kiemthe-sixstate-20261024-000713-uniform",
+  "host": {
+    "he": "moc",
+    "faction": "moc",
+    "archetype": "marksman",
+    "rarity": "ssr",
+    "name": "Lăng Nguyệt",
+    "role": "Xạ thủ tầm xa chủ lực, phá giáp bằng Phong Khắc và bắn truy kích khi đồng đội đánh mục tiêu đủ tầng",
+    "col": "#4fd1a5",
+    "stats": {
+      "hp": 1040,
+      "mp": 60,
+      "atk": 162,
+      "def": 54,
+      "spd": 112
+    }
+  },
+  "kit": {
+    "passive": {
+      "name": "Phong Khắc & Tật Phong Xạ",
+      "desc": "Mỗi đòn gây sát thương gắn 1 tầng Phong Khắc (2 hiệp, tối đa 3), mỗi tầng giảm 12% giáp. Khi đồng đội đánh mục tiêu đang đủ 3 tầng, Lăng Nguyệt bắn truy kích 80% Công và hồi 10 Nộ (tối đa 1 lần mỗi vòng)."
+    },
+    "basic": {
+      "name": "Thanh Phong Tiễn",
+      "cost": 0,
+      "desc": "Mũi tên gió xuyên thấu: 110% Công, bỏ qua 20% phòng ngự, gắn 1 tầng Phong Khắc, hồi 20 Nộ. Nếu bạo kích: đẩy lùi 15% thanh hành động của mục tiêu.",
+      "fx": {
+        "kind": "damage",
+        "target": "enemy",
+        "power": 1.1
+      }
+    },
+    "ultimate": {
+      "name": "Bão Phong Vũ Tiễn",
+      "cost": 60,
+      "desc": "Mưa tên lốc xoáy: 210% Công lên toàn địch, gắn 1 tầng Phong Khắc, giảm 25% tốc toàn địch trong 2 hiệp. Sau đó bản thân nhận Thuận Phong 1 hiệp: được đẩy 100% thanh hành động (đánh thường ngay sau đó).",
+      "fx": {
+        "kind": "damage",
+        "target": "aoe_enemy",
+        "power": 2.1
+      }
+    }
+  },
+  "art": {
+    "portrait": "assets/characters/lang-nguyet/portrait-c60e9295.webp"
+  },
+  "clipsMeta": "runtime-meta.json",
+  "vfxBase": "assets/vfx/lang-nguyet/",
+  "vfxMeta": "assets/vfx/lang-nguyet/provenance.json",
+  "battle": {
+    "tempo": {
+      "basic": 1.15,
+      "ultimate": 1.0
+    },
+    "actions": {
+      "basic": {
+        "clip": "basic",
+        "release": 1200,
+        "hits": [
+          1600
+        ],
+        "vfxEnd": 4000,
+        "recovery": 4000,
+        "sfx": [
+          {
+            "cue": "lang-nguyet-basic",
+            "at": "release",
+            "lead": 270
+          },
+          {
+            "cue": "lang-nguyet-basic-hit",
+            "at": "hit"
+          }
+        ],
+        "projectile": {
+          "vfx": "vfx-basic",
+          "from": [
+            0.55,
+            0.5
+          ],
+          "scale": 1.25,
+          "arc": 0,
+          "flight": 400
+        },
+        "impact": {
+          "vfx": "vfx-basic",
+          "anchor": "body",
+          "scale": 1,
+          "shake": 4
+        }
+      },
+      "ultimate": {
+        "clip": "ultimate",
+        "release": 4110,
+        "hits": [
+          4510
+        ],
+        "vfxEnd": 6000,
+        "recovery": 6000,
+        "sfx": [
+          {
+            "cue": "lang-nguyet-ultimate",
+            "at": "release",
+            "lead": 0
+          },
+          {
+            "cue": "lang-nguyet-ultimate-vfx",
+            "at": "release",
+            "lead": 0
+          },
+          {
+            "cue": "lang-nguyet-ultimate-hit",
+            "at": "hit"
+          }
+        ],
+        "area": {
+          "vfx": "vfx-ultimate",
+          "anchor": "body",
+          "scale": 1.6,
+          "shake": 7,
+          "single": true,
+          "heightFactor": 2.4,
+          "loop": true
+        }
+      }
+    },
+    "reactions": {
+      "hitCue": "lang-nguyet-hit",
+      "hit": "hit",
+      "death": "fall-die",
+      "durationMs": 4000
+    },
+    "victory": {
+      "runVisualScale": 1.17
+    },
+    "events": {
+      "tatPhongXa": {
+        "sfx": "lang-nguyet-passive"
+      }
+    }
+  },
+  "sfx": {
+    "lang-nguyet-basic": "lang-nguyet/basic.wav",
+    "lang-nguyet-basic-hit": "lang-nguyet/basic-hit.wav",
+    "lang-nguyet-ultimate": "lang-nguyet/ultimate.wav",
+    "lang-nguyet-ultimate-vfx": "lang-nguyet/ultimate-vfx.wav",
+    "lang-nguyet-ultimate-hit": "lang-nguyet/ultimate-hit.wav",
+    "lang-nguyet-hit": "lang-nguyet/hit.wav",
+    "lang-nguyet-passive": "lang-nguyet/passive.wav"
+  },
+  "surfaces": [
+    "roster",
+    "formation",
+    "hero-detail",
+    "battle"
+  ],
+  "approval": {
+    "animation": "six-state pack kiemthe-sixstate-20261024-000713-uniform (--framing uniform, idle anchor locked); owner review pending",
+    "vfx": "owner VFX clips keyed by scripts/hero/key_vfx.py; owner review pending",
+    "sfx": "cut from the owner clip audio by scripts/hero/extract_sfx.py; owner review pending",
+    "timing": "markers derived from the clip audio by scripts/hero/scaffold.mjs (2026-10-23); owner review pending"
+  }
+}
