@@ -342,3 +342,6 @@ console.log('HERO DOCTOR PASS '+JSON.stringify(await runHeroDoctor(root,{dist:tr
 // Final shared hit/shadow owner, after all per-hero and owner refresh patches.
 const {installBattleHitFeedback}=await import('./battle-hit-feedback-v1.mjs');
 installBattleHitFeedback(root);
+// Last, after every anchor-based patch has matched the original text: full-quality atlases on phones.
+const { raiseIosAtlasBudget } = await import('./ios-atlas-budget-v1.mjs');
+raiseIosAtlasBudget(root);

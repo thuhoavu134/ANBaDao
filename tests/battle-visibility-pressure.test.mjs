@@ -38,10 +38,13 @@ test('native cache cannot erase a visible idle when a pinned action makes admiss
   const end = html.indexOf('window.__HV_NATIVE_ATLAS_CACHE=', start);
   const box = vm.createContext({ Image: FakeImage, navigator: { userAgent: 'iPhone' }, performance: { now: () => 100 } });
   const cache = vm.runInContext(html.slice(start, end) + ';BATTLE_NATIVE_ATLAS_CACHE', box);
-  const mb = 1024 * 1024, release = cache.retain(['action'], 96 * mb);
-  const action = cache.ensure('action', clip('action.webp', 80 * mb)); action.ready(1, 1);
+  // Owner 2026-10-25: full-quality atlases raised the iPhone budget to 144 MiB (-19.3 MiB reserve = 124.7 usable),
+  // so the numbers scale with it: a 100 MiB pinned action + a 10 MiB idle fit, and a further 40 MiB cannot be admitted
+  // by evicting the 10 MiB idle that is on screen - which is what this test guards.
+  const mb = 1024 * 1024, release = cache.retain(['action'], 100 * mb);
+  const action = cache.ensure('action', clip('action.webp', 100 * mb)); action.ready(1, 1);
   const idle = cache.ensure('idle', clip('idle.webp', 10 * mb)); idle.ready(1, 1);
-  assert.equal(cache.ensure('blocked', clip('blocked.webp', 20 * mb)), null);
+  assert.equal(cache.ensure('blocked', clip('blocked.webp', 40 * mb)), null);
   assert.equal(idle.src, 'idle.webp', 'failed admission must leave usable visible pixels intact');
   assert.ok(cache.inspect().entries.some(e => e.key === 'idle'));
   release(); cache.clear();
