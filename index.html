@@ -2259,11 +2259,6 @@ function defaultPlayer(){
 }
 function loadSave(){ try{ const s=SAFE_LS.getItem(SAVE_KEY); if(s){ const p=JSON.parse(s); if(p&&p.v===1) return migrateSave(p); } }catch(e){ MEMORY_ONLY=true; } return null; }
 function migrateSave(p){ for(const id in DATA.heroes) if(!p.heroes[id]) p.heroes[id]={owned:false,level:1,stars:1};
-  // Owner 2026-10-24: a hero shipped AFTER this save was created never showed up in the roster, so a new hero
-  // (Tiểu Linh) looked missing in game. Grant every catalog hero the save does not know yet. Flip the flag below
-  // to false if new heroes should instead arrive locked.
-  const GRANT_NEW_HEROES=true;
-  if(GRANT_NEW_HEROES) for(const id in DATA.heroes){ const e=p.heroes[id]; if(e&&e.owned===false&&!e.seenOnce){ e.owned=true; e.granted=true; } }
   const officialRoster12=["ong_hang_pho","thay_mo","lac_yen","cung_thu_tre","co_dao_ganh_hoi","phong_tu","thuy_nuong_roi_nuoc","hong_lien_dao_nuong","thach_quyen","dinh_loi","luc_anh","to_diep","linh_dong","bach_dien"];
   officialRoster12.forEach(id=>{ if(p.heroes[id])p.heroes[id].owned=true; });
   const activeIds=(Array.isArray(p.squad)?p.squad:[]).map(x=>String(x?.id||''));

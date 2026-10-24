@@ -17,12 +17,25 @@
   const esc = value => String(value ?? '').replace(/[&<>"']/g, ch =>
     ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch]);
   const number = value => Number(value || 0).toLocaleString('vi-VN');
+  // Clean-up for saves touched by the short-lived GRANT_NEW_HEROES (2026-10-24): it marked every DATA.heroes entry,
+  // legacy ones included, as owned + granted. Official heroes keep what they have; legacy ones go back to locked.
+  try {
+    const official = new Set(OFFICIAL_ROSTER_12_IDS);
+    let touched = false;
+    for (const [id, e] of Object.entries(P.heroes || {})) {
+      if (!e || e.granted !== true) continue;
+      if (!official.has(id)) e.owned = false;
+      delete e.granted; touched = true;
+    }
+    if (touched && typeof persist === 'function') persist();
+  } catch (_) { /* roster still renders */ }
   const nav = [['hub', 'hub', 'Thành Chính'], ['heroes', 'heroes', 'Tướng'],
     ['team', 'team', 'Trợ trận'], ['daily', 'daily', 'Lịch Luyện'], ['campaign', 'expedition', 'Chinh chiến']];
 
   renderHeroes = function renderPlayerRoster() {
     const view = buildRosterView({
-      ids: [...new Set(['bach_dien', 'linh_dong', ...OFFICIAL_ROSTER_12_IDS, ...Object.keys(DATA.heroes)])].filter(id => DATA.heroes[id]).slice(0,24),
+      // Owner 2026-10-24: the grid stopped at 24 cards. Show exactly the official roster (no legacy tail, no cap).
+      ids: [...new Set(['bach_dien', 'linh_dong', ...OFFICIAL_ROSTER_12_IDS])].filter(id => DATA.heroes[id]),
       heroes: DATA.heroes, player: P,
       powerFor: heroPower, portraitFor: id => rosterPortraitSource(id, portraitSrc(id, 'card')),
       ...state });
