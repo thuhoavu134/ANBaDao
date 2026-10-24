@@ -148,7 +148,7 @@ const runSpecs = {
 };
 
 function currentCheckpoint() { return campaignCheckpoint(P, DATA.chapters, chapterBattleSequence); }
-function ownedSceneHeroIds() { return [...new Set([...OFFICIAL_ROSTER_12_IDS, ...Object.keys(DATA.heroes)])].filter(id => DATA.heroes[id] && P.heroes[id]?.owned).slice(0,24); }
+function ownedSceneHeroIds() { return [...new Set([...OFFICIAL_ROSTER_12_IDS])].filter(id => DATA.heroes[id] && P.heroes[id]?.owned); }
 function savedSceneSquad() {
   const picks = normalizeSquad(P.squad, P, false).map(pick => ({ ...pick }));
   // Combat copies may fill missing slots; keep authored holes when slot is unique.
