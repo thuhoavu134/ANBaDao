@@ -8,6 +8,7 @@
 'be-an-basic-hit':'be-an/basic-hit.wav',
     'be-an-ultimate':'be-an/ultimate.wav',
     'be-an-special':'be-an/special.wav',
+'ulti-name':'ui/ulti-name.wav',  // tên tuyệt kỹ hiện ra (owner 2026-10-24)
     'co-nuong-pierce':'co-nuong/pierce.wav',
     'dinh-loi-atk':'dinh-loi/atk.m4a',
     'dinh-loi-skill':'dinh-loi/skill.m4a',
