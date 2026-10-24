@@ -10,15 +10,6 @@
       "cellH": 220,
       "durationMs": 3708.333,
       "pageFrames": 30,
-      "lite": {
-        "file": "idle-lite-d29a4f59.webp",
-        "cellW": 128,
-        "cellH": 110,
-        "drawScale": 2,
-        "foot": 104.1,
-        "atlasWidth": 1024,
-        "atlasHeight": 440
-      },
       "pages": [
         {
           "file": "idle-0-2c7cb439.webp",

@@ -96,16 +96,8 @@ for (const [state, clip] of Object.entries(STATE_TO_CLIP)) {
   // Phone variant of idle: same frames at half the cell. An iPhone draws a hero at ~40 px, so half size is still
   // twice the drawn pixels, while six idle pages drop from ~39 MiB to ~10 MiB - which is what leaves room for the
   // action pages (the flicker). Desktop keeps the full page, so nothing looks softer there.
-  let lite = null;
-  if (state === 'idle') {
-    const lcw = Math.max(1, Math.floor(cw / 2)), lch = Math.max(1, Math.floor(ch / 2));
-    const lbuf = await sharp(png).resize(lcw * page.columns, lch * page.rows, { kernel: 'lanczos3' })
-      .webp({ quality: 92, alphaQuality: 100, effort: 5, smartSubsample: true }).toBuffer();
-    const lfile = `idle-lite-${sha8(lbuf)}.webp`; writeFileSync(join(outDir, lfile), lbuf);
-    lite = { file: lfile, cellW: lcw, cellH: lch, drawScale: 2, foot: Math.round(footFull * (clipScale / 2) * 10) / 10,
-      atlasWidth: lcw * page.columns, atlasHeight: lch * page.rows };
-  }
-  clips[clip] = { frames, cols: page.columns, cellW: cw, cellH: ch, durationMs, pageFrames: frames, ...(lite ? { lite } : {}),
+  // No downscaled variant: a phone draws a hero at ~290 device pixels, so a half-size idle page is visibly soft.
+  clips[clip] = { frames, cols: page.columns, cellW: cw, cellH: ch, durationMs, pageFrames: frames,
     pages: [{ file, frames, cols: page.columns, rows: page.rows, atlasWidth: cw * page.columns, atlasHeight: ch * page.rows }],
     budgetScale, ...(clipScale !== budgetScale ? { drawScale: budgetScale / clipScale } : {}), sourceState: state, frameDurationsMs: meta.frames.map(f => f.durationMs) };
 }

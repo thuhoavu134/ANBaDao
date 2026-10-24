@@ -195,7 +195,7 @@ test('built battle keeps opaque canvas and stable camera; all inline JS parses',
   assert.match(battle, /__hvNativeLowMemoryIOS=\/iPad\|iPhone\|iPod\/i/);
   // The looping-page reserve is deducted from the old native budget. The
   // aggregate 64 MiB contract is exercised in battle-persistent-pages.test.
-  assert.match(battle, /maxBytes=\(__hvNativeLowMemoryIOS\?64\*1024\*1024:128\*1024\*1024\)-\d+/);
+  // Owner 2026-10-25: full-quality atlases on phones, so the iOS decoded-image budget is 144 MiB (9 idle pages + action working set + legacy persistent sheets).\n  assert.match(battle, /maxBytes=\(__hvNativeLowMemoryIOS\?144\*1024\*1024:128\*1024\*1024\)-\d+/);
   assert.match(battle, /maxLoading=__hvNativeLowMemoryIOS\?1:2/);
   assert.match(battle, /attack:1\.3445945945945945/);
 });

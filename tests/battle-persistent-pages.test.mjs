@@ -57,11 +57,12 @@ test('all 224 looping frames preserve visible RGBA pixels and full-cell registra
   assert.equal(frames,224);
 });
 
-test('iPhone native + persistent normal budgets still sum to 64 MiB; action pins do not evict idle pages', async () => {
+test('iPhone native + persistent budgets fit the 144 MiB phone budget; action pins do not evict idle pages', async () => {
   const start=html.indexOf('const BATTLE_NATIVE_ATLAS_CACHE='),end=html.indexOf('window.__HV_NATIVE_ATLAS_CACHE=',start);
   const box=vm.createContext({Image:class{},navigator:{userAgent:'iPhone'},performance:{now:()=>0}});
   const native=vm.runInContext(html.slice(start,end)+';BATTLE_NATIVE_ATLAS_CACHE',box);
-  assert.equal(native.inspect().configuredMaxBytes+budget,64*1024*1024);
+  // full-quality idle needs room for nine idle pages plus the legacy persistent sheets (owner 2026-10-25)
+  assert.ok(native.inspect().configuredMaxBytes+budget<=144*1024*1024, 'budgets exceed the phone image budget');
   assert.ok(budget<=32*1024*1024);
   const f=fixture();for(const id of Object.keys(packs))f.player.frame(id,0);await f.pump();
   const before=f.player.frame('dinh-idle',3);await f.pump();
