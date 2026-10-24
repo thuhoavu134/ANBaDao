@@ -47,7 +47,7 @@
     }
   },
   "art": {
-    "portrait": "assets/characters/lang-nguyet/portrait-c60e9295.webp"
+    "portrait": "assets/characters/lang-nguyet/portrait-b1ca6091.webp"
   },
   "clipsMeta": "runtime-meta.json",
   "vfxBase": "assets/vfx/lang-nguyet/",
@@ -55,7 +55,7 @@
   "battle": {
     "tempo": {
       "basic": 1.15,
-      "ultimate": 1.0
+      "ultimate": 1
     },
     "actions": {
       "basic": {

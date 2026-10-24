@@ -15,7 +15,7 @@ export const LANG_NGUYET_HERO = Object.freeze({
   profileVersion: 'lang-nguyet/2026-10-23-scaffold', gender: "Nữ", age: "Thiếu nữ",
   introduction: "Cung thủ gió, mũi tên xuyên giáp; đồng đội chạm đúng mục tiêu là nàng bắn theo.",
   voice: Object.freeze({ lobby: "", ultimate: "Bão Phong Vũ Tiễn!" }),
-  art: Object.freeze({ status: 'canvas-sprite-runtime-review', portrait: 'assets/characters/lang-nguyet/portrait-c60e9295.webp' }),
+  art: Object.freeze({ status: 'canvas-sprite-runtime-review', portrait: 'assets/characters/lang-nguyet/portrait-b1ca6091.webp' }),
   iconId: 'splus.lang_nguyet.ultimate', passiveName: "Phong Khắc & Tật Phong Xạ",
   passive: Object.freeze({ id: 'lang_nguyet.passive', name: "Phong Khắc & Tật Phong Xạ", target: 'Bản thân',
     description: "Mỗi đòn gây sát thương gắn 1 tầng Phong Khắc (2 hiệp, tối đa 3), mỗi tầng giảm 12% giáp. Khi đồng đội đánh mục tiêu đang đủ 3 tầng, Lăng Nguyệt bắn truy kích 80% Công và hồi 10 Nộ (tối đa 1 lần mỗi vòng).",
