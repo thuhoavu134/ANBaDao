@@ -15,7 +15,7 @@ export const TIEU_LINH_HERO = Object.freeze({
   profileVersion: 'tieu-linh/2026-10-23-scaffold', gender: "Nam", age: "Thiếu niên",
   introduction: "Thầy lang nhỏ lang thang, sau lưng là hồ lô gốm nứt phì khói hoa đào; ai yếu nhất thì được cứu trước.",
   voice: Object.freeze({ lobby: "", ultimate: "Vạn Cổ Hồ Lô - Loạn Thế Hồi Xuân Trận!" }),
-  art: Object.freeze({ status: 'canvas-sprite-runtime-review', portrait: 'assets/characters/tieu-linh/portrait-025e4a34.webp' }),
+  art: Object.freeze({ status: 'canvas-sprite-runtime-review', portrait: 'assets/characters/tieu-linh/portrait-5e51851b.webp' }),
   iconId: 'splus.tieu_linh.ultimate', passiveName: "Tà Hoa Diệu Thuật & Bảo Hiệp Thoát Thân",
   passive: Object.freeze({ id: 'tieu_linh.passive', name: "Tà Hoa Diệu Thuật & Bảo Hiệp Thoát Thân", target: 'Bản thân',
     description: "Đầu mỗi lượt của mình: hồ lô hồi 6% HP tối đa cho đồng đội yếu nhất và giải 1 hiệu ứng xấu trên người đó. Mỗi đòn gây sát thương gắn 1 tầng Độc Mộc Chú (2 hiệp, tối đa 3): đầu hiệp của địch chịu 35% Công mỗi tầng, một nửa lượng đó hồi cho cả đội. Khi bị đánh (1 lần mỗi vòng): bản thân nhận Khói Ẩn 1 hiệp (giảm 30% sát thương nhận, tăng 25% né) và được đẩy 15% thanh hành động; kẻ đánh bị giảm 20% chính xác và gắn thêm 1 tầng Độc Mộc Chú.",
