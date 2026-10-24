@@ -37,6 +37,10 @@ await page.evaluate(() => {
     }
     return dr.apply(this, arguments);
   };
+  window.__ERR = 0; window.__ULTI = {};
+  new MutationObserver(() => { const t = document.body.innerText || ''; if (t.includes('Không tải đủ hình') && !window.__ERRSEEN) { window.__ERR++; window.__ERRSEEN = true; } if (!t.includes('Không tải đủ hình')) window.__ERRSEEN = false; })
+    .observe(document.body, { childList: true, subtree: true, characterData: true });
+  setInterval(() => { for (const u of (globalThis.__HON_VIET__?.getUnits?.() || [])) if (u.state === 'ultimate') window.__ULTI[u.sourceId || u.id] = 1; }, 100);
   const tick = () => { window.__F.frame++; requestAnimationFrame(tick); };
   requestAnimationFrame(tick);
 });
@@ -44,7 +48,7 @@ await page.click('#startBattle').catch(() => {});
 await page.waitForTimeout(2500);
 await page.click('#autoButton').catch(() => {});
 const startFrame = await page.evaluate(() => window.__F.frame);
-await page.waitForTimeout(20000);
+await page.waitForTimeout(Number(process.env.RUN_MS || 45000));
 const shot = 'C:/Users/Admin/aicoworker/openclaw/workspace-main/tmp/proof/webkit-battle.png';
 await page.screenshot({ path: shot });
 const res = await page.evaluate((sf) => {
@@ -55,9 +59,10 @@ const res = await page.evaluate((sf) => {
     for (let i = 1; i < frames.length; i++) { const g = frames[i] - frames[i - 1] - 1; if (g > 0) { gaps++; maxGap = Math.max(maxGap, g); } }
     out[slug] = { framesDrawn: frames.length, gaps, maxGap, notReady: F.bad[slug] || 0 };
   }
-  return { totalFrames: F.frame - sf, heroes: out };
+  return { totalFrames: F.frame - sf, heroes: out, loadErrors: window.__ERR, ultimates: Object.keys(window.__ULTI),
+    cache: (() => { const i = window.__HV_NATIVE_ATLAS_CACHE.inspect(); return { mib: +(i.bytes / 1048576).toFixed(1), budget: +(i.maxBytes / 1048576).toFixed(1), resident: +((i.residentBytes || 0) / 1048576).toFixed(1) }; })() };
 }, startFrame);
-console.log('webkit', browser.version(), '| frames', res.totalFrames);
+console.log('webkit', browser.version(), '| frames', res.totalFrames, '| load errors', res.loadErrors, '| ultimates cast by', res.ultimates.join(','), '| cache', JSON.stringify(res.cache));
 for (const [k, v] of Object.entries(res.heroes).sort()) console.log(k.padEnd(18), JSON.stringify(v));
 if (errors.length) console.log('page errors:', errors.slice(0, 4));
 console.log('shot', shot);

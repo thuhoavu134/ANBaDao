@@ -285,14 +285,14 @@
     "date": "2026-10-24"
   },
   "detail": {
-    "file": "detail-b9e9417f.webp",
+    "file": "detail-78114fc9.webp",
     "frames": 30,
     "cols": 7,
-    "cellW": 576,
-    "cellH": 440,
+    "cellW": 542,
+    "cellH": 414,
     "durationMs": 2875,
-    "atlasWidth": 4032,
-    "atlasHeight": 2200,
+    "atlasWidth": 3794,
+    "atlasHeight": 2070,
     "note": "hero-detail screen only (full resolution); battle uses clips.idle"
   }
 }

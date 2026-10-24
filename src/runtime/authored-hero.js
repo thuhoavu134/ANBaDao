@@ -64,7 +64,10 @@ function pinAuthoredIdle(defs){
  const keys=[];let bytes=0;
  for(const d of defs){const c=d&&d.clips&&d.clips.idle;if(!c)continue;
   for(const pg of c.pages){keys.push('authored:'+pg.src);bytes+=(pg.atlasWidth||pg.cols*c.cellW)*(pg.atlasHeight||pg.rows*c.cellH)*4;}}
- if(keys.length)authoredIdleRelease=cache.retain(keys,bytes+AUTHORED_ACTION_HEADROOM);
+ if(!keys.length)return;
+ // retainResident adds these bytes on top of whatever an action leases; plain retain() would only raise the cap to
+ // max(idle, action) and starve the action (owner saw 'Không tải đủ hình và hiệu ứng' on the PR preview).
+ authoredIdleRelease=typeof cache.retainResident==='function'?cache.retainResident(keys,bytes):cache.retain(keys,bytes+AUTHORED_ACTION_HEADROOM);
 }
 function warmAuthoredBattle(){
  const battleId=state.battleId;if(authoredWarmBattles.has(battleId))return;authoredWarmBattles.add(battleId);

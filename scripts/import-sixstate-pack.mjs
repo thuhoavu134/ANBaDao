@@ -69,10 +69,15 @@ for (const [state, clip] of Object.entries(STATE_TO_CLIP)) {
     const DETAIL_MAX_MIB = 30;                       // doctor limit is 32 MiB decoded; keep headroom
     const srcW = page.canvas[0], srcH = page.canvas[1];
     const fit = Math.min(1, Math.sqrt((DETAIL_MAX_MIB * 1024 * 1024) / (srcW * srcH * 4)));
-    const detailImg = fit < 1 ? sharp(png).resize(Math.floor(srcW * fit), Math.floor(srcH * fit), { kernel: 'lanczos3' }) : sharp(png);
+    // Shrink by whole cells so the metadata below describes the file exactly; resizing the sheet without the cell
+    // size left Khaos' detail at 3796x2071 against 4032x2200 in metadata and every frame was cut a little further
+    // off - the hero screen idle shook (owner 2026-10-24).
+    const dCellW = fit < 1 ? Math.floor(cellW * fit) : cellW, dCellH = fit < 1 ? Math.floor(cellH * fit) : cellH;
+    const dW = fit < 1 ? dCellW * page.columns : srcW, dH = fit < 1 ? dCellH * page.rows : srcH;
+    const detailImg = fit < 1 ? sharp(png).resize(dW, dH, { kernel: 'lanczos3' }) : sharp(png);
     const buf = await detailImg.webp({ quality: 92, alphaQuality: 100, effort: 5, smartSubsample: true }).toBuffer();
     const file = `detail-${sha8(buf)}.webp`; writeFileSync(join(outDir, file), buf);
-    detail = { file, frames, cols: page.columns, cellW, cellH, durationMs, atlasWidth: page.canvas[0], atlasHeight: page.canvas[1], note: 'hero-detail screen only (full resolution); battle uses clips.idle' };
+    detail = { file, frames, cols: page.columns, cellW: dCellW, cellH: dCellH, durationMs, atlasWidth: dW, atlasHeight: dH, note: 'hero-detail screen only (full resolution); battle uses clips.idle' };
   }
   // Cell and atlas must agree exactly: deriving both from the same rounded cell keeps cols*cellW == atlas width
   // (importing at an odd budget scale left Khaos 2 px short of his metadata and the doctor refused the build).
