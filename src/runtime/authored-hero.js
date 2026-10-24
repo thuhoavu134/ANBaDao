@@ -24,21 +24,35 @@ function authoredClipFix(def,kind){
 }
 function authoredSpeed(){return Math.max(1,Math.min(3,Number(state.speed)||1));}
 function authoredCache(){return window.__HV_NATIVE_ATLAS_CACHE||null;}
-function authoredPage(def,key,index){
- const c=def.clips[key],p=c&&c.pages[index];if(!p)return null;
+function authoredPage(def,key,index,pageOverride,clipOverride){
+ const c=clipOverride||def.clips[key],p=pageOverride||(c&&c.pages[index]);if(!p)return null;
  const cache=authoredCache();
  if(!cache){let im=authoredPage.fallback.get(p.src);if(!im){im=new Image();im.decoding='async';im.src=p.src;authoredPage.fallback.set(p.src,im);}return im;}
  return cache.ensure('authored:'+p.src,{src:p.src,cols:p.cols,rows:p.rows,cellW:c.cellW,cellH:c.cellH,atlasWidth:p.atlasWidth,atlasHeight:p.atlasHeight});
 }
 authoredPage.fallback=new Map();
 function authoredReady(im){return !!(im&&im.complete&&im.naturalWidth);}
+// Owner 2026-10-24: six full idle pages (~39 MiB) plus the action pages do not fit the ~44.7 MiB an iPhone gives
+// decoded images, so idle pages were evicted and re-decoded while the heroes stood there - the flicker. Every idle
+// clip now ships a half-size page as well (`lite`); a phone draws a hero at ~40 px, so it uses that one and scales it
+// back up at draw time. Desktop keeps the full page, so nothing looks softer there.
+const AUTHORED_LOW_MEM=(()=>{try{return /iPad|iPhone|iPod/i.test(String(navigator?.userAgent||''))||(navigator?.platform==='MacIntel'&&Number(navigator?.maxTouchPoints||0)>1);}catch(_){return false;}})();
+function authoredLiteClip(c){
+ if(!c||!c.lite)return null;
+ const p0=c.pages[0];if(!p0)return null;
+ const dir=String(p0.src||'').replace(/[^/]*$/,'');
+ return {...c,cellW:c.lite.cellW,cellH:c.lite.cellH,pivot:Math.round(c.lite.cellW/2),foot:c.lite.foot,drawScale:c.lite.drawScale,
+  pages:[{...p0,file:c.lite.file,src:dir+c.lite.file,atlasWidth:c.lite.atlasWidth,atlasHeight:c.lite.atlasHeight}]};
+}
 function authoredSprite(ctx,def,key,frame,x,y,scale,mirror,opts={}){
- const c=def.clips[key];if(!c)return false;
+ let c=def.clips[key];if(!c)return false;
+ if(key==='idle'&&AUTHORED_LOW_MEM){const lite=authoredLiteClip(c);if(lite)c=lite;}
  frame=Math.max(0,Math.min(c.frames-1,Math.floor(frame)));
  const pageIndex=Math.floor(frame/c.pageFrames),page=c.pages[pageIndex],local=frame-pageIndex*c.pageFrames;
- if(c.pages.length>1)authoredPage(def,key,(pageIndex+1)%c.pages.length);
- const image=authoredPage(def,key,pageIndex);if(!authoredReady(image))return false;
- ctx.save();ctx.translate(x,y);if(opts.rotate)ctx.rotate(opts.rotate);ctx.scale(mirror?-scale:scale,scale);
+ if(c.pages.length>1)authoredPage(def,key,(pageIndex+1)%c.pages.length,undefined,c);
+ const image=authoredPage(def,key,pageIndex,page,c);if(!authoredReady(image))return false;
+ const ds=Number(c.drawScale)||1;   // the lite idle page is stored at half size
+ ctx.save();ctx.translate(x,y);if(opts.rotate)ctx.rotate(opts.rotate);ctx.scale(mirror?-scale*ds:scale*ds,scale*ds);
  if(c.blend)ctx.globalCompositeOperation=c.blend;if(opts.alpha!=null)ctx.globalAlpha*=opts.alpha;
  ctx.drawImage(image,local%page.cols*c.cellW,Math.floor(local/page.cols)*c.cellH,c.cellW,c.cellH,-c.pivot,-c.foot,c.cellW,c.cellH);
  ctx.restore();return true;

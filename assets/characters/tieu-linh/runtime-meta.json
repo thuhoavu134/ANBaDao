@@ -10,6 +10,15 @@
       "cellH": 220,
       "durationMs": 4458.333,
       "pageFrames": 30,
+      "lite": {
+        "file": "idle-lite-59b678b1.webp",
+        "cellW": 132,
+        "cellH": 110,
+        "drawScale": 2,
+        "foot": 103.5,
+        "atlasWidth": 924,
+        "atlasHeight": 550
+      },
       "pages": [
         {
           "file": "idle-0-5fe4001f.webp",
@@ -56,8 +65,7 @@
       ],
       "pivot": 132,
       "foot": 207.1,
-      "body": 202,
-      "scaleFix": 1.0
+      "body": 202
     },
     "run": {
       "frames": 18,
@@ -100,8 +108,7 @@
       ],
       "pivot": 220,
       "foot": 207.1,
-      "body": 202,
-      "scaleFix": 1.1118
+      "body": 202
     },
     "basic": {
       "frames": 18,
@@ -144,8 +151,7 @@
       ],
       "pivot": 176,
       "foot": 207.1,
-      "body": 202,
-      "scaleFix": 1.0272
+      "body": 202
     },
     "ultimate": {
       "frames": 18,
@@ -188,8 +194,7 @@
       ],
       "pivot": 228,
       "foot": 207.1,
-      "body": 202,
-      "scaleFix": 1.125
+      "body": 202
     },
     "hit": {
       "frames": 18,
@@ -232,8 +237,7 @@
       ],
       "pivot": 232,
       "foot": 207.1,
-      "body": 202,
-      "scaleFix": 1.0053
+      "body": 202
     },
     "fall-die": {
       "frames": 18,
@@ -276,8 +280,7 @@
       ],
       "pivot": 144,
       "foot": 207.1,
-      "body": 202,
-      "scaleFix": 1.0107
+      "body": 202
     }
   },
   "budget": {
@@ -285,14 +288,14 @@
     "date": "2026-10-24"
   },
   "detail": {
-    "file": "detail-63e61cb6.webp",
+    "file": "detail-0ae351e5.webp",
     "frames": 30,
     "cols": 7,
-    "cellW": 528,
-    "cellH": 440,
+    "cellW": 519,
+    "cellH": 432,
     "durationMs": 4458.333,
-    "atlasWidth": 3696,
-    "atlasHeight": 2200,
+    "atlasWidth": 3633,
+    "atlasHeight": 2160,
     "note": "hero-detail screen only (full resolution); battle uses clips.idle"
   }
 }
