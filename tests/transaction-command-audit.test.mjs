@@ -47,8 +47,8 @@ test('L03a records receipt absence instead of treating direct persist as atomic'
 
 test('L03a audit source hash is stable for the captured active runtime', () => {
   const hash = crypto.createHash('sha256').update(source).digest('hex');
-  // Re-pinned 2026-10-24 (2): the GRANT_NEW_HEROES loop is removed again from migrateSave - new authored heroes
-  // are granted by the build's authoredStarter flags, and that loop also granted the legacy DATA.heroes. The
-  // L03a mutation inventory is untouched and its assertions above still pass.
-  assert.equal(hash, '464ca35caed4f7bb085c45375e9066f2f19f4539eed11845015082f72f53aa75');
+  // Re-pinned 2026-10-24 (3): hero voice-over table (HERO_VOICE_LINES, hero-screen line only) added and Lục Ảnh's
+  // ultimate voice call removed - owner rule: voice is for the hero screen, ultimates are announced by the brush
+  // name only. No save / economy code changed; the L03a mutation inventory assertions above still pass.
+  assert.equal(hash, '1c67c8c3607e1666460a1f1e9e6445f0d75e482e609b0dda97daff0fbcc70678');
 });
