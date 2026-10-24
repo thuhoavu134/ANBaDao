@@ -3,7 +3,11 @@ export function createLegacyAuthoredReadiness({cache,describe,sound,enabled,time
   async function prepare(actor,action,signal) {
     const assets=describe(actor,action)||[];
     const native=assets.filter(a=>a.key);
-    const releaseCache=native.length?cache.retain(native.map(a=>a.key),native.reduce((n,a)=>n+a.bytes,0)):()=>{};
+    const cap=(()=>{try{const i=cache.inspect?.();return (i&&(i.configuredMaxBytes||i.maxBytes))||64*1024*1024;}catch(_){return 64*1024*1024;}})();
+    const need=native.reduce((n,a)=>n+a.bytes,0);
+    // Never lease more than the device can hold: over-leasing made every page fail admission and the cast never
+    // started. Pinning the part that fits still keeps the cache from thrashing while it decodes.
+    const releaseCache=native.length?cache.retain(native.map(a=>a.key),Math.min(need,Math.max(8*1024*1024,cap*0.85))):()=>{};
     let released=false;
     const release=()=>{if(released)return;released=true;releaseCache();signal?.removeEventListener('abort',release);};
     signal?.addEventListener('abort',release,{once:true});
@@ -19,11 +23,27 @@ export function createLegacyAuthoredReadiness({cache,describe,sound,enabled,time
       Promise.resolve(promise).then(v=>done(null,v),e=>done(e));
     });
     try{
-      for(const asset of assets){
+      // The first asset is the action itself and must be there. The rest are VFX sheets: wait a short while, and if
+      // the device cannot hold them let the action play without that layer instead of cancelling the turn.
+      for(let index=0;index<assets.length;index++){
+        const asset=assets[index];
         check();let image;
-        while(!(image=asset.image())){check();await wait(new Promise(resolve=>setTimeout(resolve,20)));}
-        await wait(image.decode());check();
-        if(!image.complete||image.naturalWidth<2)throw new Error('Original atlas unavailable: '+(image.src||asset.key));
+        const grabDeadline=Date.now()+(index===0?Math.max(1,deadline-Date.now()):3500);
+        while(!(image=asset.image())){
+          check();
+          if(Date.now()>grabDeadline){
+            if(index===0)throw new Error('Original atlas unavailable: '+(asset.key||''));
+            break;
+          }
+          await wait(new Promise(resolve=>setTimeout(resolve,20)));
+        }
+        if(!image)continue;
+        try{await wait(image.decode());}catch(error){if(index===0)throw error;continue;}
+        check();
+        if(!image.complete||image.naturalWidth<2){
+          if(index===0)throw new Error('Original atlas unavailable: '+(image.src||asset.key));
+          continue;
+        }
       }
       // Decode before the cast clock, using the remaining resource budget.
       // Do not give up after 2s and let the action lease cancel a cold sound.

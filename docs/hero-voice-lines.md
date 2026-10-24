@@ -1,5 +1,14 @@
 # Lời thoại 20 tướng (gửi lại đầy đủ)
 
+> **Quy tắc chốt 24/10/2026 (owner):** file lời thoại anh gửi CHỈ dùng cho **màn tướng** (phát khi mở màn nhân vật).
+> Tuyệt kỹ **không có lời thoại** — chỉ hiện tên chiêu bằng chữ bút lông. Cột "trước ulti" bên dưới giữ để tham khảo.
+> Mỗi file nhận về phải làm sạch trước khi đưa vào game: `python scripts/hero/clean-voice.py <file> <slug>`
+> (cắt khoảng lặng/tiếng thở đầu và cuối, chỉ giữ lời; chuẩn âm lượng −18 LUFS) → `assets/audio/voice-<slug>-hero.mp3`,
+> rồi thêm 1 dòng vào `HERO_VOICE_LINES` trong `index.html`.
+>
+> Đã gắn: **Cô Nương** (6.08s → 4.43s sau khi cắt sạch).
+
+
 **Câu 1** = màn hình nhân vật · **Câu 2** = hét trước khi tung tuyệt kỹ.
 Bỏ qua: 8 tướng mặc định (Lạc Yến, Cung Thủ Trẻ, Cô Đào Gánh Hội, Phong Tử, Thủy Nương Rơi Nước, Hồng Liên Đao Nương, Thạch Quyền, Tố Điệp) và Lục Ảnh.
 

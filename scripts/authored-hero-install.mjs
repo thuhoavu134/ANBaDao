@@ -57,7 +57,9 @@ export function battleDescriptor({ hero, meta, vfx, base }) {
   for (const [key, c] of Object.entries(meta.clips)) {
     clips[key] = { frames: c.frames, cellW: c.cellW, cellH: c.cellH, pivot: c.pivot, foot: c.foot, body: c.body,
       durationMs: c.durationMs, pageFrames: c.pageFrames || c.frames,
-      pages: c.pages.map(p => ({ src: base + p.file, cols: p.cols || c.cols, rows: p.rows || Math.ceil(p.frames / (p.cols || c.cols)),
+      // idle ships a half-size page for phones (see import-sixstate-pack): keep it in the battle descriptor.
+  ...(c.lite ? { lite: { ...c.lite, file: c.lite.file } } : {}),
+  pages: c.pages.map(p => ({ src: base + p.file, cols: p.cols || c.cols, rows: p.rows || Math.ceil(p.frames / (p.cols || c.cols)),
         atlasWidth: p.atlasWidth, atlasHeight: p.atlasHeight, frames: p.frames })) };
   }
   for (const [key, c] of Object.entries(vfx.clips || {})) {

@@ -258,6 +258,9 @@ if(!battle.includes('honviet-ios-audio-unlock')){
 // Ultimate voice is played by the parent page AudioContext which was unlocked by the first real UI interaction.
 battle=battle.replace(/function playLucAnhUltimateVoice\(\)\{[\s\S]*?\}\s*(?=function|async function|const |let |var )/,
 `function playLucAnhUltimateVoice(){
+  // Owner 2026-10-24: ultimates have no voice-over any more (the brush-calligraphy name announces them); voice files
+  // are for the hero screen only. Kept as a no-op so every build anchor that mentions this call still matches.
+  return;
   try{
     const bus=(window.parent&&window.parent!==window&&window.parent.HonVietAudio)?window.parent.HonVietAudio:window.HonVietAudio;
     if(bus){bus.playVoice(LUC_ANH_ULTI_VOICE,2.75).catch(()=>{});return;}

@@ -2911,7 +2911,7 @@ function resolveAction(actor,opt){ S.phase='animating'; hintEl.textContent=''; a
   targets=targets.filter(Boolean);
   replayEvent('actionQueued',{actorId:actor.id,actorName:actor.name,side:actor.side,action:isUltimate?'ultimate':(isSkill?'signature':'basic'),skillName:isSkill&&ability?ability.name:null,targetShape:targetShapeLabel(fx,isSkill),targetIds:targets.map(t=>t.id),targetNames:targets.map(t=>t.name)});
   if(isSkill && fx.kind==='revive' && !targets.length){ replayEvent('actionDenied',{actorId:actor.id,reason:'no_revive_target'}); logLine(`${nm(actor)} dùng ${ability.name} nhưng không có ai để hồi sinh.`); endTurn(); return; }
-  if(isSkill){ actor.mp-=(ability.cost||0); if(!isUltimate&&actor.id!=='luc_anh'){ const l=line(actor.id,'skill_sig'); if(l)say(actor,l); } if(isUltimate&&actor.id==='luc_anh') playLucAnhVoice(LUC_ANH_ULTI_VOICE,1); logLine(`${nm(actor)} dùng <span class="g">${ability.name}</span>.`); }
+  if(isSkill){ actor.mp-=(ability.cost||0); if(!isUltimate&&actor.id!=='luc_anh'){ const l=line(actor.id,'skill_sig'); if(l)say(actor,l); } logLine(`${nm(actor)} dùng <span class="g">${ability.name}</span>.`); }
   if(actor.id==='luc_anh') actor._lucAnim={kind:isUltimate?'ultimate':(isSkill?'skill1':'basic'),start:performance.now()};
   const offensive=['damage','multi','poison_aoe'].includes(fx.kind)||!isSkill; const tgt=targets[0];
   const moveToward=offensive&&tgt&&tgt.side!==actor.side&&actor.id!=='luc_anh'; const dir=actor.side==='ally'?1:-1;
@@ -3129,6 +3129,12 @@ const POSE_ATLAS_PATHS=Object.freeze({guardian:'assets/heroes-concept/poses/guar
 const POSE_ATLASES=Object.fromEntries(Object.entries(POSE_ATLAS_PATHS).map(([key,src])=>{ const image=new Image(); image.decoding='async'; image.src=src; return [key,image]; }));
 window.__MG_POSE_ATLASES=POSE_ATLASES;
 
+// Hero voice-over: ONE line per hero, played when the hero screen opens. Ultimates have no voice (owner 2026-10-24:
+// the ultimate is announced by the brush-calligraphy name only). Clean every file with scripts/hero/clean-voice.py.
+const HERO_VOICE_LINES={
+  co_nuong:{hero:'assets/audio/voice-co-nuong-hero.mp3'},
+  nguyet_diep:{hero:'assets/audio/voice-nguyet-diep-hero.mp3'}
+};
 const LUC_ANH_HERO_VOICE='assets/audio/voice-luc-anh-hero.mp3';
 const LUC_ANH_ULTI_VOICE='assets/audio/voice-luc-anh-ultimate.mp3';
 let _lucAnhVoice=null;
@@ -3855,6 +3861,7 @@ function renderHeroDetail(id){ const _enteringHeroDetail=(ST.screen!=='heroDetai
    <div class="upgrades" style="justify-content:center"><button class="btn sm" id="lvBtn">Nâng cấp — 🪙 ${levelCost(id)}</button><button class="btn gold sm" id="lvBtn5">⬆ Tăng cấp ×5</button>
     <button class="btn gold sm" id="stBtn">Thăng sao — ${starCost(id)} mảnh</button><button class="btn sm" id="rsBtn">♻️ Trả Mộng</button></div>`;
   if(id==='luc_anh'){ startLucAnhDetailIdle(); if(_enteringHeroDetail)playLucAnhVoice(LUC_ANH_HERO_VOICE,.92); }
+  { const _vk=String(id).replace(/^hero_splus_|^splus_/,''), _hv=HERO_VOICE_LINES[_vk]; if(_hv&&_hv.hero&&_enteringHeroDetail)playLucAnhVoice(_hv.hero,.92); }
   if(id==='linh_dong'){ startLinhDongDetailIdle(); }
   if(id==='bach_dien'){ startBachDienDetailIdle(); }
   bindRelationshipPanel(id);

@@ -47,8 +47,7 @@ test('L03a records receipt absence instead of treating direct persist as atomic'
 
 test('L03a audit source hash is stable for the captured active runtime', () => {
   const hash = crypto.createHash('sha256').update(source).digest('hex');
-  // Re-pinned 2026-10-24 (2): the GRANT_NEW_HEROES loop is removed again from migrateSave - new authored heroes
-  // are granted by the build's authoredStarter flags, and that loop also granted the legacy DATA.heroes. The
-  // L03a mutation inventory is untouched and its assertions above still pass.
-  assert.equal(hash, '464ca35caed4f7bb085c45375e9066f2f19f4539eed11845015082f72f53aa75');
+  // Re-pinned 2026-10-24 (4): Cô Nương and Nguyệt Diệp hero-screen lines wired in HERO_VOICE_LINES (cleaned by
+  // scripts/hero/clean-voice.py). No save / economy code changed; the L03a mutation inventory assertions above pass.
+  assert.equal(hash, '9bb2d4a7c1fbfe1e9b4b9ea1d3d4eb1f3709c9ae89cef7570210b0d6733e8a8b');
 });

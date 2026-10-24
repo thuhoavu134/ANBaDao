@@ -10,6 +10,15 @@
       "cellH": 220,
       "durationMs": 2958.333,
       "pageFrames": 30,
+      "lite": {
+        "file": "idle-lite-05e9210f.webp",
+        "cellW": 128,
+        "cellH": 110,
+        "drawScale": 2,
+        "foot": 104.9,
+        "atlasWidth": 1024,
+        "atlasHeight": 440
+      },
       "pages": [
         {
           "file": "idle-0-9c512549.webp",
@@ -56,8 +65,7 @@
       ],
       "pivot": 128,
       "foot": 209.9,
-      "body": 197,
-      "scaleFix": 1.0
+      "body": 197
     },
     "run": {
       "frames": 18,
@@ -100,8 +108,7 @@
       ],
       "pivot": 124,
       "foot": 209.9,
-      "body": 197,
-      "scaleFix": 1.0714
+      "body": 197
     },
     "basic": {
       "frames": 18,
@@ -144,8 +151,7 @@
       ],
       "pivot": 164,
       "foot": 209.9,
-      "body": 197,
-      "scaleFix": 1.0
+      "body": 197
     },
     "ultimate": {
       "frames": 18,
@@ -188,8 +194,7 @@
       ],
       "pivot": 152,
       "foot": 209.9,
-      "body": 197,
-      "scaleFix": 1.0052
+      "body": 197
     },
     "hit": {
       "frames": 18,
@@ -232,8 +237,7 @@
       ],
       "pivot": 136,
       "foot": 209.9,
-      "body": 197,
-      "scaleFix": 0.9799
+      "body": 197
     },
     "fall-die": {
       "frames": 18,
@@ -276,8 +280,7 @@
       ],
       "pivot": 152,
       "foot": 209.9,
-      "body": 197,
-      "scaleFix": 1.0209
+      "body": 197
     }
   },
   "budget": {

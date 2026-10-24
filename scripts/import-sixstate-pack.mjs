@@ -7,9 +7,11 @@ import { join, resolve } from 'node:path';
 import { createHash } from 'node:crypto';
 import sharp from 'sharp';
 
-const [packDir, slug, heroId, scaleArg] = process.argv.slice(2);
-if (!packDir || !slug || !heroId) { console.error('usage: <packDir> <slug> <heroId> [budgetScale]'); process.exit(2); }
+const [packDir, slug, heroId, scaleArg, idleScaleArg] = process.argv.slice(2);
+if (!packDir || !slug || !heroId) { console.error('usage: <packDir> <slug> <heroId> [budgetScale] [idleScale]'); process.exit(2); }
 const budgetScale = Number(scaleArg || 0.5);
+// idle may be stored smaller than the other clips (a phone draws a hero at about a third of the idle cell).
+const idleScale = Number(idleScaleArg || budgetScale);
 const root = resolve(new URL('..', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1'));
 const outDir = join(root, 'assets', 'characters', slug);
 mkdirSync(outDir, { recursive: true });
@@ -69,28 +71,52 @@ for (const [state, clip] of Object.entries(STATE_TO_CLIP)) {
     const DETAIL_MAX_MIB = 30;                       // doctor limit is 32 MiB decoded; keep headroom
     const srcW = page.canvas[0], srcH = page.canvas[1];
     const fit = Math.min(1, Math.sqrt((DETAIL_MAX_MIB * 1024 * 1024) / (srcW * srcH * 4)));
-    const detailImg = fit < 1 ? sharp(png).resize(Math.floor(srcW * fit), Math.floor(srcH * fit), { kernel: 'lanczos3' }) : sharp(png);
+    // Shrink by whole cells so the metadata below describes the file exactly; resizing the sheet without the cell
+    // size left Khaos' detail at 3796x2071 against 4032x2200 in metadata and every frame was cut a little further
+    // off - the hero screen idle shook (owner 2026-10-24).
+    const dCellW = fit < 1 ? Math.floor(cellW * fit) : cellW, dCellH = fit < 1 ? Math.floor(cellH * fit) : cellH;
+    const dW = fit < 1 ? dCellW * page.columns : srcW, dH = fit < 1 ? dCellH * page.rows : srcH;
+    const detailImg = fit < 1 ? sharp(png).resize(dW, dH, { kernel: 'lanczos3' }) : sharp(png);
     const buf = await detailImg.webp({ quality: 92, alphaQuality: 100, effort: 5, smartSubsample: true }).toBuffer();
     const file = `detail-${sha8(buf)}.webp`; writeFileSync(join(outDir, file), buf);
-    detail = { file, frames, cols: page.columns, cellW, cellH, durationMs, atlasWidth: page.canvas[0], atlasHeight: page.canvas[1], note: 'hero-detail screen only (full resolution); battle uses clips.idle' };
+    detail = { file, frames, cols: page.columns, cellW: dCellW, cellH: dCellH, durationMs, atlasWidth: dW, atlasHeight: dH, note: 'hero-detail screen only (full resolution); battle uses clips.idle' };
   }
   // Cell and atlas must agree exactly: deriving both from the same rounded cell keeps cols*cellW == atlas width
   // (importing at an odd budget scale left Khaos 2 px short of his metadata and the doctor refused the build).
-  const cw = Math.max(1, Math.floor(page.canvas[0] * budgetScale / page.columns));
-  const ch = Math.max(1, Math.floor(page.canvas[1] * budgetScale / page.rows));
+  // Owner 2026-10-24: six authored idle pages (~39 MiB) do not fit the ~44.7 MiB an iPhone gives decoded images, so
+  // action pages evicted them and the heroes flickered all battle long. A phone draws a hero at roughly a third of
+  // the idle cell, so idle is imported smaller (idleScale) and drawScale scales it back at draw time: same size on
+  // screen, a fraction of the memory.
+  const clipScale = state === 'idle' ? idleScale : budgetScale;
+  const cw = Math.max(1, Math.floor(page.canvas[0] * clipScale / page.columns));
+  const ch = Math.max(1, Math.floor(page.canvas[1] * clipScale / page.rows));
   const w = cw * page.columns, h = ch * page.rows;
   const buf = await sharp(png).resize(w, h, { kernel: 'lanczos3' }).webp({ quality: 90, alphaQuality: 100, effort: 5, smartSubsample: true }).toBuffer();
   const file = `${clip}-0-${sha8(buf)}.webp`; writeFileSync(join(outDir, file), buf);
-  clips[clip] = { frames, cols: page.columns, cellW: cw, cellH: ch, durationMs, pageFrames: frames,
+  // Phone variant of idle: same frames at half the cell. An iPhone draws a hero at ~40 px, so half size is still
+  // twice the drawn pixels, while six idle pages drop from ~39 MiB to ~10 MiB - which is what leaves room for the
+  // action pages (the flicker). Desktop keeps the full page, so nothing looks softer there.
+  let lite = null;
+  if (state === 'idle') {
+    const lcw = Math.max(1, Math.floor(cw / 2)), lch = Math.max(1, Math.floor(ch / 2));
+    const lbuf = await sharp(png).resize(lcw * page.columns, lch * page.rows, { kernel: 'lanczos3' })
+      .webp({ quality: 92, alphaQuality: 100, effort: 5, smartSubsample: true }).toBuffer();
+    const lfile = `idle-lite-${sha8(lbuf)}.webp`; writeFileSync(join(outDir, lfile), lbuf);
+    lite = { file: lfile, cellW: lcw, cellH: lch, drawScale: 2, foot: Math.round(footFull * (clipScale / 2) * 10) / 10,
+      atlasWidth: lcw * page.columns, atlasHeight: lch * page.rows };
+  }
+  clips[clip] = { frames, cols: page.columns, cellW: cw, cellH: ch, durationMs, pageFrames: frames, ...(lite ? { lite } : {}),
     pages: [{ file, frames, cols: page.columns, rows: page.rows, atlasWidth: cw * page.columns, atlasHeight: ch * page.rows }],
-    budgetScale, sourceState: state, frameDurationsMs: meta.frames.map(f => f.durationMs) };
+    budgetScale, ...(clipScale !== budgetScale ? { drawScale: budgetScale / clipScale } : {}), sourceState: state, frameDurationsMs: meta.frames.map(f => f.durationMs) };
 }
 const pivot = Math.round(clips.idle.cellW / 2);
 const foot = Math.round(footFull * budgetScale * 10) / 10;
 const body = Math.round(bodyFull * budgetScale);
 // Wide states (clones, long slashes) get a wider cell from the packager with the body centred,
 // so the pivot is per clip; scale, foot line and body height are shared by every state.
-for (const c of Object.values(clips)) Object.assign(c, { pivot: Math.round(c.cellW / 2), foot, body });
+for (const [key, c] of Object.entries(clips)) Object.assign(c, { pivot: Math.round(c.cellW / 2), foot, body });
+// idle is on its own scale: its foot line lives in its own pixels
+if (clips.idle && idleScale !== budgetScale) clips.idle.foot = Math.round(footFull * idleScale * 10) / 10;
 
 const pm = JSON.parse(readFileSync(join(packDir, 'PACK-MANIFEST.json'), 'utf8'));
 const runtime = {

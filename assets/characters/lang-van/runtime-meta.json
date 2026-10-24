@@ -10,9 +10,18 @@
       "cellH": 220,
       "durationMs": 3375,
       "pageFrames": 30,
+      "lite": {
+        "file": "idle-lite-f01c78e4.webp",
+        "cellW": 120,
+        "cellH": 110,
+        "drawScale": 2,
+        "foot": 101.4,
+        "atlasWidth": 960,
+        "atlasHeight": 440
+      },
       "pages": [
         {
-          "file": "idle-0-c0f73d47.webp",
+          "file": "idle-0-406b2e27.webp",
           "frames": 30,
           "cols": 8,
           "rows": 4,
@@ -56,8 +65,7 @@
       ],
       "pivot": 120,
       "foot": 202.8,
-      "body": 194,
-      "scaleFix": 1.0
+      "body": 194
     },
     "run": {
       "frames": 18,
@@ -68,7 +76,7 @@
       "pageFrames": 18,
       "pages": [
         {
-          "file": "run-0-f6081403.webp",
+          "file": "run-0-4830763f.webp",
           "frames": 18,
           "cols": 6,
           "rows": 3,
@@ -100,8 +108,7 @@
       ],
       "pivot": 120,
       "foot": 202.8,
-      "body": 194,
-      "scaleFix": 1.0435
+      "body": 194
     },
     "basic": {
       "frames": 18,
@@ -112,7 +119,7 @@
       "pageFrames": 18,
       "pages": [
         {
-          "file": "basic-0-c5cc0035.webp",
+          "file": "basic-0-c21d0662.webp",
           "frames": 18,
           "cols": 4,
           "rows": 5,
@@ -144,8 +151,7 @@
       ],
       "pivot": 212,
       "foot": 202.8,
-      "body": 194,
-      "scaleFix": 1.1163
+      "body": 194
     },
     "ultimate": {
       "frames": 18,
@@ -156,7 +162,7 @@
       "pageFrames": 18,
       "pages": [
         {
-          "file": "ultimate-0-110bb440.webp",
+          "file": "ultimate-0-64355945.webp",
           "frames": 18,
           "cols": 5,
           "rows": 4,
@@ -188,8 +194,7 @@
       ],
       "pivot": 196,
       "foot": 202.8,
-      "body": 194,
-      "scaleFix": 1.0909
+      "body": 194
     },
     "hit": {
       "frames": 18,
@@ -200,7 +205,7 @@
       "pageFrames": 18,
       "pages": [
         {
-          "file": "hit-0-2b086161.webp",
+          "file": "hit-0-c7369d38.webp",
           "frames": 18,
           "cols": 6,
           "rows": 3,
@@ -232,8 +237,7 @@
       ],
       "pivot": 120,
       "foot": 202.8,
-      "body": 194,
-      "scaleFix": 1.0492
+      "body": 194
     },
     "fall-die": {
       "frames": 18,
@@ -244,7 +248,7 @@
       "pageFrames": 18,
       "pages": [
         {
-          "file": "fall-die-0-4141aab8.webp",
+          "file": "fall-die-0-de5bd976.webp",
           "frames": 18,
           "cols": 6,
           "rows": 3,
@@ -276,8 +280,7 @@
       ],
       "pivot": 120,
       "foot": 202.8,
-      "body": 194,
-      "scaleFix": 1.1098
+      "body": 194
     }
   },
   "budget": {
@@ -285,7 +288,7 @@
     "date": "2026-10-24"
   },
   "detail": {
-    "file": "detail-6bfedffb.webp",
+    "file": "detail-e7348489.webp",
     "frames": 30,
     "cols": 8,
     "cellW": 480,
