@@ -198,46 +198,86 @@ function drawAuthoredVfxClip(ctx,def,key,age,x,y,heightPx,opts={}){
 // melts away on its own. Syllables stack vertically like the reference; each line is written a beat after the one
 // above it so it reads like brush strokes appearing.
 const authoredBanners=[];
-const BANNER_HOLD=900, BANNER_IN=150, BANNER_OUT=300, BANNER_STAGGER=60;
+const BANNER_HOLD=1100, BANNER_IN=170, BANNER_OUT=320, BANNER_STAGGER=70;
+// Owner 2026-10-24 (screenshot with a blue box drawn on it): the name is written vertically like the reference
+// game, but ONLY inside the empty band above the gate - centred, above the first row of heroes - so it never
+// covers the fight. Box measured from that screenshot as fractions of the battle canvas.
+const BANNER_BOX={x0:.38,x1:.62,y0:.045,y1:.25,minH:.13};
+function bannerColumns(text){
+ const phrases=String(text).split(/\s*[—–:]\s*|\s+-\s+/).map(s=>s.trim()).filter(Boolean);
+ let cols=phrases.map(s=>s.split(/\s+/).filter(Boolean));
+ if(cols.length>2)cols=[cols.slice(0,-1).flat(),cols[cols.length-1]];
+ if(cols.length===1&&cols[0].length>5){const w=cols[0],h=Math.ceil(w.length/2);cols=[w.slice(0,h),w.slice(h)];}
+ return cols.map(c=>c.slice(0,6));
+}
 function authorBanner(text,start,speed){
-try{document.fonts?.load('700 64px "HV Brush"').catch(()=>{});}catch(_){}
-
- // "A — B" reads as two phrases; the dash is a separator, not a line of its own.
- const phrases=String(text).split(/\s*[—–-]\s*/).filter(x=>x.trim());
- const lines=(phrases.length>1?phrases.join(' '):phrases[0]||'').split(/\s+/).filter(Boolean).slice(0,6);
- authoredBanners.push({lines,start,speed:Math.max(.4,Number(speed)||1),battleId:state.battleId,spoken:false});
- if(authoredBanners.length>6)authoredBanners.shift();
+ try{document.fonts?.load('400 64px "HV Brush"').catch(()=>{});}catch(_){}
+ const cols=bannerColumns(text);if(!cols.length)return;
+ authoredBanners.push({cols,start,speed:Math.max(.4,Number(speed)||1),battleId:state.battleId,spoken:false});
+ if(authoredBanners.length>4)authoredBanners.shift();
 }
 function drawAuthoredBanner(ctx,time){
- // Owner 2026-10-24: keep the name inside the HUD strip (next to HIỆP x/15) so the fight stays visible, and drop the
- // full-screen version that used to sit over the battlefield. The wave still runs on this clock, so the label and the
- // cue stay lined up with the release.
  if(typeof REDUCED_MOTION!=='undefined'&&REDUCED_MOTION){authoredBanners.length=0;return;}
  for(let i=authoredBanners.length-1;i>=0;i--){
   const b=authoredBanners[i];
   if(b.battleId!==state.battleId){authoredBanners.splice(i,1);continue;}
-  const total=BANNER_STAGGER*b.lines.length+BANNER_IN+BANNER_HOLD+BANNER_OUT;
+  const cells=b.cols.reduce((n,c)=>n+c.length,0);
+  const total=BANNER_STAGGER*cells+BANNER_IN+BANNER_HOLD+BANNER_OUT;
   const age=(time-b.start)*b.speed;
-  if(age>total){
-   authoredBanners.splice(i,1);
-   const el=document.getElementById('phaseLabel');
-   if(el&&el.dataset.hvUlti==='1'){el.textContent=b.previous||el.textContent;delete el.dataset.hvUlti;el.classList.remove('hv-ulti-name');}
-   continue;
-  }
+  if(age>total){authoredBanners.splice(i,1);continue;}
   if(age<0)continue;
   if(!b.spoken){
    b.spoken=true;
    if(state.sound&&!__hvIsSkipping())void window.HonVietSfx?.play('ulti-name',{group:'combat',playbackRate:1,maxDelayMs:200});
-   const el=document.getElementById('phaseLabel');
-   if(el){
-    if(el.dataset.hvUlti!=='1')b.previous=el.textContent;
-    el.textContent=b.lines.join(' ');
-    el.dataset.hvUlti='1';
-    el.classList.remove('hv-ulti-name');
-    void el.offsetWidth;              // restart the animation when two ultimates chain
-    el.classList.add('hv-ulti-name');
-   }
   }
+  const W=ctx.canvas.width,H=ctx.canvas.height;
+  // The box never reaches the heroes: its bottom stops above the highest head on screen (with the HP bar),
+  // measured through the camera transform that is still on the context here.
+  let headTop=Infinity;
+  try{
+   const m=ctx.getTransform();
+   for(const u of (typeof units!=='undefined'&&Array.isArray(units)?units:[])){
+    if(!u||u.hp<=0)continue;
+    const hx=u.x,hy=u.y-authoredBodyHeight(u)-22;
+    const sy=m.b*hx+m.d*hy+m.f;
+    if(Number.isFinite(sy))headTop=Math.min(headTop,sy);
+   }
+  }catch(_){}
+  const bx0=W*BANNER_BOX.x0,bx1=W*BANNER_BOX.x1,by0=H*BANNER_BOX.y0;
+  const by1=Math.max(by0+H*BANNER_BOX.minH,Math.min(H*BANNER_BOX.y1,headTop-H*.01));
+  const nCols=b.cols.length,maxLines=Math.max(...b.cols.map(c=>c.length));
+  const colW=(bx1-bx0)/nCols,lineH=(by1-by0)/maxLines;
+  const maxChars=Math.max(...b.cols.flat().map(w=>w.length));
+  const size=Math.max(12,Math.min(lineH*.94,colW/(maxChars*.6)));
+  const outAlpha=age>total-BANNER_OUT?Math.max(0,1-(age-(total-BANNER_OUT))/BANNER_OUT):1;
+  ctx.save();
+  // The battle canvas carries the camera transform while units are drawn; the box is in screen pixels.
+  ctx.setTransform(1,0,0,1,0,0);
+  ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.font=`400 ${size}px "HV Brush", "Times New Roman", Georgia, serif`;
+  ctx.lineJoin='round';ctx.miterLimit=2;
+  let n=0;
+  b.cols.forEach((col,ci)=>{
+   const cx=bx0+colW*(ci+.5);
+   const top=by0+((by1-by0)-lineH*col.length)/2;
+   col.forEach((word,li)=>{
+    const local=age-(n++)*BANNER_STAGGER;
+    if(local<0)return;
+    const k=Math.min(1,local/BANNER_IN),a=k*outAlpha;
+    const y=top+lineH*(li+.5)-(1-k)*size*.25;
+    ctx.globalAlpha=a;
+    // soft dark halo keeps it readable over the roof tiles without a panel
+    ctx.shadowColor='rgba(10,6,2,.85)';ctx.shadowBlur=size*.32;
+    ctx.lineWidth=Math.max(2,size*.09);ctx.strokeStyle='rgba(20,10,2,.88)';
+    ctx.strokeText(word,cx,y);
+    // cream ink with a soft warm glow, as in the reference; the brush face is thinner than the sample so a
+    // stroke in the ink colour thickens it (faux bold) without changing the letter shapes
+    ctx.shadowColor='rgba(255,236,190,.7)';ctx.shadowBlur=size*.4;
+    ctx.lineWidth=Math.max(1,size*.045);ctx.strokeStyle='#f4ecd6';ctx.strokeText(word,cx,y);
+    ctx.fillStyle='#f8f2e2';ctx.fillText(word,cx,y);
+   });
+  });
+  ctx.restore();
  }
 }
 function drawAuthoredHeroVfx(ctx,time){
