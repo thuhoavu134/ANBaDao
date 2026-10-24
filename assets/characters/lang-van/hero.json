@@ -79,14 +79,14 @@
     }
   },
   "art": {
-    "portrait": "assets/characters/lang-van/portrait-43908036.webp"
+    "portrait": "assets/characters/lang-van/portrait-b7fb2728.webp"
   },
   "clipsMeta": "runtime-meta.json",
   "vfxBase": "assets/vfx/lang-van/",
   "vfxMeta": "assets/vfx/lang-van/provenance.json",
   "battle": {
     "tempo": {
-      "basic": 3.0,
+      "basic": 3,
       "ultimate": 2.4
     },
     "actions": {

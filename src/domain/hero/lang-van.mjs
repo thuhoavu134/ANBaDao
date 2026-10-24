@@ -15,7 +15,7 @@ export const LANG_VAN_HERO = Object.freeze({
   profileVersion: 'lang-van/2026-10-23-scaffold', gender: "Nam", age: "Thiếu niên",
   introduction: "Thiếu niên thần tướng múa song thương, dẫn dòng nước xiết và băng giá quét sạch chiến trường.",
   voice: Object.freeze({ lobby: "Song thương này, ta luyện chưa từng ngơi nghỉ!", ultimate: "Song Thương Loạn Vân Phá!" }),
-  art: Object.freeze({ status: 'canvas-sprite-runtime-review', portrait: 'assets/characters/lang-van/portrait-43908036.webp' }),
+  art: Object.freeze({ status: 'canvas-sprite-runtime-review', portrait: 'assets/characters/lang-van/portrait-b7fb2728.webp' }),
   iconId: 'splus.lang_van.ultimate', passiveName: "Song Thần Tiễn Ảnh",
   passive: Object.freeze({ id: 'lang_van.passive', name: "Song Thần Tiễn Ảnh", target: 'Bản thân',
     description: "Mỗi đòn đánh thường tích 1 tầng Thủy Chú lên mục tiêu, giảm 10% tốc chạy, tối đa 3 tầng.",
