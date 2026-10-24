@@ -104,7 +104,7 @@ export function patchAuthoredBattle(input, runtime, descriptors) {
   s = once(s, 'function splusEvent(event) {', 'function splusEvent(event) {authoredHeroEvent(event);');
   s = once(s, 'function splusHeroConfig(raw, index) {',
     `function splusHeroConfig(raw, index) {\n {const authoredIds=${JSON.stringify(ids)},key=String(raw?.sourceId||raw?.id||'').replace(/-/g,'_');if(authoredIds[key])raw={...raw,sourceId:authoredIds[key]};}`);
-  s = once(s, '    drawEffects(ctx, time);', '    drawEffects(ctx, time);\n    drawAuthoredHeroVfx(ctx,time);');
+  s = once(s, '    drawEffects(ctx, time);', '    drawEffects(ctx, time);\n    drawAuthoredHeroVfx(ctx,time);\n    if(typeof drawAuthoredBanner===\'function\') drawAuthoredBanner(ctx,time);');
   s = once(s, 'const slots=isBeAn(actor)||', 'const slots=isAuthoredHero(actor)||isBeAn(actor)||');
   s = once(s, 'const authoredFallMs=', 'const authoredFallMs=isAuthoredHero(unit)?authoredHeroFallMs(unit)/Math.max(1,state.speed):');
   s = once(s, 'unit.defeatHideDuration = ', 'unit.defeatHideDuration = isAuthoredHero(unit)?authoredFallMs+120/Math.max(1,state.speed):');

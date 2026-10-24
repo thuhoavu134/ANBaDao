@@ -192,6 +192,63 @@ function drawAuthoredVfxClip(ctx,def,key,age,x,y,heightPx,opts={}){
  const frame=c.frames<=1?0:Math.min(c.frames-1,Math.floor(age/(c.frameMs||60)));
  authoredSprite(ctx,def,key,frame,x,y,heightPx/c.cellH,!!opts.mirror,opts);
 }
+// ---- ultimate name banner -----------------------------------------------------------------------------------
+// Owner 2026-10-24 ("cái chữ hiện ra theo ulti này rất đáng học hỏi"): when an ultimate fires, the skill name is
+// written over the field in a tall, brush-flavoured face, off-white, glowing softly, with no box behind it, and it
+// melts away on its own. Syllables stack vertically like the reference; each line is written a beat after the one
+// above it so it reads like brush strokes appearing.
+const authoredBanners=[];
+const BANNER_HOLD=900, BANNER_IN=150, BANNER_OUT=300, BANNER_STAGGER=60;
+function authorBanner(text,start,speed){
+try{document.fonts?.load('700 64px "HV Brush"').catch(()=>{});}catch(_){}
+
+ // "A — B" reads as two phrases; the dash is a separator, not a line of its own.
+ const phrases=String(text).split(/\s*[—–-]\s*/).filter(x=>x.trim());
+ const lines=(phrases.length>1?phrases.join(' '):phrases[0]||'').split(/\s+/).filter(Boolean).slice(0,6);
+ authoredBanners.push({lines,start,speed:Math.max(.4,Number(speed)||1),battleId:state.battleId});
+ if(authoredBanners.length>6)authoredBanners.shift();
+}
+function drawAuthoredBanner(ctx,time){
+ if(typeof REDUCED_MOTION!=='undefined'&&REDUCED_MOTION){authoredBanners.length=0;return;}
+ for(let i=authoredBanners.length-1;i>=0;i--){
+  const b=authoredBanners[i];
+  if(b.battleId!==state.battleId){authoredBanners.splice(i,1);continue;}
+  const age=(time-b.start)*b.speed,total=BANNER_STAGGER*b.lines.length+BANNER_IN+BANNER_HOLD+BANNER_OUT;
+  if(age>total){authoredBanners.splice(i,1);continue;}
+  if(age<0)continue;
+  const W=ctx.canvas.width,H=ctx.canvas.height;
+  const size=Math.max(18,Math.min(H*0.1,W/(Math.max(...b.lines.map(l=>l.length))*0.6)));
+  const lh=size*1.0,blockH=lh*b.lines.length;
+  const cx=W*0.5,top=H*0.14;
+  const outAlpha=age>total-BANNER_OUT?Math.max(0,1-(age-(total-BANNER_OUT))/BANNER_OUT):1;
+  ctx.save();
+  // The battle canvas carries the camera transform (scale/translate) when units are drawn; text must be placed in
+  // screen pixels or it lands outside the viewport (that is why the banner was invisible while it was being drawn).
+  ctx.setTransform(1,0,0,1,0,0);
+  ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.font=`700 ${size}px "HV Brush", "Times New Roman", Georgia, serif`;
+  b.lines.forEach((line,idx)=>{
+   const local=age-idx*BANNER_STAGGER;
+   if(local<0)return;
+   const a=Math.min(1,local/BANNER_IN)*outAlpha;
+   const rise=(1-Math.min(1,local/BANNER_IN))*(-size*0.28);
+   const y=top+idx*lh+lh*0.5+rise;
+   ctx.globalAlpha=a;
+   // dark halo + stroke first: the battlefield behind the name is often a bright VFX, and the reference clip reads
+   // its calligraphy on black.
+   ctx.shadowColor='rgba(6,8,12,0.9)';ctx.shadowBlur=size*0.34;
+   ctx.lineWidth=Math.max(3,size*0.10);ctx.strokeStyle='rgba(6,8,12,0.92)';ctx.lineJoin='round';ctx.miterLimit=2;
+   ctx.strokeText(line,cx,y);
+   ctx.fillStyle='rgba(6,8,12,0.55)';
+   ctx.fillText(line,cx,y);
+   // then the ink and its soft glow
+   ctx.shadowColor='rgba(255,250,235,0.85)';ctx.shadowBlur=size*0.42;
+   ctx.fillStyle='rgba(252,248,238,1)';
+   ctx.fillText(line,cx,y);
+  });
+  ctx.restore();
+ }
+}
 function drawAuthoredHeroVfx(ctx,time){
  for(let i=authoredBursts.length-1;i>=0;i--){
   const b=authoredBursts[i],c=b.def.clips[b.spec.vfx],age=(time-b.start)*b.speed;
@@ -305,6 +362,9 @@ async function performAuthoredAction(actor,action,target,e,battleId){
   setUnitState(actor,kind==='basic'?'attack':'ultimate',duration/speed);
   const title=(globalThis.SPLUS42?.catalog||[]).find(h=>h.id===actor.sourceId)?.actions?.[kind]?.name||kind;
   setStatus(actor.name+' · '+title);dom.phaseLabel.textContent=title;
+  // Ultimate name banner (see drawAuthoredBanner): stacks the skill name over the battlefield like the reference
+  // clip the owner sent - brush-ish calligraphy, off-white strong glow, no panel, fading out by itself.
+  if(kind==='ultimate'&&title&&typeof authorBanner==='function')authorBanner(title,info.start+spec.release,speed);
   const releaseCues=(spec.sfx||[]).filter(s=>s.at==='release'),hitCues=(spec.sfx||[]).filter(s=>s.at==='hit');
   const lead=Math.max(0,...releaseCues.map(s=>Number(s.lead)||0));
   if(!await wait(Math.max(0,spec.release-lead)))return;
