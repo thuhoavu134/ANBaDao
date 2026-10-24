@@ -4,7 +4,7 @@ import {readFileSync, mkdtempSync, mkdirSync, writeFileSync, cpSync, rmSync} fro
 import {tmpdir} from 'node:os';
 import {join,resolve} from 'node:path';
 import {execFileSync} from 'node:child_process';
-import {ROSTER_PORTRAIT_LANDMARKS,rosterPortraitSource,rosterPortraitStyle} from '../src/domain/hero/roster-portrait.mjs';
+import {ROSTER_PORTRAIT_LANDMARKS,rosterPortraitLandmark,rosterPortraitSource,rosterPortraitStyle} from '../src/domain/hero/roster-portrait.mjs';
 
 test('every reviewed source maps its face centre and width to the common target at mobile and desktop sizes',()=>{
   for(const [src,[x,y,face]] of Object.entries(ROSTER_PORTRAIT_LANDMARKS)){
@@ -39,4 +39,14 @@ test('real roster installer includes the shared owner and preserves parseable ru
     assert.match(js,/data-portrait-reviewed/);
     assert.doesNotMatch(html,/width:168%/);
   }finally{rmSync(root,{recursive:true,force:true});}
+});
+
+test('pipeline portraits keep their face landmark across re-packs (hash in the name changes, geometry does not)',()=>{
+  for(const slug of ['lang-van','lang-tieu','lang-nguyet','tieu-linh','lang-chan','khaos','nguyet-diep','tinh-mac','bach-y-van-phong']){
+    const hashed=`assets/characters/${slug}/portrait-0123abcd.webp`;
+    assert.ok(rosterPortraitLandmark(hashed),slug);
+    assert.match(rosterPortraitStyle(hashed),/--portrait-width:/,slug);
+  }
+  assert.equal(rosterPortraitLandmark('assets/characters/unknown/portrait-0123abcd.webp'),null);
+  assert.equal(rosterPortraitLandmark('assets/characters/lang-tieu/idle-0-0123abcd.webp'),null);
 });
