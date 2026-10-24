@@ -64,12 +64,14 @@ for (const [state, clip] of Object.entries(STATE_TO_CLIP)) {
     const boxes = await alphaBoxes(png, page.columns, cellW, cellH, frames);
     bodyFull = median(boxes.map(b => b.height));
     footFull = meta.crop.footLineCellY;
-    const buf = await sharp(png).webp({ quality: 92, alphaQuality: 100, effort: 5 }).toBuffer();
+// smartSubsample: full-resolution chroma. Default 4:2:0 halves colour resolution and cost ~4% saturation on the
+// downscaled hero atlases (Lăng Vân: -8% -> -4% vs source, same pixels) for +2% file size (owner 2026-10-24: nhợt nhạt).
+    const buf = await sharp(png).webp({ quality: 92, alphaQuality: 100, effort: 5, smartSubsample: true }).toBuffer();
     const file = `detail-${sha8(buf)}.webp`; writeFileSync(join(outDir, file), buf);
     detail = { file, frames, cols: page.columns, cellW, cellH, durationMs, atlasWidth: page.canvas[0], atlasHeight: page.canvas[1], note: 'hero-detail screen only (full resolution); battle uses clips.idle' };
   }
   const w = Math.round(page.canvas[0] * budgetScale), h = Math.round(page.canvas[1] * budgetScale);
-  const buf = await sharp(png).resize(w, h, { kernel: 'lanczos3' }).webp({ quality: 90, alphaQuality: 100, effort: 5 }).toBuffer();
+  const buf = await sharp(png).resize(w, h, { kernel: 'lanczos3' }).webp({ quality: 90, alphaQuality: 100, effort: 5, smartSubsample: true }).toBuffer();
   const file = `${clip}-0-${sha8(buf)}.webp`; writeFileSync(join(outDir, file), buf);
   const cw = Math.round(cellW * budgetScale), ch = Math.round(cellH * budgetScale);
   clips[clip] = { frames, cols: page.columns, cellW: cw, cellH: ch, durationMs, pageFrames: frames,
