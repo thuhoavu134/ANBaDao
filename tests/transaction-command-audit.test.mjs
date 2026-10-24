@@ -47,7 +47,8 @@ test('L03a records receipt absence instead of treating direct persist as atomic'
 
 test('L03a audit source hash is stable for the captured active runtime', () => {
   const hash = crypto.createHash('sha256').update(source).digest('hex');
-  // Re-pinned 2026-10-25: Khaos hero-screen line added to HERO_VOICE_LINES (cleaned by scripts/hero/clean-voice.py).
+  // Re-pinned 2026-10-25: ten more hero-screen lines wired in HERO_VOICE_LINES (Bạch Diện, Đinh Lôi, Kỳ Vân,
+  // Lăng Chân, Lăng Nguyệt, Lăng Tiêu, Lăng Vân, Thầy Mo, Tiêu Phong, Tịnh Mặc), cleaned by clean-voice.py.
   // No save / economy code changed; the L03a mutation inventory assertions above pass.
-  assert.equal(hash, 'c13db0a3b028a1c4586e1075aa32bf5d50347c62cbc85e9652863496f2a0ddc4');
+  assert.equal(hash, '9609ac1826167bf4b6de4f264a916d2114c5c08308f3d1a12bf6d4627f09231c');
 });
