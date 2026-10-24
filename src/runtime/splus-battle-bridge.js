@@ -92,6 +92,8 @@ function splusEvent(event) {
   if(t?.sourceId==='hero_splus_co_nuong'&&event.type==='damage'&&t.hp>0)coNuongMotion.set(t.id,{kind:'hit',start:performance.now(),duration:850});
   if(t?.sourceId==='hero_splus_co_nuong'&&event.type==='death')coNuongMotion.set(t.id,{kind:'fall-die',start:performance.now(),duration:4000});
   if(t&&event.type==='heal'&&!event.legacyImpact){splusFloater(t,event.amount,true);t.hpTween=null;const ar=intelUnit(a);if(ar)ar.healing+=event.amount;}
+  // Owner 2026-10-25: a shielded hit must show what the shield ate (teal, shield mark), never 'nothing happened'.
+  if(t&&event.type==='shieldAbsorb'&&!event.legacyImpact&&event.amount>0)addFloater(t,`\u{1F6E1} −${event.amount}`,'#7de3d0',false);
   if(t&&event.type==='death'&&!event.legacyImpact)markDefeated(t);
   if(t&&event.type==='resurrect'){t.defeatedAt=0;t.displayHp=t.hp;setUnitState(t,'idle',800);}
   if(event.type==='extraTurn')state.queue.unshift(event.sourceId);
