@@ -4631,7 +4631,7 @@ function paintBachBaoStep(idx,final=false){ document.querySelectorAll('.bbw-cell
 async function spinBachBaoAnimated(){ if(ST.bachBaoSpinning)return; const r=spinBachBaoCore(); if(!r.ok){toast(r.msg);return;} ST.bachBaoSpinning=true; const btn=document.getElementById('bbwSpin'); if(btn){btn.classList.add('spinning');btn.textContent='Đang quay…';} const status=document.getElementById('bbwStatus'); if(status)status.innerHTML='Ánh sáng đang chạy… <strong>đừng chớp mắt.</strong>';
   const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches; const total=reduced?1:(BACH_BAO.slots.length*2+r.idx+1); for(let k=0;k<total;k++){ const idx=reduced?r.idx:k%BACH_BAO.slots.length; paintBachBaoStep(idx,k===total-1); if(!reduced)await new Promise(resolve=>setTimeout(resolve,bachBaoDelay(k,total))); }
   if(status)status.innerHTML=`Dừng tại <strong>${esc(r.z.l)}</strong> · ${esc(r.msg)}`; if(btn){btn.classList.remove('spinning');btn.textContent='QUAY · 1🐚';btn.disabled=(P.so||0)<1;} toast('🎡 '+r.msg); ST.bachBaoSpinning=false; setTimeout(()=>renderFestival(),1250); }
-function grantExtremeEquipment(lvl){ const slot=randOf(DATA.items.slots); const mold=randOf(Object.keys(FORGE_MOLDS)); const it={uid:++P.itemSeq,slot,rar:'ssr',lvl,mold}; P.inventory.push(it); return `SSR +${lvl} · ${itemName(it)} · ${FORGE_MOLDS[mold].name}`; }
+function grantExtremeEquipment(lvl){ const slot=randOf(DATA.items.slots); const mold=randOf(Object.keys(FORGE_MOLDS)); const it={uid:++P.itemSeq,slot,rar:'ssr',lvl,mold,from:'boss',affixes:rollAffixes({source:'boss',rar:'ssr'})}; P.inventory.push(it); return `SSR +${lvl} · ${itemName(it)} · ${FORGE_MOLDS[mold].name}`; }
 function openBachBaoChest(kind){ const b=bachBaoState(); if(kind==='supreme'){ if(b.supreme<1)return null; b.supreme--; } else { if(b.chests<1)return null; b.chests--; }
   const r=Math.random()*100; let msg='',ic='✨'; if(kind==='supreme'){ if(r<45){msg=giveHeroShards('ssr',40);ic='🌟';} else if(r<85){msg=grantExtremeEquipment(10);ic='⚔️';} else {msg=giveHeroShards('ssr',60);ic='👑';} }
   else { if(r<35){msg=giveHeroShards('ss',30);ic='🧩';} else if(r<68){msg=giveHeroShards('ssr',20);ic='🌟';} else if(r<90){msg=grantExtremeEquipment(5);ic='⚔️';} else {P.gems+=120;msg='120 Ngọc';ic='💎';} }
@@ -4682,7 +4682,7 @@ function forgeMoldBonus(id){ const out={hp:0,atk:0,def:0,spd:0,active:[]}, e=(P.
   Object.keys(cnt).forEach(m=>{const n=cnt[m];if(n<2)return;const tier=n>=4?4:2;if(m==='strike')out.atk+=tier===4?.05:.02;if(m==='ward'){out.hp+=tier===4?.05:.02;out.def+=tier===4?.05:.02;}if(m==='tempo')out.spd+=tier===4?3:1;out.active.push({mold:m,n:tier});}); return out; }
 function forgeMoldLine(id){ const x=forgeMoldBonus(id); return x.active.length?' · '+x.active.map(a=>`<b style="color:#ffd978">${FORGE_MOLDS[a.mold].name} (${a.n})</b>`).join(' · '):''; }
 function rollForgeRarity(){ econ().craftPity++; let r=Math.random()*100,acc=0,rar='b'; if(econ().craftPity>=ECON.craftPitySSR){rar='ssr';econ().craftPity=0;}else{for(const [t,pr] of GACHA.rates){acc+=pr;if(r<acc){rar=t;break;}}if(econ().craftPity>=ECON.craftPitySS&&['a','b','s'].includes(rar))rar='ss';if(rar==='ssr')econ().craftPity=0;} return rar; }
-function forgeCandidate(slot){ const rar=rollForgeRarity(); return {uid:null,slot,rar,lvl:0,mold:econ().forgeMold}; }
+function forgeCandidate(slot){ const rar=rollForgeRarity(); return {uid:null,slot,rar,lvl:0,mold:econ().forgeMold,from:'craft',affixes:rollAffixes({source:'craft',rar})}; }
 function startDualForge(slot){ if(econ().forgePending)return {ok:false,msg:'Hãy chọn một phôi đang chờ trước.'}; if((P.tinh||0)<DUAL_FORGE.tinh)return {ok:false,msg:'Thiếu Tinh Lực cho Song Rèn.'}; if(P.gold<DUAL_FORGE.gold)return {ok:false,msg:'Thiếu vàng cho Song Rèn.'}; P.tinh-=DUAL_FORGE.tinh;P.gold-=DUAL_FORGE.gold;econ().forgePending={slot,mold:econ().forgeMold,candidates:[forgeCandidate(slot),forgeCandidate(slot)]};econ().forgeStats.dual++;persist();refreshResbar();return {ok:true}; }
 function chooseDualForge(i){ const p=econ().forgePending;if(!p||!p.candidates[i])return false;const it={...p.candidates[i],uid:++P.itemSeq};P.inventory.push(it);econ().forgePending=null;econ().forgeStats.chosen++;questProgress('craft',1);persist();refreshResbar();toast('Đã giữ '+itemName(it)+' · '+FORGE_MOLDS[it.mold].name);return true; }
 const RFAC={b:1,a:1.3,s:1.7,ss:2.2,ssr:3};
@@ -4692,7 +4692,8 @@ function equippedBy(uid){ for(const hId in (P.equip||{})){ const e=P.equip[hId];
 function heroEquipBonus(id){ const out={hp:0,atk:0,def:0,spd:0}; if(!P||!P.equip) return out;
   const e=P.equip[id]; if(!e) return out;
   for(const s of DATA.items.slots){ const uid=e[s]; if(!uid) continue;
-    const it=P.inventory.find(i=>i.uid===uid); if(it) out[DATA.items.statMap[s]]+=itemStat(it); }
+    const it=P.inventory.find(i=>i.uid===uid); if(!it) continue; out[DATA.items.statMap[s]]+=itemStat(it);
+  const a=typeof affixSum==='function'?affixSum(it):null; if(a){ out.hp+=a.hp; out.atk+=a.atk; out.def+=a.def; out.spd+=a.spd; } }
   return out; }
 function equipLine(id){ const e=(P.equip||{})[id]||{};
   return 'Trang bị: '+DATA.items.slots.map(s=>{ const uid=e[s]; const it=uid&&P.inventory.find(i=>i.uid===uid);

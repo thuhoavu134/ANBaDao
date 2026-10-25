@@ -345,7 +345,9 @@ function applyGrant(result, grant, stamCap) {
       slot: grant.slot,
       rar: 'ssr',
       lvl: grant.lvl,
-      mold: grant.mold
+      mold: grant.mold,
+      from: 'boss',
+      affixes: typeof rollAffixes === 'function' ? rollAffixes({ source: 'boss', rar: 'ssr' }) : []
     });
   }
 }

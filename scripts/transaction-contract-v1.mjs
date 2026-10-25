@@ -14,14 +14,16 @@ const loadoutSource = readFileSync(join(process.cwd(), 'src/domain/hero/loadout.
 const partyRuntime = readFileSync(join(process.cwd(), 'src/ui/party-command-runtime.js'), 'utf8');
 new Function(loadoutSource + '\n' + partyRuntime);
 const forgeSource = readFileSync(join(process.cwd(), 'src/domain/equipment/forge-commands.mjs'), 'utf8').replace(/^export\s+/gm, '');
+const affixSource = readFileSync(join(process.cwd(), 'src/domain/equipment/item-affixes.mjs'), 'utf8').replace(/^export\s+/gm, '');
 const forgeRuntime = readFileSync(join(process.cwd(), 'src/ui/forge-command-runtime.js'), 'utf8');
 new Function(forgeSource + '\n' + forgeRuntime);
+new Function(forgeSource + '\n' + affixSource + '\n' + forgeRuntime);
 
 const heroMarker = 'function levelUpHero(';
 if (!html.includes(heroMarker)) throw new Error('Hero upgrade marker not found');
 html = html.replace(
   heroMarker,
-  moduleSource + '\n' + loadoutSource + '\n' + forgeSource + '\n/* Hồn Việt R07: local transaction receipts */\n' + heroMarker
+  moduleSource + '\n' + loadoutSource + '\n' + forgeSource + '\n' + affixSource + '\n/* Hồn Việt R07: local transaction receipts */\n' + heroMarker
 );
 
 const helper = `function hvReceiptForCommand(commandId){

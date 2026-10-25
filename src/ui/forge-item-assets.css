@@ -36,3 +36,15 @@
 @keyframes hvForgeSweep{to{transform:translateX(45%)}}
 @media(max-width:720px){#forgeScreen .forge-item-reveal{grid-template-columns:72px minmax(0,1fr);gap:9px}.forge-item-reveal .forge-reveal-art{width:72px;height:72px}.forge-item-reveal .forge-reveal-dismiss{grid-column:1 / -1;width:100%}}
 @media(prefers-reduced-motion:reduce){#forgeScreen .forge-item-reveal,#forgeScreen .forge-item-reveal:before{animation:none}}
+
+/* Owner 2026-10-25: dòng phụ trang bị. Dòng đặc biệt (đồ săn boss) in màu đỏ-cam để tách khỏi dòng thường. */
+.hv-affix-list{display:flex;flex-wrap:wrap;gap:4px 6px;margin-top:4px}
+.hv-affix{
+  font-size:10px;font-weight:800;line-height:1.5;padding:1px 6px;border-radius:999px;
+  color:#cfe6c4;background:rgba(120,200,140,.12);box-shadow:inset 0 0 0 1px rgba(150,220,170,.3);
+  font-variant-numeric:tabular-nums;
+}
+.hv-affix.is-special{
+  color:#ffd0a2;background:linear-gradient(180deg,rgba(255,120,60,.26),rgba(200,50,20,.26));
+  box-shadow:inset 0 0 0 1px rgba(255,150,90,.65),0 0 6px rgba(255,110,50,.35);
+}
