@@ -294,6 +294,27 @@ function drawAuthoredHeroVfx(ctx,time){
  for(const info of authoredActions){
   const age=(time-info.start)*info.speed;if(info.battleId!==state.battleId)continue;
   const def=info.def,spec=info.spec,u=info.actor,victims=info.targets.map(getUnit).filter(Boolean);
+  // Owner 2026-10-25 (Lăng Chân): 'atk cho bóng màu trắng di chuyển từ vị trí idle bay đến địch, cú đánh cuối của cái
+  // bóng có vòng âm dương đập vào địch, lặp lại 1 lần nữa để có 2 lần đánh'. The hero no longer dashes: a bright copy of
+  // him flies to the target for each hit (hero.json basic.shadow), and the impact VFX (the yin-yang ring) lands there.
+  if(spec.shadow&&victims.length){
+   const sh=spec.shadow,lead=Math.max(120,Number(sh.lead)||620),clipKey=sh.clip||'basic',c=def.clips[clipKey];
+   if(c){
+    const fm=c.frameMs||60,ho=spec.hits;
+    for(let i=0;i<ho.length;i++){
+     const from=ho[i]-lead,p=(age-from)/lead;
+     if(p<0||p>1)continue;
+     const t=victims[Math.min(i,victims.length-1)],bh=authoredBodyHeight(u);
+     const x=u.x+(t.x-u.x)*p,y=u.y+(t.y-u.y)*p-bh*(Number(sh.lift)||.1)*Math.sin(Math.PI*p);
+     const frame=Math.max(0,Math.min(c.frames-1,Math.floor((age-from)/fm)));
+     ctx.save();
+     ctx.globalCompositeOperation=sh.tint||'lighter';
+     ctx.globalAlpha=(Number(sh.alpha)||.9)*(1-Math.max(0,p-.92)*6);
+     authoredSprite(ctx,def,clipKey,frame,x,y,authoredScale(u)*(Number(sh.scale)||1),t.x<u.x);
+     ctx.restore();
+    }
+   }
+  }
   if(spec.projectile?.passes&&victims[0]){const pr=spec.projectile,t=victims[0],bh=authoredBodyHeight(u),th=authoredBodyHeight(t),f=authoredFacing(u);
    const D=Math.max(bh,Math.hypot(t.x-u.x,t.y-u.y))*(Number(pr.reach)||1),O=D*(Number(pr.overshoot)||.45),ang=(Number(pr.angle)||45)*Math.PI/180;
    const cx=t.x,cy=t.y-th*.5,ux=-f*Math.cos(ang),uy=-Math.sin(ang),P=[cx+ux*D,cy+uy*D],Q=[cx-ux*O,cy-uy*O],F=Number(pr.flight)||300;
