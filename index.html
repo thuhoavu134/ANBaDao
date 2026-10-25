@@ -2500,7 +2500,8 @@ function heroStats(id){ const b=DATA.heroes[id].stats; const lm=1+0.08*(heroLeve
   return {hp:Math.round(b.hp*lm*sm*(1+pHp)*am)+eq.hp, mp:b.mp+(mb.mp||0),
     atk:Math.round(b.atk*lm*sm*(1+pAtk)*am)+eq.atk,
     def:Math.round(b.def*lm*sm*(1+pDef)*am)+eq.def,
-    spd:b.spd+eq.spd+sp.spd+fm.spd+aw+(rb.spd||0)+(mb.spd||0)}; }
+    spd:b.spd+eq.spd+sp.spd+fm.spd+aw+(rb.spd||0)+(mb.spd||0),
+    khangHe:eq.khangHe||0, satHe:eq.satHe||0}; }
 function levelCost(id){ return 60*heroLevel(id); }
 function starCost(id){ return 20*heroStars(id); }
 function levelUpHero(id){ if(heroLevel(id)>=30) return {ok:false,msg:"Đã đạt cấp tối đa (30)"};
@@ -2689,9 +2690,19 @@ function fitCanvas(){ const r=window.devicePixelRatio||1; cv.width=CW*r; cv.heig
 let uid=0;
 const HE={than:{ic:'🔥',nm:'Hỏa'},hoa:{ic:'🔥',nm:'Hỏa'},kim:{ic:'⚙️',nm:'Kim'},moc:{ic:'🌿',nm:'Mộc'},phong:{ic:'🌀',nm:'Phong'},thuy:{ic:'💧',nm:'Thủy'},tho:{ic:'🪨',nm:'Thổ'},rau:{ic:'🌿',nm:'Mộc'},suong:{ic:'💧',nm:'Thủy'},set:{ic:'⚡',nm:'Lôi'},mong:{ic:'🌙',nm:'Mộng'},soul:{ic:'🎭',nm:'Âm Hồn'}};
 const OFFICIAL_ROSTER_12_IDS=Object.freeze(["ong_hang_pho","thay_mo","lac_yen","cung_thu_tre","co_dao_ganh_hoi","phong_tu","thuy_nuong_roi_nuoc","hong_lien_dao_nuong","thach_quyen","dinh_loi","luc_anh","to_diep","linh_dong","bach_dien"]);
-const KHAC={than:'rau',rau:'suong',suong:'set',set:'mong',mong:'than'};
-const SINH={suong:'rau',rau:'than',than:'set',set:'mong',mong:'suong'};
-function counterMult(a,d){ return (KHAC[a]===d)?1.2:1; }
+// Owner 2026-10-25: chuẩn hoá về đúng 5 hệ Kim/Mộc/Thuỷ/Hoả/Thổ.
+// Tướng cũ còn dùng tên nội bộ (than/rau/suong/set/mong/soul/phong) nên map về hệ chuẩn ở một chỗ.
+const HE_ALIAS={kim:'kim',moc:'moc',thuy:'thuy',hoa:'hoa',tho:'tho',
+  than:'hoa',rau:'moc',suong:'thuy',phong:'moc',set:'kim',mong:'tho',soul:'hoa',
+  // vài tướng còn ghi tên hệ tiếng Anh
+  metal:'kim',wood:'moc',water:'thuy',fire:'hoa',earth:'tho',dream:'tho',am:'hoa'};
+for(const [alias,canon] of Object.entries(HE_ALIAS)){ if(alias!==canon&&HE[canon]) HE[alias]=HE[canon]; }
+function heOf(v){ return HE_ALIAS[String(v||'').toLowerCase()]||null; }
+// Kim khắc Mộc · Mộc khắc Thổ · Thổ khắc Thuỷ · Thuỷ khắc Hoả · Hoả khắc Kim
+const KHAC={kim:'moc',moc:'tho',tho:'thuy',thuy:'hoa',hoa:'kim'};
+// Tương sinh: Kim sinh Thuỷ · Thuỷ sinh Mộc · Mộc sinh Hoả · Hoả sinh Thổ · Thổ sinh Kim
+const SINH={kim:'thuy',thuy:'moc',moc:'hoa',hoa:'tho',tho:'kim'};
+function counterMult(a,d){ const A=heOf(a),D=heOf(d); if(!A||!D)return 1; if(KHAC[A]===D)return 1.25; if(KHAC[D]===A)return 0.85; return 1; }
 function inferArchetype(def){
   if(def.archetype) return def.archetype;
   const role=String(def.role||'').toLowerCase(); const kind=def.skill?.fx?.kind||def.skill?.vfx||'';
@@ -2705,7 +2716,7 @@ function inferArchetype(def){
 function makeCombatant(def, side, isHero){ const st=def.stats;
   return { uid:++uid, id:def.id, sourceHeroId:def.sourceHeroId||def.heroId||def.id, name:def.name, col:def.col||"#9aa", side, isHero, row:def.row||"front", archetype:inferArchetype(def), he:(def.he||((DATA.heroes[def.sourceHeroId||def.heroId||def.id]&&DATA.heroes[def.sourceHeroId||def.heroId||def.id].he)||'vo')),
     hpMax:st.hp, hp:st.hp, mpMax:st.mp||0, mp:isHero?Math.round((st.mp||0)*0.5):0,
-    atk:st.atk, def:st.def, spd:st.spd, baseSpd:st.spd, skill:def.skill||null, ultimate:def.ultimate||null, cd:0,
+    atk:st.atk, def:st.def, spd:st.spd, baseSpd:st.spd, khangHe:Number(st.khangHe)||0, satHe:Number(st.satHe)||0, skill:def.skill||null, ultimate:def.ultimate||null, cd:0,
     buffs:[], shield:0, mark:0, markDur:0, feared:0, guard:0, hasteDur:0, _taunt:0,
     av:0, x:0,y:0, ax:0,ay:0, flash:0, dead:false, saidLow:false }; }
 
@@ -2950,7 +2961,11 @@ function applyEffect(actor,targets,fx,isSkill,opt){ triggerHit(); const ability=
   const doDamage=(t,power)=>{ if(!t||t.dead)return {target:t,killed:false,dmg:0}; const wasAlive=!t.dead&&t.hp>0; let raw=actor.atk*power*atkMul(actor);
     if(actor._seasonBlood&&actor.hp/actor.hpMax<0.45) raw*=1.15;
     const _rm=seasonRoleCounterMult(actor,t); if(_rm>1){ raw*=_rm; if(!S.hideNumbers) floatText(t,'▲role','#9de8ff'); }
-    const _km=counterMult(actor.he,t.he); if(_km>1){ raw*=_km; if(!S.hideNumbers) floatText(t,'▲khắc','#ffd782'); }
+    const _km=counterMult(actor.he,t.he); if(_km!==1){ raw*=_km; if(!S.hideNumbers) floatText(t,_km>1?'▲khắc':'▼bị khắc',_km>1?'#ffd782':'#8fa8c8'); }
+    // Owner 2026-10-25: dòng phụ hệ chỉ cộng khi giao tranh đúng chiều khắc hệ.
+    const _ar=Number(actor.satHe)||0, _dr=Number(t.khangHe)||0;
+    const _ahe=heOf(actor.he), _dhe=heOf(t.he);
+    if(_ahe&&_dhe&&KHAC[_ahe]===_dhe){ if(_ar>0) raw*=(1+_ar/100); if(_dr>0) raw*=(1-_dr/100); }
     if(fx.missingHpBonus){ const m=1-t.hp/t.hpMax; raw*=(1+m*fx.missingHpBonus); }
     let dmg=raw*(100/(100+t.def*defMul(t))); if(t.row==='back'&&!isSkill)dmg*=0.75;
     if(t.mark>0)dmg*=(1+t.mark); if(t.guard>0)dmg*=0.5; dmg*=(0.9+Math.random()*0.2); dmg=Math.max(1,Math.round(dmg));
@@ -4715,11 +4730,11 @@ const RFAC={b:1,a:1.3,s:1.7,ss:2.2,ssr:3};
 function itemName(it){ return DATA.items.names[it.slot][it.rar]; }
 function itemStat(it){ return Math.round(DATA.items.base[it.slot][it.rar]*(1+0.12*it.lvl)); }
 function equippedBy(uid){ for(const hId in (P.equip||{})){ const e=P.equip[hId]; if(e) for(const s of DATA.items.slots) if(e[s]===uid) return hId; } return null; }
-function heroEquipBonus(id){ const out={hp:0,atk:0,def:0,spd:0}; if(!P||!P.equip) return out;
+function heroEquipBonus(id){ const out={hp:0,atk:0,def:0,spd:0,khangHe:0,satHe:0}; if(!P||!P.equip) return out;
   const e=P.equip[id]; if(!e) return out;
   for(const s of DATA.items.slots){ const uid=e[s]; if(!uid) continue;
     const it=P.inventory.find(i=>i.uid===uid); if(!it) continue; out[DATA.items.statMap[s]]+=itemStat(it);
-  const a=typeof affixSum==='function'?affixSum(it):null; if(a){ out.hp+=a.hp; out.atk+=a.atk; out.def+=a.def; out.spd+=a.spd; } }
+  const a=typeof affixSum==='function'?affixSum(it):null; if(a){ out.hp+=a.hp; out.atk+=a.atk; out.def+=a.def; out.spd+=a.spd; out.khangHe+=a.khangHe||0; out.satHe+=a.satHe||0; } }
   return out; }
 function equipLine(id){ const e=(P.equip||{})[id]||{};
   return 'Trang bị: '+DATA.items.slots.map(s=>{ const uid=e[s]; const it=uid&&P.inventory.find(i=>i.uid===uid);

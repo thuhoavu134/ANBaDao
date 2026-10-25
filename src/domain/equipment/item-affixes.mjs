@@ -49,6 +49,15 @@ export const AFFIX_TIER2 = Object.freeze({
   counter: Object.freeze({
     key: 'counter', label: 'Phản đòn', short: 'CTR', stat: 'counter', kind: 'pct', special: true,
     range: Object.freeze({ s: [5, 7], ss: [10, 14], ssr: [18, 25] })
+  }),
+  // Owner 2026-10-25: hai dòng hệ, chỉ có nghĩa khi giao tranh đúng chiều khắc hệ.
+  khangHe: Object.freeze({
+    key: 'khangHe', label: 'Kháng hệ khắc', short: 'KHE', stat: 'khangHe', kind: 'pct', special: true,
+    range: Object.freeze({ s: [3, 5], ss: [5, 8], ssr: [8, 12] })
+  }),
+  satHe: Object.freeze({
+    key: 'satHe', label: 'Sát thương hệ khắc', short: 'SHE', stat: 'satHe', kind: 'pct', special: true,
+    range: Object.freeze({ s: [3, 5], ss: [5, 8], ssr: [8, 12] })
   })
 });
 
@@ -120,7 +129,7 @@ export function normalizeAffixes(item) {
 
 /** Tổng chỉ số phụ của một món, luôn trả đủ khoá để cộng dồn an toàn. */
 export function affixSum(item) {
-  const out = { hp: 0, def: 0, spd: 0, atk: 0, crit: 0, accuracy: 0, critRes: 0, evasion: 0, lifesteal: 0, counter: 0 };
+  const out = { hp: 0, def: 0, spd: 0, atk: 0, crit: 0, accuracy: 0, critRes: 0, evasion: 0, lifesteal: 0, counter: 0, khangHe: 0, satHe: 0 };
   for (const affix of normalizeAffixes(item)) {
     const def = AFFIX_KEYS[affix.k];
     if (!def) continue;

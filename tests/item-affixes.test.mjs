@@ -57,7 +57,8 @@ test('món cũ không có affixes vẫn đọc an toàn', () => {
   assert.deepEqual(normalizeAffixes({}), []);
   assert.deepEqual(normalizeAffixes({ affixes: null }), []);
   const zero = affixSum({});
-  assert.deepEqual(Object.values(zero), [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+  assert.deepEqual(Object.values(zero), new Array(Object.keys(zero).length).fill(0));
+  assert.equal(zero.khangHe, 0, 'dòng hệ cũng phải có mặt và bằng 0');
   assert.deepEqual(affixLines({}), []);
   // save hỏng: dòng lạ, giá trị âm, trùng khoá → bỏ hết
   const bad = normalizeAffixes({ affixes: [{ k: 'hp', v: 100 }, { k: 'hp', v: 50 }, { k: 'la', v: 9 }, { k: 'def', v: -3 }] });
