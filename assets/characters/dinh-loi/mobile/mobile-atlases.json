@@ -1,0 +1,37 @@
+{
+ "assets/characters/dinh-loi/basic-projectile-atlas.png": {
+  "src": "assets/characters/dinh-loi/mobile/basic-projectile-atlas.png",
+  "width": 1920,
+  "height": 1080
+ },
+ "assets/characters/dinh-loi/basic-impact-atlas.png": {
+  "src": "assets/characters/dinh-loi/mobile/basic-impact-atlas.png",
+  "width": 1920,
+  "height": 1080
+ },
+ "assets/characters/dinh-loi/skill1-wave-atlas.png": {
+  "src": "assets/characters/dinh-loi/mobile/skill1-wave-atlas.png",
+  "width": 1920,
+  "height": 1080
+ },
+ "assets/characters/dinh-loi/skill1-impact-atlas.png": {
+  "src": "assets/characters/dinh-loi/mobile/skill1-impact-atlas.png",
+  "width": 1920,
+  "height": 1080
+ },
+ "assets/characters/dinh-loi/skill1-shield-atlas.png": {
+  "src": "assets/characters/dinh-loi/mobile/skill1-shield-atlas.png",
+  "width": 1920,
+  "height": 1080
+ },
+ "assets/characters/dinh-loi/ultimate-vfx-atlas.png": {
+  "src": "assets/characters/dinh-loi/mobile/ultimate-vfx-atlas.png",
+  "width": 1080,
+  "height": 1920
+ },
+ "assets/characters/dinh-loi/ultimate-impact-atlas.png": {
+  "src": "assets/characters/dinh-loi/mobile/ultimate-impact-atlas.png",
+  "width": 1080,
+  "height": 1920
+ }
+}

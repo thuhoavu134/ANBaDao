@@ -348,3 +348,6 @@ raiseIosAtlasBudget(root);
 // AFK/preparation farm: every authored hero gets a run-in + attack spec from the atlas they already ship.
 const { installFarmAttackSpecs } = await import('./campaign-farm-attack-specs-v1.mjs');
 installFarmAttackSpecs(root);
+// Đình Lôi glow sheets at half size on phones: his 443 MiB of atlases evicted our heroes' idle pages (flicker).
+const { installDinhLoiMobileAtlases } = await import('./dinh-loi-mobile-atlas-v1.mjs');
+installDinhLoiMobileAtlases(root);
