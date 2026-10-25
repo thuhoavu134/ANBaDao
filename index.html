@@ -547,17 +547,16 @@ body.hub-art-active .mainstage{height:100dvh;min-height:620px;border:0;border-ra
 .econ-actions .btn{min-height:44px;border-radius:12px}.econ-progress{height:8px;border-radius:99px;background:#161824;border:1px solid #292d40;overflow:hidden;margin:8px 0}.econ-progress>i{display:block;height:100%;background:linear-gradient(90deg,#a969ff,#f2b544);box-shadow:0 0 14px rgba(242,181,68,.5)}
 .sumgrid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}.scard{min-height:116px;background:linear-gradient(145deg,rgba(17,20,34,.98),rgba(31,21,35,.96));border-radius:16px;padding:13px;box-shadow:inset 0 0 26px rgba(255,255,255,.02),0 10px 24px rgba(0,0,0,.28)}
 .forge-slotbar{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.forge-slot{display:flex;align-items:center;gap:8px;text-align:left;min-height:62px}.forge-slot img{width:38px;height:38px;border-radius:10px;object-fit:cover}
-/* Kiếm Thế enhancement glow (owner 2026-10-25): the cell is clear glass so the item reads perfectly; inside and
-   around its rim a metallic tier-coloured fire burns, with coloured motes and bright embers drifting upward.
+/* Kiếm Thế enhancement glow (owner 2026-10-25): the cell is clear glass so the item reads perfectly; inside its rim a metallic tier-coloured fire burns (clipped to the cell), with coloured motes and bright embers drifting upward.
    Drawn by HV_ENH_FX (canvas, src/ui/forge-item-assets-runtime.js). +9..+11 tím, +12..+13 vàng kim, +14..+15 đỏ. */
 .hv-item-slot{position:relative;display:inline-flex;flex:0 0 auto}
 .hv-item-slot[class*='hv-glow-'] .forge-item-art{position:relative;z-index:1;border-radius:7px;border:2px solid;
   background:linear-gradient(180deg,rgba(255,255,255,.34) 0%,rgba(255,255,255,.06) 38%,rgba(255,255,255,0) 52%),
              radial-gradient(circle at 50% 58%,rgba(18,14,30,.08) 0%,rgba(18,14,30,.42) 100%)}
-.hv-item-slot.hv-glow-purple .forge-item-art{border-color:#d4a4ff;box-shadow:0 0 10px 1px rgba(170,90,255,.8)}
-.hv-item-slot.hv-glow-gold .forge-item-art{border-color:#ffe98a;box-shadow:0 0 10px 1px rgba(255,214,60,.85)}
-.hv-item-slot.hv-glow-red .forge-item-art{border-color:#ffab55;box-shadow:0 0 12px 2px rgba(255,100,30,.9)}
-.hv-item-slot>canvas.hv-fx{position:absolute;left:-16px;top:-22px;z-index:2;pointer-events:none;mix-blend-mode:screen}
+.hv-item-slot.hv-glow-purple .forge-item-art{border-color:#d4a4ff;box-shadow:0 0 3px rgba(170,90,255,.7)}
+.hv-item-slot.hv-glow-gold .forge-item-art{border-color:#ffe98a;box-shadow:0 0 3px rgba(255,214,60,.75)}
+.hv-item-slot.hv-glow-red .forge-item-art{border-color:#ffab55;box-shadow:0 0 3px rgba(255,100,30,.8)}
+.hv-item-slot>canvas.hv-fx{position:absolute;left:0;top:0;z-index:2;pointer-events:none;mix-blend-mode:screen}
 @media (prefers-reduced-motion: reduce){.hv-item-slot>canvas.hv-fx{display:none}}
 .econ-itemgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:9px}.econ-item{border:1px solid #363242;border-radius:15px;background:linear-gradient(180deg,rgba(24,22,31,.96),rgba(13,14,22,.96));padding:12px;position:relative;overflow:hidden}.econ-item::after{content:"";position:absolute;right:-24px;bottom:-30px;width:90px;height:90px;background:radial-gradient(circle,rgba(242,181,68,.14),transparent 70%)}.econ-item .nm{font-weight:850;color:#f6e6bd}.econ-item .meta{font-size:11.5px;color:#b8bdd0;margin-top:4px}.econ-item .price{font-size:12px;color:#f2c14e;margin-top:8px}
 .shop-shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}.shop-card{min-height:170px;border:1px solid rgba(213,171,81,.35);border-radius:17px;background:linear-gradient(180deg,rgba(20,20,28,.96),rgba(10,11,17,.95));padding:13px;display:flex;flex-direction:column;position:relative;overflow:hidden}.shop-card img{width:58px;height:58px;border-radius:14px;object-fit:cover;border:1px solid rgba(242,181,68,.25)}.shop-card .shop-name{font-weight:850;font-size:13px;color:#f7e8be;margin-top:9px}.shop-card .shop-what{font-size:11.5px;color:#b8bdd0;line-height:1.5;margin-top:4px}.shop-card .btn{margin-top:auto}

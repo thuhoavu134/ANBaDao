@@ -55,22 +55,23 @@ chooseDualForge = function chooseDualForgeWithReveal(index, commandId, pendingId
 // 17-20 yellow) onto our +0..+15 ceiling: +9..+11 tím, +12..+13 vàng kim, +14..+15 đỏ rực.
 function enhGlowTier(lvl){ const n=Number(lvl)||0; return n>=14?'red':n>=12?'gold':n>=9?'purple':''; }
 
-// Owner 2026-10-25: enhanced item cells - clear glass in the middle, a metallic tier-coloured fire burning inside and
-// around the rim, coloured motes and bright embers rising like sparks. One shared rAF for every glowing cell on screen.
+// Owner 2026-10-25: enhanced item cells - clear glass in the middle, a metallic tier-coloured fire burning inside the
+// rim, coloured motes and bright embers rising like sparks, plus li-ti specks that now and then flash.
+// Owner: "hạt chỉ được phép di chuyển trong phạm vi ô đồ, không được cháy ra ngoài" - everything is clipped to the
+// inside of the cell; nothing is drawn past its border. One shared rAF for every glowing cell on screen.
 const HV_ENH_FX = (() => {
   const PAL = {
-    purple: { rim: [178, 96, 255], hot: [246, 214, 255], mote: [205, 140, 255], rate: 46 },
-    gold:   { rim: [255, 196, 40], hot: [255, 248, 196], mote: [255, 224, 110], rate: 56 },
-    red:    { rim: [255, 84, 22],  hot: [255, 222, 120], mote: [255, 146, 52],  rate: 72 },
+    purple: { rim: [178, 96, 255], hot: [246, 214, 255], mote: [205, 140, 255], rate: 46, specks: 16 },
+    gold:   { rim: [255, 196, 40], hot: [255, 248, 196], mote: [255, 224, 110], rate: 56, specks: 20 },
+    red:    { rim: [255, 84, 22],  hot: [255, 222, 120], mote: [255, 146, 52],  rate: 72, specks: 24 },
   };
-  const PAD_X = 16, PAD_TOP = 22, PAD_BOTTOM = 12;
   const cells = new Set();
-  let raf = 0, last = 0;
+  let raf = 0, last = 0, manual = false, clock = 0;
   const rgba = (c, a) => `rgba(${c[0]},${c[1]},${c[2]},${a})`;
 
   function attach(root) {
     if (!root) return;
-    if (typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!manual && typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     root.querySelectorAll('.hv-item-slot[data-glow]').forEach(el => {
       if (el.__hvFx) return;
       const tier = el.dataset.glow;
@@ -78,14 +79,15 @@ const HV_ENH_FX = (() => {
       const c = document.createElement('canvas');
       c.className = 'hv-fx';
       el.appendChild(c);
-      el.__hvFx = { c, tier, parts: [], acc: 0, seed: Math.random() * 1000 };
+      el.__hvFx = { c, tier, parts: [], specks: [], acc: 0, sacc: 0, seed: Math.random() * 1000 };
       cells.add(el);
     });
-    if (cells.size && !raf) { last = 0; raf = requestAnimationFrame(loop); }
+    if (cells.size && !raf && !manual) { last = 0; raf = requestAnimationFrame(loop); }
   }
 
   function loop(ts) {
     raf = 0;
+    if (manual) return;
     const dt = last ? Math.min(0.05, (ts - last) / 1000) : 0.016;
     last = ts;
     const vh = innerHeight;
@@ -98,25 +100,36 @@ const HV_ENH_FX = (() => {
     if (cells.size) raf = requestAnimationFrame(loop);
   }
 
+  // Deterministic stepping (QA / video capture): advance every cell by dt seconds regardless of frame rate.
+  function step(dt) {
+    manual = true;
+    if (raf) { cancelAnimationFrame(raf); raf = 0; }
+    clock += dt;
+    for (const el of cells) if (el.isConnected) draw(el, clock, dt);
+  }
+
   function draw(el, t, dt) {
     const fx = el.__hvFx, pal = PAL[fx.tier];
     const w = el.offsetWidth, h = el.offsetHeight;
-    const W = w + PAD_X * 2, H = h + PAD_TOP + PAD_BOTTOM;
-    // (not the campaign scene's exact dpr line: a build step anchors on that text being unique)
     const dpr = Math.min(2, (window.devicePixelRatio) || 1);
     const c = fx.c;
-    if (c.width !== Math.round(W * dpr) || c.height !== Math.round(H * dpr)) {
-      c.width = Math.round(W * dpr); c.height = Math.round(H * dpr);
-      c.style.width = W + 'px'; c.style.height = H + 'px';
+    if (c.width !== Math.round(w * dpr) || c.height !== Math.round(h * dpr)) {
+      c.width = Math.round(w * dpr); c.height = Math.round(h * dpr);
+      c.style.width = w + 'px'; c.style.height = h + 'px';
     }
     const g = c.getContext('2d');
     g.setTransform(dpr, 0, 0, dpr, 0, 0);
-    g.clearRect(0, 0, W, H);
+    g.clearRect(0, 0, w, h);
+    // inside of the 2px border, rounded like the cell
+    const b = 2, x0 = b, y0 = b, x1 = w - b, y1 = h - b, iw = x1 - x0, ih = y1 - y0, rad = 6;
+    g.save();
+    g.beginPath();
+    g.moveTo(x0 + rad, y0); g.arcTo(x1, y0, x1, y1, rad); g.arcTo(x1, y1, x0, y1, rad);
+    g.arcTo(x0, y1, x0, y0, rad); g.arcTo(x0, y0, x1, y0, rad); g.closePath();
+    g.clip();
     g.globalCompositeOperation = 'lighter';
-    const x0 = PAD_X, y0 = PAD_TOP, x1 = PAD_X + w, y1 = PAD_TOP + h;
 
-    // 1) metallic fire burning along the INSIDE of the rim: flickering soft bands on all four edges,
-    //    stronger along the bottom where the flames start.
+    // 1) metallic fire along the inside of the rim, strongest at the bottom
     const flick = s => 0.55 + 0.45 * Math.sin(t * 7.3 + s) * Math.sin(t * 3.1 + s * 1.7);
     const edge = (gx0, gy0, gx1, gy1, a) => {
       const gr = g.createLinearGradient(gx0, gy0, gx1, gy1);
@@ -125,64 +138,90 @@ const HV_ENH_FX = (() => {
       gr.addColorStop(1, rgba(pal.rim, 0));
       return gr;
     };
-    const band = Math.max(8, w * 0.2);
-    g.fillStyle = edge(0, y1, 0, y1 - band * 1.5, 0.55 * flick(fx.seed)); g.fillRect(x0, y1 - band * 1.5, w, band * 1.5);
-    g.fillStyle = edge(x0, 0, x0 + band, 0, 0.32 * flick(fx.seed + 2)); g.fillRect(x0, y0, band, h);
-    g.fillStyle = edge(x1, 0, x1 - band, 0, 0.32 * flick(fx.seed + 4)); g.fillRect(x1 - band, y0, band, h);
-    g.fillStyle = edge(0, y0, 0, y0 + band, 0.22 * flick(fx.seed + 6)); g.fillRect(x0, y0, w, band);
+    const band = Math.max(7, iw * 0.19);
+    g.fillStyle = edge(0, y1, 0, y1 - band * 1.6, 0.58 * flick(fx.seed)); g.fillRect(x0, y1 - band * 1.6, iw, band * 1.6);
+    g.fillStyle = edge(x0, 0, x0 + band, 0, 0.34 * flick(fx.seed + 2)); g.fillRect(x0, y0, band, ih);
+    g.fillStyle = edge(x1, 0, x1 - band, 0, 0.34 * flick(fx.seed + 4)); g.fillRect(x1 - band, y0, band, ih);
+    g.fillStyle = edge(0, y0, 0, y0 + band, 0.22 * flick(fx.seed + 6)); g.fillRect(x0, y0, iw, band);
 
-    // 2) flame tongues licking up from the bottom rim (outside + inside)
+    // 2) flame tongues licking up from the bottom rim - inside the cell only
     const tongues = 5;
     for (let i = 0; i < tongues; i++) {
-      const fxp = x0 + (i + 0.5) * (w / tongues) + Math.sin(t * 2.3 + i * 1.9 + fx.seed) * 3;
-      const fh = h * (0.22 + 0.16 * (0.5 + 0.5 * Math.sin(t * 5.1 + i * 2.7 + fx.seed)));
+      const fxp = x0 + (i + 0.5) * (iw / tongues) + Math.sin(t * 2.3 + i * 1.9 + fx.seed) * 3;
+      const fh = ih * (0.2 + 0.15 * (0.5 + 0.5 * Math.sin(t * 5.1 + i * 2.7 + fx.seed)));
       const rg = g.createRadialGradient(fxp, y1, 0, fxp, y1, fh);
-      rg.addColorStop(0, rgba(pal.hot, 0.55));
-      rg.addColorStop(0.4, rgba(pal.rim, 0.32));
+      rg.addColorStop(0, rgba(pal.hot, 0.5));
+      rg.addColorStop(0.4, rgba(pal.rim, 0.3));
       rg.addColorStop(1, rgba(pal.rim, 0));
       g.fillStyle = rg;
-      g.beginPath(); g.ellipse(fxp, y1, w / tongues * 0.75, fh, 0, Math.PI, 0); g.fill();
+      g.beginPath(); g.ellipse(fxp, y1, iw / tongues * 0.75, fh, 0, Math.PI, 0); g.fill();
     }
 
-    // 3) shimmering metallic rim line
-    g.lineWidth = 1.5;
-    g.strokeStyle = rgba(pal.hot, 0.35 + 0.3 * flick(fx.seed + 9));
-    g.strokeRect(x0 + 1, y0 + 1, w - 2, h - 2);
-
-    // 4) particles: coloured motes + bright embers, born near the bottom / rim, drifting up and swaying
+    // 3) motes + embers: born inside, rise and sway, die before the top border - never leave the cell
     fx.acc += pal.rate * dt;
     while (fx.acc >= 1) {
       fx.acc -= 1;
       const ember = Math.random() < 0.38;
-      const side = Math.random();
-      const px = side < 0.7 ? x0 + Math.random() * w : (side < 0.85 ? x0 + Math.random() * 6 : x1 - Math.random() * 6);
-      const py = side < 0.7 ? y1 - Math.random() * h * 0.35 : y0 + h * (0.3 + Math.random() * 0.7);
-      fx.parts.push({ x: px, y: py, vx: (Math.random() - 0.5) * 8, vy: -(18 + Math.random() * 30) * (ember ? 1.35 : 1),
-        life: 0, max: 0.9 + Math.random() * 0.9, r: ember ? 0.9 + Math.random() * 1.1 : 1.4 + Math.random() * 1.8, ember, ph: Math.random() * 6 });
+      fx.parts.push({ x: x0 + 3 + Math.random() * (iw - 6), y: y1 - 2 - Math.random() * ih * 0.4,
+        vx: (Math.random() - 0.5) * 6, vy: -(14 + Math.random() * 22) * (ember ? 1.3 : 1),
+        life: 0, max: 0.8 + Math.random() * 0.9, r: ember ? 0.8 + Math.random() * 0.9 : 1.1 + Math.random() * 1.4, ember, ph: Math.random() * 6 });
     }
     const keep = [];
     for (const q of fx.parts) {
       q.life += dt;
-      if (q.life >= q.max) continue;
-      q.x += (q.vx + Math.sin(t * 4 + q.ph) * 6) * dt;
+      q.x += (q.vx + Math.sin(t * 4 + q.ph) * 5) * dt;
       q.y += q.vy * dt;
-      if (q.y < 0) continue;
-      const k = q.life / q.max, a = (k < 0.15 ? k / 0.15 : 1 - (k - 0.15) / 0.85) * (q.ember ? 1 : 0.75);
+      if (q.life >= q.max || q.y < y0 + 2 || q.x < x0 + 1 || q.x > x1 - 1) continue;
+      const k = q.life / q.max, nearTop = Math.min(1, (q.y - y0) / (ih * 0.25));
+      const a = (k < 0.15 ? k / 0.15 : 1 - (k - 0.15) / 0.85) * (q.ember ? 1 : 0.75) * nearTop;
       const col = q.ember ? pal.hot : pal.mote;
-      const rad = q.r * (q.ember ? 3.2 : 2.6);
-      const rg = g.createRadialGradient(q.x, q.y, 0, q.x, q.y, rad);
+      const rr = q.r * (q.ember ? 2.6 : 2.2);
+      const rg = g.createRadialGradient(q.x, q.y, 0, q.x, q.y, rr);
       rg.addColorStop(0, rgba(col, a));
       rg.addColorStop(0.45, rgba(q.ember ? pal.mote : pal.rim, a * 0.55));
       rg.addColorStop(1, rgba(pal.rim, 0));
       g.fillStyle = rg;
-      g.beginPath(); g.arc(q.x, q.y, rad, 0, Math.PI * 2); g.fill();
+      g.beginPath(); g.arc(q.x, q.y, rr, 0, Math.PI * 2); g.fill();
       keep.push(q);
     }
-    fx.parts = keep.length > 120 ? keep.slice(-120) : keep;
+    fx.parts = keep.length > 110 ? keep.slice(-110) : keep;
+
+    // 4) li-ti specks: tiny points scattered through the glass, mostly faint, now and then one FLASHES
+    //    (a bright core with a short four-point glint) and fades again.
+    fx.sacc += pal.specks * dt;
+    while (fx.sacc >= 1) {
+      fx.sacc -= 1;
+      fx.specks.push({ x: x0 + 3 + Math.random() * (iw - 6), y: y0 + 3 + Math.random() * (ih - 6),
+        life: 0, max: 0.7 + Math.random() * 1.1, flash: Math.random() < 0.3, at: 0.25 + Math.random() * 0.45,
+        vy: -(2 + Math.random() * 5), r: 0.35 + Math.random() * 0.45 });
+    }
+    const sk = [];
+    for (const s of fx.specks) {
+      s.life += dt;
+      if (s.life >= s.max) continue;
+      s.y += s.vy * dt;
+      if (s.y < y0 + 2) continue;
+      const k = s.life / s.max;
+      let a = 0.28 * Math.sin(Math.PI * k);
+      let glint = 0;
+      if (s.flash) { const d = Math.abs(k - s.at); if (d < 0.12) { glint = 1 - d / 0.12; a = Math.max(a, glint); } }
+      g.fillStyle = rgba(pal.hot, a);
+      g.beginPath(); g.arc(s.x, s.y, s.r + glint * 0.9, 0, Math.PI * 2); g.fill();
+      if (glint > 0.05) {
+        const L = 2.5 + glint * 4;
+        g.strokeStyle = rgba(pal.hot, glint * 0.9);
+        g.lineWidth = 0.6;
+        g.beginPath(); g.moveTo(s.x - L, s.y); g.lineTo(s.x + L, s.y); g.moveTo(s.x, s.y - L); g.lineTo(s.x, s.y + L); g.stroke();
+      }
+      sk.push(s);
+    }
+    fx.specks = sk.length > 60 ? sk.slice(-60) : sk;
+
+    g.restore();
     g.globalCompositeOperation = 'source-over';
   }
 
-  return { attach };
+  return { attach, step };
 })();
 window.HV_ENH_FX = HV_ENH_FX;
 
