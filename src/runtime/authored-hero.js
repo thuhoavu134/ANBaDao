@@ -258,6 +258,8 @@ function drawAuthoredBanner(ctx,time){
   // The battle canvas carries the camera transform while units are drawn; the box is in screen pixels.
   ctx.setTransform(1,0,0,1,0,0);
   ctx.textAlign='center';ctx.textBaseline='middle';
+  // Owner 2026-10-25 (b): 'sau chữ tuyệt kỹ ko để sương đen nữa' - the mist is gone; the text keeps its
+  // heavier outline + double fill, which is what makes it readable.
   ctx.font=`400 ${size}px "HV Brush", "Times New Roman", Georgia, serif`;
   ctx.lineJoin='round';ctx.miterLimit=2;
   let n=0;
@@ -270,15 +272,14 @@ function drawAuthoredBanner(ctx,time){
     const k=Math.min(1,local/BANNER_IN),a=k*outAlpha;
     const y=top+lineH*(li+.5)-(1-k)*size*.25;
     ctx.globalAlpha=a;
-    // soft dark halo keeps it readable over the roof tiles without a panel
-    ctx.shadowColor='rgba(10,6,2,.85)';ctx.shadowBlur=size*.32;
-    ctx.lineWidth=Math.max(2,size*.09);ctx.strokeStyle='rgba(20,10,2,.88)';
+    // Owner 2026-10-25: 'cho nét chữ đậm hơn chút'. At this size the brush face is thin, so the outline is heavier
+    // and the ink itself is stroked as well as filled: bolder letters, same brush edge.
+    ctx.shadowColor='rgba(8,5,2,.9)';ctx.shadowBlur=size*.36;
+    ctx.lineWidth=Math.max(2,size*.055);ctx.strokeStyle='rgba(12,6,2,.92)';
     ctx.strokeText(word,cx,y);
-    // cream ink with a soft warm glow, as in the reference; the brush face is thinner than the sample so a
-    // stroke in the ink colour thickens it (faux bold) without changing the letter shapes
-    ctx.shadowColor='rgba(255,236,190,.7)';ctx.shadowBlur=size*.4;
-    ctx.lineWidth=Math.max(1,size*.045);ctx.strokeStyle='#f4ecd6';ctx.strokeText(word,cx,y);
-    ctx.fillStyle='#f8f2e2';ctx.fillText(word,cx,y);
+    ctx.shadowColor='rgba(255,236,190,.75)';ctx.shadowBlur=size*.42;
+    ctx.lineWidth=Math.max(1,size*.032);ctx.strokeStyle='#f6efdb';ctx.strokeText(word,cx,y);
+    ctx.fillStyle='#fdf9ee';ctx.fillText(word,cx,y);ctx.fillText(word,cx,y);
    });
   });
   ctx.restore();
