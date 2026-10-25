@@ -47,15 +47,28 @@ test('khắc hệ áp cả trong engine S+', () => {
   assert.ok(Math.abs(weak.amount / even.amount - 0.85) < 0.03, 'hệ số bị khắc ~0.85');
 });
 
-test('bỏ qua kháng và sát thương chuẩn làm tăng sát thương so với thường', () => {
+test('bỏ qua kháng chỉ xuyên kháng HỆ, không xuyên giáp', () => {
+  const roll = { hit: 0, variance: 0.5, crit: 1 };
+  // Bị khắc hệ: kim đánh hoả → 0,85. Bỏ qua kháng hệ phải kéo về gần 1,0.
+  const countered = honVietCore.calculateDamageDetailed(unit({ element: 'kim' }), unit({ element: 'hoa', hp: 20000, maxHp: 20000 }), 1, roll).amount;
+  const ignored = honVietCore.calculateDamageDetailed(unit({ element: 'kim', boQuaKhang: 90 }), unit({ element: 'hoa', hp: 20000, maxHp: 20000 }), 1, roll).amount;
+  const even = honVietCore.calculateDamageDetailed(unit({ element: 'kim' }), unit({ element: 'kim', hp: 20000, maxHp: 20000 }), 1, roll).amount;
+  assert.ok(ignored > countered, 'bỏ qua kháng hệ phải đỡ bị phạt: ' + ignored + ' vs ' + countered);
+  assert.ok(ignored <= even + 2, 'không được vượt quá trường hợp không khắc: ' + ignored + ' vs ' + even);
+  // Giáp vẫn phải tính: bỏ qua kháng KHÔNG được làm giảm tác dụng của giáp
+  const fat = () => unit({ element: 'kim', def: 900, hp: 20000, maxHp: 20000 });
+  const plain = honVietCore.calculateDamageDetailed(unit({ element: 'kim' }), fat(), 1, roll).amount;
+  const withIgnore = honVietCore.calculateDamageDetailed(unit({ element: 'kim', boQuaKhang: 90 }), fat(), 1, roll).amount;
+  assert.equal(withIgnore, plain, 'cùng hệ thì bỏ qua kháng không đổi gì, giáp vẫn nguyên');
+});
+
+test('sát thương chuẩn ăn xuyên giáp', () => {
+  const roll = { hit: 0, variance: 0.5, crit: 1 };
   const tank = () => unit({ element: 'kim', def: 900, hp: 20000, maxHp: 20000 });
-  const base = honVietCore.calculateDamageDetailed(unit(), tank(), 1, { hit: 0, variance: 0.5, crit: 1 }).amount;
-  const pierce = honVietCore.calculateDamageDetailed(unit({ boQuaKhang: 40 }), tank(), 1, { hit: 0, variance: 0.5, crit: 1 }).amount;
-  const trueDmg = honVietCore.calculateDamageDetailed(unit({ stChuan: 30 }), tank(), 1, { hit: 0, variance: 0.5, crit: 1 }).amount;
-  assert.ok(pierce > base, 'bỏ qua kháng phải xuyên hơn: ' + pierce + ' vs ' + base);
+  const base = honVietCore.calculateDamageDetailed(unit(), tank(), 1, roll).amount;
+  const trueDmg = honVietCore.calculateDamageDetailed(unit({ stChuan: 30 }), tank(), 1, roll).amount;
   assert.ok(trueDmg > base, 'sát thương chuẩn phải cao hơn: ' + trueDmg + ' vs ' + base);
-  // sát thương chuẩn 100% (bị chặn ở 80%) vẫn cao hơn nữa
-  const cap = honVietCore.calculateDamageDetailed(unit({ stChuan: 100 }), tank(), 1, { hit: 0, variance: 0.5, crit: 1 }).amount;
+  const cap = honVietCore.calculateDamageDetailed(unit({ stChuan: 100 }), tank(), 1, roll).amount;
   assert.ok(cap >= trueDmg, 'càng nhiều sát thương chuẩn càng cao');
 });
 

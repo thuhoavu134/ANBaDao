@@ -2963,16 +2963,17 @@ function applyEffect(actor,targets,fx,isSkill,opt){ triggerHit(); const ability=
   const doDamage=(t,power)=>{ if(!t||t.dead)return {target:t,killed:false,dmg:0}; const wasAlive=!t.dead&&t.hp>0; let raw=actor.atk*power*atkMul(actor);
     if(actor._seasonBlood&&actor.hp/actor.hpMax<0.45) raw*=1.15;
     const _rm=seasonRoleCounterMult(actor,t); if(_rm>1){ raw*=_rm; if(!S.hideNumbers) floatText(t,'▲role','#9de8ff'); }
-    const _km=counterMult(actor.he,t.he); if(_km>1){ raw*=_km; if(!S.hideNumbers) floatText(t,'▲khắc','#ffd782'); } else if(_km<1){ raw*=_km; }
+    // Owner 2026-10-25: bỏ qua kháng = xuyên kháng HỆ của đối thủ (không phải xuyên giáp).
+    const _ir=Math.min(90,Number(actor.boQuaKhang)||0)/100;
+    const _km=counterMult(actor.he,t.he); if(_km>1){ raw*=_km; if(!S.hideNumbers) floatText(t,'▲khắc','#ffd782'); } else if(_km<1){ raw*=(1-(1-_km)*(1-_ir)); }
     // Owner 2026-10-25: dòng phụ hệ chỉ cộng khi giao tranh đúng chiều khắc hệ.
     const _ar=Number(actor.satHe)||0, _dr=Number(t.khangHe)||0;
     const _ahe=heOf(actor.he), _dhe=heOf(t.he);
-    if(_ahe&&_dhe&&KHAC[_ahe]===_dhe){ if(_ar>0) raw*=(1+_ar/100); if(_dr>0) raw*=(1-_dr/100); }
+    if(_ahe&&_dhe&&KHAC[_ahe]===_dhe){ if(_ar>0) raw*=(1+_ar/100); if(_dr>0) raw*=(1-(_dr/100)*(1-_ir)); }
     if(fx.missingHpBonus){ const m=1-t.hp/t.hpMax; raw*=(1+m*fx.missingHpBonus); }
-    // Owner 2026-10-25: bỏ qua kháng = giảm hệ số kháng/giáp của đối thủ; sát thương chuẩn = phần ăn thẳng, không qua giáp/kháng.
-    const _ir=Math.min(90,Number(actor.boQuaKhang)||0)/100, _td=Math.min(80,Number(actor.stChuan)||0)/100;
-    const _defEff=t.def*defMul(t)*(1-_ir);
-    const _mitigated=raw*(100/(100+_defEff));
+    // Owner 2026-10-25: sát thương chuẩn = phần ăn thẳng vào máu, không qua giáp lẫn kháng.
+    const _td=Math.min(80,Number(actor.stChuan)||0)/100;
+    const _mitigated=raw*(100/(100+t.def*defMul(t)));
     let dmg=_mitigated*(1-_td)+raw*_td; if(t.row==='back'&&!isSkill)dmg*=0.75;
     if(t.mark>0)dmg*=(1+t.mark); if(t.guard>0)dmg*=0.5; dmg*=(0.9+Math.random()*0.2); dmg=Math.max(1,Math.round(dmg));
     if(t.shield>0){ const s=Math.min(t.shield,dmg); t.shield-=s; dmg-=s; if(dmg<=0){ floatText(t,"⛊","#7fe0ff"); return {target:t,killed:false,dmg:0,blocked:true}; } }

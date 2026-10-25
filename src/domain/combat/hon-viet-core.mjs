@@ -68,7 +68,11 @@ const moduleShim = { exports: {} };
     const a = elementOf(attacker), d = elementOf(target);
     if (!a || !d) return 1;
     if (ELEMENT_COUNTER[a] === d) return 1.25;
-    if (ELEMENT_COUNTER[d] === a) return 0.85;
+    if (ELEMENT_COUNTER[d] === a) {
+      // Owner 2026-10-25: "bỏ qua kháng" xuyên kháng HỆ, không phải xuyên giáp.
+      const ignore = clamp((Number(attacker?.boQuaKhang) || 0) / 100, 0, 0.9);
+      return 1 - (1 - 0.85) * (1 - ignore);
+    }
     return 1;
   }
 
@@ -271,9 +275,7 @@ const moduleShim = { exports: {} };
     const ignoreEvade = clamp((Number(attacker?.boQuaNe) || 0) / 100, 0, 0.95);
     if (hitRoll > clamp(hitChance(attacker, target) + ignoreEvade, 0, 0.995)) return { amount: 0, missed: true, critical: false };
     const attack = Math.max(1, effectiveStat(attacker, "atk"));
-    // Owner 2026-10-25: bỏ qua kháng = đánh xuyên hệ số kháng/giáp của đối thủ.
-    const resistCut = clamp((Number(attacker?.boQuaKhang) || 0) / 100, 0, 0.9);
-    const defense = Math.max(0, effectiveStat(target, "def")) * tacticDefenseMultiplier(target) * (1 - resistCut);
+    const defense = Math.max(0, effectiveStat(target, "def")) * tacticDefenseMultiplier(target);
     const varianceRoll = clamp(Number(rolls.variance ?? rolls.roll ?? 0.5), 0, 1);
     const variance = 0.94 + varianceRoll * 0.12;
     const guarded = target.statuses?.some((status) => status.type === "guard") ? 0.68 : 1;
@@ -290,6 +292,7 @@ const moduleShim = { exports: {} };
     const nemViOutgoing = nemViStacks >= 1 ? 0.95 : 1;
     const targetNemViStacks = Math.max(0, Math.min(3, Number((target?.statuses||[]).find(status=>status.type==="nemVi")?.stacks)||0));
     const ongPhoTasteEdge = attacker?.sourceId === "ong_hang_pho" && targetNemViStacks >= 2 ? 1.08 : 1;
+    // elementEdge đã tính cả bỏ qua kháng hệ bên trong
     const element = elementEdge(attacker, target);
     const beforeMitigation = attack * multiplier * roleEdge * combo * archetypeEdge * burstFinish * slotCombo * nemViOutgoing * ongPhoTasteEdge * tacticDamageMultiplier(attacker) * zoneDamageOutgoing(attacker) * zoneDamageIncoming(target) * element;
     const raw = beforeMitigation * (100 / (100 + defense * 0.82));

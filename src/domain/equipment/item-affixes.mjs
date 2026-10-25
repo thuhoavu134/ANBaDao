@@ -60,11 +60,11 @@ export const AFFIX_TIER2 = Object.freeze({
     range: Object.freeze({ s: [3, 5], ss: [5, 8], ssr: [8, 12] })
   }),
   // Owner 2026-10-25:
-  //  bỏ qua kháng = đánh xuyên hệ số kháng/giáp của đối thủ
+  //  bỏ qua kháng = xuyên kháng HỆ của đối thủ (giáp vẫn tính bình thường)
   //  sát thương chuẩn = phần sát thương ăn thẳng vào máu, không qua giáp/kháng
   //  bỏ qua né = tăng tỉ lệ đánh trúng tướng né cao
   boQuaKhang: Object.freeze({
-    key: 'boQuaKhang', label: 'Bỏ qua kháng', short: 'BQK', stat: 'boQuaKhang', kind: 'pct', special: true,
+    key: 'boQuaKhang', label: 'Bỏ qua kháng hệ', short: 'BQK', stat: 'boQuaKhang', kind: 'pct', special: true,
     range: Object.freeze({ s: [6, 9], ss: [12, 16], ssr: [20, 26] })
   }),
   stChuan: Object.freeze({
