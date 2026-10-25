@@ -128,6 +128,27 @@
       chapters: P.clearedChapters
     });
     if (!result.ok) return result;
+    // Owner 2026-10-25: hạ boss săn thì rơi 1 món trang bị (bảng riêng, tỉ lệ cao hơn phó bản).
+    try {
+      if (shot.killed && typeof rollHuntDrop === 'function' && typeof buildDropItem === 'function') {
+        const day = dayNow();
+        const bossId = todayBoss(day).id;
+        P.gearPity = P.gearPity || {}; P.gearDay = P.gearDay || {};
+        const key = bossId + ':' + day;
+        const hits = Number(P.gearDay[key]) || 0;
+        const roll = rollHuntDrop({ bossId, firstOfDay: hits === 0, pity: Number(P.gearPity.hunt) || 0, overCap: hits >= 1, rng: Math.random });
+        P.gearPity.hunt = roll.pity;
+        P.gearDay[key] = hits + 1;
+        const slot = ['weapon', 'armor', 'charm', 'boots'][Math.floor(Math.random() * 4)];
+        const item = buildDropItem({ uid: (Number(P.itemSeq) || 0) + 1, slot, rar: roll.rar, source: 'boss',
+          rollAffixes: typeof rollAffixes === 'function' ? rollAffixes : null });
+        if (item) { P.itemSeq = item.uid; P.inventory = P.inventory || []; P.inventory.push(item); result.gearDrop = item; }
+      }
+    } catch (_) {}
+    if (result.gearDrop && typeof itemName === 'function') {
+      result.toasts = result.toasts || [];
+      result.toasts.push('🎁 Rơi trang bị: ' + itemName(result.gearDrop) + ' (' + String(result.gearDrop.rar).toUpperCase() + ')');
+    }
     if (commitHunt(result, 'hunt.settle:' + dayNow() + ':' + (shot.dmg || 0), 'hunt.settle').ok) {
       deliver(result);
       refreshResbar?.();
