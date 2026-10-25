@@ -777,7 +777,7 @@
       button.classList.remove('rar-ssr', 'rar-ss', 'rar-s', 'rar-a', 'rar-b', 'hv-glow-purple', 'hv-glow-gold', 'hv-glow-red');
       if (item?.rar) button.classList.add('rar-' + item.rar);
       // Owner 2026-10-25: Trợ trận > Trang bị is the main enhancement screen - the Kiếm Thế enhancement fire goes here.
-      const glow = item && typeof enhGlowTier === 'function' ? enhGlowTier(item.lvl) : '';
+      const glow = item && typeof enhGlowTier === 'function' ? enhGlowTier(item.lvl, item.rar) : '';
       if (glow) { button.classList.add('hv-glow-' + glow); button.dataset.glow = glow; } else delete button.dataset.glow;
       const img = button.querySelector('img');
       const lvl = button.querySelector('.lvl');
@@ -810,12 +810,12 @@
       const cost = item && typeof enhCost === 'function' ? enhCost(item) : { gold: 0, hoat: 0 };
       const now = teamHp();
       let next = now;
-      if (item && item.lvl < 15) {
+      if (item && item.lvl < gearMaxLvl(item)) {
         try { item.lvl += 1; next = teamHp(); } finally { item.lvl -= 1; }
       }
       body.innerHTML = `<div class="hv-gear-cost"><span>Lv ${item ? item.lvl : 0} → ${item ? Math.min(15, item.lvl + 1) : 1}</span><span>HP ${now} → ${next}</span></div>
         <div class="hv-gear-cost"><span><img src="assets/items/materials/gold.png" alt="">${cost.gold}</span><span><img src="assets/items/materials/hoat-luc.png" alt="">${cost.hoat}</span></div>
-        <div class="hv-gear-actions"><button type="button" data-gear-enhance ${item && item.lvl < 15 ? '' : 'disabled'}>Cường hóa</button><button type="button" data-gear-enhance-all ${item ? '' : 'disabled'}>Cường hóa nhanh</button></div>`;
+        <div class="hv-gear-actions"><button type="button" data-gear-enhance ${item && item.lvl < gearMaxLvl(item) ? '' : 'disabled'}>Cường hóa</button><button type="button" data-gear-enhance-all ${item ? '' : 'disabled'}>Cường hóa nhanh</button></div>`;
     }
   }
 
