@@ -345,3 +345,6 @@ installBattleHitFeedback(root);
 // Last, after every anchor-based patch has matched the original text: full-quality atlases on phones.
 const { raiseIosAtlasBudget } = await import('./ios-atlas-budget-v1.mjs');
 raiseIosAtlasBudget(root);
+// AFK/preparation farm: every authored hero gets a run-in + attack spec from the atlas they already ship.
+const { installFarmAttackSpecs } = await import('./campaign-farm-attack-specs-v1.mjs');
+installFarmAttackSpecs(root);

@@ -318,7 +318,8 @@ function sampleCampaignFarm(time, squad, quiet = false, specs = {}, world = null
   const direction={x:(to.x-from.x)/length,y:(to.y-from.y)/length};
   const count=Math.min(4,Math.max(1,squad.length));
   const events=[], actors=squad.map((hero,i)=>{
-    const spec=specs[hero.id]||specs[String(hero.id).replace(/^hero_splus_/,'').replace(/-/g,'_')],castDuration=spec ? (spec.durations?.reduce((a,b)=>a+b,0)||spec.frames*spec.ms) : 1200,approachMs=spec&&spec.src?350:0,duration=castDuration+approachMs*2;
+    const spec=specs[hero.id]||specs[String(hero.id).replace(/^hero_splus_/,'').replace(/-/g,'_')],castDuration=spec ? (spec.durations?.reduce((a,b)=>a+b,0)||spec.frames*spec.ms) : 1200,// Owner 2026-10-25: every hero in the squad must run to the mobs; only the attack drawing needs a spec.
+    approachMs=350,duration=castDuration+approachMs*2;
     const start=6200+i*110;
     let attackTime=-1;
     for(let round=0;round<2;round++) {
