@@ -36,7 +36,8 @@ function runtime(player = fixture()) {
     normalizeSquad: squad => squad.map(pick => ({ ...pick })), netScheduleSync() {}, refreshResbar() {},
     featLocked: () => locked, today: () => 7, messages: [], toast: message => context.messages.push(message)
   });
-  for (const path of ['src/domain/save/save-contract.mjs', 'src/domain/transaction/receipt-contract.mjs', 'src/domain/equipment/forge-commands.mjs']) {
+  // Owner 2026-10-25: craft rolls item affixes, so the affix module must exist in the sandbox too.
+  for (const path of ['src/domain/save/save-contract.mjs', 'src/domain/transaction/receipt-contract.mjs', 'src/domain/equipment/item-affixes.mjs', 'src/domain/equipment/forge-commands.mjs']) {
     vm.runInContext(read(path).replace(/^export\s+/gm, ''), context);
   }
   const helper = section('function hvReceiptForCommand(', 'window.HonVietTransaction=Object.freeze(');
@@ -66,8 +67,12 @@ test('craft debits once and commits item, pity, quest and receipt together acros
   assert.equal(saved.economy.craftPity, 1); assert.equal(saved.daily.quests[0].progress, 1);
   assert.deepEqual(saved.receipts['craft:one'].delta, { tinh: -20, gold: -200 });
   assert.equal(saved.inventory.length, 2); assert.equal(saved.revision, 5); assert.equal(r.writes(), 1);
+  // Owner 2026-10-25: mỗi lần chế còn roll dòng thuộc tính, nên đếm số lần roll trước khi retry
+  // rồi chỉ kiểm retry không roll thêm.
+  const rollsAfterCraft = r.rolls();
+  assert.ok(rollsAfterCraft >= 1);
   r.reload(); assert.equal(r.run("craftItem('weapon','craft:one')").uid, 2);
-  assert.deepEqual(r.saved(), saved); assert.equal(r.writes(), 1); assert.equal(r.rolls(), 1);
+  assert.deepEqual(r.saved(), saved); assert.equal(r.writes(), 1); assert.equal(r.rolls(), rollsAfterCraft);
   assert.equal(r.context.messages.length, 1);
 });
 

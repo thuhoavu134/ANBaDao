@@ -175,8 +175,12 @@ export function accountGearBonus(gear, inventory, { statMap = {}, itemStat = () 
     const item = bag.find(entry => entry.uid === uid);
     if (!item) continue;
     const key = statMap[item.slot];
-    if (!key || out[key] == null) continue;
-    out[key] += Number(itemStat(item)) || 0;
+    if (key && out[key] != null) out[key] += Number(itemStat(item)) || 0;
+    for (const affix of (Array.isArray(item.affixes) ? item.affixes : [])) {
+      const value = Number(affix?.v);
+      if (!Number.isFinite(value) || value <= 0) continue;
+      if (affix.k === 'hp' || affix.k === 'atk' || affix.k === 'def' || affix.k === 'spd') out[affix.k] += value;
+    }
   }
   const master = accountGearMasterBonus(accountGearMasterLevel(gear, inventory));
   out.hp += master.hp;

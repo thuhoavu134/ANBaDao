@@ -19,7 +19,8 @@
       for (const slot of slots) {
         for (const rar of ['ssr', 'ss', 's', 'a', 'b']) {
           if (have.has(slot + ':' + rar + '@0')) continue;
-          P.inventory.push({ uid: ++P.itemSeq, slot, rar, lvl: 0, mold: 'strike' });
+          P.inventory.push({ uid: ++P.itemSeq, slot, rar, lvl: 0, mold: 'strike', from: 'craft',
+            affixes: typeof rollAffixes === 'function' ? rollAffixes({ source: 'craft', rar }) : [] });
         }
       }
       // Owner 2026-10-25: trần cường hoá theo phẩm + màu cường hoá không đè màu sẵn.
@@ -29,7 +30,8 @@
       for (const [slot, rar, lvl] of [['weapon', 'b', 10], ['armor', 'a', 9], ['charm', 's', 12],
         ['boots', 'ss', 9], ['weapon', 'ss', 14], ['armor', 'ssr', 12], ['boots', 'ssr', 15]]) {
         if (P.inventory.some(i => i.slot === slot && i.rar === rar && i.lvl === lvl)) continue;
-        P.inventory.push({ uid: ++P.itemSeq, slot, rar, lvl, mold: 'strike' });
+        P.inventory.push({ uid: ++P.itemSeq, slot, rar, lvl, mold: 'strike', from: 'boss',
+          affixes: typeof rollAffixes === 'function' ? rollAffixes({ source: 'boss', rar }) : [] });
       }
       P.clearedChapters = Array.from(new Set([...(P.clearedChapters || []), 1, 2, 3, 4]));
       P.maxChapter = Math.max(Number(P.maxChapter) || 0, 4);

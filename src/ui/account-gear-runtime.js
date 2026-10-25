@@ -813,7 +813,7 @@
       if (item && item.lvl < gearMaxLvl(item)) {
         try { item.lvl += 1; next = teamHp(); } finally { item.lvl -= 1; }
       }
-      body.innerHTML = `<div class="hv-gear-cost"><span>Lv ${item ? item.lvl : 0} → ${item ? Math.min(15, item.lvl + 1) : 1}</span><span>HP ${now} → ${next}</span></div>
+      body.innerHTML = `${item && typeof hvAffixLinesHtml === 'function' ? hvAffixLinesHtml(item) : ''}<div class="hv-gear-cost"><span>Lv ${item ? item.lvl : 0} → ${item ? Math.min(15, item.lvl + 1) : 1}</span><span>HP ${now} → ${next}</span></div>
         <div class="hv-gear-cost"><span><img src="assets/items/materials/gold.png" alt="">${cost.gold}</span><span><img src="assets/items/materials/hoat-luc.png" alt="">${cost.hoat}</span></div>
         <div class="hv-gear-actions"><button type="button" data-gear-enhance ${item && item.lvl < gearMaxLvl(item) ? '' : 'disabled'}>Cường hóa</button><button type="button" data-gear-enhance-all ${item ? '' : 'disabled'}>Cường hóa nhanh</button></div>`;
     }
