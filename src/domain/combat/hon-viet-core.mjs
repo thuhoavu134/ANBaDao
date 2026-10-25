@@ -50,6 +50,28 @@ const moduleShim = { exports: {} };
       ? Math.max(0, effectiveStat(unit, name)) : fallback;
   }
 
+  // Owner 2026-10-25: ngũ hành tương khắc. Bảng này phải khớp HE_ALIAS/KHAC trong index.html
+  // (tests/elements.test.mjs canh hai bảng giống nhau). Giữ nội bộ để engine S+ chạy được cả trong node.
+  const ELEMENT_ALIAS = Object.freeze({
+    kim: "kim", moc: "moc", thuy: "thuy", hoa: "hoa", tho: "tho",
+    than: "hoa", rau: "moc", suong: "thuy", phong: "moc", set: "kim", mong: "tho", soul: "hoa",
+    metal: "kim", wood: "moc", water: "thuy", fire: "hoa", earth: "tho", dream: "tho", am: "hoa"
+  });
+  const ELEMENT_COUNTER = Object.freeze({ kim: "moc", moc: "tho", tho: "thuy", thuy: "hoa", hoa: "kim" });
+
+  function elementOf(unit) {
+    const key = String(unit?.element || unit?.he || "").toLowerCase();
+    return ELEMENT_ALIAS[key] || null;
+  }
+
+  function elementEdge(attacker, target) {
+    const a = elementOf(attacker), d = elementOf(target);
+    if (!a || !d) return 1;
+    if (ELEMENT_COUNTER[a] === d) return 1.25;
+    if (ELEMENT_COUNTER[d] === a) return 0.85;
+    return 1;
+  }
+
   function hitChance(attacker, target) {
     const accuracy = statOrDefault(attacker, "accuracy", 100);
     const evasion = statOrDefault(target, "evasion", 5);
@@ -245,9 +267,13 @@ const moduleShim = { exports: {} };
 
   function calculateDamageDetailed(attacker, target, multiplier = 1, rolls = {}) {
     const hitRoll = clamp(Number(rolls.hit ?? rolls.roll ?? 0.5), 0, 1);
-    if (hitRoll > hitChance(attacker, target)) return { amount: 0, missed: true, critical: false };
+    // Owner 2026-10-25: bỏ qua né = tăng tỉ lệ đánh trúng tướng né cao.
+    const ignoreEvade = clamp((Number(attacker?.boQuaNe) || 0) / 100, 0, 0.95);
+    if (hitRoll > clamp(hitChance(attacker, target) + ignoreEvade, 0, 0.995)) return { amount: 0, missed: true, critical: false };
     const attack = Math.max(1, effectiveStat(attacker, "atk"));
-    const defense = Math.max(0, effectiveStat(target, "def")) * tacticDefenseMultiplier(target);
+    // Owner 2026-10-25: bỏ qua kháng = đánh xuyên hệ số kháng/giáp của đối thủ.
+    const resistCut = clamp((Number(attacker?.boQuaKhang) || 0) / 100, 0, 0.9);
+    const defense = Math.max(0, effectiveStat(target, "def")) * tacticDefenseMultiplier(target) * (1 - resistCut);
     const varianceRoll = clamp(Number(rolls.variance ?? rolls.roll ?? 0.5), 0, 1);
     const variance = 0.94 + varianceRoll * 0.12;
     const guarded = target.statuses?.some((status) => status.type === "guard") ? 0.68 : 1;
@@ -264,9 +290,14 @@ const moduleShim = { exports: {} };
     const nemViOutgoing = nemViStacks >= 1 ? 0.95 : 1;
     const targetNemViStacks = Math.max(0, Math.min(3, Number((target?.statuses||[]).find(status=>status.type==="nemVi")?.stacks)||0));
     const ongPhoTasteEdge = attacker?.sourceId === "ong_hang_pho" && targetNemViStacks >= 2 ? 1.08 : 1;
-    const raw = attack * multiplier * roleEdge * combo * archetypeEdge * burstFinish * slotCombo * nemViOutgoing * ongPhoTasteEdge * tacticDamageMultiplier(attacker) * zoneDamageOutgoing(attacker) * zoneDamageIncoming(target) * (100 / (100 + defense * 0.82));
+    const element = elementEdge(attacker, target);
+    const beforeMitigation = attack * multiplier * roleEdge * combo * archetypeEdge * burstFinish * slotCombo * nemViOutgoing * ongPhoTasteEdge * tacticDamageMultiplier(attacker) * zoneDamageOutgoing(attacker) * zoneDamageIncoming(target) * element;
+    const raw = beforeMitigation * (100 / (100 + defense * 0.82));
+    // Owner 2026-10-25: sát thương chuẩn = phần ăn thẳng vào máu, không qua giáp/kháng.
+    const trueShare = clamp((Number(attacker?.stChuan) || 0) / 100, 0, 0.8);
+    const blended = raw * (1 - trueShare) + beforeMitigation * trueShare;
     const COMBAT_LETHALITY_V3148 = 1.22;
-    const amount = Math.max(12, Math.round(raw * variance * guarded * marked * critMultiplier * COMBAT_LETHALITY_V3148));
+    const amount = Math.max(12, Math.round(blended * variance * guarded * marked * critMultiplier * COMBAT_LETHALITY_V3148));
     return { amount, missed: false, critical };
   }
 
@@ -1276,6 +1307,10 @@ const moduleShim = { exports: {} };
     enemyRolePriorityTarget,
     HERO_TACTICAL_ROLE_DEFS,
     heroTacticalRoleFor,
+    elementOf,
+    elementEdge,
+    ELEMENT_ALIAS,
+    ELEMENT_COUNTER,
     heroTacticalDamageMultiplier,
     heroProtectorMitigation,
     objectiveFormationDamageMultiplier,
