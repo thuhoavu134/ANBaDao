@@ -125,7 +125,7 @@ const FUNCTIONS = [
     name: 'rollForgeRarity',
     scope: 'forge.rarity',
     sites: [
-      ["econ().craftPity++; let r=Math.random()*100,acc=0,rar='b';", `econ().craftPity++; let r=${R('forge.rarity')}*100,acc=0,rar='b';`]
+      ["econ().craftPity++; let r=Math.random()*100,acc=0,rar='s';", `econ().craftPity++; let r=${R('forge.rarity')}*100,acc=0,rar='s';`]
     ]
   }
 ];
