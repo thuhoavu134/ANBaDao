@@ -10,7 +10,9 @@ test('farm keeps sparse squad identities and authored fractional frame durations
  const specs={a:{frames:3,ms:62.5,durations:[60,70,62.5]}};
  const frame=sample(6260,squad,false,specs);
  assert.equal(frame.actors[0].slot,4);assert.equal(frame.actors[1].slot,0);
- assert.equal(frame.actors[0].duration,192.5);assert.equal(frame.actors[0].attackTime,60);
+  // Owner 2026-10-25: every hero in the squad now runs in and attacks, even one with no atlas of its own, so the
+  // approach is always 350 ms (cast 192.5 + 2 x approach = 892.5) instead of 0 for spec-less heroes.
+ assert.equal(frame.actors[0].duration,892.5);assert.equal(frame.actors[0].attackTime,60);
  assert.equal(sample(6260,squad,true,specs),null);assert.equal(sample(6260,[]),null);
 });
 test('farm remains presentation-only and shares scene lifetime, no reward or combat owner',()=>{
