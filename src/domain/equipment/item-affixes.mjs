@@ -58,6 +58,22 @@ export const AFFIX_TIER2 = Object.freeze({
   satHe: Object.freeze({
     key: 'satHe', label: 'Sát thương hệ khắc', short: 'SHE', stat: 'satHe', kind: 'pct', special: true,
     range: Object.freeze({ s: [3, 5], ss: [5, 8], ssr: [8, 12] })
+  }),
+  // Owner 2026-10-25:
+  //  bỏ qua kháng = xuyên kháng HỆ của đối thủ (giáp vẫn tính bình thường)
+  //  sát thương chuẩn = phần sát thương ăn thẳng vào máu, không qua giáp/kháng
+  //  bỏ qua né = tăng tỉ lệ đánh trúng tướng né cao
+  boQuaKhang: Object.freeze({
+    key: 'boQuaKhang', label: 'Bỏ qua kháng hệ', short: 'BQK', stat: 'boQuaKhang', kind: 'pct', special: true,
+    range: Object.freeze({ s: [6, 9], ss: [12, 16], ssr: [20, 26] })
+  }),
+  stChuan: Object.freeze({
+    key: 'stChuan', label: 'Sát thương chuẩn', short: 'STC', stat: 'stChuan', kind: 'pct', special: true,
+    range: Object.freeze({ s: [3, 4], ss: [6, 8], ssr: [10, 14] })
+  }),
+  boQuaNe: Object.freeze({
+    key: 'boQuaNe', label: 'Bỏ qua né', short: 'BQN', stat: 'boQuaNe', kind: 'pct', special: true,
+    range: Object.freeze({ s: [8, 12], ss: [15, 20], ssr: [25, 32] })
   })
 });
 
@@ -129,7 +145,8 @@ export function normalizeAffixes(item) {
 
 /** Tổng chỉ số phụ của một món, luôn trả đủ khoá để cộng dồn an toàn. */
 export function affixSum(item) {
-  const out = { hp: 0, def: 0, spd: 0, atk: 0, crit: 0, accuracy: 0, critRes: 0, evasion: 0, lifesteal: 0, counter: 0, khangHe: 0, satHe: 0 };
+  const out = { hp: 0, def: 0, spd: 0, atk: 0, crit: 0, accuracy: 0, critRes: 0, evasion: 0, lifesteal: 0, counter: 0,
+    khangHe: 0, satHe: 0, boQuaKhang: 0, stChuan: 0, boQuaNe: 0 };
   for (const affix of normalizeAffixes(item)) {
     const def = AFFIX_KEYS[affix.k];
     if (!def) continue;
