@@ -69,9 +69,9 @@
           <button type="button" class="hv-gear-slot" data-gear-slot="III" aria-label="Dây chuyền"><b class="roman">III</b><img alt=""><i class="plus">+</i><small class="lvl" hidden></small></button>
           <button type="button" class="hv-gear-slot" data-gear-slot="IV" aria-label="Nhẫn"><b class="roman">IV</b><img alt=""><i class="plus">+</i><small class="lvl" hidden></small></button>
           <button type="button" class="hv-gear-slot" data-gear-slot="V" aria-label="Giáp"><b class="roman">V</b><img alt=""><i class="plus">+</i><small class="lvl" hidden></small></button>
-          <button type="button" class="hv-gear-slot" data-gear-slot="VI" aria-label="Túi"><b class="roman">VI</b><img alt=""><i class="plus">+</i><small class="lvl" hidden></small></button>
+          <button type="button" class="hv-gear-slot" data-gear-slot="VI" aria-label="Quần"><b class="roman">VI</b><img alt=""><i class="plus">+</i><small class="lvl" hidden></small></button>
           <button type="button" class="hv-gear-slot" data-gear-slot="VII" aria-label="Giày"><b class="roman">VII</b><img alt=""><i class="plus">+</i><small class="lvl" hidden></small></button>
-          <button type="button" class="hv-gear-slot" data-gear-slot="VIII" aria-label="Khôi"><b class="roman">VIII</b><img alt=""><i class="plus">+</i><small class="lvl" hidden></small></button>
+          <button type="button" class="hv-gear-slot" data-gear-slot="VIII" aria-label="Găng"><b class="roman">VIII</b><img alt=""><i class="plus">+</i><small class="lvl" hidden></small></button>
           <button type="button" class="hv-gear-slot" data-gear-slot="IX" aria-label="Hộ uyển"><b class="roman">IX</b><img alt=""><i class="plus">+</i><small class="lvl" hidden></small></button>
           <button type="button" class="hv-gear-slot" data-gear-slot="X" aria-label="Khăn"><b class="roman">X</b><img alt=""><i class="plus">+</i><small class="lvl" hidden></small></button>
           <button type="button" class="hv-gear-slot" data-gear-slot="XI" aria-label="Ngọc bội"><b class="roman">XI</b><img alt=""><i class="plus">+</i><small class="lvl" hidden></small></button>
@@ -433,6 +433,14 @@
   function artFor(item) {
     return globalThis.honVietEquipmentAssetFor?.(item) || 'assets/ui/menu-v3233/icons/forge.png';
   }
+  // Owner 2026-10-25: mỗi ô bảng có hình riêng theo phẩm (owner vẽ). Ô chưa có hình giữ hình theo loại đồ.
+  const SLOT_ART = { I: 'non', II: 'dai', III: 'day-chuyen', IV: 'nhan', VI: 'quan', VIII: 'gang', IX: 'ho-uyen', X: 'khan' };
+  const SLOT_ART_RAR = { b: 1, a: 1, s: 1, ss: 1, ssr: 1 };
+  function slotArtFor(slotId, item) {
+    const key = SLOT_ART[slotId];
+    const rar = String(item?.rar || '').toLowerCase();
+    return key && SLOT_ART_RAR[rar] ? 'assets/items/equipment/slots/' + key + '-' + rar + '.webp' : '';
+  }
   function commit(gear, commandId, source) {
     const run = typeof hvRunCommittedTransaction === 'function' ? hvRunCommittedTransaction : null;
     if (!run) { P.gear = gear; persist?.(); return { ok: true }; }
@@ -777,7 +785,7 @@
       img.hidden = !item;
       plus.hidden = !!item;
       if (item) {
-        img.src = artFor(item);
+        img.src = slotArtFor(slot.id, item) || artFor(item);
         img.alt = typeof itemName === 'function' ? itemName(item) : slot.name;
         lvl.hidden = false;
         lvl.textContent = '+' + item.lvl;
@@ -1336,7 +1344,7 @@
     if (!list.length) {
       box.innerHTML = `<div class="hv-gear-empty"><p>Chưa có trang bị!</p><button type="button" data-gear-go="forge">Đi nhận thưởng</button></div>`;
     } else {
-      box.innerHTML = list.map(item => `<button type="button" class="hv-gear-choice" data-gear-pick="${item.uid}"><img src="${artFor(item)}" alt=""><span>${typeof itemName === 'function' ? itemName(item) : item.slot} +${item.lvl}<small style="display:block">${String(item.rar).toUpperCase()}</small></span><b>Mặc</b></button>`).join('');
+      box.innerHTML = list.map(item => `<button type="button" class="hv-gear-choice" data-gear-pick="${item.uid}"><img src="${slotArtFor(slotId, item) || artFor(item)}" alt=""><span>${typeof itemName === 'function' ? itemName(item) : item.slot} +${item.lvl}<small style="display:block">${String(item.rar).toUpperCase()}</small></span><b>Mặc</b></button>`).join('');
     }
     root.querySelector('[data-gear-picker]').classList.add('is-open');
     renderBoard();
