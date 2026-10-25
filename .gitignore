@@ -1,5 +1,7 @@
 ﻿node_modules/
 dist/
+# Temporary copies made when a build needed to move a locked dist aside (never commit 10 GB of build output).
+dist-old-*/
 artifacts/
 tmp/
 *.zip

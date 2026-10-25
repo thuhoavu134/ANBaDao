@@ -476,3 +476,13 @@
   .hv-divine-panel{max-height:36%}
 }
 
+
+/* Owner 2026-10-25: Kiếm Thế enhancement fire on the main enhancement board (Trợ trận > Trang bị).
+   The canvas (HV_ENH_FX) burns inside the slot only; the border takes the tier colour. */
+.hv-gear-slot.hv-fx-host>canvas.hv-fx{position:absolute;left:0;top:0;z-index:2;pointer-events:none;mix-blend-mode:screen;border-radius:12px}
+.hv-gear-slot.hv-glow-purple{border:2px solid #d4a4ff;box-shadow:0 0 3px rgba(170,90,255,.7)}
+.hv-gear-slot.hv-glow-gold{border:2px solid #ffe98a;box-shadow:0 0 3px rgba(255,214,60,.75)}
+.hv-gear-slot.hv-glow-red{border:2px solid #ffab55;box-shadow:0 0 3px rgba(255,100,30,.8)}
+.hv-gear-slot[class*="hv-glow-"] .lvl{z-index:3;text-shadow:0 0 3px #000}
+.hv-gear-slot[class*="hv-glow-"] .roman{z-index:3}
+@media (prefers-reduced-motion: reduce){.hv-gear-slot>canvas.hv-fx{display:none}}

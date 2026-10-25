@@ -766,8 +766,11 @@
       const item = itemOf(gear[slot.id]);
       button.classList.toggle('is-on', state.slot === slot.id);
       button.classList.toggle('is-empty', !item);
-      button.classList.remove('rar-ssr', 'rar-ss', 'rar-s', 'rar-a', 'rar-b');
+      button.classList.remove('rar-ssr', 'rar-ss', 'rar-s', 'rar-a', 'rar-b', 'hv-glow-purple', 'hv-glow-gold', 'hv-glow-red');
       if (item?.rar) button.classList.add('rar-' + item.rar);
+      // Owner 2026-10-25: Trợ trận > Trang bị is the main enhancement screen - the Kiếm Thế enhancement fire goes here.
+      const glow = item && typeof enhGlowTier === 'function' ? enhGlowTier(item.lvl) : '';
+      if (glow) { button.classList.add('hv-glow-' + glow); button.dataset.glow = glow; } else delete button.dataset.glow;
       const img = button.querySelector('img');
       const lvl = button.querySelector('.lvl');
       const plus = button.querySelector('.plus');
@@ -784,6 +787,7 @@
         lvl.hidden = true;
       }
     }
+    try { window.HV_ENH_FX && window.HV_ENH_FX.attach(root); } catch (_) {}
     root.querySelectorAll('[data-gear-tab]').forEach(button => button.classList.toggle('is-on', button.dataset.gearTab === state.tab));
     const body = root.querySelector('[data-gear-tab-body]');
     const item = selectedItem();

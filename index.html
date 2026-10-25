@@ -547,16 +547,17 @@ body.hub-art-active .mainstage{height:100dvh;min-height:620px;border:0;border-ra
 .econ-actions .btn{min-height:44px;border-radius:12px}.econ-progress{height:8px;border-radius:99px;background:#161824;border:1px solid #292d40;overflow:hidden;margin:8px 0}.econ-progress>i{display:block;height:100%;background:linear-gradient(90deg,#a969ff,#f2b544);box-shadow:0 0 14px rgba(242,181,68,.5)}
 .sumgrid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}.scard{min-height:116px;background:linear-gradient(145deg,rgba(17,20,34,.98),rgba(31,21,35,.96));border-radius:16px;padding:13px;box-shadow:inset 0 0 26px rgba(255,255,255,.02),0 10px 24px rgba(0,0,0,.28)}
 .forge-slotbar{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.forge-slot{display:flex;align-items:center;gap:8px;text-align:left;min-height:62px}.forge-slot img{width:38px;height:38px;border-radius:10px;object-fit:cover}
-/* Kiếm Thế enhancement glow (owner 2026-10-25): the original 10-frame glow art, colour by tier. */
-.econ-item.glow{overflow:visible}
-.econ-item.glow::before{content:'';position:absolute;inset:-16px;pointer-events:none;z-index:0;border-radius:26px;
-  background-repeat:no-repeat;background-size:1000% 100%;background-position:0 50%;opacity:.85;
-  mix-blend-mode:screen;filter:saturate(1.15);animation:hvGlowStep 1.1s steps(10) infinite}
-@keyframes hvGlowStep{from{background-position:0 50%}to{background-position:-100% 50%}}
-.econ-item.glow-purple::before{background-image:url('assets/ui/enhance-glow/purple.png')}
-.econ-item.glow-gold::before{background-image:url('assets/ui/enhance-glow/gold.png')}
-.econ-item.glow-red::before{background-image:url('assets/ui/enhance-glow/red.png');opacity:.95;filter:saturate(1.3) brightness(1.1)}
-@media (prefers-reduced-motion: reduce){.econ-item.glow::before{animation:none;background-position:-450% 50%}}
+/* Kiếm Thế enhancement glow (owner 2026-10-25): the cell is clear glass so the item reads perfectly; inside its rim a metallic tier-coloured fire burns (clipped to the cell), with coloured motes and bright embers drifting upward.
+   Drawn by HV_ENH_FX (canvas, src/ui/forge-item-assets-runtime.js). +9..+11 tím, +12..+13 vàng kim, +14..+15 đỏ. */
+.hv-item-slot{position:relative;display:inline-flex;flex:0 0 auto}
+.hv-item-slot[class*='hv-glow-'] .forge-item-art{position:relative;z-index:1;border-radius:7px;border:2px solid;
+  background:linear-gradient(180deg,rgba(255,255,255,.34) 0%,rgba(255,255,255,.06) 38%,rgba(255,255,255,0) 52%),
+             radial-gradient(circle at 50% 58%,rgba(18,14,30,.08) 0%,rgba(18,14,30,.42) 100%)}
+.hv-item-slot.hv-glow-purple .forge-item-art{border-color:#d4a4ff;box-shadow:0 0 3px rgba(170,90,255,.7)}
+.hv-item-slot.hv-glow-gold .forge-item-art{border-color:#ffe98a;box-shadow:0 0 3px rgba(255,214,60,.75)}
+.hv-item-slot.hv-glow-red .forge-item-art{border-color:#ffab55;box-shadow:0 0 3px rgba(255,100,30,.8)}
+.hv-item-slot>canvas.hv-fx{position:absolute;left:0;top:0;z-index:2;pointer-events:none;mix-blend-mode:screen}
+@media (prefers-reduced-motion: reduce){.hv-item-slot>canvas.hv-fx{display:none}}
 .econ-itemgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:9px}.econ-item{border:1px solid #363242;border-radius:15px;background:linear-gradient(180deg,rgba(24,22,31,.96),rgba(13,14,22,.96));padding:12px;position:relative;overflow:hidden}.econ-item::after{content:"";position:absolute;right:-24px;bottom:-30px;width:90px;height:90px;background:radial-gradient(circle,rgba(242,181,68,.14),transparent 70%)}.econ-item .nm{font-weight:850;color:#f6e6bd}.econ-item .meta{font-size:11.5px;color:#b8bdd0;margin-top:4px}.econ-item .price{font-size:12px;color:#f2c14e;margin-top:8px}
 .shop-shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}.shop-card{min-height:170px;border:1px solid rgba(213,171,81,.35);border-radius:17px;background:linear-gradient(180deg,rgba(20,20,28,.96),rgba(10,11,17,.95));padding:13px;display:flex;flex-direction:column;position:relative;overflow:hidden}.shop-card img{width:58px;height:58px;border-radius:14px;object-fit:cover;border:1px solid rgba(242,181,68,.25)}.shop-card .shop-name{font-weight:850;font-size:13px;color:#f7e8be;margin-top:9px}.shop-card .shop-what{font-size:11.5px;color:#b8bdd0;line-height:1.5;margin-top:4px}.shop-card .btn{margin-top:auto}
 @media(max-width:720px){.econ-stage{padding:8px 8px 84px}.econ-hero{grid-template-columns:86px 1fr;padding:12px;gap:11px;border-radius:16px}.econ-hero-icon{width:82px;height:82px;border-radius:18px}.econ-title{font-size:19px}.econ-copy{font-size:11.5px}.econ-panel{grid-column:1/-1;padding:11px;border-radius:15px}.forge-slotbar{grid-template-columns:repeat(2,1fr)}.shop-shelf{grid-template-columns:repeat(2,minmax(0,1fr))}.shop-card{min-height:165px;padding:10px}.sumgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -5849,4 +5850,5 @@ renderCampaign = function(){
 })();
 
 </script>
+  <script src="assets/qa/qa-gear-seed.js"></script>
 </body></html>
