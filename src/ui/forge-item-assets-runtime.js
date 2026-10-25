@@ -69,16 +69,23 @@ const HV_ENH_FX = (() => {
   let raf = 0, last = 0, manual = false, clock = 0;
   const rgba = (c, a) => `rgba(${c[0]},${c[1]},${c[2]},${a})`;
 
+  // Any element carrying data-glow="purple|gold|red" gets the effect (forge item icons AND the Trợ trận gear board).
+  // Re-run after every render: a cell whose tier changed is updated, a cell that lost its tier is cleaned up.
   function attach(root) {
     if (!root) return;
     if (!manual && typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    root.querySelectorAll('.hv-item-slot[data-glow]').forEach(el => {
-      if (el.__hvFx) return;
-      const tier = el.dataset.glow;
+    root.querySelectorAll('[data-glow], .hv-fx-host').forEach(el => {
+      const tier = el.dataset.glow || '';
+      if (el.__hvFx) {
+        if (!PAL[tier]) { el.__hvFx.c.remove(); delete el.__hvFx; el.classList.remove('hv-fx-host'); cells.delete(el); return; }
+        if (el.__hvFx.tier !== tier) { el.__hvFx.tier = tier; el.__hvFx.parts = []; el.__hvFx.specks = []; }
+        return;
+      }
       if (!PAL[tier]) return;
       const c = document.createElement('canvas');
       c.className = 'hv-fx';
       el.appendChild(c);
+      el.classList.add('hv-fx-host');
       el.__hvFx = { c, tier, parts: [], specks: [], acc: 0, sacc: 0, seed: Math.random() * 1000 };
       cells.add(el);
     });
@@ -94,6 +101,7 @@ const HV_ENH_FX = (() => {
     for (const el of cells) {
       if (!el.isConnected) { cells.delete(el); continue; }
       const r = el.getBoundingClientRect();
+      if (r.width < 12 || r.height < 12) continue;            // hidden screen (display:none) - no layout to draw into
       if (r.bottom < -40 || r.top > vh + 40) continue;        // off screen: keep state, skip drawing
       draw(el, ts / 1000, dt);
     }
@@ -111,6 +119,7 @@ const HV_ENH_FX = (() => {
   function draw(el, t, dt) {
     const fx = el.__hvFx, pal = PAL[fx.tier];
     const w = el.offsetWidth, h = el.offsetHeight;
+    if (w < 12 || h < 12) return;                              // guard: radii below would go negative
     const dpr = Math.min(2, (window.devicePixelRatio) || 1);
     const c = fx.c;
     if (c.width !== Math.round(w * dpr) || c.height !== Math.round(h * dpr)) {
@@ -121,7 +130,7 @@ const HV_ENH_FX = (() => {
     g.setTransform(dpr, 0, 0, dpr, 0, 0);
     g.clearRect(0, 0, w, h);
     // inside of the 2px border, rounded like the cell
-    const b = 2, x0 = b, y0 = b, x1 = w - b, y1 = h - b, iw = x1 - x0, ih = y1 - y0, rad = 6;
+    const b = 2, x0 = b, y0 = b, x1 = w - b, y1 = h - b, iw = x1 - x0, ih = y1 - y0, rad = Math.max(1, Math.min(6, iw / 4, ih / 4));
     g.save();
     g.beginPath();
     g.moveTo(x0 + rad, y0); g.arcTo(x1, y0, x1, y1, rad); g.arcTo(x1, y1, x0, y1, rad);
@@ -149,12 +158,12 @@ const HV_ENH_FX = (() => {
     for (let i = 0; i < tongues; i++) {
       const fxp = x0 + (i + 0.5) * (iw / tongues) + Math.sin(t * 2.3 + i * 1.9 + fx.seed) * 3;
       const fh = ih * (0.2 + 0.15 * (0.5 + 0.5 * Math.sin(t * 5.1 + i * 2.7 + fx.seed)));
-      const rg = g.createRadialGradient(fxp, y1, 0, fxp, y1, fh);
+      const rg = g.createRadialGradient(fxp, y1, 0, fxp, y1, Math.max(0.5, fh));
       rg.addColorStop(0, rgba(pal.hot, 0.5));
       rg.addColorStop(0.4, rgba(pal.rim, 0.3));
       rg.addColorStop(1, rgba(pal.rim, 0));
       g.fillStyle = rg;
-      g.beginPath(); g.ellipse(fxp, y1, iw / tongues * 0.75, fh, 0, Math.PI, 0); g.fill();
+      g.beginPath(); g.ellipse(fxp, y1, Math.max(0.5, iw / tongues * 0.75), Math.max(0.5, fh), 0, Math.PI, 0); g.fill();
     }
 
     // 3) motes + embers: born inside, rise and sway, die before the top border - never leave the cell
