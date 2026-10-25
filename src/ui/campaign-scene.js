@@ -78,7 +78,8 @@ const sceneRewards = [
 const sceneDock = [['hub', 'hub', 'Thành Chính'], ['heroes', 'heroes', 'Tướng'], ['team', 'team', 'Trợ trận'], ['daily', 'daily', 'Lịch Luyện'], ['campaign', 'expedition', 'Chinh chiến']];
 function campaignActorArtId(value) {
   const id=String(value||'').replace(/-/g,'_');
-  return id==='hero_splus_co_nuong'?'co_nuong':id==='hero_splus_linh_dong'?'linh_dong':id==='hero_splus_bach_dien'?'bach_dien':id;
+  // Every S+ hero, not only the first three, maps to its art key (the farm attack table uses the short key).
+  return id.replace(/^hero_splus_/,'');
 }
 const spriteSpecs = {
   co_nuong: { src:'assets/characters/co-nuong/idle.webp',frames:30,cols:8,cellW:480,cellH:440,ms:100,pivot:224,foot:432,body:409 },

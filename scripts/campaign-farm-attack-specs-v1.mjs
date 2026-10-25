@@ -55,6 +55,12 @@ export function installFarmAttackSpecs(root) {
     }
   }
 
+  // Hero ids that differ from their asset folder (DATA.heroes key vs assets/characters/<slug>).
+  const ALIASES = {bach_y_van_phong: 'van_phong', ong_pho: 'ong_hang_pho'};
+  for (const [from, to] of Object.entries(ALIASES)) {
+    if (attacks[from] && !attacks[to]) attacks[to] = attacks[from];
+    if (vfx[from] && !vfx[to]) vfx[to] = vfx[from];
+  }
   const file = join(root, 'dist', 'index.html');
   const html = readFileSync(file, 'utf8');
   const anchor = 'function sampleCampaignFarm(';
@@ -62,7 +68,22 @@ export function installFarmAttackSpecs(root) {
   if (html.includes('/* farm-attack-specs */')) return html;      // idempotent
   const inject = '/* farm-attack-specs */Object.assign(farmAttackSpecs,' + JSON.stringify(attacks) + ');\n'
     + 'Object.assign(farmBasicVfxSpecs,' + JSON.stringify(vfx) + ');\n';
-  writeFileSync(file, html.replace(anchor, inject + anchor));
+  let out = html.replace(anchor, inject + anchor);
+  // campaign-resource-lifecycle-v1 removed the attack prefetch (it used untracked Images), so an atlas was only
+  // requested once its hero had started swinging and then queued behind six heroes' idle pages - only the first
+  // hero ever got to attack. Request every squad member's attack page through the budgeted cache once the march
+  // is over (spawn phase, ~1.2 s before the first swing): during the march the run pages need that room.
+  const pre = '    // Attack atlases are requested with their spec only by the attacking actor.';
+  if (out.split(pre).length !== 2) throw new Error('FARM_SPECS: prefetch anchor not found');
+  out = out.replace(pre, pre + '\n    if(farm.phase!==\'march\')for(const actor of farm.actors){const k=campaignActorArtId(actor.id),a=farmAttackSpecs[k];'
+    + 'if(a){const first=campaignPagedSprite(a,farmAttackPacks[k],0).spec;imageForScene(first.src,first);}}');
+  // Six idle pages + run pages + six attack pages do not fit the old scene budget (64 MiB on phones, 96 MiB on
+  // desktop): the later heroes' attacks were refused every round. 128 MiB on both - still below the 144 MiB the
+  // battle already runs at on phones, and the scene releases its pages when a battle opens.
+  const budget = 'maxDecodedBytes: __HV_CAMPAIGN_LOW_MEMORY ? 64 * 1024 * 1024 : 96 * 1024 * 1024,';
+  if (out.split(budget).length !== 2) throw new Error('FARM_SPECS: campaign budget anchor not found');
+  out = out.replace(budget, 'maxDecodedBytes: 128 * 1024 * 1024,');
+  writeFileSync(file, out);
   console.log(`AFK farm: ${Object.keys(attacks).length} hero attacks, ${Object.keys(vfx).length} VFX pages`);
   return null;
 }
