@@ -206,11 +206,11 @@ const HV_ENH_FX = (() => {
       let glint = 0;
       if (s.flash) { const d = Math.abs(k - s.at); if (d < 0.12) { glint = 1 - d / 0.12; a = Math.max(a, glint); } }
       g.fillStyle = rgba(pal.hot, a);
-      g.beginPath(); g.arc(s.x, s.y, s.r + glint * 0.3, 0, Math.PI * 2); g.fill();
+      g.beginPath(); g.arc(s.x, s.y, s.r + glint * 0.9, 0, Math.PI * 2); g.fill();
       if (glint > 0.05) {
-        const L = 1 + glint * 1.4;   // owner: flashes small, not glaring
-        g.strokeStyle = rgba(pal.hot, glint * 0.7);
-        g.lineWidth = 0.4;
+        const L = 2.5 + glint * 4;
+        g.strokeStyle = rgba(pal.hot, glint * 0.9);
+        g.lineWidth = 0.6;
         g.beginPath(); g.moveTo(s.x - L, s.y); g.lineTo(s.x + L, s.y); g.moveTo(s.x, s.y - L); g.lineTo(s.x, s.y + L); g.stroke();
       }
       sk.push(s);
