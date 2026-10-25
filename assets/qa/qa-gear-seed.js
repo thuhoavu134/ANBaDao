@@ -22,10 +22,14 @@
           P.inventory.push({ uid: ++P.itemSeq, slot, rar, lvl: 0, mold: 'strike' });
         }
       }
-      // One item already sitting on each glow tier, so the colours are visible immediately.
-      for (const [slot, lvl] of [['weapon', 10], ['armor', 12], ['boots', 15]]) {
-        if (have.has(slot + ':ssr@' + lvl) || P.inventory.some(i => i.slot === slot && i.rar === 'ssr' && i.lvl === lvl)) continue;
-        P.inventory.push({ uid: ++P.itemSeq, slot, rar: 'ssr', lvl, mold: 'strike' });
+      // Owner 2026-10-25: trần cường hoá theo phẩm + màu cường hoá không đè màu sẵn.
+      // Mỗi phẩm một món đã cường hoá để nhìn thấy đúng luật:
+      //   b +10 (tím, chạm trần) · a +9 (tím) · s +12 (vàng kim, chạm trần)
+      //   ss +9 (vẫn kính vàng, không lửa tím) · ss +14 (lửa đỏ) · ssr +12 (vẫn kính đỏ) · ssr +15 (lửa đỏ, chạm trần)
+      for (const [slot, rar, lvl] of [['weapon', 'b', 10], ['armor', 'a', 9], ['charm', 's', 12],
+        ['boots', 'ss', 9], ['weapon', 'ss', 14], ['armor', 'ssr', 12], ['boots', 'ssr', 15]]) {
+        if (P.inventory.some(i => i.slot === slot && i.rar === rar && i.lvl === lvl)) continue;
+        P.inventory.push({ uid: ++P.itemSeq, slot, rar, lvl, mold: 'strike' });
       }
       P.clearedChapters = Array.from(new Set([...(P.clearedChapters || []), 1, 2, 3, 4]));
       P.maxChapter = Math.max(Number(P.maxChapter) || 0, 4);
@@ -64,7 +68,7 @@
     stable = ok ? stable + 1 : 0;
     window.__QA_GEAR_DONE = { ok, stable, ticks, at: Date.now() };
     if (stable >= 3 || ++ticks > 80) {
-      if (stable >= 3 && typeof toast === 'function') toast('🧪 Bộ đồ test: 20 món +0, kèm +10 / +12 / +15 · 5.000.000 vàng');
+      if (stable >= 3 && typeof toast === 'function') toast('🧪 Bộ đồ test: 20 món +0, cộng 7 món đã cường hoá theo từng phẩm · 5.000.000 vàng');
       return;
     }
     setTimeout(tick, 400);

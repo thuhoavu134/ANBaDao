@@ -1,5 +1,12 @@
 export const FORGE_MAX_LEVEL = 15;
+// Owner 2026-10-25: trần cường hoá theo phẩm - đồ phẩm thấp không lên được bằng phẩm cao.
+export const FORGE_MAX_LEVEL_BY_RAR = Object.freeze({ b: 10, a: 10, s: 12, ss: 15, ssr: 15 });
 const FORGE_SALVAGE_BASE = Object.freeze({ b: 5, a: 8, s: 12, ss: 18, ssr: 28 });
+
+export function forgeMaxLevel(rar) {
+  const key = String(rar || '').toLowerCase();
+  return Object.hasOwn(FORGE_MAX_LEVEL_BY_RAR, key) ? FORGE_MAX_LEVEL_BY_RAR[key] : FORGE_MAX_LEVEL;
+}
 
 function forgeFailure(code, message) { return { ok: false, code, message }; }
 
@@ -91,7 +98,10 @@ export function prepareForgeCommand(state, config, action, payload = {}) {
   if (!found.ok) return found;
   const item = found.item;
   if (action === 'enhance') {
-    if (item.lvl >= FORGE_MAX_LEVEL) return forgeFailure('ITEM_MAX_LEVEL', 'Món này đã +15 tối đa.');
+    const cap = forgeMaxLevel(item.rar);
+    if (item.lvl >= cap) {
+      return forgeFailure('ITEM_MAX_LEVEL', 'Món phẩm ' + String(item.rar).toUpperCase() + ' chỉ cường hoá tới +' + cap + '.');
+    }
     return { ok: true, cost: forgeEnhanceCost(item, factors), uid: item.uid, level: item.lvl + 1 };
   }
   if (action === 'lock') {
