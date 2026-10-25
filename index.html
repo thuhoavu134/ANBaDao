@@ -3010,6 +3010,29 @@ function endBattle(){ if(S.phase==='over')return; if(challengeAdvanceWave())retu
   if(S.challengeTimedOut&&S.challengeJudgement){ const j=S.challengeJudgement; logLine(`<span class="g">Phân xử 15 hiệp: phe ta ${j.allyHp.toLocaleString('vi-VN')} HP · đối thủ ${j.foeHp.toLocaleString('vi-VN')} HP${j.allyHp===j.foeHp?' · xét thêm tỉ lệ HP và số người còn đứng':''}.</span>`); }
   if(typeof guildTrack==='function'&&myGuild()&&ST.mode!=='guildBoss'&&ST.mode!=='guildWar'){guildTrack('battle',1);if(win)guildTrack('win',1);} if(typeof clanDutyProgress==='function')clanDutyProgress('battle',1); replayEvent('battleEnd',{win,turns:S.replay?S.replay.turn:0,rounds:S.roundNo||0,challengeJudgement:S.challengeJudgement||null}); window.__MG_LAST_REPLAY=S.replay;
   if(win){ const c=randOf(alive(S.allies)); const l=line(c.id,'victory'); if(l)say(c,l);
+    // Owner 2026-10-25: trận thường/tinh anh trong phó bản rơi b/a (rác phân giải); trận cuối chương do boss chương lo.
+    try{
+      if(ST.mode==='campaign'&&typeof rollStageDrop==='function'&&typeof buildDropItem==='function'){
+        const seq=typeof chapterBattleSequence==='function'?chapterBattleSequence(ST.chapterIdx):null;
+        const stage=Number(ST.campaignBattleIndex)||0, last=Array.isArray(seq)?seq.length-1:-1;
+        if(Array.isArray(seq)&&stage!==last){
+          const kind=stage===last-1?'elite':'normal';
+          const rar=rollStageDrop({kind,rng:Math.random});
+          const tx=window.HonVietTransaction;
+          if(rar&&tx&&typeof tx.commit==='function'){
+            const slot=randOf(DATA.items.slots);
+            tx.commit({commandId:'stage.drop:'+ST.chapterIdx+':'+stage+':'+(P.revision||0),source:'campaign-stage',cost:{},balances:{},
+              mutate:player=>{
+                const uid=(Number(player.itemSeq)||0)+1;
+                const item=buildDropItem({uid,slot,rar,source:'stage',rollAffixes:typeof rollAffixes==='function'?rollAffixes:null});
+                if(!item) return {ok:false,code:'DROP_INVALID'};
+                player.itemSeq=uid; player.inventory=player.inventory||[]; player.inventory.push(item);
+                return {ok:true,item:{uid,rar,slot}};
+              }});
+          }
+        }
+      }
+    }catch(_){}
     showBanner('CHIẾN THẮNG','#3fd6a0'); logLine('<b>CHIẾN THẮNG!</b>');
     setTimeout(()=>{ if(S.onBattleEnd)S.onBattleEnd(true); }, 1500);
   } else { showBanner('THẤT BẠI','#e8455f'); logLine('<span class="f">THẤT BẠI.</span>');
@@ -4681,7 +4704,10 @@ function forgeMoldBonus(id){ const out={hp:0,atk:0,def:0,spd:0,active:[]}, e=(P.
   DATA.items.slots.forEach(slot=>{const uid=e[slot],it=uid&&P.inventory.find(x=>x.uid===uid);if(it&&it.mold)cnt[it.mold]=(cnt[it.mold]||0)+1;});
   Object.keys(cnt).forEach(m=>{const n=cnt[m];if(n<2)return;const tier=n>=4?4:2;if(m==='strike')out.atk+=tier===4?.05:.02;if(m==='ward'){out.hp+=tier===4?.05:.02;out.def+=tier===4?.05:.02;}if(m==='tempo')out.spd+=tier===4?3:1;out.active.push({mold:m,n:tier});}); return out; }
 function forgeMoldLine(id){ const x=forgeMoldBonus(id); return x.active.length?' · '+x.active.map(a=>`<b style="color:#ffd978">${FORGE_MOLDS[a.mold].name} (${a.n})</b>`).join(' · '):''; }
-function rollForgeRarity(){ econ().craftPity++; let r=Math.random()*100,acc=0,rar='b'; if(econ().craftPity>=ECON.craftPitySSR){rar='ssr';econ().craftPity=0;}else{for(const [t,pr] of GACHA.rates){acc+=pr;if(r<acc){rar=t;break;}}if(econ().craftPity>=ECON.craftPitySS&&['a','b','s'].includes(rar))rar='ss';if(rar==='ssr')econ().craftPity=0;} return rar; }
+// Owner 2026-10-25: lò rèn chỉ ra s/ss/ssr. b/a chỉ rơi ở phó bản (rác phân giải).
+// Bảng riêng, KHÔNG dùng GACHA.rates vì bảng đó của triệu hồi tướng.
+const FORGE_RARITY=[['ssr',10],['ss',30],['s',60]];
+function rollForgeRarity(){ econ().craftPity++; let r=Math.random()*100,acc=0,rar='s'; if(econ().craftPity>=ECON.craftPitySSR){rar='ssr';econ().craftPity=0;}else{for(const [t,pr] of FORGE_RARITY){acc+=pr;if(r<acc){rar=t;break;}}if(econ().craftPity>=ECON.craftPitySS&&rar==='s')rar='ss';if(rar==='ssr')econ().craftPity=0;} return rar; }
 function forgeCandidate(slot){ const rar=rollForgeRarity(); return {uid:null,slot,rar,lvl:0,mold:econ().forgeMold,from:'craft',affixes:rollAffixes({source:'craft',rar})}; }
 function startDualForge(slot){ if(econ().forgePending)return {ok:false,msg:'Hãy chọn một phôi đang chờ trước.'}; if((P.tinh||0)<DUAL_FORGE.tinh)return {ok:false,msg:'Thiếu Tinh Lực cho Song Rèn.'}; if(P.gold<DUAL_FORGE.gold)return {ok:false,msg:'Thiếu vàng cho Song Rèn.'}; P.tinh-=DUAL_FORGE.tinh;P.gold-=DUAL_FORGE.gold;econ().forgePending={slot,mold:econ().forgeMold,candidates:[forgeCandidate(slot),forgeCandidate(slot)]};econ().forgeStats.dual++;persist();refreshResbar();return {ok:true}; }
 function chooseDualForge(i){ const p=econ().forgePending;if(!p||!p.candidates[i])return false;const it={...p.candidates[i],uid:++P.itemSeq};P.inventory.push(it);econ().forgePending=null;econ().forgeStats.chosen++;questProgress('craft',1);persist();refreshResbar();toast('Đã giữ '+itemName(it)+' · '+FORGE_MOLDS[it.mold].name);return true; }

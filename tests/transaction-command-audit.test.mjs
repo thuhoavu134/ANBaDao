@@ -24,7 +24,8 @@ test('L03a source audit verifies the mutation inventory and opening sequence', (
   assert.equal(report.opening.weeklyProgressPersistsInternally, true);
   assert.equal(report.opening.transactionBoundaryPresent, false);
   assert.equal(report.opening.atomicity, 'not-atomic');
-  assert.equal(report.transactionRuntimeWired, false);
+  // Owner 2026-10-25: endBattle (phó bản) đã gọi window.HonVietTransaction.commit nên runtime đã được nối
+  assert.equal(report.transactionRuntimeWired, true);
 });
 
 test('L03a records receipt absence instead of treating direct persist as atomic', () => {
@@ -39,9 +40,10 @@ test('L03a records receipt absence instead of treating direct persist as atomic'
   assert.equal(questProgress.receipt, 'none');
   assert.equal(chapterClear.receipt, 'none');
   assert.ok(report.summary.candidateMutationFunctionCount > 0);
+  // Owner 2026-10-25: endBattle đã gọi HonVietTransaction.commit nên source có nhắc tới runtime
   assert.equal(
     /\b(?:executeLocalTransaction|settleRewardTransaction|HonVietTransaction)\b/.test(source),
-    false
+    true
   );
 });
 

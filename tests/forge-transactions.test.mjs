@@ -45,7 +45,7 @@ function runtime(player = fixture()) {
   vm.runInContext([
     persist, helper, section('const ECON=', 'function awakeningRank('), line('const GACHA='),
     section('const WEEKLY_QUESTS=', 'function claimWeeklyQuest('), section('function questProgress(', 'function claimQuest('),
-    section('DATA.items={', 'function forgeMoldBonus('), section('function rollForgeRarity(', 'const RFAC='),
+    section('DATA.items={', 'function forgeMoldBonus('), section('const FORGE_RARITY=', 'const RFAC='),
     section('const RFAC=', '/* Samkok E10/E11:'), section('function forgeCommand(', 'function renderForge(')
   ].join('\n'), context);
   context.renderForge = () => { renders++; };
@@ -61,7 +61,7 @@ function runtime(player = fixture()) {
 test('craft debits once and commits item, pity, quest and receipt together across reload/retry', () => {
   const r = runtime();
   const item = r.run("craftItem('weapon','craft:one')");
-  assert.equal(item.uid, 2); assert.equal(item.rar, 'b');
+  assert.equal(item.uid, 2); assert.equal(item.rar, 's'); // Owner 2026-10-25: lò rèn chỉ ra s/ss/ssr
   const saved = r.saved();
   assert.equal(saved.gold, 2800); assert.equal(saved.tinh, 100);
   assert.equal(saved.economy.craftPity, 1); assert.equal(saved.daily.quests[0].progress, 1);
@@ -112,7 +112,8 @@ test('craft allocates beyond existing UIDs when an old itemSeq is behind invento
 });
 
 test('existing pity boundaries and two sequential dual rolls are preserved', () => {
-  for (const [pity, rarity, next] of [[8, 'b', 9], [9, 'ss', 10], [29, 'ssr', 0]]) {
+  // Owner 2026-10-25: lò rèn chỉ ra s/ss/ssr nên mốc pity thường giờ là 's'
+  for (const [pity, rarity, next] of [[8, 's', 9], [9, 'ss', 10], [29, 'ssr', 0]]) {
     const p = fixture(); p.economy.craftPity = pity;
     const r = runtime(p); assert.equal(r.run("craftItem('weapon','pity')").rar, rarity);
     assert.equal(r.saved().economy.craftPity, next);
