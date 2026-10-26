@@ -1412,7 +1412,7 @@ export function createSplusMechanics(options={}) {
   function resolveHongThuongHit(actorId,castId,targetId,hitIndex){
     const actor=unit(actorId),cast=spearCastOf(actorId,castId),target=unit(targetId),token=targetId+':'+hitIndex;
     // Owner 2026-10-26: ulti Hồng Thương chọc 4 lần xuống toàn đội địch (trước đây tối đa 3).
-    if(!cast||!Number.isInteger(hitIndex)||hitIndex<0||hitIndex>3||cast.resolved.includes(token))return {ok:false};
+    if(!cast||!Number.isInteger(hitIndex)||hitIndex<0||hitIndex>8||cast.resolved.includes(token))return {ok:false};
     cast.resolved.push(token);
     if(cast.kind==='ultimate'&&!cast.struckIds.includes(targetId))cast.struckIds.push(targetId);
     if(!alive(actor))return {ok:true,events:[]};

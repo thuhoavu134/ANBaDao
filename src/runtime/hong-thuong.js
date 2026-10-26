@@ -175,7 +175,8 @@ function drawHongThuongHero(ctx,u,time){
  let tilt=0;
  if(active&&info.action==='ultimate'&&info.ultHover&&key==='ult-cluster'){
   const segsN=info.segments||[];const segN=segsN.find(x=>elapsed>=x.start&&elapsed<x.start+x.dur);
-  if(segN&&segN.from&&segN.from.y<=info.ultHover.y+1)tilt=-0.34*facing;
+  // 45 độ theo yêu cầu owner.
+  if(segN&&segN.from&&segN.from.y<=info.ultHover.y+1)tilt=-(Math.PI/4)*facing;
  }
  ctx.scale(scale*facing,scale);
  if(tilt)ctx.rotate(tilt);
@@ -325,16 +326,24 @@ function drawHvUltFx(ctx, time) {
   }
 }
 
-function spawnHongThuongVfx(x,y,info,target){hongThuongVfxImage('impact');
+function spawnHongThuongVfx(x,y,info,target,spread){hongThuongVfxImage('impact');
  const body=target?battleCharacterBody(target):null;
  const centerX=body?body.centerX:x,centerY=body?body.centerY:y;
- hongThuongVfxLive.push({x:centerX,y:centerY,speed:info?.speed||state.speed||1,startedAt:performance.now(),battleId:state.battleId});}
+ const s=spread||null;
+ hongThuongVfxLive.push({x:centerX+(s?s.dx:0),y:centerY+(s?s.dy:0),speed:info?.speed||state.speed||1,
+  startedAt:performance.now()+(s?s.delay||0:0),battleId:state.battleId});}
+// Owner 2026-10-26: mỗi địch nhận 4 lớp VFX xen kẽ nhau (lệch vị trí + lệch nhịp) cho dày mắt.
+function spawnHongThuongVfxQuad(x,y,info,target){
+ const quad=[{dx:-14,dy:6,delay:0},{dx:12,dy:-4,delay:90},{dx:-4,dy:-14,delay:180},{dx:6,dy:14,delay:270}];
+ for(const q of quad)spawnHongThuongVfx(x,y,info,target,q);
+}
 
 function drawHongThuongVfx(context,time){
 
  const clip=HONG_THUONG_META.vfx.clips.impact;
  for(let i=hongThuongVfxLive.length-1;i>=0;i--){
   const v=hongThuongVfxLive[i],elapsed=(time-v.startedAt)*v.speed,ms=clip.frames/clip.fps*1000;
+  if(elapsed<0)continue;
   if(elapsed>=ms||state.battleId!==v.battleId){hongThuongVfxLive.splice(i,1);continue;}
   const img=hongThuongVfxImage('impact');if(!img||img.complete===false||img.naturalWidth===0)continue;
   const frame=Math.min(clip.frames-1,Math.floor(elapsed/1000*clip.fps));
@@ -402,20 +411,19 @@ function drawHongThuongVfx(context,time){
   const bodyH=Math.max(96,(firstBody&&firstBody.bodyH)||160);
   const dir=actor.team===TEAM_ENEMY?1:-1; // đứng về phía đội mình so với địch
   // Đứng TRƯỚC mặt địch (xa hơn) và bay lên CAO HẲN trên đầu cả đội (owner: phải thấy rõ là bay lên).
-  const ground={x:anchor.x+dir*Math.max(96,bodyH*0.85),y:anchor.y+bodyH*0.40};
-  const hover={x:ground.x,y:ground.y-bodyH*2.85};
+  // Owner 2026-10-26: gần hơn + thấp hơn bản trước (bay 2.85 thân và cách 96px bị chê là quá xa/cao).
+  const ground={x:anchor.x+dir*Math.max(54,bodyH*0.5),y:anchor.y+bodyH*0.22};
+  const hover={x:ground.x,y:ground.y-bodyH*1.55};
   // đi tới điểm đứng trước mặt địch
-  seg.push({start:cursor,dur:260,from:info.home,to:ground,clip:'run'});cursor+=260;
-  const WAVES=4;
+  seg.push({start:cursor,dur:320,from:info.home,to:ground,clip:'run'});cursor+=320;
+  // Owner 2026-10-26: 3 đợt, mỗi đợt 3 lần đánh, nhịp chậm hơn cho "đã tai".
+  const WAVES=3,STRIKES=3,STRIKE_MS=460,HOVER_MS=STRIKES*STRIKE_MS;
   for(let w=0;w<WAVES;w++){
-    // bay lên
-    seg.push({start:cursor,dur:180,from:ground,to:hover,clip:'run'});cursor+=180;
+    seg.push({start:cursor,dur:240,from:ground,to:hover,clip:'run'});cursor+=240;
     const hoverStart=cursor;
-    // giữ trên cao, chếch người xuống, diễn hoạt đánh
-    seg.push({start:hoverStart,dur:tl.clusterMs,from:hover,to:hover,clip:'ult-cluster'});cursor+=tl.clusterMs;
-    waves.push({at:hoverStart+Math.round(tl.clusterMs*0.5),wave:w,spot:hover});
-    // hạ xuống đúng điểm cũ
-    seg.push({start:cursor,dur:180,from:hover,to:ground,clip:'run'});cursor+=180;
+    seg.push({start:hoverStart,dur:HOVER_MS,from:hover,to:hover,clip:'ult-cluster'});cursor+=HOVER_MS;
+    for(let k=0;k<STRIKES;k++)waves.push({at:hoverStart+Math.round(STRIKE_MS*(k+0.45)),wave:w*STRIKES+k,spot:hover});
+    seg.push({start:cursor,dur:240,from:hover,to:ground,clip:'run'});cursor+=240;
   }
   seg.push({start:cursor,dur:420,from:ground,to:info.home,clip:'run'});cursor+=420;
   info.segments=seg;info.actionTotalMs=cursor;
@@ -437,7 +445,7 @@ function drawHongThuongVfx(context,time){
   // VFX nổi TRÊN ĐẦU từng địch -> cả sân dày hiệu ứng
   for(const f of foes){
    const u=getUnit(f.id);
-   if(u)spawnHongThuongVfx(u.x,u.y-60,info,u);
+   if(u)spawnHongThuongVfxQuad(u.x,u.y-60,info,u);
   }
   hongThuongSfx(info);flush();
  }

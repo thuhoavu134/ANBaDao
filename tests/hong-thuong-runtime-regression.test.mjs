@@ -31,20 +31,21 @@ test('ultimate keeps one ground spot and leaps four times over the whole enemy t
  assert.ok(info);
  await h.s.resolveHongThuongCast(engine,info,h.actor,'ultimate',victims[0],1);
  const segs=info.segments,clusters=segs.filter(s=>s.clip==='ult-cluster');
- assert.equal(clusters.length,4,'bốn nhịp chọc');
+ assert.equal(clusters.length,3,'ba đợt');
  assert.equal(segs.filter(s=>s.clip==='ult-finisher').length,0,'không còn Hồi Mã Thương riêng');
  for(let i=1;i<segs.length;i++)assert.equal(segs[i].start,segs[i-1].start+segs[i-1].dur,'timeline liền mạch');
  // mỗi nhịp: TOÀN BỘ địch còn sống đều ăn đòn, chỉ số nhịp 0..3
- assert.equal(hits.length,8,'4 nhịp x 2 địch');
- for(const wave of [0,1,2,3])assert.deepEqual(hits.filter(x=>x.i===wave).map(x=>x.id).sort(),['e1','e2']);
- assert.ok(hits.every(x=>x.i>=0&&x.i<=3),'chỉ số nhịp nằm trong 0..3');
+ assert.equal(hits.length,18,'3 đợt x 3 nhịp x 2 địch');
+ for(const wave of [0,1,2,3,4,5,6,7,8])assert.deepEqual(hits.filter(x=>x.i===wave).map(x=>x.id).sort(),['e1','e2']);
+ assert.ok(hits.every(x=>x.i>=0&&x.i<=8),'chỉ số nhịp nằm trong 0..8');
  // đứng yên một chỗ: cả 4 cụm đánh cùng một toạ độ, cao hơn MỌI địch
  const hoverY=clusters[0].to.y;
  for(const c of clusters){
   assert.equal(c.to.x,clusters[0].to.x,'cùng một điểm đứng');
   assert.equal(c.to.y,hoverY,'cùng một độ cao');
  }
- assert.ok(hoverY<Math.min(...victims.map(v=>v.y))-80,'bay lên cao hơn hẳn đội địch');
+ assert.ok(hoverY<Math.min(...victims.map(v=>v.y))-40,'bay lên cao hơn đội địch (không quá cao)');
+ assert.ok(hoverY>Math.min(...victims.map(v=>v.y))-260,'không bay cao quá mức owner muốn');
  // giữa các cụm phải hạ xuống đúng điểm đứng dưới đất (không nhảy sang người khác)
  const groundX=segs.find(x=>x.clip==='run'&&x.to.y>Math.min(...victims.map(v=>v.y))).to.x;
  for(const c of clusters)assert.equal(c.to.x,groundX,'bay lên ngay trên điểm đứng của mình');
