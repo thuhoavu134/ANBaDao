@@ -1,3 +1,16 @@
+## 2026-10-26 — SFX tướng: 2 lỗi làm owner nghe sai tiếng (đã sửa, PR #376/#377 merged)
+
+Đổi tiếng đòn thường Lăng Vân theo lựa chọn của owner (nhịp 1–2 `cy_bzwy_c`, nhịp 3 `tm_dcg_c` = số 23 trong 181 tiếng kho Kiếm Thế). Hai lỗi thật, đều không nằm ở deploy:
+
+1. **Tiếng va chạm cũ đè tiếng mới.** Mỗi nhịp còn phát kèm `lang-van-basic-hit` (`basic-hit.wav` bộ cũ) cùng lúc: RMS **−8,4 dB** so với −15,9 / −21,6 dB của tiếng owner chọn → tai chỉ nghe ra tiếng cũ. Đã bỏ cue này khỏi đòn thường.
+2. **Engine tua tiếng theo tốc độ trận.** Trận nhúng bị ép x3 (`battle.html`: `if (!EMBEDDED) return; state.speed = 3;`) và `audio-sfx-runtime.js` gán `source.playbackRate = speed` → tiếng nhanh 3×, cao hơn ~19 nửa cung, owner nghe "không đúng âm thanh gốc". Nay **mọi tiếng `playbackRate = 1`** (cả 10 tướng authored lẫn 6 tướng cũ); nhịp phát vẫn theo trận.
+
+Ngoài ra: file tiếng owner chọn giữ **nguyên byte** (`atk-bang-efd892d4.wav` = `cy_bzwy_c`, `atk-gai-90bd2748.wav` = `tm_dcg_c`), tên mang md5 vì `/assets/(.*)` bị `immutable` 1 năm.
+
+Bài học chi tiết + checklist: [SFX-INTEGRATION-LESSONS.md](SFX-INTEGRATION-LESSONS.md). Test khoá hành vi: `tests/authored-sfx-pitch.test.mjs` (x1/x2/x3 đều rate 1, md5 file gốc, không còn cue va chạm cũ). Toàn bộ: 2241 đạt / 88 lỗi cũ / 0 lỗi mới.
+
+---
+
 ## 2026-10-17 — Điểm tiếp tục: Ultimate Kỷ Vân ba tia (DRAFT / REVIEW)
 
 Owner đã cho merge PR #312; main hiện `642dd78e3174dca902e4ea0deeebe009dfd6e83b`. Source mới trên `fix/ky-van-triple-lightning-sfx-20261017`, PR #313: `kyVanUltimateLightning` vẽ ba tia sau latest-strike dedupe. Owner đã phản hồi ba tia song song/equal-height trông giả; revision hiện dùng height factors [.78,1,.90] xoay theo slot%3 và offsets [-spread,0,.75spread], với spread clamp(height×0.14,18,36). Scale cả width/height quanh anchor gốc giúp ba đầu tia cao thấp khác nhau, còn contact vẫn đúng foot. Một group/target, một impact, không thêm damage. Basic giữ heightFactor=1, offset0/một cột. Last visual tail vẫn 3670 < recovery3900.024.
