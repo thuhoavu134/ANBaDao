@@ -45,6 +45,7 @@
 
   const syncOpen = name => {
     const open = name === 'heroDetail';
+    if (!open) root.querySelector('.vc-detail-sheet[open]')?.close?.();
     root.hidden = !open;
     root.classList.toggle('is-open', open);
     document.body.classList.toggle('hero-detail-hall-active', open);

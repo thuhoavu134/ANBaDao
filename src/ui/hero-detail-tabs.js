@@ -4,7 +4,7 @@
   const tabs = [['attributes', 'Thuộc tính'], ['skills', 'Kỹ năng'],
     ['equipment', 'Trang bị'], ['breakthrough', 'Đột phá'], ['bonds', 'Duyên phận'], ['mastery', 'Tinh thông']];
   const body = document.getElementById('hdBody');
-  let currentHero = null, selected = 'attributes';
+  let currentHero = null, selected = 'attributes', bachUpgradeCount = 1;
 
   function equipmentPanel(id) {
     const panel = document.createElement('section');
@@ -119,7 +119,7 @@
   }
 
   function mount(id) {
-    if (id !== currentHero) { currentHero = id; selected = 'attributes'; }
+    if (id !== currentHero) { currentHero = id; selected = 'attributes'; bachUpgradeCount = 1; }
     const children = Array.from(body.children), stage = body.querySelector('.hstage');
     const oldTabs = body.querySelector('.hero-art-tabs');
     const skills = children.filter(node => node.matches('.skillbox'));
@@ -170,6 +170,7 @@
     dock.append(medals, upgrades);
     const shortcuts = document.createElement('div'); shortcuts.className = 'hv-scene-skills';
     shortcuts.setAttribute('aria-label', 'Chiêu thức của tướng');
+    let revealBachDetails;
     const labels = { basic: 'Công thường', ultimate: 'Tuyệt kỹ', passive: 'Nội tại' };
     for (const skill of skills) {
       const slot = skill.dataset.skillSlot;
@@ -182,7 +183,8 @@
       button.setAttribute('aria-controls', 'hero-panel-skills');
       button.append(icon, label);
       button.addEventListener('click', () => {
-        activate('skills', true);
+        if (id === 'bach_dien' && revealBachDetails) revealBachDetails('skills', skill, button);
+        else activate('skills', true);
         skill.scrollIntoView({ block: 'nearest' });
       });
       shortcuts.append(button);
@@ -222,7 +224,7 @@
       const primary = document.createElement('button');
       primary.type = 'button'; primary.className = 'btn vc-primary-upgrade';
       primary.textContent = 'Nâng cấp';
-      let count = 1;
+      let count = bachUpgradeCount;
       const modeButtons = [];
       const updateUpgrade = () => {
         const source = count === 5 ? five : one;
@@ -236,7 +238,10 @@
         coin.className = 'vc-coin'; coin.setAttribute('aria-hidden', 'true');
         if (!source) price.textContent = 'Chưa có lệnh nâng cấp ' + count + ' cấp';
         else if (cost && count === 1) price.replaceChildren(coin, cost[1] + ' bạc');
-        else price.replaceChildren(coin, count === 5 ? 'Lên 5 cấp' : sourceText);
+        else {
+          const firstCost = (one?.textContent || '').match(/(\d[\d.,]*)\s*$/);
+          price.replaceChildren(coin, count === 5 && firstCost ? 'Từ ' + firstCost[1] + ' bạc/cấp' : sourceText);
+        }
         for (const option of modeButtons) {
           const active = Number(option.dataset.count) === count;
           option.setAttribute('aria-pressed', String(active));
@@ -248,7 +253,7 @@
         option.type = 'button'; option.className = 'vc-mode-btn';
         option.dataset.count = String(amount); option.textContent = '×' + amount;
         option.disabled = amount === 5 && !five;
-        option.addEventListener('click', () => { count = amount; updateUpgrade(); });
+        option.addEventListener('click', () => { count = amount; bachUpgradeCount = amount; updateUpgrade(); });
         selector.append(option); modeButtons.push(option);
       }
       primary.addEventListener('click', () => {
@@ -342,30 +347,43 @@
         button.append(art, caption); button.addEventListener('click', action);
         return button;
       };
-      const reveal = (key, target) => {
-        workspace.hidden = false;
-        workspace.classList.add('is-expanded');
+      const sheet = document.createElement('dialog');
+      sheet.className = 'vc-detail-sheet';
+      sheet.setAttribute('aria-labelledby', 'vc-sheet-heading');
+      const sheetHeader = document.createElement('header'); sheetHeader.className = 'vc-sheet-header';
+      const sheetTitle = document.createElement('h2'); sheetTitle.id = 'vc-sheet-heading'; sheetTitle.textContent = 'Chi tiết tướng';
+      const close = document.createElement('button'); close.type = 'button'; close.textContent = 'Đóng'; close.className = 'vc-sheet-close';
+      close.setAttribute('aria-label', 'Đóng chi tiết');
+      sheetHeader.append(sheetTitle, close);
+      let sheetOpener = null;
+      const reveal = (key, target, opener) => {
+        activate(key); sheetOpener = opener || detailTrigger;
+        if (!sheet.open) sheet.showModal();
         detailTrigger.setAttribute('aria-expanded', 'true');
-        activate(key);
-        const destination = target || workspace;
-        destination.scrollIntoView({ block: 'start', behavior: 'auto' });
+        buttons.get(key)?.focus({preventScroll:true});
+        if (target) target.scrollIntoView({block:'nearest'});
       };
-      const detailTrigger = feature('Chi tiết', 'details', () => {
-        const expanded = !workspace.hidden;
-        workspace.hidden = expanded;
-        workspace.classList.toggle('is-expanded', !expanded);
-        detailTrigger.setAttribute('aria-expanded', String(!expanded));
-        if (!expanded) { activate(selected); workspace.scrollIntoView({ block: 'start' }); }
+      revealBachDetails = reveal;
+      close.addEventListener('click', () => sheet.close());
+      sheet.addEventListener('close', () => {
+        detailTrigger.setAttribute('aria-expanded', 'false');
+        if (sheetOpener?.isConnected) sheetOpener.focus({preventScroll:true});
       });
+      sheet.addEventListener('click', event => {
+        if (event.target !== sheet) return;
+        const rect = sheet.getBoundingClientRect();
+        if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) sheet.close();
+      });
+      const detailTrigger = feature('Chi tiết', 'details', () => reveal(selected));
       detailTrigger.setAttribute('aria-controls', 'vc-detail-content');
       detailTrigger.setAttribute('aria-expanded', 'false');
-      features.append(
-        feature('Trang bị', 'equipment', () => reveal('equipment')),
-        feature('Thăng sao', 'star', () => reveal('attributes', upgrades)),
-        detailTrigger
-      );
+      detailTrigger.setAttribute('aria-haspopup', 'dialog');
+      const gearTrigger = feature('Trang bị', 'equipment', () => reveal('equipment', null, gearTrigger));
+      const starTrigger = feature('Thăng sao', 'star', () => reveal('attributes', upgrades, starTrigger));
+      gearTrigger.setAttribute('aria-haspopup', 'dialog'); starTrigger.setAttribute('aria-haspopup', 'dialog');
+      features.append(gearTrigger, starTrigger, detailTrigger);
       workspace.id = 'vc-detail-content';
-      workspace.hidden = true;
+      workspace.hidden = false;
       // Do not clone or replace .upgrades: listeners, ids, costs and guards survive.
       const advanced = document.createElement('section');
       advanced.className = 'vc-advanced-actions';
@@ -373,7 +391,13 @@
       advancedTitle.textContent = 'Thăng sao & bồi dưỡng';
       advanced.append(advancedTitle, upgrades);
       workspace.append(advanced);
-      body.replaceChildren(stage, medals, overview, features, workspace);
+      const profileCopy = document.createElement('section'); profileCopy.className = 'section';
+      const quote = stage.querySelector('.hsepi');
+      if (quote) profileCopy.append(quote);
+      const affinityCopy = document.createElement('p'); affinityCopy.textContent = element?.title || element?.textContent || '';
+      profileCopy.append(affinityCopy); panels.get('attributes').prepend(profileCopy);
+      sheet.append(sheetHeader, workspace);
+      body.replaceChildren(stage, medals, overview, features, sheet);
     } else body.replaceChildren(stage, dock, workspace);
 
     function activate(key, focus = false) {
