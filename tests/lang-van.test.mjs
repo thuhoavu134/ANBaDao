@@ -2,7 +2,7 @@
 // and the ultimate that freezes the soaked and shatters the frozen.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { createSplusCombat } from '../src/domain/combat/splus-mechanics.mjs';
 import { SPLUS_EXTRA_BY_ID, resolveSplusExtraId } from '../src/domain/hero/splus-extras.mjs';
 
@@ -166,14 +166,29 @@ test('lang_van shatter: an enemy already in the back row cannot be pushed furthe
 });
 
 // ---- SFX must follow the animation, beat by beat ------------------------------------------------------
-test('lang_van basic: the swing cue is not pinned to one hit, so every beat plays its own sound', () => {
+test('lang_van basic: mỗi nhịp đánh có tiếng riêng (3-3-1 theo chủ dự án)', () => {
   const h = JSON.parse(readFileSync(new URL('../assets/characters/lang-van/hero.json', import.meta.url), 'utf8'));
-  const beats = h.battle.actions.basic.hits.length;
+  const basic = h.battle.actions.basic;
+  const beats = basic.hits.length;
   assert.ok(beats >= 3, 'three beats');
-  const swing = h.battle.actions.basic.sfx.filter(s => s.cue === 'lang-van-basic');
-  assert.equal(swing.length, 1, 'one swing cue entry');
-  // `hit: N` would lock the cue to that single beat (the bug: the swing only sounded on beat 1).
-  assert.equal(swing[0].hit, undefined, 'no hit pin -> the runtime plays it on every beat');
-  assert.equal(swing[0].at, 'hit');
+  // Owner 2026-10-26: ba nhịp dùng ba tiếng, nhịp 1-2 là tiếng số 3, nhịp 3 là tiếng số 1 (sắc hơn).
+  // Bài học cũ vẫn giữ: KHÔNG được để nhịp nào im lặng — mọi hit index 0..beats-1 phải có cue.
+  const perBeat = new Map();
+  for (const entry of basic.sfx) {
+    if (entry.at !== 'hit' || entry.hit === undefined) continue;
+    perBeat.set(entry.hit, entry.cue);
+  }
+  for (let beat = 0; beat < beats; beat++) {
+    assert.ok(perBeat.has(beat), `nhịp ${beat} phải có tiếng, không được im`);
+  }
+  assert.equal(perBeat.get(0), 'lang-van-basic-1');
+  assert.equal(perBeat.get(1), 'lang-van-basic-2');
+  assert.equal(perBeat.get(2), 'lang-van-basic-3');
+  // tệp phải tồn tại thật
+  for (const [, cue] of perBeat) {
+    const rel = h.sfx[cue];
+    assert.ok(rel, `cue ${cue} phải được đăng ký`);
+    assert.ok(existsSync(new URL('../assets/audio/sfx/' + rel, import.meta.url)), `thiếu file cho ${cue}`);
+  }
 });
 
