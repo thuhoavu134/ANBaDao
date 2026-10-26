@@ -3916,8 +3916,8 @@ function renderHeroes(){ const g=document.getElementById('heroGrid'); g.innerHTM
     lg.querySelectorAll('.hechip').forEach(b=>b.addEventListener('click',()=>{ heFilter=b.dataset.he; renderHeroes(); }));
     lg.querySelectorAll('[data-bclaim]').forEach(b=>b.addEventListener('click',()=>{ const r=claimBond(b.dataset.bclaim);
       toast(r.ok?'🤝 Duyên trọn vẹn — nhận 💎40!':(r.msg||'')); if(r.ok){ refreshResbar(); renderHeroes(); } })); }
-  const _own=OFFICIAL_ROSTER_12_IDS.filter(id=>P.heroes[id]?.owned).length;
-  const _dx=document.getElementById('dexCount'); if(_dx) _dx.textContent='— Đồ Giám '+_own+'/'+OFFICIAL_ROSTER_12_IDS.length+' Tướng Hồn Việt';
+  const _own=activeRosterIds().filter(id=>P.heroes[id]?.owned).length;
+  const _dx=document.getElementById('dexCount'); if(_dx) _dx.textContent='— Đồ Giám '+_own+'/'+activeRosterIds().length+' Tướng Hồn Việt';
   for(const id of sortedHeroIds()){ const h=DATA.heroes[id], own=P.heroes[id].owned, lo=DATA.lore[id];
     if(heFilter!=='all'&&h.he!==heFilter) continue;
     const d=document.createElement('div'); d.className='hcard'+(own?'':' locked'); d.dataset.rarity=h.rarity;
@@ -4211,12 +4211,18 @@ Object.assign(DATA.voice,{
  den_duong_nhap_nhay:{battle_start:["Tách... tách... sáng rồi!"],skill_sig:["Nháy loá! Run tay chưa!","Chớp một phát nhớ đời!"]},
 });
 const RAR_ORDER={ssr:0,ss:1,s:2,a:3,b:4};
-function sortedHeroIds(){ return OFFICIAL_ROSTER_12_IDS.slice().sort((x,y)=>(RAR_ORDER[DATA.heroes[x].rarity]-RAR_ORDER[DATA.heroes[y].rarity])||x.localeCompare(y)); }
+// Owner 2026-10-26: 8 tướng KHÔNG đưa vào game nữa. Giữ dữ liệu (save/trận cũ không vỡ) nhưng ẩn khỏi màn tướng,
+// đội hình, chiêu mộ và Đồ Giám. Thêm tướng mới về sau chỉ cần bỏ khỏi danh sách này.
+const RETIRED_HERO_IDS=Object.freeze(["lac_yen","cung_thu_tre","co_dao_ganh_hoi","phong_tu","thuy_nuong_roi_nuoc","hong_lien_dao_nuong","thach_quyen","to_diep"]);
+const RETIRED_HERO_SET=new Set(RETIRED_HERO_IDS);
+function isRetiredHero(id){ return RETIRED_HERO_SET.has(String(id||"")); }
+function activeRosterIds(){ return OFFICIAL_ROSTER_12_IDS.filter(id=>!isRetiredHero(id)); }
+function sortedHeroIds(){ return activeRosterIds().sort((x,y)=>(RAR_ORDER[DATA.heroes[x].rarity]-RAR_ORDER[DATA.heroes[y].rarity])||x.localeCompare(y)); }
 function rarCol(t){ return {ssr:'#f2c14e',ss:'#c084fc',s:'#60a5fa',a:'#4ade80',b:'#9aa3b8'}[t]||'#9aa3b8'; }
 const GACHA={cost1:80,cost10:720,rates:[['ssr',3],['ss',9],['s',18],['a',30],['b',40]],pityAt:60,dupShards:{ssr:15,ss:10,s:6,a:4,b:3}};
 function rollTier(){ P.pity=(P.pity||0)+1; if(P.pity>=GACHA.pityAt){ P.pity=0; return 'ssr'; }
   const r=Math.random()*100; let acc=0; for(const [t,pr] of GACHA.rates){ acc+=pr; if(r<acc){ if(t==='ssr')P.pity=0; return t; } } return 'b'; }
-function poolOf(t){ return OFFICIAL_ROSTER_12_IDS.filter(id=>DATA.heroes[id].rarity===t); }
+function poolOf(t){ return activeRosterIds().filter(id=>DATA.heroes[id].rarity===t); }
 function freePullAvailable(){ return P.freePullDay!==today(); }
 function msToMidnight(){ const d=new Date(); d.setHours(24,0,0,0); const m=Math.max(0,d-Date.now()); return Math.floor(m/3600000)+'g'+String(Math.floor(m%3600000/60000)).padStart(2,'0')+'p'; }
 function doSummon(n,free){ const cost=free?0:(n===10?GACHA.cost10:GACHA.cost1);
@@ -4697,7 +4703,7 @@ const BACH_BAO={slots:[
  {t:'stam',v:35,ic:'⚡',l:'35 Tỉnh Táo'},{t:'gold',v:680,ic:'🪙',l:'680 Vàng'},{t:'hoat',v:40,ic:'🔥',l:'40 Hoạt Lực'},{t:'supreme',ic:'👑',l:'Rương Chí Bảo',chest:2}
 ]};
 function bachBaoState(){ P.bachBao=P.bachBao||{spins:0,chests:0,supreme:0,opened:0,history:[]}; if(!Array.isArray(P.bachBao.history))P.bachBao.history=[]; return P.bachBao; }
-function rareHeroPool(rar){ return OFFICIAL_ROSTER_12_IDS.filter(id=>DATA.heroes[id]&&DATA.heroes[id].rarity===rar); }
+function rareHeroPool(rar){ return activeRosterIds().filter(id=>DATA.heroes[id]&&DATA.heroes[id].rarity===rar); }
 function giveHeroShards(rar,n){ const pool=rareHeroPool(rar); const id=pool.length?randOf(pool):randOf(Object.keys(DATA.heroes)); P.shards[id]=(P.shards[id]||0)+n; return `${n} mảnh ${DATA.heroes[id].name}${rar==='ssr'?' (SSR)':''}`; }
 function grantBachBaoSlot(z){ if(z.t==='gold'){P.gold+=z.v;return '🪙 '+z.v+' Vàng';} if(z.t==='gems'){P.gems+=z.v;return '💎 '+z.v+' Ngọc';} if(z.t==='stam'){refreshStamina();P.stamina=Math.min(DATA.daily.stamCap,P.stamina+z.v);return '⚡ '+z.v+' Độ Tỉnh Táo';} if(z.t==='tinh'){P.tinh=(P.tinh||0)+z.v;return '⚗ '+z.v+' Tinh Lực';} if(z.t==='hoat'){P.hoat=(P.hoat||0)+z.v;return '🔥 '+z.v+' Hoạt Lực';} if(z.t==='sh_ss')return giveHeroShards('ss',z.v); if(z.t==='sh_ssr')return giveHeroShards('ssr',z.v); if(z.t==='chest'){bachBaoState().chests++;return '🎁 Rương Báu ×1 — mở rương để nhận bảo vật';} bachBaoState().supreme++;return '👑 Rương Chí Bảo ×1 — có thể ra trang bị SSR cực phẩm'; }
 function pickBachBaoIndex(){ return Math.floor(Math.random()*BACH_BAO.slots.length); }

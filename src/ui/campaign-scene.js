@@ -352,12 +352,23 @@ function sampleCampaignFarm(time, squad, quiet = false, specs = {}, world = null
     phase:elapsed<5000?'march':elapsed<6200?'spawn':elapsed<19500?'attack':elapsed<22500?'loot':'rest'};
 }
 function campaignFarmActorPose(pick,w,h,farm) {
-  const home=homePartyPose(pick,w,h,farm),actor=farm?.actors.find(a=>a.id===pick.id);
+  const home=homePartyPose(pick,w,h,farm);
+  // Owner 2026-10-26: id trong đội có thể là 'hong_thuong' còn actor là 'hero_splus_hong_thuong' (hoặc ngược lại)
+  // -> tra thẳng không thấy thì tra bản đã chuẩn hoá, tránh tướng bị bỏ qua và đứng im.
+  const normId=v=>String(v||'').replace(/^hero_splus_/,'').replace(/-/g,'_').toLowerCase();
+  const actor=farm?.actors.find(a=>a.id===pick.id)||farm?.actors.find(a=>normId(a.id)===normId(pick.id));
   if(!actor||!actor.approachMs||farm.elapsed<actor.engageAt)return {...home,facing:farm?.direction.x<0?-1:1,castTime:-1};
+  // Owner 2026-10-26: tướng đánh xa đứng tại chỗ đánh, tướng cận chiến mới lao lên (giống trong trận).
+  if(typeof attackRangeFor==='function'&&attackRangeFor(pick.id)==='ranged')return {...home,facing:farm?.direction.x<0?-1:1,castTime:actor.attackTime>=actor.approachMs&&actor.attackTime<=actor.approachMs+actor.castDuration?actor.attackTime-actor.approachMs:-1};
   const map=campaignMapView(w,h,farm.center),mob=farm.mobs[actor.target];
   const tx=map.left+mob.worldX*map.width,ty=map.top+mob.worldY*map.height;
   const dx=tx-home.x,dy=ty-home.y,distance=Math.max(1,Math.hypot(dx,dy));
-  const reach=home.bodyH*.85,ratio=Math.max(0,(distance-reach)/distance);
+  // Owner 2026-10-26: trước đây blend theo (distance-reach)/distance nên khi nhà đã gần quái thì gần như
+  // không nhích (đo được 0-14px). Nay tính hẳn điểm đứng cách quái một khoảng thân rồi đi tới đó.
+  const standoff=Math.max(6,home.bodyH*.12);
+  const ux=dx/distance,uy=dy/distance;
+  const dest={x:tx-ux*standoff,y:ty-uy*standoff};
+  const ratio=1;
   const e=actor.attackTime,castEnd=actor.approachMs+actor.castDuration;
   // Hold the same engagement point through the pauses between authored ATKs.
   // Regroup only after the entire pack has died and the last cast has recovered.
@@ -368,7 +379,7 @@ function campaignFarmActorPose(pick,w,h,farm) {
   const returning=farm.elapsed>regroupAt;
   let blend=returning?1-(farm.elapsed-regroupAt)/actor.approachMs:approach;
   blend=Math.max(0,Math.min(1,blend));blend=blend*blend*(3-2*blend);
-  return {...home,x:home.x+dx*ratio*blend,y:home.y+dy*ratio*blend,facing:dx<0?-1:1,
+  return {...home,x:home.x+(dest.x-home.x)*ratio*blend,y:home.y+(dest.y-home.y)*ratio*blend,facing:dx<0?-1:1,
     moving:approach<1||(returning&&blend>0),castTime:e>=actor.approachMs&&e<=castEnd?e-actor.approachMs:-1};
 }
 function drawCampaignBasicVfx(ctx,actor,farm,w,h,size) {
@@ -460,6 +471,30 @@ function drawScene(time) {
     return image.complete && image.naturalWidth > 0;
   }).every(Boolean);
   const farm = preparing ? null : sampleCampaignFarm(reducedMotion.matches ? 0 : sceneState.farmTime, picks, false, farmAttackSpecs, sceneState.world||campaignWorldForChapter(0));
+  // QA (?qaFarm=1): soi vì sao một tướng không lao lên trong màn AFK.
+  if (farm && typeof location === 'object' && /qaFarm=1/.test(String(location.search || ''))) {
+    const normId = v => String(v || '').replace(/^hero_splus_/, '').replace(/-/g, '_').toLowerCase();
+    try {
+      window.__FARM_DEBUG = {
+        phase: farm.phase, elapsed: Math.round(farm.elapsed),
+        picks: picks.map(p => ({ id: p.id, slot: p.slot, row: p.row })),
+        actors: farm.actors.map(a => ({ id: a.id, target: a.target, engageAt: a.engageAt, attackTime: Math.round(a.attackTime) })),
+        poses: picks.map(p => {
+          const home = homePartyPose(p, w, h, farm);
+          const pos = campaignFarmActorPose(p, w, h, farm);
+          const match = farm.actors.find(a => a.id === p.id) || farm.actors.find(a => normId(a.id) === normId(p.id));
+          const mob = match ? farm.mobs[match.target] : null;
+          const mp = mob ? campaignMapView(w, h, farm.center) : null;
+          const mx = mob ? mp.left + mob.worldX * mp.width : 0;
+          const my = mob ? mp.top + mob.worldY * mp.height : 0;
+          const dist = mob ? Math.round(Math.hypot(mx - home.x, my - home.y)) : -1;
+          return { id: p.id, homeX: Math.round(home.x), x: Math.round(pos.x), moved: Math.round(pos.x - home.x),
+                   mobX: Math.round(mx), dist, moving: !!pos.moving, cast: Math.round(pos.castTime || 0),
+                   matched: !!match, range: (typeof attackRangeFor === 'function' ? attackRangeFor(p.id) : '?') };
+        })
+      };
+    } catch (error) { window.__FARM_DEBUG = { error: String(error && error.message) }; }
+  }
   if (!preparing) { syncCampaignMap(w,h,farm); drawCampaignFarm(ctx,farm,w,h,'monsters-back'); }
   const rowCounts = { front: 0, back: 0, enemyfront: 0, enemyback: 0 };
   picks.map(pick => {
