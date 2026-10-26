@@ -4,7 +4,7 @@
 // "Triệu Kình" or any past suggestion as official).
 export const HONG_THUONG_HERO=Object.freeze({
  id:'hero_splus_hong_thuong',key:'hong_thuong',number:null,catalogKind:'authored-extra',
- name:'Hồng Thương',fullName:'Hồng Y Thương Nữ — Hồng Thương (tên tạm)',rarity:'S+',element:'metal',elementName:'Kim Khí',role:'striker',recommendedSlots:[1,2],weapon:'Xích Thương',
+ name:'Hồng Thương',fullName:'Hồng Y Thương Nữ — Hồng Thương',rarity:'S+',element:'metal',elementName:'Kim Khí',role:'striker',recommendedSlots:[1,2],weapon:'Xích Thương',
  profileVersion:'hong-thuong/2026-10-16-idea-locked',gender:'Nữ',age:'Thanh niên',
  introduction:'Nữ đấu sĩ thương cận chiến: đâm ba nhát mở Sơ Hở, đòn kế tiếp phá giáp xé khiên, và Kinh Hoồng Phá Trận càn qua cả hai hàng địch.',
  art:{status:'canvas-sprite-runtime-review',portrait:'assets/characters/hong-thuong/avatar.webp',card:'assets/characters/hong-thuong/avatar.webp',hudIcon:'assets/characters/hong-thuong/avatar.webp',atlas:'assets/characters/hong-thuong/basic.webp',pending:['tên hiển thị tạm "Hồng Thương" chờ owner','avatar.webp tạm cắt từ idle frame 21','ATK clip chỉ có 2 cú đâm riêng biệt — hit2+hit3 hiện map vào cú đâm mạnh (chờ duyệt)']},
