@@ -351,3 +351,7 @@ installFarmAttackSpecs(root);
 // Đình Lôi glow sheets at half size on phones: his 443 MiB of atlases evicted our heroes' idle pages (flicker).
 const { installDinhLoiMobileAtlases } = await import('./dinh-loi-mobile-atlas-v1.mjs');
 installDinhLoiMobileAtlases(root);
+
+// Owner-requested clean tower scene preview, after legacy art owners.
+const { installMainCityArt } = await import('./hub-main-city-art-v1.mjs');
+installMainCityArt(root);
