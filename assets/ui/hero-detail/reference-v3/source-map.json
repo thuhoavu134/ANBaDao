@@ -305,7 +305,8 @@
           84
         ]
       ],
-      "mask": "ellipse"
+      "mask": "ellipse",
+      "cleanup": "2026-10-27: replace entire inner disk (center 56,55; opaque radius 40, feather to 43) with a clean dark brown radial fill. Preserve original gold rim/alpha; no baked text or digits. Runtime supplies Cấp and current/max level."
     },
     "title": {
       "box": [

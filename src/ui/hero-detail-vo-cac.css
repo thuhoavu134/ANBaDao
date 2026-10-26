@@ -178,7 +178,7 @@
 #hvHeroDetailRoot[data-hero-id="bach_dien"] .vc-stat-copy{align-items:flex-start;gap:calc(5 * var(--vc-u))}
 #hvHeroDetailRoot[data-hero-id="bach_dien"] .vc-stat-copy b{font:700 calc(24 * var(--vc-u))/1 system-ui!important;color:#fff!important}
 #hvHeroDetailRoot[data-hero-id="bach_dien"] .vc-stat-copy small{font:400 calc(18 * var(--vc-u))/1 system-ui!important;color:#ded8d4!important}
-#hvHeroDetailRoot[data-hero-id="bach_dien"] .medalrow .medal{position:relative;width:calc(113 * var(--vc-u))!important;height:calc(111 * var(--vc-u))!important;margin:0!important;border:0!important;box-shadow:none;border-radius:0;background:url('assets/ui/hero-detail/reference-v3/level.png') center/100% 100% no-repeat!important;gap:calc(3 * var(--vc-u))}
+#hvHeroDetailRoot[data-hero-id="bach_dien"] .medalrow .medal{position:relative;width:calc(113 * var(--vc-u))!important;height:calc(111 * var(--vc-u))!important;margin:0!important;border:0!important;box-shadow:none;border-radius:0;background:url('assets/ui/hero-detail/reference-v3/level.png?v=clean-20261027') center/100% 100% no-repeat!important;gap:calc(3 * var(--vc-u))}
 #hvHeroDetailRoot[data-hero-id="bach_dien"] .medal .vc-lv-cap{font:400 calc(23 * var(--vc-u))/1 'Times New Roman',serif!important;color:#fff4df!important}
 #hvHeroDetailRoot[data-hero-id="bach_dien"] .medal b{font:700 calc(35 * var(--vc-u))/1 'Times New Roman',serif!important;color:#fff4df!important}
 #hvHeroDetailRoot[data-hero-id="bach_dien"] .medal b span{font-size:calc(21 * var(--vc-u));color:#fff4df}
