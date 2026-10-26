@@ -4721,7 +4721,15 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     return 'contact';
   }
 
+  // Owner 2026-10-26: tầm đánh của TƯỚNG quyết định áp sát hay đứng xa, không theo hàng.
+  const RANGED_ARCHETYPES=new Set(["ranger","marksman","mystic","support","healer"]);
+  function unitAttackRange(actor){
+    const declared=String(actor?.range||"").toLowerCase();
+    if(declared==="ranged"||declared==="melee")return declared;
+    return RANGED_ARCHETYPES.has(String(actor?.archetype||"").toLowerCase())?"ranged":"melee";
+  }
   function approachPoint(actor, target, action="basic") {
+    if (unitAttackRange(actor) === "ranged") return { x: actor.baseX, y: actor.baseY };
     const profile=COMBAT_PRESENTATION_STANDARD.profiles[combatPresentationProfileFor(actor,action)];
     if (!profile.movesToTarget) return { x: actor.baseX, y: actor.baseY };
     const distance = Math.abs(target.x - actor.x);
