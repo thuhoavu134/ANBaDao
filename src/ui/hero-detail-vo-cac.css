@@ -204,3 +204,6 @@
 #hvHeroDetailRoot[data-hero-id="bach_dien"] .vc-mode-btn::after{top:auto;bottom:0;transform:none}
 /* Authored cell has transparent margins: align its visible head/boot landmarks. */
 #hvHeroDetailRoot[data-hero-id="bach_dien"] #authoredDetailIdle,#hvHeroDetailRoot[data-hero-id="bach_dien"] #bachDienDetailIdle{top:7.6%!important;height:48.2%!important}
+
+/* Reference coin row: one dark rounded strip behind the silver cost and count selector. */
+#hvHeroDetailRoot[data-hero-id="bach_dien"] .vc-overview::before{content:'';position:absolute;left:28.24%;top:calc(3 * var(--vc-u));width:48.95%;height:calc(40 * var(--vc-u));border-radius:calc(22 * var(--vc-u));background:linear-gradient(90deg,#201a17e6,#34241cd9);box-shadow:inset 0 1px 0 #d3ab6240,inset 0 -1px 0 #100c0a80;pointer-events:none}
