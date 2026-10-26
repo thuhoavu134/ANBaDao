@@ -72,3 +72,13 @@ test('Lăng Vân: đòn thường không còn tiếng va chạm cũ đè lên 3 
   assert.deepEqual(cues, ['lang-van-basic-1', 'lang-van-basic-2', 'lang-van-basic-3']);
   assert.equal(hero.sfx['lang-van-basic-hit'], undefined);
 });
+
+// Owner 2026-10-26 ("đưa về cao độ gốc đi"): 6 tướng cũ cũng không được tua tiếng theo tốc độ trận.
+for (const cue of ['be-an-basic', 'tich-dao-slash', 'hong-thuong-impact', 'co-nuong-atk', 'dinh-loi-atk', 'thay-mo-ultimate']) {
+  test(`tướng cũ: ${cue} giữ cao độ gốc ở x3`, async () => {
+    const { bus, sources } = makeBus();
+    assert.equal(await bus.prepare(cue), true, 'phải nạp được file của ' + cue);
+    assert.equal(await bus.play(cue, { group: 'combat', playbackRate: 3 }), true);
+    assert.equal(sources.at(-1).playbackRate.value, 1, cue + ' không được tua nhanh/cao giọng');
+  });
+}

@@ -288,10 +288,11 @@
         ? Number(options.cuePerformanceMs)
         : Number.isFinite(Number(options.audibleAtPerformanceMs)) ? Number(options.audibleAtPerformanceMs) : null;
       const sampleCue = options.sampleCue === 'dominant' ? 'dominant' : 'onset';
-      // Owner 2026-10-26: tiếng tướng authored luôn phát đúng cao độ gốc. Trận nhúng chạy x3, nếu tua theo
-      // tốc độ trận thì tiếng nhanh gấp 3 và cao hơn ~19 nửa cung -> không còn là tiếng gốc owner chọn.
-      // Nhịp phát vẫn theo tốc độ trận vì authored-hero.js tự canh thời điểm gọi play().
-      const playbackRate=Object.hasOwn(authoredFiles,event)?1:event.startsWith('be-an-')?Math.max(1,Math.min(4.2,Number(options.playbackRate)||1)):event.startsWith('tich-dao-')||event.startsWith('hong-thuong-')||event.startsWith('co-nuong-')||event.startsWith('dinh-loi-')||event.startsWith('thay-mo-')?Math.max(1,Math.min(3,Number(options.playbackRate)||1)):1;
+      // Owner 2026-10-26: MỌI tiếng phát đúng cao độ & tốc độ gốc. Trận nhúng bị ép x3, trước đây tiếng tướng
+      // được tua theo tốc độ trận (AudioBufferSourceNode.playbackRate đổi cả tốc độ lẫn cao độ) -> nhanh gấp 3,
+      // cao hơn ~19 nửa cung, owner nghe 'không đúng âm thanh gốc'. Nhịp phát vẫn theo tốc độ trận vì các runtime
+      // tự canh thời điểm gọi play().
+      const playbackRate=1;
       const sampleCueOffsetMs = (sampleCue === 'dominant' ? analysis.dominantCueMs : analysis.audibleLeadInMs)/playbackRate;
       const source = c.createBufferSource(), gain = c.createGain();
       source.buffer = buffer;
