@@ -5499,9 +5499,12 @@ renderCampaign = function(){
     const archetype = combatant.archetype || (typeof inferArchetype === "function" ? inferArchetype(definition) : "striker");
     const bridgeId = `hv-${team}-${slot}-${sourceId}`;
     combatant.__hvBridgeId = bridgeId;
+    // Owner 2026-10-26: tầm đánh đi theo tướng vào trận (ranged = đứng đánh xa).
+    const attackRange = combatant.range || (typeof attackRangeFor === "function" ? attackRangeFor(sourceId, definition) : "melee");
     return {
       id: bridgeId,
       sourceId,
+      range: attackRange,
       visualSource: "hon-viet",
       visualId: `visual:${sourceId}`,
       animationSetId: `anim:${sourceId}`,
@@ -5555,7 +5558,7 @@ renderCampaign = function(){
     return {
       id:`pool-${sourceId}`,sourceId,visualSource:"hon-viet",team:"player",slot:index%6,
       name:safeText(definition.name,"Tướng"),title:safeText(definition.role,"Tướng dự bị"),initial:typeof initials==="function"?initials(definition.name):safeText(definition.name,"?").slice(0,1),
-      archetype,weapon:weaponByArchetype[archetype]||"sword",hp:Math.max(1,Math.round(st.hp||800)),atk:Math.max(1,Math.round(st.atk||100)),def:Math.max(0,Math.round(st.def||40)),speed:Math.max(1,Math.round(st.spd||75)),energy:Math.max(0,Math.min(100,Math.round(st.mp||35))),
+      archetype,range:attackRangeFor(sourceId,{archetype}),weapon:weaponByArchetype[archetype]||"sword",hp:Math.max(1,Math.round(st.hp||800)),atk:Math.max(1,Math.round(st.atk||100)),def:Math.max(0,Math.round(st.def||40)),speed:Math.max(1,Math.round(st.spd||75)),energy:Math.max(0,Math.min(100,Math.round(st.mp||35))),
       color:definition.col||"#39746a",accent:"#e2bd68",skin:"#c77f57",hair:"#1f1a17",level:heroLevel(sourceId),stars:heroStars(sourceId),rarity:combatRarityValue(definition.rarity),progression:heroBattleProgression(sourceId),...mapSkill(synthetic)
     };
   }
@@ -5577,7 +5580,34 @@ renderCampaign = function(){
     return {type:'eliminate'};
   }
 
-  function integratedConfig(sessionId, battleId) {
+  // Owner 2026-10-26: tầm đánh của từng tướng quyết định nó áp sát hay đứng xa đánh.
+// 'ranged' = đứng tại chỗ đánh xa; 'melee' = lao tới mục tiêu rồi đánh.
+// Không dựa vào hàng (trước/sau) — hàng sau vẫn có thể là tướng cận chiến.
+const HERO_ATTACK_RANGE=Object.freeze({
+  // --- đánh xa ---
+  lac_yen:'ranged',cung_thu_tre:'ranged',nang_tien_ca_can:'ranged',
+  thay_mo:'ranged',thuy_nuong_roi_nuoc:'ranged',luc_anh:'ranged',linh_dong:'ranged',
+  ca_tre_biet_buon:'ranged',ong_ke_that_nghiep:'ranged',
+  co_dao_ganh_hoi:'ranged',to_diep:'ranged',ong_chu_wifi:'ranged',ong_dia_lac_duong:'ranged',
+  hon_cay_bang:'ranged',ky_lan_ca_phe:'ranged',
+  'lang-nguyet':'ranged','lang-tieu':'ranged','bach-y-van-phong':'ranged','khaos':'ranged',
+  // --- đánh gần ---
+  ong_hang_pho:'melee',hong_lien_dao_nuong:'melee',thach_quyen:'melee',dinh_loi:'melee',
+  phong_tu:'melee',thang_be_dieu_set:'melee',robot_trong_rau:'melee',meo_9_deadline:'melee',
+  chi_ve_chai_thien_ha:'melee',
+  'lang-van':'melee','lang-chan':'melee','tinh-mac':'melee','bach-dien':'melee','nguyet-diep':'melee',
+  'tieu-linh':'ranged'
+});
+const RANGED_ARCHETYPES=new Set(['ranger','marksman','mystic','support','healer']);
+function attackRangeFor(id,definition){
+  const raw=String(id||'').toLowerCase();
+  // id có thể là 'lang_nguyet', 'lang-nguyet', 'hero_splus_lang_nguyet' -> đưa về một dạng rồi tra bảng
+  const keys=[raw,raw.replace(/^hero_splus_/,''),raw.replace(/^hero_/,''),raw.replace(/_/g,'-'),raw.replace(/^hero_splus_/,'').replace(/_/g,'-'),raw.replace(/^hero_/,'').replace(/_/g,'-')];
+  for(const k of keys){ if(HERO_ATTACK_RANGE[k])return HERO_ATTACK_RANGE[k]; }
+  const arch=String((definition&&definition.archetype)||'').toLowerCase();
+  return RANGED_ARCHETYPES.has(arch)?'ranged':'melee';
+}
+function integratedConfig(sessionId, battleId) {
     const qaParam = new URLSearchParams(location.search).get("qa") || "";
     const roster12Mode = qaParam === "roster12";
     const qaMode = window.__HV_QA__ === true || qaParam === "1" || qaParam === "status-icons" || roster12Mode;

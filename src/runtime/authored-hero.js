@@ -403,7 +403,9 @@ async function performAuthoredAction(actor,action,target,e,battleId){
   cast=e.act(actor.id,kind,target?.id,{deferAuthored:true});if(!cast.ok){authoredTrace(info,'act-failed:'+(cast.reason||''));return;}
   info.targets=cast.targetIds;info.plan=authoredHitPlan(spec,info.targets);trace?.begin({actionId:presentationId,roundId:state.round,actorId:actor.id,targetIds:info.targets,skillId:kind,position:{x:actor.x,y:actor.y}});
   // Walk up to the target first, then the action animation plays from there.
-  const lungeSpec=spec.lunge,lungeTarget=lungeSpec&&info.targets[0]?getUnit(info.targets[0]):null;
+  // Owner 2026-10-26: tướng đánh xa đứng tại chỗ ra đòn, không lao tới mục tiêu.
+  const rangedActor=String(actor?.range||'').toLowerCase()==='ranged';
+  const lungeSpec=rangedActor?null:spec.lunge,lungeTarget=lungeSpec&&info.targets[0]?getUnit(info.targets[0]):null;
   let lungeOrigin=null;
   if(lungeTarget){
    const anchor=authoredMeleeAnchor(actor,lungeTarget);
