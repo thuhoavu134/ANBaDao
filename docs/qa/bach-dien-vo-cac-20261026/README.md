@@ -1,3 +1,5 @@
+> Superseded by [the supplied-reference revision and SSR five-star policy](../bach-dien-reference-20261027/README.md).
+
 # Bạch Diện — compact Võ các review
 
 This version supersedes the original panel-heavy concept and repair screenshots. Draft PR #382 only; main is not merged. Built on branch head e556f238a627e41a6a0b19679ec63d4a42d5e695, preserving its six individual icons, typography, stat symbols and original upgrade proxy handlers.

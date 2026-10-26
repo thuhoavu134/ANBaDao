@@ -229,6 +229,7 @@
       const updateUpgrade = () => {
         const source = count === 5 ? five : one;
         const available = !!source && !source.disabled;
+        price.classList.toggle('is-batch', count === 5);
         primary.disabled = !available;
         primary.title = source?.title || '';
         // Owner layout 2026-10-26: one coin pill, cost read from the live button.
@@ -272,7 +273,7 @@
       const features = document.createElement('nav');
       features.className = 'vc-feature-menu';
       features.setAttribute('aria-label', 'Chức năng của tướng');
-      const ICONS = 'assets/ui/hero-detail/bach-dien-icons/';
+      const ICONS = 'assets/ui/hero-detail/reference-v3/'; // Exact crops replace assets/ui/hero-detail/bach-dien-icons/
       const iconImg = name => {
         const img = document.createElement('img');
         img.src = ICONS + name + '.png'; img.alt = ''; img.decoding = 'async';
@@ -281,6 +282,15 @@
       };
       // Header chips, power capsule, stat captions and skill seals (owner mock).
       const hero = DATA.heroes[id] || {};
+      const stars = stage.querySelector('.hsrar .stars');
+      if (stars) {
+        const n = Math.max(0, Math.min(6, heroStars(id)));
+        stars.replaceChildren(); stars.setAttribute('aria-label', n + ' sao');
+        for (let i = 0; i < 6; i++) {
+          const star = document.createElement('i'); star.className = 'vc-star' + (i < n ? ' is-filled' : '');
+          star.setAttribute('aria-hidden', 'true'); stars.append(star);
+        }
+      }
       const element = stage.querySelector('.hshe');
       if (element && typeof HE === 'object' && HE[hero.he]) {
         element.title = element.textContent.trim();
@@ -311,7 +321,7 @@
         if (!cell || cell.querySelector('.vc-stat-ico')) return;
         const value = cell.querySelector('b');
         const ico = document.createElement('span'); ico.className = 'vc-stat-ico';
-        ico.setAttribute('aria-hidden', 'true');
+        ico.setAttribute('aria-hidden', 'true'); ico.dataset.stat = String(index);
         ico.innerHTML = '<svg viewBox="0 0 24 24">' + STAT_SVG[index] + '</svg>';
         const copy = document.createElement('span'); copy.className = 'vc-stat-copy';
         const small = document.createElement('small'); small.textContent = caption;
