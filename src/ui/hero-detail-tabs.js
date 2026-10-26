@@ -229,9 +229,11 @@
         const available = !!source && !source.disabled;
         primary.disabled = !available;
         primary.title = source?.title || '';
-        price.textContent = source
-          ? (source.textContent || '').trim()
-          : 'Chưa có lệnh nâng cấp ' + count + ' cấp';
+        // Owner layout 2026-10-26: one coin pill, cost read from the live button.
+        const sourceText = (source?.textContent || '').trim();
+        const cost = sourceText.match(/(\d[\d.,]*)\s*$/);
+        price.textContent = !source ? 'Chưa có lệnh nâng cấp ' + count + ' cấp'
+          : cost && count === 1 ? '🪙 ' + cost[1] : count === 5 ? 'Lên 5 cấp' : sourceText;
         for (const option of modeButtons) {
           const active = Number(option.dataset.count) === count;
           option.setAttribute('aria-pressed', String(active));
@@ -262,11 +264,50 @@
       const features = document.createElement('nav');
       features.className = 'vc-feature-menu';
       features.setAttribute('aria-label', 'Chức năng của tướng');
+      const ICONS = 'assets/ui/hero-detail/bach-dien-icons/';
+      const iconImg = name => {
+        const img = document.createElement('img');
+        img.src = ICONS + name + '.png'; img.alt = ''; img.decoding = 'async';
+        img.draggable = false;
+        return img;
+      };
+      // Header chips, power capsule, stat captions and skill seals (owner mock).
+      const hero = DATA.heroes[id] || {};
+      const element = stage.querySelector('.hshe');
+      if (element && typeof HE === 'object' && HE[hero.he]) {
+        element.title = element.textContent.trim();
+        element.textContent = HE[hero.he].ic + ' Hệ ' + HE[hero.he].nm;
+      }
+      const power = stage.querySelector('.hspow');
+      if (power) {
+        const row = document.createElement('div'); row.className = 'vc-power-row';
+        const role = document.createElement('span'); role.className = 'vc-role';
+        role.textContent = hero.role || '';
+        const value = document.createElement('span'); value.className = 'vc-power';
+        const glyph = document.createElement('i'); glyph.textContent = '⚔'; glyph.setAttribute('aria-hidden', 'true');
+        const amount = document.createElement('b');
+        amount.textContent = (power.textContent || '').replace(/[^\d.,]/g, '');
+        value.append(glyph, ' Lực chiến ', amount);
+        row.append(role, value);
+        power.replaceWith(row);
+      }
+      ['HP', 'Công', 'Thủ', 'Tốc độ'].forEach((caption, index) => {
+        const cell = medals?.querySelectorAll('.mstat')[index];
+        if (!cell || cell.querySelector('small')) return;
+        const small = document.createElement('small'); small.textContent = caption;
+        cell.append(small);
+      });
+      for (const seal of shortcuts.querySelectorAll('.hv-scene-skill-seal')) {
+        const slot = seal.closest('.hv-scene-skill')?.dataset.skillSlot;
+        if (!['basic', 'ultimate', 'passive'].includes(slot)) continue;
+        seal.textContent = ''; seal.append(iconImg(slot)); seal.classList.add('has-art');
+      }
       const feature = (label, symbol, action) => {
         const button = document.createElement('button');
         button.type = 'button'; button.className = 'vc-feature';
         const art = document.createElement('span');
-        art.className = 'vc-feature-symbol'; art.textContent = symbol;
+        art.className = 'vc-feature-symbol';
+        art.append(iconImg(symbol));
         art.setAttribute('aria-hidden', 'true');
         const caption = document.createElement('span');
         caption.textContent = label;
@@ -281,7 +322,7 @@
         const destination = target || workspace;
         destination.scrollIntoView({ block: 'start', behavior: 'auto' });
       };
-      const detailTrigger = feature('Chi tiết', '☷', () => {
+      const detailTrigger = feature('Chi tiết', 'details', () => {
         const expanded = !workspace.hidden;
         workspace.hidden = expanded;
         workspace.classList.toggle('is-expanded', !expanded);
@@ -291,8 +332,8 @@
       detailTrigger.setAttribute('aria-controls', 'vc-detail-content');
       detailTrigger.setAttribute('aria-expanded', 'false');
       features.append(
-        feature('Trang bị', '♜', () => reveal('equipment')),
-        feature('Thăng sao', '★', () => reveal('attributes', upgrades)),
+        feature('Trang bị', 'equipment', () => reveal('equipment')),
+        feature('Thăng sao', 'star', () => reveal('attributes', upgrades)),
         detailTrigger
       );
       workspace.id = 'vc-detail-content';
