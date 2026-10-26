@@ -50,7 +50,7 @@ const HV_SCREEN_FX_TIERS = [
   { dim: 0.58, zoom: 1.09, ms: 900 }
 ];
 const hvScreenFx = (() => {
-  let wrap = null, dim = null, vignette = null, flash = null, canvas = null, raf = 0, state = null;
+  let wrap = null, dim = null, vignette = null, flash = null, canvas = null, raf = 0, state = null, lastSpots = null;
   function ensure() {
     if (wrap && wrap.isConnected) return true;
     canvas = document.querySelector('canvas');
@@ -84,10 +84,47 @@ const hvScreenFx = (() => {
     if (vignette) vignette.style.opacity = '0';
     if (flash) flash.style.opacity = '0';
   }
-  function punch(tier) {
+  // Owner 2026-10-26: chỉ tối XUNG QUANH. Vùng Hồng Thương và vùng đội địch phải sáng
+  // để còn nhìn thấy diễn hoạt + VFX. Dùng mask đục 2 lỗ tròn tại hai vùng đó.
+  function cutLights(spots) {
+    if (!dim || !spots) return;
+    const cv = canvas || document.querySelector('canvas');
+    if (!cv) return;
+    const kx = cv.clientWidth / Math.max(1, cv.width), ky = cv.clientHeight / Math.max(1, cv.height);
+    const px = (u) => '(' + Math.round((u.x || 0) * kx) + 'px ' + Math.round((u.y || 0) * ky) + 'px)';
+    const hero = spots.hero, foes = spots.foes || [];
+    const layers = ['linear-gradient(#000,#000)'];
+    const comps = [];
+    if (hero) { layers.push('radial-gradient(circle 150px at ' + px(hero) + ', transparent 0%, transparent 62%, #000 100%)'); comps.push('subtract'); }
+    if (foes.length) {
+      const cx = foes.reduce((t, f) => t + (f.x || 0), 0) / foes.length;
+      const cy = foes.reduce((t, f) => t + (f.y || 0), 0) / foes.length;
+      const spreadX = Math.max(...foes.map(f => Math.abs((f.x || 0) - cx))) + 110;
+      const spreadY = Math.max(...foes.map(f => Math.abs((f.y || 0) - cy))) + 130;
+      const r = Math.max(150, Math.round(Math.max(spreadX, spreadY * 0.9)));
+      layers.push('radial-gradient(ellipse ' + r + 'px ' + Math.round(r * 0.75) + 'px at ' + px({ x: cx, y: cy }) + ', transparent 0%, transparent 66%, #000 100%)');
+      comps.push('subtract');
+    }
+    if (!comps.length) {
+      dim.style.webkitMaskImage = '';
+      dim.style.maskImage = '';
+      dim.style.maskComposite = '';
+      dim.style.webkitMaskComposite = '';
+      return;
+    }
+    const mask = layers.join(', ');
+    dim.style.webkitMaskImage = mask;
+    dim.style.maskImage = mask;
+    dim.style.webkitMaskComposite = comps.map(() => 'source-out').join(', ');
+    dim.style.maskComposite = comps.join(', ');
+  }
+
+  function punch(tier, spots) {
     window.__fxPunches = (window.__fxPunches || 0) + 1;
     const cfg = HV_SCREEN_FX_TIERS[Math.max(0, Math.min(HV_SCREEN_FX_TIERS.length - 1, tier | 0))];
     if (!ensure()) return;
+    if (spots) lastSpots = spots;
+    cutLights(lastSpots);
     wrap.style.opacity = '1';
     dim.style.opacity = String(cfg.dim);
     vignette.style.opacity = '1';
@@ -96,6 +133,7 @@ const hvScreenFx = (() => {
   }
   function start() {
     if (!ensure()) return;
+    cutLights(lastSpots);
     wrap.style.opacity = '1';
     dim.style.opacity = '0.3';
     vignette.style.opacity = '1';
@@ -103,6 +141,8 @@ const hvScreenFx = (() => {
   }
   function stop() {
     cancelAnimationFrame(raf);
+    if (dim) { dim.style.maskImage = ''; dim.style.webkitMaskImage = ''; dim.style.maskComposite = ''; dim.style.webkitMaskComposite = ''; }
+    lastSpots = null;
     state = null;
     reset();
   }
@@ -175,8 +215,8 @@ function drawHongThuongHero(ctx,u,time){
  let tilt=0;
  if(active&&info.action==='ultimate'&&info.ultHover&&key==='ult-cluster'){
   const segsN=info.segments||[];const segN=segsN.find(x=>elapsed>=x.start&&elapsed<x.start+x.dur);
-  // 45 độ theo yêu cầu owner.
-  if(segN&&segN.from&&segN.from.y<=info.ultHover.y+1)tilt=-(Math.PI/4)*facing;
+  // Owner 2026-10-26: phải chếch XUỐNG 45 độ (bản trước nghiêng ngược lên).
+  if(segN&&segN.from&&segN.from.y<=info.ultHover.y+1)tilt=(Math.PI/4)*facing;
  }
  ctx.scale(scale*facing,scale);
  if(tilt)ctx.rotate(tilt);
@@ -439,7 +479,8 @@ function drawHongThuongVfx(context,time){
  for(const w of waves){
   if(!await hitAt(w.at))return {ok:false};
   const foes=livingFoes();
-  try{hvScreenFx.punch(Math.min(2,w.wave));}catch(_){}
+  // vị trí sáng: chỗ cô ấy đang đứng/bay và cả cụm địch
+  try{hvScreenFx.punch(Math.min(2,Math.floor(w.wave/3)),{hero:w.spot,foes:livingFoes()});}catch(_){}
   // Mỗi nhịp: toàn bộ địch còn sống ăn đòn (chỉ số nhịp 0..3)
   for(const f of foes){e.resolveHongThuongHit(actor.id,result.castId,f.id,w.wave);}
   // VFX nổi TRÊN ĐẦU từng địch -> cả sân dày hiệu ứng
