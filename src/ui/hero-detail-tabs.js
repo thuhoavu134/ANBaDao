@@ -2,7 +2,7 @@
 // or touching the player save. The roster wrapper still owns idle preservation.
 (() => {
   const tabs = [['attributes', 'Thuộc tính'], ['skills', 'Kỹ năng'],
-    ['equipment', 'Trang bị'], ['bonds', 'Duyên phận'], ['mastery', 'Tinh thông']];
+    ['equipment', 'Trang bị'], ['breakthrough', 'Đột phá'], ['bonds', 'Duyên phận'], ['mastery', 'Tinh thông']];
   const body = document.getElementById('hdBody');
   let currentHero = null, selected = 'attributes';
 
@@ -62,18 +62,75 @@
     return panel;
   }
 
+  // Owner 2026-10-26: cây Đột phá 4 mốc. Không tạo handler mới ngoài nút mở mốc.
+  function breakthroughPanel(id) {
+    const panel = document.createElement('section');
+    panel.className = 'section hv-detail-breakthrough';
+    const heading = document.createElement('h3');
+    heading.textContent = 'Cây Đột phá';
+    const opened = typeof breakthroughLevel === 'function' ? breakthroughLevel(P, id) : 0;
+    const sub = document.createElement('p');
+    sub.className = 'hv-dp-sub';
+    sub.textContent = 'Đã mở ' + opened + '/4 mốc · mở bằng cấp, sao, vàng và Tinh.';
+    panel.append(heading, sub);
+    const list = document.createElement('div');
+    list.className = 'hv-dp-list';
+    const steps = typeof BREAKTHROUGH_STEPS !== 'undefined' ? BREAKTHROUGH_STEPS : [];
+    const state = typeof canBreakthrough === 'function'
+      ? canBreakthrough(P, id, { level: heroLevel(id), stars: heroStars(id), gold: P.gold, tinh: econ().tinh })
+      : { ok: false, code: 'UNAVAILABLE', message: '' };
+    for (const step of steps) {
+      const done = step.id <= opened;
+      const isNext = !!state.step && state.step.id === step.id;
+      const row = document.createElement('div');
+      row.className = 'hv-dp-step' + (done ? ' is-done' : '') + (isNext && state.ok ? ' is-ready' : '');
+      const dot = document.createElement('span'); dot.className = 'hv-dp-dot'; dot.textContent = done ? '✓' : String(step.id);
+      const copy = document.createElement('div'); copy.className = 'hv-dp-copy';
+      const name = document.createElement('b'); name.textContent = step.name;
+      const note = document.createElement('small'); note.textContent = step.note;
+      const req = document.createElement('small'); req.className = 'hv-dp-req';
+      req.textContent = 'Cấp ' + step.level + ' · ' + step.stars + '★ · 🪙' + step.gold + ' · ✨' + step.tinh;
+      copy.append(name, note, req);
+      row.append(dot, copy);
+      if (!done && isNext) {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'btn gold sm';
+        button.textContent = state.ok ? 'Đột phá' : 'Chưa đủ';
+        button.disabled = !state.ok;
+        if (!state.ok && state.message) button.title = state.message;
+        button.addEventListener('click', () => {
+          if (typeof heroBreakthrough !== 'function') return;
+          // heroBreakthrough tự render lại chi tiết tướng, không mount lần hai.
+          heroBreakthrough(id);
+        });
+        row.append(button);
+      }
+      list.append(row);
+    }
+    panel.append(list);
+    if (!state.ok && state.message) {
+      const hint = document.createElement('p');
+      hint.className = 'hv-dp-hint';
+      hint.textContent = state.message;
+      panel.append(hint);
+    }
+    return panel;
+  }
+
   function mount(id) {
     if (id !== currentHero) { currentHero = id; selected = 'attributes'; }
     const children = Array.from(body.children), stage = body.querySelector('.hstage');
     const oldTabs = body.querySelector('.hero-art-tabs');
     const skills = children.filter(node => node.matches('.skillbox'));
+    const breakthrough = [breakthroughPanel(id)];
     const bonds = children.filter(node => node.matches('.lorebox,.relbox'));
     const mastery = [body.querySelector('#masteryPanel'), body.querySelector('#awBtn')?.closest('.section')].filter(Boolean);
     const medals = body.querySelector('.medalrow');
     const upgrades = body.querySelector('.upgrades');
-    const assigned = new Set([stage, oldTabs, medals, upgrades, ...skills, ...bonds, ...mastery]);
+    const assigned = new Set([stage, oldTabs, medals, upgrades, ...skills, ...bonds, ...mastery, ...breakthrough]);
     const attributes = children.filter(node => !assigned.has(node));
-    const content = { attributes, skills, equipment: [equipmentPanel(id)], bonds, mastery };
+    const content = { attributes, skills, equipment: [equipmentPanel(id)], breakthrough, bonds, mastery };
 
     body.classList.add('hv-detail-tabs-layout');
     oldTabs?.remove();

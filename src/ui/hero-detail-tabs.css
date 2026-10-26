@@ -72,3 +72,17 @@
 #heroDetailScreen .hv-detail-workspace{width:100%;box-sizing:border-box;padding:12px;background:#e9eee3}
 #heroDetailScreen .hv-detail-tablist{background:#dce5d4;border-color:#b4c4ad}
 @media(max-width:380px){#heroDetailScreen #hdBody.hv-detail-tabs-layout>.hstage{min-height:470px!important}#heroDetailScreen .hv-detail-tabs-layout .hstage .hsava,#heroDetailScreen .hv-detail-tabs-layout #lucAnhDetailIdle,#heroDetailScreen .hv-detail-tabs-layout #linhDongDetailIdle{width:min(280px,100%)!important}#heroDetailScreen .hv-scene-skills{gap:16px}}
+
+/* Owner 2026-10-26: cây Đột phá 4 mốc */
+.hv-dp-sub{margin:2px 0 0;font-size:11px;opacity:.82}
+.hv-dp-list{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.hv-dp-step{display:flex;align-items:center;gap:10px;padding:10px;border-radius:12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08)}
+.hv-dp-step.is-done{border-color:rgba(120,220,160,.45);background:rgba(120,220,160,.07)}
+.hv-dp-step.is-ready{border-color:rgba(240,190,80,.6);box-shadow:0 0 12px rgba(240,190,80,.18)}
+.hv-dp-dot{width:26px;height:26px;min-width:26px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:12px;background:rgba(255,255,255,.08)}
+.hv-dp-step.is-done .hv-dp-dot{background:rgba(120,220,160,.25);color:#bff5d5}
+.hv-dp-copy{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}
+.hv-dp-copy b{font-size:13px}
+.hv-dp-copy small{font-size:10.5px;color:#9fb0c8}
+.hv-dp-req{opacity:.85}
+.hv-dp-hint{margin:8px 0 0;font-size:11px;color:#ffd0a2}
