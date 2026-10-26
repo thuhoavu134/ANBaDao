@@ -41,6 +41,87 @@ function hongThuongFallDuration(){return HONG_THUONG_META.clips['fall-die'].dura
 // Melee presenter: park in front of the victim, glide home at the tail. The
 // finisher parks on the spear side so the reverse thrust points INTO the
 // victim (never stabbing outward from the wrong side).
+// ── Owner 2026-10-26: lớp hiệu ứng màn hình cho tuyệt kỹ toàn sân ───────────────────────────────
+// Chỉ dùng DOM + CSS transform trên canvas nên KHÔNG đổi toạ độ vẽ bên trong, không phá hit point.
+const HV_SCREEN_FX_TIERS = [
+  { dim: 0.34, zoom: 1.05, shake: 6, flash: 0.10, ms: 520 },
+  { dim: 0.46, zoom: 1.09, shake: 12, flash: 0.18, ms: 640 },
+  { dim: 0.58, zoom: 1.14, shake: 22, flash: 0.34, ms: 900 }
+];
+const hvScreenFx = (() => {
+  let wrap = null, dim = null, vignette = null, flash = null, canvas = null, raf = 0, state = null;
+  function ensure() {
+    if (wrap && wrap.isConnected) return true;
+    canvas = document.querySelector('canvas');
+    const host = canvas && canvas.parentElement;
+    if (!canvas || !host) return false;
+    if (getComputedStyle(host).position === 'static') host.style.position = 'relative';
+    wrap = document.createElement('div');
+    wrap.id = 'hvScreenFx';
+    wrap.setAttribute('aria-hidden', 'true');
+    wrap.style.cssText = 'position:absolute;inset:0;pointer-events:none;z-index:5;overflow:hidden;opacity:0;transition:opacity .25s ease';
+    dim = document.createElement('div');
+    dim.style.cssText = 'position:absolute;inset:0;background:rgba(6,3,8,.9);opacity:0;transition:opacity .3s ease';
+    vignette = document.createElement('div');
+    vignette.style.cssText = 'position:absolute;inset:0;opacity:0;transition:opacity .3s ease;background:radial-gradient(ellipse at 50% 52%, rgba(0,0,0,0) 38%, rgba(0,0,0,.55) 72%, rgba(0,0,0,.86) 100%)';
+    flash = document.createElement('div');
+    flash.style.cssText = 'position:absolute;inset:0;background:#fff6e8;opacity:0;mix-blend-mode:screen';
+    wrap.append(dim, vignette, flash);
+    host.append(wrap);
+    return true;
+  }
+  function apply(zoom) {
+    if (!canvas) return;
+    canvas.style.transformOrigin = '50% 54%';
+    canvas.style.transform = 'scale(' + zoom.toFixed(3) + ')';
+    canvas.style.transition = 'transform .38s ease-out';
+  }
+  function reset() {
+    if (canvas) { canvas.style.transform = ''; canvas.style.transition = ''; }
+    if (wrap) wrap.style.opacity = '0';
+    if (dim) dim.style.opacity = '0';
+    if (vignette) vignette.style.opacity = '0';
+    if (flash) flash.style.opacity = '0';
+  }
+  function punch(tier) {
+    window.__fxPunches = (window.__fxPunches || 0) + 1;
+    const cfg = HV_SCREEN_FX_TIERS[Math.max(0, Math.min(HV_SCREEN_FX_TIERS.length - 1, tier | 0))];
+    if (!ensure()) return;
+    wrap.style.opacity = '1';
+    dim.style.opacity = String(cfg.dim);
+    vignette.style.opacity = '1';
+    apply(cfg.zoom);
+    flash.style.transition = 'none';
+    flash.style.opacity = String(cfg.flash);
+    void flash.offsetWidth;
+    flash.style.transition = 'opacity ' + Math.round(cfg.ms * 0.55) + 'ms ease-out';
+    flash.style.opacity = '0';
+    if (canvas.animate) {
+      const s = cfg.shake;
+      canvas.animate([
+        { translate: '0 0' }, { translate: s + 'px ' + (-s * 0.6) + 'px' },
+        { translate: (-s * 0.8) + 'px ' + (s * 0.5) + 'px' }, { translate: (s * 0.35) + 'px 0' },
+        { translate: '0 0' }
+      ], { duration: 260 + s * 6, easing: 'ease-out' });
+    }
+    state = { until: performance.now() + cfg.ms };
+  }
+  function start() {
+    if (!ensure()) return;
+    wrap.style.opacity = '1';
+    dim.style.opacity = '0.3';
+    vignette.style.opacity = '1';
+    apply(1.03);
+  }
+  function stop() {
+    cancelAnimationFrame(raf);
+    state = null;
+    reset();
+  }
+  return { start, punch, stop, get active() { return !!state; } };
+})();
+if (typeof window !== 'undefined') window.HvScreenFx = hvScreenFx;
+
 function hongThuongSpotFor(actor,unitLike,side){
  if(!actor||!unitLike)return null;
  const dir=side==='spear'?(actor.team===TEAM_ENEMY?-1:1):(actor.x!==undefined&&actor.x!==unitLike.x?Math.sign(actor.x-unitLike.x):1);
@@ -144,12 +225,110 @@ function hongThuongSfx(info){
  if(!state.sound||__hvIsSkipping())return;
  try{void window.HonVietSfx?.play('hong-thuong-impact',{group:'combat',signal:info.abort.signal,playbackRate:info.speed});}catch(error){}
 }
+// ── Owner 2026-10-26: hiệu ứng tràn sân vẽ bằng canvas (không thêm atlas, không tốn bộ nhớ) ────────
+// Ba lớp: vòng vàng dưới mục tiêu → cột lửa + tàn lửa → vệt chém lưỡi liềm khi kết liễu.
+const hvUltFx = { rings: [], waves: [], embers: [], startedAt: 0, battleId: null, tier: 0, stage: 0 };
+
+if (typeof window !== 'undefined') window.HvUltFx = hvUltFx; // QA
+function hvUltFxReset() { hvUltFx.rings.length = 0; hvUltFx.waves.length = 0; hvUltFx.embers.length = 0; hvUltFx.startedAt = 0; hvUltFx.battleId = null; hvUltFx.tier = 0; }
+
+// Một đợt đánh: vòng vàng dưới chân mục tiêu + sóng lửa lan ra + tàn lửa bay lên. tier 0..2 càng cao càng lớn.
+function hvUltFxWave(x, y, tier) {
+  let t = Math.max(0, Math.min(2, tier | 0));
+  const now = performance.now();
+  hvUltFx.battleId = state.battleId;
+  hvUltFx.tier = Math.max(hvUltFx.tier, t);
+  // Owner 2026-10-26: càng về sau càng mạnh (tăng theo tiến trình cả đợt, không chỉ theo nhịp).
+  const boost = Math.min(1.2, hvUltFx.stage * 0.22);
+  t = Math.max(0, Math.min(2, t + (hvUltFx.stage >= 4 ? 1 : 0)));
+  hvUltFx.rings.push({ x, y, startedAt: now, scale: (1 + t * 0.45) * (1 + boost), life: 600 + t * 220 });
+  hvUltFx.waves.push({ x, y, startedAt: now, scale: (1 + t * 0.6) * (1 + boost), life: 520 + t * 260, tier: t });
+  const count = Math.round((10 + t * 10) * (1 + boost));
+  for (let i = 0; i < count; i++) {
+    const a = Math.random() * Math.PI * 2, r = 12 + Math.random() * 46;
+    hvUltFx.embers.push({
+      x: x + Math.cos(a) * r, y: y + Math.sin(a) * r * 0.5,
+      vx: (Math.random() - 0.5) * 0.05, vy: -0.06 - Math.random() * 0.09,
+      startedAt: now, life: 620 + Math.random() * 520, size: 1.6 + Math.random() * 2.6 + t
+    });
+  }
+}
+
+function unit0X(v){const u=getUnit(v&&v.id);return u?u.x:(v&&v.x)||0;}
+function unit0Y(v){const u=getUnit(v&&v.id);return u?(u.y-60):((v&&v.y)||0)-60;}
+function hvUltFxCrescent(x, y, tier) {
+  hvUltFx.waves.push({ x, y, startedAt: performance.now(), scale: 2.1, life: 460, tier: 2, crescent: true });
+  hvUltFx.battleId = state.battleId;
+}
+
+function drawHvUltFx(ctx, time) {
+  if (hvUltFx.battleId !== state.battleId) return;
+  const now = performance.now();
+  // 1. vòng vàng dưới chân
+  for (let i = hvUltFx.rings.length - 1; i >= 0; i--) {
+    const r = hvUltFx.rings[i], p = (now - r.startedAt) / r.life;
+    if (p >= 1) { hvUltFx.rings.splice(i, 1); continue; }
+    const rad = (18 + 54 * p) * r.scale;
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.strokeStyle = 'rgba(255,206,96,' + (0.85 * (1 - p)).toFixed(3) + ')';
+    ctx.lineWidth = 3 + 4 * (1 - p);
+    ctx.beginPath(); ctx.ellipse(r.x, r.y, rad, rad * 0.42, 0, 0, Math.PI * 2); ctx.stroke();
+    ctx.strokeStyle = 'rgba(255,120,50,' + (0.55 * (1 - p)).toFixed(3) + ')';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.ellipse(r.x, r.y, rad * 1.18, rad * 0.5, 0, 0, Math.PI * 2); ctx.stroke();
+    ctx.restore();
+  }
+  // 2. sóng lửa / vệt chém
+  for (let i = hvUltFx.waves.length - 1; i >= 0; i--) {
+    const w = hvUltFx.waves[i], p = (now - w.startedAt) / w.life;
+    if (p >= 1) { hvUltFx.waves.splice(i, 1); continue; }
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+    if (w.crescent) {
+      ctx.translate(w.x, w.y);
+      ctx.rotate(-0.28);
+      const grad = ctx.createLinearGradient(-90, 0, 90, 0);
+      grad.addColorStop(0, 'rgba(255,150,40,0)');
+      grad.addColorStop(0.45, 'rgba(255,224,150,' + (0.85 * (1 - p)).toFixed(3) + ')');
+      grad.addColorStop(1, 'rgba(255,90,30,0)');
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.ellipse(0, 0, 90 + 60 * p, 16 + 22 * p, 0, 0, Math.PI * 2);
+      ctx.fill();
+    } else {
+      const rad = (24 + 70 * p) * w.scale;
+      const alpha = 0.55 * (1 - p);
+      const g2 = ctx.createRadialGradient(w.x, w.y, rad * 0.3, w.x, w.y, rad);
+      g2.addColorStop(0, 'rgba(255,240,190,' + (alpha * 0.9).toFixed(3) + ')');
+      g2.addColorStop(0.5, 'rgba(255,140,40,' + (alpha * 0.6).toFixed(3) + ')');
+      g2.addColorStop(1, 'rgba(180,30,10,0)');
+      ctx.fillStyle = g2;
+      ctx.beginPath(); ctx.ellipse(w.x, w.y, rad, rad * 0.55, 0, 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.restore();
+  }
+  // 3. tàn lửa bay lên
+  for (let i = hvUltFx.embers.length - 1; i >= 0; i--) {
+    const e = hvUltFx.embers[i], p = (now - e.startedAt) / e.life;
+    if (p >= 1) { hvUltFx.embers.splice(i, 1); continue; }
+    e.x += e.vx * 16; e.y += e.vy * 16; e.vy += 0.0016;
+    ctx.save();
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.fillStyle = 'rgba(255,' + Math.round(150 + 90 * (1 - p)) + ',60,' + (0.8 * (1 - p)).toFixed(3) + ')';
+    ctx.beginPath(); ctx.arc(e.x, e.y, e.size * (1 - p * 0.5), 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+  }
+}
+
 function spawnHongThuongVfx(x,y,info,target){hongThuongVfxImage('impact');
  const body=target?battleCharacterBody(target):null;
  const centerX=body?body.centerX:x,centerY=body?body.centerY:y;
  hongThuongVfxLive.push({x:centerX,y:centerY,speed:info?.speed||state.speed||1,startedAt:performance.now(),battleId:state.battleId});}
 
 function drawHongThuongVfx(context,time){
+ try{drawHvUltFx(context,time);}catch(_){}
+
  const clip=HONG_THUONG_META.vfx.clips.impact;
  for(let i=hongThuongVfxLive.length-1;i>=0;i--){
   const v=hongThuongVfxLive[i],elapsed=(time-v.startedAt)*v.speed,ms=clip.frames/clip.fps*1000;
@@ -189,6 +368,9 @@ function drawHongThuongVfx(context,time){
  }
  const result=e.act(actor.id,action,target?.id,{deferHongThuong:true});if(!result.ok)return result;
  const tl=HONG_THUONG_META.ultimateTimeline;
+ // Owner 2026-10-26: tối sân + zoom khi bắt đầu tuyệt kỹ toàn sân.
+ try{hvScreenFx.start();}catch(_){}
+
  // Read-only cast plan (engine legal-target list) — the authoritative per-hit
  // sequencing stays in the engine via struckIds as markers resolve below.
  const victims=e.targets(actor.id,'ultimate').filter(Boolean);
@@ -216,11 +398,15 @@ function drawHongThuongVfx(context,time){
    const at=base+(tl.clusterHitsAt?.[i]??[96,384,672][i]);
    if(!await hitAt(at))return {ok:false};
    e.resolveHongThuongHit(actor.id,result.castId,v.id,i);
+   // Owner 2026-10-26: ba đợt tăng dần — nhịp 1 nhẹ, nhịp 2 vừa, nhịp 3 nặng (flash + rung mạnh).
+   try{hvScreenFx.punch(i);}catch(_){}
+   try{hvUltFxWave(unit0X(v), unit0Y(v), i);}catch(_){}
    const unit=getUnit(v.id);
    if(unit&&unit.hp>0)spawnHongThuongVfx(unit.x,unit.y-60,info,unit);
    hongThuongSfx(info);flush();
   }
   if(!await hitAt(base+tl.clusterMs))return {ok:false};
+  hvUltFx.stage = Math.min(6, (hvUltFx.stage || 0) + 1);
  }
  // Select after all cluster damage, matching the engine's living-target rule.
  const finaleVictim=e.nextHongThuongFinale(actor.id,result.castId);
@@ -235,6 +421,7 @@ function drawHongThuongVfx(context,time){
   if(!await hitAt(finaleStart+tl.finisherHitAt))return {ok:false};
   const unit=getUnit(finaleVictim.id);
   e.resolveHongThuongFinale(actor.id,result.castId);
+  try{hvScreenFx.punch(2);hvUltFxCrescent(unit0X(finaleVictim),unit0Y(finaleVictim),2);}catch(_){}
   if(unit)spawnHongThuongVfx(unit.x,unit.y-60,info,unit);
   hongThuongSfx(info);flush();
  }else{
@@ -243,6 +430,7 @@ function drawHongThuongVfx(context,time){
  }
  if(!await hitAt(info.actionTotalMs))return {ok:false};
  e.finishHongThuongCast(actor.id,result.castId);flush();
+ try{hvScreenFx.stop();hvUltFxReset();}catch(_){}
  return result;
 }
 
