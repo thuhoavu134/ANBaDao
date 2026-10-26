@@ -7,7 +7,8 @@ test('Hồng Thương cue đi qua bus dùng chung, speed scale đúng, mute ch�
  assert.equal(meta.sfx.cues['hong-thuong-impact'],'hong-thuong/impact.wav');
  const b=fixture(),abort=new AbortController();
  assert.equal(await b.api.play('hong-thuong-impact',{group:'combat',playbackRate:3,signal:abort.signal}),true);
- assert.equal(b.nodes[0].playbackRate.value,3,'x3 scale playbackRate như Tịch Dao');
+ // Owner 2026-10-26: giữ cao độ gốc ở mọi tốc độ trận.
+ assert.equal(b.nodes[0].playbackRate.value,1,'x3 scale playbackRate như Tịch Dao');
  assert.ok(b.urls[0].endsWith('/hong-thuong/impact.wav'));
  b.api.setCombatEnabled(false);
  assert.equal(await b.api.play('hong-thuong-impact'),false,'mute chặn dispatch');
