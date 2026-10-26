@@ -9,7 +9,9 @@ test('owner-locked Bạch Diện layout: stage → stats → upgrade → three f
   const css = read('src/ui/hero-detail-vo-cac.css');
   const order = ['hstage', 'medalrow', 'vc-overview', 'vc-feature-menu', 'hv-detail-workspace'];
   order.forEach((cls, index) =>
-    assert.match(css, new RegExp(S + ' #hdBody>\\.' + cls + '\\{order:' + index + '\\}')));
+    assert.match(css, new RegExp(S + ' #hdBody>\\.' + cls + '\\{order:' + index + '[;}]')));
+  assert.match(css, /\.vc-coin\{/);
+  assert.match(css, /\.vc-stat-ico svg\{/);
   assert.match(css, new RegExp(S + ' \\.hsepi\\{display:none!important\\}'));
   assert.match(css, new RegExp(S + ' \\.vc-primary-upgrade\\{'));
   assert.doesNotMatch(css.slice(css.indexOf('Owner-locked layout')), /Georgia/,

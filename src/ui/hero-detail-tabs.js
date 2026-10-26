@@ -232,8 +232,11 @@
         // Owner layout 2026-10-26: one coin pill, cost read from the live button.
         const sourceText = (source?.textContent || '').trim();
         const cost = sourceText.match(/(\d[\d.,]*)\s*$/);
-        price.textContent = !source ? 'Chưa có lệnh nâng cấp ' + count + ' cấp'
-          : cost && count === 1 ? '🪙 ' + cost[1] : count === 5 ? 'Lên 5 cấp' : sourceText;
+        const coin = document.createElement('i');
+        coin.className = 'vc-coin'; coin.setAttribute('aria-hidden', 'true');
+        if (!source) price.textContent = 'Chưa có lệnh nâng cấp ' + count + ' cấp';
+        else if (cost && count === 1) price.replaceChildren(coin, cost[1] + ' bạc');
+        else price.replaceChildren(coin, count === 5 ? 'Lên 5 cấp' : sourceText);
         for (const option of modeButtons) {
           const active = Number(option.dataset.count) === count;
           option.setAttribute('aria-pressed', String(active));
@@ -291,14 +294,37 @@
         row.append(role, value);
         power.replaceWith(row);
       }
+      // Stat bar: colored icon left, value over caption right (owner mock).
+      const STAT_SVG = [
+        '<path fill="#e5393b" d="M12 21s-7.2-4.5-9.4-8.7C1 9 3.1 5 6.7 5c2 0 3.4 1.1 4.3 2.5C12 6.1 13.4 5 15.4 5 19 5 21 9 20.9 12.3 18.9 16.5 12 21 12 21z"/>',
+        '<path d="M4.5 4.5l10 10M19.5 4.5l-10 10M6.5 17.5l-2.5 2.5M17.5 17.5l2.5 2.5M8.5 15.5l-3-3M15.5 15.5l3-3" stroke="#dfe3ea" stroke-width="2.2" stroke-linecap="round" fill="none"/>',
+        '<path fill="#3b7fd8" stroke="#bcd8ff" stroke-width="1.3" d="M12 2.5l8 3v6c0 5-3.4 8.7-8 10.5-4.6-1.8-8-5.5-8-10.5v-6z"/>',
+        '<path d="M3 9h11a3 3 0 1 0-3-3M3 13h15a3 3 0 1 1-3 3M3 17h7" stroke="#5db9ff" stroke-width="2.3" fill="none" stroke-linecap="round"/>'
+      ];
       ['HP', 'Công', 'Thủ', 'Tốc độ'].forEach((caption, index) => {
         const cell = medals?.querySelectorAll('.mstat')[index];
-        if (!cell || cell.querySelector('small')) return;
+        if (!cell || cell.querySelector('.vc-stat-ico')) return;
+        const value = cell.querySelector('b');
+        const ico = document.createElement('span'); ico.className = 'vc-stat-ico';
+        ico.setAttribute('aria-hidden', 'true');
+        ico.innerHTML = '<svg viewBox="0 0 24 24">' + STAT_SVG[index] + '</svg>';
+        const copy = document.createElement('span'); copy.className = 'vc-stat-copy';
         const small = document.createElement('small'); small.textContent = caption;
-        cell.append(small);
+        copy.append(value, small);
+        cell.replaceChildren(ico, copy);
+        cell.setAttribute('aria-label', caption + ' ' + (value?.textContent || ''));
       });
-      const levelCap = medals?.querySelector('.medal small');
-      if (levelCap) levelCap.textContent = (levelCap.textContent.match(/\/\s*\d+/) || ['/30'])[0].replace(/\s/g, '');
+      const medal = medals?.querySelector('.medal');
+      if (medal && !medal.querySelector('.vc-lv-cap')) {
+        const level = medal.querySelector('b')?.textContent || '';
+        const max = ((medal.querySelector('small')?.textContent || '').match(/\d+/) || ['30'])[0];
+        const top = document.createElement('small'); top.className = 'vc-lv-cap'; top.textContent = 'Cấp';
+        const val = document.createElement('b'); val.textContent = level;
+        const cap = document.createElement('span'); cap.textContent = '/' + max;
+        val.append(cap);
+        medal.replaceChildren(top, val);
+        medal.setAttribute('aria-label', 'Cấp ' + level + ' trên ' + max);
+      }
       for (const seal of shortcuts.querySelectorAll('.hv-scene-skill-seal')) {
         const slot = seal.closest('.hv-scene-skill')?.dataset.skillSlot;
         if (!['basic', 'ultimate', 'passive'].includes(slot)) continue;
