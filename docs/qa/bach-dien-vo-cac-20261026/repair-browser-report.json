@@ -1,0 +1,66 @@
+{
+  "method": "Downloaded full deployed game HTML with changed source modules/CSS substituted; actual game renderer and handlers, original atlas served locally. Not clean full build or deployed updated PR.",
+  "checks": [
+    {
+      "viewport": {
+        "width": 320,
+        "height": 700
+      },
+      "before": 1,
+      "after": 2,
+      "overflow": false,
+      "actionBottom": 694.78125,
+      "actionTop": 562.59375,
+      "canvasWidth": 192,
+      "canvasHeight": 176,
+      "height": 700,
+      "buttons": [
+        55.09375,
+        55.09375,
+        55.09375,
+        55.09375
+      ]
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "before": 2,
+      "after": 3,
+      "overflow": false,
+      "actionBottom": 832,
+      "actionTop": 714,
+      "canvasWidth": 240,
+      "canvasHeight": 220,
+      "height": 844,
+      "buttons": [
+        48,
+        48,
+        48,
+        48
+      ]
+    },
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "before": 3,
+      "after": 4,
+      "overflow": false,
+      "actionBottom": 788,
+      "actionTop": 670,
+      "canvasWidth": 240,
+      "canvasHeight": 220,
+      "height": 800,
+      "buttons": [
+        48,
+        48,
+        48,
+        48
+      ]
+    }
+  ],
+  "errors": []
+}

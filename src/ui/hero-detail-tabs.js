@@ -123,6 +123,18 @@
     const children = Array.from(body.children), stage = body.querySelector('.hstage');
     const oldTabs = body.querySelector('.hero-art-tabs');
     const skills = children.filter(node => node.matches('.skillbox'));
+    if (id === 'bach_dien') {
+      // Player-facing wording; retain levels, costs, limits and counterplay.
+      for (const skill of skills) {
+        const heading = skill.querySelector('.sn');
+        if (heading) heading.textContent = heading.textContent.replace('Basic —', 'Công thường —').replace('Ultimate —', 'Tuyệt kỹ —');
+        const meta = skill.querySelector('.skill-meta');
+        if (!meta) continue;
+        const level = meta.textContent.match(/(?:Basic|Ultimate) Lv\.(\d+)/);
+        if (level) meta.textContent = 'Cấp kỹ năng: ' + level[1];
+        else meta.textContent = meta.textContent.replace('on_skill_or_dodge', 'khi tung chiêu hoặc né');
+      }
+    }
     const breakthrough = [breakthroughPanel(id)];
     const bonds = children.filter(node => node.matches('.lorebox,.relbox'));
     const mastery = [body.querySelector('#masteryPanel'), body.querySelector('#awBtn')?.closest('.section')].filter(Boolean);
@@ -189,7 +201,10 @@
         stage.append(arrow);
       }
     }
-    body.replaceChildren(stage, dock, workspace);
+    if (id === 'bach_dien') {
+      // Real flex children: Safari can pin the action bar without display:contents.
+      body.replaceChildren(stage, medals, workspace, upgrades);
+    } else body.replaceChildren(stage, dock, workspace);
 
     function activate(key, focus = false) {
       if (!panels.has(key)) return;
@@ -225,3 +240,4 @@
   };
   if (ST.screen === 'heroDetail' && ST._heroDetailId) mount(ST._heroDetailId);
 })();
+
