@@ -202,8 +202,109 @@
       }
     }
     if (id === 'bach_dien') {
-      // Real flex children: Safari can pin the action bar without display:contents.
-      body.replaceChildren(stage, medals, workspace, upgrades);
+      // Compact approved profile. Move existing live command nodes into Chi tiết;
+      // the main Upgrade command delegates to the original button, never mutations.
+      const originalButtons = Array.from(upgrades.querySelectorAll('button'));
+      const one = upgrades.querySelector('#lvBtn') || originalButtons.find(button =>
+        /nâng cấp|lên cấp/i.test(button.textContent || ''));
+      const five = upgrades.querySelector('#lv5Btn, #lv5, #lvFiveBtn, #lv5xBtn') ||
+        originalButtons.find(button => button !== one &&
+          /(?:[×x+]\s*5|5\s*(?:cấp|lần))/i.test(button.textContent || ''));
+      const overview = document.createElement('div');
+      overview.className = 'vc-overview';
+      const selector = document.createElement('div');
+      selector.className = 'vc-upgrade-mode';
+      selector.setAttribute('role', 'group');
+      selector.setAttribute('aria-label', 'Số cấp nâng');
+      const price = document.createElement('div');
+      price.className = 'vc-upgrade-price';
+      price.setAttribute('aria-live', 'polite');
+      const primary = document.createElement('button');
+      primary.type = 'button'; primary.className = 'btn vc-primary-upgrade';
+      primary.textContent = 'Nâng cấp';
+      let count = 1;
+      const modeButtons = [];
+      const updateUpgrade = () => {
+        const source = count === 5 ? five : one;
+        const available = !!source && !source.disabled;
+        primary.disabled = !available;
+        primary.title = source?.title || '';
+        price.textContent = source
+          ? (source.textContent || '').trim()
+          : 'Chưa có lệnh nâng cấp ' + count + ' cấp';
+        for (const option of modeButtons) {
+          const active = Number(option.dataset.count) === count;
+          option.setAttribute('aria-pressed', String(active));
+          option.classList.toggle('is-active', active);
+        }
+      };
+      for (const amount of [1, 5]) {
+        const option = document.createElement('button');
+        option.type = 'button'; option.className = 'vc-mode-btn';
+        option.dataset.count = String(amount); option.textContent = '×' + amount;
+        option.disabled = amount === 5 && !five;
+        option.addEventListener('click', () => { count = amount; updateUpgrade(); });
+        selector.append(option); modeButtons.push(option);
+      }
+      primary.addEventListener('click', () => {
+        const source = count === 5 ? five : one;
+        if (!source || source.disabled) return;
+        // Existing level-up transaction/receipt handler remains the only owner.
+        source.click();
+      });
+      // Hide only the original duplicated level buttons; other command handlers
+      // (star-up, reset and related advancement) remain accessible below.
+      if (one) one.classList.add('vc-proxy-source');
+      if (five) five.classList.add('vc-proxy-source');
+      overview.append(price, selector, primary);
+      updateUpgrade();
+
+      const features = document.createElement('nav');
+      features.className = 'vc-feature-menu';
+      features.setAttribute('aria-label', 'Chức năng của tướng');
+      const feature = (label, symbol, action) => {
+        const button = document.createElement('button');
+        button.type = 'button'; button.className = 'vc-feature';
+        const art = document.createElement('span');
+        art.className = 'vc-feature-symbol'; art.textContent = symbol;
+        art.setAttribute('aria-hidden', 'true');
+        const caption = document.createElement('span');
+        caption.textContent = label;
+        button.append(art, caption); button.addEventListener('click', action);
+        return button;
+      };
+      const reveal = (key, target) => {
+        workspace.hidden = false;
+        workspace.classList.add('is-expanded');
+        detailTrigger.setAttribute('aria-expanded', 'true');
+        activate(key);
+        const destination = target || workspace;
+        destination.scrollIntoView({ block: 'start', behavior: 'auto' });
+      };
+      const detailTrigger = feature('Chi tiết', '☷', () => {
+        const expanded = !workspace.hidden;
+        workspace.hidden = expanded;
+        workspace.classList.toggle('is-expanded', !expanded);
+        detailTrigger.setAttribute('aria-expanded', String(!expanded));
+        if (!expanded) { activate(selected); workspace.scrollIntoView({ block: 'start' }); }
+      });
+      detailTrigger.setAttribute('aria-controls', 'vc-detail-content');
+      detailTrigger.setAttribute('aria-expanded', 'false');
+      features.append(
+        feature('Trang bị', '♜', () => reveal('equipment')),
+        feature('Thăng sao', '★', () => reveal('attributes', upgrades)),
+        detailTrigger
+      );
+      workspace.id = 'vc-detail-content';
+      workspace.hidden = true;
+      // Do not clone or replace .upgrades: listeners, ids, costs and guards survive.
+      const advanced = document.createElement('section');
+      advanced.className = 'vc-advanced-actions';
+      const advancedTitle = document.createElement('h3');
+      advancedTitle.textContent = 'Thăng sao & bồi dưỡng';
+      advanced.append(advancedTitle, upgrades);
+      workspace.append(advanced);
+      body.replaceChildren(stage, medals, overview, features, workspace);
     } else body.replaceChildren(stage, dock, workspace);
 
     function activate(key, focus = false) {
