@@ -1,0 +1,45 @@
+/* Approved Bạch Diện concept, scoped to the existing hall overlay.
+   Live canvas, tabs, commands and their listeners remain owned by the game. */
+#hvHeroDetailRoot[data-hero-id="bach_dien"]{--vc-ink:#392719;--vc-gold:#bd914c;--vc-paper:#fff6df;background:#392719;color:var(--vc-ink);scroll-padding-top:64px}
+#hvHeroDetailRoot[data-hero-id="bach_dien"] .hv-hd-top{background:linear-gradient(#513821,#302014);color:#fff0c9;border-bottom:2px solid var(--vc-gold);padding:8px 12px}
+#hvHeroDetailRoot[data-hero-id="bach_dien"] .hv-hd-top b{font:700 22px/1.2 Georgia,serif}
+#hvHeroDetailRoot[data-hero-id="bach_dien"] .hv-hd-stage{padding:0;min-height:0;flex:1 0 auto}
+#hvHeroDetailRoot[data-hero-id="bach_dien"] #hdBody{display:flex!important;flex-direction:column;gap:10px;max-width:620px;margin:0 auto;padding:0 10px max(12px,env(safe-area-inset-bottom))!important;min-height:0;width:100%;box-sizing:border-box;background:#392719}
+#hvHeroDetailRoot[data-hero-id="bach_dien"] #hdBody>.hstage{display:flex!important;position:relative;flex-direction:column;align-items:center;min-height:0!important;width:calc(100% + 20px);margin:0 -10px!important;padding:12px 12px 10px!important;box-sizing:border-box;border:0!important;border-radius:0!important;box-shadow:none!important;background:linear-gradient(0deg,#392719 0%,transparent 35%),url('assets/ui/hero-detail/vo-cac-pavilion-v1.webp') center/cover no-repeat!important;isolation:isolate}
+#hvHeroDetailRoot[data-hero-id="bach_dien"] .hstage::before,#hvHeroDetailRoot[data-hero-id="bach_dien"] .hstage::after{content:none!important}
+#hvHeroDetailRoot[data-hero-id="bach_dien"] .hstage .hsava{display:none!important}
+#hvHeroDetailRoot[data-hero-id="bach_dien"] #bachDienDetailIdle{position:static!important;transform:none!important;width:min(300px,78vw)!important;height:auto!important;aspect-ratio:1;flex-shrink:0;margin:0 auto!important;order:1;filter:drop-shadow(0 8px 5px #281b1640)}
+#hvHeroDetailRoot[data-hero-id="bach_dien"] .hsrar{order:0;align-self:flex-start;margin:0!important;padding:5px 9px;border-radius:9px;background:#342515df;color:#ffd578;font-size:18px;z-index:1}
+#hvHeroDetailRoot[data-hero-id="bach_dien"] .hsnm{order:2;font:700 22px/1.2 Georgia,serif!important;color:#fff3ce!important;text-shadow:0 2px 3px #24170d;margin:0!important}
+#hvHeroDetailRoot[data-hero-id="bach_dien"] .hsepi{order:3;color:#fff0d3!important;font-size:12px;line-height:1.5;margin:4px 0;text-shadow:0 1px 3px #24170d}
+#hvHeroDetailRoot[data-hero-id="bach_dien"] .hshe{order:4;background:#3c261deb;color:#ffda91!important;border:1px solid #b78c4c;border-radius:8px;padding:4px 8px;font-size:12px;max-width:100%;box-sizing:border-box}
+#hvHeroDetailRoot[data-hero-id="bach_dien"] .hspow{order:5;color:#ffdb83!important;font-size:23px!important;margin:5px 0!important;font-weight:800}
+#hvHeroDetailRoot[data-hero-id="bach_dien"] .hv-scene-skills{order:6;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;width:100%;margin-top:5px}
+#hvHeroDetailRoot[data-hero-id="bach_dien"] .hv-scene-skill{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;min-width:0;min-height:64px;padding:6px 2px;border:1px solid #c7a260;border-radius:10px;background:linear-gradient(#fff9e9,#eddbb4);color:#482e19;font:700 12px/1.25 system-ui;box-shadow:inset 0 0 0 2px #fffae6}
+#hvHeroDetailRoot[data-hero-id="bach_dien"] .hv-scene-skill-seal{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:linear-gradient(#a64c28,#582316);color:#ffdc8c;border:1px solid #b5873f;font-size:20px}
+#hvHeroDetailRoot[data-hero-id="bach_dien"] .hv-scene-arrow{position:absolute!important;top:32%;z-index:5;min-width:44px;min-height:52px;border:1px solid #d5ac64;border-radius:12px;background:#51351bd9;color:#ffe7ad;font-size:34px}
+#hvHeroDetailRoot[data-hero-id="bach_dien"] .is-prev{left:8px}#hvHeroDetailRoot[data-hero-id="bach_dien"] .is-next{right:8px}
+#hvHeroDetailRoot[data-hero-id="bach_dien"] .hv-scene-dock{display:contents}
+#hvHeroDetailRoot[data-hero-id="bach_dien"] .medalrow{order:1;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));align-items:center;gap:3px;padding:8px 5px!important;margin:0!important;border:1px solid #c7a260;border-radius:12px;background:linear-gradient(#fff8e7,#efdfbc)!important;box-shadow:inset 0 0 0 2px #fff9e7;color:#392719}
+#hvHeroDetailRoot[data-hero-id="bach_dien"] .medalrow .mstat{display:flex;flex-direction:column;gap:3px;align-items:center;padding:6px 2px;min-width:0;background:transparent!important;border:0;color:#392719!important;border-radius:0;font-size:14px}
+#hvHeroDetailRoot[data-hero-id="bach_dien"] .medalrow .medal{display:flex;flex-direction:column;justify-content:center;align-items:center;min-width:0;width:auto;height:auto;aspect-ratio:1;border:1px solid #ba934f;border-radius:50%;background:#463020!important;color:#ffe4a4!important;padding:5px;box-sizing:border-box}
+#hvHeroDetailRoot[data-hero-id="bach_dien"] .medal b{font-size:24px}#hvHeroDetailRoot[data-hero-id="bach_dien"] .medal small{font-size:9px;color:#ffe4a4}
+#hvHeroDetailRoot[data-hero-id="bach_dien"] .mstat b{color:#392719;margin-left:0;font-size:15px}
+#hvHeroDetailRoot[data-hero-id="bach_dien"] .hv-detail-workspace{order:2;width:100%;min-width:0;box-sizing:border-box}
+#hvHeroDetailRoot[data-hero-id="bach_dien"] .hv-detail-tablist{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;padding:0;margin-bottom:10px;background:transparent!important;border:0!important}
+#hvHeroDetailRoot[data-hero-id="bach_dien"] button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+#hvHeroDetailRoot[data-hero-id="bach_dien"] .btn{min-height:44px;min-width:0;white-space:normal;line-height:1.35;border:1px solid #c7a260;border-radius:10px;color:#492e18!important;background:linear-gradient(#fff7e3,#ebd6ac)!important;box-shadow:inset 0 0 0 2px #fff0cb;font:700 13px/1.35 system-ui;padding:9px 6px;text-shadow:none}
+#hvHeroDetailRoot[data-hero-id="bach_dien"] .hv-detail-tablist [aria-selected="true"],#hvHeroDetailRoot[data-hero-id="bach_dien"] #lvBtn{background:linear-gradient(#23745b,#14513e)!important;color:#fff1c9!important;box-shadow:inset 0 0 0 2px #8baf7866}
+#hvHeroDetailRoot[data-hero-id="bach_dien"] .hv-detail-panel{display:grid;gap:8px;min-width:0}
+#hvHeroDetailRoot[data-hero-id="bach_dien"] .hv-detail-panel[hidden]{display:none!important}
+#hvHeroDetailRoot[data-hero-id="bach_dien"] .hv-detail-panel>:is(.section,.skillbox,.lorebox,.relbox){margin:0!important;padding:12px!important;background:#fff4dc!important;border:1px solid #c7a260!important;border-radius:12px;color:#392719!important;box-shadow:none!important;overflow-wrap:anywhere}
+#hvHeroDetailRoot[data-hero-id="bach_dien"] .hv-detail-panel :is(div,span,b,small,p,h3){color:inherit!important}
+#hvHeroDetailRoot[data-hero-id="bach_dien"] .hv-detail-panel .skill-meta{font-size:11px;line-height:1.5}
+#hvHeroDetailRoot[data-hero-id="bach_dien"] .hv-equipment-slots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+#hvHeroDetailRoot[data-hero-id="bach_dien"] .hv-equipment-slot{display:grid;gap:6px;padding:10px;border-radius:8px}
+#hvHeroDetailRoot[data-hero-id="bach_dien"] .upgrades{order:3;position:static!important;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:0!important;margin:0!important;background:transparent!important;border:0!important}
+#hvHeroDetailRoot[data-hero-id="bach_dien"] .upgrades .btn{min-height:48px;background:linear-gradient(#68462b,#412b1b)!important;color:#ffe5b1!important;box-shadow:inset 0 0 0 2px #b58c4555}
+#hvHeroDetailRoot[data-hero-id="bach_dien"] button:disabled{opacity:.55;cursor:not-allowed}
+#hvHeroDetailRoot[data-hero-id="bach_dien"] button:focus-visible{outline:3px solid #51b9a2;outline-offset:2px}
+#hvHeroDetailRoot[data-hero-id="bach_dien"] button:active:not(:disabled){filter:brightness(1.12)}
+@media(min-width:760px){#hvHeroDetailRoot[data-hero-id="bach_dien"] #hdBody{max-width:620px}#hvHeroDetailRoot[data-hero-id="bach_dien"] #bachDienDetailIdle{width:300px!important}}

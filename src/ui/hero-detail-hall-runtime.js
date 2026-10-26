@@ -31,6 +31,7 @@
     const stage = body.querySelector('.hstage');
     if (!stage) return;
     const id = stage.dataset.heroId;
+    root.dataset.heroId = id || '';
     const existing = getComputedStyle(stage).getPropertyValue('--hero-detail-bg');
     if (existing && existing.includes('url(')) {
       stage.classList.add('hv-depth-bg');
@@ -73,3 +74,4 @@
   root.querySelector('[data-hd-close]').addEventListener('click', () => navTo('heroes'));
   syncOpen(typeof ST === 'object' ? ST.screen : '');
 })();
+
