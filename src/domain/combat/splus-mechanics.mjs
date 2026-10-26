@@ -1411,7 +1411,8 @@ export function createSplusMechanics(options={}) {
   // hits without redirecting (REVIEW DEFAULT: drop hit, keep the cluster plan).
   function resolveHongThuongHit(actorId,castId,targetId,hitIndex){
     const actor=unit(actorId),cast=spearCastOf(actorId,castId),target=unit(targetId),token=targetId+':'+hitIndex;
-    if(!cast||!Number.isInteger(hitIndex)||hitIndex<0||hitIndex>2||cast.resolved.includes(token))return {ok:false};
+    // Owner 2026-10-26: ulti Hồng Thương chọc 4 lần xuống toàn đội địch (trước đây tối đa 3).
+    if(!cast||!Number.isInteger(hitIndex)||hitIndex<0||hitIndex>3||cast.resolved.includes(token))return {ok:false};
     cast.resolved.push(token);
     if(cast.kind==='ultimate'&&!cast.struckIds.includes(targetId))cast.struckIds.push(targetId);
     if(!alive(actor))return {ok:true,events:[]};
@@ -1419,7 +1420,7 @@ export function createSplusMechanics(options={}) {
     const previous=currentAction,startIndex=events.length;currentAction=cast.action;
     try{
       const kind=cast.kind,slot=kind==='basic'?'basic':'ultimate';
-      const r=rules(actor,slot),mult=(kind==='basic'?r.hitMultipliers:r.clusterMultipliers)[hitIndex];
+      const r=rules(actor,slot),table=(kind==='basic'?r.hitMultipliers:r.clusterMultipliers)||[],mult=table[hitIndex]??table[table.length-1];
       const consume=hongThuongConsume(actor,target);
       const absorbed=()=>events.slice(startIndex).filter(e=>e.type==='shieldAbsorb'&&e.targetId===target.id).reduce((sum,e)=>sum+n(e.amount),0);
       const dealt=damage(actor,target,{action:slot,multiplier:n(mult,1),armorPierce:consume?consume.armorPierce:0});

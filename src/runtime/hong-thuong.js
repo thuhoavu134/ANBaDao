@@ -43,10 +43,11 @@ function hongThuongFallDuration(){return HONG_THUONG_META.clips['fall-die'].dura
 // victim (never stabbing outward from the wrong side).
 // ── Owner 2026-10-26: lớp hiệu ứng màn hình cho tuyệt kỹ toàn sân ───────────────────────────────
 // Chỉ dùng DOM + CSS transform trên canvas nên KHÔNG đổi toạ độ vẽ bên trong, không phá hit point.
+// Owner 2026-10-26: KHÔNG rung màn hình, KHÔNG flash (nhìn đau mắt) — chỉ tối sân + vignette + zoom nhẹ.
 const HV_SCREEN_FX_TIERS = [
-  { dim: 0.34, zoom: 1.05, shake: 6, flash: 0.10, ms: 520 },
-  { dim: 0.46, zoom: 1.09, shake: 12, flash: 0.18, ms: 640 },
-  { dim: 0.58, zoom: 1.14, shake: 22, flash: 0.34, ms: 900 }
+  { dim: 0.38, zoom: 1.04, ms: 520 },
+  { dim: 0.48, zoom: 1.06, ms: 640 },
+  { dim: 0.58, zoom: 1.09, ms: 900 }
 ];
 const hvScreenFx = (() => {
   let wrap = null, dim = null, vignette = null, flash = null, canvas = null, raf = 0, state = null;
@@ -91,19 +92,6 @@ const hvScreenFx = (() => {
     dim.style.opacity = String(cfg.dim);
     vignette.style.opacity = '1';
     apply(cfg.zoom);
-    flash.style.transition = 'none';
-    flash.style.opacity = String(cfg.flash);
-    void flash.offsetWidth;
-    flash.style.transition = 'opacity ' + Math.round(cfg.ms * 0.55) + 'ms ease-out';
-    flash.style.opacity = '0';
-    if (canvas.animate) {
-      const s = cfg.shake;
-      canvas.animate([
-        { translate: '0 0' }, { translate: s + 'px ' + (-s * 0.6) + 'px' },
-        { translate: (-s * 0.8) + 'px ' + (s * 0.5) + 'px' }, { translate: (s * 0.35) + 'px 0' },
-        { translate: '0 0' }
-      ], { duration: 260 + s * 6, easing: 'ease-out' });
-    }
     state = { until: performance.now() + cfg.ms };
   }
   function start() {
@@ -137,6 +125,14 @@ function hongThuongBodyPos(u,elapsed,key){
   return lerp(info.spot,info.home,Math.min(1,(elapsed-(dur-220))/220));
  }
  if(key==='ultimate'){
+  // QA (?qaUlti=1): ghi lại vị trí thân thực tế đang vẽ
+  if(typeof window!=='undefined'&&typeof location!=='undefined'&&/qaUlti=1/.test(String(location.search||''))){
+   try{window.__BODY_CALLS=(window.__BODY_CALLS||0)+1;const _s=info.segments;let _r=null;
+    if(!_s)_r=info.home;else{for(const _g of _s){if(elapsed>=_g.start&&elapsed<_g.start+_g.dur){_r=_g.to===null?info.home:lerp(_g.from,_g.to,(elapsed-_g.start)/_g.dur);break;}}
+     if(!_r){const _l=_s[_s.length-1];_r=_l.to===null?info.home:_l.to;}}
+    window.__BODY_LAST={t:Math.round(elapsed),x:_r?Math.round(_r.x):null,y:_r?Math.round(_r.y):null,segs:_s?_s.length:0};
+   }catch(_){}
+  }
   // Modules: prep at home → glide to each cluster spot → finale spot → home.
   const seg=info.segments;
   if(!seg)return info.home;
@@ -327,7 +323,6 @@ function spawnHongThuongVfx(x,y,info,target){hongThuongVfxImage('impact');
  hongThuongVfxLive.push({x:centerX,y:centerY,speed:info?.speed||state.speed||1,startedAt:performance.now(),battleId:state.battleId});}
 
 function drawHongThuongVfx(context,time){
- try{drawHvUltFx(context,time);}catch(_){}
 
  const clip=HONG_THUONG_META.vfx.clips.impact;
  for(let i=hongThuongVfxLive.length-1;i>=0;i--){
@@ -373,61 +368,55 @@ function drawHongThuongVfx(context,time){
 
  // Read-only cast plan (engine legal-target list) — the authoritative per-hit
  // sequencing stays in the engine via struckIds as markers resolve below.
- const victims=e.targets(actor.id,'ultimate').filter(Boolean);
- // Travel and authored clips occupy disjoint intervals. Damage markers use
- // these same cluster starts, so movement cannot hide the opening thrust.
- const seg=[];let cursor=tl.prepMs,from=info.home;
- const spotOf=v=>hongThuongSpotFor(actor,getUnit(v?.id)||v);
- const clusterStarts=[];
+ // Owner 2026-10-26: diễn hoạt mới — bay lên trên đội địch rồi chọc 4 lần xuống TOÀN BỘ địch.
+ // Không rung màn hình, không flash, không vẽ hiệu ứng bằng canvas: mọi VFX là sprite thật
+ // nhân lên ở từng địch nên sân dày hiệu ứng.
+ const livingFoes=()=>e.targets(actor.id,'ultimate').filter(Boolean)
+   .map(v=>getUnit(v.id)).filter(u=>u&&u.hp>0);
+ const seg=[];let cursor=0;const waves=[];
  seg.push({start:0,dur:tl.prepMs,from:info.home,to:info.home,clip:'ult-prep'});
- for(const v of victims){
-  const spot=spotOf(v);
-  seg.push({start:cursor,dur:220,from,to:spot,clip:'run'});cursor+=220;
-  clusterStarts.push(cursor);
-  seg.push({start:cursor,dur:tl.clusterMs,from:spot,to:spot,clip:'ult-cluster'});
-  cursor+=tl.clusterMs;from=spot;
- }
- info.segments=seg;
- info.actionTotalMs=cursor+260+tl.finisherMs+420;
- // Playback: prep → per-foe cluster → Hồi Mã Thương → glide home.
- if(!await hitAt(tl.prepMs))return {ok:false};
- for(const v of victims){
-  const spot=spotOf(v);info.clip='ult-cluster';
-  const base=clusterStarts[victims.indexOf(v)];
-  for(let i=0;i<3;i++){
-   const at=base+(tl.clusterHitsAt?.[i]??[96,384,672][i]);
-   if(!await hitAt(at))return {ok:false};
-   e.resolveHongThuongHit(actor.id,result.castId,v.id,i);
-   // Owner 2026-10-26: ba đợt tăng dần — nhịp 1 nhẹ, nhịp 2 vừa, nhịp 3 nặng (flash + rung mạnh).
-   try{hvScreenFx.punch(i);}catch(_){}
-   try{hvUltFxWave(unit0X(v), unit0Y(v), i);}catch(_){}
-   const unit=getUnit(v.id);
-   if(unit&&unit.hp>0)spawnHongThuongVfx(unit.x,unit.y-60,info,unit);
-   hongThuongSfx(info);flush();
-  }
-  if(!await hitAt(base+tl.clusterMs))return {ok:false};
-  hvUltFx.stage = Math.min(6, (hvUltFx.stage || 0) + 1);
- }
- // Select after all cluster damage, matching the engine's living-target rule.
- const finaleVictim=e.nextHongThuongFinale(actor.id,result.castId);
- const finaleSpot=finaleVictim?hongThuongSpotFor(actor,getUnit(finaleVictim.id)||finaleVictim,'spear'):null;
- if(finaleSpot){
-  seg.push({start:cursor,dur:260,from,to:finaleSpot,clip:'run'});cursor+=260;
-  const finaleStart=cursor;
-  seg.push({start:cursor,dur:tl.finisherMs,from:finaleSpot,to:finaleSpot,clip:'ult-finisher'});
-  cursor+=tl.finisherMs;from=finaleSpot;
-  seg.push({start:cursor,dur:420,from,to:info.home,clip:'run'});
-  info.actionTotalMs=cursor+420;
-  if(!await hitAt(finaleStart+tl.finisherHitAt))return {ok:false};
-  const unit=getUnit(finaleVictim.id);
-  e.resolveHongThuongFinale(actor.id,result.castId);
-  try{hvScreenFx.punch(2);hvUltFxCrescent(unit0X(finaleVictim),unit0Y(finaleVictim),2);}catch(_){}
-  if(unit)spawnHongThuongVfx(unit.x,unit.y-60,info,unit);
-  hongThuongSfx(info);flush();
+ cursor=tl.prepMs;
+ const first=livingFoes();
+ if(!first.length){
+  seg.push({start:cursor,dur:420,from:info.home,to:info.home,clip:'run'});
+  info.segments=seg;info.actionTotalMs=cursor+420;
  }else{
-  seg.push({start:cursor,dur:420,from,to:info.home,clip:'run'});
-  info.actionTotalMs=cursor+420;
+  // Điểm bay lên: giữa đội địch, phía trên đầu hàng trước một khoảng thân.
+  const cx=first.reduce((sum,u)=>sum+u.x,0)/first.length;
+  const topY=Math.min(...first.map(u=>u.y));
+  const bodyH=(typeof battleCharacterBody==='function'&&battleCharacterBody(first[0]))?battleCharacterBody(first[0]).bodyH:160;
+  const hover={x:cx,y:topY-(bodyH||160)*1.35};
+  seg.push({start:cursor,dur:340,from:info.home,to:hover,clip:'run'});cursor+=340;
+  const WAVES=4;
+  for(let w=0;w<WAVES;w++){
+    const targets=livingFoes();
+    const pool=targets.length?targets:first;
+    const focal=pool[Math.min(pool.length-1,w%pool.length)];
+    const dive={x:focal.x,y:focal.y-46};
+    seg.push({start:cursor,dur:250,from:hover,to:dive,clip:'run'});cursor+=250;
+    const castStart=cursor;
+    seg.push({start:castStart,dur:tl.clusterMs,from:dive,to:dive,clip:'ult-cluster'});cursor+=tl.clusterMs;
+    // nhịp chọc nằm giữa cụm, mỗi nhịp đánh TOÀN BỘ địch còn sống
+    waves.push({at:castStart+Math.round(tl.clusterMs*0.55),wave:w,spot:dive});
+    seg.push({start:cursor,dur:150,from:dive,to:hover,clip:'run'});cursor+=150;
+  }
+  seg.push({start:cursor,dur:420,from:hover,to:info.home,clip:'run'});cursor+=420;
+  info.segments=seg;info.actionTotalMs=cursor;
  }
+ info.actionTotalMs=Math.max(info.actionTotalMs||0,cursor);
+ if(!await hitAt(tl.prepMs))return {ok:false};
+ info.clip='ult-cluster';
+ for(const w of waves){
+  if(!await hitAt(w.at))return {ok:false};
+  const foes=livingFoes();
+  try{hvScreenFx.punch(Math.min(2,w.wave));}catch(_){}
+  // Mỗi địch ăn một nhịp: engine cho phép tối đa 4 nhịp (0..3).
+  for(const f of foes){e.resolveHongThuongHit(actor.id,result.castId,f.id,w.wave);}
+  // VFX sprite nổ ở TỪNG địch -> cả sân dày hiệu ứng.
+  for(const f of foes){const u=getUnit(f.id);if(u&&u.hp>=0)spawnHongThuongVfx(u.x,u.y-60,info,u);}
+  hongThuongSfx(info);flush();
+ }
+ try{hvScreenFx.punch(2);}catch(_){}
  if(!await hitAt(info.actionTotalMs))return {ok:false};
  e.finishHongThuongCast(actor.id,result.castId);flush();
  try{hvScreenFx.stop();hvUltFxReset();}catch(_){}
