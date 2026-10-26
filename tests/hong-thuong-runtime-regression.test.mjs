@@ -19,8 +19,10 @@ test('idle source cells progress across pages',async()=>{const h=harness();await
 test('cold basic action does not skip turn due to atlas mismatch',async()=>{const h=harness();const a=await h.s.beginHongThuongAction(h.actor,'basic',{id:'e',x:600,y:500},1,{});assert.ok(a);h.s.finishHongThuongAction(a);assert.deepEqual(h.errors,[]);});
 // Owner 2026-10-26: ulti đổi sang 4 nhịp chọc xuống TOÀN BỘ địch (bay lên trên đội địch rồi chếch xuống),
 // bỏ Hồi Mã Thương riêng. Timeline phải vẫn liền mạch, không chồng lấn, và mỗi nhịp đánh mọi địch còn sống.
-test('ultimate now dives four times onto the whole enemy team on a nonoverlapping timeline',async()=>{
- const h=harness(),victims=[{id:'e1',x:600,y:400,hp:100},{id:'e2',x:650,y:550,hp:100}],hits=[];
+// Owner 2026-10-26 (chốt): cô ấy KHÔNG nhảy sang từng người. Đứng yên MỘT chỗ trước vị trí số 2 của đội địch,
+// mỗi nhịp bay lên cao, chếch người xuống đánh (VFX trên đầu toàn bộ địch), hạ xuống đúng chỗ đó — lặp 4 lần.
+test('ultimate keeps one ground spot and leaps four times over the whole enemy team',async()=>{
+ const h=harness(),victims=[{id:'e1',x:600,y:400,hp:100,slot:0},{id:'e2',x:650,y:550,hp:100,slot:1}],hits=[];
  Object.assign(h.s,{getUnit:id=>victims.find(v=>v.id===id),splusPresentation:new Map(),updateTeamCounters(){},splusStateView(){}});
  const engine={act:()=>({ok:true,castId:'cast'}),targets:()=>victims.filter(v=>v.hp>0),
  resolveHongThuongHit(a,c,id,i){hits.push({id,i,at:h.s.hongThuongElapsed(info)});},
@@ -32,12 +34,20 @@ test('ultimate now dives four times onto the whole enemy team on a nonoverlappin
  assert.equal(clusters.length,4,'bốn nhịp chọc');
  assert.equal(segs.filter(s=>s.clip==='ult-finisher').length,0,'không còn Hồi Mã Thương riêng');
  for(let i=1;i<segs.length;i++)assert.equal(segs[i].start,segs[i-1].start+segs[i-1].dur,'timeline liền mạch');
- // mỗi nhịp: mọi địch còn sống đều ăn đòn, chỉ số nhịp 0..3
+ // mỗi nhịp: TOÀN BỘ địch còn sống đều ăn đòn, chỉ số nhịp 0..3
  assert.equal(hits.length,8,'4 nhịp x 2 địch');
  for(const wave of [0,1,2,3])assert.deepEqual(hits.filter(x=>x.i===wave).map(x=>x.id).sort(),['e1','e2']);
  assert.ok(hits.every(x=>x.i>=0&&x.i<=3),'chỉ số nhịp nằm trong 0..3');
- // bay lên trên đội địch: có đoạn đi tới điểm cao hơn mọi địch
- const lift=segs[1];assert.ok(lift.to.y<Math.min(...victims.map(v=>v.y)),'điểm bay lên cao hơn đội địch');
+ // đứng yên một chỗ: cả 4 cụm đánh cùng một toạ độ, cao hơn MỌI địch
+ const hoverY=clusters[0].to.y;
+ for(const c of clusters){
+  assert.equal(c.to.x,clusters[0].to.x,'cùng một điểm đứng');
+  assert.equal(c.to.y,hoverY,'cùng một độ cao');
+ }
+ assert.ok(hoverY<Math.min(...victims.map(v=>v.y))-80,'bay lên cao hơn hẳn đội địch');
+ // giữa các cụm phải hạ xuống đúng điểm đứng dưới đất (không nhảy sang người khác)
+ const groundX=segs.find(x=>x.clip==='run'&&x.to.y>Math.min(...victims.map(v=>v.y))).to.x;
+ for(const c of clusters)assert.equal(c.to.x,groundX,'bay lên ngay trên điểm đứng của mình');
  const ret=segs.at(-1),mid=h.s.hongThuongBodyPos(h.actor,ret.start+ret.dur/2,'ultimate');
  assert.equal(Math.round(mid.x),Math.round((ret.from.x+info.home.x)/2));
  assert.equal(info.actionTotalMs,ret.start+ret.dur);

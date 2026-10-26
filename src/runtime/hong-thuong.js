@@ -170,7 +170,15 @@ function drawHongThuongHero(ctx,u,time){
  }
  const bodyPos=hongThuongBodyPos(u,elapsed,info&&info.action);
  ctx.save();ctx.translate(bodyPos?bodyPos.x:u.x,bodyPos?bodyPos.y:u.y);const scale=battleCharacterDepthScale(u)*battleCharacterScale(u);// Behind-target finisher faces back into the victim; other clips keep team facing.
- const facing=(u.team===TEAM_ENEMY?-1:1)*(key==='ult-finisher'?-1:1);ctx.scale(scale*facing,scale);
+ const facing=(u.team===TEAM_ENEMY?-1:1)*(key==='ult-finisher'?-1:1);
+ // Owner 2026-10-26: lúc ở trên cao thì chếch người xuống theo hướng địch.
+ let tilt=0;
+ if(active&&info.action==='ultimate'&&info.ultHover&&key==='ult-cluster'){
+  const segsN=info.segments||[];const segN=segsN.find(x=>elapsed>=x.start&&elapsed<x.start+x.dur);
+  if(segN&&segN.from&&segN.from.y<=info.ultHover.y+1)tilt=-0.34*facing;
+ }
+ ctx.scale(scale*facing,scale);
+ if(tilt)ctx.rotate(tilt);
  const paintBody=copy=>{const c=hongThuongClipMeta(key);return c&&hongThuongPaint(copy,u,key,frame)||key!=='idle-authored-0'&&(u.hp>0&&hongThuongPaint(copy,u,'standing',0));};
  const drawn=__hvHeroVisibility.finish(ctx,'hong-thuong',u,time,paintBody(ctx),paintBody);
  ctx.restore();if(nextPage)hongThuongImage(nextPage,'prefetch');if(u.hp>0)drawUnitHud(ctx,u,time,1);return drawn;
@@ -373,6 +381,9 @@ function drawHongThuongVfx(context,time){
  // nhân lên ở từng địch nên sân dày hiệu ứng.
  const livingFoes=()=>e.targets(actor.id,'ultimate').filter(Boolean)
    .map(v=>getUnit(v.id)).filter(u=>u&&u.hp>0);
+ // Owner 2026-10-26 (chốt lại): cô ấy ĐỨNG YÊN tại một điểm trước vị trí số 2 của đội địch.
+ // Mỗi nhịp: bay lên cao -> giữ trên cao, chếch người xuống, đánh -> VFX nổi trên đầu TOÀN BỘ địch
+ // -> hạ xuống đúng điểm đó. Lặp lại y hệt 4 lần (không nhảy sang từng người).
  const seg=[];let cursor=0;const waves=[];
  seg.push({start:0,dur:tl.prepMs,from:info.home,to:info.home,clip:'ult-prep'});
  cursor=tl.prepMs;
@@ -381,27 +392,38 @@ function drawHongThuongVfx(context,time){
   seg.push({start:cursor,dur:420,from:info.home,to:info.home,clip:'run'});
   info.segments=seg;info.actionTotalMs=cursor+420;
  }else{
-  // Điểm bay lên: giữa đội địch, phía trên đầu hàng trước một khoảng thân.
-  const cx=first.reduce((sum,u)=>sum+u.x,0)/first.length;
-  const topY=Math.min(...first.map(u=>u.y));
-  const bodyH=(typeof battleCharacterBody==='function'&&battleCharacterBody(first[0]))?battleCharacterBody(first[0]).bodyH:160;
-  const hover={x:cx,y:topY-(bodyH||160)*1.35};
-  seg.push({start:cursor,dur:340,from:info.home,to:hover,clip:'run'});cursor+=340;
+  const bySlot=a=>a.slice().sort((x,y)=>(x.slot??0)-(y.slot??0));
+  const sorted=bySlot(first);
+  // "vị trí số 2" = địch ở slot thứ 2 của đội hình (fallback: con đầu tiên)
+  const anchor=sorted[Math.min(1,sorted.length-1)];
+  const firstBody=(typeof battleCharacterBody==='function'&&battleCharacterBody(anchor))?battleCharacterBody(anchor):null;
+  // battleCharacterBody có thể trả bodyH rất nhỏ với unit không có art -> phải có sàn, nếu không
+  // điểm bay lên trùng luôn điểm đứng (đo được: hover.y == ground.y).
+  const bodyH=Math.max(96,(firstBody&&firstBody.bodyH)||160);
+  const dir=actor.team===TEAM_ENEMY?1:-1; // đứng về phía đội mình so với địch
+  // Đứng TRƯỚC mặt địch (xa hơn) và bay lên CAO HẲN trên đầu cả đội (owner: phải thấy rõ là bay lên).
+  const ground={x:anchor.x+dir*Math.max(96,bodyH*0.85),y:anchor.y+bodyH*0.40};
+  const hover={x:ground.x,y:ground.y-bodyH*2.85};
+  // đi tới điểm đứng trước mặt địch
+  seg.push({start:cursor,dur:260,from:info.home,to:ground,clip:'run'});cursor+=260;
   const WAVES=4;
   for(let w=0;w<WAVES;w++){
-    const targets=livingFoes();
-    const pool=targets.length?targets:first;
-    const focal=pool[Math.min(pool.length-1,w%pool.length)];
-    const dive={x:focal.x,y:focal.y-46};
-    seg.push({start:cursor,dur:250,from:hover,to:dive,clip:'run'});cursor+=250;
-    const castStart=cursor;
-    seg.push({start:castStart,dur:tl.clusterMs,from:dive,to:dive,clip:'ult-cluster'});cursor+=tl.clusterMs;
-    // nhịp chọc nằm giữa cụm, mỗi nhịp đánh TOÀN BỘ địch còn sống
-    waves.push({at:castStart+Math.round(tl.clusterMs*0.55),wave:w,spot:dive});
-    seg.push({start:cursor,dur:150,from:dive,to:hover,clip:'run'});cursor+=150;
+    // bay lên
+    seg.push({start:cursor,dur:180,from:ground,to:hover,clip:'run'});cursor+=180;
+    const hoverStart=cursor;
+    // giữ trên cao, chếch người xuống, diễn hoạt đánh
+    seg.push({start:hoverStart,dur:tl.clusterMs,from:hover,to:hover,clip:'ult-cluster'});cursor+=tl.clusterMs;
+    waves.push({at:hoverStart+Math.round(tl.clusterMs*0.5),wave:w,spot:hover});
+    // hạ xuống đúng điểm cũ
+    seg.push({start:cursor,dur:180,from:hover,to:ground,clip:'run'});cursor+=180;
   }
-  seg.push({start:cursor,dur:420,from:hover,to:info.home,clip:'run'});cursor+=420;
+  seg.push({start:cursor,dur:420,from:ground,to:info.home,clip:'run'});cursor+=420;
   info.segments=seg;info.actionTotalMs=cursor;
+  info.ultGround=ground;info.ultHover=hover;
+  if(typeof window!=='undefined'&&typeof location!=='undefined'&&/qaUlti=1/.test(String(location.search||''))){
+   window.__ULT_SEG=seg.map(x=>({start:x.start,dur:x.dur,clip:x.clip,fx:Math.round(x.from.x),fy:Math.round(x.from.y),tx:Math.round(x.to.x),ty:Math.round(x.to.y)}));
+   window.__ULT_HOVER={x:Math.round(hover.x),y:Math.round(hover.y),groundY:Math.round(ground.y)};
+  }
  }
  info.actionTotalMs=Math.max(info.actionTotalMs||0,cursor);
  if(!await hitAt(tl.prepMs))return {ok:false};
@@ -410,10 +432,13 @@ function drawHongThuongVfx(context,time){
   if(!await hitAt(w.at))return {ok:false};
   const foes=livingFoes();
   try{hvScreenFx.punch(Math.min(2,w.wave));}catch(_){}
-  // Mỗi địch ăn một nhịp: engine cho phép tối đa 4 nhịp (0..3).
+  // Mỗi nhịp: toàn bộ địch còn sống ăn đòn (chỉ số nhịp 0..3)
   for(const f of foes){e.resolveHongThuongHit(actor.id,result.castId,f.id,w.wave);}
-  // VFX sprite nổ ở TỪNG địch -> cả sân dày hiệu ứng.
-  for(const f of foes){const u=getUnit(f.id);if(u&&u.hp>=0)spawnHongThuongVfx(u.x,u.y-60,info,u);}
+  // VFX nổi TRÊN ĐẦU từng địch -> cả sân dày hiệu ứng
+  for(const f of foes){
+   const u=getUnit(f.id);
+   if(u)spawnHongThuongVfx(u.x,u.y-60,info,u);
+  }
   hongThuongSfx(info);flush();
  }
  try{hvScreenFx.punch(2);}catch(_){}
