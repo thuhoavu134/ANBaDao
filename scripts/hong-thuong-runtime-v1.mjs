@@ -33,7 +33,7 @@ export function patchHongThuongBattle(input,runtime,meta){
         context.fillStyle=status.type==='loDiemYeu'?'#ffd2d8':'#ffe3c4';context.fillText(String(status.stacks||1),sx+size*.34,sy+size*.30);
       }
       if(isNemVi){`);
- once('    drawEffects(ctx, time);\n    drawTichDaoVfx(ctx, time);','    drawEffects(ctx, time);\n    drawTichDaoVfx(ctx, time);\n    drawHongThuongVfx(ctx, time);');
+ once('    drawEffects(ctx, time);\n    drawTichDaoVfx(ctx, time);','    drawEffects(ctx, time);\n    drawTichDaoVfx(ctx, time);\n    drawHongThuongVfx(ctx, time);\n    if(typeof drawHongThuongOnTop===\'function\') drawHongThuongOnTop(ctx, time);');
  return s;
 }
 export async function buildHongThuongCampaignAssets(root){

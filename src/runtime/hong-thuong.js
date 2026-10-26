@@ -215,8 +215,8 @@ function drawHongThuongHero(ctx,u,time){
  let tilt=0;
  if(active&&info.action==='ultimate'&&info.ultHover&&key==='ult-cluster'){
   const segsN=info.segments||[];const segN=segsN.find(x=>elapsed>=x.start&&elapsed<x.start+x.dur);
-  // Owner 2026-10-26: phải chếch XUỐNG 45 độ (bản trước nghiêng ngược lên).
-  if(segN&&segN.from&&segN.from.y<=info.ultHover.y+1)tilt=(Math.PI/4)*facing;
+  // Owner 2026-10-26 (chốt): KHÔNG nghiêng nữa — giữ dáng ngang y như khi đứng dưới đất.
+  tilt=0;
  }
  ctx.scale(scale*facing,scale);
  if(tilt)ctx.rotate(tilt);
@@ -371,11 +371,22 @@ function spawnHongThuongVfx(x,y,info,target,spread){hongThuongVfxImage('impact')
  const centerX=body?body.centerX:x,centerY=body?body.centerY:y;
  const s=spread||null;
  hongThuongVfxLive.push({x:centerX+(s?s.dx:0),y:centerY+(s?s.dy:0),speed:info?.speed||state.speed||1,
+  alpha:s&&s.alpha!=null?s.alpha:1,scaleFactor:s&&s.scale!=null?s.scale:1,
   startedAt:performance.now()+(s?s.delay||0:0),battleId:state.battleId});}
 // Owner 2026-10-26: mỗi địch nhận 4 lớp VFX xen kẽ nhau (lệch vị trí + lệch nhịp) cho dày mắt.
 function spawnHongThuongVfxQuad(x,y,info,target){
- const quad=[{dx:-14,dy:6,delay:0},{dx:12,dy:-4,delay:90},{dx:-4,dy:-14,delay:180},{dx:6,dy:14,delay:270}];
+ // 4 lớp xen kẽ như owner yêu cầu, nhưng mỗi lớp mảnh hơn để còn thấy tướng đang diễn hoạt.
+ const quad=[{dx:-16,dy:7,delay:0,alpha:.55,scale:.8},{dx:14,dy:-5,delay:90,alpha:.5,scale:.75},
+             {dx:-6,dy:-16,delay:180,alpha:.45,scale:.7},{dx:8,dy:16,delay:270,alpha:.45,scale:.7}];
  for(const q of quad)spawnHongThuongVfx(x,y,info,target,q);
+}
+
+// Owner 2026-10-26: VFX nằm trên đầu địch nhưng lại che mất chính cô ấy — vẽ lại cô ấy SAU lớp VFX.
+function drawHongThuongOnTop(ctx,time){
+ try{
+  const list=(typeof units!=='undefined'&&Array.isArray(units))?units:[];
+  for(const u of list){ if(isHongThuong(u)&&u.hp>0&&u._hongThuongAction&&u._hongThuongAction.action==='ultimate') drawHongThuongHero(ctx,u,time); }
+ }catch(_){}
 }
 
 function drawHongThuongVfx(context,time){
@@ -387,7 +398,7 @@ function drawHongThuongVfx(context,time){
   if(elapsed>=ms||state.battleId!==v.battleId){hongThuongVfxLive.splice(i,1);continue;}
   const img=hongThuongVfxImage('impact');if(!img||img.complete===false||img.naturalWidth===0)continue;
   const frame=Math.min(clip.frames-1,Math.floor(elapsed/1000*clip.fps));
-  const d=clip.display||{},dh=d.heightPx||160,w=dh*(clip.cellW/clip.cellH);
+  const d=clip.display||{},dh=(d.heightPx||160)*(v.scaleFactor||1),w=dh*(clip.cellW/clip.cellH);
   context.save();context.globalCompositeOperation=clip.blendMode||'screen';
   context.imageSmoothingEnabled=true;context.imageSmoothingQuality='high';
   // Two co-timed layers share one event, sprite and SFX. Small separation
@@ -441,19 +452,19 @@ function drawHongThuongVfx(context,time){
   seg.push({start:cursor,dur:420,from:info.home,to:info.home,clip:'run'});
   info.segments=seg;info.actionTotalMs=cursor+420;
  }else{
-  const bySlot=a=>a.slice().sort((x,y)=>(x.slot??0)-(y.slot??0));
-  const sorted=bySlot(first);
-  // "vị trí số 2" = địch ở slot thứ 2 của đội hình (fallback: con đầu tiên)
-  const anchor=sorted[Math.min(1,sorted.length-1)];
-  const firstBody=(typeof battleCharacterBody==='function'&&battleCharacterBody(anchor))?battleCharacterBody(anchor):null;
-  // battleCharacterBody có thể trả bodyH rất nhỏ với unit không có art -> phải có sàn, nếu không
-  // điểm bay lên trùng luôn điểm đứng (đo được: hover.y == ground.y).
+  // Owner 2026-10-26 (chốt): điểm bay là MỘT chỗ CỐ ĐỊNH ngay trước HÀNG GIỮA của đội địch,
+  // không bám theo một địch cụ thể nào và không liên quan tới VFX.
+  const firstBody=(typeof battleCharacterBody==='function'&&battleCharacterBody(first[0]))?battleCharacterBody(first[0]):null;
   const bodyH=Math.max(96,(firstBody&&firstBody.bodyH)||160);
-  const dir=actor.team===TEAM_ENEMY?1:-1; // đứng về phía đội mình so với địch
-  // Đứng TRƯỚC mặt địch (xa hơn) và bay lên CAO HẲN trên đầu cả đội (owner: phải thấy rõ là bay lên).
-  // Owner 2026-10-26: gần hơn + thấp hơn bản trước (bay 2.85 thân và cách 96px bị chê là quá xa/cao).
-  const ground={x:anchor.x+dir*Math.max(54,bodyH*0.5),y:anchor.y+bodyH*0.22};
-  const hover={x:ground.x,y:ground.y-bodyH*1.55};
+  const ys=first.map(u=>u.y).sort((a,b)=>a-b);
+  const midY=ys[Math.floor(ys.length/2)];
+  const xsAll=first.map(u=>u.x).sort((a,b)=>a-b);
+  const midX=xsAll[Math.floor(xsAll.length/2)];
+  const dir=actor.team===TEAM_ENEMY?1:-1;
+  // đứng ngay trước hàng giữa (về phía đội mình), rồi bay THẲNG lên — dáng ngang như dưới đất
+  // Owner 2026-10-26 (chốt): đứng/bay Ở PHÍA TRƯỚC hàng giữa (về phía đội mình), không nằm trong cột địch.
+  const ground={x:midX+dir*bodyH*1.15,y:midY+bodyH*0.15};
+  const hover={x:ground.x,y:ground.y-bodyH*1.7};
   // đi tới điểm đứng trước mặt địch
   seg.push({start:cursor,dur:320,from:info.home,to:ground,clip:'run'});cursor+=320;
   // Owner 2026-10-26: 3 đợt, mỗi đợt 3 lần đánh, nhịp chậm hơn cho "đã tai".
