@@ -297,6 +297,8 @@
         const small = document.createElement('small'); small.textContent = caption;
         cell.append(small);
       });
+      const levelCap = medals?.querySelector('.medal small');
+      if (levelCap) levelCap.textContent = (levelCap.textContent.match(/\/\s*\d+/) || ['/30'])[0].replace(/\s/g, '');
       for (const seal of shortcuts.querySelectorAll('.hv-scene-skill-seal')) {
         const slot = seal.closest('.hv-scene-skill')?.dataset.skillSlot;
         if (!['basic', 'ultimate', 'passive'].includes(slot)) continue;
