@@ -2496,19 +2496,39 @@ function heroLevel(id){ return (P.heroes[id]&&P.heroes[id].level)||1; }
 function heroStars(id){ return (P.heroes[id]&&P.heroes[id].stars)||1; }
 function heroStats(id){ const b=DATA.heroes[id].stats; const lm=1+0.08*(heroLevel(id)-1), sm=1+0.12*(heroStars(id)-1);
   const eq=heroEquipBonus(id), sp=setPcts(id), fm=forgeMoldBonus(id), g=guildPct(), cl=clanPct(), aw=awakeningRank(id), am=1+0.02*aw, gt=(typeof guildTechCombat==='function'?guildTechCombat():{atk:0,hp:0}), rb=(typeof relationshipStatBonus==='function'?relationshipStatBonus(id):{hp:0,atk:0,def:0,spd:0}), mb=(typeof masteryBonus==='function'?masteryBonus(id):{hp:0,atk:0,def:0,spd:0,mp:0});
-  const pHp=sp.pct+fm.hp+(g.stat==='hp'?g.pct:0)+cl+(gt.hp||0)+(rb.hp||0)+(mb.hp||0), pAtk=sp.pct+fm.atk+(g.stat==='atk'?g.pct:0)+(gt.atk||0)+(rb.atk||0)+(typeof clanAtkBonus==='function'?clanAtkBonus():0)+(mb.atk||0), pDef=sp.pct+fm.def+(g.stat==='def'?g.pct:0)+(rb.def||0)+(mb.def||0);
+  // Owner 2026-10-26: cây Đột phá 4 mốc cộng % vào chỉ số nền.
+  const dp=(typeof breakthroughBonus==='function'?breakthroughBonus(P,id):{hp:0,atk:0,def:0,spd:0,crit:0});
+  const pHp=sp.pct+fm.hp+(g.stat==='hp'?g.pct:0)+cl+(gt.hp||0)+(rb.hp||0)+(mb.hp||0)+(dp.hp||0), pAtk=sp.pct+fm.atk+(g.stat==='atk'?g.pct:0)+(gt.atk||0)+(rb.atk||0)+(typeof clanAtkBonus==='function'?clanAtkBonus():0)+(mb.atk||0)+(dp.atk||0), pDef=sp.pct+fm.def+(g.stat==='def'?g.pct:0)+(rb.def||0)+(mb.def||0)+(dp.def||0);
   return {hp:Math.round(b.hp*lm*sm*(1+pHp)*am)+eq.hp, mp:b.mp+(mb.mp||0),
     atk:Math.round(b.atk*lm*sm*(1+pAtk)*am)+eq.atk,
     def:Math.round(b.def*lm*sm*(1+pDef)*am)+eq.def,
-    spd:b.spd+eq.spd+sp.spd+fm.spd+aw+(rb.spd||0)+(mb.spd||0),
+    spd:b.spd+eq.spd+sp.spd+fm.spd+aw+(rb.spd||0)+(mb.spd||0)+Math.round(b.spd*(dp.spd||0)),
+    crit:(dp.crit||0),
     khangHe:eq.khangHe||0, satHe:eq.satHe||0,
-    boQuaKhang:eq.boQuaKhang||0, stChuan:eq.stChuan||0, boQuaNe:eq.boQuaNe||0}; }
+    boQuaKhang:eq.boQuaKhang||0, stChuan:eq.stChuan||0, boQuaNe:eq.boQuaNe||0,
+    evasion:5+(eq.evasion||0), accuracy:100+(eq.accuracy||0)}; }
 function levelCost(id){ return 60*heroLevel(id); }
 function starCost(id){ return 20*heroStars(id); }
 function levelUpHero(id){ if(heroLevel(id)>=30) return {ok:false,msg:"Đã đạt cấp tối đa (30)"};
   const c=levelCost(id); if(P.gold<c) return {ok:false,msg:"Không đủ vàng"}; P.gold-=c; P.heroes[id].level++; questProgress('level',1); persist(); return {ok:true}; }
 function starUpHero(id){ if(heroStars(id)>=6) return {ok:false,msg:"Đã đạt sao tối đa (6★)"};
   const c=starCost(id), have=P.shards[id]||0; if(have<c) return {ok:false,msg:"Không đủ mảnh hồn"}; P.shards[id]=have-c; P.heroes[id].stars++; persist(); return {ok:true}; }
+// Owner 2026-10-26: mở một mốc Đột phá (cấp + sao + vàng + Tinh).
+function heroBreakthrough(id){
+  if(!P.heroes[id]||!P.heroes[id].owned) return {ok:false,msg:'Chưa sở hữu tướng này.'};
+  if(typeof prepareBreakthrough!=='function') return {ok:false,msg:'Chưa sẵn sàng.'};
+  const e=econ();
+  const check=prepareBreakthrough(P,id,{level:heroLevel(id),stars:heroStars(id),gold:P.gold,tinh:e.tinh});
+  if(!check.ok){ toast(check.message); return check; }
+  P.gold-=check.cost.gold; e.tinh-=check.cost.tinh;
+  P.heroes[id].dp=check.levelAfter;
+  questProgress('level',1);
+  persist();
+  toast('⚡ '+DATA.heroes[id].name+' — '+check.message);
+  if(typeof refreshResbar==='function') refreshResbar();
+  if(typeof renderHeroDetail==='function') renderHeroDetail(id);
+  return check;
+}
 function unlockHero(id){ if(P.heroes[id]&&!P.heroes[id].owned){ P.heroes[id].owned=true; persist(); return true; } return false; }
 
 /* currency + rewards */
@@ -2704,6 +2724,12 @@ const KHAC={kim:'moc',moc:'tho',tho:'thuy',thuy:'hoa',hoa:'kim'};
 // Tương sinh: Kim sinh Thuỷ · Thuỷ sinh Mộc · Mộc sinh Hoả · Hoả sinh Thổ · Thổ sinh Kim
 const SINH={kim:'thuy',thuy:'moc',moc:'hoa',hoa:'tho',tho:'kim'};
 function counterMult(a,d){ const A=heOf(a),D=heOf(d); if(!A||!D)return 1; if(KHAC[A]===D)return 1.25; if(KHAC[D]===A)return 0.85; return 1; }
+// Owner 2026-10-26: tỉ lệ trúng cho trận thường. Chính xác của người đánh, né của mục tiêu, bỏ qua né của trang bị.
+function hvHitChanceVs(a,t){
+  const ac=Number(a&&a.accuracy)||100, ev=Number(t&&t.evasion)||0, ignore=Math.min(90,Number(a&&a.boQuaNe)||0)/100;
+  const edge=(Number(a&&a.spd||0)-Number(t&&t.spd||0))*0.0015;
+  return Math.max(0.60,Math.min(0.99, 0.98+(ac-100)*0.002+edge-ev*0.006+ignore));
+}
 function inferArchetype(def){
   if(def.archetype) return def.archetype;
   const role=String(def.role||'').toLowerCase(); const kind=def.skill?.fx?.kind||def.skill?.vfx||'';
@@ -2718,7 +2744,8 @@ function makeCombatant(def, side, isHero){ const st=def.stats;
   return { uid:++uid, id:def.id, sourceHeroId:def.sourceHeroId||def.heroId||def.id, name:def.name, col:def.col||"#9aa", side, isHero, row:def.row||"front", archetype:inferArchetype(def), he:(def.he||((DATA.heroes[def.sourceHeroId||def.heroId||def.id]&&DATA.heroes[def.sourceHeroId||def.heroId||def.id].he)||'vo')),
     hpMax:st.hp, hp:st.hp, mpMax:st.mp||0, mp:isHero?Math.round((st.mp||0)*0.5):0,
     atk:st.atk, def:st.def, spd:st.spd, baseSpd:st.spd, khangHe:Number(st.khangHe)||0, satHe:Number(st.satHe)||0,
-    boQuaKhang:Number(st.boQuaKhang)||0, stChuan:Number(st.stChuan)||0, boQuaNe:Number(st.boQuaNe)||0, skill:def.skill||null, ultimate:def.ultimate||null, cd:0,
+    boQuaKhang:Number(st.boQuaKhang)||0, stChuan:Number(st.stChuan)||0, boQuaNe:Number(st.boQuaNe)||0,
+    evasion:Number(st.evasion)||0, accuracy:Number(st.accuracy)||100, skill:def.skill||null, ultimate:def.ultimate||null, cd:0,
     buffs:[], shield:0, mark:0, markDur:0, feared:0, guard:0, hasteDur:0, _taunt:0,
     av:0, x:0,y:0, ax:0,ay:0, flash:0, dead:false, saidLow:false }; }
 
@@ -2960,7 +2987,11 @@ function tauntedTarget(list){ const a=alive(list); const t=a.filter(x=>x._taunt>
 
 function applyEffect(actor,targets,fx,isSkill,opt){ triggerHit(); const ability=(opt&&opt.ultimate)?actor.ultimate:actor.skill; const vfx=isSkill?(ability?.vfx||'skill'):'slash';
   replayEvent('impact',{actorId:actor.id,skillName:isSkill&&ability?ability.name:null,targetShape:targetShapeLabel(fx,isSkill),targetIds:targets.filter(Boolean).map(t=>t.id)});
-  const doDamage=(t,power)=>{ if(!t||t.dead)return {target:t,killed:false,dmg:0}; const wasAlive=!t.dead&&t.hp>0; let raw=actor.atk*power*atkMul(actor);
+  const doDamage=(t,power)=>{ if(!t||t.dead)return {target:t,killed:false,dmg:0};
+    const wasAlive=!t.dead&&t.hp>0;
+    // né chỉ áp cho đòn thường và đòn đánh, không áp cho hồi máu/khiên (những loại đó không gọi doDamage)
+    // chiêu lớn (power >= 1.5) luôn trúng, chỉ đòn thường mới có thể bị né
+    if(power<1.5 && !S.neverMiss && Math.random()>hvHitChanceVs(actor,t)){ if(!S.hideNumbers) floatText(t,'NÉ','#9fd8ff'); replayEvent('miss',{actorId:actor.id,targetId:t.id}); return {target:t,killed:false,dmg:0,missed:true}; } let raw=actor.atk*power*atkMul(actor);
     if(actor._seasonBlood&&actor.hp/actor.hpMax<0.45) raw*=1.15;
     const _rm=seasonRoleCounterMult(actor,t); if(_rm>1){ raw*=_rm; if(!S.hideNumbers) floatText(t,'▲role','#9de8ff'); }
     // Owner 2026-10-25: bỏ qua kháng = xuyên kháng HỆ của đối thủ (không phải xuyên giáp).
@@ -4737,12 +4768,13 @@ const RFAC={b:1,a:1.3,s:1.7,ss:2.2,ssr:3};
 function itemName(it){ return DATA.items.names[it.slot][it.rar]; }
 function itemStat(it){ return Math.round(DATA.items.base[it.slot][it.rar]*(1+0.12*it.lvl)); }
 function equippedBy(uid){ for(const hId in (P.equip||{})){ const e=P.equip[hId]; if(e) for(const s of DATA.items.slots) if(e[s]===uid) return hId; } return null; }
-function heroEquipBonus(id){ const out={hp:0,atk:0,def:0,spd:0,khangHe:0,satHe:0,boQuaKhang:0,stChuan:0,boQuaNe:0}; if(!P||!P.equip) return out;
+function heroEquipBonus(id){ const out={hp:0,atk:0,def:0,spd:0,khangHe:0,satHe:0,boQuaKhang:0,stChuan:0,boQuaNe:0,evasion:0,accuracy:0}; if(!P||!P.equip) return out;
   const e=P.equip[id]; if(!e) return out;
   for(const s of DATA.items.slots){ const uid=e[s]; if(!uid) continue;
     const it=P.inventory.find(i=>i.uid===uid); if(!it) continue; out[DATA.items.statMap[s]]+=itemStat(it);
   const a=typeof affixSum==='function'?affixSum(it):null; if(a){ out.hp+=a.hp; out.atk+=a.atk; out.def+=a.def; out.spd+=a.spd; out.khangHe+=a.khangHe||0; out.satHe+=a.satHe||0;
-      out.boQuaKhang+=a.boQuaKhang||0; out.stChuan+=a.stChuan||0; out.boQuaNe+=a.boQuaNe||0; } }
+      out.boQuaKhang+=a.boQuaKhang||0; out.stChuan+=a.stChuan||0; out.boQuaNe+=a.boQuaNe||0;
+      out.evasion+=a.evasion||0; out.accuracy+=a.accuracy||0; } }
   return out; }
 function equipLine(id){ const e=(P.equip||{})[id]||{};
   return 'Trang bị: '+DATA.items.slots.map(s=>{ const uid=e[s]; const it=uid&&P.inventory.find(i=>i.uid===uid);
