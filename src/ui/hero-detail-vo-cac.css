@@ -218,3 +218,6 @@
 #hvHeroDetailRoot[data-hero-id="lang_chan"] .hshe{background:linear-gradient(#143e48,#0b2434)!important;color:#e1faff!important;font-size:calc(24 * var(--vc-u))!important;display:flex;align-items:center;justify-content:center;border:1px solid #c6a873!important;border-radius:calc(12 * var(--vc-u))!important}
 #hvHeroDetailRoot[data-hero-id="lang_chan"] .vc-role{background:linear-gradient(#473221,#241710)!important;color:#fff0c7!important;font-size:calc(22 * var(--vc-u))!important;display:flex;align-items:center;justify-content:center;border:1px solid #b18c58!important;border-radius:calc(12 * var(--vc-u))!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #hvHeroDetailRoot[data-hero-id="lang_chan"] #authoredDetailIdle{top:calc(8.1% + 0.7 * var(--vc-u))!important}
+
+/* Do not reuse Bạch Diện's three skill paintings for Lăng Chân. */
+#hvHeroDetailRoot[data-hero-id="lang_chan"] .hv-scene-skill-seal.vc-native-skill{display:flex!important;align-items:center;justify-content:center;font-size:calc(65 * var(--vc-u))!important;color:#d5faff!important;text-shadow:0 2px 6px #001f32;background:radial-gradient(circle,#205e78,#102735 70%,#080f19)!important;border:calc(4 * var(--vc-u)) solid #b69b69!important;border-radius:50%!important;box-sizing:border-box}
