@@ -17,22 +17,40 @@ test('last idle page loads its actual partial row',async()=>{const h=harness();a
 test('idle body and foot registration do not subtract centre twice',async()=>{const h=harness();await h.loader.acquire([h.s.hongThuongClip('idle-authored-0')]);h.s.drawHongThuongHero(h.ctx,h.actor,0);const d=h.draws.at(-1),iv=meta.idleVisual,k=iv.contentScale;assert.ok(Math.abs(d[5]+iv.content.bodyCx*k)<.001);assert.ok(Math.abs(d[6]+iv.content.footCellY*k)<.001);});
 test('idle source cells progress across pages',async()=>{const h=harness();await h.loader.acquire(['idle-authored-0','idle-authored-1'].map(h.s.hongThuongClip));for(const t of [0,meta.idleVisual.frameDurationsMs[0]+1,meta.idleVisual.frameDurationsMs.slice(0,8).reduce((a,b)=>a+b,0)+1])h.s.drawHongThuongHero(h.ctx,h.actor,t);assert.equal(h.draws[0][1],0);assert.equal(h.draws[1][1],meta.idleVisual.cellW);assert.notEqual(h.draws[1][0],h.draws[2][0]);});
 test('cold basic action does not skip turn due to atlas mismatch',async()=>{const h=harness();const a=await h.s.beginHongThuongAction(h.actor,'basic',{id:'e',x:600,y:500},1,{});assert.ok(a);h.s.finishHongThuongAction(a);assert.deepEqual(h.errors,[]);});
-test('ultimate travel, impacts, finale selection and return share a nonoverlapping timeline',async()=>{
- const h=harness(),victims=[{id:'e1',x:600,y:400,hp:100},{id:'e2',x:650,y:550,hp:100}],hits=[];
+// Owner 2026-10-26: ulti đổi sang 4 nhịp chọc xuống TOÀN BỘ địch (bay lên trên đội địch rồi chếch xuống),
+// bỏ Hồi Mã Thương riêng. Timeline phải vẫn liền mạch, không chồng lấn, và mỗi nhịp đánh mọi địch còn sống.
+// Owner 2026-10-26 (chốt): cô ấy KHÔNG nhảy sang từng người. Đứng yên MỘT chỗ trước vị trí số 2 của đội địch,
+// mỗi nhịp bay lên cao, chếch người xuống đánh (VFX trên đầu toàn bộ địch), hạ xuống đúng chỗ đó — lặp 4 lần.
+test('ultimate keeps one ground spot and leaps four times over the whole enemy team',async()=>{
+ const h=harness(),victims=[{id:'e1',x:600,y:400,hp:100,slot:0},{id:'e2',x:650,y:550,hp:100,slot:1}],hits=[];
  Object.assign(h.s,{getUnit:id=>victims.find(v=>v.id===id),splusPresentation:new Map(),updateTeamCounters(){},splusStateView(){}});
- const engine={act:()=>({ok:true,castId:'cast'}),targets:()=>victims,
- resolveHongThuongHit(a,c,id,i){hits.push({id,i,at:h.s.hongThuongElapsed(info)});if(id==='e1'&&i===2)victims[0].hp=0;},
- nextHongThuongFinale(){assert.equal(hits.length,6);return victims.find(v=>v.hp>0);},
- resolveHongThuongFinale(){assert.equal(hits.length,6);},finishHongThuongCast(){}};
+ const engine={act:()=>({ok:true,castId:'cast'}),targets:()=>victims.filter(v=>v.hp>0),
+ resolveHongThuongHit(a,c,id,i){hits.push({id,i,at:h.s.hongThuongElapsed(info)});},
+ finishHongThuongCast(){}};
  const info=await h.s.beginHongThuongAction(h.actor,'ultimate',victims[0],1,engine);
  assert.ok(info);
  await h.s.resolveHongThuongCast(engine,info,h.actor,'ultimate',victims[0],1);
  const segs=info.segments,clusters=segs.filter(s=>s.clip==='ult-cluster');
- for(let i=1;i<segs.length;i++)assert.equal(segs[i].start,segs[i-1].start+segs[i-1].dur);
- hits.forEach((hit,i)=>assert.equal(hit.at,clusters[Math.floor(i/3)].start+meta.ultimateTimeline.clusterHitsAt[i%3]));
- const finale=segs.find(s=>s.clip==='ult-finisher');assert.equal(finale.to.x,victims[1].x+70);
+ assert.equal(clusters.length,3,'ba đợt');
+ assert.equal(segs.filter(s=>s.clip==='ult-finisher').length,0,'không còn Hồi Mã Thương riêng');
+ for(let i=1;i<segs.length;i++)assert.equal(segs[i].start,segs[i-1].start+segs[i-1].dur,'timeline liền mạch');
+ // mỗi nhịp: TOÀN BỘ địch còn sống đều ăn đòn, chỉ số nhịp 0..3
+ assert.equal(hits.length,18,'3 đợt x 3 nhịp x 2 địch');
+ for(const wave of [0,1,2,3,4,5,6,7,8])assert.deepEqual(hits.filter(x=>x.i===wave).map(x=>x.id).sort(),['e1','e2']);
+ assert.ok(hits.every(x=>x.i>=0&&x.i<=8),'chỉ số nhịp nằm trong 0..8');
+ // đứng yên một chỗ: cả 4 cụm đánh cùng một toạ độ, cao hơn MỌI địch
+ const hoverY=clusters[0].to.y;
+ for(const c of clusters){
+  assert.equal(c.to.x,clusters[0].to.x,'cùng một điểm đứng');
+  assert.equal(c.to.y,hoverY,'cùng một độ cao');
+ }
+ assert.ok(hoverY<Math.min(...victims.map(v=>v.y))-40,'bay lên cao hơn đội địch (không quá cao)');
+ assert.ok(hoverY>Math.min(...victims.map(v=>v.y))-260,'không bay cao quá mức owner muốn');
+ // giữa các cụm phải hạ xuống đúng điểm đứng dưới đất (không nhảy sang người khác)
+ const groundX=segs.find(x=>x.clip==='run'&&x.to.y>Math.min(...victims.map(v=>v.y))).to.x;
+ for(const c of clusters)assert.equal(c.to.x,groundX,'bay lên ngay trên điểm đứng của mình');
  const ret=segs.at(-1),mid=h.s.hongThuongBodyPos(h.actor,ret.start+ret.dur/2,'ultimate');
- assert.equal(mid.x,(ret.from.x+info.home.x)/2);
+ assert.equal(Math.round(mid.x),Math.round((ret.from.x+info.home.x)/2));
  assert.equal(info.actionTotalMs,ret.start+ret.dur);
  h.s.finishHongThuongAction(info);assert.deepEqual(h.errors,[]);
 });
