@@ -228,3 +228,27 @@
 #hvHeroDetailRoot[data-hero-id="lang_chan"] #authoredDetailIdle{
   filter:brightness(1.065) contrast(1.11) saturate(1.20) drop-shadow(0 4px 3px #271b1640)!important;
 }
+
+/* Lang Chan parity: anchor the entire animated canvas lower so its magic-circle
+   foot line meets the wooden dais, rather than moving only one static frame. */
+#hvHeroDetailRoot[data-hero-id="lang_chan"] #authoredDetailIdle{
+  top:calc(8.1% + 5.2%)!important;
+}
+/* Retain the reference-frame silhouette, but render the live water label above it. */
+#hvHeroDetailRoot[data-hero-id="lang_chan"] .hshe{
+  background:url('assets/ui/hero-detail/reference-v3/element.png') center/100% 100% no-repeat!important;
+  border:0!important;border-radius:0!important;box-shadow:none!important;
+  padding:0 calc(10 * var(--vc-u))!important;box-sizing:border-box;
+  color:#e4faff!important;font:700 calc(23 * var(--vc-u))/1 'Times New Roman',serif!important;
+  text-shadow:0 1px 3px #061b25,0 0 3px #061b25!important;
+}
+/* Restore the reference role plaque, keep the live job text legible and contained. */
+#hvHeroDetailRoot[data-hero-id="lang_chan"] .vc-role{
+  background:url('assets/ui/hero-detail/reference-v3/role.png') center/100% 100% no-repeat!important;
+  border:0!important;border-radius:0!important;box-shadow:none!important;
+  padding:0 calc(10 * var(--vc-u))!important;box-sizing:border-box;
+  font:700 calc(19 * var(--vc-u))/1 'Times New Roman',serif!important;
+  color:#fff1c9!important;text-shadow:0 1px 2px #281406!important;
+  white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;
+  min-width:0!important;
+}
