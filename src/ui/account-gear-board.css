@@ -518,3 +518,59 @@
 .hv-gear-slot[class*="rar-"] img,.hv-smelt-cell[class*="rar-"] img{position:relative;z-index:1}
 .hv-gear-slot[class*="rar-"] .lvl,.hv-gear-slot[class*="rar-"] .roman,
 .hv-smelt-cell[class*="rar-"] .lvl,.hv-smelt-cell[class*="rar-"] em{z-index:3;text-shadow:0 0 3px #000}
+
+/* Owner 2026-10-27: ô đồ + giao diện nhân vật theo chuẩn Kiếm Thế trong clip IMG_8105.
+   Khung ô = kim loại đồng lõm vào (vát sáng trên-trái, tối dưới-phải, nền hốc tối),
+   đồ cường hoá cao tỏa hào quang TRÀN RA NGOÀI khung + vệt lấp lánh quét qua — đúng clip. */
+.hv-gear-slot{
+  border:2px solid #4a4030;border-radius:3px;
+  background:linear-gradient(180deg,#191714,#23201a 55%,#16140f);
+  box-shadow:
+    inset 1px 1px 0 rgba(212,190,140,.30),
+    inset -1px -1px 0 rgba(0,0,0,.85),
+    inset 0 0 7px rgba(0,0,0,.75),
+    0 0 0 1px #0d0b09,
+    0 2px 3px rgba(0,0,0,.5);
+}
+.hv-gear-slot.is-empty{background:linear-gradient(180deg,#141210,#1c1915)}
+.hv-gear-slot.is-empty:after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 55%,rgba(255,240,200,.05),transparent 75%);pointer-events:none}
+
+/* Hào quang tràn ra ngoài khung 3-4px + lòng trong rực */
+.hv-gear-slot.hv-glow-purple{
+  border:2px solid #c48ae6;
+  box-shadow:0 0 12px 4px rgba(156,84,255,.60),0 0 4px 1px rgba(200,140,255,.9),inset 0 0 6px rgba(214,150,255,.95),inset 1px 1px 0 rgba(212,190,140,.30),0 0 0 1px #0d0b09;
+}
+.hv-gear-slot.hv-glow-gold{
+  border:2px solid #ffd242;
+  box-shadow:0 0 13px 4px rgba(255,150,20,.65),0 0 4px 1px rgba(255,220,110,.95),inset 0 0 6px rgba(255,250,180,1),inset 1px 1px 0 rgba(212,190,140,.30),0 0 0 1px #0d0b09;
+}
+.hv-gear-slot.hv-glow-red{
+  border:2px solid #ff5422;
+  box-shadow:0 0 14px 5px rgba(255,90,20,.70),0 0 4px 1px rgba(255,170,90,.95),inset 0 0 6px rgba(255,180,90,1),inset 1px 1px 0 rgba(212,190,140,.30),0 0 0 1px #0d0b09;
+}
+
+/* Vệt lấp lánh quét chéo (shimmer) lặp tuần hoàn trên ô đã cường hoá */
+@keyframes hvSlotSweep{0%{transform:translateX(-130%) rotate(10deg)}55%,100%{transform:translateX(130%) rotate(10deg)}}
+.hv-gear-slot[class*="hv-glow-"]::after{
+  content:"";position:absolute;inset:-12%;z-index:2;pointer-events:none;mix-blend-mode:screen;
+  background:linear-gradient(115deg,transparent 40%,rgba(255,255,225,.55) 50%,transparent 60%);
+  animation:hvSlotSweep 3.2s linear infinite;
+}
+.hv-gear-slot.hv-glow-purple,.hv-gear-slot.hv-glow-gold,.hv-gear-slot.hv-glow-red{animation:hvGlowBreath 2.6s ease-in-out infinite alternate}
+@keyframes hvGlowBreath{from{filter:brightness(1)}to{filter:brightness(1.2)}}
+
+/* Canvas lửa cường hoá + nút + chữ số: chuẩn đồng cổ */
+.hv-gear-slot.hv-fx-host>canvas.hv-fx{border-radius:3px}
+.hv-gear-slot .plus{background:linear-gradient(180deg,#7a6136,#3d2f18);color:#f3d48a;border:1px solid #8a744c;box-shadow:inset 0 1px 0 rgba(255,235,190,.35),0 1px 2px rgba(0,0,0,.5)}
+.hv-gear-slot .lvl{top:2px;right:2px;font-size:11px;color:#ffe9a8;text-shadow:0 1px 0 #000,0 0 4px rgba(0,0,0,.9);background:linear-gradient(180deg,rgba(24,18,10,.85),rgba(24,18,10,.55));border-radius:6px;padding:0 4px;border:1px solid rgba(178,144,74,.7)}
+.hv-gear-slot[class*="hv-glow-"] .lvl{color:#fff3b8;font-size:12px}
+
+/* Giao diện nhân vật: backlight sau lưng + đế sáng dưới chân (lớp stage, dưới panel) */
+.hv-gear-hero{filter:drop-shadow(0 14px 20px rgba(0,0,0,.5)) drop-shadow(0 0 26px rgba(255,190,90,.30))}
+.hv-gear-stage:after{
+  content:"";position:absolute;inset:0;z-index:0;
+  background:
+    radial-gradient(ellipse 38% 28% at 50% 42%,rgba(255,174,74,.34),rgba(255,140,50,.13) 60%,transparent 82%),
+    radial-gradient(ellipse 30% 7% at 50% 84%,rgba(255,204,116,.34),rgba(255,146,54,.12) 60%,transparent 82%),
+    linear-gradient(180deg,rgba(12,8,6,.28) 0%,transparent 26%,transparent 46%,rgba(16,10,6,.55) 72%,rgba(16,10,6,.2) 100%);
+}
