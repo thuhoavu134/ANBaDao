@@ -549,35 +549,34 @@
   box-shadow:0 0 14px 5px rgba(255,90,20,.70),0 0 4px 1px rgba(255,170,90,.95),inset 0 0 6px rgba(255,180,90,1),inset 1px 1px 0 rgba(212,190,140,.30),0 0 0 1px #0d0b09;
 }
 
-/* Owner 2026-10-28 (soi lại mẫu IMG_8105 từng khung 30fps): MỘT nguồn sáng chạy vòng quanh
-   khung ô; ánh của nó loang trắng vào MẶT KÍNH phía nó đang đứng, cắt gọn trong ô.
-   Không có vệt quét chéo riêng. Đốm + vùng loang dùng chung một góc nên luôn đi cùng nhau. */
+/* Owner 2026-10-28 00:50 (mô tả chốt): MỘT DẢI SÁNG xoay quanh viền ô; đi qua góc nào thì
+   ngoài viền còn quét sáng cả GÓC TAM GIÁC đó. Bên trong là vùng TRÒN chứa đồ, không bị quét.
+   ::before = dải sáng trên viền · ::after = cùng dải đó nhưng phủ cả mặt ô rồi khoét tròn giữa
+   (mask radial) → chỉ 4 góc ngoài vòng tròn sáng lên khi dải đi qua. Mọi ô cùng nhịp. */
 @property --hv-spark-a{syntax:'<angle>';inherits:false;initial-value:0deg}
 @keyframes hvSparkRun{to{--hv-spark-a:360deg}}
-.hv-gear-slot[class*="hv-glow-"]{--hv-spark:#ffffff;--hv-spark-halo:rgba(255,246,200,.9);--hv-spark-wash:rgba(255,252,228,.78)}
-.hv-gear-slot.hv-glow-purple{--hv-spark-halo:rgba(236,200,255,.95);--hv-spark-wash:rgba(246,228,255,.72)}
-.hv-gear-slot.hv-glow-gold{--hv-spark-halo:rgba(255,236,150,.95);--hv-spark-wash:rgba(255,250,214,.80)}
-.hv-gear-slot.hv-glow-red{--hv-spark-halo:rgba(255,196,140,.95);--hv-spark-wash:rgba(255,236,214,.76)}
-/* đốm sáng: nằm ĐÚNG trên viền 2px của ô (+1px mép kính), cung sáng ngắn chạy vòng */
+.hv-gear-slot[class*="hv-glow-"]{--hv-band:rgba(255,244,200,.95)}
+.hv-gear-slot.hv-glow-purple{--hv-band:rgba(240,206,255,.95)}
+.hv-gear-slot.hv-glow-gold{--hv-band:rgba(255,236,150,.97)}
+.hv-gear-slot.hv-glow-red{--hv-band:rgba(255,206,160,.95)}
+/* dải sáng trên viền */
 .hv-gear-slot[class*="hv-glow-"]::before{
   content:"";position:absolute;inset:-2px;z-index:4;pointer-events:none;border-radius:3px;padding:3px;
   background:conic-gradient(from var(--hv-spark-a),
-    transparent 0deg 300deg,var(--hv-spark-halo) 330deg,var(--hv-spark) 346deg,var(--hv-spark) 357deg,transparent 360deg);
+    transparent 0deg 286deg,var(--hv-band) 316deg,#fff 334deg,#fff 342deg,var(--hv-band) 352deg,transparent 360deg);
   -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
   -webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);
-  animation:hvSparkRun 1.5s linear infinite;
+  animation:hvSparkRun 1.6s linear infinite;
 }
-/* ánh loang trên mặt kính: quạt sáng từ tâm hướng về đốm, đậm ở mép, nhạt dần vào giữa; inset:0 = chỉ trong lòng ô */
+/* góc tam giác: cùng dải sáng phủ mặt ô, khoét bỏ vòng tròn giữa (vùng chứa đồ) */
 .hv-gear-slot[class*="hv-glow-"]::after{
-  content:"";position:absolute;inset:0;z-index:2;pointer-events:none;border-radius:inherit;mix-blend-mode:screen;
+  content:"";position:absolute;inset:0;z-index:3;pointer-events:none;border-radius:inherit;mix-blend-mode:screen;
   background:conic-gradient(from var(--hv-spark-a),
-    transparent 0deg 262deg,var(--hv-spark-wash) 322deg,rgba(255,255,255,.96) 346deg,var(--hv-spark-wash) 354deg,transparent 360deg);
-  -webkit-mask:radial-gradient(closest-side,rgba(0,0,0,.35),rgba(0,0,0,.8) 50%,#000 100%);
-  mask:radial-gradient(closest-side,rgba(0,0,0,.35),rgba(0,0,0,.8) 50%,#000 100%);
-  animation:hvSparkRun 1.5s linear infinite;
+    transparent 0deg 286deg,var(--hv-band) 316deg,#fff 334deg,#fff 342deg,var(--hv-band) 352deg,transparent 360deg);
+  -webkit-mask:radial-gradient(circle closest-side,transparent 0 88%,rgba(0,0,0,.3) 97%,rgba(0,0,0,.7) 108%,#000 126%);
+  mask:radial-gradient(circle closest-side,transparent 0 88%,rgba(0,0,0,.3) 97%,rgba(0,0,0,.7) 108%,#000 126%);
+  animation:hvSparkRun 1.6s linear infinite;
 }
-.hv-gear-slot.hv-glow-gold::before,.hv-gear-slot.hv-glow-gold::after{animation-delay:-.5s}
-.hv-gear-slot.hv-glow-red::before,.hv-gear-slot.hv-glow-red::after{animation-delay:-1s}
 @media (prefers-reduced-motion:reduce){.hv-gear-slot[class*="hv-glow-"]::before,.hv-gear-slot[class*="hv-glow-"]::after{animation:none}}
 .hv-gear-slot.hv-glow-purple,.hv-gear-slot.hv-glow-gold,.hv-gear-slot.hv-glow-red{animation:hvGlowBreath 2.6s ease-in-out infinite alternate}
 @keyframes hvGlowBreath{from{filter:brightness(1)}to{filter:brightness(1.2)}}
