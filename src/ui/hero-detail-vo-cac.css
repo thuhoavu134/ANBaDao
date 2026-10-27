@@ -221,3 +221,10 @@
 
 /* Do not reuse Bạch Diện's three skill paintings for Lăng Chân. */
 #hvHeroDetailRoot[data-hero-id="lang_chan"] .hv-scene-skill-seal.vc-native-skill{display:flex!important;align-items:center;justify-content:center;font-size:calc(65 * var(--vc-u))!important;color:#d5faff!important;text-shadow:0 2px 6px #001f32;background:radial-gradient(circle,#205e78,#102735 70%,#080f19)!important;border:calc(4 * var(--vc-u)) solid #b69b69!important;border-radius:50%!important;box-sizing:border-box}
+
+/* Lang Chan: restore color separation on the large profile-only idle canvas.
+   Keep the authored 30-frame atlas, DPR rendering, transparency and anchors intact.
+   This is tonal tuning, not a replacement for higher-resolution source pixels. */
+#hvHeroDetailRoot[data-hero-id="lang_chan"] #authoredDetailIdle{
+  filter:brightness(1.065) contrast(1.11) saturate(1.20) drop-shadow(0 4px 3px #271b1640)!important;
+}
