@@ -126,7 +126,7 @@
   position:relative;aspect-ratio:1;min-height:44px;padding:0;border:1px solid #b0894c;border-radius:12px;
   background:linear-gradient(180deg,#3a2a1c,#24180f);color:#f3e0b4;
 }
-.hv-gear-slot.is-on{box-shadow:0 0 0 2px #f0c66a,0 0 12px rgba(240,180,70,.35)}
+.hv-gear-slot.is-on{box-shadow:inset 0 0 0 2px #f0c66a}
 .hv-gear-slot.rar-ssr{border-color:#f0c66a}
 .hv-gear-slot.rar-ss{border-color:#c48ae6}
 .hv-gear-slot.rar-s{border-color:#6aa4e6}
@@ -535,18 +535,19 @@
 .hv-gear-slot.is-empty{background:linear-gradient(180deg,#141210,#1c1915)}
 .hv-gear-slot.is-empty:after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 55%,rgba(255,240,200,.05),transparent 75%);pointer-events:none}
 
-/* Hào quang tràn ra ngoài khung 3-4px + lòng trong rực */
+/* Owner 2026-10-28 01:08: mọi ánh sáng DỪNG Ở VIỀN ô — không còn hào quang tràn ra ngoài.
+   Màu bậc chỉ nằm trên viền 2px + ánh trong lòng ô. */
 .hv-gear-slot.hv-glow-purple{
   border:2px solid #c48ae6;
-  box-shadow:0 0 12px 4px rgba(156,84,255,.60),0 0 4px 1px rgba(200,140,255,.9),inset 0 0 6px rgba(214,150,255,.95),inset 1px 1px 0 rgba(212,190,140,.30),0 0 0 1px #0d0b09;
+  box-shadow:inset 0 0 6px rgba(214,150,255,.95),inset 1px 1px 0 rgba(212,190,140,.30),0 0 0 1px #0d0b09;
 }
 .hv-gear-slot.hv-glow-gold{
   border:2px solid #ffd242;
-  box-shadow:0 0 13px 4px rgba(255,150,20,.65),0 0 4px 1px rgba(255,220,110,.95),inset 0 0 6px rgba(255,250,180,1),inset 1px 1px 0 rgba(212,190,140,.30),0 0 0 1px #0d0b09;
+  box-shadow:inset 0 0 6px rgba(255,250,180,1),inset 1px 1px 0 rgba(212,190,140,.30),0 0 0 1px #0d0b09;
 }
 .hv-gear-slot.hv-glow-red{
   border:2px solid #ff5422;
-  box-shadow:0 0 14px 5px rgba(255,90,20,.70),0 0 4px 1px rgba(255,170,90,.95),inset 0 0 6px rgba(255,180,90,1),inset 1px 1px 0 rgba(212,190,140,.30),0 0 0 1px #0d0b09;
+  box-shadow:inset 0 0 6px rgba(255,180,90,1),inset 1px 1px 0 rgba(212,190,140,.30),0 0 0 1px #0d0b09;
 }
 
 /* Owner 2026-10-28 00:50 (mô tả chốt): MỘT DẢI SÁNG xoay quanh viền ô; đi qua góc nào thì
@@ -596,3 +597,26 @@
     radial-gradient(ellipse 30% 7% at 50% 84%,rgba(255,204,116,.34),rgba(255,146,54,.12) 60%,transparent 82%),
     linear-gradient(180deg,rgba(12,8,6,.28) 0%,transparent 26%,transparent 46%,rgba(16,10,6,.55) 72%,rgba(16,10,6,.2) 100%);
 }
+
+/* Owner 2026-10-28 01:08: bỏ số "+N" trên ô (che mất đồ) — +N chỉ hiện trong popup thông tin đồ */
+.hv-gear-slot .lvl{display:none!important}
+/* ô đang chọn: vòng chọn vẽ BÊN TRONG viền, không loé ra ngoài */
+.hv-gear-slot.is-on,.hv-gear-slot[class*="rar-"]:not(.is-empty):not([class*="hv-glow-"]).is-on{box-shadow:inset 0 0 0 2px #f0c66a,inset 0 0 8px rgba(240,180,70,.45)}
+.hv-gear-slot[class*="hv-glow-"].is-on{box-shadow:inset 0 0 0 2px #fff3c0,inset 0 0 8px rgba(255,240,190,.9)}
+.hv-gear-info .hv-gear-sheet{max-height:86%}
+.hv-gear-info-head{display:grid;grid-template-columns:72px 1fr;gap:12px;align-items:center;margin-bottom:10px}
+.hv-gear-info-art{width:72px;height:72px;border-radius:4px;background:#1d1914;display:grid;place-items:center;border:2px solid #b0894c}
+.hv-gear-info-art img{width:64px;height:64px;object-fit:contain}
+.hv-gear-info-art.rar-ssr{border-color:#f0c66a}.hv-gear-info-art.rar-ss{border-color:#c48ae6}
+.hv-gear-info-art.rar-s{border-color:#6aa4e6}.hv-gear-info-art.rar-a{border-color:#6cbf6a}
+.hv-gear-info .hv-gear-info-name{margin:0;font-size:16px;font-weight:900;color:#3d2a16;text-align:left}
+.hv-gear-info .hv-gear-info-sub{margin:2px 0 0;font-size:12px;color:#6a5340;text-align:left}
+.hv-gear-info-lvl{display:inline-block;margin-top:4px;padding:1px 8px;border-radius:10px;background:#3a2c22;color:#ffe08a;font-weight:900;font-size:13px}
+.hv-gear-info-stats{margin:8px 0;padding:8px 10px;border-radius:10px;background:#fff8ec;font-size:13px;line-height:1.6}
+.hv-gear-info-stats b{float:right}
+.hv-gear-info-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.hv-gear-info-actions button{min-height:44px;border:0;border-radius:22px;font-weight:900;background:linear-gradient(180deg,#f0c56a,#c4892c);color:#4a2c0d}
+.hv-gear-info-actions button.ghost{background:#e9dcc6;color:#3d2a16}
+#hvGearRoot .hv-gear-info [data-gear-info-close]{width:100%;margin-top:8px;min-height:44px;border:0;border-radius:22px;background:#3a2c22;color:#f3e2b8;font-weight:900}
+.hv-gear-info-affix{margin:6px 0;padding:8px;border-radius:10px;background:#2a2018}
+.hv-gear-info-affix:empty{display:none}
