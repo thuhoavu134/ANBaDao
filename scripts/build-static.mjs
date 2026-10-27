@@ -356,3 +356,6 @@ installDinhLoiMobileAtlases(root);
 const { installHeroRarityStars } = await import('./hero-rarity-stars-v1.mjs');
 installHeroRarityStars(root);
 
+// Owner-requested clean tower scene preview, after legacy art owners.
+const { installMainCityArt } = await import('./hub-main-city-art-v1.mjs');
+installMainCityArt(root);
