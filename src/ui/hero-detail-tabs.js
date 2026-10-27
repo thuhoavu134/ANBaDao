@@ -123,7 +123,7 @@
     const children = Array.from(body.children), stage = body.querySelector('.hstage');
     const oldTabs = body.querySelector('.hero-art-tabs');
     const skills = children.filter(node => node.matches('.skillbox'));
-    if (id === 'bach_dien') {
+    if (id === 'bach_dien' || id === 'lang_chan') {
       // Player-facing wording; retain levels, costs, limits and counterplay.
       for (const skill of skills) {
         const heading = skill.querySelector('.sn');
@@ -183,7 +183,7 @@
       button.setAttribute('aria-controls', 'hero-panel-skills');
       button.append(icon, label);
       button.addEventListener('click', () => {
-        if (id === 'bach_dien' && revealBachDetails) revealBachDetails('skills', skill, button);
+        if ((id === 'bach_dien' || id === 'lang_chan') && revealBachDetails) revealBachDetails('skills', skill, button);
         else activate('skills', true);
         skill.scrollIntoView({ block: 'nearest' });
       });
@@ -203,7 +203,7 @@
         stage.append(arrow);
       }
     }
-    if (id === 'bach_dien') {
+    if (id === 'bach_dien' || id === 'lang_chan') {
       // Compact approved profile. Move existing live command nodes into Chi tiết;
       // the main Upgrade command delegates to the original button, never mutations.
       const originalButtons = Array.from(upgrades.querySelectorAll('button'));
