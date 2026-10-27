@@ -270,7 +270,7 @@
    đo bằng pixel alpha thật của canvas. Áp cho mọi canvas/ảnh nhân vật (mỗi tướng một id khác). */
 #hvHeroDetailRoot[data-vc-layout] .hstage > canvas,
 #hvHeroDetailRoot[data-vc-layout] .hstage > .hsava{
-  translate:0 calc(var(--vc-idle-shift-u, 0) * var(--vc-u))}
+  translate:calc(var(--vc-idle-shift-x-u, 0) * var(--vc-u)) calc(var(--vc-idle-shift-u, 0) * var(--vc-u))}
 #hvHeroDetailRoot[data-vc-layout] [data-hd-title],
 #hvHeroDetailRoot[data-vc-layout] .vc-role{white-space:nowrap!important}
 
