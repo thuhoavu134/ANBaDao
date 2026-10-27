@@ -15,7 +15,7 @@
     dinh_loi: { idleH: 43.27, idleShiftU: 73, job: 'Hộ vệ', skillIcons: { basic: 'assets/ui/skills/dinh-loi-basic.webp', ultimate: 'assets/ui/skills/dinh-loi-ultimate.webp', passive: 'assets/ui/skills/dinh-loi-passive.webp' } },
     hong_thuong: { idleH: 62.02, idleShiftU: -203, job: 'Đấu sĩ', skillIcons: { basic: 'assets/ui/skills/hong-thuong-basic.webp', ultimate: 'assets/ui/skills/hong-thuong-ultimate.webp', passive: 'assets/ui/skills/hong-thuong-passive.webp' } },
     khaos: { idleShiftU: 66, job: 'Pháp sư', skillIcons: { basic: 'assets/ui/skills/khaos-basic.webp', ultimate: 'assets/ui/skills/khaos-ultimate.webp', passive: 'assets/ui/skills/khaos-passive.webp' } },
-    ky_van: { idleShiftXU: -42, idleH: 48.7, idleShiftU: -140, job: 'Lôi Châm Sư', skillIcons: { basic: 'assets/ui/skills/ky-van-basic.webp', ultimate: 'assets/ui/skills/ky-van-ultimate.webp', passive: 'assets/ui/skills/ky-van-passive.webp' } },
+    ky_van: { idleShiftXU: 0, idleH: 48.7, idleShiftU: 0, job: 'Lôi Châm Sư', skillIcons: { basic: 'assets/ui/skills/ky-van-basic.webp', ultimate: 'assets/ui/skills/ky-van-ultimate.webp', passive: 'assets/ui/skills/ky-van-passive.webp' } },
     lang_chan: { job: 'Sát thủ', skillIcons: { basic: 'assets/ui/skills/lang-chan-basic.webp', ultimate: 'assets/ui/skills/lang-chan-ultimate.webp', passive: 'assets/ui/skills/lang-chan-passive.webp' } },
     lang_nguyet: { idleShiftU: 202, job: 'Xạ thủ', skillIcons: { basic: 'assets/ui/skills/lang-nguyet-basic.webp', ultimate: 'assets/ui/skills/lang-nguyet-ultimate.webp', passive: 'assets/ui/skills/lang-nguyet-passive.webp' } },
     lang_tieu: { idleShiftU: 47, job: 'Xạ thủ', skillIcons: { basic: 'assets/ui/skills/lang-tieu-basic.webp', ultimate: 'assets/ui/skills/lang-tieu-ultimate.webp', passive: 'assets/ui/skills/lang-tieu-passive.webp' } },
@@ -27,7 +27,7 @@
     thay_mo: { idleH: 43.27, idleShiftU: 72, job: 'Pháp sư', skillIcons: { basic: 'assets/ui/skills/thay-mo-basic.webp', ultimate: 'assets/ui/skills/thay-mo-ultimate.webp', passive: 'assets/ui/skills/thay-mo-passive.webp' } },
     tich_dao: { idleH: 57.98, idleShiftU: -154, job: 'Sát thủ', skillIcons: { basic: 'assets/ui/skills/tich-dao-basic.webp', ultimate: 'assets/ui/skills/tich-dao-ultimate.webp', passive: 'assets/ui/skills/tich-dao-passive.webp' } },
     tieu_linh: { idleShiftU: 65, job: 'Hỗ trợ', skillIcons: { basic: 'assets/ui/skills/tieu-linh-basic.webp', ultimate: 'assets/ui/skills/tieu-linh-ultimate.webp', passive: 'assets/ui/skills/tieu-linh-passive.webp' } },
-    tieu_phong: { idleShiftXU: -18, idleH: 48.7, idleShiftU: -141, job: 'Ngự Phong', skillIcons: { basic: 'assets/ui/skills/tieu-phong-basic.webp', ultimate: 'assets/ui/skills/tieu-phong-ultimate.webp', passive: 'assets/ui/skills/tieu-phong-passive.webp' } },
+    tieu_phong: { idleShiftXU: 0, idleH: 48.7, idleShiftU: 0, job: 'Ngự Phong', skillIcons: { basic: 'assets/ui/skills/tieu-phong-basic.webp', ultimate: 'assets/ui/skills/tieu-phong-ultimate.webp', passive: 'assets/ui/skills/tieu-phong-passive.webp' } },
     tinh_mac: { idleShiftU: 38, job: 'Đấu sĩ', skillIcons: { basic: 'assets/ui/skills/tinh-mac-basic.webp', ultimate: 'assets/ui/skills/tinh-mac-ultimate.webp', passive: 'assets/ui/skills/tinh-mac-passive.webp' } },
     van_phong: { idleShiftU: 131, job: 'Pháp sư', skillIcons: { basic: 'assets/ui/skills/van-phong-basic.webp', ultimate: 'assets/ui/skills/van-phong-ultimate.webp', passive: 'assets/ui/skills/van-phong-passive.webp' } }
   });
