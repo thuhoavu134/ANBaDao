@@ -260,7 +260,7 @@
 #hvHeroDetailRoot[data-vc-element="thuy"]{--vc-elem-medal:url('assets/ui/hero-detail/reference-v3/element-thuy.png');--vc-seal-a:#1d5d7a;--vc-seal-b:#081a26}
 #hvHeroDetailRoot[data-vc-element="tho"]{--vc-elem-medal:url('assets/ui/hero-detail/reference-v3/element-tho.png');--vc-seal-a:#7a4a16;--vc-seal-b:#261405}
 #hvHeroDetailRoot[data-vc-element="kim"]{--vc-elem-medal:url('assets/ui/hero-detail/reference-v3/element-kim.png');--vc-seal-a:#7a6526;--vc-seal-b:#241c08}
-#hvHeroDetailRoot[data-vc-element="moc"]{--vc-seal-a:#2c6b34;--vc-seal-b:#0a1f0d}
+#hvHeroDetailRoot[data-vc-element="moc"]{--vc-elem-medal:url('assets/ui/hero-detail/reference-v3/element-moc.png');--vc-seal-a:#2c6b34;--vc-seal-b:#0a1f0d}
 /* Ô kỹ năng chưa có icon: ấn chữ tạm theo màu hệ (sẽ thay bằng icon thật). */
 #hvHeroDetailRoot[data-vc-layout]:not([data-hero-id="bach_dien"]) .hv-scene-skill-seal.vc-letter-seal{
   background:radial-gradient(circle,var(--vc-seal-a,#205e78),var(--vc-seal-b,#080f19) 72%)!important;
