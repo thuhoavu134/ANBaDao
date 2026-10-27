@@ -344,8 +344,16 @@
         const slot = seal.closest('.hv-scene-skill')?.dataset.skillSlot;
         if (!['basic', 'ultimate', 'passive'].includes(slot)) continue;
         if (id === 'bach_dien') { seal.textContent = ''; seal.append(iconImg(slot)); seal.classList.add('has-art'); }
-        // Lang Chan keeps its own authored skill glyph; never show Bach Dien's skill art.
-        else { seal.textContent = seal.closest('.hv-scene-skill')?.dataset.skillIcon || (skills.find(skill => skill.dataset.skillSlot === slot)?.dataset.skillIcon || ''); seal.classList.add('vc-native-skill'); }
+        // Lang Chan owns distinct illustrated skill assets, never Bach Dien's icons.
+        else if (id === 'lang_chan') {
+          const img = document.createElement('img');
+          img.src = 'assets/ui/skills/lang-chan-' + slot + '.svg';
+          img.alt = '';
+          img.decoding = 'async';
+          seal.replaceChildren(img);
+          seal.classList.remove('vc-native-skill');
+          seal.classList.add('has-art');
+        } else { seal.textContent = seal.closest('.hv-scene-skill')?.dataset.skillIcon || (skills.find(skill => skill.dataset.skillSlot === slot)?.dataset.skillIcon || ''); seal.classList.add('vc-native-skill'); }
       }
       const feature = (label, symbol, action) => {
         const button = document.createElement('button');
