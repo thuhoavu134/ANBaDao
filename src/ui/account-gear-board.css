@@ -549,13 +549,34 @@
   box-shadow:0 0 14px 5px rgba(255,90,20,.70),0 0 4px 1px rgba(255,170,90,.95),inset 0 0 6px rgba(255,180,90,1),inset 1px 1px 0 rgba(212,190,140,.30),0 0 0 1px #0d0b09;
 }
 
-/* Vệt lấp lánh quét chéo (shimmer) lặp tuần hoàn trên ô đã cường hoá */
-@keyframes hvSlotSweep{0%{transform:translateX(-130%) rotate(10deg)}55%,100%{transform:translateX(130%) rotate(10deg)}}
-.hv-gear-slot[class*="hv-glow-"]::after{
-  content:"";position:absolute;inset:-12%;z-index:2;pointer-events:none;mix-blend-mode:screen;
-  background:linear-gradient(115deg,transparent 40%,rgba(255,255,225,.55) 50%,transparent 60%);
-  animation:hvSlotSweep 3.2s linear infinite;
+/* Owner 2026-10-27 23:54 (ảnh Kiếm Thế): 1 ĐỐM SÁNG chạy vòng quanh khung từng ô,
+   còn vệt sáng chỉ quét trên MẶT KÍNH của ô (trong lòng ô, không tràn ra ngoài). */
+@property --hv-spark-a{syntax:'<angle>';inherits:false;initial-value:0deg}
+@keyframes hvSparkRun{to{--hv-spark-a:360deg}}
+.hv-gear-slot[class*="hv-glow-"]{--hv-spark:#fff6d6;--hv-spark-halo:rgba(255,236,170,.85)}
+.hv-gear-slot.hv-glow-purple{--hv-spark:#fbefff;--hv-spark-halo:rgba(226,170,255,.9)}
+.hv-gear-slot.hv-glow-gold{--hv-spark:#fffbe6;--hv-spark-halo:rgba(255,222,120,.95)}
+.hv-gear-slot.hv-glow-red{--hv-spark:#fff1e0;--hv-spark-halo:rgba(255,160,90,.95)}
+/* đốm sáng: vành 4px trùng khung ô, chỉ hiện 1 cung ngắn đang chạy */
+.hv-gear-slot[class*="hv-glow-"]::before{
+  content:"";position:absolute;inset:-4px;z-index:4;pointer-events:none;border-radius:5px;padding:4px;
+  background:conic-gradient(from var(--hv-spark-a),
+    transparent 0deg 322deg,var(--hv-spark-halo) 342deg,var(--hv-spark) 352deg,#fff 356deg,#fff 358deg,transparent 360deg);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);
+  animation:hvSparkRun 2.4s linear infinite;
 }
+.hv-gear-slot.hv-glow-gold::before{animation-delay:-.8s}
+.hv-gear-slot.hv-glow-red::before{animation-delay:-1.6s}
+/* vệt sáng trên mặt kính: nằm gọn trong lòng ô (inset:0 = phần kính trong khung), quét bằng background-position */
+@keyframes hvGlassSweep{0%{background-position:160% 0}60%,100%{background-position:-60% 0}}
+.hv-gear-slot[class*="hv-glow-"]::after{
+  content:"";position:absolute;inset:0;z-index:2;pointer-events:none;border-radius:inherit;overflow:hidden;
+  mix-blend-mode:screen;background-repeat:no-repeat;background-size:250% 100%;
+  background-image:linear-gradient(115deg,transparent 42%,rgba(255,255,235,.10) 46%,rgba(255,255,235,.55) 50%,rgba(255,255,235,.10) 54%,transparent 58%);
+  animation:hvGlassSweep 3.4s ease-in-out infinite;
+}
+@media (prefers-reduced-motion:reduce){.hv-gear-slot[class*="hv-glow-"]::before,.hv-gear-slot[class*="hv-glow-"]::after{animation:none}}
 .hv-gear-slot.hv-glow-purple,.hv-gear-slot.hv-glow-gold,.hv-gear-slot.hv-glow-red{animation:hvGlowBreath 2.6s ease-in-out infinite alternate}
 @keyframes hvGlowBreath{from{filter:brightness(1)}to{filter:brightness(1.2)}}
 
