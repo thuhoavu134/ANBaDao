@@ -343,7 +343,9 @@
       for (const seal of shortcuts.querySelectorAll('.hv-scene-skill-seal')) {
         const slot = seal.closest('.hv-scene-skill')?.dataset.skillSlot;
         if (!['basic', 'ultimate', 'passive'].includes(slot)) continue;
-        seal.textContent = ''; seal.append(iconImg(slot)); seal.classList.add('has-art');
+        if (id === 'bach_dien') { seal.textContent = ''; seal.append(iconImg(slot)); seal.classList.add('has-art'); }
+        // Lang Chan keeps its own authored skill glyph; never show Bach Dien's skill art.
+        else { seal.textContent = seal.closest('.hv-scene-skill')?.dataset.skillIcon || (skills.find(skill => skill.dataset.skillSlot === slot)?.dataset.skillIcon || ''); seal.classList.add('vc-native-skill'); }
       }
       const feature = (label, symbol, action) => {
         const button = document.createElement('button');
