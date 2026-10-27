@@ -37,3 +37,20 @@ Yêu cầu owner: mọi tướng dùng **đúng mẫu Bạch Diện**, chỉ tha
 | `lang-chan-before.jpg` / `lang-chan-after.jpg` | trước / sau icon mới |
 | `ong-pho-static-art.jpg` | Ông Phở dùng ảnh tĩnh |
 | `element-badges.jpg` | khung Hệ sạch + 3 huy hiệu |
+
+
+## Sửa vị trí chân (owner báo nhiều tướng đặt chân không giống Bạch Diện)
+
+**Nguyên nhân**
+1. 9 tướng dùng canvas riêng (Bé An, Đình Lôi, Hồng Thương, Kỷ Vân, Linh Đồng, Lục Ảnh, Thầy Mo, Tịch Dao, Tiêu Phong)
+   có kích thước riêng không theo khung sân khấu → căn ở 390×844 đúng nhưng cỡ khác lệch 30–80px.
+2. Đo "pixel thấp nhất" bị lừa bởi bóng đổ / vòng phép vẽ đặc dưới chân (Lăng Chân, Tiểu Linh, Lăng Tiêu, Tịnh Mặc).
+3. Ông Phở (ảnh tĩnh) có lề trong suốt dưới chân → lơ lửng.
+
+**Sửa**
+- 9 canvas riêng ép vào cùng khung sân khấu (`position/top/height` theo % khung, `--vc-idle-h` = manifest `idleH`),
+  giữ nguyên độ to ở 390×844 → sau sửa lệch ±0,2px ở 390×844 / 320×700 / 414×715 / 1280×800.
+- Đọc đế giày bằng mắt (thước 2px), Bạch Diện chạm y≈452 @390×844; hạ Lăng Chân +15, Tiểu Linh +12, Lăng Tiêu +7,
+  Tịnh Mặc +5, Bé An +5, Ông Phở +3 (px @390×844, lưu theo đơn vị artboard nên đúng mọi cỡ màn).
+- Khaos giữ nguyên: thiết kế nằm bay trên mây mực, không có bàn chân chạm sàn.
+- `feet-390x844.jpg`, `feet-414x715.jpg`, `feet-1280x800.jpg`: vạch đỏ = đế giày Bạch Diện.

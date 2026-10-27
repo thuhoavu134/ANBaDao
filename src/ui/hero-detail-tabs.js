@@ -10,25 +10,25 @@
   // skillIcons null = chưa có icon -> ấn chữ tạm (chờ bộ icon AI owner duyệt).
   const VC_HERO_PROFILES = Object.freeze({
     bach_dien: { job: 'Sát thủ phép', skillIcons: 'reference-v3' },
-    be_an: { idleShiftU: 42, job: 'Pháp sư', skillIcons: null },
+    be_an: { idleH: 55.07, idleShiftU: -27, job: 'Pháp sư', skillIcons: null },
     co_nuong: { job: 'Pháp sư', skillIcons: null },
-    dinh_loi: { idleShiftU: 197, job: 'Hộ vệ', skillIcons: { basic: 'assets/ui/skills/dinh-loi-basic.webp', ultimate: 'assets/ui/skills/dinh-loi-ultimate.webp', passive: 'assets/ui/skills/dinh-loi-passive.webp' } },
-    hong_thuong: { idleShiftU: -102, job: 'Đấu sĩ', skillIcons: null },
+    dinh_loi: { idleH: 43.27, idleShiftU: 73, job: 'Hộ vệ', skillIcons: { basic: 'assets/ui/skills/dinh-loi-basic.webp', ultimate: 'assets/ui/skills/dinh-loi-ultimate.webp', passive: 'assets/ui/skills/dinh-loi-passive.webp' } },
+    hong_thuong: { idleH: 62.02, idleShiftU: -203, job: 'Đấu sĩ', skillIcons: null },
     khaos: { idleShiftU: 66, job: 'Pháp sư', skillIcons: null },
-    ky_van: { idleScale: 0.84, idleShiftU: -47, job: 'Lôi Châm Sư', skillIcons: null },
-    lang_chan: { job: 'Sát thủ', skillIcons: { basic: 'assets/ui/skills/lang-chan-basic.webp', ultimate: 'assets/ui/skills/lang-chan-ultimate.webp', passive: 'assets/ui/skills/lang-chan-passive.webp' } },
+    ky_van: { idleH: 57.98, idleShiftU: -140, idleScale: 0.84, job: 'Lôi Châm Sư', skillIcons: null },
+    lang_chan: { idleShiftU: 33, job: 'Sát thủ', skillIcons: { basic: 'assets/ui/skills/lang-chan-basic.webp', ultimate: 'assets/ui/skills/lang-chan-ultimate.webp', passive: 'assets/ui/skills/lang-chan-passive.webp' } },
     lang_nguyet: { idleShiftU: 202, job: 'Xạ thủ', skillIcons: null },
-    lang_tieu: { idleShiftU: 31, job: 'Xạ thủ', skillIcons: null },
+    lang_tieu: { idleShiftU: 47, job: 'Xạ thủ', skillIcons: null },
     lang_van: { idleShiftU: 51, job: 'Đấu sĩ', skillIcons: null },
-    linh_dong: { idleShiftU: 259, job: 'Pháp sư', skillIcons: null },
-    luc_anh: { idleShiftU: 321, job: 'Huyền thuật sư', skillIcons: { basic: 'assets/ui/skills/luc-anh-basic.webp', ultimate: 'assets/ui/skills/luc-anh-ultimate.webp', passive: 'assets/ui/skills/luc-anh-passive.webp' } },
+    linh_dong: { idleH: 38.94, idleShiftU: 150, job: 'Pháp sư', skillIcons: null },
+    luc_anh: { idleH: 37.5, idleShiftU: 213, job: 'Huyền thuật sư', skillIcons: { basic: 'assets/ui/skills/luc-anh-basic.webp', ultimate: 'assets/ui/skills/luc-anh-ultimate.webp', passive: 'assets/ui/skills/luc-anh-passive.webp' } },
     nguyet_diep: { idleShiftU: 49, job: 'Pháp sư', skillIcons: null },
     ong_hang_pho: { job: 'Đấu sĩ', skillIcons: { basic: 'assets/ui/skills/ong-pho-basic.webp', ultimate: 'assets/ui/skills/ong-pho-ultimate.webp', passive: 'assets/ui/skills/ong-pho-passive.webp' } },
-    thay_mo: { idleShiftU: 197, job: 'Pháp sư', skillIcons: { basic: 'assets/ui/skills/thay-mo-basic.webp', ultimate: 'assets/ui/skills/thay-mo-ultimate.webp', passive: 'assets/ui/skills/thay-mo-passive.webp' } },
-    tich_dao: { idleShiftU: -51, job: 'Sát thủ', skillIcons: null },
-    tieu_linh: { idleShiftU: 38, job: 'Hỗ trợ', skillIcons: null },
-    tieu_phong: { idleScale: 0.84, idleShiftU: -49, job: 'Ngự Phong', skillIcons: null },
-    tinh_mac: { idleShiftU: 27, job: 'Đấu sĩ', skillIcons: null },
+    thay_mo: { idleH: 43.27, idleShiftU: 72, job: 'Pháp sư', skillIcons: { basic: 'assets/ui/skills/thay-mo-basic.webp', ultimate: 'assets/ui/skills/thay-mo-ultimate.webp', passive: 'assets/ui/skills/thay-mo-passive.webp' } },
+    tich_dao: { idleH: 57.98, idleShiftU: -154, job: 'Sát thủ', skillIcons: null },
+    tieu_linh: { idleShiftU: 65, job: 'Hỗ trợ', skillIcons: null },
+    tieu_phong: { idleH: 57.98, idleShiftU: -141, idleScale: 0.84, job: 'Ngự Phong', skillIcons: null },
+    tinh_mac: { idleShiftU: 38, job: 'Đấu sĩ', skillIcons: null },
     van_phong: { idleShiftU: 131, job: 'Pháp sư', skillIcons: null }
   });
   // Co chữ cho vừa khung: giữ một dòng, giảm cỡ chữ tới tối đa 55% thay vì xuống dòng/cắt chữ.
@@ -174,7 +174,10 @@
         vcRoot.dataset.vcElement = vcElementKey(id);
         vcRoot.style.setProperty('--vc-idle-shift-u', String(VC_HERO_PROFILES[id].idleShiftU || 0));
         vcRoot.style.setProperty('--vc-idle-scale', String(VC_HERO_PROFILES[id].idleScale || 1));
-      } else { delete vcRoot.dataset.vcElement; vcRoot.style.removeProperty('--vc-idle-shift-u'); vcRoot.style.removeProperty('--vc-idle-scale'); }
+        // Canvas riêng của từng tướng: ép vào khung sân khấu chung (cao theo % khung) để không lệch khi đổi cỡ màn hình.
+        if (VC_HERO_PROFILES[id].idleH) vcRoot.style.setProperty('--vc-idle-h', VC_HERO_PROFILES[id].idleH + '%');
+        else vcRoot.style.removeProperty('--vc-idle-h');
+      } else { delete vcRoot.dataset.vcElement; vcRoot.style.removeProperty('--vc-idle-shift-u'); vcRoot.style.removeProperty('--vc-idle-scale'); vcRoot.style.removeProperty('--vc-idle-h'); }
     }
     const children = Array.from(body.children), stage = body.querySelector('.hstage');
     const oldTabs = body.querySelector('.hero-art-tabs');
