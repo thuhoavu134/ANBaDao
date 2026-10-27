@@ -31,6 +31,7 @@
     const stage = body.querySelector('.hstage');
     if (!stage) return;
     const id = stage.dataset.heroId;
+    root.dataset.heroId = id || '';
     const existing = getComputedStyle(stage).getPropertyValue('--hero-detail-bg');
     if (existing && existing.includes('url(')) {
       stage.classList.add('hv-depth-bg');
@@ -44,13 +45,15 @@
 
   const syncOpen = name => {
     const open = name === 'heroDetail';
+    if (!open) root.querySelector('.vc-detail-sheet[open]')?.close?.();
     root.hidden = !open;
     root.classList.toggle('is-open', open);
     document.body.classList.toggle('hero-detail-hall-active', open);
     if (open) {
       const title = document.getElementById('hdName')?.textContent || 'Tướng';
       const chip = root.querySelector('[data-hd-title]');
-      if (chip) chip.textContent = title;
+      // Tướng dùng mẫu hồ sơ chung: chỉ hiện tên chính (bỏ danh hiệu sau ' — ').
+      if (chip) chip.textContent = root.hasAttribute?.('data-vc-layout') ? title.split(' — ')[0].trim() : title;
       paintShowcase();
     }
   };
@@ -73,3 +76,4 @@
   root.querySelector('[data-hd-close]').addEventListener('click', () => navTo('heroes'));
   syncOpen(typeof ST === 'object' ? ST.screen : '');
 })();
+

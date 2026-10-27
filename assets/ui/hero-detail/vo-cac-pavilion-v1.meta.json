@@ -1,0 +1,10 @@
+{
+  "asset": "vo-cac-pavilion-v1.webp",
+  "purpose": "Bach Dien detail stage background; live UI and character rendered separately",
+  "created": "2026-10-26",
+  "source": "OpenAI image generation, derived from owner-approved Vo cac UI concept",
+  "reference": "docs/qa/bach-dien-vo-cac-20261026/approved-concept.jpg",
+  "prompt": "Extract/reconstruct only the quiet wooden wuxia pavilion environment behind the character in the upper part of this approved game UI concept. Output landscape 4:3 clean background plate. Remove all character, masks, fans, people, text, stars, badges, buttons, panels, arrows, borders and UI. Wooden pavilion framing left and right, soft teal sky and distant courtyard through open back, warm wooden floor with simple circular floor inset centered near lower quarter. Keep central area pale and uncluttered. Clean stylized hand-painted broad shapes, diffuse daylight, minimal detail, no grain, sparkles, speckles or elaborate gilding.",
+  "conversion": "Resize to 1200x900, WebP quality 90; no character or UI pixels included",
+  "runtime_review": "pending desktop/mobile browser and physical Safari"
+}

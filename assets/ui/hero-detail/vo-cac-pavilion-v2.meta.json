@@ -1,0 +1,10 @@
+{
+  "asset": "vo-cac-pavilion-v2.webp",
+  "purpose": "Portrait background for compact Bach Dien profile; original animated hero and live UI render separately",
+  "created": "2026-10-26",
+  "source": "OpenAI image generation derived from owner-approved compact concept",
+  "reference": "docs/qa/bach-dien-vo-cac-20261026/approved-compact-concept.jpg",
+  "prompt": "Extract a production game BACKGROUND ONLY from this approved UI concept, portrait 9:16. Preserve warm wood martial pavilion, pale teal sky, quiet distant roofs, pillars framing sides, soft lanterns, circular floor where hero stands at 55% down canvas. Remove ALL character, masks, fan, text, header, labels, stars, buttons, icons, numbers, power ribbons, UI and foreground leaves that overlap UI. Empty scene for live character and controls. Main round floor at center y55%, open pale sky behind center upper half, lower 40% is simple darker wooden floor for live interface readability. Broad smooth painted surfaces no grain no noise, minimal mountains. Match reference palette and framing closely, no new objects.",
+  "conversion": "Resize to fit 900x1600, WebP quality 90",
+  "review": "Local Chromium inspected; physical Safari and deployed preview not certified"
+}

@@ -1,0 +1,176 @@
+{
+  "method": "Full downloaded deployed game HTML with latest branch source modules/CSS substituted; isolated guest state; original atlas and icons served locally. Not a clean repository build or updated deployment certification.",
+  "checks": [
+    {
+      "viewport": {
+        "width": 320,
+        "height": 700
+      },
+      "dimensions": {
+        "overflow": false,
+        "scroll": 0,
+        "footerBottom": 692,
+        "height": 700,
+        "canvas": {
+          "x": 3.203125,
+          "y": 54.1875,
+          "width": 313.59375,
+          "height": 287.453125,
+          "top": 54.1875,
+          "right": 316.796875,
+          "bottom": 341.640625,
+          "left": 3.203125
+        }
+      },
+      "before": {
+        "lv": 1,
+        "gold": 100000
+      },
+      "afterOne": {
+        "lv": 2,
+        "gold": 99940
+      },
+      "afterFive": {
+        "lv": 7,
+        "gold": 98740
+      }
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 664
+      },
+      "dimensions": {
+        "overflow": false,
+        "scroll": 8,
+        "footerBottom": 663.703125,
+        "height": 664,
+        "canvas": {
+          "x": 39.265625,
+          "y": 50,
+          "width": 311.46875,
+          "height": 285.5,
+          "top": 50,
+          "right": 350.734375,
+          "bottom": 335.5,
+          "left": 39.265625
+        }
+      },
+      "before": {
+        "lv": 7,
+        "gold": 100000
+      },
+      "afterOne": {
+        "lv": 8,
+        "gold": 99580
+      },
+      "afterFive": {
+        "lv": 13,
+        "gold": 96580
+      }
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "dimensions": {
+        "overflow": false,
+        "scroll": 0,
+        "footerBottom": 836,
+        "height": 844,
+        "canvas": {
+          "x": 3.90625,
+          "y": 106.203125,
+          "width": 382.1875,
+          "height": 350.328125,
+          "top": 106.203125,
+          "right": 386.09375,
+          "bottom": 456.53125,
+          "left": 3.90625
+        }
+      },
+      "before": {
+        "lv": 13,
+        "gold": 100000
+      },
+      "afterOne": {
+        "lv": 14,
+        "gold": 99220
+      },
+      "afterFive": {
+        "lv": 19,
+        "gold": 94420
+      }
+    },
+    {
+      "viewport": {
+        "width": 414,
+        "height": 715
+      },
+      "dimensions": {
+        "overflow": false,
+        "scroll": 0,
+        "footerBottom": 707,
+        "height": 715,
+        "canvas": {
+          "x": 39.296875,
+          "y": 59.5,
+          "width": 335.390625,
+          "height": 307.4375,
+          "top": 59.5,
+          "right": 374.6875,
+          "bottom": 366.9375,
+          "left": 39.296875
+        }
+      },
+      "before": {
+        "lv": 19,
+        "gold": 100000
+      },
+      "afterOne": {
+        "lv": 20,
+        "gold": 98860
+      },
+      "afterFive": {
+        "lv": 25,
+        "gold": 92260
+      }
+    },
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "dimensions": {
+        "overflow": false,
+        "scroll": 0,
+        "footerBottom": 792,
+        "height": 800,
+        "canvas": {
+          "x": 452.359375,
+          "y": 81.96875,
+          "width": 375.265625,
+          "height": 343.984375,
+          "top": 81.96875,
+          "right": 827.625,
+          "bottom": 425.953125,
+          "left": 452.359375
+        }
+      },
+      "before": {
+        "lv": 25,
+        "gold": 100000
+      },
+      "afterOne": {
+        "lv": 26,
+        "gold": 98500
+      },
+      "afterFive": {
+        "lv": 30,
+        "gold": 91900
+      }
+    }
+  ],
+  "errors": []
+}

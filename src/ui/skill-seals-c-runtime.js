@@ -5,6 +5,11 @@
     const body = document.getElementById('hdBody');
     if (!body) return;
     const hid = String(id || '');
+    // Tướng đã dùng mẫu hồ sơ chung (PR #382) tự lo icon kỹ năng — không xoá, không gắn nền cũ.
+    if (globalThis.HV_VC_HERO_PROFILES && Object.prototype.hasOwnProperty.call(globalThis.HV_VC_HERO_PROFILES, hid)) {
+      if (HEROES.includes(body.getAttribute('data-hero-id') || '')) body.removeAttribute('data-hero-id');
+      return;
+    }
     if (HEROES.includes(hid)) {
       body.setAttribute('data-hero-id', hid);
       body.querySelectorAll('.hv-scene-skill-seal').forEach(el => { el.textContent = ''; });

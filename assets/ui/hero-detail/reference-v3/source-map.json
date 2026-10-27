@@ -1,0 +1,552 @@
+{
+  "source": "Owner supplied 21B2DB20-B566-4B59-8F05-B23982F745B9.jpeg",
+  "referenceSize": [
+    864,
+    1536
+  ],
+  "assets": {
+    "basic": {
+      "box": [
+        171,
+        930,
+        310,
+        1069
+      ],
+      "erase": null,
+      "mask": "ellipse"
+    },
+    "ultimate": {
+      "box": [
+        363,
+        930,
+        503,
+        1070
+      ],
+      "erase": null,
+      "mask": "ellipse"
+    },
+    "passive": {
+      "box": [
+        554,
+        930,
+        694,
+        1070
+      ],
+      "erase": null,
+      "mask": "ellipse"
+    },
+    "back": {
+      "box": [
+        31,
+        33,
+        98,
+        100
+      ],
+      "erase": null,
+      "mask": "ellipse"
+    },
+    "prev": {
+      "box": [
+        35,
+        455,
+        112,
+        533
+      ],
+      "erase": null,
+      "mask": "ellipse"
+    },
+    "next": {
+      "box": [
+        752,
+        455,
+        830,
+        533
+      ],
+      "erase": null,
+      "mask": "ellipse"
+    },
+    "coin": {
+      "box": [
+        244,
+        1215,
+        290,
+        1262
+      ],
+      "erase": null,
+      "mask": "ellipse"
+    },
+    "star-on": {
+      "box": [
+        220,
+        88,
+        249,
+        117
+      ],
+      "erase": null,
+      "mask": null
+    },
+    "star-off": {
+      "box": [
+        251,
+        88,
+        281,
+        117
+      ],
+      "erase": null,
+      "mask": null
+    },
+    "upgrade": {
+      "box": [
+        214,
+        1270,
+        652,
+        1358
+      ],
+      "erase": null,
+      "mask": [
+        [
+          214,
+          1315
+        ],
+        [
+          236,
+          1282
+        ],
+        [
+          253,
+          1272
+        ],
+        [
+          604,
+          1272
+        ],
+        [
+          626,
+          1281
+        ],
+        [
+          651,
+          1314
+        ],
+        [
+          632,
+          1344
+        ],
+        [
+          610,
+          1355
+        ],
+        [
+          252,
+          1355
+        ],
+        [
+          230,
+          1343
+        ]
+      ]
+    },
+    "power": {
+      "box": [
+        331,
+        853,
+        696,
+        916
+      ],
+      "erase": [
+        [
+          95,
+          10,
+          318,
+          49
+        ]
+      ],
+      "mask": [
+        [
+          332,
+          884
+        ],
+        [
+          350,
+          855
+        ],
+        [
+          676,
+          855
+        ],
+        [
+          694,
+          884
+        ],
+        [
+          676,
+          912
+        ],
+        [
+          350,
+          912
+        ]
+      ]
+    },
+    "role": {
+      "box": [
+        126,
+        853,
+        321,
+        912
+      ],
+      "erase": null,
+      "mask": [
+        [
+          127,
+          881
+        ],
+        [
+          147,
+          856
+        ],
+        [
+          165,
+          855
+        ],
+        [
+          180,
+          861
+        ],
+        [
+          307,
+          861
+        ],
+        [
+          320,
+          882
+        ],
+        [
+          305,
+          907
+        ],
+        [
+          178,
+          907
+        ],
+        [
+          156,
+          910
+        ],
+        [
+          138,
+          898
+        ]
+      ]
+    },
+    "element": {
+      "box": [
+        667,
+        32,
+        840,
+        102
+      ],
+      "erase": null,
+      "mask": [
+        [
+          669,
+          64
+        ],
+        [
+          684,
+          46
+        ],
+        [
+          699,
+          33
+        ],
+        [
+          711,
+          46
+        ],
+        [
+          823,
+          46
+        ],
+        [
+          838,
+          64
+        ],
+        [
+          825,
+          86
+        ],
+        [
+          716,
+          86
+        ],
+        [
+          700,
+          100
+        ],
+        [
+          679,
+          86
+        ]
+      ]
+    },
+    "level": {
+      "box": [
+        376,
+        1104,
+        489,
+        1215
+      ],
+      "erase": [
+        [
+          35,
+          23,
+          77,
+          84
+        ]
+      ],
+      "mask": "ellipse",
+      "cleanup": "2026-10-27: replace entire inner disk (center 56,55; opaque radius 40, feather to 43) with a clean dark brown radial fill. Preserve original gold rim/alpha; no baked text or digits. Runtime supplies Cấp and current/max level."
+    },
+    "title": {
+      "box": [
+        132,
+        27,
+        356,
+        84
+      ],
+      "erase": null,
+      "mask": null
+    },
+    "equipment": {
+      "box": [
+        168,
+        1370,
+        287,
+        1472
+      ],
+      "erase": null,
+      "mask": [
+        [
+          202,
+          1371
+        ],
+        [
+          234,
+          1370
+        ],
+        [
+          239,
+          1382
+        ],
+        [
+          265,
+          1387
+        ],
+        [
+          287,
+          1406
+        ],
+        [
+          278,
+          1424
+        ],
+        [
+          267,
+          1424
+        ],
+        [
+          275,
+          1455
+        ],
+        [
+          247,
+          1465
+        ],
+        [
+          215,
+          1471
+        ],
+        [
+          179,
+          1458
+        ],
+        [
+          182,
+          1429
+        ],
+        [
+          168,
+          1421
+        ],
+        [
+          180,
+          1397
+        ],
+        [
+          200,
+          1389
+        ]
+      ]
+    },
+    "star": {
+      "box": [
+        382,
+        1370,
+        486,
+        1474
+      ],
+      "erase": null,
+      "mask": [
+        [
+          427,
+          1371
+        ],
+        [
+          439,
+          1393
+        ],
+        [
+          474,
+          1393
+        ],
+        [
+          471,
+          1417
+        ],
+        [
+          484,
+          1446
+        ],
+        [
+          473,
+          1466
+        ],
+        [
+          414,
+          1473
+        ],
+        [
+          383,
+          1465
+        ],
+        [
+          393,
+          1428
+        ],
+        [
+          383,
+          1406
+        ],
+        [
+          412,
+          1399
+        ]
+      ]
+    },
+    "details": {
+      "box": [
+        578,
+        1380,
+        703,
+        1473
+      ],
+      "erase": null,
+      "mask": [
+        [
+          580,
+          1382
+        ],
+        [
+          595,
+          1382
+        ],
+        [
+          603,
+          1394
+        ],
+        [
+          666,
+          1384
+        ],
+        [
+          686,
+          1385
+        ],
+        [
+          690,
+          1424
+        ],
+        [
+          703,
+          1445
+        ],
+        [
+          695,
+          1464
+        ],
+        [
+          679,
+          1471
+        ],
+        [
+          617,
+          1464
+        ],
+        [
+          596,
+          1472
+        ],
+        [
+          589,
+          1459
+        ]
+      ]
+    },
+    "hp": {
+      "box": [
+        58,
+        1132,
+        102,
+        1178
+      ],
+      "erase": null,
+      "mask": null
+    },
+    "atk": {
+      "box": [
+        231,
+        1131,
+        274,
+        1176
+      ],
+      "erase": null,
+      "mask": null
+    },
+    "def": {
+      "box": [
+        527,
+        1130,
+        569,
+        1176
+      ],
+      "erase": null,
+      "mask": null
+    },
+    "spd": {
+      "box": [
+        684,
+        1130,
+        737,
+        1176
+      ],
+      "erase": null,
+      "mask": null
+    }
+  },
+  "background": "ImageGen removal of hero/UI from exact reference; reconstructed occluded scenery, not pixel-identical",
+  "staticText": "Name, role, element and upgrade raster labels copied with owner authorization; semantic text retained in DOM. Stats, stars, costs, level and power stay live.",
+  "backgroundPrompt": "Edit exact reference as clean background plate; preserve camera, colors, architecture, mountains, floor at y54% and foreground. Remove central hero and all UI, reconstruct only hidden scene. Same 9:16; no new objects or grain.",
+  "tool": "OpenAI imagegen for background removal; Pillow/OpenCV for owner-requested deterministic crops, masks and text clearing",
+  "limitations": "Original animated hero retained; generated clean background and dynamic font glyphs are not a pixel-identical reconstruction. Static title/role/element/upgrade/skill/footer labels are source raster crops with accessible DOM labels."
+}

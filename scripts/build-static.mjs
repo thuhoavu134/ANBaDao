@@ -352,6 +352,10 @@ installFarmAttackSpecs(root);
 const { installDinhLoiMobileAtlases } = await import('./dinh-loi-mobile-atlas-v1.mjs');
 installDinhLoiMobileAtlases(root);
 
+// SSR base-star policy runs after all registry/default/save owners have matched their anchors.
+const { installHeroRarityStars } = await import('./hero-rarity-stars-v1.mjs');
+installHeroRarityStars(root);
+
 // Owner-requested clean tower scene preview, after legacy art owners.
 const { installMainCityArt } = await import('./hub-main-city-art-v1.mjs');
 installMainCityArt(root);
