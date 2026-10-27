@@ -52,7 +52,8 @@
     if (open) {
       const title = document.getElementById('hdName')?.textContent || 'Tướng';
       const chip = root.querySelector('[data-hd-title]');
-      if (chip) chip.textContent = title;
+      // Tướng dùng mẫu hồ sơ chung: chỉ hiện tên chính (bỏ danh hiệu sau ' — ').
+      if (chip) chip.textContent = root.hasAttribute?.('data-vc-layout') ? title.split(' — ')[0].trim() : title;
       paintShowcase();
     }
   };

@@ -3,7 +3,8 @@ import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
 
 const read = path => readFileSync(new URL('../' + path, import.meta.url), 'utf8');
-const S = '#hvHeroDetailRoot\\[data-hero-id="bach_dien"\\]';
+// PR #382 (2026-10-27): layout Bạch Diện là MẪU CHUNG cho mọi tướng -> scope [data-vc-layout].
+const S = '#hvHeroDetailRoot\\[data-vc-layout\\]';
 
 test('owner-locked Bạch Diện layout: stage → stats → upgrade → three features', () => {
   const css = read('src/ui/hero-detail-vo-cac.css');

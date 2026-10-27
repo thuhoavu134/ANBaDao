@@ -3,6 +3,53 @@
 (() => {
   const tabs = [['attributes', 'Thuộc tính'], ['skills', 'Kỹ năng'],
     ['equipment', 'Trang bị'], ['breakthrough', 'Đột phá'], ['bonds', 'Duyên phận'], ['mastery', 'Tinh thông']];
+  // Owner 2026-10-27: mọi tướng dùng CHUNG mẫu hồ sơ Bạch Diện (PR #382). Mỗi tướng chỉ khai
+  // phần trình bày riêng: 3 icon kỹ năng. Tên, hệ, nghề, chỉ số luôn đọc từ dữ liệu thật.
+  // skillIcons: 'reference-v3' = bộ crop gốc của Bạch Diện; object = đường dẫn từng slot.
+  // job: nhãn nghề NGẮN cho khung Nghề (dữ liệu role gốc nhiều tướng là câu mô tả dài, tràn khung).
+  // skillIcons null = chưa có icon -> ấn chữ tạm (chờ bộ icon AI owner duyệt).
+  const VC_HERO_PROFILES = Object.freeze({
+    bach_dien: { job: 'Sát thủ phép', skillIcons: 'reference-v3' },
+    be_an: { idleShiftU: 42, job: 'Pháp sư', skillIcons: null },
+    co_nuong: { job: 'Pháp sư', skillIcons: null },
+    dinh_loi: { idleShiftU: 197, job: 'Hộ vệ', skillIcons: { basic: 'assets/ui/skills/dinh-loi-basic.webp', ultimate: 'assets/ui/skills/dinh-loi-ultimate.webp', passive: 'assets/ui/skills/dinh-loi-passive.webp' } },
+    hong_thuong: { idleShiftU: -102, job: 'Đấu sĩ', skillIcons: null },
+    khaos: { idleShiftU: 66, job: 'Pháp sư', skillIcons: null },
+    ky_van: { idleScale: 0.84, idleShiftU: -47, job: 'Lôi Châm Sư', skillIcons: null },
+    lang_chan: { job: 'Sát thủ', skillIcons: { basic: 'assets/ui/skills/lang-chan-basic.webp', ultimate: 'assets/ui/skills/lang-chan-ultimate.webp', passive: 'assets/ui/skills/lang-chan-passive.webp' } },
+    lang_nguyet: { idleShiftU: 202, job: 'Xạ thủ', skillIcons: null },
+    lang_tieu: { idleShiftU: 31, job: 'Xạ thủ', skillIcons: null },
+    lang_van: { idleShiftU: 51, job: 'Đấu sĩ', skillIcons: null },
+    linh_dong: { idleShiftU: 259, job: 'Pháp sư', skillIcons: null },
+    luc_anh: { idleShiftU: 321, job: 'Huyền thuật sư', skillIcons: { basic: 'assets/ui/skills/luc-anh-basic.webp', ultimate: 'assets/ui/skills/luc-anh-ultimate.webp', passive: 'assets/ui/skills/luc-anh-passive.webp' } },
+    nguyet_diep: { idleShiftU: 49, job: 'Pháp sư', skillIcons: null },
+    ong_hang_pho: { job: 'Đấu sĩ', skillIcons: { basic: 'assets/ui/skills/ong-pho-basic.webp', ultimate: 'assets/ui/skills/ong-pho-ultimate.webp', passive: 'assets/ui/skills/ong-pho-passive.webp' } },
+    thay_mo: { idleShiftU: 197, job: 'Pháp sư', skillIcons: { basic: 'assets/ui/skills/thay-mo-basic.webp', ultimate: 'assets/ui/skills/thay-mo-ultimate.webp', passive: 'assets/ui/skills/thay-mo-passive.webp' } },
+    tich_dao: { idleShiftU: -51, job: 'Sát thủ', skillIcons: null },
+    tieu_linh: { idleShiftU: 38, job: 'Hỗ trợ', skillIcons: null },
+    tieu_phong: { idleScale: 0.84, idleShiftU: -49, job: 'Ngự Phong', skillIcons: null },
+    tinh_mac: { idleShiftU: 27, job: 'Đấu sĩ', skillIcons: null },
+    van_phong: { idleShiftU: 131, job: 'Pháp sư', skillIcons: null }
+  });
+  // Co chữ cho vừa khung: giữ một dòng, giảm cỡ chữ tới tối đa 55% thay vì xuống dòng/cắt chữ.
+  const vcFitText = el => {
+    if (!el || !el.isConnected) return;
+    el.style.fontSize = '';
+    const base = parseFloat(getComputedStyle(el).fontSize) || 16;
+    let size = base;
+    for (let i = 0; i < 12 && el.scrollWidth > el.clientWidth + 1 && size > base * 0.55; i++) {
+      size *= 0.94;
+      el.style.setProperty('font-size', size.toFixed(2) + 'px', 'important');
+    }
+  };
+  const vcEnabled = id => Object.prototype.hasOwnProperty.call(VC_HERO_PROFILES, id);
+  const VC_ELEMENT_KEY = Object.freeze({ 'Hỏa': 'hoa', 'Thủy': 'thuy', 'Thổ': 'tho', 'Kim': 'kim', 'Mộc': 'moc' });
+  const vcElementKey = id => {
+    const he = DATA.heroes[id]?.he;
+    const nm = (typeof HE === 'object' && HE[he]) ? HE[he].nm : '';
+    return VC_ELEMENT_KEY[nm] || '';
+  };
+  globalThis.HV_VC_HERO_PROFILES = VC_HERO_PROFILES;
   const body = document.getElementById('hdBody');
   let currentHero = null, selected = 'attributes', bachUpgradeCount = 1;
 
@@ -120,10 +167,19 @@
 
   function mount(id) {
     if (id !== currentHero) { currentHero = id; selected = 'attributes'; bachUpgradeCount = 1; }
+    const vcRoot = document.getElementById('hvHeroDetailRoot');
+    vcRoot?.toggleAttribute('data-vc-layout', vcEnabled(id));
+    if (vcRoot) {
+      if (vcEnabled(id)) {
+        vcRoot.dataset.vcElement = vcElementKey(id);
+        vcRoot.style.setProperty('--vc-idle-shift-u', String(VC_HERO_PROFILES[id].idleShiftU || 0));
+        vcRoot.style.setProperty('--vc-idle-scale', String(VC_HERO_PROFILES[id].idleScale || 1));
+      } else { delete vcRoot.dataset.vcElement; vcRoot.style.removeProperty('--vc-idle-shift-u'); vcRoot.style.removeProperty('--vc-idle-scale'); }
+    }
     const children = Array.from(body.children), stage = body.querySelector('.hstage');
     const oldTabs = body.querySelector('.hero-art-tabs');
     const skills = children.filter(node => node.matches('.skillbox'));
-    if (id === 'bach_dien' || id === 'lang_chan') {
+    if (vcEnabled(id)) {
       // Player-facing wording; retain levels, costs, limits and counterplay.
       for (const skill of skills) {
         const heading = skill.querySelector('.sn');
@@ -183,7 +239,7 @@
       button.setAttribute('aria-controls', 'hero-panel-skills');
       button.append(icon, label);
       button.addEventListener('click', () => {
-        if ((id === 'bach_dien' || id === 'lang_chan') && revealBachDetails) revealBachDetails('skills', skill, button);
+        if (vcEnabled(id) && revealBachDetails) revealBachDetails('skills', skill, button);
         else activate('skills', true);
         skill.scrollIntoView({ block: 'nearest' });
       });
@@ -203,7 +259,7 @@
         stage.append(arrow);
       }
     }
-    if (id === 'bach_dien' || id === 'lang_chan') {
+    if (vcEnabled(id)) {
       // Compact approved profile. Move existing live command nodes into Chi tiết;
       // the main Upgrade command delegates to the original button, never mutations.
       const originalButtons = Array.from(upgrades.querySelectorAll('button'));
@@ -282,6 +338,13 @@
       };
       // Header chips, power capsule, stat captions and skill seals (owner mock).
       const hero = DATA.heroes[id] || {};
+      // Tên: chỉ tên chính, bỏ danh hiệu sau ' — ' (vd 'Đình Lôi — Vệ Binh Trống Đồng').
+      const vcTitle = document.querySelector('#hvHeroDetailRoot [data-hd-title]');
+      if (vcTitle) {
+        vcTitle.textContent = String(hero.name || vcTitle.textContent || '').split(' — ')[0].trim();
+        vcTitle.title = hero.name || '';
+        setTimeout(() => vcFitText(vcTitle), 0);
+      }
       const stars = stage.querySelector('.hsrar .stars');
       if (stars) {
         const n = Math.max(0, Math.min(6, heroStars(id)));
@@ -294,13 +357,15 @@
       const element = stage.querySelector('.hshe');
       if (element && typeof HE === 'object' && HE[hero.he]) {
         element.title = element.textContent.trim();
-        element.textContent = HE[hero.he].ic + ' Hệ ' + HE[hero.he].nm;
+        element.textContent = 'Hệ ' + HE[hero.he].nm;
       }
       const power = stage.querySelector('.hspow');
       if (power) {
         const row = document.createElement('div'); row.className = 'vc-power-row';
         const role = document.createElement('span'); role.className = 'vc-role';
-        role.textContent = hero.role || '';
+        role.textContent = VC_HERO_PROFILES[id]?.job || hero.role || '';
+        role.title = hero.role || '';
+        setTimeout(() => vcFitText(role), 0);
         const value = document.createElement('span'); value.className = 'vc-power';
         const glyph = document.createElement('i'); glyph.textContent = '⚔'; glyph.setAttribute('aria-hidden', 'true');
         const amount = document.createElement('b');
@@ -343,17 +408,24 @@
       for (const seal of shortcuts.querySelectorAll('.hv-scene-skill-seal')) {
         const slot = seal.closest('.hv-scene-skill')?.dataset.skillSlot;
         if (!['basic', 'ultimate', 'passive'].includes(slot)) continue;
-        if (id === 'bach_dien') { seal.textContent = ''; seal.append(iconImg(slot)); seal.classList.add('has-art'); }
-        // Lang Chan owns distinct illustrated skill assets, never Bach Dien's icons.
-        else if (id === 'lang_chan') {
+        const skillArt = VC_HERO_PROFILES[id]?.skillIcons;
+        if (skillArt === 'reference-v3') { seal.textContent = ''; seal.append(iconImg(slot)); seal.classList.add('has-art'); }
+        // Mỗi tướng dùng icon riêng của mình, không bao giờ mượn icon Bạch Diện.
+        else if (skillArt && skillArt[slot]) {
           const img = document.createElement('img');
-          img.src = 'assets/ui/skills/lang-chan-' + slot + '.svg';
+          img.src = skillArt[slot];
           img.alt = '';
           img.decoding = 'async';
           seal.replaceChildren(img);
           seal.classList.remove('vc-native-skill');
           seal.classList.add('has-art');
-        } else { seal.textContent = seal.closest('.hv-scene-skill')?.dataset.skillIcon || (skills.find(skill => skill.dataset.skillSlot === slot)?.dataset.skillIcon || ''); seal.classList.add('vc-native-skill'); }
+        } else {
+          // Chưa có icon riêng: ấn chữ đầu tên kỹ năng (tạm thời, KHÔNG dùng emoji).
+          const skillNode = skills.find(skill => skill.dataset.skillSlot === slot);
+          const title = (skillNode?.querySelector('.sn')?.textContent || '').replace(/^[^—]*—\s*/, '').trim();
+          seal.textContent = (title.match(/\p{L}/u) || [''])[0].toUpperCase();
+          seal.classList.add('vc-native-skill', 'vc-letter-seal');
+        }
       }
       const feature = (label, symbol, action) => {
         const button = document.createElement('button');

@@ -274,3 +274,18 @@ Dán đoạn sau vào cuộc hội thoại mới:
 > Đọc `docs/hero-detail-ui-spec-20261027.md`, `AGENTS.md` và `docs/ui-ux-reference-parity.md` trước khi sửa. Dùng giao diện Bạch Diện trong PR #382 làm golden reference để triển khai cùng layout cho các tướng khác. Giữ canvas/animation, data, save, economy và handler thật của từng tướng. Tách layout chung khỏi manifest presentation theo từng hero; không dùng screenshot làm background hoàn chỉnh, không hardcode số động và không dựng fixture app. Làm từng hero theo nhóm, kiểm tra 320×700, 390×664, 390×844, 414×715 và 1280×800. Mỗi hero phải có nền sạch, canvas visible feet, ba skill icon, stat row, bạc + ×1/×5 tách riêng, nút Nâng cấp và ba feature actions giống artboard 864×1536. Chạy test, browser interaction, screenshot review và báo rõ Safari/deployment nếu chưa chạy. Giữ Draft và chờ owner duyệt, không merge main.
 
 **Điểm bắt đầu đề xuất:** refactor phần Bạch Diện thành component/layout dùng chung, sau đó migrate tướng có canvas và tỷ lệ gần nhau trước. Không copy crop chữ hoặc icon riêng của Bạch Diện sang tướng khác.
+
+## 14. Trạng thái triển khai (27/10/2026)
+
+Mẫu đã bật cho **cả 21 tướng** qua manifest `VC_HERO_PROFILES` (`src/ui/hero-detail-tabs.js`); CSS dùng scope chung
+`#hvHeroDetailRoot[data-vc-layout]`, hệ gắn qua `data-vc-element`. Thêm tướng mới = thêm một dòng manifest:
+
+```js
+new_hero: { idleShiftU: 0, idleScale: 1, job: 'Nhãn nghề ngắn', skillIcons: { basic, ultimate, passive } }
+```
+
+- `idleShiftU`: dịch canvas theo đơn vị artboard để chân visible chạm vòng sàn (đo alpha thật, mốc Bạch Diện).
+- `idleScale`: chỉ dùng khi canvas quá cao, đầu chạm vùng tên/sao (Kỷ Vân, Tiêu Phong = 0.84).
+- `skillIcons: null` → ấn chữ tạm theo màu hệ, chờ icon thật. Không dùng emoji.
+- Tướng không có canvas idle dùng ảnh toàn thân tĩnh của `.hsava` trong đúng khung sân khấu.
+- QA: `docs/qa/hero-detail-all-21-20261027/README.md`.

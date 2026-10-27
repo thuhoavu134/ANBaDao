@@ -14,7 +14,8 @@ export function patchHeroRarityStars(html, domain) {
     'for(const id in DATA.heroes) if(!p.heroes[id]) p.heroes[id]={owned:false,level:1,...initialHeroStars(DATA.heroes[id])};');
   once('  p.squad=normalizeSquad(p.squad,p,true);\n  return p; }',
     '  normalizeRarityStars(p,DATA.heroes);\n  p.squad=normalizeSquad(p.squad,p,true);\n  return p; }');
-  once('function persist(){', 'function persist(){\n  normalizeRarityStars(P,DATA.heroes);');
+  // Guard: transaction tests run persist() alone in a sandbox; the real build always defines it.
+  once('function persist(){', 'function persist(){\n  if(typeof normalizeRarityStars==="function")normalizeRarityStars(P,DATA.heroes);');
   once('function heroStars(id){ return (P.heroes[id]&&P.heroes[id].stars)||1; }',
     'function heroStars(id){ return Math.max(rarityBaseStars(DATA.heroes[id]), (P.heroes[id]&&P.heroes[id].stars)||1); }');
   once('shards:10*S2*(S2-1)', 'shards:refundableHeroStarShards(P.heroes[id],DATA.heroes[id])');
