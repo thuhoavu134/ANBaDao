@@ -73,14 +73,14 @@
   }
 
   function paintBrand() {
-    document.title = 'Lục Thần';
+    document.title = 'An Bá Đạo';
     document.querySelectorAll('.hv-brandcopy strong, .v4-name, .rr-name, .v3-name').forEach(el => {
-      el.textContent = 'Lục Thần';
+      el.textContent = 'An Bá Đạo';
     });
     document.querySelectorAll('.hv-brandcopy small').forEach(el => {
-      el.textContent = 'Sáu ấn · Chinh chiến chính tuyến';
+      el.textContent = 'Võ các · Bộ sưu tập tướng';
     });
-    document.querySelectorAll('.hv-seal').forEach(el => { el.textContent = 'LT'; });
+    document.querySelectorAll('.hv-seal').forEach(el => { el.textContent = 'ABĐ'; });
     document.querySelectorAll('#hubScreen .scnm, #hubScreen .hv-land b, #hubScreen [data-art-go]').forEach(el => {
       if (el && el.childNodes) {
         el.childNodes.forEach(n => {

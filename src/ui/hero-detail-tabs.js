@@ -147,7 +147,9 @@
       slots.forEach((slot, index) => {
         const item = itemOf(P.gear?.[slot.id]);
         const cell = button('', () => { selectedSlot = slot.id; mode = item ? 'info' : 'pick'; render(); });
-        cell.className = 'hv-equipment-slot' + (selectedSlot === slot.id ? ' is-selected' : '');
+        const glow = item && typeof enhGlowTier === 'function' ? enhGlowTier(item.lvl, item.rar) : '';
+        cell.className = 'hv-equipment-slot hv-gear-slot' + (glow ? ' hv-glow-' + glow : '') + (selectedSlot === slot.id ? ' is-selected' : '');
+        if (glow) cell.dataset.glow = glow;
         cell.setAttribute('aria-label', slot.name + (item ? ' · ' + itemName(item) : ' · Chưa trang bị'));
         cell.setAttribute('aria-pressed', String(selectedSlot === slot.id));
         if (item) { const img = el('img', 'hv-equipment-slot-art'); img.src = gearAPI?.art(slot.id, item) || artFor(slot.id, item); img.alt = ''; cell.append(img); }
@@ -158,6 +160,7 @@
       const slot = slots.find(value => value.id === selectedSlot);
       if (!slot) { details.append(el('p', '', 'Chưa có dữ liệu trang bị.')); return; }
       const item = itemOf(P.gear?.[selectedSlot]);
+      try { window.HV_ENH_FX && window.HV_ENH_FX.attach(panel); } catch (_) {}
       details.append(el('h3', '', slot.name));
       if (mode === 'pick') {
         const list = gearAPI?.candidates(selectedSlot) || [];

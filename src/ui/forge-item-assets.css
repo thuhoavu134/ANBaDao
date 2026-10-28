@@ -48,3 +48,32 @@
   color:#ffd0a2;background:linear-gradient(180deg,rgba(255,120,60,.26),rgba(200,50,20,.26));
   box-shadow:inset 0 0 0 1px rgba(255,150,90,.65),0 0 6px rgba(255,110,50,.35);
 }
+
+
+/* Owner 2026-10-28: PR389 forge uses the same equipment glow as Trang bị. */
+#forgeScreen .hv-item-slot{
+  position:relative;display:inline-grid;place-items:center;overflow:hidden;box-sizing:border-box;
+  border:2px solid #4a4030;border-radius:8px;background:linear-gradient(180deg,#191714,#23201a 55%,#16140f);
+  box-shadow:inset 1px 1px 0 rgba(212,190,140,.30),inset -1px -1px 0 rgba(0,0,0,.85),inset 0 0 7px rgba(0,0,0,.75),0 0 0 1px #0d0b09;
+}
+#forgeScreen .hv-item-slot .forge-item-art,#forgeScreen .hv-item-slot .forge-slot-art,#forgeScreen .hv-item-slot .forge-reveal-art{position:relative;z-index:1;background:transparent;border:0;box-shadow:none;filter:none}
+#forgeScreen .hv-item-slot.hv-glow-purple{--hv-band:rgba(240,206,255,.95);border-color:#c48ae6;box-shadow:inset 0 0 6px rgba(214,150,255,.95),inset 1px 1px 0 rgba(212,190,140,.30),0 0 0 1px #0d0b09}
+#forgeScreen .hv-item-slot.hv-glow-gold{--hv-band:rgba(255,236,150,.97);border-color:#ffd242;box-shadow:inset 0 0 6px rgba(255,250,180,1),inset 1px 1px 0 rgba(212,190,140,.30),0 0 0 1px #0d0b09}
+#forgeScreen .hv-item-slot.hv-glow-red{--hv-band:rgba(255,206,160,.95);border-color:#ff5422;box-shadow:inset 0 0 6px rgba(255,180,90,1),inset 1px 1px 0 rgba(212,190,140,.30),0 0 0 1px #0d0b09}
+@property --hv-forge-spark-a{syntax:'<angle>';inherits:false;initial-value:0deg}
+@keyframes hvForgeSparkRun{to{--hv-forge-spark-a:360deg}}
+#forgeScreen .hv-item-slot[class*="hv-glow-"]::before{
+  content:"";position:absolute;inset:-2px;z-index:4;pointer-events:none;border-radius:7px;padding:3px;
+  background:conic-gradient(from var(--hv-forge-spark-a),transparent 0deg 286deg,var(--hv-band) 316deg,#fff 334deg,#fff 342deg,var(--hv-band) 352deg,transparent 360deg);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);
+  animation:hvForgeSparkRun 1.6s linear infinite;
+}
+#forgeScreen .hv-item-slot[class*="hv-glow-"]::after{
+  content:"";position:absolute;inset:0;z-index:3;pointer-events:none;border-radius:inherit;mix-blend-mode:screen;
+  background:conic-gradient(from var(--hv-forge-spark-a),transparent 0deg 286deg,var(--hv-band) 316deg,#fff 334deg,#fff 342deg,var(--hv-band) 352deg,transparent 360deg);
+  -webkit-mask:radial-gradient(circle closest-side,transparent 0 88%,rgba(0,0,0,.3) 97%,rgba(0,0,0,.7) 108%,#000 126%);
+  mask:radial-gradient(circle closest-side,transparent 0 88%,rgba(0,0,0,.3) 97%,rgba(0,0,0,.7) 108%,#000 126%);
+  animation:hvForgeSparkRun 1.6s linear infinite;
+}
+@media(prefers-reduced-motion:reduce){#forgeScreen .hv-item-slot[class*="hv-glow-"]::before,#forgeScreen .hv-item-slot[class*="hv-glow-"]::after{animation:none}}

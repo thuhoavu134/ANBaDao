@@ -833,3 +833,32 @@
 
 
 
+
+
+/* Owner 2026-10-28: An Bá Đạo equipment uses the same compact six-per-side cells as Trợ trận. */
+#hvHeroDetailRoot[data-vc-layout] .hv-equipment-layout{
+  grid-template-columns:var(--vc-gear-cell) minmax(72px,1fr) var(--vc-gear-cell);
+  --vc-gear-cell:clamp(44px,12vw,56px);
+  justify-content:center;align-items:start;gap:clamp(5px,2vw,10px);margin:4px auto 10px;width:max-content;max-width:100%;
+}
+#hvHeroDetailRoot[data-vc-layout] .hv-equipment-side{
+  grid-template-rows:repeat(6,var(--vc-gear-cell));grid-auto-rows:var(--vc-gear-cell);gap:clamp(4px,1.4vw,6px);width:var(--vc-gear-cell);
+}
+#hvHeroDetailRoot[data-vc-layout] .hv-equipment-side .hv-equipment-slot{
+  display:grid;position:relative;width:var(--vc-gear-cell);height:var(--vc-gear-cell);min-height:0!important;min-width:0;padding:0!important;overflow:hidden;
+  grid-template-columns:1fr!important;grid-template-rows:1fr!important;place-items:center;gap:0;border-radius:8px!important;
+}
+#hvHeroDetailRoot[data-vc-layout] .hv-equipment-side .hv-equipment-slot-art{
+  grid-row:1!important;order:0!important;width:calc(100% - 6px)!important;height:calc(100% - 6px)!important;margin:3px;padding:0!important;object-fit:contain;border:0!important;background:transparent!important;z-index:1;
+}
+#hvHeroDetailRoot[data-vc-layout] .hv-equipment-side .hv-equipment-copy{
+  position:absolute;left:2px;right:2px;bottom:2px;z-index:3;display:block!important;min-width:0;pointer-events:none;text-align:center;
+}
+#hvHeroDetailRoot[data-vc-layout] .hv-equipment-side .hv-equipment-copy span,
+#hvHeroDetailRoot[data-vc-layout] .hv-equipment-side .hv-equipment-copy small{display:none!important}
+#hvHeroDetailRoot[data-vc-layout] .hv-equipment-side .hv-equipment-slot .hv-fx-host>canvas.hv-fx{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none;mix-blend-mode:screen;border-radius:inherit}
+#hvHeroDetailRoot[data-vc-layout] .hv-equipment-side .hv-equipment-slot.is-selected{box-shadow:inset 0 0 0 2px #f0c66a!important}
+@media(max-width:390px){
+  #hvHeroDetailRoot[data-vc-layout]{--vc-gear-cell:44px}
+  #hvHeroDetailRoot[data-vc-layout] .hv-equipment-layout{gap:4px}
+}
