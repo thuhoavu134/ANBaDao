@@ -1,9 +1,10 @@
 // Installed once by the static build. Uses the existing shell router and art.
 (() => {
-  const state = { element: 'all', scope: 'owned', sort: 'default', scrollTop: 0, selectedId: null };
+  const state = { element: 'all', scope: 'owned', sort: 'default', query: '', scrollTop: 0, selectedId: null };
   const screen = document.getElementById('heroesScreen');
   const root = document.createElement('section');
   root.id = 'hvHeroRosterV4';
+  root.dataset.rosterConcept = 'dark-hall';
   root.setAttribute('aria-label', 'Danh sách tướng');
   // Same paint surface as Trợ trận: body-level fixed overlay. Mounting inside
   // #heroesScreen (a .wrap > .screen) lets iOS/Grok iframe clip the card grid
@@ -38,13 +39,17 @@
       ids: [...new Set(['bach_dien', 'linh_dong', ...OFFICIAL_ROSTER_12_IDS])].filter(id => DATA.heroes[id]),
       heroes: DATA.heroes, player: P,
       powerFor: heroPower, portraitFor: id => rosterPortraitSource(id, portraitSrc(id, 'card')),
-      ...state });
+      ...state, element: 'all' });
+    const normalize = value => String(value).normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').toLowerCase();
+    const cards = view.cards.filter(card => normalize(card.name).includes(normalize(state.query)) &&
+      (state.element === 'all' || (HE[card.element]?.nm || card.element) === (HE[state.element]?.nm || state.element)));
     root.innerHTML = `<header class="v4-top"><div class="v4-profile">
       <button class="v4-avatar" data-roster-nav="hub" aria-label="Về Thành Chính">‹</button>
-      <div><div class="v4-name">Hồn Việt</div><div class="v4-sub">Sở hữu ${view.owned}/${view.total} tướng</div>
-      <div class="v4-total" aria-label="Lực chiến đội hình">⚔ ${number(view.squadPower)}</div></div>
+      <div><div class="v4-name"><img src="assets/ui/an-ba-dao/logo-v1.webp" alt="An Bá Đạo"></div><div class="v4-sub">Bộ sưu tập tướng</div></div>
       <div class="v4-res"><span aria-label="Vàng" data-roster-gold>🪙 ${number(view.gold)}</span>
       <span aria-label="Ngọc" data-roster-gems>💎 ${number(view.gems)}</span></div></div>
+      <div class="v4-roster-heading"><h1>TƯỚNG</h1><span>${view.owned}/${view.total}</span></div>
+      <label class="v4-search"><span aria-hidden="true">⌕</span><input type="search" placeholder="Tìm kiếm tướng..." aria-label="Tìm kiếm tướng" value="${esc(state.query)}" data-roster-search></label>
       <div class="v4-tabs" role="group" aria-label="Chế độ danh sách">
       ${[['owned', 'Tướng'], ['all', 'Đồ Giám']].map(([key, label]) =>
         `<button class="v4-tab ${state.scope === key ? 'active' : ''}" data-roster-scope="${key}" aria-pressed="${state.scope === key}">${label}</button>`).join('')}
@@ -52,26 +57,26 @@
       ${[['default', 'Mặc định'], ['power', 'Lực chiến'], ['level', 'Cấp độ'], ['name', 'Tên']].map(([key, label]) =>
         `<option value="${key}" ${state.sort === key ? 'selected' : ''}>${label}</option>`).join('')}</select></label></div>
       <div class="v4-filter" role="group" aria-label="Lọc hệ">
-      ${['all', 'hoa', 'kim', 'moc', 'phong', 'thuy', 'tho', 'mong', 'soul'].map(key =>
-        `<button data-roster-element="${key}" class="${state.element === key ? 'active' : ''}" aria-label="${key === 'all' ? 'Tất cả hệ' : 'Hệ ' + HE[key].nm}" aria-pressed="${state.element === key}">${key === 'all' ? '▦' : HE[key].ic}</button>`).join('')}</div></header>
+      ${['all', 'hoa', 'kim', 'moc', 'thuy', 'tho'].map(key =>
+        `<button data-roster-element="${key}" class="${state.element === key ? 'active' : ''}" aria-label="${key === 'all' ? 'Tất cả hệ' : 'Hệ ' + HE[key].nm}" aria-pressed="${state.element === key}"><i>${key === 'all' ? '✦' : HE[key].ic}</i><small>${key === 'all' ? 'Tất cả' : HE[key].nm}</small></button>`).join('')}</div></header>
       <div class="v4-grid" aria-label="Thẻ tướng">
-      ${view.cards.map(card => {
+      ${cards.map(card => {
         const grade = ({ SSR: 'S+', SS: 'S', S: 'S', A: 'A', B: 'B' }[card.rarity] || 'B');
         const gradeFile = grade === 'S+' ? 'splus' : grade.toLowerCase();
         const starN = Math.max(0, Math.min(5, card.stars || 0));
         const stars = Array.from({ length: 5 }, (_, i) => '<i class="' + (i < starN ? 'on' : '') + '">★</i>').join('');
         return `<button class="v4-card r-${grade === 'S+' ? 'splus' : grade.toLowerCase()} ${card.owned ? '' : 'is-locked'}" data-hero-id="${esc(card.id)}" aria-label="${esc(card.name)}${card.owned ? ', cấp ' + card.level + ', ' + card.stars + ' sao, lực chiến ' + card.power : ', chưa sở hữu'}">
         <div class="v4-art"><img src="${esc(card.portrait)}" style="${rosterPortraitStyle(card.portrait)}" data-portrait-reviewed="${Boolean(rosterPortraitLandmark(card.portrait))}" alt="" loading="lazy" decoding="async"></div>
-        <div class="v4-grade"><img src="assets/ui/heroes/grade-${gradeFile}.png" alt="${grade}"></div><div class="v4-level">${card.owned ? 'Lv.' + card.level : '🔒'}</div>
+        <div class="v4-grade">${esc(card.rarity)}</div><div class="v4-level">${card.owned ? 'Lv.' + card.level : '🔒'}</div>
         <div class="v4-veil">
           <div class="v4-element">${card.element === 'soul' ? '🎭' : (HE[card.element]?.ic || '')}</div>
           <div class="v4-stars">${stars}</div>
           <div class="v4-cardname" title="${esc(card.name)}">${esc(card.shortName)}</div>
         </div></button>`;
       }).join('')}
-      ${view.cards.length ? '' : '<p class="v4-empty" role="status">Chưa có tướng phù hợp với bộ lọc này.</p>'}</div>
-      <nav class="v4-dock" aria-label="Điều hướng game">${nav.map(([target, icon, label]) =>
-        `<button data-roster-nav="${target}" ${target === 'heroes' ? 'aria-current="page"' : ''}><img src="assets/ui/menu-v3233/icons/${icon}.png" alt="">${label}</button>`).join('')}</nav>`;
+      ${cards.length ? '' : '<p class="v4-empty" role="status">Chưa có tướng phù hợp với bộ lọc này.</p>'}</div>
+      <nav class="v4-dock" aria-label="Quản lý tướng">${[['roster','♟','Tướng'],['skills','⚔','Kỹ năng'],['equipment','♜','Trang bị'],['star','★','Thăng sao'],['details','▤','Chi tiết']].map(([target, icon, label]) =>
+        `<button data-roster-action="${target}" ${target === 'roster' ? 'aria-current="page"' : !state.selectedId ? 'disabled title="Chọn một tướng trước"' : ''}><i aria-hidden="true">${icon}</i>${label}</button>`).join('')}</nav>`;
     root.dataset.rosterTargetTotal = String(view.catalog.targetTotal);
     root.dataset.rosterActiveTotal = String(view.catalog.activeTotal);
     root.dataset.rosterTargetCounts = JSON.stringify(view.catalog.targetCounts);
@@ -83,6 +88,15 @@
     const button = event.target.closest('button');
     if (!button || !root.contains(button)) return;
     if (button.dataset.rosterNav) { navTo(button.dataset.rosterNav); return; }
+    if (button.dataset.rosterAction) {
+      const action = button.dataset.rosterAction;
+      if (action === 'roster' || !state.selectedId || !P.heroes[state.selectedId]?.owned) return;
+      rememberScroll(); renderHeroDetail(state.selectedId); showScreen('heroDetail');
+      const detail = document.getElementById('hvHeroDetailRoot');
+      const target = action === 'skills' ? detail?.querySelector('.hv-scene-skill') :
+        detail?.querySelectorAll('.vc-feature')[{equipment:0,star:1,details:2}[action]];
+      target?.click(); return;
+    }
     if (button.dataset.rosterElement || button.dataset.rosterScope) {
       if (button.dataset.rosterElement) state.element = button.dataset.rosterElement;
       if (button.dataset.rosterScope) state.scope = button.dataset.rosterScope;
@@ -97,6 +111,14 @@
   root.addEventListener('change', event => {
     if (!event.target.matches('[data-roster-sort]')) return;
     state.sort = event.target.value; state.scrollTop = 0; renderHeroes();
+  });
+  root.addEventListener('input', event => {
+    if (!event.target.matches('[data-roster-search]')) return;
+    const position = event.target.selectionStart;
+    state.query = event.target.value; state.scrollTop = 0; renderHeroes();
+    const input = root.querySelector('[data-roster-search]');
+    input.focus({ preventScroll: true });
+    if (position != null) input.setSelectionRange(position, position);
   });
   root.addEventListener('scroll', () => { if (ST.screen === 'heroes') rememberScroll(); }, { capture: true, passive: true });
 
@@ -176,5 +198,8 @@
   root.classList.toggle('is-open', ST.screen === 'heroes');
   if (ST.screen === 'heroes') renderHeroes();
 })();
+
+
+
 
 

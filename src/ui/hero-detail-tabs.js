@@ -52,60 +52,152 @@
   globalThis.HV_VC_HERO_PROFILES = VC_HERO_PROFILES;
   const body = document.getElementById('hdBody');
   let currentHero = null, selected = 'attributes', bachUpgradeCount = 1;
+  const vcNode = (tag, cls, text) => {
+    const node = document.createElement(tag); node.className = cls;
+    if (text != null) node.textContent = text;
+    return node;
+  };
+  function vcStatTable(stats, next = null) {
+    const table = vcNode('div', 'vc-attribute-table');
+    const rows = [['hp','♥','HP'],['atk','⚔','Công'],['def','◈','Thủ'],['spd','➟','Tốc độ']];
+    if (!next) rows.push(['crit','✧','Bạo kích'],['evasion','◇','Né tránh']);
+    for (const [key, icon, label] of rows) {
+      const row = vcNode('div', 'vc-attribute-row');
+      const value = Number(stats[key]) || 0;
+      const percent = key === 'crit' || key === 'evasion';
+      row.append(vcNode('i', '', icon), vcNode('span', '', label),
+        vcNode('b', '', value.toLocaleString('vi-VN') + (percent ? '%' : '')));
+      if (next) {
+        const after = Number(next[key]) || 0, gain = after - value;
+        row.append(vcNode('span', 'vc-stat-arrow', '→'),
+          vcNode('b', 'vc-stat-after', after.toLocaleString('vi-VN')),
+          vcNode('small', 'vc-stat-gain', (gain >= 0 ? '+' : '') + gain.toLocaleString('vi-VN')));
+      }
+      table.append(row);
+    }
+    return table;
+  }
+  // Mirror the canonical star-dependent base term; never modify P for a preview.
+  function vcNextStarStats(id) {
+    const base = DATA.heroes[id]?.stats;
+    if (!base || typeof heroStats !== 'function') return null;
+    const stars = heroStars(id), lm = 1 + .08 * (heroLevel(id) - 1);
+    const sm = 1 + .12 * (stars - 1), nextSm = stars >= 6 ? sm : sm + .12;
+    const sp = typeof setPcts === 'function' ? setPcts(id) : {pct:0};
+    const fm = typeof forgeMoldBonus === 'function' ? forgeMoldBonus(id) : {};
+    const guild = typeof guildPct === 'function' ? guildPct() : {};
+    const gt = typeof guildTechCombat === 'function' ? guildTechCombat() : {};
+    const rb = typeof relationshipStatBonus === 'function' ? relationshipStatBonus(id) : {};
+    const mb = typeof masteryBonus === 'function' ? masteryBonus(id) : {};
+    const dp = typeof breakthroughBonus === 'function' ? breakthroughBonus(P,id) : {};
+    const am = 1 + .02 * (typeof awakeningRank === 'function' ? awakeningRank(id) : 0);
+    const delta = {};
+    for (const key of ['hp','atk','def']) {
+      const clan = key === 'hp' && typeof clanPct === 'function' ? clanPct() :
+        key === 'atk' && typeof clanAtkBonus === 'function' ? clanAtkBonus() : 0;
+      const pct = (sp.pct || 0) + (fm[key] || 0) + (guild.stat === key ? guild.pct || 0 : 0) +
+        clan + (gt[key] || 0) + (rb[key] || 0) + (mb[key] || 0) + (dp[key] || 0);
+      const term = (Number(base[key]) || 0) * lm * (1 + pct) * am;
+      delta[key] = Math.round(term * nextSm) - Math.round(term * sm);
+    }
+    const projected = window.HonVietAccountGear?.heroDetailGear?.previewBaseDelta?.(id, delta);
+    return projected || null;
+  }
 
   function equipmentPanel(id) {
     const panel = document.createElement('section');
     panel.className = 'section hv-detail-equipment';
-    const heading = document.createElement('h3');
-    heading.textContent = 'Trang bị đang mặc'; panel.append(heading);
-    const slots = document.createElement('div'); slots.className = 'hv-equipment-slots';
-    for (const slot of DATA.items.slots) {
-      const uid = P.equip?.[id]?.[slot];
-      const item = uid == null ? null : (P.inventory || []).find(candidate => candidate.uid === uid);
-      const cell = document.createElement('div'); cell.className = 'hv-equipment-slot';
-      const label = document.createElement('b'); label.textContent = DATA.items.slotName[slot];
-      if (item) {
-        const art = document.createElement('img');
-        art.className = 'hv-equipment-slot-art';
-        art.src = globalThis.honVietEquipmentAssetFor?.(item) || 'assets/ui/menu-v3233/icons/forge.png';
-        art.alt = itemName(item);
-        art.loading = 'lazy';
-        cell.append(art);
+    const el = (tag, cls, text) => {
+      const node = document.createElement(tag); node.className = cls;
+      if (text != null) node.textContent = text;
+      return node;
+    };
+    const gearAPI = window.HonVietAccountGear?.heroDetailGear;
+    const slots = gearAPI?.slots || window.HonVietAccountGear?.slots || [];
+    let selectedSlot = slots[0]?.id;
+    let mode = 'info';
+    const layout = el('div', 'hv-equipment-layout');
+    const left = el('div', 'hv-equipment-side is-left');
+    const right = el('div', 'hv-equipment-side is-right');
+    const center = el('div', 'hv-equipment-center');
+    center.dataset.heroPreview = id;
+    layout.append(left, center, right);
+    const details = el('div', 'vc-item-details');
+    const note = el('p', 'vc-screen-note', 'Trang bị toàn đội');
+    panel.append(note, layout, details);
+    const itemOf = uid => (P.inventory || []).find(item => item.uid === uid);
+    const artFor = (slot, item) => {
+      const names = { I:'non', II:'dai', III:'day-chuyen', IV:'nhan', VI:'quan', VIII:'gang', IX:'ho-uyen', X:'khan' };
+      return names[slot] && item ? 'assets/items/equipment/slots/' + names[slot] + '-' + item.rar + '.webp'
+        : globalThis.honVietEquipmentAssetFor?.(item) || 'assets/ui/menu-v3233/icons/forge.png';
+    };
+    const button = (text, action, disabled = false) => {
+      const node = el('button', 'btn', text); node.type = 'button'; node.disabled = disabled;
+      node.addEventListener('click', action); return node;
+    };
+    const change = (uid, action) => {
+      const saved = gearAPI?.change(selectedSlot, uid, action);
+      if (!saved) { toast('Trang bị chưa sẵn sàng.'); return; }
+      if (!saved.ok) { toast(saved.message || 'Chưa lưu được trang bị.'); return; }
+      panel.dataset.changed = 'true';
+      mode = 'info'; refreshResbar(); render();
+    };
+    function render() {
+      left.replaceChildren(); right.replaceChildren(); details.replaceChildren();
+      slots.forEach((slot, index) => {
+        const item = itemOf(P.gear?.[slot.id]);
+        const cell = button('', () => { selectedSlot = slot.id; mode = item ? 'info' : 'pick'; render(); });
+        cell.className = 'hv-equipment-slot' + (selectedSlot === slot.id ? ' is-selected' : '');
+        cell.setAttribute('aria-label', slot.name + (item ? ' · ' + itemName(item) : ' · Chưa trang bị'));
+        cell.setAttribute('aria-pressed', String(selectedSlot === slot.id));
+        if (item) { const img = el('img', 'hv-equipment-slot-art'); img.src = gearAPI?.art(slot.id, item) || artFor(slot.id, item); img.alt = ''; cell.append(img); }
+        else cell.append(el('span', 'vc-empty-slot', '+'));
+        cell.append(el('span', 'hv-equipment-copy', slot.name));
+        (index < 6 ? left : right).append(cell);
+      });
+      const slot = slots.find(value => value.id === selectedSlot);
+      if (!slot) { details.append(el('p', '', 'Chưa có dữ liệu trang bị.')); return; }
+      const item = itemOf(P.gear?.[selectedSlot]);
+      details.append(el('h3', '', slot.name));
+      if (mode === 'pick') {
+        const list = gearAPI?.candidates(selectedSlot) || [];
+        if (!list.length) details.append(el('p', '', 'Chưa có trang bị phù hợp trong kho.'));
+        for (const candidate of list) {
+          const choice = button(itemName(candidate) + ' +' + candidate.lvl, () => change(candidate.uid, 'equip'));
+          const art = el('img', 'vc-choice-art'); art.src = gearAPI.art(selectedSlot, candidate); art.alt = '';
+          choice.prepend(art); details.append(choice);
+        }
+        details.append(button('Quay lại', () => { mode = 'info'; render(); }));
+        return;
       }
-      const copy = document.createElement('div'); copy.className = 'hv-equipment-copy';
-      const name = document.createElement('span');
-      name.textContent = item ? itemName(item) + ' +' + item.lvl : 'Chưa trang bị';
-      copy.append(label, name);
-      if (item) {
-        const stat = document.createElement('small');
-        stat.textContent = item.rar.toUpperCase() + ' · +' + itemStat(item) + ' ' + DATA.items.statName[slot];
-        copy.append(stat);
+      if (!item) {
+        details.append(el('p', '', 'Ô trống · chọn trang bị từ kho để mặc.'));
+        details.append(button('Chọn trang bị', () => { mode = 'pick'; render(); }));
+        return;
       }
-      cell.append(copy);
-      slots.append(cell);
+      details.append(el('h4', '', itemName(item) + ' +' + item.lvl + ' · ' + item.rar.toUpperCase()));
+      const selectedArt = el('img', 'vc-selected-item-art');
+      selectedArt.src = gearAPI?.art(selectedSlot, item) || artFor(selectedSlot, item); selectedArt.alt = '';
+      details.prepend(selectedArt);
+      const stat = DATA.items.statName[item.slot] || '';
+      details.append(el('p', '', stat + ' +' + itemStat(item)));
+      if (mode === 'enhance') {
+        const max = gearMaxLvl(item), cost = enhCost(item);
+        const capped = item.lvl >= max;
+        details.append(el('p', 'vc-next-stat', capped ? 'Đã đạt cấp tối đa' :
+          stat + ' +' + itemStat(item) + ' → +' + itemStat({...item, lvl:item.lvl + 1})));
+        details.append(el('p', '', capped ? '' : 'Chi phí: ' + cost.gold + ' bạc · ' + cost.hoat + ' Hoạt lực'));
+        details.append(button('Cường hoá', () => {
+          if (enhanceItem(item.uid)) { panel.dataset.changed = 'true'; refreshResbar(); render(); }
+        }, capped || P.gold < cost.gold || (P.hoat || 0) < cost.hoat));
+        details.append(button('Quay lại', () => { mode = 'info'; render(); }));
+      } else {
+        details.append(button('Cường hoá', () => { mode = 'enhance'; render(); }));
+        details.append(button('Thay đồ', () => { mode = 'pick'; render(); }));
+        details.append(button('Tháo', () => change(item.uid, 'unequip')));
+      }
     }
-    panel.append(slots);
-    const set = document.createElement('p');
-    // Existing set descriptions are authored HTML; preserve their formatting.
-    set.innerHTML = setLine(id) || 'Chưa kích hoạt hiệu ứng bộ trang bị.';
-    panel.append(set);
-    const forge = document.createElement('button');
-    forge.type = 'button'; forge.className = 'btn gold sm'; forge.textContent = 'Mở Rèn Mộng';
-    forge.disabled = featLocked('forge');
-    forge.addEventListener('click', () => navTo('forge'));
-    panel.append(forge);
-    const board = document.createElement('button');
-    board.type = 'button'; board.className = 'btn sm'; board.textContent = 'Mở trang bị';
-    board.addEventListener('click', () => {
-      if (window.HonVietAccountGear?.openBoard) window.HonVietAccountGear.openBoard();
-      else navTo('team');
-    });
-    panel.append(board);
-    if (forge.disabled) {
-      const gate = document.createElement('p');
-      gate.textContent = 'Rèn Mộng mở sau khi vượt ' + (JOURNEY_UNLOCK.forge?.ch || 1) + ' chương.';
-      panel.append(gate);
-    }
+    render();
     return panel;
   }
 
@@ -240,7 +332,7 @@
       icon.textContent = skill.dataset.skillIcon || '✦'; icon.setAttribute('aria-hidden', 'true');
       const label = document.createElement('span'); label.textContent = labels[slot] || 'Kỹ năng';
       button.setAttribute('aria-label', skill.querySelector('.sn')?.textContent || label.textContent);
-      button.setAttribute('aria-controls', 'hero-panel-skills');
+      button.setAttribute('aria-controls', vcEnabled(id) ? 'vc-detail-content' : 'hero-panel-skills');
       button.append(icon, label);
       button.addEventListener('click', () => {
         if (vcEnabled(id) && revealBachDetails) revealBachDetails('skills', skill, button);
@@ -447,30 +539,138 @@
       sheet.className = 'vc-detail-sheet';
       sheet.setAttribute('aria-labelledby', 'vc-sheet-heading');
       const sheetHeader = document.createElement('header'); sheetHeader.className = 'vc-sheet-header';
+      const sheetIcon = document.createElement('span'); sheetIcon.className = 'vc-sheet-icon'; sheetIcon.setAttribute('aria-hidden', 'true');
       const sheetTitle = document.createElement('h2'); sheetTitle.id = 'vc-sheet-heading'; sheetTitle.textContent = 'Chi tiết tướng';
       const close = document.createElement('button'); close.type = 'button'; close.textContent = 'Đóng'; close.className = 'vc-sheet-close';
       close.setAttribute('aria-label', 'Đóng chi tiết');
-      sheetHeader.append(sheetTitle, close);
+      sheetHeader.append(sheetIcon, sheetTitle, close);
+      const brandBar = document.createElement('div'); brandBar.className = 'vc-brand-bar';
+      const brandLogo = document.createElement('img'); brandLogo.src = 'assets/ui/an-ba-dao/logo-v1.webp'; brandLogo.alt = 'An Bá Đạo';
+      const wallet = document.createElement('div'); wallet.className = 'vc-wallet';
+      brandBar.append(brandLogo, wallet);
+      const skillChoices = document.createElement('nav'); skillChoices.className = 'vc-popup-skills'; skillChoices.setAttribute('aria-label', 'Chọn kỹ năng');
+      for (const original of stage.querySelectorAll('.hv-scene-skill')) {
+        const choice = original.cloneNode(true); choice.removeAttribute('id');
+        choice.querySelectorAll('[id]').forEach(node => node.removeAttribute('id'));
+        choice.addEventListener('click', () => original.click()); skillChoices.append(choice);
+      }
+      const understood = document.createElement('button'); understood.type = 'button'; understood.className = 'btn vc-skill-understood'; understood.textContent = 'Đã hiểu'; understood.addEventListener('click', () => sheet.close());
       let sheetOpener = null;
+      let skillPopupTarget = null;
+      // Render a still of the current hero without moving or duplicating its live idle.
+      const updatePreview = container => {
+        if (!container) return;
+        container.replaceChildren();
+        const source = stage.querySelector('canvas');
+        if (source?.width && source?.height) {
+          const preview = document.createElement('canvas');
+          let crop = {x:0,y:0,w:source.width,h:source.height};
+          try {
+            const pixels = source.getContext('2d').getImageData(0,0,source.width,source.height).data;
+            let x0=source.width,y0=source.height,x1=0,y1=0;
+            for (let y=0;y<source.height;y+=2) for (let x=0;x<source.width;x+=2) {
+              if (pixels[(y*source.width+x)*4+3] < 24) continue;
+              x0=Math.min(x0,x);x1=Math.max(x1,x);y0=Math.min(y0,y);y1=Math.max(y1,y);
+            }
+            if (x1>x0 && y1>y0) crop={x:x0,y:y0,w:Math.min(source.width-x0,x1-x0+3),h:Math.min(source.height-y0,y1-y0+3)};
+          } catch (_) { /* cross-origin canvas: retain the original frame */ }
+          preview.width = crop.w; preview.height = crop.h;
+          preview.getContext('2d').drawImage(source,crop.x,crop.y,crop.w,crop.h,0,0,crop.w,crop.h);
+          preview.setAttribute('aria-label', hero.name || 'Tướng');
+          container.append(preview);
+        } else if (typeof portraitSrc === 'function') {
+          const image = document.createElement('img');
+          image.src = portraitSrc(id, 'master') || portraitSrc(id, 'card');
+          image.alt = hero.name || 'Tướng'; container.append(image);
+        }
+      };
+      const restoreSkillPopup = () => {
+        if (!skillPopupTarget) return;
+        for (const node of panels.get('skills')?.children || []) node.hidden = false;
+        strip.hidden = false;
+        workspace.classList.remove('is-skill-popup');
+        skillPopupTarget = null;
+      };
       const reveal = (key, target, opener) => {
+        restoreSkillPopup();
         activate(key); sheetOpener = opener || detailTrigger;
+        sheet.dataset.sheetView = target === upgrades ? 'star' : key;
+        skillChoices.hidden = key !== 'skills'; understood.hidden = key !== 'skills';
+        [...skillChoices.children].forEach((choice,index) => choice.setAttribute('aria-pressed', String(stage.querySelectorAll('.hv-scene-skill')[index] === opener)));
+        wallet.replaceChildren();
+        for (const [icon, amount, label] of [['◉', P.gold, 'Vàng'], ['◈', P.gems, 'Ngọc']]) {
+          const chip = document.createElement('span'); chip.setAttribute('aria-label', label);
+          chip.textContent = icon + ' ' + Number(amount || 0).toLocaleString('vi-VN'); wallet.append(chip);
+        }
+        strip.hidden = key === 'equipment' || target === upgrades || (key === 'skills' && !!target);
+        const advancedSection = workspace.querySelector('.vc-advanced-actions');
+        if (advancedSection) advancedSection.hidden = target !== upgrades;
+        const summary = workspace.querySelector('.vc-profile-summary');
+        if (summary) summary.hidden = target === upgrades || key === 'equipment' || key === 'skills';
+        if (target === upgrades) {
+          for (const panel of panels.values()) panel.hidden = true;
+        }
+        for (const [tabKey, tabButton] of buttons) {
+          tabButton.hidden = !['attributes', 'breakthrough', 'bonds', 'mastery'].includes(tabKey);
+        }
+        if (key === 'equipment') {
+          const equipment = panels.get('equipment');
+          equipment.replaceChildren(equipmentPanel(id));
+          updatePreview(equipment.querySelector('[data-hero-preview]'));
+        }
+        if (target === upgrades) updatePreview(starPreview);
+        if (key === 'skills' && target) {
+          skillPopupTarget = target;
+          for (const node of panels.get('skills')?.children || []) node.hidden = node !== target;
+          strip.hidden = true;
+          workspace.classList.add('is-skill-popup');
+          const name = target.querySelector('.sn, h3, h4, strong')?.textContent?.trim();
+          const sourceIcon = opener?.querySelector('.hv-scene-skill-seal');
+          sheetIcon.replaceChildren();
+          const sourceImage = sourceIcon?.querySelector('img');
+          if (sourceImage) {
+            const image = document.createElement('img'); image.src = sourceImage.src; image.alt = '';
+            sheetIcon.append(image);
+          } else sheetIcon.textContent = sourceIcon?.textContent || '✦';
+          sheetIcon.style.backgroundImage = sourceIcon ? getComputedStyle(sourceIcon).backgroundImage : '';
+          sheetIcon.dataset.skillSlot = target.dataset.skillSlot || '';
+          sheetIcon.hidden = false;
+          sheetTitle.textContent = name ? name.replace(/^.*?—\s*/, '').replace(/\s*·\s*\d+\s*MP$/, '') : 'Kỹ năng';
+        } else {
+          sheetIcon.hidden = true;
+          sheetIcon.textContent = '';
+          sheetIcon.style.backgroundImage = '';
+          sheetIcon.dataset.skillSlot = '';
+          sheetTitle.textContent = key === 'equipment' ? 'Trang bị' : target === upgrades ? 'Thăng sao' : 'Chi tiết';
+        }
         if (!sheet.open) sheet.showModal();
-        detailTrigger.setAttribute('aria-expanded', 'true');
-        buttons.get(key)?.focus({preventScroll:true});
-        if (target) target.scrollIntoView({block:'nearest'});
+        sheetOpener.setAttribute('aria-expanded', 'true');
+        workspace.scrollTop = 0;
+        close.focus({preventScroll:true});
       };
       revealBachDetails = reveal;
       close.addEventListener('click', () => sheet.close());
       sheet.addEventListener('close', () => {
-        detailTrigger.setAttribute('aria-expanded', 'false');
+        // A queued close event must not reset a newly reopened skill popup.
+        if (sheet.open) return;
+        restoreSkillPopup();
+        sheet.dataset.sheetView = '';
+        sheetIcon.hidden = true;
+        sheetIcon.style.backgroundImage = '';
+        sheetTitle.textContent = 'Chi tiết tướng';
+        sheetOpener?.setAttribute('aria-expanded', 'false');
         if (sheetOpener?.isConnected) sheetOpener.focus({preventScroll:true});
+        if (panels.get('equipment').querySelector('[data-changed="true"]')) {
+          renderHeroDetail(id);
+          body.querySelector('.vc-feature')?.focus({preventScroll:true});
+        }
       });
       sheet.addEventListener('click', event => {
         if (event.target !== sheet) return;
         const rect = sheet.getBoundingClientRect();
         if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) sheet.close();
       });
-      const detailTrigger = feature('Chi tiết', 'details', () => reveal(selected));
+      const detailTrigger = feature('Chi tiết', 'details', () => reveal('attributes', null, detailTrigger));
       detailTrigger.setAttribute('aria-controls', 'vc-detail-content');
       detailTrigger.setAttribute('aria-expanded', 'false');
       detailTrigger.setAttribute('aria-haspopup', 'dialog');
@@ -484,15 +684,84 @@
       const advanced = document.createElement('section');
       advanced.className = 'vc-advanced-actions';
       const advancedTitle = document.createElement('h3');
-      advancedTitle.textContent = 'Thăng sao & bồi dưỡng';
-      advanced.append(advancedTitle, upgrades);
+      advancedTitle.textContent = '';
+      advancedTitle.hidden = true;
+      const starPreview = document.createElement('div'); starPreview.className = 'vc-star-preview';
+      const starTrack = document.createElement('div'); starTrack.className = 'vc-star-track';
+      const countStars = Math.max(0, heroStars(id));
+      const starCommand = upgrades.querySelector('#stBtn');
+      starTrack.textContent = '★'.repeat(countStars) + (countStars >= 6 ? ' · Tối đa' : ' → ' + '★'.repeat(countStars + 1));
+      const shardCopy = document.createElement('p'); shardCopy.className = 'vc-shard-copy';
+      const haveShards = Number(P.shards?.[id] || 0);
+      const needShards = typeof starCost === 'function' ? starCost(id) :
+        Number((starCommand?.textContent || '').match(/(\d+)\s*mảnh/)?.[1]) || 20 * countStars;
+      if (starCommand) {
+        starCommand.disabled = starCommand.disabled || countStars >= 6 || haveShards < needShards;
+        starCommand.title = countStars >= 6 ? 'Đã đạt 6 sao' : 'Cần ' + needShards + ' mảnh hồn';
+        starCommand.textContent = countStars >= 6 ? 'Đã tối đa' : haveShards < needShards ? 'Chưa đủ mảnh' : 'Thăng sao';
+      }
+      shardCopy.textContent = 'Mảnh ' + String(hero.name || '').split(' — ')[0] + ': ' + haveShards +
+        (needShards == null ? '' : '/' + needShards);
+      const starHelp = document.createElement('p'); starHelp.className = 'vc-screen-note';
+      starHelp.textContent = '';
+      starHelp.hidden = true;
+      const fragment = vcNode('div', 'vc-fragment-card');
+      const fragmentArt = vcNode('img', '');
+      if (typeof portraitSrc === 'function') fragmentArt.src = portraitSrc(id, 'card') || '';
+      fragmentArt.alt = '';
+      const fragmentInfo = vcNode('div', '');
+      const progress = vcNode('progress', '');
+      progress.max = needShards || 1; progress.value = Math.min(haveShards, needShards);
+      progress.setAttribute('aria-label', 'Mảnh thăng sao');
+      fragmentInfo.append(shardCopy, progress);
+      fragment.append(fragmentArt, fragmentInfo);
+      advanced.append(advancedTitle, starPreview, starTrack);
+      if (typeof heroStats === 'function') {
+        const stats = heroStats(id), next = vcNextStarStats(id);
+        advanced.append(vcStatTable(stats, next || stats));
+      }
+      advanced.append(fragment);
+      // Keep the original guarded command and its listener, isolate it from level/reset actions.
+      if (starCommand) advanced.append(starCommand);
+      else advanced.append(document.createTextNode('Chưa thể thăng sao.'));
+      const sources = vcNode('button', 'btn vc-shard-source', 'Nguồn mảnh'); sources.type = 'button';
+      const sourceList = vcNode('div', 'vc-shard-sources'); sourceList.hidden = true;
+      sourceList.append(vcNode('p', '', 'Nhận mảnh hồn qua Chiêu mộ và phần thưởng Chinh chiến.'));
+      for (const [route, text] of [['summon','Chiêu mộ'],['campaign','Chinh chiến']]) {
+        const go = vcNode('button', 'btn', text); go.type = 'button';
+        go.addEventListener('click', () => { sheet.close(); navTo(route); }); sourceList.append(go);
+      }
+      sources.addEventListener('click', () => {
+        sourceList.hidden = !sourceList.hidden;
+        sources.setAttribute('aria-expanded', String(!sourceList.hidden));
+      });
+      sources.setAttribute('aria-expanded', 'false');
+      advanced.append(sources, sourceList);
+      upgrades.classList.add('vc-secondary-progression');
+      panels.get('mastery').append(upgrades);
       workspace.append(advanced);
       const profileCopy = document.createElement('section'); profileCopy.className = 'section';
+      profileCopy.classList.add('vc-profile-summary');
+      const profileArt = vcNode('img', 'vc-profile-portrait');
+      if (typeof portraitSrc === 'function') profileArt.src = portraitSrc(id, 'card') || '';
+      profileArt.alt = '';
+      const profileText = vcNode('div', 'vc-profile-text');
+      profileText.append(vcNode('h3', '', String(hero.name || '').split(' — ')[0]),
+        vcNode('p', '', (VC_HERO_PROFILES[id]?.job || '') + ' · ' + (element?.textContent || '')),
+        vcNode('p', 'vc-profile-stars', '★'.repeat(countStars)));
+      profileCopy.append(profileArt, profileText);
       const quote = stage.querySelector('.hsepi');
-      if (quote) profileCopy.append(quote);
+      if (quote) profileText.append(quote);
       const affinityCopy = document.createElement('p'); affinityCopy.textContent = element?.title || element?.textContent || '';
-      profileCopy.append(affinityCopy); panels.get('attributes').prepend(profileCopy);
-      sheet.append(sheetHeader, workspace);
+      profileText.append(affinityCopy);
+      if (typeof heroStats === 'function') {
+        for (const node of panels.get('attributes').children) {
+          if (!node.querySelector('button,input,select')) node.classList.add('vc-legacy-info');
+        }
+        panels.get('attributes').prepend(vcStatTable(heroStats(id)));
+      }
+      workspace.insertBefore(profileCopy, strip);
+      sheet.append(brandBar, skillChoices, sheetHeader, workspace, understood);
       body.replaceChildren(stage, medals, overview, features, sheet);
     } else body.replaceChildren(stage, dock, workspace);
 
@@ -515,10 +784,11 @@
       const button = event.target.closest('[data-detail-tab]');
       if (!button || !['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
       event.preventDefault();
-      const index = tabs.findIndex(([key]) => key === button.dataset.detailTab);
-      const next = event.key === 'Home' ? 0 : event.key === 'End' ? tabs.length - 1
-        : (index + (event.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
-      activate(tabs[next][0], true);
+      const visibleTabs = tabs.filter(([key]) => !buttons.get(key).hidden);
+      const index = visibleTabs.findIndex(([key]) => key === button.dataset.detailTab);
+      const next = event.key === 'Home' ? 0 : event.key === 'End' ? visibleTabs.length - 1
+        : (index + (event.key === 'ArrowRight' ? 1 : -1) + visibleTabs.length) % visibleTabs.length;
+      activate(visibleTabs[next][0], true);
     });
     activate(selected);
   }
@@ -530,4 +800,7 @@
   };
   if (ST.screen === 'heroDetail' && ST._heroDetailId) mount(ST._heroDetailId);
 })();
+
+
+
 
