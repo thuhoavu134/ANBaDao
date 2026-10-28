@@ -820,45 +820,17 @@
 #hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open] .vc-skill-understood{display:block;width:150px;margin:10px auto 24px}
 #hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="skills"] .vc-sheet-header{position:static!important}
 #hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="skills"] .skillbox .sn{display:none!important}
-/* Equipment view keeps all twelve slots legible and lets the modal scroll on short screens. */
-#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="equipment"]{max-height:82dvh!important;overflow-y:auto!important;overscroll-behavior:contain!important}
-#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="equipment"] .hv-detail-workspace{height:auto!important;max-height:none!important;overflow:visible!important}
-#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="equipment"] .hv-detail-equipment{display:flex!important;flex-direction:column;min-height:0;box-sizing:border-box}
-#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="equipment"] .hv-equipment-layout{height:auto!important;min-height:0!important;grid-template-columns:clamp(64px,18vw,78px) minmax(96px,1fr) clamp(64px,18vw,78px)!important;gap:8px!important;margin:0 0 12px!important}
-#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="equipment"] .hv-equipment-side{grid-template-rows:repeat(6,minmax(90px,auto))!important;gap:12px!important}
-#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="equipment"] .hv-equipment-side .hv-equipment-slot{width:100%;min-width:0;min-height:90px!important;grid-template-columns:minmax(0,1fr)!important;grid-template-rows:52px minmax(28px,auto)!important;align-content:start;justify-items:center;gap:3px;padding:5px!important;box-sizing:border-box}
-#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="equipment"] .hv-equipment-slot-art{width:48px!important;height:48px!important;grid-column:1!important;grid-row:1!important;order:0!important;justify-self:center}
-#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="equipment"] .hv-equipment-copy{grid-column:1!important;grid-row:2!important;order:1!important;width:100%;display:flex;align-items:center;justify-content:center;text-align:center!important;align-content:start;gap:1px;padding:0 2px;box-sizing:border-box;white-space:normal;overflow-wrap:anywhere;font-size:11px!important;line-height:1.1!important}
-#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="equipment"] .vc-item-details{flex:0 0 auto!important;min-height:145px!important}
 
-
-
-
-
-/* Owner 2026-10-28: An Bá Đạo equipment uses the same compact six-per-side cells as Trợ trận. */
-#hvHeroDetailRoot[data-vc-layout] .hv-equipment-layout{
-  grid-template-columns:var(--vc-gear-cell) minmax(72px,1fr) var(--vc-gear-cell);
-  --vc-gear-cell:clamp(44px,12vw,56px);
-  justify-content:center;align-items:start;gap:clamp(5px,2vw,10px);margin:4px auto 10px;width:max-content;max-width:100%;
-}
-#hvHeroDetailRoot[data-vc-layout] .hv-equipment-side{
-  grid-template-rows:repeat(6,var(--vc-gear-cell));grid-auto-rows:var(--vc-gear-cell);gap:clamp(4px,1.4vw,6px);width:var(--vc-gear-cell);
-}
-#hvHeroDetailRoot[data-vc-layout] .hv-equipment-side .hv-equipment-slot{
-  display:grid;position:relative;width:var(--vc-gear-cell);height:var(--vc-gear-cell);min-height:0!important;min-width:0;padding:0!important;overflow:hidden;
-  grid-template-columns:1fr!important;grid-template-rows:1fr!important;place-items:center;gap:0;border-radius:8px!important;
-}
-#hvHeroDetailRoot[data-vc-layout] .hv-equipment-side .hv-equipment-slot-art{
-  grid-row:1!important;order:0!important;width:calc(100% - 6px)!important;height:calc(100% - 6px)!important;margin:3px;padding:0!important;object-fit:contain;border:0!important;background:transparent!important;z-index:1;
-}
-#hvHeroDetailRoot[data-vc-layout] .hv-equipment-side .hv-equipment-copy{
-  position:absolute;left:2px;right:2px;bottom:2px;z-index:3;display:block!important;min-width:0;pointer-events:none;text-align:center;
-}
-#hvHeroDetailRoot[data-vc-layout] .hv-equipment-side .hv-equipment-copy span,
-#hvHeroDetailRoot[data-vc-layout] .hv-equipment-side .hv-equipment-copy small{display:none!important}
-#hvHeroDetailRoot[data-vc-layout] .hv-equipment-side .hv-equipment-slot .hv-fx-host>canvas.hv-fx{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none;mix-blend-mode:screen;border-radius:inherit}
-#hvHeroDetailRoot[data-vc-layout] .hv-equipment-side .hv-equipment-slot.is-selected{box-shadow:inset 0 0 0 2px #f0c66a!important}
-@media(max-width:390px){
-  #hvHeroDetailRoot[data-vc-layout]{--vc-gear-cell:44px}
-  #hvHeroDetailRoot[data-vc-layout] .hv-equipment-layout{gap:4px}
-}
+/* PR389: one bounded six-per-side equipment layout; replaces conflicting 90px rows. */
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="equipment"]{height:100dvh!important;max-height:100dvh!important;overflow:hidden!important;}
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="equipment"] .hv-detail-workspace{height:calc(100dvh - 90px)!important;max-height:calc(100dvh - 90px)!important;overflow-y:auto!important;overflow-x:hidden!important;box-sizing:border-box!important;}
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="equipment"] .hv-detail-equipment{display:flex!important;flex-direction:column!important;min-width:0!important;width:100%!important;padding:0!important;}
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="equipment"] .hv-equipment-layout{--vc-gear-cell:clamp(44px,calc((100vw - 54px)/6),64px);display:grid!important;grid-template-columns:var(--vc-gear-cell) minmax(0,1fr) var(--vc-gear-cell)!important;width:100%!important;max-width:100%!important;height:auto!important;min-height:0!important;gap:8px!important;margin:0 0 10px!important;align-items:stretch!important;box-sizing:border-box!important;}
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="equipment"] .hv-equipment-side{display:grid!important;grid-template-rows:repeat(6,var(--vc-gear-cell))!important;grid-auto-rows:var(--vc-gear-cell)!important;width:var(--vc-gear-cell)!important;min-width:0!important;gap:5px!important;}
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="equipment"] .hv-equipment-side .hv-equipment-slot{display:grid!important;place-items:center!important;grid-template-columns:1fr!important;grid-template-rows:1fr!important;width:var(--vc-gear-cell)!important;height:var(--vc-gear-cell)!important;min-height:0!important;min-width:0!important;padding:0!important;gap:0!important;position:relative!important;overflow:hidden!important;box-sizing:border-box!important;border-radius:3px!important;}
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="equipment"] .hv-equipment-slot-art{grid-area:1/1!important;width:calc(100% - 6px)!important;height:calc(100% - 6px)!important;max-width:none!important;padding:0!important;margin:3px!important;object-fit:contain!important;order:0!important;background:none!important;border:0!important;}
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="equipment"] .hv-equipment-copy{display:none!important;}
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="equipment"] .hv-equipment-center{position:relative!important;width:100%!important;min-width:0!important;min-height:0!important;height:100%!important;overflow:hidden!important;}
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="equipment"] .hv-equipment-center :is(img,canvas){position:absolute!important;inset:0!important;width:100%!important;height:100%!important;max-height:100%!important;max-width:100%!important;object-fit:contain!important;}
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="equipment"] .hv-equipment-slot.hv-fx-host>canvas.hv-fx{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;mix-blend-mode:screen;}
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="equipment"] .vc-item-details{min-height:0!important;box-sizing:border-box!important;}
