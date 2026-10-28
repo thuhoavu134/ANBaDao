@@ -620,3 +620,39 @@
 #hvGearRoot .hv-gear-info [data-gear-info-close]{width:100%;margin-top:8px;min-height:44px;border:0;border-radius:22px;background:#3a2c22;color:#f3e2b8;font-weight:900}
 .hv-gear-info-affix{margin:6px 0;padding:8px;border-radius:10px;background:#2a2018}
 .hv-gear-info-affix:empty{display:none}
+
+
+/* Owner 2026-10-28: mobile hero gear + star-upgrade readability */
+/* 12 equipment cells: 6 columns, compact enough for 375/390px while keeping a clean 256px source icon. */
+.hv-gear-slots{
+  grid-template-columns:repeat(6,minmax(0,1fr));
+  gap:clamp(3px,1.35vw,6px);
+  padding-inline:2px;
+}
+.hv-gear-slot{
+  min-width:0;min-height:0;width:100%;aspect-ratio:1;border-radius:8px;
+}
+.hv-gear-slot img{
+  display:block;width:calc(100% - 6px);height:calc(100% - 6px);
+  margin:3px;object-fit:contain;
+}
+.hv-gear-slot .roman{top:2px;left:3px;font-size:8px}
+.hv-gear-slot .plus{right:2px;bottom:2px;width:16px;height:16px;line-height:16px;font-size:12px}
+.hv-gear-slot .lvl{right:2px;top:2px;font-size:8px}
+
+/* Thăng sao: bigger hierarchy and numbers; do not let the text sit lost in empty space. */
+.hv-star-panel{max-height:42%}
+.hv-star-panel .hv-gear-title{font-size:clamp(17px,4.6vw,22px);padding:4px 0}
+.hv-star-panel .hv-gear-copy{font-size:clamp(13px,3.6vw,16px);line-height:1.45;margin:6px 0 10px}
+.hv-star-panel .hv-star-name{font-size:clamp(19px,5.4vw,26px);line-height:1.2;margin:8px 0 6px;font-weight:900}
+.hv-star-panel .hv-gear-cost{font-size:clamp(14px,4.2vw,18px);font-weight:800;gap:clamp(18px,7vw,32px);margin:10px 0}
+.hv-star-panel .hv-gear-actions{margin-top:10px}
+.hv-star-panel .hv-gear-actions button{min-height:52px;font-size:clamp(15px,4vw,18px)}
+.hv-star-panel .hv-star-cell .lvl{font-size:11px;padding:1px 5px}
+@media(max-width:380px){
+  .hv-gear-slots{gap:3px;padding-inline:0}
+  .hv-gear-slot img{width:calc(100% - 4px);height:calc(100% - 4px);margin:2px}
+  .hv-star-panel{max-height:44%}
+  .hv-star-panel .hv-star-name{font-size:19px}
+  .hv-star-panel .hv-gear-cost{font-size:14px;gap:16px}
+}
