@@ -91,6 +91,9 @@
           <button type="button" data-gear-picker-close>Đóng</button>
         </div>
       </div>
+      <div class="hv-gear-picker hv-gear-info" data-gear-info>
+        <div class="hv-gear-sheet" data-gear-info-body></div>
+      </div>
     </section>
     <section class="hv-gear-screen hv-smelt-screen" data-gear-view="smelt">
       <div class="hv-gear-top">
@@ -1332,6 +1335,32 @@
     if (!Array.isArray(state.smeltPicks)) state.smeltPicks = [];
     show('smelt');
   }
+  function closeInfo() {
+    root.querySelector('[data-gear-info]')?.classList.remove('is-open');
+  }
+  function openInfo(slotId) {
+    const item = itemOf(board()[slotId]);
+    const box = root.querySelector('[data-gear-info-body]');
+    if (!item || !box) return;
+    const slot = slots.find(s => s.id === slotId);
+    const name = typeof itemName === 'function' ? itemName(item) : (slot ? slot.name : '');
+    const max = typeof gearMaxLvl === 'function' ? gearMaxLvl(item) : 15;
+    const statLabel = (typeof DATA !== 'undefined' && DATA.items?.statName?.[item.slot]) || '';
+    const statVal = typeof itemStat === 'function' ? itemStat(item) : '';
+    const mold = (typeof FORGE_MOLDS !== 'undefined' && item.mold && FORGE_MOLDS[item.mold]) ? FORGE_MOLDS[item.mold] : null;
+    const affix = typeof hvAffixLinesHtml === 'function' ? hvAffixLinesHtml(item) : '';
+    box.innerHTML = `<div class="hv-gear-info-head">
+        <span class="hv-gear-info-art rar-${item.rar || 'b'}"><img src="${slotArtFor(slotId, item) || artFor(item)}" alt=""></span>
+        <div><h3 class="hv-gear-info-name">${name}</h3>
+          <p class="hv-gear-info-sub">${slot ? slot.name + ' · ' : ''}Phẩm ${String(item.rar || 'b').toUpperCase()}</p>
+          <span class="hv-gear-info-lvl">Cường hóa +${item.lvl}/${max}</span></div>
+      </div>
+      <div class="hv-gear-info-stats">${statLabel ? `<div>${statLabel} <b>+${Number(statVal).toLocaleString('vi-VN')}</b></div>` : ''}${mold ? `<div>${mold.icon || ''} ${mold.name} <b>${mold.desc || ''}</b></div>` : ''}</div>
+      <div class="hv-gear-info-affix">${affix}</div>
+      <div class="hv-gear-info-actions"><button type="button" class="ghost" data-gear-info-swap>Thay đồ</button><button type="button" data-gear-info-enhance>Cường hóa</button></div>
+      <button type="button" data-gear-info-close>Đóng</button>`;
+    root.querySelector('[data-gear-info]').classList.add('is-open');
+  }
   function closePicker() {
     root.querySelector('[data-gear-picker]').classList.remove('is-open');
     state.picker = null;
@@ -1398,6 +1427,9 @@
     if (event.target.closest('[data-gear-wheel]')) { closePicker(); show('wheel'); return; }
     if (event.target.closest('[data-gear-board]')) { show('board'); return; }
     if (event.target.closest('[data-gear-picker-close]')) { closePicker(); return; }
+    if (event.target.closest('[data-gear-info-close]') || event.target.matches('[data-gear-info]')) { closeInfo(); return; }
+    if (event.target.closest('[data-gear-info-enhance]')) { closeInfo(); state.tab = 'enhance'; renderBoard(); return; }
+    if (event.target.closest('[data-gear-info-swap]')) { const sid = state.slot; closeInfo(); openPicker(sid); return; }
     if (event.target.matches('[data-gear-picker]')) { closePicker(); return; }
     const smelt = event.target.closest('[data-gear-smelt]');
     if (smelt) { openSmelt(); return; }
@@ -1446,9 +1478,10 @@
       const id = slotButton.dataset.gearSlot;
       const worn = itemOf(board()[id]);
       if (!worn) { state.slot = id; openPicker(id); return; }
-      if (state.slot === id && state.tab === 'wear') { openPicker(id); return; }
+      // Owner 2026-10-28: ấn vào đồ -> popup thông tin (cấp +N, chỉ số, dòng phụ); số +N không còn nằm trên ô.
       state.slot = id;
       renderBoard();
+      openInfo(id);
       return;
     }
     const pick = event.target.closest('[data-gear-pick]');
