@@ -437,7 +437,7 @@
     return globalThis.honVietEquipmentAssetFor?.(item) || 'assets/ui/menu-v3233/icons/forge.png';
   }
   // Owner 2026-10-25: mỗi ô bảng có hình riêng theo phẩm (owner vẽ). Ô chưa có hình giữ hình theo loại đồ.
-  const SLOT_ART = { I: 'non', II: 'dai', III: 'day-chuyen', IV: 'nhan', VI: 'quan', VIII: 'gang', IX: 'ho-uyen', X: 'khan' };
+  const SLOT_ART = { I: 'non', II: 'dai', III: 'day-chuyen', IV: 'nhan', V: 'giap', VI: 'quan', VII: 'giay', VIII: 'gang', IX: 'ho-uyen', X: 'khan', XI: 'ngoc-boi', XII: 'vu-khi' };
   const SLOT_ART_RAR = { b: 1, a: 1, s: 1, ss: 1, ssr: 1 };
   function slotArtFor(slotId, item) {
     const key = SLOT_ART[slotId];
@@ -789,7 +789,7 @@
       plus.hidden = !!item;
       if (item) {
         img.src = slotArtFor(slot.id, item) || artFor(item);
-        img.alt = typeof itemName === 'function' ? itemName(item) : slot.name;
+        img.alt = slotItemName(slot.id, item) || slot.name;
         lvl.hidden = false;
         lvl.textContent = '+' + item.lvl;
       } else {
@@ -1335,6 +1335,25 @@
     if (!Array.isArray(state.smeltPicks)) state.smeltPicks = [];
     show('smelt');
   }
+  const SLOT_NAMES = {
+    I: { b: "Mũ Rơm Tả Tơi", a: "Nón Lá Phố Đêm", s: "Mũ Da Sương Mù", ss: "Nón Đồng Chạm Rồng", ssr: "Kim Khôi Mộng Ảnh" },
+    II: { b: "Đai Vải Sờn", a: "Đai Da Bò", s: "Đai Đồng Đen", ss: "Đai Bạc Chạm Mây", ssr: "Long Văn Kim Đai" },
+    III: { b: "Dây Cước Chợ Đêm", a: "Chuỗi Hạt Cỏ", s: "Dây Bạc Mảnh", ss: "Chuỗi Ngọc Lam", ssr: "Tỏa Nguyệt Linh Xuyến" },
+    IV: { b: "Nhẫn Đồng Méo", a: "Nhẫn Thiếc Cũ", s: "Nhẫn Bạc Khắc Gió", ss: "Nhẫn Hồng Ngọc", ssr: "Nguyệt Ấn Chỉ" },
+    V: { b: "Áo Vải Vá", a: "Giáp Da Mỏng", s: "Chiến Giáp Đồng", ss: "Giáp Bạc Thêu Mây", ssr: "Huyền Giáp Long Lân" },
+    VI: { b: "Quần Tơ Rách", a: "Quần Vải Bố", s: "Quần Da Lửng", ss: "Quần Gấm Thêu", ssr: "Vân Cẩm Chiến Khố" },
+    VII: { b: "Dép Rơm Mòn", a: "Giày Vải Bạc Màu", s: "Giày Da Sương", ss: "Hài Gấm Thêu Vân", ssr: "Đạp Vân Ngoa" },
+    VIII: { b: "Găng Vải Thô", a: "Găng Da Cũ", s: "Găng Đồng Đanh", ss: "Găng Bạc Chạm", ssr: "Long Trảo Hộ Thủ" },
+    IX: { b: "Xà Cạp Vải", a: "Hộ Cẳng Da", s: "Hộ Uyển Đồng", ss: "Hộ Uyển Bạc", ssr: "Kim Cang Hộ Cước" },
+    X: { b: "Khăn Mộc Bạc", a: "Khăn Lụa Rẻ", s: "Khăn Gấm Lam", ss: "Khăn Ngọc Thêu", ssr: "Phi Vân Cẩm Đới" },
+    XI: { b: "Mảnh Đá Vụn", a: "Ngọc Thô Chợ Đêm", s: "Bội Ngọc Xanh", ss: "Dương Chi Bạch Ngọc", ssr: "Huyết Ngọc Long Bội" },
+    XII: { b: "Dao Rỉ Sét", a: "Đao Thiếc Cũ", s: "Kiếm Thép Sương", ss: "Đao Bạc Chạm Vân", ssr: "Trảm Nguyệt Linh Đao" },
+  };
+  function slotItemName(slotId, item) {
+    const set = SLOT_NAMES[slotId];
+    const key = String(item?.rar || 'b').toLowerCase();
+    return (set && set[key]) || (typeof itemName === 'function' ? itemName(item) : '');
+  }
   function closeInfo() {
     root.querySelector('[data-gear-info]')?.classList.remove('is-open');
   }
@@ -1343,7 +1362,7 @@
     const box = root.querySelector('[data-gear-info-body]');
     if (!item || !box) return;
     const slot = slots.find(s => s.id === slotId);
-    const name = typeof itemName === 'function' ? itemName(item) : (slot ? slot.name : '');
+    const name = slotItemName(slotId, item) || (slot ? slot.name : '');
     const max = typeof gearMaxLvl === 'function' ? gearMaxLvl(item) : 15;
     const statLabel = (typeof DATA !== 'undefined' && DATA.items?.statName?.[item.slot]) || '';
     const statVal = typeof itemStat === 'function' ? itemStat(item) : '';
@@ -1373,7 +1392,7 @@
     if (!list.length) {
       box.innerHTML = `<div class="hv-gear-empty"><p>Chưa có trang bị!</p><button type="button" data-gear-go="forge">Đi nhận thưởng</button></div>`;
     } else {
-      box.innerHTML = list.map(item => `<button type="button" class="hv-gear-choice" data-gear-pick="${item.uid}"><img src="${slotArtFor(slotId, item) || artFor(item)}" alt=""><span>${typeof itemName === 'function' ? itemName(item) : item.slot} +${item.lvl}<small style="display:block">${String(item.rar).toUpperCase()}</small></span><b>Mặc</b></button>`).join('');
+      box.innerHTML = list.map(item => `<button type="button" class="hv-gear-choice" data-gear-pick="${item.uid}"><img src="${slotArtFor(slotId, item) || artFor(item)}" alt=""><span>${slotItemName(slotId, item)} +${item.lvl}<small style="display:block">${String(item.rar).toUpperCase()}</small></span><b>Mặc</b></button>`).join('');
     }
     root.querySelector('[data-gear-picker]').classList.add('is-open');
     renderBoard();
