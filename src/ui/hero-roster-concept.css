@@ -1,0 +1,73 @@
+/* Roster concept: lacquered wood, compact gold-framed portraits, live search. */
+#hvHeroRosterV4[data-roster-concept="dark-hall"]{background:linear-gradient(#160e0755,#160e0766),url('assets/ui/an-ba-dao/hall-v1.webp') center/cover;color:#efdfbc;padding:max(6px,env(safe-area-inset-top)) 8px 0;font-family:'Noto Serif','Times New Roman',serif;isolation:isolate}
+#hvHeroRosterV4[data-roster-concept="dark-hall"]::before{content:'';position:absolute;inset:4px;z-index:-1;border:1px solid #b38c4b;border-radius:8px;box-shadow:inset 0 0 0 3px #20150e,inset 0 0 0 4px #b38c4b44;pointer-events:none}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-top{padding:0 10px;background:none;border:0;box-shadow:none}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-profile{height:40px;grid-template-columns:30px 1fr auto;padding:0;gap:7px}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-avatar{width:30px;height:30px;min-height:30px;padding:0;border:1px solid #a88951;border-radius:50%;background:#22180f;font:24px Georgia;color:#f7dda2;box-shadow:none}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-name{font:italic 700 19px/1 Georgia;color:#fff2cb;text-shadow:1px 2px #5b2017}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-sub{display:none}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-res{display:flex;gap:5px}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-res span{min-width:0;padding:3px 5px;background:#0e0c09b0;border:1px solid #846a3c;border-radius:12px;color:#f3e5c6;font:10px system-ui}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-roster-heading{display:flex;align-items:center;justify-content:space-between;height:33px}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-roster-heading h1{margin:0;font:700 25px Georgia;color:#f7dda2}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-roster-heading>span{font:11px system-ui}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-search{height:30px;display:flex;align-items:center;gap:6px;padding:0 7px;border:1px solid #a98a53;background:#13100dbd;border-radius:4px}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-search input{border:0;outline:0;background:none;color:#f5e5c3;font:12px Georgia;min-width:0;width:100%;height:100%}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-search input::placeholder{color:#b6a98b}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-tabs{height:32px;padding:3px 0 0;grid-template-columns:58px 65px 1fr;align-items:center}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-tab,#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-tab.active{height:27px;min-height:27px;border:0;border-radius:0;background:none;box-shadow:none;color:#b7a482;font:11px Georgia;padding:0}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-tab.active{color:#ffdc8e;border-bottom:1px solid #d5ac61}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-sort{color:#b9a98a;font:10px Georgia}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] select{background:#22190f;color:#dfcdab;border:1px solid #6f5632;max-width:94px;padding:3px;font-size:10px}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-filter{height:54px;justify-content:flex-start;gap:9px;background:none;border:0;overflow-x:auto;scrollbar-width:none;padding:1px 0 5px}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-filter button{display:flex;flex-direction:column;align-items:center;gap:3px;flex:0 0 35px;width:35px;height:48px;min-height:44px;padding:0;border:0;background:none;color:#d4c3a0;border-radius:0;outline:0}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-filter button i{font-style:normal;display:grid;place-items:center;width:29px;height:29px;background:radial-gradient(circle,#4d3820,#1a130d);border:1px solid #ad8a4c;border-radius:50%;font-size:17px}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-filter button small{font:9px Georgia;white-space:nowrap}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-filter button.active i{border-color:#ffe098;box-shadow:0 0 9px #ffd16980;color:#ffe7ad}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-grid{grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:auto;gap:9px;padding:6px 11px 14px}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-card{aspect-ratio:.70;min-height:0;border:1px solid #c9a357;border-radius:4px;background:#21170f;box-shadow:0 0 0 1px #130e08,inset 0 0 0 2px #dbc18230;overflow:hidden}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-art{inset:2px;background:radial-gradient(ellipse at 50% 30%,#8b755550,#16130f 95%);border-radius:2px}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-veil{inset:auto 2px 2px;height:39%;padding:0 2px 4px;background:linear-gradient(transparent,#1d150bd9 60%,#171008);gap:3px}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-element{position:absolute;top:4px;left:4px;margin:0;width:18px;height:18px;font-size:11px;border:1px solid #d8b471;background:#21170f;box-shadow:0 0 5px #0008;z-index:6}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-veil{position:static}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-veil::before{content:'';position:absolute;left:2px;right:2px;bottom:2px;height:42%;background:linear-gradient(transparent,#171008 90%);z-index:3}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-stars{position:absolute;left:2px;right:2px;bottom:20px;z-index:5;font-size:10px;color:#ffe09a;text-shadow:0 1px 2px #000;letter-spacing:-1px}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-cardname{position:absolute;left:3px;right:3px;bottom:6px;z-index:5;max-width:none;color:#fff0ca;text-shadow:0 1px 2px #000;font:700 10px/1.1 Georgia}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-grade{left:auto;right:5px;top:4px;width:auto;height:auto;color:#ffe5a1;font:italic 700 13px Georgia;text-shadow:0 1px 3px #000}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-level{display:none}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-dock{background:linear-gradient(#372619,#20160f);border:1px solid #92713e;border-radius:5px 5px 0 0;margin-top:auto;padding:5px 0 max(8px,env(safe-area-inset-bottom))}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-dock img{width:30px;height:28px;filter:sepia(.5)}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-dock button{color:#b8a481;font:10px Georgia;min-height:44px}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-dock [aria-current]{color:#ffe4a0;background:radial-gradient(ellipse,#ba8b3d44,transparent 70%)}
+
+#hvHeroRosterV4[data-roster-concept="dark-hall"]{width:min(100%,480px)!important;container-type:inline-size}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;grid-auto-rows:calc((100cqw - 50px)/2.2)!important;gap:9px!important;padding:3px 9px 12px!important}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-card{height:100%!important;aspect-ratio:auto!important;min-height:0!important}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-cardname{display:block!important;min-height:0!important;height:auto!important;white-space:nowrap!important;-webkit-line-clamp:unset!important;line-height:1.1!important}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-dock{background:linear-gradient(#372619,#20160f)!important}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-filter button.active{background:none!important;box-shadow:none!important;border:0!important}
+
+/* An Bá Đạo reference proportions. Keep overrides after the shared shell. */
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-name img{display:block;width:108px;height:40px;object-fit:contain}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-profile{grid-template-columns:18px 1fr auto!important;height:43px!important;gap:3px!important}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-avatar{width:22px!important;height:36px!important;min-height:36px!important;border:0!important;background:none!important;font-size:23px!important}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-roster-heading{height:35px!important}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-roster-heading h1{font:600 24px/1.2 'Noto Serif',serif!important;letter-spacing:1px}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-roster-heading>span{color:#f1e4c6!important}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-tabs{height:24px!important;padding:0!important}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-tab{height:23px!important;min-height:23px!important;font-size:9px!important}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-filter{justify-content:space-between!important;height:63px!important;padding:5px 0!important;gap:3px!important}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-filter button{border:0!important;box-shadow:none!important;height:52px!important;min-height:44px!important}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-filter button::before,#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-filter button::after{content:none!important}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-filter button i{width:32px!important;height:32px!important}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-stars{bottom:22px!important;font-size:13px!important;letter-spacing:-1px!important}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-cardname{font:600 12px/1.15 'Noto Serif',serif!important;bottom:6px!important}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-grade{font-size:17px!important}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-element{width:22px!important;height:22px!important;font-size:13px!important}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-card{box-shadow:inset 0 0 0 2px #e1b86633,0 2px 3px #130b06!important}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-dock button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px!important;font-size:10px!important}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-dock i{font:24px/1 Georgia;color:#b9a078}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-dock [aria-current] i{color:#ffdc82}
+#hvHeroRosterV4[data-roster-concept="dark-hall"] .v4-dock button:disabled{opacity:.65;background:none!important}
+
+

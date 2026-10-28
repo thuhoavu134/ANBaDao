@@ -16,7 +16,7 @@ test('L108: Lục Thần lore overlay — sáu ấn, không sửa index.html', (
   assert.match(ui, /Ấn Phố/);
   assert.match(ui, /Lục Thần/);
   assert.match(ui, /Kẻ Trộm Ấn/);
-  assert.match(ui, /document\.title = 'Lục Thần'/);
+  assert.match(ui, /document\.title = 'An Bá Đạo'/); // Owner 28/10: PR389 shell is An Bá Đạo
   assert.doesNotMatch(ui, /document\.addEventListener\(['"](?:click|pointerdown|pointerup)/);
   assert.match(css, /\.hv-lore-title/);
   assert.match(lane, /lore-luc-than-v1/);

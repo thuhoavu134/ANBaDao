@@ -1861,8 +1861,21 @@
       return baseNav(name);
     };
   }
+  let previewBaseDelta = null;
   if (typeof heroStats === 'function') {
     const baseStats = heroStats;
+    previewBaseDelta = (id, delta) => {
+      const base = baseStats(id), before = heroStats(id);
+      const flats = [bonus(), relicBonus(), petBonus(), spiritBonus(), antiqueBonus(), illusionBonus(), fishBonus()];
+      const divine = divineBonus(), luck = luckBonus();
+      const next = { ...before };
+      for (const key of ['hp', 'atk', 'def']) {
+        const flat = flats.reduce((sum, values) => sum + (Number(values[key]) || 0), 0);
+        const multiplier = 1 + (Number(divine[key]) || 0) + (Number(luck[key]) || 0);
+        next[key] = Math.round((base[key] + flat + (delta[key] || 0)) * multiplier);
+      }
+      return next;
+    };
     heroStats = function accountGearHeroStats(id) {
       const stats = baseStats(id);
       const add = bonus();
@@ -1884,5 +1897,20 @@
     };
   }
 
-  window.HonVietAccountGear = { openAssistWheel, openBoard, openSmelt, openRelic, openPet, openSpirit, openDivine, openStar, openAntique, openLuck, openIllusion, openFish, close: hide, slots };
+  // Cross-screen API: domain declarations stay private to the account-gear bundle.
+  // Hero detail must use this facade rather than assuming its constants are globals.
+  const heroDetailGear = {
+    slots,
+    previewBaseDelta: (id, delta) => previewBaseDelta?.(id, delta) || null,
+    candidates: slotId => candidatesForGearSlot(P, slotId, { rarOrder }),
+    art: (slotId, item) => slotArtFor(slotId, item) || artFor(item),
+    change: (slotId, uid, action) => {
+      const change = prepareAccountGearChange(P, { slotId, uid, action });
+      if (!change.ok) return change;
+      return commit(change.gear, 'gear.' + action + ':' + slotId + ':' + uid + ':' + (P.revision || 0), 'gear.' + action);
+    }
+  };
+  window.HonVietAccountGear = { openAssistWheel, openBoard, openSmelt, openRelic, openPet, openSpirit, openDivine, openStar, openAntique, openLuck, openIllusion, openFish, close: hide, slots, heroDetailGear };
 })();
+
+

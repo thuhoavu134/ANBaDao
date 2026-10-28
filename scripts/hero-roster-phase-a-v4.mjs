@@ -76,3 +76,5 @@ html = html.slice(0, bodyEnd) + js + '\n' + html.slice(bodyEnd);
 writeFileSync(p, html);
 console.log('State-backed roster installed: official identities, live stats, one route owner');
 
+
+
