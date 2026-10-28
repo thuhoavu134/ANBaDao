@@ -35,7 +35,7 @@ test('real late build owner emits preview CSS while preserving live scripts and 
  const dir=mkdtempSync(join(tmpdir(),'vo-cac-'));
  try{
   mkdirSync(join(dir,'src/ui'),{recursive:true});mkdirSync(join(dir,'dist'));
-  for(const file of ['core-screen-polish.css','hero-detail-vo-cac.css'])copyFileSync(new URL('src/ui/'+file,root),join(dir,'src/ui',file));
+  for(const file of ['core-screen-polish.css','hero-detail-vo-cac.css','hero-roster-concept.css'])copyFileSync(new URL('src/ui/'+file,root),join(dir,'src/ui',file));
   const live='<body><button id="lvBtn">Nâng cấp</button><script>window.keepExistingHandler=true;</script></body>';
   writeFileSync(join(dir,'dist/index.html'),'<html><head></head>'+live+'</html>');
   installCoreScreenPolish(dir);
