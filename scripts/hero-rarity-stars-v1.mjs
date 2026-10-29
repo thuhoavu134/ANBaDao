@@ -43,7 +43,7 @@ export function patchHeroRarityStars(html, domain) {
   once('function netOnline(){ return !!(NET.server&&NET.token); }', 'function netOnline(){ return !__HV_QA_STARUP__&&!!(NET.server&&NET.token); }');
   once('async function netAuth(kind){', `async function netAuth(kind){\n  if(__HV_QA_STARUP__){toast('QA chỉ dùng hồ sơ khách cục bộ.');return;}`);
   once('function netLogout(){', `function netLogout(){\n  if(__HV_QA_STARUP__){toast('Phiên máy thật được giữ nguyên trong QA.');return;}`);
-  once('  <script src=\"assets/qa/qa-gear-seed.js\"></script>', '  <script src=\"assets/qa/qa-gear-seed.js\"></script>\n  <script src=\"assets/qa/qa-star-up-seed.js\"></script>');
+  once('  <script src=\"assets/qa/qa-gear-seed.js\"></script>', '  <script src=\"assets/qa/qa-gear-seed.js\"></script>\n  <script src=\"assets/qa/qa-star-up-seed.js?v=3ac1d14-2\"></script>');
   once('const heroes={}; for(const id in DATA.heroes) heroes[id]={owned:false,level:1,stars:1};',
     'const heroes={}; for(const id in DATA.heroes) heroes[id]={owned:false,level:1,...initialHeroStars(DATA.heroes[id])};');
   once('for(const id in DATA.heroes) if(!p.heroes[id]) p.heroes[id]={owned:false,level:1,stars:1};',
@@ -69,4 +69,5 @@ export function installHeroRarityStars(root) {
   const domain = readFileSync(join(root, 'src/domain/hero/rarity-stars.mjs'), 'utf8');
   writeFileSync(path, patchHeroRarityStars(readFileSync(path, 'utf8'), domain));
 }
+
 
