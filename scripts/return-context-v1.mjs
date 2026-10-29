@@ -113,7 +113,12 @@ const runtime = String.raw`<script id="samkok-r04-return-context">
   };
   const enterHeroDetail=({entering,from,mode,encounterId,heroId,filter}={})=>{
     if(!entering)return {ok:true,duplicate:true,context:context?clone(context):null};
-    const sourceScreen=SCREEN.test(String(from||""))?String(from):"hub";
+    // Owner 2026-10-29: swiping to another hero re-enters renderHeroDetail while the screen is
+    // already heroDetail. Keep the ORIGINAL return target instead of overwriting it with
+    // "heroDetail", otherwise the back button navigates to itself and never leaves the detail.
+    if(String(from||"")==="heroDetail"&&context&&context.sourceRoute.screen!=="heroDetail")
+      return {ok:true,duplicate:true,context:clone(context)};
+    const sourceScreen=SCREEN.test(String(from||""))&&String(from)!=="heroDetail"?String(from):"hub";
     return capture({sourceRoute:{screen:sourceScreen,params:encounterId?{encounterId}:{}},mode,encounterId,heroId,tab:"overview",filter:filter||"all",scroll:readScroll(sourceScreen),draftRevision:readRevision()});
   };
   const beforeNavigate=({from,name}={})=>{
