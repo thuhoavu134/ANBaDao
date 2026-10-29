@@ -4,6 +4,11 @@ import {readFileSync} from 'node:fs';
 import vm from 'node:vm';
 import {initialHeroStars,normalizeRarityStars,rarityBaseStars,refundableHeroStarShards} from '../src/domain/hero/rarity-stars.mjs';
 import {buildStarUpResultView,runStarUpOnce,patchHeroRarityStars} from '../scripts/hero-rarity-stars-v1.mjs';
+test('star-up QA bypasses the login overlay before touching session or network',()=>{
+ const source=readFileSync(new URL('../src/ui/login-gate-runtime.js',import.meta.url),'utf8');
+ const blocked=new Proxy({}, {get(){throw new Error('QA must not touch login state');}});
+ assert.doesNotThrow(()=>vm.runInNewContext(source,{__HV_QA_STARUP__:true,document:blocked,localStorage:blocked,sessionStorage:blocked,fetch(){throw new Error('QA must not fetch auth');}}));
+});
 const defs={ssr:{rarity:'ssr'},six:{rarity:'SSR'},sr:{rarity:'sr'}};
 test('new SSR starts at five real stars with no refundable free investment',()=>{
  const hero={owned:true,level:1,...initialHeroStars(defs.ssr)};

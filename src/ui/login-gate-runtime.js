@@ -1,4 +1,6 @@
 (() => {
+  // The isolated branch-preview QA profile never enters authentication or cloud saves.
+  if (typeof __HV_QA_STARUP__ !== 'undefined' && __HV_QA_STARUP__) return;
   if (typeof document === 'undefined' || !document.body) return;
   if (document.getElementById('hvLoginRoot')) return;
 
@@ -525,3 +527,4 @@
     }, 80);
   }
 })();
+
