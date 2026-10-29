@@ -46,18 +46,19 @@
   reset.type = 'button';
   reset.textContent = 'Đặt lại';
   reset.setAttribute('aria-label', 'Đặt lại hồ sơ thử nghiệm thăng sao');
-  Object.assign(reset.style, {
+  const qaButtonStyle = {
     minWidth: '72px', minHeight: '44px', borderRadius: '999px', border: '1px solid #e8c974',
     color: '#241b10', background: 'linear-gradient(#f7df9c,#c89b44)',
     font: '700 12px system-ui,sans-serif', cursor: 'pointer'
-  });
+  };
+  Object.assign(reset.style, qaButtonStyle);
   reset.addEventListener('click', () => {
     if (seed() && typeof toast === 'function') toast('Hồ sơ QA đã được đặt lại.');
   });
   const refill = document.createElement('button');
   refill.type = 'button'; refill.textContent = 'Nạp nguyên liệu';
   refill.setAttribute('aria-label', 'Nạp nguyên liệu thử nghiệm, giữ nguyên cấp và sao');
-  Object.assign(refill.style, reset.style);
+  Object.assign(refill.style, qaButtonStyle);
   refill.addEventListener('click', () => {
     refillMaterials(P); persist();
     if (typeof refreshResbar === 'function') refreshResbar();
