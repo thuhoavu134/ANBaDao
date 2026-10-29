@@ -64,6 +64,7 @@ test('star-up patch keeps confirmation close-only and resets shared reward UI fo
   'function persist(){',
   'function netOnline(){ return !!(NET.server&&NET.token); }',
   'async function netAuth(kind){',
+  'function netLogout(){',
   'function heroStars(id){ return (P.heroes[id]&&P.heroes[id].stars)||1; }',
   'shards:10*S2*(S2-1)','hh.level=1; hh.stars=1;',
   'P.heroes[id].stars++; persist(); return {ok:true};',
@@ -86,6 +87,7 @@ test('star-up patch keeps confirmation close-only and resets shared reward UI fo
  assert.match(patched,/mong_gioi_qa_star_up_v1/);
  assert.match(patched,/function netOnline\(\)\{ return !__HV_QA_STARUP__/);
  assert.match(patched,/if\(__HV_QA_STARUP__\)\{toast\('QA chỉ dùng hồ sơ khách cục bộ\.'/);
+ assert.match(patched,/if\(__HV_QA_STARUP__\)\{toast\('Phiên máy thật được giữ nguyên trong QA\.'/);
  assert.match(patched,/portraitSrc\(id,'card'\)/);
 });
 
