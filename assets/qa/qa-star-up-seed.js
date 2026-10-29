@@ -32,33 +32,33 @@
 
   const banner = document.createElement('details');
   banner.setAttribute('aria-label', 'Hồ sơ thử nghiệm thăng sao');
-  Object.assign(banner.style, {
-    position: 'fixed', zIndex: '10000', left: '50%', bottom: 'calc(12px + env(safe-area-inset-bottom))',
-    transform: 'translateX(-50%)', display: 'flex', alignItems: 'center', gap: '10px',
-    maxWidth: 'calc(100vw - 24px)', padding: '8px 10px 8px 14px', borderRadius: '999px',
-    color: '#f8e9c9', background: 'linear-gradient(135deg,#211b17,#42301f)',
-    border: '1px solid #d2aa5d', boxShadow: '0 5px 20px #0009',
-    font: '600 12px/1.2 system-ui,sans-serif'
-  });
+  banner.style.cssText = [
+    'position:fixed', 'z-index:10000', 'left:50%',
+    'bottom:calc(12px + env(safe-area-inset-bottom))', 'transform:translateX(-50%)',
+    'display:flex', 'align-items:center', 'gap:10px', 'max-width:calc(100vw - 24px)',
+    'padding:8px 10px 8px 14px', 'border-radius:999px', 'color:#f8e9c9',
+    'background:linear-gradient(135deg,#211b17,#42301f)', 'border:1px solid #d2aa5d',
+    'box-shadow:0 5px 20px #0009', 'font:600 12px/1.2 system-ui,sans-serif'
+  ].join(';');
   const label = document.createElement('summary');
   label.textContent = 'TEST THĂNG SAO · 10.000 mảnh/tướng';
   const reset = document.createElement('button');
   reset.type = 'button';
   reset.textContent = 'Đặt lại';
   reset.setAttribute('aria-label', 'Đặt lại hồ sơ thử nghiệm thăng sao');
-  const qaButtonStyle = {
-    minWidth: '72px', minHeight: '44px', borderRadius: '999px', border: '1px solid #e8c974',
-    color: '#241b10', background: 'linear-gradient(#f7df9c,#c89b44)',
-    font: '700 12px system-ui,sans-serif', cursor: 'pointer'
-  };
-  Object.assign(reset.style, qaButtonStyle);
+  const qaButtonCss = [
+    'min-width:72px', 'min-height:44px', 'border-radius:999px', 'border:1px solid #e8c974',
+    'color:#241b10', 'background:linear-gradient(#f7df9c,#c89b44)',
+    'font:700 12px system-ui,sans-serif', 'cursor:pointer'
+  ].join(';');
+  reset.style.cssText = qaButtonCss;
   reset.addEventListener('click', () => {
     if (seed() && typeof toast === 'function') toast('Hồ sơ QA đã được đặt lại.');
   });
   const refill = document.createElement('button');
   refill.type = 'button'; refill.textContent = 'Nạp nguyên liệu';
   refill.setAttribute('aria-label', 'Nạp nguyên liệu thử nghiệm, giữ nguyên cấp và sao');
-  Object.assign(refill.style, qaButtonStyle);
+  refill.style.cssText = qaButtonCss;
   refill.addEventListener('click', () => {
     refillMaterials(P); persist();
     if (typeof refreshResbar === 'function') refreshResbar();
