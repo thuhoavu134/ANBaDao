@@ -30,7 +30,7 @@
     return true;
   };
 
-  const banner = document.createElement('aside');
+  const banner = document.createElement('details');
   banner.setAttribute('aria-label', 'Hồ sơ thử nghiệm thăng sao');
   Object.assign(banner.style, {
     position: 'fixed', zIndex: '10000', left: '50%', bottom: 'calc(12px + env(safe-area-inset-bottom))',
@@ -40,7 +40,7 @@
     border: '1px solid #d2aa5d', boxShadow: '0 5px 20px #0009',
     font: '600 12px/1.2 system-ui,sans-serif'
   });
-  const label = document.createElement('span');
+  const label = document.createElement('summary');
   label.textContent = 'TEST THĂNG SAO · 10.000 mảnh/tướng';
   const reset = document.createElement('button');
   reset.type = 'button';
@@ -66,8 +66,10 @@
     if (typeof showScreen === 'function') showScreen('heroDetail');
     if (typeof toast === 'function') toast('Đã nạp đủ nguyên liệu test. Giữ nguyên cấp và sao.');
   });
-  banner.style.flexWrap = 'wrap'; banner.style.justifyContent = 'center';
-  label.style.flexBasis = '100%'; label.style.textAlign = 'center';
+  // Collapsed by default so the QA controls do not cover the profile's star button.
+  banner.style.display = 'block'; banner.style.textAlign = 'center';
+  label.style.cursor = 'pointer'; label.style.padding = '4px';
+  reset.style.margin = '6px 4px 0'; refill.style.margin = '6px 4px 0';
   banner.style.borderRadius = '12px';
   banner.append(label, reset, refill);
   document.body.appendChild(banner);
