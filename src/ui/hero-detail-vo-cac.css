@@ -868,3 +868,14 @@
 #hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="star"] #stBtn{display:block!important;width:100%!important;min-height:48px!important;margin:12px 0 0!important;border:0!important;border-radius:6px!important;background:linear-gradient(180deg,#f0d078,#c4892c)!important;color:#3a2408!important;font:700 17px/1 'Noto Serif',serif!important;}
 #hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="star"] #stBtn:disabled{background:linear-gradient(#66635b,#383630)!important;color:#c4c0b5!important;}
 #hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="star"] .vc-shard-source{display:block!important;width:100%!important;min-height:44px!important;margin-top:8px!important;float:none!important;background:#2a1f16!important;color:#e8d3a8!important;border:1px solid #7d6338!important;border-radius:6px!important;font:600 14px/1 'Noto Serif',serif!important;}
+
+/* Owner 2026-10-30: show the increase arrow; both actions must fit without scrolling. */
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="star"] .vc-stat-arrow{display:inline!important;color:#8ecf95!important;font-weight:700!important}
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="star"] .vc-stat-gain{display:none!important}
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="star"] .vc-star-preview{height:clamp(96px,15dvh,132px)!important}
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="star"] .vc-advanced-actions .vc-attribute-row{min-height:36px!important;font-size:14px!important}
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="star"] .vc-fragment-card{margin:8px 0!important;padding:8px!important}
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="star"] .vc-fragment-card>img{width:38px!important;height:44px!important}
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="star"] .vc-shard-copy{font-size:13px!important;margin:0 0 4px!important}
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="star"] #stBtn{margin-top:8px!important}
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="star"] .vc-shard-source{margin-top:6px!important}
