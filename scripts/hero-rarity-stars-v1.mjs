@@ -39,7 +39,10 @@ export function patchHeroRarityStars(html, domain) {
     html = html.replace(anchor, () => replacement);
   };
   const runtimeHelpers=[buildStarUpResultView.toString(),runStarUpOnce.toString(),showHeroStarUpResult.toString()].join('\n');
-  once('const SAVE_KEY="mong_gioi_save_v1";', MARK + '\n' + domain.replace(/^export\s+/gm, '') + '\n' + runtimeHelpers + '\nconst SAVE_KEY="mong_gioi_save_v1";');
+  once('const SAVE_KEY="mong_gioi_save_v1";', MARK + '\n' + domain.replace(/^export\s+/gm, '') + '\n' + runtimeHelpers + "\nconst __HV_QA_STARUP__=(()=>{try{return new URLSearchParams(location.search).get('qa')==='star-up'&&location.hostname.endsWith('.vercel.app')&&location.hostname.includes('-git-');}catch(_){return false;}})();\nconst SAVE_KEY=__HV_QA_STARUP__?'mong_gioi_qa_star_up_v1':'mong_gioi_save_v1';");
+  once('function netOnline(){ return !!(NET.server&&NET.token); }', 'function netOnline(){ return !__HV_QA_STARUP__&&!!(NET.server&&NET.token); }');
+  once('async function netAuth(kind){', `async function netAuth(kind){\n  if(__HV_QA_STARUP__){toast('QA chỉ dùng hồ sơ khách cục bộ.');return;}`);
+  once('  <script src=\"assets/qa/qa-gear-seed.js\"></script>', '  <script src=\"assets/qa/qa-gear-seed.js\"></script>\n  <script src=\"assets/qa/qa-star-up-seed.js\"></script>');
   once('const heroes={}; for(const id in DATA.heroes) heroes[id]={owned:false,level:1,stars:1};',
     'const heroes={}; for(const id in DATA.heroes) heroes[id]={owned:false,level:1,...initialHeroStars(DATA.heroes[id])};');
   once('for(const id in DATA.heroes) if(!p.heroes[id]) p.heroes[id]={owned:false,level:1,stars:1};',
