@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
+import vm from 'node:vm';
 import {initialHeroStars,normalizeRarityStars,rarityBaseStars,refundableHeroStarShards} from '../src/domain/hero/rarity-stars.mjs';
 import {buildStarUpResultView,runStarUpOnce,patchHeroRarityStars} from '../scripts/hero-rarity-stars-v1.mjs';
 const defs={ssr:{rarity:'ssr'},six:{rarity:'SSR'},sr:{rarity:'sr'}};
@@ -61,12 +62,15 @@ test('star-up patch keeps confirmation close-only and resets shared reward UI fo
   'for(const id in DATA.heroes) if(!p.heroes[id]) p.heroes[id]={owned:false,level:1,stars:1};',
   '  p.squad=normalizeSquad(p.squad,p,true);\n  return p; }',
   'function persist(){',
+  'function netOnline(){ return !!(NET.server&&NET.token); }',
+  'async function netAuth(kind){',
   'function heroStars(id){ return (P.heroes[id]&&P.heroes[id].stars)||1; }',
   'shards:10*S2*(S2-1)','hh.level=1; hh.stars=1;',
   'P.heroes[id].stars++; persist(); return {ok:true};',
   "const v=document.getElementById('rewardVeil'); if(!v)return toast(title); document.getElementById('rewardBurst').textContent=icon;",
   starListener,
   "document.getElementById('rewardClose')?.addEventListener('click',closeRewardCeremony);"
+  ,'  <script src="assets/qa/qa-gear-seed.js"></script>'
  ].join('\n');
  const patched=patchHeroRarityStars(html,'export const STAR_MAX=6;');
  const begin=patched.indexOf("document.getElementById('stBtn').addEventListener('click'");
@@ -79,6 +83,9 @@ test('star-up patch keeps confirmation close-only and resets shared reward UI fo
  assert.match(patched,/v\.removeAttribute\('data-reward-kind'\)/);
  assert.match(patched,/close\.textContent='Thu nhận'/);
  assert.match(patched,/close\.textContent='Xác nhận'/);
+ assert.match(patched,/mong_gioi_qa_star_up_v1/);
+ assert.match(patched,/function netOnline\(\)\{ return !__HV_QA_STARUP__/);
+ assert.match(patched,/if\(__HV_QA_STARUP__\)\{toast\('QA chỉ dùng hồ sơ khách cục bộ\.'/);
  assert.match(patched,/portraitSrc\(id,'card'\)/);
 });
 
@@ -88,6 +95,10 @@ test('real index patch parses every inline script and wires the star result with
  const patched=patchHeroRarityStars(html,domain);
  assert.match(patched,/const beforeStars=readStars\(id\),result=performStarUp\(id\)/);
  assert.match(patched,/portraitSrc\(id,'card'\)\|\|portraitSrc\(id,'master'\)/);
+ assert.match(patched,/mong_gioi_qa_star_up_v1/);
+ assert.match(patched,/location\.hostname\.endsWith\('\.vercel\.app'\).*location\.hostname\.includes\('-git-'\)/);
+ assert.match(patched,/function netOnline\(\)\{ return !__HV_QA_STARUP__&&!!\(NET\.server&&NET\.token\); \}/);
+ assert.match(patched,/assets\/qa\/qa-star-up-seed\.js/);
  assert.match(patched,/starLine:'★'\.repeat\(before\)\+' → '\+'★'\.repeat\(after\)/);
  const scripts=[...patched.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)];
  assert.ok(scripts.length>0);
@@ -95,5 +106,30 @@ test('real index patch parses every inline script and wires the star result with
   if(!body.trim()||/type=["'](?:application\/json|text\/template)["']/i.test(attrs))continue;
   assert.doesNotThrow(()=>new Function(body),'inline script must parse after star-up patch');
  }
+});
+
+test('star-up QA seed is preview-only, resettable, and leaves production profile untouched',()=>{
+ const source=readFileSync(new URL('../assets/qa/qa-star-up-seed.js',import.meta.url),'utf8');
+ const mainProfile={gold:321,heroes:{thay_mo:{owned:false,stars:1}}};
+ const hero={name:'Thầy Mơ',rarity:'sr'};
+ const makeContext=enabled=>{
+  const writes=[],shown=[];let context;
+  const document={body:{appendChild(node){this.banner=node;}},createElement(tag){return {tag,style:{},attrs:{},children:[],setAttribute(k,v){this.attrs[k]=v;},addEventListener(type,fn){this[type+'Handler']=fn;},append(...children){this.children.push(...children);}};}};
+  context={__HV_QA_STARUP__:enabled,DATA:{heroes:{thay_mo:hero},daily:{stamCap:120}},P:mainProfile,document,
+   toast(){},refreshResbar(){},renderHeroDetail(id){shown.push(id);},showScreen(id){shown.push(id);},rarityBaseStars:()=>2,
+   defaultPlayer:()=>({heroes:{thay_mo:{owned:true,stars:2}},shards:{},gold:500,gems:800,so:0,tinh:0,hoat:0,stamina:10,economy:{}}),
+   persist(){writes.push(JSON.parse(JSON.stringify(context.P)));}};
+  vm.runInNewContext(source,context);
+  return {context,writes,shown};
+ };
+ const disabled=makeContext(false);assert.equal(disabled.writes.length,0);assert.equal(disabled.context.P,mainProfile);
+ const qa=makeContext(true);
+ assert.equal(qa.context.P.heroes.thay_mo.stars,2);assert.equal(qa.context.P.heroes.thay_mo.owned,true);
+ assert.equal(qa.context.P.shards.thay_mo,10000);assert.equal(qa.context.P.gold,5000000);
+ assert.equal(qa.context.P.gems,50000);assert.equal(qa.context.P.stamina,120);
+ assert.notEqual(qa.context.P,mainProfile);assert.equal(mainProfile.gold,321);
+ assert.deepEqual(qa.shown,['thay_mo','heroDetail']);assert.equal(qa.writes.length,1);
+ qa.context.document.body.banner.children[1].clickHandler();
+ assert.equal(qa.writes.length,2);assert.equal(mainProfile.gold,321);
 });
 
