@@ -3,21 +3,25 @@
   if (typeof __HV_QA_STARUP__ === 'undefined' || !__HV_QA_STARUP__) return;
 
   const heroId = 'thay_mo';
+  const refillMaterials = player => {
+    player.gold = Math.max(Number(player.gold) || 0, 5000000);
+    player.gems = Math.max(Number(player.gems) || 0, 50000);
+    for (const key of ['so', 'tinh', 'hoat']) player[key] = Math.max(Number(player[key]) || 0, 5000);
+    player.stamina = DATA.daily.stamCap;
+    player.shards = player.shards || {};
+    for (const id of Object.keys(DATA.heroes)) player.shards[id] = Math.max(Number(player.shards[id]) || 0, 10000);
+    player.economy = player.economy || {};
+    for (const key of ['dreamEssence', 'spark']) player.economy[key] = Math.max(Number(player.economy[key]) || 0, 5000);
+  };
   const seed = () => {
     if (typeof DATA === 'undefined' || !DATA.heroes[heroId] || typeof defaultPlayer !== 'function') return false;
     const player = defaultPlayer();
-    player.heroes[heroId].owned = true;
-    player.heroes[heroId].stars = rarityBaseStars(DATA.heroes[heroId]);
-    player.gold = 5000000;
-    player.gems = 50000;
-    player.so = 5000;
-    player.tinh = 5000;
-    player.hoat = 5000;
-    player.stamina = DATA.daily.stamCap;
-    player.shards[heroId] = 10000;
-    player.economy = player.economy || {};
-    player.economy.dreamEssence = 5000;
-    player.economy.spark = 5000;
+    for (const [id, hero] of Object.entries(DATA.heroes)) {
+      player.heroes[id] = player.heroes[id] || {};
+      player.heroes[id].owned = true;
+      player.heroes[id].stars = rarityBaseStars(hero);
+    }
+    refillMaterials(player);
     P = player;
     persist();
     if (typeof refreshResbar === 'function') refreshResbar();
@@ -37,7 +41,7 @@
     font: '600 12px/1.2 system-ui,sans-serif'
   });
   const label = document.createElement('span');
-  label.textContent = 'QA PREVIEW · khách cục bộ · không đồng bộ';
+  label.textContent = 'TEST THĂNG SAO · 10.000 mảnh/tướng';
   const reset = document.createElement('button');
   reset.type = 'button';
   reset.textContent = 'Đặt lại';
@@ -50,11 +54,28 @@
   reset.addEventListener('click', () => {
     if (seed() && typeof toast === 'function') toast('Hồ sơ QA đã được đặt lại.');
   });
-  banner.append(label, reset);
+  const refill = document.createElement('button');
+  refill.type = 'button'; refill.textContent = 'Nạp nguyên liệu';
+  refill.setAttribute('aria-label', 'Nạp nguyên liệu thử nghiệm, giữ nguyên cấp và sao');
+  Object.assign(refill.style, reset.style);
+  refill.addEventListener('click', () => {
+    refillMaterials(P); persist();
+    if (typeof refreshResbar === 'function') refreshResbar();
+    const selected = document.getElementById?.('hvHeroDetailRoot')?.dataset.heroId;
+    if (typeof renderHeroDetail === 'function') renderHeroDetail(DATA.heroes[selected] ? selected : heroId);
+    if (typeof showScreen === 'function') showScreen('heroDetail');
+    if (typeof toast === 'function') toast('Đã nạp đủ nguyên liệu test. Giữ nguyên cấp và sao.');
+  });
+  banner.style.flexWrap = 'wrap'; banner.style.justifyContent = 'center';
+  label.style.flexBasis = '100%'; label.style.textAlign = 'center';
+  banner.style.borderRadius = '12px';
+  banner.append(label, reset, refill);
   document.body.appendChild(banner);
 
   if (!seed()) {
     label.textContent = 'QA PREVIEW · hồ sơ chưa sẵn sàng';
     reset.disabled = true;
+    refill.disabled = true;
   }
 })();
+

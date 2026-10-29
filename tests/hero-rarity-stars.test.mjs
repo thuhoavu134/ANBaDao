@@ -117,8 +117,8 @@ test('star-up QA seed is preview-only, resettable, and leaves production profile
  const makeContext=enabled=>{
   const writes=[],shown=[];let context;
   const document={body:{appendChild(node){this.banner=node;}},createElement(tag){return {tag,style:{},attrs:{},children:[],setAttribute(k,v){this.attrs[k]=v;},addEventListener(type,fn){this[type+'Handler']=fn;},append(...children){this.children.push(...children);}};}};
-  context={__HV_QA_STARUP__:enabled,DATA:{heroes:{thay_mo:hero},daily:{stamCap:120}},P:mainProfile,document,
-   toast(){},refreshResbar(){},renderHeroDetail(id){shown.push(id);},showScreen(id){shown.push(id);},rarityBaseStars:()=>2,
+  context={__HV_QA_STARUP__:enabled,DATA:{heroes:{thay_mo:hero,bach_dien:{name:'Bạch Diện',rarity:'ssr'}},daily:{stamCap:120}},P:mainProfile,document,
+   toast(){},refreshResbar(){},renderHeroDetail(id){shown.push(id);},showScreen(id){shown.push(id);},rarityBaseStars:hero=>hero.rarity==='ssr'?5:2,
    defaultPlayer:()=>({heroes:{thay_mo:{owned:true,stars:2}},shards:{},gold:500,gems:800,so:0,tinh:0,hoat:0,stamina:10,economy:{}}),
    persist(){writes.push(JSON.parse(JSON.stringify(context.P)));}};
   vm.runInNewContext(source,context);
@@ -129,9 +129,19 @@ test('star-up QA seed is preview-only, resettable, and leaves production profile
  assert.equal(qa.context.P.heroes.thay_mo.stars,2);assert.equal(qa.context.P.heroes.thay_mo.owned,true);
  assert.equal(qa.context.P.shards.thay_mo,10000);assert.equal(qa.context.P.gold,5000000);
  assert.equal(qa.context.P.gems,50000);assert.equal(qa.context.P.stamina,120);
+ assert.equal(qa.context.P.shards.bach_dien,10000);
+ assert.equal(qa.context.P.heroes.bach_dien.owned,true);assert.equal(qa.context.P.heroes.bach_dien.stars,5);
  assert.notEqual(qa.context.P,mainProfile);assert.equal(mainProfile.gold,321);
  assert.deepEqual(qa.shown,['thay_mo','heroDetail']);assert.equal(qa.writes.length,1);
+ qa.context.P.heroes.thay_mo.stars=3;qa.context.P.heroes.thay_mo.level=12;
+ qa.context.P.shards.thay_mo=1;qa.context.P.gold=1;qa.context.P.shards.bach_dien=20000;
+ qa.context.document.body.banner.children[2].clickHandler();
+ assert.equal(qa.context.P.heroes.thay_mo.stars,3);assert.equal(qa.context.P.heroes.thay_mo.level,12);
+ assert.equal(qa.context.P.shards.thay_mo,10000);assert.equal(qa.context.P.shards.bach_dien,20000);
+ assert.equal(qa.context.P.gold,5000000);assert.equal(qa.writes.length,2);
  qa.context.document.body.banner.children[1].clickHandler();
- assert.equal(qa.writes.length,2);assert.equal(mainProfile.gold,321);
+ assert.equal(qa.writes.length,3);assert.equal(mainProfile.gold,321);
+ assert.equal(qa.context.P.heroes.thay_mo.stars,2);
 });
+
 
