@@ -703,8 +703,8 @@
         starCommand.title = countStars >= 6 ? 'Đã đạt 6 sao' : 'Cần ' + needShards + ' mảnh hồn';
         starCommand.textContent = countStars >= 6 ? 'Đã tối đa' : haveShards < needShards ? 'Chưa đủ mảnh' : 'Thăng sao';
       }
-      shardCopy.textContent = 'Mảnh ' + String(hero.name || '').split(' — ')[0] + ': ' + haveShards +
-        (needShards == null ? '' : '/' + needShards);
+      shardCopy.textContent = 'Mảnh ' + String(hero.name || '').split(' — ')[0] + ': ' + haveShards.toLocaleString('vi-VN') +
+        (needShards == null ? '' : ' / ' + Number(needShards).toLocaleString('vi-VN'));
       const starHelp = document.createElement('p'); starHelp.className = 'vc-screen-note';
       starHelp.textContent = '';
       starHelp.hidden = true;
