@@ -879,3 +879,34 @@
 #hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="star"] .vc-shard-copy{font-size:13px!important;margin:0 0 4px!important}
 #hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="star"] #stBtn{margin-top:8px!important}
 #hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="star"] .vc-shard-source{margin-top:6px!important}
+
+/* Owner 2026-10-30: bright parchment + gold pass; overrides the earlier dark frames. */
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="skills"],#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="star"]{
+  background:linear-gradient(160deg,#fdf9ee 0%,#f7edd6 46%,#efe0be 100%)!important;
+  border:1px solid #b58e49!important;color:#4a3418!important;
+  box-shadow:inset 0 0 0 4px #fffdf6,inset 0 0 0 5px #d9bc84,0 16px 44px #00000055!important}
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="skills"] .vc-sheet-header h2,#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="star"] .vc-sheet-header h2{color:#6a4a1e!important;text-shadow:0 1px 0 #fffdf6!important}
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="skills"] .vc-sheet-close,#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="star"] .vc-sheet-close{background:#f3e3c4!important;border:1px solid #c1a068!important;color:#6a4a1e!important;border-radius:50%!important}
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="skills"] .hv-detail-workspace,#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="star"] .hv-detail-workspace{background:transparent!important;color:#4a3418!important}
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="star"] .vc-star-track{background:linear-gradient(#fffdf4,#f6e8ca)!important;border:1px solid #cbb083!important;color:#8a5a12!important;text-shadow:0 1px 0 #fffdf6!important}
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="star"] .vc-advanced-actions .vc-attribute-table{background:#fffdf4!important;border:1px solid #cbb083!important;box-shadow:inset 0 1px 0 #fff!important}
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="star"] .vc-advanced-actions .vc-attribute-row{color:#5a4426!important;border-bottom:1px solid #d9c49a!important}
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="star"] .vc-attribute-row b{color:#3f2c12!important}
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="star"] .vc-stat-arrow{color:#1f7a3a!important}
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="star"] .vc-stat-after{color:#8a5a12!important;font-weight:700!important}
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="star"] .vc-fragment-card{background:#fffdf4!important;border:1px solid #cbb083!important;box-shadow:inset 0 1px 0 #fff!important}
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="star"] .vc-shard-copy{color:#5a4426!important}
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="star"] .vc-fragment-card progress{background:#eadfc6!important;border:1px solid #c1a068!important}
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="star"] .vc-shard-source{background:#f6ead2!important;color:#6a4a1e!important;border:1px solid #c1a068!important}
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="star"] #stBtn{background:linear-gradient(180deg,#ffe6a6,#e0a83c 62%,#c4892c)!important;color:#3a2408!important;box-shadow:0 3px 0 #93641c,0 6px 16px #00000033!important;text-shadow:0 1px 0 #ffeec2!important}
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="star"] #stBtn:disabled{background:linear-gradient(#ded6c6,#c3baa6)!important;color:#6d6552!important;box-shadow:none!important}
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="skills"] .skillbox{color:#4a3418!important}
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="skills"] .skillbox :is(p,li,span,div){color:#4a3418!important}
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="skills"] .hv-detail-tablist button{background:#f6ead2!important;border:1px solid #c1a068!important;color:#6a4a1e!important}
+
+/* final: rows readable on parchment */
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="star"] .vc-attribute-row{color:#4a3418!important;border-bottom:1px solid #d9c49a!important}
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="star"] .vc-attribute-row i{color:#7a6038!important}
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="star"] .vc-attribute-row b{color:#3f2c12!important}
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="star"] .vc-attribute-table{background:#fffdf4!important;border:1px solid #cbb083!important}
+#hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="skills"] .vc-attribute-row{color:#4a3418!important}
