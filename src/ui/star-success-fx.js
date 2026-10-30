@@ -28,8 +28,8 @@
       background-image:linear-gradient(100deg,#f2c53d 0%,#ffdf74 30%,#fffdf0 47%,#ffffff 50%,#fffdf0 53%,#ffdf74 70%,#f2c53d 100%);
       background-size:250% 100%;background-position:120% 0;-webkit-background-clip:text;background-clip:text;
       filter:drop-shadow(0 0 9px rgba(255,196,74,.9));
-      animation:ssGlass 1.7s ease-in-out infinite}
-    @keyframes ssGlass{0%{background-position:128% 0}60%,100%{background-position:-28% 0}}
+      animation:ssGlass 4s cubic-bezier(.35,0,.4,1) infinite}
+    @keyframes ssGlass{0%{background-position:132% 0}44%{background-position:-30% 0}100%{background-position:-30% 0}}
     #hvStarSuccess .ss-title{font:700 30px/1.1 'Noto Serif','Times New Roman',serif;letter-spacing:.1em;
       background:linear-gradient(180deg,#fff6cf,#ffca4e 55%,#b97a12);-webkit-background-clip:text;background-clip:text;color:transparent;
       filter:drop-shadow(0 2px 8px rgba(0,0,0,.85));opacity:0;transform:translateY(8px);transition:opacity .4s,transform .4s}
