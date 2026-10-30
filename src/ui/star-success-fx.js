@@ -18,22 +18,18 @@
       opacity:0;transition:opacity .3s ease;cursor:pointer}
     #hvStarSuccess.is-on{opacity:1}
     #hvStarSuccess .ss-wrap{position:relative;display:grid;justify-items:center;gap:16px;padding:26px 18px}
-    #hvStarSuccess .ss-mist{position:absolute;left:-20%;right:-20%;top:-40%;height:180%;pointer-events:none;
-      background:linear-gradient(180deg,transparent 0%,rgba(255,206,110,.10) 34%,rgba(255,224,150,.34) 50%,rgba(255,196,90,.12) 66%,transparent 100%);
-      transform:translateY(-58%);opacity:0}
-    #hvStarSuccess.is-on .ss-mist{animation:ssMist 2.1s ease-in-out .12s both}
-    @keyframes ssMist{0%{opacity:0;transform:translateY(-58%)}22%{opacity:1}100%{opacity:0;transform:translateY(46%)}}
     #hvStarSuccess .ss-stars{display:flex;gap:10px}
     #hvStarSuccess .ss-star{position:relative;display:inline-block;font-size:40px;line-height:1;color:#4a3a22;
       transform:scale(.86);opacity:.55;transition:color .16s ease}
     #hvStarSuccess .ss-star.on{color:#ffd75e;opacity:1;animation:ssPop .42s cubic-bezier(.2,1.5,.4,1) both;
       text-shadow:0 0 12px #ffc94d,0 0 26px rgba(255,150,20,.8),0 0 48px rgba(255,140,10,.5)}
     @keyframes ssPop{0%{transform:scale(.5)}58%{transform:scale(1.55)}100%{transform:scale(1)}}
-    #hvStarSuccess .ss-star.on::after{content:"";position:absolute;inset:-14% -18%;border-radius:50%;pointer-events:none;
-      background:linear-gradient(115deg,transparent 38%,rgba(255,255,255,.9) 48%,rgba(255,255,255,.28) 54%,transparent 62%);
-      opacity:0}
-    #hvStarSuccess.gloss .ss-star.on::after{animation:ssGloss 1.5s ease-in-out infinite}
-    @keyframes ssGloss{0%{opacity:0;transform:translateX(-70%)}35%{opacity:.95}100%{opacity:0;transform:translateX(70%)}}
+    #hvStarSuccess.gloss .ss-star.on{color:transparent;
+      background-image:linear-gradient(100deg,#f2c53d 0%,#ffdf74 30%,#fffdf0 47%,#ffffff 50%,#fffdf0 53%,#ffdf74 70%,#f2c53d 100%);
+      background-size:250% 100%;background-position:120% 0;-webkit-background-clip:text;background-clip:text;
+      filter:drop-shadow(0 0 9px rgba(255,196,74,.9));
+      animation:ssGlass 1.7s ease-in-out infinite}
+    @keyframes ssGlass{0%{background-position:128% 0}60%,100%{background-position:-28% 0}}
     #hvStarSuccess .ss-title{font:700 30px/1.1 'Noto Serif','Times New Roman',serif;letter-spacing:.1em;
       background:linear-gradient(180deg,#fff6cf,#ffca4e 55%,#b97a12);-webkit-background-clip:text;background-clip:text;color:transparent;
       filter:drop-shadow(0 2px 8px rgba(0,0,0,.85));opacity:0;transform:translateY(8px);transition:opacity .4s,transform .4s}
@@ -51,8 +47,6 @@
     root.id = 'hvStarSuccess';
     const wrap = document.createElement('div');
     wrap.className = 'ss-wrap';
-    const mist = document.createElement('div');
-    mist.className = 'ss-mist';
     const row = document.createElement('div');
     row.className = 'ss-stars';
     const slots = Math.max(6, total);
@@ -73,7 +67,7 @@
     const hint = document.createElement('div');
     hint.className = 'ss-hint';
     hint.textContent = 'Chạm vào màn hình để tiếp tục';
-    wrap.append(mist, row, title, sub, hint);
+    wrap.append(row, title, sub, hint);
     root.append(wrap);
     document.body.append(root);
     requestAnimationFrame(() => root.classList.add('is-on'));
