@@ -1,28 +1,84 @@
+/* Owner 2026-11-01: Hòm thư dùng thẳng ảnh concept 2 làm nền (mail-lacquer-bg.jpg, 768x1376).
+   Mọi chữ, nút, thư, quà là phần tử thật đặt đúng toạ độ % lên ảnh. */
 #hvMailRoot{
-  --hall-ink:#2d251f;
-  --hall-gold:#d58a14;
-  position:fixed;inset:0;z-index:80;display:none;flex-direction:column;
+  position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;
   overflow:auto;-webkit-overflow-scrolling:touch;touch-action:manipulation;
-  background:#f3e4c4;
-  color:var(--hall-ink);font-family:inherit;box-sizing:border-box;
-  padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+  --hall-art:url('assets/ui/mail/mail-hall.jpg');
+  background:rgba(8,4,1,.62);
+  font-family:inherit;box-sizing:border-box;
 }
 #hvMailRoot.is-open{display:flex}
 #hvMailRoot[hidden]{display:none!important}
-#hvMailRoot .hv-mail-top{
-  flex:0 0 auto;display:grid;grid-template-columns:44px 1fr auto;align-items:end;gap:8px;
-  padding:72px 12px 12px;position:sticky;top:0;z-index:2;
-  background:#5c3a22 url('assets/ui/mail/mail-hall.jpg') center/cover no-repeat;
-  color:#fff4d4;
+#hvMailRoot *{box-sizing:border-box}
+
+#hvMailRoot .hv-mail-frame{
+  position:relative;flex:0 0 auto;container-type:inline-size;
+  width:min(100vw,calc(100dvh * 768 / 1376));aspect-ratio:768/1376;
+  background:url('assets/ui/mail/mail-lacquer-frame.png') 42.31% 48.61%/96.615% 94.767% no-repeat;
+  filter:drop-shadow(0 10px 24px rgba(0,0,0,.6));
 }
+#hvMailRoot .hv-mail-top{position:absolute;left:27.6%;top:4.2%;width:45.5%;height:5%;display:grid;place-items:center;pointer-events:none}
+#hvMailRoot .hv-mail-top b{font-size:6.2cqw;font-weight:900;letter-spacing:.06em;color:#5a3412;text-shadow:0 1px 0 rgba(255,250,230,.8)}
+#hvMailRoot .hv-mail-top span{display:none}
 #hvMailRoot .hv-mail-back{
-  width:44px;height:44px;border:0;border-radius:50%;
-  background:linear-gradient(145deg,#fff7df,#f0c692);color:#7a4a1f;
-  box-shadow:0 0 0 1px #d7b36a,0 2px 6px rgba(79,58,27,.2);font-size:22px;line-height:1;cursor:pointer;
+  position:absolute;left:86.84%;top:4.98%;width:9.5%;aspect-ratio:1;border:0;border-radius:50%;
+  background:transparent;cursor:pointer;font-size:0;
 }
-#hvMailRoot .hv-mail-top b{justify-self:center;font-size:16px;letter-spacing:.04em}
-#hvMailRoot .hv-mail-stage{flex:1 1 auto;min-height:420px;padding:8px 10px 28px;box-sizing:border-box}
-#hvMailRoot #mailBody{min-height:420px}
-#hvMailRoot #mailBody .section,#hvMailRoot #mailBody .quest,#hvMailRoot #mailBody .hcard{
-  background:#fff8e8!important;color:#2d251f!important;border-color:#e2c48a!important;
+#hvMailRoot .hv-mail-back:before,#hvMailRoot .hv-mail-back:after{
+  content:"";position:absolute;left:50%;top:50%;width:46%;height:9%;border-radius:2px;background:#f4fff6;
+  transform:translate(-50%,-50%) rotate(45deg);box-shadow:0 1px 2px rgba(0,40,20,.6);
 }
+#hvMailRoot .hv-mail-back:after{transform:translate(-50%,-50%) rotate(-45deg)}
+
+#hvMailRoot .hv-mail-stage,#hvMailRoot #mailBody{position:absolute;inset:0;pointer-events:none}
+#hvMailRoot #mailBody>*{pointer-events:auto}
+
+/* tabs: labels are painted in the art; we only add hit areas + active state */
+#hvMailRoot .mx-tab{position:absolute;top:12.3%;height:4.8%;border:0;background:transparent;cursor:pointer;border-radius:1.2cqw;font-size:0}
+#hvMailRoot .mx-tab[data-tab="sys"]{left:11.9%;width:37%}
+#hvMailRoot .mx-tab[data-tab="gift"]{left:50.9%;width:37.6%}
+#hvMailRoot .mx-tab:not(.on){background:rgba(20,10,4,.38)}
+#hvMailRoot .mx-tab.on{box-shadow:0 0 0 .5cqw rgba(255,214,120,.9),0 0 3cqw rgba(255,200,90,.6)}
+#hvMailRoot .mx-tab i{position:absolute;top:-1.6cqw;right:-1.2cqw;min-width:5cqw;height:5cqw;padding:0 1cqw;border-radius:3cqw;background:#c4281c;color:#fff;font-style:normal;font-size:3cqw;line-height:4.6cqw;font-weight:800;border:.3cqw solid #ffd1b0}
+
+/* list */
+#hvMailRoot .mx-list{position:absolute;left:11.5%;top:19.2%;width:77.3%;height:48%;overflow:auto;display:flex;flex-direction:column;gap:2cqw;padding:.8cqw .4cqw;scrollbar-width:none}
+#hvMailRoot .mx-list::-webkit-scrollbar{display:none}
+#hvMailRoot .mx-row{
+  position:relative;flex:0 0 auto;width:100%;aspect-ratio:596/124;border:0;padding:0;cursor:pointer;text-align:left;font:inherit;
+  background:url('assets/ui/mail/mail-row.jpg') center/100% 100% no-repeat;
+}
+#hvMailRoot .mx-row.on{background-image:url('assets/ui/mail/mail-row-on.jpg')}
+#hvMailRoot .mx-row.done{filter:saturate(.55) brightness(.82)}
+#hvMailRoot .mx-env{position:absolute;left:3.6%;top:12%;width:17.4%;height:76%;display:grid;place-items:center}
+#hvMailRoot .mx-env svg{width:78%;height:auto}
+#hvMailRoot .mx-env .bd{position:absolute;top:-6%;right:-8%;width:4.6cqw;height:4.6cqw;border-radius:50%;background:#c4281c;color:#fff;font-size:2.7cqw;font-weight:800;display:grid;place-items:center;border:.3cqw solid #ffd1b0}
+#hvMailRoot .mx-env .gf{position:absolute;right:-4%;bottom:-6%;width:4.4cqw;height:4.4cqw}
+#hvMailRoot .mx-tx{position:absolute;left:25%;right:4%;top:16%;bottom:14%;display:flex;flex-direction:column;justify-content:center;min-width:0}
+#hvMailRoot .mx-t{font-size:4cqw;font-weight:800;color:#ffe1a0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 1px 2px rgba(0,0,0,.7)}
+#hvMailRoot .mx-f{display:flex;justify-content:space-between;gap:2cqw;font-size:3cqw;color:#d6c09a;margin-top:1cqw}
+#hvMailRoot .mx-f span:first-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#hvMailRoot .mx-f span:last-child{white-space:nowrap;color:#bfa77c}
+#hvMailRoot .mx-empty{padding:12cqw 4cqw;text-align:center;color:#cdb68c;font-size:3.6cqw}
+
+/* parchment reader */
+#hvMailRoot .mx-read{position:absolute;left:12%;top:72%;width:50%;height:11.5%;overflow:hidden;color:#3a2412}
+#hvMailRoot .mx-dt{font-size:4.1cqw;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#hvMailRoot .mx-from{font-size:2.8cqw;color:#7a5a32;margin-top:.6cqw}
+#hvMailRoot .mx-db{font-size:3.1cqw;line-height:1.38;color:#5a4128;margin-top:1cqw;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+#hvMailRoot .mx-slot{position:absolute;top:84.6%;width:12.6%;aspect-ratio:1;display:grid;place-items:center}
+#hvMailRoot .mx-slot.s0{left:14.6%}#hvMailRoot .mx-slot.s1{left:30.4%}#hvMailRoot .mx-slot.s2{left:46.3%}
+#hvMailRoot .mx-slot img{width:76%;height:76%;object-fit:contain;filter:drop-shadow(0 1px 2px rgba(0,0,0,.45))}
+#hvMailRoot .mx-slot u{text-decoration:none;font-size:5cqw;font-weight:900;color:#6a3a8a}
+#hvMailRoot .mx-slot em{position:absolute;right:4%;bottom:2%;font-style:normal;font-size:2.9cqw;font-weight:900;color:#fff;text-shadow:0 1px 2px #000,0 0 2px #000}
+#hvMailRoot .mx-slot.r-purple{box-shadow:inset 0 0 0 .5cqw #a46ad8}
+#hvMailRoot .mx-slot.r-blue{box-shadow:inset 0 0 0 .5cqw #5a9ee0}
+#hvMailRoot .mx-slot.r-green{box-shadow:inset 0 0 0 .5cqw #58b672}
+#hvMailRoot .mx-slot.r-gold{box-shadow:inset 0 0 0 .5cqw #d9a43a}
+#hvMailRoot .mx-more{position:absolute;left:12.6%;top:93%;font-size:2.7cqw;color:#7a5a32}
+#hvMailRoot .mx-btn{position:absolute;left:64.2%;border:0;background:transparent;cursor:pointer;font:inherit;font-size:3.9cqw;font-weight:900;letter-spacing:.04em;color:#4a2a06;text-shadow:0 1px 0 rgba(255,245,210,.85);border-radius:5cqw;white-space:nowrap;padding:0}
+#hvMailRoot .mx-btn.one{top:76%;width:25.4%;height:5.2%}
+#hvMailRoot .mx-btn.all{top:86.8%;width:26%;height:4.8%;font-size:3.05cqw;letter-spacing:0}
+#hvMailRoot .mx-btn:disabled{cursor:default;color:rgba(74,42,6,.45);filter:grayscale(.6)}
+#hvMailRoot .mx-btn:not(:disabled):active{filter:brightness(1.12)}
+#hvMailRoot .mx-done{position:absolute;left:64.2%;top:76%;width:25.4%;height:5.2%;display:grid;place-items:center;font-size:3.7cqw;font-weight:900;color:#3f6b33}
