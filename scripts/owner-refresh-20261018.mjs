@@ -143,6 +143,7 @@ export function patchOwnerRefresh(input,kind){
 .irv-word{position:absolute!important;left:50%!important;transform:translateX(-50%)!important;width:min(62vw,286px)!important;height:auto!important;aspect-ratio:auto!important;object-fit:contain!important;top:calc(min(100vw,56.25vh) * .085)!important;z-index:6!important;pointer-events:none;opacity:0;transition:opacity .16s linear;filter:drop-shadow(0 5px 9px rgba(30,13,3,.55))}
 .irv-defeat .irv-word{width:min(46vw,212px)!important;top:calc(min(100vw,56.25vh) * .125)!important}
 </style></head>`);
+  s=once(s,'</body>',`<style id="owner-hide-legacy-result-art">/* legacy result art carried the old lettering; hide it everywhere */\n.v151-art-result .v151-art-bg,.v151-art-result .v151-reward-art,.v151-art-result .v151-art-bg img,.v151-art-result .v151-art-bg::before,.v151-art-result .v151-art-bg::after{display:none!important;background-image:none!important;opacity:0!important}\n</style></body>`);
 
  }else{
   const art={slug:'dinh-loi',displayName:'Đình Lôi — Vệ Binh Trống Đồng',identityVersion:'owner-20261018',reference:{master:'assets/characters/dinh-loi/owner-portrait.webp',runtime:true},assets:Object.fromEntries(['master','avatar','card','dialogue','icon'].map(k=>[k,'assets/characters/dinh-loi/owner-portrait.webp']))};
