@@ -67,8 +67,11 @@ function showHeroStarUpResult(id,beforeStars){
 export function patchHeroRarityStars(html, domain) {
   if (html.includes(MARK)) return html;
   const once = (anchor, replacement) => {
-    if (html.split(anchor).length !== 2) throw new Error('RARITY_STARS_ANCHOR: ' + anchor);
-    html = html.replace(anchor, () => replacement);
+    const parts = html.split(anchor);
+    if (parts.length < 2) throw new Error('RARITY_STARS_ANCHOR: ' + anchor);
+    // Some inline bundles repeat the same snippet (persistHero + normalizeTeam);
+    // patching the first occurrence is what the runtime needs.
+    html = parts.join('\u0000').replace('\u0000', () => replacement).split('\u0000').join(anchor);
   };
   const runtimeHelpers=[buildStarUpResultView.toString(),runStarUpOnce.toString(),installStarUpCeremonySkin.toString(),showHeroStarUpResult.toString()].join('\n');
   once('const SAVE_KEY="mong_gioi_save_v1";', MARK + '\n' + domain.replace(/^export\s+/gm, '') + '\n' + runtimeHelpers + "\nconst __HV_QA_STARUP__=(()=>{try{return new URLSearchParams(location.search).get('qa')==='star-up'&&location.hostname.endsWith('.vercel.app')&&location.hostname.includes('-git-');}catch(_){return false;}})();\nconst SAVE_KEY=__HV_QA_STARUP__?'mong_gioi_qa_star_up_v1':'mong_gioi_save_v1';");
@@ -80,8 +83,9 @@ export function patchHeroRarityStars(html, domain) {
     'const heroes={}; for(const id in DATA.heroes) heroes[id]={owned:false,level:1,...initialHeroStars(DATA.heroes[id])};');
   once('for(const id in DATA.heroes) if(!p.heroes[id]) p.heroes[id]={owned:false,level:1,stars:1};',
     'for(const id in DATA.heroes) if(!p.heroes[id]) p.heroes[id]={owned:false,level:1,...initialHeroStars(DATA.heroes[id])};');
-  once('  p.squad=normalizeSquad(p.squad,p,true);\n  return p; }',
-    '  normalizeRarityStars(p,DATA.heroes);\n  p.squad=normalizeSquad(p.squad,p,true);\n  return p; }');
+  const squadAnchor = html.includes('  p.squad=normalizeSquad(p.squad,p,true);\n  return p; }') ? '  p.squad=normalizeSquad(p.squad,p,true);\n  return p; }' : '  p.squad=normalizeSquad(p.squad,p,true);\n    return p; }';
+  once(squadAnchor,
+    squadAnchor.replace('  p.squad', '  normalizeRarityStars(p,DATA.heroes);\n  p.squad'));
   // Guard: transaction tests run persist() alone in a sandbox; the real build always defines it.
   once('function persist(){', 'function persist(){\n  if(typeof normalizeRarityStars==="function")normalizeRarityStars(P,DATA.heroes);');
   once('function heroStars(id){ return (P.heroes[id]&&P.heroes[id].stars)||1; }',

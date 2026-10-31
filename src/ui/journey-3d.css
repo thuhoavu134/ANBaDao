@@ -12,7 +12,7 @@
 #hvJourneyRoot .hv-journey-top{
   flex:0 0 auto;display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:8px;
   padding:8px 12px 6px;position:sticky;top:0;z-index:2;
-  background:linear-gradient(180deg,rgba(188,220,231,.96),rgba(247,237,216,.92));
+  background:linear-gradient(180deg,rgba(253,249,239,.96),rgba(243,231,207,.94));
   border-bottom:1px solid #d7b883;box-shadow:0 2px 8px rgba(79,58,27,.14);
 }
 #hvJourneyRoot .hv-journey-back{

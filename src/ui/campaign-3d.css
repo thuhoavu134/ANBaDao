@@ -35,3 +35,27 @@
   background:linear-gradient(#eccc7e,#c69b4b)!important;
 }
 body.campaign-3d-active .hv-brandbar,body.campaign-3d-active #resbar{display:none!important}
+
+/* owner-warm-campaign-20261031 */
+/* warm ivory + gold so the campaign screen matches the rest of the set */
+html body .campaign-art-screen{background-image:linear-gradient(180deg,#fdf9ef,#f3e7cf)!important}
+html body .campaign-art-screen .pagehdr{background:linear-gradient(180deg,rgba(255,251,240,.97),rgba(246,233,208,.93))!important;border-bottom:1px solid rgba(181,142,73,.55)!important;box-shadow:0 6px 18px rgba(120,86,40,.18)!important}
+html body .campaign-art-screen .pagehdr .ttl,html body .campaign-art-screen .pagehdr b,html body .campaign-art-screen .pagehdr strong{color:#5a3a18!important;text-shadow:none!important}
+html body .campaign-art-screen .pagehdr small{color:#7a6242!important}
+html body .campaign-art-screen .back{background:linear-gradient(180deg,#fffdf3,#efe0c2)!important;border:1px solid rgba(181,142,73,.55)!important;color:#5a3a18!important;box-shadow:0 2px 6px rgba(120,86,40,.22)!important}
+html body .mode-intro-campaign{border-color:rgba(181,142,73,.5)!important;background:linear-gradient(135deg,rgba(255,252,242,.97),rgba(245,231,203,.93))!important}
+html body .mode-intro-campaign b{color:#5a3a18!important;text-shadow:none!important}
+html body .mode-intro-campaign small{color:#7a6242!important}
+html body .mode-intro-campaign .screen-kicker{color:#96702f!important}
+html body .mode-intro-campaign .mode-pulse{background:linear-gradient(180deg,#f2d99c,#c69b4b)!important;color:#3a2a12!important;border:1px solid rgba(150,110,50,.5)!important;box-shadow:0 3px 10px rgba(120,86,40,.25)!important}
+html body .campaign-art-screen .chrow,html body .campaign-art-screen .section,html body .campaign-art-screen .hcard,html body .campaign-art-screen .worldmap{background:linear-gradient(180deg,rgba(255,252,244,.97),rgba(246,234,210,.94))!important;border-color:rgba(181,142,73,.42)!important}
+html body .campaign-art-screen .section h3,html body .campaign-art-screen .chrow .cn,html body .campaign-art-screen .chrow .ct{color:#6a4a1e!important;text-shadow:none!important}
+html body .campaign-art-screen .chrow .num{background:linear-gradient(180deg,#f6e2b4,#d3ab63)!important;color:#3a2a12!important}
+html body .campaign-art-screen .pagehdr{color:#5a3a18!important}
+html body .mode-intro-campaign{color:#5a3a18!important}
+html body .mode-intro-campaign span,html body .mode-intro-campaign small,html body .mode-intro-campaign div{color:#8a6a3a!important}
+html body .mode-intro-campaign b,html body .mode-intro-campaign strong{color:#5a3a18!important}
+html body #campaignScreen.campaign-art-screen .mode-intro-campaign small{color:#8a6a3a!important}
+html body #campaignScreen.campaign-art-screen .mode-intro-campaign .screen-kicker{color:#96702f!important}
+html body #campaignScreen.campaign-art-screen .pagehdr .ttl,html body #campaignScreen.campaign-art-screen .pagehdr .sub2{color:#5a3a18!important}
+html body #campaignScreen.campaign-art-screen .mode-intro-campaign b{color:#5a3a18!important}
