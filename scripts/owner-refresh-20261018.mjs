@@ -136,11 +136,11 @@ export function patchOwnerRefresh(input,kind){
   s=once(s,'drawW=Math.min(790,Math.max(710,bounds.w+270)),drawH=Math.min(430,Math.max(390,bounds.h+250))','drawW=Math.min(790,Math.max(710,bounds.w+270)),drawH=drawW*270/480');
   s=s.replaceAll("dinh_loi:'assets/heroes-concept/crops/guardian-00.png'","dinh_loi:'assets/characters/dinh-loi/owner-portrait.webp'");
   s=once(s,"${base}${victory?'victory-text-clean-smooth-v5.apng':'defeat-clean-loop.apng'}","assets/owner-refresh-20261018/${victory?'result-victory-wings.png':'result-defeat-wings.png'}");
-  s=once(s,'<div class="irv-hero-wrap">',`<img class="irv-word" alt="\${victory?'Victory':'Defeat'}" src="assets/result-art/result-word-v2/\${victory?'victory':'defeat'}.svg"><div class="irv-hero-wrap">`);
+  s=once(s,'<div class="irv-hero-wrap">',`<img class="irv-word" alt="\${victory?'Victory':'Defeat'}" decoding="sync" style="opacity:0" onload="this.style.opacity=1" src="assets/result-art/result-word-v2/\${victory?'victory':'defeat'}.svg"><div class="irv-hero-wrap">`);
   s=once(s,'</head>',`<style>
 /* Word mark: vector outlines sized to the wing crest; wings stay the top layer. */
 .irv-title{clip-path:none!important;z-index:3}
-.irv-word{position:absolute!important;left:50%!important;transform:translateX(-50%)!important;width:min(62vw,286px)!important;height:auto!important;aspect-ratio:auto!important;object-fit:contain!important;top:calc(min(100vw,56.25vh) * .085)!important;z-index:2!important;pointer-events:none;filter:drop-shadow(0 5px 9px rgba(30,13,3,.55))}
+.irv-word{position:absolute!important;left:50%!important;transform:translateX(-50%)!important;width:min(62vw,286px)!important;height:auto!important;aspect-ratio:auto!important;object-fit:contain!important;top:calc(min(100vw,56.25vh) * .085)!important;z-index:6!important;pointer-events:none;opacity:0;transition:opacity .16s linear;filter:drop-shadow(0 5px 9px rgba(30,13,3,.55))}
 .irv-defeat .irv-word{width:min(46vw,212px)!important;top:calc(min(100vw,56.25vh) * .125)!important}
 </style></head>`);
 
