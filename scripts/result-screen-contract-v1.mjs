@@ -1,5 +1,10 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { rewardIconMapLiteral, REWARD_ICON_FALLBACK } from './result-reward-icons.mjs';
+
+// Embedded into the generated in-page reward helper.
+const REWARD_ICON_MAP = rewardIconMapLiteral();
+const REWARD_ICON_FALLBACK_LITERAL = JSON.stringify(REWARD_ICON_FALLBACK);
 
 function once(source,from,to){
   if(source.split(from).length!==2)throw new Error('RESULT_CONTRACT_ANCHOR: '+from.slice(0,100));
@@ -40,8 +45,8 @@ export function patchResultBattle(battle,actions){
    const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
    const progress=snap?.progression||{},details=Array.isArray(progress.rewardDetails)?progress.rewardDetails:(snap?.rewards||[]);
    const rows=details.filter(r=>Number.isFinite(Number(r.value))&&Number(r.value)>0);
-   const icons={gold:'assets/result-icons-art/gold-imagen.png',mastery:'assets/result-icons-art/mastery-imagen.png',playerXp:'assets/result-icons-art/scroll-imagen.png',gems:'assets/meta/economy/icon-gems.png',shards:'assets/result-icons-art/hero-shard-imagen.png'};
-   return '<section class="irv-rewards"><h2>Chiến lợi phẩm</h2><div class="irv-grid">'+rows.map(r=>'<div class="irv-loot" data-reward-id="'+esc(r.id)+'"><img src="'+esc(icons[r.id]||'assets/result-icons-art/scroll-imagen.png')+'" alt=""><strong>+'+Number(r.value).toLocaleString('vi-VN')+'</strong><span>'+esc(r.name)+'</span><small>'+esc(r.detail||'')+'</small></div>').join('')+'</div><p class="irv-reward-note">'+esc(progress.rewardNote||'Nhận khi xác nhận kết quả trận.')+'</p></section>';
+   const icons=${REWARD_ICON_MAP};const fallback=${REWARD_ICON_FALLBACK_LITERAL};
+   return '<section class="irv-rewards"><h2>Chiến lợi phẩm</h2><div class="irv-grid">'+rows.map(r=>'<div class="irv-loot" data-reward-id="'+esc(r.id)+'"><img src="'+esc(icons[r.id]||fallback)+'" alt=""><strong>+'+Number(r.value).toLocaleString('vi-VN')+'</strong><span>'+esc(r.name)+'</span><small>'+esc(r.detail||'')+'</small></div>').join('')+'</div><p class="irv-reward-note">'+esc(progress.rewardNote||'Nhận khi xác nhận kết quả trận.')+'</p></section>';
  }
 `;
   battle=once(battle,' function show(victory,snap){',helper+' function show(victory,snap){');

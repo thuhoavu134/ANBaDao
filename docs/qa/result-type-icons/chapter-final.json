@@ -1,0 +1,11 @@
+{
+  "when": "2026-10-31T06:33:38.172Z",
+  "fixture": {
+    "chapter": 5,
+    "sequence": 18,
+    "stageIndex": 17
+  },
+  "stageLabel": "Ải 6–18",
+  "ok": false,
+  "error": "Error: Browser condition timed out: (document.getElementById(\"hvBattleFrame\")?.contentWindow?.__HON_VIET__?document.getElementById(\"hvBattleFrame\").contentWindow:window).querySelector(\"#integratedResultV6.show\") |     at Object.wait (file:///C:/lt/wt-result-icons/scripts/qa-battle-readiness-browser.mjs:42:178)"
+}

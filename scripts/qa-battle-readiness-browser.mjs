@@ -16,7 +16,7 @@ export async function startBrowser() {
     if(!file.startsWith(root+sep)||!existsSync(file)||!statSync(file).isFile()){
       requestLog.push({url:name,status:404});res.writeHead(404).end('not found');return;
     }
-    const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.mjs':'text/javascript; charset=utf-8','.json':'application/json','.webp':'image/webp','.png':'image/png','.jpg':'image/jpeg','.wav':'audio/wav','.mp3':'audio/mpeg','.css':'text/css'}[extname(file)]||'application/octet-stream';
+    const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.mjs':'text/javascript; charset=utf-8','.json':'application/json','.webp':'image/webp','.png':'image/png','.svg':'image/svg+xml','.jpg':'image/jpeg','.wav':'audio/wav','.mp3':'audio/mpeg','.css':'text/css'}[extname(file)]||'application/octet-stream';
     res.writeHead(200,{'Content-Type':mime,'Cache-Control':'no-cache'});res.end(readFileSync(file));
   });
   server.listen(0,'127.0.0.1');await once(server,'listening');

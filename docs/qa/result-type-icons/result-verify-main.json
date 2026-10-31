@@ -1,0 +1,1265 @@
+{
+  "tag": "verify-main",
+  "when": "2026-10-31T06:38:55.245Z",
+  "dpr": 2,
+  "runs": [
+    {
+      "result": "victory",
+      "width": 375,
+      "height": 812,
+      "dpr": 2,
+      "chapter": 5,
+      "stage": 1,
+      "squad": 6,
+      "level": 120,
+      "stars": 6,
+      "fixture": {
+        "cleared": 5,
+        "squad": 6,
+        "chapters": 6
+      },
+      "stageLabel": "Ải 6–2",
+      "skipButton": {
+        "x": 345,
+        "y": 779,
+        "w": 44,
+        "h": 44
+      },
+      "winner": "player",
+      "rounds": 2,
+      "actions": 17,
+      "probe": {
+        "phase": "show irv-victory irv-authored-motion irv-motion-run-active",
+        "viewport": [
+          375,
+          812
+        ],
+        "dpr": 2,
+        "word": {
+          "x": 71,
+          "y": 32,
+          "w": 233,
+          "h": 38,
+          "display": "block",
+          "opacity": "1",
+          "z": "2",
+          "visibility": "visible",
+          "font": "Georgia, \"Times New Roman\", serif",
+          "fontSize": "16px",
+          "src": "assets/result-art/result-word-v2/victory.svg",
+          "natural": [
+            300,
+            49
+          ]
+        },
+        "title": {
+          "x": 0,
+          "y": 0,
+          "w": 375,
+          "h": 211,
+          "display": "block",
+          "opacity": "1",
+          "z": "3",
+          "visibility": "visible",
+          "font": "Georgia, \"Times New Roman\", serif",
+          "fontSize": "16px",
+          "src": "assets/owner-refresh-20261018/result-victory-wings.png",
+          "natural": [
+            480,
+            287
+          ]
+        },
+        "stage": {
+          "x": 0,
+          "y": 0,
+          "w": 375,
+          "h": 211,
+          "display": "block",
+          "opacity": "1",
+          "z": "1",
+          "visibility": "visible",
+          "font": "Georgia, \"Times New Roman\", serif",
+          "fontSize": "16px",
+          "src": "assets/result-victory-v6/victory-stage-original-quality-smooth-v5.apng",
+          "natural": [
+            480,
+            270
+          ]
+        },
+        "card": {
+          "x": 0,
+          "y": 162,
+          "w": 375,
+          "h": 650,
+          "display": "block",
+          "opacity": "1",
+          "z": "2",
+          "visibility": "visible",
+          "font": "Georgia, \"Times New Roman\", serif",
+          "fontSize": "16px",
+          "src": "assets/result-victory-v6/victory-info-card-portrait-v6.png",
+          "natural": [
+            1122,
+            1402
+          ]
+        },
+        "hero": {
+          "x": 47,
+          "y": 188,
+          "w": 280,
+          "h": 158,
+          "display": "block",
+          "opacity": "1",
+          "z": "8",
+          "visibility": "visible",
+          "font": "Georgia, \"Times New Roman\", serif",
+          "fontSize": "16px"
+        },
+        "result": {
+          "x": 26,
+          "y": 349,
+          "w": 323,
+          "h": 74,
+          "display": "block",
+          "opacity": "1",
+          "z": "5",
+          "visibility": "visible",
+          "font": "Georgia, \"Times New Roman\", serif",
+          "fontSize": "16px"
+        },
+        "resultHead": "Ông Phở",
+        "resultMeta": "⚔ 11442 sát thương · ☠ 1 kết liễu",
+        "rewards": {
+          "x": 23,
+          "y": 438,
+          "w": 330,
+          "h": 233,
+          "display": "block",
+          "opacity": "1",
+          "z": "6",
+          "visibility": "visible",
+          "font": "Georgia, \"Times New Roman\", serif",
+          "fontSize": "16px"
+        },
+        "rewardHead": "Chiến lợi phẩm",
+        "note": "Ải 6–2 · Xác nhận để nhận thưởng. Ải sau nhận thưởng rồi vào ải kế tiếp.",
+        "actions": {
+          "x": 30,
+          "y": 725,
+          "w": 315,
+          "h": 46,
+          "display": "grid",
+          "opacity": "1",
+          "z": "99999",
+          "visibility": "visible",
+          "font": "Georgia, \"Times New Roman\", serif",
+          "fontSize": "16px"
+        },
+        "buttons": [
+          {
+            "label": "Xác nhận",
+            "box": {
+              "x": 30,
+              "y": 725,
+              "w": 152,
+              "h": 46,
+              "display": "block",
+              "opacity": "1",
+              "z": "100000",
+              "visibility": "visible",
+              "font": "Georgia",
+              "fontSize": "14px"
+            }
+          },
+          {
+            "label": "Ải sau",
+            "box": {
+              "x": 194,
+              "y": 725,
+              "w": 152,
+              "h": 46,
+              "display": "block",
+              "opacity": "1",
+              "z": "100000",
+              "visibility": "visible",
+              "font": "Georgia",
+              "fontSize": "14px"
+            }
+          }
+        ],
+        "loot": [
+          {
+            "id": "gold",
+            "text": "+180VàngThưởng thắng trận",
+            "icon": "assets/result-icons-art/gold-imagen.png",
+            "natural": [
+              192,
+              192
+            ],
+            "tile": [
+              77,
+              138
+            ],
+            "imgBox": [
+              52,
+              52
+            ],
+            "imgOk": true
+          },
+          {
+            "id": "mastery",
+            "text": "+24Tinh Thông đội6 tướng · tối đa +4/tướng, dừng ở 100",
+            "icon": "assets/result-icons-art/mastery-imagen.png",
+            "natural": [
+              192,
+              192
+            ],
+            "tile": [
+              77,
+              164
+            ],
+            "imgBox": [
+              52,
+              52
+            ],
+            "imgOk": true
+          },
+          {
+            "id": "gold",
+            "text": "+246Vàng vượt ảiThưởng ải 6–2",
+            "icon": "assets/result-icons-art/gold-imagen.png",
+            "natural": [
+              192,
+              192
+            ],
+            "tile": [
+              77,
+              126
+            ],
+            "imgBox": [
+              52,
+              52
+            ],
+            "imgOk": true
+          },
+          {
+            "id": "playerXp",
+            "text": "+188EXP người chơiVượt ải lần đầu · mở ải theo cấp",
+            "icon": "assets/result-icons-art/scroll-imagen.png",
+            "natural": [
+              192,
+              192
+            ],
+            "tile": [
+              77,
+              152
+            ],
+            "imgBox": [
+              52,
+              52
+            ],
+            "imgOk": true
+          }
+        ],
+        "tips": [],
+        "overflow": [
+          {
+            "tag": "CANVAS",
+            "cls": "irv-hero run",
+            "rect": [
+              -20,
+              260
+            ]
+          }
+        ],
+        "scrollW": 375,
+        "imgs": [
+          {
+            "src": "victory-stage-original-quality-smooth-v5.apng",
+            "ok": true,
+            "natural": [
+              480,
+              270
+            ]
+          },
+          {
+            "src": "victory-info-card-portrait-v6.png",
+            "ok": true,
+            "natural": [
+              1122,
+              1402
+            ]
+          },
+          {
+            "src": "result-victory-wings.png",
+            "ok": true,
+            "natural": [
+              480,
+              287
+            ]
+          },
+          {
+            "src": "victory.svg",
+            "ok": true,
+            "natural": [
+              300,
+              49
+            ]
+          },
+          {
+            "src": "gold-imagen.png",
+            "ok": true,
+            "natural": [
+              192,
+              192
+            ]
+          },
+          {
+            "src": "mastery-imagen.png",
+            "ok": true,
+            "natural": [
+              192,
+              192
+            ]
+          },
+          {
+            "src": "gold-imagen.png",
+            "ok": true,
+            "natural": [
+              192,
+              192
+            ]
+          },
+          {
+            "src": "scroll-imagen.png",
+            "ok": true,
+            "natural": [
+              192,
+              192
+            ]
+          }
+        ]
+      },
+      "consoleErrors": [],
+      "assetErrors": [],
+      "screenshot": "C:\\lt\\wt-result-icons\\docs\\qa\\result-type-icons\\verify-main-victory-375.png",
+      "shotOk": true,
+      "beforeConfirm": {
+        "gold": 500,
+        "gems": 800,
+        "url": "http://127.0.0.1:62937/"
+      },
+      "afterConfirm": {
+        "url": "http://127.0.0.1:62937/",
+        "resultVisible": false,
+        "frameAlive": true,
+        "overlayOpen": false,
+        "gold": 926,
+        "stage": [
+          5,
+          0
+        ]
+      },
+      "ok": true
+    },
+    {
+      "result": "victory",
+      "width": 430,
+      "height": 932,
+      "dpr": 2,
+      "chapter": 5,
+      "stage": 1,
+      "squad": 6,
+      "level": 120,
+      "stars": 6,
+      "fixture": {
+        "cleared": 5,
+        "squad": 6,
+        "chapters": 6
+      },
+      "stageLabel": "Ải 6–2",
+      "skipButton": {
+        "x": 400,
+        "y": 899,
+        "w": 44,
+        "h": 44
+      },
+      "winner": "player",
+      "rounds": 2,
+      "actions": 17,
+      "probe": {
+        "phase": "show irv-victory irv-authored-motion irv-motion-run-active irv-motion-idle",
+        "viewport": [
+          430,
+          932
+        ],
+        "dpr": 2,
+        "word": {
+          "x": 82,
+          "y": 37,
+          "w": 267,
+          "h": 43,
+          "display": "block",
+          "opacity": "1",
+          "z": "2",
+          "visibility": "visible",
+          "font": "Georgia, \"Times New Roman\", serif",
+          "fontSize": "16px",
+          "src": "assets/result-art/result-word-v2/victory.svg",
+          "natural": [
+            300,
+            49
+          ]
+        },
+        "title": {
+          "x": 0,
+          "y": 0,
+          "w": 430,
+          "h": 242,
+          "display": "block",
+          "opacity": "1",
+          "z": "3",
+          "visibility": "visible",
+          "font": "Georgia, \"Times New Roman\", serif",
+          "fontSize": "16px",
+          "src": "assets/owner-refresh-20261018/result-victory-wings.png",
+          "natural": [
+            480,
+            287
+          ]
+        },
+        "stage": {
+          "x": 0,
+          "y": 0,
+          "w": 430,
+          "h": 242,
+          "display": "block",
+          "opacity": "1",
+          "z": "1",
+          "visibility": "visible",
+          "font": "Georgia, \"Times New Roman\", serif",
+          "fontSize": "16px",
+          "src": "assets/result-victory-v6/victory-stage-original-quality-smooth-v5.apng",
+          "natural": [
+            480,
+            270
+          ]
+        },
+        "card": {
+          "x": 0,
+          "y": 186,
+          "w": 430,
+          "h": 746,
+          "display": "block",
+          "opacity": "1",
+          "z": "2",
+          "visibility": "visible",
+          "font": "Georgia, \"Times New Roman\", serif",
+          "fontSize": "16px",
+          "src": "assets/result-victory-v6/victory-info-card-portrait-v6.png",
+          "natural": [
+            1122,
+            1402
+          ]
+        },
+        "hero": {
+          "x": 54,
+          "y": 215,
+          "w": 322,
+          "h": 181,
+          "display": "block",
+          "opacity": "1",
+          "z": "8",
+          "visibility": "visible",
+          "font": "Georgia, \"Times New Roman\", serif",
+          "fontSize": "16px"
+        },
+        "result": {
+          "x": 30,
+          "y": 401,
+          "w": 370,
+          "h": 78,
+          "display": "block",
+          "opacity": "1",
+          "z": "5",
+          "visibility": "visible",
+          "font": "Georgia, \"Times New Roman\", serif",
+          "fontSize": "16px"
+        },
+        "resultHead": "Ông Phở",
+        "resultMeta": "⚔ 11442 sát thương · ☠ 1 kết liễu",
+        "rewards": {
+          "x": 26,
+          "y": 503,
+          "w": 378,
+          "h": 282,
+          "display": "block",
+          "opacity": "1",
+          "z": "6",
+          "visibility": "visible",
+          "font": "Georgia, \"Times New Roman\", serif",
+          "fontSize": "16px"
+        },
+        "rewardHead": "Chiến lợi phẩm",
+        "note": "Ải 6–2 · Xác nhận để nhận thưởng. Ải sau nhận thưởng rồi vào ải kế tiếp.",
+        "actions": {
+          "x": 34,
+          "y": 839,
+          "w": 361,
+          "h": 46,
+          "display": "grid",
+          "opacity": "1",
+          "z": "99999",
+          "visibility": "visible",
+          "font": "Georgia, \"Times New Roman\", serif",
+          "fontSize": "16px"
+        },
+        "buttons": [
+          {
+            "label": "Xác nhận",
+            "box": {
+              "x": 34,
+              "y": 839,
+              "w": 175,
+              "h": 46,
+              "display": "block",
+              "opacity": "1",
+              "z": "100000",
+              "visibility": "visible",
+              "font": "Georgia",
+              "fontSize": "14px"
+            }
+          },
+          {
+            "label": "Ải sau",
+            "box": {
+              "x": 221,
+              "y": 839,
+              "w": 175,
+              "h": 46,
+              "display": "block",
+              "opacity": "1",
+              "z": "100000",
+              "visibility": "visible",
+              "font": "Georgia",
+              "fontSize": "14px"
+            }
+          }
+        ],
+        "loot": [
+          {
+            "id": "gold",
+            "text": "+180VàngThưởng thắng trận",
+            "icon": "assets/result-icons-art/gold-imagen.png",
+            "natural": [
+              192,
+              192
+            ],
+            "tile": [
+              121,
+              126
+            ],
+            "imgBox": [
+              52,
+              52
+            ],
+            "imgOk": true
+          },
+          {
+            "id": "mastery",
+            "text": "+24Tinh Thông đội6 tướng · tối đa +4/tướng, dừng ở 100",
+            "icon": "assets/result-icons-art/mastery-imagen.png",
+            "natural": [
+              192,
+              192
+            ],
+            "tile": [
+              121,
+              138
+            ],
+            "imgBox": [
+              52,
+              52
+            ],
+            "imgOk": true
+          },
+          {
+            "id": "gold",
+            "text": "+246Vàng vượt ảiThưởng ải 6–2",
+            "icon": "assets/result-icons-art/gold-imagen.png",
+            "natural": [
+              192,
+              192
+            ],
+            "tile": [
+              121,
+              126
+            ],
+            "imgBox": [
+              52,
+              52
+            ],
+            "imgOk": true
+          }
+        ],
+        "tips": [],
+        "overflow": [],
+        "scrollW": 430,
+        "imgs": [
+          {
+            "src": "victory-stage-original-quality-smooth-v5.apng",
+            "ok": true,
+            "natural": [
+              480,
+              270
+            ]
+          },
+          {
+            "src": "victory-info-card-portrait-v6.png",
+            "ok": true,
+            "natural": [
+              1122,
+              1402
+            ]
+          },
+          {
+            "src": "result-victory-wings.png",
+            "ok": true,
+            "natural": [
+              480,
+              287
+            ]
+          },
+          {
+            "src": "victory.svg",
+            "ok": true,
+            "natural": [
+              300,
+              49
+            ]
+          },
+          {
+            "src": "gold-imagen.png",
+            "ok": true,
+            "natural": [
+              192,
+              192
+            ]
+          },
+          {
+            "src": "mastery-imagen.png",
+            "ok": true,
+            "natural": [
+              192,
+              192
+            ]
+          },
+          {
+            "src": "gold-imagen.png",
+            "ok": true,
+            "natural": [
+              192,
+              192
+            ]
+          }
+        ]
+      },
+      "consoleErrors": [],
+      "assetErrors": [],
+      "screenshot": "C:\\lt\\wt-result-icons\\docs\\qa\\result-type-icons\\verify-main-victory-430.png",
+      "shotOk": true,
+      "beforeConfirm": {
+        "gold": 926,
+        "gems": 800,
+        "url": "http://127.0.0.1:62937/"
+      },
+      "afterConfirm": {
+        "url": "http://127.0.0.1:62937/",
+        "resultVisible": false,
+        "frameAlive": true,
+        "overlayOpen": false,
+        "gold": 1352,
+        "stage": [
+          5,
+          0
+        ]
+      },
+      "ok": true
+    },
+    {
+      "result": "defeat",
+      "width": 375,
+      "height": 812,
+      "dpr": 2,
+      "chapter": 5,
+      "stage": 1,
+      "squad": 6,
+      "level": 1,
+      "stars": 1,
+      "fixture": {
+        "cleared": 5,
+        "squad": 6,
+        "chapters": 6
+      },
+      "stageLabel": "Ải 6–2",
+      "skipButton": {
+        "x": 345,
+        "y": 779,
+        "w": 44,
+        "h": 44
+      },
+      "winner": "enemy",
+      "rounds": 6,
+      "actions": 49,
+      "probe": {
+        "phase": "show irv-defeat irv-authored-motion",
+        "viewport": [
+          375,
+          812
+        ],
+        "dpr": 2,
+        "word": {
+          "x": 101,
+          "y": 28,
+          "w": 173,
+          "h": 32,
+          "display": "block",
+          "opacity": "1",
+          "z": "2",
+          "visibility": "visible",
+          "font": "Georgia, \"Times New Roman\", serif",
+          "fontSize": "16px",
+          "src": "assets/result-art/result-word-v2/defeat.svg",
+          "natural": [
+            300,
+            56
+          ]
+        },
+        "title": {
+          "x": 0,
+          "y": 12,
+          "w": 375,
+          "h": 211,
+          "display": "block",
+          "opacity": "1",
+          "z": "3",
+          "visibility": "visible",
+          "font": "Georgia, \"Times New Roman\", serif",
+          "fontSize": "16px",
+          "src": "assets/owner-refresh-20261018/result-defeat-wings.png",
+          "natural": [
+            480,
+            253
+          ]
+        },
+        "stage": {
+          "x": 0,
+          "y": 0,
+          "w": 375,
+          "h": 211,
+          "display": "block",
+          "opacity": "1",
+          "z": "1",
+          "visibility": "visible",
+          "font": "Georgia, \"Times New Roman\", serif",
+          "fontSize": "16px",
+          "src": "assets/result-defeat-v4/victory-stage-original-quality-smooth-v5.apng",
+          "natural": [
+            480,
+            270
+          ]
+        },
+        "card": {
+          "x": 0,
+          "y": 211,
+          "w": 375,
+          "h": 601,
+          "display": "block",
+          "opacity": "1",
+          "z": "2",
+          "visibility": "visible",
+          "font": "Georgia, \"Times New Roman\", serif",
+          "fontSize": "16px",
+          "src": "assets/result-defeat-v4/victory-info-card-portrait-v6.png",
+          "natural": [
+            1122,
+            1402
+          ]
+        },
+        "hero": {
+          "x": 15,
+          "y": 93,
+          "w": 345,
+          "h": 194,
+          "display": "block",
+          "opacity": "1",
+          "z": "8",
+          "visibility": "visible",
+          "font": "Georgia, \"Times New Roman\", serif",
+          "fontSize": "16px"
+        },
+        "result": {
+          "x": 26,
+          "y": 348,
+          "w": 323,
+          "h": 74,
+          "display": "block",
+          "opacity": "1",
+          "z": "5",
+          "visibility": "visible",
+          "font": "Georgia, \"Times New Roman\", serif",
+          "fontSize": "16px"
+        },
+        "resultHead": "Thầy Mo",
+        "resultMeta": "⚔ 937 sát thương · ☠ 0 kết liễu",
+        "rewards": null,
+        "rewardHead": null,
+        "note": null,
+        "actions": {
+          "x": 30,
+          "y": 725,
+          "w": 315,
+          "h": 46,
+          "display": "grid",
+          "opacity": "1",
+          "z": "99999",
+          "visibility": "visible",
+          "font": "Georgia, \"Times New Roman\", serif",
+          "fontSize": "16px"
+        },
+        "buttons": [
+          {
+            "label": "Xác nhận",
+            "box": {
+              "x": 30,
+              "y": 725,
+              "w": 152,
+              "h": 46,
+              "display": "block",
+              "opacity": "1",
+              "z": "100000",
+              "visibility": "visible",
+              "font": "Georgia",
+              "fontSize": "14px"
+            }
+          },
+          {
+            "label": "Quay lại",
+            "box": {
+              "x": 194,
+              "y": 725,
+              "w": 152,
+              "h": 46,
+              "display": "block",
+              "opacity": "1",
+              "z": "100000",
+              "visibility": "visible",
+              "font": "Georgia",
+              "fontSize": "14px"
+            }
+          }
+        ],
+        "loot": [],
+        "tips": [
+          {
+            "text": "Thưởng treo máy",
+            "icon": "assets/result-defeat-v4/idle-reward.png",
+            "ok": true
+          },
+          {
+            "text": "Tăng cấp tướng",
+            "icon": "assets/result-defeat-v4/upgrade-hero.png",
+            "ok": true
+          },
+          {
+            "text": "Chiêu mộ danh tướng",
+            "icon": "assets/result-defeat-v4/summon-hero.png",
+            "ok": true
+          },
+          {
+            "text": "Mang trang bị",
+            "icon": "assets/result-defeat-v4/equip-gear.png",
+            "ok": true
+          }
+        ],
+        "overflow": [],
+        "scrollW": 375,
+        "imgs": [
+          {
+            "src": "victory-stage-original-quality-smooth-v5.apng",
+            "ok": true,
+            "natural": [
+              480,
+              270
+            ]
+          },
+          {
+            "src": "victory-info-card-portrait-v6.png",
+            "ok": true,
+            "natural": [
+              1122,
+              1402
+            ]
+          },
+          {
+            "src": "result-defeat-wings.png",
+            "ok": true,
+            "natural": [
+              480,
+              253
+            ]
+          },
+          {
+            "src": "defeat.svg",
+            "ok": true,
+            "natural": [
+              300,
+              56
+            ]
+          },
+          {
+            "src": "idle-reward.png",
+            "ok": true,
+            "natural": [
+              200,
+              200
+            ]
+          },
+          {
+            "src": "upgrade-hero.png",
+            "ok": true,
+            "natural": [
+              200,
+              200
+            ]
+          },
+          {
+            "src": "summon-hero.png",
+            "ok": true,
+            "natural": [
+              200,
+              200
+            ]
+          },
+          {
+            "src": "equip-gear.png",
+            "ok": true,
+            "natural": [
+              200,
+              200
+            ]
+          }
+        ]
+      },
+      "consoleErrors": [],
+      "assetErrors": [],
+      "screenshot": "C:\\lt\\wt-result-icons\\docs\\qa\\result-type-icons\\verify-main-defeat-375.png",
+      "shotOk": true,
+      "beforeConfirm": {
+        "gold": 1352,
+        "gems": 800,
+        "url": "http://127.0.0.1:62937/"
+      },
+      "afterConfirm": {
+        "url": "http://127.0.0.1:62937/",
+        "resultVisible": false,
+        "frameAlive": true,
+        "overlayOpen": false,
+        "gold": 1352,
+        "stage": [
+          5,
+          0
+        ]
+      },
+      "ok": true
+    },
+    {
+      "result": "defeat",
+      "width": 430,
+      "height": 932,
+      "dpr": 2,
+      "chapter": 5,
+      "stage": 1,
+      "squad": 6,
+      "level": 1,
+      "stars": 1,
+      "fixture": {
+        "cleared": 5,
+        "squad": 6,
+        "chapters": 6
+      },
+      "stageLabel": "Ải 6–2",
+      "skipButton": {
+        "x": 400,
+        "y": 899,
+        "w": 44,
+        "h": 44
+      },
+      "winner": "enemy",
+      "rounds": 6,
+      "actions": 49,
+      "probe": {
+        "phase": "show irv-defeat irv-authored-motion",
+        "viewport": [
+          430,
+          932
+        ],
+        "dpr": 2,
+        "word": {
+          "x": 116,
+          "y": 32,
+          "w": 198,
+          "h": 37,
+          "display": "block",
+          "opacity": "1",
+          "z": "2",
+          "visibility": "visible",
+          "font": "Georgia, \"Times New Roman\", serif",
+          "fontSize": "16px",
+          "src": "assets/result-art/result-word-v2/defeat.svg",
+          "natural": [
+            300,
+            56
+          ]
+        },
+        "title": {
+          "x": 0,
+          "y": 14,
+          "w": 430,
+          "h": 242,
+          "display": "block",
+          "opacity": "1",
+          "z": "3",
+          "visibility": "visible",
+          "font": "Georgia, \"Times New Roman\", serif",
+          "fontSize": "16px",
+          "src": "assets/owner-refresh-20261018/result-defeat-wings.png",
+          "natural": [
+            480,
+            253
+          ]
+        },
+        "stage": {
+          "x": 0,
+          "y": 0,
+          "w": 430,
+          "h": 242,
+          "display": "block",
+          "opacity": "1",
+          "z": "1",
+          "visibility": "visible",
+          "font": "Georgia, \"Times New Roman\", serif",
+          "fontSize": "16px",
+          "src": "assets/result-defeat-v4/victory-stage-original-quality-smooth-v5.apng",
+          "natural": [
+            480,
+            270
+          ]
+        },
+        "card": {
+          "x": 0,
+          "y": 242,
+          "w": 430,
+          "h": 690,
+          "display": "block",
+          "opacity": "1",
+          "z": "2",
+          "visibility": "visible",
+          "font": "Georgia, \"Times New Roman\", serif",
+          "fontSize": "16px",
+          "src": "assets/result-defeat-v4/victory-info-card-portrait-v6.png",
+          "natural": [
+            1122,
+            1402
+          ]
+        },
+        "hero": {
+          "x": 17,
+          "y": 107,
+          "w": 396,
+          "h": 223,
+          "display": "block",
+          "opacity": "1",
+          "z": "8",
+          "visibility": "visible",
+          "font": "Georgia, \"Times New Roman\", serif",
+          "fontSize": "16px"
+        },
+        "result": {
+          "x": 30,
+          "y": 399,
+          "w": 370,
+          "h": 78,
+          "display": "block",
+          "opacity": "1",
+          "z": "5",
+          "visibility": "visible",
+          "font": "Georgia, \"Times New Roman\", serif",
+          "fontSize": "16px"
+        },
+        "resultHead": "Thầy Mo",
+        "resultMeta": "⚔ 937 sát thương · ☠ 0 kết liễu",
+        "rewards": null,
+        "rewardHead": null,
+        "note": null,
+        "actions": {
+          "x": 34,
+          "y": 839,
+          "w": 361,
+          "h": 46,
+          "display": "grid",
+          "opacity": "1",
+          "z": "99999",
+          "visibility": "visible",
+          "font": "Georgia, \"Times New Roman\", serif",
+          "fontSize": "16px"
+        },
+        "buttons": [
+          {
+            "label": "Xác nhận",
+            "box": {
+              "x": 34,
+              "y": 839,
+              "w": 175,
+              "h": 46,
+              "display": "block",
+              "opacity": "1",
+              "z": "100000",
+              "visibility": "visible",
+              "font": "Georgia",
+              "fontSize": "14px"
+            }
+          },
+          {
+            "label": "Quay lại",
+            "box": {
+              "x": 221,
+              "y": 839,
+              "w": 175,
+              "h": 46,
+              "display": "block",
+              "opacity": "1",
+              "z": "100000",
+              "visibility": "visible",
+              "font": "Georgia",
+              "fontSize": "14px"
+            }
+          }
+        ],
+        "loot": [],
+        "tips": [
+          {
+            "text": "Thưởng treo máy",
+            "icon": "assets/result-defeat-v4/idle-reward.png",
+            "ok": true
+          },
+          {
+            "text": "Tăng cấp tướng",
+            "icon": "assets/result-defeat-v4/upgrade-hero.png",
+            "ok": true
+          },
+          {
+            "text": "Chiêu mộ danh tướng",
+            "icon": "assets/result-defeat-v4/summon-hero.png",
+            "ok": true
+          },
+          {
+            "text": "Mang trang bị",
+            "icon": "assets/result-defeat-v4/equip-gear.png",
+            "ok": true
+          }
+        ],
+        "overflow": [],
+        "scrollW": 430,
+        "imgs": [
+          {
+            "src": "victory-stage-original-quality-smooth-v5.apng",
+            "ok": true,
+            "natural": [
+              480,
+              270
+            ]
+          },
+          {
+            "src": "victory-info-card-portrait-v6.png",
+            "ok": true,
+            "natural": [
+              1122,
+              1402
+            ]
+          },
+          {
+            "src": "result-defeat-wings.png",
+            "ok": true,
+            "natural": [
+              480,
+              253
+            ]
+          },
+          {
+            "src": "defeat.svg",
+            "ok": true,
+            "natural": [
+              300,
+              56
+            ]
+          },
+          {
+            "src": "idle-reward.png",
+            "ok": true,
+            "natural": [
+              200,
+              200
+            ]
+          },
+          {
+            "src": "upgrade-hero.png",
+            "ok": true,
+            "natural": [
+              200,
+              200
+            ]
+          },
+          {
+            "src": "summon-hero.png",
+            "ok": true,
+            "natural": [
+              200,
+              200
+            ]
+          },
+          {
+            "src": "equip-gear.png",
+            "ok": true,
+            "natural": [
+              200,
+              200
+            ]
+          }
+        ]
+      },
+      "consoleErrors": [],
+      "assetErrors": [],
+      "screenshot": "C:\\lt\\wt-result-icons\\docs\\qa\\result-type-icons\\verify-main-defeat-430.png",
+      "shotOk": true,
+      "beforeConfirm": {
+        "gold": 1352,
+        "gems": 800,
+        "url": "http://127.0.0.1:62937/"
+      },
+      "afterConfirm": {
+        "url": "http://127.0.0.1:62937/",
+        "resultVisible": false,
+        "frameAlive": true,
+        "overlayOpen": false,
+        "gold": 1352,
+        "stage": [
+          5,
+          0
+        ]
+      },
+      "ok": true
+    }
+  ],
+  "ok": true
+}

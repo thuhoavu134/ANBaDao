@@ -69,6 +69,7 @@ await import('./meta-rng-seed-v1.mjs');
 await import('./meta-rng-seed-v2.mjs');
 await import('./hero-roster-phase-a-v4.mjs');
 await import('./hero-detail-tabs.mjs');
+await import('./star-success-fx.mjs');
 await import('./runtime-mobile-render-sfx-v1.mjs');
 await import('./dinh-loi-retina-portrait-v1.mjs');
 await import('./skill-kit-runtime-v1.mjs');

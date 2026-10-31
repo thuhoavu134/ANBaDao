@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Word-mark geometry preview</title>
+<style>
+  html,body{margin:0;background:#070706;font-family:Georgia,'Times New Roman',serif}
+  #viewport{position:relative;width:min(100vw,56.25vh);height:100dvh;margin:auto;overflow:hidden;background:#0b0a07}
+  .stage,.card,.wings,.word{position:absolute}
+  .stage{inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
+  .card{left:0;right:0;top:8%;height:84%;width:100%;object-fit:contain;z-index:2}
+  .wings{left:0;top:0;width:100%;z-index:4;object-fit:contain}
+  .word{left:50%;transform:translateX(-50%);z-index:3;object-fit:contain;
+        filter:drop-shadow(0 5px 9px rgba(30,13,3,.55))}
+  /* real overlay geometry for comparison */
+  .irv-old{position:absolute;left:50%;transform:translateX(-50%);width:100%;top:0;z-index:3;opacity:.85;outline:1px dashed #f0f}
+</style>
+</head>
+<body>
+<div id="viewport">
+  <img class="stage" src="assets/result-victory-v6/victory-stage-original-quality-smooth-v5.apng" alt="">
+  <img class="card" src="assets/result-victory-v6/victory-info-card-portrait-v6.png" alt="">
+  <img class="wings" src="assets/owner-refresh-20261018/result-victory-wings.png" alt="">
+  <img class="word" id="word" src="assets/result-art/result-word-v2/victory.svg" alt="VICTORY">
+  <img class="irv-old" id="old" src="assets/owner-refresh-20261018/result-victory-letters.png" alt="">
+</div>
+<script>
+  const q = new URLSearchParams(location.search);
+  const word = document.getElementById('word');
+  const oldWord = document.getElementById('old');
+  const vw = Number(q.get('vw') || 72);
+  const topFrac = Number(q.get('top') || 0.22);
+  const showOld = q.get('old') === '1';
+  const face = q.get('face');
+  if (face) word.src = `assets/result-art/result-word-alt/${q.get('word') === 'defeat' ? 'defeat' : 'victory'}-${face}.svg`;
+  word.style.width = `min(${vw}vw, ${Math.round(vw * 4.6)}px)`;
+  word.style.top = `calc(min(100vw,56.25vh) * ${topFrac})`;
+  oldWord.style.display = showOld ? 'block' : 'none';
+  if (q.get('word') === 'defeat') {
+    word.src = 'assets/result-art/result-word-v2/defeat.svg';
+    document.querySelector('.wings').src = 'assets/owner-refresh-20261018/result-defeat-wings.png';
+  }
+</script>
+</body>
+</html>

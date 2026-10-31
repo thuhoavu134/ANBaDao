@@ -1,0 +1,92 @@
+[
+  {
+    "file": "C:\\lt\\wt-result-icons\\docs\\qa\\result-type-icons\\face-victory-palatino.png",
+    "word": "victory",
+    "face": "palatino",
+    "src": "victory-palatino.svg",
+    "natural": [
+      300,
+      48
+    ],
+    "box": [
+      270,
+      43
+    ],
+    "top": 83
+  },
+  {
+    "file": "C:\\lt\\wt-result-icons\\docs\\qa\\result-type-icons\\face-defeat-palatino.png",
+    "word": "defeat",
+    "face": "palatino",
+    "src": "defeat-palatino.svg",
+    "natural": [
+      300,
+      56
+    ],
+    "box": [
+      270,
+      50
+    ],
+    "top": 83
+  },
+  {
+    "file": "C:\\lt\\wt-result-icons\\docs\\qa\\result-type-icons\\face-victory-bookman.png",
+    "word": "victory",
+    "face": "bookman",
+    "src": "victory-bookman.svg",
+    "natural": [
+      300,
+      46
+    ],
+    "box": [
+      270,
+      42
+    ],
+    "top": 83
+  },
+  {
+    "file": "C:\\lt\\wt-result-icons\\docs\\qa\\result-type-icons\\face-defeat-bookman.png",
+    "word": "defeat",
+    "face": "bookman",
+    "src": "defeat-bookman.svg",
+    "natural": [
+      300,
+      51
+    ],
+    "box": [
+      270,
+      46
+    ],
+    "top": 83
+  },
+  {
+    "file": "C:\\lt\\wt-result-icons\\docs\\qa\\result-type-icons\\face-victory-constantia.png",
+    "word": "victory",
+    "face": "constantia",
+    "src": "victory-constantia.svg",
+    "natural": [
+      300,
+      49
+    ],
+    "box": [
+      270,
+      44
+    ],
+    "top": 83
+  },
+  {
+    "file": "C:\\lt\\wt-result-icons\\docs\\qa\\result-type-icons\\face-defeat-constantia.png",
+    "word": "defeat",
+    "face": "constantia",
+    "src": "defeat-constantia.svg",
+    "natural": [
+      300,
+      56
+    ],
+    "box": [
+      270,
+      51
+    ],
+    "top": 83
+  }
+]
