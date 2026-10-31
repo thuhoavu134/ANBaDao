@@ -7,7 +7,7 @@ let html = readFileSync(p, 'utf8');
 const css = `<style id="hero-roster-phase-a-v3-css">
 #hvHeroRosterV3{position:fixed;left:0;right:0;top:0;bottom:74px;z-index:9999;background:linear-gradient(180deg,#bddce7 0 110px,#f7edd8 110px 100%);color:#2d251f;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;overflow:auto;-webkit-overflow-scrolling:touch}
 #hvHeroRosterV3[hidden]{display:none!important}
-#hvHeroRosterV3 .v3-top{position:sticky;top:0;z-index:5;background:linear-gradient(180deg,rgba(188,220,231,.985),rgba(236,231,208,.985));border-bottom:1px solid #d7b883;box-shadow:0 2px 8px rgba(79,58,27,.14)}
+#hvHeroRosterV3 .v3-top{position:sticky;top:0;z-index:5;background:linear-gradient(180deg,rgba(253,249,239,.985),rgba(243,231,207,.985));border-bottom:1px solid #d7b883;box-shadow:0 2px 8px rgba(79,58,27,.14)}
 #hvHeroRosterV3 .v3-profile{height:70px;display:grid;grid-template-columns:54px 1fr auto;gap:8px;align-items:center;padding:7px 10px}
 #hvHeroRosterV3 .v3-avatar{width:52px;height:52px;border-radius:10px;background:linear-gradient(145deg,#4a6072,#1b222a);border:3px solid #e4b85d;color:#ffe9af;display:flex;align-items:center;justify-content:center;font-weight:1000;font-size:18px;box-shadow:0 2px 5px rgba(77,49,11,.28)}
 #hvHeroRosterV3 .v3-name{font-size:15px;font-weight:950;line-height:1}.v3-sub{font-size:10px;color:#6d5941;margin-top:5px}.v3-total{font-size:17px;font-weight:1000;color:#d58a14;margin-top:2px}
