@@ -1,0 +1,130 @@
+[
+  {
+    "file": "C:\\lt\\wt-result-icons\\docs\\qa\\result-type-icons\\grid-victory-375-60vw.png",
+    "which": "victory",
+    "width": 375,
+    "vw": 60,
+    "top": 0.26,
+    "ok": true
+  },
+  {
+    "file": "C:\\lt\\wt-result-icons\\docs\\qa\\result-type-icons\\grid-defeat-375-60vw.png",
+    "which": "defeat",
+    "width": 375,
+    "vw": 60,
+    "top": 0.26,
+    "ok": true
+  },
+  {
+    "file": "C:\\lt\\wt-result-icons\\docs\\qa\\result-type-icons\\grid-victory-375-72vw.png",
+    "which": "victory",
+    "width": 375,
+    "vw": 72,
+    "top": 0.22,
+    "ok": true
+  },
+  {
+    "file": "C:\\lt\\wt-result-icons\\docs\\qa\\result-type-icons\\grid-defeat-375-72vw.png",
+    "which": "defeat",
+    "width": 375,
+    "vw": 72,
+    "top": 0.22,
+    "ok": true
+  },
+  {
+    "file": "C:\\lt\\wt-result-icons\\docs\\qa\\result-type-icons\\grid-victory-375-82vw.png",
+    "which": "victory",
+    "width": 375,
+    "vw": 82,
+    "top": 0.19,
+    "ok": true
+  },
+  {
+    "file": "C:\\lt\\wt-result-icons\\docs\\qa\\result-type-icons\\grid-defeat-375-82vw.png",
+    "which": "defeat",
+    "width": 375,
+    "vw": 82,
+    "top": 0.19,
+    "ok": true
+  },
+  {
+    "file": "C:\\lt\\wt-result-icons\\docs\\qa\\result-type-icons\\grid-victory-375-92vw.png",
+    "which": "victory",
+    "width": 375,
+    "vw": 92,
+    "top": 0.16,
+    "ok": true
+  },
+  {
+    "file": "C:\\lt\\wt-result-icons\\docs\\qa\\result-type-icons\\grid-defeat-375-92vw.png",
+    "which": "defeat",
+    "width": 375,
+    "vw": 92,
+    "top": 0.16,
+    "ok": true
+  },
+  {
+    "file": "C:\\lt\\wt-result-icons\\docs\\qa\\result-type-icons\\grid-victory-430-60vw.png",
+    "which": "victory",
+    "width": 430,
+    "vw": 60,
+    "top": 0.26,
+    "ok": true
+  },
+  {
+    "file": "C:\\lt\\wt-result-icons\\docs\\qa\\result-type-icons\\grid-defeat-430-60vw.png",
+    "which": "defeat",
+    "width": 430,
+    "vw": 60,
+    "top": 0.26,
+    "ok": true
+  },
+  {
+    "file": "C:\\lt\\wt-result-icons\\docs\\qa\\result-type-icons\\grid-victory-430-72vw.png",
+    "which": "victory",
+    "width": 430,
+    "vw": 72,
+    "top": 0.22,
+    "ok": true
+  },
+  {
+    "file": "C:\\lt\\wt-result-icons\\docs\\qa\\result-type-icons\\grid-defeat-430-72vw.png",
+    "which": "defeat",
+    "width": 430,
+    "vw": 72,
+    "top": 0.22,
+    "ok": true
+  },
+  {
+    "file": "C:\\lt\\wt-result-icons\\docs\\qa\\result-type-icons\\grid-victory-430-82vw.png",
+    "which": "victory",
+    "width": 430,
+    "vw": 82,
+    "top": 0.19,
+    "ok": true
+  },
+  {
+    "file": "C:\\lt\\wt-result-icons\\docs\\qa\\result-type-icons\\grid-defeat-430-82vw.png",
+    "which": "defeat",
+    "width": 430,
+    "vw": 82,
+    "top": 0.19,
+    "ok": true
+  },
+  {
+    "file": "C:\\lt\\wt-result-icons\\docs\\qa\\result-type-icons\\grid-victory-430-92vw.png",
+    "which": "victory",
+    "width": 430,
+    "vw": 92,
+    "top": 0.16,
+    "ok": true
+  },
+  {
+    "file": "C:\\lt\\wt-result-icons\\docs\\qa\\result-type-icons\\grid-defeat-430-92vw.png",
+    "which": "defeat",
+    "width": 430,
+    "vw": 92,
+    "top": 0.16,
+    "ok": true
+  }
+]

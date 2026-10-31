@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620.08 116.0" role="img" aria-label="DEFEAT">
 <title>DEFEAT</title>
 <defs>
-<linearGradient id="metal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fdfaf1"/><stop offset="0.18" stop-color="#fdfaf1"/><stop offset="0.46" stop-color="#d6d9e1"/><stop offset="0.72" stop-color="#7e828d"/><stop offset="0.88" stop-color="#7e828d"/><stop offset="1" stop-color="#c6cad3"/></linearGradient>
+<linearGradient id="metal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fffaf0"/><stop offset="0.18" stop-color="#f7ecd8"/><stop offset="0.46" stop-color="#dccbaa"/><stop offset="0.72" stop-color="#8d7a5c"/><stop offset="0.88" stop-color="#8d7a5c"/><stop offset="1" stop-color="#cdb894"/></linearGradient>
 <linearGradient id="gloss" x1="0" y1="0" x2="0" y2="1">
 <stop offset="0" stop-color="#ffffff" stop-opacity=".42"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
 </linearGradient>

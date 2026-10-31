@@ -1,0 +1,269 @@
+{
+  "when": "2026-10-31T06:07:58.940Z",
+  "shots": [
+    {
+      "file": "C:\\lt\\wt-result-icons\\docs\\qa\\result-type-icons\\preview-victory-375-a-52vw-top30.png",
+      "result": "victory",
+      "width": 375,
+      "cfg": {
+        "name": "a-52vw-top30",
+        "width": "min(52vw,290px)",
+        "top": "calc(min(100vw,56.25vh) * 0.30)"
+      },
+      "ok": true
+    },
+    {
+      "file": "C:\\lt\\wt-result-icons\\docs\\qa\\result-type-icons\\preview-victory-375-b-62vw-top26.png",
+      "result": "victory",
+      "width": 375,
+      "cfg": {
+        "name": "b-62vw-top26",
+        "width": "min(62vw,340px)",
+        "top": "calc(min(100vw,56.25vh) * 0.24)"
+      },
+      "ok": true
+    },
+    {
+      "file": "C:\\lt\\wt-result-icons\\docs\\qa\\result-type-icons\\preview-victory-375-c-70vw-top22.png",
+      "result": "victory",
+      "width": 375,
+      "cfg": {
+        "name": "c-70vw-top22",
+        "width": "min(70vw,380px)",
+        "top": "calc(min(100vw,56.25vh) * 0.20)"
+      },
+      "ok": true
+    },
+    {
+      "file": "C:\\lt\\wt-result-icons\\docs\\qa\\result-type-icons\\preview-victory-375-d-58vw-top34.png",
+      "result": "victory",
+      "width": 375,
+      "cfg": {
+        "name": "d-58vw-top34",
+        "width": "min(58vw,320px)",
+        "top": "calc(min(100vw,56.25vh) * 0.34)"
+      },
+      "ok": true
+    },
+    {
+      "result": "victory",
+      "width": 375,
+      "geometry": {
+        "word": [
+          79,
+          128,
+          218,
+          19
+        ],
+        "wings": [
+          0,
+          0,
+          375,
+          211
+        ],
+        "stage": [
+          0,
+          211
+        ]
+      }
+    },
+    {
+      "file": "C:\\lt\\wt-result-icons\\docs\\qa\\result-type-icons\\preview-victory-430-a-52vw-top30.png",
+      "result": "victory",
+      "width": 430,
+      "cfg": {
+        "name": "a-52vw-top30",
+        "width": "min(52vw,290px)",
+        "top": "calc(min(100vw,56.25vh) * 0.30)"
+      },
+      "ok": true
+    },
+    {
+      "file": "C:\\lt\\wt-result-icons\\docs\\qa\\result-type-icons\\preview-victory-430-b-62vw-top26.png",
+      "result": "victory",
+      "width": 430,
+      "cfg": {
+        "name": "b-62vw-top26",
+        "width": "min(62vw,340px)",
+        "top": "calc(min(100vw,56.25vh) * 0.24)"
+      },
+      "ok": true
+    },
+    {
+      "file": "C:\\lt\\wt-result-icons\\docs\\qa\\result-type-icons\\preview-victory-430-c-70vw-top22.png",
+      "result": "victory",
+      "width": 430,
+      "cfg": {
+        "name": "c-70vw-top22",
+        "width": "min(70vw,380px)",
+        "top": "calc(min(100vw,56.25vh) * 0.20)"
+      },
+      "ok": true
+    },
+    {
+      "file": "C:\\lt\\wt-result-icons\\docs\\qa\\result-type-icons\\preview-victory-430-d-58vw-top34.png",
+      "result": "victory",
+      "width": 430,
+      "cfg": {
+        "name": "d-58vw-top34",
+        "width": "min(58vw,320px)",
+        "top": "calc(min(100vw,56.25vh) * 0.34)"
+      },
+      "ok": true
+    },
+    {
+      "result": "victory",
+      "width": 430,
+      "geometry": {
+        "word": [
+          90,
+          146,
+          249,
+          19
+        ],
+        "wings": [
+          0,
+          0,
+          430,
+          242
+        ],
+        "stage": [
+          0,
+          242
+        ]
+      }
+    },
+    {
+      "file": "C:\\lt\\wt-result-icons\\docs\\qa\\result-type-icons\\preview-defeat-375-a-52vw-top30.png",
+      "result": "defeat",
+      "width": 375,
+      "cfg": {
+        "name": "a-52vw-top30",
+        "width": "min(52vw,290px)",
+        "top": "calc(min(100vw,56.25vh) * 0.30)"
+      },
+      "ok": true
+    },
+    {
+      "file": "C:\\lt\\wt-result-icons\\docs\\qa\\result-type-icons\\preview-defeat-375-b-62vw-top26.png",
+      "result": "defeat",
+      "width": 375,
+      "cfg": {
+        "name": "b-62vw-top26",
+        "width": "min(62vw,340px)",
+        "top": "calc(min(100vw,56.25vh) * 0.24)"
+      },
+      "ok": true
+    },
+    {
+      "file": "C:\\lt\\wt-result-icons\\docs\\qa\\result-type-icons\\preview-defeat-375-c-70vw-top22.png",
+      "result": "defeat",
+      "width": 375,
+      "cfg": {
+        "name": "c-70vw-top22",
+        "width": "min(70vw,380px)",
+        "top": "calc(min(100vw,56.25vh) * 0.20)"
+      },
+      "ok": true
+    },
+    {
+      "file": "C:\\lt\\wt-result-icons\\docs\\qa\\result-type-icons\\preview-defeat-375-d-58vw-top34.png",
+      "result": "defeat",
+      "width": 375,
+      "cfg": {
+        "name": "d-58vw-top34",
+        "width": "min(58vw,320px)",
+        "top": "calc(min(100vw,56.25vh) * 0.34)"
+      },
+      "ok": true
+    },
+    {
+      "result": "defeat",
+      "width": 375,
+      "geometry": {
+        "word": [
+          79,
+          131,
+          218,
+          19
+        ],
+        "wings": [
+          0,
+          12,
+          375,
+          211
+        ],
+        "stage": [
+          0,
+          211
+        ]
+      }
+    },
+    {
+      "file": "C:\\lt\\wt-result-icons\\docs\\qa\\result-type-icons\\preview-defeat-430-a-52vw-top30.png",
+      "result": "defeat",
+      "width": 430,
+      "cfg": {
+        "name": "a-52vw-top30",
+        "width": "min(52vw,290px)",
+        "top": "calc(min(100vw,56.25vh) * 0.30)"
+      },
+      "ok": true
+    },
+    {
+      "file": "C:\\lt\\wt-result-icons\\docs\\qa\\result-type-icons\\preview-defeat-430-b-62vw-top26.png",
+      "result": "defeat",
+      "width": 430,
+      "cfg": {
+        "name": "b-62vw-top26",
+        "width": "min(62vw,340px)",
+        "top": "calc(min(100vw,56.25vh) * 0.24)"
+      },
+      "ok": true
+    },
+    {
+      "file": "C:\\lt\\wt-result-icons\\docs\\qa\\result-type-icons\\preview-defeat-430-c-70vw-top22.png",
+      "result": "defeat",
+      "width": 430,
+      "cfg": {
+        "name": "c-70vw-top22",
+        "width": "min(70vw,380px)",
+        "top": "calc(min(100vw,56.25vh) * 0.20)"
+      },
+      "ok": true
+    },
+    {
+      "file": "C:\\lt\\wt-result-icons\\docs\\qa\\result-type-icons\\preview-defeat-430-d-58vw-top34.png",
+      "result": "defeat",
+      "width": 430,
+      "cfg": {
+        "name": "d-58vw-top34",
+        "width": "min(58vw,320px)",
+        "top": "calc(min(100vw,56.25vh) * 0.34)"
+      },
+      "ok": true
+    },
+    {
+      "result": "defeat",
+      "width": 430,
+      "geometry": {
+        "word": [
+          90,
+          151,
+          249,
+          19
+        ],
+        "wings": [
+          0,
+          14,
+          430,
+          242
+        ],
+        "stage": [
+          0,
+          242
+        ]
+      }
+    }
+  ]
+}

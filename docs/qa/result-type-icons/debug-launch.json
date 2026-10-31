@@ -1,0 +1,280 @@
+{
+  "save0": {
+    "chapters": 6,
+    "chapterIdx": 0,
+    "squad": 6
+  },
+  "fixture11": {
+    "cleared": 11,
+    "unlocked": 12
+  },
+  "label11": {
+    "pill": "Ải 6–1",
+    "ST": {
+      "chapterIdx": 0
+    },
+    "cleared": 11,
+    "chapters": 6
+  },
+  "afterChallenge": {
+    "prepare": true,
+    "hidden": false,
+    "buttons": [
+      {
+        "cls": "cs-back",
+        "act": "cancel",
+        "txt": "‹"
+      },
+      {
+        "cls": "cs-field-unit",
+        "act": null,
+        "txt": "★★★★★ · Lv1Ông Phở"
+      },
+      {
+        "cls": "cs-field-unit",
+        "act": null,
+        "txt": "★★★★★ · Lv1Đình Lôi — Vệ Binh "
+      },
+      {
+        "cls": "cs-field-unit",
+        "act": null,
+        "txt": "★★★★★ · Lv1Cô Đào Gánh Hội"
+      },
+      {
+        "cls": "cs-field-unit",
+        "act": null,
+        "txt": "★★★★★ · Lv1Thầy Mo"
+      },
+      {
+        "cls": "cs-field-unit",
+        "act": null,
+        "txt": "★★★★★ · Lv1Thần Nỏ Sơn Nữ — Lạ"
+      },
+      {
+        "cls": "cs-field-unit",
+        "act": null,
+        "txt": "★★★★★ · Lv1Nữ Cung Thủ Tre"
+      },
+      {
+        "cls": "",
+        "act": null,
+        "txt": "Tất cả"
+      },
+      {
+        "cls": "",
+        "act": null,
+        "txt": "Hỏa"
+      },
+      {
+        "cls": "",
+        "act": null,
+        "txt": "Thổ"
+      },
+      {
+        "cls": "",
+        "act": null,
+        "txt": "Kim"
+      },
+      {
+        "cls": "",
+        "act": null,
+        "txt": "Mộc"
+      },
+      {
+        "cls": "",
+        "act": null,
+        "txt": "Mộc"
+      },
+      {
+        "cls": "",
+        "act": null,
+        "txt": "Thủy"
+      },
+      {
+        "cls": "",
+        "act": null,
+        "txt": "Thổ"
+      },
+      {
+        "cls": "",
+        "act": null,
+        "txt": "Hỏa"
+      },
+      {
+        "cls": "",
+        "act": null,
+        "txt": "Kim"
+      },
+      {
+        "cls": "",
+        "act": null,
+        "txt": "Thổ"
+      },
+      {
+        "cls": "cs-bench-hero is-deployed",
+        "act": null,
+        "txt": "Ông PhởĐang ra trận✓"
+      },
+      {
+        "cls": "cs-bench-hero is-deployed",
+        "act": null,
+        "txt": "Thầy MoĐang ra trận✓"
+      },
+      {
+        "cls": "cs-bench-hero is-deployed",
+        "act": null,
+        "txt": "Thần Nỏ Sơn Nữ — Lạc YênĐang r"
+      },
+      {
+        "cls": "cs-bench-hero is-deployed",
+        "act": null,
+        "txt": "Nữ Cung Thủ TreĐang ra trận✓"
+      },
+      {
+        "cls": "cs-bench-hero is-deployed",
+        "act": null,
+        "txt": "Cô Đào Gánh HộiĐang ra trận✓"
+      },
+      {
+        "cls": "cs-bench-hero ",
+        "act": null,
+        "txt": "Phong TửCấp 1"
+      },
+      {
+        "cls": "cs-bench-hero ",
+        "act": null,
+        "txt": "Thủy Nương Rối NướcCấp 1"
+      },
+      {
+        "cls": "cs-bench-hero ",
+        "act": null,
+        "txt": "Hồng Liên Đao NươngCấp 1"
+      },
+      {
+        "cls": "cs-bench-hero ",
+        "act": null,
+        "txt": "Thạch QuyềnCấp 1"
+      },
+      {
+        "cls": "cs-bench-hero is-deployed",
+        "act": null,
+        "txt": "Đình Lôi — Vệ Binh Trống ĐồngĐ"
+      },
+      {
+        "cls": "cs-bench-hero ",
+        "act": null,
+        "txt": "Lục Ảnh — Kép Đèn Kéo QuânCấp "
+      },
+      {
+        "cls": "cs-bench-hero ",
+        "act": null,
+        "txt": "Tố Điệp — Mộc Bản NươngCấp 1"
+      },
+      {
+        "cls": "cs-bench-hero ",
+        "act": null,
+        "txt": "Linh ĐồngCấp 1"
+      },
+      {
+        "cls": "cs-bench-hero ",
+        "act": null,
+        "txt": "Bạch DiệnCấp 1"
+      },
+      {
+        "cls": "cs-bench-hero ",
+        "act": null,
+        "txt": "Kỷ VânCấp 1"
+      },
+      {
+        "cls": "cs-bench-hero ",
+        "act": null,
+        "txt": "Tiêu PhongCấp 1"
+      },
+      {
+        "cls": "cs-bench-hero ",
+        "act": null,
+        "txt": "Tịch DaoCấp 1"
+      },
+      {
+        "cls": "cs-bench-hero ",
+        "act": null,
+        "txt": "Hồng ThươngCấp 1"
+      },
+      {
+        "cls": "cs-bench-hero ",
+        "act": null,
+        "txt": "Cổ NươngCấp 1"
+      },
+      {
+        "cls": "cs-bench-hero ",
+        "act": null,
+        "txt": "Bé AnCấp 1"
+      },
+      {
+        "cls": "cs-bench-hero ",
+        "act": null,
+        "txt": "Bạch Y Vân PhongCấp 1"
+      },
+      {
+        "cls": "cs-bench-hero ",
+        "act": null,
+        "txt": "KhaosCấp 1"
+      },
+      {
+        "cls": "cs-bench-hero ",
+        "act": null,
+        "txt": "Lăng ChânCấp 1"
+      },
+      {
+        "cls": "cs-bench-hero ",
+        "act": null,
+        "txt": "Lăng NguyệtCấp 1"
+      },
+      {
+        "cls": "cs-bench-hero ",
+        "act": null,
+        "txt": "Lăng TiêuCấp 1"
+      },
+      {
+        "cls": "cs-bench-hero ",
+        "act": null,
+        "txt": "Lăng VânCấp 1"
+      },
+      {
+        "cls": "cs-bench-hero ",
+        "act": null,
+        "txt": "Nguyệt DiệpCấp 1"
+      },
+      {
+        "cls": "cs-bench-hero ",
+        "act": null,
+        "txt": "Tiểu LinhCấp 1"
+      },
+      {
+        "cls": "cs-bench-hero ",
+        "act": null,
+        "txt": "Tịnh MặcCấp 1"
+      },
+      {
+        "cls": "cs-primary",
+        "act": "quick",
+        "txt": "Ra trận nhanh"
+      },
+      {
+        "cls": "cs-primary",
+        "act": "launch",
+        "txt": "Xuất chiến · 6 thể lực"
+      }
+    ]
+  },
+  "launchExists": true,
+  "afterLaunch": {
+    "frame": true,
+    "url": "http://127.0.0.1:60380/",
+    "hv": true,
+    "mode": "battle",
+    "overlay": "is-open",
+    "top": "hvBattleFrame"
+  },
+  "error": "Error: CDP timeout: Page.captureScreenshot |     at Timeout._onTimeout (file:///C:/lt/wt-result-icons/scripts/qa-battle-readiness-browser.mjs:38:138) |     at listOnTimeout (node:internal/timers:605:17) |     at process.processTimers (node:internal/timers:541:7)"
+}

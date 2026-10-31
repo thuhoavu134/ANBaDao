@@ -1,0 +1,10 @@
+[
+  {
+    "result": "victory",
+    "error": "Error: Browser condition timed out: (document.getElementById(\"hvBattleFrame\")?.contentWindow?.__HON_VIET__?document.getElementById(\"hvBattle"
+  },
+  {
+    "result": "defeat",
+    "error": "Error: Browser condition timed out: (document.getElementById(\"hvBattleFrame\")?.contentWindow?.__HON_VIET__?document.getElementById(\"hvBattle"
+  }
+]
