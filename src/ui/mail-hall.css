@@ -21,7 +21,7 @@
 #hvMailRoot .hv-mail-top b{font-size:6.2cqw;font-weight:900;letter-spacing:.06em;color:#5a3412;text-shadow:0 1px 0 rgba(255,250,230,.8)}
 #hvMailRoot .hv-mail-top span{display:none}
 #hvMailRoot .hv-mail-back{
-  position:absolute;left:85.4%;top:3.9%;width:11%;aspect-ratio:1;border:0;border-radius:50%;
+  position:absolute;left:86.84%;top:4.98%;width:9.5%;aspect-ratio:1;border:0;border-radius:50%;
   background:transparent;cursor:pointer;font-size:0;
 }
 #hvMailRoot .hv-mail-back:before,#hvMailRoot .hv-mail-back:after{
