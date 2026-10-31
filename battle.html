@@ -5389,20 +5389,30 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
   }
 
   const RESULT_REWARD_ART_ICONS = Object.freeze({
+    // Mirrors scripts/result-reward-icons.mjs; tests/result-reward-icons.test.mjs
+    // fails the build if the two drift apart.
     gold: "assets/result-icons-art/gold-imagen.png",
     mastery: "assets/result-icons-art/mastery-imagen.png",
     scroll: "assets/result-icons-art/scroll-imagen.png",
-    shard: "assets/result-icons-art/hero-shard-imagen.png"
+    playerXp: "assets/result-icons-art/scroll-imagen.png",
+    exp: "assets/result-icons-art/scroll-imagen.png",
+    shard: "assets/result-icons-art/hero-shard-imagen.png",
+    shards: "assets/result-icons-art/hero-shard-imagen.png",
+    gems: "assets/ui/menu-v3233/icons/resource-gem-imagen.png"
   });
+  const RESULT_REWARD_ART_FALLBACK = "assets/result-art/reward-empty-slot-imagen-v154.png";
   function rewardArtIcon(item={}){
     const id=String(item.id||"").toLowerCase();
     const name=String(item.name||"").toLowerCase();
     if(RESULT_REWARD_ART_ICONS[id])return RESULT_REWARD_ART_ICONS[id];
     if(id.includes("gold")||name.includes("vàng"))return RESULT_REWARD_ART_ICONS.gold;
     if(id.includes("master")||name.includes("tinh thông"))return RESULT_REWARD_ART_ICONS.mastery;
-    if(id.includes("scroll")||name.includes("cuộn")||name.includes("hồn ức"))return RESULT_REWARD_ART_ICONS.scroll;
+    if(id.includes("scroll")||name.includes("cuộn")||name.includes("hồn ức")||id.includes("exp"))return RESULT_REWARD_ART_ICONS.scroll;
     if(id.includes("shard")||name.includes("mảnh"))return RESULT_REWARD_ART_ICONS.shard;
-    return item.icon || RESULT_REWARD_ART_ICONS.mastery;
+    if(id.includes("gem")||name.includes("ngọc"))return RESULT_REWARD_ART_ICONS.gems;
+    // Never borrow another reward's art for an unknown id: that reads as a
+    // mislabelled reward. Fall through to the neutral empty slot instead.
+    return item.icon || RESULT_REWARD_ART_FALLBACK;
   }
   function rewardSparkles(){return '<i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>';}
   function rewardSlotLayout(rewards=[]){

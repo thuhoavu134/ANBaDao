@@ -1,0 +1,22 @@
+{
+  "direct": {
+    "hasSvg": true,
+    "viewBox": "0 0 726.28 118.0",
+    "paths": 5,
+    "bbox": [
+      0,
+      0,
+      726,
+      105
+    ]
+  },
+  "asImg": {
+    "complete": true,
+    "natural": [
+      300,
+      49
+    ],
+    "w": 300,
+    "h": 49
+  }
+}

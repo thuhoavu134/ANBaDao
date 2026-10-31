@@ -1,0 +1,105 @@
+{
+  "afterCampaign": {
+    "hidden": false,
+    "cls": "hv-campaign-3d is-open",
+    "interesting": [
+      "cs-primary cs-challenge",
+      "cs-primary",
+      "cs-primary",
+      "cs-primary"
+    ],
+    "chList": null,
+    "buttons": [
+      {
+        "cls": "cs-stage-pill",
+        "txt": "Ải 1–1",
+        "disabled": false
+      },
+      {
+        "cls": "cs-xp-help",
+        "txt": "Nhận EXP từ rương",
+        "disabled": false
+      },
+      {
+        "cls": "cs-xp-help",
+        "txt": "Nhiệm vụ",
+        "disabled": false
+      },
+      {
+        "cls": "cs-minimap",
+        "txt": "Bản đồ",
+        "disabled": false
+      },
+      {
+        "cls": "cs-chest-fab",
+        "txt": "00:00:02",
+        "disabled": false
+      },
+      {
+        "cls": "cs-swap",
+        "txt": "Đổi đội hình",
+        "disabled": false
+      },
+      {
+        "cls": "cs-primary cs-challenge",
+        "txt": "Khiêu chiến",
+        "disabled": false
+      },
+      {
+        "cls": "",
+        "txt": "Thành Chính",
+        "disabled": false
+      },
+      {
+        "cls": "",
+        "txt": "Tướng",
+        "disabled": false
+      },
+      {
+        "cls": "",
+        "txt": "Trợ trận",
+        "disabled": false
+      },
+      {
+        "cls": "",
+        "txt": "Lịch Luyện",
+        "disabled": false
+      },
+      {
+        "cls": "",
+        "txt": "Chinh chiến",
+        "disabled": false
+      },
+      {
+        "cls": "cs-back",
+        "txt": "‹",
+        "disabled": false
+      },
+      {
+        "cls": "",
+        "txt": "Tất cả",
+        "disabled": false
+      },
+      {
+        "cls": "",
+        "txt": "Hỏa",
+        "disabled": false
+      },
+      {
+        "cls": "",
+        "txt": "Thổ",
+        "disabled": false
+      },
+      {
+        "cls": "",
+        "txt": "Kim",
+        "disabled": false
+      },
+      {
+        "cls": "",
+        "txt": "Mộc",
+        "disabled": false
+      }
+    ]
+  }
+}
