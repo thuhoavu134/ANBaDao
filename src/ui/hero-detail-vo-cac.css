@@ -835,7 +835,31 @@
 #hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="equipment"] .hv-equipment-slot.hv-fx-host>canvas.hv-fx{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2;mix-blend-mode:screen;}
 #hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="equipment"] .vc-item-details{min-height:0!important;box-sizing:border-box!important;}
 
-/* Star upgrade readability: scoped to the real hero-detail dialog only. */
+
+/* Focused star-up success ceremony: portrait, real star transition, and a close-only action. */
+#rewardVeil[data-reward-kind="star-up"]{padding:12px;background:radial-gradient(ellipse at 50% 35%,#50351b88,#080604e8 70%);backdrop-filter:blur(4px)}
+#rewardVeil[data-reward-kind="star-up"] .rewardcard{box-sizing:border-box;width:min(86vw,420px);max-height:min(78dvh,640px);overflow-y:auto;overscroll-behavior:contain;padding:20px 18px max(18px,env(safe-area-inset-bottom));border:1px solid #d1a45c;border-radius:14px;background:linear-gradient(#180f08df,#160e08ed),url('assets/ui/an-ba-dao/hall-v1.webp') center/cover;color:#f3e3c5;font-family:'Noto Serif','Times New Roman',serif;box-shadow:inset 0 0 0 3px #23180f,0 12px 40px #000b}
+#rewardVeil[data-reward-kind="star-up"] .rewardcard:before{content:none}
+#rewardVeil[data-reward-kind="star-up"] .rewardburst{width:88px;height:104px;margin:0 auto 10px;border:1px solid #d1a45c;border-radius:7px;background:#1b120c;box-shadow:0 3px 12px #0009;overflow:hidden;animation:none}
+#rewardVeil[data-reward-kind="star-up"] .rewardburst:after{content:none;display:none}
+#rewardVeil[data-reward-kind="star-up"] .reward-star-portrait{display:block;width:100%;height:100%;object-fit:cover;object-position:center 20%}
+#rewardVeil[data-reward-kind="star-up"] .rewardkicker{font:700 10px/1.3 'Noto Serif','Times New Roman',serif;letter-spacing:.16em;color:#cba45d}
+#rewardVeil[data-reward-kind="star-up"] .rewardtitle{margin:4px 0 0;font:700 22px/1.2 'Noto Serif','Times New Roman',serif;color:#ffe2a1;text-shadow:0 1px 3px #000}
+#rewardVeil[data-reward-kind="star-up"] .rewarddesc{margin:8px auto 0;color:#e8d7b8;font:13px/1.45 'Noto Serif','Times New Roman',serif}
+#rewardVeil[data-reward-kind="star-up"] .rewarditems{margin:12px 0}
+#rewardVeil[data-reward-kind="star-up"] .star-up-result{display:grid;gap:5px;max-width:100%;padding:9px 12px;border:1px solid #936f3d;border-radius:6px;background:linear-gradient(#2b1e13e8,#18110be8);color:#f3e2bf}
+#rewardVeil[data-reward-kind="star-up"] .star-up-result strong{font:700 14px/1.3 'Noto Serif','Times New Roman',serif}
+#rewardVeil[data-reward-kind="star-up"] .star-up-result-stars{color:#ffd46f;font:700 16px/1.25 'Noto Serif','Times New Roman',serif;white-space:nowrap}
+#rewardVeil[data-reward-kind="star-up"] .rewardbtn{min-width:168px;min-height:46px;border:1px solid #d3ac62;border-radius:6px;background:linear-gradient(#387b5c,#1d543d);color:#f9e9c8;font:700 14px 'Noto Serif','Times New Roman',serif}
+#rewardVeil[data-reward-kind="star-up"] .rewardbtn:focus-visible{outline:3px solid #ffe4a2;outline-offset:3px}
+@media(max-width:390px){
+ #rewardVeil[data-reward-kind="star-up"] .rewardcard{width:min(90vw,380px);max-height:min(78dvh,560px);padding:16px 14px max(16px,env(safe-area-inset-bottom))}
+ #rewardVeil[data-reward-kind="star-up"] .rewardburst{width:76px;height:90px}
+ #rewardVeil[data-reward-kind="star-up"] .rewardtitle{font-size:20px}
+ #rewardVeil[data-reward-kind="star-up"] .star-up-result-stars{font-size:14px}
+}
+
+* Star upgrade readability: scoped to the real hero-detail dialog only. */
 #hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="star"] .vc-star-preview{height:clamp(150px,24dvh,220px)!important;}
 #hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="star"] .vc-star-track{font-size:clamp(18px,5vw,23px)!important;padding:12px 4px!important;letter-spacing:0!important;white-space:normal!important;text-align:center;}
 #hvHeroDetailRoot[data-vc-layout] .vc-detail-sheet[open][data-sheet-view="star"] .vc-advanced-actions .vc-attribute-row{grid-template-columns:16px minmax(44px,.8fr) minmax(0,1fr) 14px minmax(0,1fr) auto!important;font-size:15px!important;min-height:42px!important;gap:5px!important;}
