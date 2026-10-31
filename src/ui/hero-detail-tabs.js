@@ -545,7 +545,7 @@
       const sheetIcon = document.createElement('span'); sheetIcon.className = 'vc-sheet-icon'; sheetIcon.setAttribute('aria-hidden', 'true');
       const sheetTitle = document.createElement('h2'); sheetTitle.id = 'vc-sheet-heading'; sheetTitle.textContent = 'Chi tiết tướng';
       const close = document.createElement('button'); close.type = 'button'; close.textContent = 'Đóng'; close.className = 'vc-sheet-close';
-      close.setAttribute('aria-label', 'Đóng chi tiết');
+      close.setAttribute('aria-label', 'Quay lại');
       sheetHeader.append(sheetIcon, sheetTitle, close);
       const brandBar = document.createElement('div'); brandBar.className = 'vc-brand-bar';
       const brandLogo = document.createElement('img'); brandLogo.src = 'assets/ui/an-ba-dao/logo-v1.webp'; brandLogo.alt = 'An Bá Đạo';
@@ -649,7 +649,11 @@
         if (!sheet.open) sheet.showModal();
         sheetOpener.setAttribute('aria-expanded', 'true');
         workspace.scrollTop = 0;
-        close.focus({preventScroll:true});
+        // Small skill dialogs dismiss on the backdrop or the acknowledgement button.
+        close.hidden = key === 'skills';
+        if (key === 'skills') close.style.setProperty('display', 'none', 'important');
+        else close.style.removeProperty('display');
+        (key === 'skills' ? understood : close).focus({preventScroll:true});
       };
       revealBachDetails = reveal;
       close.addEventListener('click', () => sheet.close());
