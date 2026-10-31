@@ -139,7 +139,7 @@ export function patchOwnerRefresh(input,kind){
   s=once(s,'<div class="irv-hero-wrap">',`<img class="irv-word" alt="\${victory?'Victory':'Defeat'}" decoding="sync" style="opacity:0" onload="this.style.opacity=1" src="assets/result-art/result-word-v2/\${victory?'victory':'defeat'}.svg"><div class="irv-hero-wrap">`);
   s=once(s,'</head>',`<style>
 /* Word mark: vector outlines sized to the wing crest; wings stay the top layer. */
-.irv-title{clip-path:none!important;z-index:3}
+.irv-title{clip-path:none!important;z-index:3}.v151-art-result .v151-reward-art{display:none!important}.v151-art-result .v151-art-bg{opacity:0!important}
 .irv-word{position:absolute!important;left:50%!important;transform:translateX(-50%)!important;width:min(62vw,286px)!important;height:auto!important;aspect-ratio:auto!important;object-fit:contain!important;top:calc(min(100vw,56.25vh) * .085)!important;z-index:6!important;pointer-events:none;opacity:0;transition:opacity .16s linear;filter:drop-shadow(0 5px 9px rgba(30,13,3,.55))}
 .irv-defeat .irv-word{width:min(46vw,212px)!important;top:calc(min(100vw,56.25vh) * .125)!important}
 </style></head>`);
