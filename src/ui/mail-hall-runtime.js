@@ -6,9 +6,9 @@
   const root = document.createElement('section');
   root.id = 'hvMailRoot';
   root.setAttribute('aria-label', 'Hòm thư');
-  root.innerHTML = `<button type="button" class="hv-mail-back" data-mail-close aria-label="Đóng">×</button>
-  <div class="hv-mail-frame">
+  root.innerHTML = `<div class="hv-mail-frame">
     <header class="hv-mail-top"><b>Hòm thư</b><span></span></header>
+    <button type="button" class="hv-mail-back" data-mail-close aria-label="Đóng">×</button>
     <div class="hv-mail-stage"></div>
   </div>`;
   root.querySelector('.hv-mail-stage').append(body);
@@ -36,7 +36,7 @@
   const items = rw => {
     if (!rw) return [];
     const out = [];
-    if (rw.gold) out.push({ img: 'assets/items/materials/gold.png', n: rw.gold, label: 'Vàng', r: '' });
+    if (rw.gold) out.push({ img: 'assets/items/materials/gold.png', n: rw.gold, label: 'Vàng', r: 'r-gold' });
     if (rw.gems) out.push({ img: 'assets/ui/menu-v3233/icons/resource-gem-imagen.png', n: rw.gems, label: 'Ngọc', r: 'r-blue' });
     if (rw.tinh) out.push({ img: 'assets/items/materials/tinh-luc.png', n: rw.tinh, label: 'Tinh lực', r: 'r-blue' });
     if (rw.hoat) out.push({ img: 'assets/items/materials/hoat-luc.png', n: rw.hoat, label: 'Hoạt lực', r: 'r-green' });
@@ -61,31 +61,28 @@
       const open = m.reward && !m.claimed;
       return `<button type="button" class="mx-row${m.id === ui.sel ? ' on' : ''}${m.claimed && m.reward ? ' done' : ''}" data-mail="${m.id}">
         <span class="mx-env">${ENV}${open ? '<span class="bd">1</span>' : ''}${m.reward ? GIFT : ''}</span>
-        <span><span class="mx-t" style="display:block">${esc(m.title)}</span><span class="mx-f" style="display:block">${esc(m.from)}</span></span>
-        <span class="mx-time">${esc(ago(m.t))}</span>
+        <span class="mx-tx"><span class="mx-t">${esc(m.title)}</span><span class="mx-f"><span>${esc(m.from)}</span><span>${esc(ago(m.t))}</span></span></span>
       </button>`;
     }).join('');
 
-    let detail = '';
+    let reader = '';
     if (sel) {
       const its = items(sel.reward);
-      const slots = its.map(it => `<span class="mx-slot ${it.r}"><b>${it.img ? `<img src="${it.img}" alt="">` : `<u>${it.glyph || '?'}</u>`}<em>x${fmtN(it.n)}</em></b><small>${esc(it.label)}</small></span>`).join('');
-      const claimBtn = sel.reward
-        ? (sel.claimed ? '<div class="mx-claimed">✓ Đã nhận</div>' : `<button type="button" class="mx-btn" data-claim="${sel.id}">NHẬN</button>`)
-        : '';
-      detail = `<div class="mx-detail">
-        <div><div class="mx-dt">${esc(sel.title)}</div><div class="mx-db">${esc(sel.body)}</div></div>
-        <div class="mx-acts">${claimBtn}<button type="button" class="mx-btn alt" data-claim-all ${unclaimed ? '' : 'disabled'}>NHẬN TẤT CẢ</button></div>
-        ${slots ? `<div class="mx-items">${slots}</div>` : ''}
-      </div>`;
+      const slots = its.slice(0, 3).map((it, i) => `<span class="mx-slot s${i} ${it.r || 'r-gold'}" title="${esc(it.label)}">${it.img ? `<img src="${it.img}" alt="${esc(it.label)}">` : `<u>${it.glyph || '?'}</u>`}<em>x${fmtN(it.n)}</em></span>`).join('');
+      const more = its.length > 3 ? `<span class="mx-more">+${its.length - 3} vật phẩm khác</span>` : '';
+      const one = !sel.reward
+        ? '<button type="button" class="mx-btn one" disabled>ĐÃ ĐỌC</button>'
+        : sel.claimed
+          ? '<button type="button" class="mx-btn one" disabled>ĐÃ NHẬN</button>'
+          : `<button type="button" class="mx-btn one" data-claim="${sel.id}">NHẬN</button>`;
+      reader = `<div class="mx-read"><div class="mx-dt">${esc(sel.title)}</div><div class="mx-from">Từ: ${esc(sel.from)}</div><div class="mx-db">${esc(sel.body)}</div></div>${slots}${more}${one}`;
     }
 
-    body.innerHTML = `<div class="mx-tabs">
-        <button type="button" class="mx-tab${ui.tab === 'sys' ? ' on' : ''}" data-tab="sys">Thư hệ thống${sysNew ? `<i>${sysNew}</i>` : ''}</button>
-        <button type="button" class="mx-tab${ui.tab === 'gift' ? ' on' : ''}" data-tab="gift">Thư quà${giftOpen ? `<i>${giftOpen}</i>` : ''}</button>
-      </div>
+    body.innerHTML = `<button type="button" class="mx-tab${ui.tab === 'sys' ? ' on' : ''}" data-tab="sys" aria-label="Thư hệ thống">Thư hệ thống${sysNew ? `<i>${sysNew}</i>` : ''}</button>
+      <button type="button" class="mx-tab${ui.tab === 'gift' ? ' on' : ''}" data-tab="gift" aria-label="Thư quà">Thư quà${giftOpen ? `<i>${giftOpen}</i>` : ''}</button>
       <div class="mx-list">${rows || '<div class="mx-empty">Chưa có thư nào.</div>'}</div>
-      ${detail}`;
+      ${reader}
+      <button type="button" class="mx-btn all" data-claim-all ${unclaimed ? '' : 'disabled'}>NHẬN TẤT CẢ</button>`;
     if (sel && !sel.read) sel.read = true;
   }
 
