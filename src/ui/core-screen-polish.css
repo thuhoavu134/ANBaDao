@@ -58,3 +58,15 @@ body:has(#hvGearRoot.is-open:not([hidden])) #hvHubBackChip{display:none!importan
 #hvHeroRosterV4 .v4-tab:active,#hvHeroRosterV4 .v4-filter button:active,#hvHeroRosterV4 .v4-card:active,#hubScreen .art-action:active{filter:brightness(1.08)}
 @media(prefers-reduced-motion:no-preference){#hvHeroRosterV4 .v4-tab,#hvHeroRosterV4 .v4-filter button,#hvHeroRosterV4 .v4-card{transition:filter .12s ease,box-shadow .12s ease}}
 @media(max-width:360px){#hvHeroRosterV4 .v4-profile{padding-inline:10px;gap:8px}#hvHeroRosterV4 .v4-tabs{padding-inline:10px;gap:5px;grid-template-columns:1fr 1fr 118px}#hvHeroRosterV4 .v4-sort{font-size:9px}#hvHeroRosterV4 .v4-grid{padding-inline:9px;gap:7px}#hvHeroRosterV4 .v4-cardname{font-size:10px}#hvHeroRosterV4 .v4-dock button,#hvCampaignScene .cs-dock button{font-size:10px}#hubScreen .art-side .art-label-text{font-size:9px!important}}
+
+/* owner-warm-20261031 */
+/* owner-warm-20261031: warm ivory + gold palette replacing the mint/teal reference set */
+:root{--ref-edge:rgba(181,142,73,.34)!important;--ref-ink:#3a2a12!important;--ref-muted:#7a6242!important;--ref-panel:rgba(255,252,243,.94)!important;--ref-paper:#fdf9ef!important;--ref-paper-2:#f3e7cf!important;--ref-shadow:rgba(120,86,40,.18)!important;--ref-teal:#96702f!important;--ref-teal-hi:#c69b4b!important}
+html body .art-game-screen.art-game-screen{background:linear-gradient(180deg,#fdf9ef,#f3e7cf)!important;color:#3a2a12!important}
+html body .art-game-screen.art-game-screen:before{background:linear-gradient(145deg,rgba(255,252,243,.97),rgba(243,231,207,.95))!important;filter:none!important;opacity:1!important}
+html body .art-game-screen.art-game-screen:after{background:radial-gradient(ellipse at 50% 0%,rgba(255,253,246,.9),transparent 48%),linear-gradient(180deg,transparent 48%,rgba(150,112,47,.06))!important}
+html body .art-game-screen.art-game-screen .pagehdr{background:rgba(255,252,243,.92)!important;border-bottom:1px solid rgba(181,142,73,.42)!important;box-shadow:0 5px 14px rgba(120,86,40,.12)!important}
+html body .art-game-screen.art-game-screen .pagehdr .ttl{color:#5a3a18!important;text-shadow:none!important}
+html body .art-game-screen.art-game-screen .pagehdr small,html body .art-game-screen.art-game-screen .pagehdr .sub2{color:#7a6242!important}
+html body .art-game-screen.art-game-screen .pagehdr .back,html body .screen.screen .back{color:#5a3a18!important;background:linear-gradient(145deg,#fffdf3,#efe0c2)!important;border:1px solid rgba(181,142,73,.55)!important;box-shadow:0 2px 6px rgba(120,86,40,.22)!important}
+html body .screen.screen{background:linear-gradient(180deg,rgba(253,249,239,.96),rgba(243,231,207,.94))!important}
