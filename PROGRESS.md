@@ -64,7 +64,20 @@ one mapping. Keep layout/background/wing art/buttons. No new image generation, n
    neutral fallback `reward-empty-slot-imagen-v154.png`. Wired into `result-screen-contract-v1.mjs`
    (loot tiles) and `battle.html` `RESULT_REWARD_ART_ICONS` (+ gems, + rewardArtIcon no longer returns the
    mastery orb for unknown ids). Drift guard: `tests/result-reward-icons.test.mjs` (4/4 pass).
-3. Build #2 running → final `qa-result.mjs` at 375/430 for win + defeat.
-4. Commit locally (no push / no PR).
+3. ~~Build + final QA~~ DONE — `build-3.log` EXIT=0; `qa-final.log`: 4/4 runs ok (real win, real loss, 375/430).
+4. ~~Commit locally~~ DONE — `0bd31121` (no push, no PR).
 
-STATUS: IN PROGRESS
+## Final evidence
+- `docs/qa/result-type-icons/result-final.json` — word 173–310px wide at top 28–32px, loot rows with icon srcs,
+  button boxes, `overflow=0`, `afterConfirm` (overlay closes, gold credited).
+- `final-victory-{375,430}.png`, `final-defeat-{375,430}.png`, plus `baseline-*` before/after.
+
+## Coverage limits
+- The defeat screen renders no reward tiles, so `gems`/`shards` were exercised on the victory path only;
+  a chapter-final reward (gems + shards tiles) was not screenshotted.
+- Chromium (Edge) only, DPR 2; no real iOS Safari run.
+- `node_modules` is a junction to the dirty main checkout (build deps only; nothing written into
+  `C:/lt/luc-than-main`).
+- Defeat MVP name "Thầy Mo": DOM text is correct; the serif glyph stack is pre-existing and untouched.
+
+STATUS: ALL DONE
