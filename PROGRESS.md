@@ -80,4 +80,16 @@ one mapping. Keep layout/background/wing art/buttons. No new image generation, n
   `C:/lt/luc-than-main`).
 - Defeat MVP name "Thầy Mo": DOM text is correct; the serif glyph stack is pre-existing and untouched.
 
-STATUS: ALL DONE
+## Attempt to close the gems/shards gap (UNVERIFIED — stop point)
+Ran `docs/qa/result-type-icons/qa-chapter-final.mjs` (new): fixture put the run on the **last mission of the
+last chapter** (label read back as `Ải 6–18`, sequence 18), levelled squad, real launch.
+Result: the battle reached `mode="result"`, but **`#integratedResultV6.show` never appeared** within 30 s, so
+the chapter-final screen is NOT served by the integrated overlay renderer that this change touches
+(`renderResultRewards` / `.irv-loot`). Evidence: `docs/qa/result-type-icons/chapter-final.json`
+(`ok:false`, `stage:"Ải 6–18"`, loot `[]`), `final-chapter-victory-375-FAIL.png`.
+Consequence, stated plainly: **the `gems` and `shards` icon entries are wired and unit-tested, but never seen
+rendered in a real tile.** Which screen actually shows the chapter-complete rewards still needs tracing
+(likely `endScreen`/chapter-complete panel, a different renderer) before anyone claims those two tiles verified.
+No code was changed for this attempt; nothing was forced to fake a pass.
+
+STATUS: ALL DONE (code verified on result loot + defeat tips; gems/shards tiles UNVERIFIED in renderer)
