@@ -22,7 +22,9 @@ test('L103: hall chức năng nền kem, jpg chỉ dải trên; không đụng l
   assert.match(files.summon, /#hvSummonRoot\{[^}]*background:#f3e4c4/);
   assert.match(files.hunt, /#hvHuntRoot\{[^}]*background:#f3e4c4/);
   assert.match(files.expedition, /#hvExpeditionRoot\{[^}]*background:#f3e4c4/);
-  assert.match(files.jobs, /#hvJobsRoot\{[^}]*background:#f3e4c4;/);
+  // Owner 2026-11-01: Giao viec dung khung go son mai (concept 2) thay cho nen kem.
+  assert.match(files.jobs, /jobs-lacquer-frame\.png/);
+  assert.doesNotMatch(files.jobs, /#hvJobsRoot\{[^}]*background:#f3e4c4;/);
   // Owner 2026-11-01: Hom thu dung khung go son mai (concept 2) thay cho nen kem.
   assert.match(files.mail, /mail-lacquer-frame\.png/);
   const chat = read('src/ui/chat-hall.css');
