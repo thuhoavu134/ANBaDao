@@ -1,67 +1,141 @@
+/* Owner 2026-11-01: Túi đồ dùng thẳng ảnh concept 4 cột làm khung (assets/ui/bag/bag-lacquer-frame.png).
+   Khung, vành gỗ sơn mài, cuộn giấy tiêu đề, hàng 4 tab và tấm giấy da phía dưới là ảnh;
+   mọi chữ, ô vật phẩm, nút bấm là phần tử thật đặt đúng toạ độ % (cqw) lên ảnh.
+   Ảnh tranh cũ của sảnh túi vẫn nằm ở assets/ui/bag/bag-hall.jpg để tham chiếu. */
 #hvBagRoot{
-  --hall-ink:#2d251f;
-  position:fixed;inset:0;z-index:92;display:none;flex-direction:column;justify-content:flex-end;
+  position:fixed;inset:0;z-index:92;display:none;align-items:center;justify-content:center;
   overflow:auto;-webkit-overflow-scrolling:touch;touch-action:manipulation;
-  background:transparent;color:var(--hall-ink);font-family:inherit;box-sizing:border-box;
-  padding:0 8px calc(72px + env(safe-area-inset-bottom));
-  pointer-events:none;
+  background:rgba(8,4,1,.62);color:#2d251f;font-family:inherit;
 }
 #hvBagRoot.is-open{display:flex}
 #hvBagRoot[hidden]{display:none!important}
-#hvBagRoot .hv-bag-panel{
-  pointer-events:auto;max-height:75vh;min-height:75vh;display:flex;flex-direction:column;
-  border-radius:20px 20px 10px 10px;overflow:auto;
-  background:#f3e4c4;
-  box-shadow:0 16px 40px rgba(0,0,0,.5),0 0 0 1px rgba(215,179,106,.55);
-  animation:hvBagSheet .28s ease;
+#hvBagRoot *{box-sizing:border-box}
+
+#hvBagRoot .hv-bag-frame{
+  position:relative;flex:0 0 auto;container-type:inline-size;
+  width:min(100vw,calc(100dvh * 768 / 1376));aspect-ratio:768/1376;
+  background:url('assets/ui/bag/bag-lacquer-frame.png') 0 0/100% 100% no-repeat;
+  filter:drop-shadow(0 10px 24px rgba(0,0,0,.6));
 }
-@keyframes hvBagSheet{from{transform:translateY(20px);opacity:0}to{transform:none;opacity:1}}
+
+/* ---------- title scroll + jade close ---------- */
 #hvBagRoot .hv-bag-top{
-  flex:0 0 auto;display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:8px;
-  padding:10px 12px;position:sticky;top:0;z-index:2;
-  background:#5c3a22 url('assets/ui/bag/bag-hall.jpg') center/cover no-repeat;color:#fff4d4;
+  position:absolute;left:26.7cqw;top:15.6cqw;width:46.6cqw;height:9.6cqw;
+  display:grid;place-items:center;pointer-events:none;
 }
-#hvBagRoot .hv-bag-back{
-  width:44px;height:44px;border:0;border-radius:50%;
-  background:linear-gradient(145deg,#fff7df,#f0c692);color:#7a4a1f;
-  box-shadow:0 0 0 1px #d7b36a;font-size:22px;line-height:1;cursor:pointer;
+#hvBagRoot .hv-bag-top b{
+  font-size:6.1cqw;font-weight:900;letter-spacing:.04em;line-height:1;color:#5a3412;
+  text-shadow:0 1px 0 rgba(255,250,230,.85);white-space:nowrap;
 }
-#hvBagRoot .hv-bag-top b{justify-self:center;font-size:15px}
-#hvBagRoot .hv-bag-tabs{display:flex;gap:6px;padding:8px 10px 0}
-#hvBagRoot .hv-bag-tabs button{
-  flex:1;min-height:36px;border:1px solid #d7b883;border-radius:10px;background:#fff8e8;color:#6a4318;font-weight:800;font-size:12px;
+#hvBagRoot .hv-bag-top span{display:none}
+#hvBagRoot .hv-bag-close{
+  position:absolute;left:91.15cqw;top:19.01cqw;width:10.4cqw;height:10.4cqw;
+  transform:translate(-50%,-50%);border:0;border-radius:50%;background:transparent;
+  cursor:pointer;font-size:0;padding:0;
 }
-#hvBagRoot .hv-bag-tabs button.is-on{background:#e2b45a;color:#3a2414}
+#hvBagRoot .hv-bag-close:active{filter:brightness(1.15)}
+
+/* ---------- 4 category tabs ---------- */
+#hvBagRoot .hv-bag-tabs{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none}
+#hvBagRoot .hv-bag-tab{
+  position:absolute;top:29.43cqw;height:7.42cqw;width:18.36cqw;border:0;cursor:pointer;
+  font:inherit;font-size:3.35cqw;font-weight:900;letter-spacing:.01em;line-height:1;
+  border-radius:1.6cqw;color:#e9cfa1;text-shadow:0 1px 2px rgba(0,0,0,.7);
+  background:rgba(18,9,3,.42);padding:0;pointer-events:auto;
+  display:grid;place-items:center;white-space:nowrap;
+}
+#hvBagRoot .hv-bag-tab:nth-child(1){left:10.68cqw}
+#hvBagRoot .hv-bag-tab:nth-child(2){left:30.47cqw}
+#hvBagRoot .hv-bag-tab:nth-child(3){left:50.26cqw}
+#hvBagRoot .hv-bag-tab:nth-child(4){left:70.05cqw}
+#hvBagRoot .hv-bag-tab.on{
+  color:#4a2a06;text-shadow:0 1px 0 rgba(255,246,214,.9);
+  background:linear-gradient(180deg,#fbe6a6,#e8bd5f 42%,#c78f2c 70%,#a9701b);
+  box-shadow:inset 0 0 0 .35cqw rgba(255,240,190,.55),0 0 1.6cqw rgba(255,201,90,.5);
+}
+
+/* ---------- item grid (4 x scrollable) ---------- */
 #hvBagRoot .hv-bag-grid{
-  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;padding:10px;
+  position:absolute;left:11.59cqw;top:38.8cqw;width:76.95cqw;height:77.6cqw;
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:17.59cqw;
+  gap:2.2cqw;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:none;
+  padding:.5cqw;align-content:start;
+  box-shadow:inset 0 0 6cqw rgba(0,0,0,.55);
 }
+#hvBagRoot .hv-bag-grid::-webkit-scrollbar{display:none}
 #hvBagRoot .hv-bag-cell{
-  aspect-ratio:1;border-radius:12px;border:2px solid rgba(90,60,20,.2);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  font-size:10px;font-weight:800;color:#fff;text-shadow:0 1px 2px #000;position:relative;
-  background:#c4b49a;
+  position:relative;width:100%;height:100%;min-width:0;border-radius:2.6cqw;cursor:pointer;
+  border:.5cqw solid rgba(90,60,20,.45);padding:0;
+  background:radial-gradient(120% 120% at 50% 20%,rgba(255,233,190,.10),rgba(0,0,0,.28) 70%),rgba(58,26,14,.55);
+  display:flex;align-items:center;justify-content:center;
+  font:inherit;font-size:4.2cqw;font-weight:900;color:#f4e2bb;text-shadow:0 1px 2px rgba(0,0,0,.8);
 }
-#hvBagRoot .hv-bag-cell small{position:absolute;right:4px;bottom:3px;font-size:10px}
-#hvBagRoot .hv-bag-cell.t-ssr{background:#8b5a12;border-color:#f2c14e}
-#hvBagRoot .hv-bag-cell.t-ss{background:#6b3fa0;border-color:#c9a0ff}
-#hvBagRoot .hv-bag-cell.t-s{background:#2d6a9a;border-color:#7ec8ff}
-#hvBagRoot .hv-bag-cell.t-a{background:#2f6b45;border-color:#8ee0a8}
-#hvBagRoot .hv-bag-cell.t-b{background:#5a5a5a;border-color:#cfcfcf}
-#hvBagRoot .hv-bag-cell.t-mat{background:#8a4a22;border-color:#e0a060}
+#hvBagRoot .hv-bag-cell.on{
+  border-color:#ffd98a;
+  box-shadow:0 0 0 .35cqw rgba(255,214,120,.85),0 0 2.4cqw rgba(255,196,80,.55) inset;
+}
+#hvBagRoot .hv-bag-cell small{
+  position:absolute;right:.9cqw;bottom:.5cqw;font-size:2.95cqw;font-weight:800;line-height:1;
+  color:#fff;text-shadow:0 1px 2px #000,0 0 2px #000;z-index:1;
+}
 #hvBagRoot .hv-bag-ico{
-  position:absolute;left:4%;top:2%;width:92%;height:84%;
-  object-fit:contain;display:block;pointer-events:none;
-  flex:0 0 auto;min-width:0;min-height:0;
-  filter:drop-shadow(0 2px 4px rgba(0,0,0,.35));
+  position:absolute;left:8%;top:6%;width:84%;height:78%;object-fit:contain;display:block;
+  pointer-events:none;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4));
 }
-#hvBagRoot .hv-bag-cell small{z-index:1;text-shadow:0 1px 2px #000}
-#resbar .hv-res-ico{width:22px;height:22px;object-fit:contain;flex:0 0 auto;display:block}
+#hvBagRoot .hv-bag-cell u{text-decoration:none;font-size:4.4cqw;color:#ffe6ac}
+#hvBagRoot .hv-bag-cell.t-ssr{border-color:#f2c14e;background:radial-gradient(120% 120% at 50% 20%,rgba(255,214,120,.28),rgba(40,18,6,.55) 72%)}
+#hvBagRoot .hv-bag-cell.t-ss{border-color:#c9a0ff;background:radial-gradient(120% 120% at 50% 20%,rgba(190,140,255,.3),rgba(30,14,42,.55) 72%)}
+#hvBagRoot .hv-bag-cell.t-s{border-color:#7ec8ff;background:radial-gradient(120% 120% at 50% 20%,rgba(120,190,255,.28),rgba(12,26,44,.55) 72%)}
+#hvBagRoot .hv-bag-cell.t-a{border-color:#8ee0a8;background:radial-gradient(120% 120% at 50% 20%,rgba(120,220,160,.26),rgba(14,32,20,.55) 72%)}
+#hvBagRoot .hv-bag-cell.t-b{border-color:#cfcfcf;background:radial-gradient(120% 120% at 50% 20%,rgba(210,210,210,.22),rgba(22,22,22,.55) 72%)}
+#hvBagRoot .hv-bag-cell.t-mat{border-color:#e0a060}
+#hvBagRoot .hv-bag-empty{
+  grid-column:1/-1;padding:14cqw 4cqw;text-align:center;color:#d8bd8c;font-size:3.6cqw;
+}
+
+/* ---------- parchment detail panel ---------- */
+#hvBagRoot .hv-bag-detail{position:absolute;left:10.55cqw;top:132.94cqw;width:77.6cqw;height:30.86cqw;color:#3d2410}
+#hvBagRoot .hv-bag-pic{
+  position:absolute;left:4.04cqw;top:1.82cqw;width:13.8cqw;height:12.63cqw;border-radius:2cqw;
+  background:radial-gradient(120% 120% at 50% 25%,rgba(255,255,255,.42),rgba(120,82,42,.22) 78%);
+  box-shadow:inset 0 0 0 .35cqw rgba(120,82,42,.45);
+  display:grid;place-items:center;overflow:hidden;
+}
+#hvBagRoot .hv-bag-pic img{width:86%;height:86%;object-fit:contain;display:block}
+#hvBagRoot .hv-bag-pic u{text-decoration:none;font-size:5.4cqw;font-weight:900;color:#6a3a8a}
+#hvBagRoot .hv-bag-name{
+  position:absolute;left:19.15cqw;top:1.9cqw;right:1.6cqw;
+  font-size:4.05cqw;font-weight:900;line-height:1.1;color:#3d2410;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+#hvBagRoot .hv-bag-sub{position:absolute;left:19.15cqw;top:6.6cqw;right:1.6cqw;font-size:2.65cqw;color:#8a6438;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#hvBagRoot .hv-bag-desc{
+  position:absolute;left:19.15cqw;top:10.2cqw;width:56cqw;height:10.6cqw;
+  font-size:2.7cqw;line-height:1.32;color:#5a4128;overflow:hidden;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;
+}
+#hvBagRoot .hv-bag-act{
+  position:absolute;top:22.2cqw;height:7.3cqw;width:14.32cqw;border:0;cursor:pointer;padding:0;
+  font:inherit;font-size:3.1cqw;font-weight:900;letter-spacing:.03em;white-space:nowrap;
+  color:#3f2306;text-shadow:0 1px 0 rgba(255,246,212,.85);border-radius:4cqw;
+  background:linear-gradient(180deg,#fbe8a8,#e5bb59 46%,#c88f2b 72%,#a76f1b);
+  box-shadow:inset 0 0 0 .3cqw rgba(255,244,198,.6),0 .3cqw .8cqw rgba(60,30,0,.35);
+}
+#hvBagRoot .hv-bag-act.use{left:44.79cqw}
+#hvBagRoot .hv-bag-act.more{left:63.02cqw;color:#4a2c08;font-size:2.85cqw}
+#hvBagRoot .hv-bag-act:active{filter:brightness(1.1)}
+#hvBagRoot .hv-bag-act:disabled{cursor:default;filter:grayscale(.55) brightness(.92);color:rgba(70,42,8,.55)}
+
+/* ---------- old bag screen stays mounted but invisible ---------- */
 #hvBagRoot .hv-bag-stage{display:none}
 #hvBagRoot #bagBody{display:none}
+#resbar .hv-res-ico{width:22px;height:22px;object-fit:contain;flex:0 0 auto;display:block}
 body.bag-hall-active #hubScreen{display:block!important;visibility:visible!important}
 body.bag-hall-active #bagScreen{display:none!important}
 body.bag-hall-active .art-dock{z-index:96}
 body.bag-hall-active .hv-brandbar,body.bag-hall-active #resbar{display:none!important}
+
+/* item detail modal (unchanged, owned by shop-runtime) */
 #hvItemTip{
   position:fixed;inset:0;z-index:140;display:flex;align-items:center;justify-content:center;
   flex-direction:column;background:rgba(8,6,4,.62);

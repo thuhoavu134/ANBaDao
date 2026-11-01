@@ -19,5 +19,6 @@ test('L105: Giao việc slot trống, chat chữ thuần, túi 3/4 màn', () => 
   assert.match(jobsCss, /\.hv-job-slot/);
   assert.match(chat, /CHAT_CHANNELS\[k\]\.label/);
   assert.match(chatCss, /nth-of-type\(2\)\{display:none/);
-  assert.match(bag, /max-height:75vh/);
+  // Owner 2026-11-01: túi đồ là popup khung gỗ sơn mài theo tỷ lệ ảnh concept (không còn tấm 75vh).
+  assert.match(bag, /aspect-ratio:768\/1376/);
 });

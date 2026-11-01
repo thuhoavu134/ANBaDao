@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import sharp from 'sharp';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const read = rel => readFileSync(join(root, rel), 'utf8');
@@ -51,4 +52,31 @@ test('L27-T5: hall art is a dedicated 3D file, not a menu-v3233 reuse', () => {
   assert.ok(stat.length > 50000, 'hall jpg must be a real painted background');
   const css = read('src/ui/bag-hall.css');
   assert.doesNotMatch(css, /menu-v3233/);
+});
+
+test('L27-T6: popup dùng thẳng khung concept 4 cột, chữ và ô vật phẩm là phần tử thật', async () => {
+  const png = 'assets/ui/bag/bag-lacquer-frame.png';
+  assert.equal(existsSync(join(root, png)), true, 'frame png missing');
+  const meta = await sharp(join(root, png)).metadata();
+  assert.equal(meta.width, 768);
+  assert.equal(meta.height, 1376);
+  assert.equal(meta.hasAlpha, true);
+
+  const css = read('src/ui/bag-hall.css');
+  assert.match(css, /bag-lacquer-frame\.png/);
+  assert.match(css, /aspect-ratio:768\/1376/);
+  assert.match(css, /container-type:inline-size/);
+  assert.doesNotMatch(css, /#f3e4c4/, 'nền kem cũ không còn');
+
+  const ui = read('src/ui/bag-hall-runtime.js');
+  assert.match(ui, /class="hv-bag-frame"/);
+  assert.equal((ui.match(/data-bag-tab="/g) || []).length, 4, 'đúng 4 tab thật');
+  assert.match(ui, /data-bag-detail/);
+  assert.match(ui, /data-bag-act/);
+  assert.match(ui, /<b>Túi đồ<\/b>/);
+  // everything outside the wooden frame is transparent: corner alpha = 0
+  const { data, info } = await sharp(join(root, png)).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+  assert.equal(data[3], 0, 'góc trên trái phải trong suốt');
+  const cx = Math.floor(info.width / 2), cy = Math.floor(info.height / 2);
+  assert.equal(data[(info.width * cy + cx) * info.channels + 3], 255, 'thân khung phải đục');
 });
