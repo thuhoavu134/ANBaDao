@@ -76,8 +76,11 @@
 
   function cell(cls, label, n, title, tip) {
     const i = tips.length;
-    tips.push(tip || { title, what: title, use: '' });
-    return `<button type="button" class="hv-bag-cell ${cls}" data-bag-i="${i}" aria-label="${title}">${label}${n != null ? `<small>${n}</small>` : ''}</button>`;
+    const t = tip || { title, what: title, use: '' };
+    t.cls = cls;
+    tips.push(t);
+    const nn = (n === '+0' || n === '') ? null : n;
+    return `<button type="button" class="hv-bag-cell ${cls}" data-bag-i="${i}" aria-label="${title}">${label}${nn != null ? `<small>${nn}</small>` : ''}</button>`;
   }
 
   function gearCells(out) {
@@ -90,7 +93,7 @@
       const pic = art ? ico(`assets/items/equipment/slots/${art}-${rar}.webp`, name) : (it.slot || '?').slice(0, 2);
       out.push(cell('t-' + rar, pic, '+' + (it.lvl || 0), name, {
         title: name, ic: '⚔️', icon: art ? `assets/items/equipment/slots/${art}-${rar}.webp` : undefined,
-        qty: 1, tone: 'gold', how: ['forge', 'fest'],
+        qty: 1, tone: 'gold', how: ['hunt', 'forge'], lvl: it.lvl || 0, item: it, kind: slot ? 'Trang bị · ' + slot : 'Trang bị',
         what: (slot ? slot + ' · ' : '') + 'phẩm ' + rar.toUpperCase().replace('SSR', 'S+').replace('SS', 'S') + ' · +' + (it.lvl || 0) + '.',
         use: 'Mặc cho tướng ở Đội hình. Cường hoá ở Rèn (vàng + Hoạt, tối đa +15).',
         action: 'Dùng', go: 'heroes'
@@ -185,12 +188,11 @@
       : `<u>${info.ic || '◆'}</u>`;
     const act = info.action || info.act || 'Chi tiết';
     const canGo = !!(info.go || info.buyKey);
-    box.innerHTML = `<div class="hv-bag-pic">${pic}</div>
+    box.innerHTML = `<div class="hv-bag-pic ${info.cls || ''}">${pic}</div>
       <div class="hv-bag-name">${info.title || ''}</div>
       <div class="hv-bag-sub">Số lượng: ${info.qty != null ? info.qty : '—'}${info.what ? ' · ' + info.what : ''}</div>
       <div class="hv-bag-desc">${info.use || info.what || ''}</div>
-      <button type="button" class="hv-bag-act use" data-bag-act${canGo ? '' : ' disabled'}>${act}</button>
-      <button type="button" class="hv-bag-act more" data-bag-more>Chi tiết</button>`;
+      <button type="button" class="hv-bag-act use" data-bag-act${canGo ? '' : ' disabled'}>${act}</button>`;
   }
 
   const close = () => { if (typeof navTo === 'function') navTo('hub'); };
@@ -234,6 +236,7 @@
     ui.sel = Number(btn.getAttribute('data-bag-i'));
     root.querySelectorAll('[data-bag-i]').forEach(el => el.classList.toggle('on', el === btn));
     paintDetail();
+    if (typeof window.hvShowItemTip === 'function') window.hvShowItemTip(tips[ui.sel]);
   });
   root.querySelector('[data-bag-detail]')?.addEventListener('click', ev => {
     const info = tips[ui.sel];

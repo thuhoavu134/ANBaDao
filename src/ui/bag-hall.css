@@ -145,3 +145,26 @@ body.bag-hall-active .hv-brandbar,body.bag-hall-active #resbar{display:none!impo
   flex:0 0 auto;align-self:center;height:auto;min-height:0;max-height:min(72dvh,540px);
   margin:0;padding:0;
 }
+
+/* Owner 2026-11-01: chi tiết theo đúng concept — ô phẩm cấp tô đầy màu, khung thông tin chữ vàng nâu, nút IN HOA */
+#hvBagRoot .hv-bag-cell{border-width:.45cqw;box-shadow:inset 0 0 0 .35cqw rgba(255,226,150,.28),inset 0 -2cqw 3cqw rgba(0,0,0,.35)}
+#hvBagRoot .hv-bag-cell.t-ssr{border-color:#f6cf63;background:linear-gradient(160deg,#f3c95a 0%,#c98a1f 45%,#7a4710 100%)}
+#hvBagRoot .hv-bag-cell.t-ss{border-color:#d7a9ff;background:linear-gradient(160deg,#a35ad8 0%,#6a2a9e 50%,#3a1460 100%)}
+#hvBagRoot .hv-bag-cell.t-s{border-color:#8fd0ff;background:linear-gradient(160deg,#3f86c8 0%,#21508a 50%,#11284b 100%)}
+#hvBagRoot .hv-bag-cell.t-a{border-color:#9fe6b6;background:linear-gradient(160deg,#3f9a62 0%,#235e3a 50%,#123220 100%)}
+#hvBagRoot .hv-bag-cell.t-b{border-color:#d6d0c4;background:linear-gradient(160deg,#8a8172 0%,#5a5246 50%,#2e2a24 100%)}
+#hvBagRoot .hv-bag-cell.t-mat{border-color:#e9b46c;background:linear-gradient(160deg,#8b5a2b 0%,#5a3518 55%,#2f1a0b 100%)}
+#hvBagRoot .hv-bag-cell.on{box-shadow:0 0 0 .5cqw #ffe7a8,0 0 2.6cqw rgba(255,200,90,.85),inset 0 0 0 .35cqw rgba(255,240,200,.5)}
+#hvBagRoot .hv-bag-pic{border:.5cqw solid #c9952f;box-shadow:inset 0 0 0 .3cqw rgba(255,232,170,.6),0 .3cqw .8cqw rgba(60,30,0,.3)}
+#hvBagRoot .hv-bag-pic.t-ssr{background:linear-gradient(160deg,#f3c95a,#c98a1f 50%,#7a4710)}
+#hvBagRoot .hv-bag-pic.t-ss{background:linear-gradient(160deg,#a35ad8,#6a2a9e 50%,#3a1460)}
+#hvBagRoot .hv-bag-pic.t-s{background:linear-gradient(160deg,#3f86c8,#21508a 50%,#11284b)}
+#hvBagRoot .hv-bag-pic.t-a{background:linear-gradient(160deg,#3f9a62,#235e3a 50%,#123220)}
+#hvBagRoot .hv-bag-pic.t-b,#hvBagRoot .hv-bag-pic.t-mat{background:linear-gradient(160deg,#8b5a2b,#5a3518 55%,#2f1a0b)}
+#hvBagRoot .hv-bag-name{font-size:4.5cqw;color:#5a3010;letter-spacing:.01em}
+#hvBagRoot .hv-bag-sub{color:#9a5a16;font-weight:700}
+#hvBagRoot .hv-bag-act{text-transform:uppercase;font-size:3.2cqw;letter-spacing:.06em;width:15.6cqw;height:7.8cqw}
+#hvBagRoot .hv-bag-act.more{font-size:3.2cqw;left:61.7cqw}
+#hvBagRoot .hv-bag-act.use{left:43.6cqw}
+/* Owner 2026-11-01: bấm món mở thẳng chi tiết, bỏ nút Chi tiết — nút Dùng nằm giữa */
+#hvBagRoot .hv-bag-act.use{left:52.7cqw}

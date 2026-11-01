@@ -101,7 +101,7 @@
     camp: { name: 'Chinh chiến', go: 'campaign' },
     daily: { name: 'Nhiệm vụ ngày', go: 'daily' },
     arena: { name: 'Đấu trường', go: 'arena' },
-    hunt: { name: 'Săn', go: 'hunt' },
+    hunt: { name: 'Săn Boss', go: 'hunt' },
     mail: { name: 'Hòm thư', go: 'mail' },
     summon: { name: 'Gọi tướng', go: 'summon' },
     jobs: { name: 'Giao việc', go: 'jobs' }
@@ -175,20 +175,46 @@
       : `<span class="hv-tip-ic">${info.ic || '◆'}</span>`;
     const stars = Math.max(0, Math.min(5, Number(info.stars) || 0));
     const starHtml = stars ? `<span class="hv-tip-stars">${'★'.repeat(stars)}</span>` : '';
-    tip.innerHTML = `<div class="hv-tip-card">
+    const rcls = String(info.cls || '').replace(/^.*?(t-[a-z]+).*$/, '$1') || 't-mat';
+    const RL = { 't-ssr': 'Huyền thoại · SSR', 't-ss': 'Sử thi · SS', 't-s': 'Hiếm · S', 't-a': 'Tinh xảo · A', 't-b': 'Thường · B' };
+    const rarTxt = RL[rcls] || 'Vật phẩm';
+    const lvl = info.lvl != null ? Number(info.lvl) : null;
+    const kind = info.kind || (info.tone === 'shard' ? 'Mảnh tướng' : 'Vật phẩm');
+    const qty = info.qty != null ? (typeof fmtN === 'function' ? fmtN(info.qty) : info.qty) : '—';
+    // Chỉ số lấy đúng hệ thống trang bị (giống bảng thông tin ô đồ): chỉ số chính, khuôn, dòng phụ.
+    const it = info.item || null;
+    const maxLvl = it && typeof gearMaxLvl === 'function' ? gearMaxLvl(it) : 15;
+    let rows = [];
+    let moldTxt = '';
+    if (it) {
+      const sn = (typeof DATA !== 'undefined' && DATA.items && DATA.items.statName && DATA.items.statName[it.slot]) || '';
+      const sv = typeof itemStat === 'function' ? itemStat(it) : 0;
+      if (sn) rows.push({ k: sn.charAt(0) + sn.slice(1).toLowerCase(), v: '+' + Number(sv).toLocaleString('vi-VN') });
+      const mold = (typeof FORGE_MOLDS !== 'undefined' && it.mold && FORGE_MOLDS[it.mold]) ? FORGE_MOLDS[it.mold] : null;
+      if (mold) moldTxt = `<b class="tf-mold">${mold.name}</b> ${mold.desc || ''}`;
+      const aff = typeof affixLines === 'function' ? affixLines(it) : [];
+      for (const a of aff) { if (rows.length >= 4) break; const m = String(a.text || '').match(/^([+\-]?\d[\d.,]*%?)\s+(.+)$/); rows.push({ k: m ? m[2] : a.text, v: m ? m[1] : '', sp: !!a.special }); }
+    }
+    if (!rows.length) rows = [{ k: 'Loại', v: kind }, { k: 'Phẩm cấp', v: rarTxt }, { k: 'Sở hữu', v: qty }, { k: 'Cách dùng', v: info.action || '—' }];
+    const srcs = how.slice(0, 2).map((s, k) => `<button type="button" class="hv-tip-src tf-c${k}" data-tip-go="${s.go}">${s.name}</button>`).join('');
+    tip.innerHTML = `<div class="hv-tip-card hv-tipf">
       <button type="button" class="hv-tip-x" data-tip-close aria-label="Đóng">×</button>
-      <div class="hv-tip-head t-${info.tone || 'gold'}">
-        ${icon}
-        <b>${info.title || ''}</b>
-        ${starHtml}
-        <small>Số lượng sở hữu: ${info.qty != null ? info.qty : '—'}</small>
+      <div class="hv-tip-head">
+        <div class="tf-art ${rcls}">${icon}${starHtml}</div>
+        <b class="tf-name">${info.title || ''}</b>
+        <span class="tf-strip ${rcls}">${rarTxt}</span>
+        <div class="tf-meta"><span>${kind}</span><span>Sở hữu: ${qty}</span></div>
       </div>
       <div class="hv-tip-body">
-        <p>${info.use || info.what || ''}</p>
-        ${info.action ? `<button type="button" class="hv-tip-act" data-tip-act>${info.action}</button>` : ''}
+        <div class="tf-rows">${rows.map(r => `<div class="tf-row${r.sp ? ' sp' : ''}"><span>${r.k}</span><b>${r.v}</b></div>`).join('')}</div>
+        <div class="tf-bar"><em style="width:${lvl != null ? Math.max(0, Math.min(100, lvl / maxLvl * 100)) : 0}%"></em></div>
+        <div class="tf-barv">${lvl != null ? `+${lvl}/${maxLvl}` : '—'}</div>
+        <div class="tf-desc">${moldTxt ? moldTxt + '<br>' : ''}${info.use || info.what || ''}</div>
         <h4 class="hv-tip-how-title" data-tip-how>Cách nhận</h4>
-        ${how.map(s => `<div class="hv-tip-src"><span>${s.name}</span><button type="button" data-tip-go="${s.go}">Đi</button></div>`).join('') || '<p>Chưa có nguồn nhận.</p>'}
+        ${srcs}
       </div>
+      ${info.action ? `<button type="button" class="hv-tip-act" data-tip-act>${info.action}</button>` : ''}
+      <button type="button" class="tf-close" data-tip-close>Đóng</button>
     </div>`;
   }
 
