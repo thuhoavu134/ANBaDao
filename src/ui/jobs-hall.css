@@ -202,3 +202,24 @@
 #hvJobsRoot .hv-jobs-back:after{transform:translate(-50%,-50%) rotate(-45deg)!important}
 #hvJobsRoot .hv-job-name .jn{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 #hvJobsRoot .hv-job-name em{flex:0 0 auto}
+
+/* Owner 2026-11-02: card interiors rebuilt clean; close button = concept sprite at concept size;
+   slots and progress bars drawn crisp in the concept style. */
+#hvJobsRoot .hv-jobs-back{left:88.6%!important;top:1.2%!important;width:11.4%!important;height:auto!important;aspect-ratio:1!important;
+  background:url('assets/ui/jobs/jobs-close.png') center/100% 100% no-repeat!important;border:0!important;border-radius:50%!important;box-shadow:none!important;padding:0!important}
+#hvJobsRoot .hv-jobs-back:before,#hvJobsRoot .hv-jobs-back:after{display:none!important}
+#hvJobsRoot .hv-job-bar{background:linear-gradient(#2a1c14,#3d2a1d)!important;box-shadow:inset 0 0 0 .3cqw #6b4a2c,inset 0 1px 2px rgba(0,0,0,.6)!important}
+#hvJobsRoot .hv-job-bar i{background:linear-gradient(180deg,#5fd0cc,#2f8f93 60%,#246f73)!important}
+#hvJobsRoot .hv-job-slot{border-radius:1.5cqw!important}
+#hvJobsRoot .hv-job-slot.is-empty{background:linear-gradient(#e6d6b4,#d6c39d)!important;box-shadow:inset 0 0 0 .32cqw #b4966a,inset 0 .4cqw .8cqw rgba(70,40,10,.18)!important}
+#hvJobsRoot .hv-job-slot.is-empty:after{color:rgba(110,70,26,.6)!important}
+#hvJobsRoot .hv-job-slot:not(.is-empty){box-shadow:inset 0 0 0 .32cqw #d9a845,0 .2cqw .6cqw rgba(50,24,6,.35)!important}
+#hvJobsRoot .hv-job-slot.s2:not(.is-empty){background:radial-gradient(circle at 50% 40%,#6e4c1e,#2b1b09 75%)!important}
+
+/* Owner 2026-11-02b: title never runs into the role tag; tag a touch smaller. */
+#hvJobsRoot .hv-job-name{right:35%!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important;display:block!important;line-height:5.1cqw}
+#hvJobsRoot .hv-job-need{font-size:2.05cqw!important;max-width:33%;overflow:hidden;text-overflow:ellipsis}
+
+/* Owner 2026-11-02c: readable reward glyph on the dark slot; visible reputation track like the concept. */
+#hvJobsRoot .hv-job-slot.s2 u{color:#ffd88a!important;text-shadow:0 1px 2px #000}
+#hvJobsRoot .hv-rep-track{background:linear-gradient(#140b06,#2a1a10)!important;box-shadow:inset 0 0 0 .25cqw rgba(214,170,90,.6),0 .2cqw 0 rgba(255,220,150,.12)!important;height:14%!important;border-radius:2cqw!important}
