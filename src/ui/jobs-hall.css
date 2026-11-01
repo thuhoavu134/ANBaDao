@@ -183,3 +183,22 @@
 #hvJobsRoot .hv-rep-track{left:14.03%!important;right:8.22%!important}
 /* Review pass 7: the hub bottom bar was painting over the popup's lower edge, so lift the popup above it. */
 #hvJobsRoot{z-index:140!important}
+
+/* Review pass 9: the concept artwork's close button was clipped by its own crop, so we draw a complete
+   jade button on top of it (gold ring, jade disc, white X) and hide the clipped art underneath. */
+#hvJobsRoot .hv-jobs-back{
+  position:absolute!important;left:84.36%!important;top:.59%!important;
+  width:15.34%!important;height:8.56%!important;
+  border:0!important;padding:0!important;cursor:pointer!important;font-size:0!important;
+  border-radius:50%!important;
+  background:radial-gradient(circle at 34% 30%,#9df3cc 0%,#46c894 40%,#1f8460 70%,#0d5340 100%)!important;
+  box-shadow:inset 0 0 0 .5cqw rgba(255,248,214,.9),0 0 0 .85cqw #c08d34,0 0 0 1.3cqw #6b4715,0 .35cqw 1.1cqw rgba(0,0,0,.55)!important;
+}
+#hvJobsRoot .hv-jobs-back:before,#hvJobsRoot .hv-jobs-back:after{
+  content:""!important;position:absolute!important;left:50%!important;top:50%!important;
+  width:38%!important;height:8%!important;border-radius:2px!important;background:#f8fffb!important;
+}
+#hvJobsRoot .hv-jobs-back:before{transform:translate(-50%,-50%) rotate(45deg)!important}
+#hvJobsRoot .hv-jobs-back:after{transform:translate(-50%,-50%) rotate(-45deg)!important}
+#hvJobsRoot .hv-job-name .jn{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#hvJobsRoot .hv-job-name em{flex:0 0 auto}

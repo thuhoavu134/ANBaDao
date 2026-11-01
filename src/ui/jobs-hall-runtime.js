@@ -88,7 +88,7 @@
       const crew = (act.heroIds || []).map(shortName).join(' & ');
       const prog = Math.min(100, Math.max(0, (1 - Math.max(0, left) / act.hours) * 100));
       return `<div class="hv-job" style="top:${top}%;height:${h}%">
-        <div class="hv-job-name">${esc(job.name)} <em>${esc(crew)}</em></div>
+        <div class="hv-job-name"><span class="jn">${esc(job.name)}</span><em>${esc(crew)}</em></div>
         <div class="hv-job-need">${done ? 'Xong việc' : 'còn ' + fmtLeft(left)}</div>
         <div class="hv-job-bar"><i style="width:${done ? 100 : prog}%"></i><span>${jobQualityLabel({ grade: q })}</span></div>
         <div class="hv-job-slots">${heroSlot(jid, (act.heroIds || [])[0], 0)}${heroSlot(jid, (act.heroIds || [])[1], 1)}${rewardCell(job)}</div>
@@ -100,7 +100,7 @@
     const bonus = Math.round((jobRewardMult(fit.grade) - 1) * 100);
     const hrs = jobHoursEff(job, picks.length === 2 ? picks : []);
     return `<div class="hv-job" style="top:${top}%;height:${h}%">
-      <div class="hv-job-name">${esc(job.name)}${bonus ? `<em>+${bonus}%</em>` : ''}</div>
+      <div class="hv-job-name"><span class="jn">${esc(job.name)}</span>${bonus ? `<em>+${bonus}%</em>` : ''}</div>
       <div class="hv-job-need">${esc(needs)}</div>
       <div class="hv-job-bar"><i style="width:${(picks.length / 2) * 100}%"></i><span>${picks.length}/2 tướng${picks.length === 2 ? ' · ' + hrs.toFixed(1).replace('.0', '') + 'h' : ''}</span></div>
       <div class="hv-job-slots">${heroSlot(jid, picks[0], 0)}${heroSlot(jid, picks[1], 1)}${rewardCell(job)}</div>
@@ -116,7 +116,7 @@
     const crew = (act.heroIds || []).map(shortName).join(' & ');
     const prog = Math.min(100, Math.max(0, (1 - Math.max(0, left) / act.hours) * 100));
     return `<div class="hv-job" style="top:${top}%;height:${h}%">
-      <div class="hv-job-name">${esc(job.name)} <em>${esc(crew)}</em></div>
+      <div class="hv-job-name"><span class="jn">${esc(job.name)}</span><em>${esc(crew)}</em></div>
       <div class="hv-job-need">${done ? 'Xong việc' : 'còn ' + fmtLeft(left)}</div>
       <div class="hv-job-bar"><i style="width:${done ? 100 : prog}%"></i><span>${jobQualityLabel({ grade: q })}</span></div>
       <div class="hv-job-slots">${heroSlot(job.id, (act.heroIds || [])[0], 0)}${heroSlot(job.id, (act.heroIds || [])[1], 1)}${rewardCell(job)}</div>
