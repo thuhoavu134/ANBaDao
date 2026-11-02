@@ -43,6 +43,53 @@
   const toastMsg = m => { if (typeof toast === 'function') toast(m); };
   const jobs = () => (typeof DATA === 'object' && Array.isArray(DATA.jobs) ? DATA.jobs : []);
   const jobOf = id => jobs().find(j => j.id === id) || null;
+
+  /* Owner 2026-11-02: Bảng cáo thị — lore giang hồ + 4 thưởng thật cho mỗi việc.
+     index.html giữ nguyên (patch khác bám vào nó); dữ liệu và luật nhận thưởng được bổ sung ở đây. */
+  const BOUNTY = {
+    ship_pho: ['Hộ tống thư khẩn', 'Phong thư phải tới tay minh chủ trước canh ba.', { gold: 320, gems: 6, tinh: 10, hoat: 10 }],
+    trong_quan: ['Truy nã đạo chích', 'Tên trộm lẩn trong chợ đêm — bắt sống mới được lĩnh thưởng.', { gems: 22, gold: 160, tinh: 15, hoat: 15 }],
+    don_kho: ['Canh giữ Tàng Kinh Các', 'Bí kíp thất truyền nằm đây, không kẻ nào được bén mảng.', { shards: 5, gold: 400, gems: 12, hoat: 30 }],
+    tuoi_cay: ['Thu thảo dược Vân Sơn', 'Linh chi trăm năm mọc nơi vách đá sương mù.', { gold: 460, gems: 8, tinh: 12, hoat: 12 }],
+    canh_den: ['Dẹp sơn trại Hắc Phong', 'Bọn cướp núi chặn đường thương lái đã ba tháng nay.', { gems: 34, gold: 240, tinh: 25, hoat: 20 }],
+    do_rac_mo: ['Dò thám Ma giáo', 'Lần theo dấu huyết ấn, tuyệt đối không để bị phát hiện.', { shards: 3, gold: 280, gems: 10, tinh: 20 }]
+  };
+  jobs().forEach(j => {
+    const b = BOUNTY[j.id];
+    if (!b) return;
+    j.name = b[0]; j.flavor = b[1]; j.reward = Object.assign({}, b[2]);
+  });
+  if (typeof claimJob === 'function' && !claimJob.__bounty) {
+    const baseClaim = claimJob;
+    const wrapped = function bountyClaimJob(jobId) {
+      const st = (typeof P === 'object' && P && P.jobs) || {};
+      const act = (st.active || []).find(a => a.jobId === jobId);
+      const job = jobOf(jobId);
+      let mult = 1;
+      if (act && job && typeof jobRewardMult === 'function') {
+        const q = act.quality || (typeof jobFit === 'function' ? jobFit(job, act.heroIds).grade : '');
+        mult = jobRewardMult(q);
+      }
+      const before = typeof P === 'object' && P ? { gold: P.gold || 0, gems: P.gems || 0, sh: Object.values(P.shards || {}).reduce((t, v) => t + v, 0) } : null;
+      const res = baseClaim.apply(this, arguments);
+      if (res && res.ok && job && before) {
+        const rw = job.reward || {};
+        const parts = [];
+        const dg = (P.gold || 0) - before.gold, dm = (P.gems || 0) - before.gems;
+        const ds = Object.values(P.shards || {}).reduce((t, v) => t + v, 0) - before.sh;
+        if (dg > 0) parts.push('🪙 ' + dg);
+        if (dm > 0) parts.push('💎 ' + dm);
+        if (ds > 0) parts.push(ds + ' mảnh tướng');
+        if (rw.tinh) { const v = Math.round(rw.tinh * mult); P.tinh = (P.tinh || 0) + v; parts.push('Tinh ' + v); }
+        if (rw.hoat) { const v = Math.round(rw.hoat * mult); P.hoat = (P.hoat || 0) + v; parts.push('Hoạt ' + v); }
+        if (parts.length) res.txt = parts.join(' · ');
+        save();
+      }
+      return res;
+    };
+    wrapped.__bounty = true;
+    claimJob = wrapped;
+  }
   const state = () => {
     if (typeof P !== 'object' || !P) return { board: [], active: [], rep: 0, perfect: 0 };
     P.jobs = P.jobs || { day: -1, board: [], active: [], rep: 0, perfect: 0 };
