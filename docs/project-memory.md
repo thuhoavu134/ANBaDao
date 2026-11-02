@@ -624,3 +624,10 @@ Recipient-relative Đình Lôi shield; ultimate content bounded by formation row
 **Blocker deploy (khong phai code):** Vercel tra `"Git author bktimmy247 must have access to the project on Vercel to create deployments"` cho ca commit PR va commit head cua `main` (bed18cde) -> preview/production dung o ban cu. Can owner merge bang tai khoan `cuonggmn`, hoac moi `bktimmy247` vao team Vercel.
 
 **Chua lam:** do net/DPR tren iPhone that (headless dpr=1); battle renderer khong doi (van dung clip 0.5x, chan nhieu ~7px nhu cu — co y giu nguyen scope).
+
+## Quy tắc nguồn trang bị (owner chốt, nhắc lại 2026-11-01 20:21)
+- Trang bị CHỈ nhận từ **Săn Boss** hoặc **Rèn (chế đồ)**. KHÔNG từ Bách Bảo Rương / Chợ.
+- Đồ **Săn Boss** có thêm **dòng hiếm/đặc biệt** (code: 3 dòng = 2 thường + 1 đặc biệt). Đồ **chế (Rèn)** KHÔNG có dòng hiếm (2 dòng thường).
+- Mọi UI ghi "Cách nhận" của trang bị phải theo quy tắc này (Túi đồ, chi tiết đồ, Chợ...).
+- Nguồn code: src/domain/equipment/item-affixes.mjs (AFFIX_SOURCES craft/stage/boss).
+- Owner 2026-11-01 21:04: GIU nguon do roi Chinh chien (1 dong thuong), khong bo.

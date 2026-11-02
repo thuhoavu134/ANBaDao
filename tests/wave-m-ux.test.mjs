@@ -30,7 +30,8 @@ test('L94: túi lưới ô + tab', () => {
   const ui = read('src/ui/bag-hall-runtime.js');
   const css = read('src/ui/bag-hall.css');
   assert.match(ui, /hv-bag-grid/);
-  assert.match(css, /grid-template-columns:repeat\(5/);
+  // Owner 2026-11-01: concept 4 cột (thay cho lưới 5 cột cũ).
+  assert.match(css, /grid-template-columns:repeat\(4/);
   assert.match(css, /body\.bag-hall-active #hubScreen/);
 });
 

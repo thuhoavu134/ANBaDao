@@ -49,9 +49,10 @@ test('L89: chat là panel trên dock', () => {
 test('L90: túi là khung ô thu/mở', () => {
   const css = read('src/ui/bag-hall.css');
   const ui = read('src/ui/bag-hall-runtime.js');
-  assert.match(css, /hv-bag-panel/);
-  assert.match(css, /grid-template-columns:repeat\(5/);
-  assert.match(ui, /hv-bag-panel/);
+  // Owner 2026-11-01: túi là khung gỗ sơn mài 4 cột theo concept đã duyệt (không còn 5 cột).
+  assert.match(css, /hv-bag-frame/);
+  assert.match(css, /grid-template-columns:repeat\(4/);
+  assert.match(ui, /hv-bag-frame/);
   assert.match(css, /assets\/ui\/bag\/bag-hall\.jpg/);
 });
 

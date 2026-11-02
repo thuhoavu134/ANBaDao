@@ -31,7 +31,8 @@ test('L103: hall chức năng nền kem, jpg chỉ dải trên; không đụng l
   const bag = read('src/ui/bag-hall.css');
   assert.match(chat, /#hvChatRoot \.hv-chat-panel\{[^}]*background:#f3e4c4;/);
   assert.match(chat, /\.chat-bubble\{[^}]*color:#fff8e8/);
-  assert.match(bag, /#hvBagRoot \.hv-bag-panel\{[^}]*background:#f3e4c4;/);
+  // Owner 2026-11-01: Túi đồ dùng khung gỗ sơn mài (concept 4 cột) thay cho nền kem.
+  assert.match(bag, /bag-lacquer-frame\.png/);
   assert.match(files.tower, /tower-hall\.jpg/);
   assert.match(files.shop, /shop-hall\.jpg/);
   assert.match(files.summon, /summon-hall\.jpg/);
