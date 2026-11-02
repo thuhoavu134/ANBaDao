@@ -1,52 +1,241 @@
+/* Owner 2026-11-01: Giao việc dùng thẳng ảnh concept 2 làm nền (jobs-lacquer-frame.png, 665x1192).
+   Khung gỗ, bảng tên, 3 tab dọc, 4 thẻ việc, ô thưởng, nút vàng và thanh rương là tranh vẽ sẵn;
+   ở đây chỉ đặt chữ, thanh tiến độ, icon thật và vùng bấm đúng toạ độ % của tranh. */
 #hvJobsRoot{
-  --hall-ink:#2d251f;
-  --hall-gold:#d58a14;
-  position:fixed;inset:0;z-index:80;display:none;flex-direction:column;
+  --hall-art:url('assets/ui/jobs/jobs-hall.jpg');
+  position:fixed;inset:0;height:100dvh;max-height:100dvh;z-index:80;display:none;align-items:center;justify-content:center;
   overflow:auto;-webkit-overflow-scrolling:touch;touch-action:manipulation;
-  background:#f3e4c4;
-  color:var(--hall-ink);font-family:inherit;box-sizing:border-box;
-  padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+  background:rgba(8,4,1,.62);
+  font-family:inherit;box-sizing:border-box;
 }
 #hvJobsRoot.is-open{display:flex}
 #hvJobsRoot[hidden]{display:none!important}
-#hvJobsRoot .hv-jobs-top{
-  flex:0 0 auto;display:grid;grid-template-columns:44px 1fr auto;align-items:end;gap:8px;
-  padding:72px 12px 12px;position:sticky;top:0;z-index:2;
-  background:#5c3a22 url('assets/ui/jobs/jobs-hall.jpg') center/cover no-repeat;
-  color:#fff4d4;
+#hvJobsRoot *{box-sizing:border-box}
+
+#hvJobsRoot .hv-jobs-frame{
+  position:relative;flex:0 0 auto;container-type:inline-size;
+  width:min(100vw,calc(100dvh * 665 / 1192));aspect-ratio:665/1192;
+  background:url('assets/ui/jobs/jobs-lacquer-frame.png') 0 0/100% 100% no-repeat;
+  filter:drop-shadow(0 10px 24px rgba(0,0,0,.62));
 }
+
+/* ---- bảng tên + nút đóng (tranh đã vẽ sẵn bảng và nút ngọc) ---- */
+#hvJobsRoot .hv-jobs-top{position:absolute;left:20%;top:1.4%;width:60.8%;height:6.9%;display:grid;place-items:center;pointer-events:none}
+#hvJobsRoot .hv-jobs-top b{font-size:5.1cqw;font-weight:900;letter-spacing:.08em;color:#5a3412;text-shadow:0 1px 0 rgba(255,250,230,.75)}
 #hvJobsRoot .hv-jobs-back{
-  width:44px;height:44px;border:0;border-radius:50%;
-  background:linear-gradient(145deg,#fff7df,#f0c692);color:#7a4a1f;
-  box-shadow:0 0 0 1px #d7b36a,0 2px 6px rgba(79,58,27,.2);font-size:22px;line-height:1;cursor:pointer;
+  position:absolute;left:91.2%;top:1.25%;width:8.6%;height:5.2%;
+  border:0;background:transparent;cursor:pointer;font-size:0;
 }
-#hvJobsRoot .hv-jobs-top b{justify-self:center;font-size:16px;letter-spacing:.04em}
-#hvJobsRoot .hv-jobs-stage{flex:1 1 auto;min-height:420px;padding:8px 10px 28px;box-sizing:border-box}
-#hvJobsRoot #jobsBody{min-height:420px}
-#hvJobsRoot .hv-jobs-street{
-  margin:0 0 10px;padding:10px;border-radius:14px;border:1px solid #d7b883;
-  background:rgba(255,248,230,.92);color:#4a3016;
+/* The approved artwork already contains the X; only its hit area is rendered. */
+/* ---- 3 tab dọc bên trái: nhãn đặt trên tấm gỗ đã vẽ ---- */
+#hvJobsRoot .hv-tab{
+  position:absolute;left:4.4%;width:17.7%;height:8.4%;border:0;background:transparent;cursor:pointer;
+  display:grid;place-items:center;padding:0 .6cqw;border-radius:1.3cqw;
+  font:inherit;font-size:2.8cqw;font-weight:900;line-height:1.05;letter-spacing:.02em;text-align:center;
+  color:#d9c294;text-shadow:0 1px 2px rgba(0,0,0,.85);
 }
-#hvJobsRoot .hv-jobs-street b{display:block;font-size:14px}
-#hvJobsRoot .hv-jobs-street small{display:block;margin:4px 0 8px;color:#6d5941}
-#hvJobsRoot .hv-jobs-street button{
-  min-height:36px;padding:0 12px;border:0;border-radius:10px;background:#e2b45a;color:#3a2414;font-weight:800;
+#hvJobsRoot .hv-tab:nth-of-type(1){top:17.45%}
+#hvJobsRoot .hv-tab:nth-of-type(2){top:27.18%}
+#hvJobsRoot .hv-tab:nth-of-type(3){top:37.08%}
+#hvJobsRoot .hv-tab.is-on{
+  color:#fff6d6;
+  box-shadow:inset 0 0 0 .4cqw rgba(255,212,120,.9),0 0 2.2cqw rgba(255,193,86,.55);
 }
-#hvJobsRoot .hv-jobs-street button:disabled{opacity:.5}
-#hvJobsRoot #jobsBody .jobcard{background:#fff8e8!important;color:#2d251f!important;border:1px solid #e2c48a;border-radius:16px;padding:12px;margin:0 0 12px}
-#hvJobsRoot .hv-job-slots{display:flex;gap:10px;justify-content:center;margin:8px 0}
+#hvJobsRoot .hv-tab:not(.is-on):active{filter:brightness(1.2)}
+#hvJobsRoot .hv-tab i{font-style:normal;display:block;font-size:2.1cqw;font-weight:800;color:#ffd58a}
+
+/* ---- danh sách thẻ việc: mỗi thẻ nằm đúng tấm giấy đã vẽ ---- */
+#hvJobsRoot .hv-jobs-list{
+  position:absolute;left:23.46%;top:17.45%;width:70.53%;height:64.45%;
+  overflow-y:auto;overflow-x:hidden;scrollbar-width:none;
+}
+#hvJobsRoot .hv-jobs-list::-webkit-scrollbar{display:none}
+#hvJobsRoot .hv-job{position:absolute;left:0;width:100%;font:inherit;color:#4a2a10}
+#hvJobsRoot .hv-job-name{
+  position:absolute;left:4.6%;right:26%;top:1.9cqw;height:5.1cqw;
+  display:flex;align-items:center;gap:1cqw;
+  font-size:3.45cqw;font-weight:900;color:#4a2a10;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+#hvJobsRoot .hv-job-name em{font-style:normal;font-size:2.6cqw;font-weight:800;color:#8a5a1c}
+#hvJobsRoot .hv-job-need{position:absolute;right:4%;top:2.3cqw;font-size:2.35cqw;font-weight:800;color:#7c4a12;text-align:right;white-space:nowrap}
+#hvJobsRoot .hv-job-bar{
+  position:absolute;left:4.6%;right:4.4%;top:7.05cqw;height:2.4cqw;border-radius:1.1cqw;
+  background:rgba(58,30,10,.34);box-shadow:inset 0 1px 2px rgba(0,0,0,.45),0 1px 0 rgba(255,246,214,.35);
+  overflow:hidden;
+}
+#hvJobsRoot .hv-job-bar i{display:block;height:100%;width:0;border-radius:inherit;background:linear-gradient(90deg,#b8742a,#f0c65c 70%,#ffe79b);transition:width .28s ease}
+#hvJobsRoot .hv-job-bar span{
+  position:absolute;inset:0;display:grid;place-items:center;
+  font-size:2.4cqw;font-weight:900;color:#fff8e4;text-shadow:0 1px 2px rgba(0,0,0,.75);
+}
 #hvJobsRoot .hv-job-slot{
-  width:64px;height:64px;border-radius:12px;border:2px solid #d7b883;padding:0;
-  background:#cfc8c0 center/cover no-repeat;box-shadow:inset 0 8px 16px rgba(0,0,0,.18);
+  position:absolute;top:15.05cqw;height:9.9cqw;border:0;padding:0;cursor:pointer;
+  background:transparent center/cover no-repeat;border-radius:1.4cqw;
+  display:grid;place-items:center;
 }
+#hvJobsRoot .hv-job-slot.s0{left:4.6%;width:12.4%}
+#hvJobsRoot .hv-job-slot.s1{left:18.1%;width:13.7%}
+#hvJobsRoot .hv-job-slot.s2{left:33.7%;width:13.8%;cursor:default}
 #hvJobsRoot .hv-job-slot.is-empty{
-  background:#3a3a3a url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><circle cx='32' cy='24' r='10' fill='%23666'/><ellipse cx='32' cy='48' rx='16' ry='10' fill='%23666'/></svg>") center/70% no-repeat;
+  background:rgba(92,52,22,.16);
+  box-shadow:inset 0 0 0 .28cqw rgba(120,74,26,.45);
 }
-#hvJobsRoot .jpick{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:8px 0}
-#hvJobsRoot .jchip,#hvJobsRoot .hv-job-face{
-  width:auto;aspect-ratio:1;min-height:56px;border-radius:12px;border:2px solid #d7b883;
-  background:#efe0c0 center/cover no-repeat;color:transparent!important;font-size:0!important;overflow:hidden;
+#hvJobsRoot .hv-job-slot.is-empty:after{content:"+";font-size:4.4cqw;font-weight:900;color:rgba(96,52,14,.55)}
+#hvJobsRoot .hv-job-slot:not(.is-empty){box-shadow:inset 0 0 0 .28cqw rgba(255,226,160,.75),0 1px 3px rgba(60,28,6,.4)}
+#hvJobsRoot .hv-job-slots{display:contents}
+#hvJobsRoot .hv-job-slot img{width:66%;height:66%;object-fit:contain;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}
+#hvJobsRoot .hv-job-slot u{text-decoration:none;font-size:4.2cqw;font-weight:900;color:#6a3a12}
+#hvJobsRoot .hv-job-slot em{
+  position:absolute;right:2%;bottom:0;font-style:normal;font-size:2.2cqw;font-weight:900;
+  color:#fff8e4;text-shadow:0 1px 2px #000,0 0 2px #000;
 }
-#hvJobsRoot .jchip.on{box-shadow:0 0 0 3px #e2b45a}
-#hvJobsRoot .jrow{display:flex;justify-content:flex-end;gap:8px;align-items:center;margin-top:8px}
-#hvJobsRoot .jst{font-size:11px;color:#6a4318}
+#hvJobsRoot .hv-job-go{
+  position:absolute;left:69.3%;width:27.2%;top:16.3cqw;height:7cqw;
+  display:grid;place-items:center;padding:0;text-align:center;
+  border:0;background:transparent;cursor:pointer;font:inherit;
+  font-size:3cqw;font-weight:900;letter-spacing:.04em;line-height:1;
+  color:#4a2a06;text-shadow:0 1px 0 rgba(255,245,210,.9);border-radius:6cqw;white-space:nowrap;
+}
+#hvJobsRoot .hv-job-go:disabled{cursor:default;color:rgba(74,42,6,.42);text-shadow:none;filter:grayscale(.35)}
+#hvJobsRoot .hv-job-go:not(:disabled):active{filter:brightness(1.14)}
+#hvJobsRoot .hv-job:empty{display:none}
+#hvJobsRoot .hv-empty{
+  position:absolute;left:0;width:100%;top:2%;padding:8cqw 4cqw;text-align:center;
+  font-size:3.4cqw;font-weight:700;color:#e6d3ac;text-shadow:0 1px 2px rgba(0,0,0,.7);
+}
+
+/* ---- thanh uy tín phía dưới (rương mốc đã vẽ sẵn) ---- */
+#hvJobsRoot .hv-rep{position:absolute;left:6%;top:84.4%;width:88%;height:10.6%;pointer-events:none;color:#f3e4bd}
+#hvJobsRoot .hv-rep-head{
+  position:absolute;left:1%;top:-15%;right:1%;display:flex;justify-content:space-between;align-items:baseline;
+  font-size:2.5cqw;font-weight:800;text-shadow:0 1px 2px rgba(0,0,0,.8);
+}
+#hvJobsRoot .hv-rep-head b{font-size:2.9cqw;color:#ffe1a0}
+#hvJobsRoot .hv-rep-track{
+  position:absolute;left:0.5%;right:0.5%;top:74%;height:9%;border-radius:1cqw;
+  background:rgba(28,12,4,.6);box-shadow:inset 0 1px 2px rgba(0,0,0,.6);overflow:hidden;
+}
+#hvJobsRoot .hv-rep-track i{display:block;height:100%;width:0;background:linear-gradient(90deg,#b8742a,#f2ca63);transition:width .3s ease}
+#hvJobsRoot .hv-rep-track s{position:absolute;top:0;width:1px;height:100%;background:rgba(255,240,200,.5);text-decoration:none}
+#hvJobsRoot .hv-rep-foot{position:absolute;left:1%;right:1%;top:87%;display:flex;justify-content:space-between;font-size:2.2cqw;color:#cdb88e;text-shadow:0 1px 2px rgba(0,0,0,.8)}
+
+/* ---- bảng chọn tướng cho 2 ô đầu ---- */
+#hvJobsRoot .hv-pick{position:absolute;inset:0;display:grid;place-items:center;background:rgba(6,3,1,.66);border-radius:2cqw}
+#hvJobsRoot .hv-pick[hidden]{display:none}
+#hvJobsRoot .hv-pick-panel{
+  width:78%;max-height:64%;display:flex;flex-direction:column;gap:2.2cqw;padding:3cqw 3cqw 4cqw;
+  background:url('assets/ui/jobs/jobs-card.jpg') center/100% 100% no-repeat;
+  border-radius:2.2cqw;box-shadow:0 8px 22px rgba(0,0,0,.55);color:#4a2a10;
+}
+#hvJobsRoot .hv-pick-head{display:flex;justify-content:space-between;align-items:center;font-size:3.2cqw;font-weight:900}
+#hvJobsRoot .hv-pick-head button{border:0;background:transparent;font:inherit;font-size:3.4cqw;font-weight:900;color:#8a3a12;cursor:pointer;line-height:1}
+#hvJobsRoot .hv-pick-sub{font-size:2.4cqw;color:#7a5320;margin-top:-1cqw}
+#hvJobsRoot .hv-pick-grid{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.6cqw;
+  overflow-y:auto;scrollbar-width:none;padding-bottom:.4cqw;
+}
+#hvJobsRoot .hv-pick-grid::-webkit-scrollbar{display:none}
+#hvJobsRoot .hv-pick-face{
+  position:relative;aspect-ratio:1;border:0;padding:0;cursor:pointer;border-radius:1.4cqw;
+  background:#d8c5a0 center/cover no-repeat;box-shadow:inset 0 0 0 .28cqw rgba(255,232,170,.8),0 1px 3px rgba(50,24,6,.45);
+  color:transparent;font-size:0;
+}
+#hvJobsRoot .hv-pick-face b{
+  position:absolute;left:0;right:0;bottom:0;padding:.2cqw 0;
+  font-size:1.9cqw;font-weight:800;color:#fff6dd;text-align:center;
+  background:rgba(50,22,4,.55);border-radius:0 0 1.2cqw 1.2cqw;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+#hvJobsRoot .hv-pick-face.is-on{box-shadow:inset 0 0 0 .55cqw #ffd27a,0 0 2cqw rgba(255,196,90,.6)}
+
+/* Review: use painted slot rims only; fit progress labels inside the track. */
+#hvJobsRoot .hv-job-bar span{font-size:2.1cqw;line-height:1;white-space:nowrap}
+#hvJobsRoot .hv-job-slot.is-empty{background:transparent;box-shadow:none}
+#hvJobsRoot .hv-job-slot:not(.is-empty){box-shadow:none}
+#hvJobsRoot .hv-job:nth-child(2) .hv-job-slot{top:15.95cqw}
+#hvJobsRoot .hv-job:nth-child(3) .hv-job-slot,#hvJobsRoot .hv-job:nth-child(4) .hv-job-slot{top:16.4cqw}
+
+/* Review pass 2: progress label must sit inside the track; reputation labels clear of the divider; baked chest tick marks removed. */
+#hvJobsRoot .hv-job-bar{height:3.5cqw;border-radius:1.6cqw}
+#hvJobsRoot .hv-job-bar span{font-size:2.15cqw;line-height:1}
+#hvJobsRoot .hv-job-name{top:1.1cqw}
+#hvJobsRoot .hv-job-need{top:1.7cqw}
+#hvJobsRoot .hv-job-bar{top:6.5cqw}
+#hvJobsRoot .hv-rep-head{top:-19%}
+#hvJobsRoot .hv-rep-foot{top:88.5%}
+#hvJobsRoot .hv-rep-track s{display:none}
+#hvJobsRoot .hv-job-slot{top:15.6cqw;height:9.4cqw}
+
+/* Review pass 3: measured pixel offsets inside the 390x699 frame (head 576, track 645, foot 656). */
+#hvJobsRoot .hv-rep-head{transform:translateY(-22px)}
+#hvJobsRoot .hv-rep-foot{transform:translateY(16px)}
+
+/* Review pass 4: reputation labels only on the reputation tab; the board keeps the painted chest track alone. */
+#hvJobsRoot[data-jtab="board"] .hv-rep-head,
+#hvJobsRoot[data-jtab="active"] .hv-rep-head{display:none}
+/* Review pass 5: track must end under the centre of the first and last chest. */
+#hvJobsRoot .hv-rep-track{left:6.6%!important;right:4.8%!important}
+/* Review pass 6: measured chest centres in the painted frame (122/236/349/463/577 of 665px)
+   so the progress track runs exactly from the first to the last chest, and the frame shrinks
+   enough to clear the hub bottom bar on a 390x844 phone. */
+#hvJobsRoot .hv-jobs-frame{width:min(100vw,calc((100dvh - 92px) * 665 / 1192))}
+#hvJobsRoot .hv-rep-track{left:14.03%!important;right:8.22%!important}
+/* Review pass 7: the hub bottom bar was painting over the popup's lower edge, so lift the popup above it. */
+#hvJobsRoot{z-index:140!important}
+
+/* Review pass 9: the concept artwork's close button was clipped by its own crop, so we draw a complete
+   jade button on top of it (gold ring, jade disc, white X) and hide the clipped art underneath. */
+#hvJobsRoot .hv-jobs-back{
+  position:absolute!important;left:84.36%!important;top:.59%!important;
+  width:15.34%!important;height:8.56%!important;
+  border:0!important;padding:0!important;cursor:pointer!important;font-size:0!important;
+  border-radius:50%!important;
+  background:radial-gradient(circle at 34% 30%,#9df3cc 0%,#46c894 40%,#1f8460 70%,#0d5340 100%)!important;
+  box-shadow:inset 0 0 0 .5cqw rgba(255,248,214,.9),0 0 0 .85cqw #c08d34,0 0 0 1.3cqw #6b4715,0 .35cqw 1.1cqw rgba(0,0,0,.55)!important;
+}
+#hvJobsRoot .hv-jobs-back:before,#hvJobsRoot .hv-jobs-back:after{
+  content:""!important;position:absolute!important;left:50%!important;top:50%!important;
+  width:38%!important;height:8%!important;border-radius:2px!important;background:#f8fffb!important;
+}
+#hvJobsRoot .hv-jobs-back:before{transform:translate(-50%,-50%) rotate(45deg)!important}
+#hvJobsRoot .hv-jobs-back:after{transform:translate(-50%,-50%) rotate(-45deg)!important}
+#hvJobsRoot .hv-job-name .jn{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#hvJobsRoot .hv-job-name em{flex:0 0 auto}
+
+/* Owner 2026-11-02: card interiors rebuilt clean; close button = concept sprite at concept size;
+   slots and progress bars drawn crisp in the concept style. */
+#hvJobsRoot .hv-jobs-back{left:88.6%!important;top:1.2%!important;width:11.4%!important;height:auto!important;aspect-ratio:1!important;
+  background:url('assets/ui/jobs/jobs-close.png') center/100% 100% no-repeat!important;border:0!important;border-radius:50%!important;box-shadow:none!important;padding:0!important}
+#hvJobsRoot .hv-jobs-back:before,#hvJobsRoot .hv-jobs-back:after{display:none!important}
+#hvJobsRoot .hv-job-bar{background:linear-gradient(#2a1c14,#3d2a1d)!important;box-shadow:inset 0 0 0 .3cqw #6b4a2c,inset 0 1px 2px rgba(0,0,0,.6)!important}
+#hvJobsRoot .hv-job-bar i{background:linear-gradient(180deg,#5fd0cc,#2f8f93 60%,#246f73)!important}
+#hvJobsRoot .hv-job-slot{border-radius:1.5cqw!important}
+#hvJobsRoot .hv-job-slot.is-empty{background:linear-gradient(#e6d6b4,#d6c39d)!important;box-shadow:inset 0 0 0 .32cqw #b4966a,inset 0 .4cqw .8cqw rgba(70,40,10,.18)!important}
+#hvJobsRoot .hv-job-slot.is-empty:after{color:rgba(110,70,26,.6)!important}
+#hvJobsRoot .hv-job-slot:not(.is-empty){box-shadow:inset 0 0 0 .32cqw #d9a845,0 .2cqw .6cqw rgba(50,24,6,.35)!important}
+#hvJobsRoot .hv-job-slot.s2:not(.is-empty){background:radial-gradient(circle at 50% 40%,#6e4c1e,#2b1b09 75%)!important}
+
+/* Owner 2026-11-02b: title never runs into the role tag; tag a touch smaller. */
+#hvJobsRoot .hv-job-name{right:35%!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important;display:block!important;line-height:5.1cqw}
+#hvJobsRoot .hv-job-need{font-size:2.05cqw!important;max-width:33%;overflow:hidden;text-overflow:ellipsis}
+
+/* Owner 2026-11-02c: readable reward glyph on the dark slot; visible reputation track like the concept. */
+#hvJobsRoot .hv-job-slot.s2 u{color:#ffd88a!important;text-shadow:0 1px 2px #000}
+#hvJobsRoot .hv-rep-track{background:linear-gradient(#140b06,#2a1a10)!important;box-shadow:inset 0 0 0 .25cqw rgba(214,170,90,.6),0 .2cqw 0 rgba(255,220,150,.12)!important;height:14%!important;border-radius:2cqw!important}
+
+/* Owner 2026-11-02d: bảng cáo thị — một hàng 2 ô tướng + 4 ô thưởng thật, cùng cỡ. */
+#hvJobsRoot .hv-job .hv-job-slot{top:16.9cqw!important;height:6.8cqw!important;width:9.6%!important}
+#hvJobsRoot .hv-job .hv-job-slot.s0{left:3.8%!important}
+#hvJobsRoot .hv-job .hv-job-slot.s1{left:14.6%!important}
+#hvJobsRoot .hv-job .hv-job-slot.s2,#hvJobsRoot .hv-job .hv-job-slot.r0{left:26.2%!important}
+#hvJobsRoot .hv-job .hv-job-slot.r1{left:37%!important}
+#hvJobsRoot .hv-job .hv-job-slot.r2{left:47.8%!important}
+#hvJobsRoot .hv-job .hv-job-slot.r3{left:58.6%!important}
+#hvJobsRoot .hv-job-slot.rw{cursor:default}
+#hvJobsRoot .hv-job-slot.rw:not(.is-empty){background:radial-gradient(circle at 50% 40%,#6e4c1e,#2b1b09 75%)!important}
+#hvJobsRoot .hv-job-slot.rw.is-empty{background:rgba(70,42,16,.14)!important;box-shadow:inset 0 0 0 .25cqw rgba(150,110,60,.35)!important}
+#hvJobsRoot .hv-job-slot.rw.is-empty:after{content:none!important}
+#hvJobsRoot .hv-job-slot img{width:72%!important;height:72%!important}
+#hvJobsRoot .hv-job-slot.is-empty:after{font-size:3.4cqw!important}
+#hvJobsRoot .hv-job-slot em{font-size:1.9cqw!important;right:3%!important;bottom:-.2cqw!important;line-height:1}

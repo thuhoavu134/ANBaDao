@@ -122,6 +122,7 @@ const runtime = String.raw`<style id="hv-qa-full-access-v1-style">
   const qaBanner=document.createElement('aside');
   qaBanner.id='hvQaFullAccess';
   qaBanner.setAttribute('role','status');
+  qaBanner.style.display='none';
   qaBanner.innerHTML='<span>🧪 QA</span><small>Đã mở chức năng + 20 item · sandbox không lưu</small><span data-qa-persist-fault aria-live="polite">Lưu bình thường</span><button type="button" data-qa-arm-persist-fail aria-label="Mô phỏng lỗi lưu">Arm lỗi lưu</button><button type="button" data-qa-exit aria-label="Thoát chế độ QA">Thoát</button>';
   updateQaFaultStatus=()=>{
     const status=qaBanner.querySelector('[data-qa-persist-fault]');
