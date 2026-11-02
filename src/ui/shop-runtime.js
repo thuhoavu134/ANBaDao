@@ -288,35 +288,46 @@
     adoptShop(opened);
     const shop = opened.shop || P.shop;
     const sold = shop.bought?.length || 0;
+    const GEM_ICO = 'assets/ui/menu-v3233/icons/resource-gem-imagen.png';
+    const CARD_X = [8.368, 29.289, 50.209, 71.13];
+    const CARD_Y = [29.397, 52.01];
+    const tone = it => {
+      if (it.type === 'shards') {
+        const rr = DATA?.heroes?.[it.hero]?.rarity;
+        return (rr === 'ssr' || rr === 'ss') ? 'gold' : 'purple';
+      }
+      if (it.type === 'craftpack') return 'purple';
+      return 'blue';
+    };
+    const costHtml = it => it.gold
+      ? `<img class="hv-cur-ico" src="assets/items/materials/gold.png" alt="">${fmt(it.gold)}`
+      : `<img class="hv-cur-ico" src="${GEM_ICO}" alt="">${fmt(it.gems)}`;
     const inner = `
-        <div class="hv-shop-top">
-          <button type="button" class="hv-shop-back" data-shop-back aria-label="Về Thành Chính">‹</button>
-          <b>Chợ Lục Châu</b>
-          <div class="hv-shop-chips">
-            <span class="hv-shop-chip" data-shop-gold><img class="hv-cur-ico" src="assets/items/materials/gold.png" alt=""> ${fmt(P.gold)}</span>
-            <span class="hv-shop-chip" data-shop-gems>💎 ${fmt(P.gems)}</span>
-          </div>
-        </div>
-        <div class="hv-shop-hero">
-          <div class="hv-shop-kicker">Quầy đêm · đổi lúc nửa đêm</div>
-          <div class="hv-shop-title" data-shop-title>Chợ Đêm</div>
-          <div class="hv-shop-best">Đã mua ${sold}/8 hôm nay · Tinh/Hoạt có trần</div>
-        </div>
-        <div class="hv-shop-panel">
-          <p class="hv-shop-copy">Mỗi món một lần/ngày. Không bán tăng lực chiến vô hạn.</p>
+        <button type="button" class="hv-shopc-x" data-shop-back aria-label="Đóng">×</button>
+        <b class="hv-shopc-title">Chợ Lục Châu</b>
+        <div class="hv-shopf">
+          <button type="button" class="hv-shop-back" data-shop-back aria-label="Về Thành Chính"></button>
+          <b class="hv-shopf-title" data-shop-title>Chợ Đêm</b>
+          <span class="hv-shop-chip hv-shopf-pill g" data-shop-gold><img class="hv-cur-ico" src="assets/items/materials/gold.png" alt=""> ${fmt(P.gold)}</span>
+          <span class="hv-shop-chip hv-shopf-pill m" data-shop-gems><img class="hv-cur-ico" src="${GEM_ICO}" alt=""> ${fmt(P.gems)}</span>
           <div class="hv-shop-shelf" data-shop-shelf>
-            ${(shop.stock || []).map(it => {
+            ${(shop.stock || []).slice(0, 8).map((it, i) => {
               const out = (shop.bought || []).includes(it.k);
-              return `<article class="hv-shop-card${out ? ' is-sold' : ''}" data-shop-card="${it.k}">
-                <img src="${stallIcon(it)}" alt="">
+              return `<article class="hv-shop-card t-${tone(it)}${out ? ' is-sold' : ''}" data-shop-card="${it.k}" style="left:${CARD_X[i % 4]}%;top:${CARD_Y[i >> 2]}%" title="${stallWhat(it)}">
+                <span class="hv-shopf-ic"><img src="${stallIcon(it)}" alt="">${it.qty ? `<em>x${fmt(it.qty)}</em>` : ''}</span>
                 <b>${it.name}</b>
-                <small>${stallWhat(it)}</small>
-                <span data-shop-price="${it.k}">${out ? 'Đã mua hôm nay' : stallCost(it)}</span>
-                <button type="button" class="hv-shop-buy" data-shop-buy="${it.k}" ${out ? 'disabled' : ''}>${out ? 'Hết hàng' : 'Mua ngay'}</button>
+                <span class="hv-shopf-price" data-shop-price="${it.k}">${out ? 'Đã mua hôm nay' : costHtml(it)}</span>
+                <button type="button" class="hv-shop-buy" data-shop-buy="${it.k}" ${out ? 'disabled' : ''}>${out ? 'ĐÃ MUA' : 'MUA'}</button>
               </article>`;
             }).join('')}
           </div>
-          <div class="hv-shop-note">⚗ Tinh ${fmt(P.tinh || 0)} · 🔥 Hoạt ${fmt(P.hoat || 0)} · ⚡ ${fmt(P.stamina || 0)}</div>
+          <div class="hv-shopf-res">
+            <span class="r1" title="Tinh lực">${fmt(P.tinh || 0)}</span>
+            <span class="r2" title="Hoạt lực">${fmt(P.hoat || 0)}</span>
+            <span class="r3" title="Độ tỉnh táo">${fmt(P.stamina || 0)}</span>
+          </div>
+          <span class="hv-shopf-pill c" data-shop-sold>Đã mua <b>${sold}/8</b></span>
+          <div class="hv-shop-note"><span>Mỗi món một lần mỗi ngày · Đổi hàng lúc nửa đêm<br>Tinh/Hoạt mua ở chợ có giới hạn mỗi ngày</span></div>
         </div>`;
     let root = liveShopRoot();
     if (!root) {
@@ -327,12 +338,12 @@
     }
     if (root && root.parentElement !== document.body) document.body.append(root);
     root.hidden = false;
-    root.classList.add('is-open');
-    root.querySelector('[data-shop-back]')?.addEventListener('click', ev => {
+    root.classList.add('is-open', 'hv-shopl');
+    root.querySelectorAll('[data-shop-back]').forEach(el => el.addEventListener('click', ev => {
       ev.preventDefault();
       ev.stopPropagation();
       closeShop();
-    });
+    }));
     root.querySelectorAll('[data-shop-buy]').forEach(btn => {
       btn.addEventListener('click', ev => {
         ev.preventDefault();
