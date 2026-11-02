@@ -112,7 +112,9 @@ export function prepareShopOpen(player, { day, heroes, rng } = {}) {
   const d = asInt(day, shopDayIndex());
   const pools = heroPools(heroes);
   const allow = new Set([...(pools.nonSsr || []), ...(pools.ssr || [])]);
-  const heroOk = !allow.size || shop.stock.every(it => it.type !== 'shards' || allow.has(it.hero));
+  // A shard pack rolled with no eligible hero (hero:null) is still today's stock; re-rolling for it
+  // wiped `bought` on every open, so the same stall could be bought again and again.
+  const heroOk = !allow.size || shop.stock.every(it => it.type !== 'shards' || !it.hero || allow.has(it.hero));
   if (shop.day === d && shop.stock.length === SHOP_STALL_COUNT && heroOk) {
     return { ok: true, shop, refreshed: false };
   }
