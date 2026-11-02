@@ -223,3 +223,19 @@
 /* Owner 2026-11-02c: readable reward glyph on the dark slot; visible reputation track like the concept. */
 #hvJobsRoot .hv-job-slot.s2 u{color:#ffd88a!important;text-shadow:0 1px 2px #000}
 #hvJobsRoot .hv-rep-track{background:linear-gradient(#140b06,#2a1a10)!important;box-shadow:inset 0 0 0 .25cqw rgba(214,170,90,.6),0 .2cqw 0 rgba(255,220,150,.12)!important;height:14%!important;border-radius:2cqw!important}
+
+/* Owner 2026-11-02d: bảng cáo thị — một hàng 2 ô tướng + 4 ô thưởng thật, cùng cỡ. */
+#hvJobsRoot .hv-job .hv-job-slot{top:16.9cqw!important;height:6.8cqw!important;width:9.6%!important}
+#hvJobsRoot .hv-job .hv-job-slot.s0{left:3.8%!important}
+#hvJobsRoot .hv-job .hv-job-slot.s1{left:14.6%!important}
+#hvJobsRoot .hv-job .hv-job-slot.s2,#hvJobsRoot .hv-job .hv-job-slot.r0{left:26.2%!important}
+#hvJobsRoot .hv-job .hv-job-slot.r1{left:37%!important}
+#hvJobsRoot .hv-job .hv-job-slot.r2{left:47.8%!important}
+#hvJobsRoot .hv-job .hv-job-slot.r3{left:58.6%!important}
+#hvJobsRoot .hv-job-slot.rw{cursor:default}
+#hvJobsRoot .hv-job-slot.rw:not(.is-empty){background:radial-gradient(circle at 50% 40%,#6e4c1e,#2b1b09 75%)!important}
+#hvJobsRoot .hv-job-slot.rw.is-empty{background:rgba(70,42,16,.14)!important;box-shadow:inset 0 0 0 .25cqw rgba(150,110,60,.35)!important}
+#hvJobsRoot .hv-job-slot.rw.is-empty:after{content:none!important}
+#hvJobsRoot .hv-job-slot img{width:72%!important;height:72%!important}
+#hvJobsRoot .hv-job-slot.is-empty:after{font-size:3.4cqw!important}
+#hvJobsRoot .hv-job-slot em{font-size:1.9cqw!important;right:3%!important;bottom:-.2cqw!important;line-height:1}

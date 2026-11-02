@@ -1348,7 +1348,7 @@ body.hub-art-active .mainstage{background:#74c9ef!important}
 
 <!-- JOBS -->
 <div id="jobsScreen" class="screen">
-  <div class="pagehdr"><span class="back" data-nav="hub">‹</span><span class="ttl">Giao Việc</span><span class="sub2">— xóm đêm luôn có việc cho người còn thức</span></div>
+  <div class="pagehdr"><span class="back" data-nav="hub">‹</span><span class="ttl">Giao Việc</span><span class="sub2">— bảng cáo thị treo thưởng giang hồ</span></div>
   <div id="jobsBody"></div>
 </div>
 
@@ -2007,12 +2007,12 @@ DATA.bonds=[
 ];
 /* ===== GIAO VIỆC XÓM ĐÊM ===== */
 DATA.jobs=[
- {id:'ship_pho',ic:'🛵',name:'Ship phở xuyên mộng',hours:2,reward:{gold:320},needs:['nhanh','bao_ve'],needNames:['Nhanh nhẹn','Bảo vệ'],flavor:'Tô phở phải tới nơi khi còn bốc khói — kể cả trong mơ.'},
- {id:'trong_quan',ic:'🖥',name:'Trông quán net khuya',hours:4,reward:{gems:22},needs:['khong_che','nhanh'],needNames:['Khống chế','Nhanh nhẹn'],flavor:'Việc chính: đánh thức mấy đứa ngủ gục trước màn hình.'},
- {id:'don_kho',ic:'📦',name:'Dọn kho ký ức',hours:8,reward:{shards:5},needs:['bao_ve','ho_tro'],needNames:['Bảo vệ','Hỗ trợ'],flavor:'Cẩn thận, có mấy thùng vừa mở là khóc.'},
- {id:'tuoi_cay',ic:'🌱',name:'Tưới cây cho cả xóm',hours:3,reward:{gold:460},needs:['ho_tro','rau'],needNames:['Hỗ trợ','Hệ Rau'],flavor:'Cây nào nghe kể chuyện thì lớn nhanh hơn.'},
- {id:'canh_den',ic:'🕯',name:'Canh đèn Ông Hàng Phở',hours:6,reward:{gems:34},needs:['bao_ve','khong_che'],needNames:['Bảo vệ','Khống chế'],flavor:'Đèn tắt là quán mất — chuyện lớn đó.'},
- {id:'do_rac_mo',ic:'🗑',name:'Đổ rác ác mộng',hours:5,reward:{shards:3},needs:['tan_cong','mong'],needNames:['Tấn công','Hệ Mộng'],flavor:'Phân loại: mộng tái chế được và mộng phải chôn.'}];
+ {id:'ship_pho',ic:'🛵',name:'Hộ tống thư khẩn',hours:2,reward:{gold:320,gems:6,tinh:10,hoat:10},needs:['nhanh','bao_ve'],needNames:['Nhanh nhẹn','Bảo vệ'],flavor:'Phong thư phải tới tay minh chủ trước canh ba.'},
+ {id:'trong_quan',ic:'🖥',name:'Truy nã đạo chích',hours:4,reward:{gems:22,gold:160,tinh:15,hoat:15},needs:['khong_che','nhanh'],needNames:['Khống chế','Nhanh nhẹn'],flavor:'Tên trộm lẩn trong chợ đêm — bắt sống mới được lĩnh thưởng.'},
+ {id:'don_kho',ic:'📦',name:'Canh giữ Tàng Kinh Các',hours:8,reward:{shards:5,gold:400,gems:12,hoat:30},needs:['bao_ve','ho_tro'],needNames:['Bảo vệ','Hỗ trợ'],flavor:'Bí kíp thất truyền nằm đây, không kẻ nào được bén mảng.'},
+ {id:'tuoi_cay',ic:'🌱',name:'Thu thảo dược Vân Sơn',hours:3,reward:{gold:460,gems:8,tinh:12,hoat:12},needs:['ho_tro','rau'],needNames:['Hỗ trợ','Hệ Rau'],flavor:'Linh chi trăm năm mọc nơi vách đá sương mù.'},
+ {id:'canh_den',ic:'🕯',name:'Dẹp sơn trại Hắc Phong',hours:6,reward:{gems:34,gold:240,tinh:25,hoat:20},needs:['bao_ve','khong_che'],needNames:['Bảo vệ','Khống chế'],flavor:'Bọn cướp núi chặn đường thương lái đã ba tháng nay.'},
+ {id:'do_rac_mo',ic:'🗑',name:'Dò thám Ma giáo',hours:5,reward:{shards:3,gold:280,gems:10,tinh:20},needs:['tan_cong','mong'],needNames:['Tấn công','Hệ Mộng'],flavor:'Lần theo dấu huyết ấn, tuyệt đối không để bị phát hiện.'}];
 /* ===== MỘNG THÚ ĐỒNG HÀNH v2.71 — NẾP NHÀ & KÝ ỨC ===== */
 DATA.pets={
  meo_tam_the:{ic:'🐈',name:'Mèo Tam Thể Tha Lộc',fx:'+10% vàng thắng trận',how:'Quà cư dân — đã ở sẵn trong nhà anh',activity:'battle',activityLabel:'Dắt theo và thắng một trận',memories:[
@@ -2213,11 +2213,14 @@ function claimJob(jobId){ jobsEnsure(); const i=P.jobs.active.findIndex(a=>a.job
   if(i<0) return {ok:false,msg:'Không thấy việc.'}; const a=P.jobs.active[i];
   if(jobElapsedH(a)<a.hours) return {ok:false,msg:'Chưa xong việc.'};
   const job=DATA.jobs.find(j=>j.id===a.jobId), quality=a.quality||jobFit(job,a.heroIds).grade, mult=jobRewardMult(quality), rw=job.reward; let txt='';
-  if(rw.gold){ const v=Math.round(rw.gold*mult); P.gold+=v; txt='🪙 '+v; }
-  if(rw.gems){ const v=Math.round(rw.gems*mult); P.gems+=v; txt='💎 '+v; }
+  const parts=[];
+  if(rw.gold){ const v=Math.round(rw.gold*mult); P.gold+=v; parts.push('🪙 '+v); }
+  if(rw.gems){ const v=Math.round(rw.gems*mult); P.gems+=v; parts.push('💎 '+v); }
   if(rw.shards){ const v=Math.max(1,Math.round(rw.shards*mult)); const pool=Object.keys(DATA.heroes).filter(x=>DATA.heroes[x].rarity!=='ssr');
-    const hid=pool[(Math.random()*pool.length)|0]; P.shards[hid]=(P.shards[hid]||0)+v;
-    txt=v+' mảnh '+DATA.heroes[hid].name; }
+    const hid=pool[(Math.random()*pool.length)|0]; P.shards[hid]=(P.shards[hid]||0)+v; parts.push(v+' mảnh '+DATA.heroes[hid].name); }
+  if(rw.tinh){ const v=Math.round(rw.tinh*mult); P.tinh=(P.tinh||0)+v; parts.push('Tinh '+v); }
+  if(rw.hoat){ const v=Math.round(rw.hoat*mult); P.hoat=(P.hoat||0)+v; parts.push('Hoạt '+v); }
+  txt=parts.join(' · ');
   if(quality==='perfect'){P.jobs.perfect++;P.jobs.rep=Math.min(100,(P.jobs.rep||0)+2);} else if(quality==='fit')P.jobs.rep=Math.min(100,(P.jobs.rep||0)+1);
   const bondGain=quality==='perfect'?2:quality==='fit'?1:0; if(bondGain&&typeof relAdd==='function')a.heroIds.forEach(id=>relAdd(id,bondGain,'Hoàn thành Giao Việc phù hợp'));
   P.jobs.active.splice(i,1);
@@ -3876,8 +3879,8 @@ function fmtLeft(hLeft){ const mm=Math.max(0,Math.round(hLeft*60)); return Math.
 function renderJobs(){ jobsEnsure();
   const root=document.getElementById('jobsBody');
   const busySet=new Set([].concat.apply([],P.jobs.active.map(a=>a.heroIds)));
-  const repRank=P.jobs.rep>=30?'Người Quen Cả Xóm':P.jobs.rep>=15?'Mối Ruột':P.jobs.rep>=6?'Người Có Mối':'Người Mới';
-  root.innerHTML=`<div class="section"><h3>📋 Bảng Giao Việc Chuyên Môn</h3><div class="sub2" style="line-height:1.65">Không còn chọn 2 tướng mạnh nhất là đủ. Mỗi việc cần <b>2 chuyên môn</b>; ghép đúng người sẽ rút thời gian và tăng thưởng.<br>Uy tín xóm: <b>${P.jobs.rep}/100</b> · ${repRank} · Ca hoàn hảo: <b>${P.jobs.perfect}</b>.</div></div>`+P.jobs.board.map(jid=>{ const job=DATA.jobs.find(jj=>jj.id===jid);
+  const repRank=P.jobs.rep>=30?'Danh chấn giang hồ':P.jobs.rep>=15?'Đại hiệp':P.jobs.rep>=6?'Thiếu hiệp':'Vô danh tiểu tốt';
+  root.innerHTML=`<div class="section"><h3>📋 Bảng Giao Việc Chuyên Môn</h3><div class="sub2" style="line-height:1.65">Không còn chọn 2 tướng mạnh nhất là đủ. Mỗi việc cần <b>2 chuyên môn</b>; ghép đúng người sẽ rút thời gian và tăng thưởng.<br>Danh vọng giang hồ: <b>${P.jobs.rep}/100</b> · ${repRank} · Ca hoàn hảo: <b>${P.jobs.perfect}</b>.</div></div>`+P.jobs.board.map(jid=>{ const job=DATA.jobs.find(jj=>jj.id===jid);
     const act=P.jobs.active.find(a=>a.jobId===jid);
     const rwLb=job.reward.gold?('🪙 '+job.reward.gold):job.reward.gems?('💎 '+job.reward.gems):('🧩 '+job.reward.shards+' mảnh');
     const needs=`<div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:5px">${(job.needNames||[]).map(x=>`<span class="st">${x}</span>`).join('')}</div>`;

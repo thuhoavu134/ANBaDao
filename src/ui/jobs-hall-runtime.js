@@ -12,11 +12,11 @@
     <nav class="hv-tabnav">
       <button type="button" class="hv-tab" data-jtab="board">Việc<br>trong ngày</button>
       <button type="button" class="hv-tab" data-jtab="active">Đang<br>làm</button>
-      <button type="button" class="hv-tab" data-jtab="rep">Uy tín<br>xóm</button>
+      <button type="button" class="hv-tab" data-jtab="rep">Danh<br>vọng</button>
     </nav>
     <div class="hv-jobs-list"></div>
     <div class="hv-rep">
-      <div class="hv-rep-head"><span>Uy tín xóm</span><b data-rep-rank></b></div>
+      <div class="hv-rep-head"><span>Danh vọng giang hồ</span><b data-rep-rank></b></div>
       <div class="hv-rep-track"><i data-rep-fill></i></div>
       <div class="hv-rep-foot"><span data-rep-num></span><span data-rep-perfect></span></div>
     </div>
@@ -30,10 +30,10 @@
      vị trí tranh vẽ. Toàn bộ luật chơi vẫn là startJob()/claimJob()/socialClaimDaily(). */
   const ROWS = [[0, 23.3], [24.6, 24.2], [50.0, 24.3], [75.5, 24.5]];
   const TIERS = [
-    { min: 30, max: 100, name: 'Người Quen Cả Xóm' },
-    { min: 15, max: 30, name: 'Mối Ruột' },
-    { min: 6, max: 15, name: 'Người Có Mối' },
-    { min: 0, max: 6, name: 'Người Mới' }
+    { min: 30, max: 100, name: 'Danh chấn giang hồ' },
+    { min: 15, max: 30, name: 'Đại hiệp' },
+    { min: 6, max: 15, name: 'Thiếu hiệp' },
+    { min: 0, max: 6, name: 'Vô danh tiểu tốt' }
   ];
   const ui = { tab: 'board', pick: null };
   const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -63,13 +63,23 @@
   };
   const rowBox = i => ROWS[i] || [100 + (i - 4) * 24.5, 24.5];
 
+  const RW_KINDS = {
+    gold: ['Vàng', 'assets/items/materials/gold.png'],
+    gems: ['Ngọc', 'assets/ui/menu-v3233/icons/resource-gem-imagen.png'],
+    shards: ['Mảnh tướng', 'assets/result-icons-art/hero-shard-imagen.png'],
+    tinh: ['Tinh Lực', 'assets/items/materials/tinh-luc.png'],
+    hoat: ['Hoạt Lực', 'assets/items/materials/hoat-luc.png']
+  };
   function rewardCell(job) {
     const rw = (job && job.reward) || {};
-    if (rw.gold) return `<span class="hv-job-slot s2" title="Vàng"><img src="assets/items/materials/gold.png" alt=""><em>×${fmtN(rw.gold)}</em></span>`;
-    if (rw.gems) return `<span class="hv-job-slot s2" title="Ngọc"><img src="assets/ui/menu-v3233/icons/resource-gem-imagen.png" alt=""><em>×${fmtN(rw.gems)}</em></span>`;
-    if (rw.shards) return `<span class="hv-job-slot s2" title="Mảnh tướng"><u>✦</u><em>×${fmtN(rw.shards)}</em></span>`;
-    return '<span class="hv-job-slot s2 is-empty" aria-hidden="true"></span>';
+    const cells = Object.keys(rw).filter(k => RW_KINDS[k] && rw[k] > 0).slice(0, 4).map((k, i) => {
+      const [label, img] = RW_KINDS[k];
+      return `<span class="hv-job-slot rw r${i}" title="${label}"><img src="${img}" alt=""><em>${fmtN(rw[k])}</em></span>`;
+    });
+    while (cells.length < 4) cells.push(`<span class="hv-job-slot rw r${cells.length} is-empty" aria-hidden="true"></span>`);
+    return cells.join('');
   }
+
 
   function heroSlot(jobId, heroId, idx) {
     if (!heroId) return `<button type="button" class="hv-job-slot s${idx} is-empty" data-jslot="${esc(jobId)}" aria-label="Chọn tướng"></button>`;
@@ -131,10 +141,10 @@
     const claimed = !!s.claimed;
     const ok = posts >= 3 && !claimed;
     return `<div class="hv-job" style="top:${top}%;height:${h}%">
-      <div class="hv-job-name">Việc vặt phố chợ</div>
-      <div class="hv-job-need">Giao lưu 3 tin</div>
+      <div class="hv-job-name">Truyền tin giang hồ</div>
+      <div class="hv-job-need">Gửi 3 tin</div>
       <div class="hv-job-bar"><i style="width:${(posts / 3) * 100}%"></i><span>${posts}/3 tin</span></div>
-      <div class="hv-job-slots"><span class="hv-job-slot s0 is-empty" aria-hidden="true"></span><span class="hv-job-slot s1 is-empty" aria-hidden="true"></span><span class="hv-job-slot s2" title="Thưởng"><img src="assets/items/materials/gold.png" alt=""><em>×120</em></span></div>
+      <div class="hv-job-slots"><span class="hv-job-slot s0 is-empty" aria-hidden="true"></span><span class="hv-job-slot s1 is-empty" aria-hidden="true"></span><span class="hv-job-slot s2" title="Thưởng"><img src="assets/items/materials/gold.png" alt=""><em>120</em></span></div>
       <button type="button" class="hv-job-go" data-jobs-street ${ok ? '' : 'disabled'}>${claimed ? 'ĐÃ NHẬN' : 'NHẬN'}</button>
     </div>`;
   }
@@ -149,7 +159,7 @@
       const prog = Math.min(100, Math.max(0, ((rep - t.min) / span) * 100));
       return `<div class="hv-job" style="top:${top}%;height:${h}%">
         <div class="hv-job-name">${esc(t.name)}</div>
-        <div class="hv-job-need">${t.min}–${t.max} uy tín</div>
+        <div class="hv-job-need">${t.min}–${t.max} danh vọng</div>
         <div class="hv-job-bar"><i style="width:${inside ? prog : 0}%"></i><span>${rep}/${t.max}</span></div>
         <div class="hv-job-slots"><span class="hv-job-slot s2 ${inside ? '' : 'is-empty'}" title="${esc(state)}"><u>${inside ? '★' : '☆'}</u><em>${esc(state)}</em></span></div>
         <span class="hv-job-go" aria-hidden="true">${esc(state === 'Đang ở' ? 'HIỆN TẠI' : state === 'Đã qua' ? 'XONG' : 'KHÓA')}</span>
@@ -160,10 +170,10 @@
   function repPanel() {
     const P0 = state();
     const rep = Math.max(0, Math.min(100, Number(P0.rep || 0)));
-    const rank = rep >= 30 ? 'Người Quen Cả Xóm' : rep >= 15 ? 'Mối Ruột' : rep >= 6 ? 'Người Có Mối' : 'Người Mới';
+    const rank = rep >= 30 ? 'Danh chấn giang hồ' : rep >= 15 ? 'Đại hiệp' : rep >= 6 ? 'Thiếu hiệp' : 'Vô danh tiểu tốt';
     root.querySelector('[data-rep-rank]').textContent = rank;
-    root.querySelector('[data-rep-num]').textContent = `${rep}/100 uy tín`;
-    root.querySelector('[data-rep-perfect]').textContent = `Ca hoàn hảo ${Number(P0.perfect || 0)}`;
+    root.querySelector('[data-rep-num]').textContent = `${rep}/100 danh vọng`;
+    root.querySelector('[data-rep-perfect]').textContent = `Hoàn hảo ${Number(P0.perfect || 0)}`;
     root.querySelector('[data-rep-fill]').style.width = rep + '%';
     root.querySelectorAll('.hv-rep-track s').forEach(n => n.remove());
     const track = root.querySelector('.hv-rep-track');
