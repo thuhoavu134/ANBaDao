@@ -107,20 +107,24 @@
     const w = P.weekly || emptyWeekly(Math.floor(dayNow() / 7));
     const claimedToday = d.signInClaimedDay === dayNow();
     const posDone = d.signInDay > 0 ? (((d.signInDay - 1) % DAILY_CALENDAR_DAYS) + 1) : 0;
-    let cal = '';
+    const plain = t => String(t == null ? '' : t)
+      .replace(/[\u{1F000}-\u{1FAFF}\u2600-\u27BF\uFE0F\u2B00-\u2BFF]/gu, '')
+      .replace(/\s+/g, ' ').trim();
+    const calBtns = [];
     for (let i = 1; i <= DAILY_CALENDAR_DAYS; i++) {
       const rw = signInReward(i);
       const ms = (i % 7 === 0);
       const isToday = (!claimedToday && i === posDone + 1) || (claimedToday && i === posDone);
-      cal += `<button type="button" class="hv-daily-day${i <= posDone ? ' is-claimed' : ''}${isToday ? ' is-today' : ''}${ms ? ' is-mile' : ''}" data-daily-day="${i}" disabled><b>${i}</b><small>${rw.label}</small></button>`;
+      calBtns.push(`<button type="button" class="hv-daily-day${i <= posDone ? ' is-claimed' : ''}${isToday ? ' is-today' : ''}${ms ? ' is-mile' : ''}" data-daily-day="${i}" disabled><b>${i}</b><small>${plain(rw.label)}</small></button>`);
     }
+    const cal = calBtns.slice(-7).join('');
     const idleP = idlePreview(P, openArgs());
     const h = hourNow();
     const noonOpen = napWindowOpen('noon', h);
     const eveOpen = napWindowOpen('eve', h);
     const pts = d.activityPoints || 0;
     const wpts = w.points || 0;
-    const quests = (d.quests || []).map(q => {
+    const questRows = (d.quests || []).map(q => {
       const def = dailyQuestDefinition(P, q.id);
       if (!def) return '';
       const done = q.progress >= def.goal;
@@ -130,7 +134,9 @@
         <span>${Math.min(q.progress, def.goal)}/${def.goal}</span>
         <button type="button" class="hv-daily-claim" data-daily-claim="${q.id}" ${(!done || q.claimed) ? 'disabled' : ''}>${q.claimed ? '✓' : 'Nhận'}</button>
       </div>`;
-    }).join('');
+    });
+    const quests = questRows.slice(0, 4).join('');
+    const questsMore = questRows.slice(4).join('');
     const weekly = (w.quests || []).map(q => {
       const def = weeklyQuestDefinition(P, q.id);
       if (!def) return '';
@@ -145,7 +151,7 @@
     const acts = ACT_MILESTONES.map(m => {
       const on = pts >= m.p && !(d.actClaimed || []).includes(m.p);
       const got = (d.actClaimed || []).includes(m.p);
-      return `<button type="button" class="hv-daily-mile${got ? ' is-got' : ''}" data-daily-act="${m.p}" ${on ? '' : 'disabled'}>${m.p}đ · ${got ? '✓' : rewardLabel(m.reward)}</button>`;
+      return `<button type="button" class="hv-daily-mile${got ? ' is-got' : ''}" data-daily-act="${m.p}" ${on ? '' : 'disabled'} title="${plain(rewardLabel(m.reward))}">${m.p}đ${got ? ' ✓' : ''}</button>`;
     }).join('');
     const weeks = WEEKLY_MILESTONES.map(m => {
       const on = wpts >= m.p && !(w.claimed || []).includes(m.p);
@@ -156,56 +162,49 @@
       || '<div class="hv-daily-j">Chưa có dòng nào. Điểm danh và nhận Ca Trực Đêm để nhật ký tự viết.</div>';
     body.innerHTML = `
       <div id="hvDailyRoot" data-testid="hv-daily">
-        <div class="hv-daily-top">
-          <button type="button" class="hv-daily-back" data-daily-back aria-label="Về Thành Chính">‹</button>
-          <b>Nhật Ký Mơ</b>
-          <div class="hv-daily-chips">
-            <span class="hv-daily-chip" data-daily-gold>🪙 ${fmt(P.gold)}</span>
-            <span class="hv-daily-chip" data-daily-gems>💎 ${fmt(P.gems)}</span>
+        <div class="hv-dl">
+          <div class="hv-dl-frame">
+            <button type="button" class="hv-dl-x" data-daily-back aria-label="Về Thành Chính"></button>
+            <div class="hv-dl-ttl" data-daily-title>Nhật Ký Mơ</div>
+            <div class="hv-dl-days" data-daily-cal>${cal}</div>
+            <div class="hv-dl-rows" data-daily-quests>${quests}</div>
+            <div class="hv-dl-chests" data-daily-miles>${acts}<span class="hv-dl-chest-lock">Khoá</span></div>
+          </div>
+          <div class="hv-dl-more">
+            <div class="hv-dl-sheet">
+              <div class="hv-dl-chips">
+                <span class="hv-daily-chip" data-daily-gold><img src="assets/items/materials/gold.png" alt=""> ${fmt(P.gold)}</span>
+                <span class="hv-daily-chip" data-daily-gems><img src="assets/ui/festival/bbr/gems.png" alt=""> ${fmt(P.gems)}</span>
+                <span class="hv-daily-chip"><img src="assets/ui/festival/bbr/so.png" alt=""> ${fmt(P.so || 0)}</span>
+              </div>
+              <button type="button" class="hv-dl-sign" data-daily-sign ${claimedToday ? 'disabled' : ''}>${claimedToday ? 'Đã điểm danh hôm nay ✓' : 'Điểm danh nhận thưởng'}</button>
+              <div class="hv-dl-best">Chuỗi ${fmt(d.streak || 1)} ngày · Sôi nổi ${pts}/100 · Danh vọng ${wpts}/100</div>
+
+              <div class="hv-dl-h">😴 Chợp Mắt — +${DAILY_NAP_GAIN}⚡</div>
+              <div class="hv-daily-naps">
+                <button type="button" class="hv-daily-nap" data-daily-nap="noon" ${(!noonOpen || d.napNoon) ? 'disabled' : ''}>Trưa 11–14h ${d.napNoon ? '✓' : (noonOpen ? '' : '(chưa tới giờ)')}</button>
+                <button type="button" class="hv-daily-nap" data-daily-nap="eve" ${(!eveOpen || d.napEve) ? 'disabled' : ''}>Tối 18–21h ${d.napEve ? '✓' : (eveOpen ? '' : '(chưa tới giờ)')}</button>
+              </div>
+
+              <div class="hv-dl-h">🌙 Ca Trực Đêm</div>
+              <p class="hv-daily-copy">Tích luỹ <b>${idleP.hrs.toFixed(1)}h</b>/${DAILY_IDLE_CAP_H}h · sẵn nhận <b>🪙 ${fmt(idleP.gold)}</b> <small>×${idleP.chapterMult.toFixed(1)}</small></p>
+              <button type="button" class="hv-dl-sign" data-daily-idle ${idleP.gold < 1 ? 'disabled' : ''}>Nhận ca trực</button>
+
+              <div class="hv-dl-h">🏮 Việc Tuần</div>
+              <div class="hv-daily-track"><span>Danh Vọng ${wpts}/100</span><div class="hv-daily-bar"><i style="width:${Math.min(100, wpts)}%"></i></div></div>
+              <div class="hv-daily-miles">${weeks}</div>
+              <div data-daily-weekly>${weekly}</div>
+
+              ${questsMore ? `<div class="hv-dl-h">🗂 Việc khác hôm nay</div><div class="hv-dl-rest">${questsMore}</div>` : ''}
+              <div class="hv-dl-h">📖 Nhật Ký Mơ</div>
+              <div class="hv-daily-journal" data-daily-journal>${journal}</div>
+            </div>
           </div>
         </div>
-        <div class="hv-daily-hero">
-          <div class="hv-daily-kicker">Điểm danh · Ca trực · Việc vặt</div>
-          <div class="hv-daily-title" data-daily-title>Nhật Ký Mơ</div>
-          <div class="hv-daily-best">Chuỗi ${fmt(d.streak || 1)} ngày · 🐚 ${fmt(P.so || 0)}</div>
-        </div>
-        <div class="hv-daily-panel">
-          <section class="hv-daily-sec">
-            <h3>📅 Điểm danh</h3>
-            <div class="hv-daily-cal" data-daily-cal>${cal}</div>
-            <button type="button" class="hv-daily-go" data-daily-sign ${claimedToday ? 'disabled' : ''}>${claimedToday ? 'Đã điểm danh hôm nay ✓' : 'Điểm danh nhận thưởng'}</button>
-          </section>
-          <section class="hv-daily-sec">
-            <h3>😴 Chợp Mắt — +${DAILY_NAP_GAIN}⚡</h3>
-            <div class="hv-daily-naps">
-              <button type="button" class="hv-daily-nap" data-daily-nap="noon" ${(!noonOpen || d.napNoon) ? 'disabled' : ''}>Trưa 11–14h ${d.napNoon ? '✓' : (noonOpen ? '' : '(chưa tới giờ)')}</button>
-              <button type="button" class="hv-daily-nap" data-daily-nap="eve" ${(!eveOpen || d.napEve) ? 'disabled' : ''}>Tối 18–21h ${d.napEve ? '✓' : (eveOpen ? '' : '(chưa tới giờ)')}</button>
-            </div>
-          </section>
-          <section class="hv-daily-sec">
-            <h3>🌙 Ca Trực Đêm</h3>
-            <p class="hv-daily-copy">Tích luỹ <b>${idleP.hrs.toFixed(1)}h</b>/${DAILY_IDLE_CAP_H}h · sẵn nhận <b>🪙 ${fmt(idleP.gold)}</b> <small>×${idleP.chapterMult.toFixed(1)}</small></p>
-            <button type="button" class="hv-daily-go" data-daily-idle ${idleP.gold < 1 ? 'disabled' : ''}>Nhận ca trực</button>
-          </section>
-          <section class="hv-daily-sec">
-            <h3>📝 Việc Vặt Trong Mơ</h3>
-            <div class="hv-daily-track"><span>Sôi Nổi ${pts}/100</span><div class="hv-daily-bar"><i style="width:${Math.min(100, pts)}%"></i></div></div>
-            <div class="hv-daily-miles">${acts}</div>
-            <div data-daily-quests>${quests}</div>
-          </section>
-          <section class="hv-daily-sec">
-            <h3>🏮 Việc Tuần</h3>
-            <div class="hv-daily-track"><span>Danh Vọng ${wpts}/100</span><div class="hv-daily-bar"><i style="width:${Math.min(100, wpts)}%"></i></div></div>
-            <div class="hv-daily-miles">${weeks}</div>
-            <div data-daily-weekly>${weekly}</div>
-          </section>
-          <section class="hv-daily-sec">
-            <h3>📖 Nhật Ký Mơ</h3>
-            <div class="hv-daily-journal" data-daily-journal>${journal}</div>
-          </section>
-        </div>
       </div>`;
-    body.querySelector('[data-daily-back]')?.addEventListener('click', () => navTo?.('hub'));
+    const hvRoot = document.getElementById('hvDailyRoot');
+    if (hvRoot) hvRoot.classList.add('hv-daily-on');
+    body.querySelector('[data-daily-back]')?.addEventListener('click', () => { hvRoot?.classList.remove('hv-daily-on'); hvRoot?.remove(); navTo?.('hub'); });
     body.querySelector('[data-daily-sign]')?.addEventListener('click', () => honVietSignIn());
     body.querySelectorAll('[data-daily-nap]').forEach(btn => {
       btn.addEventListener('click', () => honVietNap(btn.dataset.dailyNap));

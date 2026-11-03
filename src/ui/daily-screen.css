@@ -227,3 +227,114 @@
 @media(prefers-reduced-motion:reduce){
   .hv-lich-back:not(:disabled):active{transform:none}
 }
+
+/* Owner 2026-11-03: Nhat Ky Mo on approved Concept 1 frame */
+html body #hvDailyRoot{position:fixed!important;inset:0!important;z-index:140!important;display:none;overflow:auto!important;
+  background:rgba(8,4,1,.66)!important;padding:8px 0 18px!important;}
+html body #hvDailyRoot.hv-daily-on{display:block!important}
+html body #hvDailyRoot.hv-daily-on .hv-dl{width:min(100vw,calc(100dvh * 768 / 1376));margin:0 auto;}
+html body #hvDailyRoot .hv-dl-frame{position:relative;width:100%;aspect-ratio:768/1376;container-type:inline-size;
+  background:url('assets/ui/daily/daily-frame.png') 0 0/100% 100% no-repeat;filter:drop-shadow(0 10px 24px rgba(0,0,0,.6));}
+html body #hvDailyRoot .hv-dl-frame > *{position:absolute}
+html body #hvDailyRoot .hv-dl-x{left:84.6%;top:1.09%;width:11.1%;height:6.2%;border:0!important;background:transparent!important;box-shadow:none!important;font-size:0!important;padding:0!important}
+html body #hvDailyRoot .hv-dl-ttl{left:20.6%;top:1.6%;width:59.6%;height:7.2%;display:grid;place-items:center;
+  font-size:5.4cqw;font-weight:900;letter-spacing:.06em;color:#5a3412;text-shadow:0 1px 0 rgba(255,250,230,.8)}
+
+/* 7 ô điểm danh đặt đúng 7 ô vẽ sẵn */
+html body #hvDailyRoot .hv-dl-days{left:8.46%;top:15.84%;width:83.2%;height:14.68%;display:grid;grid-template-columns:repeat(7,1fr);gap:1.05cqw}
+html body #hvDailyRoot .hv-dl-days .hv-daily-day{position:relative!important;width:auto!important;height:100%!important;margin:0!important;
+  border:0!important;background:transparent!important;box-shadow:none!important;border-radius:2cqw!important;padding:0!important;
+  display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:.4cqw;
+  color:#4a2a10!important;font:inherit!important}
+html body #hvDailyRoot .hv-dl-days .hv-daily-day b{font-size:4.4cqw!important;line-height:1;color:#5a3412!important;text-shadow:0 1px 0 rgba(255,250,230,.7)}
+html body #hvDailyRoot .hv-dl-days .hv-daily-day small{font-size:1.85cqw!important;line-height:1.1;text-align:center;color:#7a5320!important;max-width:96%;overflow:hidden}
+html body #hvDailyRoot .hv-dl-days .hv-daily-day.is-claimed{background:rgba(120,80,20,.16)!important;box-shadow:inset 0 0 0 .35cqw rgba(255,214,120,.75)!important}
+html body #hvDailyRoot .hv-dl-days .hv-daily-day.is-today{box-shadow:inset 0 0 0 .5cqw #ffd27a,0 0 2cqw rgba(255,196,90,.7)!important}
+html body #hvDailyRoot .hv-dl-days .hv-daily-day.is-mile b{color:#8a3d0e!important}
+
+/* 4 dòng việc đặt đúng 4 tấm giấy */
+html body #hvDailyRoot .hv-dl-rows{left:8.33%;top:32.41%;width:83.34%;height:42.3%;display:flex;flex-direction:column;gap:0}
+html body #hvDailyRoot .hv-dl-rows .hv-daily-quest{position:relative!important;flex:1 1 0!important;display:block!important;
+  background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;padding:0!important;margin:0!important;color:#3d2410!important}
+html body #hvDailyRoot .hv-dl-rows .hv-daily-qt{position:absolute;left:3.4%;top:14%;width:64%;height:44%}
+html body #hvDailyRoot .hv-dl-rows .hv-daily-qt b{display:block;font-size:2.9cqw!important;font-weight:900;line-height:1.15;color:#3d2410!important;
+  max-height:2.3em;overflow:hidden}
+html body #hvDailyRoot .hv-dl-rows .hv-daily-qt small{display:block;margin-top:.5cqw;font-size:2.05cqw!important;color:#8a5a1c!important;font-weight:800}
+html body #hvDailyRoot .hv-dl-rows .hv-daily-qt i{position:absolute;left:0;bottom:-1.9cqw;height:1.5cqw!important;border-radius:1cqw;
+  background:linear-gradient(90deg,#b8742a,#f0c65c 70%,#ffe79b)!important;box-shadow:0 0 0 .18cqw rgba(90,52,12,.35)}
+html body #hvDailyRoot .hv-dl-rows .hv-daily-quest > span{position:absolute;right:23.5%;bottom:16%;font-size:2.2cqw!important;font-weight:900;color:#7c4a12!important}
+html body #hvDailyRoot .hv-dl-rows .hv-daily-claim{position:absolute!important;left:72.3%!important;top:31%!important;width:17%!important;height:35%!important;
+  border:0!important;border-radius:1.6cqw!important;background:transparent!important;box-shadow:none!important;padding:0!important;
+  font-size:2.6cqw!important;font-weight:900;letter-spacing:.03em;color:#4a2a06!important;text-shadow:0 1px 0 rgba(255,245,210,.9)}
+html body #hvDailyRoot .hv-dl-rows .hv-daily-claim:disabled{color:rgba(74,42,6,.45)!important;text-shadow:none}
+
+/* 5 rương mốc */
+html body #hvDailyRoot .hv-dl-chests{left:6.9%;top:86.2%;width:86.2%;height:9.4%;display:block}
+html body #hvDailyRoot .hv-dl-chests .hv-daily-mile{position:absolute!important;top:0!important;height:100%!important;width:12.5%!important;
+  border:0!important;background:transparent!important;box-shadow:none!important;padding:0!important;
+  display:flex!important;align-items:flex-end!important;justify-content:center!important;
+  font-size:1.95cqw!important;font-weight:900;color:#4a2a06!important;text-shadow:0 1px 0 rgba(255,246,210,.85)}
+html body #hvDailyRoot .hv-dl-chests .hv-daily-mile:nth-child(1){left:0}
+html body #hvDailyRoot .hv-dl-chests .hv-daily-mile:nth-child(2){left:19.1%}
+html body #hvDailyRoot .hv-dl-chests .hv-daily-mile:nth-child(3){left:38.2%}
+html body #hvDailyRoot .hv-dl-chests .hv-daily-mile:nth-child(4){left:57.3%}
+html body #hvDailyRoot .hv-dl-chests .hv-daily-mile:nth-child(5){left:76.4%}
+html body #hvDailyRoot .hv-dl-chests .hv-daily-mile.is-got{color:#1f6b3a!important}
+html body #hvDailyRoot .hv-dl-chests .hv-daily-mile:disabled{opacity:1;filter:grayscale(.55) brightness(.9)}
+
+/* phần phụ dưới khung */
+html body #hvDailyRoot .hv-dl-more{width:100%;margin:10px auto 0;padding:0 3px}
+html body #hvDailyRoot .hv-dl-sheet{background:linear-gradient(180deg,#fdf8ec,#f2e5cb);border:.5cqw solid #b58e49;border-radius:14px;
+  padding:12px 12px 16px;box-shadow:0 8px 20px rgba(0,0,0,.35);color:#3d2410}
+html body #hvDailyRoot .hv-dl-chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+html body #hvDailyRoot .hv-dl-chips .hv-daily-chip{background:#fffdf6;border:1px solid #d9bd86;border-radius:999px;padding:4px 10px;
+  font-size:12.5px;font-weight:800;color:#5a3a18}
+html body #hvDailyRoot .hv-dl-sign{width:100%;height:44px;border-radius:12px;border:1px solid #b58e49;
+  background:linear-gradient(180deg,#ffe6a6,#d7a94f);color:#4a2a06;font-size:15px;font-weight:900;letter-spacing:.02em;margin:4px 0 6px}
+html body #hvDailyRoot .hv-dl-sign:disabled{filter:grayscale(.5) brightness(.94);color:rgba(74,42,6,.6)}
+html body #hvDailyRoot .hv-dl-best{font-size:12px;color:#7a5320;font-weight:700;margin-bottom:8px}
+html body #hvDailyRoot .hv-dl-h{margin:12px 0 6px;font-size:14px;font-weight:900;color:#5a3a18}
+html body #hvDailyRoot .hv-dl-sheet .hv-daily-naps{display:flex;gap:8px}
+html body #hvDailyRoot .hv-dl-sheet .hv-daily-nap{flex:1;height:40px;border-radius:10px;border:1px solid #d9bd86;background:#fffdf6;
+  color:#5a3a18;font-size:12.5px;font-weight:800}
+html body #hvDailyRoot .hv-dl-sheet .hv-daily-nap:disabled{opacity:.55}
+html body #hvDailyRoot .hv-dl-sheet .hv-daily-copy{margin:0 0 6px;font-size:12.5px;color:#5a3a18}
+html body #hvDailyRoot .hv-dl-sheet .hv-daily-track{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:800;color:#6a4a1e}
+html body #hvDailyRoot .hv-dl-sheet .hv-daily-bar{position:relative;flex:1;height:8px;border-radius:6px;background:rgba(120,80,30,.22);overflow:hidden}
+html body #hvDailyRoot .hv-dl-sheet .hv-daily-bar i{display:block;height:100%;background:linear-gradient(90deg,#b8742a,#f0c65c)}
+html body #hvDailyRoot .hv-dl-sheet .hv-daily-miles{display:flex;gap:6px;margin:8px 0}
+html body #hvDailyRoot .hv-dl-sheet .hv-daily-miles .hv-daily-mile{flex:1;height:34px;border-radius:9px;border:1px solid #d9bd86;background:#fffdf6;
+  color:#5a3a18;font-size:11px;font-weight:800}
+html body #hvDailyRoot .hv-dl-sheet .hv-daily-journal{max-height:150px;overflow:auto}
+html body #hvDailyRoot .hv-dl-sheet .hv-daily-j{font-size:12.5px;color:#5a3a18;padding:5px 0;border-bottom:1px dashed rgba(120,80,30,.25)}
+html body #hvDailyRoot .hv-dl-rows{overflow:hidden}
+html body #hvDailyRoot .hv-dl-rest{display:flex;flex-direction:column;gap:6px}
+html body #hvDailyRoot .hv-dl-rest .hv-daily-quest{position:relative!important;display:grid!important;grid-template-columns:1fr 52px 62px;align-items:center;gap:8px;
+  background:#fffdf6!important;border:1px solid #d9bd86!important;border-radius:10px!important;padding:7px 9px!important;box-shadow:none!important;color:#5a3a18!important}
+html body #hvDailyRoot .hv-dl-rest .hv-daily-qt{position:static;width:auto;height:auto}
+html body #hvDailyRoot .hv-dl-rest .hv-daily-qt b{font-size:12.5px;color:#5a3a18}
+html body #hvDailyRoot .hv-dl-rest .hv-daily-qt small{font-size:11px;color:#8a5a1c}
+html body #hvDailyRoot .hv-dl-rest .hv-daily-qt i{position:static;display:block;margin-top:4px;height:4px;border-radius:3px;background:linear-gradient(90deg,#b8742a,#f0c65c)}
+html body #hvDailyRoot .hv-dl-rest .hv-daily-quest > span{position:static;font-size:11.5px;text-align:right}
+html body #hvDailyRoot .hv-dl-rest .hv-daily-claim{position:static!important;width:auto!important;height:32px!important;border-radius:9px!important;
+  border:1px solid #b58e49!important;background:linear-gradient(180deg,#ffe6a6,#d7a94f)!important;font-size:12px!important;color:#4a2a06!important}
+html body #hvDailyRoot .hv-dl-rows .hv-daily-claim{display:grid!important;place-items:center!important;text-align:center!important;line-height:1!important}
+html body #hvDailyRoot .hv-dl-rows .hv-daily-qt small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+html body #hvDailyRoot .hv-dl-chests .hv-daily-mile{white-space:nowrap;letter-spacing:0}
+html body #hvDailyRoot .hv-dl-chips .hv-daily-chip{display:inline-flex;align-items:center;gap:5px}
+html body #hvDailyRoot .hv-dl-chips .hv-daily-chip img{width:16px;height:16px;object-fit:contain}
+html body #hvDailyRoot .hv-dl-rows .hv-daily-qt i{border:0!important;min-width:0}
+html body #hvDailyRoot .hv-dl-rows .hv-daily-quest > span{right:24%!important;bottom:30%!important;font-size:2.05cqw!important}
+html body #hvDailyRoot .hv-dl-rows .hv-daily-claim{justify-items:center!important;align-items:center!important;padding-left:0!important;padding-right:0!important}
+html body #hvDailyRoot .hv-dl-rows .hv-daily-qt:after{content:"";position:absolute;left:0;right:0;bottom:-1.9cqw;height:1.5cqw;border-radius:1cqw;background:rgba(90,52,12,.26)}
+html body #hvDailyRoot .hv-dl-rows .hv-daily-qt i{z-index:1!important}
+html body #hvDailyRoot .hv-dl-rows .hv-daily-claim{left:71.2%!important;width:18.6%!important;font-size:2.3cqw!important;overflow:visible!important}
+html body #hvDailyRoot .hv-dl-rows .hv-daily-quest span{right:26.5%!important;bottom:8%!important;font-size:1.95cqw!important}
+html body #hvDailyRoot .hv-dl-chest-lock{position:absolute;left:76.4%;top:0;width:12.5%;height:100%;display:grid;align-items:end;justify-items:center;font-size:1.8cqw;font-weight:800;color:rgba(74,42,6,.45)}
+/* khung chi hien thi thanh tien do; so chinh xac nam trong danh sach duoi khung */
+html body #hvDailyRoot .hv-dl-rows .hv-daily-quest > span{display:none!important}
+html body #hvDailyRoot .hv-dl-rows .hv-daily-claim{left:71.8%!important;width:17.8%!important;border-radius:1.2cqw!important;
+  background:transparent!important;box-shadow:none!important;overflow:hidden!important;font-size:2.35cqw!important}
+html body #hvDailyRoot .hv-dl-rows .hv-daily-qt{width:66%!important}
+html body #hvDailyRoot .hv-dl-rows .hv-daily-claim{left:72.6%!important;width:16.6%!important;font-size:2.1cqw!important;
+  padding-left:1.2cqw!important;overflow:visible!important;letter-spacing:0!important}
