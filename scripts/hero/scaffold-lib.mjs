@@ -5,7 +5,8 @@ import { validateSpec } from '../../src/domain/combat/authored-effects.mjs';
 const constName = key => key.toUpperCase();
 const js = v => JSON.stringify(v);
 
-export const ELEMENT = { soul: ['soul', 'Âm Hồn'], moc: ['wood', 'Mộc Tinh'], thuy: ['water', 'Thương Thủy'], hoa: ['fire', 'Viêm Hỏa'], kim: ['metal', 'Kim Khí'], mong: ['dream', 'Hư Mộng'] };
+// Owner 2026-11-03: gom hệ về ngũ hành — tên hiển thị chỉ còn 5 hệ.
+export const ELEMENT = { soul: ['soul', 'Hỏa'], moc: ['wood', 'Mộc'], thuy: ['water', 'Thủy'], hoa: ['fire', 'Hỏa'], kim: ['metal', 'Kim'], mong: ['dream', 'Thổ'], tho: ['earth', 'Thổ'] };
 export const TARGETS = { enemy: '1 địch', aoe_enemy: 'Toàn bộ địch' };
 
 export function validateBrief(b) {

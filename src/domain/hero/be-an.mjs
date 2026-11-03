@@ -1,7 +1,7 @@
 // Owner's seal companion kit, 18 October 2026. Numbers remain explicit tuning.
 const basic={id:'be_an.basic',name:'Bắt Lấy Nè!',description:'Ném hải cẩu chạm hai lần, mỗi lần 70% Công. Hit cuối đặt một Dấu Chân Hải Cẩu, tối đa 3 tầng trong 2 lượt.',target:'Một địch',cost:0,cooldown:0,rules:{hits:2,multiplier:.7}};
 export const BE_AN_HERO=Object.freeze({
- id:'hero_splus_be_an',key:'be_an',number:null,catalogKind:'authored-extra',name:'Bé An',fullName:'Bé An — Bạn Thân Hải Cẩu',rarity:'S+',element:'dream',elementName:'Hư Mộng',role:'mystic',recommendedSlots:[3,4,5],weapon:'Hải Cẩu Bông',profileVersion:'be-an/2026-10-18',gender:'Nữ',age:'Bé nhỏ',
+ id:'hero_splus_be_an',key:'be_an',number:null,catalogKind:'authored-extra',name:'Bé An',fullName:'Bé An — Bạn Thân Hải Cẩu',rarity:'S+',element: 'dream', elementName: 'Thổ',role:'mystic',recommendedSlots:[3,4,5],weapon:'Hải Cẩu Bông',profileVersion:'be-an/2026-10-18',gender:'Nữ',age:'Bé nhỏ',
  introduction:'Cô bé đeo kính cùng người bạn hải cẩu: hai cú ném tinh nghịch, ba lần triệu hồi và lời hứa luôn bảo vệ nhau.',
  art:{status:'authored-source24-review',portrait:'assets/characters/be-an/avatar.webp',card:'assets/characters/be-an/avatar.webp',hudIcon:'assets/characters/be-an/avatar.webp',atlas:'assets/characters/be-an/idle-0-35de8825.webp'},
  iconId:'splus.be_an.passive',passiveName:'Không Được Bắt Nạt Bé!',

@@ -11,7 +11,7 @@ export const VAN_PHONG_KIT = Object.freeze({
 
 export const VAN_PHONG_HERO = Object.freeze({
   id: 'hero_splus_van_phong', key: 'van_phong', number: null, catalogKind: 'authored-extra',
-  name: 'Vân Phong', fullName: 'Bạch Y Vân Phong', rarity: 'S+', element: 'wood', elementName: 'Mộc Tinh', role: 'mystic',
+  name: 'Vân Phong', fullName: 'Bạch Y Vân Phong', rarity: 'S+', element: 'wood', elementName: 'Mộc', role: 'mystic',
   recommendedSlots: [3, 4, 5], weapon: 'Huyền Vũ Tiên Phiến',
   profileVersion: 'van-phong/2026-10-20-owner-kit', gender: 'Nam', age: 'Thanh niên',
   introduction: 'Pháp sư bịt mắt, áo trắng, lướt trên gió mực với Huyền Vũ Tiên Phiến. Khống chế diện rộng, né đòn rồi phản kích, che chắn đồng minh cùng hàng.',

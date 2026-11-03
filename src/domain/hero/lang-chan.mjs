@@ -10,7 +10,7 @@ export const LANG_CHAN_KIT = Object.freeze({
 
 export const LANG_CHAN_HERO = Object.freeze({
   id: 'hero_splus_lang_chan', key: 'lang_chan', number: null, catalogKind: 'authored-extra',
-  name: "Lăng Chân", fullName: "Lăng Chân — Vô Cực Kiếm Tử", rarity: 'S+', element: 'water', elementName: 'Thương Thủy', role: 'duelist',
+  name: "Lăng Chân", fullName: "Lăng Chân — Vô Cực Kiếm Tử", rarity: 'S+', element: 'water', elementName: 'Thủy', role: 'duelist',
   recommendedSlots: [0,1,3], weapon: "Chân Võ Cổ Kiếm (kiếm thẳng, lam ngọc)",
   profileVersion: 'lang-chan/2026-10-23-scaffold', gender: "Nam", age: "Thiếu niên",
   introduction: "Truyền nhân Võ Đang, kiếm khí Thái Cực lam bạch. Hắn không đánh nhiều — hắn chỉ cần một nhát đúng lúc.",

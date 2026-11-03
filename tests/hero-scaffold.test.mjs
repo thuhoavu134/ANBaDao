@@ -54,7 +54,7 @@ test('scaffold domain module is valid JS with the S+ profile contract', async ()
   const h = mod.THU_NGHIEM_HERO;
   assert.equal(h.id, 'hero_splus_thu_nghiem');
   assert.equal(h.element, 'soul');
-  assert.equal(h.elementName, 'Âm Hồn');
+  assert.equal(h.elementName, 'Hỏa');
   assert.deepEqual(Object.keys(h.actions), ['basic', 'skill', 'ultimate']);
   assert.equal(h.actions.ultimate.target, 'Toàn bộ địch');
   assert.equal(mod.THU_NGHIEM_KIT.basic.hits, 3);

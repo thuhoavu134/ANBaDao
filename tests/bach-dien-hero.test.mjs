@@ -19,7 +19,8 @@ test('L156-T1 DATA.heroes.bach_dien and CHARACTER_MANIFEST surfaces match Linh �
   assert.match(index, /surfaces:\['roster','formation','hero-detail','battle'/);
   assert.match(index, /detailBackground:'assets\/ui\/hero-detail\/bach-dien-showcase-bg\.jpg'/);
   assert.equal(exists('assets/ui/hero-detail/bach-dien-showcase-bg.jpg'), true);
-  assert.match(index, /soul:\{ic:'🎭',nm:'Âm Hồn'\}/);
+  // Owner 2026-11-03: gom hệ về ngũ hành, Âm Hồn hiển thị là Hỏa.
+  assert.match(index, /soul:\{ic:'🔥',nm:'Hỏa'\}/);
 });
 
 test('L156-T2 official ids, default owned, stars include Bạch Diện and keep Linh Đồng', () => {

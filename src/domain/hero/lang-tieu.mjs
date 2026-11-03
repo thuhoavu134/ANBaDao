@@ -10,7 +10,7 @@ export const LANG_TIEU_KIT = Object.freeze({
 
 export const LANG_TIEU_HERO = Object.freeze({
   id: 'hero_splus_lang_tieu', key: 'lang_tieu', number: null, catalogKind: 'authored-extra',
-  name: "Lăng Tiêu", fullName: "Lăng Tiêu - Tử Lôi Kiếm Ảnh", rarity: 'S+', element: 'metal', elementName: 'Kim Khí', role: 'striker',
+  name: "Lăng Tiêu", fullName: "Lăng Tiêu - Tử Lôi Kiếm Ảnh", rarity: 'S+', element: 'metal', elementName: 'Kim', role: 'striker',
   recommendedSlots: [3,4,5], weapon: "Trường kiếm",
   profileVersion: 'lang-tieu/2026-10-23-scaffold', gender: "Nam", age: "Thiếu niên",
   introduction: "Kiếm sĩ lôi điện, mỗi nhát chém gieo một ấn sét; đủ bốn ấn thì trời giáng xuống.",

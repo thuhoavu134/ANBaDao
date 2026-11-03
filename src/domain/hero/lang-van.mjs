@@ -10,7 +10,7 @@ export const LANG_VAN_KIT = Object.freeze({
 
 export const LANG_VAN_HERO = Object.freeze({
   id: 'hero_splus_lang_van', key: 'lang_van', number: null, catalogKind: 'authored-extra',
-  name: "Lăng Vân", fullName: "Lăng Vân — Thiếu Niên Thần Tướng", rarity: 'S+', element: 'water', elementName: 'Thương Thủy', role: 'duelist',
+  name: "Lăng Vân", fullName: "Lăng Vân — Thiếu Niên Thần Tướng", rarity: 'S+', element: 'water', elementName: 'Thủy', role: 'duelist',
   recommendedSlots: [0,1,2], weapon: "Song thương",
   profileVersion: 'lang-van/2026-10-23-scaffold', gender: "Nam", age: "Thiếu niên",
   introduction: "Thiếu niên thần tướng múa song thương, dẫn dòng nước xiết và băng giá quét sạch chiến trường.",

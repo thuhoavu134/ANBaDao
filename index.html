@@ -2709,7 +2709,7 @@ function spatialSort(a,b){ return a.y-b.y || (a.side==='foe'?1:-1); }
 function fitCanvas(){ const r=window.devicePixelRatio||1; cv.width=CW*r; cv.height=CH*r; ctx.setTransform(r,0,0,r,0,0); }
 
 let uid=0;
-const HE={than:{ic:'🔥',nm:'Hỏa'},hoa:{ic:'🔥',nm:'Hỏa'},kim:{ic:'⚙️',nm:'Kim'},moc:{ic:'🌿',nm:'Mộc'},phong:{ic:'🌀',nm:'Phong'},thuy:{ic:'💧',nm:'Thủy'},tho:{ic:'🪨',nm:'Thổ'},rau:{ic:'🌿',nm:'Mộc'},suong:{ic:'💧',nm:'Thủy'},set:{ic:'⚡',nm:'Lôi'},mong:{ic:'🌙',nm:'Mộng'},soul:{ic:'🎭',nm:'Âm Hồn'}};
+const HE={than:{ic:'🔥',nm:'Hỏa'},hoa:{ic:'🔥',nm:'Hỏa'},kim:{ic:'⚙️',nm:'Kim'},moc:{ic:'🌿',nm:'Mộc'},phong:{ic:'🌿',nm:'Mộc'},thuy:{ic:'💧',nm:'Thủy'},tho:{ic:'🪨',nm:'Thổ'},rau:{ic:'🌿',nm:'Mộc'},suong:{ic:'💧',nm:'Thủy'},set:{ic:'⚙️',nm:'Kim'},mong:{ic:'🪨',nm:'Thổ'},soul:{ic:'🔥',nm:'Hỏa'}};
 const OFFICIAL_ROSTER_12_IDS=Object.freeze(["ong_hang_pho","thay_mo","lac_yen","cung_thu_tre","co_dao_ganh_hoi","phong_tu","thuy_nuong_roi_nuoc","hong_lien_dao_nuong","thach_quyen","dinh_loi","luc_anh","to_diep","linh_dong","bach_dien"]);
 // Owner 2026-10-25: chuẩn hoá về đúng 5 hệ Kim/Mộc/Thuỷ/Hoả/Thổ.
 // Tướng cũ còn dùng tên nội bộ (than/rau/suong/set/mong/soul/phong) nên map về hệ chuẩn ở một chỗ.

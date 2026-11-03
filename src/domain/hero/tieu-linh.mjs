@@ -10,7 +10,7 @@ export const TIEU_LINH_KIT = Object.freeze({
 
 export const TIEU_LINH_HERO = Object.freeze({
   id: 'hero_splus_tieu_linh', key: 'tieu_linh', number: null, catalogKind: 'authored-extra',
-  name: "Tiểu Linh", fullName: "Tiểu Linh - Tiểu Quái Y", rarity: 'S+', element: 'wood', elementName: 'Mộc Tinh', role: 'support',
+  name: "Tiểu Linh", fullName: "Tiểu Linh - Tiểu Quái Y", rarity: 'S+', element: 'wood', elementName: 'Mộc', role: 'support',
   recommendedSlots: [0,1,2], weapon: "Gậy cành khô và hồ lô",
   profileVersion: 'tieu-linh/2026-10-23-scaffold', gender: "Nam", age: "Thiếu niên",
   introduction: "Thầy lang nhỏ lang thang, sau lưng là hồ lô gốm nứt phì khói hoa đào; ai yếu nhất thì được cứu trước.",

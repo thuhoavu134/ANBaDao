@@ -1,7 +1,7 @@
 // Owner-approved probabilities and recipient-turn durations; normal wave damage/cost remain review defaults.
 export const TIEU_PHONG_HERO=Object.freeze({
  id:'hero_splus_tieu_phong',key:'tieu_phong',number:null,catalogKind:'authored-extra',
- name:'Tiêu Phong',fullName:'Ngự Phong Công Tử — Tiêu Phong',rarity:'S+',element:'metal',elementName:'Kim Khí',role:'mystic',recommendedSlots:[3,4,5],weapon:'Thiết Phiến',
+ name:'Tiêu Phong',fullName:'Ngự Phong Công Tử — Tiêu Phong',rarity:'S+',element: 'metal', elementName: 'Kim',role:'mystic',recommendedSlots:[3,4,5],weapon:'Thiết Phiến',
  profileVersion:'tieu-phong/2026-10-09-review',gender:'Nam',age:'Thanh niên',
  introduction:'Ngự Phong Công Tử dùng thiết phiến điều khiển ba đợt lốc xuyên hàng địch.',
  art:{status:'canvas-sprite-runtime-review',portrait:'assets/characters/tieu-phong/avatar.webp',card:'assets/characters/tieu-phong/avatar.webp',hudIcon:'assets/characters/tieu-phong/avatar.webp',atlas:'assets/characters/tieu-phong/basic.webp',pending:[]},
