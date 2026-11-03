@@ -11,7 +11,7 @@ export const NGUYET_DIEP_KIT = Object.freeze({
 
 export const NGUYET_DIEP_HERO = Object.freeze({
   id: 'hero_splus_nguyet_diep', key: 'nguyet_diep', number: null, catalogKind: 'authored-extra',
-  name: 'Nguyệt Diệp', fullName: 'Nguyệt Diệp — Võ Đang Kiếm Sư', rarity: 'S+', element: 'soul', elementName: 'Âm Hồn', role: 'mystic',
+  name: 'Nguyệt Diệp', fullName: 'Nguyệt Diệp — Võ Đang Kiếm Sư', rarity: 'S+', element: 'soul', elementName: 'Hỏa', role: 'mystic',
   recommendedSlots: [3, 4, 5], weapon: 'Kiếm Võ Đang',
   profileVersion: 'nguyet-diep/2026-10-20-owner-kit', gender: 'Nam', age: 'Thiếu niên',
   introduction: 'Đệ tử Võ Đang xuất hồn cầm kiếm lướt xuyên địch, tay giữ Âm Dương Linh Kính thanh tẩy tà khí cho cả đội.',

@@ -1,7 +1,7 @@
 // Review defaults: owner approved the effect, not its probability/damage/cost.
 export const KY_VAN_HERO=Object.freeze({
  id:'hero_splus_ky_van',key:'ky_van',number:null,catalogKind:'authored-extra',
- name:'Kỷ Vân',fullName:'Lôi Châm Sư — Kỷ Vân',rarity:'S+',element:'metal',elementName:'Kim Khí',role:'mystic',recommendedSlots:[3,4,5],weapon:'Lôi Châm',
+ name:'Kỷ Vân',fullName:'Lôi Châm Sư — Kỷ Vân',rarity:'S+',element: 'metal', elementName: 'Kim',role:'mystic',recommendedSlots:[3,4,5],weapon:'Lôi Châm',
  profileVersion:'ky-van/2026-10-09-review',gender:'Nam',age:'Thanh niên',
  introduction:'Lôi Châm Sư điều khiển phi châm dẫn sét, tạo châm trận trên đội hình địch.',
  art:{status:'canvas-sprite-runtime-review',portrait:'assets/characters/ky-van/avatar.webp',card:'assets/characters/ky-van/avatar.webp',hudIcon:'assets/characters/ky-van/avatar.webp',atlas:'assets/characters/ky-van/basic.webp',pending:[]},

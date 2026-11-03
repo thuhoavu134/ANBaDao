@@ -12,7 +12,7 @@ export const TINH_MAC_KIT = Object.freeze({
 
 export const TINH_MAC_HERO = Object.freeze({
   id: 'hero_splus_tinh_mac', key: 'tinh_mac', number: null, catalogKind: 'authored-extra',
-  name: 'Tịnh Mặc', fullName: 'Tịnh Mặc — Độ Hồn Đao Khách', rarity: 'S+', element: 'soul', elementName: 'Âm Hồn', role: 'mystic',
+  name: 'Tịnh Mặc', fullName: 'Tịnh Mặc — Độ Hồn Đao Khách', rarity: 'S+', element: 'soul', elementName: 'Hỏa', role: 'mystic',
   recommendedSlots: [0, 1, 2], weapon: 'Đại Đao Phong Ấn',
   profileVersion: 'tinh-mac/2026-10-21-owner-kit', gender: 'Nam', age: 'Thanh niên',
   introduction: 'Đao khách bịt mắt không nhìn người sống mà nhìn nghiệp chướng; thanh đại đao quá tà ác nên phải dán bùa phong ấn, chỉ khi xé bùa mới chém thẳng vào linh hồn.',

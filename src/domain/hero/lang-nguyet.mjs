@@ -10,7 +10,7 @@ export const LANG_NGUYET_KIT = Object.freeze({
 
 export const LANG_NGUYET_HERO = Object.freeze({
   id: 'hero_splus_lang_nguyet', key: 'lang_nguyet', number: null, catalogKind: 'authored-extra',
-  name: "Lăng Nguyệt", fullName: "Lăng Nguyệt - Phong Linh Cung Thủ", rarity: 'S+', element: 'wood', elementName: 'Mộc Tinh', role: 'marksman',
+  name: "Lăng Nguyệt", fullName: "Lăng Nguyệt - Phong Linh Cung Thủ", rarity: 'S+', element: 'wood', elementName: 'Mộc', role: 'marksman',
   recommendedSlots: [3,4,5], weapon: "Cung ngọc",
   profileVersion: 'lang-nguyet/2026-10-23-scaffold', gender: "Nữ", age: "Thiếu nữ",
   introduction: "Cung thủ gió, mũi tên xuyên giáp; đồng đội chạm đúng mục tiêu là nàng bắn theo.",

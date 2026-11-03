@@ -3,7 +3,7 @@
 // Temporary avatar and missing SFX are tracked in art.pending.
 export const TICH_DAO_HERO=Object.freeze({
  id:'hero_splus_tich_dao',key:'tich_dao',number:null,catalogKind:'authored-extra',
- name:'Tịch Dao',fullName:'Ảnh Sát Song Kiếm — Tịch Dao',rarity:'S+',element:'soul',elementName:'Âm Hồn',role:'duelist',recommendedSlots:[0,1,2],weapon:'Song Đao',
+ name:'Tịch Dao',fullName:'Ảnh Sát Song Kiếm — Tịch Dao',rarity:'S+',element: 'soul', elementName: 'Hỏa',role:'duelist',recommendedSlots:[0,1,2],weapon:'Song Đao',
  profileVersion:'tich-dao/2026-10-16-locked-kit',gender:'Nữ',age:'Thanh niên',
  introduction:'Nữ sát thủ song kiếm: luồn qua tuyến trước, thoắt hiện cạnh hàng sau đặt dấu Hoa Ấn, rồi kích nổ bằng Tam Ảnh Đoạt Mệnh.',
  art:{status:'canvas-sprite-runtime-review',portrait:'assets/characters/tich-dao/avatar.webp',card:'assets/characters/tich-dao/avatar.webp',hudIcon:'assets/characters/tich-dao/avatar.webp',atlas:'assets/characters/tich-dao/basic.webp',pending:['avatar.webp tạm cắt từ frame idle 53 — portrait authored chờ owner','chưa có SFX authored cho basic/ultimate/hit']},

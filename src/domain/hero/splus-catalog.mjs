@@ -1,7 +1,7 @@
 import { SPLUS_EXTRA_BY_ID, SPLUS_EXTRA_HEROES, resolveSplusExtraId } from './splus-extras.mjs';
 import { SPLUS_PROFILE_BY_KEY, SPLUS_PROFILE_VERSION } from './splus-profile-data.mjs';
 export const SPLUS_SCHEMA = 'luc-than-splus42/v2';
-export const SPLUS_ELEMENTS = Object.freeze({metal:'Kim Khí',soul:'Âm Hồn',water:'Thương Thủy',fire:'Viêm Hỏa',wood:'Mộc Tinh',dream:'Hư Mộng'});
+export const SPLUS_ELEMENTS = Object.freeze({metal:'Kim',soul:'Hỏa',water:'Thủy',fire:'Hỏa',wood:'Mộc',dream:'Thổ'});
 // Numeric omissions are review defaults, not owner-approved balance. Explicit
 // percentages in the authored descriptions are implemented by splus-mechanics.
 export const SPLUS_REVIEW_DEFAULTS = Object.freeze({skillCooldown:2,skillCost:25,ultimateCost:60,basicRage:15,duration:2,markDuration:3,skillMultiplier:1.4,singleUltimateMultiplier:2.4,aoeUltimateMultiplier:1.2});
