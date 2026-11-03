@@ -28,7 +28,8 @@ test('L119-T2: Shop điểm là popup lưới thẻ có icon', () => {
   const css = read('src/ui/bach-bao-ruong.css');
   assert.match(ui, /hvBbrShop/);
   assert.match(ui, /hv-bbr-good/);
-  assert.match(ui, /shop-keep\.jpg/);
+  // Owner 2026-11-03: Shop điểm dựng trên khung concept đã duyệt (pts-frame.png) thay ảnh quầy cũ.
+  assert.match(ui, /hv-ptsf/);
   assert.match(css, /#hvFestivalRoot > #hvBbrShop/);
   assert.match(css, /#hvBbrShop\.is-open/);
   assert.match(css, /\.hv-bbr-good img/);
@@ -39,7 +40,7 @@ test('L119-T2: Shop điểm là popup lưới thẻ có icon', () => {
 test('L119-T3: panel quay giữ nút Quay; shop không nuốt side', () => {
   const ui = read('src/ui/bach-bao-ruong-runtime.js');
   assert.match(ui, /hv-bbr-side[\s\S]*data-bbr-step/);
-  assert.match(read('src/ui/shop-3d-runtime.js'), /Shop điểm/);
+  assert.match(read('src/ui/shop-3d-runtime.js'), /Tụ Bảo Các/);
   assert.doesNotMatch(ui, /pane === 'shop' \? `/);
 });
 

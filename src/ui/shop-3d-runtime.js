@@ -2,8 +2,8 @@
   if (typeof document === 'undefined' || !document.body) return;
 
   const TILES = [
-    { id: 'night', name: 'Chợ Đêm', img: 'assets/ui/shop/tiles/cho-dem.jpg' },
-    { id: 'pts', name: 'Shop điểm', img: 'assets/ui/festival/bbr/shop-girl.jpg' }
+    { id: 'night', name: 'Hắc Thị', img: 'assets/ui/shop/tiles/cho-dem.jpg' },
+    { id: 'pts', name: 'Tụ Bảo Các', img: 'assets/ui/festival/bbr/shop-girl.jpg' }
   ];
 
   let prevCity = '';
@@ -28,6 +28,12 @@
       city.id = 'hvShopCity';
       root.append(city);
       city.addEventListener('click', ev => {
+        if (ev.target.closest('[data-city-close]')) {
+          ev.preventDefault();
+          const x = root.querySelector('.hv-shopc-x');
+          if (x) x.click();
+          return;
+        }
         const btn = ev.target.closest('[data-scity]');
         if (!btn) return;
         root.dataset.scity = btn.getAttribute('data-scity');
@@ -36,6 +42,12 @@
         prevTileOpen = true;
         if (typeof paintBbrShop === 'function') paintBbrShop();
       });
+      window.hvShopCityBack = () => {
+        root.classList.remove('is-tile-open');
+        root.dataset.scity = '';
+        prevCity = '';
+        prevTileOpen = false;
+      };
       root.addEventListener('click', ev => {
         if (!ev.target.closest('[data-shop-back]')) return;
         if (!root.classList.contains('is-tile-open')) return;
@@ -47,9 +59,19 @@
         prevTileOpen = false;
       }, true);
     }
-    city.innerHTML = TILES.map(t =>
-      `<button type="button" class="hv-stile" data-scity="${t.id}"><img src="${t.img}" alt="${t.name}"><b>${t.name}</b></button>`
-    ).join('');
+    const fmtN = n => Number(n || 0).toLocaleString('vi-VN');
+    const bbrPts = (typeof P === 'object' && P && P.bachBao && P.bachBao.pts) || 0;
+    // Owner 2026-11-03: market chooser on the approved Concept (lacquer frame, 2 painted gateways).
+    city.innerHTML = `<div class="hv-cityf">
+      <b class="hv-cityf-title">Chợ Lục Châu</b>
+      <button type="button" class="hv-cityf-x" data-city-close aria-label="Đóng"></button>
+      ${TILES.map((t, i) => `<button type="button" class="hv-stile hv-cityf-card c${i}" data-scity="${t.id}" aria-label="${t.name}" data-art="${t.img}"><span class="hv-cityf-plaque">${t.name}</span></button>`).join('')}
+      <div class="hv-cityf-note">
+        <p><b>Hắc Thị</b> · chợ đen giang hồ, 8 món mỗi ngày, đổi hàng lúc nửa đêm</p>
+        <p><b>Tụ Bảo Các</b> · đổi Điểm tích từ Bách Bảo Rương lấy bảo vật</p>
+        <p class="bal"><img src="assets/items/materials/gold.png" alt=""> ${fmtN(P.gold)} · <img src="assets/ui/menu-v3233/icons/resource-gem-imagen.png" alt=""> ${fmtN(P.gems)} · Điểm <b>${fmtN(bbrPts)}</b></p>
+      </div>
+    </div>`;
     let pts = root.querySelector('#hvShopPts');
     if (!pts) {
       pts = document.createElement('div');

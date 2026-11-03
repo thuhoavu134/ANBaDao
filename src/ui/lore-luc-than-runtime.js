@@ -30,7 +30,9 @@
       .replace(/Người Gác Mộng/g, 'Kẻ Trộm Ấn')
       .replace(/Hết Mộng Châu/g, 'Đóng đủ sáu ấn')
       .replace(/Hết Lục Châu/g, 'Đóng đủ sáu ấn')
-      .replace(/Chợ Đêm Mộng/g, 'Chợ Đêm')
+      .replace(/Chợ Đêm Mộng/g, 'Hắc Thị')
+      .replace(/Chợ Đêm/g, 'Hắc Thị')
+      .replace(/Shop điểm/gi, 'Tụ Bảo Các')
       .replace(/Chợ Mộng/g, 'Chợ Lục Châu')
       .replace(/Mảnh mộng hiếm/g, 'Mảnh S+')
       .replace(/thợ mộng/gi, 'thợ rèn')
@@ -51,6 +53,9 @@
         ch.name = CHAPTERS[i].name;
         ch.desc = CHAPTERS[i].desc;
       });
+    }
+    if (typeof DATA === 'object' && DATA.daily && Array.isArray(DATA.daily.quests)) {
+      DATA.daily.quests.forEach(q => { if (q && typeof q.text === 'string') q.text = rewrite(q.text); });
     }
     const bags = [];
     if (typeof DATA === 'object' && DATA.scenes) bags.push(DATA.scenes);

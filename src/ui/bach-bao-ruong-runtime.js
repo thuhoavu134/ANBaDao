@@ -429,31 +429,32 @@
     return it.name;
   }
 
+  const PTS_CARDS = [{"slot": [15.365, 31.541, 13.021, 7.122], "name": [29.688, 31.541, 18.75, 7.122], "bar": [14.062, 40.262, 32.552, 1.89], "btn": [20.833, 43.314, 19.271, 3.198]}, {"slot": [55.99, 31.541, 13.021, 7.122], "name": [70.312, 31.541, 18.75, 7.122], "bar": [54.427, 40.262, 32.552, 1.89], "btn": [61.458, 43.314, 19.01, 3.198]}, {"slot": [15.365, 51.163, 13.021, 6.977], "name": [29.688, 51.163, 18.75, 6.977], "bar": [14.062, 60.756, 32.552, 2.18], "btn": [20.833, 63.953, 19.271, 3.198]}, {"slot": [55.99, 51.163, 13.021, 6.977], "name": [70.312, 51.163, 18.75, 6.977], "bar": [54.427, 60.756, 32.552, 2.18], "btn": [61.458, 63.953, 19.01, 3.198]}, {"slot": [15.365, 71.802, 13.021, 7.122], "name": [29.688, 71.802, 18.75, 7.122], "bar": [14.062, 82.558, 32.552, 2.035], "btn": [20.833, 85.756, 19.271, 3.198]}, {"slot": [55.99, 71.802, 13.021, 7.122], "name": [70.312, 71.802, 18.75, 7.122], "bar": [54.427, 82.558, 32.552, 2.035], "btn": [61.458, 85.756, 19.01, 3.198]}];
   function paintShop() {
     const host = document.getElementById('hvShopPts');
     if (!host) return;
     const b = st();
-    host.innerHTML = `
-      <div class="hv-bbr-shop-hero">
-        <img src="assets/ui/festival/shop-keep.jpg" alt="">
-        <div class="hv-bbr-shop-pts">Điểm <b>${b.pts || 0}</b></div>
-        <div class="hv-bbr-shop-ribbon">Shop Điểm</div>
-      </div>
-      <div class="hv-bbr-shop-body">
-        <div class="hv-bbr-shop-tab">Điểm</div>
-        <div class="hv-bbr-goods">${SHOP.map(it => {
+    const pts = b.pts || 0;
+    const fmtN = n => Number(n || 0).toLocaleString('vi-VN');
+    const box = r => `left:${r[0]}%;top:${r[1]}%;width:${r[2]}%;height:${r[3]}%`;
+    // Owner 2026-11-03: Shop điểm on the approved Concept frame; real goods, real points, buy via data-bbr-buy.
+    host.innerHTML = `<div class="hv-ptsf">
+      <b class="hv-ptsf-title">Tụ Bảo Các</b>
+      <button type="button" class="hv-ptsf-x" data-pts-back aria-label="Về chọn chợ"></button>
+      <span class="hv-ptsf-pill p0"><img src="assets/items/materials/gold.png" alt="">${fmtN(P.gold)}</span>
+      <span class="hv-ptsf-pill p1"><img src="assets/ui/menu-v3233/icons/resource-gem-imagen.png" alt="">${fmtN(P.gems)}</span>
+      <span class="hv-ptsf-pill p2">${SO_IC}${fmtN(P.so)}</span>
+      <div class="hv-ptsf-badge">Điểm <b>${fmtN(pts)}</b></div>
+      ${SHOP.slice(0, 6).map((it, i) => {
+        const g = PTS_CARDS[i];
         const tag = shopTag(it);
-        return `<button type="button" class="hv-bbr-good" data-bbr-buy="${it.id}">
-          <i class="hv-bbr-tag ${tag.cls}">${tag.label}</i>
-          <span class="hv-bbr-ico"><img src="${shopIcon(it)}" alt=""><em>${shopQty(it)}</em></span>
-          <span class="hv-bbr-meta">
-            <b>${shopTitle(it)}</b>
-            <small>Đổi bằng điểm</small>
-            <span class="hv-bbr-cost">${it.pts} điểm</span>
-          </span>
-        </button>`;
-      }).join('')}</div>
-      </div>`;
+        const low = pts < it.pts;
+        return `<span class="hv-ptsf-ic" style="${box(g.slot)}"><img src="${shopIcon(it)}" alt=""><em>x${shopQty(it)}</em></span>
+        <span class="hv-ptsf-name" style="${box(g.name)}"><b>${shopTitle(it)}</b><i class="hv-bbr-tag ${tag.cls}">${tag.label}</i></span>
+        <span class="hv-ptsf-cost${low ? ' is-low' : ''}" style="${box(g.bar)}">${fmtN(it.pts)} điểm</span>
+        <button type="button" class="hv-bbr-good hv-ptsf-btn${low ? ' is-low' : ''}" style="${box(g.btn)}" data-bbr-buy="${it.id}" aria-label="Đổi ${shopTitle(it)}">ĐỔI</button>`;
+      }).join('')}
+    </div>`;
   }
   window.paintBbrShop = paintShop;
 
@@ -579,6 +580,7 @@
       if (it.sh_ssr) giveHeroShards?.('ssr', it.sh_ssr);
       persist?.(); refreshResbar?.(); toast?.('Đổi ' + it.name);
       paintDesk();
+      paintShop();
     }
   }
 
@@ -589,6 +591,7 @@
       if (ev.target.closest('#hvBbrDesk, #hvBbrShop, #hvShopPts')) {
         ev.preventDefault();
         ev.stopImmediatePropagation();
+        if (ev.target.closest('[data-pts-back]')) { if (typeof window.hvShopCityBack === 'function') window.hvShopCityBack(); return; }
         onDesk(ev);
         return;
       }

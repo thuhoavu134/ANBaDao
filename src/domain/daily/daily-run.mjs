@@ -29,7 +29,7 @@ export const DAILY_QUESTS = balancedQuests([
   Object.freeze({ id: 'q_level', text: 'Nâng cấp 1 anh hùng', type: 'level', goal: 1, reward: Object.freeze({ gold: 160 }), pts: 10 }),
   Object.freeze({ id: 'q_summon', text: 'Chiêu mộ 1 lần', type: 'summon', goal: 1, reward: Object.freeze({ gold: 150 }), pts: 10 }),
   Object.freeze({ id: 'q_tower', text: 'Leo Tháp Trắng Đêm 1 tầng', type: 'tower', goal: 1, reward: Object.freeze({ gold: 180 }), pts: 10 }),
-  Object.freeze({ id: 'q_shop', text: 'Mua 1 món ở Chợ Đêm', type: 'shop', goal: 1, reward: Object.freeze({ gold: 150 }), pts: 10 }),
+  Object.freeze({ id: 'q_shop', text: 'Mua 1 món ở Hắc Thị', type: 'shop', goal: 1, reward: Object.freeze({ gold: 150 }), pts: 10 }),
   Object.freeze({ id: 'q_arena', text: 'Khiêu chiến Đấu Trường 1 trận', type: 'arena', goal: 1, reward: Object.freeze({ gold: 200 }), pts: 10 }),
   Object.freeze({ id: 'q_hunt', text: 'Săn Boss Mộng 1 lượt', type: 'hunt', goal: 1, reward: Object.freeze({ gold: 200 }), pts: 10 }),
   Object.freeze({ id: 'q_hoadang', text: 'Thả 1 hoa đăng', type: 'hoadang', goal: 1, reward: Object.freeze({ gold: 150 }), pts: 10 }),

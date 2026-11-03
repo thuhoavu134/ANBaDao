@@ -307,7 +307,7 @@
         <b class="hv-shopc-title">Chợ Lục Châu</b>
         <div class="hv-shopf">
           <button type="button" class="hv-shop-back" data-shop-back aria-label="Về Thành Chính"></button>
-          <b class="hv-shopf-title" data-shop-title>Chợ Đêm</b>
+          <b class="hv-shopf-title" data-shop-title>Hắc Thị</b>
           <span class="hv-shop-chip hv-shopf-pill g" data-shop-gold><img class="hv-cur-ico" src="assets/items/materials/gold.png" alt=""> ${fmt(P.gold)}</span>
           <span class="hv-shop-chip hv-shopf-pill m" data-shop-gems><img class="hv-cur-ico" src="${GEM_ICO}" alt=""> ${fmt(P.gems)}</span>
           <div class="hv-shop-shelf" data-shop-shelf>

@@ -12,8 +12,9 @@ test('L129-T1: Chợ Mộng 2 ô, bỏ shop icon trên BBR', () => {
   const shop = read('src/ui/shop-3d-runtime.js');
   const css = read('src/ui/shop-3d.css');
   const bbr = read('src/ui/bach-bao-ruong-runtime.js');
-  assert.match(shop, /Chợ Đêm/);
-  assert.match(shop, /Shop điểm/);
+  // Owner 2026-11-03: đổi tên chợ theo chủ đề giang hồ.
+  assert.match(shop, /Hắc Thị/);
+  assert.match(shop, /Tụ Bảo Các/);
   assert.match(shop, /hvShopCity/);
   assert.match(shop, /data-scity/);
   assert.match(css, /#hvShopCity/);
