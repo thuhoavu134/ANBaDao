@@ -1,0 +1,328 @@
+{
+  "run": "2026-11-03T11-16-21-443Z",
+  "revision": "7757ac07da05d5062a4451d5a33a9651ac75209e",
+  "startedAt": "2026-11-03T11:16:21.444Z",
+  "buildSha256": "bb1113a533b4f9cf8cf4133ce4ed6e7b905bc5b1b022033b4dcfa8be2b65acf6",
+  "sourceHashes": {
+    "src/ui/shop-screen.css": "9ada785187728f2c876faf1a82de4aa2e37bb4f33df880a94162945e56b9a516",
+    "src/ui/shop-3d-runtime.js": "49e457c5c774e9974e1a954bf8e709971bbe134e38fffb5a41496f5a35c5dfbf",
+    "src/ui/shop-runtime.js": "42d4032996b12eee0c32fb055ba45a170cd03b404159750cc5d5ccafb6412d30",
+    "src/ui/bach-bao-ruong-runtime.js": "e53d1ea9badf5d4fa38ac361ea6add56b4267e4cedd3a1fc2100cdf0f07b537e",
+    "assets/ui/shop/frame-manifest.json": "e780c4cc14f2d7cdd81579d2612f27985db03bdd041d320df64591f6ed5be4a9"
+  },
+  "checks": [
+    {
+      "name": "served build matches disk 360",
+      "ok": true,
+      "detail": "bb1113a533b4f9cf8cf4133ce4ed6e7b905bc5b1b022033b4dcfa8be2b65acf6"
+    },
+    {
+      "name": "city layout 360",
+      "ok": true,
+      "detail": {
+        "closeCount": 1,
+        "hit": true,
+        "frame": [
+          12,
+          121,
+          336,
+          602
+        ],
+        "inViewport": true,
+        "hubVisible": true,
+        "backdrop": "none",
+        "overflow": false
+      }
+    },
+    {
+      "name": "pts layout 360",
+      "ok": true,
+      "detail": {
+        "closeCount": 1,
+        "hit": true,
+        "frame": [
+          12,
+          121,
+          336,
+          602
+        ],
+        "inViewport": true,
+        "hubVisible": true,
+        "backdrop": "none",
+        "overflow": false
+      }
+    },
+    {
+      "name": "exchange 360",
+      "ok": true,
+      "detail": {
+        "before": 420,
+        "after": 320
+      }
+    },
+    {
+      "name": "night layout 360",
+      "ok": true,
+      "detail": {
+        "closeCount": 1,
+        "hit": true,
+        "frame": [
+          12,
+          142.234375,
+          336,
+          559.53125
+        ],
+        "inViewport": true,
+        "hubVisible": true,
+        "backdrop": "none",
+        "overflow": false
+      }
+    },
+    {
+      "name": "close 360",
+      "ok": true
+    },
+    {
+      "name": "served build matches disk 390",
+      "ok": true,
+      "detail": "bb1113a533b4f9cf8cf4133ce4ed6e7b905bc5b1b022033b4dcfa8be2b65acf6"
+    },
+    {
+      "name": "city layout 390",
+      "ok": true,
+      "detail": {
+        "closeCount": 1,
+        "hit": true,
+        "frame": [
+          12,
+          94.125,
+          366,
+          655.75
+        ],
+        "inViewport": true,
+        "hubVisible": true,
+        "backdrop": "none",
+        "overflow": false
+      }
+    },
+    {
+      "name": "pts layout 390",
+      "ok": true,
+      "detail": {
+        "closeCount": 1,
+        "hit": true,
+        "frame": [
+          12,
+          94.125,
+          366,
+          655.75
+        ],
+        "inViewport": true,
+        "hubVisible": true,
+        "backdrop": "none",
+        "overflow": false
+      }
+    },
+    {
+      "name": "exchange 390",
+      "ok": true,
+      "detail": {
+        "before": 420,
+        "after": 320
+      }
+    },
+    {
+      "name": "night layout 390",
+      "ok": true,
+      "detail": {
+        "closeCount": 1,
+        "hit": true,
+        "frame": [
+          12,
+          117.25,
+          366,
+          609.484375
+        ],
+        "inViewport": true,
+        "hubVisible": true,
+        "backdrop": "none",
+        "overflow": false
+      }
+    },
+    {
+      "name": "close 390",
+      "ok": true
+    },
+    {
+      "name": "served build matches disk 430",
+      "ok": true,
+      "detail": "bb1113a533b4f9cf8cf4133ce4ed6e7b905bc5b1b022033b4dcfa8be2b65acf6"
+    },
+    {
+      "name": "city layout 430",
+      "ok": true,
+      "detail": {
+        "closeCount": 1,
+        "hit": true,
+        "frame": [
+          12,
+          58.296875,
+          406,
+          727.40625
+        ],
+        "inViewport": true,
+        "hubVisible": true,
+        "backdrop": "none",
+        "overflow": false
+      }
+    },
+    {
+      "name": "pts layout 430",
+      "ok": true,
+      "detail": {
+        "closeCount": 1,
+        "hit": true,
+        "frame": [
+          12,
+          58.296875,
+          406,
+          727.40625
+        ],
+        "inViewport": true,
+        "hubVisible": true,
+        "backdrop": "none",
+        "overflow": false
+      }
+    },
+    {
+      "name": "exchange 430",
+      "ok": true,
+      "detail": {
+        "before": 420,
+        "after": 320
+      }
+    },
+    {
+      "name": "night layout 430",
+      "ok": true,
+      "detail": {
+        "closeCount": 1,
+        "hit": true,
+        "frame": [
+          12,
+          83.953125,
+          406,
+          676.09375
+        ],
+        "inViewport": true,
+        "hubVisible": true,
+        "backdrop": "none",
+        "overflow": false
+      }
+    },
+    {
+      "name": "close 430",
+      "ok": true
+    },
+    {
+      "name": "page errors",
+      "ok": true,
+      "detail": []
+    }
+  ],
+  "images": [
+    {
+      "file": "docs\\qa\\shop-popup\\2026-11-03T11-16-21-443Z\\360-city.png",
+      "sha256": "f0993164053df1ce4fbecb22ef599e88fd14c8ba6e04844f80e1cfb89fd6f06f",
+      "capturedAt": "2026-11-03T11:16:24.438Z",
+      "viewport": {
+        "width": 360,
+        "height": 844
+      },
+      "mode": "city"
+    },
+    {
+      "file": "docs\\qa\\shop-popup\\2026-11-03T11-16-21-443Z\\360-pts.png",
+      "sha256": "38078b80052e3f021eeecef2bb5a5d6ec8a64dfdd0b71202b0f306c1fc4c17f6",
+      "capturedAt": "2026-11-03T11:16:25.965Z",
+      "viewport": {
+        "width": 360,
+        "height": 844
+      },
+      "mode": "pts"
+    },
+    {
+      "file": "docs\\qa\\shop-popup\\2026-11-03T11-16-21-443Z\\360-night.png",
+      "sha256": "55708faa5b4b75cfda4ef31020fa13a026525948a3c9ada20b7ca2ec174692f4",
+      "capturedAt": "2026-11-03T11:16:28.257Z",
+      "viewport": {
+        "width": 360,
+        "height": 844
+      },
+      "mode": "night"
+    },
+    {
+      "file": "docs\\qa\\shop-popup\\2026-11-03T11-16-21-443Z\\390-city.png",
+      "sha256": "233f989dadbaab8d4cbcc1ca214a83b4602fdbc92f65656f573983f5d7d36395",
+      "capturedAt": "2026-11-03T11:16:31.028Z",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "mode": "city"
+    },
+    {
+      "file": "docs\\qa\\shop-popup\\2026-11-03T11-16-21-443Z\\390-pts.png",
+      "sha256": "0fa80970339bad3dd7a3ed96c886204b01cde2053f872d0e7b20239a87d488c2",
+      "capturedAt": "2026-11-03T11:16:32.613Z",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "mode": "pts"
+    },
+    {
+      "file": "docs\\qa\\shop-popup\\2026-11-03T11-16-21-443Z\\390-night.png",
+      "sha256": "47338930b65c45184a85c4b594723952a236267aa6fbc8fed64c51e4a37a38f0",
+      "capturedAt": "2026-11-03T11:16:34.957Z",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "mode": "night"
+    },
+    {
+      "file": "docs\\qa\\shop-popup\\2026-11-03T11-16-21-443Z\\430-city.png",
+      "sha256": "bf6cd40c24f6b5cc2b41b48c4f0c3d5cefd071f7b78d1b77472e63127c35d5fa",
+      "capturedAt": "2026-11-03T11:16:37.910Z",
+      "viewport": {
+        "width": 430,
+        "height": 844
+      },
+      "mode": "city"
+    },
+    {
+      "file": "docs\\qa\\shop-popup\\2026-11-03T11-16-21-443Z\\430-pts.png",
+      "sha256": "e716b8198f1aa6bd653337cd5d6300bc4e602f66b4eab673e6c545479c140afb",
+      "capturedAt": "2026-11-03T11:16:39.659Z",
+      "viewport": {
+        "width": 430,
+        "height": 844
+      },
+      "mode": "pts"
+    },
+    {
+      "file": "docs\\qa\\shop-popup\\2026-11-03T11-16-21-443Z\\430-night.png",
+      "sha256": "f962d80b6c75207cb5c7542839e847cd55dccf65f7740351a901d6f5b00bae0f",
+      "capturedAt": "2026-11-03T11:16:42.164Z",
+      "viewport": {
+        "width": 430,
+        "height": 844
+      },
+      "mode": "night"
+    }
+  ],
+  "errors": [],
+  "physicalSafari": "NOT_TESTED",
+  "status": "PASS"
+}

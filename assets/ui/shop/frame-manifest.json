@@ -1,0 +1,105 @@
+{
+  "version": 2,
+  "transforms": "border-connected white matte removal; mirrored authored top rail (right end only); night-only parchment band erase by vertical copy",
+  "frames": [
+    {
+      "id": "city",
+      "input": "assets/ui/shop/source/city.jpg",
+      "inputSha256": "e179b460ca0259dcdf133ba08d3f8fcd36cac4fc0512ae12069855daf6cfdbea",
+      "crop": [
+        0,
+        0,
+        768,
+        1376
+      ],
+      "mirrorRect": [
+        645,
+        0,
+        123,
+        144
+      ],
+      "erasedBaked": [],
+      "output": "assets/ui/shop/city/city-frame.png",
+      "outputSha256": "7a7e3fb4b91ad31deb2cbfdf027fb0ab6b4f0e3a729ec613cc91f0c5f5882eb7",
+      "size": [
+        768,
+        1376
+      ]
+    },
+    {
+      "id": "pts",
+      "input": "assets/ui/shop/source/pts.jpg",
+      "inputSha256": "86ad7578763633c9cf5baca44643aea08b1a30c7fde9dccfc7e5dd27059b3e71",
+      "crop": [
+        0,
+        0,
+        768,
+        1376
+      ],
+      "mirrorRect": [
+        645,
+        0,
+        123,
+        144
+      ],
+      "erasedBaked": [],
+      "output": "assets/ui/shop/city/pts-frame.png",
+      "outputSha256": "24f98a5c9258c3cc4116f203e1f3413ba579758e93785eb8c630de65f0b1b7eb",
+      "size": [
+        768,
+        1376
+      ]
+    },
+    {
+      "id": "night",
+      "input": "assets/ui/shop/source/night.jpg",
+      "inputSha256": "c7a57aad9ca15f2da062d423d8a678b0436f75e3203a9a01cffe291297535141",
+      "crop": [
+        26,
+        94,
+        742,
+        1288
+      ],
+      "mirrorRect": [
+        601,
+        0,
+        115,
+        125
+      ],
+      "erasedBaked": [
+        {
+          "band": [
+            0.783,
+            0.823
+          ],
+          "pixels": [
+            0,
+            934,
+            716,
+            48
+          ],
+          "sourceOffsetY": -54
+        },
+        {
+          "band": [
+            0.86,
+            0.896
+          ],
+          "pixels": [
+            0,
+            1026,
+            716,
+            43
+          ],
+          "sourceOffsetY": -49
+        }
+      ],
+      "output": "assets/ui/shop/shop-lacquer-frame.png",
+      "outputSha256": "24331159fc13de4f440c232b6da5fb363188ad9e2ec331a995697a609dff455e",
+      "size": [
+        716,
+        1194
+      ]
+    }
+  ]
+}

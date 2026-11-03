@@ -17,7 +17,7 @@
   --shop-mist:#9bcfd6;
   position:relative;min-height:100%;height:100%;display:flex;flex-direction:column;
   color:var(--shop-ink);font-family:inherit;
-  background:#100c08 url('https://luc-than.vercel.app/assets/hub/daylight-v3233/hub-daylight.png') center top/cover no-repeat;
+  background:#100c08 url('assets/ui/shop/city/concept-city.jpg') center top/cover no-repeat;
   overflow-x:hidden;overflow-y:auto;touch-action:manipulation;
 }
 #hvShopRoot:before{
@@ -272,14 +272,6 @@ html body #hvShopRoot.hv-shopl[hidden]{display:none!important}
 #hvShopRoot.hv-shopl .hv-shopc-x,#hvShopRoot.hv-shopl .hv-shopc-title{display:none}
 #hvShopRoot.hv-shopl:not(.is-tile-open),#hvShopRoot.hv-shopl[data-scity="pts"]{flex-direction:column!important}
 #hvShopRoot.hv-shopl[data-scity="pts"]{justify-content:flex-start!important}
-#hvShopRoot.hv-shopl:not(.is-tile-open) .hv-shopc-x,
-#hvShopRoot.hv-shopl[data-scity="pts"] .hv-shopc-x{
-  display:grid!important;place-items:center;position:fixed!important;z-index:6;
-  top:calc(10px + env(safe-area-inset-top));right:12px;width:44px;height:44px;border-radius:50%!important;padding:0!important;
-  font-size:26px!important;font-weight:900;line-height:1;color:#f4fff6!important;
-  background:radial-gradient(circle at 40% 35%,#3fae86,#145a44)!important;border:2px solid #e2b45a!important;
-  box-shadow:0 3px 10px rgba(0,0,0,.5)!important;
-}
 #hvShopRoot.hv-shopl:not(.is-tile-open) .hv-shopc-title{
   display:block;margin:0 0 12px;font-size:22px;font-weight:900;letter-spacing:.08em;color:#ffe3a0;text-shadow:0 2px 6px #000;
 }
@@ -300,7 +292,7 @@ html body #hvShopRoot.hv-shopl[data-scity="pts"] #hvShopPts{display:block!import
 .hv-ptsf-title{left:22.917%;top:2.326%;width:53.906%;height:5.378%}
 .hv-cityf-x,.hv-ptsf-x{border:0;border-radius:50%;background:transparent;cursor:pointer;padding:0}
 .hv-cityf-x{left:89.844%;top:1.744%;width:9.375%;height:5.233%}
-.hv-ptsf-x{left:89.844%;top:1.744%;width:9.375%;height:5.233%}
+.hv-ptsf-x{left:86.2%;top:2.1%;width:9.4%;height:5.2%}
 #hvShopCity .hv-cityf-card{display:block!important;flex-direction:initial!important;border:0!important;background:transparent!important;box-shadow:none!important;border-radius:1.4cqw!important;padding:0!important;margin:0!important;cursor:pointer}
 #hvShopCity .hv-cityf-card:active{filter:brightness(1.12)}
 #hvShopCity .hv-cityf-card.c0{left:10.156%;top:25.145%;width:80.729%;height:20.93%}
@@ -340,3 +332,69 @@ html body #hvShopRoot.hv-shopl.hv-city:not(.is-tile-open) .hv-shopc-title{displa
 .hv-ptsf .hv-ptsf-badge{display:flex!important;align-items:center;justify-content:center;gap:1cqw}
 .hv-ptsf .hv-ptsf-badge b{margin-left:0}
 
+
+
+/* CANONICAL_SHOP_MODAL: one overlay, authored frame, independent close control. */
+html body #hvShopRoot.hv-shopl{
+ position:fixed!important;inset:0!important;z-index:120!important;min-height:0!important;
+ height:100dvh!important;width:100%!important;box-sizing:border-box!important;
+ background:rgba(6,4,2,.68)!important;backdrop-filter:blur(3px) saturate(.85);-webkit-backdrop-filter:blur(3px) saturate(.85);padding:12px!important;overflow:auto!important;
+ align-items:center!important;justify-content:center!important;
+}
+html body #hvShopRoot.hv-shopl::before,html body #hvShopRoot.hv-shopl::after{display:none!important;content:none!important}
+html body #hvShopRoot.hv-shopl .hv-shopc-x,html body #hvShopRoot.hv-shopl .hv-shopc-title{display:none!important}
+html body #hvShopRoot .hv-cityf,html body #hvShopRoot .hv-ptsf{
+ width:min(calc(100vw - 24px),calc((100dvh - 24px) * 768 / 1376))!important;
+ flex:none;overflow:visible;filter:drop-shadow(0 8px 14px #0008);
+}
+html body #hvShopRoot.hv-shopl .hv-shopf{
+ width:min(calc(100vw - 24px),calc((100dvh - 24px) * 717 / 1194))!important;
+ flex:none;overflow:visible;filter:drop-shadow(0 8px 14px #0008);
+}
+html body #hvShopRoot .hv-cityf-x,html body #hvShopRoot .hv-ptsf-x,html body #hvShopRoot .hv-shopf .hv-shop-back{
+ position:absolute!important;left:auto!important;right:1.8%!important;top:1.4%!important;
+ width:11%!important;height:auto!important;min-height:0!important;aspect-ratio:1;
+ background:transparent url('assets/ui/jobs/jobs-close.png') center/contain no-repeat!important;
+ border:0!important;border-radius:50%!important;padding:0!important;margin:0!important;
+ box-shadow:none!important;z-index:10!important;font-size:0!important;line-height:1!important;
+ cursor:pointer;display:block!important;appearance:none;
+}
+html body #hvShopRoot .hv-shopf-pill,html body #hvShopRoot .hv-ptsf-pill{
+ min-height:0!important;min-width:0!important;padding:0!important;margin:0!important;
+ display:flex!important;align-items:center!important;justify-content:center!important;line-height:1!important;
+}
+html body #hvShopRoot .hv-shopf-pill img,html body #hvShopRoot .hv-ptsf-pill img{display:block;width:3cqw!important;height:3cqw!important;flex:none;object-fit:contain}
+html body #hvShopRoot .hv-shop-buy,html body #hvShopRoot .hv-ptsf-btn{
+ display:flex!important;align-items:center!important;justify-content:center!important;
+ min-height:0!important;min-width:0!important;margin:0!important;padding:0!important;line-height:1!important;appearance:none;
+}
+html body #hvShopRoot .hv-ptsf-btn:disabled{opacity:.55;filter:grayscale(1);cursor:default}
+html body #hvShopRoot .hv-ptsf-name b{font-size:2.9cqw;line-height:1.15;white-space:normal;overflow:hidden;max-height:2.3em}
+html body #hvShopRoot .hv-cityf-title{display:grid!important}
+html body #hvShopRoot .hv-shopf-pill.c{border-radius:99px!important;background:#1b100ccc!important;padding:0 .4cqw!important}
+/* CANONICAL_NIGHT_TRIM: frame has no slots for these legacy rows */
+html body #hvShopRoot.hv-shopl .hv-shopf-res,
+html body #hvShopRoot.hv-shopl .hv-shopf-pill.c,
+html body #hvShopRoot.hv-shopl .hv-shop-note{display:none!important}
+html body #hvShopRoot.hv-shopl .hv-shopf-pill.g{left:27.5%!important;width:19%!important}
+html body #hvShopRoot.hv-shopl .hv-shopf-pill.m{left:50.5%!important;width:19%!important}
+/* CANONICAL_BACKDROP: only the hub may show behind the modal */
+html body.shop-3d-active #hvBbrDesk,
+html body.shop-3d-active #hvBbrShop,
+html body.shop-3d-active #hvFestRoot,
+html body.shop-3d-active #hvShopPts,
+html body.shop-3d-active #hvShopCity{display:none!important}
+html body #hvShopRoot.is-open #hvShopPts,
+html body #hvShopRoot.is-open #hvShopCity{display:none!important}
+html body #hvShopRoot.hv-shopl .hv-cityf,
+html body #hvShopRoot.hv-shopl .hv-ptsf,
+html body #hvShopRoot.hv-shopl .hv-shopf{z-index:2}
+/* CANONICAL_NIGHT_NOTE: fill the frame blank band with real copy */
+html body #hvShopRoot.hv-shopl .hv-shop-note{display:flex!important;position:absolute!important;
+  left:12%!important;top:85.6%!important;width:76%!important;height:6.4%!important;padding:0!important;
+  align-items:center!important;justify-content:center!important;text-align:center!important;
+  background:transparent!important;border:0!important;box-shadow:none!important;
+  font-size:2.5cqw!important;line-height:1.35!important;color:#6a4520!important}
+html body #hvShopRoot.hv-shopl .hv-shopf-pill.c{display:flex!important;left:26%!important;top:92.4%!important;
+  width:48%!important;height:3%!important;border-radius:99px!important;background:#1b100ccc!important;
+  box-shadow:0 0 0 1px rgba(215,179,106,.45)!important;font-size:2.4cqw!important}

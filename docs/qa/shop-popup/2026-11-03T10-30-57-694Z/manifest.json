@@ -1,0 +1,25 @@
+{
+  "run": "2026-11-03T10-30-57-694Z",
+  "revision": "7757ac07da05d5062a4451d5a33a9651ac75209e",
+  "startedAt": "2026-11-03T10:30:57.694Z",
+  "buildSha256": "552a7c040d2c018e439d1eba719185cd6ce9415b27219a2884fe82a80683fac8",
+  "sourceHashes": {
+    "src/ui/shop-screen.css": "f1bb1737d8db8173de8d3219258bc47dd60d758139672c5ddf51a84c46148e9a",
+    "src/ui/shop-3d-runtime.js": "49e457c5c774e9974e1a954bf8e709971bbe134e38fffb5a41496f5a35c5dfbf",
+    "src/ui/shop-runtime.js": "42d4032996b12eee0c32fb055ba45a170cd03b404159750cc5d5ccafb6412d30",
+    "src/ui/bach-bao-ruong-runtime.js": "e53d1ea9badf5d4fa38ac361ea6add56b4267e4cedd3a1fc2100cdf0f07b537e",
+    "assets/ui/shop/frame-manifest.json": "bb1e990df21f98659b835c4da060136fc585455f7cfd52d2ffa66ca110a8d904"
+  },
+  "checks": [
+    {
+      "name": "served build matches disk 360",
+      "ok": false,
+      "detail": "81d19f6fa8eadcb120c8e36714654e59888a1e30b4b5229b2a18810fabb904aa"
+    }
+  ],
+  "images": [],
+  "errors": [],
+  "physicalSafari": "NOT_TESTED",
+  "status": "FAIL",
+  "failure": "Error: served build matches disk 360: \"81d19f6fa8eadcb120c8e36714654e59888a1e30b4b5229b2a18810fabb904aa\"\n    at check (C:\\lt\\wt-ptsfix\\scripts\\ui\\verify-shop-popup.cjs:12:85)\n    at C:\\lt\\wt-ptsfix\\scripts\\ui\\verify-shop-popup.cjs:21:3"
+}

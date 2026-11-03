@@ -16,6 +16,8 @@
     nodes.forEach(el => { if (el !== root) el.remove(); });
     if (root.parentElement !== document.body) document.body.append(root);
     root.setAttribute('aria-label', 'Chợ Lục Châu');
+    root.setAttribute('role', 'dialog');
+    root.setAttribute('aria-modal', 'true');
     return root;
   };
 
@@ -48,6 +50,8 @@
         prevCity = '';
         prevTileOpen = false;
       };
+      if (!root.__shopBackBound) {
+      root.__shopBackBound = true;
       root.addEventListener('click', ev => {
         if (!ev.target.closest('[data-shop-back]')) return;
         if (!root.classList.contains('is-tile-open')) return;
@@ -58,6 +62,7 @@
         prevCity = '';
         prevTileOpen = false;
       }, true);
+      }
     }
     const fmtN = n => Number(n || 0).toLocaleString('vi-VN');
     const bbrPts = (typeof P === 'object' && P && P.bachBao && P.bachBao.pts) || 0;
@@ -104,8 +109,10 @@
 
   const baseShowScreen = showScreen;
   showScreen = function showScreenWithShop3d(name) {
-    baseShowScreen(name);
-    syncOpen(ST.screen);
+    // Real hub DOM behind the modal. Never substitute a concept image backdrop.
+    baseShowScreen(name === 'shop' ? 'hub' : name);
+    if (name === 'shop') ST.screen = 'shop';
+    syncOpen(name);
   };
 
   if (typeof renderShop === 'function') {

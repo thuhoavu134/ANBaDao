@@ -406,7 +406,7 @@
 
   function shopIcon(it) {
     if (it.sh_ss) return ART.sh_ss;
-    if (it.sh_ssr) return ART.sh_ssr;
+    if (it.sh_ssr) return 'assets/result-icons-art/hero-shard-imagen.png';
     if (it.chest) return ART.chest;
     if (it.gems) return ART.gems;
     if (it.supreme) return ART.supreme;
@@ -415,14 +415,14 @@
   function shopTag(it) {
     if (it.supreme || (it.sh_ssr && it.pts >= 1500)) return { cls: 't-super', label: 'Siêu' };
     if (it.chest || it.sh_ssr || it.gems) return { cls: 't-rare', label: 'Hiếm' };
-    return { cls: 't-ok', label: 'Đổi' };
+    return { cls: 't-ok', label: 'Thường' };
   }
   function shopQty(it) {
     return it.sh_ss || it.sh_ssr || it.gems || it.chest || it.supreme || 1;
   }
   function shopTitle(it) {
     if (it.sh_ss) return 'Mảnh S';
-    if (it.sh_ssr) return 'Mảnh S+';
+    if (it.sh_ssr) return it.pts >= 1500 ? 'Rương Mảnh S+' : 'Túi Mảnh S+';
     if (it.chest) return 'Rương Báu';
     if (it.gems) return 'Ngọc';
     if (it.supreme) return 'Rương Chí Bảo';
@@ -452,7 +452,7 @@
         return `<span class="hv-ptsf-ic" style="${box(g.slot)}"><img src="${shopIcon(it)}" alt=""><em>x${shopQty(it)}</em></span>
         <span class="hv-ptsf-name" style="${box(g.name)}"><b>${shopTitle(it)}</b><i class="hv-bbr-tag ${tag.cls}">${tag.label}</i></span>
         <span class="hv-ptsf-cost${low ? ' is-low' : ''}" style="${box(g.bar)}">${fmtN(it.pts)} điểm</span>
-        <button type="button" class="hv-bbr-good hv-ptsf-btn${low ? ' is-low' : ''}" style="${box(g.btn)}" data-bbr-buy="${it.id}" aria-label="Đổi ${shopTitle(it)}">ĐỔI</button>`;
+        <button type="button" class="hv-bbr-good hv-ptsf-btn${low ? ' is-low' : ''}" style="${box(g.btn)}" data-bbr-buy="${it.id}" ${low ? 'disabled' : ''} aria-label="Đổi ${shopTitle(it)}">ĐỔI</button>`;
       }).join('')}
     </div>`;
   }
