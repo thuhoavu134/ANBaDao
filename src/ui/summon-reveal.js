@@ -154,6 +154,105 @@
     };
 
     // Man show tuong SSR (giong game tham khao): nen toi + tia sang, tranh tuong lon, ten thu phap, nhan SSR.
+    // Owner 2026-11-04: tuong o san dinh phai SONG - idle that (atlas / chuoi khung) + thoai cua tuong.
+    const IDLE_MS = 110;
+    // 3 tuong co atlas idle trong game (index.html: LUC_ANH_ANIMS / LINH_DONG_ANIMS / BACH_DIEN_ANIMS)
+    const ATLAS_IDLE = {
+      luc_anh: { src: 'assets/characters/luc-anh/idle-atlas.webp', frames: 64, cols: 8, w: 240, h: 240, ms: 72 },
+      linh_dong: { src: 'assets/characters/linh-dong/idle-atlas.webp', frames: 96, cols: 8, w: 480, h: 440, ms: 42 },
+      bach_dien: { src: 'assets/characters/bach-dien/idle-atlas.webp', frames: 94, cols: 8, w: 480, h: 440, ms: 33 }
+    };
+    function heroDir(src) {
+      const m = String(src || '').match(/^(.*\/characters\/[^/]+)\//);
+      return m ? m[1] : '';
+    }
+    function voiceSrc(id) {
+      // chi dung bang thoai that cua game; tuong chua co file thi im lang, khong bam 404
+      try {
+        const v = (typeof HERO_VOICE_LINES === 'object' && HERO_VOICE_LINES) ? HERO_VOICE_LINES[id] : null;
+        if (v && v.hero) return String(v.hero);
+      } catch (_) {}
+      return id === 'luc_anh' && typeof LUC_ANH_HERO_VOICE === 'string' ? LUC_ANH_HERO_VOICE : '';
+    }
+    function idlePlay(sc, id, src) {
+      const timers = [];
+      let audio = null, raf = 0;
+      const stopAnim = [];
+      const host = sc.querySelector('.hsv-hero-host');
+      const atlas = ATLAS_IDLE[id];
+      if (host && atlas) {
+        try {
+          const cv = document.createElement('canvas');
+          cv.className = 'hsv-hero hsv-hero-cv';
+          const cw = atlas.w, ch = atlas.h, rows = Math.ceil(atlas.frames / atlas.cols);
+          cv.width = cw; cv.height = ch;
+          host.appendChild(cv);
+          const g = cv.getContext('2d');
+          const im = new Image();
+          im.onload = () => {
+            let f = 0, last = 0;
+            const step = t => {
+              if (!cv.isConnected) return;
+              if (t - last >= atlas.ms) {
+                last = t;
+                g.clearRect(0, 0, cw, ch);
+                const sx = (f % atlas.cols) * cw, sy = Math.floor(f / atlas.cols) * ch;
+                g.drawImage(im, sx, sy, cw, ch, 0, 0, cw, ch);
+                f = (f + 1) % atlas.frames;
+              }
+              raf = requestAnimationFrame(step);
+            };
+            raf = requestAnimationFrame(step);
+          };
+          im.src = atlas.src;
+          const still = sc.querySelector('.hsv-hero-frame');
+          if (still) still.style.visibility = 'hidden';
+          stopAnim.push(() => { cancelAnimationFrame(raf); try { cv.remove(); } catch (_) {} });
+        } catch (_) {}
+      }
+      if (!stopAnim.length) {
+        const img = sc.querySelector('.hsv-hero-frame');
+        const dir = heroDir(src);
+        img?.classList.add('is-anim');
+        let started = false;
+        const run = urls => {
+          if (started) return;
+          started = true;
+          let k = 0;
+          timers.push(setInterval(() => { k = (k + 1) % urls.length; img.src = urls[k]; }, IDLE_MS));
+        };
+        if (img && dir) {
+          const urls = [0, 1, 2, 3, 4, 5].map(i => dir + '/idle-' + i + '.webp');
+          const ok = [];
+          let pending = urls.length;
+          urls.forEach((u, i) => {
+            const im = new Image();
+            const done = good => { if (good) ok[i] = u; if (!started && --pending <= 0) { const list = ok.filter(Boolean); if (list.length > 1) run(list); } };
+            im.onload = () => done(true);
+            im.onerror = () => done(false);
+            im.src = u;
+          });
+        }
+        // khong co chuoi khung -> van cho tho (breathing) de khong chet cung
+        if (img) timers.push(setTimeout(() => { if (!started) img.classList.add('is-breathe'); }, 700));
+      }
+      const vs = voiceSrc(id);
+      try {
+        if (!vs) throw 0;
+        audio = new Audio(vs);
+        audio.volume = 0.9;
+        const pr = audio.play();
+        if (pr && pr.catch) pr.catch(() => {});
+      } catch (_) { audio = null; }
+      return () => {
+        timers.forEach(clearTimeout); timers.forEach(clearInterval);
+        stopAnim.forEach(fn => fn());
+        try { if (audio) { audio.pause(); audio.currentTime = 0; } } catch (_) {}
+        const im = sc.querySelector('.hsv-hero-frame');
+        if (im) im.classList.remove('is-anim', 'is-breathe');
+      };
+    }
+
     function showcase(list) {
       const q = list.filter(Boolean);
       const EL = { 'Hỏa': ['hoa', 'Hỏa'], 'Thủy': ['thuy', 'Thủy'], 'Thổ': ['tho', 'Thổ'], 'Kim': ['kim', 'Kim'], 'Mộc': ['moc', 'Mộc'] };
@@ -180,19 +279,22 @@
         sc.innerHTML = `<div class="hsv-blur"></div>
           <div class="hsv-pf">
             <div class="hsv-glow"></div>
-            ${src ? `<img class="hsv-hero" src="${esc(src)}" alt="">` : `<b class="hsv-hero hsv-hero-mono">${esc(c.name.charAt(0))}</b>`}
+            ${src ? `<div class="hsv-hero-host"><img class="hsv-hero hsv-hero-frame" src="${esc(src)}" alt=""></div>` : `<b class="hsv-hero hsv-hero-mono">${esc(c.name.charAt(0))}</b>`}
             <div class="hsv-plq"><h3 style="--nf:${Math.min(1, 9 / Math.max(1, [...c.name].length)).toFixed(2)}">${esc(c.name)}</h3><p>${esc(title)}</p></div>
             ${el ? `<span class="hsv-emb"><img src="${RV}element-${el[0]}.png" alt="${esc(el[1])}"></span><em class="hsv-emb-t">${esc(el[1])}</em>` : ''}
             ${SK.map(([k, lb], i) => `<span class="hsv-sk s${i}">${art && art[k] ? `<img src="${esc(art[k])}" alt="">` : `<b>${lb.charAt(0)}</b>`}</span><em class="hsv-skt s${i}">${esc(skName(k) || lb)}</em>`).join('')}
           </div>
           <div class="hsv-tap">Chạm để tiếp tục</div>`;
         box.append(sc);
+        // Owner 2026-11-04: tuong o san dinh phai SONG - chay idle va mo thoai cua tuong.
+        const stop = idlePlay(sc, c.id, src);
         if (navigator.vibrate) navigator.vibrate([40, 30, 90]);
         let ok = false;
         T(() => { ok = true; }, 700);
         sc.addEventListener('click', () => {
           if (!ok) return;
           sc.classList.add('out');
+          stop();
           setTimeout(() => { sc.remove(); next(); }, 260);
         });
       };

@@ -142,3 +142,9 @@
   color:#fff;text-shadow:0 1px 3px #000;animation:hsvBlink 1.4s ease-in-out infinite alternate}
 @keyframes hsvBlink{from{opacity:.35}to{opacity:.95}}
 #hvSumReveal .hsv-blur{z-index:0}#hvSumReveal .hsv-pf{z-index:1;isolation:isolate}#hvSumReveal .hsv-pf .hsv-glow{z-index:0}#hvSumReveal .hsv-pf .hsv-hero{z-index:1}#hvSumReveal .hsv-pf>*:not(.hsv-glow):not(.hsv-hero){z-index:2}
+
+/* idle that: host + canvas atlas + tho nhe cho tuong chua co chuoi khung */
+#hvSumReveal .hsv-hero-host{position:absolute;left:50%;bottom:20%;height:72%;transform:translateX(-50%);display:grid;place-items:end center}
+#hvSumReveal .hsv-hero-host .hsv-hero{position:relative;left:auto;bottom:auto;transform:none;height:100%;max-width:78vw}
+#hvSumReveal .hsv-hero-host .hsv-hero.is-breathe{animation:hsvBreathe 4.4s ease-in-out infinite alternate}
+@keyframes hsvBreathe{from{transform:translateY(0) scale(1)}to{transform:translateY(-1.1%) scale(1.012)}}
