@@ -1,45 +1,82 @@
-/* Owner 2026-11-04: man ket qua trieu hoi - the roi 3 tang, vien + lua cuong hoa */
-#hvSumReveal{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;
-  padding:calc(8px + env(safe-area-inset-top)) 8px calc(10px + env(safe-area-inset-bottom))}
-#hvSumReveal .hsr-veil{position:absolute;inset:0;background:#070502}
-#hvSumReveal .hsr-veil::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 38%,rgba(90,60,24,.35),transparent 62%)}
-#hvSumReveal .hsr-stage{position:relative;width:min(100%,520px);aspect-ratio:390/700;max-height:100%}
-#hvSumReveal .hsr-slot{position:absolute;transform:translate(-50%,0);opacity:0;z-index:2}
-#hvSumReveal .hsr-slot.fall{opacity:1}
-#hvSumReveal .hsr-slot.lit{z-index:3}
-#hvSumReveal .hsr-card{position:relative;width:100%;height:100%;perspective:900px;cursor:pointer;container-type:size;
-  filter:drop-shadow(0 6px 12px rgba(0,0,0,.6))}
-#hvSumReveal .hsr-inner{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.3,.7,.2,1)}
-#hvSumReveal .hsr-slot.flipped .hsr-inner{transform:rotateY(180deg)}
-#hvSumReveal .hsr-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
-  border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center}
-#hvSumReveal .hsr-back{background:linear-gradient(160deg,#1b2430,#0d1218 70%);box-shadow:inset 0 0 0 2px #c9a45c,inset 0 0 18px rgba(0,0,0,.8)}
-#hvSumReveal .hsr-back b{font-family:Georgia,serif;font-weight:900;font-size:clamp(9px,24cqw,32px);line-height:1;color:#f6e6c0;letter-spacing:.06em;text-shadow:0 0 10px rgba(255,220,140,.5)}
-#hvSumReveal .r-p .hsr-back{box-shadow:inset 0 0 0 2px #f2c65c,inset 0 0 18px rgba(0,0,0,.8)}
-#hvSumReveal .r-g .hsr-back{box-shadow:inset 0 0 0 2px #ffd166,inset 0 0 26px rgba(255,150,40,.45)}
-#hvSumReveal .hsr-front{transform:rotateY(180deg);flex-direction:column;background:linear-gradient(180deg,#1a1408,#0d0a05);box-shadow:inset 0 0 0 2px #8a6a33}
-#hvSumReveal .r-p .hsr-front{box-shadow:inset 0 0 0 2px #a878ff,0 0 18px rgba(150,100,255,.45)}
-#hvSumReveal .r-p .hsr-rk{background:rgba(92,52,160,.92)}
-#hvSumReveal .r-w .hsr-front{box-shadow:inset 0 0 0 2px #9fb0cc}
-#hvSumReveal .r-w .hsr-rk{background:rgba(48,66,102,.9)}
-#hvSumReveal .r-g .hsr-front{box-shadow:inset 0 0 0 2px #ffd166,0 0 26px rgba(255,170,50,.55)}
-#hvSumReveal .hsr-slot.lit.r-g .hsr-card{filter:drop-shadow(0 0 18px rgba(255,180,60,.55))}
-#hvSumReveal .hsr-slot.lit.r-p .hsr-card{filter:drop-shadow(0 0 14px rgba(160,105,255,.5))}
-#hvSumReveal .r-p .hsr-back{box-shadow:inset 0 0 0 2px #a878ff,inset 0 0 18px rgba(0,0,0,.8)}
-#hvSumReveal .hsr-front img{position:relative;z-index:2;width:100%;height:80%;object-fit:cover;object-position:50% 10%;transform:scale(1.45);transform-origin:50% 12%;image-rendering:auto}
-#hvSumReveal .hsr-mono{position:absolute;top:0;left:0;right:0;height:76%;display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-weight:900;font-size:clamp(16px,34cqw,52px);line-height:1;color:rgba(255,255,255,.92);letter-spacing:.04em;background:var(--mono-col,#6e573d);text-shadow:0 2px 10px rgba(0,0,0,.35)}
-#hvSumReveal .hsr-name{position:absolute;z-index:3;left:5%;right:5%;bottom:4%;font-family:inherit;font-weight:800;font-size:clamp(7px,9cqw,13px);line-height:1.15;color:#3d2410;text-align:center;max-height:32%;
-  background:linear-gradient(180deg,#fff8e6,#ead6ab);border-radius:4px;padding:1px 2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:break-word}
-#hvSumReveal .hsr-rk{position:absolute;z-index:4;top:3%;left:5%;font-family:Georgia,serif;font-weight:900;font-size:clamp(7.5px,7.5cqw,12px);line-height:1;padding:2px 5px;color:#fff;
-  background:rgba(120,20,10,.8);border-radius:4px;padding:1px 4px;text-decoration:none}
-#hvSumReveal .r-p .hsr-rk{background:rgba(120,70,10,.85)}
-#hvSumReveal .r-g .hsr-rk{background:rgba(160,20,10,.9)}
-#hvSumReveal .hsr-all{position:fixed;left:50%;bottom:max(14px,env(safe-area-inset-bottom));z-index:5;transform:translateX(-50%);
-  min-width:140px;height:40px;border-radius:10px;border:1px solid #b58e49;
-  background:linear-gradient(180deg,#ffe6a6,#d7a94f);color:#3a2310;font-weight:900;letter-spacing:.04em}
-#hvSumReveal .hsr-card{container-type:size}
-@container (max-width:110px){#hvSumReveal .hsr-name{-webkit-line-clamp:2;font-size:8px;line-height:1.1;padding:1px 1px;max-height:46%}}
-@container (max-width:80px){#hvSumReveal .hsr-name{-webkit-line-clamp:1;font-size:7.5px}}
-#summonScreen.hsr-shake{animation:hsrShake .34s linear}
-@keyframes hsrShake{0%,100%{transform:none}25%{transform:translate(-3px,2px)}50%{transform:translate(3px,-2px)}75%{transform:translate(-2px,1px)}}
-@media (max-width:360px){#hvSumReveal .hsr-back b{font-size:18px}}
+/* Owner 2026-11-04: man ket qua Goi Mong = ban thu v56 da duyet (C:\lt\tmp\summon-demo\v56.html)
+   phim mo dau -> 10 the thuy mac roi xuong dai bia 3 tang (3-3-4) -> sang + cuong hoa -> lat the ra tuong that.
+   S = vien tim, SS = vang, SSR = cam do (giong hieu ung cuong hoa do). */
+#hvSumReveal{position:fixed;inset:0;z-index:9000;background:linear-gradient(rgba(8,6,4,.55),rgba(8,6,4,.55)),#0a0806 url('assets/ui/summon/stage.jpg') center/cover no-repeat;display:grid;place-items:center;overflow:hidden;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#f4e6c6;touch-action:manipulation}
+#hvSumReveal .hsv-stage{position:relative;width:min(100vw,calc(100dvh*768/1376));aspect-ratio:768/1376;max-height:100dvh;overflow:hidden;
+  background:#12100e url('assets/ui/summon/stage.jpg') center bottom/auto 122% no-repeat}
+#hvSumReveal .hsv-stage.shake{animation:hsvShake .35s linear}
+@keyframes hsvShake{0%,100%{transform:none}25%{transform:translate(-3px,2px)}50%{transform:translate(3px,-2px)}75%{transform:translate(-2px,1px)}}
+
+/* phim mo dau */
+#hvSumReveal .hsv-clip{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:60;background:#000;opacity:0;pointer-events:none;transition:opacity .3s}
+#hvSumReveal .hsv-clip.on{opacity:1}
+#hvSumReveal .hsv-skip{position:absolute;top:calc(12px + env(safe-area-inset-top));right:12px;z-index:61;display:none;background:rgba(0,0,0,.6);color:#fff;
+  border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:6px 14px;font-weight:800;font-size:13px}
+#hvSumReveal .hsv-skip.on{display:block}
+
+/* o the */
+#hvSumReveal .hsv-slot{position:absolute;transform:translateX(-50%);width:var(--w);bottom:var(--b);left:var(--x);isolation:isolate;container-type:inline-size}
+#hvSumReveal .hsv-slot.wait{visibility:hidden}
+#hvSumReveal .hsv-slot::before{content:"";position:absolute;left:6%;right:6%;bottom:-6%;height:10%;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 50%,rgba(0,0,0,.7),rgba(0,0,0,.3) 45%,transparent 72%);filter:blur(2px)}
+#hvSumReveal .hsv-card{position:relative;display:block;width:100%;aspect-ratio:300/545;border:0;padding:0;background:transparent;cursor:pointer;z-index:1;border-radius:3%;perspective:900px}
+#hvSumReveal .hsv-face{position:absolute;inset:0;border-radius:3%;z-index:2;background-size:100% 100%;background-repeat:no-repeat;overflow:hidden;
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;transition:transform .5s}
+#hvSumReveal .hsv-back{background-image:url('assets/ui/summon/card-back.webp')}
+#hvSumReveal .hsv-front{transform:rotateY(180deg);background:#1b120a}
+#hvSumReveal .hsv-card.done .hsv-back{transform:rotateY(180deg)}
+#hvSumReveal .hsv-card.done .hsv-front{transform:rotateY(0)}
+
+/* mat truoc: tranh tuong that nam DUOI khung thuy mac; khung cung tu chat phu len tren */
+#hvSumReveal .hsv-art{position:absolute;left:7%;right:7%;top:5%;bottom:15%;z-index:1;overflow:hidden;border-radius:4%;
+  background:radial-gradient(ellipse at 50% 35%,var(--hsv-tint,#4a3420),#140c06 78%)}
+#hvSumReveal .hsv-art img{position:absolute;left:50%;top:0;width:auto;height:118%;min-width:100%;transform:translateX(-50%);object-fit:cover;object-position:50% 0}
+#hvSumReveal .hsv-art .hsv-mono{position:absolute;inset:0;display:grid;place-items:center;font:900 46cqw/1 'Noto Serif','Times New Roman',serif;color:rgba(255,236,190,.82);
+  text-shadow:0 0 6cqw var(--hsv-tint,#c08a3a)}
+#hvSumReveal .hsv-frame{position:absolute;inset:0;z-index:2;pointer-events:none;background-size:100% 100%;background-repeat:no-repeat;
+  -webkit-mask:linear-gradient(#000 0 0),radial-gradient(ellipse 39% 34% at 50% 45%,#000 70%,transparent 100%);-webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) exclude,radial-gradient(ellipse 39% 34% at 50% 45%,#000 70%,transparent 100%)}
+#hvSumReveal .r-w .hsv-frame{background-image:url('assets/ui/summon/card-s.webp')}
+#hvSumReveal .r-p .hsv-frame{background-image:url('assets/ui/summon/card-ss.webp')}
+#hvSumReveal .r-g .hsv-frame{background-image:url('assets/ui/summon/card-ssr.webp')}
+#hvSumReveal .r-w{--hsv-tint:#5a4a6e}
+#hvSumReveal .r-p{--hsv-tint:#6e5420}
+#hvSumReveal .r-g{--hsv-tint:#7a2e10}
+#hvSumReveal .hsv-name{position:absolute;left:12%;right:12%;bottom:6.5%;z-index:4;height:8%;display:grid;place-items:center;
+  font-weight:800;line-height:1;font-family:'Noto Serif','Times New Roman',serif;color:#3a2410;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* chu tu chat hien len khi the cham dai (mat sau) */
+#hvSumReveal .hsv-rk{position:absolute;left:50%;top:50%;z-index:5;transform:translate(-50%,-50%);writing-mode:vertical-rl;
+  font:900 30cqw/1 'Noto Serif','Times New Roman',serif;color:#fff;opacity:0;transition:opacity .4s;pointer-events:none}
+#hvSumReveal .hsv-slot.lit .hsv-rk{opacity:1;text-shadow:0 0 2cqw #fff,0 0 6cqw currentColor}
+#hvSumReveal .hsv-slot.lit .hsv-card.done .hsv-rk{opacity:0}
+#hvSumReveal .r-w .hsv-rk{color:#e3c6ff}
+#hvSumReveal .r-p .hsv-rk{color:#ffe794}
+#hvSumReveal .r-g .hsv-rk{color:#ffb38a}
+#hvSumReveal .hsv-card canvas.hv-fx{position:absolute;inset:0;z-index:3;pointer-events:none;border-radius:3%}
+
+/* tieu de thu phap + chu chay SSR */
+#hvSumReveal .hsv-brush{position:absolute;left:0;right:0;top:calc(6px + env(safe-area-inset-top));z-index:30;text-align:center;pointer-events:none;
+  opacity:0;transform:translateY(-10px) scale(.96);transition:opacity .9s ease,transform .9s ease}
+#hvSumReveal .hsv-brush.on{opacity:1;transform:none}
+#hvSumReveal .hsv-brush img{display:block;margin:0 auto;width:min(92vw,520px);height:auto;filter:drop-shadow(0 4px 10px rgba(0,0,0,.6))}
+#hvSumReveal .hsv-ticker{position:absolute;left:0;right:0;top:calc(10px + min(92vw,520px)*.2264 + env(safe-area-inset-top));z-index:31;height:30px;overflow:hidden;pointer-events:none;
+  opacity:0;transition:opacity .5s;
+  background:linear-gradient(90deg,transparent,rgba(30,10,4,.82) 10%,rgba(30,10,4,.82) 90%,transparent);
+  border-top:1px solid rgba(232,194,122,.55);border-bottom:1px solid rgba(232,194,122,.55)}
+#hvSumReveal .hsv-ticker.on{opacity:1}
+#hvSumReveal .hsv-ticker span{position:absolute;top:0;left:100%;white-space:nowrap;font:600 14px/30px 'Noto Serif','Times New Roman',serif;
+  color:#fff1cf;text-shadow:0 1px 2px #000}
+#hvSumReveal .hsv-ticker em{font-style:normal;color:#ffb14a;font-weight:800}
+#hvSumReveal .hsv-ticker b{color:#ff6b3d}
+
+/* nut duoi */
+#hvSumReveal .hsv-btn{position:absolute;left:50%;bottom:calc(14px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:40;
+  min-width:180px;height:46px;border-radius:12px;border:1px solid #b58e49;font-weight:900;font-size:15px;letter-spacing:.04em;
+  background:linear-gradient(180deg,#ffe6a6,#d7a94f);color:#3a2310;box-shadow:0 4px 14px rgba(0,0,0,.55);opacity:0;pointer-events:none;transition:opacity .4s}
+#hvSumReveal .hsv-btn.on{opacity:1;pointer-events:auto}
+#hvSumReveal .hsv-hint{position:absolute;left:0;right:0;bottom:calc(66px + env(safe-area-inset-bottom));z-index:40;text-align:center;
+  font:600 12px/1.3 'Noto Serif','Times New Roman',serif;color:#f5e3b8;text-shadow:0 1px 3px #000;opacity:0;transition:opacity .4s;pointer-events:none}
+#hvSumReveal .hsv-hint.on{opacity:.9}
+@media (prefers-reduced-motion:reduce){#hvSumReveal .hsv-stage.shake{animation:none}}
