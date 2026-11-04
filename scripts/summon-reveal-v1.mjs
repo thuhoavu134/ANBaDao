@@ -2,8 +2,8 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 const target = join(process.cwd(), 'dist/index.html');
-const js = readFileSync(join(process.cwd(), 'src/ui/summon-reveal.js'), 'utf8');
-const css = readFileSync(join(process.cwd(), 'src/ui/summon-reveal.css'), 'utf8');
+const js = readFileSync(join(process.cwd(), 'src/ui/summon-altar.js'), 'utf8') + '\n' + readFileSync(join(process.cwd(), 'src/ui/summon-reveal.js'), 'utf8');
+const css = readFileSync(join(process.cwd(), 'src/ui/summon-altar.css'), 'utf8') + '\n' + readFileSync(join(process.cwd(), 'src/ui/summon-reveal.css'), 'utf8');
 new Function(js);
 
 let html = readFileSync(target, 'utf8');

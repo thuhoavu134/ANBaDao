@@ -1,0 +1,67 @@
+/* Owner 2026-11-04: man Goi Mong = concept te dan (UI trong phim mo dau). Anh concept la nen; chu/so la du lieu that.
+   Toa do theo khung 670x1200 cua concept (%). */
+#hvSummonRoot.hv-altar{position:fixed!important;inset:0!important;padding:0!important;margin:0!important;overflow:hidden!important;
+  background:radial-gradient(ellipse at 50% 40%,rgba(40,24,12,.35),rgba(6,4,3,.82)),#0a0806 url('assets/ui/summon/stage.jpg') center/cover no-repeat!important}
+#hvSummonRoot.hv-altar[hidden]{display:none!important}
+#hvSummonRoot.hv-altar > :not(.hva){display:none!important}
+#hvSummonRoot > .hva{position:absolute!important;top:max(6px,env(safe-area-inset-top))!important;left:6px!important;right:6px!important;bottom:max(6px,env(safe-area-inset-bottom))!important;width:auto!important;height:auto!important;margin:0!important;padding:0!important;display:grid!important;place-items:center;container-type:size;font-family:'Noto Serif','Times New Roman',serif}
+.hva-panel{position:relative;width:min(100cqw,calc(100cqh*768/1376));aspect-ratio:768/1376;container-type:inline-size;
+  background:url('assets/ui/summon/altar-panel.webp') center/100% 100% no-repeat;filter:drop-shadow(0 10px 24px rgba(0,0,0,.6))}
+.hva-panel.shake{animation:hvaShake .4s linear}
+@keyframes hvaShake{0%,100%{transform:none}20%{transform:translate(-3px,2px)}40%{transform:translate(3px,-2px)}60%{transform:translate(-2px,1px)}80%{transform:translate(2px,-1px)}}
+.hva-hit{position:absolute;display:block;border:0;padding:0;background:transparent;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.hva-hit:disabled{cursor:not-allowed;filter:grayscale(.85) brightness(.75)}
+.hva-hit:not(:disabled):active{transform:translateY(1px) scale(.985)}
+
+/* nut dong = nut X ve san */
+.hva-close{left:89.8%;top:2.4%;width:9.6%;height:5.4%;border-radius:50%}
+
+/* 2 bang tren mai */
+.hva-plq{position:absolute;display:grid;place-items:center;color:#f6e3b4;font-weight:800;white-space:nowrap;text-shadow:0 1px 2px #000;line-height:1}
+.hva-pity{left:33.3%;top:11.75%;width:14.8%;height:2.1%;font-size:2.5cqw}
+.hva-gems{left:54.2%;top:11.75%;width:20.3%;height:2.1%;font-size:3.1cqw}
+
+/* 3 o vat pham */
+.hva-box{top:24.5%;width:15.7%;height:8.8%;border-radius:6%}
+.hva-box.b1{left:20.9%}.hva-box.b2{left:42.4%}.hva-box.b3{left:63.7%}
+.hva-box em{position:absolute;left:-6%;right:-6%;bottom:-2.4cqw;display:block;padding:.5cqw 0;border-radius:2cqw;font-style:normal;font-weight:800;
+  font-size:2.5cqw;line-height:1.15;color:#fff3cf;background:linear-gradient(180deg,rgba(60,26,10,.92),rgba(30,12,4,.95));
+  border:1px solid rgba(232,194,122,.75);text-shadow:0 1px 1px #000;white-space:nowrap}
+.hva-box.ready em{color:#3a2310;background:linear-gradient(180deg,#ffe9ad,#e3b45c);border-color:#fff3c4}
+.hva-box.ready::after{content:"";position:absolute;inset:-4%;border-radius:8%;box-shadow:0 0 0 2px rgba(255,226,140,.9),0 0 14px rgba(255,210,110,.85);
+  animation:hvaPulse 1.4s ease-in-out infinite alternate;pointer-events:none}
+@keyframes hvaPulse{from{opacity:.45}to{opacity:1}}
+
+/* nut goi */
+.hva-btn{display:grid;place-items:center;align-content:center;color:#3e2410;font-weight:900;line-height:1.05;text-shadow:0 1px 0 rgba(255,240,200,.6)}
+.hva-x1{left:29.6%;top:69.3%;width:41.4%;height:5.0%;font-size:4.5cqw;letter-spacing:.02em}
+.hva-x10{left:75.5%;top:70.0%;width:15.4%;height:4.1%;font-size:3.9cqw}
+.hva-btn small{display:block;font-size:2.55cqw;font-weight:800;color:#5a3412;margin-top:.3cqw;letter-spacing:0}
+.hva-x10 small{font-size:2cqw;margin-top:0}
+.hva-btn.free{color:#7a2a08}
+
+/* dai giay mong + giay duoi */
+.hva-strip{position:absolute;left:9%;right:9%;top:78.5%;height:1.5%;display:grid;place-items:center;font-size:2.15cqw;font-weight:700;color:#4a2c12;white-space:nowrap}
+.hva-rates{position:absolute;left:8%;right:8%;top:83.6%;height:2.9%;display:grid;place-items:center;font-size:3.05cqw;font-weight:700;color:#3b2612}
+.hva-paper{position:absolute;left:9.5%;right:9.5%;top:87.4%;height:9.4%;display:flex;flex-direction:column;gap:1.1cqw;color:#3b2612;font-size:2.6cqw}
+.hva-meter{display:flex;align-items:center;gap:2cqw;font-weight:700}
+.hva-meter i{flex:1;height:1.6cqw;border-radius:1cqw;background:rgba(80,50,20,.22);box-shadow:inset 0 0 0 1px rgba(80,50,20,.35);overflow:hidden}
+.hva-meter u{display:block;height:100%;background:linear-gradient(90deg,#c9892a,#ffd56a)}
+.hva-note{font-size:2.35cqw;color:#5a3d1e;line-height:1.3}
+.hva-lock{position:absolute;left:12%;right:12%;top:63%;padding:1.5cqw 2cqw;border-radius:2cqw;font-size:2.6cqw;font-weight:700;text-align:center;
+  color:#ffe9c2;background:rgba(80,10,6,.82);border:1px solid #ff9a6a}
+
+/* bang Hoi Uc Tuyen Chon / thong tin */
+.hva-sheet{position:absolute;left:7%;right:7%;bottom:3.4%;max-height:44%;overflow:auto;z-index:5;padding:3cqw;border-radius:2.4cqw;
+  background:linear-gradient(180deg,#fbf0d6,#ecd8ab);border:2px solid #8a5a2a;box-shadow:0 8px 24px rgba(0,0,0,.6);color:#3b2612;font-size:2.9cqw}
+.hva-sheet h4{margin:0 0 1.6cqw;font-size:3.6cqw;color:#5a2c0c}
+.hva-sheet p{margin:0 0 1.6cqw;line-height:1.35}
+.hva-sheet .picks{display:flex;flex-wrap:wrap;gap:1.6cqw}
+.hva-sheet .picks button{padding:1.2cqw 2.2cqw;border-radius:1.6cqw;border:1px solid #9a6a32;background:#fff7e2;font:inherit;font-weight:800;color:#4a2a10}
+.hva-sheet .picks button:disabled{opacity:.5}
+.hva-sheet .x{position:absolute;right:2cqw;top:1.4cqw;border:0;background:none;font-size:4.5cqw;font-weight:900;color:#6a3a14}
+
+/* lop hieu ung tu linh tren te dan */
+.hva-fx{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:4}
+.hva-flash{position:fixed;inset:0;z-index:8999;pointer-events:none;background:#fff;opacity:0}
+.hva-strip{display:none}

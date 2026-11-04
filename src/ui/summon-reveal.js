@@ -59,8 +59,6 @@
     const box = document.createElement('div');
     box.id = 'hvSumReveal';
     box.innerHTML = `<div class="hsv-stage">
-        <video class="hsv-clip" src="${A}summon.mp4" muted playsinline preload="auto"></video>
-        <button class="hsv-skip" type="button">Bỏ qua ›</button>
         <div class="hsv-hint">Chạm thẻ để lật · chạm lần nữa xem tướng</div>
         <button class="hsv-btn" type="button">LẬT TẤT CẢ</button>
       </div>
@@ -68,8 +66,6 @@
       <div class="hsv-ticker"><span></span></div>`;
     document.body.append(box);
     const stage = box.querySelector('.hsv-stage');
-    const clip = box.querySelector('.hsv-clip');
-    const skip = box.querySelector('.hsv-skip');
     const btn = box.querySelector('.hsv-btn');
     const close = () => { timers.forEach(clearTimeout); box.remove(); };
 
@@ -99,10 +95,10 @@
       card.addEventListener('click', () => {
         if (!el.classList.contains('lit')) return;
         if (card.classList.contains('done')) openDetail(c.p.id, box);
-        else { card.classList.add('done'); afterFlip(); }
+        else { card.classList.add('done'); if (c.k === 'g') showcase([cards.find(x => x.card === card)]); afterFlip(); }
       });
       stage.appendChild(el);
-      return { el, card, k: c.k, name };
+      return { el, card, k: c.k, name, id: c.p.id, full: c.p.name };
     });
 
     function afterFlip() {
@@ -149,24 +145,47 @@
       T(() => { box.querySelector('.hsv-brush').classList.add('on'); btn.classList.add('on'); box.querySelector('.hsv-hint').classList.add('on'); }, t + 900);
       T(runTicker, t + 1500);
     }
-    let started = false;
-    function toCards() {
-      if (started) return; started = true;
-      try { clip.pause(); } catch (_) {}
-      clip.classList.remove('on'); skip.classList.remove('on');
-      T(dropAll, 250);
-    }
     btn.onclick = () => {
-      cards.filter(c => c.el.classList.contains('lit') && !c.card.classList.contains('done'))
-        .sort((a, b) => RANK[a.k] - RANK[b.k])
-        .forEach((c, i) => T(() => { c.card.classList.add('done'); afterFlip(); }, i * 140));
+      const todo = cards.filter(c => c.el.classList.contains('lit') && !c.card.classList.contains('done'))
+        .sort((a, b) => RANK[a.k] - RANK[b.k]);
+      todo.forEach((c, i) => T(() => { c.card.classList.add('done'); afterFlip(); }, i * 140));
+      const ssr = todo.filter(c => c.k === 'g');
+      if (ssr.length) T(() => showcase(ssr), todo.length * 140 + 450);
     };
-    skip.addEventListener('click', toCards);
-    clip.addEventListener('ended', toCards);
-    clip.addEventListener('error', toCards);
-    clip.classList.add('on'); skip.classList.add('on');
-    const pr = clip.play(); if (pr && pr.catch) pr.catch(() => toCards());
-    T(toCards, 5000);
+
+    // Man show tuong SSR (giong game tham khao): nen toi + tia sang, tranh tuong lon, ten thu phap, nhan SSR.
+    function showcase(list) {
+      const q = list.filter(Boolean);
+      const next = () => {
+        const c = q.shift();
+        if (!c) return;
+        const h = window.DATA && DATA.heroes ? DATA.heroes[c.id] : null;
+        const title = String(c.full || '').split(/\s+[—–-]\s+/)[1] || (h && (h.title || h.role)) || 'Kỳ hiệp Mộng Giới';
+        const src = portrait(c.id);
+        const sc = document.createElement('div');
+        sc.className = 'hsv-show';
+        sc.innerHTML = `<div class="hsv-rays"></div><div class="hsv-glow"></div>
+          ${src ? `<img class="hsv-hero" src="${esc(src)}" alt="">` : `<b class="hsv-hero hsv-hero-mono">${esc(c.name.charAt(0))}</b>`}
+          <div class="hsv-info"><span class="hsv-badge">SSR</span><h3>${esc(c.name)}</h3><p>${esc(title)}</p></div>
+          <div class="hsv-tap">Chạm để tiếp tục</div>`;
+        box.append(sc);
+        if (navigator.vibrate) navigator.vibrate([40, 30, 90]);
+        let ok = false;
+        T(() => { ok = true; }, 700);
+        sc.addEventListener('click', () => {
+          if (!ok) return;
+          sc.classList.add('out');
+          setTimeout(() => { sc.remove(); next(); }, 260);
+        });
+      };
+      next();
+    }
+    box.style.display = 'none';
+    const best = cards.some(c => c.k === 'g') ? 'g' : cards.some(c => c.k === 'p') ? 'p' : 'w';
+    const altar = window.HV_SUMMON_ALTAR;
+    try { altar?.mount(); } catch (_) {}
+    const go = () => { box.style.display = ''; T(dropAll, 120); };
+    if (altar && altar.charge) altar.charge(best).then(go, go); else go();
   }
 
   window.HV_SUMMON_REVEAL = { play };
