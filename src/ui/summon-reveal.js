@@ -155,102 +155,38 @@
 
     // Man show tuong SSR (giong game tham khao): nen toi + tia sang, tranh tuong lon, ten thu phap, nhan SSR.
     // Owner 2026-11-04: tuong o san dinh phai SONG - idle that (atlas / chuoi khung) + thoai cua tuong.
-    const IDLE_MS = 110;
-    // 3 tuong co atlas idle trong game (index.html: LUC_ANH_ANIMS / LINH_DONG_ANIMS / BACH_DIEN_ANIMS)
-    const ATLAS_IDLE = {
-      luc_anh: { src: 'assets/characters/luc-anh/idle-atlas.webp', frames: 64, cols: 8, w: 240, h: 240, ms: 72 },
-      linh_dong: { src: 'assets/characters/linh-dong/idle-atlas.webp', frames: 96, cols: 8, w: 480, h: 440, ms: 42 },
-      bach_dien: { src: 'assets/characters/bach-dien/idle-atlas.webp', frames: 94, cols: 8, w: 480, h: 440, ms: 33 }
-    };
-    function heroDir(src) {
-      const m = String(src || '').match(/^(.*\/characters\/[^/]+)\//);
-      return m ? m[1] : '';
-    }
-    function voiceSrc(id) {
-      // chi dung bang thoai that cua game; tuong chua co file thi im lang, khong bam 404
-      try {
-        const v = (typeof HERO_VOICE_LINES === 'object' && HERO_VOICE_LINES) ? HERO_VOICE_LINES[id] : null;
-        if (v && v.hero) return String(v.hero);
-      } catch (_) {}
-      return id === 'luc_anh' && typeof LUC_ANH_HERO_VOICE === 'string' ? LUC_ANH_HERO_VOICE : '';
-    }
-    function idlePlay(sc, id, src) {
-      const timers = [];
-      let audio = null, raf = 0;
-      const stopAnim = [];
-      const host = sc.querySelector('.hsv-hero-host');
-      const atlas = ATLAS_IDLE[id];
-      if (host && atlas) {
-        try {
-          const cv = document.createElement('canvas');
-          cv.className = 'hsv-hero hsv-hero-cv';
-          const cw = atlas.w, ch = atlas.h, rows = Math.ceil(atlas.frames / atlas.cols);
-          cv.width = cw; cv.height = ch;
-          host.appendChild(cv);
-          const g = cv.getContext('2d');
-          const im = new Image();
-          im.onload = () => {
-            let f = 0, last = 0;
-            const step = t => {
-              if (!cv.isConnected) return;
-              if (t - last >= atlas.ms) {
-                last = t;
-                g.clearRect(0, 0, cw, ch);
-                const sx = (f % atlas.cols) * cw, sy = Math.floor(f / atlas.cols) * ch;
-                g.drawImage(im, sx, sy, cw, ch, 0, 0, cw, ch);
-                f = (f + 1) % atlas.frames;
-              }
-              raf = requestAnimationFrame(step);
-            };
-            raf = requestAnimationFrame(step);
-          };
-          im.src = atlas.src;
-          const still = sc.querySelector('.hsv-hero-frame');
-          if (still) still.style.visibility = 'hidden';
-          stopAnim.push(() => { cancelAnimationFrame(raf); try { cv.remove(); } catch (_) {} });
-        } catch (_) {}
-      }
-      if (!stopAnim.length) {
-        const img = sc.querySelector('.hsv-hero-frame');
-        const dir = heroDir(src);
-        img?.classList.add('is-anim');
-        let started = false;
-        const run = urls => {
-          if (started) return;
-          started = true;
-          let k = 0;
-          timers.push(setInterval(() => { k = (k + 1) % urls.length; img.src = urls[k]; }, IDLE_MS));
-        };
-        if (img && dir) {
-          const urls = [0, 1, 2, 3, 4, 5].map(i => dir + '/idle-' + i + '.webp');
-          const ok = [];
-          let pending = urls.length;
-          urls.forEach((u, i) => {
-            const im = new Image();
-            const done = good => { if (good) ok[i] = u; if (!started && --pending <= 0) { const list = ok.filter(Boolean); if (list.length > 1) run(list); } };
-            im.onload = () => done(true);
-            im.onerror = () => done(false);
-            im.src = u;
-          });
-        }
-        // khong co chuoi khung -> van cho tho (breathing) de khong chet cung
-        if (img) timers.push(setTimeout(() => { if (!started) img.classList.add('is-breathe'); }, 700));
-      }
-      const vs = voiceSrc(id);
-      try {
-        if (!vs) throw 0;
-        audio = new Audio(vs);
-        audio.volume = 0.9;
-        const pr = audio.play();
-        if (pr && pr.catch) pr.catch(() => {});
-      } catch (_) { audio = null; }
-      return () => {
-        timers.forEach(clearTimeout); timers.forEach(clearInterval);
-        stopAnim.forEach(fn => fn());
-        try { if (audio) { audio.pause(); audio.currentTime = 0; } } catch (_) {}
-        const im = sc.querySelector('.hsv-hero-frame');
-        if (im) im.classList.remove('is-anim', 'is-breathe');
+    // Reuse detail renderers verbatim; never infer atlas geometry from filenames.
+    function idlePlay(sc, id) {
+      const host=sc.querySelector('.hsv-hero-host');
+      const still=sc.querySelector('.hsv-hero-frame');
+      let stop=()=>{},voice=null;
+      const dedicated={
+        ky_van:typeof startKyVanDetailIdle==='function'?startKyVanDetailIdle:null,
+        tieu_phong:typeof startTieuPhongDetailIdle==='function'?startTieuPhongDetailIdle:null,
+        hong_thuong:typeof startHongThuongDetailIdle==='function'?startHongThuongDetailIdle:null,
+        tich_dao:typeof startTichDaoDetailIdle==='function'?startTichDaoDetailIdle:null
       };
+      const authored=typeof AUTHORED_DETAIL_IDLE==='object'&&AUTHORED_DETAIL_IDLE[id];
+      const renderer=dedicated[id] || (authored&&typeof startAuthoredDetailIdle==='function'?cv=>startAuthoredDetailIdle(id,cv):null);
+      if(host&&renderer){
+        const cv=document.createElement('canvas');cv.className='hsv-hero hsv-hero-cv';
+        cv.dataset.detailRenderer=dedicated[id]?'dedicated':'authored';host.append(cv);
+        stop=renderer(cv)||stop;
+        cv.style.aspectRatio=cv.width+'/'+cv.height;
+        if(still)still.style.visibility='hidden';
+      }
+      // Same voice owner and source table as renderHeroDetail; do not create a second player.
+      const src=typeof HERO_VOICE_LINES==='object'&&HERO_VOICE_LINES[id]?.hero ||
+        (id==='luc_anh'&&typeof LUC_ANH_HERO_VOICE==='string'?LUC_ANH_HERO_VOICE:'');
+      if(src&&typeof playLucAnhVoice==='function'){
+        playLucAnhVoice(src,.92);
+        if(typeof _lucAnhVoice!=='undefined')voice=_lucAnhVoice;
+      }
+      let disposed=false;
+      const cleanup=()=>{if(disposed)return;disposed=true;stop();observer.disconnect();if(voice){voice.pause();voice.currentTime=0;}};
+      const observer=new MutationObserver(()=>{if(!sc.isConnected)cleanup();});
+      observer.observe(document.body,{childList:true,subtree:true});
+      return cleanup;
     }
 
     function showcase(list) {

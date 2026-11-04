@@ -146,5 +146,6 @@
 /* idle that: host + canvas atlas + tho nhe cho tuong chua co chuoi khung */
 #hvSumReveal .hsv-hero-host{position:absolute;left:50%;bottom:20%;height:72%;transform:translateX(-50%);display:grid;place-items:end center}
 #hvSumReveal .hsv-hero-host .hsv-hero{position:relative;left:auto;bottom:auto;transform:none;height:100%;max-width:78vw}
-#hvSumReveal .hsv-hero-host .hsv-hero.is-breathe{animation:hsvBreathe 4.4s ease-in-out infinite alternate}
-@keyframes hsvBreathe{from{transform:translateY(0) scale(1)}to{transform:translateY(-1.1%) scale(1.012)}}
+/* Animation comes exclusively from the hero-detail renderer. */
+#hvSumReveal .hsv-hero-host canvas.hsv-hero{grid-area:1/1;width:auto;height:100%;object-fit:contain}
+#hvSumReveal .hsv-hero-host img.hsv-hero{grid-area:1/1}

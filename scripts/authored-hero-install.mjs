@@ -206,9 +206,10 @@ export function patchAuthoredHost(input, heroes, root = process.cwd()) {
     "if(id==='bach_dien'){ if(typeof AUTHORED_DETAIL_IDLE!=='undefined'&&AUTHORED_DETAIL_IDLE.bach_dien)startAuthoredDetailIdle('bach_dien');else startBachDienDetailIdle(); }\nelse if(typeof AUTHORED_DETAIL_IDLE!=='undefined'&&AUTHORED_DETAIL_IDLE[id])startAuthoredDetailIdle(id);");
   s = once(s, "id==='be_an'?'<canvas id=",
     "(typeof AUTHORED_DETAIL_IDLE!=='undefined'&&AUTHORED_DETAIL_IDLE[id])?'<canvas id=\"authoredDetailIdle\" data-hero-id=\"'+id+'\" width=\"'+AUTHORED_DETAIL_IDLE[id].cellW+'\" height=\"'+AUTHORED_DETAIL_IDLE[id].cellH+'\" aria-label=\"'+AUTHORED_DETAIL_IDLE[id].name+' idle\"></canvas>':id==='be_an'?'<canvas id=");
-  s = once(s, 'function startBachDienDetailIdle(){', `function startAuthoredDetailIdle(id){
- if(window.__AUTHORED_DETAIL_IDLE_STATE&&window.__AUTHORED_DETAIL_IDLE_STATE.id===id){const prevCv=document.getElementById('authoredDetailIdle');if(prevCv&&window.__AUTHORED_DETAIL_IDLE_STATE.cv===prevCv&&prevCv.isConnected)return;}
- cancelAnimationFrame(_lucDetailRaf);const cv=document.getElementById('authoredDetailIdle'),m=AUTHORED_DETAIL_IDLE[id];if(!cv||!m)return;
+  s = once(s, 'function startBachDienDetailIdle(){', `function startAuthoredDetailIdle(id,targetCanvas){
+ let localRaf=0,disposed=false;
+ if(!targetCanvas&&window.__AUTHORED_DETAIL_IDLE_STATE&&window.__AUTHORED_DETAIL_IDLE_STATE.id===id){const prevCv=document.getElementById('authoredDetailIdle');if(prevCv&&window.__AUTHORED_DETAIL_IDLE_STATE.cv===prevCv&&prevCv.isConnected)return;}
+ if(!targetCanvas)cancelAnimationFrame(_lucDetailRaf);const cv=targetCanvas||document.getElementById('authoredDetailIdle'),m=AUTHORED_DETAIL_IDLE[id];if(!cv||!m)return;
  cv.style.setProperty('--authored-idle-ar',m.cellW+'/'+m.cellH);
  // Same rendering contract as the battle renderer: anchor the cell on pivot/foot instead of
  // painting from the cell corner, and draw at devicePixelRatio so the art stays sharp.
@@ -225,12 +226,13 @@ export function patchAuthoredHost(input, heroes, root = process.cwd()) {
  // Battle parity (owner 2026-10-22: the battle idle is smooth, do exactly the same): authoredBodyFrame
  // picks frame = floor(progress*frames) with a uniform clock and paints the cell on one fixed anchor.
  const total=m.durationMs;
- const start=performance.now();window.__AUTHORED_DETAIL_IDLE_STATE={id:id,cv:cv,start:start};
- function tick(){if(!cv.isConnected){image.src='';window.__AUTHORED_DETAIL_IDLE_STATE=null;return;}
+ const start=performance.now();if(!targetCanvas)window.__AUTHORED_DETAIL_IDLE_STATE={id:id,cv:cv,start:start};
+ function tick(){if(disposed||!cv.isConnected){image.src='';if(!targetCanvas)window.__AUTHORED_DETAIL_IDLE_STATE=null;return;}
   const el=(performance.now()-start)%total;const frame=Math.min(m.frames-1,Math.floor(el/total*m.frames));
   if(image.complete&&image.naturalWidth){const dy=0;ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,cv.width,cv.height);ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';ctx.drawImage(image,(frame%m.cols)*m.cellW,Math.floor(frame/m.cols)*m.cellH,m.cellW,m.cellH,ox,oy+dy,m.cellW*dpr,m.cellH*dpr);}
-  _lucDetailRaf=requestAnimationFrame(tick);}
+  localRaf=requestAnimationFrame(tick);if(!targetCanvas)_lucDetailRaf=localRaf;}
  tick();
+ return ()=>{disposed=true;cancelAnimationFrame(localRaf);image.src='';};
 }
 function startBachDienDetailIdle(){`);
   s = once(s, "function portraitSrc(heroId,kind='card'){",
