@@ -107,7 +107,7 @@
 /* o ten */
 #hvSumReveal .hsv-plq{position:absolute;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;overflow:hidden;animation:hsvInfoIn .6s .35s ease-out both}
 #hvSumReveal .bg-1 .hsv-plq{left:28%;width:56%;top:73.6%;height:6%}
-#hvSumReveal .bg-4 .hsv-plq{left:31%;width:42%;top:71.6%;height:6.4%}
+#hvSumReveal .bg-4 .hsv-plq{left:31%;width:42%;top:85.6%;height:6.4%}
 #hvSumReveal .hsv-plq h3{margin:0;font:400 calc(9.6cqw*var(--nf,1))/1 'HV Brush','Noto Serif',serif;white-space:nowrap}
 #hvSumReveal .hsv-plq p{margin:.3cqw 0 0;font:600 2.7cqw/1.15 'Noto Serif',serif;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
 #hvSumReveal .bg-1 .hsv-plq h3{color:#fff3d2;text-shadow:0 .3cqw 0 #3a1c04,0 0 2.5cqw rgba(255,200,90,.6)}
@@ -147,5 +147,9 @@
 #hvSumReveal .hsv-hero-host{position:absolute;left:50%;bottom:20%;height:72%;transform:translateX(-50%);display:grid;place-items:end center}
 #hvSumReveal .hsv-hero-host .hsv-hero{position:relative;left:auto;bottom:auto;transform:none;height:100%;max-width:78vw}
 /* Animation comes exclusively from the hero-detail renderer. */
-#hvSumReveal .hsv-hero-host canvas.hsv-hero{grid-area:1/1;width:auto;height:100%;object-fit:contain}
+#hvSumReveal .hsv-hero-host canvas.hsv-hero{grid-area:1/1;position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:auto;height:auto;max-height:100%;object-fit:contain}
 #hvSumReveal .hsv-hero-host img.hsv-hero{grid-area:1/1}
+
+/* Owner 2026-11-05: chan tuong phai dat dung mat san dinh (duong san = 79.4% chieu cao panel),
+   khong duoc lan vao bang ten. Do bang pixel, khong uoc luong. */
+#hvSumReveal .bg-4 .hsv-hero-host{bottom:15.2%}
