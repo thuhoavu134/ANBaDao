@@ -158,7 +158,8 @@
       const q = list.filter(Boolean);
       const EL = { 'Hỏa': ['hoa', 'Hỏa'], 'Thủy': ['thuy', 'Thủy'], 'Thổ': ['tho', 'Thổ'], 'Kim': ['kim', 'Kim'], 'Mộc': ['moc', 'Mộc'] };
       const RV = 'assets/ui/hero-detail/reference-v3/';
-      const bgNow = () => (window.HV_SSR_BG = window.HV_SSR_BG || (new URLSearchParams(location.search).get('ssrbg') === '4' ? '4' : '1'));
+      // Owner 2026-11-04: chot mau nen 'Dinh lang'. ?ssrbg=1 de xem lai mau thuy mac khi can so sanh.
+      const bgNow = () => (window.HV_SSR_BG = window.HV_SSR_BG || (new URLSearchParams(location.search).get('ssrbg') === '1' ? '1' : '4'));
       const next = () => {
         const c = q.shift();
         if (!c) return;
@@ -176,25 +177,16 @@
         const src = portrait(c.id);
         const sc = document.createElement('div');
         sc.className = 'hsv-show bg-' + bgNow();
-        sc.innerHTML = `<div class="hsv-sbg"></div><div class="hsv-glow"></div>
-          ${src ? `<img class="hsv-hero" src="${esc(src)}" alt="">` : `<b class="hsv-hero hsv-hero-mono">${esc(c.name.charAt(0))}</b>`}
-          <span class="hsv-badge">SSR</span>
-          <button class="hsv-bgsw" type="button">Nền: ${bgNow() === '1' ? 'Thủy mặc' : 'Đình làng'} ⇄</button>
-          <div class="hsv-plate">
-            <div class="hsv-id">
-              ${el ? `<span class="hsv-el"><img src="${RV}element-${el[0]}.png" alt=""><em>${esc(el[1])}</em></span>` : ''}
-              <div class="hsv-nm"><h3>${esc(c.name)}</h3><p>${esc(title)}</p></div>
-            </div>
-            <div class="hsv-skills">${SK.map(([k, lb]) => `<span class="hsv-sk">${art && art[k] ? `<img src="${esc(art[k])}" alt="">` : `<b>${lb.charAt(0)}</b>`}<em>${esc(skName(k) || lb)}</em><i>${lb}</i></span>`).join('')}</div>
+        sc.innerHTML = `<div class="hsv-blur"></div>
+          <div class="hsv-pf">
+            <div class="hsv-glow"></div>
+            ${src ? `<img class="hsv-hero" src="${esc(src)}" alt="">` : `<b class="hsv-hero hsv-hero-mono">${esc(c.name.charAt(0))}</b>`}
+            <div class="hsv-plq"><h3 style="--nf:${Math.min(1, 9 / Math.max(1, [...c.name].length)).toFixed(2)}">${esc(c.name)}</h3><p>${esc(title)}</p></div>
+            ${el ? `<span class="hsv-emb"><img src="${RV}element-${el[0]}.png" alt="${esc(el[1])}"></span><em class="hsv-emb-t">${esc(el[1])}</em>` : ''}
+            ${SK.map(([k, lb], i) => `<span class="hsv-sk s${i}">${art && art[k] ? `<img src="${esc(art[k])}" alt="">` : `<b>${lb.charAt(0)}</b>`}</span><em class="hsv-skt s${i}">${esc(skName(k) || lb)}</em>`).join('')}
           </div>
           <div class="hsv-tap">Chạm để tiếp tục</div>`;
         box.append(sc);
-        sc.querySelector('.hsv-bgsw').addEventListener('click', ev => {
-          ev.stopPropagation();
-          window.HV_SSR_BG = bgNow() === '1' ? '4' : '1';
-          sc.className = 'hsv-show bg-' + window.HV_SSR_BG;
-          ev.currentTarget.textContent = 'Nền: ' + (window.HV_SSR_BG === '1' ? 'Thủy mặc' : 'Đình làng') + ' ⇄';
-        });
         if (navigator.vibrate) navigator.vibrate([40, 30, 90]);
         let ok = false;
         T(() => { ok = true; }, 700);
