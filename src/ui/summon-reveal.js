@@ -32,7 +32,7 @@
         if (a) return String(a);
       }
     } catch (_) {}
-    const h = window.DATA && DATA.heroes ? DATA.heroes[id] : null;
+    const h = typeof DATA === 'object' && DATA.heroes ? DATA.heroes[id] : null;
     return h && (h.img || h.portrait || h.art) ? String(h.img || h.portrait || h.art) : '';
   }
 
@@ -156,19 +156,45 @@
     // Man show tuong SSR (giong game tham khao): nen toi + tia sang, tranh tuong lon, ten thu phap, nhan SSR.
     function showcase(list) {
       const q = list.filter(Boolean);
+      const EL = { 'Hỏa': ['hoa', 'Hỏa'], 'Thủy': ['thuy', 'Thủy'], 'Thổ': ['tho', 'Thổ'], 'Kim': ['kim', 'Kim'], 'Mộc': ['moc', 'Mộc'] };
+      const RV = 'assets/ui/hero-detail/reference-v3/';
+      const bgNow = () => (window.HV_SSR_BG = window.HV_SSR_BG || (new URLSearchParams(location.search).get('ssrbg') === '4' ? '4' : '1'));
       const next = () => {
         const c = q.shift();
         if (!c) return;
-        const h = window.DATA && DATA.heroes ? DATA.heroes[c.id] : null;
-        const title = String(c.full || '').split(/\s+[—–-]\s+/)[1] || (h && (h.title || h.role)) || 'Kỳ hiệp Mộng Giới';
+        const h = typeof DATA === 'object' && DATA.heroes ? DATA.heroes[c.id] : null;
+        const prof = (globalThis.HV_VC_HERO_PROFILES || {})[c.id] || {};
+        const role = String((h && h.role) || '');
+        const title = String(c.full || '').split(/\s+[—–-]\s+/)[1] || (role.includes('/') ? role : (prof && prof.job) || role) || 'Kỳ hiệp Mộng Giới';
+        const skName = k => { const o = h && h[k === 'basic' ? 'skill' : k]; return o && (o.nm || o.name || o.n || o.title) || ''; };
+        const heNm = h && typeof HE === 'object' && HE[h.he] ? HE[h.he].nm : '';
+        const el = Object.entries(EL).find(([k]) => k.normalize('NFC') === String(heNm).normalize('NFC'))?.[1] || null;
+        const art = prof.skillIcons === 'reference-v3'
+          ? { basic: RV + 'basic.png', ultimate: RV + 'ultimate.png', passive: RV + 'passive.png' }
+          : (prof.skillIcons || null);
+        const SK = [['basic', 'Đánh thường'], ['ultimate', 'Tuyệt kỹ'], ['passive', 'Nội tại']];
         const src = portrait(c.id);
         const sc = document.createElement('div');
-        sc.className = 'hsv-show';
-        sc.innerHTML = `<div class="hsv-rays"></div><div class="hsv-glow"></div>
+        sc.className = 'hsv-show bg-' + bgNow();
+        sc.innerHTML = `<div class="hsv-sbg"></div><div class="hsv-glow"></div>
           ${src ? `<img class="hsv-hero" src="${esc(src)}" alt="">` : `<b class="hsv-hero hsv-hero-mono">${esc(c.name.charAt(0))}</b>`}
-          <div class="hsv-info"><span class="hsv-badge">SSR</span><h3>${esc(c.name)}</h3><p>${esc(title)}</p></div>
+          <span class="hsv-badge">SSR</span>
+          <button class="hsv-bgsw" type="button">Nền: ${bgNow() === '1' ? 'Thủy mặc' : 'Đình làng'} ⇄</button>
+          <div class="hsv-plate">
+            <div class="hsv-id">
+              ${el ? `<span class="hsv-el"><img src="${RV}element-${el[0]}.png" alt=""><em>${esc(el[1])}</em></span>` : ''}
+              <div class="hsv-nm"><h3>${esc(c.name)}</h3><p>${esc(title)}</p></div>
+            </div>
+            <div class="hsv-skills">${SK.map(([k, lb]) => `<span class="hsv-sk">${art && art[k] ? `<img src="${esc(art[k])}" alt="">` : `<b>${lb.charAt(0)}</b>`}<em>${esc(skName(k) || lb)}</em><i>${lb}</i></span>`).join('')}</div>
+          </div>
           <div class="hsv-tap">Chạm để tiếp tục</div>`;
         box.append(sc);
+        sc.querySelector('.hsv-bgsw').addEventListener('click', ev => {
+          ev.stopPropagation();
+          window.HV_SSR_BG = bgNow() === '1' ? '4' : '1';
+          sc.className = 'hsv-show bg-' + window.HV_SSR_BG;
+          ev.currentTarget.textContent = 'Nền: ' + (window.HV_SSR_BG === '1' ? 'Thủy mặc' : 'Đình làng') + ' ⇄';
+        });
         if (navigator.vibrate) navigator.vibrate([40, 30, 90]);
         let ok = false;
         T(() => { ok = true; }, 700);
