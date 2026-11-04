@@ -24,8 +24,8 @@ test('lò rèn có bảng tỉ lệ riêng, chỉ s/ss/ssr, không đụng GACHA
   assert.match(fn, /FORGE_RARITY/);
   assert.doesNotMatch(fn, /GACHA\.rates/, 'không được dùng bảng của triệu hồi');
   assert.doesNotMatch(fn, /\['a','b','s'\]/, 'nhánh pity cũ cho a/b phải bỏ');
-  // GACHA vẫn nguyên cho triệu hồi tướng
-  assert.match(html, /rates:\[\['ssr',3\],\['ss',9\],\['s',18\],\['a',30\],\['b',40\]\]/);
+  // GACHA của triệu hồi tướng: owner 2026-11-04 chốt 3 bậc SSR/SS/S (bỏ A/B)
+  assert.match(html, /rates:\[\['ssr',3\],\['ss',12\],\['s',85\]\]/);
 });
 
 test('trận thường/tinh anh rơi b/a; trận cuối chương để boss chương', () => {

@@ -10,10 +10,8 @@ export const TEN_PULL_FLOOR = Object.freeze(['s', 'ss', 'ssr']);
 
 export const GACHA_RATES = Object.freeze([
   Object.freeze(['ssr', 3]),
-  Object.freeze(['ss', 9]),
-  Object.freeze(['s', 18]),
-  Object.freeze(['a', 30]),
-  Object.freeze(['b', 40])
+  Object.freeze(['ss', 12]),
+  Object.freeze(['s', 85])
 ]);
 
 export const GACHA_DUP_SHARDS = Object.freeze({ ssr: 15, ss: 10, s: 6, a: 4, b: 3 });

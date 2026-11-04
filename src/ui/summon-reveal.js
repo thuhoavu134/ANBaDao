@@ -4,15 +4,28 @@
   if (typeof document === 'undefined') return;
   const TIERS = [
     { cls: 'g', ys: 6, h: 31 },   // SSR - tren cung
-    { cls: 'p', ys: 40, h: 27 },  // SR
-    { cls: 'w', ys: 70, h: 24 }   // S va thap hon
+    { cls: 'p', ys: 40, h: 27 },  // SS
+    { cls: 'w', ys: 70, h: 24 }   // S
   ];
-  const MAP = { ssr: 'g', ss: 'p', s: 'p', a: 'w', b: 'w' };
-  const LABEL = { g: 'SSR', p: 'SR', w: 'S' };
+  const MAP = { ssr: 'g', ss: 'p', s: 'w', a: 'w', b: 'w' };
+  const LABEL = { g: 'SSR', p: 'SS', w: 'S' };
   const GLOW = { g: 'red', p: 'gold', w: 'purple' };
   const RANK = { g: 3, p: 2, w: 1 };
 
+  function shortName(name) {
+    const s = String(name || '').trim();
+    const cut = s.split(/\s+[—–-]\s+/)[0];
+    return (cut || s).trim();
+  }
+
   function portrait(id) {
+    // uu tien card art that cua tuong (CHARACTER_MANIFEST), roi avatar, roi field cu
+    try {
+      if (typeof characterAsset === 'function') {
+        const card = characterAsset(id, 'card') || characterAsset(id, 'avatar') || characterAsset(id, 'icon') || characterAsset(id, 'idle');
+        if (card) return String(card);
+      }
+    } catch (_) {}
     const h = (window.DATA && DATA.heroes) ? DATA.heroes[id] : null;
     const src = h && (h.img || h.portrait || h.art);
     return src ? String(src) : '';
@@ -25,8 +38,10 @@
     const box = document.createElement('div');
     box.id = 'hvSumReveal';
     box.innerHTML = '<div class="hsr-veil"></div><div class="hsr-stage"></div>';
-    host.append(box);
+    // gan vao body: tranh bi scale/transform cua khung game lam lech toa do
+    document.body.append(box);
     const stage = box.querySelector('.hsr-stage');
+    box.querySelector('.hsr-veil')?.addEventListener('click', () => box.remove());
     const cards = pulls.map((p, i) => {
       const k = MAP[p.t] || 'w';
       const el = document.createElement('div');
@@ -34,8 +49,8 @@
       el.dataset.k = k;
       el.innerHTML = `<div class="hsr-card"><div class="hsr-inner">
           <div class="hsr-face hsr-back"><b>${LABEL[k]}</b></div>
-          <div class="hsr-face hsr-front">${portrait(p.id) ? `<img src="${portrait(p.id)}" alt="">` : ''}
-            <i class="hsr-name">${p.name || ''}</i><u class="hsr-rk">${LABEL[k]}</u></div>
+          <div class="hsr-face hsr-front"><span class="hsr-mono">${(String(p.name || '?').trim().charAt(0) || '?').toUpperCase()}</span>${portrait(p.id) ? `<img src="${portrait(p.id)}" alt="" onerror="this.remove()">` : ''}
+            <i class="hsr-name" title="${(p.name || '').replace(/"/g, '&quot;')}">${shortName(p.name)}</i><u class="hsr-rk">${LABEL[k]}</u></div>
         </div></div>`;
       el.querySelector('.hsr-card').addEventListener('click', () => flip(el));
       stage.appendChild(el);
@@ -49,10 +64,22 @@
     ['w', 'p', 'g'].forEach(k => {
       const tier = TIERS.find(t => t.cls === k);
       const list = rows[k];
+      const perRow = Math.min(list.length, 5) || 1;
+      const rowCount = Math.max(1, Math.ceil(list.length / perRow));
+      const rowH = tier.h / rowCount;
       list.forEach((c, idx) => {
-        const w = Math.min(tier.h * 0.72, 92 / Math.max(list.length, 1));
-        const left = list.length === 1 ? 50 : 6 + (88 / (list.length - 1)) * idx;
-        Object.assign(c.el.style, { top: tier.ys + '%', left: left + '%', width: w + '%', height: tier.h + '%' });
+        const row = Math.floor(idx / perRow);
+        const col = idx % perRow;
+        const inRow = Math.min(perRow, list.length - row * perRow);
+        const w = Math.min(rowH * 1.11, 92 / (inRow * 1.06));
+        const step = w * 1.06;
+        const left = 50 + (col - (inRow - 1) / 2) * step;
+        Object.assign(c.el.style, {
+          top: (tier.ys + rowH * row) + '%',
+          left: left + '%',
+          width: w + '%',
+          height: (rowH * 0.94) + '%'
+        });
         order.push(c);
       });
     });
@@ -86,8 +113,14 @@
       btn.type = 'button';
       btn.className = 'hsr-all';
       btn.textContent = 'LẬT TẤT CẢ';
-      btn.onclick = () => cards.filter(c => !c.el.classList.contains('flipped'))
-        .sort((a, b) => RANK[a.k] - RANK[b.k]).forEach((c, i) => setTimeout(() => flip(c), i * 140));
+      btn.onclick = () => {
+        cards.filter(c => !c.el.classList.contains('flipped'))
+          .sort((a, b) => RANK[a.k] - RANK[b.k]).forEach((c, i) => setTimeout(() => flip(c), i * 140));
+        setTimeout(() => {
+          btn.textContent = 'TIẾP TỤC';
+          btn.onclick = () => box.remove();
+        }, cards.length * 140 + 700);
+      };
       stage.append(btn);
     }, t + 400);
   }
