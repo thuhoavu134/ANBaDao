@@ -3,9 +3,9 @@
 (() => {
   if (typeof document === 'undefined') return;
   const TIERS = [
-    { cls: 'g', ys: 6, h: 31 },   // SSR - tren cung
-    { cls: 'p', ys: 40, h: 27 },  // SS
-    { cls: 'w', ys: 70, h: 24 }   // S
+    { cls: 'g', ys: 3, h: 29 },   // SSR - tren cung, to nhat
+    { cls: 'p', ys: 35, h: 21 },  // SS
+    { cls: 'w', ys: 58, h: 38 }   // S: 2 hang
   ];
   const MAP = { ssr: 'g', ss: 'p', s: 'w', a: 'w', b: 'w' };
   const LABEL = { g: 'SSR', p: 'SS', w: 'S' };
@@ -19,16 +19,35 @@
   }
 
   function portrait(id) {
-    // uu tien card art that cua tuong (CHARACTER_MANIFEST), roi avatar, roi field cu
+    // dung dung chuoi art cua man role: portraitSrc(card/master) roi characterAsset
+    try {
+      if (typeof portraitSrc === 'function') {
+        const p = portraitSrc(id, 'card') || portraitSrc(id, 'master') || portraitSrc(id, 'avatar');
+        if (p) return String(p);
+      }
+    } catch (_) {}
     try {
       if (typeof characterAsset === 'function') {
-        const card = characterAsset(id, 'card') || characterAsset(id, 'avatar') || characterAsset(id, 'icon') || characterAsset(id, 'idle');
-        if (card) return String(card);
+        const a = characterAsset(id, 'card') || characterAsset(id, 'avatar') || characterAsset(id, 'icon') || characterAsset(id, 'idle');
+        if (a) return String(a);
       }
     } catch (_) {}
     const h = (window.DATA && DATA.heroes) ? DATA.heroes[id] : null;
     const src = h && (h.img || h.portrait || h.art);
     return src ? String(src) : '';
+  }
+
+  function heroCol(id, fallback) {
+    const h = (window.DATA && DATA.heroes) ? DATA.heroes[id] : null;
+    return (h && h.col) ? String(h.col) : (fallback || '#6e573d');
+  }
+
+  function openDetail(id) {
+    try {
+      document.getElementById('hvSumReveal')?.remove();
+      if (typeof renderHeroDetail === 'function') renderHeroDetail(id);
+      if (typeof showScreen === 'function') showScreen('heroDetail');
+    } catch (_) {}
   }
 
   function play(pulls, grid) {
@@ -49,10 +68,15 @@
       el.dataset.k = k;
       el.innerHTML = `<div class="hsr-card"><div class="hsr-inner">
           <div class="hsr-face hsr-back"><b>${LABEL[k]}</b></div>
-          <div class="hsr-face hsr-front"><span class="hsr-mono">${(String(p.name || '?').trim().charAt(0) || '?').toUpperCase()}</span>${portrait(p.id) ? `<img src="${portrait(p.id)}" alt="" onerror="this.remove()">` : ''}
+          <div class="hsr-face hsr-front">${portrait(p.id)
+            ? `<img src="${portrait(p.id)}" alt="" loading="lazy" onerror="this.remove()">`
+            : `<span class="hsr-mono" style="--mono-col:${heroCol(p.id)}">${(String(p.name || '?').trim().charAt(0) || '?').toUpperCase()}</span>`}
             <i class="hsr-name" title="${(p.name || '').replace(/"/g, '&quot;')}">${shortName(p.name)}</i><u class="hsr-rk">${LABEL[k]}</u></div>
         </div></div>`;
-      el.querySelector('.hsr-card').addEventListener('click', () => flip(el));
+      el.querySelector('.hsr-card').addEventListener('click', () => {
+        // chua lat thi lat; lat roi thi mo man chi tiet tuong (man role)
+        if (el.classList.contains('flipped')) openDetail(p.id); else flip(el);
+      });
       stage.appendChild(el);
       return { el, k, i };
     });
@@ -64,7 +88,7 @@
     ['w', 'p', 'g'].forEach(k => {
       const tier = TIERS.find(t => t.cls === k);
       const list = rows[k];
-      const perRow = Math.min(list.length, 5) || 1;
+      const perRow = Math.min(list.length, 4) || 1;
       const rowCount = Math.max(1, Math.ceil(list.length / perRow));
       const rowH = tier.h / rowCount;
       list.forEach((c, idx) => {

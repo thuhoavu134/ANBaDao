@@ -17,14 +17,20 @@
 #hvSumReveal .hsr-back b{font-family:Georgia,serif;font-weight:900;font-size:clamp(9px,24cqw,32px);line-height:1;color:#f6e6c0;letter-spacing:.06em;text-shadow:0 0 10px rgba(255,220,140,.5)}
 #hvSumReveal .r-p .hsr-back{box-shadow:inset 0 0 0 2px #f2c65c,inset 0 0 18px rgba(0,0,0,.8)}
 #hvSumReveal .r-g .hsr-back{box-shadow:inset 0 0 0 2px #ffd166,inset 0 0 26px rgba(255,150,40,.45)}
-#hvSumReveal .hsr-front{transform:rotateY(180deg);flex-direction:column;background:linear-gradient(180deg,#fdf8ec,#efe0c2)}
-#hvSumReveal .hsr-front img{position:relative;z-index:2;width:100%;height:76%;object-fit:cover;object-position:50% 18%}
-#hvSumReveal .hsr-mono{position:absolute;top:0;left:0;right:0;height:76%;display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-weight:900;font-size:clamp(16px,34cqw,52px);line-height:1;color:rgba(96,60,18,.5);letter-spacing:.04em;background:radial-gradient(ellipse at 50% 30%,rgba(255,250,235,.95),rgba(226,205,164,.9) 62%,rgba(198,170,120,.95))}
-#hvSumReveal .r-p .hsr-mono{background:radial-gradient(ellipse at 50% 30%,rgba(255,248,225,.97),rgba(232,206,150,.92) 62%,rgba(201,168,105,.95))}
-#hvSumReveal .r-g .hsr-mono{background:radial-gradient(ellipse at 50% 30%,rgba(255,240,205,.98),rgba(240,204,140,.94) 60%,rgba(206,164,96,.96))}
-#hvSumReveal .hsr-name{position:absolute;z-index:3;left:5%;right:5%;bottom:4%;font-family:inherit;font-weight:800;font-size:clamp(6px,8cqw,12px);line-height:1.15;color:#3d2410;text-align:center;max-height:32%;
+#hvSumReveal .hsr-front{transform:rotateY(180deg);flex-direction:column;background:linear-gradient(180deg,#1a1408,#0d0a05);box-shadow:inset 0 0 0 2px #8a6a33}
+#hvSumReveal .r-p .hsr-front{box-shadow:inset 0 0 0 2px #a878ff,0 0 18px rgba(150,100,255,.45)}
+#hvSumReveal .r-p .hsr-rk{background:rgba(92,52,160,.92)}
+#hvSumReveal .r-w .hsr-front{box-shadow:inset 0 0 0 2px #9fb0cc}
+#hvSumReveal .r-w .hsr-rk{background:rgba(48,66,102,.9)}
+#hvSumReveal .r-g .hsr-front{box-shadow:inset 0 0 0 2px #ffd166,0 0 26px rgba(255,170,50,.55)}
+#hvSumReveal .hsr-slot.lit.r-g .hsr-card{filter:drop-shadow(0 0 18px rgba(255,180,60,.55))}
+#hvSumReveal .hsr-slot.lit.r-p .hsr-card{filter:drop-shadow(0 0 14px rgba(160,105,255,.5))}
+#hvSumReveal .r-p .hsr-back{box-shadow:inset 0 0 0 2px #a878ff,inset 0 0 18px rgba(0,0,0,.8)}
+#hvSumReveal .hsr-front img{position:relative;z-index:2;width:100%;height:80%;object-fit:cover;object-position:50% 10%;transform:scale(1.45);transform-origin:50% 12%;image-rendering:auto}
+#hvSumReveal .hsr-mono{position:absolute;top:0;left:0;right:0;height:76%;display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-weight:900;font-size:clamp(16px,34cqw,52px);line-height:1;color:rgba(255,255,255,.92);letter-spacing:.04em;background:var(--mono-col,#6e573d);text-shadow:0 2px 10px rgba(0,0,0,.35)}
+#hvSumReveal .hsr-name{position:absolute;z-index:3;left:5%;right:5%;bottom:4%;font-family:inherit;font-weight:800;font-size:clamp(7px,9cqw,13px);line-height:1.15;color:#3d2410;text-align:center;max-height:32%;
   background:linear-gradient(180deg,#fff8e6,#ead6ab);border-radius:4px;padding:1px 2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:break-word}
-#hvSumReveal .hsr-rk{position:absolute;z-index:4;top:3%;left:5%;font-family:Georgia,serif;font-weight:900;font-size:clamp(6px,6.5cqw,11px);line-height:1;color:#fff;
+#hvSumReveal .hsr-rk{position:absolute;z-index:4;top:3%;left:5%;font-family:Georgia,serif;font-weight:900;font-size:clamp(7.5px,7.5cqw,12px);line-height:1;padding:2px 5px;color:#fff;
   background:rgba(120,20,10,.8);border-radius:4px;padding:1px 4px;text-decoration:none}
 #hvSumReveal .r-p .hsr-rk{background:rgba(120,70,10,.85)}
 #hvSumReveal .r-g .hsr-rk{background:rgba(160,20,10,.9)}
@@ -32,7 +38,8 @@
   min-width:140px;height:40px;border-radius:10px;border:1px solid #b58e49;
   background:linear-gradient(180deg,#ffe6a6,#d7a94f);color:#3a2310;font-weight:900;letter-spacing:.04em}
 #hvSumReveal .hsr-card{container-type:size}
-@container (max-width:110px){#hvSumReveal .hsr-name{-webkit-line-clamp:2;font-size:6px;line-height:1.05;padding:0 1px;max-height:44%}}
+@container (max-width:110px){#hvSumReveal .hsr-name{-webkit-line-clamp:2;font-size:8px;line-height:1.1;padding:1px 1px;max-height:46%}}
+@container (max-width:80px){#hvSumReveal .hsr-name{-webkit-line-clamp:1;font-size:7.5px}}
 #summonScreen.hsr-shake{animation:hsrShake .34s linear}
 @keyframes hsrShake{0%,100%{transform:none}25%{transform:translate(-3px,2px)}50%{transform:translate(3px,-2px)}75%{transform:translate(-2px,1px)}}
 @media (max-width:360px){#hvSumReveal .hsr-back b{font-size:18px}}
