@@ -1,0 +1,10 @@
+import { launch, attach } from './tmp-qa-run-alt.mjs';
+const b = await launch({ width: 390, height: 844 });
+const c = await attach((await (await fetch(b.base + '/json/list')).json()).find(t => t.type === 'page').webSocketDebuggerUrl);
+await c.resize(390, 844);
+await c.goto('http://127.0.0.1:18092/index.html?qa=unlock-all', 6000);
+const r = await c.eval(`(()=>{ renderHeroes(); const root=document.getElementById('hvHeroRosterV4');
+  return [...root.querySelectorAll('.v4-card')].map(card=>{const img=card.querySelector('.v4-art img');
+    return {id:card.dataset.heroId, src:img&&img.getAttribute('src'), reviewed:img&&img.dataset.portraitReviewed};});})()`);
+await b.kill();
+for (const x of r) console.log((x.reviewed === 'true' ? 'OK      ' : 'MISSING ') + x.id.padEnd(22) + x.src);

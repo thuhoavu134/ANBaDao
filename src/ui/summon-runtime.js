@@ -125,6 +125,10 @@
         <small>${sub}</small>
       </article>`;
     }).join('');
+    // Owner 2026-11-04: the roi 3 tang theo tu chat + lat the (summon-reveal.js)
+    try {
+      window.HV_SUMMON_REVEAL?.play(pulls.map(r => ({ id: r.id, t: r.t, name: heroName(r.id), dup: !!r.dup, sh: r.sh })), grid);
+    } catch (_) {}
   }
 
   function renderLacquer() {
@@ -161,7 +165,7 @@
           <div class="hv-sum-meter">
             <div>Còn <b data-summon-pity>${left}</b> lượt nữa chắc chắn SSR</div>
             <i><u style="width:${pct}%"></u></i>
-            <small>SSR 3% · SS 9% · S 18% · A 30% · B 40%</small>
+            <small>SSR 3% · SS 12% · S 85%</small>
           </div>
           <div class="hv-sum-free" data-summon-free>${free ? 'Lượt miễn phí hôm nay đang sẵn sàng.' : (locked ? 'Trạng thái lượt miễn phí được giữ nguyên.' : ('Quay lại sau <b>' + msToMidnightLabel() + '</b>.'))}</div>
           <div class="hv-sum-actions">

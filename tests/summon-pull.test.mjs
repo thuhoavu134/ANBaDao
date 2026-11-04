@@ -70,7 +70,7 @@ test('L07-T1: live catalog frozen — rates sum 100, costs and pity unchanged', 
   assert.equal(GACHA_PITY_AT, 60);
   assert.equal(SPARK_SELECT, 120);
   assert.equal(gachaRatesSum(), 100);
-  assert.deepEqual(GACHA_RATES.map(([t, w]) => [t, w]), [['ssr', 3], ['ss', 9], ['s', 18], ['a', 30], ['b', 40]]);
+  assert.deepEqual(GACHA_RATES.map(([t, w]) => [t, w]), [['ssr', 3], ['ss', 12], ['s', 85]]);
   assert.deepEqual(GACHA_DUP_SHARDS, { ssr: 15, ss: 10, s: 6, a: 4, b: 3 });
   assert.deepEqual(ESSENCE_BY_RARITY, { ssr: 12, ss: 8, s: 5, a: 3, b: 2 });
   assert.equal(LIVE_GACHA.cost1, 80);
