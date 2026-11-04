@@ -109,6 +109,7 @@ await import('./lanes/tkt-0040-guild.mjs');
 await import('./lanes/tkt-0041-friends.mjs');
 await import('./lanes/tkt-0042-chat.mjs');
 await import('./social-broadcast-v1.mjs');
+await import('./summon-reveal-v1.mjs');
 await import('./lanes/tkt-0043-clan.mjs');
 await import('./lanes/tkt-0044-vault.mjs');
 await import('./lanes/tkt-0046-tower.mjs');

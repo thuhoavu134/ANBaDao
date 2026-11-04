@@ -125,6 +125,10 @@
         <small>${sub}</small>
       </article>`;
     }).join('');
+    // Owner 2026-11-04: the roi 3 tang theo tu chat + lat the (summon-reveal.js)
+    try {
+      window.HV_SUMMON_REVEAL?.play(pulls.map(r => ({ id: r.id, t: r.t, name: heroName(r.id), dup: !!r.dup, sh: r.sh })), grid);
+    } catch (_) {}
   }
 
   function renderLacquer() {

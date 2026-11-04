@@ -1,0 +1,32 @@
+/* Owner 2026-11-04: man ket qua trieu hoi - the roi 3 tang, vien + lua cuong hoa */
+#hvSumReveal{position:fixed;inset:0;z-index:120;display:flex;align-items:center;justify-content:center;
+  padding:calc(8px + env(safe-area-inset-top)) 8px calc(10px + env(safe-area-inset-bottom))}
+#hvSumReveal .hsr-veil{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 42%,rgba(18,12,6,.55),rgba(6,4,2,.92))}
+#hvSumReveal .hsr-stage{position:relative;width:min(100%,520px);aspect-ratio:390/700;max-height:100%}
+#hvSumReveal .hsr-slot{position:absolute;transform:translate(-50%,0);opacity:0;z-index:2}
+#hvSumReveal .hsr-slot.fall{opacity:1}
+#hvSumReveal .hsr-slot.lit{z-index:3}
+#hvSumReveal .hsr-card{position:relative;width:100%;height:100%;perspective:900px;cursor:pointer;
+  filter:drop-shadow(0 6px 12px rgba(0,0,0,.6))}
+#hvSumReveal .hsr-inner{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.3,.7,.2,1)}
+#hvSumReveal .hsr-slot.flipped .hsr-inner{transform:rotateY(180deg)}
+#hvSumReveal .hsr-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+#hvSumReveal .hsr-back{background:linear-gradient(160deg,#1b2430,#0d1218 70%);box-shadow:inset 0 0 0 2px #c9a45c,inset 0 0 18px rgba(0,0,0,.8)}
+#hvSumReveal .hsr-back b{font:900 2.2em/1 Georgia,serif;color:#f6e6c0;letter-spacing:.06em;text-shadow:0 0 10px rgba(255,220,140,.5)}
+#hvSumReveal .r-p .hsr-back{box-shadow:inset 0 0 0 2px #f2c65c,inset 0 0 18px rgba(0,0,0,.8)}
+#hvSumReveal .r-g .hsr-back{box-shadow:inset 0 0 0 2px #ffd166,inset 0 0 26px rgba(255,150,40,.45)}
+#hvSumReveal .hsr-front{transform:rotateY(180deg);flex-direction:column;background:linear-gradient(180deg,#fdf8ec,#efe0c2)}
+#hvSumReveal .hsr-front img{width:100%;height:78%;object-fit:cover;object-position:50% 18%}
+#hvSumReveal .hsr-name{position:absolute;left:4%;right:4%;bottom:3%;font:800 .68em/1.2 inherit;color:#3d2410;text-align:center;
+  background:linear-gradient(180deg,#fff8e6,#ead6ab);border-radius:4px;padding:2px 0}
+#hvSumReveal .hsr-rk{position:absolute;top:4%;left:6%;font:900 .62em/1 Georgia,serif;color:#fff;
+  background:rgba(120,20,10,.8);border-radius:4px;padding:2px 5px;text-decoration:none}
+#hvSumReveal .r-p .hsr-rk{background:rgba(120,70,10,.85)}
+#hvSumReveal .r-g .hsr-rk{background:rgba(160,20,10,.9)}
+#hvSumReveal .hsr-all{position:absolute;left:50%;bottom:-9%;transform:translateX(-50%);
+  min-width:140px;height:40px;border-radius:10px;border:1px solid #b58e49;
+  background:linear-gradient(180deg,#ffe6a6,#d7a94f);color:#3a2310;font-weight:900;letter-spacing:.04em}
+#summonScreen.hsr-shake{animation:hsrShake .34s linear}
+@keyframes hsrShake{0%,100%{transform:none}25%{transform:translate(-3px,2px)}50%{transform:translate(3px,-2px)}75%{transform:translate(-2px,1px)}}
+@media (max-width:360px){#hvSumReveal .hsr-back b{font-size:1.7em}}
