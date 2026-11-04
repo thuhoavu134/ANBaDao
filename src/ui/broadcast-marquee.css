@@ -1,0 +1,30 @@
+/* Owner 2026-11-04 09:05: dai loa he thong theo concept da duyet (3 kieu: SSR do-vang, do Boss tim-ngoc, trung thuong vang) */
+#hvMarquee{--h:clamp(40px,11.5vw,52px);position:fixed;left:50%;top:calc(env(safe-area-inset-top) + 52vh);z-index:9000;
+  width:min(98vw,640px);height:var(--h);transform:translate(-50%,-8px);opacity:0;pointer-events:none;
+  display:grid;grid-template-columns:calc(var(--h) * 1.517) 1fr calc(var(--h) * .563);
+  filter:drop-shadow(0 6px 10px rgba(0,0,0,.65));transition:opacity .35s,transform .35s}
+#hvMarquee.on{opacity:1;transform:translate(-50%,0)}
+#hvMarquee .hv-mq-l,#hvMarquee .hv-mq-r{position:relative;z-index:2;background:center/100% 100% no-repeat}
+#hvMarquee .hv-mq-r{margin-left:calc(var(--h) * -.22)}
+#hvMarquee .hv-mq-l{margin-right:calc(var(--h) * -.12)}
+#hvMarquee .hv-mq-track{position:relative;overflow:hidden;background:0 0/auto 100% repeat-x;
+  }
+#hvMarquee .hv-mq-ic{display:none}
+#hvMarquee .hv-mq-txt{position:absolute;left:0;top:50%;transform:translateY(-50%);white-space:nowrap;will-change:transform;
+  font:italic 700 clamp(13px,3.7vw,16px)/1 'Noto Serif','Times New Roman',Georgia,serif;color:#ffe9c4;
+  text-shadow:0 1px 0 #2a0a04,0 0 6px rgba(0,0,0,.7)}
+#hvMarquee .hv-mq-txt em{font-style:normal;font-weight:900;color:#ffb44a;text-shadow:0 0 8px rgba(255,160,40,.6),0 1px 0 #2a0a04}
+#hvMarquee .hv-mq-txt b{color:#ffd875}
+#hvMarquee[data-tone="ssr"] .hv-mq-l,#hvMarquee:not([data-tone]) .hv-mq-l,#hvMarquee[data-tone="net"] .hv-mq-l{background-image:url('assets/ui/chat/v2/rb-ssr-l.png')}
+#hvMarquee[data-tone="ssr"] .hv-mq-track,#hvMarquee:not([data-tone]) .hv-mq-track,#hvMarquee[data-tone="net"] .hv-mq-track{background-image:url('assets/ui/chat/v2/rb-ssr-m.png')}
+#hvMarquee[data-tone="ssr"] .hv-mq-r,#hvMarquee:not([data-tone]) .hv-mq-r,#hvMarquee[data-tone="net"] .hv-mq-r{background-image:url('assets/ui/chat/v2/rb-ssr-r.png')}
+#hvMarquee[data-tone="boss"] .hv-mq-l,#hvMarquee[data-tone="enh"] .hv-mq-l{background-image:url('assets/ui/chat/v2/rb-boss-l.png')}
+#hvMarquee[data-tone="boss"] .hv-mq-track,#hvMarquee[data-tone="enh"] .hv-mq-track{background-image:url('assets/ui/chat/v2/rb-boss-m.png')}
+#hvMarquee[data-tone="boss"] .hv-mq-r,#hvMarquee[data-tone="enh"] .hv-mq-r{background-image:url('assets/ui/chat/v2/rb-boss-r.png')}
+#hvMarquee[data-tone="boss"] .hv-mq-txt em,#hvMarquee[data-tone="enh"] .hv-mq-txt em{color:#e7b8ff;text-shadow:0 0 8px rgba(190,110,255,.7),0 1px 0 #1a0628}
+#hvMarquee[data-tone="bbr"] .hv-mq-l{background-image:url('assets/ui/chat/v2/rb-bbr-l.png')}
+#hvMarquee[data-tone="bbr"] .hv-mq-track{background-image:url('assets/ui/chat/v2/rb-bbr-m.png')}
+#hvMarquee[data-tone="bbr"] .hv-mq-r{background-image:url('assets/ui/chat/v2/rb-bbr-r.png')}
+#hvMarquee[data-tone="bbr"] .hv-mq-txt{color:#fff2c8}
+#hvMarquee[data-tone="bbr"] .hv-mq-txt em{color:#ffe36a;text-shadow:0 0 8px rgba(255,210,60,.7),0 1px 0 #3a1c02}
+@media (prefers-reduced-motion:reduce){#hvMarquee{transition:none}}

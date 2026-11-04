@@ -1,4 +1,5 @@
 import { hashPassword, randomId, signToken, usernameFromEmail, verifyPassword, verifyToken } from './crypto.mjs';
+import { BROADCAST_COOLDOWN_MS, buildBroadcast, cleanGuildName } from '../domain/social/broadcast.mjs';
 import { redeemGiftCode } from '../domain/profile/gift-codes.mjs';
 
 const USER_RE = /^[A-Za-z0-9_]{3,16}$/;
@@ -466,19 +467,103 @@ export function createApp(deps) {
       } };
     }
 
+    // Owner 2026-11-04: kenh Thế Giới / Bang Hội / Gia Tộc / Hệ Thống + loa he thong + bang/gia toc tren server
+    const chatScope = async (u, channel, peer) => {
+      if (channel === 'world' || channel === 'sys') return { ok: true, scope: '' };
+      if (channel === 'friend') {
+        const other = String(peer || '').trim();
+        if (!other) return { ok: false };
+        const mine = await ensureProfile(u);
+        const fr = Array.isArray(mine.friends) ? mine.friends : [];
+        if (!fr.some(x => x.toLowerCase() === other.toLowerCase())) return { ok: false, code: 'NOT_FRIEND' };
+        return { ok: true, scope: [u.user.toLowerCase(), other.toLowerCase()].sort().join('|') };
+      }
+      if (channel !== 'guild' && channel !== 'clan') return { ok: false };
+      const mb = await store.getMembership(u.id);
+      const id = channel === 'guild' ? mb.guild : mb.clan;
+      return id ? { ok: true, scope: id } : { ok: false, code: 'NOT_MEMBER' };
+    };
+
     if (m === 'GET' && path === '/api/chat') {
       if (!user) return fail(401, 'Chưa đăng nhập.');
-      const messages = await store.listChatSince(query.since);
-      const last = messages.reduce((m, x) => Math.max(m, x.t || 0), Number(query.since) || 0);
-      return ok({ messages, last });
+      const channel = String(query.channel || 'world');
+      const sc = await chatScope(user, channel, query.peer);
+      if (!sc.ok) return fail(sc.code ? 403 : 400, sc.code === 'NOT_FRIEND' ? 'Chưa kết hảo hữu.' : sc.code === 'NOT_MEMBER' ? 'Chưa vào ' + (channel === 'guild' ? 'bang' : 'gia tộc') + '.' : 'Kênh không hợp lệ.');
+      const messages = await store.listChatSince(query.since, { channel, scope: sc.scope });
+      const last = messages.reduce((acc, x) => Math.max(acc, x.t || 0), Number(query.since) || 0);
+      return ok({ messages, last, channel });
     }
 
     if (m === 'POST' && path === '/api/chat') {
       if (!user) return fail(401, 'Chưa đăng nhập.');
       const text = String(body.text || '').trim().slice(0, 160);
       if (!text) return fail(400, 'Trống.');
-      const msg = { user: user.user, text, t: now() };
-      await store.appendChat(msg);
+      const channel = String(body.channel || 'world');
+      if (channel === 'sys') return fail(403, 'Kênh Hệ Thống chỉ để thông báo.');
+      const sc = await chatScope(user, channel, body.peer);
+      if (!sc.ok) return fail(sc.code ? 403 : 400, sc.code === 'NOT_FRIEND' ? 'Chưa kết hảo hữu.' : sc.code === 'NOT_MEMBER' ? 'Chưa vào ' + (channel === 'guild' ? 'bang' : 'gia tộc') + '.' : 'Kênh không hợp lệ.');
+      await store.appendChat({ user: user.user, text, t: now(), channel, scope: sc.scope, kind: 'chat' });
+      return ok({ ok: true });
+    }
+
+    if (m === 'POST' && path === '/api/broadcast') {
+      if (!user) return fail(401, 'Chưa đăng nhập.');
+      const last = await store.lastBroadcastAt(user.user);
+      if (last && now() - last < BROADCAST_COOLDOWN_MS) return fail(429, 'Loa hệ thống đang hồi, thử lại sau.');
+      const b = buildBroadcast(String(body.event || ''), body.data, user.user, now());
+      if (!b.ok) return fail(400, 'Sự kiện không hợp lệ.');
+      const t = now();
+      const base = { user: '📢 Hệ Thống', text: b.text, t, kind: 'sys', by: user.user, meta: { event: b.event } };
+      await store.appendChat({ ...base, channel: 'sys', scope: '' });
+      await store.appendChat({ ...base, channel: 'world', scope: '' });
+      const mb = await store.getMembership(user.id);
+      if (mb.guild) await store.appendChat({ ...base, channel: 'guild', scope: mb.guild });
+      if (mb.clan) await store.appendChat({ ...base, channel: 'clan', scope: mb.clan });
+      return ok({ ok: true, text: b.text });
+    }
+
+    if (m === 'GET' && path === '/api/guild') {
+      if (!user) return fail(401, 'Chưa đăng nhập.');
+      const mb = await store.getMembership(user.id);
+      const out = { guild: null, clan: null };
+      for (const k of ['guild', 'clan']) {
+        if (!mb[k]) continue;
+        const g = await store.getGuild(mb[k]);
+        if (g) out[k] = { ...g, members: await store.countMembers(g.id) };
+      }
+      const kind = query.kind === 'clan' ? 'clan' : 'guild';
+      return ok({ ...out, list: await store.listGuilds(kind, 30) });
+    }
+
+    if (m === 'POST' && path === '/api/guild/create') {
+      if (!user) return fail(401, 'Chưa đăng nhập.');
+      const kind = body.kind === 'clan' ? 'clan' : 'guild';
+      const name = cleanGuildName(body.name);
+      if (!name) return fail(400, 'Tên cần 2–18 ký tự.');
+      const mb = await store.getMembership(user.id);
+      if (mb[kind]) return fail(409, kind === 'guild' ? 'Đại hiệp đã có bang.' : 'Đại hiệp đã có gia tộc.');
+      if (await store.findGuildByName(name, kind)) return fail(409, 'Tên đã có người dùng.');
+      const g = { id: kind[0] + '_' + now().toString(36) + Math.random().toString(36).slice(2, 6), name, kind, owner: user.user, createdAt: now() };
+      await store.createGuild(g);
+      await store.setMembership(user.id, { [kind]: g.id });
+      return ok({ ok: true, [kind]: { ...g, members: 1 } });
+    }
+
+    if (m === 'POST' && path === '/api/guild/join') {
+      if (!user) return fail(401, 'Chưa đăng nhập.');
+      const g = await store.getGuild(String(body.id || ''));
+      if (!g) return fail(404, 'Không tìm thấy.');
+      const mb = await store.getMembership(user.id);
+      if (mb[g.kind]) return fail(409, g.kind === 'guild' ? 'Đại hiệp đã có bang.' : 'Đại hiệp đã có gia tộc.');
+      if (await store.countMembers(g.id) >= (g.kind === 'guild' ? 50 : 20)) return fail(409, 'Đã đủ người.');
+      await store.setMembership(user.id, { [g.kind]: g.id });
+      return ok({ ok: true, [g.kind]: { ...g, members: await store.countMembers(g.id) } });
+    }
+
+    if (m === 'POST' && path === '/api/guild/leave') {
+      if (!user) return fail(401, 'Chưa đăng nhập.');
+      const kind = body.kind === 'clan' ? 'clan' : 'guild';
+      await store.setMembership(user.id, { [kind]: '' });
       return ok({ ok: true });
     }
 

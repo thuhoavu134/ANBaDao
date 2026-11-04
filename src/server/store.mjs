@@ -13,6 +13,9 @@ export function createMemoryStore() {
   const chat = [];
   const oauthState = new Map();
   const oauthCodes = new Map();
+  // Owner 2026-11-04: Bang hoi / Gia toc tren server (kenh Bang + Gia toc that)
+  const guilds = new Map();   // id -> { id, name, kind: 'guild'|'clan', owner, createdAt }
+  const members = new Map();  // userId -> { guild, clan, updatedAt }
 
   return {
     kind: 'memory',
@@ -89,12 +92,52 @@ export function createMemoryStore() {
       return [...profiles.entries()].map(([userId, profile]) => ({ userId, ...clone(profile) }));
     },
     async appendChat(msg) {
-      chat.push({ ...msg });
-      while (chat.length > 200) chat.shift();
+      chat.push({ channel: 'world', kind: 'chat', scope: '', ...msg });
+      while (chat.length > 400) chat.shift();
     },
-    async listChatSince(since) {
+    async listChatSince(since, opts = {}) {
       const t = Number(since) || 0;
-      return chat.filter(m => m.t > t).slice(-80);
+      const channel = opts.channel || 'world';
+      const scope = opts.scope || '';
+      return clone(chat.filter(m => m.t > t && (m.channel || 'world') === channel && (m.scope || '') === scope).slice(-80));
+    },
+    async listAllChat() {
+      return clone(chat);
+    },
+    async lastBroadcastAt(user) {
+      let t = 0;
+      for (const m of chat) if (m.kind === 'sys' && m.by === user && m.t > t) t = m.t;
+      return t;
+    },
+    async createGuild(row) {
+      guilds.set(row.id, { ...row });
+      return clone(row);
+    },
+    async getGuild(id) {
+      return clone(guilds.get(id) || null);
+    },
+    async findGuildByName(name, kind) {
+      const key = String(name || '').toLowerCase();
+      return clone([...guilds.values()].find(g => g.kind === kind && g.name.toLowerCase() === key) || null);
+    },
+    async listGuilds(kind, limit = 30) {
+      const count = id => [...members.values()].filter(m => m.guild === id || m.clan === id).length;
+      return [...guilds.values()].filter(g => g.kind === kind).map(g => ({ ...clone(g), members: count(g.id) }))
+        .sort((a, b) => b.members - a.members || a.createdAt - b.createdAt).slice(0, limit);
+    },
+    async countMembers(id) {
+      return [...members.values()].filter(m => m.guild === id || m.clan === id).length;
+    },
+    async getMembership(userId) {
+      return clone(members.get(userId) || { guild: '', clan: '' });
+    },
+    async setMembership(userId, row) {
+      const cur = members.get(userId) || { guild: '', clan: '' };
+      members.set(userId, { ...cur, ...row });
+      return clone(members.get(userId));
+    },
+    async listGuildState() {
+      return { guilds: [...guilds.values()].map(clone), members: [...members.entries()].map(([id, m]) => [id, clone(m)]) };
     },
     async putOauthState(state, row) {
       oauthState.set(state, { ...row });
@@ -135,10 +178,14 @@ export function createFileStore(filePath) {
       users: await mem.listUsers(),
       saves: (await mem.listUsers()).map(async u => [u.id, await mem.getSave(u.id)]),
       profiles: await mem.listProfiles(),
-      chat: await mem.listChatSince(0),
+      chat: [],
       oauthState: [],
       oauthCodes: []
     };
+    data.chat = await mem.listAllChat();
+    const gs = await mem.listGuildState();
+    data.guilds = gs.guilds;
+    data.members = gs.members;
     const saves = [];
     for (const u of data.users) {
       const save = await mem.getSave(u.id);
@@ -166,6 +213,8 @@ export function createFileStore(filePath) {
           mem.putProfile(userId, profile);
         }
       }
+      for (const g of raw.guilds || []) mem.createGuild(g);
+      for (const [id, m] of raw.members || []) mem.setMembership(id, m);
       for (const msg of raw.chat || []) mem.appendChat(msg);
     } catch {
       void snapshot;
@@ -191,7 +240,9 @@ export function createFileStore(filePath) {
     putSaveIfVersion: persist(mem.putSaveIfVersion.bind(mem)),
     putProfile: persist(mem.putProfile.bind(mem)),
     patchProfileStats: persist(mem.patchProfileStats.bind(mem)),
-    appendChat: persist(mem.appendChat.bind(mem))
+    appendChat: persist(mem.appendChat.bind(mem)),
+    createGuild: persist(mem.createGuild.bind(mem)),
+    setMembership: persist(mem.setMembership.bind(mem))
   };
 }
 
@@ -228,6 +279,27 @@ export async function createPostgresStore(databaseUrl, sqlImpl) {
     username TEXT NOT NULL,
     text TEXT NOT NULL,
     t BIGINT NOT NULL
+  )`;
+  // Owner 2026-11-04 (duyet): chi THEM cot / bang, khong xoa du lieu cu
+  await sql`ALTER TABLE hv_chat ADD COLUMN IF NOT EXISTS channel TEXT NOT NULL DEFAULT 'world'`;
+  await sql`ALTER TABLE hv_chat ADD COLUMN IF NOT EXISTS kind TEXT NOT NULL DEFAULT 'chat'`;
+  await sql`ALTER TABLE hv_chat ADD COLUMN IF NOT EXISTS scope TEXT NOT NULL DEFAULT ''`;
+  await sql`ALTER TABLE hv_chat ADD COLUMN IF NOT EXISTS by_user TEXT`;
+  await sql`ALTER TABLE hv_chat ADD COLUMN IF NOT EXISTS meta JSONB`;
+  await sql`CREATE INDEX IF NOT EXISTS hv_chat_channel_idx ON hv_chat (channel, scope, t)`;
+  await sql`CREATE TABLE IF NOT EXISTS hv_guilds (
+    id TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    kind TEXT NOT NULL,
+    owner TEXT NOT NULL,
+    created_at BIGINT NOT NULL
+  )`;
+  await sql`CREATE UNIQUE INDEX IF NOT EXISTS hv_guilds_name_idx ON hv_guilds (kind, lower(name))`;
+  await sql`CREATE TABLE IF NOT EXISTS hv_members (
+    user_id TEXT PRIMARY KEY,
+    guild_id TEXT NOT NULL DEFAULT '',
+    clan_id TEXT NOT NULL DEFAULT '',
+    updated_at BIGINT NOT NULL
   )`;
   await sql`CREATE TABLE IF NOT EXISTS hv_oauth_state (
     state TEXT PRIMARY KEY,
@@ -358,11 +430,56 @@ export async function createPostgresStore(databaseUrl, sqlImpl) {
       return rows.map(mapProfile);
     },
     async appendChat(msg) {
-      await sql`INSERT INTO hv_chat (username, text, t) VALUES (${msg.user}, ${msg.text}, ${msg.t})`;
+      await sql`INSERT INTO hv_chat (username, text, t, channel, kind, scope, by_user, meta)
+        VALUES (${msg.user}, ${msg.text}, ${msg.t}, ${msg.channel || 'world'}, ${msg.kind || 'chat'}, ${msg.scope || ''},
+          ${msg.by || null}, ${msg.meta ? JSON.stringify(msg.meta) : null}::jsonb)`;
     },
-    async listChatSince(since) {
-      const rows = await sql`SELECT username, text, t FROM hv_chat WHERE t > ${Number(since) || 0} ORDER BY t ASC LIMIT 80`;
-      return rows.map(r => ({ user: r.username, text: r.text, t: Number(r.t) }));
+    async listChatSince(since, opts = {}) {
+      const channel = opts.channel || 'world';
+      const scope = opts.scope || '';
+      const rows = await sql`SELECT username, text, t, channel, kind, scope, by_user, meta FROM hv_chat
+        WHERE t > ${Number(since) || 0} AND channel = ${channel} AND scope = ${scope} ORDER BY t ASC LIMIT 80`;
+      return rows.map(r => ({ user: r.username, text: r.text, t: Number(r.t), channel: r.channel || 'world',
+        kind: r.kind || 'chat', scope: r.scope || '', by: r.by_user || undefined,
+        meta: r.meta && typeof r.meta === 'object' ? r.meta : undefined }));
+    },
+    async lastBroadcastAt(user) {
+      const rows = await sql`SELECT MAX(t) AS t FROM hv_chat WHERE kind = 'sys' AND by_user = ${user}`;
+      return Number((rows[0] && rows[0].t) || 0);
+    },
+    async createGuild(row) {
+      await sql`INSERT INTO hv_guilds (id, name, kind, owner, created_at) VALUES (${row.id}, ${row.name}, ${row.kind}, ${row.owner}, ${row.createdAt})`;
+      return { ...row };
+    },
+    async getGuild(id) {
+      const rows = await sql`SELECT * FROM hv_guilds WHERE id = ${id} LIMIT 1`;
+      const g = rows[0];
+      return g ? { id: g.id, name: g.name, kind: g.kind, owner: g.owner, createdAt: Number(g.created_at) } : null;
+    },
+    async findGuildByName(name, kind) {
+      const rows = await sql`SELECT * FROM hv_guilds WHERE kind = ${kind} AND lower(name) = lower(${name}) LIMIT 1`;
+      const g = rows[0];
+      return g ? { id: g.id, name: g.name, kind: g.kind, owner: g.owner, createdAt: Number(g.created_at) } : null;
+    },
+    async listGuilds(kind, limit = 30) {
+      const rows = await sql`SELECT g.*, (SELECT COUNT(*) FROM hv_members m WHERE m.guild_id = g.id OR m.clan_id = g.id) AS members
+        FROM hv_guilds g WHERE g.kind = ${kind} ORDER BY members DESC, g.created_at ASC LIMIT ${limit}`;
+      return rows.map(g => ({ id: g.id, name: g.name, kind: g.kind, owner: g.owner, createdAt: Number(g.created_at), members: Number(g.members || 0) }));
+    },
+    async countMembers(id) {
+      const rows = await sql`SELECT COUNT(*) AS n FROM hv_members WHERE guild_id = ${id} OR clan_id = ${id}`;
+      return Number((rows[0] && rows[0].n) || 0);
+    },
+    async getMembership(userId) {
+      const rows = await sql`SELECT guild_id, clan_id FROM hv_members WHERE user_id = ${userId} LIMIT 1`;
+      return rows[0] ? { guild: rows[0].guild_id || '', clan: rows[0].clan_id || '' } : { guild: '', clan: '' };
+    },
+    async setMembership(userId, row) {
+      const cur = await this.getMembership(userId);
+      const next = { ...cur, ...row };
+      await sql`INSERT INTO hv_members (user_id, guild_id, clan_id, updated_at) VALUES (${userId}, ${next.guild || ''}, ${next.clan || ''}, ${Date.now()})
+        ON CONFLICT (user_id) DO UPDATE SET guild_id = excluded.guild_id, clan_id = excluded.clan_id, updated_at = excluded.updated_at`;
+      return next;
     },
     async putOauthState(state, row) {
       await sql`INSERT INTO hv_oauth_state (state, created_at, payload) VALUES (${state}, ${row.createdAt}, ${JSON.stringify(row || {})}::jsonb)

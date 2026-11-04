@@ -147,7 +147,11 @@
     else if (type === 'sh_ss') giveHeroShards?.('ss', n);
     else if (type === 'sh_ssr') giveHeroShards?.('ssr', n);
     else if (type === 'chest') st().chests = (st().chests || 0) + n;
-    else if (type === 'supreme') st().supreme = (st().supreme || 0) + n;
+    else if (type === 'supreme') {
+      st().supreme = (st().supreme || 0) + n;
+      // Owner 2026-11-04: trung Rương Chí Bảo -> chu chay + loa he thong
+      try { window.HV_MARQUEE?.announce('bbr_jackpot', { prize: n + ' Rương Chí Bảo' }); } catch (_) {}
+    }
   }
 
   function applyIdx(idx) {

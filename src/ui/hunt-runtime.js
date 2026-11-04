@@ -148,6 +148,14 @@
     if (result.gearDrop && typeof itemName === 'function') {
       result.toasts = result.toasts || [];
       result.toasts.push('🎁 Rơi trang bị: ' + itemName(result.gearDrop) + ' (' + String(result.gearDrop.rar).toUpperCase() + ')');
+      // Owner 2026-11-04: do hiem tu boss -> chu chay + loa he thong
+      try {
+        const rr = String(result.gearDrop.rar || '').toLowerCase();
+        if (rr === 'ss' || rr === 'ssr') {
+          const bz = typeof todayBoss === 'function' ? todayBoss(dayNow()) : null;
+          window.HV_MARQUEE?.announce('boss_drop', { item: itemName(result.gearDrop), boss: (bz && (bz.name || bz.title)) || 'Boss Săn', rarity: rr === 'ssr' ? 'legend' : 'epic' });
+        }
+      } catch (_) {}
     }
     if (commitHunt(result, 'hunt.settle:' + dayNow() + ':' + (shot.dmg || 0), 'hunt.settle').ok) {
       deliver(result);
