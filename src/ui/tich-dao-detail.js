@@ -1,7 +1,8 @@
 // Plays the supplied lossless idle pack; only current and next mobile pages stay decoded.
-function startTichDaoDetailIdle(){
- cancelAnimationFrame(_lucDetailRaf);
- const cv=document.getElementById('tichDaoDetailIdle');if(!cv)return;
+function startTichDaoDetailIdle(targetCanvas){
+ if(!targetCanvas)cancelAnimationFrame(_lucDetailRaf);
+ let localRaf=0,disposed=false;
+ const cv=targetCanvas||document.getElementById('tichDaoDetailIdle');if(!cv)return;
  const images=new Map(),dpr=Math.min(2,window.devicePixelRatio||1),width=260,height=402;
  cv.width=width*dpr;cv.height=height*dpr;
  const context=cv.getContext('2d'),started=performance.now(),meta=TICH_DAO_DETAIL_META;
@@ -13,7 +14,7 @@ function startTichDaoDetailIdle(){
   return images.get(page);
  }
  function tick(){
-  if(!cv.isConnected){images.clear();return;}
+  if(disposed||!cv.isConnected){images.clear();return;}
   let elapsed=(performance.now()-started)%meta.durationMs,frame=0;
   for(;frame<meta.frameDurationsMs.length-1;frame++){if(elapsed<meta.frameDurationsMs[frame])break;elapsed-=meta.frameDurationsMs[frame];}
   const page=Math.floor(frame/meta.pageFrames),next=(page+1)%meta.pages,image=getPage(page);getPage(next);
@@ -22,7 +23,8 @@ function startTichDaoDetailIdle(){
    context.setTransform(dpr,0,0,dpr,0,0);context.clearRect(0,0,width,height);
    const local=frame%meta.pageFrames;context.drawImage(image,(local%meta.cols)*meta.cellW,Math.floor(local/meta.cols)*meta.cellH,meta.cellW,meta.cellH,offX,offY,drawW,drawH);
   }
-  _lucDetailRaf=requestAnimationFrame(tick);
+  localRaf=requestAnimationFrame(tick);if(!targetCanvas)_lucDetailRaf=localRaf;
  }
  tick();
+ return ()=>{disposed=true;cancelAnimationFrame(localRaf);images.clear();};
 }

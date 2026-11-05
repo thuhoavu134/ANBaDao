@@ -142,3 +142,22 @@
   color:#fff;text-shadow:0 1px 3px #000;animation:hsvBlink 1.4s ease-in-out infinite alternate}
 @keyframes hsvBlink{from{opacity:.35}to{opacity:.95}}
 #hvSumReveal .hsv-blur{z-index:0}#hvSumReveal .hsv-pf{z-index:1;isolation:isolate}#hvSumReveal .hsv-pf .hsv-glow{z-index:0}#hvSumReveal .hsv-pf .hsv-hero{z-index:1}#hvSumReveal .hsv-pf>*:not(.hsv-glow):not(.hsv-hero){z-index:2}
+
+/* idle that: host + canvas atlas + tho nhe cho tuong chua co chuoi khung */
+#hvSumReveal .hsv-hero-host{position:absolute;left:50%;bottom:20%;height:calc(var(--vc-idle-h,72) * 1%);transform:translateX(calc(-50% + (var(--vc-shift-x-u,0) * 100cqw / 864))) translateY(calc(var(--vc-shift-u,0) * 100cqw / 864));display:grid;place-items:end center}
+#hvSumReveal .hsv-hero-host .hsv-hero{position:relative;left:auto;bottom:auto;transform:none;height:100%;max-width:78vw}
+/* Animation comes exclusively from the hero-detail renderer. */
+#hvSumReveal .hsv-hero-host canvas.hsv-hero{grid-area:1/1;position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:auto;height:auto;max-height:100%;object-fit:contain}
+#hvSumReveal .hsv-hero-host img.hsv-hero{grid-area:1/1}
+
+/* Owner 2026-11-05: chan tuong phai dat dung mat san dinh (duong san = 79.4% chieu cao panel),
+   khong duoc lan vao bang ten. Do bang pixel, khong uoc luong. */
+#hvSumReveal .bg-4 .hsv-hero-host{bottom:20%}
+
+
+/* Owner 2026-11-05: neo 2 ban chan theo diem chan anh mau concept; kich thuoc = man chi tiet. */
+#hvSumReveal .hsv-pf .hsv-hero-host.is-anchoring,#hvSumReveal .hsv-pf .hsv-hero-host.is-anchored{position:absolute!important;top:0!important;left:0!important;right:0!important;bottom:0!important;width:auto!important;height:auto!important;transform:none!important;display:block!important}
+#hvSumReveal .hsv-pf .hsv-hero-host.is-anchoring .hsv-hero{visibility:hidden!important}
+#hvSumReveal .hsv-pf .hsv-hero-host.is-anchored .hsv-hero{position:absolute!important;transform:none!important;max-width:none!important;max-height:none!important;bottom:auto!important;
+  height:var(--ch)!important;width:calc(var(--ch) * var(--har))!important;
+  left:calc(var(--foot-x) - var(--fx) * var(--ch) * var(--har))!important;top:calc(var(--foot-y) - var(--fy) * var(--ch))!important}
