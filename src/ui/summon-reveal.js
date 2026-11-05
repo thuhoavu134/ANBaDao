@@ -156,6 +156,54 @@
     // Man show tuong SSR (giong game tham khao): nen toi + tia sang, tranh tuong lon, ten thu phap, nhan SSR.
     // Owner 2026-11-04: tuong o san dinh phai SONG - idle that (atlas / chuoi khung) + thoai cua tuong.
     // Reuse detail renderers verbatim; never infer atlas geometry from filenames.
+    // Owner 2026-11-05: 2 ban chan MOI tuong phai cham dung diem chan cua nhan vat trong anh mau concept
+    // Dinh lang (day chan = 67.2% cao, giua = 50% ngang khung panel). Kich thuoc giu y nhu man chi tiet
+    // (cao = idleH% cua stage 9:16 -> idleH*16/9 cqw). Vi tri do tu pixel chan that cua khung idle.
+    const FOOT = { x: 50, y: 67.2 };
+    function anchorFeet(host, el, id, authoredPack) {
+      const prof = (globalThis.HV_VC_HERO_PROFILES || {})[id] || {};
+      const idleH = Number(prof.idleH) || (authoredPack ? 47.2 : 48.2);
+      host.classList.add('is-anchoring');
+      let tries = 0;
+      const again = () => { if (++tries < 150) requestAnimationFrame(probe); };
+      function probe() {
+        if (!el.isConnected) return;
+        let w, h, data;
+        try {
+          if (el.tagName === 'CANVAS') {
+            w = el.width; h = el.height; if (!w || !h) throw 0;
+            data = el.getContext('2d').getImageData(0, 0, w, h).data;
+          } else {
+            if (!el.complete || !el.naturalWidth) throw 0;
+            w = Math.min(el.naturalWidth, 600); h = Math.round(el.naturalHeight * w / el.naturalWidth);
+            const t = document.createElement('canvas'); t.width = w; t.height = h;
+            const g = t.getContext('2d'); g.drawImage(el, 0, 0, w, h); data = g.getImageData(0, 0, w, h).data;
+          }
+        } catch (_) { again(); return; }
+        const need = Math.max(3, Math.round(w * 0.02));
+        let bottom = -1;
+        for (let y = h - 1; y >= 0 && bottom < 0; y--) {
+          let n = 0;
+          for (let x = 0; x < w; x++) if (data[(y * w + x) * 4 + 3] > 60 && ++n >= need) { bottom = y; break; }
+        }
+        if (bottom < 0) { again(); return; }
+        const band = Math.max(1, Math.round(h * 0.05));
+        let sx = 0, c = 0;
+        for (let y = Math.max(0, bottom - band); y <= bottom; y++)
+          for (let x = 0; x < w; x++) if (data[(y * w + x) * 4 + 3] > 60) { sx += x; c++; }
+        const fx = sx / c / w, fy = (bottom + 1) / h;
+        host.style.setProperty('--ch', (idleH * 16 / 9).toFixed(3) + 'cqw');
+        host.style.setProperty('--har', (w / h).toFixed(5));
+        host.style.setProperty('--fx', fx.toFixed(5));
+        host.style.setProperty('--fy', fy.toFixed(5));
+        host.style.setProperty('--foot-x', FOOT.x + '%');
+        host.style.setProperty('--foot-y', FOOT.y + '%');
+        el.dataset.foot = fx.toFixed(3) + ',' + fy.toFixed(3);
+        host.classList.remove('is-anchoring'); host.classList.add('is-anchored');
+      }
+      requestAnimationFrame(probe);
+    }
+
     function idlePlay(sc, id) {
       const host=sc.querySelector('.hsv-hero-host');
       const still=sc.querySelector('.hsv-hero-frame');
@@ -174,6 +222,9 @@
         stop=renderer(cv)||stop;
         cv.style.aspectRatio=cv.width+'/'+cv.height;
         if(still)still.style.visibility='hidden';
+        anchorFeet(host,cv,id,!dedicated[id]);
+      } else if(host&&still){
+        anchorFeet(host,still,id,false);
       }
       // Same voice owner and source table as renderHeroDetail; do not create a second player.
       const src=typeof HERO_VOICE_LINES==='object'&&HERO_VOICE_LINES[id]?.hero ||
@@ -201,7 +252,7 @@
         const h = typeof DATA === 'object' && DATA.heroes ? DATA.heroes[c.id] : null;
         const prof = (globalThis.HV_VC_HERO_PROFILES || {})[c.id] || {};
         const role = String((h && h.role) || '');
-        const title = String(c.full || '').split(/\s+[—–-]\s+/)[1] || (role.includes('/') ? role : (prof && prof.job) || role) || 'Kỳ hiệp Mộng Giới';
+        const title = (prof && prof.job) || role || 'Kỳ hiệp Mộng Giới';
         const skName = k => { const o = h && h[k === 'basic' ? 'skill' : k]; return o && (o.nm || o.name || o.n || o.title) || ''; };
         const heNm = h && typeof HE === 'object' && HE[h.he] ? HE[h.he].nm : '';
         const el = Object.entries(EL).find(([k]) => k.normalize('NFC') === String(heNm).normalize('NFC'))?.[1] || null;
@@ -209,13 +260,14 @@
           ? { basic: RV + 'basic.png', ultimate: RV + 'ultimate.png', passive: RV + 'passive.png' }
           : (prof.skillIcons || null);
         const SK = [['basic', 'Đánh thường'], ['ultimate', 'Tuyệt kỹ'], ['passive', 'Nội tại']];
+        const idleStyle = `--vc-idle-h:${Number(prof.idleH || 72)};--vc-shift-u:${Number(prof.idleShiftU || 0)};--vc-shift-x-u:${Number(prof.idleShiftXU || 0)}`;
         const src = portrait(c.id);
         const sc = document.createElement('div');
         sc.className = 'hsv-show bg-' + bgNow();
         sc.innerHTML = `<div class="hsv-blur"></div>
           <div class="hsv-pf">
             <div class="hsv-glow"></div>
-            ${src ? `<div class="hsv-hero-host"><img class="hsv-hero hsv-hero-frame" src="${esc(src)}" alt=""></div>` : `<b class="hsv-hero hsv-hero-mono">${esc(c.name.charAt(0))}</b>`}
+            ${src ? `<div class="hsv-hero-host" style="${idleStyle}"><img class="hsv-hero hsv-hero-frame" src="${esc(src)}" alt=""></div>` : `<b class="hsv-hero hsv-hero-mono">${esc(c.name.charAt(0))}</b>`}
             <div class="hsv-plq"><h3 style="--nf:${Math.min(1, 9 / Math.max(1, [...c.name].length)).toFixed(2)}">${esc(c.name)}</h3><p>${esc(title)}</p></div>
             ${el ? `<span class="hsv-emb"><img src="${RV}element-${el[0]}.png" alt="${esc(el[1])}"></span><em class="hsv-emb-t">${esc(el[1])}</em>` : ''}
             ${SK.map(([k, lb], i) => `<span class="hsv-sk s${i}">${art && art[k] ? `<img src="${esc(art[k])}" alt="">` : `<b>${lb.charAt(0)}</b>`}</span><em class="hsv-skt s${i}">${esc(skName(k) || lb)}</em>`).join('')}
