@@ -165,6 +165,7 @@
       const idleH = Number(prof.idleH) || (authoredPack ? 47.2 : 48.2);
       host.classList.add('is-anchoring');
       let tries = 0;
+      const samples = [];
       const again = () => { if (++tries < 150) requestAnimationFrame(probe); };
       function probe() {
         if (!el.isConnected) return;
@@ -180,19 +181,24 @@
             const g = t.getContext('2d'); g.drawImage(el, 0, 0, w, h); data = g.getImageData(0, 0, w, h).data;
           }
         } catch (_) { again(); return; }
-        const need = Math.max(3, Math.round(w * 0.02));
+        // mui chan hep: chi can 2 diem dac lien nhau trong dai giua 15%-85% (loai hat VFX o mep)
+        const x0 = Math.floor(w * 0.15), x1 = Math.ceil(w * 0.85);
         let bottom = -1;
         for (let y = h - 1; y >= 0 && bottom < 0; y--) {
-          let n = 0;
-          for (let x = 0; x < w; x++) if (data[(y * w + x) * 4 + 3] > 60 && ++n >= need) { bottom = y; break; }
+          let run = 0;
+          for (let x = x0; x < x1; x++) { if (data[(y * w + x) * 4 + 3] > 90) { if (++run >= 2) { bottom = y; break; } } else run = 0; }
         }
         if (bottom < 0) { again(); return; }
         const band = Math.max(1, Math.round(h * 0.05));
         let sx = 0, c = 0;
         for (let y = Math.max(0, bottom - band); y <= bottom; y++)
-          for (let x = 0; x < w; x++) if (data[(y * w + x) * 4 + 3] > 60) { sx += x; c++; }
-        const fx = sx / c / w, fy = (bottom + 1) / h;
-        host.style.setProperty('--ch', (idleH * 16 / 9).toFixed(3) + 'cqw');
+          for (let x = x0; x < x1; x++) if (data[(y * w + x) * 4 + 3] > 90) { sx += x; c++; }
+        samples.push({ fy: (bottom + 1) / h, fx: sx / c / w });
+        if (el.tagName === 'CANVAS' && samples.length < 18) { setTimeout(() => requestAnimationFrame(probe), 80); return; }
+        const low = samples.reduce((a, b) => (b.fy > a.fy ? b : a));
+        const fx = samples.reduce((s2, v) => s2 + v.fx, 0) / samples.length, fy = low.fy;
+        const inlineH = el.tagName === 'CANVAS' && /px$/.test(el.style.height) ? parseFloat(el.style.height) : 0;
+        host.style.setProperty('--ch', inlineH ? inlineH + 'px' : (idleH * 16 / 9).toFixed(3) + 'cqw');
         host.style.setProperty('--har', (w / h).toFixed(5));
         host.style.setProperty('--fx', fx.toFixed(5));
         host.style.setProperty('--fy', fy.toFixed(5));
@@ -213,6 +219,11 @@
         tieu_phong:typeof startTieuPhongDetailIdle==='function'?startTieuPhongDetailIdle:null,
         hong_thuong:typeof startHongThuongDetailIdle==='function'?startHongThuongDetailIdle:null,
         tich_dao:typeof startTichDaoDetailIdle==='function'?startTichDaoDetailIdle:null
+        ,luc_anh:typeof startLucAnhDetailIdle==='function'?startLucAnhDetailIdle:null,
+        linh_dong:typeof startLinhDongDetailIdle==='function'?startLinhDongDetailIdle:null,
+        dinh_loi:typeof startOwnerRefreshDetailIdle==='function'?cv=>startOwnerRefreshDetailIdle('dinh_loi',cv):null,
+        thay_mo:typeof startOwnerRefreshDetailIdle==='function'?cv=>startOwnerRefreshDetailIdle('thay_mo',cv):null,
+        be_an:typeof startBeAnDetailIdle==='function'?startBeAnDetailIdle:null
       };
       const authored=typeof AUTHORED_DETAIL_IDLE==='object'&&AUTHORED_DETAIL_IDLE[id];
       const renderer=dedicated[id] || (authored&&typeof startAuthoredDetailIdle==='function'?cv=>startAuthoredDetailIdle(id,cv):null);

@@ -363,3 +363,7 @@ installHeroRarityStars(root);
 // Owner-requested clean tower scene preview, after legacy art owners.
 const { installMainCityArt } = await import('./hub-main-city-art-v1.mjs');
 installMainCityArt(root);
+
+// Owner 2026-11-05: SSR showcase reuses the exact detail idle renderers (optional target canvas). Keep LAST.
+const { installDetailIdleTargets } = await import('./detail-idle-target-v1.mjs');
+installDetailIdleTargets(root);
