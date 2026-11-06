@@ -114,11 +114,25 @@
 /* Icon that thay emoji */
 #hvTowerRoot .hvt-ico{width:16px;height:16px;object-fit:contain;vertical-align:-3px;margin:0 2px;filter:drop-shadow(0 1px 1px rgba(0,0,0,.9))}
 
-/* --- Ray leo tang (giu nguyen) --- */
-#hvTowerRoot .hvt-rail{position:fixed;right:10px;top:calc(16% + env(safe-area-inset-top));z-index:6;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none}
-#hvTowerRoot .hvt-rail::before{content:"";position:absolute;top:6px;bottom:6px;width:2px;border-radius:2px;background:linear-gradient(180deg,transparent,rgba(240,193,105,.55),transparent);z-index:-1}
-#hvTowerRoot .hvt-node{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font:800 12px/1 'Noto Serif',serif;color:#f4e2c0;background:rgba(12,9,6,.85);border:1.5px solid rgba(240,193,105,.45);text-shadow:0 1px 2px #000;box-shadow:0 2px 8px rgba(0,0,0,.6)}
-#hvTowerRoot .hvt-node.done{color:rgba(233,211,172,.65);border-color:rgba(240,193,105,.22)}
-#hvTowerRoot .hvt-node.now{width:44px;height:44px;font-size:14px;color:#2f1a07;background:radial-gradient(circle at 50% 34%,#fff4cf,#e8b757 60%,#a9711f);border:2px solid #fffbe8;box-shadow:0 0 0 3px rgba(255,224,140,.35),0 0 22px rgba(255,190,80,.8);pointer-events:auto;cursor:pointer;text-shadow:0 1px 0 rgba(255,255,255,.5)}
-#hvTowerRoot .hvt-node.next{color:#e9d3ac;border-style:dashed}
-#hvTowerRoot .hvt-node.boss::after{content:"";position:absolute;margin-top:-2px;width:7px;height:7px;border-radius:50%;background:#ff5b2d;box-shadow:0 0 8px #ff5b2d;border:1px solid #ffd0b8}
+/* --- Ray leo tang: con dau da khac (anh), tang hien tai = con dau vang ngoc phat sang --- */
+#hvTowerRoot .hvt-rail{position:fixed;right:8px;top:calc(15% + env(safe-area-inset-top));z-index:6;display:flex;flex-direction:column;gap:6px;align-items:center;pointer-events:none}
+#hvTowerRoot .hvt-rail::before{content:"";position:absolute;top:14px;bottom:14px;width:3px;border-radius:2px;
+  background:repeating-linear-gradient(180deg,rgba(240,193,105,.75) 0 5px,rgba(240,193,105,0) 5px 9px);
+  filter:drop-shadow(0 0 2px rgba(0,0,0,.9));z-index:-1}
+#hvTowerRoot .hvt-node{width:40px;height:40px;display:grid;place-items:center;border:0;border-radius:0;
+  background:url('assets/ui/tower/floor-stone.webp') center/contain no-repeat;
+  font:800 13px/1 'Noto Serif',serif;color:#f6e7c8;
+  text-shadow:0 0 2px #000,0 1px 2px #000;filter:drop-shadow(0 3px 6px rgba(0,0,0,.7))}
+#hvTowerRoot .hvt-node.done{opacity:.6;filter:grayscale(.6) drop-shadow(0 3px 6px rgba(0,0,0,.7))}
+#hvTowerRoot .hvt-node.next{opacity:.92}
+#hvTowerRoot .hvt-node.now{width:62px;height:62px;
+  background-image:url('assets/ui/tower/floor-now.webp');
+  font:400 22px/1 'HV Brush','Noto Serif',serif;color:#4a2304;
+  text-shadow:0 1px 0 rgba(255,250,225,.85),0 0 6px rgba(255,240,190,.9);
+  pointer-events:auto;cursor:pointer;
+  filter:drop-shadow(0 0 10px rgba(255,200,90,.75)) drop-shadow(0 4px 8px rgba(0,0,0,.6));
+  animation:hvtNow 2.4s ease-in-out infinite alternate}
+@keyframes hvtNow{from{transform:scale(1)}to{transform:scale(1.06)}}
+@media (prefers-reduced-motion:reduce){#hvTowerRoot .hvt-node.now{animation:none}}
+#hvTowerRoot .hvt-node.boss::after{content:"";position:absolute;transform:translate(14px,-14px);width:10px;height:10px;border-radius:50%;
+  background:radial-gradient(circle,#ffb08a,#e8381a 60%,#7a1205);box-shadow:0 0 8px #ff5b2d}
