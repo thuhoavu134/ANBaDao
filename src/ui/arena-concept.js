@@ -45,6 +45,13 @@
     if (!root.classList.contains('hva-concept')) root.classList.add('hva-concept');
     let bg = root.querySelector(':scope > .hva-bg');
     if (!bg) { bg = document.createElement('div'); bg.className = 'hva-bg'; bg.style.backgroundImage = `url('${BG}')`; root.prepend(bg); }
+    // Owner 06/11: bo man tong quan 1 san + 3 diem bam. Vao Dau Truong la vao thang 1 san,
+    // doi san bang 3 tab duoi day (moi san la 1 man rieng).
+    if (!root.classList.contains('is-tile-open')) {
+      if (typeof ST === 'object' && !ST.arenaTab) ST.arenaTab = 'pvp';
+      root.classList.add('is-tile-open');
+      return;
+    }
     const open = root.classList.contains('is-tile-open');
     const zone = open ? ((typeof ST === 'object' && ST.arenaTab) || 'season') : '';
     if (root.dataset.zone !== zone) root.dataset.zone = zone;
@@ -69,6 +76,13 @@
       const z = ZONES[t.dataset.arenaTab];
       if (z && t.textContent.trim() !== z.label) t.textContent = z.label;
     });
+    // Kit chung: nut quay ve vuong + khung bang anh (owner 2026-11-06)
+    if (!document.querySelector('.hvk-back.hva-back')) {
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'hvk-back hva-back'; b.setAttribute('aria-label', 'Quay ve Thanh Chinh');
+      b.addEventListener('click', () => { const t = root.querySelector('[data-arena-back]'); if (t) t.click(); else if (typeof navTo === 'function') navTo('hub'); });
+      document.body.append(b);
+    }
     clean(root);
   }
 

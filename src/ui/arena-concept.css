@@ -236,3 +236,50 @@
 /* bang ron: luat cu dong 30 co min-width:150px lam bang ron rong 150 thay vi 84 */
 #hvArenaRoot.hva-concept #hvArenaCity .hv-atile{min-width:0!important;max-width:84px!important;width:84px!important}
 #hvArenaRoot.hva-concept #hvArenaCity .hv-atile:active{transform:translateX(-50%) scale(.97)!important}
+
+/* v5 owner 06/11: dung BO KHUNG CHUNG hv-kit cho ca 3 khu (khung bang, hang, nut), an nut quay ve chu "<" */
+#hvArenaRoot.hva-concept .hv-ar-panel{background:none!important;box-shadow:none!important;border-style:solid!important;
+  border-width:14px 20px!important;border-image:url('assets/ui/kit/panel.webp') 70 90 fill / 14px 20px stretch!important;padding:2px 0!important}
+#hvArenaRoot.hva-concept .hv-ar-card{background:none!important;box-shadow:none!important;border-style:solid!important;
+  border-width:10px 16px!important;border-image:url('assets/ui/kit/panel.webp') 70 90 fill / 10px 16px stretch!important;padding:2px 0!important;border-radius:0!important}
+#hvArenaRoot.hva-concept .hv-ar-top{border-bottom:0!important;background:linear-gradient(180deg,rgba(8,5,3,.72),rgba(8,5,3,0))!important}
+#hvArenaRoot.hva-concept .hv-ar-top>button,#hvArenaRoot.hva-concept .hv-tower-back,#hvArenaRoot.hva-concept [data-arena-back]{display:none!important}
+#hvArenaRoot.hva-concept .hv-ar-title{padding:0!important}
+#hvArenaRoot.hva-concept .hv-ar-actions button,#hvArenaRoot.hva-concept .hv-ar-refresh{min-height:48px!important;border:0!important;
+  background:url('assets/ui/kit/btn-secondary.webp') center/100% 100% no-repeat!important;color:#eaf7ec!important;font-weight:800!important;
+  text-shadow:0 1px 2px #0d2a14!important;border-radius:0!important}
+#hvArenaRoot.hva-concept .hv-ar-actions button.is-gold,#hvArenaRoot.hva-concept .hv-ar-primary{background-image:url('assets/ui/kit/btn-primary.webp')!important;color:#fff6e0!important;text-shadow:0 1px 2px #4a0d02!important}
+#hvArenaRoot.hva-concept .hv-ar-copy,#hvArenaRoot.hva-concept .hv-ar-rule{background:rgba(10,6,3,.55)!important;border-radius:10px!important;padding:8px 10px!important}
+
+/* v6 owner 06/11: hv-kit.css chua duoc nap vao index nen khai bao nut quay ve ngay tai day */
+.hva-back{position:fixed;left:10px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:96;width:52px;height:52px;border:0;padding:0;
+  background:url('assets/ui/kit/back.webp') center/contain no-repeat;cursor:pointer;filter:drop-shadow(0 3px 5px rgba(0,0,0,.6));-webkit-tap-highlight-color:transparent}
+.hva-back:active{transform:translateY(1px)}
+/* v7 owner 06/11: tong quan - 3 bang ron xep bac thang theo 3 khu cua san (tren -> duoi), co do nghieng + bong do cho giong vat that */
+#hvArenaRoot.hva-concept #hvArenaCity .hv-atile{filter:drop-shadow(0 10px 14px rgba(0,0,0,.55))}
+#hvArenaRoot.hva-concept #hvArenaCity .hv-atile[data-acity="pve"]{left:20%!important;top:20%!important;transform:translateX(-50%) rotate(-3deg)!important}
+#hvArenaRoot.hva-concept #hvArenaCity .hv-atile[data-acity="pvp"]{left:50%!important;top:45%!important;transform:translateX(-50%)!important}
+#hvArenaRoot.hva-concept #hvArenaCity .hv-atile[data-acity="season"]{left:80%!important;top:70%!important;transform:translateX(-50%) rotate(3deg)!important}
+#hvArenaRoot.hva-concept #hvArenaCity .hv-atile:active{transform:translateX(-50%) scale(.97)!important}
+/* v8 owner 06/11: BO 3 LA CO DEN. Tong quan dung huy hieu tron + ten khu (giong game tham khao), van bam duoc */
+#hvArenaRoot.hva-concept #hvArenaCity .hv-atile{background:none!important;border:0!important;box-shadow:none!important;min-width:0!important;width:108px!important;height:auto!important;
+  display:flex!important;flex-direction:column!important;align-items:center!important;gap:3px!important;padding:0!important;filter:drop-shadow(0 6px 10px rgba(0,0,0,.5))}
+#hvArenaRoot.hva-concept #hvArenaCity .hv-atile::before{display:none!important;content:none!important}
+#hvArenaRoot.hva-concept #hvArenaCity .hv-atile .hva-bn-ic{position:relative!important;left:auto!important;top:auto!important;transform:none!important;
+  width:78px!important;height:78px!important;display:grid!important;place-items:center!important;
+  background:url('assets/ui/arena/kit/medal.webp') center/contain no-repeat!important}
+#hvArenaRoot.hva-concept #hvArenaCity .hv-atile .hva-bn-ic img{width:46px!important;height:46px!important;object-fit:contain!important;filter:drop-shadow(0 1px 2px #000)}
+#hvArenaRoot.hva-concept #hvArenaCity .hv-atile b{font-size:15px!important;font-weight:800!important;line-height:1.15!important;color:#fff3d6!important;text-shadow:0 1px 3px #000,0 0 6px rgba(0,0,0,.9)!important}
+#hvArenaRoot.hva-concept #hvArenaCity .hv-atile small{font-size:12.5px!important;font-weight:600!important;line-height:1.2!important;color:#ffe3ab!important;text-shadow:0 1px 2px #000!important;text-align:center}
+#hvArenaRoot.hva-concept #hvArenaCity .hv-atile[data-acity="pve"]{left:22%!important;top:22%!important;transform:translateX(-50%)!important}
+#hvArenaRoot.hva-concept #hvArenaCity .hv-atile[data-acity="pvp"]{left:50%!important;top:46%!important;transform:translateX(-50%)!important}
+#hvArenaRoot.hva-concept #hvArenaCity .hv-atile[data-acity="season"]{left:78%!important;top:70%!important;transform:translateX(-50%)!important}
+
+/* v9 owner 06/11: bo han lop tong quan (3 diem bam + dai chu + vong den). Moi san la 1 man rieng. */
+#hvArenaRoot.hva-concept #hvArenaCity,#hvArenaRoot.hva-concept .hv-atile{display:none!important}
+
+/* v10 owner 06/11: nut quay ve vuong o goc trai de len tab Mua -> day 3 tab sang phai */
+#hvArenaRoot.hva-concept .hv-ar-tabs{margin-left:64px!important;padding-right:6px!important}
+@media (max-width:360px){#hvArenaRoot.hva-concept .hv-ar-tabs{margin-left:58px!important}}
+/* v11 owner 06/11: 3 tab chiem day man -> dua nut quay ve vuong len goc trai TREN */
+.hva-back{top:calc(8px + env(safe-area-inset-top))!important;bottom:auto!important;left:10px!important;z-index:97!important}
