@@ -27,3 +27,46 @@
 }
 #hvTowerRoot .hv-tower-copy,#hvTowerRoot .hv-tower-trial small,#hvTowerRoot .hv-tower-power small{color:#5a3a18!important}
 body.tower-3d-active .hv-brandbar,body.tower-3d-active #resbar{display:none!important}
+
+/* Owner 2026-11-06: concept san dinh phu toan man (nhu Goi Mong dung anh concept lam nen).
+   Anh concept la nen; the thong tin noi len bang kinh mo, khong con khoi kem dac chiem nua man. */
+#hvTowerRoot{
+  background:
+    linear-gradient(180deg,rgba(20,14,8,.10) 0%,rgba(18,12,6,.42) 42%,rgba(14,9,5,.78) 100%),
+    url('assets/ui/tower/tower-hall.jpg') center top/cover no-repeat #1a1208!important;
+  padding-bottom:calc(18px + env(safe-area-inset-bottom))!important;
+}
+#hvTowerRoot .hv-tower-hero{background:none!important;min-height:150px!important;max-height:none!important}
+#hvTowerRoot .hv-tower-panel{
+  background:linear-gradient(180deg,rgba(255,248,232,.93),rgba(243,228,196,.88))!important;
+  border:1px solid rgba(120,80,32,.35)!important;border-top:1px solid rgba(120,80,32,.35)!important;
+  border-radius:16px!important;margin:10px 10px 0!important;
+  box-shadow:0 10px 26px rgba(20,10,2,.34),inset 0 1px 0 rgba(255,255,255,.7)!important;
+  backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
+}
+#hvTowerRoot .hv-tower-trial,#hvTowerRoot .hv-tower-team,#hvTowerRoot .hv-tower-mark,
+#hvTowerRoot .hv-tower-power,#hvTowerRoot .hv-tower-chip,#hvTowerRoot .hv-tower-back{
+  background:linear-gradient(180deg,#fffaf0,#f6e7c8)!important;
+  box-shadow:0 0 0 1px rgba(160,106,34,.45),0 2px 6px rgba(60,32,6,.12)!important;
+}
+#hvTowerRoot .hv-tower-back{background:linear-gradient(180deg,#fff8e8,#efd9a8)!important;border-radius:12px!important}
+
+/* Owner 2026-11-06: bien the B de anh so — giu bo cuc cu (khoi kem) nhung doi tong goi - sanh,
+   nen concept chi nam o dai tieu de. Bat bang body.tower-v2. */
+body.tower-v2 #hvTowerRoot{
+  background:#f3e4c4!important;
+  padding-bottom:env(safe-area-inset-bottom)!important;
+}
+body.tower-v2 #hvTowerRoot .hv-tower-hero{
+  background:url('assets/ui/tower/tower-hall.jpg') center/cover no-repeat!important;
+  min-height:150px!important;max-height:none!important;border-radius:0!important;
+}
+body.tower-v2 #hvTowerRoot .hv-tower-panel{
+  background:#f3e4c4!important;border:0!important;border-top:1px solid #e2c48a!important;border-radius:0!important;
+  margin:0!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+}
+body.tower-v2 #hvTowerRoot .hv-tower-trial,body.tower-v2 #hvTowerRoot .hv-tower-team,
+body.tower-v2 #hvTowerRoot .hv-tower-mark,body.tower-v2 #hvTowerRoot .hv-tower-power,
+body.tower-v2 #hvTowerRoot .hv-tower-chip,body.tower-v2 #hvTowerRoot .hv-tower-back{
+  background:#fff8e8!important;box-shadow:0 0 0 1px #e2c48a!important;
+}

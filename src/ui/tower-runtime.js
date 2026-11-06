@@ -98,7 +98,7 @@
       <div id="hvTowerRoot" data-testid="hv-tower">
         <div class="hv-tower-top">
           <button type="button" class="hv-tower-back" data-tower-back aria-label="Về Thành Chính">‹</button>
-          <b>Tháp Trắng Đêm</b>
+          <b data-tower-title>Thông Thiên Tháp</b>
           <div class="hv-tower-chips">
             <span class="hv-tower-chip" data-tower-gold>🪙 ${fmt(P.gold)}</span>
             <span class="hv-tower-chip" data-tower-stam>⚡ ${stamina}</span>
@@ -145,7 +145,7 @@
                 const done = (tower.claimedSigils || []).includes(mark);
                 const ready = !done && (tower.sigils || 0) >= mark;
                 const label = (rw.gold ? '🪙' + rw.gold : '') + (rw.gems ? ' 💎' + rw.gems : '');
-                return `<button type="button" class="hv-tower-mark${done ? ' is-done' : ready ? ' is-ready' : ''}" data-tower-mark="${mark}" ${!ready || done ? 'disabled' : ''}>${done ? '✓ ' : ''}${mark} Ấn<br>${label}</button>`;
+                return `<button type="button" class="hv-tower-mark${done ? ' is-done' : ready ? ' is-ready' : ''}" data-tower-mark="${mark}" ${!ready || done ? 'disabled' : ''} aria-label="Mốc ${mark} Ấn"><img class="hvt-chest" src="assets/ui/tower/chest-${ready || done ? 'open' : 'closed'}.webp" alt=""><b>${mark} Ấn</b><span>${label}</span>${done ? '<i class="hvt-got">Đã nhận</i>' : ''}</button>`;
               }).join('')}
             </div>
           </div>
@@ -178,7 +178,7 @@
     btn.addEventListener('click', () => {
       if (locked) {
         const r = typeof JOURNEY_UNLOCK === 'object' ? JOURNEY_UNLOCK.tower : null;
-        toast?.(`🔒 ${r?.label || 'Tháp Trắng Đêm'} mở sau khi vượt ${r?.ch || 1} chương.`);
+        toast?.(`🔒 ${r?.label || 'Thông Thiên Tháp'} mở sau khi vượt ${r?.ch || 1} chương.`);
         return;
       }
       navTo('tower');
@@ -252,9 +252,9 @@
       refreshResbar?.();
       if (attempt.passed) {
         if (attempt.floorCleared % 10 === 0) {
-          addJournal?.('Đội leo tới tầng ' + attempt.floorCleared + ' Tháp Trắng Đêm. Gió trên đó không ngủ.');
-          sendMail?.('Tháp Trắng Đêm', 'Tầng ' + attempt.floorCleared, 'Gió tầng ' + attempt.floorCleared + ' đã ghi tên anh.', { gems: 10 });
-          chatSys?.('Tin tháp: đội anh chạm tầng ' + attempt.floorCleared + ' Tháp Trắng Đêm!');
+          addJournal?.('Đội leo tới tầng ' + attempt.floorCleared + ' Thông Thiên Tháp. Gió trên đó không ngủ.');
+          sendMail?.('Thông Thiên Tháp', 'Tầng ' + attempt.floorCleared, 'Gió tầng ' + attempt.floorCleared + ' đã ghi tên anh.', { gems: 10 });
+          chatSys?.('Tin tháp: đội anh chạm tầng ' + attempt.floorCleared + ' Thông Thiên Tháp!');
         }
         questProgress?.('tower', 1);
         toast?.(rewardLine(attempt));

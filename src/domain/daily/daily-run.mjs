@@ -28,7 +28,7 @@ export const DAILY_QUESTS = balancedQuests([
   Object.freeze({ id: 'q_train', text: 'Luyện tập 2 trận', type: 'train', goal: 2, reward: Object.freeze({ gold: 180 }), pts: 10 }),
   Object.freeze({ id: 'q_level', text: 'Nâng cấp 1 anh hùng', type: 'level', goal: 1, reward: Object.freeze({ gold: 160 }), pts: 10 }),
   Object.freeze({ id: 'q_summon', text: 'Chiêu mộ 1 lần', type: 'summon', goal: 1, reward: Object.freeze({ gold: 150 }), pts: 10 }),
-  Object.freeze({ id: 'q_tower', text: 'Leo Tháp Trắng Đêm 1 tầng', type: 'tower', goal: 1, reward: Object.freeze({ gold: 180 }), pts: 10 }),
+  Object.freeze({ id: 'q_tower', text: 'Leo Thông Thiên Tháp 1 tầng', type: 'tower', goal: 1, reward: Object.freeze({ gold: 180 }), pts: 10 }),
   Object.freeze({ id: 'q_shop', text: 'Mua 1 món ở Hắc Thị', type: 'shop', goal: 1, reward: Object.freeze({ gold: 150 }), pts: 10 }),
   Object.freeze({ id: 'q_arena', text: 'Khiêu chiến Đấu Trường 1 trận', type: 'arena', goal: 1, reward: Object.freeze({ gold: 200 }), pts: 10 }),
   Object.freeze({ id: 'q_hunt', text: 'Săn Boss Mộng 1 lượt', type: 'hunt', goal: 1, reward: Object.freeze({ gold: 200 }), pts: 10 }),
@@ -105,7 +105,7 @@ export const LIVE_DAILY = Object.freeze({
 export const LICH_LUYEN_SPOKES = Object.freeze([
   Object.freeze({ key: 'campaign', label: 'Qua Ải Mộng', sub: 'Trảm Tướng', go: 'campaign', ch: 0, angle: 0, icon: 'campaign' }),
   Object.freeze({ key: 'train', label: 'Giáo Trường', sub: 'Luyện Tâm', go: 'train', ch: 0, angle: 33, icon: 'train' }),
-  Object.freeze({ key: 'tower', label: 'Tháp Trắng Đêm', sub: 'Bảo Vệ', go: 'tower', ch: 1, angle: 65, icon: 'tower' }),
+  Object.freeze({ key: 'tower', label: 'Thông Thiên Tháp', sub: 'Bảo Vệ', go: 'tower', ch: 1, angle: 65, icon: 'tower' }),
   Object.freeze({ key: 'hold', label: 'Trì Thủ Phố Đêm', sub: 'Sắp mở', go: null, ch: 99, angle: 98, icon: 'hold' }),
   Object.freeze({ key: 'arena', label: 'Đấu Trường', sub: 'Đoạt Kỳ', go: 'arena', ch: 3, angle: 131, icon: 'arena' }),
   Object.freeze({ key: 'expedition', label: 'Mộng Lộ', sub: 'Khám Phá', go: 'expedition', ch: 2, angle: 164, icon: 'expedition' }),

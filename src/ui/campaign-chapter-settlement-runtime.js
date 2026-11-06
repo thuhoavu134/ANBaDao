@@ -49,7 +49,7 @@ function hvShowCommittedChapterResult(result,options){
   if(result.incident)msg+=' · Xử lý sự cố: 🪙 '+result.incident.reward.gold+' · 💎 '+result.incident.reward.gems;
   if(result.gearDrop&&typeof itemName==='function')msg+=' · Rơi đồ: '+itemName(result.gearDrop)+' +'+result.gearDrop.lvl;
   toast(msg);
-  if(result.first&&result.idx===0)toast('🔓 Mở khoá: 🗼 Tháp Trắng Đêm · 🏟 Đấu Trường · 🐋 Săn Boss!');
+  if(result.first&&result.idx===0)toast('🔓 Mở khoá: 🗼 Thông Thiên Tháp · 🏟 Đấu Trường · 🐋 Săn Boss!');
   if(options?.autoContinue===true){
     const next=DATA.chapters.find(x=>P.unlockedChapters.includes(x.idx)&&!P.clearedChapters.includes(x.idx));
     if(next)setTimeout(()=>startChapter(next.idx,{continuing:true}),520);
