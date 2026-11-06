@@ -167,3 +167,25 @@
 #hvTowerRoot .hv-tower-team::after{content:"Đổi đội";position:absolute;left:50%;bottom:-16px;transform:translateX(-50%);white-space:nowrap;
   font:800 12px/1 'Noto Serif',serif;color:#fff3d6;text-shadow:0 1px 2px #000,0 0 3px #000}
 #hvTowerRoot .hv-tower-actions{align-items:center!important;padding-bottom:16px!important}
+
+/* v5 owner 06/11: luc chien khong tran khung; ten man 1 dong */
+#hvTowerRoot .hv-tower-top{display:flex!important;align-items:center!important;gap:8px!important;flex-wrap:nowrap!important}
+#hvTowerRoot .hv-tower-top>b{flex:1 1 auto!important;min-width:0!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;
+  font-size:clamp(17px,5.2vw,22px)!important;line-height:1.15!important}
+#hvTowerRoot .hv-tower-chips{flex:0 0 auto!important;display:flex!important;gap:4px!important;flex-wrap:nowrap!important}
+#hvTowerRoot .hv-tower-chip{white-space:nowrap!important;padding:4px 8px!important;font-size:12px!important}
+
+#hvTowerRoot .hv-tower-power{width:min(100%,360px)!important;margin:6px auto 0!important;box-sizing:border-box!important;
+  padding:14px 20px 14px 25%!important;min-height:0!important;height:auto!important;
+  background-size:100% 100%!important;display:flex!important;flex-direction:column!important;gap:5px!important}
+#hvTowerRoot .hv-tower-power-row{display:flex!important;flex-wrap:nowrap!important;align-items:baseline!important;gap:5px!important;white-space:nowrap!important;min-width:0!important}
+#hvTowerRoot .hv-tower-power-row b{font-size:16px!important}
+#hvTowerRoot .hv-tower-power-row span:first-child{font-size:12px!important}
+#hvTowerRoot .hv-tower-power-bar{width:100%!important;display:block!important}
+#hvTowerRoot .hv-tower-power small,#hvTowerRoot [data-tower-power-hint]{display:block!important;white-space:normal!important;overflow-wrap:anywhere!important;
+  font-size:12px!important;line-height:1.25!important;max-width:100%!important}
+
+#hvTowerRoot .hv-tower-top>b{font-size:clamp(15px,4.4vw,20px)!important;letter-spacing:0!important;text-overflow:clip!important}
+#hvTowerRoot .hv-tower-chip{padding:3px 6px!important}
+#hvTowerRoot .hv-tower-chip .hvt-ico{width:14px!important;height:14px!important;margin:0 1px!important}
+#hvTowerRoot .hv-tower-top{padding-left:6px!important;padding-right:6px!important;gap:6px!important}
