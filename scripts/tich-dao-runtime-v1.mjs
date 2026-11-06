@@ -37,7 +37,7 @@ export function patchTichDaoBattle(input,runtime,meta){
 export async function buildTichDaoCampaignAssets(root){
  const {default:sharp}=await import('sharp');
  const base=join(root,'dist/assets/characters/tich-dao'),out=join(base,'campaign');mkdirSync(out,{recursive:true});
- for(const key of ['idle-authored-0','idle-authored-1','idle-authored-2','idle-authored-3','idle-authored-4','idle-authored-5','idle-authored-6','idle-authored-7','idle-authored-8','run','basic']){
+ for(const key of [...Object.keys(JSON.parse(readFileSync(join(root,'assets/characters/tich-dao/runtime-meta.json'),'utf8')).clips).filter(k=>k.startsWith('idle-authored-')),'run','basic']){
   const source=sharp(join(base,key+'.webp')),info=await source.metadata();
   await source.resize(Math.round(info.width/2),Math.round(info.height/2)).webp({quality:90,alphaQuality:100}).toFile(join(out,key+'.webp'));
  }

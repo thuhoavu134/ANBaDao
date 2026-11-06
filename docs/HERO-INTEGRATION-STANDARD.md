@@ -463,6 +463,30 @@ Script dùng GraphQL `createCommitOnBranch` (cần `gh` đã đăng nhập), chi
 4. QA trong trận thật: `node scripts/qa-authored-battle.mjs <heroKey> <slug> <tag>` (server `scripts/qa-static-server.mjs`
    phục vụ `dist/`) — tự chụp ảnh lúc basic/ultimate/VFX được vẽ và báo lỗi JS.
 
+## IDLE LẶP MƯỢT KHÔNG NHOÈ: tìm cặp khung đầu–cuối khớp nhau (bắt buộc từ 2026-11-07)
+
+**Vấn đề.** Khi chỗ nối chưa khớp, packager trộn 4 frame cuối vào các khung dẫn về frame đầu (`IDLE_SEAM_CROSSFADE = 4`).
+Trộn hai hình khác nhau ra hình chồng mờ, nên vòng lặp có một đoạn **nhoè** (owner phát hiện trên Tịch Dao 07/11).
+
+**Cách làm.** Không trộn nữa, mà tìm đoạn cắt có khung *sau khung cuối* gần như trùng khung đầu, rồi đóng gói với trộn = 0.
+
+1. Tìm cặp khớp nhất:
+   `python scripts/hero/find-idle-loop.py <idle.mp4> --samples 30 --min-sec 2.5`
+   - Lấy 30 mẫu đều từ `start..end` (giữ cả 2 đầu). Bước giữa 2 mẫu = `(end-start)/29` khung video.
+   - **seam** = khác biệt điểm ảnh trung bình giữa khung `end + bước` (nội suy) và khung `start`, đo trên vùng nhân vật thu nhỏ.
+   - **tỷ lệ** = seam / bước thường (trung vị khác biệt giữa 2 mẫu liền nhau). Chọn tỷ lệ nhỏ nhất; **< 1** là chỗ nối êm hơn một bước bình thường.
+2. Đóng gói bằng chính các hàm của packager, ép cửa sổ đó và tắt trộn:
+   `python scripts/hero/pack-idle-fixed-loop.py <idle.mp4> --start <s> --end <e> --out <dir>`
+   (gọi probe → extract → key Blender → scrub → measure_uniform (khoá anchor) → pack_state với `IDLE_SEAM_CROSSFADE=0`).
+3. Cổng bắt buộc (giữ nguyên): `qa-idle-source-parity.mjs <dir> <video>` và `qa-idle-loop-seam.mjs <dir> --state idle` phải PASS.
+4. Idle vẫn là **30 frame**, mỗi frame giữ đúng thời lượng nó đại diện theo PTS (không ép đều, không bỏ khung).
+
+**Số đo ca Tịch Dao (07/11).** Cửa sổ packager tự chọn 20..126 phải trộn (bỏ trộn thì nối 1,08× bước thường → giật).
+Cửa sổ tìm theo cách trên: **19..121**, tỷ lệ 0,29 → pack không trộn: seam gate **1,03×** trung vị, parity ×1,0/×1,0/×1,0,
+IoU đầu–cuối 0,972, vòng 4,29 s. Hết nhoè.
+
+**Không làm:** trộn/hoà khung để che chỗ nối; cắt đoạn rồi chạy tới–lui (ping-pong); bỏ bớt khung để vừa số trang.
+
 ## Idle loop: chọn theo độ êm chỗ nối + hoà 4 frame (bắt buộc từ 2026-10-23)
 
 Clip idle do AI làm gần như **không bao giờ quay về đúng tư thế đầu** (idle_7: frame gần nhất vẫn lệch 3.3 so với

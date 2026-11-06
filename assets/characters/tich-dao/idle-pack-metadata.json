@@ -1,0 +1,787 @@
+{
+  "state": "idle",
+  "sourceName": "Ta_o_video_nha_n_va_t_hoa_t_dac5c874_1080p---778db016-3c6a-4c5f-bae9-9744dcba224c.mp4",
+  "sourceSha256": "0e925bc0b6df7826359b6eef76f980e4c332f927cdc22c1b55711b2620af5cd8",
+  "sourceResolution": [
+    1920,
+    1080
+  ],
+  "sourceFrameCount": 143,
+  "sourceDurationSeconds": 5.97,
+  "keyColorLinear": [
+    0.005605,
+    0.571125,
+    0.015209,
+    1.0
+  ],
+  "keyingSettings": {
+    "engine": "Blender 5.1.2 compositor Keying v2",
+    "clipBlack": 0.28,
+    "clipWhite": 0.68,
+    "dilateSize": -2,
+    "featherSize": 2,
+    "despillStrength": 1.2,
+    "despillBalance": 0.5,
+    "blurPre": 1,
+    "blurPost": 1
+  },
+  "crop": {
+    "method": "uniform scale across all states plus per-frame body anchor (in-place cycle, constant vertical foot line)",
+    "uniformScale": 0.453694,
+    "cell": [
+      480,
+      440
+    ],
+    "contentSizeNoUpscale": [
+      371,
+      436
+    ],
+    "contentOffset": [
+      0,
+      0
+    ],
+    "pivot": "bottom-center",
+    "footLineCellY": 436.0,
+    "anchor": {
+      "mode": "bottom-band alpha centroid",
+      "bandFraction": 0.2,
+      "smoothingWindow": 3,
+      "locked": true
+    },
+    "frames": [
+      {
+        "sourceFrameIndex": 19,
+        "sourceRect": [
+          519,
+          95,
+          1247,
+          1039
+        ],
+        "offset": [
+          -192,
+          -35
+        ],
+        "anchorXSourcePx": 952.838
+      },
+      {
+        "sourceFrameIndex": 23,
+        "sourceRect": [
+          519,
+          83,
+          1243,
+          1039
+        ],
+        "offset": [
+          -192,
+          -35
+        ],
+        "anchorXSourcePx": 952.838
+      },
+      {
+        "sourceFrameIndex": 26,
+        "sourceRect": [
+          519,
+          79,
+          1251,
+          1039
+        ],
+        "offset": [
+          -192,
+          -35
+        ],
+        "anchorXSourcePx": 952.838
+      },
+      {
+        "sourceFrameIndex": 30,
+        "sourceRect": [
+          503,
+          79,
+          1267,
+          1039
+        ],
+        "offset": [
+          -192,
+          -35
+        ],
+        "anchorXSourcePx": 952.838
+      },
+      {
+        "sourceFrameIndex": 33,
+        "sourceRect": [
+          491,
+          87,
+          1279,
+          1039
+        ],
+        "offset": [
+          -192,
+          -35
+        ],
+        "anchorXSourcePx": 952.838
+      },
+      {
+        "sourceFrameIndex": 37,
+        "sourceRect": [
+          475,
+          99,
+          1287,
+          1039
+        ],
+        "offset": [
+          -192,
+          -35
+        ],
+        "anchorXSourcePx": 952.838
+      },
+      {
+        "sourceFrameIndex": 40,
+        "sourceRect": [
+          475,
+          111,
+          1291,
+          1039
+        ],
+        "offset": [
+          -192,
+          -35
+        ],
+        "anchorXSourcePx": 952.838
+      },
+      {
+        "sourceFrameIndex": 44,
+        "sourceRect": [
+          475,
+          115,
+          1283,
+          1039
+        ],
+        "offset": [
+          -192,
+          -35
+        ],
+        "anchorXSourcePx": 952.838
+      },
+      {
+        "sourceFrameIndex": 47,
+        "sourceRect": [
+          483,
+          115,
+          1271,
+          1039
+        ],
+        "offset": [
+          -192,
+          -35
+        ],
+        "anchorXSourcePx": 952.838
+      },
+      {
+        "sourceFrameIndex": 51,
+        "sourceRect": [
+          499,
+          111,
+          1255,
+          1039
+        ],
+        "offset": [
+          -192,
+          -35
+        ],
+        "anchorXSourcePx": 952.838
+      },
+      {
+        "sourceFrameIndex": 54,
+        "sourceRect": [
+          511,
+          103,
+          1247,
+          1039
+        ],
+        "offset": [
+          -192,
+          -35
+        ],
+        "anchorXSourcePx": 952.838
+      },
+      {
+        "sourceFrameIndex": 58,
+        "sourceRect": [
+          523,
+          91,
+          1247,
+          1039
+        ],
+        "offset": [
+          -192,
+          -35
+        ],
+        "anchorXSourcePx": 952.838
+      },
+      {
+        "sourceFrameIndex": 61,
+        "sourceRect": [
+          523,
+          87,
+          1251,
+          1039
+        ],
+        "offset": [
+          -192,
+          -35
+        ],
+        "anchorXSourcePx": 952.838
+      },
+      {
+        "sourceFrameIndex": 65,
+        "sourceRect": [
+          515,
+          87,
+          1267,
+          1039
+        ],
+        "offset": [
+          -192,
+          -35
+        ],
+        "anchorXSourcePx": 952.838
+      },
+      {
+        "sourceFrameIndex": 68,
+        "sourceRect": [
+          503,
+          91,
+          1279,
+          1039
+        ],
+        "offset": [
+          -192,
+          -35
+        ],
+        "anchorXSourcePx": 952.838
+      },
+      {
+        "sourceFrameIndex": 72,
+        "sourceRect": [
+          491,
+          99,
+          1287,
+          1039
+        ],
+        "offset": [
+          -192,
+          -35
+        ],
+        "anchorXSourcePx": 952.838
+      },
+      {
+        "sourceFrameIndex": 75,
+        "sourceRect": [
+          487,
+          107,
+          1287,
+          1039
+        ],
+        "offset": [
+          -192,
+          -35
+        ],
+        "anchorXSourcePx": 952.838
+      },
+      {
+        "sourceFrameIndex": 79,
+        "sourceRect": [
+          483,
+          115,
+          1279,
+          1039
+        ],
+        "offset": [
+          -192,
+          -35
+        ],
+        "anchorXSourcePx": 952.838
+      },
+      {
+        "sourceFrameIndex": 82,
+        "sourceRect": [
+          487,
+          115,
+          1271,
+          1039
+        ],
+        "offset": [
+          -192,
+          -35
+        ],
+        "anchorXSourcePx": 952.838
+      },
+      {
+        "sourceFrameIndex": 86,
+        "sourceRect": [
+          503,
+          107,
+          1255,
+          1039
+        ],
+        "offset": [
+          -192,
+          -35
+        ],
+        "anchorXSourcePx": 952.838
+      },
+      {
+        "sourceFrameIndex": 89,
+        "sourceRect": [
+          515,
+          99,
+          1247,
+          1039
+        ],
+        "offset": [
+          -192,
+          -35
+        ],
+        "anchorXSourcePx": 952.838
+      },
+      {
+        "sourceFrameIndex": 93,
+        "sourceRect": [
+          523,
+          87,
+          1247,
+          1039
+        ],
+        "offset": [
+          -192,
+          -35
+        ],
+        "anchorXSourcePx": 952.838
+      },
+      {
+        "sourceFrameIndex": 96,
+        "sourceRect": [
+          519,
+          83,
+          1255,
+          1039
+        ],
+        "offset": [
+          -192,
+          -35
+        ],
+        "anchorXSourcePx": 952.838
+      },
+      {
+        "sourceFrameIndex": 100,
+        "sourceRect": [
+          507,
+          83,
+          1267,
+          1039
+        ],
+        "offset": [
+          -192,
+          -35
+        ],
+        "anchorXSourcePx": 952.838
+      },
+      {
+        "sourceFrameIndex": 103,
+        "sourceRect": [
+          495,
+          87,
+          1279,
+          1039
+        ],
+        "offset": [
+          -192,
+          -35
+        ],
+        "anchorXSourcePx": 952.838
+      },
+      {
+        "sourceFrameIndex": 107,
+        "sourceRect": [
+          479,
+          95,
+          1287,
+          1039
+        ],
+        "offset": [
+          -192,
+          -35
+        ],
+        "anchorXSourcePx": 952.838
+      },
+      {
+        "sourceFrameIndex": 110,
+        "sourceRect": [
+          479,
+          107,
+          1287,
+          1039
+        ],
+        "offset": [
+          -192,
+          -35
+        ],
+        "anchorXSourcePx": 952.838
+      },
+      {
+        "sourceFrameIndex": 114,
+        "sourceRect": [
+          479,
+          111,
+          1279,
+          1039
+        ],
+        "offset": [
+          -192,
+          -35
+        ],
+        "anchorXSourcePx": 952.838
+      },
+      {
+        "sourceFrameIndex": 117,
+        "sourceRect": [
+          487,
+          115,
+          1267,
+          1039
+        ],
+        "offset": [
+          -192,
+          -35
+        ],
+        "anchorXSourcePx": 952.838
+      },
+      {
+        "sourceFrameIndex": 121,
+        "sourceRect": [
+          503,
+          107,
+          1251,
+          1039
+        ],
+        "offset": [
+          -192,
+          -35
+        ],
+        "anchorXSourcePx": 952.838
+      }
+    ]
+  },
+  "atlasPages": [
+    {
+      "file": "sprite_sheets/idle-atlas-01.png",
+      "frameCount": 30,
+      "columns": 8,
+      "rows": 4,
+      "canvas": [
+        3840,
+        1760
+      ],
+      "firstFrameIndex": 0
+    }
+  ],
+  "frameCount": 30,
+  "frames": [
+    {
+      "loopIndex": 0,
+      "sourceFrameIndex": 19,
+      "sourceFrameNumber": 20,
+      "sourcePtsSeconds": 0.791667,
+      "durationMs": 166.666,
+      "sourceFramesRepresented": 4,
+      "atlasCellIndex": 0
+    },
+    {
+      "loopIndex": 1,
+      "sourceFrameIndex": 23,
+      "sourceFrameNumber": 24,
+      "sourcePtsSeconds": 0.958333,
+      "durationMs": 125.0,
+      "sourceFramesRepresented": 3,
+      "atlasCellIndex": 1
+    },
+    {
+      "loopIndex": 2,
+      "sourceFrameIndex": 26,
+      "sourceFrameNumber": 27,
+      "sourcePtsSeconds": 1.083333,
+      "durationMs": 166.667,
+      "sourceFramesRepresented": 4,
+      "atlasCellIndex": 2
+    },
+    {
+      "loopIndex": 3,
+      "sourceFrameIndex": 30,
+      "sourceFrameNumber": 31,
+      "sourcePtsSeconds": 1.25,
+      "durationMs": 125.0,
+      "sourceFramesRepresented": 3,
+      "atlasCellIndex": 3
+    },
+    {
+      "loopIndex": 4,
+      "sourceFrameIndex": 33,
+      "sourceFrameNumber": 34,
+      "sourcePtsSeconds": 1.375,
+      "durationMs": 166.667,
+      "sourceFramesRepresented": 4,
+      "atlasCellIndex": 4
+    },
+    {
+      "loopIndex": 5,
+      "sourceFrameIndex": 37,
+      "sourceFrameNumber": 38,
+      "sourcePtsSeconds": 1.541667,
+      "durationMs": 125.0,
+      "sourceFramesRepresented": 3,
+      "atlasCellIndex": 5
+    },
+    {
+      "loopIndex": 6,
+      "sourceFrameIndex": 40,
+      "sourceFrameNumber": 41,
+      "sourcePtsSeconds": 1.666667,
+      "durationMs": 166.666,
+      "sourceFramesRepresented": 4,
+      "atlasCellIndex": 6
+    },
+    {
+      "loopIndex": 7,
+      "sourceFrameIndex": 44,
+      "sourceFrameNumber": 45,
+      "sourcePtsSeconds": 1.833333,
+      "durationMs": 125.0,
+      "sourceFramesRepresented": 3,
+      "atlasCellIndex": 7
+    },
+    {
+      "loopIndex": 8,
+      "sourceFrameIndex": 47,
+      "sourceFrameNumber": 48,
+      "sourcePtsSeconds": 1.958333,
+      "durationMs": 166.667,
+      "sourceFramesRepresented": 4,
+      "atlasCellIndex": 8
+    },
+    {
+      "loopIndex": 9,
+      "sourceFrameIndex": 51,
+      "sourceFrameNumber": 52,
+      "sourcePtsSeconds": 2.125,
+      "durationMs": 125.0,
+      "sourceFramesRepresented": 3,
+      "atlasCellIndex": 9
+    },
+    {
+      "loopIndex": 10,
+      "sourceFrameIndex": 54,
+      "sourceFrameNumber": 55,
+      "sourcePtsSeconds": 2.25,
+      "durationMs": 166.667,
+      "sourceFramesRepresented": 4,
+      "atlasCellIndex": 10
+    },
+    {
+      "loopIndex": 11,
+      "sourceFrameIndex": 58,
+      "sourceFrameNumber": 59,
+      "sourcePtsSeconds": 2.416667,
+      "durationMs": 125.0,
+      "sourceFramesRepresented": 3,
+      "atlasCellIndex": 11
+    },
+    {
+      "loopIndex": 12,
+      "sourceFrameIndex": 61,
+      "sourceFrameNumber": 62,
+      "sourcePtsSeconds": 2.541667,
+      "durationMs": 166.666,
+      "sourceFramesRepresented": 4,
+      "atlasCellIndex": 12
+    },
+    {
+      "loopIndex": 13,
+      "sourceFrameIndex": 65,
+      "sourceFrameNumber": 66,
+      "sourcePtsSeconds": 2.708333,
+      "durationMs": 125.0,
+      "sourceFramesRepresented": 3,
+      "atlasCellIndex": 13
+    },
+    {
+      "loopIndex": 14,
+      "sourceFrameIndex": 68,
+      "sourceFrameNumber": 69,
+      "sourcePtsSeconds": 2.833333,
+      "durationMs": 166.667,
+      "sourceFramesRepresented": 4,
+      "atlasCellIndex": 14
+    },
+    {
+      "loopIndex": 15,
+      "sourceFrameIndex": 72,
+      "sourceFrameNumber": 73,
+      "sourcePtsSeconds": 3.0,
+      "durationMs": 125.0,
+      "sourceFramesRepresented": 3,
+      "atlasCellIndex": 15
+    },
+    {
+      "loopIndex": 16,
+      "sourceFrameIndex": 75,
+      "sourceFrameNumber": 76,
+      "sourcePtsSeconds": 3.125,
+      "durationMs": 166.667,
+      "sourceFramesRepresented": 4,
+      "atlasCellIndex": 16
+    },
+    {
+      "loopIndex": 17,
+      "sourceFrameIndex": 79,
+      "sourceFrameNumber": 80,
+      "sourcePtsSeconds": 3.291667,
+      "durationMs": 125.0,
+      "sourceFramesRepresented": 3,
+      "atlasCellIndex": 17
+    },
+    {
+      "loopIndex": 18,
+      "sourceFrameIndex": 82,
+      "sourceFrameNumber": 83,
+      "sourcePtsSeconds": 3.416667,
+      "durationMs": 166.666,
+      "sourceFramesRepresented": 4,
+      "atlasCellIndex": 18
+    },
+    {
+      "loopIndex": 19,
+      "sourceFrameIndex": 86,
+      "sourceFrameNumber": 87,
+      "sourcePtsSeconds": 3.583333,
+      "durationMs": 125.0,
+      "sourceFramesRepresented": 3,
+      "atlasCellIndex": 19
+    },
+    {
+      "loopIndex": 20,
+      "sourceFrameIndex": 89,
+      "sourceFrameNumber": 90,
+      "sourcePtsSeconds": 3.708333,
+      "durationMs": 166.667,
+      "sourceFramesRepresented": 4,
+      "atlasCellIndex": 20
+    },
+    {
+      "loopIndex": 21,
+      "sourceFrameIndex": 93,
+      "sourceFrameNumber": 94,
+      "sourcePtsSeconds": 3.875,
+      "durationMs": 125.0,
+      "sourceFramesRepresented": 3,
+      "atlasCellIndex": 21
+    },
+    {
+      "loopIndex": 22,
+      "sourceFrameIndex": 96,
+      "sourceFrameNumber": 97,
+      "sourcePtsSeconds": 4.0,
+      "durationMs": 166.667,
+      "sourceFramesRepresented": 4,
+      "atlasCellIndex": 22
+    },
+    {
+      "loopIndex": 23,
+      "sourceFrameIndex": 100,
+      "sourceFrameNumber": 101,
+      "sourcePtsSeconds": 4.166667,
+      "durationMs": 125.0,
+      "sourceFramesRepresented": 3,
+      "atlasCellIndex": 23
+    },
+    {
+      "loopIndex": 24,
+      "sourceFrameIndex": 103,
+      "sourceFrameNumber": 104,
+      "sourcePtsSeconds": 4.291667,
+      "durationMs": 166.666,
+      "sourceFramesRepresented": 4,
+      "atlasCellIndex": 24
+    },
+    {
+      "loopIndex": 25,
+      "sourceFrameIndex": 107,
+      "sourceFrameNumber": 108,
+      "sourcePtsSeconds": 4.458333,
+      "durationMs": 125.0,
+      "sourceFramesRepresented": 3,
+      "atlasCellIndex": 25
+    },
+    {
+      "loopIndex": 26,
+      "sourceFrameIndex": 110,
+      "sourceFrameNumber": 111,
+      "sourcePtsSeconds": 4.583333,
+      "durationMs": 166.667,
+      "sourceFramesRepresented": 4,
+      "atlasCellIndex": 26
+    },
+    {
+      "loopIndex": 27,
+      "sourceFrameIndex": 114,
+      "sourceFrameNumber": 115,
+      "sourcePtsSeconds": 4.75,
+      "durationMs": 125.0,
+      "sourceFramesRepresented": 3,
+      "atlasCellIndex": 27
+    },
+    {
+      "loopIndex": 28,
+      "sourceFrameIndex": 117,
+      "sourceFrameNumber": 118,
+      "sourcePtsSeconds": 4.875,
+      "durationMs": 166.667,
+      "sourceFramesRepresented": 4,
+      "atlasCellIndex": 28
+    },
+    {
+      "loopIndex": 29,
+      "sourceFrameIndex": 121,
+      "sourceFrameNumber": 122,
+      "sourcePtsSeconds": 5.041667,
+      "durationMs": 41.666,
+      "sourceFramesRepresented": 1,
+      "atlasCellIndex": 29
+    }
+  ],
+  "contactSheet": "idle-loop-contact-12.png",
+  "preview": {
+    "file": "preview/idle-loop-review-2cycles.mp4",
+    "fps": 30,
+    "frames": 257,
+    "durationSeconds": 8.566667,
+    "cycles": 2
+  },
+  "loop": {
+    "startSourceFrame": 20,
+    "endSourceFrameInclusive": 122,
+    "startPtsSeconds": 0.791667,
+    "durationSeconds": 4.291666,
+    "alphaSilhouetteIoUStartEnd": 0.9722,
+    "seamCrossfade": {
+      "samples": 0,
+      "applied": 0,
+      "sourceStep": 4,
+      "rule": "last K samples dissolve into the frames leading into START (premultiplied alpha)"
+    },
+    "minimumAlphaSilhouetteIoU": 0.85,
+    "seamOverride": {
+      "ownerApproved": false,
+      "minimumIoU": 0.85,
+      "reason": ""
+    }
+  }
+}

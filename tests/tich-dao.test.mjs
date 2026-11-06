@@ -184,10 +184,12 @@ test('VFX provenance: restores the three owner-approved clips',()=>{
  }
 });
 
-test('Pack budgets: 77-frame idle on nine-frame pages inside mobile decode caps',()=>{
- assert.equal(meta.idle.frames,77);
+// Owner 2026-11-07: idle = 30 frame (chuan da duyet), vong lap tim cap dau-cuoi khop, khong tron khung.
+test('Pack budgets: 30-frame idle on nine-frame pages inside mobile decode caps',()=>{
+ assert.equal(meta.idle.frames,30);
  assert.equal(meta.idleVisual.pageFrames,9);
- assert.equal(meta.idleVisual.pages,9);
+ assert.equal(meta.idleVisual.pages,Math.ceil(30/9));
+ assert.equal(meta.idle.frameDurationsMs.length,30);
  for(const [key,c] of Object.entries(meta.clips)){
   assert.equal(c.frames,c.frameDurationsMs.length,key);
   const decoded=c.cols*c.cellW*Math.ceil(c.frames/c.cols)*c.cellH*4;

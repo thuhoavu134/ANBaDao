@@ -59,31 +59,6 @@
       "bodyHeight": 423,
       "footX": 240,
       "footY": 440
-    },
-    "idle-authored-4": {
-      "bodyHeight": 423,
-      "footX": 240,
-      "footY": 440
-    },
-    "idle-authored-5": {
-      "bodyHeight": 423,
-      "footX": 240,
-      "footY": 440
-    },
-    "idle-authored-6": {
-      "bodyHeight": 423,
-      "footX": 240,
-      "footY": 440
-    },
-    "idle-authored-7": {
-      "bodyHeight": 423,
-      "footX": 240,
-      "footY": 440
-    },
-    "idle-authored-8": {
-      "bodyHeight": 423,
-      "footX": 240,
-      "footY": 440
     }
   },
   "vfxClips": [
@@ -97,11 +72,6 @@
       "idle-authored-1",
       "idle-authored-2",
       "idle-authored-3",
-      "idle-authored-4",
-      "idle-authored-5",
-      "idle-authored-6",
-      "idle-authored-7",
-      "idle-authored-8",
       "standing"
     ],
     "attack": [
