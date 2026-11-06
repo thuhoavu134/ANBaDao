@@ -1,0 +1,66 @@
+/* hv-kit: bo khung UI dung chung cho moi man (owner 2026-11-06).
+   Chuan: theo Thanh Chinh. Hinh = anh gpt_image trong assets/ui/kit, KHONG ve khung bang CSS.
+   Quy uoc: chu font he thong, nho nhat 12px; nut cao >= 44px; khong emoji (dung icon anh). */
+:root{
+  --hvk-ink:#fff3d6;      /* chu chinh tren nen toi */
+  --hvk-ink-2:#e9d3a8;    /* chu phu */
+  --hvk-gold:#ffd77a;     /* so lieu, nhan manh */
+  --hvk-good:#8fe3a6;
+  --hvk-bad:#ff9a6a;
+  --hvk-font:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+  --hvk-pad:12px;
+  --hvk-gap:8px;
+}
+.hvk,.hvk *{font-family:var(--hvk-font)}
+.hvk{color:var(--hvk-ink);font-size:14px;line-height:1.4}
+.hvk small,.hvk .hvk-sub{font-size:12.5px;color:var(--hvk-ink-2)}
+.hvk .hvk-num{color:var(--hvk-gold);font-weight:800;font-variant-numeric:tabular-nums}
+
+/* 1. Khung bang (panel) - gian theo noi dung, 4 goc hoa van giu nguyen */
+.hvk-panel{border-style:solid;border-width:16px 22px;border-image:url('../../../assets/ui/kit/panel.webp') 70 90 fill / 16px 22px stretch;
+  padding:4px 2px;color:var(--hvk-ink)}
+.hvk-panel > h3{margin:0 0 6px;font-size:15px;font-weight:800;color:var(--hvk-ink)}
+
+/* 2. Bang ten / tieu de man (plaque) */
+.hvk-plaque{display:inline-grid;place-items:center;min-width:180px;min-height:52px;padding:0 44px;
+  background:url('../../../assets/ui/kit/plaque.webp') center/100% 100% no-repeat;
+  font-size:18px;font-weight:800;color:var(--hvk-ink);text-shadow:0 1px 2px #000}
+
+/* 3. Nut chinh / nut phu */
+.hvk-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:48px;min-width:120px;padding:0 22px;border:0;
+  background:url('../../../assets/ui/kit/btn-primary.webp') center/100% 100% no-repeat;color:#fff6e0;font-size:15px;font-weight:800;
+  text-shadow:0 1px 2px #4a0d02,0 0 3px #4a0d02;cursor:pointer}
+.hvk-btn.is-2{background-image:url('../../../assets/ui/kit/btn-secondary.webp');text-shadow:0 1px 2px #0d2a14,0 0 3px #0d2a14}
+.hvk-btn:disabled{filter:grayscale(.85) brightness(.7);cursor:not-allowed}
+.hvk-btn:not(:disabled):active{transform:translateY(1px) scale(.98)}
+.hvk-btn small{font-size:12px;font-weight:600;color:#ffe9c4}
+
+/* 4. Tab */
+.hvk-tabs{display:flex;gap:6px}
+.hvk-tab{flex:1;min-height:44px;border:0;background:url('../../../assets/ui/kit/tab.webp') center/100% 100% no-repeat;
+  color:var(--hvk-ink-2);font-size:14px;font-weight:700;opacity:.8;cursor:pointer}
+.hvk-tab.is-on{opacity:1;color:var(--hvk-gold);filter:drop-shadow(0 0 4px rgba(255,215,122,.7))}
+
+/* 5. Nut quay ve vuong - goc duoi trai, giong nhau o moi man */
+.hvk-back{position:fixed;left:10px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:96;width:52px;height:52px;border:0;
+  background:url('../../../assets/ui/kit/back.webp') center/contain no-repeat;cursor:pointer;filter:drop-shadow(0 3px 5px rgba(0,0,0,.6))}
+
+/* 6. O vat pham */
+.hvk-slot{position:relative;display:grid;place-items:center;width:64px;height:64px;
+  background:url('../../../assets/ui/kit/slot.webp') center/100% 100% no-repeat}
+.hvk-slot img{width:72%;height:72%;object-fit:contain}
+.hvk-slot b{position:absolute;right:6px;bottom:3px;font-size:12px;font-weight:800;color:var(--hvk-ink);text-shadow:0 1px 2px #000}
+
+/* 7. Popup - noi giua man, nen toi, dong bang nut hoac cham ngoai */
+.hvk-sheet{position:fixed;inset:0;z-index:2000;display:grid;place-items:center;background:rgba(6,3,1,.66);padding:18px 12px}
+.hvk-sheet > .hvk-panel{width:min(100%,440px);max-height:min(82vh,680px);overflow:auto}
+.hvk-close{position:absolute;right:8px;top:6px;min-width:44px;min-height:44px;border:0;background:none;color:var(--hvk-ink);font-size:22px;font-weight:800;cursor:pointer}
+
+/* 8. Hang nut day (dock) - cho chuc nang phu cua man */
+.hvk-dock{position:fixed;left:70px;right:8px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:95;display:flex;justify-content:flex-end;gap:6px}
+
+/* 9. Dong danh sach (doi thu, nhiem vu, thu...) */
+.hvk-row{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;margin:0 0 8px}
+
+/* Cham do bao viec can lam */
+.hvk-dot{position:absolute;top:2px;right:2px;width:12px;height:12px;border-radius:50%;background:#e8352a;box-shadow:0 0 0 2px #2a0f03}

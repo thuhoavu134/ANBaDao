@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>hv-kit demo</title>
+<link rel="stylesheet" href="hv-kit.css">
+<style>
+body{margin:0;min-height:100vh;background:#1a120a url('../../../assets/ui/tower/tower-diorama.webp') center/cover fixed;}
+main{padding:16px 12px 90px;display:flex;flex-direction:column;gap:14px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+</style></head>
+<body class="hvk">
+<main>
+  <div style="text-align:center"><span class="hvk-plaque">Đấu Trường</span></div>
+  <div class="hvk-tabs"><button class="hvk-tab is-on">Đấu Hạng</button><button class="hvk-tab">Võ Đài</button><button class="hvk-tab">Mùa</button></div>
+  <section class="hvk-panel">
+    <h3>Hạng của bạn <span class="hvk-num">#594</span></h3>
+    <small>Đồng · 0 LP · còn 27 ngày</small>
+    <div class="hvk-row" style="margin-top:10px">
+      <div class="hvk-slot"><b>780</b></div>
+      <div><b>Hội Cú Đêm</b><br><small>Cấp 7 · 2 sao</small></div>
+      <button class="hvk-btn">Khiêu chiến</button>
+    </div>
+  </section>
+  <section class="hvk-panel">
+    <h3>Nút</h3>
+    <div class="row"><button class="hvk-btn">Nút chính</button><button class="hvk-btn is-2">Nút phụ</button><button class="hvk-btn" disabled>Đang khoá</button></div>
+  </section>
+  <section class="hvk-panel">
+    <h3>Ô vật phẩm</h3>
+    <div class="row"><div class="hvk-slot"><b>x10</b></div><div class="hvk-slot"><b>x2</b></div><div class="hvk-slot"><b>99</b></div></div>
+  </section>
+</main>
+<button class="hvk-back" aria-label="Quay về"></button>
+</body></html>
