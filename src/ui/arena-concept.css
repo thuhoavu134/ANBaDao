@@ -169,3 +169,47 @@
   background:url('assets/ui/arena/btn-fight.webp') center/100% 100% no-repeat!important;border:0!important;box-shadow:none!important;
   color:#fff6e0!important;text-shadow:0 1px 2px #4a0d02,0 0 3px #4a0d02!important}
 #hvArenaRoot.hva-concept .hv-ar-fight:disabled{filter:grayscale(.85) brightness(.7)}
+/* v5 owner 06/11: vao khu la thay ngay noi dung, danh sach doi thu khong phai keo */
+#hvArenaRoot.hva-concept.is-tile-open .hv-ar-hero{display:none!important}
+#hvArenaRoot.hva-concept.is-tile-open .hv-ar-panel{position:absolute!important;top:103px!important;left:0!important;right:0!important;bottom:0!important;
+  margin:0!important;padding:6px 10px calc(58px + env(safe-area-inset-bottom))!important;display:flex!important;flex-direction:column!important;min-height:0!important}
+#hvArenaRoot.hva-concept.is-tile-open .hv-ar-panel>[data-arena-pane],#hvArenaRoot.hva-concept.is-tile-open [data-arena-pane]{
+  flex:1 1 auto!important;min-height:0!important;max-height:none!important;height:auto!important;margin:0!important;top:auto!important;overflow:auto!important}
+#hvArenaRoot.hva-concept.is-tile-open .hv-ar-tabs{position:absolute!important;left:10px;right:10px;bottom:calc(6px + env(safe-area-inset-bottom));margin:0!important}
+/* the hang 1 dong */
+#hvArenaRoot.hva-concept .hv-arp-sum{grid-template-columns:auto 1fr!important;gap:8px!important;padding:0 2px!important}
+#hvArenaRoot.hva-concept .hv-arp-me{flex-direction:row!important;align-items:center!important;gap:6px!important;min-width:0!important;padding-right:8px!important}
+#hvArenaRoot.hva-concept .hv-arp-me>small,#hvArenaRoot.hva-concept .hv-arp-me>span{display:none!important}
+#hvArenaRoot.hva-concept .hv-arp-me b{font-size:22px!important}
+#hvArenaRoot.hva-concept .hvm-tier-me{margin:0!important;flex-direction:column;gap:0!important}
+#hvArenaRoot.hva-concept .hvm-tier-me em{font-size:12px!important}
+#hvArenaRoot.hva-concept .hv-arp-stats span{flex-direction:column}
+#hvArenaRoot.hva-concept .hv-arp-stats small{font-size:12px!important}
+#hvArenaRoot.hva-concept .hv-arp-stats b{font-size:15px!important}
+/* nhiem vu 1 dong */
+#hvArenaRoot.hva-concept .hv-arp-head:first-of-type{display:none!important}
+#hvArenaRoot.hva-concept .hv-arp-deeds{margin:6px 0 0!important;gap:4px!important}
+#hvArenaRoot.hva-concept .hv-arp-deed{flex-direction:row!important;justify-content:center;gap:4px!important;padding:0!important;min-height:34px;font-size:12.5px!important;
+  border-width:6px 8px!important;border-image-width:6px 8px!important;white-space:nowrap}
+#hvArenaRoot.hva-concept .hv-arp-deed em{display:none}
+#hvArenaRoot.hva-concept .hv-arp-head{margin:6px 2px 4px!important}
+/* hang doi thu 3 cot tren 1 dong */
+#hvArenaRoot.hva-concept .hv-ar-list .hv-ar-card.hv-arp-row{display:grid!important;grid-template-columns:48px minmax(0,1fr) auto!important;gap:8px!important;
+  align-items:center!important;margin:0 0 6px!important;padding:0 2px!important;border-width:8px 12px!important;border-image-width:8px 12px!important}
+#hvArenaRoot.hva-concept .hv-ar-list .hv-arp-rank{width:46px!important;height:46px!important}
+#hvArenaRoot.hva-concept .hv-ar-list .hv-arp-main{gap:2px!important}
+#hvArenaRoot.hva-concept .hv-ar-list .hv-arp-av{width:26px!important;height:26px!important}
+#hvArenaRoot.hva-concept .hv-ar-list .hv-arp-act{gap:2px!important}
+#hvArenaRoot.hva-concept .hv-ar-list .hv-arp-row .hv-ar-fight{min-width:88px!important;min-height:44px!important}
+/* Vo Dai + Mua: khoi gon, nut ngang hang */
+#hvArenaRoot.hva-concept.is-tile-open .hv-ar-copy{margin:0 0 6px!important;font-size:12.5px!important;line-height:1.35!important}
+#hvArenaRoot.hva-concept.is-tile-open .hv-ar-rule{margin:0 0 6px!important;padding:6px 8px!important}
+#hvArenaRoot.hva-concept.is-tile-open .hv-ar-miles{margin:0 0 6px!important}
+#hvArenaRoot.hva-concept.is-tile-open .hv-ar-list>.hv-ar-card:not(.hv-arp-row),#hvArenaRoot.hva-concept.is-tile-open [data-arena-pane]>.hv-ar-card{
+  display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;align-items:center!important;gap:4px 8px!important;margin:0 0 6px!important;padding:6px 10px!important}
+#hvArenaRoot.hva-concept.is-tile-open .hv-ar-card:not(.hv-arp-row)>b{grid-column:1}
+#hvArenaRoot.hva-concept.is-tile-open .hv-ar-card:not(.hv-arp-row)>small{grid-column:1}
+#hvArenaRoot.hva-concept.is-tile-open .hv-ar-card:not(.hv-arp-row)>.hv-ar-fight{grid-column:2;grid-row:1 / span 3;min-height:44px!important;min-width:96px!important;margin:0!important}
+
+#hvArenaRoot.hva-concept .hvm-bar + .hv-arp-head{display:none!important}
+#hvArenaRoot.hva-concept .hv-arp-sum{padding:0!important;border-width:8px 12px!important;border-image-width:8px 12px!important}

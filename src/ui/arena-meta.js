@@ -96,15 +96,13 @@
   function closeSheet() { sheetEl?.remove(); sheetEl = null; }
   function openSheet(kind) {
     closeSheet();
-    const root = document.getElementById('hvArenaRoot');
-    if (!root) return;
     sheetEl = document.createElement('div');
     sheetEl.className = 'hvm-sheet';
     sheetEl.dataset.hvm = kind;
     sheetEl.innerHTML = `<div class="hvm-panel"><header class="hvm-head"><b></b><button type="button" class="hvm-close" aria-label="Đóng">Đóng</button></header><div class="hvm-body"></div></div>`;
     sheetEl.addEventListener('click', ev => { if (ev.target === sheetEl) closeSheet(); });
     sheetEl.querySelector('.hvm-close').addEventListener('click', closeSheet);
-    root.append(sheetEl);
+    document.body.append(sheetEl); // popup that su: nam ngoai khung man (khung co hieu ung phong to)
     paintSheet(kind);
   }
   function paintSheet(kind) {
@@ -237,7 +235,7 @@
       ['board', A + 'tier-6.webp', 'Xếp hạng', 'Server', false],
       ['shop', A + 'coin.webp', 'Cửa hàng', fmt(m.coins) + ' xu', false],
       ['week', A + 'chest.webp', 'Thưởng tuần', claim ? 'Có quà' : tierOf(m.week.best).name, claim]
-    ].map(([k, img, label, sub, dot]) => `<button type="button" class="hvm-tab${dot ? ' has-dot' : ''}" data-hvm-open="${k}"><img src="${img}" alt=""><b>${label}</b><small>${sub}</small></button>`).join('');
+    ].map(([k, img, label, sub, dot]) => `<button type="button" class="hvm-tab${dot ? ' has-dot' : ''}" data-hvm-open="${k}" title="${label}: ${sub}"><img src="${img}" alt=""><b>${label}</b></button>`).join('');
     bar.querySelectorAll('[data-hvm-open]').forEach(b => b.addEventListener('click', () => openSheet(b.dataset.hvmOpen)));
     (pane.querySelector('.hv-arp-sum') || list).after(bar);
   }
