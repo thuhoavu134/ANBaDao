@@ -3,6 +3,7 @@
 (() => {
   if (typeof document === 'undefined') return;
   const BOSS_EVERY = 5;
+  const TRIAL_ART = { intact: 'assets/ui/tower/trial-intact.webp', swift: 'assets/ui/tower/trial-swift.webp', self: 'assets/ui/tower/trial-self.webp' };
   const ICONS = [
     { re: /\u{1F4B0}|\u{1FA99}/gu, src: 'assets/ui/menu-v3233/icons/resource-gold-imagen.png', alt: 'vàng' },
     { re: /\u26A1|\u{1F50B}/gu, src: 'assets/ui/menu-v3233/icons/resource-energy-imagen.png', alt: 'nộ' },
@@ -85,6 +86,13 @@
       });
     }
 
+    // Owner 2026-11-06: icon thu thach moi (thay seal cu)
+    root.querySelectorAll('[data-tower-trial]').forEach((btn) => {
+      const id = btn.dataset.towerTrial;
+      const img = btn.querySelector('img');
+      const src = TRIAL_ART[id];
+      if (img && src && !img.src.endsWith(src)) img.src = src;
+    });
     iconize(root);
   }
 
