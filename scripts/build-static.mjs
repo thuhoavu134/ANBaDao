@@ -373,3 +373,6 @@ await import('./tower-concept-v1.mjs');
 
 // Owner 2026-11-06: Dau Truong concept B (1 san, 3 khu).
 await import('./arena-concept-v1.mjs');
+
+// Owner 2026-11-06: Mong Lo theo concept B (mieu mong cat lop).
+await import('./expedition-concept-v1.mjs');
