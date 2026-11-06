@@ -6,8 +6,11 @@
   const hoist = () => {
     const nodes = [...document.querySelectorAll('#hvArenaRoot')];
     if (!nodes.length) return null;
-    nodes.slice(0, -1).forEach(n => n.remove());
-    const root = nodes[nodes.length - 1];
+    // renderArena ve root MOI vao #arenaBody (dung truoc root cu da hoist o cuoi body). Phai giu root moi,
+    // giu root cu thi moi lan doi tab/khu deu hien noi dung cu (loi: bam Dau Hang van ra Mua).
+    const fresh = nodes.find(n => n.parentElement && n.parentElement.id === 'arenaBody');
+    const root = fresh || nodes[nodes.length - 1];
+    nodes.forEach(n => { if (n !== root) n.remove(); });
     if (root.parentElement !== document.body) document.body.append(root);
     root.setAttribute('aria-label', 'Đấu Trường');
     return root;
