@@ -367,3 +367,6 @@ installMainCityArt(root);
 // Owner 2026-11-05: SSR showcase reuses the exact detail idle renderers (optional target canvas). Keep LAST.
 const { installDetailIdleTargets } = await import('./detail-idle-target-v1.mjs');
 installDetailIdleTargets(root);
+
+// Owner 2026-11-06: man Thap theo concept 9 (diorama) - nen anh concept + ray leo tang that.
+await import('./tower-concept-v1.mjs');

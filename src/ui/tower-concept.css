@@ -1,0 +1,46 @@
+/* Owner 2026-11-06: man Thap theo concept 9 (cat lop diorama) anh duyet.
+   Anh concept la nen toan man; so lieu/ten la du lieu that tu save. Khong popup, khong luoi the. */
+#hvTowerRoot{
+  background:linear-gradient(180deg,rgba(5,9,13,.62) 0%,rgba(5,9,13,.18) 30%,rgba(4,7,10,.80) 66%,#04070a 100%),
+    url('assets/ui/tower/tower-diorama.webp') center top/cover no-repeat!important;
+  color:#f6e9cf!important;
+}
+#hvTowerRoot .hv-tower-hero{background:none!important;min-height:0!important;max-height:none!important;padding-top:calc(6px + env(safe-area-inset-top))!important}
+#hvTowerRoot .hv-tower-title{font-family:'Noto Serif','Times New Roman',serif!important;font-size:clamp(22px,6.2vw,30px)!important;color:#ffe9b8!important;letter-spacing:.02em!important;text-shadow:0 2px 6px rgba(0,0,0,.9)!important}
+#hvTowerRoot .hv-tower-kicker{font-size:10px!important;letter-spacing:.2em!important;color:#d9bb8a!important;text-shadow:0 1px 3px #000!important}
+#hvTowerRoot .hv-tower-best{font-size:11.5px!important;color:#d6c39a!important;text-shadow:0 1px 3px #000!important}
+#hvTowerRoot .hv-tower-panel{
+  background:linear-gradient(180deg,rgba(13,19,23,.70),rgba(8,12,15,.92))!important;
+  border:1px solid rgba(226,196,138,.36)!important;border-radius:16px!important;
+  -webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px);
+  margin:10px 12px!important;padding:14px!important;
+  box-shadow:0 10px 26px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,236,196,.14)!important;
+  color:#f2e5c9!important;
+}
+#hvTowerRoot .hv-tower-chip{background:rgba(7,11,14,.74)!important;border:1px solid rgba(226,196,138,.42)!important;color:#ffeecd!important;border-radius:999px!important;padding:4px 10px!important;font-weight:800!important}
+#hvTowerRoot .hv-tower-floor{font:400 clamp(30px,9vw,44px)/1 'HV Brush','Noto Serif',serif!important;color:#ffd98a!important;text-shadow:0 2px 0 #2a1505,0 0 20px rgba(255,180,60,.5)!important}
+#hvTowerRoot [data-tower-climb]{
+  background:linear-gradient(180deg,#ffe6a6,#d7a94f)!important;color:#3a2310!important;font-weight:900!important;
+  border:1px solid #b58e49!important;border-radius:14px!important;min-height:52px!important;font-size:15px!important;
+  box-shadow:0 8px 20px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.6)!important;
+}
+#hvTowerRoot [data-tower-trial]{
+  background:rgba(9,15,18,.70)!important;border:1px solid rgba(226,196,138,.32)!important;
+  border-radius:12px!important;color:#f4e6c6!important;box-shadow:none!important;
+}
+#hvTowerRoot [data-tower-trial].on{background:rgba(58,34,10,.80)!important;border-color:#ffd56a!important;box-shadow:0 0 0 2px rgba(255,213,106,.45),0 0 18px rgba(255,190,70,.32)!important}
+#hvTowerRoot [data-tower-mark]{background:rgba(9,15,18,.62)!important;border:1px solid rgba(226,196,138,.30)!important;color:#f0dfbe!important;border-radius:10px!important}
+#hvTowerRoot [data-tower-mark]:disabled{opacity:.45!important}
+#hvTowerRoot [data-tower-team],#hvTowerRoot [data-tower-back]{background:rgba(9,15,18,.66)!important;border:1px solid rgba(226,196,138,.34)!important;color:#ffeecd!important;border-radius:12px!important}
+#hvTowerRoot [data-tower-power]{color:#f6e6c4!important}
+#hvTowerRoot [data-tower-power].is-ready b{color:#8ef0a8!important}
+
+/* Ray leo tang ben phai: tang da qua / dang o / ke tiep (du lieu that) */
+#hvTowerRoot .hvt-rail{position:fixed;right:8px;top:calc(12% + env(safe-area-inset-top));z-index:5;display:flex;flex-direction:column;gap:6px;align-items:center;pointer-events:none}
+#hvTowerRoot .hvt-node{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font:800 12px/1 'Noto Serif',serif;
+  color:#e9d7b2;background:rgba(6,10,13,.72);border:1px solid rgba(226,196,138,.38);box-shadow:inset 0 0 8px rgba(0,0,0,.6)}
+#hvTowerRoot .hvt-node.done{color:#9c8a63;border-color:rgba(226,196,138,.22)}
+#hvTowerRoot .hvt-node.now{width:42px;height:42px;font-size:14px;color:#3a2310;background:linear-gradient(180deg,#ffe9ad,#dda94b);
+  border-color:#fff3c4;box-shadow:0 0 0 2px rgba(255,226,140,.6),0 0 18px rgba(255,196,90,.75);pointer-events:auto;cursor:pointer}
+#hvTowerRoot .hvt-node.next{color:#cfc3a6;border-style:dashed}
+#hvTowerRoot .hvt-node.boss::after{content:"";position:absolute;margin-top:-2px;width:6px;height:6px;border-radius:50%;background:#ff6b3d;box-shadow:0 0 8px #ff6b3d}
