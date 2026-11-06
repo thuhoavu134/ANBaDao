@@ -345,7 +345,10 @@
     const ids = Object.keys((typeof DATA === 'object' && DATA.heroes) || {});
     const teams = [0, 1, 2].map(() => ids.slice().sort(() => Math.random() - 0.5).slice(0, 6));
     const result = prepareRivalsLocal(P, { names, teams });
-    if (result.ok) commitArena(result, 'arena.rivals:' + (P.arena?.rank || 0), 'arena.rivals');
+    // Ma lenh phai khac nhau moi lan doi doi thu: ma cu chi theo hang -> lan bam thu 2 bi coi la trung lap, nut "Doi doi thu" khong doi gi.
+    // (khong luu so dem vao P.arena: commitArena ghi de P.arena bang ban moi nen so dem bi reset)
+    const seq = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+    if (result.ok) commitArena(result, 'arena.rivals:' + (P.arena?.rank || 0) + ':' + seq, 'arena.rivals');
     else if (baseRivals) return baseRivals();
   };
 
