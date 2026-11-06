@@ -178,7 +178,7 @@
     btn.addEventListener('click', () => {
       if (locked) {
         const r = typeof JOURNEY_UNLOCK === 'object' ? JOURNEY_UNLOCK.tower : null;
-        toast?.(`🔒 ${r?.label || 'Tháp Trắng Đêm'} mở sau khi vượt ${r?.ch || 1} chương.`);
+        toast?.(`🔒 ${r?.label || 'Thông Thiên Tháp'} mở sau khi vượt ${r?.ch || 1} chương.`);
         return;
       }
       navTo('tower');
@@ -252,9 +252,9 @@
       refreshResbar?.();
       if (attempt.passed) {
         if (attempt.floorCleared % 10 === 0) {
-          addJournal?.('Đội leo tới tầng ' + attempt.floorCleared + ' Tháp Trắng Đêm. Gió trên đó không ngủ.');
-          sendMail?.('Tháp Trắng Đêm', 'Tầng ' + attempt.floorCleared, 'Gió tầng ' + attempt.floorCleared + ' đã ghi tên anh.', { gems: 10 });
-          chatSys?.('Tin tháp: đội anh chạm tầng ' + attempt.floorCleared + ' Tháp Trắng Đêm!');
+          addJournal?.('Đội leo tới tầng ' + attempt.floorCleared + ' Thông Thiên Tháp. Gió trên đó không ngủ.');
+          sendMail?.('Thông Thiên Tháp', 'Tầng ' + attempt.floorCleared, 'Gió tầng ' + attempt.floorCleared + ' đã ghi tên anh.', { gems: 10 });
+          chatSys?.('Tin tháp: đội anh chạm tầng ' + attempt.floorCleared + ' Thông Thiên Tháp!');
         }
         questProgress?.('tower', 1);
         toast?.(rewardLine(attempt));

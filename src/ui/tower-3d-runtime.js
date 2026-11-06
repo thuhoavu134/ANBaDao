@@ -5,7 +5,7 @@
     const root = document.getElementById('hvTowerRoot');
     if (!root) return null;
     if (root.parentElement !== document.body) document.body.append(root);
-    root.setAttribute('aria-label', 'Tháp Trắng Đêm');
+    root.setAttribute('aria-label', 'Thông Thiên Tháp');
     return root;
   };
 

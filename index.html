@@ -1354,7 +1354,7 @@ body.hub-art-active .mainstage{background:#74c9ef!important}
 
 <!-- TOWER -->
 <div id="towerScreen" class="screen art-game-screen tower-art-screen mode-overhaul-screen">
-  <div class="pagehdr"><span class="back" data-nav="hub">‹</span><span class="ttl">Tháp Trắng Đêm</span><span class="sub2">— leo tới khi gục thì thôi</span></div>
+  <div class="pagehdr"><span class="back" data-nav="hub">‹</span><span class="ttl">Thông Thiên Tháp</span><span class="sub2">— leo tới khi gục thì thôi</span></div>
   <div class="mode-intro mode-intro-tower"><div class="mode-seal">塔</div><div><span class="screen-kicker">THỬ THÁCH VÔ TẬN</span><b>Mỗi tầng kiểm tra một cách dựng đội khác nhau</b><small>Chọn Ấn Thử để tăng độ khó và kiếm Tháp Ấn; thất bại thử thách phụ không xóa tiến trình tầng.</small></div><div class="mode-pulse"><span>∞</span> ĐỘ CAO</div></div>
   <div id="towerBody"></div>
 </div>
@@ -1684,7 +1684,7 @@ daily:{
   {id:"q_train",text:"Luyện tập 2 trận",type:"train",goal:2,reward:{gold:180},pts:10},
   {id:"q_level",text:"Nâng cấp 1 anh hùng",type:"level",goal:1,reward:{gold:160},pts:10},
   {id:"q_summon",text:"Chiêu mộ 1 lần",type:"summon",goal:1,reward:{gold:150},pts:10},
-  {id:"q_tower",text:"Leo Tháp Trắng Đêm 1 tầng",type:"tower",goal:1,reward:{gold:180},pts:10},
+  {id:"q_tower",text:"Leo Thông Thiên Tháp 1 tầng",type:"tower",goal:1,reward:{gold:180},pts:10},
   {id:"q_shop",text:"Mua 1 món ở Chợ Đêm",type:"shop",goal:1,reward:{gold:150},pts:10},
   {id:"q_arena",text:"Khiêu chiến Đấu Trường 1 trận",type:"arena",goal:1,reward:{gold:200},pts:10},
   {id:"q_hunt",text:"Săn Boss Mộng 1 lượt",type:"hunt",goal:1,reward:{gold:200},pts:10},
@@ -2854,7 +2854,7 @@ function runBattle(battleId, onEnd){
     : battleId==='__arena' ? ((ST.seasonMatch?'MÙA GIẢI — ':'ĐẤU TRƯỜNG — ')+(ST.rival?ST.rival.name:'đối thủ'))
     : battleId==='__hunt' ? ('SĂN BOSS — '+todayBoss().name)
     : battleId==='__pve' ? ('VÕ ĐÀI — '+(ST.pveStage?ST.pveStage.name:''))
-    : battleId==='__tower' ? ('THÁP TRẮNG ĐÊM — Tầng '+P.tower.floor)
+    : battleId==='__tower' ? ('THÔNG THIÊN THÁP — Tầng '+P.tower.floor)
     : battleId==='__rogue' ? ('MỘNG LỘ — Tầng '+(P.rogue?.floor||1))
     : battleId==='__challenge' ? ('THỬ THÁCH — '+((S.challenge&&S.challenge.name)||'Chiến Trường'))
     : battleId==='__guildboss' ? ('BOSS BANG — Phase '+(P.guild?.boss?.phase||1))
@@ -3412,7 +3412,7 @@ function hubBadge(){ const canSign=P.daily.signInClaimedDay!==today();
   const canQuest=P.daily.quests.some(q=>{const d=DATA.daily.quests.find(x=>x.id===q.id);return !q.claimed&&q.progress>=d.goal;});
   return canSign||canQuest||idlePending().hrs>=1; }
 const JOURNEY_UNLOCK={
-  summon:{ch:1,label:'Gọi Mộng'}, forge:{ch:1,label:'Rèn Mộng'}, tower:{ch:1,label:'Tháp Trắng Đêm'}, shop:{ch:0,label:'Chợ Đêm'}, bag:{ch:1,label:'Túi Đồ'}, festival:{ch:1,label:'Lễ Hội'},
+  summon:{ch:1,label:'Gọi Mộng'}, forge:{ch:1,label:'Rèn Mộng'}, tower:{ch:1,label:'Thông Thiên Tháp'}, shop:{ch:0,label:'Chợ Đêm'}, bag:{ch:1,label:'Túi Đồ'}, festival:{ch:1,label:'Lễ Hội'},
   expedition:{ch:2,label:'Mộng Lộ'}, jobs:{ch:2,label:'Giao Việc'}, hunt:{ch:3,label:'Săn Boss'}, arena:{ch:3,label:'Đấu Trường'},
   guild:{ch:4,label:'Bang Hội'}, clan:{ch:4,label:'Gia Tộc'}, friends:{ch:4,label:'Bạn Bè'}, chat:{ch:4,label:'Chat'}, net:{ch:4,label:'Online'}
 };
@@ -4113,7 +4113,7 @@ function endChapter(options={}){ const idx=ST.chapterIdx, ch=DATA.chapters[idx];
       chatSys('Đội của anh vừa vượt '+ch.name+'!');
     }
     clanAddXp(25);
-    if(idx===0){ toast('🔓 Mở khoá: 🗼 Tháp Trắng Đêm · 🏟 Đấu Trường · 🐋 Săn Boss!'); }
+    if(idx===0){ toast('🔓 Mở khoá: 🗼 Thông Thiên Tháp · 🏟 Đấu Trường · 🐋 Săn Boss!'); }
     if(idx===5 && !referenceLoop){ sendMail('Mộng Giới','Đêm đầu tiên','Cả đội ngủ một giấc không mộng mị. Ông Hàng Phở dậy sớm nhất, nấu nồi nước dùng đầu tiên của ngày mới. Cảm ơn người đã thức cùng Mộng Phố tới tận đây.',{gems:50});
       addJournal('HOÀN THÀNH MỘNG GIỚI — mười hai Kẻ Mất Ngủ cùng nhau đi hết đêm dài.');
       chatSys('🌅 Đội của anh đã đi hết Mộng Giới! Bình minh đầu tiên sau bao đêm.'); }
@@ -4296,7 +4296,7 @@ Object.assign(DATA.voice,{
  dom_dom_thanh_pho:{battle_start:["Chớp... chớp... tôi tới rồi."],skill_sig:["Chút sáng cuối — ấm vai từng người!","Đậu đây, sáng đây!"]},
  chuot_cong_trieu_phu:{battle_start:["Chít! Trận này có tiền không?"],skill_sig:["Cắn trộm két — nghề của chuột!","Chỗ hiểm đây rồi, chít chít!"]},
 });
-/* ---- Tháp Trắng Đêm · v2.67 Ấn Thử Tháp ---- */
+/* ---- Thông Thiên Tháp · v2.67 Ấn Thử Tháp ---- */
 const TOWER_TRIALS=Object.freeze({
   intact:{id:'intact',icon:'🛡️',name:'Ấn Vẹn Đội',desc:'Thắng khi còn ít nhất 5 chiến binh sống.',sigils:1,goldBonus:.20},
   swift:{id:'swift',icon:'⚡',name:'Ấn Tốc Kết',desc:'Kết thúc chiến thắng không quá lượt 4.',sigils:1,goldBonus:.25},
@@ -4341,16 +4341,16 @@ function towerReward(f,trial){ let g=120+f*30, gm=0, shId=null, shN=0; towerEnsu
   else if(trial) P.tower.mastery[String(f)]={trial:trial.id,ok:false,at:Date.now()};
   P.gold+=g; if(f%5===0){ gm=15; P.gems+=gm; }
   if(f%10===0){ const pool=poolOf('ssr'); shId=pool[(Math.random()*pool.length)|0]; shN=8; P.shards[shId]=(P.shards[shId]||0)+shN;
-    addJournal('Đội leo tới tầng '+f+' Tháp Trắng Đêm. Gió trên đó không ngủ.');
-    sendMail('Tháp Trắng Đêm','Tầng '+f,'Gió tầng '+f+' đã ghi tên anh.',{gems:10});
-    chatSys('Tin tháp: đội anh chạm tầng '+f+' Tháp Trắng Đêm!'); }
+    addJournal('Đội leo tới tầng '+f+' Thông Thiên Tháp. Gió trên đó không ngủ.');
+    sendMail('Thông Thiên Tháp','Tầng '+f,'Gió tầng '+f+' đã ghi tên anh.',{gems:10});
+    chatSys('Tin tháp: đội anh chạm tầng '+f+' Thông Thiên Tháp!'); }
   P.tower.floor=f+1; P.tower.best=Math.max(P.tower.best||0,f); P.tower.selectedTrial=null;
   questProgress('tower',1); persist();
   toast('Vượt tầng '+f+': +🪙'+g+(gm?(' +💎'+gm):'')+(shN?(' +'+shN+' mảnh '+DATA.heroes[shId].name):'')+(trial?(masteryOk?` · ${trial.icon} ${trial.name} +${trial.sigils} Tháp Ấn`:` · ${trial.icon} chưa đạt điều kiện`):'')); }
 function renderTower(){ towerEnsure(); const b=document.getElementById('towerBody'); const f=P.tower.floor,offer=towerTrialOffer(f);
   const trialCards=offer.map(id=>{const t=TOWER_TRIALS[id],on=P.tower.selectedTrial===id;return `<button class="tbtn ${on?'on':''} towertrial" data-id="${id}" style="text-align:left;padding:10px;min-height:94px"><b>${t.icon} ${t.name}</b><br><span style="font-size:11.5px;color:#aeb7d8">${t.desc}</span><br><span style="font-size:11px;color:#f0c86a">Đạt: +${t.sigils} Tháp Ấn · +${Math.round(t.goldBonus*100)}% vàng tầng</span></button>`}).join('');
   const milestones=Object.entries(TOWER_SIGIL_MILESTONES).map(([n,rw])=>{const done=P.tower.claimedSigils.includes(Number(n)),open=P.tower.sigils>=Number(n);return `<button class="btn ${done?'ghost':open?'gold':'ghost'} sm towersigil" data-n="${n}" ${!open||done?'disabled':''}>${done?'✓ ':''}${n} Ấn · ${rw.gold?'🪙'+rw.gold:''}${rw.gems?' 💎'+rw.gems:''}</button>`}).join(' ');
-  b.innerHTML=`<div class="section"><h3>🗼 Tháp Trắng Đêm</h3>
+  b.innerHTML=`<div class="section"><h3>🗼 Thông Thiên Tháp</h3>
    <div style="font-size:13px;color:#c3cbee;line-height:1.7">Mỗi tầng một trận, quái mạnh dần. Thua không tụt tầng — nghỉ rồi leo tiếp.<br>
    Đang ở: <b style="color:#fff">Tầng ${f}</b> · Kỷ lục: <b>${P.tower.best||0}</b> · Tháp Ấn: <b style="color:#f2c14e">${P.tower.sigils}</b><br>
    Thưởng tầng: 🪙 ${120+f*30}${f%5===0?' · 💎 15':''}${f%10===0?' · 8 mảnh SSR ngẫu nhiên':''}</div>
@@ -4871,7 +4871,7 @@ const CHAT_CHANNELS={
  team:{label:'Tổ Đội',ic:'⚔',hint:'Kênh chiến thuật của 6 tướng đang ra trận.'}
 };
 const CHAT_AMBIENT={
- world:["Đêm nay ai trực khu chợ không?","Nghe nói tầng cao Tháp Trắng Đêm gió mạnh lắm.","Có ai đổi mảnh hồn không, mình dư mấy mảnh nè.","Phở khuya ai ăn không, Ông Phở đãi nước dùng miễn phí kìa!","Boss mai là con nào biết chưa?","Ngáp quá... mà ngủ thì ai gác phố.","Bên Đấu Trường có đội mới lên hạng, dữ lắm.","Hoa đăng tối nay đẹp, ai chưa thả thì thả đi.","Chợ Đêm hôm nay có món ngon, đi lẹ kẻo hết."],
+ world:["Đêm nay ai trực khu chợ không?","Nghe nói tầng cao Thông Thiên Tháp gió mạnh lắm.","Có ai đổi mảnh hồn không, mình dư mấy mảnh nè.","Phở khuya ai ăn không, Ông Phở đãi nước dùng miễn phí kìa!","Boss mai là con nào biết chưa?","Ngáp quá... mà ngủ thì ai gác phố.","Bên Đấu Trường có đội mới lên hạng, dữ lắm.","Hoa đăng tối nay đẹp, ai chưa thả thì thả đi.","Chợ Đêm hôm nay có món ngon, đi lẹ kẻo hết."],
  guild:["Ai còn lượt Boss Bang nhớ đánh trước khi đổi ngày nha.","Công Nghệ Bang nên ưu tiên nhánh nào tối nay?","Bang Chiến còn lượt, ai chưa khóa đội phòng thủ thì khóa nhé.","Thiếu một chút đóng góp để mở mốc chiến dịch kế tiếp.","Hôm nay đội mình giữ cờ khá ổn đó."],
  team:["Nếu gặp tuyến trước cứng thì để Phá Tuyến mở đường trước.","Giữ Nộ một nhịp có khi lời hơn xả ngay.","Đừng quên nhìn mục tiêu trận, không phải lúc nào cũng cần dồn damage.","Có Cơ Hội Chiến Thuật thì phối hợp đúng nhịp sẽ lời hơn.","Nếu ai thấp máu quá thì ưu tiên giữ đội hình trước khi tham sát thương."]
 };
@@ -5430,7 +5430,7 @@ renderCampaign = function(){
     if (battleId === "__arena") return `Đấu Trường — ${ST.rival?.name || "Đối thủ"}`;
     if (battleId === "__hunt") return `Săn Boss — ${typeof todayBoss === "function" ? todayBoss().name : "Mộng Thú"}`;
     if (battleId === "__pve") return `Võ Đài — ${ST.pveStage?.name || "Thí luyện"}`;
-    if (battleId === "__tower") return `Tháp Trắng Đêm — Tầng ${P.tower?.floor || 1}`;
+    if (battleId === "__tower") return `Thông Thiên Tháp — Tầng ${P.tower?.floor || 1}`;
     if (battleId === "__rogue") return `Mộng Lộ — Tầng ${P.rogue?.floor || 1}`;
     if (battleId === "__challenge") return `Khiêu chiến 15 hiệp — ${ST.challengeConfig?.name || "Chiến Trường"}`;
     if (ST.mode === "train") return "Luyện Đội Hình";

@@ -9,7 +9,7 @@
   const FRAMES = [
     { id: 'none', name: 'Mặc định', how: 'Hệ thống mặc định khung avatar' },
     { id: 'lacquer', name: 'Sơn son thếp vàng', how: 'Mở khi vào Thành Chính' },
-    { id: 'tower', name: 'Tháp Trắng Đêm', how: 'Qua ải Tháp tầng 5' },
+    { id: 'tower', name: 'Thông Thiên Tháp', how: 'Qua ải Tháp tầng 5' },
     { id: 'arena', name: 'Đấu Trường', how: 'Đấu 3 trận Đấu Trường' }
   ];
   const TITLES = [
@@ -259,7 +259,7 @@
       <div><dt>Ải nhiệm vụ chính</dt><dd>${esc(chapterLine())}</dd></div>
       <div><dt>Thu thập tướng</dt><dd>${ownedCount()}/12</dd></div>
       <div><dt>Hạng Đấu trường</dt><dd>${fmt(P && P.arena && P.arena.rank)}</dd></div>
-      <div><dt>Tháp Trắng Đêm</dt><dd>Tầng ${fmt(P && P.tower && P.tower.best)}</dd></div>
+      <div><dt>Thông Thiên Tháp</dt><dd>Tầng ${fmt(P && P.tower && P.tower.best)}</dd></div>
     </dl>
     <p class="hv-pf-title">${esc(title.name)}</p>
     <div class="hv-pf-team">${slots}</div>

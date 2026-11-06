@@ -11,9 +11,9 @@ html = html.replace(/<style id="hv-tower-3d-css">[\s\S]*?<\/style>\n?/, '');
 html = html.replace(/<script id="hv-tower-3d-js">[\s\S]*?<\/script>\n?/, '');
 html = html.replace('</head>', `<style id="hv-tower-3d-css">${css}</style>\n</head>`);
 const end = html.lastIndexOf('</body>');
-if (end < 0) throw new Error('Tháp Trắng Đêm 3d body end missing');
+if (end < 0) throw new Error('Thông Thiên Tháp 3d body end missing');
 html = html.slice(0, end)
   + `<script id="hv-tower-3d-js">${runtime}</script>\n`
   + html.slice(end);
 writeFileSync(target, html);
-console.log('Tháp Trắng Đêm 3D overlay installed');
+console.log('Thông Thiên Tháp 3D overlay installed');

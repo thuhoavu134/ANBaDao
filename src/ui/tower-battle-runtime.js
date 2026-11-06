@@ -114,9 +114,9 @@
         if (clear.ok && commitTower(clear, 'tower.clear:' + clear.floorCleared, 'tower.clear').ok) {
           refreshResbar?.();
           if (clear.floorCleared % 10 === 0) {
-            addJournal?.('Đội leo tới tầng ' + clear.floorCleared + ' Tháp Trắng Đêm. Gió trên đó không ngủ.');
-            sendMail?.('Tháp Trắng Đêm', 'Tầng ' + clear.floorCleared, 'Gió tầng ' + clear.floorCleared + ' đã ghi tên anh.', { gems: 10 });
-            chatSys?.('Tin tháp: đội anh chạm tầng ' + clear.floorCleared + ' Tháp Trắng Đêm!');
+            addJournal?.('Đội leo tới tầng ' + clear.floorCleared + ' Thông Thiên Tháp. Gió trên đó không ngủ.');
+            sendMail?.('Thông Thiên Tháp', 'Tầng ' + clear.floorCleared, 'Gió tầng ' + clear.floorCleared + ' đã ghi tên anh.', { gems: 10 });
+            chatSys?.('Tin tháp: đội anh chạm tầng ' + clear.floorCleared + ' Thông Thiên Tháp!');
           }
           questProgress?.('tower', 1);
           toast?.(rewardLine(clear));
