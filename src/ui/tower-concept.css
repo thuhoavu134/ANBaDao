@@ -136,3 +136,34 @@
 @media (prefers-reduced-motion:reduce){#hvTowerRoot .hvt-node.now{animation:none}}
 #hvTowerRoot .hvt-node.boss::after{content:"";position:absolute;transform:translate(14px,-14px);width:10px;height:10px;border-radius:50%;
   background:radial-gradient(circle,#ffb08a,#e8381a 60%,#7a1205);box-shadow:0 0 8px #ff5b2d}
+
+/* v4 owner 06/11: moc Thap An = ruong thuong; khung luc chien chuyen nghiep; nut doi doi tron */
+#hvTowerRoot .hv-tower-marks-row{display:flex!important;gap:6px!important;justify-content:space-between!important;flex-wrap:nowrap!important}
+#hvTowerRoot .hv-tower-mark{flex:1 1 0!important;min-width:0!important;min-height:96px!important;padding:2px 0 4px!important;border:0!important;border-radius:10px!important;
+  background:none!important;box-shadow:none!important;display:flex!important;flex-direction:column!important;align-items:center!important;gap:1px!important;position:relative!important;color:#fff3d6!important;opacity:1!important}
+#hvTowerRoot .hv-tower-mark .hvt-chest{width:56px;height:56px;object-fit:contain;filter:drop-shadow(0 4px 6px rgba(0,0,0,.75))}
+#hvTowerRoot .hv-tower-mark:disabled:not(.is-done) .hvt-chest{filter:grayscale(.35) brightness(.85) drop-shadow(0 4px 6px rgba(0,0,0,.75))}
+#hvTowerRoot .hv-tower-mark.is-ready .hvt-chest{filter:drop-shadow(0 0 10px rgba(255,205,90,.95)) drop-shadow(0 4px 6px rgba(0,0,0,.7));animation:hvtChest 1.2s ease-in-out infinite alternate}
+@keyframes hvtChest{from{transform:translateY(0) rotate(-2deg)}to{transform:translateY(-3px) rotate(2deg)}}
+#hvTowerRoot .hv-tower-mark.is-done .hvt-chest{opacity:.55}
+#hvTowerRoot .hv-tower-mark b{font:800 12px/1.1 'Noto Serif',serif;color:#ffe3a6;text-shadow:0 1px 2px #000,0 0 3px #000}
+#hvTowerRoot .hv-tower-mark span{font:700 12px/1.15 'Noto Serif',serif;color:#fff3d6;text-shadow:0 1px 2px #000,0 0 3px #000;white-space:nowrap;display:flex;align-items:center;gap:2px}
+#hvTowerRoot .hv-tower-mark .hvt-got{position:absolute;top:22px;left:50%;transform:translateX(-50%) rotate(-8deg);font:800 12px/1 'Noto Serif',serif;font-style:normal;
+  padding:2px 6px;border-radius:4px;background:#2f6b3a;color:#eaffea;border:1px solid #9fe0a8;box-shadow:0 2px 4px rgba(0,0,0,.6)}
+@media (prefers-reduced-motion:reduce){#hvTowerRoot .hv-tower-mark.is-ready .hvt-chest{animation:none}}
+
+#hvTowerRoot .hv-tower-power{position:relative!important;border:0!important;border-radius:0!important;box-shadow:none!important;
+  background:url('assets/ui/tower/power-frame.webp') center/100% 100% no-repeat!important;
+  padding:12px 18px 10px 26%!important;min-height:78px!important;filter:drop-shadow(0 4px 8px rgba(0,0,0,.6))}
+#hvTowerRoot .hv-tower-power-row{gap:6px!important}
+#hvTowerRoot .hv-tower-power-row b{font:800 18px/1 'Noto Serif',serif!important;color:#ffe6a6!important;text-shadow:0 1px 0 #3a1c04,0 0 6px rgba(255,200,90,.45)!important}
+#hvTowerRoot .hv-tower-power-bar{height:8px!important;border-radius:4px!important;background:rgba(0,0,0,.55)!important;box-shadow:inset 0 0 0 1px rgba(240,193,105,.55)!important}
+#hvTowerRoot .hv-tower-power-bar b{background:linear-gradient(90deg,#c9892a,#ffd56a)!important;border-radius:4px!important}
+#hvTowerRoot .hv-tower-power.is-ready .hv-tower-power-bar b{background:linear-gradient(90deg,#3a9a5a,#9ef0a8)!important}
+
+#hvTowerRoot .hv-tower-team{width:64px!important;height:64px!important;min-width:64px!important;flex:0 0 64px!important;padding:0!important;border:0!important;border-radius:50%!important;
+  background:url('assets/ui/tower/team-btn.webp') center/contain no-repeat!important;box-shadow:none!important;
+  color:transparent!important;font-size:0!important;position:relative!important;filter:drop-shadow(0 4px 8px rgba(0,0,0,.65))}
+#hvTowerRoot .hv-tower-team::after{content:"Đổi đội";position:absolute;left:50%;bottom:-16px;transform:translateX(-50%);white-space:nowrap;
+  font:800 12px/1 'Noto Serif',serif;color:#fff3d6;text-shadow:0 1px 2px #000,0 0 3px #000}
+#hvTowerRoot .hv-tower-actions{align-items:center!important;padding-bottom:16px!important}

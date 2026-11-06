@@ -98,7 +98,7 @@
       <div id="hvTowerRoot" data-testid="hv-tower">
         <div class="hv-tower-top">
           <button type="button" class="hv-tower-back" data-tower-back aria-label="Về Thành Chính">‹</button>
-          <b>Tháp Trắng Đêm</b>
+          <b data-tower-title>Thông Thiên Tháp</b>
           <div class="hv-tower-chips">
             <span class="hv-tower-chip" data-tower-gold>🪙 ${fmt(P.gold)}</span>
             <span class="hv-tower-chip" data-tower-stam>⚡ ${stamina}</span>
@@ -145,7 +145,7 @@
                 const done = (tower.claimedSigils || []).includes(mark);
                 const ready = !done && (tower.sigils || 0) >= mark;
                 const label = (rw.gold ? '🪙' + rw.gold : '') + (rw.gems ? ' 💎' + rw.gems : '');
-                return `<button type="button" class="hv-tower-mark${done ? ' is-done' : ready ? ' is-ready' : ''}" data-tower-mark="${mark}" ${!ready || done ? 'disabled' : ''}>${done ? '✓ ' : ''}${mark} Ấn<br>${label}</button>`;
+                return `<button type="button" class="hv-tower-mark${done ? ' is-done' : ready ? ' is-ready' : ''}" data-tower-mark="${mark}" ${!ready || done ? 'disabled' : ''} aria-label="Mốc ${mark} Ấn"><img class="hvt-chest" src="assets/ui/tower/chest-${ready || done ? 'open' : 'closed'}.webp" alt=""><b>${mark} Ấn</b><span>${label}</span>${done ? '<i class="hvt-got">Đã nhận</i>' : ''}</button>`;
               }).join('')}
             </div>
           </div>
