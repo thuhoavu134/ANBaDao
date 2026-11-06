@@ -110,3 +110,46 @@
 
 /* Bang doi khu: chu thuong, dam, khong thu phap */
 #hvArenaRoot.hva-concept .hv-ar-tab{font-size:13.5px!important;font-weight:800!important;line-height:1.2!important;min-height:44px!important;padding:8px 6px!important}
+
+/* v3 owner 06/11: Dau Hang theo bo cuc AFK Arena / Epic Seven. Font he thong de doc. */
+#hvArenaRoot.hva-concept [data-arena-pane]{font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif!important}
+#hvArenaRoot.hva-concept .hv-arp-sum{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center;padding:10px 12px;border-radius:12px;
+  background:linear-gradient(180deg,rgba(54,22,8,.94),rgba(28,10,3,.96));border:1.5px solid #c9952e;box-shadow:inset 0 0 0 2px rgba(20,8,2,.9),0 4px 10px rgba(0,0,0,.5)}
+#hvArenaRoot.hva-concept .hv-arp-me{display:flex;flex-direction:column;align-items:center;min-width:92px;padding-right:10px;border-right:1px solid rgba(240,193,105,.35)}
+#hvArenaRoot.hva-concept .hv-arp-me small,#hvArenaRoot.hva-concept .hv-arp-stats small{font-size:12.5px;color:#e9cfa0;font-weight:600}
+#hvArenaRoot.hva-concept .hv-arp-me b{font-size:28px;line-height:1.1;color:#ffd77a;font-weight:800}
+#hvArenaRoot.hva-concept .hv-arp-me span{font-size:12.5px;color:#f3e2c0}
+#hvArenaRoot.hva-concept .hv-arp-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;text-align:center}
+#hvArenaRoot.hva-concept .hv-arp-stats span{display:flex;flex-direction:column;gap:2px}
+#hvArenaRoot.hva-concept .hv-arp-stats b{font-size:18px;color:#fff1d2;font-weight:800}
+#hvArenaRoot.hva-concept .hv-arp-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:12px 2px 6px}
+#hvArenaRoot.hva-concept .hv-arp-head b{font-size:15px;color:#fff1d2;font-weight:800;text-shadow:0 1px 2px #000}
+#hvArenaRoot.hva-concept .hv-arp-head small{font-size:12.5px;color:#f0dcb8;text-align:right;text-shadow:0 1px 2px #000}
+#hvArenaRoot.hva-concept .hv-arp-deeds{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+#hvArenaRoot.hva-concept .hv-arp-deed{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 4px;border-radius:10px;
+  background:rgba(24,10,3,.82);border:1px solid rgba(240,193,105,.4);font-size:13px;font-weight:700;color:#fff1d2;text-align:center}
+#hvArenaRoot.hva-concept .hv-arp-deed b{font-size:15px;color:#c9b38a}
+#hvArenaRoot.hva-concept .hv-arp-deed em{font-style:normal;font-size:12.5px;color:#ffd77a}
+#hvArenaRoot.hva-concept .hv-arp-deed.is-done{border-color:#6fcf8f;background:rgba(14,40,22,.85)}
+#hvArenaRoot.hva-concept .hv-arp-deed.is-done b{color:#7ee09c}
+#hvArenaRoot.hva-concept .hv-arp-refresh{min-height:40px!important;padding:0 14px!important;font-size:13.5px!important;font-weight:700!important}
+#hvArenaRoot.hva-concept .hv-arp-row{display:grid!important;grid-template-columns:58px 1fr auto;gap:10px;align-items:center;padding:10px!important;margin:0 0 8px!important;
+  border-radius:12px!important;background:linear-gradient(180deg,rgba(46,20,7,.94),rgba(24,9,3,.96))!important;border:1px solid rgba(240,193,105,.55)!important}
+#hvArenaRoot.hva-concept .hv-arp-row.is-grudge{border-color:#ff7a4a!important;box-shadow:0 0 0 1px rgba(255,122,74,.35) inset!important}
+#hvArenaRoot.hva-concept .hv-arp-rank{display:flex;flex-direction:column;align-items:center;justify-content:center;height:58px;border-radius:10px;
+  background:rgba(255,215,122,.12);border:1px solid rgba(255,215,122,.45)}
+#hvArenaRoot.hva-concept .hv-arp-rank small{font-size:12px;color:#e9cfa0;font-weight:600}
+#hvArenaRoot.hva-concept .hv-arp-rank b{font-size:16px;color:#ffd77a;font-weight:800}
+#hvArenaRoot.hva-concept .hv-arp-main{min-width:0;display:flex;flex-direction:column;gap:3px}
+#hvArenaRoot.hva-concept .hv-arp-name{font-size:15px!important;color:#fff4dc!important;font-weight:800!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#hvArenaRoot.hva-concept .hv-arp-meta{font-size:12.5px!important;color:#e9d3a8!important}
+#hvArenaRoot.hva-concept .hv-arp-meta em{font-style:normal;color:#ff9a6a;font-weight:700}
+#hvArenaRoot.hva-concept .hv-arp-team{display:flex;gap:4px;margin-top:2px}
+#hvArenaRoot.hva-concept .hv-arp-av{width:32px;height:32px;border-radius:50%;object-fit:cover;border:1.5px solid #c9952e;background:#3a2210;display:grid;place-items:center;
+  font-style:normal;font-size:13px;font-weight:800;color:#ffe3ab}
+#hvArenaRoot.hva-concept .hv-arp-act{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+#hvArenaRoot.hva-concept .hv-arp-gain{font-size:12px;color:#8fe3a6;font-weight:700;white-space:nowrap}
+#hvArenaRoot.hva-concept .hv-arp-row .hv-ar-fight{min-width:96px;min-height:48px!important;padding:4px 10px!important;display:flex!important;flex-direction:column;
+  align-items:center;justify-content:center;line-height:1.15!important;font-size:14.5px!important;font-weight:800!important;border-radius:10px!important}
+#hvArenaRoot.hva-concept .hv-arp-row .hv-ar-fight small{font-size:12px;font-weight:600;color:#ffe9c4;opacity:.95}
+@media (max-width:370px){#hvArenaRoot.hva-concept .hv-arp-stats{grid-template-columns:repeat(2,minmax(0,1fr))}#hvArenaRoot.hva-concept .hv-arp-row{grid-template-columns:50px 1fr auto}#hvArenaRoot.hva-concept .hv-arp-row .hv-ar-fight{min-width:84px}}
