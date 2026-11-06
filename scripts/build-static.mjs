@@ -370,3 +370,6 @@ installDetailIdleTargets(root);
 
 // Owner 2026-11-06: man Thap theo concept 9 (diorama) - nen anh concept + ray leo tang that.
 await import('./tower-concept-v1.mjs');
+
+// Owner 2026-11-06: Dau Truong concept B (1 san, 3 khu).
+await import('./arena-concept-v1.mjs');

@@ -125,33 +125,79 @@
     });
   }
 
+  // Owner 2026-11-06: hoc bo cuc dau truong AFK Arena / Epic Seven - the tom tat hang o tren,
+  // moi doi thu 1 hang (hang, ten, avatar doi hinh, nut Khieu chien), thanh tich hom nay ro rang.
+  const arenaAvatar = id => {
+    try {
+      if (typeof portraitSrc === 'function') {
+        const s = portraitSrc(id, 'avatar') || portraitSrc(id, 'card') || portraitSrc(id, 'master');
+        if (s) return String(s);
+      }
+    } catch (_) {}
+    try {
+      if (typeof characterAsset === 'function') {
+        const s = characterAsset(id, 'avatar') || characterAsset(id, 'card');
+        if (s) return String(s);
+      }
+    } catch (_) {}
+    return '';
+  };
+  const arenaTeamAvatars = r => (r.team || [])
+    .map(x => typeof x === 'string' ? x : x && x.id)
+    .filter(id => id && DATA?.heroes?.[id])
+    .slice(0, 3)
+    .map(id => {
+      const src = arenaAvatar(id), nm = heroName(id);
+      return src
+        ? `<img class="hv-arp-av" src="${src}" alt="${nm}" title="${nm}">`
+        : `<i class="hv-arp-av is-mono" title="${nm}">${String(nm || '?').charAt(0)}</i>`;
+    }).join('');
+
   function paintPvp(root) {
     const rivalry = typeof normalizeRivalry === 'function'
       ? normalizeRivalry(P.arena?.rivalry, dayNow())
       : (P.arena?.rivalry || emptyRivalry());
     const rivals = P.arena?.rivals || [];
+    const myRank = P.arena?.rank || 1000;
     const deeds = [
-      ['first', '⚔️', 'Khai Trận Thắng', 1],
-      ['leap', '🚀', 'Bứt Hạng', 2],
-      ['revenge', '🔥', 'Phục Hận', 2]
-    ].map(([id, ic, name, marks]) => {
+      ['first', 'Khai Trận Thắng', 1],
+      ['leap', 'Bứt Hạng', 2],
+      ['revenge', 'Phục Hận', 2]
+    ].map(([id, name, marks]) => {
       const done = (rivalry.deeds || []).includes(id);
-      return `<span class="hv-ar-mile">${done ? '✓ ' : ''}${ic} ${name} +${marks}</span>`;
+      return `<span class="hv-arp-deed${done ? ' is-done' : ''}"><b>${done ? '✓' : '○'}</b>${name}<em>+${marks} Ấn</em></span>`;
     }).join('');
     const cards = rivals.map((r, i) => {
       const pw = rivalPower(r.rank);
       const key = arenaRivalKey(r);
       const grudge = !!(rivalry.grudges && rivalry.grudges[key]);
-      return `<article class="hv-ar-card" data-arena-card="${i}">
-        <b>${r.name}${grudge ? ' · 🔥 Kình Địch' : ''}</b>
-        <small>Hạng ${r.rank} · Cấp ${pw.lvl} · ${'★'.repeat(pw.stars)}</small>
-        <button type="button" class="hv-ar-fight" data-arena-fight="${i}" ${r.net ? 'disabled' : ''}>${r.net ? 'Đấu hạng online đang bảo trì' : 'Khiêu chiến — ' + cost() + '⚡'}</button>
+      const gain = Math.max(0, myRank - r.rank);
+      return `<article class="hv-ar-card hv-arp-row${grudge ? ' is-grudge' : ''}" data-arena-card="${i}">
+        <div class="hv-arp-rank"><small>Hạng</small><b>${fmt(r.rank)}</b></div>
+        <div class="hv-arp-main">
+          <b class="hv-arp-name">${r.name}</b>
+          <small class="hv-arp-meta">Cấp ${pw.lvl} · ${pw.stars} sao${grudge ? ' · <em>Kình địch</em>' : ''}</small>
+          <div class="hv-arp-team">${arenaTeamAvatars(r) || '<small class="hv-arp-meta">Đội ẩn</small>'}</div>
+        </div>
+        <div class="hv-arp-act">
+          ${gain ? `<small class="hv-arp-gain">Thắng lên ${fmt(gain)} hạng</small>` : ''}
+          <button type="button" class="hv-ar-fight" data-arena-fight="${i}" ${r.net ? 'disabled' : ''}>${r.net ? 'Bảo trì' : 'Khiêu chiến'}<small>${r.net ? '' : cost() + ' năng lượng'}</small></button>
+        </div>
       </article>`;
     }).join('');
     root.innerHTML = `
-      <p class="hv-ar-copy">Thắng ai, chiếm hạng người đó. Thua không tụt hạng. Hạng <b data-arena-rank>${fmt(P.arena?.rank || 1000)}</b> · cao nhất ${fmt(P.arena?.best || 1000)} · Vinh Ấn ${fmt(rivalry.marks || 0)}</p>
-      <div class="hv-ar-deeds">${deeds}</div>
-      <button type="button" class="hv-ar-btn" data-arena-refresh>Đổi đối thủ</button>
+      <section class="hv-arp-sum">
+        <div class="hv-arp-me"><small>Hạng của bạn</small><b data-arena-rank>${fmt(myRank)}</b><span>Cao nhất ${fmt(P.arena?.best || 1000)}</span></div>
+        <div class="hv-arp-stats">
+          <span><small>Vinh Ấn</small><b>${fmt(rivalry.marks || 0)}</b></span>
+          <span><small>Thắng hôm nay</small><b>${fmt(rivalry.wins || 0)}</b></span>
+          <span><small>Thua</small><b>${fmt(rivalry.losses || 0)}</b></span>
+          <span><small>Phục thù</small><b>${fmt(rivalry.revenges || 0)}</b></span>
+        </div>
+      </section>
+      <div class="hv-arp-head"><b>Nhiệm vụ hôm nay</b><small>Thắng ai, chiếm hạng người đó. Thua không tụt hạng.</small></div>
+      <div class="hv-ar-deeds hv-arp-deeds">${deeds}</div>
+      <div class="hv-arp-head"><b>Chọn đối thủ</b><button type="button" class="hv-ar-btn hv-arp-refresh" data-arena-refresh>Đổi đối thủ</button></div>
       <div class="hv-ar-list" data-arena-pvp-list>${cards}</div>`;
     root.querySelectorAll('[data-arena-fight]').forEach(btn => {
       btn.addEventListener('click', () => startArena(+btn.dataset.arenaFight));
@@ -345,7 +391,10 @@
     const ids = Object.keys((typeof DATA === 'object' && DATA.heroes) || {});
     const teams = [0, 1, 2].map(() => ids.slice().sort(() => Math.random() - 0.5).slice(0, 6));
     const result = prepareRivalsLocal(P, { names, teams });
-    if (result.ok) commitArena(result, 'arena.rivals:' + (P.arena?.rank || 0), 'arena.rivals');
+    // Ma lenh phai khac nhau moi lan doi doi thu: ma cu chi theo hang -> lan bam thu 2 bi coi la trung lap, nut "Doi doi thu" khong doi gi.
+    // (khong luu so dem vao P.arena: commitArena ghi de P.arena bang ban moi nen so dem bi reset)
+    const seq = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+    if (result.ok) commitArena(result, 'arena.rivals:' + (P.arena?.rank || 0) + ':' + seq, 'arena.rivals');
     else if (baseRivals) return baseRivals();
   };
 
