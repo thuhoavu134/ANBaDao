@@ -69,3 +69,21 @@
 .hvm-tab b{font-size:12.5px!important}
 .hvm-panel{max-height:min(78vh,640px)!important;animation:hvmPop .16s ease-out}
 @keyframes hvmPop{from{transform:scale(.94);opacity:0}to{transform:none;opacity:1}}
+
+/* v3 06/11: bo khung chung theo game tham khao - huy hieu tron + bang ten (anh gpt_image kit/) */
+.hvm-tab,.hvm-dk{background:none!important;border:0!important;border-image:none!important;display:flex!important;flex-direction:column!important;align-items:center!important;
+  justify-content:flex-start!important;gap:0!important;padding:0!important;cursor:pointer;color:#fff1d2}
+.hvm-tab i,.hvm-dk i{display:grid;place-items:center;background:url('assets/ui/arena/kit/medal.webp') center/contain no-repeat}
+.hvm-tab i{width:44px;height:44px}
+.hvm-dk i{width:58px;height:58px}
+.hvm-tab i img{width:24px!important;height:24px!important;object-fit:contain}
+.hvm-dk i img{width:30px;height:30px;object-fit:contain}
+.hvm-tab b,.hvm-dk b{display:block;margin-top:-4px;padding:3px 8px 4px;min-width:72px;text-align:center;background:url('assets/ui/arena/kit/plaque.webp') center/100% 100% no-repeat;
+  font:800 12.5px/1.1 system-ui,'Segoe UI',sans-serif;color:#ffe9bd;text-shadow:0 1px 2px #000;white-space:nowrap}
+.hvm-tab.has-dot i::after,.hvm-dk.has-dot i::after{content:'';position:absolute;transform:translate(16px,-16px);width:11px;height:11px;border-radius:50%;background:#ff4a2a;box-shadow:0 0 0 2px #2a0f03}
+.hvm-tab i,.hvm-dk i{position:relative}
+.hvm-tab.has-dot::after,.hvm-dk.has-dot::after{display:none}
+.hvm-dock{position:absolute;left:62px;right:6px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:30;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2px;
+  font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+
+#hvArenaRoot > .hvm-dock{position:fixed!important;top:auto!important;left:6px!important;right:6px!important;bottom:calc(10px + env(safe-area-inset-bottom))!important;z-index:95!important}

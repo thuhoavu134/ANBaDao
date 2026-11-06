@@ -4,7 +4,7 @@
 (() => {
   if (typeof document === 'undefined') return;
   const BG = 'assets/ui/arena/arena-courtyard.webp';
-  const ZONES = { pve: { y: 24, label: 'Võ Đài', sub: 'Thí luyện · điểm Mùa' }, pvp: { y: 52, label: 'Đấu Hạng', sub: 'Thắng ai chiếm hạng' }, season: { y: 82, label: 'Mùa', sub: 'Hạng mùa · quà mốc' } };
+  const ZONES = { pve: { y: 24, x: 20, label: 'Võ Đài', sub: 'Thí luyện · điểm Mùa' }, pvp: { y: 52, x: 50, label: 'Đấu Hạng', sub: 'Thắng ai chiếm hạng' }, season: { y: 82, x: 80, label: 'Mùa', sub: 'Hạng mùa · quà mốc' } };
   const ENERGY = 'assets/ui/menu-v3233/icons/resource-energy-imagen.png';
   // Bo moi emoji (tranh moi may ve mot kieu), rieng tia set doi sang icon nang luong that cua game
   const STRIP = /(?!\u26A1)[\p{Extended_Pictographic}\uFE0F\u200D]/gu;
@@ -60,7 +60,8 @@
       if (!z || btn.dataset.hva === '1') return;
       btn.dataset.hva = '1';
       btn.style.setProperty('--y', z.y + '%');
-      btn.innerHTML = `<b>${z.label}</b><small>${z.sub}</small>`;
+      btn.style.setProperty('--x', z.x + '%');
+      btn.innerHTML = `<i class="hva-bn-ic"><img src="assets/ui/arena/kit/ic-${btn.dataset.acity}.webp" alt=""></i><b>${z.label}</b>`;
       btn.setAttribute('aria-label', z.label + ' — ' + z.sub);
     });
     // tab duoi day doi khu: an dung vao renderArena cua game

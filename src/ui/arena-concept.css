@@ -213,3 +213,26 @@
 
 #hvArenaRoot.hva-concept .hvm-bar + .hv-arp-head{display:none!important}
 #hvArenaRoot.hva-concept .hv-arp-sum{padding:0!important;border-width:8px 12px!important;border-image-width:8px 12px!important}
+
+/* v6 owner 06/11: bang ron treo doc cam tren san, nut ve vuong, tab doi khu = bang son mai (anh gpt_image kit/) */
+#hvArenaRoot.hva-concept #hvArenaCity .hv-atile{position:absolute!important;top:15%!important;left:var(--x,50%)!important;transform:translateX(-50%)!important;
+  width:84px!important;height:304px!important;min-height:0!important;padding:0!important;margin:0!important;border:0!important;border-image:none!important;box-shadow:none!important;
+  background:url('assets/ui/arena/kit/banner.webp') center top/100% 100% no-repeat!important;display:block!important;cursor:pointer;filter:drop-shadow(0 6px 8px rgba(0,0,0,.55))}
+#hvArenaRoot.hva-concept #hvArenaCity .hv-atile .hva-bn-ic{position:absolute;left:50%;top:5.5%;transform:translateX(-50%);width:44px;height:44px;display:grid;place-items:center}
+#hvArenaRoot.hva-concept #hvArenaCity .hv-atile .hva-bn-ic img{width:40px;height:40px;object-fit:contain;filter:drop-shadow(0 1px 2px #000)}
+#hvArenaRoot.hva-concept #hvArenaCity .hv-atile b{position:absolute;left:50%;top:30%;transform:translateX(-50%);writing-mode:vertical-rl;text-orientation:upright;
+  font:800 21px/1 system-ui,'Segoe UI',sans-serif!important;letter-spacing:.06em;color:#ffe9bd!important;text-shadow:0 2px 3px #000!important;white-space:nowrap}
+#hvArenaRoot.hva-concept #hvArenaCity .hv-atile small{display:none!important}
+#hvArenaRoot.hva-concept #hvArenaCity .hv-atile:active{transform:translateX(-50%) translateY(2px)!important}
+#hvArenaBackFab{width:52px!important;height:52px!important;border:0!important;border-radius:0!important;box-shadow:none!important;
+  background:url('assets/ui/arena/kit/back.webp') center/contain no-repeat!important;color:transparent!important;font-size:0!important;
+  left:8px!important;bottom:calc(14px + env(safe-area-inset-bottom))!important;top:auto!important}
+#hvArenaRoot.hva-concept .hv-ar-tabs .hv-ar-tab,#hvArenaRoot.hva-concept [data-arena-tab]{background:url('assets/ui/arena/kit/plaque.webp') center/100% 100% no-repeat!important;
+  border:0!important;border-image:none!important;box-shadow:none!important;min-height:44px!important;color:#ffe9bd!important;font:800 14px system-ui,'Segoe UI',sans-serif!important;text-shadow:0 1px 2px #000}
+#hvArenaRoot.hva-concept [data-arena-tab].is-on{filter:brightness(1.25) drop-shadow(0 0 5px rgba(255,210,110,.8))}
+
+#hvArenaRoot.hva-concept.hv-city #hvArenaCity .hv-atile,#hvArenaRoot.hva-concept #hvArenaCity button.hv-atile[data-acity]{width:84px!important;max-width:84px!important;height:304px!important;top:15%!important;left:var(--x,50%)!important;right:auto!important;bottom:auto!important;transform:translateX(-50%)!important}
+
+/* bang ron: luat cu dong 30 co min-width:150px lam bang ron rong 150 thay vi 84 */
+#hvArenaRoot.hva-concept #hvArenaCity .hv-atile{min-width:0!important;max-width:84px!important;width:84px!important}
+#hvArenaRoot.hva-concept #hvArenaCity .hv-atile:active{transform:translateX(-50%) scale(.97)!important}

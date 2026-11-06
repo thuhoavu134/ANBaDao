@@ -235,10 +235,26 @@
       ['board', A + 'tier-6.webp', 'Xếp hạng', 'Server', false],
       ['shop', A + 'coin.webp', 'Cửa hàng', fmt(m.coins) + ' xu', false],
       ['week', A + 'chest.webp', 'Thưởng tuần', claim ? 'Có quà' : tierOf(m.week.best).name, claim]
-    ].map(([k, img, label, sub, dot]) => `<button type="button" class="hvm-tab${dot ? ' has-dot' : ''}" data-hvm-open="${k}" title="${label}: ${sub}"><img src="${img}" alt=""><b>${label}</b></button>`).join('');
+    ].map(([k, img, label, sub, dot]) => `<button type="button" class="hvm-tab${dot ? ' has-dot' : ''}" data-hvm-open="${k}" title="${label}: ${sub}"><i><img src="${img}" alt=""></i><b>${label}</b></button>`).join('');
     bar.querySelectorAll('[data-hvm-open]').forEach(b => b.addEventListener('click', () => openSheet(b.dataset.hvmOpen)));
     (pane.querySelector('.hv-arp-sum') || list).after(bar);
   }
-  new MutationObserver(() => decorate(false)).observe(document.body, { childList: true, subtree: true });
+  // Man tong quan: hang nut day kieu huy hieu tron + bang ten (giong game tham khao owner gui)
+  function dock() {
+    const root = document.getElementById('hvArenaRoot');
+    if (!root) return;
+    const show = root.classList.contains('is-open') && !root.classList.contains('is-tile-open');
+    let d = root.querySelector(':scope > .hvm-dock');
+    if (!show) { d?.remove(); return; }
+    const mm = meta(), claim = !!(mm.lastWeek && !mm.lastWeek.claimed);
+    const sig = mm.log.length + '|' + mm.coins + '|' + claim;
+    if (d && d.dataset.sig === sig) return;
+    if (!d) { d = document.createElement('nav'); d.className = 'hvm-dock'; root.append(d); }
+    d.dataset.sig = sig;
+    d.innerHTML = [['log', A + 'row-frame.webp', 'Nhật ký', false], ['board', A + 'tier-6.webp', 'Xếp hạng', false], ['shop', A + 'coin.webp', 'Cửa hàng', false], ['week', A + 'chest.webp', 'Thưởng tuần', claim]]
+      .map(([k, img, label, dot]) => `<button type="button" class="hvm-dk${dot ? ' has-dot' : ''}" data-hvm-open="${k}"><i><img src="${img}" alt=""></i><b>${label}</b></button>`).join('');
+    d.querySelectorAll('[data-hvm-open]').forEach(b => b.addEventListener('click', () => openSheet(b.dataset.hvmOpen)));
+  }
+  new MutationObserver(() => { decorate(false); dock(); }).observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
   window.HV_ARENA_META = { meta, tierOf, TIERS, SHOP, openSheet, closeSheet, decorate };
 })();
