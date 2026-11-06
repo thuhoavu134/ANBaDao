@@ -51,7 +51,13 @@
     }
   }
 
+  let busy = false;
   function mount() {
+    if (busy) return;
+    busy = true;
+    try { mountInner(); } finally { busy = false; }
+  }
+  function mountInner() {
     const root = document.getElementById('hvTowerRoot');
     if (!root || !root.classList.contains('is-open')) return;
     if (typeof P !== 'object' || !P || !P.tower) return;
@@ -70,8 +76,10 @@
 
     let rail = root.querySelector('.hvt-rail');
     if (!rail) { rail = document.createElement('div'); rail.className = 'hvt-rail'; root.append(rail); }
-    rail.innerHTML = html;
-    rail.title = `Tầng ${f} · kỷ lục ${best}`;
+    // Chi ghi DOM khi noi dung that su doi: ghi moi lan thi MutationObserver goi lai mount() vo han -> treo man.
+    if (rail.dataset.key !== html) { rail.dataset.key = html; rail.innerHTML = html; }
+    const tip = `Tầng ${f} · kỷ lục ${best}`;
+    if (rail.title !== tip) rail.title = tip;
 
     const now = rail.querySelector('.hvt-node.now');
     if (now && now.dataset.wired !== '1') {
@@ -94,6 +102,19 @@
       if (img && src && !img.src.endsWith(src)) img.src = src;
     });
     iconize(root);
+
+    // Owner 2026-11-06: noi o tai nguyen voi chuc nang that: vang -> Cho Dem (mua vang), nang luong -> Cho Dem (mua Do Tinh Tao)
+    root.querySelectorAll('[data-tower-gold],[data-tower-stam]').forEach((chip) => {
+      if (chip.dataset.wired === '1') return;
+      chip.dataset.wired = '1';
+      chip.setAttribute('role', 'button');
+      chip.setAttribute('tabindex', '0');
+      chip.setAttribute('aria-label', chip.hasAttribute('data-tower-gold') ? 'Mua vàng ở Chợ Đêm' : 'Mua năng lượng ở Chợ Đêm');
+      chip.style.cursor = 'pointer';
+      const go = () => { if (typeof navTo === 'function') navTo('shop'); };
+      chip.addEventListener('click', go);
+      chip.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
+    });
   }
 
   const start = () => {

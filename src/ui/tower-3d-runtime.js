@@ -4,6 +4,8 @@
   const hoist = () => {
     const root = document.getElementById('hvTowerRoot');
     if (!root) return null;
+    // renderTower ve lai root moi trong #towerBody; root cu da hoist o body phai bo, khong de 2 #hvTowerRoot
+    document.querySelectorAll('#hvTowerRoot').forEach(el => { if (el !== root) el.remove(); });
     if (root.parentElement !== document.body) document.body.append(root);
     root.setAttribute('aria-label', 'Thông Thiên Tháp');
     return root;
