@@ -88,17 +88,17 @@
         <div class="hv-exp-hero">
           <div class="hv-exp-kicker">Lộ trình biến ảo</div>
           <div class="hv-exp-floor" data-expedition-floor>${kicker}</div>
-          <div class="hv-exp-best">Kỷ lục ${rogue.best || 0}/5 · Vàng chuyến này 🪙 ${fmt(rogue.earnedGold || 0)}</div>
+          <div class="hv-exp-best">Kỷ lục ${rogue.best || 0}/5 · Vàng run 🪙 ${fmt(rogue.earnedGold || 0)}</div>
           <div class="hv-exp-path" data-expedition-path>${pathMarks(rogue)}</div>
         </div>
         <div class="hv-exp-panel">
           <p class="hv-exp-copy">${rogue.pending
             ? 'Chọn 1 trong 3 Phúc. 2 Mộng Ấn đổi bộ một lần mỗi tầng.'
             : boss
-              ? 'Tầng cuối. Thắng là phá Mộng Lộ. Thua thì chuyến đi khép, kỷ lục giữ.'
+              ? 'Tầng cuối. Thắng là phá Mộng Lộ. Thua thì run khép, kỷ lục giữ.'
               : rogue.active
                 ? 'Chọn Ngã Rẽ rồi xuất chiến. Liều càng sâu, thưởng càng lớn. Thua không mất kỷ lục.'
-                : 'Một chuyến, năm tầng. Mỗi tầng một quyết định rủi ro. Chuyến đang đi được lưu — quay lại là tiếp.'}</p>
+                : 'Một run, năm tầng. Mỗi tầng một quyết định rủi ro. Run đang đi được lưu — quay lại là tiếp.'}</p>
           ${rogue.pending ? `
             <div class="hv-exp-offers" data-expedition-offer>
               ${offer.map(b => `<button type="button" class="hv-exp-card" data-expedition-bless="${b.id}">
@@ -118,7 +118,7 @@
           ` : ''}
           <div class="hv-exp-actions">
             ${rogue.active
-              ? `<button type="button" class="hv-exp-abort" data-expedition-abort>Rời Mộng Lộ</button>
+              ? `<button type="button" class="hv-exp-abort" data-expedition-abort>Kết thúc run</button>
                  <button type="button" class="hv-exp-fight" data-expedition-fight>${boss ? 'Phá Mộng Chủ' : ('Xuất chiến tầng ' + rogue.floor)}</button>`
               : `<button type="button" class="hv-exp-start" data-expedition-start>Bắt đầu Mộng Lộ</button>`}
           </div>
@@ -169,14 +169,12 @@
   };
 
   rogueChooseRoute = function honVietRogueRoute(id) {
-    // Owner 07/11: ma lenh phai khac nhau moi lan doi loi (A->B->A), neu khong lan chon lai bi coi la lenh trung va bi bo qua
-    const fromRoute = (P && P.rogue && P.rogue.route) || 'none';
     const result = prepareRogueChooseRoute(P, id);
     if (!result.ok) {
       toast?.(result.message);
       return;
     }
-    if (commitRogue(result, 'rogue.route:' + fromRoute + '>' + id + ':' + result.rogue.floor + ':' + Date.now().toString(36), 'rogue.route').ok) {
+    if (commitRogue(result, 'rogue.route:' + id + ':' + result.rogue.floor, 'rogue.route').ok) {
       renderExpedition();
     }
   };
@@ -243,7 +241,7 @@
           weeklyProgress?.('rogue', 1);
           toast?.('Vượt tầng ' + floor + ' · nhận ' + (result.sigilGain || 0) + ' Mộng Ấn · chọn một Phúc Mộng.');
         } else {
-          toast?.('Mộng Lộ khép lại. Giữ kỷ lục, bắt đầu chuyến mới khi sẵn sàng.');
+          toast?.('Mộng Lộ khép lại. Giữ kỷ lục, bắt đầu run mới khi sẵn sàng.');
         }
       } else if (baseBattle) {
         return;

@@ -77,13 +77,11 @@
       if (z && t.textContent.trim() !== z.label) t.textContent = z.label;
     });
     // Kit chung: nut quay ve vuong + khung bang anh (owner 2026-11-06)
-    // Nut chi song trong man Dau Truong (gan vao root), khong treo o body nua -> khong lo ra Thanh Chinh
-    document.querySelectorAll('body > .hva-back').forEach((x) => x.remove());
-    if (!root.querySelector('.hvk-back.hva-back')) {
+    if (!document.querySelector('.hvk-back.hva-back')) {
       const b = document.createElement('button');
       b.type = 'button'; b.className = 'hvk-back hva-back'; b.setAttribute('aria-label', 'Quay ve Thanh Chinh');
       b.addEventListener('click', () => { const t = root.querySelector('[data-arena-back]'); if (t) t.click(); else if (typeof navTo === 'function') navTo('hub'); });
-      root.append(b);
+      document.body.append(b);
     }
     clean(root);
   }

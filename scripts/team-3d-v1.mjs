@@ -2,7 +2,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 const target = join(process.cwd(), 'dist/index.html');
-const runtime = readFileSync(join(process.cwd(), 'src/ui/team-3d-runtime.js'), 'utf8') + '\n' + readFileSync(join(process.cwd(), 'src/ui/team-idle.js'), 'utf8');
+const runtime = readFileSync(join(process.cwd(), 'src/ui/team-3d-runtime.js'), 'utf8');
 const css = readFileSync(join(process.cwd(), 'src/ui/team-3d.css'), 'utf8');
 new Function(runtime);
 
