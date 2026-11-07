@@ -3812,7 +3812,7 @@ function startTraining(){ refreshStamina();
 let teamPicks=null;
 function renderTeam(){ if(!teamPicks) teamPicks=normalizeSquad(P.squad,P,false).map(p=>({...p})); else teamPicks=normalizeSquad(teamPicks,P,false);
   const g=document.getElementById('teamGrid'); g.innerHTML='';
-  for(const id of sortedHeroIds()){ if(!P.heroes[id].owned) continue; const h=DATA.heroes[id]; const p=teamPicks.find(x=>x.id===id);
+  for(const id of sortedOwnedIds()){ const h=DATA.heroes[id]; const p=teamPicks.find(x=>x.id===id);
     const d=document.createElement('div'); d.className='hcard'+(p?' picked':'');
     d.dataset.rarity=h.rarity;
     const _teamArt=characterAsset(id,'card');
@@ -4226,6 +4226,7 @@ const RETIRED_HERO_IDS=Object.freeze(["lac_yen","cung_thu_tre","co_dao_ganh_hoi"
 const RETIRED_HERO_SET=new Set(RETIRED_HERO_IDS);
 function isRetiredHero(id){ return RETIRED_HERO_SET.has(String(id||"")); }
 function activeRosterIds(){ return OFFICIAL_ROSTER_12_IDS.filter(id=>!isRetiredHero(id)); }
+function sortedOwnedIds(){ return Object.keys(P.heroes).filter(id=>P.heroes[id].owned&&DATA.heroes[id]).sort((x,y)=>(RAR_ORDER[DATA.heroes[x].rarity]-RAR_ORDER[DATA.heroes[y].rarity])||String(DATA.heroes[x].name).localeCompare(String(DATA.heroes[y].name))); }
 function sortedHeroIds(){ return activeRosterIds().sort((x,y)=>(RAR_ORDER[DATA.heroes[x].rarity]-RAR_ORDER[DATA.heroes[y].rarity])||x.localeCompare(y)); }
 function rarCol(t){ return {ssr:'#f2c14e',ss:'#c084fc',s:'#60a5fa',a:'#4ade80',b:'#9aa3b8'}[t]||'#9aa3b8'; }
 const GACHA={cost1:80,cost10:720,rates:[['ssr',3],['ss',12],['s',85]],pityAt:60,dupShards:{ssr:15,ss:10,s:6,a:4,b:3}};
