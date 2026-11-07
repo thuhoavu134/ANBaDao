@@ -154,6 +154,8 @@
       const id = slot.dataset.wid || '';
       let cur = live.get(i);
       if (cur && cur.id !== id) { kill(i); cur = null; }
+      // Owner 07/11: man bi ve lai (vd bam Doi goi y) lam wrapper cu bi go khoi DOM -> phai tao lai, neu khong idle bien mat
+      if (cur && !cur.wrap.isConnected) { kill(i); cur = null; }
       if (!id) return;
       if (!cur) { make(i, id, slot, L); cur = live.get(i); }
       seen.add(i);
