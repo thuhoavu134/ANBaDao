@@ -3872,7 +3872,14 @@ function renderTeam(){ if(!teamPicks) teamPicks=normalizeSquad(P.squad,P,false).
       q.row=(q.row==='front')?'back':'front'; renderTeam(); }));
   }
 }
-document.getElementById('teamQuick').addEventListener('click',()=>{ teamPicks=normalizeSquad(defaultPlayer().squad,P,true); renderTeam(); });
+// Owner 08/11: 'Doi goi y' truoc chi tra ve doi khoi dau (trung doi dang co) nen bam khong thay gi.
+// Gio goi y 6 tuong manh nhat dang so huu; tuong do/chien/ve dung hang truoc.
+function suggestSquad(){ const ids=Object.keys(P.heroes).filter(id=>P.heroes[id].owned&&DATA.heroes[id]);
+  ids.sort((a,b)=>heroPower(b)-heroPower(a)); const top=ids.slice(0,6);
+  const isFront=id=>/(Đỡ|Tank|Chiến|Vệ|Hộ|Khiên)/i.test(String(DATA.heroes[id].role||''));
+  const front=top.filter(isFront).slice(0,3); for(const id of top){ if(front.length>=3) break; if(!front.includes(id)) front.push(id); }
+  return top.map(id=>({id,row:front.includes(id)?'front':'back'})); }
+document.getElementById('teamQuick').addEventListener('click',()=>{ teamPicks=normalizeSquad(suggestSquad(),P,true)||teamPicks; renderTeam(); });
 document.getElementById('teamSave').addEventListener('click',()=>{ const normalized=normalizeSquad(teamPicks,P,false); if(!normalized||normalized.length!==6){ toast('Cần đúng 6 anh hùng khác nhau.'); return; }
   teamPicks=normalized; P.squad=normalized.map(p=>({...p})); persist(); toast('Đã lưu đội hình không trùng tướng.'); navTo('hub'); });
 /* ---------- HEROES + DETAIL ---------- */

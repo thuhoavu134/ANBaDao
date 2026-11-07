@@ -47,7 +47,7 @@
       const before = sig();
       setTimeout(() => {
         const after = sig();
-        const msg = before && after && before === after ? 'Doi goi y trung voi doi hien tai' : 'Da ap dung doi goi y';
+        const msg = before && after && before === after ? 'Đội gợi ý trùng với đội hiện tại' : 'Đã áp dụng đội gợi ý';
         try { toast(msg); } catch (_) {}
       }, 60);
     }, true);
