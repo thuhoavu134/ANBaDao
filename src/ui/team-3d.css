@@ -171,6 +171,6 @@ body.team-3d-active #teamScreen:after{display:none!important;content:none!import
 
 /* Owner 07/11: Tran Hinh phai la MOT man, khong cuon nhu lop phu.
    #petHome nam duoi day (cao 571px) lam man bi cuon -> an di, khoa cuon. */
-#hvTeamRoot{overflow:hidden!important;overscroll-behavior:none!important}
+#hvTeamRoot{overscroll-behavior:none!important}
 #hvTeamRoot #petHome{display:none!important}
 #hvTeamRoot .hv-team-stage{height:100%!important;overflow:hidden!important}
