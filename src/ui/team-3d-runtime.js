@@ -47,7 +47,7 @@
       const before = sig();
       setTimeout(() => {
         const after = sig();
-        const msg = before && after && before === after ? 'Đội gợi ý trùng với đội hiện tại' : 'Đã áp dụng đội gợi ý';
+        const msg = window.__hvSuggestMsg || (before && after && before === after ? 'Đội gợi ý trùng với đội hiện tại' : 'Đã áp dụng đội gợi ý'); window.__hvSuggestMsg = '';
         try { toast(msg); } catch (_) {}
       }, 60);
     }, true);

@@ -3872,14 +3872,35 @@ function renderTeam(){ if(!teamPicks) teamPicks=normalizeSquad(P.squad,P,false).
       q.row=(q.row==='front')?'back':'front'; renderTeam(); }));
   }
 }
-// Owner 08/11: 'Doi goi y' truoc chi tra ve doi khoi dau (trung doi dang co) nen bam khong thay gi.
-// Gio goi y 6 tuong manh nhat dang so huu; tuong do/chien/ve dung hang truoc.
-function suggestSquad(){ const ids=Object.keys(P.heroes).filter(id=>P.heroes[id].owned&&DATA.heroes[id]);
-  ids.sort((a,b)=>heroPower(b)-heroPower(a)); const top=ids.slice(0,6);
-  const isFront=id=>/(Đỡ|Tank|Chiến|Vệ|Hộ|Khiên)/i.test(String(DATA.heroes[id].role||''));
-  const front=top.filter(isFront).slice(0,3); for(const id of top){ if(front.length>=3) break; if(!front.includes(id)) front.push(id); }
-  return top.map(id=>({id,row:front.includes(id)?'front':'back'})); }
-document.getElementById('teamQuick').addEventListener('click',()=>{ teamPicks=normalizeSquad(suggestSquad(),P,true)||teamPicks; renderTeam(); });
+// Owner 08/11: 'Doi goi y' xoay vong 3 kieu doi; moi lan bam doi sang kieu tiep theo.
+const SUGGEST_KINDS=['Mạnh nhất','Cân bằng','Cùng hệ'];
+let suggestKind=-1;
+function heroKind(id){ const r=String(DATA.heroes[id].role||'');
+  if(/(Hỗ trợ|Hồi|Khuếch đại|Thanh tẩy|cứu)/i.test(r)) return 'sup';
+  if(/(Hộ vệ|Khiên|Hộ mệnh|Đấu sĩ|Hải cẩu|cận chiến|Kiếm sĩ|Song Kiếm|song thương)/i.test(r)) return 'tank';
+  return 'dps'; }
+function suggestSquad(kind){ const own=Object.keys(P.heroes).filter(id=>P.heroes[id].owned&&DATA.heroes[id]);
+  own.sort((a,b)=>heroPower(b)-heroPower(a));
+  let pick=[];
+  if(kind===1){ const need={tank:2,dps:2,sup:2};
+    for(const id of own){ const k=heroKind(id); if(need[k]>0){ need[k]--; pick.push(id); } if(pick.length>=6) break; } }
+  else if(kind===2){ const cnt={}; own.forEach(id=>{ const h=DATA.heroes[id].he; cnt[h]=(cnt[h]||0)+heroPower(id); });
+    const best=Object.keys(cnt).sort((a,b)=>cnt[b]-cnt[a])[0];
+    pick=own.filter(id=>DATA.heroes[id].he===best).slice(0,6); }
+  for(const id of own){ if(pick.length>=6) break; if(!pick.includes(id)) pick.push(id); }
+  pick=pick.slice(0,6);
+  const front=pick.filter(id=>heroKind(id)==='tank').slice(0,3);
+  for(const id of pick){ if(front.length>=3) break; if(!front.includes(id)&&heroKind(id)!=='sup') front.push(id); }
+  for(const id of pick){ if(front.length>=3) break; if(!front.includes(id)) front.push(id); }
+  return pick.map(id=>({id,row:front.includes(id)?'front':'back'})); }
+document.getElementById('teamQuick').addEventListener('click',()=>{
+  suggestKind=(suggestKind+1)%SUGGEST_KINDS.length;
+  const sq=normalizeSquad(suggestSquad(suggestKind),P,true);
+  if(sq) teamPicks=sq;
+  renderTeam();
+  const pw=teamPicks.reduce((a,x)=>a+heroPower(x.id),0);
+  window.__hvSuggestMsg='Đội gợi ý '+(suggestKind+1)+'/'+SUGGEST_KINDS.length+': '+SUGGEST_KINDS[suggestKind]+' · ⚔ '+pw.toLocaleString('vi-VN');
+});
 document.getElementById('teamSave').addEventListener('click',()=>{ const normalized=normalizeSquad(teamPicks,P,false); if(!normalized||normalized.length!==6){ toast('Cần đúng 6 anh hùng khác nhau.'); return; }
   teamPicks=normalized; P.squad=normalized.map(p=>({...p})); persist(); toast('Đã lưu đội hình không trùng tướng.'); navTo('hub'); });
 /* ---------- HEROES + DETAIL ---------- */
