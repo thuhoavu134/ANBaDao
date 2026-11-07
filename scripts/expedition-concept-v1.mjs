@@ -2,10 +2,8 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 const target = join(process.cwd(), 'dist/index.html');
-const js = readFileSync(join(process.cwd(), 'src/ui/expedition-concept.js'), 'utf8') + '\n' +
-  readFileSync(join(process.cwd(), 'src/ui/expedition-monglo.js'), 'utf8');
-const css = readFileSync(join(process.cwd(), 'src/ui/expedition-concept.css'), 'utf8') + '\n' +
-  readFileSync(join(process.cwd(), 'src/ui/expedition-monglo.css'), 'utf8');
+const js = readFileSync(join(process.cwd(), 'src/ui/expedition-concept.js'), 'utf8');
+const css = readFileSync(join(process.cwd(), 'src/ui/expedition-concept.css'), 'utf8');
 new Function(js);
 
 let html = readFileSync(target, 'utf8');
