@@ -168,3 +168,9 @@ body.team-3d-active #teamScreen:after{display:none!important;content:none!import
 #hvTeamRoot #fieldPrev .wcol.front .wslot:nth-child(1){left:calc(67.9cqw - 6.4cqw)!important;top:calc(0.3817*141.56cqw - 9.5cqw)!important}
 #hvTeamRoot #fieldPrev .wcol.front .wslot:nth-child(2){left:calc(67.9cqw - 6.4cqw)!important;top:calc(0.4752*141.56cqw - 9.5cqw)!important}
 #hvTeamRoot #fieldPrev .wcol.front .wslot:nth-child(3){left:calc(67.9cqw - 6.4cqw)!important;top:calc(0.5717*141.56cqw - 9.5cqw)!important}
+
+/* Owner 07/11: Tran Hinh phai la MOT man, khong cuon nhu lop phu.
+   #petHome nam duoi day (cao 571px) lam man bi cuon -> an di, khoa cuon. */
+#hvTeamRoot{overflow:hidden!important;overscroll-behavior:none!important}
+#hvTeamRoot #petHome{display:none!important}
+#hvTeamRoot .hv-team-stage{height:100%!important;overflow:hidden!important}
