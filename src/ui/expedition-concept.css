@@ -92,3 +92,49 @@
   min-height:54px!important;font-size:16px!important;font-weight:800!important;color:#fff6e0!important}
 #hvExpeditionRoot .hv-exp-abort,#hvExpeditionRoot .hv-exp-reroll{background:url('assets/ui/kit/btn-secondary.webp') center/100% 100% no-repeat!important;border:0!important;box-shadow:none!important;
   min-height:46px!important;font-size:14px!important;font-weight:800!important;color:#eafff2!important}
+
+/* v4 owner 06/11: lo trinh phai co ICON (khong phai so), bot khung chong khung cho hai hoa */
+#hvExpeditionRoot .hv-exp-path{min-height:64px!important;padding:0 14px!important}
+#hvExpeditionRoot .hv-exp-node{position:relative!important;width:46px!important;height:46px!important;text-indent:-999px!important;overflow:hidden!important;
+  background:url('assets/ui/kit/medal.webp') center/contain no-repeat!important;filter:drop-shadow(0 2px 3px rgba(0,0,0,.6))}
+#hvExpeditionRoot .hv-exp-node::before{content:"";position:absolute;left:23%;top:23%;right:23%;bottom:23%;
+  background-position:center!important;background-size:contain!important;background-repeat:no-repeat!important}
+#hvExpeditionRoot .hv-exp-node[data-expedition-node="1"]::before{background-image:url('assets/ui/menu-v3233/icons/expedition.png')}
+#hvExpeditionRoot .hv-exp-node[data-expedition-node="2"]::before{background-image:url('assets/ui/menu-v3233/icons/hunt.png')}
+#hvExpeditionRoot .hv-exp-node[data-expedition-node="3"]::before{background-image:url('assets/ui/menu-v3233/icons/daily.png')}
+#hvExpeditionRoot .hv-exp-node[data-expedition-node="4"]::before{background-image:url('assets/ui/menu-v3233/icons/forge.png')}
+#hvExpeditionRoot .hv-exp-node[data-expedition-node="5"]::before{background-image:url('assets/ui/menu-v3233/icons/arena.png')}
+/* the Nga Re: mot lop khung thoi, khong long hai lop */
+#hvExpeditionRoot .hv-exp-route{border-width:14px 12px!important;border-image:url('assets/ui/kit/panel.webp') 70 90 fill / 14px 12px stretch!important;
+  background:none!important;box-shadow:none!important;min-height:146px}
+#hvExpeditionRoot .hv-exp-route > b{font-size:14.5px!important}
+#hvExpeditionRoot .hv-exp-route > small{font-size:12px!important;max-width:100%}
+/* the Phuc: bo khung anh, chi dung khung chung cho gon */
+#hvExpeditionRoot .hv-exp-card{background:none!important;border-style:solid!important;border-width:12px 10px!important;
+  border-image:url('assets/ui/kit/panel.webp') 70 90 fill / 12px 10px stretch!important;box-shadow:none!important}
+
+/* v5 owner 06/11: khong de nen den si - bo phan "fill" cua khung, dung nen nau am mo */
+#hvExpeditionRoot .hv-exp-route,#hvExpeditionRoot .hv-exp-card,#hvExpeditionRoot .hv-exp-panel{
+  border-image:url('assets/ui/kit/panel.webp') 70 90 / 14px 12px stretch!important;
+  background:linear-gradient(180deg,rgba(104,64,32,.93),rgba(62,36,18,.95))!important;
+  box-shadow:inset 0 1px 0 rgba(255,222,160,.35),0 4px 10px rgba(0,0,0,.35)!important}
+#hvExpeditionRoot .hv-exp-card{background:linear-gradient(180deg,rgba(112,70,36,.95),rgba(70,42,22,.96))!important}
+#hvExpeditionRoot .hv-exp-route.is-on{background:linear-gradient(180deg,rgba(140,94,44,.96),rgba(92,56,26,.97))!important}
+/* dai lo trinh va chip: sang hon */
+#hvExpeditionRoot .hv-exp-path{filter:brightness(1.18) saturate(1.05)}
+#hvExpeditionRoot .hv-exp-chip{filter:brightness(1.15)}
+
+/* v6 owner 06/11: anh moi tu gpt_image - the giay kem am, bang ron do vang, huy hieu vang rong */
+#hvExpeditionRoot .hv-exp-route,#hvExpeditionRoot .hv-exp-card{background:none!important;border:0!important;box-shadow:none!important;
+  border-style:solid!important;border-width:18px 14px!important;
+  border-image:url('assets/ui/expedition/card-warm.webp') 74 46 fill / 18px 14px stretch!important;
+  display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:flex-start!important;gap:3px!important;min-height:148px}
+#hvExpeditionRoot .hv-exp-route b,#hvExpeditionRoot .hv-exp-card b{font-size:15.5px!important;font-weight:800!important;color:#4a2a0c!important;text-shadow:0 1px 0 rgba(255,255,255,.55)!important}
+#hvExpeditionRoot .hv-exp-route small,#hvExpeditionRoot .hv-exp-card small{font-size:12.5px!important;line-height:1.3!important;color:#6a4420!important;text-align:center!important;text-shadow:none!important}
+#hvExpeditionRoot .hv-exp-route.is-on{border-image:url('assets/ui/expedition/card-warm.webp') 74 46 fill / 18px 14px stretch!important;filter:drop-shadow(0 0 8px rgba(255,196,90,.95)) brightness(1.06)!important}
+#hvExpeditionRoot .hv-exp-path{background:url('assets/ui/expedition/ribbon-warm.webp') center/100% 100% no-repeat!important;border:0!important;box-shadow:none!important;
+  padding:0 20px!important;min-height:64px!important;display:flex!important;align-items:center!important;justify-content:space-between!important}
+#hvExpeditionRoot .hv-exp-node{background:url('assets/ui/expedition/medal-warm.webp') center/contain no-repeat!important;border:0!important;box-shadow:none!important;
+  width:46px!important;height:46px!important;display:grid!important;place-items:center!important;
+  font-size:15px!important;font-weight:800!important;color:#4a2a0c!important;text-shadow:0 1px 0 rgba(255,255,255,.6)!important}
+#hvExpeditionRoot .hv-exp-chip{background:url('assets/ui/expedition/tag.webp') center/100% 100% no-repeat!important;color:#fff3d6!important}
