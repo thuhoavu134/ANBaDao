@@ -38,7 +38,6 @@ const txt = (el) => el ? (el.textContent || '').replace(/\s+/g, ' ').trim() : ''
           ${startBtn ? '<button type="button" class="hvm3-btn is-main" data-k="start">Bắt đầu Mộng Lộ</button>' : ''}
           ${fightBtn ? `<button type="button" class="hvm3-btn is-main" data-k="fight">${txt(fightBtn)}</button>` : ''}
           ${abortBtn ? '<button type="button" class="hvm3-btn is-sub" data-k="abort">Rời Mộng Lộ</button>' : ''}
-          <button type="button" class="hvm3-team" data-k="team">Đội hình</button>
         </div>
         <div class="hvm3-foot"><span>${gold}</span><span>${sigil}</span><span>${best}</span>${wornText ? `<span>${wornText}</span>` : ''}</div>`;
   }
