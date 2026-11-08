@@ -185,3 +185,10 @@ body.team-3d-active #teamScreen:after{display:none!important;content:none!import
 #hvTeamRoot #teamGrid .hcard::after{content:"";position:absolute;inset:0;background:url('assets/ui/team/slot-frame.webp') center/100% 100% no-repeat;pointer-events:none;z-index:3}
 #hvTeamRoot #teamGrid .hcard.picked::after{filter:brightness(1.35) drop-shadow(0 0 4px #ffe08a) drop-shadow(0 0 9px rgba(255,190,70,.9))}
 #hvTeamRoot #teamGrid .hcard .badge{z-index:4!important}
+
+/* v9 owner 08/11: dang tai idle thi KHONG hien huy hieu tron, de tuong hien thang bang idle */
+#hvTeamRoot #fieldPrev .wslot.hv-idle-wait .wunit{opacity:0!important;border:0!important;box-shadow:none!important}
+
+/* v10 owner 08/11: anh cho (toan than) trong luc idle dang khoi dong */
+#hvTeamRoot .hv-tidle img.hv-tidle-ph{width:100%;height:100%;object-fit:contain;object-position:center bottom;display:block}
+#hvTeamRoot .hv-tidle canvas{display:block;width:100%;height:100%}

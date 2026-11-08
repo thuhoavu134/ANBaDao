@@ -83,6 +83,8 @@
     } catch (_) {}
     return null;
   }
+  const FOOT = Object.create(null);
+  let pendingStarts = 0;
   function staticArt(slot) {
     const u = slot.querySelector('.wunit-art');
     return u && u.getAttribute('src');
@@ -94,18 +96,23 @@
   }
   function make(i, id, slot, L) {
     const wrap = document.createElement('div'); wrap.className = 'hv-tidle';
-    const cur = { id, wrap, stop: () => {}, foot: null, cv: null, kind: 'wait', tries: 0, h: 0.27 };
+    const cur = { id, wrap, stop: () => {}, foot: null, cv: null, kind: 'wait', tries: 0, h: 0.27, ph: null };
     L.append(wrap); live.set(i, cur);
+    // Owner 08/11: tuong hien NGAY bang anh toan than (nhe), idle thay vao khi da san sang - khong de dai trong
+    const phSrc = staticArt(slot);
+    if (phSrc) { const ph = document.createElement('img'); ph.alt = ''; ph.className = 'hv-tidle-ph'; ph.decoding = 'async'; ph.src = phSrc; wrap.append(ph); cur.ph = ph; }
     const render = rendererFor(id);
     if (render) {
-      const cv = document.createElement('canvas'); wrap.append(cv); cur.cv = cv; cur.kind = 'detail';
-      try { cur.stop = render(cv) || cur.stop; } catch (_) {}
+      const cv = document.createElement('canvas'); cv.style.visibility = 'hidden'; wrap.append(cv); cur.cv = cv; cur.kind = 'detail';
+      // khoi dong renderer lech nhau theo thu tu -> khong don giai ma 6 bo anh lon vao cung 1 khung hinh
+      const delay = 90 * (pendingStarts++);
+      setTimeout(() => { pendingStarts = Math.max(0, pendingStarts - 1); if (live.get(i) !== cur) return; try { cur.stop = render(cv) || cur.stop; } catch (_) {} }, delay);
       return;
     }
     loadMeta(id).then(meta => {
       if (live.get(i) !== cur) return;
       if (meta) {
-        const cv = document.createElement('canvas'); wrap.append(cv); cur.cv = cv; cur.kind = 'atlas';
+        const cv = document.createElement('canvas'); cv.style.visibility = 'hidden'; wrap.append(cv); cur.cv = cv; cur.kind = 'atlas';
         const pl = atlasPlayer(cv, meta); cur.stop = pl.stop; cur.foot = pl.foot;
         // body = chieu cao than trong o: chuan hoa de cac tuong cung co
         if (meta.c.body) cur.h = 0.27 * meta.c.cellH / meta.c.body * 0.78;
@@ -134,8 +141,9 @@
             for (let y = ya; y < yb; y++) for (let x = 0; x < w; x++) if (d[(y * w + x) * 4 + 3] > 140) { if (x < mn) mn = x; if (x > mxx) mxx = x; }
             if (mxx >= mn) fx = (mn + mxx) / 2 / w;
           } catch (_) {}
-          if (bust) { cur.kind = 'badge'; return; }
+          if (bust) { if (cur.ph) { cur.ph.remove(); cur.ph = null; } cur.kind = 'badge'; return; }
           // anh tinh: tam ngang lay giua anh (vu khi chia xuong dat lam lech trung binh hang day)
+          if (cur.ph) { cur.ph.remove(); cur.ph = null; }
           wrap.append(im); cur.kind = 'static'; cur.cv = im; cur.foot = { x: fx, y: fy };
         };
         im.src = src;
@@ -159,21 +167,30 @@
       if (!id) return;
       if (!cur) { make(i, id, slot, L); cur = live.get(i); }
       seen.add(i);
-      if (cur.kind === 'badge') { slot.classList.remove('hv-idle-on'); cur.wrap.style.opacity = '0'; return; }
-      const el = cur.cv;
-      const w0 = el && (el.width || el.naturalWidth), h0 = el && (el.height || el.naturalHeight);
-      if (!w0 || !h0) { cur.wrap.style.opacity = '0'; return; }
-      if (cur.kind === 'detail' && !cur.foot && cur.tries < 40) { cur.tries++; cur.foot = footOf(el); }
-      if (!cur.foot) { cur.wrap.style.opacity = '0'; return; }
-      slot.classList.add('hv-idle-on');
+      if (cur.kind === 'badge') { slot.classList.remove('hv-idle-on', 'hv-idle-wait'); cur.wrap.style.opacity = '0'; return; }
+      slot.classList.add('hv-idle-wait');
+      let el = cur.cv;
+      let w0 = el && (el.width || el.naturalWidth), h0 = el && (el.height || el.naturalHeight);
+      if (cur.kind === 'detail' && !cur.foot && FOOT[cur.id]) cur.foot = FOOT[cur.id];
+      if (cur.kind === 'detail' && w0 && !cur.foot && cur.tries < 40) { cur.tries++; cur.foot = footOf(el); if (cur.foot) FOOT[cur.id] = cur.foot; }
+      let foot = cur.foot, usePh = false;
+      // canvas idle phai da ve that (co diem anh) moi thay anh cho
+      const drawn = !!(w0 && h0 && foot && (cur.kind !== 'detail' || cur.drawn || (cur.drawn = !!footOf(el))));
+      if (!drawn) {
+        const ph = cur.ph;
+        if (!ph || !ph.complete || !ph.naturalWidth) { cur.wrap.style.opacity = '0'; return; }
+        el = ph; w0 = ph.naturalWidth; h0 = ph.naturalHeight; foot = { x: 0.5, y: 0.97 }; usePh = true;
+      } else if (cur.ph) { cur.ph.remove(); cur.ph = null; if (cur.cv && cur.cv.style) cur.cv.style.visibility = ''; }
+      else if (cur.cv && cur.cv.style && cur.cv.style.visibility) cur.cv.style.visibility = '';
+      slot.classList.add('hv-idle-on'); slot.classList.remove('hv-idle-wait');
       // Owner 07/11: chan dat dung tam mat dai dat (do tren anh concept, ti le theo be rong anh)
       const PED = [[32.55, 38.17], [32.55, 47.52], [32.55, 57.17], [67.9, 38.17], [67.9, 47.52], [67.9, 57.17]]; // owner 07/11: tam vong vang do tren anh (trung diem trai-phai, tren-duoi)
       const pt = PED[i] || PED[0];
       const bx = lr.width * pt[0] / 100, by = lr.width * 1.4156 * pt[1] / 100;
-      const H = lr.width * (cur.kind === 'static' ? 0.24 : cur.h), W = H * w0 / h0;
+      const H = lr.width * ((cur.kind === 'static' || usePh) ? 0.24 : cur.h), W = H * w0 / h0;
       Object.assign(cur.wrap.style, {
         width: W.toFixed(1) + 'px', height: H.toFixed(1) + 'px',
-        left: (bx - cur.foot.x * W).toFixed(1) + 'px', top: (by - cur.foot.y * H).toFixed(1) + 'px',
+        left: (bx - foot.x * W).toFixed(1) + 'px', top: (by - foot.y * H).toFixed(1) + 'px',
         zIndex: String(10 + Math.round(by)), opacity: '1'
       });
     });
@@ -185,6 +202,8 @@
     c.wrap.remove(); live.delete(k);
   }
   function clearAll() { [...live.keys()].forEach(kill); }
+
+
 
   // Owner 08/11: chon tuong la idle hien ngay - goi sync ngay sau moi lan renderTeam (khong cho nhip 250ms)
   function hookRender() {
@@ -204,10 +223,22 @@
     const step = () => {
       const id = ids[k++]; if (!id) return;
       loadMeta(id).then(meta => {
-        if (meta) meta.c.pages.forEach(pg => img('assets/characters/' + meta.slug + '/' + pg.file));
+        if (meta) meta.c.pages.forEach(pg => { const im = img('assets/characters/' + meta.slug + '/' + pg.file); if (im.decode) im.decode().catch(() => {}); });
       }).finally(() => setTimeout(step, 40));
     };
     step(); step(); step();
+    // Tuong dung renderer idle rieng (Thay Mo, Dinh Loi, Lang ...): chay thu 1 lan tren canvas an de giai ma
+    // san cac trang anh lon -> luc len dai khong bi khung 1-2 giay giai ma anh tren luong chinh
+    const det = ids.filter(id => rendererFor(id));
+    let j = 0;
+    const warmDet = () => {
+      const id = det[j++]; if (!id) return;
+      let stop = null;
+      let cv = null;
+      try { cv = document.createElement('canvas'); stop = rendererFor(id)(cv); } catch (_) {}
+      setTimeout(() => { try { if (cv && !FOOT[id]) { const f = footOf(cv); if (f) FOOT[id] = f; } } catch (_) {} try { if (typeof stop === 'function') stop(); } catch (_) {} setTimeout(warmDet, 60); }, 450);
+    };
+    setTimeout(warmDet, 200);
   }
   setInterval(() => { try { hookRender(); warmAll(); } catch (_) {} }, 300);
   setInterval(() => { try { sync(); } catch (_) {} }, 120);
