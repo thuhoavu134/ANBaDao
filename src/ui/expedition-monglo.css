@@ -1,0 +1,167 @@
+/* Owner 06/11: Mong Lo = anh concept nguyen man + lop du lieu that.
+   Toa do lay bang cach do truc tiep tren anh: 5 huy hieu vang tam y=11% (x 16/34/50/67/84), the kem y 16-33%, nut do y 71.5-80%. */
+#expeditionBody.hvm3-under,#hvExpeditionRoot.hvm3-under{opacity:0!important;pointer-events:none!important}
+#hvm3{position:fixed;inset:0;z-index:78;overflow:hidden;background:#120d08;font-family:var(--hvk-font,system-ui)}
+#hvm3 .hvm3-stage{position:absolute;inset:0;background:url('assets/ui/expedition/monglo-full.webp') center/cover no-repeat}
+#hvm3 .hvm3-floors{position:absolute;left:9.5%;right:9.5%;top:11%;height:0;display:flex;align-items:center;justify-content:space-between}
+#hvm3 .hvm3-fl{font-style:normal;width:43px;height:43px;margin-top:-21px;display:grid;place-items:center;font-size:15px;font-weight:800;color:#5a3410;
+  text-shadow:0 1px 0 rgba(255,255,255,.5)}
+#hvm3 .hvm3-fl.is-done,#hvm3 .hvm3-fl.hv-exp-done{opacity:.5}
+#hvm3 .hvm3-fl.is-now,#hvm3 .hvm3-fl.hv-exp-now{transform:scale(1.14);color:#3a1a04;text-shadow:0 0 8px rgba(255,220,140,.9),0 1px 0 rgba(255,255,255,.6)}
+#hvm3 .hvm3-floor{position:absolute;left:0;right:0;top:13.6%;text-align:center;font-size:14px;font-weight:800;color:#4a2a0c;text-shadow:0 1px 0 rgba(255,255,255,.6)}
+#hvm3 .hvm3-cards{position:absolute;left:2.4%;right:2.4%;top:17.4%;height:15.4%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2.5%}
+#hvm3 .hvm3-card{border:0;background:none;padding:6px 8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+  cursor:pointer;-webkit-tap-highlight-color:transparent;min-height:0}
+#hvm3 .hvm3-card b{font-size:14px;line-height:1.15;font-weight:800;color:#4a2a0c;text-align:center}
+#hvm3 .hvm3-card small{font-size:12px;line-height:1.25;font-weight:600;color:#6a4420;text-align:center;overflow:hidden}
+#hvm3 .hvm3-card.is-on{filter:drop-shadow(0 0 9px rgba(255,196,90,.95))}
+#hvm3 .hvm3-card.is-on b{color:#301402}
+#hvm3 .hvm3-acts{position:absolute;left:3.2%;right:3.2%;top:71.3%;height:8.8%;display:flex;align-items:stretch;gap:3%}
+#hvm3 .hvm3-btn{border:0;cursor:pointer;font-family:inherit;font-weight:800;min-height:52px;font-size:15.5px;color:#fff6e0;
+  background:url('assets/ui/kit/btn-primary.webp') center/100% 100% no-repeat;text-shadow:0 1px 2px #4a0d02;flex:2.1}
+#hvm3 .hvm3-btn.is-sub{font-size:13.5px;color:#eafff2;background-image:url('assets/ui/kit/btn-secondary.webp');text-shadow:0 1px 2px #0d2a14;flex:1}
+#hvm3 .hvm3-btn:disabled{filter:grayscale(.8) brightness(.75)}
+#hvm3 .hvm3-btn:active{transform:translateY(1px)}
+#hvm3 .hvm3-reroll{position:absolute;right:4%;top:66.4%;min-height:34px;padding:0 12px;border:0;border-radius:999px;cursor:pointer;
+  font-family:inherit;font-size:12.5px;font-weight:700;color:#fff3d6;background:rgba(40,18,6,.8);border:1px solid rgba(240,193,105,.6)}
+#hvm3 .hvm3-reroll:disabled{opacity:.5}
+#hvm3 .hvm3-foot{position:absolute;left:0;right:0;top:82.6%;display:flex;justify-content:center;gap:7px;flex-wrap:wrap;padding:0 6px}
+#hvm3 .hvm3-foot span{font-size:12.5px;font-weight:700;color:#fff3d6;padding:5px 12px;border-radius:999px;background:rgba(40,18,6,.78);
+  border:1px solid rgba(240,193,105,.55);text-shadow:0 1px 2px #000}
+@media (max-height:780px){#hvm3 .hvm3-cards{top:17.6%;height:15%}#hvm3 .hvm3-acts{top:71%}#hvm3 .hvm3-foot{top:82%}}
+
+/* v-fit owner 06/11: KHONG chong anh len anh.
+   1) Khung anh giu dung ti le 941x1672, vua be ngang man (khong cat 2 ben); phan duoi dung chinh anh do lam mo.
+   2) Nut khong co anh rieng - chu nam thang len nut do / nut ngoc ve san trong anh concept.
+   3) Tat dai chu chay kenh chat khi dang o Mong Lo. */
+#hvm3{overflow:hidden!important;background:#1d130c!important}
+#hvm3::before{content:"";position:absolute;inset:-24px;z-index:0;pointer-events:none;
+  background:url('assets/ui/expedition/monglo-full.webp') center bottom/cover no-repeat;filter:blur(16px) brightness(.5)}
+#hvm3 .hvm3-stage{position:absolute!important;inset:auto!important;left:0!important;right:0!important;top:0!important;
+  width:100%!important;height:auto!important;aspect-ratio:941/1672;z-index:1;
+  background:url('assets/ui/expedition/monglo-full.webp') 0 0/100% 100% no-repeat!important}
+#hvm3 .hvm3-acts{position:absolute!important;left:0!important;right:0!important;top:0!important;height:100%!important;display:block!important;pointer-events:none}
+#hvm3 .hvm3-btn{position:absolute!important;pointer-events:auto;background:none!important;background-image:none!important;border:0!important;box-shadow:none!important;
+  min-height:0!important;padding:0 6px!important;display:grid!important;place-items:center!important;flex:none!important;
+  font-weight:800!important;color:#fff6e0!important;text-shadow:0 1px 2px #3a0a02,0 0 5px rgba(58,10,2,.9)!important}
+#hvm3 .hvm3-btn.is-main{left:6%!important;width:60%!important;top:71.9%!important;height:8%!important;font-size:17px!important}
+#hvm3 .hvm3-btn.is-sub{left:69.4%!important;width:25.1%!important;top:72.4%!important;height:6.6%!important;font-size:13.5px!important;
+  color:#eafff2!important;text-shadow:0 1px 2px #062014,0 0 5px rgba(6,32,20,.9)!important}
+#hvm3 .hvm3-foot{top:auto!important;bottom:-56px!important;left:8px!important;right:8px!important}
+body.hvm3-on .hv-mq-l,body.hvm3-on .hv-mq-track,body.hvm3-on .hv-mq-r,body.hvm3-on [class^="hv-mq"]{display:none!important}
+
+#hvExpeditionRoot.hvm3-under{visibility:hidden!important}
+
+/* v9 owner 06/11: do truc tiep 3 khung kem trong anh concept roi dat chu vao dung khung */
+.hvm3-stage .hvm3-cards{position:absolute!important;inset:0!important;display:block!important;pointer-events:none}
+.hvm3-stage .hvm3-card{position:absolute!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:flex-start!important;
+  gap:2px!important;padding:9% 7% 6%!important;overflow:hidden!important;pointer-events:auto;box-sizing:border-box;
+  border:0!important;background:none!important;box-shadow:none!important}
+.hvm3-stage .hvm3-card:nth-child(1){left:7.4%!important;top:36%!important;width:24.4%!important;height:33%!important}
+.hvm3-stage .hvm3-card:nth-child(2){left:38.5%!important;top:34%!important;width:24%!important;height:35%!important}
+.hvm3-stage .hvm3-card:nth-child(3){left:69.2%!important;top:28.5%!important;width:24.4%!important;height:41%!important}
+.hvm3-stage .hvm3-card b{font-size:13px!important;line-height:1.15!important;font-weight:800!important;color:#3a2210!important;text-shadow:none!important;text-align:center}
+.hvm3-stage .hvm3-card i{font-style:normal!important;font-size:12px!important;line-height:1.25!important;color:#5a3a1a!important;text-align:center;overflow:hidden}
+.hvm3-stage .hvm3-card.is-on{filter:drop-shadow(0 0 5px rgba(255,214,120,.95))}
+
+/* v12 owner 06/11: 3 the phai nam DE len dung 3 khung kem da do trong anh (khong theo flow) */
+#hvm3 .hvm3-stage{position:relative!important}
+#hvm3 .hvm3-cards{position:absolute!important;inset:0!important;display:block!important;z-index:6!important}
+#hvm3 .hvm3-card{position:absolute!important;display:flex!important;flex-direction:column!important;justify-content:center!important;align-items:center!important;
+  gap:2px!important;padding:6px 7px!important;overflow:hidden!important;background:none!important;border:0!important;box-shadow:none!important;text-align:center!important}
+#hvm3 .hvm3-card b{font-size:13.5px!important;line-height:1.15!important;color:#3a2210!important;font-weight:800!important;text-shadow:none!important}
+#hvm3 .hvm3-card small{font-size:11.5px!important;line-height:1.25!important;color:#6a4420!important;text-shadow:none!important;
+  display:-webkit-box!important;-webkit-line-clamp:5!important;-webkit-box-orient:vertical!important;overflow:hidden!important}
+#hvm3 .hvm3-card.is-on{filter:drop-shadow(0 0 10px rgba(255,214,120,.95))!important}
+
+/* v13: flex khong duoc bop chieu cao chu */
+#hvm3 .hvm3-card b,#hvm3 .hvm3-card small{flex:0 0 auto!important;width:100%!important;min-height:0!important}
+#hvm3 .hvm3-card{gap:3px!important}
+/* v13 owner 07/11: chon loi -> vien khung sang len (vong sang trung khit khung anh) */
+#hvm3 .hvm3-card{border-radius:12px!important;transition:box-shadow .18s ease!important}
+#hvm3 .hvm3-card.is-on{filter:none!important;box-shadow:0 0 0 3px #ffd36a,0 0 0 5px rgba(140,60,10,.55),0 0 22px 8px rgba(255,196,80,.85)!important}
+#hvm3 .hvm3-card:not(.is-on):active{box-shadow:0 0 0 2px rgba(255,211,106,.7)!important}
+/* v14 owner 07/11: nut "‹" goc cua game (#hvExpBackFab) nam chong duoi nut vuong -> an khi lop Mong Lo moi dang mo */
+body.hvm3-on #hvExpBackFab{display:none!important}
+/* v15 owner 07/11 (xem video): bo nut den, bo so de len icon, chon loi ro rang, chu to de doc */
+/* nut quay ve: huy hieu vang-son do ve bang gpt_image, cung chat lieu voi 5 huy hieu tren ron */
+body.hvm3-on .hve-back{background:url('assets/ui/expedition/back-medal.webp') center/contain no-repeat!important;border:0!important;box-shadow:none!important;
+  width:48px!important;height:48px!important;border-radius:50%!important;color:transparent!important;font-size:0!important;filter:drop-shadow(0 3px 5px rgba(0,0,0,.45))}
+body.hvm3-on .hve-back::before,body.hvm3-on .hve-back::after{display:none!important}
+body.hvm3-on .hve-back:active{transform:scale(.93)}
+/* 5 huy hieu tang: KHONG ghi so de len icon; tang da qua mo, tang dang o co vong sang nhip tho */
+#hvm3 .hvm3-fl{color:transparent!important;text-shadow:none!important;width:56px!important;height:56px!important;margin-top:-28px!important;border-radius:50%!important;background:none!important}
+#hvm3 .hvm3-fl.is-done,#hvm3 .hvm3-fl.hv-exp-done{opacity:1!important;background:radial-gradient(circle,rgba(40,24,14,.55) 0 62%,transparent 64%)!important}
+#hvm3 .hvm3-fl.is-now,#hvm3 .hvm3-fl.hv-exp-now{transform:none!important;animation:hvm3Pulse 1.6s ease-in-out infinite}
+@keyframes hvm3Pulse{0%,100%{box-shadow:0 0 0 3px #ffd36a,0 0 14px 4px rgba(255,200,90,.75)}50%{box-shadow:0 0 0 4px #fff0b8,0 0 24px 9px rgba(255,210,110,.95)}}
+@media (prefers-reduced-motion:reduce){#hvm3 .hvm3-fl.is-now{animation:none;box-shadow:0 0 0 3px #ffd36a,0 0 18px 6px rgba(255,200,90,.85)}}
+/* nhan tang: bang go nho ve bang gpt_image, nam ngay duoi ron, khong de len huy hieu */
+#hvm3 .hvm3-floor{left:50%!important;right:auto!important;transform:translateX(-50%)!important;top:15.6%!important;width:150px!important;height:42px!important;
+  display:grid!important;place-items:center!important;padding-top:2px;background:url('assets/ui/expedition/floor-plaque.webp') center/100% 100% no-repeat!important;
+  font-size:15px!important;font-weight:800!important;color:#4a2408!important;text-shadow:none!important;letter-spacing:.2px}
+/* the loi: chu to hon; the dang chon noi len + nhan "Da chon", the khac mo di */
+#hvm3 .hvm3-card{transition:transform .16s ease,opacity .16s ease,box-shadow .16s ease!important}
+#hvm3 .hvm3-card b{font-size:16px!important}
+#hvm3 .hvm3-card small{font-size:13px!important;line-height:1.3!important}
+#hvm3 .hvm3-card:active{transform:scale(.97)!important}
+#hvm3 .hvm3-cards:has(.is-on) .hvm3-card:not(.is-on){opacity:.68;filter:saturate(.75)}
+#hvm3 .hvm3-card.is-on{transform:scale(1.05)!important;z-index:2;
+  box-shadow:0 0 0 3px #ffd36a,0 0 0 6px rgba(150,40,10,.6),0 0 28px 10px rgba(255,196,80,.9)!important}
+#hvm3 .hvm3-card.is-on::after{content:'Đã chọn';position:absolute;left:50%;bottom:9%;transform:translateX(-50%);white-space:nowrap;
+  background:linear-gradient(#a3241a,#7a160e);color:#ffe9b0;font-size:12.5px;font-weight:800;padding:4px 12px;border-radius:12px;border:1px solid #e9bd62;box-shadow:0 2px 6px rgba(0,0,0,.35)}
+/* nut duoi: chu to, de bam */
+#hvm3 .hvm3-btn.is-main{font-size:19px!important;font-weight:800!important;letter-spacing:.3px}
+#hvm3 .hvm3-btn.is-sub{font-size:15px!important;font-weight:800!important}
+#hvm3 .hvm3-btn:active{transform:scale(.97)}
+/* chip QA (chi co o che do QA) khong de len nut Ket thuc run */
+body.hvm3-on #hvQaGrant{top:calc(12px + env(safe-area-inset-top))!important;bottom:auto!important;right:10px!important;left:auto!important}
+
+/* v16: nut quay ve ra khoi ron (dang de len huy hieu 1) -> dat ben trai, ngang bang "Tang x/5" */
+body.hvm3-on .hve-back{top:calc(104px + env(safe-area-inset-top))!important;left:12px!important}
+#hvm3 .hvm3-floors{top:10.7%!important}#hvm3 .hvm3-floors{top:11.9%!important}
+#hvm3 .hvm3-fl{width:54px!important;height:54px!important;margin-top:-27px!important}
+/* v17 owner 07/11: bo lop sang ep len the; chi VIEN KHUNG cua anh sang len, khit duong vien ngoai */
+#hvm3 .hvm3-card,#hvm3 .hvm3-card.is-on,#hvm3 .hvm3-card:not(.is-on){box-shadow:none!important;filter:none!important;transform:none!important;opacity:1!important;background:none!important}
+#hvm3 .hvm3-card.is-on::before,#hvm3 .hvm3-card.is-on::after,#hvm3 .hvm3-card::before,#hvm3 .hvm3-card::after{content:none!important;display:none!important}
+#hvm3 .hvm3-rim{position:absolute;pointer-events:none;z-index:5;opacity:0;transition:opacity .18s ease}
+#hvm3 .hvm3-rim.is-on{opacity:1;filter:brightness(1.45) saturate(1.2) drop-shadow(0 0 3px #fff1b8) drop-shadow(0 0 9px rgba(255,196,70,.95));animation:hvm3RimPulse 1.6s ease-in-out infinite}
+@keyframes hvm3RimPulse{50%{filter:brightness(1.7) saturate(1.25) drop-shadow(0 0 4px #fff6cc) drop-shadow(0 0 14px rgba(255,200,80,1))}}
+@media (prefers-reduced-motion:reduce){#hvm3 .hvm3-rim.is-on{animation:none}}
+
+/* v18 owner 07/11: bo vong sang tu ve tren huy hieu tang; chi VIEN huy hieu trong anh sang len */
+#hvm3 .hvm3-fl,#hvm3 .hvm3-fl.is-now,#hvm3 .hvm3-fl.hv-exp-now{box-shadow:none!important;background:none!important;border:0!important;animation:none!important;transform:none!important;filter:none!important}
+#hvm3 .hvm3-fl::before,#hvm3 .hvm3-fl::after{content:none!important;display:none!important}
+#hvm3 .hvm3-mrim{position:absolute;pointer-events:none;z-index:5;opacity:0;transition:opacity .18s ease}
+#hvm3 .hvm3-mrim.is-on{opacity:1;filter:brightness(1.45) saturate(1.2) drop-shadow(0 0 3px #fff1b8) drop-shadow(0 0 9px rgba(255,196,70,.95));animation:hvm3RimPulse 1.6s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){#hvm3 .hvm3-mrim.is-on{animation:none}}
+
+/* v19 owner 07/11: nut quay ve khong duoc treo o sanh; vien sang dung yen, khong nhap nhay */
+body:not(.hvm3-on) .hve-back{display:none!important}
+#hvm3 .hvm3-rim.is-on,#hvm3 .hvm3-mrim.is-on{animation:none!important;transition:none!important}
+#hvm3 .hvm3-rim,#hvm3 .hvm3-mrim{transition:none!important}
+
+/* v20: roi Mong Lo thi lop hvm3 phai bien mat, khong treo de len sanh */
+body:not(.hvm3-on) #hvm3{display:none!important}
+
+/* v21 owner 07/11: nut quay ve phai bam duoc (truoc bi lop #hvm3 de len) */
+body.hvm3-on .hve-back{position:fixed!important;z-index:2147483000!important;pointer-events:auto!important}
+#hvm3 .hvm3-rim,#hvm3 .hvm3-mrim{will-change:auto}
+
+/* v21 owner 07/11: ten 3 loi luon cung hang (khong canh giua theo noi dung); chan man khong de chu chong nhau */
+#hvm3 .hvm3-card{justify-content:flex-start!important;padding-top:20%!important}
+#hvm3 .hvm3-foot{display:flex!important;flex-wrap:wrap!important;justify-content:center!important;align-items:center!important;gap:6px 8px!important;height:auto!important}
+#hvm3 .hvm3-foot span{position:static!important;transform:none!important}
+#hvExpeditionRoot.hvm3-under,#hvExpeditionRoot.hvm3-under *{visibility:hidden!important}
+
+/* v22 owner 07/11: mo ta khong bi cat; an chu ma cua lop goc (worn/copy) lo ra o chan man */
+#hvm3 .hvm3-card{padding-top:15%!important;padding-left:6px!important;padding-right:6px!important}
+#hvm3 .hvm3-card small{font-size:12px!important;line-height:1.22!important;-webkit-line-clamp:7!important}
+body.hvm3-on [data-expedition-worn],body.hvm3-on .hv-exp-worn,body.hvm3-on .hv-exp-copy,body.hvm3-on .hv-exp-panel,body.hvm3-on .hv-exp-hero,body.hvm3-on .hv-exp-top{display:none!important}
+
+/* v23: toast goi y khong de len dai thong tin chan man */
+body.hvm3-on #toast{top:600px!important;bottom:auto!important}
+
+
+
+/* v25: lop hvm3 khong bao gio chan cham khi khong o Mong Lo */
+body:not(.hvm3-on) #hvm3{display:none!important;pointer-events:none!important}

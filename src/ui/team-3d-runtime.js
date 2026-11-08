@@ -38,6 +38,21 @@
     };
   }
 
+
+  // Owner 07/11: nut 'Doi goi y' phai phan hoi ro rang - truoc day bam khong thay gi nen tuong hong
+  const quickBtn = document.getElementById('teamQuick');
+  if (quickBtn) {
+    const sig = () => [...document.querySelectorAll('#fieldPrev .wside.ally .wslot')].map(s => s.dataset.wid || '-').join(',');
+    quickBtn.addEventListener('click', () => {
+      const before = sig();
+      setTimeout(() => {
+        const after = sig();
+        const msg = window.__hvSuggestMsg || (before && after && before === after ? 'Đội gợi ý trùng với đội hiện tại' : 'Đã áp dụng đội gợi ý'); window.__hvSuggestMsg = '';
+        try { toast(msg); } catch (_) {}
+      }, 60);
+    }, true);
+  }
+
   root.querySelector('[data-team-close]').addEventListener('click', () => navTo('hub'));
   syncOpen(typeof ST === 'object' ? ST.screen : '');
 })();

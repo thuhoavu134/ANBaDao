@@ -1250,7 +1250,7 @@ html,body,body *{font-family:'HV UI','Asap Condensed','Arial Narrow',system-ui,s
 
 <!-- EXPEDITION / ROGUE LOOP -->
 <div id="expeditionScreen" class="screen art-game-screen expedition-art-screen mode-overhaul-screen">
-  <div class="pagehdr"><span class="back" data-nav="hub">‹</span><span class="ttl">Mộng Lộ</span><span class="sub2">— rogue run · chọn phúc · liều càng sâu thưởng càng lớn</span></div>
+  <div class="pagehdr"><span class="back" data-nav="hub">‹</span><span class="ttl">Mộng Lộ</span><span class="sub2">— năm tầng mộng · chọn phúc · liều càng sâu thưởng càng lớn</span></div>
   <div class="mode-intro mode-intro-expedition"><div class="mode-seal">☾</div><div><span class="screen-kicker">LỘ TRÌNH BIẾN ẢO</span><b>Mỗi tầng là một quyết định rủi ro</b><small>Chọn Ngã Rẽ, tích Phúc Mộng và đổi cách đánh theo run hiện tại. Không có hai chuyến đi hoàn toàn giống nhau.</small></div><div class="mode-pulse"><span>5</span> TẦNG</div></div>
   <div class="chlist" id="expeditionBody"></div>
 </div>
@@ -3425,7 +3425,7 @@ const JOURNEY_UNLOCK={
   expedition:{ch:2,label:'Mộng Lộ'}, jobs:{ch:2,label:'Giao Việc'}, hunt:{ch:3,label:'Săn Boss'}, arena:{ch:3,label:'Đấu Trường'},
   guild:{ch:4,label:'Bang Hội'}, clan:{ch:4,label:'Gia Tộc'}, friends:{ch:4,label:'Bạn Bè'}, chat:{ch:4,label:'Chat'}, net:{ch:4,label:'Online'}
 };
-const JOURNEY_TIPS={campaign:'Mục tiêu chính: vượt chương để mở dần thành phố.',team:'1–2–3 là hàng trước; 4–5–6 là hàng sau. Slot 1 còn là Chủ tướng.',heroes:'Đừng nâng đều tất cả. Chọn 6–10 tướng lõi trước.',summon:'Pity và Hồi Ức giúp giảm phụ thuộc may rủi. Tướng trùng vẫn có giá trị.',forge:'Trang bị là hướng build, không phải lý do bỏ đội hình/counter.',tower:'Tháp kiểm tra chiều sâu roster. Bị kẹt thì đổi đội/build trước khi chỉ nâng lực chiến.',expedition:'Mộng Lộ là rogue run: chọn Phúc Mộng theo đội đang có, không theo tier list cố định.',hunt:'Boss ưu tiên tối ưu DPS và sống đủ lâu qua cơ chế phase.',arena:'Đấu trường Mùa có draft/ban. Đội phòng thủ được lưu snapshot riêng.',guild:'Bang có công nghệ, boss, Gia Tộc và chiến dịch chung; đóng góp cá nhân có trần ngày.',friends:'Bạn bè dùng để kết giao và tặng thể lực mỗi ngày; không trùng với Gia Tộc/Bang Hội.',daily:'Nhật Ký gom việc ngắn. Không cần làm mọi mode mỗi ngày.',journey:'Đây là bản đồ học game: luôn chỉ ra mục tiêu kế tiếp.'};
+const JOURNEY_TIPS={campaign:'Mục tiêu chính: vượt chương để mở dần thành phố.',team:'1–2–3 là hàng trước; 4–5–6 là hàng sau. Slot 1 còn là Chủ tướng.',heroes:'Đừng nâng đều tất cả. Chọn 6–10 tướng lõi trước.',summon:'Pity và Hồi Ức giúp giảm phụ thuộc may rủi. Tướng trùng vẫn có giá trị.',forge:'Trang bị là hướng build, không phải lý do bỏ đội hình/counter.',tower:'Tháp kiểm tra chiều sâu roster. Bị kẹt thì đổi đội/build trước khi chỉ nâng lực chiến.',expedition:'Mộng Lộ: chọn Phúc Mộng hợp với đội đang có, không theo bảng mạnh–yếu cố định.',hunt:'Boss ưu tiên tối ưu DPS và sống đủ lâu qua cơ chế phase.',arena:'Đấu trường Mùa có draft/ban. Đội phòng thủ được lưu snapshot riêng.',guild:'Bang có công nghệ, boss, Gia Tộc và chiến dịch chung; đóng góp cá nhân có trần ngày.',friends:'Bạn bè dùng để kết giao và tặng thể lực mỗi ngày; không trùng với Gia Tộc/Bang Hội.',daily:'Nhật Ký gom việc ngắn. Không cần làm mọi mode mỗi ngày.',journey:'Đây là bản đồ học game: luôn chỉ ra mục tiêu kế tiếp.'};
 function clearedCount(){ return (P.clearedChapters||[]).length; }
 function featLocked(name){ const r=JOURNEY_UNLOCK[name]; return !!(r&&clearedCount()<r.ch); }
 function journeyPhase(){ const c=clearedCount(); if(c<1)return 0; if(c<2)return 1; if(c<3)return 2; if(c<4)return 3; return 4; }
@@ -3812,7 +3812,7 @@ function startTraining(){ refreshStamina();
 let teamPicks=null;
 function renderTeam(){ if(!teamPicks) teamPicks=normalizeSquad(P.squad,P,false).map(p=>({...p})); else teamPicks=normalizeSquad(teamPicks,P,false);
   const g=document.getElementById('teamGrid'); g.innerHTML='';
-  for(const id of sortedHeroIds()){ if(!P.heroes[id].owned) continue; const h=DATA.heroes[id]; const p=teamPicks.find(x=>x.id===id);
+  for(const id of sortedOwnedIds()){ const h=DATA.heroes[id]; const p=teamPicks.find(x=>x.id===id);
     const d=document.createElement('div'); d.className='hcard'+(p?' picked':'');
     d.dataset.rarity=h.rarity;
     const _teamArt=characterAsset(id,'card');
@@ -3850,7 +3850,7 @@ function renderTeam(){ if(!teamPicks) teamPicks=normalizeSquad(P.squad,P,false).
   const fp=document.getElementById('fieldPrev');
   if(fp){
     const mk=(pk)=>{ const hh=DATA.heroes[pk.id];
-      return `<div class="wslot" data-wid="${pk.id}" title="Chạm để đổi hàng Trước/Sau">
+      return `<div class="wslot" data-wid="${pk.id}" title="Chạm để bỏ tướng khỏi đội">
         <div class="wtag">Lv.${heroLevel(pk.id)} <span>${'★'.repeat(heroStars(pk.id))}</span></div>
         <div class="wunit${portraitSrc(pk.id,'icon')?' hero-icon':''}" style="background:${hh.col};${portraitInline(pk.id,'icon')}">${portraitSrc(pk.id,'icon')?`<img class="wunit-art" src="${portraitSrc(pk.id,'icon')}" alt="" aria-hidden="true">`:''}<span>${initials(hh.name)}</span><small>${HE[hh.he]?HE[hh.he].ic:''}</small></div>
         <div class="wname">${hh.name}</div><div class="woval"></div></div>`; };
@@ -3868,11 +3868,40 @@ function renderTeam(){ if(!teamPicks) teamPicks=normalizeSquad(P.squad,P,false).
       <div class="wside foe"><div class="wcol front">${ghostS.repeat(3)}</div><div class="wcol back">${ghostS.repeat(3)}</div></div>
       <div class="wcap left">ĐỘI CỦA ANH</div><div class="wcap right">BÓNG MỘNG</div>`;
     fp.querySelectorAll('[data-wid]').forEach(el=>el.addEventListener('click',()=>{
-      const q=teamPicks.find(x=>x.id===el.dataset.wid); if(!q) return;
-      q.row=(q.row==='front')?'back':'front'; renderTeam(); }));
+      // Owner 08/11: cham tuong tren dai = bo chon de chon tuong khac (hang do vi tri dai quyet dinh)
+      const i=teamPicks.findIndex(x=>x.id===el.dataset.wid); if(i<0) return;
+      teamPicks.splice(i,1); renderTeam(); }));
   }
 }
-document.getElementById('teamQuick').addEventListener('click',()=>{ teamPicks=normalizeSquad(defaultPlayer().squad,P,true); renderTeam(); });
+// Owner 08/11: 'Doi goi y' xoay vong 3 kieu doi; moi lan bam doi sang kieu tiep theo.
+const SUGGEST_KINDS=['Mạnh nhất','Cân bằng','Cùng hệ'];
+let suggestKind=-1;
+function heroKind(id){ const r=String(DATA.heroes[id].role||'');
+  if(/(Hỗ trợ|Hồi|Khuếch đại|Thanh tẩy|cứu)/i.test(r)) return 'sup';
+  if(/(Hộ vệ|Khiên|Hộ mệnh|Đấu sĩ|Hải cẩu|cận chiến|Kiếm sĩ|Song Kiếm|song thương)/i.test(r)) return 'tank';
+  return 'dps'; }
+function suggestSquad(kind){ const own=Object.keys(P.heroes).filter(id=>P.heroes[id].owned&&DATA.heroes[id]);
+  own.sort((a,b)=>heroPower(b)-heroPower(a));
+  let pick=[];
+  if(kind===1){ const need={tank:2,dps:2,sup:2};
+    for(const id of own){ const k=heroKind(id); if(need[k]>0){ need[k]--; pick.push(id); } if(pick.length>=6) break; } }
+  else if(kind===2){ const cnt={}; own.forEach(id=>{ const h=DATA.heroes[id].he; cnt[h]=(cnt[h]||0)+heroPower(id); });
+    const best=Object.keys(cnt).sort((a,b)=>cnt[b]-cnt[a])[0];
+    pick=own.filter(id=>DATA.heroes[id].he===best).slice(0,6); }
+  for(const id of own){ if(pick.length>=6) break; if(!pick.includes(id)) pick.push(id); }
+  pick=pick.slice(0,6);
+  const front=pick.filter(id=>heroKind(id)==='tank').slice(0,3);
+  for(const id of pick){ if(front.length>=3) break; if(!front.includes(id)&&heroKind(id)!=='sup') front.push(id); }
+  for(const id of pick){ if(front.length>=3) break; if(!front.includes(id)) front.push(id); }
+  return pick.map(id=>({id,row:front.includes(id)?'front':'back'})); }
+document.getElementById('teamQuick').addEventListener('click',()=>{
+  suggestKind=(suggestKind+1)%SUGGEST_KINDS.length;
+  const sq=normalizeSquad(suggestSquad(suggestKind),P,true);
+  if(sq) teamPicks=sq;
+  renderTeam();
+  const pw=teamPicks.reduce((a,x)=>a+heroPower(x.id),0);
+  window.__hvSuggestMsg='Đội gợi ý '+(suggestKind+1)+'/'+SUGGEST_KINDS.length+': '+SUGGEST_KINDS[suggestKind]+' · ⚔ '+pw.toLocaleString('vi-VN');
+});
 document.getElementById('teamSave').addEventListener('click',()=>{ const normalized=normalizeSquad(teamPicks,P,false); if(!normalized||normalized.length!==6){ toast('Cần đúng 6 anh hùng khác nhau.'); return; }
   teamPicks=normalized; P.squad=normalized.map(p=>({...p})); persist(); toast('Đã lưu đội hình không trùng tướng.'); navTo('hub'); });
 /* ---------- HEROES + DETAIL ---------- */
@@ -4226,6 +4255,7 @@ const RETIRED_HERO_IDS=Object.freeze(["lac_yen","cung_thu_tre","co_dao_ganh_hoi"
 const RETIRED_HERO_SET=new Set(RETIRED_HERO_IDS);
 function isRetiredHero(id){ return RETIRED_HERO_SET.has(String(id||"")); }
 function activeRosterIds(){ return OFFICIAL_ROSTER_12_IDS.filter(id=>!isRetiredHero(id)); }
+function sortedOwnedIds(){ return Object.keys(P.heroes).filter(id=>P.heroes[id].owned&&DATA.heroes[id]).sort((x,y)=>(RAR_ORDER[DATA.heroes[x].rarity]-RAR_ORDER[DATA.heroes[y].rarity])||String(DATA.heroes[x].name).localeCompare(String(DATA.heroes[y].name))); }
 function sortedHeroIds(){ return activeRosterIds().sort((x,y)=>(RAR_ORDER[DATA.heroes[x].rarity]-RAR_ORDER[DATA.heroes[y].rarity])||x.localeCompare(y)); }
 function rarCol(t){ return {ssr:'#f2c14e',ss:'#c084fc',s:'#60a5fa',a:'#4ade80',b:'#9aa3b8'}[t]||'#9aa3b8'; }
 const GACHA={cost1:80,cost10:720,rates:[['ssr',3],['ss',12],['s',85]],pityAt:60,dupShards:{ssr:15,ss:10,s:6,a:4,b:3}};
