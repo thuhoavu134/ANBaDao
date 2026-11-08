@@ -58,7 +58,7 @@ body.team-3d-active #teamScreen:after{display:none!important;content:none!import
    Anh nen 1054x1492 (ti le 0.7064) phu theo be ngang; moi vi tri tinh theo % anh:
    x -> cqw, y -> f*141.56cqw (chieu cao anh = 141.56cqw). */
 #hvTeamRoot.is-open{container-type:inline-size;overflow-x:hidden!important;overflow-y:auto!important;
-  background:#3b2a1b url('assets/ui/team/team-concept.webp') top center/100% auto no-repeat!important}
+  background:#3b2a1b url('assets/ui/team/team-concept-tray.webp') top center/100% auto no-repeat!important}
 #hvTeamRoot.is-open::after{content:'';display:block;height:1px}
 #hvTeamRoot .hv-team-top{position:static!important;background:none!important;border:0!important;box-shadow:none!important;height:0!important;padding:0!important}
 #hvTeamRoot .hv-team-top > b{position:absolute!important;left:19cqw;width:62cqw;top:3.2cqw;height:9cqw;display:flex!important;align-items:center;justify-content:center;
@@ -174,3 +174,14 @@ body.team-3d-active #teamScreen:after{display:none!important;content:none!import
 #hvTeamRoot{overscroll-behavior:none!important}
 #hvTeamRoot #petHome{display:none!important}
 #hvTeamRoot .hv-team-stage{height:100%!important;overflow:hidden!important}
+
+/* v8 owner 08/11: o vang di cung anh tuong khi vuot ngang - khay nen da bo 6 o ve san, moi the tu mang khung o vang */
+#hvTeamRoot #teamGrid{left:10.626cqw!important;width:80.313cqw!important;top:102.182cqw!important;height:17.268cqw!important;
+  gap:1.376cqw!important;overflow-x:auto!important;overflow-y:hidden!important;scroll-snap-type:x mandatory!important;padding:0!important}
+#hvTeamRoot #teamGrid .hcard{position:relative!important;flex:0 0 12.239cqw!important;width:12.239cqw!important;height:17.268cqw!important;
+  background:none!important;border:0!important;box-shadow:none!important;border-radius:0!important;overflow:visible!important;scroll-snap-align:start!important}
+#hvTeamRoot #teamGrid .hcard .av{position:absolute!important;inset:0.854cqw!important;width:auto!important;height:auto!important;margin:0!important;border-radius:3px!important;
+  background-size:cover!important;background-position:center top!important;box-shadow:none!important;border:0!important}
+#hvTeamRoot #teamGrid .hcard::after{content:"";position:absolute;inset:0;background:url('assets/ui/team/slot-frame.webp') center/100% 100% no-repeat;pointer-events:none;z-index:3}
+#hvTeamRoot #teamGrid .hcard.picked::after{filter:brightness(1.35) drop-shadow(0 0 4px #ffe08a) drop-shadow(0 0 9px rgba(255,190,70,.9))}
+#hvTeamRoot #teamGrid .hcard .badge{z-index:4!important}

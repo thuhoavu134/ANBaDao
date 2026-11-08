@@ -3850,7 +3850,7 @@ function renderTeam(){ if(!teamPicks) teamPicks=normalizeSquad(P.squad,P,false).
   const fp=document.getElementById('fieldPrev');
   if(fp){
     const mk=(pk)=>{ const hh=DATA.heroes[pk.id];
-      return `<div class="wslot" data-wid="${pk.id}" title="Chạm để đổi hàng Trước/Sau">
+      return `<div class="wslot" data-wid="${pk.id}" title="Chạm để bỏ tướng khỏi đội">
         <div class="wtag">Lv.${heroLevel(pk.id)} <span>${'★'.repeat(heroStars(pk.id))}</span></div>
         <div class="wunit${portraitSrc(pk.id,'icon')?' hero-icon':''}" style="background:${hh.col};${portraitInline(pk.id,'icon')}">${portraitSrc(pk.id,'icon')?`<img class="wunit-art" src="${portraitSrc(pk.id,'icon')}" alt="" aria-hidden="true">`:''}<span>${initials(hh.name)}</span><small>${HE[hh.he]?HE[hh.he].ic:''}</small></div>
         <div class="wname">${hh.name}</div><div class="woval"></div></div>`; };
@@ -3868,8 +3868,9 @@ function renderTeam(){ if(!teamPicks) teamPicks=normalizeSquad(P.squad,P,false).
       <div class="wside foe"><div class="wcol front">${ghostS.repeat(3)}</div><div class="wcol back">${ghostS.repeat(3)}</div></div>
       <div class="wcap left">ĐỘI CỦA ANH</div><div class="wcap right">BÓNG MỘNG</div>`;
     fp.querySelectorAll('[data-wid]').forEach(el=>el.addEventListener('click',()=>{
-      const q=teamPicks.find(x=>x.id===el.dataset.wid); if(!q) return;
-      q.row=(q.row==='front')?'back':'front'; renderTeam(); }));
+      // Owner 08/11: cham tuong tren dai = bo chon de chon tuong khac (hang do vi tri dai quyet dinh)
+      const i=teamPicks.findIndex(x=>x.id===el.dataset.wid); if(i<0) return;
+      teamPicks.splice(i,1); renderTeam(); }));
   }
 }
 // Owner 08/11: 'Doi goi y' xoay vong 3 kieu doi; moi lan bam doi sang kieu tiep theo.

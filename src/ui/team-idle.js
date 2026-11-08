@@ -185,6 +185,31 @@
     c.wrap.remove(); live.delete(k);
   }
   function clearAll() { [...live.keys()].forEach(kill); }
-  setInterval(() => { try { sync(); } catch (_) {} }, 250);
+
+  // Owner 08/11: chon tuong la idle hien ngay - goi sync ngay sau moi lan renderTeam (khong cho nhip 250ms)
+  function hookRender() {
+    if (typeof window.renderTeam !== 'function' || window.renderTeam.__hvIdle) return;
+    const orig = window.renderTeam;
+    const wrapped = function () { const r = orig.apply(this, arguments); try { sync(); requestAnimationFrame(() => { try { sync(); } catch (_) {} }); } catch (_) {} return r; };
+    wrapped.__hvIdle = true;
+    window.renderTeam = wrapped;
+  }
+  // Owner 08/11: nap san idle cua MOI tuong dang so huu ngay sau dang nhap -> len dai/vao tran khong phai cho tai
+  let warmed = false;
+  function warmAll() {
+    if (warmed || typeof P !== 'object' || !P || !P.heroes || typeof DATA !== 'object') return;
+    warmed = true;
+    const ids = Object.keys(P.heroes).filter(id => P.heroes[id].owned && DATA.heroes[id]);
+    let k = 0;
+    const step = () => {
+      const id = ids[k++]; if (!id) return;
+      loadMeta(id).then(meta => {
+        if (meta) meta.c.pages.forEach(pg => img('assets/characters/' + meta.slug + '/' + pg.file));
+      }).finally(() => setTimeout(step, 40));
+    };
+    step(); step(); step();
+  }
+  setInterval(() => { try { hookRender(); warmAll(); } catch (_) {} }, 300);
+  setInterval(() => { try { sync(); } catch (_) {} }, 120);
   window.HV_TEAM_IDLE = { sync, clearAll, live };
 })();
