@@ -52,7 +52,7 @@
 
   const root = document.createElement('section');
   root.id = 'hvLoginRoot';
-  root.setAttribute('aria-label', 'Đăng nhập Lục Thần');
+  root.setAttribute('aria-label', 'Đăng nhập AN Bá Đạo');
   root.innerHTML = `
     <video class="hv-login-video" poster="assets/ui/auth/login-bg.jpg" muted loop playsinline webkit-playsinline>
       <source src="assets/ui/auth/login-bg.mp4" type="video/mp4">

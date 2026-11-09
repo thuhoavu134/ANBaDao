@@ -4,3 +4,27 @@
 }
 .hv-brandcopy strong{font-size:13px}
 #hvLoginRoot .hv-lore-title{position:relative;z-index:4;color:#3a2414;text-shadow:0 1px 0 #fff4d4}
+
+/* AN Bá Đạo (09/11): chân dung hội thoại hoà vào popup — không khung, không bo góc,
+   nhân vật đứng lớn ngay trên mép khung thoại (kiểu visual novel). */
+#storyScreen .vnportrait,
+#hvStoryRoot .vnportrait{
+  left:0!important;right:0!important;transform:none!important;
+  bottom:calc(12px + 96px)!important;
+  align-items:center;pointer-events:none;z-index:1;
+}
+#storyScreen .pface,
+#hvStoryRoot .pface{
+  width:min(84vw,360px)!important;height:min(50vh,430px)!important;
+  border-radius:0!important;box-shadow:none!important;background-color:transparent!important;
+  filter:drop-shadow(0 10px 18px rgba(0,0,0,.45));
+}
+#storyScreen .pface.hero-avatar,
+#hvStoryRoot .pface.hero-avatar{
+  background-size:contain!important;background-position:center bottom!important;
+}
+#storyScreen .pface .emblem,
+#hvStoryRoot .pface .emblem{display:none}
+#storyScreen .vnbox,
+#hvStoryRoot .vnbox{z-index:2}
+#storyScreen .vnname,#hvStoryRoot .vnname{color:#8a2a0c!important;font-weight:900}

@@ -13,10 +13,14 @@ test('L108: Lục Thần lore overlay — sáu ấn, không sửa index.html', (
   const build = read('scripts/build-static.mjs');
   const lane = read('scripts/lanes/tkt-0108-lore.mjs');
   const lore = read('docs/COT-TRUYEN-LUC-THAN.md');
-  assert.match(ui, /Ấn Phố/);
-  assert.match(ui, /Lục Thần/);
-  assert.match(ui, /Kẻ Trộm Ấn/);
-  assert.match(ui, /document\.title = 'An Bá Đạo'/); // Owner 28/10: PR389 shell is An Bá Đạo
+  // Owner 09/11: cốt truyện v4.1 kiếm hiệp — Ba là Bạch Diện (Vô Danh Kiếm)
+  assert.match(ui, /Trấn Đình Làng/);
+  assert.match(ui, /Hắc Liên Đài/);
+  assert.match(ui, /Vô Danh Kiếm/);
+  assert.match(ui, /FOE_NAMES/);
+  assert.match(ui, /AN Bá Đạo/);
+  assert.match(ui, /Không ai trên thế giới này yêu thương con gái bằng ba của cô ấy\./);
+  assert.match(ui, /document\.title = 'AN Bá Đạo'/); // Owner 09/11: tên game viết AN Bá Đạo
   assert.doesNotMatch(ui, /document\.addEventListener\(['"](?:click|pointerdown|pointerup)/);
   assert.match(css, /\.hv-lore-title/);
   assert.match(lane, /lore-luc-than-v1/);

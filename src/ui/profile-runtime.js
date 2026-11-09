@@ -3,7 +3,7 @@
   if (document.getElementById('hvProfileRoot')) return;
 
   const EXTRA = {
-    LUCTHAN: { label: 'Lục Thần khai ấn', gold: 5000, gems: 300, stam: 40 },
+    LUCTHAN: { label: 'AN Bá Đạo khai môn', gold: 5000, gems: 300, stam: 40 },
     THANHCHINH: { label: 'Cổng Thành Chính', gold: 2200, gems: 180, stam: 25 }
   };
   const FRAMES = [
@@ -27,7 +27,7 @@
   const root = document.createElement('section');
   root.id = 'hvProfileRoot';
   root.hidden = true;
-  root.setAttribute('aria-label', 'Hồ sơ Lục Thần');
+  root.setAttribute('aria-label', 'Hồ sơ AN Bá Đạo');
   document.body.append(root);
 
   const state = { sheet: 'home', tab: 'figure', modal: '', toast: '' };
@@ -348,7 +348,7 @@
     }
     if (m === 'contact') {
       return `<div class="hv-pf-mask"><div class="hv-pf-dialog" role="dialog">
-        <h3>Kênh CSKH Lục Thần</h3>
+        <h3>Kênh CSKH AN Bá Đạo</h3>
         <ul class="hv-pf-faq">
           <li>Mất tài khoản — đăng nhập lại Google/Facebook hoặc email đã tạo.</li>
           <li>Mã quà — nhập trong Hồ sơ → Mã đổi. Mỗi mã một lần.</li>

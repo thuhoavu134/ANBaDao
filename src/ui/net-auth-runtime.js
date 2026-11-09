@@ -152,7 +152,7 @@
     host.appendChild(btn);
     const hint = body.querySelector('.section div');
     if (hint && /mong-gioi-server/.test(hint.innerHTML)) {
-      hint.innerHTML = 'Tài khoản Lục Thần trên cùng bản Vercel. User + mật khẩu, hoặc Google (email). Không mạng vẫn chơi offline đủ.';
+      hint.innerHTML = 'Tài khoản AN Bá Đạo trên cùng bản Vercel. User + mật khẩu, hoặc Google (email). Không mạng vẫn chơi offline đủ.';
     }
   }
 
