@@ -1,0 +1,114 @@
+{
+  "audit": {
+    "ok": true,
+    "viewport": {
+      "w": 390,
+      "h": 844
+    },
+    "rootScroll": {
+      "scrollH": 844,
+      "clientH": 844,
+      "overflowY": "auto"
+    },
+    "docScroll": {
+      "scrollH": 844,
+      "clientH": 844
+    },
+    "stageBg": "url(\"http://127.0.0.1:18292/assets/ui/hunt/concept/hunt-concept-a.webp\")",
+    "boxes": {
+      "head": {
+        "x": 0,
+        "y": 20,
+        "w": 390,
+        "h": 44
+      },
+      "boss": {
+        "x": 20,
+        "y": 114,
+        "w": 207,
+        "h": 76
+      },
+      "stats": {
+        "x": 257,
+        "y": 211,
+        "w": 117,
+        "h": 197
+      },
+      "foot": {
+        "x": 0,
+        "y": 716,
+        "w": 390,
+        "h": 128
+      },
+      "go": {
+        "x": 16,
+        "y": 778,
+        "w": 293,
+        "h": 56
+      },
+      "back": {
+        "x": 16,
+        "y": 708,
+        "w": 48,
+        "h": 48
+      }
+    },
+    "visible": {
+      "title": "Sổ Săn Đêm",
+      "bossName": "Đồng Hồ Cát Vỡ",
+      "best": "0",
+      "marks": "0",
+      "attempts": "2/2",
+      "gold": "500",
+      "kheCount": 3,
+      "goDisabled": true
+    },
+    "smallText": [],
+    "smallBtn": [],
+    "emoji": []
+  },
+  "sheet": {
+    "open": true,
+    "miles": 3,
+    "contracts": 3,
+    "box": {
+      "x": 0,
+      "y": 0,
+      "w": 390,
+      "h": 844
+    }
+  },
+  "sheetUpload": null,
+  "after": {
+    "contract": "break_core",
+    "goText": "Vào săn 6",
+    "onChip": 1
+  },
+  "errors": [
+    "console: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "console: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "console: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "console: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "console: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "console: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "console: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "console: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "console: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "console: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "console: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "console: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "console: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "console: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "console: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "console: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "console: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "console: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "console: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "console: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "console: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "console: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "console: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "console: Failed to load resource: the server responded with a status of 404 (File not found)",
+    "console: Failed to load resource: the server responded with a status of 404 (File not found)"
+  ]
+}

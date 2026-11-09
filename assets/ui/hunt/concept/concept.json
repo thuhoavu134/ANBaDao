@@ -1,0 +1,27 @@
+{
+  "screen": "hunt",
+  "title": "Săn Boss",
+  "status": "concept-ab",
+  "date": "2026-11-08",
+  "source": "gpt_image",
+  "size": "1024x1536",
+  "concepts": {
+    "a": {
+      "file": "hunt-concept-a.webp",
+      "also": "hunt-concept-a.png",
+      "name": "Sổ Săn Đêm",
+      "idea": "cận cảnh bàn sơn mài + sổ săn mở, boss hiện lên như mực loang",
+      "prompt": "hunt-concept-a.prompt.md"
+    },
+    "b": {
+      "file": "hunt-concept-b.webp",
+      "also": "hunt-concept-b.png",
+      "name": "Bãi Săn Đêm",
+      "idea": "toàn cảnh sân chùa/cổng thành đêm, boss khổng lồ sau cổng đá",
+      "prompt": "hunt-concept-b.prompt.md"
+    }
+  },
+  "style": "sơn mài đen + viền vàng + thủy mặc (docs/ui-kit.md, chốt 06/11/2026)",
+  "approved": null,
+  "note": "Chờ owner chốt A hoặc B. Chưa mở nhánh, chưa sửa code UI. Nút/khung lấy từ assets/ui/kit/, không vẽ bằng CSS."
+}

@@ -164,7 +164,16 @@
     return result;
   }
 
+  // Trạng thái sheet phải sống ngoài lần render: renderLacquer() bị gọi lại
+  // (refreshStamina, chọn khế, đổi ngày...) nên nếu để trong closure thì sheet tự đóng.
+  let hvhSheetOpen = false;
+
   function renderLacquer() {
+    if (typeof document === 'undefined' || !document.body) return;
+    // Lớp hunt-3d-runtime hoist #hvHuntRoot lên <body>. Vì mỗi lần render tạo root
+    // mới trong #huntBody nên bản cũ bị bỏ lại trên body -> mỗi thao tác +1 bản sao.
+    // Dọn sạch trước khi vẽ; lớp 3d sẽ hoist bản mới lên.
+    document.querySelectorAll('#hvHuntRoot').forEach(el => el.remove());
     const screen = document.getElementById('huntScreen');
     const body = document.getElementById('huntBody');
     if (!body) return;
@@ -180,52 +189,93 @@
     const best = Number((hunt.best && hunt.best[bz.id]) || 0);
     const hp = huntBossHp(P.clearedChapters);
     const dropName = heroName(bz.drop);
-    const contracts = HUNT_CONTRACT_IDS.map(id => {
+    const KH_NAMES = { break_core: 'Phá Lõi', clean_field: 'Quét Tinh', finisher: 'Đoạt Mệnh' };
+    const contracts = HUNT_CONTRACT_IDS.map((id, i) => {
       const c = HUNT_CONTRACTS[id];
       const on = hunt.contract === id;
       const block = locked && !on;
-      return `<button type="button" class="hv-hunt-card${on ? ' is-on' : ''}" data-hunt-contract="${id}" ${block ? 'disabled' : ''}>
-        <b>${c.icon} ${c.name}</b>
+      const shortKhe = KH_NAMES[id] || c.name;
+      return `<button type="button" class="hvh-khe-btn hvh-k${i + 1}${on ? ' is-on' : ''}" data-hunt-contract="${id}" ${block ? 'disabled' : ''} aria-pressed="${on ? 'true' : 'false'}">
+        <b>${shortKhe}</b>
+        <small>+${c.marks} ấn</small>
+        <em>${on ? 'Đang chọn' : 'Chọn khế'}</em>
+      </button>`;
+    }).join('');
+    const contractsFull = HUNT_CONTRACT_IDS.map(id => {
+      const c = HUNT_CONTRACTS[id];
+      const on = hunt.contract === id;
+      const block = locked && !on;
+      return `<article class="hv-hunt-card${on ? ' is-on' : ''}">
+        <b>${c.name} · +${c.marks} ấn</b>
         <small>${c.desc}</small>
         <span>${c.reward}</span>
-      </button>`;
+        <button type="button" data-hunt-contract="${id}" ${block ? 'disabled' : ''}>${on ? 'Đang chọn khế này' : 'Chọn khế này'}</button>
+      </article>`;
     }).join('');
     const miles = HUNT_MARK_KEYS.map(k => {
       const r = HUNT_MARK_MILESTONES[k];
       const on = marks >= k;
-      return `<span class="hv-hunt-mile${on ? ' is-on' : ''}" data-hunt-mile="${k}">${on ? '✓ ' : ''}${k} Ấn · ${r.label}</span>`;
+      return `<span class="hvh-mile${on ? ' is-on' : ''}" data-hunt-mile="${k}"><em>${k} ấn</em> ${r.label}${on ? ' · đã đạt' : ''}</span>`;
     }).join('');
     const canGo = attempts > 0 && !!hunt.contract;
+    // Mẫu 3 (owner chốt 09/11): nút, khung, icon VẼ SẴN trong ảnh gpt_image
+    // (assets/ui/hunt/hunt-full.webp, 941x1672). Ở đây chỉ đặt chữ + vùng bấm
+    // trong suốt lên đúng toạ độ đo trên ảnh — giống Mộng Lộ.
     body.innerHTML = `
       <div id="hvHuntRoot" data-testid="hv-hunt">
-        <div class="hv-hunt-top">
-          <button type="button" class="hv-hunt-back" data-hunt-back aria-label="Về Thành Chính">‹</button>
-          <b>Săn Boss</b>
-          <div class="hv-hunt-chips">
-            <span class="hv-hunt-chip" data-hunt-attempts>⚔ ${attempts}/${perDay}</span>
-            <span class="hv-hunt-chip" data-hunt-gold>🪙 ${fmt(P.gold)}</span>
+        <div class="hvh-stage">
+          <button type="button" class="hvh-back" data-hunt-back aria-label="Về Thành Chính"></button>
+          <span class="hvh-plaque">Săn Boss</span>
+          <span class="hvh-chip-gold"><b data-hunt-gold>${fmt(P.gold)}</b></span>
+
+          <section class="hvh-boss">
+            <div class="hvh-bossname" data-hunt-boss>${bz.name}</div>
+            <div class="hvh-kicker"><span data-hunt-title>Sổ Săn Đêm</span> · ${perDay} lượt/ngày</div>
+          </section>
+
+          <div class="hvh-stat hvh-s1"><span>Kỷ lục</span><b data-hunt-best>${fmt(best)}</b></div>
+          <div class="hvh-stat hvh-s2"><span>Săn Ấn</span><b data-hunt-marks>${fmt(marks)}</b></div>
+          <div class="hvh-stat hvh-s3"><span>Lượt săn</span><b data-hunt-attempts>${attempts}/${perDay}</b></div>
+
+          <div class="hvh-khe" data-hunt-contracts>${contracts}</div>
+
+          <button type="button" class="hvh-info" data-hunt-open-sheet aria-label="Sổ: khế săn và mốc ấn"></button>
+          <button type="button" class="hvh-go" data-hunt-go ${canGo ? '' : 'disabled'}>
+            <span>${canGo ? 'Vào săn · ' + cost() + ' nộ' : 'Chọn khế để săn'}</span>
+          </button>
+        </div>
+
+        <div class="hvh-sheet" data-hunt-sheet${hvhSheetOpen ? '' : ' hidden'}>
+          <div class="hvh-sheet-panel">
+            <button type="button" class="hvh-sheet-x" data-hunt-sheet-x aria-label="Đóng"></button>
+            <h2>Khế săn &amp; mốc ấn</h2>
+            <p class="hvh-desc">${bz.desc}<br>
+              Máu <b data-hunt-hp>${fmt(hp)}</b> · giới hạn ${HUNT_TURN_LIMIT} lượt — gây bao nhiêu tính bấy nhiêu.<br>
+              Vàng theo sát thương · mỗi 6000 ST = 1 mảnh <b>${dropName}</b> · hạ gục +40 ngọc.
+              ${hunt.contractDone ? '<br><b>Khế hôm nay đã xong.</b>' : ''}
+            </p>
+            <span class="hvh-sub">Mốc săn ấn</span>
+            <div class="hvh-miles" data-hunt-miles>${miles}</div>
+            <span class="hvh-sub">Khế săn</span>
+            <div class="hvh-khe-full">${contractsFull}</div>
           </div>
         </div>
-        <div class="hv-hunt-hero">
-          <div class="hv-hunt-kicker">Săn Boss Mộng · 2 lượt/ngày</div>
-          <div class="hv-hunt-title" data-hunt-title>Sổ Săn Đêm</div>
-          <div class="hv-hunt-best" data-hunt-boss style="color:${bz.col}">${bz.name}</div>
-        </div>
-        <div class="hv-hunt-panel">
-          <p class="hv-hunt-copy">${bz.desc}<br>
-            Máu <b data-hunt-hp>${fmt(hp)}</b> · giới hạn ${HUNT_TURN_LIMIT} lượt — gây bao nhiêu tính bấy nhiêu.<br>
-            🪙 theo sát thương · mỗi 6000 ST = 1 mảnh <b>${dropName}</b> · hạ gục +💎40.<br>
-            Kỷ lục <b data-hunt-best>${fmt(best)}</b> ST · Săn Ấn <b data-hunt-marks>${fmt(marks)}</b>
-            ${hunt.contractDone ? ' · <b>Khế đã xong</b>' : ''}
-          </p>
-          <div class="hv-hunt-miles" data-hunt-miles>${miles}</div>
-          <div class="hv-hunt-list" data-hunt-contracts>${contracts}</div>
-          <button type="button" class="hv-hunt-go" data-hunt-go ${canGo ? '' : 'disabled'}>Vào săn — ${cost()}⚡</button>
-        </div>
       </div>`;
+    const root = body.querySelector('#hvHuntRoot');
+    const sheet = root?.querySelector('[data-hunt-sheet]');
+    const setSheet = open => { hvhSheetOpen = !!open; if (sheet) sheet.hidden = !hvhSheetOpen; };
     body.querySelector('[data-hunt-back]')?.addEventListener('click', () => navTo?.('hub'));
+    body.querySelector('[data-hunt-open-sheet]')?.addEventListener('click', () => setSheet(true));
+    body.querySelector('[data-hunt-sheet-x]')?.addEventListener('click', () => setSheet(false));
+    sheet?.addEventListener('click', ev => { if (ev.target === sheet) setSheet(false); });
     body.querySelectorAll('[data-hunt-contract]').forEach(btn => {
-      btn.addEventListener('click', () => honVietSelect(btn.dataset.huntContract));
+      btn.addEventListener('click', () => {
+        honVietSelect(btn.dataset.huntContract);
+        setSheet(false);
+        // Phải gọi renderHunt() (không phải renderLacquer) để lớp hunt-3d hoist root
+        // lên <body>; gọi thẳng renderLacquer sẽ để root nằm trong #huntBody cao 0px.
+        renderHunt();
+      });
     });
     body.querySelector('[data-hunt-go]')?.addEventListener('click', () => honVietStart());
   }

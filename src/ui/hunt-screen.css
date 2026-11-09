@@ -1,86 +1,165 @@
-#huntScreen.hv-hunt-live{
-  background:#100c08;
-  padding:0;
-  display:flex;
-  flex-direction:column;
-  min-height:100%;
-}
+/* Săn Boss — Mẫu 3 "Hổ trắng rừng trúc" (owner chốt 09/11).
+   Giống Mộng Lộ (src/ui/expedition-monglo.css, v-fit 06/11):
+     - Nút, khung, icon đều VẼ SẴN trong 1 ảnh gpt_image: assets/ui/hunt/hunt-full.webp (941x1672).
+     - Khung ảnh giữ đúng tỉ lệ, vừa bề ngang màn (không cắt 2 bên); phần thừa dùng chính ảnh làm mờ.
+     - Ở đây chỉ đặt CHỮ + vùng bấm trong suốt, toạ độ % đo trực tiếp trên ảnh.
+   Bảng đo (% theo ảnh): về 3/2.7 w11 h6.3 · bảng tên 31/3.3 w38 h4.4 · vàng 82/4 w14 h3.7
+     băng tên boss 14/11.5 w52 h6 · ô số liệu x79 w17.5, y 25.2/34.4/43.6 h6.4
+     3 khế: x 12/38/64 w24, y 64 h18.5 (chữ từ ~70%) · Sổ 15/89 w14.6 h7 · Vào săn 34.5/88.8 w50.5 h7.5 */
+
+#huntScreen.hv-hunt-live{background:#3a2a18;padding:0;display:flex;flex-direction:column;min-height:100%}
 #huntScreen.hv-hunt-live .pagehdr,
 #huntScreen.hv-hunt-live .mode-intro{display:none!important}
-#huntScreen.hv-hunt-live #huntBody{
-  flex:1;min-height:0;padding:0!important;max-width:none!important;margin:0!important
-}
+#huntScreen.hv-hunt-live #huntBody{flex:1;min-height:0;padding:0!important;max-width:none!important;margin:0!important}
+
 #hvHuntRoot{
-  --hunt-ink:#f6e6c0;
-  --hunt-muted:#cbb48a;
-  --hunt-gold:#e2b45a;
-  --hunt-mist:#9bcfd6;
-  position:relative;min-height:100%;height:100%;display:flex;flex-direction:column;
-  color:var(--hunt-ink);font-family:inherit;
-  background:#100c08 url('https://luc-than.vercel.app/assets/hub/daylight-v3233/hub-daylight.png') center top/cover no-repeat;
-  overflow-x:hidden;overflow-y:auto;touch-action:manipulation;
+  position:relative;height:100%;min-height:100%;overflow:hidden;
+  background:#3a2a18;
+  display:flex;align-items:center;justify-content:center;
+  color:#4a2408;
+  font-family:var(--hvk-font,system-ui),sans-serif;
+  touch-action:manipulation;
 }
-#hvHuntRoot:before{
-  content:"";position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(180deg,rgba(12,8,6,.55) 0%,rgba(12,8,6,.22) 28%,rgba(10,7,5,.6) 58%,rgba(8,6,4,.94) 100%);
+#hvHuntRoot::before{
+  content:"";position:absolute;inset:-24px;z-index:0;pointer-events:none;
+  background:url('assets/ui/hunt/hunt-full.webp') center bottom/cover no-repeat;
+  filter:blur(18px) brightness(.72) saturate(1.1);
 }
-#hvHuntRoot > *{position:relative;z-index:1}
-#hvHuntRoot button{font:inherit;color:inherit;cursor:pointer}
-#hvHuntRoot button:disabled{opacity:.45;cursor:default}
-#hvHuntRoot button:not(:disabled):active{transform:scale(.98)}
-.hv-hunt-top{
-  display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:8px;
-  padding:calc(6px + env(safe-area-inset-top)) 12px 4px;
+#hvHuntRoot .hvh-stage{
+  position:relative;flex:none;z-index:1;
+  width:100%;aspect-ratio:941/1672;
+  background:url('assets/ui/hunt/hunt-full.webp') 0 0/100% 100% no-repeat;
 }
-.hv-hunt-back{
-  width:44px;height:44px;border:0;border-radius:50%;
-  background:rgba(24,16,10,.72);box-shadow:0 0 0 1px rgba(215,179,106,.45);
-  font-size:22px;line-height:1;
+#hvHuntRoot .hvh-stage > *{position:absolute;box-sizing:border-box}
+#hvHuntRoot button{
+  font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent;
+  background:none;border:0;padding:0;margin:0;
 }
-.hv-hunt-top b{justify-self:center;font-size:16px;letter-spacing:.04em}
-.hv-hunt-chips{display:flex;gap:6px}
-.hv-hunt-chip{
-  min-height:28px;padding:4px 8px;border-radius:999px;
-  background:rgba(20,12,8,.72);box-shadow:0 0 0 1px rgba(215,179,106,.35);
-  font-size:11px;font-weight:800;
+#hvHuntRoot .hvh-stage button:not(:disabled):active{transform:translateY(1px)}
+
+/* ---- đầu màn ---- */
+.hvh-back{left:2.6%;top:2.5%;width:11.8%;height:6.3%;color:transparent;font-size:0}
+.hvh-plaque{
+  left:31%;top:3.3%;width:38%;height:4.4%;
+  display:grid;place-items:center;
+  font-size:16px;font-weight:900;color:#4a2408;letter-spacing:.3px;
+  text-shadow:0 1px 0 rgba(255,236,190,.7);
 }
-.hv-hunt-hero{
-  min-height:52px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
-  padding:0 16px 6px;text-align:center;
+.hvh-chip-gold{
+  left:82%;top:4%;width:14%;height:3.7%;
+  display:grid;place-items:center;
+  font-size:12.5px;font-weight:800;color:#fff3d2;
+  text-shadow:0 1px 2px #3a1a06;
 }
-.hv-hunt-kicker{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--hunt-mist);font-weight:800}
-.hv-hunt-title{font-size:22px;line-height:1.1;font-weight:900;color:#fff4d4;text-shadow:0 8px 24px rgba(0,0,0,.55)}
-.hv-hunt-best{margin-top:2px;font-size:11px;color:var(--hunt-muted)}
-.hv-hunt-panel{
-  display:flex;flex-direction:column;gap:8px;flex:1;
-  padding:8px 12px calc(72px + env(safe-area-inset-bottom));
-  background:linear-gradient(180deg,rgba(28,18,12,.82),rgba(16,10,8,.94));
-  box-shadow:0 -12px 28px rgba(0,0,0,.35);
-  border-top:1px solid rgba(215,179,106,.35);
+
+/* ---- băng tên boss (khung kem lớn) ---- */
+.hvh-boss{
+  left:14%;top:11.6%;width:52%;height:6%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;
+  text-align:center;
 }
-.hv-hunt-copy{margin:0;font-size:11px;line-height:1.35;color:var(--hunt-muted)}
-.hv-hunt-miles{display:flex;flex-wrap:wrap;gap:6px}
-.hv-hunt-mile{
-  min-height:28px;padding:4px 8px;border-radius:999px;font-size:11px;font-weight:700;
-  background:rgba(42,28,18,.88);box-shadow:0 0 0 1px rgba(167,126,68,.4);
+.hvh-bossname{font-size:17px;line-height:1.15;font-weight:900;color:#6a1a08}
+.hvh-kicker{font-size:12px;line-height:1.2;font-weight:700;color:#7a4a1c}
+
+/* ---- 3 ô số liệu bên phải (khung kem, icon vẽ sẵn bên trái) ---- */
+.hvh-stat{
+  left:79%;width:17.5%;height:6.4%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;line-height:1.1;
 }
-.hv-hunt-mile.is-on{background:linear-gradient(180deg,#e2b45a,#a06a22);color:#2a1608}
-.hv-hunt-list{display:flex;flex-direction:column;gap:6px}
-.hv-hunt-card{
-  text-align:left;min-height:88px;padding:8px 10px;border:0;border-radius:14px;
-  background:rgba(42,28,18,.88);box-shadow:0 0 0 1px rgba(167,126,68,.4);color:var(--hunt-ink);
+.hvh-s1{top:25.2%}
+.hvh-s2{top:34.4%}
+.hvh-s3{top:43.6%}
+.hvh-stat span{font-size:12px;font-weight:700;color:#7a4a1c}
+.hvh-stat b{font-size:15px;font-weight:900;color:#4a2408}
+
+/* ---- 3 khế săn (3 khung kem trên bảng gỗ, icon vẽ sẵn ở đỉnh) ---- */
+.hvh-khe{left:0;top:0;width:100%;height:100%;pointer-events:none}
+.hvh-khe-btn{
+  position:absolute!important;top:64%;width:24%;height:18.5%;
+  pointer-events:auto;border-radius:10px;
+  display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+  padding:9% 4px 0!important;text-align:center;line-height:1.15;
+  transition:box-shadow .16s ease;
 }
-.hv-hunt-card.is-on{box-shadow:0 0 0 2px #e2b45a;background:rgba(64,40,16,.95)}
-.hv-hunt-card b{display:block;font-size:13px}
-.hv-hunt-card small{display:block;margin-top:3px;font-size:10px;line-height:1.3;color:var(--hunt-muted)}
-.hv-hunt-card span{display:block;margin-top:4px;font-size:10.5px;color:var(--hunt-gold);font-weight:700}
-.hv-hunt-go{
-  width:100%;min-height:44px;border:0;border-radius:11px;font-weight:800;
-  background:linear-gradient(180deg,#e2b45a,#a06a22);color:#2a1608;
+.hvh-k1{left:12%}
+.hvh-k2{left:38%}
+.hvh-k3{left:64%}
+.hvh-khe-btn b{font-size:15px;font-weight:900;color:#4a2408}
+.hvh-khe-btn small{font-size:13px;font-weight:800;color:#8a2a0c}
+.hvh-khe-btn em{
+  margin-top:6px;font-style:normal;font-size:12px;font-weight:700;color:#7a4a1c;
 }
-.hv-hunt-go:disabled{
-  background:rgba(42,28,18,.9);color:var(--hunt-muted);box-shadow:0 0 0 1px rgba(167,126,68,.4);
+.hvh-khe-btn.is-on{
+  box-shadow:0 0 0 3px #ffd36a,0 0 0 5px rgba(140,60,10,.45),0 0 20px 6px rgba(255,196,80,.85);
 }
-@media(max-width:360px){
-  .hv-hunt-title{font-size:20px}
+.hvh-khe-btn.is-on em{color:#a8320c;font-weight:900}
+.hvh-khe-btn:disabled{opacity:.55;cursor:default}
+
+/* ---- đáy: Sổ (nút ngọc có sách vẽ sẵn) + Vào săn (nút đỏ có lửa vẽ sẵn) ---- */
+.hvh-info{left:15%;top:89%;width:14.6%;height:7%;color:transparent;font-size:0;border-radius:10px}
+.hvh-go{
+  left:34.5%;top:88.8%;width:50.5%;height:7.5%;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  padding-left:18%!important;
+  font-size:18px;font-weight:900;letter-spacing:.3px;
+  color:#fff6e0;text-shadow:0 1px 2px #3a0a02,0 0 5px rgba(58,10,2,.9);
+}
+.hvh-go:disabled{background:rgba(40,20,10,.38);cursor:default;font-size:15px}
+
+/* ---- sheet: khế săn + mốc ấn (nền giấy kem, chữ nâu như khung trong ảnh) ---- */
+.hvh-sheet{
+  position:fixed;inset:0;z-index:9;
+  display:flex;align-items:flex-end;justify-content:center;
+  background:rgba(30,18,8,.55);
+  padding:16px 12px calc(16px + env(safe-area-inset-bottom));
+}
+.hvh-sheet[hidden]{display:none!important}
+.hvh-sheet-panel{
+  position:relative;width:100%;max-width:430px;max-height:76vh;overflow:auto;
+  padding:18px 16px 16px;border-radius:14px;
+  background:#f6e8c8;border:3px solid #d9a845;
+  box-shadow:0 0 0 2px #8a5a1c,0 18px 40px rgba(0,0,0,.45);
+  color:#4a2408;
+}
+.hvh-sheet-panel h2{margin:0 48px 10px 0;font-size:16px;font-weight:900;color:#6a1a08}
+.hvh-sheet-x{
+  position:absolute;right:8px;top:8px;width:44px;height:44px;
+  background:url('assets/ui/expedition/back-medal.webp') center/contain no-repeat!important;
+  color:transparent;font-size:0;
+}
+.hvh-desc{margin:0 0 10px;font-size:13px;line-height:1.45;color:#5a3412}
+.hvh-desc b{color:#8a2a0c}
+.hvh-sub{display:block;margin:14px 0 8px;font-size:12.5px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#2f6a4a}
+.hvh-miles{display:flex;flex-direction:column;gap:7px}
+.hvh-mile{
+  display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;
+  background:#fff6df;border:1px solid #d9b46a;
+  font-size:13px;font-weight:700;color:#5a3412;
+}
+.hvh-mile.is-on{border-color:#d9a845;box-shadow:0 0 0 2px #ffd36a}
+.hvh-mile em{font-style:normal;font-weight:900;color:#a8320c}
+.hvh-khe-full{display:flex;flex-direction:column;gap:9px}
+.hvh-khe-full .hv-hunt-card{padding:10px 13px;border-radius:10px;background:#fff6df;border:1px solid #d9b46a}
+.hvh-khe-full .hv-hunt-card.is-on{box-shadow:0 0 0 2px #ffd36a,0 0 12px 3px rgba(255,196,80,.55)}
+.hvh-khe-full .hv-hunt-card b{display:block;font-size:14px;color:#6a1a08}
+.hvh-khe-full .hv-hunt-card small{display:block;margin-top:4px;font-size:12.5px;line-height:1.4;color:#5a3412}
+.hvh-khe-full .hv-hunt-card span{display:block;margin-top:6px;font-size:12.5px;font-weight:800;color:#8a2a0c}
+#hvHuntRoot .hvh-khe-full .hv-hunt-card button{
+  margin-top:9px;width:100%;min-height:46px;
+  background:url('assets/ui/kit/btn-secondary.webp') center/100% 100% no-repeat!important;
+  color:#f4fff6;font-size:14px;font-weight:800;text-shadow:0 1px 2px #062014,0 0 5px rgba(6,32,20,.9);
+}
+#hvHuntRoot .hvh-khe-full .hv-hunt-card button:disabled{opacity:.5;cursor:default}
+
+/* nút FAB quay về cũ do lớp hunt-3d-runtime chèn — trùng với huy hiệu về trong ảnh */
+#hvHuntBackFab{display:none!important}
+
+@media (max-width:360px){
+  .hvh-plaque{font-size:14px}
+  .hvh-bossname{font-size:15px}
+  .hvh-khe-btn b{font-size:13px}
+  .hvh-khe-btn small{font-size:12px}
+  .hvh-stat b{font-size:13px}
+  .hvh-go{font-size:16px}
 }
