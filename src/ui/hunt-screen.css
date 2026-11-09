@@ -7,14 +7,14 @@
      băng tên boss 14/11.5 w52 h6 · ô số liệu x79 w17.5, y 25.2/34.4/43.6 h6.4
      3 khế: x 12/38/64 w24, y 64 h18.5 (chữ từ ~70%) · Sổ 15/89 w14.6 h7 · Vào săn 34.5/88.8 w50.5 h7.5 */
 
-#huntScreen.hv-hunt-live{background:#3a2a18;padding:0;display:flex;flex-direction:column;min-height:100%}
+#huntScreen.hv-hunt-live{background:#2a1a0e;padding:0;display:flex;flex-direction:column;min-height:100%}
 #huntScreen.hv-hunt-live .pagehdr,
 #huntScreen.hv-hunt-live .mode-intro{display:none!important}
 #huntScreen.hv-hunt-live #huntBody{flex:1;min-height:0;padding:0!important;max-width:none!important;margin:0!important}
 
 #hvHuntRoot{
-  position:relative;height:100%;min-height:100%;overflow:hidden;
-  background:#3a2a18;
+  position:fixed;inset:0;z-index:50;overflow:hidden;
+  background:#2a1a0e!important;
   display:flex;align-items:center;justify-content:center;
   color:#4a2408;
   font-family:var(--hvk-font,system-ui),sans-serif;
@@ -23,7 +23,14 @@
 #hvHuntRoot::before{
   content:"";position:absolute;inset:-24px;z-index:0;pointer-events:none;
   background:url('assets/ui/hunt/hunt-full.webp') center bottom/cover no-repeat;
-  filter:blur(18px) brightness(.72) saturate(1.1);
+  filter:blur(22px) brightness(.55) saturate(1.15);
+  transform:scale(1.15);
+}
+/* Nền phủ 2 dải trên/dưới: hv-hunt-3d-css tắt ::before và tô kem cho root, nên dùng phần tử riêng. */
+#hvHuntRoot .hvh-bg{
+  position:absolute;inset:-30px;z-index:0;pointer-events:none;
+  background:#2a1a0e url('assets/ui/hunt/hunt-full.webp') center/cover no-repeat;
+  filter:blur(22px) brightness(.55) saturate(1.15);
 }
 #hvHuntRoot .hvh-stage{
   position:relative;flex:none;z-index:1;
@@ -97,15 +104,16 @@
 .hvh-khe-btn:disabled{opacity:.55;cursor:default}
 
 /* ---- đáy: Sổ (nút ngọc có sách vẽ sẵn) + Vào săn (nút đỏ có lửa vẽ sẵn) ---- */
-.hvh-info{left:15%;top:89%;width:14.6%;height:7%;color:transparent;font-size:0;border-radius:10px}
-.hvh-go{
+#hvHuntRoot .hvh-info{left:15%;top:89%;width:14.6%;height:7%;color:transparent;font-size:0;border-radius:10px}
+#hvHuntRoot .hvh-go{
   left:34.5%;top:88.8%;width:50.5%;height:7.5%;border-radius:12px;
   display:flex;align-items:center;justify-content:center;
   padding-left:18%!important;
   font-size:18px;font-weight:900;letter-spacing:.3px;
   color:#fff6e0;text-shadow:0 1px 2px #3a0a02,0 0 5px rgba(58,10,2,.9);
 }
-.hvh-go:disabled{background:rgba(40,20,10,.38);cursor:default;font-size:15px}
+#hvHuntRoot .hvh-go:disabled{cursor:default;font-size:15px;color:#fff6e0;filter:grayscale(.35) brightness(.92)}
+#hvHuntRoot .hvh-go:disabled span{background:rgba(40,14,4,.55);padding:3px 10px;border-radius:8px}
 
 /* ---- sheet: khế săn + mốc ấn (nền giấy kem, chữ nâu như khung trong ảnh) ---- */
 .hvh-sheet{
@@ -163,3 +171,9 @@
   .hvh-stat b{font-size:13px}
   .hvh-go{font-size:16px}
 }
+
+/* Mỗi boss trong ngày một nền riêng (cùng bố cục khung/nút, owner 09/11). */
+#hvHuntRoot[data-hunt-boss-id="nhen_det_ac_mong"] .hvh-stage,
+#hvHuntRoot[data-hunt-boss-id="nhen_det_ac_mong"] .hvh-bg{background-image:url('assets/ui/hunt/hunt-full-xa.webp')}
+#hvHuntRoot[data-hunt-boss-id="dong_ho_cat_vo"] .hvh-stage,
+#hvHuntRoot[data-hunt-boss-id="dong_ho_cat_vo"] .hvh-bg{background-image:url('assets/ui/hunt/hunt-full-nguu.webp')}

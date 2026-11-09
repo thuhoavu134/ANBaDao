@@ -222,7 +222,8 @@
     // (assets/ui/hunt/hunt-full.webp, 941x1672). Ở đây chỉ đặt chữ + vùng bấm
     // trong suốt lên đúng toạ độ đo trên ảnh — giống Mộng Lộ.
     body.innerHTML = `
-      <div id="hvHuntRoot" data-testid="hv-hunt">
+      <div id="hvHuntRoot" data-testid="hv-hunt" data-hunt-boss-id="${bz.id}">
+        <div class="hvh-bg" aria-hidden="true"></div>
         <div class="hvh-stage">
           <button type="button" class="hvh-back" data-hunt-back aria-label="Về Thành Chính"></button>
           <span class="hvh-plaque">Săn Boss</span>

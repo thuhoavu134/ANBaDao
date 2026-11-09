@@ -163,6 +163,8 @@ await import('./lanes/tkt-0083-profile.mjs');
 
 // WAVE-S 2026-09-13 TKT-0108 Lục Thần lore — Chinh chiến sáu ấn. Keep AFTER profile.
 await import('./lanes/tkt-0108-lore.mjs');
+// 09/11 Chiến Dịch · Giang Hồ Đồ (Mẫu B). Keep AFTER lore.
+await import('./campaign-map-v1.mjs');
 
 // WAVE-S 2026-09-13 TKT-0109 Bách Bảo Rương Kiếm Thế. Keep AFTER lore.
 await import('./lanes/tkt-0109-bbr.mjs');

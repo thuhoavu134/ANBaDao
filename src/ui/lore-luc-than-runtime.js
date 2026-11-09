@@ -220,25 +220,48 @@
     ch06_end_choose_03: 'KẾT THÚC · ' + AN_ENDING_LINE
   };
 
+  // Owner 09/11: đổi hết tên kiểu "mộng" sang giang hồ.
+  const WORDS = [
+    [/Hồn Việt:\s*Mộng Giới/g, 'AN Bá Đạo'],
+    [/Lục Thần|Hồn Việt/g, 'AN Bá Đạo'],
+    [/Chợ Đêm Mộng|Chợ Đêm|Chợ Mộng/g, 'Hắc Thị'],
+    [/Săn Boss Mộng|Boss Mộng/g, 'Săn Boss'],
+    [/Đấu Trường Mộng/g, 'Lôi Đài'],
+    [/Gọi Mộng/g, 'Chiêu Mộ'],
+    [/Rèn Mộng/g, 'Rèn Binh'],
+    [/Xưởng Mộng/g, 'Xưởng Binh'],
+    [/Kho Mộng/g, 'Kho Đồ'],
+    [/Mộng Lộ/g, 'Hành Tẩu'],
+    [/Phúc Mộng/g, 'Phúc Duyên'],
+    [/Mộng Tủy/g, 'Nội Đan'],
+    [/Mảnh mộng hiếm/g, 'Mảnh S+'],
+    [/Người Dẫn Mộng|Người Kể Ấn/g, 'Người Kể Chuyện'],
+    [/Kẻ Mất Ngủ|Người Giữ Ấn/g, 'AN'],
+    [/Mộng Phố|Mộng Giới|Lục Châu|Mộng Châu|Cõi Mơ/g, 'Giang Hồ'],
+    [/Shop điểm/gi, 'Tụ Bảo Các'],
+    [/thợ mộng/gi, 'thợ rèn'],
+    [/Bách Bảo Luân/g, 'Bách Bảo Rương'],
+    [/Tam Nguyện Sông Mơ/g, 'Hoa Đăng Giang Hồ']
+  ];
   function rewrite(s) {
-    return String(s)
-      .replace(/Hồn Việt:\s*Mộng Giới/g, 'AN Bá Đạo')
-      .replace(/Lục Thần/g, 'AN Bá Đạo')
-      .replace(/Hồn Việt/g, 'AN Bá Đạo')
-      .replace(/Mộng Giới|Lục Châu|Mộng Châu/g, 'Cõi Mơ')
-      .replace(/Kẻ Mất Ngủ|Người Giữ Ấn/g, 'AN')
-      .replace(/Người Dẫn Mộng|Người Kể Ấn/g, 'Người Kể Chuyện')
-      .replace(/Kẻ Trộm Ấn/g, 'Người Gác Mộng')
-      .replace(/Hết Cõi Mơ|Đóng đủ sáu ấn/g, 'Thắp lại mặt trăng')
-      .replace(/Chợ Đêm Mộng/g, 'Hắc Thị')
-      .replace(/Chợ Đêm/g, 'Hắc Thị')
-      .replace(/Shop điểm/gi, 'Tụ Bảo Các')
-      .replace(/Chợ Mộng/g, 'Chợ Cõi Mơ')
-      .replace(/Mảnh mộng hiếm/g, 'Mảnh S+')
-      .replace(/thợ mộng/gi, 'thợ rèn')
-      .replace(/Săn Ấn/g, 'Mảnh Trăng')
-      .replace(/Bách Bảo Luân/g, 'Bách Bảo Rương')
-      .replace(/Tam Nguyện Sông Mơ/g, 'Hoa Đăng Cõi Mơ');
+    let out = String(s);
+    for (const [re, to] of WORDS) out = out.replace(re, to);
+    return out;
+  }
+
+  // Đổi chữ hiển thị ở sảnh, thanh dưới và tiêu đề màn (chỉ text node, không observer).
+  function rewriteTextIn(sel) {
+    document.querySelectorAll(sel).forEach(root => {
+      const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+      let n;
+      while ((n = w.nextNode())) {
+        const t = n.nodeValue;
+        if (t && /Mộng|Lục Thần|Hồn Việt|Chợ Đêm|Cõi Mơ/.test(t)) {
+          const r = rewrite(t);
+          if (r !== t) n.nodeValue = r;
+        }
+      }
+    });
   }
 
   function patchData() {
@@ -320,13 +343,7 @@
       el.textContent = 'Võ các · Bộ sưu tập tướng';
     });
     document.querySelectorAll('.hv-seal').forEach(el => { el.textContent = 'ABĐ'; });
-    document.querySelectorAll('#hubScreen .scnm, #hubScreen .hv-land b, #hubScreen [data-art-go]').forEach(el => {
-      if (el && el.childNodes) {
-        el.childNodes.forEach(n => {
-          if (n.nodeType === 3) n.textContent = rewrite(n.textContent);
-        });
-      }
-    });
+    rewriteTextIn('#hubScreen, .dock, nav, .pagehdr, .mode-intro, .screen.active > header, #hvM3, .hv-hub-menu');
   }
 
   const SEAL_STAGES = 18;

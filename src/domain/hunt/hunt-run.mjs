@@ -20,27 +20,27 @@ export const HUNT_FINISHER_GEMS = 20;
 export const HUNT_BOSSES = Object.freeze([
   Object.freeze({
     id: 'ca_voi_nuot_trang',
-    name: 'Cá Voi Nuốt Trăng',
+    name: 'Bạch Hổ Rừng Trúc',
     col: '#5a7fd6',
     drop: 'hon_cay_bang',
-    desc: 'Nó nuốt mất mặt trăng nên đêm không còn sáng. Trong bụng nó, thuỷ triều vẫn nhớ bờ.',
-    mech: Object.freeze({ name: 'Thuỷ Triều Nuốt Trăng', fx: Object.freeze({ kind: 'shield', target: 'aoe_ally', power: 1.0 }) })
+    desc: 'Hổ trắng vằn vàng canh miếu đá giữa rừng trúc. Hắc Liên Giáo trói nó bằng bùa, nó đánh cả kẻ đến cứu.',
+    mech: Object.freeze({ name: 'Hổ Gầm Trúc Lâm', fx: Object.freeze({ kind: 'shield', target: 'aoe_ally', power: 1.0 }) })
   }),
   Object.freeze({
     id: 'nhen_det_ac_mong',
-    name: 'Nhện Dệt Ác Mộng',
+    name: 'Hắc Xà Đầm Lầy',
     col: '#8a5fae',
     drop: 'ong_ke_that_nghiep',
-    desc: 'Mỗi sợi tơ là một cơn mơ xấu ai đó chưa tỉnh. Cắt được tơ, người ngủ nhẹ bớt một phần.',
-    mech: Object.freeze({ name: 'Tơ Độc Ác Mộng', fx: Object.freeze({ kind: 'fear', target: 'aoe_enemy', power: 1.0 }) })
+    desc: 'Rắn đen trăm năm dưới đầm lầy, nọc độc làm người trúng sợ hãi run tay, không cầm nổi kiếm.',
+    mech: Object.freeze({ name: 'Nọc Độc Hắc Xà', fx: Object.freeze({ kind: 'fear', target: 'aoe_enemy', power: 1.0 }) })
   }),
   Object.freeze({
     id: 'dong_ho_cat_vo',
-    name: 'Đồng Hồ Cát Vỡ',
+    name: 'Thiết Giáp Ngưu',
     col: '#d6b45a',
     drop: 'ky_lan_ca_phe',
-    desc: 'Cát chảy ngược qua vết nứt — thời gian của thành phố đang rò rỉ qua nó.',
-    mech: Object.freeze({ name: 'Cát Chảy Ngược', fx: Object.freeze({ kind: 'haste', target: 'aoe_ally', power: 1.0 }) })
+    desc: 'Trâu sắt luyện từ lò đan Hắc Liên. Càng đánh lâu, nó càng húc nhanh.',
+    mech: Object.freeze({ name: 'Cuồng Ngưu Xung Trận', fx: Object.freeze({ kind: 'haste', target: 'aoe_ally', power: 1.0 }) })
   })
 ]);
 
@@ -53,9 +53,9 @@ export const HUNT_CONTRACTS = Object.freeze({
     reward: 'Hoàn thành: +1 Săn Ấn · +25% vàng của lần săn.'
   }),
   clean_field: Object.freeze({
-    name: 'Quét Mộng Tinh',
+    name: 'Quét Tay Chân',
     icon: '🧹',
-    desc: 'Hạ cả hai Mộng Tinh phụ trợ trong cùng một lần săn.',
+    desc: 'Hạ cả hai tay chân phụ trợ của boss trong cùng một lần săn.',
     marks: 1,
     reward: 'Hoàn thành: +1 Săn Ấn · +1 mảnh tướng boss.'
   }),
@@ -169,7 +169,7 @@ export function huntEncounter(day, chapters) {
   return Object.freeze([
     Object.freeze({
       id: 'add1',
-      name: 'Mộng Tinh',
+      name: 'Tay Chân',
       col: '#6a6f9a',
       row: 'back',
       slot: 3,
@@ -197,7 +197,7 @@ export function huntEncounter(day, chapters) {
     }),
     Object.freeze({
       id: 'add2',
-      name: 'Mộng Tinh',
+      name: 'Tay Chân',
       col: '#6a6f9a',
       row: 'back',
       slot: 5,
