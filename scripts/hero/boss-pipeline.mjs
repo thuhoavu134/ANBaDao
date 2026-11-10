@@ -43,7 +43,7 @@ const run = (cmd, args, opts = {}) => {
 
 // 1. kiểm clip
 try {
-  run(PY, [path.join(ROOT, 'scripts', 'hero', 'clip-edge-check.py'), '--dir', raw]);
+  run(PY, [path.join(ROOT, 'scripts', 'hero', 'clip-edge-check.py'), '--dir', raw, '--max-touch', arg('max-touch', '0')], { env: { ...process.env, PYTHONIOENCODING: 'utf-8' } });
 } catch (e) {
   console.error('\n✖ Clip gốc không đạt (thiếu clip, hoặc chạm 4 mép). Sửa/tạo lại clip trước.');
   process.exit(1);

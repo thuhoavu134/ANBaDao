@@ -56,6 +56,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dir", required=True)
     ap.add_argument("--tmp", default=r"C:\tmp\clipedges")
+    ap.add_argument("--max-touch", type=int, default=0, help="số khung chạm mép tối đa được chấp nhận")
     args = ap.parse_args()
 
     missing = [s for s in STATES if not os.path.exists(os.path.join(args.dir, s + ".mp4"))]
@@ -69,8 +70,8 @@ def main():
             continue
         info = probe(p)
         rep = edge_report(p, os.path.join(args.tmp, s))
-        flag = "OK" if (info["w"] >= 1280 and rep["touchFrames"] == 0) else "CẦN XEM"
-        if rep["touchFrames"]:
+        flag = "OK" if (info["w"] >= 1280 and rep["touchFrames"] <= args.max_touch) else "CẦN XEM"
+        if rep["touchFrames"] > args.max_touch:
             ok = False
         print(f"{s:9s} {info['w']}x{info['h']} {info['fps']}fps {info['dur']}s "
               f"frames={rep['frames']} chamMep={rep['touchFrames']} worst={rep['worstEdge']} -> {flag}")

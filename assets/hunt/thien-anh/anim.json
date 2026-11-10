@@ -1,0 +1,63 @@
+{
+ "schema": "hunt-boss-anim/v1",
+ "slug": "thien-anh",
+ "form": "ca_voi_nuot_trang",
+ "source": "Google Flow Omni 1.2 Flash + kiemthe-animation-packager (uniform framing)",
+ "clips": {
+  "idle": {
+   "src": "assets/hunt/thien-anh/idle.webp",
+   "frames": 30,
+   "cols": 6,
+   "cellW": 240,
+   "cellH": 220,
+   "pivot": 120,
+   "foot": 188,
+   "durationMs": 3042,
+   "loop": true
+  },
+  "atk": {
+   "src": "assets/hunt/thien-anh/atk.webp",
+   "frames": 18,
+   "cols": 6,
+   "cellW": 320,
+   "cellH": 220,
+   "pivot": 160,
+   "foot": 192,
+   "durationMs": 1500,
+   "loop": false
+  },
+  "ultimate": {
+   "src": "assets/hunt/thien-anh/ultimate.webp",
+   "frames": 18,
+   "cols": 6,
+   "cellW": 400,
+   "cellH": 220,
+   "pivot": 200,
+   "foot": 192,
+   "durationMs": 2600,
+   "loop": false
+  },
+  "hit": {
+   "src": "assets/hunt/thien-anh/hit.webp",
+   "frames": 18,
+   "cols": 6,
+   "cellW": 240,
+   "cellH": 220,
+   "pivot": 120,
+   "foot": 188,
+   "durationMs": 700,
+   "loop": false
+  },
+  "fall-die": {
+   "src": "assets/hunt/thien-anh/fall-die.webp",
+   "frames": 18,
+   "cols": 6,
+   "cellW": 256,
+   "cellH": 220,
+   "pivot": 128,
+   "foot": 217,
+   "durationMs": 1600,
+   "loop": false
+  }
+ }
+}

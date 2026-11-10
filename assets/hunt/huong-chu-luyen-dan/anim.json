@@ -1,0 +1,63 @@
+{
+ "schema": "hunt-boss-anim/v1",
+ "slug": "huong-chu-luyen-dan",
+ "form": "ca_voi_nuot_trang",
+ "source": "Google Flow Omni 1.2 Flash + kiemthe-animation-packager (uniform framing)",
+ "clips": {
+  "idle": {
+   "src": "assets/hunt/huong-chu-luyen-dan/idle.webp",
+   "frames": 30,
+   "cols": 6,
+   "cellW": 240,
+   "cellH": 220,
+   "pivot": 120,
+   "foot": 183,
+   "durationMs": 3042,
+   "loop": true
+  },
+  "atk": {
+   "src": "assets/hunt/huong-chu-luyen-dan/atk.webp",
+   "frames": 18,
+   "cols": 6,
+   "cellW": 240,
+   "cellH": 220,
+   "pivot": 120,
+   "foot": 183,
+   "durationMs": 1500,
+   "loop": false
+  },
+  "ultimate": {
+   "src": "assets/hunt/huong-chu-luyen-dan/ultimate.webp",
+   "frames": 18,
+   "cols": 6,
+   "cellW": 272,
+   "cellH": 220,
+   "pivot": 136,
+   "foot": 219,
+   "durationMs": 2600,
+   "loop": false
+  },
+  "hit": {
+   "src": "assets/hunt/huong-chu-luyen-dan/hit.webp",
+   "frames": 18,
+   "cols": 6,
+   "cellW": 240,
+   "cellH": 220,
+   "pivot": 120,
+   "foot": 183,
+   "durationMs": 700,
+   "loop": false
+  },
+  "fall-die": {
+   "src": "assets/hunt/huong-chu-luyen-dan/fall-die.webp",
+   "frames": 18,
+   "cols": 6,
+   "cellW": 240,
+   "cellH": 220,
+   "pivot": 120,
+   "foot": 215,
+   "durationMs": 1600,
+   "loop": false
+  }
+ }
+}

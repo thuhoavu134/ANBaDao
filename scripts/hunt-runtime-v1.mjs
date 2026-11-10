@@ -102,15 +102,15 @@ if (existsSync(battleTarget)) {
   battle = replaceOnce(
     battle,
     '  function drawUnit(context, unit, time) {\n    if(unit.kitVersion===\'splus42-v2\')return drawSplusToken(context,unit,time);',
-    '  function drawUnit(context, unit, time) {\n    /*hv-hunt-draw*/\n    if (unit && typeof honVietDrawHuntUnit === "function") {\n      const huntForm = unit.huntForm || (typeof honVietInferHuntForm === "function" ? honVietInferHuntForm(unit) : null);\n      if (huntForm) {\n        unit.huntForm = huntForm;\n        honVietDrawHuntUnit(context, unit, time, { drawHud: drawUnitHud, reducedMotion: REDUCED_MOTION });\n        return;\n      }\n    }\n    if(unit.kitVersion===\'splus42-v2\')return drawSplusToken(context,unit,time);',
+    '  function drawUnit(context, unit, time) {\n    /*hv-hunt-draw*/\n    if (unit && typeof honVietDrawHuntUnit === "function") {\n      const huntForm = unit.huntForm || (typeof honVietInferHuntForm === "function" ? honVietInferHuntForm(unit) : null);\n      if (huntForm) {\n        unit.huntForm = huntForm;\n        honVietDrawHuntUnit(context, unit, time, { drawHud: drawUnitHud, reducedMotion: REDUCED_MOTION, target: unit.actionTarget || null, aoe: !!unit.actionAoe });\n        return;\n      }\n    }\n    if(unit.kitVersion===\'splus42-v2\')return drawSplusToken(context,unit,time);',
     'battle-drawUnit'
   );
 
   // hv-hunt-units: owner 10/11 - noc phun toi 6 vi tri, can vi tri doi hinh.
   {
-    const hookOld = '{ drawHud: drawUnitHud, reducedMotion: REDUCED_MOTION }';
+    const hookOld = '{ drawHud: drawUnitHud, reducedMotion: REDUCED_MOTION, target: unit.actionTarget || null, aoe: !!unit.actionAoe }';
     if (!battle.includes(hookOld)) throw new Error('hunt-runtime: hunt draw hook missing');
-    battle = battle.split(hookOld).join('{ drawHud: drawUnitHud, reducedMotion: REDUCED_MOTION, units }');
+    battle = battle.split(hookOld).join('{ drawHud: drawUnitHud, reducedMotion: REDUCED_MOTION, target: unit.actionTarget || null, aoe: !!unit.actionAoe, units }');
     // Boss co VFX clip (Flow) thi khong ve hieu ung bang code cua engine.
     const guards = [
       [/function launchWeaponEffect\(actor, target, action, battleId\) \{/, 'function launchWeaponEffect(actor, target, action, battleId) { if (typeof honVietHuntSkipFx === "function" && honVietHuntSkipFx(actor)) { playReleaseSound(actor); return sleep(TIMING.meleeRelease, battleId); }'],

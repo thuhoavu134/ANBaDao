@@ -10,7 +10,7 @@
     'be-an-special':'be-an/special.wav',
     'bach-ho-atk':'bach-ho/atk.wav','bach-ho-ultimate':'bach-ho/ultimate.wav',
     'hac-xa-atk':'hac-xa/atk.wav','hac-xa-ultimate':'hac-xa/ultimate.wav',
-    'thiet-giap-nguu-atk':'thiet-giap-nguu/atk.wav','thiet-giap-nguu-ultimate':'thiet-giap-nguu/ultimate.wav',
+    'thiet-giap-nguu-atk':'thiet-giap-nguu/atk.wav','thiet-giap-nguu-ultimate':'thiet-giap-nguu/ultimate.wav','huong-chu-luyen-dan-atk':'huong-chu-luyen-dan/atk.wav','huong-chu-luyen-dan-ultimate':'huong-chu-luyen-dan/ultimate.wav','khaos-atk':'khaos/basic.wav','khaos-ultimate':'khaos/ultimate.wav','son-tac-atk':'son-tac/atk.wav','thien-anh-atk':'thien-anh/atk.wav','thien-anh-ultimate':'thien-anh/ultimate.wav','thuy-trai-chua-atk':'thuy-trai-chua/atk.wav','thuy-trai-chua-ultimate':'thuy-trai-chua/ultimate.wav','son-tac-ultimate':'son-tac/ultimate.wav','ho-phap-ba-dau-atk':'ho-phap-ba-dau/atk.wav','ho-phap-ba-dau-ultimate':'ho-phap-ba-dau/ultimate.wav',
 'ulti-name':'ui/ulti-name.wav',  // tên tuyệt kỹ hiện ra (owner 2026-10-24)
     'co-nuong-pierce':'co-nuong/pierce.wav',
     'dinh-loi-atk':'dinh-loi/atk.m4a',

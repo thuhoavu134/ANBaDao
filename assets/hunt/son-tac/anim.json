@@ -1,0 +1,63 @@
+{
+ "schema": "hunt-boss-anim/v1",
+ "slug": "son-tac",
+ "form": "ca_voi_nuot_trang",
+ "source": "Google Flow Omni 1.2 Flash + kiemthe-animation-packager (uniform framing)",
+ "clips": {
+  "idle": {
+   "src": "assets/hunt/son-tac/idle.webp",
+   "frames": 30,
+   "cols": 6,
+   "cellW": 240,
+   "cellH": 220,
+   "pivot": 120,
+   "foot": 195,
+   "durationMs": 3042,
+   "loop": true
+  },
+  "atk": {
+   "src": "assets/hunt/son-tac/atk.webp",
+   "frames": 18,
+   "cols": 6,
+   "cellW": 312,
+   "cellH": 220,
+   "pivot": 156,
+   "foot": 195,
+   "durationMs": 1500,
+   "loop": false
+  },
+  "ultimate": {
+   "src": "assets/hunt/son-tac/ultimate.webp",
+   "frames": 18,
+   "cols": 6,
+   "cellW": 368,
+   "cellH": 220,
+   "pivot": 184,
+   "foot": 197,
+   "durationMs": 2600,
+   "loop": false
+  },
+  "hit": {
+   "src": "assets/hunt/son-tac/hit.webp",
+   "frames": 18,
+   "cols": 6,
+   "cellW": 240,
+   "cellH": 220,
+   "pivot": 120,
+   "foot": 195,
+   "durationMs": 700,
+   "loop": false
+  },
+  "fall-die": {
+   "src": "assets/hunt/son-tac/fall-die.webp",
+   "frames": 18,
+   "cols": 6,
+   "cellW": 384,
+   "cellH": 220,
+   "pivot": 192,
+   "foot": 216,
+   "durationMs": 1600,
+   "loop": false
+  }
+ }
+}

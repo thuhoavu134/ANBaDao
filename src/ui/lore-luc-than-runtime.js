@@ -352,13 +352,17 @@
     return Math.max(1, Math.round(Number(n || 0) * m));
   }
 
+  // Owner 10/11: boss cốt truyện KHÔNG được mạnh bằng boss thế giới (Săn Boss).
+  // Trần máu = 60% máu boss Săn Boss cùng chương (45000 x (1 + 0.35 x chương)).
+  const STORY_BOSS_HP_RATIO = 0.6;
+  function storyBossHpCap(ch) { return Math.round(45000 * (1 + 0.35 * ch) * STORY_BOSS_HP_RATIO); }
   function cloneWave(foes, ch, stage, tag) {
     const m = 1 + ch * 0.22 + stage * 0.05;
     return (foes || []).map((f, i) => ({
       ...f,
       id: tag + '_' + i,
       stats: {
-        hp: mul(f.stats && f.stats.hp, m),
+        hp: Math.min(mul(f.stats && f.stats.hp, m), storyBossHpCap(ch)),
         atk: mul(f.stats && f.stats.atk, m),
         def: mul(f.stats && f.stats.def, m * 0.92),
         spd: (f.stats && f.stats.spd) || 90
@@ -428,6 +432,12 @@
             ? templates[templates.length - 1]
             : (regularTemplates[s % Math.max(1, regularTemplates.length)] || fallback);
           DATA.encounters[id] = cloneWave(src, ch, s, id);
+          // Chuong 5 (Thien Anh) khong co boss trong du lieu goc -> them boss o tran cuoi.
+          if (ch === 4 && s === SEAL_STAGES - 1 && !DATA.encounters[id].some(f => /Thiên Ảnh/.test(f.name || ''))) {
+            const m = 1 + ch * 0.22 + s * 0.05;
+            DATA.encounters[id].splice(1, 0, { id: id + '_boss', name: 'Thiên Ảnh Hắc Liên', col: '#5a3a7a', row: 'front',
+              stats: { hp: mul(14000, m), atk: mul(260, m), def: mul(110, m * 0.92), spd: 96 }, skill: null });
+          }
         }
         out.push(id);
       }
@@ -512,10 +522,70 @@
     };
   }
 
+  // QA: ?qa=...&storyboss=1..6 mở thẳng trận boss cốt truyện chương đó (owner 10/11).
+  function qaStoryBattle() {
+    try {
+      const q = new URLSearchParams(location.search);
+      const n = Number(q.get('storyboss'));
+      if (!q.get('qa') || !(n >= 1 && n <= 6)) return;
+      const go = () => {
+        if (typeof P !== 'object' || !P || !P.heroes || typeof runBattle !== 'function') { setTimeout(go, 800); return; }
+        setTimeout(() => {
+          try { chapterBattleSequence(n - 1); ST.mode = 'campaign'; ST.chapterIdx = n - 1; runBattle('lt_seal_' + (n - 1) + '_17', () => {}); } catch (e) {}
+        }, 14000);
+      };
+      go();
+    } catch (e) {}
+  }
   patchData();
   expandSeals();
+
+  // QA (owner 10/11): ?qa=...&qaBoss=son-tac|ho-phap|thuy-trai|huong-chu|thien-anh|khaos
+  // -> vào thẳng trận boss cốt truyện của chương đó (chỉ khi có qa=).
+  (function qaBossJump() {
+    try {
+      const qs = new URLSearchParams(location.search);
+      const key = qs.get('qaBoss');
+      if (!qs.has('qa') || !key) return;
+      const CH = { 'son-tac': 0, 'ho-phap': 1, 'thuy-trai': 2, 'huong-chu': 3, 'thien-anh': 4, 'khaos': 5 };
+      const ch = CH[key];
+      if (ch === undefined) return;
+      let tries = 0;
+      const go = () => {
+        tries++;
+        const boot = document.getElementById('hvBoot');
+        const login = document.getElementById('hvLoginRoot');
+        const st = {
+          tries,
+          P: typeof P === 'object' && !!P && !!P.heroes,
+          rb: typeof runBattle === 'function',
+          seq: typeof chapterBattleSequence === 'function',
+          login: !!(login && login.offsetParent),
+          boot: !!(boot && boot.offsetParent && getComputedStyle(boot).display !== 'none')
+        };
+        window.__qaBossDbg = st;
+        const ready = st.P && st.rb && st.seq && !st.login && !st.boot;
+        if (!ready) { if (tries < 180) setTimeout(go, 1000); return; }
+        chapterBattleSequence(ch);
+        if (typeof ST === 'object') { ST.mode = 'campaign'; ST.chapterIdx = ch; }
+        // QA: doi hinh rong thi khong vao tran duoc -> tu dien 5 tuong dau.
+        try {
+          if (typeof P === 'object' && P && Array.isArray(P.squad) && P.squad.length < 1 && typeof DATA === 'object' && DATA.heroes) {
+            P.squad = Object.keys(DATA.heroes).slice(0, 5);
+          }
+        } catch (e) {}
+        const bid = 'lt_seal_' + ch + '_17';
+        window.__qaBossDbg = Object.assign({}, window.__qaBossDbg, { fired: bid, enc: !!(DATA.encounters && DATA.encounters[bid]) });
+        try { runBattle(bid, () => { if (typeof navTo === 'function') navTo('hub'); }); }
+        catch (e) { window.__qaBossDbg.err = String(e).slice(0, 200); }
+      };
+      setTimeout(go, 2500);
+    } catch (e) {}
+  })();
+
   boostCompete();
   paintBrand();
+  qaStoryBattle();
 
   const login = document.getElementById('hvLoginRoot');
   if (login && !login.querySelector('.hv-lore-title')) {

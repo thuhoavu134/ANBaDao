@@ -4791,6 +4791,10 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
   async function performAction(actor, action, target) {
     if (state.locked || state.mode !== "battle" || actor.id !== state.currentId || !Core.canUseAction(actor, action)) return;
     const battleId = state.battleId;
+    // hv-hunt-vfx-target: đòn thường chỉ trúng 1 mục tiêu, VFX cần biết đúng mục tiêu đó.
+    actor.actionTarget = target || null;
+    // hv-hunt-vfx-aoe: cờ AoE thật của đòn (engine: skillKind/ultimateKind = aoe|aoeBurn|aoeDebuff).
+    actor.actionAoe = /^aoe/.test(String(actionKind(actor, action) || ""));
     state.locked = true;
     state.selectedAction = action;
     clearTargets();
