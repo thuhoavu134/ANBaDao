@@ -1,0 +1,63 @@
+{
+ "schema": "hunt-boss-anim/v1",
+ "slug": "thiet-giap-nguu",
+ "form": "ca_voi_nuot_trang",
+ "source": "Google Flow Omni 1.2 Flash + kiemthe-animation-packager (uniform framing)",
+ "clips": {
+  "idle": {
+   "src": "assets/hunt/thiet-giap-nguu/idle.webp",
+   "frames": 30,
+   "cols": 6,
+   "cellW": 240,
+   "cellH": 220,
+   "pivot": 120,
+   "foot": 195,
+   "durationMs": 3042,
+   "loop": true
+  },
+  "atk": {
+   "src": "assets/hunt/thiet-giap-nguu/atk.webp",
+   "frames": 18,
+   "cols": 6,
+   "cellW": 392,
+   "cellH": 220,
+   "pivot": 196,
+   "foot": 197,
+   "durationMs": 1500,
+   "loop": false
+  },
+  "ultimate": {
+   "src": "assets/hunt/thiet-giap-nguu/ultimate.webp",
+   "frames": 18,
+   "cols": 6,
+   "cellW": 296,
+   "cellH": 220,
+   "pivot": 148,
+   "foot": 197,
+   "durationMs": 2600,
+   "loop": false
+  },
+  "hit": {
+   "src": "assets/hunt/thiet-giap-nguu/hit.webp",
+   "frames": 18,
+   "cols": 6,
+   "cellW": 240,
+   "cellH": 220,
+   "pivot": 120,
+   "foot": 195,
+   "durationMs": 700,
+   "loop": false
+  },
+  "fall-die": {
+   "src": "assets/hunt/thiet-giap-nguu/fall-die.webp",
+   "frames": 18,
+   "cols": 6,
+   "cellW": 312,
+   "cellH": 220,
+   "pivot": 156,
+   "foot": 216,
+   "durationMs": 1600,
+   "loop": false
+  }
+ }
+}

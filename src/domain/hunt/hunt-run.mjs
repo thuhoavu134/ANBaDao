@@ -145,7 +145,24 @@ export function normalizeHunt(src, day) {
   return next;
 }
 
+// QA: ?boss=ho|xa|nguu (hoặc id boss) để xem boss khác ngày (chỉ khi có qa=).
+function qaBossOverride() {
+  try {
+    const loc = (typeof window !== 'undefined') ? ((window.top && window.top.location) || window.location) : null;
+    if (!loc) return null;
+    const q = new URLSearchParams(loc.search);
+    if (!q.get('qa')) return null;
+    const want = String(q.get('boss') || '').toLowerCase();
+    if (!want) return null;
+    const alias = { ho: 'ca_voi_nuot_trang', xa: 'nhen_det_ac_mong', nguu: 'dong_ho_cat_vo', trau: 'dong_ho_cat_vo' };
+    const id = alias[want] || want;
+    return HUNT_BOSSES.find(b => b.id === id) || null;
+  } catch (e) { return null; }
+}
+
 export function todayBoss(day = 0) {
+  const qa = qaBossOverride();
+  if (qa) return qa;
   const n = HUNT_BOSSES.length;
   const idx = ((asInt(day, 0) % n) + n) % n;
   return HUNT_BOSSES[idx];

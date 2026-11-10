@@ -35,6 +35,8 @@ for f in files:
     fy = np.minimum(np.arange(h), np.arange(h)[::-1]) / (h * a.feather)
     fx = np.minimum(np.arange(w), np.arange(w)[::-1]) / (w * a.feather)
     al *= np.clip(fy, 0, 1)[:, None] * np.clip(fx, 0, 1)[None, :]
+    # xoa dau ✦ cua Flow/Veo o goc duoi phai (khong phai hieu ung)
+    al[int(h * 0.74):, int(w * 0.85):] = 0
     col = np.clip(im / np.maximum(al[..., None], 1e-3), 0, 1)
     rgba.append(np.dstack([col, al]))
 

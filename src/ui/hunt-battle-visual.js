@@ -199,7 +199,7 @@
 
   // Boss có animation thật (owner 09/11): idle / atk / ultimate / hit / fall-die từ Google Flow,
   // tách nền + cắt frame bằng kiemthe-animation-packager. Khung chọn theo unit.state của trận.
-  const HUNT_ANIM = Object.freeze({ "hac-xa": {"schema": "hunt-boss-anim/v1", "slug": "hac-xa", "form": "ca_voi_nuot_trang", "source": "Google Flow Omni 1.2 Flash + kiemthe-animation-packager (uniform framing)", "clips": {"idle": {"src": "assets/hunt/hac-xa/idle.webp", "frames": 30, "cols": 6, "cellW": 240, "cellH": 220, "pivot": 120, "foot": 208, "durationMs": 3042, "loop": true}, "atk": {"src": "assets/hunt/hac-xa/atk.webp", "frames": 18, "cols": 6, "cellW": 648, "cellH": 220, "pivot": 324, "foot": 207, "durationMs": 1500, "loop": false}, "ultimate": {"src": "assets/hunt/hac-xa/ultimate.webp", "frames": 18, "cols": 6, "cellW": 400, "cellH": 220, "pivot": 200, "foot": 207, "durationMs": 2600, "loop": false}, "hit": {"src": "assets/hunt/hac-xa/hit.webp", "frames": 18, "cols": 6, "cellW": 272, "cellH": 220, "pivot": 136, "foot": 207, "durationMs": 700, "loop": false}, "fall-die": {"src": "assets/hunt/hac-xa/fall-die.webp", "frames": 18, "cols": 6, "cellW": 264, "cellH": 220, "pivot": 132, "foot": 216, "durationMs": 1600, "loop": false}}}, 'bach-ho': {"schema": "hunt-boss-anim/v1", "source": "Google Flow Omni 1.2 Flash + kiemthe-animation-packager uniform", "clips": {"idle": {"src": "assets/hunt/bach-ho/idle.webp", "frames": 30, "cols": 6, "cellW": 456, "cellH": 220, "pivot": 228, "foot": 217, "durationMs": 3042, "loop": true}, "atk": {"src": "assets/hunt/bach-ho/atk.webp", "frames": 18, "cols": 6, "cellW": 592, "cellH": 220, "pivot": 296, "foot": 217, "durationMs": 1500, "loop": false}, "ultimate": {"src": "assets/hunt/bach-ho/ultimate.webp", "frames": 18, "cols": 6, "cellW": 504, "cellH": 220, "pivot": 252, "foot": 217, "durationMs": 2600, "loop": false}, "hit": {"src": "assets/hunt/bach-ho/hit.webp", "frames": 18, "cols": 6, "cellW": 424, "cellH": 220, "pivot": 212, "foot": 217, "durationMs": 700, "loop": false}, "fall-die": {"src": "assets/hunt/bach-ho/fall-die.webp", "frames": 18, "cols": 6, "cellW": 464, "cellH": 220, "pivot": 232, "foot": 217, "durationMs": 1600, "loop": false}}} });
+  const HUNT_ANIM = Object.freeze({ "thiet-giap-nguu": {"schema": "hunt-boss-anim/v1", "slug": "thiet-giap-nguu", "form": "ca_voi_nuot_trang", "source": "Google Flow Omni 1.2 Flash + kiemthe-animation-packager (uniform framing)", "clips": {"idle": {"src": "assets/hunt/thiet-giap-nguu/idle.webp", "frames": 30, "cols": 6, "cellW": 240, "cellH": 220, "pivot": 120, "foot": 195, "durationMs": 3042, "loop": true}, "atk": {"src": "assets/hunt/thiet-giap-nguu/atk.webp", "frames": 18, "cols": 6, "cellW": 392, "cellH": 220, "pivot": 196, "foot": 197, "durationMs": 1500, "loop": false}, "ultimate": {"src": "assets/hunt/thiet-giap-nguu/ultimate.webp", "frames": 18, "cols": 6, "cellW": 296, "cellH": 220, "pivot": 148, "foot": 197, "durationMs": 2600, "loop": false}, "hit": {"src": "assets/hunt/thiet-giap-nguu/hit.webp", "frames": 18, "cols": 6, "cellW": 240, "cellH": 220, "pivot": 120, "foot": 195, "durationMs": 700, "loop": false}, "fall-die": {"src": "assets/hunt/thiet-giap-nguu/fall-die.webp", "frames": 18, "cols": 6, "cellW": 312, "cellH": 220, "pivot": 156, "foot": 216, "durationMs": 1600, "loop": false}}}, "hac-xa": {"schema": "hunt-boss-anim/v1", "slug": "hac-xa", "form": "ca_voi_nuot_trang", "source": "Google Flow Omni 1.2 Flash + kiemthe-animation-packager (uniform framing)", "clips": {"idle": {"src": "assets/hunt/hac-xa/idle.webp", "frames": 30, "cols": 6, "cellW": 240, "cellH": 220, "pivot": 120, "foot": 208, "durationMs": 3042, "loop": true}, "atk": {"src": "assets/hunt/hac-xa/atk.webp", "frames": 18, "cols": 6, "cellW": 648, "cellH": 220, "pivot": 324, "foot": 207, "durationMs": 1500, "loop": false}, "ultimate": {"src": "assets/hunt/hac-xa/ultimate.webp", "frames": 18, "cols": 6, "cellW": 400, "cellH": 220, "pivot": 200, "foot": 207, "durationMs": 2600, "loop": false}, "hit": {"src": "assets/hunt/hac-xa/hit.webp", "frames": 18, "cols": 6, "cellW": 272, "cellH": 220, "pivot": 136, "foot": 207, "durationMs": 700, "loop": false}, "fall-die": {"src": "assets/hunt/hac-xa/fall-die.webp", "frames": 18, "cols": 6, "cellW": 264, "cellH": 220, "pivot": 132, "foot": 216, "durationMs": 1600, "loop": false}}}, 'bach-ho': {"schema": "hunt-boss-anim/v1", "source": "Google Flow Omni 1.2 Flash + kiemthe-animation-packager uniform", "clips": {"idle": {"src": "assets/hunt/bach-ho/idle.webp", "frames": 30, "cols": 6, "cellW": 456, "cellH": 220, "pivot": 228, "foot": 217, "durationMs": 3042, "loop": true}, "atk": {"src": "assets/hunt/bach-ho/atk.webp", "frames": 18, "cols": 6, "cellW": 592, "cellH": 220, "pivot": 296, "foot": 217, "durationMs": 1500, "loop": false}, "ultimate": {"src": "assets/hunt/bach-ho/ultimate.webp", "frames": 18, "cols": 6, "cellW": 504, "cellH": 220, "pivot": 252, "foot": 217, "durationMs": 2600, "loop": false}, "hit": {"src": "assets/hunt/bach-ho/hit.webp", "frames": 18, "cols": 6, "cellW": 424, "cellH": 220, "pivot": 212, "foot": 217, "durationMs": 700, "loop": false}, "fall-die": {"src": "assets/hunt/bach-ho/fall-die.webp", "frames": 18, "cols": 6, "cellW": 464, "cellH": 220, "pivot": 232, "foot": 217, "durationMs": 1600, "loop": false}}} });
   // Mỗi boss Săn Boss có bộ animation riêng. Boss nhận theo tên hiển thị
   // (tên do lớp lore đặt); boss chưa có atlas thì rơi về ảnh tĩnh.
   const BOSS_SLUGS = [
@@ -237,8 +237,8 @@
     // Tiếng đòn của boss (owner 09/11): mỗi lần vào state atk/ultimate chỉ phát 1 lần.
     if ((key === "atk" || key === "ultimate") && unit._huntSfxAt !== started) {
       unit._huntSfxAt = started;
-      const sfxForm = inferHuntForm(unit);
-      const cue = sfxForm === "ca_voi_nuot_trang" ? "bach-ho-" + key : "";
+      const slug = bossSlug(unit);
+      const cue = slug ? slug + "-" + key : "";
       if (cue && window.HonVietSfx) {
         try { void window.HonVietSfx.play(cue, { group: "combat" }); } catch (e) {}
       }
@@ -263,7 +263,7 @@
 
 
   // ---- VFX tu clip Flow (owner 10/11: VFX phai la clip, khong ve bang code) ----
-  const HUNT_VFX = Object.freeze({ 'hac-xa': { atk: { clip: {"src": "assets/hunt/hac-xa/vfx-spray.webp", "frames": 18, "cols": 6, "cellW": 463, "cellH": 260, "durationMs": 3920, "cx": 0.5, "cy": 0.5}, scale: 1.0 }, ultimate: { clip: {"src": "assets/hunt/hac-xa/vfx-spray.webp", "frames": 18, "cols": 6, "cellW": 463, "cellH": 260, "durationMs": 3920, "cx": 0.5, "cy": 0.5}, scale: 1.4 } } });
+  const HUNT_VFX = Object.freeze({ 'hac-xa': { atk: { clip: {"src": "assets/hunt/hac-xa/vfx-spray.webp", "frames": 18, "cols": 6, "cellW": 463, "cellH": 260, "durationMs": 3920, "cx": 0.5, "cy": 0.5}, scale: 1.0 }, ultimate: { clip: {"src": "assets/hunt/hac-xa/vfx-spray.webp", "frames": 18, "cols": 6, "cellW": 463, "cellH": 260, "durationMs": 3920, "cx": 0.5, "cy": 0.5}, scale: 1.4 } } , 'thiet-giap-nguu': { mode: 'impact', atk: { clip: {"src": "assets/hunt/thiet-giap-nguu/vfx-atk.webp", "frames": 18, "cols": 6, "cellW": 459, "cellH": 260, "durationMs": 3920, "cx": 0.493, "cy": 0.495}, scale: 1.0 }, ultimate: { clip: {"src": "assets/hunt/thiet-giap-nguu/vfx-ulti.webp", "frames": 18, "cols": 6, "cellW": 454, "cellH": 260, "durationMs": 3920, "cx": 0.492, "cy": 0.5}, scale: 1.35 } } });
   const huntVfxImages = {};
   function huntVfxImage(src) {
     if (!huntVfxImages[src]) { const im = new Image(); im.decoding = 'async'; im.src = src; huntVfxImages[src] = im; }
@@ -297,6 +297,12 @@
       if (!(p > 0) || p >= 1) return;
       const f = Math.max(0, Math.min(v.frames - 1, Math.floor(p * v.frames)));
       const tx = tg.x, ty = tg.y - 70;
+      if (HUNT_VFX[st.slug].mode === 'impact') {
+        // trau huc: vu no va cham dat ngay tren tung tuong
+        const h2 = 190 * spec.scale * (0.83 + (ty - 290) / 1500), w2 = h2 * v.cellW / v.cellH;
+        ctx.drawImage(img, (f % v.cols) * v.cellW, Math.floor(f / v.cols) * v.cellH, v.cellW, v.cellH, tx - w2 / 2, ty - h2 / 2, w2, h2);
+        return;
+      }
       const dx = tx - ox, dy = ty - oy, len = Math.hypot(dx, dy);
       if (len < 10) return;
       // clip phun tu PHAI sang TRAI: dau phun (mep phai) dat tai mieng, keo dai toi muc tieu

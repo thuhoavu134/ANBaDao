@@ -9,6 +9,8 @@
     'be-an-ultimate':'be-an/ultimate.wav',
     'be-an-special':'be-an/special.wav',
     'bach-ho-atk':'bach-ho/atk.wav','bach-ho-ultimate':'bach-ho/ultimate.wav',
+    'hac-xa-atk':'hac-xa/atk.wav','hac-xa-ultimate':'hac-xa/ultimate.wav',
+    'thiet-giap-nguu-atk':'thiet-giap-nguu/atk.wav','thiet-giap-nguu-ultimate':'thiet-giap-nguu/ultimate.wav',
 'ulti-name':'ui/ulti-name.wav',  // tên tuyệt kỹ hiện ra (owner 2026-10-24)
     'co-nuong-pierce':'co-nuong/pierce.wav',
     'dinh-loi-atk':'dinh-loi/atk.m4a',
