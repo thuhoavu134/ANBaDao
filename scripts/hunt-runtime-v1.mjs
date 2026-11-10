@@ -106,6 +106,23 @@ if (existsSync(battleTarget)) {
     'battle-drawUnit'
   );
 
+  // hv-hunt-units: owner 10/11 - noc phun toi 6 vi tri, can vi tri doi hinh.
+  {
+    const hookOld = '{ drawHud: drawUnitHud, reducedMotion: REDUCED_MOTION }';
+    if (!battle.includes(hookOld)) throw new Error('hunt-runtime: hunt draw hook missing');
+    battle = battle.split(hookOld).join('{ drawHud: drawUnitHud, reducedMotion: REDUCED_MOTION, units }');
+    // Boss co VFX clip (Flow) thi khong ve hieu ung bang code cua engine.
+    const guards = [
+      [/function launchWeaponEffect\(actor, target, action, battleId\) \{/, 'function launchWeaponEffect(actor, target, action, battleId) { if (typeof honVietHuntSkipFx === "function" && honVietHuntSkipFx(actor)) { playReleaseSound(actor); return sleep(TIMING.meleeRelease, battleId); }'],
+      [/function queueWeaponAnticipation\(actor, action\) \{/, 'function queueWeaponAnticipation(actor, action) { if (typeof honVietHuntSkipFx === "function" && honVietHuntSkipFx(actor)) return;'],
+      [/function queueChargeEffect\(actor, action\) \{/, 'function queueChargeEffect(actor, action) { if (typeof honVietHuntSkipFx === "function" && honVietHuntSkipFx(actor)) return;'],
+    ];
+    for (const [re, to] of guards) {
+      if (!re.test(battle)) throw new Error('hunt-runtime: fx guard anchor missing ' + re);
+      battle = battle.replace(re, to);
+    }
+  }
+
   const headEnd = battle.indexOf('</head>');
   if (headEnd < 0) throw new Error('Hunt battle head end missing');
   battle = battle.slice(0, headEnd)

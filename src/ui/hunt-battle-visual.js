@@ -197,6 +197,157 @@
     return true;
   }
 
+  // Boss có animation thật (owner 09/11): idle / atk / ultimate / hit / fall-die từ Google Flow,
+  // tách nền + cắt frame bằng kiemthe-animation-packager. Khung chọn theo unit.state của trận.
+  const HUNT_ANIM = Object.freeze({ "hac-xa": {"schema": "hunt-boss-anim/v1", "slug": "hac-xa", "form": "ca_voi_nuot_trang", "source": "Google Flow Omni 1.2 Flash + kiemthe-animation-packager (uniform framing)", "clips": {"idle": {"src": "assets/hunt/hac-xa/idle.webp", "frames": 30, "cols": 6, "cellW": 240, "cellH": 220, "pivot": 120, "foot": 208, "durationMs": 3042, "loop": true}, "atk": {"src": "assets/hunt/hac-xa/atk.webp", "frames": 18, "cols": 6, "cellW": 648, "cellH": 220, "pivot": 324, "foot": 207, "durationMs": 1500, "loop": false}, "ultimate": {"src": "assets/hunt/hac-xa/ultimate.webp", "frames": 18, "cols": 6, "cellW": 400, "cellH": 220, "pivot": 200, "foot": 207, "durationMs": 2600, "loop": false}, "hit": {"src": "assets/hunt/hac-xa/hit.webp", "frames": 18, "cols": 6, "cellW": 272, "cellH": 220, "pivot": 136, "foot": 207, "durationMs": 700, "loop": false}, "fall-die": {"src": "assets/hunt/hac-xa/fall-die.webp", "frames": 18, "cols": 6, "cellW": 264, "cellH": 220, "pivot": 132, "foot": 216, "durationMs": 1600, "loop": false}}}, 'bach-ho': {"schema": "hunt-boss-anim/v1", "source": "Google Flow Omni 1.2 Flash + kiemthe-animation-packager uniform", "clips": {"idle": {"src": "assets/hunt/bach-ho/idle.webp", "frames": 30, "cols": 6, "cellW": 456, "cellH": 220, "pivot": 228, "foot": 217, "durationMs": 3042, "loop": true}, "atk": {"src": "assets/hunt/bach-ho/atk.webp", "frames": 18, "cols": 6, "cellW": 592, "cellH": 220, "pivot": 296, "foot": 217, "durationMs": 1500, "loop": false}, "ultimate": {"src": "assets/hunt/bach-ho/ultimate.webp", "frames": 18, "cols": 6, "cellW": 504, "cellH": 220, "pivot": 252, "foot": 217, "durationMs": 2600, "loop": false}, "hit": {"src": "assets/hunt/bach-ho/hit.webp", "frames": 18, "cols": 6, "cellW": 424, "cellH": 220, "pivot": 212, "foot": 217, "durationMs": 700, "loop": false}, "fall-die": {"src": "assets/hunt/bach-ho/fall-die.webp", "frames": 18, "cols": 6, "cellW": 464, "cellH": 220, "pivot": 232, "foot": 217, "durationMs": 1600, "loop": false}}} });
+  // Mỗi boss Săn Boss có bộ animation riêng. Boss nhận theo tên hiển thị
+  // (tên do lớp lore đặt); boss chưa có atlas thì rơi về ảnh tĩnh.
+  const BOSS_SLUGS = [
+    [/Bạch Hổ/i, 'bach-ho'],
+    [/Hắc Xà/i, 'hac-xa'],
+    [/Thiết Giáp/i, 'thiet-giap-nguu']
+  ];
+  function bossSlug(unit) {
+    const name = String((unit && unit.name) || '');
+    for (const pair of BOSS_SLUGS) if (pair[0].test(name)) return pair[1];
+    const keys = Object.keys(HUNT_ANIM);
+    return keys.length ? keys[0] : null;
+  }
+
+  const huntAnimImages = {};
+  Object.keys(HUNT_ANIM).forEach((slugKey) => {
+    huntAnimImages[slugKey] = {};
+    Object.keys(HUNT_ANIM[slugKey].clips).forEach((key) => {
+      const img = new Image();
+      img.decoding = "async";
+      img.src = HUNT_ANIM[slugKey].clips[key].src;
+      huntAnimImages[slugKey][key] = img;
+    });
+  });
+  function huntAnimClip(unit, now) {
+    if ((unit.hp || 0) <= 0) {
+      if (!unit._huntFallAt) unit._huntFallAt = now;
+      return { key: "fall-die", t: now - unit._huntFallAt, hold: true };
+    }
+    unit._huntFallAt = 0;
+    const st = String(unit.state || "idle");
+    const key = st === "ultimate" ? "ultimate" : (st === "attack" || st === "skill1") ? "atk" : st === "hurt" ? "hit" : "idle";
+    if (key === "idle") return { key, t: now, loop: true };
+    const started = Number(unit.stateStarted) || now;
+    // Tiếng đòn của boss (owner 09/11): mỗi lần vào state atk/ultimate chỉ phát 1 lần.
+    if ((key === "atk" || key === "ultimate") && unit._huntSfxAt !== started) {
+      unit._huntSfxAt = started;
+      const sfxForm = inferHuntForm(unit);
+      const cue = sfxForm === "ca_voi_nuot_trang" ? "bach-ho-" + key : "";
+      if (cue && window.HonVietSfx) {
+        try { void window.HonVietSfx.play(cue, { group: "combat" }); } catch (e) {}
+      }
+    }
+    const span = Math.max(120, Number(unit.stateDuration) || 800);
+    return { key, p: Math.min(0.999, Math.max(0, (now - started) / span)) };
+  }
+  function huntAnimDebug() {
+    const out = { draws: 0, fails: 0, lastForm: null, lastKey: null, lastState: null, lastErr: null, imgs: {} };
+    Object.keys(huntAnimImages).forEach((f) => {
+      out.imgs[f] = {};
+      Object.keys(huntAnimImages[f]).forEach((k) => {
+        const i = huntAnimImages[f][k];
+        out.imgs[f][k] = { ok: !!(i.complete && i.naturalWidth), w: i.naturalWidth || 0 };
+      });
+    });
+    return Object.assign(out, window.__HVBossStats || {});
+  }
+  window.huntAnimDebug = huntAnimDebug;
+  window.__HVBossStats = { draws: 0, fails: 0 };
+
+
+
+  // ---- VFX tu clip Flow (owner 10/11: VFX phai la clip, khong ve bang code) ----
+  const HUNT_VFX = Object.freeze({ 'hac-xa': { atk: { clip: {"src": "assets/hunt/hac-xa/vfx-spray.webp", "frames": 18, "cols": 6, "cellW": 463, "cellH": 260, "durationMs": 3920, "cx": 0.5, "cy": 0.5}, scale: 1.0 }, ultimate: { clip: {"src": "assets/hunt/hac-xa/vfx-spray.webp", "frames": 18, "cols": 6, "cellW": 463, "cellH": 260, "durationMs": 3920, "cx": 0.5, "cy": 0.5}, scale: 1.4 } } });
+  const huntVfxImages = {};
+  function huntVfxImage(src) {
+    if (!huntVfxImages[src]) { const im = new Image(); im.decoding = 'async'; im.src = src; huntVfxImages[src] = im; }
+    return huntVfxImages[src];
+  }
+  // Noc phun toi 6 vi tri doi hinh nguoi choi (owner 10/11), ve bang clip Flow.
+  function huntVfxTargets(boss, units) {
+    const list = (Array.isArray(units) ? units : []).filter(u => u && u !== boss && u.team !== boss.team && (u.hp || 0) > 0 && Number.isFinite(u.x) && Number.isFinite(u.y));
+    return list.slice(0, 6);
+  }
+  // Vi tri mieng ran trong o atlas (ti le 0..1). Chinh o day neu lech.
+  const HUNT_MOUTH = { x: 0.14, y: 0.30, dx: -0.12, dy: -0.72 };
+  function drawHuntVfxTargets(ctx, unit, units) {
+    const st = unit && unit.__hvVfx;
+    if (!st) return;
+    const spec = HUNT_VFX[st.slug] && HUNT_VFX[st.slug][st.key];
+    if (!spec) return;
+    const v = spec.clip, img = huntVfxImage(v.src);
+    if (!img.complete || !img.naturalWidth) return;
+    const depth = 0.83 + ((unit.y || 520) - 290) / 1500;
+    // mieng ran theo dang dung idle (khong theo o atlas atk vi o ATK keo dai ngang)
+    const H = ((typeof innerWidth === "number" && innerWidth < 600) ? 200 : 270) * depth;
+    const ox = unit.x + HUNT_MOUTH.dx * H, oy = unit.y + HUNT_MOUTH.dy * H;
+    const targets = huntVfxTargets(unit, units);
+    const vs = window.__HVBossStats || (window.__HVBossStats = { draws: 0, fails: 0 });
+    vs.vfx = (vs.vfx || 0) + 1; vs.vfxTargets = targets.length; vs.vfxKey = st.key; vs.mouth = [Math.round(ox), Math.round(oy)]; vs.boss = [Math.round(unit.x), Math.round(unit.y), +depth.toFixed(3)]; vs.tg = targets.map(q => [Math.round(q.x), Math.round(q.y)]); try { const m = ctx.getTransform(); vs.tf = [m.a, m.d, m.e, m.f].map(n => +n.toFixed(2)); } catch (e) {}
+    ctx.save();
+    ctx.globalCompositeOperation = "lighter";
+    targets.forEach((tg, i) => {
+      const p = st.p - i * 0.03;                 // phun lan luot
+      if (!(p > 0) || p >= 1) return;
+      const f = Math.max(0, Math.min(v.frames - 1, Math.floor(p * v.frames)));
+      const tx = tg.x, ty = tg.y - 70;
+      const dx = tx - ox, dy = ty - oy, len = Math.hypot(dx, dy);
+      if (len < 10) return;
+      // clip phun tu PHAI sang TRAI: dau phun (mep phai) dat tai mieng, keo dai toi muc tieu
+      const w = len * 1.08, h = Math.min(w * v.cellH / v.cellW, 150) * spec.scale;
+      ctx.save();
+      ctx.translate(ox, oy);
+      ctx.rotate(Math.atan2(dy, dx) - Math.PI);
+      ctx.drawImage(img, (f % v.cols) * v.cellW, Math.floor(f / v.cols) * v.cellH, v.cellW, v.cellH, -w, -h / 2, w, h);
+      ctx.restore();
+    });
+    ctx.restore();
+  }
+
+  // Tat VFX ve bang code cua engine cho boss da co VFX clip (goi tu battle.html).
+  window.honVietHuntSkipFx = function (actor) { return !!(actor && HUNT_VFX[bossSlug(actor)]); };
+
+  function drawHuntAnim(ctx, unit, time, form) {
+    const slug = bossSlug(unit);
+    const spec = slug ? HUNT_ANIM[slug] : null;
+    if (!spec) return false;
+    const now = typeof performance !== "undefined" ? performance.now() : time;
+    const stats = window.__HVBossStats || (window.__HVBossStats = { draws: 0, fails: 0 });
+    stats.lastForm = form;
+    stats.lastState = String(unit.state || "idle");
+    let pick = huntAnimClip(unit, now);
+    let c = spec.clips[pick.key], img = huntAnimImages[slug][pick.key];
+    if (!c || !img || !img.complete || !img.naturalWidth) {
+      pick = { key: "idle", t: now, loop: true };
+      c = spec.clips.idle; img = huntAnimImages[slug].idle;
+      if (!img || !img.complete || !img.naturalWidth) { stats.fails += 1; return false; }
+    }
+    let frame;
+    if (pick.loop) frame = Math.floor((pick.t % c.durationMs) / c.durationMs * c.frames);
+    else if (pick.hold) frame = Math.min(c.frames - 1, Math.floor(pick.t / c.durationMs * c.frames));
+    else frame = Math.floor(pick.p * c.frames);
+    frame = Math.max(0, Math.min(c.frames - 1, frame));
+    const mobile = typeof innerWidth === "number" && innerWidth < 600;
+    const targetH = mobile ? 200 : 270;
+    const scale = targetH / c.cellH;
+    ctx.save();
+    ctx.scale(scale, scale);
+    stats.draws += 1;
+    stats.lastKey = pick.key;
+    ctx.drawImage(img, (frame % c.cols) * c.cellW, Math.floor(frame / c.cols) * c.cellH, c.cellW, c.cellH, -c.pivot, -c.foot, c.cellW, c.cellH);
+    unit.__hvVfx = pick.loop ? null : { slug, key: pick.key, p: Math.max(0, Math.min(1, pick.hold ? pick.t / c.durationMs : pick.p)),
+      // mieng ran: phia trai-tren cua o (boss quay trai), toa do tuong doi chan
+      mx: (-c.pivot + c.cellW * HUNT_MOUTH.x) * scale, my: (-c.foot + c.cellH * HUNT_MOUTH.y) * scale };
+    ctx.restore();
+    return true;
+  }
+
   function honVietDrawHuntUnit(context, unit, time, hooks) {
     const form = inferHuntForm(unit);
     if (!form) return false;
@@ -205,20 +356,24 @@
     const depthScale = 0.83 + ((unit.y || 520) - 290) / 1500;
     const shadowW = form === "crystal" ? 22 : 62;
     context.save();
-    context.globalAlpha = alive ? 1 : 0.35;
+    const hasAnim = !!HUNT_ANIM[bossSlug(unit)];
+    context.globalAlpha = (alive || hasAnim) ? 1 : 0.35;
     context.fillStyle = "rgba(0,0,0,.38)";
     context.beginPath();
     context.ellipse(unit.x, unit.y + 8, shadowW * depthScale, (form === "crystal" ? 9 : 18) * depthScale, 0, 0, Math.PI * 2);
     context.fill();
     context.translate(unit.x, unit.y);
-    if (unit.team === "enemy") context.scale(-1, 1);
+    // Atlas animation của boss đã vẽ sẵn quay mặt sang trái (hướng về đội hình
+    // người chơi) nên KHÔNG lật nữa; chỉ lật ảnh tĩnh legacy (owner 09/11).
+    if (unit.team === "enemy" && !hasAnim) context.scale(-1, 1);
     context.scale(depthScale, depthScale);
-    if (!drawHuntArt(context, unit, time, form)) {
+    if (!drawHuntAnim(context, unit, time, form) && !drawHuntArt(context, unit, time, form)) {
       const scale = ((typeof innerWidth === "number" && innerWidth < 600) ? 0.64 : 0.86) * huntScaleFor(unit, form);
       context.scale(scale, scale);
       drawHuntFallback(context, unit, time, form);
     }
     context.restore();
+    drawHuntVfxTargets(context, unit, hooks && hooks.units);
     if (form !== "crystal") {
       context.save();
       context.globalAlpha = alive ? 0.95 : 0.4;
@@ -240,7 +395,8 @@
   window.honVietInferHuntForm = inferHuntForm;
   window.honVietDrawHuntUnit = honVietDrawHuntUnit;
   window.honVietHuntVisual = Object.freeze({
-    version: 3,
+    version: 4,
+    animated: Object.freeze(Object.keys(HUNT_ANIM)),
     forms: Object.freeze(["crystal", "ca_voi_nuot_trang", "nhen_det_ac_mong", "dong_ho_cat_vo"]),
     art: HUNT_ART
   });

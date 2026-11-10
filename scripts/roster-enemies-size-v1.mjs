@@ -90,7 +90,7 @@ export function patchRosterBattle(html, registrations) {
   html = html.slice(0, unitStart) + normalizedUnit + html.slice(unitEnd);
   // Old hunt inferencer can recognize legacy instance IDs even after roster conversion.
   html = replaceOne(html, 'if (unit && typeof honVietDrawHuntUnit === "function") {',
-    'if (unit && !unit.sourceId && typeof honVietDrawHuntUnit === "function") {');
+    'if (unit && (!unit.sourceId || unit.huntForm || (typeof honVietInferHuntForm === "function" && honVietInferHuntForm(unit))) && typeof honVietDrawHuntUnit === "function") {');
   return html;
 }
 export function patchRosterEnemySlots(host) {
@@ -107,11 +107,11 @@ export async function installRosterEnemiesSize(root) {
   writeFileSync(battlePath, patchRosterBattle(readFileSync(battlePath, 'utf8'), registrations));
   const hostPath = join(out, 'index.html'); let host = readFileSync(hostPath, 'utf8');
   const domain = readFileSync(join(root, 'src/domain/combat/roster-enemies.mjs'), 'utf8').replace(/^export /gm, '');
-  const rosterRuntime = `\n/* HV_ROSTER_ENEMIES_V1 */\n${domain}\nfunction gameRosterEnemy(def,seed){return rosterEnemy(def,Object.fromEntries(OFFICIAL_ROSTER_12_IDS.filter(id=>DATA.heroes[id]).map(id=>[id,DATA.heroes[id]])),seed);}\n`;
+  const rosterRuntime = `\n/* HV_ROSTER_ENEMIES_V1 */\n${domain}\nfunction gameRosterEnemy(def,seed){if(def&&def.id==='huntboss'&&def.huntForm)return def;/* boss Săn Boss giữ hình riêng (owner 09/11) */return rosterEnemy(def,Object.fromEntries(OFFICIAL_ROSTER_12_IDS.filter(id=>DATA.heroes[id]).map(id=>[id,DATA.heroes[id]])),seed);}\n`;
   host = replaceOne(host, 'function makeCombatant(def, side, isHero){ const st=def.stats;', rosterRuntime + 'function makeCombatant(def, side, isHero){ if(side===\'foe\')def=gameRosterEnemy(def); const st=def.stats;');
   host = replaceOne(host, 'sourceHeroId:def.sourceHeroId||def.heroId||def.id, name:def.name,', 'sourceHeroId:def.sourceHeroId||def.heroId||def.id, rosterEnemy:!!def.rosterEnemy, name:def.name,');
   host = replaceOne(host, 'progression: heroBattleProgression(sourceId),', 'progression: team === "enemy" && combatant.rosterEnemy ? null : heroBattleProgression(sourceId),');
-  host = replaceOne(host, 'huntForm: combatant.huntForm || null,', 'huntForm: null,');
+  host = replaceOne(host, 'huntForm: combatant.huntForm || null,', 'huntForm: combatant.rosterEnemy ? null : (combatant.huntForm || null),');
   host = replaceOne(host, 'level: combatant.lv||heroLevel(sourceId)||1,', 'level: combatant.lv||(combatant.rosterEnemy?1:heroLevel(sourceId))||1,');
   host = replaceOne(host, 'stars: combatant.stars||heroStars(sourceId)||1,', 'stars: combatant.stars||(combatant.rosterEnemy?1:heroStars(sourceId))||1,');
   host = replaceOne(host, 'const enemies = encounter.map(enemy => ({', 'const enemies = encounter.map((enemy,index) => gameRosterEnemy(enemy,sceneState.checkpoint.battleId+\':\'+index)).map(enemy => ({');

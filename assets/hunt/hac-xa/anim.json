@@ -1,0 +1,63 @@
+{
+ "schema": "hunt-boss-anim/v1",
+ "slug": "hac-xa",
+ "form": "ca_voi_nuot_trang",
+ "source": "Google Flow Omni 1.2 Flash + kiemthe-animation-packager (uniform framing)",
+ "clips": {
+  "idle": {
+   "src": "assets/hunt/hac-xa/idle.webp",
+   "frames": 30,
+   "cols": 6,
+   "cellW": 240,
+   "cellH": 220,
+   "pivot": 120,
+   "foot": 208,
+   "durationMs": 3042,
+   "loop": true
+  },
+  "atk": {
+   "src": "assets/hunt/hac-xa/atk.webp",
+   "frames": 18,
+   "cols": 6,
+   "cellW": 648,
+   "cellH": 220,
+   "pivot": 324,
+   "foot": 207,
+   "durationMs": 1500,
+   "loop": false
+  },
+  "ultimate": {
+   "src": "assets/hunt/hac-xa/ultimate.webp",
+   "frames": 18,
+   "cols": 6,
+   "cellW": 400,
+   "cellH": 220,
+   "pivot": 200,
+   "foot": 207,
+   "durationMs": 2600,
+   "loop": false
+  },
+  "hit": {
+   "src": "assets/hunt/hac-xa/hit.webp",
+   "frames": 18,
+   "cols": 6,
+   "cellW": 272,
+   "cellH": 220,
+   "pivot": 136,
+   "foot": 207,
+   "durationMs": 700,
+   "loop": false
+  },
+  "fall-die": {
+   "src": "assets/hunt/hac-xa/fall-die.webp",
+   "frames": 18,
+   "cols": 6,
+   "cellW": 264,
+   "cellH": 220,
+   "pivot": 132,
+   "foot": 216,
+   "durationMs": 1600,
+   "loop": false
+  }
+ }
+}

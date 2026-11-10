@@ -1,0 +1,61 @@
+{
+ "schema": "hunt-boss-anim/v1",
+ "source": "Google Flow Omni 1.2 Flash + kiemthe-animation-packager uniform",
+ "clips": {
+  "idle": {
+   "src": "assets/hunt/bach-ho/idle.webp",
+   "frames": 30,
+   "cols": 6,
+   "cellW": 456,
+   "cellH": 220,
+   "pivot": 228,
+   "foot": 217,
+   "durationMs": 3042,
+   "loop": true
+  },
+  "atk": {
+   "src": "assets/hunt/bach-ho/atk.webp",
+   "frames": 18,
+   "cols": 6,
+   "cellW": 592,
+   "cellH": 220,
+   "pivot": 296,
+   "foot": 217,
+   "durationMs": 1500,
+   "loop": false
+  },
+  "ultimate": {
+   "src": "assets/hunt/bach-ho/ultimate.webp",
+   "frames": 18,
+   "cols": 6,
+   "cellW": 504,
+   "cellH": 220,
+   "pivot": 252,
+   "foot": 217,
+   "durationMs": 2600,
+   "loop": false
+  },
+  "hit": {
+   "src": "assets/hunt/bach-ho/hit.webp",
+   "frames": 18,
+   "cols": 6,
+   "cellW": 424,
+   "cellH": 220,
+   "pivot": 212,
+   "foot": 217,
+   "durationMs": 700,
+   "loop": false
+  },
+  "fall-die": {
+   "src": "assets/hunt/bach-ho/fall-die.webp",
+   "frames": 18,
+   "cols": 6,
+   "cellW": 464,
+   "cellH": 220,
+   "pivot": 232,
+   "foot": 217,
+   "durationMs": 1600,
+   "loop": false
+  }
+ }
+}
