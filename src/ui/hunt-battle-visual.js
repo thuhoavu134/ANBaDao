@@ -263,7 +263,7 @@
       }
     }
     const span = Math.max(120, Number(unit.stateDuration) || 800);
-    return { key, span, ms: Math.max(0, now - started), p: Math.min(0.999, Math.max(0, (now - started) / span)) };
+    return { key, span, started, ms: Math.max(0, now - started), p: Math.min(0.999, Math.max(0, (now - started) / span)) };
   }
   function huntAnimDebug() {
     const out = { draws: 0, fails: 0, lastForm: null, lastKey: null, lastState: null, lastErr: null, imgs: {} };
@@ -282,7 +282,15 @@
 
 
   // ---- VFX tu clip Flow (owner 10/11: VFX phai la clip, khong ve bang code) ----
-  const HUNT_VFX = Object.freeze({ 'khaos': { atk: { clip: {"src": "assets/hunt/khaos/vfx-atk.webp", "frames": 18, "cols": 6, "cellW": 462, "cellH": 260, "durationMs": 3920, "cx": 0.499, "cy": 0.501}, scale: 1.0 }, ultimate: { clip: {"src": "assets/hunt/khaos/vfx-ulti.webp", "frames": 18, "cols": 6, "cellW": 388, "cellH": 260, "durationMs": 3920, "cx": 0.499, "cy": 0.5}, scale: 1.3 }, mode: 'impact' }, 'huong-chu-luyen-dan': { atk: { clip: {"src": "assets/hunt/huong-chu-luyen-dan/vfx-atk.webp", "frames": 18, "cols": 6, "cellW": 453, "cellH": 260, "durationMs": 3920, "cx": 0.51, "cy": 0.5}, scale: 1.0 }, ultimate: { clip: {"src": "assets/hunt/huong-chu-luyen-dan/vfx-ulti.webp", "frames": 18, "cols": 6, "cellW": 462, "cellH": 260, "durationMs": 3920, "cx": 0.5, "cy": 0.5}, scale: 1.3 }, mode: 'impact' }, 'thien-anh': { atk: { clip: {"src": "assets/hunt/thien-anh/vfx-atk.webp", "frames": 18, "cols": 6, "cellW": 365, "cellH": 260, "durationMs": 3920, "cx": 0.512, "cy": 0.501}, scale: 1.0 }, ultimate: { clip: {"src": "assets/hunt/thien-anh/vfx-ulti.webp", "frames": 18, "cols": 6, "cellW": 455, "cellH": 260, "durationMs": 3920, "cx": 0.501, "cy": 0.5}, scale: 1.3 }, mode: 'impact' }, 'thuy-trai-chua': { atk: { clip: {"src": "assets/hunt/thuy-trai-chua/vfx-atk.webp", "frames": 18, "cols": 6, "cellW": 434, "cellH": 260, "durationMs": 3920, "cx": 0.486, "cy": 0.512}, scale: 1.0 }, ultimate: { clip: {"src": "assets/hunt/thuy-trai-chua/vfx-ulti.webp", "frames": 18, "cols": 6, "cellW": 456, "cellH": 260, "durationMs": 3920, "cx": 0.491, "cy": 0.522}, scale: 1.3 }, mode: 'impact' }, 'ho-phap-ba-dau': { atk: { clip: {"src": "assets/hunt/ho-phap-ba-dau/vfx-atk.webp", "frames": 18, "cols": 6, "cellW": 462, "cellH": 260, "durationMs": 3920, "cx": 0.5, "cy": 0.5}, scale: 1.0 }, ultimate: { clip: {"src": "assets/hunt/ho-phap-ba-dau/vfx-ulti.webp", "frames": 18, "cols": 6, "cellW": 462, "cellH": 260, "durationMs": 3920, "cx": 0.5, "cy": 0.5}, scale: 1.3 }, mode: 'impact' }, 'son-tac': { atk: { clip: {"src": "assets/hunt/son-tac/vfx-atk.webp", "frames": 18, "cols": 6, "cellW": 448, "cellH": 260, "durationMs": 3920, "cx": 0.495, "cy": 0.5}, scale: 1.0 }, ultimate: { clip: {"src": "assets/hunt/son-tac/vfx-ulti.webp", "frames": 18, "cols": 6, "cellW": 472, "cellH": 260, "durationMs": 3920, "cx": 0.496, "cy": 0.486}, scale: 1.3 }, mode: 'impact' }, 'hac-xa': { atk: { clip: {"src": "assets/hunt/hac-xa/vfx-spray.webp", "frames": 18, "cols": 6, "cellW": 463, "cellH": 260, "durationMs": 3920, "cx": 0.5, "cy": 0.5}, scale: 1.0 }, ultimate: { clip: {"src": "assets/hunt/hac-xa/vfx-spray.webp", "frames": 18, "cols": 6, "cellW": 463, "cellH": 260, "durationMs": 3920, "cx": 0.5, "cy": 0.5}, scale: 1.4 } } , 'thiet-giap-nguu': { mode: 'impact', atk: { clip: {"src": "assets/hunt/thiet-giap-nguu/vfx-atk.webp", "frames": 18, "cols": 6, "cellW": 459, "cellH": 260, "durationMs": 3920, "cx": 0.493, "cy": 0.495}, scale: 1.0 }, ultimate: { clip: {"src": "assets/hunt/thiet-giap-nguu/vfx-ulti.webp", "frames": 18, "cols": 6, "cellW": 454, "cellH": 260, "durationMs": 3920, "cx": 0.492, "cy": 0.5}, scale: 1.35 } } });
+  // ENTRY MAU (owner 10/11): boss khaos / ultimate dung 4 LOP CLIP chong nhau.
+  // Dang tam dung lai clip Ultimate dang co (assets/hunt/khaos/vfx-ulti.webp) voi
+  // scale/alpha khac nhau de chay thu ngay; khi co clip rieng (sky/fall/impact/dust)
+  // thi chi thay truong "src" (va cellW/cellH neu clip khac kich thuoc).
+  const HV_KHAOS_SKY = Object.freeze({"src": "assets/hunt/khaos/vfx-sky.webp", "frames": 18, "cols": 6, "cellW": 455, "cellH": 260, "durationMs": 3920, "cx": 0.507, "cy": 0.5});
+  const HV_KHAOS_FALL = Object.freeze({"src": "assets/hunt/khaos/vfx-fall.webp", "frames": 18, "cols": 6, "cellW": 455, "cellH": 260, "durationMs": 3920, "cx": 0.506, "cy": 0.5});
+  const HV_KHAOS_IMPACT = Object.freeze({"src": "assets/hunt/khaos/vfx-nova.webp", "frames": 18, "cols": 6, "cellW": 462, "cellH": 260, "durationMs": 3920, "cx": 0.5, "cy": 0.5});
+  const HV_KHAOS_DUST = Object.freeze({"src": "assets/hunt/khaos/vfx-dust.webp", "frames": 18, "cols": 6, "cellW": 417, "cellH": 260, "durationMs": 3920, "cx": 0.507, "cy": 0.5});
+  const HUNT_VFX = Object.freeze({ 'khaos': { atk: { clip: {"src": "assets/hunt/khaos/vfx-atk.webp", "frames": 18, "cols": 6, "cellW": 462, "cellH": 260, "durationMs": 3920, "cx": 0.499, "cy": 0.501}, scale: 1.0 }, ultimate: { layers: [ { name: 'sky', clip: HV_KHAOS_SKY, anchor: 'sky', perTarget: false, startMs: 0, scale: 1.2, alpha: 1 }, { name: 'fall', clip: HV_KHAOS_FALL, anchor: 'targetTop', perTarget: true, startMs: 200, staggerMs: 70, fromSky: true, fallMs: 520, scale: 1.0 }, { name: 'impact', clip: HV_KHAOS_IMPACT, anchor: 'feet', perTarget: true, startMs: 650, staggerMs: 70, scale: 0.9 }, { name: 'dust', clip: HV_KHAOS_DUST, anchor: 'feet', perTarget: true, startMs: 900, staggerMs: 70, scale: 1.1, alpha: 0.75 } ], shake: { atMs: 650, power: 5, ms: 200 }, mode: 'impact', scale: 1.3 }, mode: 'impact' }, 'huong-chu-luyen-dan': { atk: { clip: {"src": "assets/hunt/huong-chu-luyen-dan/vfx-atk.webp", "frames": 18, "cols": 6, "cellW": 453, "cellH": 260, "durationMs": 3920, "cx": 0.51, "cy": 0.5}, scale: 1.0 }, ultimate: { layers: [ { name: 'cauldron', clip: {"src": "assets/hunt/huong-chu-luyen-dan/vfx-sky.webp", "frames": 18, "cols": 6, "cellW": 286, "cellH": 260, "durationMs": 3920, "cx": 0.511, "cy": 0.469}, anchor: 'boss', perTarget: false, startMs: 0, scale: 0.85 }, { name: 'spit', clip: {"src": "assets/hunt/huong-chu-luyen-dan/vfx-fall.webp", "frames": 18, "cols": 6, "cellW": 458, "cellH": 260, "durationMs": 3920, "cx": 0.504, "cy": 0.5}, anchor: 'feet', perTarget: true, motion: 'arc', startMs: 280, staggerMs: 110, travelMs: 520, arcH: 280, scale: 0.7 }, { name: 'burst', clip: {"src": "assets/hunt/huong-chu-luyen-dan/vfx-nova.webp", "frames": 18, "cols": 6, "cellW": 432, "cellH": 260, "durationMs": 3920, "cx": 0.479, "cy": 0.5}, anchor: 'feet', perTarget: true, startMs: 780, staggerMs: 110, scale: 0.85 }, { name: 'gas', clip: {"src": "assets/hunt/huong-chu-luyen-dan/vfx-dust.webp", "frames": 18, "cols": 6, "cellW": 354, "cellH": 260, "durationMs": 3920, "cx": 0.495, "cy": 0.5}, anchor: 'feet', perTarget: false, motion: 'sweep', startMs: 1050, travelMs: 1400, sweepW: 640, scale: 1.35, alpha: 0.7 } ], shake: { atMs: 800, power: 5, ms: 220 }, mode: 'impact', scale: 1.3 }, impactClip: {"src": "assets/hunt/huong-chu-luyen-dan/vfx-nova.webp", "frames": 18, "cols": 6, "cellW": 432, "cellH": 260, "durationMs": 3920, "cx": 0.479, "cy": 0.5}, mode: 'impact' }, 'thien-anh': { atk: { clip: {"src": "assets/hunt/thien-anh/vfx-atk.webp", "frames": 18, "cols": 6, "cellW": 365, "cellH": 260, "durationMs": 3920, "cx": 0.512, "cy": 0.501}, scale: 1.0 }, ultimate: { clip: {"src": "assets/hunt/thien-anh/vfx-ulti.webp", "frames": 18, "cols": 6, "cellW": 455, "cellH": 260, "durationMs": 3920, "cx": 0.501, "cy": 0.5}, scale: 1.3 }, mode: 'impact' }, 'thuy-trai-chua': { atk: { clip: {"src": "assets/hunt/thuy-trai-chua/vfx-atk.webp", "frames": 18, "cols": 6, "cellW": 434, "cellH": 260, "durationMs": 3920, "cx": 0.486, "cy": 0.512}, scale: 1.0 }, ultimate: { layers: [ { name: 'whirl', clip: {"src": "assets/hunt/thuy-trai-chua/vfx-sky.webp", "frames": 18, "cols": 6, "cellW": 365, "cellH": 260, "durationMs": 3920, "cx": 0.41, "cy": 0.505}, anchor: 'boss', perTarget: false, startMs: 0, scale: 1.0 }, { name: 'wave', clip: {"src": "assets/hunt/thuy-trai-chua/vfx-nova.webp", "frames": 18, "cols": 6, "cellW": 466, "cellH": 260, "durationMs": 3920, "cx": 0.501, "cy": 0.49}, anchor: 'feet', perTarget: false, motion: 'sweep', startMs: 300, travelMs: 900, sweepW: 560, scale: 1.4, alpha: 0.9 }, { name: 'geyser', clip: {"src": "assets/hunt/thuy-trai-chua/vfx-fall.webp", "frames": 18, "cols": 6, "cellW": 461, "cellH": 260, "durationMs": 3920, "cx": 0.501, "cy": 0.5}, anchor: 'feet', perTarget: true, order: 'nearBoss', motion: 'rise', startMs: 850, staggerMs: 95, travelMs: 380, riseH: 200, rotate: 3.14159, scale: 1.05 }, { name: 'mist', clip: {"src": "assets/hunt/thuy-trai-chua/vfx-dust.webp", "frames": 18, "cols": 6, "cellW": 497, "cellH": 260, "durationMs": 3920, "cx": 0.509, "cy": 0.454}, anchor: 'feet', perTarget: true, startMs: 1250, staggerMs: 95, scale: 1.0, alpha: 0.65 } ], shake: { atMs: 900, power: 6, ms: 220 }, mode: 'impact', scale: 1.3 }, impactClip: {"src": "assets/hunt/thuy-trai-chua/vfx-nova.webp", "frames": 18, "cols": 6, "cellW": 466, "cellH": 260, "durationMs": 3920, "cx": 0.501, "cy": 0.49}, mode: 'impact' }, 'ho-phap-ba-dau': { atk: { clip: {"src": "assets/hunt/ho-phap-ba-dau/vfx-atk.webp", "frames": 18, "cols": 6, "cellW": 462, "cellH": 260, "durationMs": 3920, "cx": 0.5, "cy": 0.5}, scale: 1.0 }, ultimate: { layers: [ { name: 'wheels', clip: {"src": "assets/hunt/ho-phap-ba-dau/vfx-sky.webp", "frames": 18, "cols": 6, "cellW": 416, "cellH": 260, "durationMs": 3920, "cx": 0.504, "cy": 0.5}, anchor: 'center', perTarget: false, motion: 'orbit', count: 3, startMs: 0, travelMs: 1100, convergeMs: 1100, radius: 250, spin: 3.4, scale: 0.65 }, { name: 'vajra', clip: {"src": "assets/hunt/ho-phap-ba-dau/vfx-fall.webp", "frames": 18, "cols": 6, "cellW": 460, "cellH": 260, "durationMs": 3920, "cx": 0.502, "cy": 0.5}, anchor: 'center', perTarget: false, motion: 'fall', startMs: 950, travelMs: 280, scale: 1.3 }, { name: 'nova', clip: {"src": "assets/hunt/ho-phap-ba-dau/vfx-nova.webp", "frames": 18, "cols": 6, "cellW": 457, "cellH": 260, "durationMs": 3920, "cx": 0.495, "cy": 0.5}, anchor: 'center', perTarget: false, startMs: 1200, scale: 1.9 }, { name: 'embers', clip: {"src": "assets/hunt/ho-phap-ba-dau/vfx-dust.webp", "frames": 18, "cols": 6, "cellW": 397, "cellH": 260, "durationMs": 3920, "cx": 0.434, "cy": 0.491}, anchor: 'feet', perTarget: true, order: 'farBoss', startMs: 1350, staggerMs: 60, scale: 0.95, alpha: 0.8 } ], shake: { atMs: 1220, power: 7, ms: 220 }, mode: 'impact', scale: 1.3 }, impactClip: {"src": "assets/hunt/ho-phap-ba-dau/vfx-nova.webp", "frames": 18, "cols": 6, "cellW": 457, "cellH": 260, "durationMs": 3920, "cx": 0.495, "cy": 0.5}, mode: 'impact' }, 'son-tac': { atk: { clip: {"src": "assets/hunt/son-tac/vfx-atk.webp", "frames": 18, "cols": 6, "cellW": 448, "cellH": 260, "durationMs": 3920, "cx": 0.495, "cy": 0.5}, scale: 1.0 }, ultimate: { clip: {"src": "assets/hunt/son-tac/vfx-ulti.webp", "frames": 18, "cols": 6, "cellW": 472, "cellH": 260, "durationMs": 3920, "cx": 0.496, "cy": 0.486}, scale: 1.3 }, mode: 'impact' }, 'hac-xa': { atk: { clip: {"src": "assets/hunt/hac-xa/vfx-spray.webp", "frames": 18, "cols": 6, "cellW": 463, "cellH": 260, "durationMs": 3920, "cx": 0.5, "cy": 0.5}, scale: 1.0 }, ultimate: { clip: {"src": "assets/hunt/hac-xa/vfx-spray.webp", "frames": 18, "cols": 6, "cellW": 463, "cellH": 260, "durationMs": 3920, "cx": 0.5, "cy": 0.5}, scale: 1.4 } } , 'thiet-giap-nguu': { mode: 'impact', atk: { clip: {"src": "assets/hunt/thiet-giap-nguu/vfx-atk.webp", "frames": 18, "cols": 6, "cellW": 459, "cellH": 260, "durationMs": 3920, "cx": 0.493, "cy": 0.495}, scale: 1.0 }, ultimate: { clip: {"src": "assets/hunt/thiet-giap-nguu/vfx-ulti.webp", "frames": 18, "cols": 6, "cellW": 454, "cellH": 260, "durationMs": 3920, "cx": 0.492, "cy": 0.5}, scale: 1.35 } } });
   const huntVfxImages = {};
   function huntVfxImage(src) {
     if (!huntVfxImages[src]) { const im = new Image(); im.decoding = 'async'; im.src = src; huntVfxImages[src] = im; }
@@ -307,11 +315,225 @@
   }
   // Vi tri mieng ran trong o atlas (ti le 0..1). Chinh o day neu lech.
   const HUNT_MOUTH = { x: 0.14, y: 0.30, dx: -0.12, dy: -0.72 };
+  // ---- VFX nhieu lop (owner 10/11): chi XEP LOP clip Flow co san ----
+  // Khong ve hieu ung bang code; chi dat vi tri, nhan ban, doi alpha/scale va rung khung.
+  function hvVisibleWorldRect(ctx) {
+    try {
+      const m = ctx.getTransform();
+      const det = m.a * m.d - m.b * m.c;
+      if (!det) return null;
+      const W = ctx.canvas ? ctx.canvas.width : 0, H = ctx.canvas ? ctx.canvas.height : 0;
+      if (!W || !H) return null;
+      const ia = m.d / det, ib = -m.b / det, ic = -m.c / det, id = m.a / det;
+      const ie = (m.c * m.f - m.d * m.e) / det, iff = (m.b * m.e - m.a * m.f) / det;
+      const wx = (px, py) => ({ x: ia * px + ic * py + ie, y: ib * px + id * py + iff });
+      const pts = [wx(0, 0), wx(W, 0), wx(0, H), wx(W, H)];
+      const left = Math.min.apply(null, pts.map(p => p.x)), right = Math.max.apply(null, pts.map(p => p.x));
+      const top = Math.min.apply(null, pts.map(p => p.y)), bottom = Math.max.apply(null, pts.map(p => p.y));
+      return { left, right, top, bottom, cx: (left + right) / 2 };
+    } catch (e) { return null; }
+  }
+  function hvLayerDuration(layer) {
+    return Math.max(1, Number((layer.clip || {}).durationMs) || 800);
+  }
+  function hvTeamCenter(targets, ox, oy) {
+    if (!targets || !targets.length) return { x: ox, y: oy };
+    let sx = 0, sy = 0;
+    targets.forEach(t => { sx += t.x; sy += t.y; });
+    return { x: sx / targets.length, y: sy / targets.length };
+  }
+  function hvLayerTotal(spec, count) {
+    let total = 0;
+    (spec.layers || []).forEach((layer) => {
+      if (!layer || !layer.clip) return;
+      const m = layer.motion;
+      const reps = (m === "orbit" || m === "line") ? Math.max(1, Number(layer.count) || 1) : (layer.perTarget ? Math.max(1, count) : 1);
+      const end = (Number(layer.startMs) || 0) + (Number(layer.staggerMs) || 0) * (reps - 1) + hvLayerDuration(layer);
+      if (end > total) total = end;
+    });
+    return total;
+  }
+  function hvAnchorPoint(anchor, rect, unit, tg, depth, ox, oy) {
+    if (anchor === "sky") return { x: rect ? rect.cx : (unit.x || 800) + 120, y: rect ? rect.top + 40 : (unit.y || 480) - 430 };
+    if (anchor === "boss") return { x: ox, y: oy };
+    if (anchor === "targetTop" && tg) return { x: tg.x, y: tg.y - 150 * depth };
+    if (tg) return { x: tg.x, y: tg.y - 12 * depth };
+    return { x: ox, y: oy };
+  }
+  // Rung khung hinh: hang doi ngan, battle.html doc qua window.honVietHuntShakeSample(time).
+  let vfxShake = null;
+  window.honVietHuntShake = function (power, ms) {
+    const p = Math.max(0, Number(power) || 0), d = Math.max(1, Number(ms) || 120);
+    if (!p) return;
+    const now = typeof performance !== "undefined" ? performance.now() : Date.now();
+    vfxShake = { power: p, start: now, ms: d };
+  };
+  window.honVietHuntShakeSample = function () {
+    if (!vfxShake) return null;
+    const now = typeof performance !== "undefined" ? performance.now() : Date.now();
+    const k = (now - vfxShake.start) / vfxShake.ms;
+    if (!(k >= 0) || k >= 1) { vfxShake = null; return null; }
+    const amp = vfxShake.power * (1 - k);
+    return { x: (Math.random() - 0.5) * amp * 2, y: (Math.random() - 0.5) * amp };
+  };
+  function drawHuntVfxLayers(ctx, unit, st, spec, targets, now) {
+    const elapsed = Math.max(0, now - (Number(st.started) || now));
+    const total = hvLayerTotal(spec, Math.max(1, targets.length));
+    st.totalMs = total;
+    const vs = window.__HVBossStats || (window.__HVBossStats = { draws: 0, fails: 0 });
+    vs.vfxLayers = (vs.vfxLayers || 0) + 1;
+    vs.vfxElapsed = Math.round(elapsed); vs.vfxTotal = Math.round(total); vs.vfxTargets = targets.length;
+    // Rung khung hinh 1 lan cho moi don, dung timeline cua lop va cham.
+    if (spec.shake && st.shakeAt !== st.started && elapsed >= (Number(spec.shake.atMs) || 0)) {
+      st.shakeAt = st.started;
+      if (typeof window.honVietHuntShake === "function") {
+        try { window.honVietHuntShake(spec.shake.power, spec.shake.ms); } catch (e) {}
+      }
+    }
+    if (elapsed > total + 150) { unit.__hvVfx = null; return; }
+    const depth = 0.83 + ((unit.y || 520) - 290) / 1500;
+    const rect = hvVisibleWorldRect(ctx);
+    const H0 = ((typeof innerWidth === "number" && innerWidth < 600) ? 200 : 270) * depth;
+    const ox = unit.x + HUNT_MOUTH.dx * H0, oy = unit.y + HUNT_MOUTH.dy * H0;
+    const baseH = 190 * (Number(spec.scale) || 1) * depth;
+    ctx.save();
+    ctx.globalCompositeOperation = "lighter";
+    spec.layers.forEach((layer) => {
+      if (!layer || !layer.clip) return;
+      const v = layer.clip, img = huntVfxImage(v.src);
+      if (!img.complete || !img.naturalWidth) return;
+      const clipMs = hvLayerDuration(layer);
+      const cells = Math.max(1, Number(v.frames) || 1);
+      // owner 11/11: "thien bien van hoa" — moi lop co the chon kieu chuyen dong (motion) va cach nhan ban.
+      const motion = layer.motion || (layer.fromSky ? "fall" : "");
+      const cen = hvTeamCenter(targets, ox, oy);
+      let tlist = targets.slice();
+      if (layer.order === "nearBoss") tlist.sort((a, b) => Math.abs(a.x - unit.x) - Math.abs(b.x - unit.x));
+      else if (layer.order === "farBoss") tlist.sort((a, b) => Math.abs(b.x - unit.x) - Math.abs(a.x - unit.x));
+      const count = Math.max(1, Number(layer.count) || 1);
+      let reps;
+      if (motion === "orbit" || motion === "line") reps = Array.from({ length: count }, (_, i) => ({ tg: null, i }));
+      else if (layer.perTarget) reps = tlist.map((tg, i) => ({ tg, i }));
+      else reps = [{ tg: null, i: 0 }];
+      const travelMs = Math.max(1, Number(layer.travelMs) || Number(layer.fallMs) || 450);
+      reps.forEach(({ tg, i }) => {
+        if (layer.perTarget && motion !== "orbit" && motion !== "line" && !tg) return;
+        const delay = (Number(layer.startMs) || 0) + (Number(layer.staggerMs) || 0) * i;
+        const local = elapsed - delay;
+        if (local < 0 || local > clipMs) return;
+        const anchor = layer.anchor === "center" ? { x: cen.x, y: cen.y - 30 * depth } : hvAnchorPoint(layer.anchor, rect, unit, tg, depth, ox, oy);
+        let px = anchor.x, py = anchor.y, rot = Number(layer.rotate) || 0;
+        const k = Math.min(1, local / travelMs);
+        if (motion === "fall") {
+          const sky = hvAnchorPoint("sky", rect, unit, tg, depth, ox, oy);
+          px = sky.x + (anchor.x - sky.x) * k;
+          py = sky.y + (anchor.y - sky.y) * k * k;   // roi nhanh dan
+        } else if (motion === "arc" || motion === "bounce") {
+          // arc: bay vong cung tu mieng boss toi muc tieu. bounce: nay tu muc tieu truoc sang muc tieu nay.
+          const prev = motion === "bounce" && i > 0 ? tlist[i - 1] : null;
+          const sx = prev ? prev.x : ox, sy = prev ? prev.y - 40 * depth : oy;
+          const lift = (Number(layer.arcH) || 220) * depth;
+          px = sx + (anchor.x - sx) * k;
+          py = sy + (anchor.y - sy) * k - Math.sin(Math.PI * k) * lift;
+          if (layer.faceVel) { const dx = anchor.x - sx, dy = (anchor.y - sy) - Math.cos(Math.PI * k) * Math.PI * lift; rot += Math.atan2(dy, dx); }
+        } else if (motion === "rise") {
+          const riseH = (Number(layer.riseH) || 160) * depth;
+          const e = 1 - Math.pow(1 - k, 3);
+          py = anchor.y + riseH * (1 - e);
+        } else if (motion === "sweep") {
+          // quet ngang tu phia boss tran qua ca doi (mot ban sao chay dai)
+          const dir = cen.x < unit.x ? -1 : 1;
+          const span = (Number(layer.sweepW) || 520) * depth;
+          px = unit.x + dir * 120 * depth + dir * (Math.abs(cen.x - unit.x) - 120 * depth + span / 2) * k;
+          py = cen.y - 20 * depth;
+        } else if (motion === "line") {
+          // tro theo duong thang tu boss toi tam doi (da nut troi len)
+          const t = (i + 1) / count;
+          px = ox + (cen.x - ox) * t;
+          py = unit.y + (cen.y - unit.y) * t - 10 * depth;
+          const riseH = (Number(layer.riseH) || 90) * depth;
+          py += riseH * (1 - (1 - Math.pow(1 - k, 3)));
+        } else if (motion === "orbit") {
+          // bay vong quanh tam doi roi don vao giua
+          const R0 = (Number(layer.radius) || 230) * depth;
+          const conv = Math.max(1, Number(layer.convergeMs) || travelMs);
+          const ang = (Math.PI * 2 * i) / count + (local / 1000) * (Number(layer.spin) || 3.2);
+          const r = R0 * Math.max(0, 1 - Math.max(0, local - conv * 0.45) / (conv * 0.55));
+          px = cen.x + Math.cos(ang) * r;
+          py = cen.y - 40 * depth + Math.sin(ang) * r * 0.42;
+        } else if (motion === "burst") {
+          // loe ra tu nhieu huong cheo quanh tung muc tieu, moi muc tieu mot goc
+          const ang = (Number(layer.angle0) || -0.7) + i * 2.399;
+          const D = (Number(layer.dist) || 260) * depth;
+          const e = 1 - Math.pow(1 - k, 2);
+          px = anchor.x + Math.cos(ang) * D * (1 - e);
+          py = anchor.y + Math.sin(ang) * D * 0.6 * (1 - e);
+          if (layer.faceVel) rot += ang + Math.PI;
+        }
+        const f = Math.max(0, Math.min(cells - 1, Math.floor(local / clipMs * cells)));
+        const h = baseH * (Number(layer.scale) || 1);
+        const w = h * v.cellW / v.cellH;
+        const alpha = layer.alpha == null ? 1 : Number(layer.alpha);
+        ctx.globalAlpha = Math.max(0, Math.min(1, Number.isFinite(alpha) ? alpha : 1));
+        const flip = layer.flipAlt && (i % 2) ? -1 : 1;
+        if (rot || flip < 0) {
+          ctx.save(); ctx.translate(px, py); if (rot) ctx.rotate(rot); if (flip < 0) ctx.scale(-1, 1);
+          ctx.drawImage(img, (f % v.cols) * v.cellW, Math.floor(f / v.cols) * v.cellH, v.cellW, v.cellH, -w / 2, -h / 2, w, h);
+          ctx.restore();
+        } else {
+          ctx.drawImage(img, (f % v.cols) * v.cellW, Math.floor(f / v.cols) * v.cellH, v.cellW, v.cellH,
+            px - w / 2, py - h / 2, w, h);
+        }
+      });
+    });
+    ctx.restore();
+  }
+  // Va cham (impact) bang clip frame tai tung muc tieu trung don (owner 11/11: bo hat/chop ve bang code).
+  // Tuyet ky da co lop 'impact' rieng nen khong them lan nua.
+  const hvImpacts = [];
+  window.honVietHuntImpact = function (actor, target) {
+    if (!actor || !target) return;
+    if (String(actor.state) === "ultimate") return;
+    const slug = bossSlug(actor);
+    const spec = HUNT_VFX[slug] || {};
+    const clip = spec.impactClip || HV_KHAOS_IMPACT;
+    const now = typeof performance !== "undefined" ? performance.now() : Date.now();
+    hvImpacts.push({ target, t: now, clip, scale: Number(spec.impactScale) || 0.62 });
+    if (hvImpacts.length > 12) hvImpacts.shift();
+  };
+  function drawHuntImpacts(ctx) {
+    if (!hvImpacts.length) return;
+    const now = typeof performance !== "undefined" ? performance.now() : Date.now();
+    ctx.save();
+    ctx.globalCompositeOperation = "lighter";
+    for (let i = hvImpacts.length - 1; i >= 0; i--) {
+      const it = hvImpacts[i], v = it.clip, img = huntVfxImage(v.src);
+      const dur = Math.min(Number(v.durationMs) || 900, 900);
+      const local = now - it.t;
+      if (local > dur) { hvImpacts.splice(i, 1); continue; }
+      if (!img.complete || !img.naturalWidth) continue;
+      const cells = Math.max(1, Number(v.frames) || 1);
+      const f = Math.max(0, Math.min(cells - 1, Math.floor(local / dur * cells)));
+      const tg = it.target;
+      const depth = 0.83 + ((tg.y || 520) - 290) / 1500;
+      const h = 190 * it.scale * depth, w = h * v.cellW / v.cellH;
+      ctx.globalAlpha = 1;
+      ctx.drawImage(img, (f % v.cols) * v.cellW, Math.floor(f / v.cols) * v.cellH, v.cellW, v.cellH,
+        tg.x - w / 2, (tg.y - 50 * depth) - h / 2, w, h);
+    }
+    ctx.restore();
+  }
   function drawHuntVfxTargets(ctx, unit, units, target, aoe) {
+    drawHuntImpacts(ctx);
     const st = unit && unit.__hvVfx;
     if (!st) return;
     const spec = HUNT_VFX[st.slug] && HUNT_VFX[st.slug][st.key];
     if (!spec) return;
+    const now = typeof performance !== "undefined" ? performance.now() : Date.now();
+    if (Array.isArray(spec.layers) && spec.layers.length) {
+      drawHuntVfxLayers(ctx, unit, st, spec, huntVfxTargets(unit, units, target, st.key, aoe), now);
+      return;
+    }
     const v = spec.clip, img = huntVfxImage(v.src);
     if (!img.complete || !img.naturalWidth) return;
     const depth = 0.83 + ((unit.y || 520) - 290) / 1500;
@@ -348,7 +570,13 @@
   }
 
   // Tat VFX ve bang code cua engine cho boss da co VFX clip (goi tu battle.html).
-  window.honVietHuntSkipFx = function (actor) { return !!(actor && HUNT_VFX[bossSlug(actor)]); };
+  // Chi boss co clip (khong phai tuong phe ta): bossSlug() co fallback nen phai loc theo form truoc.
+  window.honVietHuntSkipFx = function (actor) {
+    if (!actor) return false;
+    const form = inferHuntForm(actor);
+    if (!form || form === "crystal") return false;
+    return !!HUNT_VFX[bossSlug(actor)];
+  };
 
   function drawHuntAnim(ctx, unit, time, form) {
     const slug = bossSlug(unit);
@@ -392,7 +620,19 @@
     stats.draws += 1;
     stats.lastKey = pick.key;
     ctx.drawImage(img, (frame % c.cols) * c.cellW, Math.floor(frame / c.cols) * c.cellH, c.cellW, c.cellH, -c.pivot, -c.foot, c.cellW, c.cellH);
-    unit.__hvVfx = pick.loop ? null : { slug, key: pick.key, p: Math.max(0, Math.min(1, pick.hold ? pick.t / c.durationMs : pick.p)),
+    const prevVfx = unit.__hvVfx;
+    // VFX nhiều lớp có thể dài hơn clip animation của boss: giữ trạng thái VFX
+    // (để các lớp rơi/vụ nổ cuối vẫn vẽ) cho tới khi hết tổng thời lượng.
+    const prevSpec = prevVfx ? (HUNT_VFX[prevVfx.slug] || {})[prevVfx.key] : null;
+    const prevTotal = prevVfx
+      ? (Number(prevVfx.totalMs) || (prevSpec && Array.isArray(prevSpec.layers) ? hvLayerTotal(prevSpec, 6) : 0))
+      : 0;
+    const keepVfx = !!(prevVfx && prevSpec && Array.isArray(prevSpec.layers)
+      && Number(prevVfx.started) > 0
+      && (now - Number(prevVfx.started)) < prevTotal + 150);
+    unit.__hvVfx = pick.loop ? (keepVfx ? prevVfx : null) : { slug, key: pick.key,
+      started: Number(pick.started) || now, span: Number(pick.span) || 0,
+      p: Math.max(0, Math.min(1, pick.hold ? pick.t / c.durationMs : pick.p)),
       // mieng ran: phia trai-tren cua o (boss quay trai), toa do tuong doi chan
       mx: (mirrored ? (c.pivot - c.cellW * HUNT_MOUTH.x) : (-c.pivot + c.cellW * HUNT_MOUTH.x)) * scale, my: (-c.foot + c.cellH * HUNT_MOUTH.y) * scale };
     ctx.restore();

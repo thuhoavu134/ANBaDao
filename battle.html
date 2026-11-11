@@ -3251,6 +3251,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
 
   function markDefeated(unit) {
     if (!unit || unit.defeatedAt) return;
+    if (QA_GOD && unit.team === TEAM_PLAYER) { window.__HVQaGodSaves = (window.__HVQaGodSaves || 0) + 1; unit.hp = 1; return; }
     if(state.mode==='battle'&&!REFERENCE_SIMPLE){ shiftMomentum(unit.team===TEAM_ENEMY?16:-16,unit.team===TEAM_ENEMY?'enemy-defeated':'player-defeated',{unitId:unit.id}); }
     unit.hp = 0;
     unit.defeatedAt = performance.now();
@@ -3261,7 +3262,11 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
   }
 
   function battleHasWinner() {
-    return living(TEAM_PLAYER).length === 0 || living(TEAM_ENEMY).length === 0;
+    if (QA_GOD) { try { units.forEach(qaGodHold); } catch (e) {} }
+    const noPlayer = living(TEAM_PLAYER).length === 0;
+    const noEnemy = living(TEAM_ENEMY).length === 0;
+    if (QA_GOD && noPlayer && !noEnemy) { window.__HVQaGodSaves = (window.__HVQaGodSaves || 0) + 1; return false; }
+    return noPlayer || noEnemy;
   }
 
   function remainingDefeatTime(time = performance.now()) {
@@ -3981,7 +3986,88 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     return {action:best.action,target:best.target};
   }
 
+
+  // ===== QA flags (owner 11/11) · chi co tac dung khi URL co qaBoss=... =====
+  // qaUlti=1: moi luot cua boss dich chon 'ultimate' (bo qua No/khang phe).
+  // qaGod=1 : tuong phe ta khong bao gio xuong duoi 1 mau, khong bi ha guc.
+  const QA_FLAGS = (function readQaFlags() {
+    const out = { boss: false, ulti: false, god: false };
+    const scan = (search) => {
+      try {
+        const q = new URLSearchParams(String(search || ""));
+        if (q.get("qaBoss")) out.boss = true;
+        if (q.get("qaUlti") === "1") out.ulti = true;
+        if (q.get("qaGod") === "1") out.god = true;
+        return out.boss || out.ulti || out.god;
+      } catch (e) { return false; }
+    };
+    const done = () => out.boss || out.ulti || out.god;
+    if (!done()) scan(location.search);
+    // Host page (index.html) luu nguyen query vao sessionStorage: iframe/URL khac van doc duoc.
+    if (!done()) { try { scan(sessionStorage.getItem("hvQaQuery") || ""); } catch (e) {} }
+    if (!done()) { try { scan(sessionStorage.getItem("hvQaFlags") || ""); } catch (e) {} }
+    if (!done()) {
+      const targets = [];
+      try { if (window.parent && window.parent !== window) targets.push(window.parent); } catch (e) {}
+      try { if (window.top && window.top !== window && window.top !== window.parent) targets.push(window.top); } catch (e) {}
+      for (const w of targets) { try { if (scan(w.location.search)) break; } catch (e) {} }
+    }
+    try { if (window.parent && window.parent !== window) window.parent.__HVQaFlags = out; } catch (e) {}
+    try { window.__HVQaFlags = out; } catch (e) {}
+    return out;
+  })();
+  const QA_ULTI = QA_FLAGS.ulti;
+  const QA_GOD = QA_FLAGS.god;
+  function qaIsBoss(unit) {
+    if (!unit || unit.team !== TEAM_ENEMY) return false;
+    const bid = state && state.bossPhase ? state.bossPhase.bossId : null;
+    if (bid && unit.id === bid) return true;
+    // Campaign path (referenceSimple) khong tao bossPhase: boss = dich con song co maxHp lon nhat.
+    if (window.__HVQaBossId) return unit.id === window.__HVQaBossId;
+    const livingEnemies = units.filter((u) => u.team === TEAM_ENEMY && u.hp > 0);
+    if (!livingEnemies.length) return false;
+    const top = livingEnemies.slice().sort((a, b) => (b.maxHp || 0) - (a.maxHp || 0) || (a.slot || 0) - (b.slot || 0))[0];
+    if (top) window.__HVQaBossId = top.id;
+    return !!top && top.id === unit.id;
+  }
+  function qaGodHold(unit) {
+    if (!QA_GOD || !unit || unit.team !== TEAM_PLAYER) return;
+    if (!(unit.hp > 1)) {
+      window.__HVQaGodSaves = (window.__HVQaGodSaves || 0) + 1;
+      unit.hp = 1;
+      unit.shield = Math.max(0, Number(unit.shield) || 0);
+    }
+    if (unit.defeatedAt || unit.state === "defeated") {
+      Object.assign(unit, { defeatedAt: 0, defeatHideDuration: 0, defeatFallDuration: 0 });
+      unit.displayHp = Math.max(1, Number(unit.displayHp) || 1);
+      try { if (unit.state === "defeated") setUnitState(unit, "idle", 400); } catch (e) {}
+    }
+  }
+  if (QA_GOD) {
+    const qaGodTick = () => {
+      try {
+        units.forEach((u) => {
+          qaGodHold(u);
+          if (u && u.team === TEAM_PLAYER) { const h = Number(u.hp) || 0; if (!(window.__HVQaMinHp > 0) || h < window.__HVQaMinHp) window.__HVQaMinHp = h; }
+        });
+      } catch (e) {}
+    };
+    qaGodTick();
+    setInterval(qaGodTick, 120);
+  }
+  // ===== end QA flags =====
   function decideAi(actor){
+    window.__HVQaCalls = (window.__HVQaCalls || 0) + 1;
+    window.__HVQaSpeed = (typeof state === "object" && state) ? state.speed : null;
+    window.__HVQaLast = { id: actor && actor.id, boss: qaIsBoss(actor), t: Math.round(performance.now()) };
+    if (QA_ULTI && qaIsBoss(actor)) {
+      actor.energy = Math.max(100, Number(actor.energy) || 0);
+      if (Array.isArray(actor.statuses)) actor.statuses = actor.statuses.filter((x) => x && x.type !== "silence");
+      window.__HVQaUlti = (window.__HVQaUlti || 0) + 1;
+      window.__HVQaUltiActor = actor.id;
+      const qaTarget = adaptiveTarget(actor, "ultimate", preferredTargetFor(actor, "ultimate")) || living(TEAM_PLAYER)[0];
+      if (qaTarget && Core.canUseAction(actor, "ultimate")) return { action: "ultimate", target: qaTarget };
+    }
     // Golden carry pacing: when Ong Pho is one basic away from Ultimate, preserve Rage instead of spending it on Skill 1.
     // Basic grants +15 Rage, so this creates a readable setup -> Ultimate cadence without changing authored animation speed.
     if(isOngPhoCarry(actor) && actor.energy>=40 && actor.energy<60 && Core.canUseAction(actor,"basic")){
@@ -4126,6 +4212,8 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     cameraShake = Math.max(cameraShake, REDUCED_MOTION ? 0 : 3 + level * 8);
     cameraFlash = Math.max(cameraFlash, REDUCED_MOTION ? 0 : 0.08 + level * 0.18);
     cameraFlashColor = action === "ultimate" ? "255,218,126" : actor.team === TEAM_PLAYER ? "255,239,205" : "255,185,168";
+    // owner 11/11: boss co clip VFX -> chi rung, khong chop, khong vong tron ve bang code.
+    if (typeof honVietHuntSkipFx === "function" && honVietHuntSkipFx(actor)) { cameraFlash = 0; return; }
     combatEffects.push({
       kind: action === "ultimate" ? "ultimateImpact" : "impactRing",
       actorX: actor.x,
@@ -4356,10 +4444,14 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     if(target.shield>0){ const absorbed=Math.min(target.shield,amount); target.shield-=absorbed; amount-=absorbed; if(absorbed>0)addFloater(target,`⛊${absorbed}`,"#7de3d0"); }
     amount=Math.min(target.hp,Math.max(0,amount));
     target.hp-=amount;
+    qaGodHold(target);
     if(amount>0){const ar=intelUnit(actor),tr=intelUnit(target);if(ar)ar.damage+=amount;if(tr)tr.damageTaken+=amount; if(!REFERENCE_SIMPLE)applyAdaptiveEnemyOnHit(actor,target,amount);if(!REFERENCE_SIMPLE&&state.bossPhase?.bossId===actor?.id){const drain=Math.min(Core.bossPhaseEnergyDrain(state.bossPhase.phase,actor,tacticalAction),Math.max(0,Number(target.energy)||0));if(drain>0){target.energy=Math.max(0,target.energy-drain);addFloater(target,`PHÁ NHỊP −${drain} NỘ`,"#e5b8ff",true);}}}
     gainEnergy(target,Math.max(4,Math.min(12,Math.round(amount/Math.max(1,target.maxHp)*60))));
-    target.flashUntil = performance.now() + motionDuration(170);
+    // owner 11/11: boss co clip -> va cham bang clip frame (Flow), khong hat/chop ve bang code.
+    const hvClipBoss = typeof honVietHuntSkipFx === "function" && honVietHuntSkipFx(actor);
+    if (!hvClipBoss) target.flashUntil = performance.now() + motionDuration(170);
     if(amount>0) addFloater(target, critical?`BẠO KÍCH −${amount}`:`−${amount}`, critical ? COMBAT_PRESENTATION_STANDARD.colors.critical : COMBAT_PRESENTATION_STANDARD.colors.damage, critical);
+    if (hvClipBoss) { if (typeof honVietHuntImpact === "function") honVietHuntImpact(actor, target); } else
     burst(target.x, target.y, options.color || actor.accent, critical ? 25 : 15);
     cameraShake = Math.max(cameraShake, critical ? 10 : 5);
     tone(critical ? 105 : 135, critical ? 0.16 : 0.09, "square", 0.035);
@@ -4382,7 +4474,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
       }else if(isLinhDong(target)){
         setTimeout(()=>{ if(target.hp>0&&target.state==="hurt") setUnitState(target,"idle",800); }, motionDuration(linhDongActionMs('hurt')));
       }
-      if(target.counterReady && actor.hp>0){ target.counterReady=false; const counterMult=target?.teamSynergy?.archetype?.mastered&&target?.teamSynergy?.archetype?.id==="counter"?0.68:0.55; const counter=Math.min(actor.hp,Math.max(10,Math.round(Core.calculateDamage(target,actor,counterMult,0.5)))); actor.hp-=counter; const rr=intelUnit(target),aa=intelUnit(actor);if(rr)rr.damage+=counter;if(aa)aa.damageTaken+=counter; addFloater(actor,`PHẢN ${counter}`,"#f8df90"); if(actor.hp<=0){markDefeated(actor);if(aa&&aa.deathAction==null)aa.deathAction=state.actionCount;} }
+      if(target.counterReady && actor.hp>0){ target.counterReady=false; const counterMult=target?.teamSynergy?.archetype?.mastered&&target?.teamSynergy?.archetype?.id==="counter"?0.68:0.55; const counter=Math.min(actor.hp,Math.max(10,Math.round(Core.calculateDamage(target,actor,counterMult,0.5)))); actor.hp-=counter; qaGodHold(actor); const rr=intelUnit(target),aa=intelUnit(actor);if(rr)rr.damage+=counter;if(aa)aa.damageTaken+=counter; addFloater(actor,`PHẢN ${counter}`,"#f8df90"); if(actor.hp<=0){markDefeated(actor);if(aa&&aa.deathAction==null)aa.deathAction=state.actionCount;} }
     }
     if(!REFERENCE_SIMPLE&&target?.id===state.bossPhase?.bossId&&target.hp>0)inspectBossPhaseTransition();
     return amount;
@@ -4692,7 +4784,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
   function applyReactionDamage(actor,target,amount,label){
     if(!target||target.hp<=0||amount<=0)return 0; let remaining=Math.max(0,Math.round(amount));
     if(target.shield>0){const absorbed=Math.min(target.shield,remaining);target.shield-=absorbed;remaining-=absorbed;if(absorbed)addFloater(target,`⛊${absorbed}`,'#7de3d0');}
-    const dealt=Math.min(target.hp,remaining); target.hp-=dealt; if(dealt>0){const ar=intelUnit(actor),tr=intelUnit(target);if(ar)ar.damage+=dealt;if(tr)tr.damageTaken+=dealt;addFloater(target,`⚗ −${dealt}`,'#ffd37e',true);burst(target.x,target.y,'#e9b85f',18,'spark');}
+    const dealt=Math.min(target.hp,remaining); target.hp-=dealt; qaGodHold(target); if(dealt>0){const ar=intelUnit(actor),tr=intelUnit(target);if(ar)ar.damage+=dealt;if(tr)tr.damageTaken+=dealt;addFloater(target,`⚗ −${dealt}`,'#ffd37e',true);burst(target.x,target.y,'#e9b85f',18,'spark');}
     if(target.hp<=0){markDefeated(target);actor.kills=(actor.kills||0)+1;const ar=intelUnit(actor),tr=intelUnit(target);if(ar)ar.kills+=1;if(tr&&tr.deathAction==null)tr.deathAction=state.actionCount;gainEnergy(actor,12);addLog(`${target.name} gục bởi phản ứng ${label}.`);}
     return dealt;
   }
@@ -4950,7 +5042,9 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
       }
 
       const releaseDuration = weaponFlightDuration(actor);
-      setUnitState(actor, "attack", TIMING.windup + releaseDuration);
+      // owner 11/11: boss co clip VFX can state "ultimate" de ve dung clip + 4 lop tuyet ky (truoc day luon "attack").
+      const hvUltState = action === "ultimate" && typeof honVietHuntSkipFx === "function" && honVietHuntSkipFx(actor);
+      setUnitState(actor, hvUltState ? "ultimate" : "attack", TIMING.windup + releaseDuration);
       setStatus(`${actor.name} ${weaponReleaseLabel(actor)}`);
       dom.phaseLabel.textContent = action === "ultimate" ? "Tuyệt kỹ • Xuất chiêu" : "Xuất chiêu";
       queueChargeEffect(actor, action);
@@ -5372,6 +5466,11 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     if(Number.isFinite(Number(verdict.playerRatio)))state.objective.playerRatio=Number(verdict.playerRatio);
     if(Number.isFinite(Number(verdict.enemyRatio)))state.objective.enemyRatio=Number(verdict.enemyRatio);
     if(String(verdict.reason||'').startsWith('round-limit'))state.round=Math.min(state.round,Number(state.objective.maxRounds)||15);
+    if (QA_GOD && verdict.winner !== TEAM_PLAYER) {
+      window.__HVQaBlockedDefeat = (window.__HVQaBlockedDefeat || 0) + 1;
+      try { units.forEach(qaGodHold); } catch (e) {}
+      return false;
+    }
     endBattle(verdict.winner===TEAM_PLAYER?TEAM_PLAYER:TEAM_ENEMY,verdict.reason);
     return true;
   }
@@ -6976,8 +7075,17 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     const zoom = REDUCED_MOTION ? 1 : 1 + Math.max(0, Math.min(0.11, cameraZoom));
     const sx = view.dpr * view.scale * zoom;
     const sy = view.dpr * view.scale * zoom;
-    const tx = view.dpr * (view.offsetX + shakeX * view.scale + cameraFocus.x * view.scale * (1 - zoom));
-    const ty = view.dpr * (view.offsetY + shakeY * view.scale + cameraFocus.y * view.scale * (1 - zoom));
+    // VFX nhieu lop cua boss (owner 10/11): rung khung hinh theo timeline clip
+    // (chi dich khung, KHONG phu trang). Battle visual dang ky window.honVietHuntShake.
+    let huntShakeX = 0, huntShakeY = 0;
+    if (!REDUCED_MOTION && typeof window.honVietHuntShakeSample === "function") {
+      try {
+        const huntShake = window.honVietHuntShakeSample(time);
+        if (huntShake) { huntShakeX = Number(huntShake.x) || 0; huntShakeY = Number(huntShake.y) || 0; }
+      } catch (error) {}
+    }
+    const tx = view.dpr * (view.offsetX + (shakeX + huntShakeX) * view.scale + cameraFocus.x * view.scale * (1 - zoom));
+    const ty = view.dpr * (view.offsetY + (shakeY + huntShakeY) * view.scale + cameraFocus.y * view.scale * (1 - zoom));
     ctx.setTransform(sx, 0, 0, sy, tx, ty);
     ctx.clearRect(-100, -100, WORLD.width + 200, WORLD.height + 200);
     drawBackground(ctx, time);

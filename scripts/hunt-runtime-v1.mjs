@@ -116,6 +116,9 @@ if (existsSync(battleTarget)) {
       [/function launchWeaponEffect\(actor, target, action, battleId\) \{/, 'function launchWeaponEffect(actor, target, action, battleId) { if (typeof honVietHuntSkipFx === "function" && honVietHuntSkipFx(actor)) { playReleaseSound(actor); return sleep(TIMING.meleeRelease, battleId); }'],
       [/function queueWeaponAnticipation\(actor, action\) \{/, 'function queueWeaponAnticipation(actor, action) { if (typeof honVietHuntSkipFx === "function" && honVietHuntSkipFx(actor)) return;'],
       [/function queueChargeEffect\(actor, action\) \{/, 'function queueChargeEffect(actor, action) { if (typeof honVietHuntSkipFx === "function" && honVietHuntSkipFx(actor)) return;'],
+      // owner 11/11: boss co clip phai vao state "ultimate" khi tung tuyet ky (engine cu luon dat "attack") -> 4 lop clip moi chay.
+      // QA qaUlti=1: boss co clip luon tung tuyet ky (decideAi bi patch auto-skill chen truoc nen ep tai day).
+      // owner 11/11: chi rung, khong chop, khong vong tron ve bang code cho boss co clip.
     ];
     for (const [re, to] of guards) {
       if (!re.test(battle)) throw new Error('hunt-runtime: fx guard anchor missing ' + re);

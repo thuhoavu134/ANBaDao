@@ -255,6 +255,9 @@ installBattleTurnPacing(root);
 // Every battlefield painter must stop after a defeated hero's fall ends.
 const { installBattleDefeatExit } = await import('./battle-defeat-exit-v1.mjs');
 installBattleDefeatExit(root);
+// QA only (qaBoss + qaUlti=1): boss co clip VFX luon tung tuyet ky.
+const { installHvQaUltiFinal } = await import('./hv-qa-ulti-final-v1.mjs');
+installHvQaUltiFinal(root);
 const { installBattleEnemyCellCleanup } = await import('./battle-enemy-cell-cleanup-v1.mjs');
 await installBattleEnemyCellCleanup(root);
 const { installRosterEnemiesSize } = await import('./roster-enemies-size-v1.mjs');

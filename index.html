@@ -5767,9 +5767,16 @@ function integratedConfig(sessionId, battleId) {
     // frameElement.dataset.config remains readable because battle.html is same-origin with index.html.
     frame.removeAttribute("srcdoc");
     const pageParams = new URLSearchParams(location.search);
-    const qaSuffix = pageParams.get("qa") === "status-icons" ? "&qa=status-icons" :
-      (pageParams.get("qaThayMoIdle") === "1" ? "&qaThayMoIdle=1" :
-      (pageParams.get("qaThayMoBasic") === "1" ? "&qaThayMoBasic=1" : ""));
+    // Forward MOI tham so qa* xuong battle.html (truoc day chi 1 trong 3 co duoc chuyen
+    // => qaGod/qaUlti/qaBoss khong bao gio toi engine).
+    const qaSuffix = Array.from(pageParams.entries())
+      .filter(([k]) => /^qa/.test(k))
+      .map(([k, v]) => `&${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
+      .join("");
+    try {
+      const qaQuery = pageParams.toString();
+      sessionStorage.setItem("hvQaQuery", qaQuery);
+    } catch (_) {}
     const url = `battle.html?embedded=1&session=${encodeURIComponent(sessionId)}&autostart=1&v=3175${qaSuffix}`;
     // Grok/iOS preview is itself an iframe; a nested battle iframe stays blank.
     // Open combat as the preview document so the player actually sees the fight.

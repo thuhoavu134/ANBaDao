@@ -550,22 +550,37 @@
       const CH = { 'son-tac': 0, 'ho-phap': 1, 'thuy-trai': 2, 'huong-chu': 3, 'thien-anh': 4, 'khaos': 5 };
       const ch = CH[key];
       if (ch === undefined) return;
+      // Owner 11/11: tran QA khong duoc chay sau man load. #hvLoginRoot va #hvBoot
+      // deu position:fixed nen offsetParent LUON null -> khong dung offsetParent de
+      // do hien thi (bug cu: tuong login/boot da dong nen ban tran o giay 2.5).
+      const shown = el => {
+        if (!el || el.hidden) return false;
+        const cs = getComputedStyle(el);
+        if (cs.display === 'none' || cs.visibility === 'hidden' || Number(cs.opacity) === 0) return false;
+        const r = el.getBoundingClientRect();
+        return r.width > 0 && r.height > 0;
+      };
+      const bootEl = () => document.getElementById('hvBoot');
+      const loginShown = () => shown(document.getElementById('hvLoginRoot')) || shown(document.getElementById('hvLoginContinue'));
+      const bootShown = () => { const b = bootEl(); return !!b && !b.classList.contains('is-done') && shown(b); };
+      // Chi coi la load xong khi boot-loader da dong VA da go khoi DOM (fade 600ms).
+      const bootFinished = () => window.HV_BOOT_DONE === true && !bootEl();
+      const bootMissing = () => typeof window.HV_BOOT === 'undefined';
       let tries = 0;
       const go = () => {
         tries++;
-        const boot = document.getElementById('hvBoot');
-        const login = document.getElementById('hvLoginRoot');
         const st = {
           tries,
           P: typeof P === 'object' && !!P && !!P.heroes,
           rb: typeof runBattle === 'function',
           seq: typeof chapterBattleSequence === 'function',
-          login: !!(login && login.offsetParent),
-          boot: !!(boot && boot.offsetParent && getComputedStyle(boot).display !== 'none')
+          login: loginShown(),
+          boot: bootShown(),
+          bootDone: window.HV_BOOT_DONE === true
         };
         window.__qaBossDbg = st;
-        const ready = st.P && st.rb && st.seq && !st.login && !st.boot;
-        if (!ready) { if (tries < 180) setTimeout(go, 1000); return; }
+        const ready = st.P && st.rb && st.seq && !st.login && !st.boot && (bootFinished() || bootMissing());
+        if (!ready) { if (tries < 240) setTimeout(go, 500); return; }
         chapterBattleSequence(ch);
         if (typeof ST === 'object') { ST.mode = 'campaign'; ST.chapterIdx = ch; }
         // QA: doi hinh rong thi khong vao tran duoc -> tu dien 5 tuong dau.
@@ -579,7 +594,7 @@
         try { runBattle(bid, () => { if (typeof navTo === 'function') navTo('hub'); }); }
         catch (e) { window.__qaBossDbg.err = String(e).slice(0, 200); }
       };
-      setTimeout(go, 2500);
+      setTimeout(go, 1200);
     } catch (e) {}
   })();
 
