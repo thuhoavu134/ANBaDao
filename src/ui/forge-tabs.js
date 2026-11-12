@@ -307,6 +307,8 @@
     var st = fa();
     st.recent = got.map(function (x) { return x.uid; }).reverse().concat(st.recent || []).filter(function (u, i, arr) { return arr.indexOf(u) === i; }).slice(0, 12);
     var ssr = got.filter(function (x) { return x.rar === 'ssr'; });
+    // Owner 12/11: loa he thong o man Tro Chuyen (kenh He Thong + dai chuc mung) nhan tin SSR.
+    if (ssr.length && typeof chatPush === 'function') ssr.forEach(function (x) { try { chatPush('Hệ thống', 'Chúc mừng đại hiệp rèn được ' + itemName(x) + ' phẩm SSR!', false, 'world'); } catch (_) {} });
     if (ssr.length && window.HV_MARQUEE) ssr.forEach(function (x) { window.HV_MARQUEE.push('🎉 Chúc mừng đại hiệp rèn được <b style="color:#ff8a3a">' + esc(itemName(x)) + '</b> phẩm SSR!', 'gold', 1); });
     var order = { ssr: 0, ss: 1, s: 2, a: 3, b: 4 };
     st.burstAt = Date.now() + 1400; clearTimeout(st._bt); st._bt = setTimeout(function () { var a = document.querySelector('.fa-anvil.fa-burst'); if (a) a.classList.remove('fa-burst'); }, 1400);

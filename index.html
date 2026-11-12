@@ -1307,7 +1307,7 @@ html,body,body *{font-family:'HV UI','Asap Condensed','Arial Narrow',system-ui,s
 
 <!-- CHAT -->
 <div id="chatScreen" class="screen">
-  <div class="pagehdr"><span class="back" data-nav="hub">‹</span><span class="ttl">Kênh Mộng Phố</span><span class="sub2">— trò chuyện với cư dân (offline)</span></div>
+  <div class="pagehdr"><span class="back" data-nav="hub">‹</span><span class="ttl">Kênh Giang Hồ</span><span class="sub2">— trò chuyện với cư dân (offline)</span></div>
   <div id="chatBody"></div>
 </div>
 
@@ -4912,7 +4912,7 @@ function renderMail(){ const b=document.getElementById('mailBody');
   const ma=document.getElementById('mailAll'); if(ma) ma.addEventListener('click',()=>{ const n=claimAllMail(); if(n){ toast('Nhận '+n+' thư.'); renderMail(); } }); }
 /* ---- Kênh Xã Hội v2.64.0 — Social Channels Depth ---- */
 const CHAT_CHANNELS={
- world:{label:'Mộng Phố',ic:'🌙',hint:'Kênh chung của cư dân Mộng Phố.'},
+ world:{label:'Thế Giới',ic:'🌏',hint:'Kênh chung của cả giang hồ.'},
  guild:{label:'Bang Hội',ic:'🏯',hint:'Trao đổi hoạt động và mục tiêu chung của bang.'},
  team:{label:'Tổ Đội',ic:'⚔',hint:'Kênh chiến thuật của 6 tướng đang ra trận.'}
 };
@@ -4941,7 +4941,7 @@ function socialUnread(ch){ socialEnsureDay(); const seen=Number(P.social.seen[ch
 function sendChat(text){ text=(text||'').trim().slice(0,160); if(!text)return false; socialEnsureDay(); const ch=P.social.channel||'world'; if(!chatChannelOpen(ch))return false; if(ch==='world'&&netOnline()){ netSendChat(text); socialTrackPost(); return true; } chatPush('Anh',text,true,ch);socialTrackPost(); const hid=randChannelHero(ch);const pool=text.includes('?')?CHAT_QREPLIES:(CHAT_REPLIES[ch]||CHAT_REPLIES.world); setTimeout(()=>{ if(!hid)return;chatPush(DATA.heroes[hid].name,pool[(Math.random()*pool.length)|0],false,ch,hid);if(ST.screen==='chat')renderChat(); },700+Math.floor(Math.random()*800)); renderChat(); return true; }
 function chatAmbient(){ if(!P||ST.screen!=='chat')return; socialEnsureDay(); const ch=P.social.channel||'world'; if(ch==='world'&&netOnline())return; if(!chatChannelOpen(ch))return; const hid=randChannelHero(ch);if(!hid)return; const pool=CHAT_AMBIENT[ch]||CHAT_AMBIENT.world; chatPush(DATA.heroes[hid].name,pool[(Math.random()*pool.length)|0],false,ch,hid);renderChat(); }
 function renderChat(){ const b=document.getElementById('chatBody');socialEnsureDay(); const on=netOnline();let ch=P.social.channel||'world';if(!chatChannelOpen(ch)){ch='world';P.social.channel='world';}
-  if(!P.chat.some(m=>(m.channel||'world')==='world'))chatSys('Chào mừng tới Kênh Mộng Phố — nơi cư dân tám chuyện suốt đêm.','world');
+  if(!P.chat.some(m=>(m.channel||'world')==='world'))chatSys('Chào mừng tới Kênh Giang Hồ — nơi cư dân tám chuyện suốt đêm.','world');
   if(myGuild()&&!P.chat.some(m=>(m.channel||'world')==='guild'))chatSys('Kênh bang đã mở. Dùng nơi này để nhắc Boss Bang, Công Nghệ và Bang Chiến.','guild','🏯 Bang Vụ');
   if((P.squad||[]).length&&!P.chat.some(m=>(m.channel||'world')==='team'))chatSys('Kênh tổ đội đã mở. Đây là nơi ghi nhanh ý đồ chiến thuật trước trận.','team','⚔ Chỉ Huy');
   P.social.seen[ch]=Date.now();persist();

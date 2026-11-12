@@ -1,0 +1,157 @@
+/* Owner 2026-11-12: Tro Chuyen kieu giay thuy mac */
+#hvChatInk{position:fixed;inset:0;z-index:60;background:#efe2c4 url(../../assets/ui/chat/ink/bg.webp) center/cover no-repeat;font-family:inherit;color:#3a2414}
+#hvChatInk[hidden]{display:none}
+body.chat-ink-open #hvChatRoot{visibility:hidden}
+#hvChatInk .ck{position:absolute;inset:0;display:flex;flex-direction:column;max-width:560px;margin:0 auto;padding:calc(10px + env(safe-area-inset-top)) 10px calc(10px + env(safe-area-inset-bottom));box-sizing:border-box;gap:8px}
+#hvChatInk .ck-top{position:relative;display:flex;align-items:center;justify-content:center;min-height:52px}
+#hvChatInk .ck-back{position:absolute;left:0;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:2px solid #d8a548;background:radial-gradient(circle at 35% 30%,#c4302a,#7d1410);color:#ffe7b0;font-size:26px;line-height:1;padding:0 0 3px;box-shadow:0 3px 8px rgba(80,20,0,.35);cursor:pointer}
+#hvChatInk .ck-title{margin:0;padding:8px 34px;border:2px solid #d8a548;border-radius:10px;background:linear-gradient(180deg,#b32a22,#7d1410);color:#ffe3a0;font:900 clamp(20px,6vw,26px)/1.1 Georgia,'Times New Roman',serif;letter-spacing:.04em;text-shadow:0 2px 0 #4a0a06;box-shadow:inset 0 0 0 2px rgba(255,210,120,.25),0 4px 10px rgba(80,20,0,.3)}
+#hvChatInk .ck-tabs{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:6px}
+#hvChatInk .ck-tab{position:relative;min-height:42px;padding:6px 4px;border-radius:22px;border:2px solid #c9a056;background:linear-gradient(180deg,#fff8e8,#f2e2bd);color:#5a2a14;font:800 clamp(13px,3.8vw,16px)/1.1 inherit;cursor:pointer;box-shadow:0 2px 4px rgba(90,50,10,.15)}
+#hvChatInk .ck-tab.on{background:linear-gradient(180deg,#c4302a,#8a1a12);color:#ffe3a0;border-color:#e2b55a;box-shadow:inset 0 0 0 1px rgba(255,220,140,.35),0 3px 6px rgba(80,20,0,.3)}
+#hvChatInk .ck-tab:disabled{opacity:.45}
+#hvChatInk .ck-tab i{position:absolute;right:-4px;top:-6px;min-width:18px;padding:0 4px;border-radius:9px;background:#c4302a;color:#fff;font:700 11px/18px inherit;font-style:normal}
+#hvChatInk .ck-banner{padding:6px 12px;border-top:1px solid #c9a056;border-bottom:1px solid #c9a056;background:linear-gradient(90deg,transparent,rgba(122,24,16,.88) 12%,rgba(122,24,16,.88) 88%,transparent);text-align:center;overflow:hidden;white-space:nowrap}
+#hvChatInk .ck-banner span{color:#ffe3a0;font-weight:800;font-size:14px;text-overflow:ellipsis;overflow:hidden;display:block}
+#hvChatInk .ck-feed{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;gap:12px;padding:6px 2px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+#hvChatInk .ck-feed::-webkit-scrollbar{display:none}
+#hvChatInk .ck-row{display:flex;align-items:flex-start;gap:8px;max-width:100%}
+#hvChatInk .ck-row.me{flex-direction:row-reverse}
+#hvChatInk .ck-av{flex:0 0 52px;width:52px;height:52px;border-radius:50%;overflow:hidden;border:2px solid #c9a056;background:#e9d6ac;display:grid;place-items:center;box-shadow:0 2px 6px rgba(90,50,10,.25)}
+#hvChatInk .ck-av img{width:100%;height:100%;object-fit:cover}
+#hvChatInk .ck-av b{color:#7d1410;font-size:20px}
+#hvChatInk .ck-col{min-width:0;max-width:calc(100% - 64px);display:flex;flex-direction:column;gap:4px}
+#hvChatInk .me .ck-col{align-items:flex-end}
+#hvChatInk .ck-meta{display:flex;align-items:center;gap:6px}
+#hvChatInk .ck-meta b{color:#8a1a12;font-size:15px;font-weight:900}
+#hvChatInk .ck-meta i{font-style:normal;font-size:11px;font-weight:800;color:#6a4a20;padding:1px 7px;border:1px solid #c9a056;border-radius:9px;background:#f6e6be}
+#hvChatInk .ck-line{display:flex;align-items:flex-end;gap:6px}
+#hvChatInk .me .ck-line{flex-direction:row-reverse}
+#hvChatInk .ck-bub{padding:9px 13px;border-radius:12px;border:1px solid #b89a6a;background:rgba(255,250,238,.95);color:#2e1c0e;font-size:15px;line-height:1.4;word-break:break-word;box-shadow:0 2px 4px rgba(90,50,10,.12)}
+#hvChatInk .me .ck-bub{background:rgba(214,234,206,.96);border-color:#8fb48a}
+#hvChatInk .ck-line time{flex:0 0 auto;font-size:11px;color:#8a7458}
+#hvChatInk .ck-sys{align-self:center;max-width:92%;text-align:center;padding:6px 12px;border-radius:12px;background:rgba(122,24,16,.08);border:1px dashed #b88a50;font-size:13px;color:#5a3a1a}
+#hvChatInk .ck-sys b{color:#8a1a12;margin-right:6px}
+#hvChatInk .ck-empty{margin:auto;text-align:center;color:#8a7458;font-size:14px}
+#hvChatInk .ck-quick{display:flex;flex-wrap:wrap;gap:6px}
+#hvChatInk .ck-quick[hidden]{display:none}
+#hvChatInk .ck-quick button{padding:6px 10px;border-radius:14px;border:1px solid #c9a056;background:#fff8e8;color:#5a2a14;font:700 13px inherit;cursor:pointer}
+#hvChatInk .ck-input{display:flex;align-items:center;gap:8px;padding:8px;border-radius:14px;border:2px solid #c9a056;background:rgba(255,248,232,.92)}
+#hvChatInk .ck-emo{flex:0 0 40px;height:40px;border-radius:50%;border:2px solid #c9a056;background:#fff3d8;color:#8a1a12;font-size:22px;line-height:1;cursor:pointer}
+#hvChatInk .ck-input input{flex:1;min-width:0;height:40px;padding:0 12px;border-radius:20px;border:1px solid #c9a056;background:#fffdf6;color:#2e1c0e;font:500 15px inherit;outline:none}
+#hvChatInk .ck-send{flex:0 0 auto;min-width:72px;height:40px;border-radius:10px;border:2px solid #e2b55a;background:linear-gradient(180deg,#c4302a,#8a1a12);color:#ffe3a0;font:900 17px inherit;cursor:pointer}
+#hvChatInk .ck-send:active{transform:translateY(1px)}
+
+/* ===== Ban online (#hvChat2 tu chat-channels-runtime): cung giao dien giay thuy mac ===== */
+body.chat2-open #hvChatInk{display:none!important}
+#hvChat2:not([hidden]){position:fixed!important;inset:0!important;z-index:60!important;background:#efe2c4 url(../../assets/ui/chat/ink/bg.webp) center/cover no-repeat!important;color:#3a2414!important}
+#hvChat2 .c2{position:absolute!important;inset:0!important;max-width:560px;margin:0 auto!important;padding:calc(10px + env(safe-area-inset-top)) 10px calc(10px + env(safe-area-inset-bottom))!important;box-sizing:border-box;display:grid!important;grid-template-columns:1fr!important;grid-template-rows:auto auto 1fr auto auto!important;grid-template-areas:"roof" "rail" "main" "quick" "input"!important;gap:8px!important;background:none!important;border:0!important;box-shadow:none!important;border-radius:0!important;width:auto!important;height:auto!important}
+#hvChat2 .c2::before,#hvChat2 .c2::after{display:none!important}
+#hvChat2 .c2-roof{grid-area:roof;position:relative!important;min-height:52px;display:flex;align-items:center;justify-content:center;background:none!important;border:0!important;height:auto!important;inset:auto!important}
+#hvChat2 .c2-roof::after{content:"Trò Chuyện";padding:8px 34px;border:2px solid #d8a548;border-radius:10px;background:linear-gradient(180deg,#b32a22,#7d1410);color:#ffe3a0;font:900 clamp(20px,6vw,26px)/1.1 Georgia,'Times New Roman',serif;letter-spacing:.04em;text-shadow:0 2px 0 #4a0a06;box-shadow:inset 0 0 0 2px rgba(255,210,120,.25),0 4px 10px rgba(80,20,0,.3)}
+#hvChat2 .c2-x{position:absolute!important;left:0!important;right:auto!important;top:50%!important;transform:translateY(-50%)!important;width:44px!important;height:44px!important;border-radius:50%!important;border:2px solid #d8a548!important;background:radial-gradient(circle at 35% 30%,#c4302a,#7d1410)!important;color:transparent!important;font-size:0!important;box-shadow:0 3px 8px rgba(80,20,0,.35)!important;padding:0!important}
+#hvChat2 .c2-x::before{content:"‹";color:#ffe7b0;font-size:26px;line-height:40px;display:block;text-align:center}
+#hvChat2 .c2-rail{grid-area:rail;position:static!important;display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:5px!important;width:auto!important;height:auto!important;background:none!important;border:0!important;padding:0!important;flex-direction:row!important;overflow:visible!important}
+#hvChat2 .c2-ch{min-height:42px!important;height:auto!important;width:auto!important;padding:4px 2px!important;border-radius:22px!important;border:2px solid #c9a056!important;background:linear-gradient(180deg,#fff8e8,#f2e2bd)!important;color:#5a2a14!important;font:800 clamp(11px,3.3vw,14px)/1.1 inherit!important;display:flex!important;align-items:center;justify-content:center;box-shadow:0 2px 4px rgba(90,50,10,.15)!important;flex-direction:row!important;margin:0!important}
+#hvChat2 .c2-ch img{display:none!important}
+#hvChat2 .c2-ch span{color:inherit!important;font:inherit!important;writing-mode:horizontal-tb!important}
+#hvChat2 .c2-ch.on{background:linear-gradient(180deg,#c4302a,#8a1a12)!important;color:#ffe3a0!important;border-color:#e2b55a!important}
+#hvChat2 .c2-main{grid-area:main;position:static!important;display:flex!important;flex-direction:column;min-height:0;gap:8px;background:none!important;border:0!important;padding:0!important;inset:auto!important;width:auto!important;height:auto!important}
+#hvChat2 .c2-bar{display:flex!important;align-items:center;gap:6px;padding:6px 10px!important;border-top:1px solid #c9a056;border-bottom:1px solid #c9a056;background:linear-gradient(90deg,transparent,rgba(122,24,16,.88) 12%,rgba(122,24,16,.88) 88%,transparent)!important;min-height:0!important}
+#hvChat2 .c2-bar h3{flex:1;margin:0!important;text-align:center;color:#ffe3a0!important;font:800 14px/1.2 inherit!important;background:none!important}
+#hvChat2 .c2-bar h3 i{display:none!important}
+#hvChat2 .c2-count,#hvChat2 .c2-mini{color:#ffe3a0!important;background:rgba(0,0,0,.2)!important;border:1px solid #e2b55a!important;border-radius:10px!important;padding:2px 8px!important;font:700 12px inherit!important}
+#hvChat2 .c2-feed{flex:1;min-height:0;overflow-y:auto;display:flex!important;flex-direction:column;gap:12px!important;padding:6px 2px!important;background:none!important;border:0!important;scrollbar-width:none}
+#hvChat2 .c2-row{display:flex!important;align-items:flex-start;gap:8px!important}
+#hvChat2 .c2-row.me{flex-direction:row-reverse!important}
+#hvChat2 .c2-av{position:relative;flex:0 0 52px!important;width:52px!important;height:52px!important;border-radius:50%!important;overflow:visible!important;border:2px solid #c9a056!important;background:#e9d6ac!important;box-shadow:0 2px 6px rgba(90,50,10,.25)!important}
+#hvChat2 .c2-av img{width:100%!important;height:100%!important;object-fit:cover;border-radius:50%}
+#hvChat2 .c2-av i{position:absolute;left:50%;bottom:-8px;transform:translateX(-50%);font-style:normal;font-size:10px!important;font-weight:800;color:#6a4a20!important;padding:0 5px;border:1px solid #c9a056;border-radius:8px;background:#f6e6be!important;white-space:nowrap}
+#hvChat2 .c2-col{min-width:0;max-width:calc(100% - 64px)}
+#hvChat2 .me .c2-col{align-items:flex-end}
+#hvChat2 .c2-meta b{color:#8a1a12!important;font-size:15px!important;font-weight:900}
+#hvChat2 .c2-meta time{color:#8a7458!important;font-size:11px!important}
+#hvChat2 .c2-bub{padding:9px 13px!important;border-radius:12px!important;border:1px solid #b89a6a!important;background:rgba(255,250,238,.95)!important;color:#2e1c0e!important;font-size:15px!important;line-height:1.4;box-shadow:0 2px 4px rgba(90,50,10,.12)!important}
+#hvChat2 .me .c2-bub{background:rgba(214,234,206,.96)!important;border-color:#8fb48a!important}
+#hvChat2 .c2-bub::before,#hvChat2 .c2-bub::after{display:none!important}
+#hvChat2 .c2-sys{align-self:center;max-width:92%;padding:6px 12px!important;border-radius:12px!important;background:rgba(122,24,16,.08)!important;border:1px dashed #b88a50!important;color:#5a3a1a!important;display:flex!important;align-items:center;gap:6px}
+#hvChat2 .c2-sys p{margin:0;color:#5a3a1a!important;font-size:13px}
+#hvChat2 .c2-sys em{color:#8a1a12!important;font-style:normal;font-weight:800}
+#hvChat2 .c2-sys-tag{color:#8a1a12!important;font-style:normal;font-weight:900;background:none!important}
+#hvChat2 .c2-sys-horn{width:18px;height:18px}
+#hvChat2 .c2-empty{color:#8a7458!important;text-align:center}
+#hvChat2 .c2-quick{grid-area:quick;display:flex!important;flex-wrap:wrap;gap:6px;position:static!important;background:none!important;border:0!important;padding:0!important}
+#hvChat2 .c2-quick[hidden]{display:none!important}
+#hvChat2 .c2-quick button{padding:6px 10px!important;border-radius:14px!important;border:1px solid #c9a056!important;background:#fff8e8!important;color:#5a2a14!important;font:700 13px inherit!important}
+#hvChat2 .c2-input{grid-area:input;position:static!important;display:flex!important;align-items:center;gap:8px!important;padding:8px!important;border-radius:14px!important;border:2px solid #c9a056!important;background:rgba(255,248,232,.92)!important;inset:auto!important;width:auto!important;height:auto!important;margin:0!important}
+#hvChat2 .c2-emo{flex:0 0 40px!important;width:40px!important;height:40px!important;border-radius:50%!important;border:2px solid #c9a056!important;background:#fff3d8!important;color:#8a1a12!important;font-size:22px!important}
+#hvChat2 .c2-input input{flex:1;min-width:0;height:40px!important;padding:0 12px!important;border-radius:20px!important;border:1px solid #c9a056!important;background:#fffdf6!important;color:#2e1c0e!important;font:500 15px inherit!important}
+#hvChat2 .c2-send{min-width:72px!important;height:40px!important;border-radius:10px!important;border:2px solid #e2b55a!important;background:linear-gradient(180deg,#c4302a,#8a1a12)!important;color:#ffe3a0!important;font:900 17px inherit!important;padding:0 12px!important}
+#hvChat2 .c2-input.off{opacity:.6}
+#hvChat2 .c2-g{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border-radius:12px;border:1px solid #c9a056;background:rgba(255,250,238,.95);color:#3a2414}
+#hvChat2 .c2-btn{border-radius:10px!important;border:2px solid #e2b55a!important;background:linear-gradient(180deg,#c4302a,#8a1a12)!important;color:#ffe3a0!important;font-weight:800!important;padding:6px 12px!important}
+#hvChat2 .c2-make input{border:1px solid #c9a056!important;background:#fffdf6!important;color:#2e1c0e!important;border-radius:10px!important}
+#hvChat2 .c2-fr{display:flex!important;align-items:center;gap:8px;padding:8px 10px!important;border-radius:12px!important;border:1px solid #c9a056!important;background:rgba(255,250,238,.95)!important;color:#3a2414!important}
+#hvChat2 .c2-ch span{background:none!important;border:0!important;padding:0!important;box-shadow:none!important;border-radius:0!important;min-width:0!important;height:auto!important}
+#hvChat2 .c2-ch::before,#hvChat2 .c2-ch::after,#hvChat2 .c2-ch span::before,#hvChat2 .c2-ch span::after{display:none!important}
+#hvChat2 .c2-meta b,#hvChat2 .c2-meta time,#hvChat2 .c2-bar h3,#hvChat2 .c2-ch,#hvChat2 .c2-sys *{text-shadow:none!important;-webkit-text-stroke:0!important}
+#hvChat2 .c2-meta{display:flex!important;align-items:center;gap:6px;background:none!important}
+#hvChat2 .c2-sys{position:static!important;flex-wrap:wrap;justify-content:center;text-align:center}
+#hvChat2 .c2-sys-horn{display:none!important}
+#hvChat2 .c2-sys-tag{position:static!important;transform:none!important;padding:0 6px 0 0!important;border:0!important;font-size:13px!important}
+#hvChat2 .c2-sys::before,#hvChat2 .c2-sys::after{display:none!important}
+/* QA +9999 khong de len tin nhan */
+body.chat-ink-open #hvQaGrant,body.chat2-open #hvQaGrant{bottom:auto!important;top:calc(70px + env(safe-area-inset-top))!important;right:8px!important;left:auto!important}
+body.chat-ink-open #hvQaGrant,body.chat2-open #hvQaGrant{top:calc(4px + env(safe-area-inset-top))!important;transform:scale(.82);transform-origin:top right}
+#hvChatInk .ck-tabs{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+#hvChatInk .ck-tab{min-height:38px}
+#hvChatInk .ck-banner{display:flex;align-items:center;gap:6px;justify-content:center}
+#hvChatInk .ck-mini{flex:0 0 auto;padding:2px 8px;border-radius:10px;border:1px solid #e2b55a;background:rgba(0,0,0,.2);color:#ffe3a0;font:700 12px inherit;cursor:pointer}
+#hvChatInk .ck-fr{display:flex;align-items:center;gap:10px;width:100%;padding:8px 10px;border-radius:12px;border:1px solid #c9a056;background:rgba(255,250,238,.95);color:#3a2414;text-align:left;cursor:pointer}
+#hvChatInk .ck-fr b{flex:1;color:#8a1a12;font-size:15px}
+#hvChatInk .ck-fr small{color:#6a4a20;font-size:12px}
+#hvChatInk .ck-av.sm{flex:0 0 40px;width:40px;height:40px}
+#hvChatInk .ck-input.off{opacity:.6}
+/* Owner 12/11: tab kenh doc ben trai thay cho 2 hang */
+#hvChatInk .ck{display:grid!important;grid-template-columns:clamp(68px,20vw,84px) minmax(0,1fr);grid-template-rows:auto auto minmax(0,1fr) auto auto;grid-template-areas:"top top" "tabs banner" "tabs feed" "quick quick" "input input";column-gap:8px}
+#hvChatInk .ck-top{grid-area:top}
+#hvChatInk .ck-banner{grid-area:banner}
+#hvChatInk .ck-feed{grid-area:feed}
+#hvChatInk .ck-quick{grid-area:quick}
+#hvChatInk .ck-input{grid-area:input}
+#hvChatInk .ck-tabs{grid-area:tabs;display:flex!important;flex-direction:column;gap:6px;align-self:start;overflow-y:auto;max-height:100%;scrollbar-width:none}
+#hvChatInk .ck-tab{min-height:46px;padding:6px 2px;border-radius:12px;font-size:clamp(12px,3.4vw,14px);line-height:1.15;white-space:normal;word-break:keep-all}
+#hvChatInk .ck-av{flex-basis:44px;width:44px;height:44px}
+#hvChatInk .ck-col{max-width:calc(100% - 54px)}
+#hvChat2 .c2{grid-template-columns:clamp(68px,20vw,84px) minmax(0,1fr)!important;grid-template-rows:auto minmax(0,1fr) auto auto!important;grid-template-areas:"roof roof" "rail main" "quick quick" "input input"!important;column-gap:8px!important}
+#hvChat2 .c2-rail{display:flex!important;flex-direction:column!important;gap:6px!important;align-self:start}
+#hvChat2 .c2-ch{min-height:46px!important;border-radius:12px!important;white-space:normal!important}
+#hvChat2 .c2-av{flex-basis:44px!important;width:44px!important;height:44px!important}
+#hvChat2 .c2-col{max-width:calc(100% - 54px)!important}#hvChat2 .c2-rail{align-items:stretch!important}
+#hvChat2 .c2-ch{width:100%!important;max-width:none!important;flex:0 0 auto!important;box-sizing:border-box!important;font-size:clamp(12px,3.4vw,14px)!important}
+
+/* Owner 12/11 18:41: 1 nut so xuong chon kenh, nhuong cho khung chat */
+#hvChatInk .ck{grid-template-columns:minmax(0,1fr)!important;grid-template-areas:"top" "tabs" "feed" "quick" "input"!important;grid-template-rows:auto auto minmax(0,1fr) auto auto!important}
+#hvChatInk .ck-banner{display:none!important}
+#hvChatInk .ck-tabs,#hvChat2 .c2-rail{position:relative;display:block!important;max-height:none!important;overflow:visible!important;z-index:5}
+#hvChatInk .ck-tabs .ck-tab,#hvChat2 .c2-rail .c2-ch{display:none!important}
+#hvChatInk .ck-pick,#hvChat2 .ck-pick{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:40px;padding:6px 14px;border-radius:12px;border:2px solid #c9a056;background:linear-gradient(180deg,#a8231a,#7a140e);color:#ffe3a0;font:800 15px inherit;cursor:pointer;box-sizing:border-box}
+#hvChatInk .ck-pick i,#hvChat2 .ck-pick i{font-style:normal;transition:transform .15s}
+#hvChatInk .ck-tabs.open .ck-pick i,#hvChat2 .c2-rail.open .ck-pick i{transform:rotate(180deg)}
+#hvChatInk .ck-tabs.open .ck-tab,#hvChat2 .c2-rail.open .c2-ch{display:flex!important;width:100%!important;justify-content:center;margin-top:4px;min-height:40px!important}
+#hvChatInk .ck-tabs.open,#hvChat2 .c2-rail.open{}
+#hvChatInk .ck-tabs .ck-drop,#hvChat2 .ck-drop{position:absolute;left:0;right:0;top:100%;padding:6px;border-radius:12px;background:rgba(250,240,220,.98);border:1px solid #c9a056;box-shadow:0 10px 24px rgba(0,0,0,.3)}
+#hvChatInk .ck-tabs:not(.open) .ck-drop,#hvChat2 .c2-rail:not(.open) .ck-drop{display:none}
+#hvChat2 .c2{grid-template-columns:minmax(0,1fr)!important;grid-template-areas:"roof" "rail" "main" "quick" "input"!important;grid-template-rows:auto auto minmax(0,1fr) auto auto!important}
+#hvChatInk .ck-col,#hvChat2 .c2-col{max-width:calc(100% - 54px)!important}
+/* Owner 12/11 18:44: 1 nut nho ben trai canh dai chuc mung, so doc xuong de len khung chat */
+#hvChatInk .ck{grid-template-columns:clamp(76px,21vw,92px) minmax(0,1fr)!important;grid-template-areas:"top top" "tabs banner" "feed feed" "quick quick" "input input"!important;grid-template-rows:auto auto minmax(0,1fr) auto auto!important;column-gap:6px!important}
+#hvChatInk .ck-banner{display:flex!important;grid-area:banner;align-self:stretch}
+#hvChat2 .c2{grid-template-columns:clamp(76px,21vw,92px) minmax(0,1fr)!important;grid-template-areas:"roof roof" "rail head" "main main" "quick quick" "input input"!important;grid-template-rows:auto auto minmax(0,1fr) auto auto!important;column-gap:6px!important}
+#hvChatInk .ck-tabs,#hvChat2 .c2-rail{grid-area:tabs;align-self:stretch}
+#hvChat2 .c2-rail{grid-area:rail}
+#hvChatInk .ck-pick,#hvChat2 .ck-pick{height:100%;min-height:38px;padding:4px 6px;justify-content:center;gap:3px;border-radius:12px;font-size:clamp(12px,3.4vw,14px)}
+#hvChatInk .ck-pick span,#hvChat2 .ck-pick span{white-space:nowrap}
+#hvChatInk .ck-pick b,#hvChat2 .ck-pick b{position:absolute;top:-6px;right:-6px;min-width:18px;height:18px;padding:0 4px;border-radius:9px;background:#d12b1f;color:#fff;font-size:11px;line-height:18px;text-align:center}
+#hvChatInk .ck-drop,#hvChat2 .ck-drop{left:0!important;right:auto!important;width:100%;top:calc(100% + 4px)!important;padding:4px!important;display:flex;flex-direction:column;gap:5px;background:rgba(250,240,220,.97)!important}
+#hvChatInk .ck-tabs.open .ck-tab,#hvChat2 .c2-rail.open .c2-ch{margin-top:0!important;min-height:42px!important;font-size:clamp(12px,3.4vw,14px)!important;padding:4px 2px!important}
