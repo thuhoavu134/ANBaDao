@@ -123,3 +123,17 @@ body.login-gate-open .hv-brandbar,
 body.login-gate-open #resbar,
 body.login-gate-open #hubScreen,
 body.login-gate-open .art-dock{display:none!important}
+/* Owner 12/11: khung dang nhap - thanh cuon duoi khong de len noi dung, nut Tiep tuc choi game dang nut vang co vien */
+#hvLoginRoot .hv-login-frame{padding:20px 16px 26px}
+#hvLoginRoot .hv-login-frame::before,#hvLoginRoot .hv-login-frame::after{pointer-events:none}
+#hvLoginRoot .hv-login-cta{
+  position:relative;min-height:52px;margin:12px 0 0;border-radius:14px;
+  border:2px solid #8a4a10;
+  background:linear-gradient(180deg,#ffd27a 0%,#f2a23c 48%,#d9741c 100%);
+  color:#4a1d02;font-size:17px;letter-spacing:.3px;text-shadow:0 1px 0 rgba(255,236,190,.7);
+  box-shadow:inset 0 2px 0 rgba(255,250,225,.75),inset 0 -3px 0 rgba(120,50,0,.35),0 4px 0 #8a4a10,0 8px 14px rgba(90,40,0,.28);
+  transition:transform .08s,box-shadow .08s;
+}
+#hvLoginRoot .hv-login-cta:active{transform:translateY(3px);box-shadow:inset 0 2px 0 rgba(255,250,225,.75),0 1px 0 #8a4a10,0 3px 6px rgba(90,40,0,.25)}
+#hvLoginRoot .hv-login-check{justify-content:center;margin:14px 0 0;color:#7a4a22;font-size:11.5px}#hvLoginRoot .hv-login-cta{border:2px solid #8a4a10;box-shadow:inset 0 1px 0 rgba(255,250,225,.75),0 6px 12px rgba(90,40,0,.25)}
+#hvLoginRoot .hv-login-cta:active{transform:translateY(1px);box-shadow:inset 0 1px 0 rgba(255,250,225,.75),0 3px 6px rgba(90,40,0,.22)}
