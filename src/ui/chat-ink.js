@@ -177,3 +177,72 @@
   new MutationObserver(run).observe(document.body, { childList: true, subtree: true });
   document.addEventListener('click', e => { if (!e.target.closest('.ck-tabs,.c2-rail')) document.querySelectorAll('.ck-tabs.open,.c2-rail.open').forEach(x => x.classList.remove('open')); });
 })();
+// Owner 12/11 18:53: khung chat nhanh o Thanh Chinh (tren thanh dock) — tang tuong tac.
+(() => {
+  if (typeof document === 'undefined' || typeof chatPush !== 'function') return;
+  const esc = t => String(t == null ? '' : t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const online = () => { try { return typeof netOnline === 'function' && netOnline(); } catch (_) { return false; } };
+  const QUICK = ['Chào các huynh đệ!', 'Ai đi Săn Boss không?', 'Lập tổ đội đánh tháp nào!', 'Vừa rèn được đồ ngon 😎', 'Đa tạ!'];
+  const box = document.createElement('div');
+  box.id = 'hvHubChat'; box.hidden = true;
+  box.innerHTML = '<button type="button" class="hc-feed" aria-label="Mở Trò chuyện"></button>'
+    + '<button type="button" class="hc-say" aria-label="Nói nhanh">💬</button>'
+    + '<div class="hc-quick" hidden>' + QUICK.map(q => '<button type="button" data-hc-q="' + esc(q) + '">' + esc(q) + '</button>').join('') + '</div>';
+  const feed = box.querySelector('.hc-feed'), quick = box.querySelector('.hc-quick');
+  let lastKey = '';
+
+  const tag = m => /Chúc mừng/i.test(m.text || '') || /^(Hệ thống|Loa)/i.test(m.who || '') ? '<i class="hc-t sys">Hệ thống</i>'
+    : (m.channel === 'guild' ? '<i class="hc-t gd">Bang</i>' : m.channel === 'team' ? '<i class="hc-t tm">Đội</i>' : '<i class="hc-t wd">Thế giới</i>');
+  function paint() {
+    const list = (P.chat || []).filter(m => !String(m.channel || '').startsWith('friend:') && !/đã mở\. Đây là nơi/.test(m.text || '')).slice(-2);
+    const key = list.map(m => m.t + m.text).join('|');
+    if (key === lastKey) return;
+    lastKey = key;
+    feed.innerHTML = list.length ? list.map(m => '<div class="hc-line">' + tag(m) + '<b>' + esc(m.me ? 'Ta' : m.who) + ':</b> <span>' + esc(String(m.text || '').replace(/Kênh Mộng Phố/g, 'Kênh Giang Hồ')) + '</span></div>').join('')
+      : '<div class="hc-line"><i class="hc-t wd">Thế giới</i><span>Chạm để trò chuyện cùng giang hồ…</span></div>';
+    feed.classList.remove('bump'); void feed.offsetWidth; feed.classList.add('bump');
+  }
+  function place() {
+    const hub = document.querySelector('#hubScreen .art-hub'), dock = hub && hub.querySelector('.art-dock');
+    if (!hub || !dock) return false;
+    if (box.parentElement !== hub) hub.append(box);
+    box.style.bottom = (hub.clientHeight - dock.offsetTop + 6) + 'px';
+    return true;
+  }
+  function sync() {
+    const on = typeof ST === 'object' && ST.screen === 'hub' && place();
+    box.hidden = !on;
+    if (on) paint();
+  }
+  // Cu dan noi chuyen ngam khi o Thanh Chinh (offline) de kenh luon co hoi tho.
+  function ambient() {
+    if (box.hidden || online() || document.hidden) return;
+    try {
+      const hid = typeof randChannelHero === 'function' && randChannelHero('world'); if (!hid) return;
+      const pool = (typeof CHAT_AMBIENT === 'object' && CHAT_AMBIENT.world) || []; if (!pool.length) return;
+      chatPush(DATA.heroes[hid].name, pool[(Math.random() * pool.length) | 0], false, 'world', hid);
+    } catch (_) {}
+    paint();
+  }
+  (function loop() { setTimeout(() => { ambient(); loop(); }, 7000 + Math.random() * 8000); })();
+  setInterval(() => { if (!box.hidden) paint(); }, 1500);
+
+  feed.addEventListener('click', () => { if (typeof navTo === 'function') navTo('chat'); });
+  box.querySelector('.hc-say').addEventListener('click', e => { e.stopPropagation(); quick.hidden = !quick.hidden; });
+  quick.addEventListener('click', e => {
+    const b = e.target.closest('[data-hc-q]'); if (!b) return;
+    quick.hidden = true;
+    if (online()) { if (typeof navTo === 'function') navTo('chat'); return; }
+    const prevCh = P.social && P.social.channel;
+    try { if (P.social) P.social.channel = 'world'; if (typeof sendChat === 'function') sendChat(b.dataset.hcQ); else chatPush('Anh', b.dataset.hcQ, true, 'world'); }
+    finally { if (P.social && prevCh) P.social.channel = prevCh; }
+    lastKey = ''; paint();
+  });
+  document.addEventListener('click', e => { if (!e.target.closest('#hvHubChat')) quick.hidden = true; });
+
+  const baseShow = showScreen;
+  showScreen = function showScreenHubChat() { const r = baseShow.apply(this, arguments); setTimeout(sync, 0); return r; };
+  window.addEventListener('resize', () => { if (!box.hidden) place(); });
+  setTimeout(sync, 300);
+  window.HV_HUB_CHAT = { sync, paint };
+})();

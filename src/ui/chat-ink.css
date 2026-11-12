@@ -155,3 +155,40 @@ body.chat-ink-open #hvQaGrant,body.chat2-open #hvQaGrant{top:calc(4px + env(safe
 #hvChatInk .ck-pick b,#hvChat2 .ck-pick b{position:absolute;top:-6px;right:-6px;min-width:18px;height:18px;padding:0 4px;border-radius:9px;background:#d12b1f;color:#fff;font-size:11px;line-height:18px;text-align:center}
 #hvChatInk .ck-drop,#hvChat2 .ck-drop{left:0!important;right:auto!important;width:100%;top:calc(100% + 4px)!important;padding:4px!important;display:flex;flex-direction:column;gap:5px;background:rgba(250,240,220,.97)!important}
 #hvChatInk .ck-tabs.open .ck-tab,#hvChat2 .c2-rail.open .c2-ch{margin-top:0!important;min-height:42px!important;font-size:clamp(12px,3.4vw,14px)!important;padding:4px 2px!important}
+/* Khung chat nhanh Thanh Chinh */
+#hvHubChat{position:absolute;left:8px;right:8px;z-index:30;display:flex;align-items:stretch;gap:6px;pointer-events:auto}
+#hvHubChat[hidden]{display:none}
+#hvHubChat .hc-feed{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;padding:6px 10px;border-radius:12px;border:1px solid rgba(226,181,90,.75);background:linear-gradient(180deg,rgba(28,16,8,.78),rgba(18,10,4,.86));box-shadow:0 4px 14px rgba(0,0,0,.35);text-align:left;color:#fff3dc;cursor:pointer;font:500 13px/1.3 inherit;overflow:hidden}
+#hvHubChat .hc-line{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#hvHubChat .hc-line b{color:#ffd27a;font-weight:800;margin-right:3px}
+#hvHubChat .hc-line span{color:#fff3dc}
+#hvHubChat .hc-t{display:inline-block;margin-right:5px;padding:0 5px;border-radius:5px;font:800 10.5px/16px inherit;font-style:normal;vertical-align:1px}
+#hvHubChat .hc-t.wd{background:#a8231a;color:#ffe3a0}
+#hvHubChat .hc-t.gd{background:#1f6b45;color:#dfffe9}
+#hvHubChat .hc-t.tm{background:#245c9c;color:#e3f0ff}
+#hvHubChat .hc-t.sys{background:#d59a1c;color:#3a1c04}
+#hvHubChat .hc-feed.bump .hc-line:last-child{animation:hcIn .35s ease-out}
+@keyframes hcIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+#hvHubChat .hc-say{flex:0 0 44px;border-radius:12px;border:1px solid rgba(226,181,90,.85);background:linear-gradient(180deg,#b3261c,#7a140e);color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.35)}
+#hvHubChat .hc-quick{position:absolute;right:0;bottom:calc(100% + 6px);display:flex;flex-direction:column;gap:4px;padding:6px;border-radius:12px;background:rgba(250,240,220,.97);border:1px solid #c9a056;box-shadow:0 10px 24px rgba(0,0,0,.35)}
+#hvHubChat .hc-quick[hidden]{display:none}
+#hvHubChat .hc-quick button{padding:7px 12px;border-radius:9px;border:1px solid #c9a056;background:#fffaf0;color:#5a2a10;font:700 13px inherit;text-align:left;white-space:nowrap;cursor:pointer}
+@media (prefers-reduced-motion:reduce){#hvHubChat .hc-feed.bump .hc-line:last-child{animation:none}}
+/* Owner 12/11 19:15: chat nhanh Thanh Chinh = mau B cuon giay do, truc go do, nut trien do */
+#hvHubChat{left:14px;right:14px;gap:8px;align-items:center}
+#hvHubChat .hc-feed{position:relative;padding:7px 16px;border-radius:4px;border:0;border-top:1px solid rgba(150,110,60,.5);border-bottom:1px solid rgba(150,110,60,.5);background:linear-gradient(180deg,rgba(255,250,236,.96),rgba(243,228,196,.96)),url(assets/ui/chat/ink/bg.webp) center/cover;box-shadow:0 4px 12px rgba(0,0,0,.3);color:#3a2414;overflow:visible}
+#hvHubChat .hc-feed::before,#hvHubChat .hc-feed::after{content:"";position:absolute;top:-5px;bottom:-5px;width:10px;border-radius:5px;background:linear-gradient(90deg,#5e0f0a,#b3261c 45%,#e04a34 55%,#7a140e);box-shadow:0 2px 4px rgba(0,0,0,.4),inset 0 0 0 1px rgba(255,210,122,.45)}
+#hvHubChat .hc-feed::before{left:-6px}
+#hvHubChat .hc-feed::after{right:-6px}
+#hvHubChat .hc-line{position:relative;z-index:1}
+#hvHubChat .hc-line b{color:#8a1a12}
+#hvHubChat .hc-line span{color:#3a2414}
+#hvHubChat .hc-t{border-radius:3px;border:1px solid rgba(120,10,6,.7);font-size:10px;line-height:14px;padding:0 4px}
+#hvHubChat .hc-t.wd{background:#b3261c;color:#fff1d6}
+#hvHubChat .hc-say{flex:0 0 44px;height:44px;border-radius:50%;border:2px solid #7a140e;background:radial-gradient(circle at 35% 30%,#e04a34,#a8231a 60%,#6e110b);color:#fff1d6;font-size:0;box-shadow:0 3px 8px rgba(0,0,0,.4),inset 0 0 0 2px rgba(255,220,180,.35)}
+#hvHubChat .hc-say::before{content:none;font:900 20px/1 serif;color:#fff1d6;text-shadow:0 1px 1px rgba(0,0,0,.4)}
+/* Owner 12/11 19:45: dung dung anh mau B da duyet (cat tu anh), khong ve lai, khong chu Trung */
+#hvHubChat .hc-feed{background:url(assets/ui/chat/hub/scroll.webp) center/100% 100% no-repeat!important;border:0!important;border-radius:0!important;box-shadow:none!important;filter:drop-shadow(0 3px 6px rgba(0,0,0,.35));padding:8px 30px!important;min-height:58px;justify-content:center}
+#hvHubChat .hc-feed::before,#hvHubChat .hc-feed::after{display:none!important;content:none!important}
+#hvHubChat .hc-say{flex:0 0 52px!important;height:52px!important;border:0!important;border-radius:50%!important;background:url(assets/ui/chat/hub/say.webp) center/100% 100% no-repeat!important;box-shadow:none!important;filter:drop-shadow(0 3px 5px rgba(0,0,0,.4))}
+#hvHubChat .hc-say::before{content:none!important;display:none!important}
