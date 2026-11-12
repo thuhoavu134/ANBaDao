@@ -14,7 +14,10 @@
       borderRadius: '999px', padding: '8px 14px', fontWeight: '800', fontSize: '13px'
     });
     b.onclick = () => {
-      try { P.gems = (Number(P.gems) || 0) + 9999; P.gold = (Number(P.gold) || 0) + 9999; } catch (_) {}
+      try { P.gems = (Number(P.gems) || 0) + 9999; P.gold = (Number(P.gold) || 0) + 99999; } catch (_) {}
+      // Owner 2026-11-12: cấp đủ nguyên liệu Rèn (Tinh/Hoạt) để test chế đồ + cường hoá.
+      try { P.tinh = (Number(P.tinh) || 0) + 9999; P.hoat = (Number(P.hoat) || 0) + 9999; } catch (_) {}
+      try { if (typeof renderForge === 'function' && document.querySelector('.fa-root')) renderForge(); } catch (_) {}
       try { if (typeof persist === 'function') persist(); } catch (_) {}
       try { if (typeof refreshResbar === 'function') refreshResbar(); } catch (_) {}
       try { if (typeof renderSummon === 'function') renderSummon(); } catch (_) {}

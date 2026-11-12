@@ -1,6 +1,8 @@
 /* Owner 08/11: man tai co thanh tien do ngay sau dang nhap.
    Nap san anh cua MOI tuong dang so huu (idle, danh, chieu, trung don, chay, nga) + anh UI chinh,
-   de vao tran / len dai doi hinh khong bi "tuong chua kip tai". Toi da 25 giay roi tu dong vao game. */
+   de vao tran / len dai doi hinh khong bi "tuong chua kip tai".
+   Owner 12/11: PHAI tai het 100% moi vao game (bo moc 25 giay tu vao). Anh nao treo qua 20 giay
+   thi tinh la xong anh do de thanh tien do van chay toi 100%, khong ket mai. */
 (() => {
   const UI = [
     'assets/ui/team/team-concept-tray.webp', 'assets/ui/team/slot-frame.webp',
@@ -36,9 +38,10 @@
   function loadImg(src) {
     return new Promise(res => {
       const im = new Image(); im.decoding = 'async';
-      const done = () => res();
+      let fin = false; const done = () => { if (!fin) { fin = true; res(); } };
       im.onload = () => { (im.decode ? im.decode().catch(() => {}) : Promise.resolve()).then(done); };
       im.onerror = done; im.src = src;
+      setTimeout(done, 20000);
       (window.__hvBootKeep = window.__hvBootKeep || []).push(im);
     });
   }
@@ -53,7 +56,6 @@
     const ids = Object.keys(P.heroes).filter(id => P.heroes[id].owned && DATA.heroes && DATA.heroes[id]);
     let closed = false;
     const close = () => { if (closed) return; closed = true; el.classList.add('is-done'); setTimeout(() => { el.remove(); }, 600); window.HV_BOOT_DONE = true; };
-    const hardStop = setTimeout(close, 25000);
     Promise.all(ids.map(urlsFor)).then(lists => {
       const all = [...new Set(UI.concat(...lists))];
       let n = 0, k = 0;
@@ -62,7 +64,7 @@
       const tick = () => { const v = Math.round(n / total * 100); fill.style.width = v + '%'; pct.textContent = v + '%'; };
       const worker = () => { const src = all[k++]; if (!src) return Promise.resolve(); return loadImg(src).then(() => { n++; tick(); return worker(); }); };
       return Promise.all(Array.from({ length: 6 }, worker)).then(() => { tick(); label.textContent = 'Sẵn sàng!'; });
-    }).finally(() => { clearTimeout(hardStop); setTimeout(close, 250); });
+    }).finally(() => { setTimeout(close, 350); });
   }
   // bat dau ngay khi dang nhap xong (co du lieu tuong) va man dang nhap da dong
   const watch = setInterval(() => {

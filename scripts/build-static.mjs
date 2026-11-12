@@ -381,3 +381,6 @@ await import('./arena-concept-v1.mjs');
 
 // Owner 2026-11-06: Mong Lo theo concept B (mieu mong cat lop).
 await import('./expedition-concept-v1.mjs');
+
+// Owner 2026-11-11: Lo Ren mau A (anh gpt_image + thanh tien trinh ren).
+await import('./forge-skin-a-v1.mjs');

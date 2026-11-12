@@ -4804,14 +4804,18 @@ function forgeMoldBonus(id){ const out={hp:0,atk:0,def:0,spd:0,active:[]}, e=(P.
 function forgeMoldLine(id){ const x=forgeMoldBonus(id); return x.active.length?' · '+x.active.map(a=>`<b style="color:#ffd978">${FORGE_MOLDS[a.mold].name} (${a.n})</b>`).join(' · '):''; }
 // Owner 2026-10-25: lò rèn chỉ ra s/ss/ssr. b/a chỉ rơi ở phó bản (rác phân giải).
 // Bảng riêng, KHÔNG dùng GACHA.rates vì bảng đó của triệu hồi tướng.
-const FORGE_RARITY=[['ssr',10],['ss',30],['s',60]];
+// Owner 2026-11-12: SSR 4% · SS 20% · S 76%.
+const FORGE_RARITY=[['ssr',4],['ss',20],['s',76]];
 function rollForgeRarity(){ econ().craftPity++; let r=Math.random()*100,acc=0,rar='s'; if(econ().craftPity>=ECON.craftPitySSR){rar='ssr';econ().craftPity=0;}else{for(const [t,pr] of FORGE_RARITY){acc+=pr;if(r<acc){rar=t;break;}}if(econ().craftPity>=ECON.craftPitySS&&rar==='s')rar='ss';if(rar==='ssr')econ().craftPity=0;} return rar; }
 function forgeCandidate(slot){ const rar=rollForgeRarity(); return {uid:null,slot,rar,lvl:0,mold:econ().forgeMold,from:'craft',affixes:rollAffixes({source:'craft',rar})}; }
 function startDualForge(slot){ if(econ().forgePending)return {ok:false,msg:'Hãy chọn một phôi đang chờ trước.'}; if((P.tinh||0)<DUAL_FORGE.tinh)return {ok:false,msg:'Thiếu Tinh Lực cho Song Rèn.'}; if(P.gold<DUAL_FORGE.gold)return {ok:false,msg:'Thiếu vàng cho Song Rèn.'}; P.tinh-=DUAL_FORGE.tinh;P.gold-=DUAL_FORGE.gold;econ().forgePending={slot,mold:econ().forgeMold,candidates:[forgeCandidate(slot),forgeCandidate(slot)]};econ().forgeStats.dual++;persist();refreshResbar();return {ok:true}; }
 function chooseDualForge(i){ const p=econ().forgePending;if(!p||!p.candidates[i])return false;const it={...p.candidates[i],uid:++P.itemSeq};P.inventory.push(it);econ().forgePending=null;econ().forgeStats.chosen++;questProgress('craft',1);persist();refreshResbar();toast('Đã giữ '+itemName(it)+' · '+FORGE_MOLDS[it.mold].name);return true; }
 const RFAC={b:1,a:1.3,s:1.7,ss:2.2,ssr:3};
 function itemName(it){ return DATA.items.names[it.slot][it.rar]; }
-function itemStat(it){ return Math.round(DATA.items.base[it.slot][it.rar]*(1+0.12*it.lvl)); }
+// Owner 2026-11-12: moc cuong hoa kieu Kiem The - dat moc thi chi so chinh cong them (lay moc cao nhat da dat).
+const ENH_MILESTONES=[[4,0.05],[8,0.10],[12,0.15],[15,0.20]];
+function enhMilestoneBonus(lvl){ let b=0; for(const [m,v] of ENH_MILESTONES) if((lvl||0)>=m) b=v; return b; }
+function itemStat(it){ return Math.round(DATA.items.base[it.slot][it.rar]*(1+0.12*it.lvl)*(1+enhMilestoneBonus(it.lvl))); }
 function equippedBy(uid){ for(const hId in (P.equip||{})){ const e=P.equip[hId]; if(e) for(const s of DATA.items.slots) if(e[s]===uid) return hId; } return null; }
 function heroEquipBonus(id){ const out={hp:0,atk:0,def:0,spd:0,khangHe:0,satHe:0,boQuaKhang:0,stChuan:0,boQuaNe:0,evasion:0,accuracy:0}; if(!P||!P.equip) return out;
   const e=P.equip[id]; if(!e) return out;

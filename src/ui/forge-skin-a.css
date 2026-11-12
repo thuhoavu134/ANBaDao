@@ -1,0 +1,53 @@
+/* Lo Ren mau A (owner 11/11): ao bang anh gpt_image */
+:is(#forgeScreen,#hvForgeRoot),:is(#forgeScreen,#hvForgeRoot)::before{background:#1a120c!important}
+:is(#forgeScreen,#hvForgeRoot)::before{background:radial-gradient(120% 70% at 50% 0%,rgba(255,150,60,.18),transparent 70%),#1a120c!important;opacity:1!important;filter:none!important}
+:is(#forgeScreen,#hvForgeRoot) .econ-stage.fa-stage{padding-top:0!important}
+:is(#forgeScreen,#hvForgeRoot) .fa-hero{position:relative;margin:0 0 10px;border-radius:14px;overflow:hidden;box-shadow:0 10px 26px rgba(0,0,0,.5)}
+:is(#forgeScreen,#hvForgeRoot) .fa-scene{display:block;width:100%;aspect-ratio:3/2;object-fit:cover}
+:is(#forgeScreen,#hvForgeRoot) .fa-plaque{position:absolute;left:50%;top:6px;transform:translateX(-50%);width:min(58%,300px);filter:drop-shadow(0 4px 6px rgba(0,0,0,.55))}
+:is(#forgeScreen,#hvForgeRoot) .fa-chips{position:absolute;left:8px;right:8px;bottom:8px;display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:0!important}
+:is(#forgeScreen,#hvForgeRoot) .fa-chips .econ-chip{background:rgba(30,18,10,.8)!important;color:#ffe2a8!important;border:1px solid rgba(240,180,90,.55)!important}
+:is(#forgeScreen,#hvForgeRoot) .econ-panel{background:url(../../assets/ui/forge/v2/panel.webp) center/100% 100% no-repeat!important;border:0!important;box-shadow:none!important;padding:22px 18px!important;color:#ffe9c4!important}
+:is(#forgeScreen,#hvForgeRoot) .econ-panel h3{color:#ffd27a!important;text-shadow:0 1px 2px #000}
+:is(#forgeScreen,#hvForgeRoot) .econ-panel .meta,:is(#forgeScreen,#hvForgeRoot) .econ-muted,:is(#forgeScreen,#hvForgeRoot) .fa-cost,:is(#forgeScreen,#hvForgeRoot) .econ-panel small{color:#f3d9b0!important}
+:is(#forgeScreen,#hvForgeRoot) .econ-item{background:rgba(40,24,12,.75)!important;border:1px solid rgba(230,170,80,.35)!important;border-radius:12px!important;color:#ffe9c4!important}
+:is(#forgeScreen,#hvForgeRoot) .econ-item .nm{color:#fff0d0!important}
+:is(#forgeScreen,#hvForgeRoot) .btn.ghost,:is(#forgeScreen,#hvForgeRoot) .moldbtn,:is(#forgeScreen,#hvForgeRoot) .dualpick,:is(#forgeScreen,#hvForgeRoot) .eqto,:is(#forgeScreen,#hvForgeRoot) .itemlock,:is(#forgeScreen,#hvForgeRoot) .uneqp{background:rgba(60,36,16,.85)!important;color:#ffe2a8!important;border:1px solid rgba(230,170,80,.55)!important}
+:is(#forgeScreen,#hvForgeRoot) .moldbtn.gold{background:linear-gradient(180deg,#e7b04a,#a8681e)!important;color:#2a1606!important}
+:is(#forgeScreen,#hvForgeRoot) .fa-ib{display:inline-block!important;border:0!important;padding:0!important;margin:2px!important;cursor:pointer;background-color:transparent!important;background-position:center!important;background-size:contain!important;background-repeat:no-repeat!important;width:120px!important;min-width:0!important;height:57px!important;min-height:0!important;font-size:0!important;color:transparent!important;box-shadow:none!important;filter:drop-shadow(0 3px 4px rgba(0,0,0,.45));transition:transform .08s}
+:is(#forgeScreen,#hvForgeRoot) .fa-ib *{display:none!important}
+:is(#forgeScreen,#hvForgeRoot) .fa-ib:active{transform:scale(.95)}
+:is(#forgeScreen,#hvForgeRoot) .fa-ib[disabled]{filter:grayscale(1) brightness(.7);opacity:.6;cursor:default}
+:is(#forgeScreen,#hvForgeRoot) .econ-item .fa-ib{width:30%!important;max-width:110px;height:auto!important;aspect-ratio:453/214}
+:is(#forgeScreen,#hvForgeRoot) .fa-ren{background-image:url(../../assets/ui/forge/v2/btn-ren.webp)!important}
+:is(#forgeScreen,#hvForgeRoot) .fa-songren{background-image:url(../../assets/ui/forge/v2/btn-songren.webp)!important}
+:is(#forgeScreen,#hvForgeRoot) .fa-cuonghoa{background-image:url(../../assets/ui/forge/v2/btn-cuonghoa.webp)!important}
+:is(#forgeScreen,#hvForgeRoot) .fa-trangbi{background-image:url(../../assets/ui/forge/v2/btn-trangbi.webp)!important}
+:is(#forgeScreen,#hvForgeRoot) .fa-phanra{background-image:url(../../assets/ui/forge/v2/btn-phanra.webp)!important}
+:is(#forgeScreen,#hvForgeRoot) .fa-huy{background-image:url(../../assets/ui/forge/v2/btn-huy.webp)!important}
+:is(#forgeScreen,#hvForgeRoot) .forge-slotbar{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:10px}
+:is(#forgeScreen,#hvForgeRoot) .forge-action{display:flex!important;flex-direction:column;align-items:center;gap:2px;background:rgba(40,24,12,.6);border-radius:12px;padding:8px 4px}
+:is(#forgeScreen,#hvForgeRoot) .fa-slotname{font-weight:800;color:#ffd27a;text-shadow:0 1px 2px #000}
+:is(#forgeScreen,#hvForgeRoot) .fa-cost{font-size:11px;display:block;text-align:center;margin-bottom:4px}
+:is(#forgeScreen,#hvForgeRoot) .fa-tabs{display:flex;gap:6px;align-items:center;justify-content:center;flex-wrap:wrap;margin-bottom:8px}
+:is(#forgeScreen,#hvForgeRoot) .fa-tab{border:0;padding:0;cursor:pointer;width:88px;height:38px;background:center/contain no-repeat;font-size:0;opacity:.55;filter:saturate(.6)}
+:is(#forgeScreen,#hvForgeRoot) .fa-tab.on{opacity:1;filter:drop-shadow(0 0 6px rgba(255,200,90,.8))}
+:is(#forgeScreen,#hvForgeRoot) .fa-tab-all{font-size:12px;font-weight:800;color:#ffe2a8;background:rgba(40,24,12,.85);border:1px solid rgba(230,170,80,.5);border-radius:10px;width:auto;padding:0 10px;height:32px}
+.fa-prog{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;background:rgba(10,6,3,.62)}
+.fa-prog-box{width:min(88vw,420px);text-align:center}
+.fa-prog-lbl{font-weight:900;color:#ffd27a;font-size:18px;text-shadow:0 2px 4px #000;margin-bottom:6px}
+.fa-prog-bar{position:relative;width:100%;aspect-ratio:900/197}
+.fa-prog-fill{position:absolute;left:11%;right:5%;top:30%;bottom:30%;background:url(../../assets/ui/forge/v2/bar-fill.webp) center/100% 100% no-repeat;clip-path:inset(0 100% 0 0);border-radius:6px}
+.fa-prog-frame{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.fa-spark{position:absolute;top:50%;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;background:radial-gradient(circle,#fff6c9,#ffb347 45%,transparent 70%);box-shadow:0 0 14px 4px rgba(255,170,60,.7)}
+.fa-prog-pct{color:#ffe9c4;font-weight:800;margin-top:4px;text-shadow:0 1px 2px #000}
+@media (prefers-reduced-motion: reduce){.fa-spark{display:none}}
+
+/* thu gon (owner 12/11): khung canh nho, khong tran ngang */
+:is(#forgeScreen,#hvForgeRoot){overflow-x:hidden!important}
+:is(#forgeScreen,#hvForgeRoot) .fa-stage{max-width:100%!important;min-height:0!important;height:auto!important}
+:is(#forgeScreen,#hvForgeRoot) .fa-hero{width:100%!important;max-width:520px!important;margin:0 auto 8px!important;height:auto!important;min-height:0!important}
+:is(#forgeScreen,#hvForgeRoot) .fa-scene{width:100%!important;height:auto!important;max-height:26vh!important;min-height:0!important;aspect-ratio:3/2!important;object-fit:cover!important;position:static!important}
+:is(#forgeScreen,#hvForgeRoot) .fa-plaque{width:min(46%,220px)!important}
+:is(#forgeScreen,#hvForgeRoot) .econ-panel{padding:14px 12px!important}
+:is(#forgeScreen,#hvForgeRoot) .fa-hero .econ-chip img,:is(#forgeScreen,#hvForgeRoot) .fa-hero .fa-chips img{width:20px!important;height:20px!important;max-width:20px!important;object-fit:contain!important;vertical-align:middle}

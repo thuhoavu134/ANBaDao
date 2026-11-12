@@ -344,7 +344,7 @@
     const b = st();
     const day = typeof today === 'function' ? today() : 0;
     if (b.craftDay !== day) { b.crafted = 0; b.craftDay = day; }
-    if (b.crafted >= 2) { toast?.('Hôm nay đã chế đủ sò.'); return { ok: false }; }
+    // Owner 2026-11-12: chế sò không giới hạn, chỉ cần đủ Tinh/Hoạt.
     if ((P.tinh || 0) < 25 || (P.hoat || 0) < 25) {
       toast?.('Cần 25 Tinh + 25 Hoạt. Mua Bình/Lò ở Chợ.');
       return { ok: false };
