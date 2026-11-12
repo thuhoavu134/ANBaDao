@@ -604,9 +604,10 @@
 
   const login = document.getElementById('hvLoginRoot');
   if (login && !login.querySelector('.hv-lore-title')) {
+    // Owner 12/11: dung logo chu An Ba Dao giong man tuong, khong dung chu Georgia.
     const t = document.createElement('p');
-    t.className = 'hv-lore-title';
-    t.textContent = 'AN Bá Đạo';
+    t.className = 'hv-lore-title hv-lore-logo';
+    t.innerHTML = '<img src="assets/ui/an-ba-dao/logo-v1.webp" alt="An Bá Đạo" decoding="async">';
     login.querySelector('.hv-login-stage')?.prepend(t);
   }
 

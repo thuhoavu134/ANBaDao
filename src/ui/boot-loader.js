@@ -5,6 +5,7 @@
    thi tinh la xong anh do de thanh tien do van chay toi 100%, khong ket mai. */
 (() => {
   const UI = [
+    'assets/ui/an-ba-dao/logo-v1.webp',
     'assets/ui/team/team-concept-tray.webp', 'assets/ui/team/slot-frame.webp',
     'assets/ui/expedition/monglo-full.webp', 'assets/ui/expedition/back-medal.webp', 'assets/ui/expedition/floor-plaque.webp'
   ];
@@ -13,6 +14,7 @@
 #hvBoot{position:fixed;inset:0;z-index:2147483000;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;
   background:#1b130c url('assets/ui/loading/boot-bg.webp') center/cover no-repeat;transition:opacity .45s ease;font-family:inherit}
 #hvBoot.is-done{opacity:0;pointer-events:none}
+#hvBoot .hvb-logo{position:absolute;left:50%;top:calc(7vh + env(safe-area-inset-top));transform:translateX(-50%);width:min(78vw,320px);height:auto;filter:drop-shadow(0 3px 8px rgba(0,0,0,.6)) drop-shadow(0 0 16px rgba(255,170,60,.35));pointer-events:none}
 #hvBoot .hvb-box{width:min(92vw,420px);margin-bottom:calc(64px + env(safe-area-inset-bottom));display:flex;flex-direction:column;align-items:center;gap:8px}
 #hvBoot .hvb-label{color:#fff3d6;font-size:15px;font-weight:700;text-shadow:0 1px 3px #000,0 0 8px rgba(0,0,0,.8);letter-spacing:.2px}
 #hvBoot .hvb-bar{position:relative;width:100%;aspect-ratio:2158/336;background:url('assets/ui/loading/bar-frame.webp') center/100% 100% no-repeat}
@@ -49,7 +51,7 @@
     if (started) return; started = true;
     const st = document.createElement('style'); st.id = 'hvBootCss'; st.textContent = css; document.head.append(st);
     const el = document.createElement('div'); el.id = 'hvBoot';
-    el.innerHTML = '<div class="hvb-box"><div class="hvb-label">Đang tải…</div><div class="hvb-bar"><div class="hvb-trough"><div class="hvb-fill"></div></div><div class="hvb-pct">0%</div></div><div class="hvb-tip">Mẹo: Xếp tướng đỡ đòn ở hàng trước để che chắn cho cả đội.</div></div>';
+    el.innerHTML = '<img class="hvb-logo" src="assets/ui/an-ba-dao/logo-v1.webp" alt="An Bá Đạo"><div class="hvb-box"><div class="hvb-label">Đang tải…</div><div class="hvb-bar"><div class="hvb-trough"><div class="hvb-fill"></div></div><div class="hvb-pct">0%</div></div><div class="hvb-tip">Mẹo: Xếp tướng đỡ đòn ở hàng trước để che chắn cho cả đội.</div></div>';
     document.body.append(el);
     const TIPS = ['Mẹo: Xếp tướng đỡ đòn ở hàng trước để che chắn cho cả đội.','Mẹo: Bấm Đội gợi ý nhiều lần để xem các kiểu đội khác nhau.','Mẹo: Mỗi tầng Mộng Lộ cho chọn một Phúc Mộng, chọn hợp với đội đang có.','Mẹo: Đấu Hạng mỗi tuần có thưởng theo bậc hạng.']; let tipI = 0; const tipEl = el.querySelector('.hvb-tip'); const tipT = setInterval(() => { if (!tipEl || !el.isConnected) { clearInterval(tipT); return; } tipI = (tipI + 1) % TIPS.length; tipEl.textContent = TIPS[tipI]; }, 3000);
   const fill = el.querySelector('.hvb-fill'), pct = el.querySelector('.hvb-pct'), label = el.querySelector('.hvb-label');

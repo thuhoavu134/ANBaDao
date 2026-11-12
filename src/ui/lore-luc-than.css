@@ -4,6 +4,8 @@
 }
 .hv-brandcopy strong{font-size:13px}
 #hvLoginRoot .hv-lore-title{position:relative;z-index:4;color:#3a2414;text-shadow:0 1px 0 #fff4d4}
+#hvLoginRoot .hv-lore-logo{margin:0 auto 6px;text-align:center;line-height:0}
+#hvLoginRoot .hv-lore-logo img{display:inline-block;width:min(72vw,300px);height:auto;filter:drop-shadow(0 3px 6px rgba(0,0,0,.65)) drop-shadow(0 0 14px rgba(255,170,60,.35))}
 
 /* AN Bá Đạo (09/11): chân dung hội thoại hoà vào popup — không khung, không bo góc,
    nhân vật đứng lớn ngay trên mép khung thoại (kiểu visual novel). */
