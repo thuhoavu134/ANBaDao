@@ -23,5 +23,12 @@ html = html.replace(/<style id="hv-chat-ink-css">[\s\S]*?<\/style>\n?/, '').repl
 html = html.replace('</head>', `<style id="hv-chat-ink-css">${chatCss}</style>\n</head>`);
 const end2 = html.lastIndexOf('</body>');
 html = html.slice(0, end2) + `<script id="hv-chat-ink-js">${chatJs}</script>\n` + html.slice(end2);
+const guildJs = readFileSync(join(process.cwd(), 'src/ui/guild-ink.js'), 'utf8');
+const guildCss = readFileSync(join(process.cwd(), 'src/ui/guild-ink.css'), 'utf8');
+new Function(guildJs);
+html = html.replace(/<style id="hv-guild-ink-css">[\s\S]*?<\/style>\n?/g, '');
+html = html.replace(/<script id="hv-guild-ink-js">[\s\S]*?<\/script>\n?/g, '');
+html = html.replace('</head>', `<style id="hv-guild-ink-css">${guildCss}</style>\n</head>`);
+const e3 = html.lastIndexOf('</body>'); html = html.slice(0,e3) + `<script id="hv-guild-ink-js">${guildJs}</script>\n` + html.slice(e3);
 writeFileSync(target, html);
 console.log('Forge tabs installed');

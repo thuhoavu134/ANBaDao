@@ -1,0 +1,48 @@
+/* Owner 2026-11-12: Bang Hoi mau A - giay do, danh sach dai ngang */
+#hvGuildRoot{background:#efe2c4 url(assets/ui/chat/ink/bg.webp) center/cover no-repeat!important;color:#3a2414!important}
+#hvGuildRoot .hv-guild-top{height:58px!important;background:transparent!important;border:0!important;color:#ffe3a0!important;position:relative}
+#hvGuildRoot .hv-guild-top::after{content:"Bang Hội";padding:9px 40px;border:2px solid #d8a548;border-radius:10px;background:linear-gradient(180deg,#b32a22,#7d1410);font:900 23px Georgia,serif;letter-spacing:.04em;text-shadow:0 2px #4a0a06;box-shadow:0 3px 10px #6b2a1d;position:absolute;left:50%;top:8px;transform:translateX(-50%)}
+#hvGuildRoot .hv-guild-top b{display:none}
+#hvGuildRoot .hv-guild-back{z-index:2;background:#8a1a12!important;border:2px solid #d8a548!important;color:#ffe3a0!important}
+#hvGuildRoot .hv-guild-stage{display:block!important;position:static!important;overflow:auto!important;flex:1!important}
+#hvGuildRoot #guildBody{display:none!important}
+#hvGuildRoot .hv-guild-hero{margin:8px 12px 10px!important;min-height:174px!important;padding:26px 18px 14px!important;border:2px solid #b98d4e!important;border-radius:14px!important;background:linear-gradient(180deg,rgba(66,24,18,.15),rgba(255,248,228,.72)),url(assets/ui/guild/guild-hall.jpg) center/cover!important;position:relative!important;box-shadow:0 4px 10px rgba(90,50,10,.2)!important}
+#hvGuildRoot .gi-hero-copy{max-width:73%;text-shadow:0 1px #fff4d4}
+#hvGuildRoot .gi-kicker{color:#8a1a12;font-size:12px;font-weight:900;letter-spacing:.08em}
+#hvGuildRoot .hv-guild-hero .nm{font-size:22px;color:#5a2418!important;font-family:Georgia,serif}
+#hvGuildRoot .hv-guild-hero .sub{font-size:13px;color:#5c4328!important}
+#hvGuildRoot .hv-guild-hero button{background:linear-gradient(#c4302a,#8a1a12)!important;border:2px solid #e2b55a!important;color:#ffe3a0!important;border-radius:9px!important;padding:9px 12px!important;font-weight:900}
+#hvGuildRoot .gi-clan{position:absolute;right:10px;bottom:10px;width:112px;padding:8px;border-radius:10px;background:rgba(255,250,238,.9);border:1px solid #c9a056;display:flex;flex-direction:column;gap:2px;text-align:center;box-shadow:0 2px 5px #7d552455}
+#hvGuildRoot .gi-clan span{font-size:10px;color:#8a7458}.gi-clan b{color:#8a1a12}.gi-clan small{font-size:10px;color:#6a4a20}
+#hvGuildRoot .hv-guild-ranks{display:none!important}
+#hvGuildRoot .hv-guild-city{display:flex!important;flex-direction:column!important;gap:8px!important;padding:0 12px 94px!important}
+#hvGuildRoot .gi-row{min-height:86px;display:flex;align-items:center;gap:9px;padding:8px;border:1px solid #c9a056;border-radius:12px;background:rgba(255,250,238,.92);box-shadow:0 2px 6px rgba(90,50,10,.14)}
+#hvGuildRoot .gi-row>img{width:68px;height:68px;object-fit:cover;border-radius:9px;border:2px solid #c9a056;flex:0 0 68px}
+#hvGuildRoot .gi-copy{min-width:0;flex:1;display:flex;flex-direction:column;gap:2px}.gi-copy b{color:#8a1a12;font-size:14px}.gi-copy span{font-size:11px;color:#6a4a20}.gi-copy small{font-size:10px;color:#8a7458;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#hvGuildRoot .gi-row button{flex:0 0 auto;padding:7px 8px;border-radius:8px;border:2px solid #e2b55a;background:linear-gradient(#c4302a,#8a1a12);color:#ffe3a0;font-weight:900;font-size:11px}
+#hvGuildRoot .hv-guild-dock{position:absolute!important;bottom:0!important;left:0!important;right:0!important;background:#8a572c!important;padding:8px!important;gap:8px!important}
+#hvGuildRoot .hv-guild-dock button{border-radius:12px!important;background:#fff8e8!important;border:1px solid #c9a056!important;color:#5a2a14!important;font-weight:900!important}
+#hvGuildRoot .hv-guild-sheet{background:#fff8e8!important;border:2px solid #c9a056!important;border-radius:15px!important;color:#3a2414!important}
+/* v2: tieu de 1 dong, hero de doc, luoi 2 cot khi da vao bang */
+#hvGuildRoot .hv-guild-top::after{white-space:nowrap;font-size:20px!important;padding:8px 30px!important;top:10px!important}
+#hvGuildRoot .hv-guild-hero{margin-top:14px!important;min-height:150px!important;padding:16px 14px 14px!important;background:linear-gradient(180deg,rgba(255,248,228,.86),rgba(255,248,228,.62)),url(assets/ui/guild/guild-hall.jpg) center/cover!important;text-align:left!important}
+#hvGuildRoot .gi-hero-copy{max-width:62%;text-shadow:none}
+#hvGuildRoot .hv-guild-hero .nm{color:#7d1410!important;font-weight:900;text-shadow:none!important}
+#hvGuildRoot .hv-guild-hero .sub{color:#3a2414!important;font-weight:600;opacity:1!important;text-shadow:none!important}
+#hvGuildRoot.gi-joined .hv-guild-hero{text-align:center!important}
+#hvGuildRoot.gi-joined .hv-guild-city{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+#hvGuildRoot.gi-joined .hv-gtile{padding:6px!important;border:1px solid #c9a056!important;border-radius:12px!important;background:rgba(255,250,238,.94)!important;box-shadow:0 2px 6px rgba(90,50,10,.14)!important}
+#hvGuildRoot.gi-joined .hv-gtile img{width:100%!important;height:auto!important;aspect-ratio:16/10!important;object-fit:cover!important;border-radius:8px!important}
+#hvGuildRoot.gi-joined .hv-gtile b{color:#8a1a12!important;font-size:14px!important;margin-top:5px!important}/* v3 (owner 12/11): nut va khung cat tu sheet gpt_image assets/ui/guild/ink, khong ve bang code */
+#hvGuildRoot .hv-guild-top::after{background:url(assets/ui/guild/ink/title.webp) center/100% 100% no-repeat!important;border:0!important;border-radius:0!important;box-shadow:none!important;width:250px;height:46px;padding:0!important;display:grid;place-items:center;top:8px!important;font-size:19px!important}
+#hvGuildRoot .hv-guild-back{background:url(assets/ui/guild/ink/back.webp) center/contain no-repeat!important;border:0!important;box-shadow:none!important;border-radius:0!important;width:46px!important;height:46px!important}
+#hvGuildRoot .hv-guild-hero{background:none!important;border-style:solid!important;border-color:transparent!important;border-width:14px 34px!important;border-image:url(assets/ui/guild/ink/hero.webp) 28 67 28 67 fill / 14px 34px!important;border-radius:0!important;box-shadow:none!important;padding:8px 6px!important;min-height:120px!important}
+#hvGuildRoot .gi-clan{background:url(assets/ui/guild/ink/btn-cream.webp) center/100% 100% no-repeat!important;border:0!important;box-shadow:none!important;border-radius:0!important;padding:10px 12px!important;width:118px!important;right:4px!important;bottom:6px!important}
+#hvGuildRoot .gi-row{background:none!important;border-style:solid!important;border-color:transparent!important;border-width:14px!important;border-image:url(assets/ui/guild/ink/row.webp) 31 fill / 14px!important;border-radius:0!important;box-shadow:none!important;padding:2px 2px!important;min-height:74px!important}
+#hvGuildRoot .gi-row button,#hvGuildRoot .hv-guild-hero button,#hvGuildRoot .hv-guild-sheet button.act{background:url(assets/ui/guild/ink/btn-red.webp) center/100% 100% no-repeat!important;border:0!important;border-radius:0!important;box-shadow:none!important;color:#ffe9b0!important;padding:10px 16px!important;min-width:84px;font-weight:900!important;text-shadow:0 1px 2px #4a0a06}
+#hvGuildRoot .hv-guild-sheet button.act:disabled{filter:grayscale(.7);opacity:.7}
+#hvGuildRoot .hv-guild-dock{background:linear-gradient(180deg,rgba(60,30,12,.0),rgba(60,30,12,.55))!important}
+#hvGuildRoot .hv-guild-dock button{background:url(assets/ui/guild/ink/btn-cream.webp) center/100% 100% no-repeat!important;border:0!important;border-radius:0!important;box-shadow:none!important;min-height:46px!important;color:#5a2a14!important}
+#hvGuildRoot.gi-joined .hv-gtile{background:url(assets/ui/guild/ink/tile.webp) center/100% 100% no-repeat!important;border:0!important;border-radius:0!important;box-shadow:none!important;padding:0!important;aspect-ratio:366/351;position:relative;display:block!important}
+#hvGuildRoot.gi-joined .hv-gtile img{position:absolute;left:9%;top:8%;width:82%!important;height:64%!important;aspect-ratio:auto!important;border-radius:4px!important;object-fit:cover!important}
+#hvGuildRoot.gi-joined .hv-gtile b{position:absolute;left:10%;right:10%;bottom:8.5%;height:13%;display:grid!important;place-items:center;margin:0!important;color:#ffe3a0!important;font-size:14px!important;text-shadow:0 1px 2px #000}
