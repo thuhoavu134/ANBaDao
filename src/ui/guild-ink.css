@@ -22,7 +22,6 @@
 #hvGuildRoot .gi-row button{flex:0 0 auto;padding:7px 8px;border-radius:8px;border:2px solid #e2b55a;background:linear-gradient(#c4302a,#8a1a12);color:#ffe3a0;font-weight:900;font-size:11px}
 #hvGuildRoot .hv-guild-dock{position:absolute!important;bottom:0!important;left:0!important;right:0!important;background:#8a572c!important;padding:8px!important;gap:8px!important}
 #hvGuildRoot .hv-guild-dock button{border-radius:12px!important;background:#fff8e8!important;border:1px solid #c9a056!important;color:#5a2a14!important;font-weight:900!important}
-#hvGuildRoot .hv-guild-sheet{background:#fff8e8!important;border:2px solid #c9a056!important;border-radius:15px!important;color:#3a2414!important}
 /* v2: tieu de 1 dong, hero de doc, luoi 2 cot khi da vao bang */
 #hvGuildRoot .hv-guild-top::after{white-space:nowrap;font-size:20px!important;padding:8px 30px!important;top:10px!important}
 #hvGuildRoot .hv-guild-hero{margin-top:14px!important;min-height:150px!important;padding:16px 14px 14px!important;background:linear-gradient(180deg,rgba(255,248,228,.86),rgba(255,248,228,.62)),url(assets/ui/guild/guild-hall.jpg) center/cover!important;text-align:left!important}
@@ -39,8 +38,7 @@
 #hvGuildRoot .hv-guild-hero{background:none!important;border-style:solid!important;border-color:transparent!important;border-width:14px 34px!important;border-image:url(assets/ui/guild/ink/hero.webp) 28 67 28 67 fill / 14px 34px!important;border-radius:0!important;box-shadow:none!important;padding:8px 6px!important;min-height:120px!important}
 #hvGuildRoot .gi-clan{background:url(assets/ui/guild/ink/btn-cream.webp) center/100% 100% no-repeat!important;border:0!important;box-shadow:none!important;border-radius:0!important;padding:10px 12px!important;width:118px!important;right:4px!important;bottom:6px!important}
 #hvGuildRoot .gi-row{background:none!important;border-style:solid!important;border-color:transparent!important;border-width:14px!important;border-image:url(assets/ui/guild/ink/row.webp) 31 fill / 14px!important;border-radius:0!important;box-shadow:none!important;padding:2px 2px!important;min-height:74px!important}
-#hvGuildRoot .gi-row button,#hvGuildRoot .hv-guild-hero button,#hvGuildRoot .hv-guild-sheet button.act{background:url(assets/ui/guild/ink/btn-red.webp) center/100% 100% no-repeat!important;border:0!important;border-radius:0!important;box-shadow:none!important;color:#ffe9b0!important;padding:10px 16px!important;min-width:84px;font-weight:900!important;text-shadow:0 1px 2px #4a0a06}
-#hvGuildRoot .hv-guild-sheet button.act:disabled{filter:grayscale(.7);opacity:.7}
+#hvGuildRoot .gi-row button,#hvGuildRoot .hv-guild-hero button{background:url(assets/ui/guild/ink/btn-red.webp) center/100% 100% no-repeat!important;border:0!important;border-radius:0!important;box-shadow:none!important;color:#ffe9b0!important;padding:10px 16px!important;min-width:84px;font-weight:900!important;text-shadow:0 1px 2px #4a0a06}
 #hvGuildRoot .hv-guild-dock{background:linear-gradient(180deg,rgba(60,30,12,.0),rgba(60,30,12,.55))!important}
 #hvGuildRoot .hv-guild-dock button{background:url(assets/ui/guild/ink/btn-cream.webp) center/100% 100% no-repeat!important;border:0!important;border-radius:0!important;box-shadow:none!important;min-height:46px!important;color:#5a2a14!important}
 #hvGuildRoot.gi-joined .hv-gtile{background:url(assets/ui/guild/ink/tile.webp) center/100% 100% no-repeat!important;border:0!important;border-radius:0!important;box-shadow:none!important;padding:0!important;aspect-ratio:366/351;position:relative;display:block!important}

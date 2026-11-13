@@ -6,7 +6,6 @@
   const CH = [
     { k: 'world', label: 'Thế giới', title: 'Kênh thế giới', ic: 'ic-world.png', hint: 'Kênh chung của toàn giang hồ.' },
     { k: 'guild', label: 'Bang hội', title: 'Kênh bang hội', ic: 'ic-guild.png', hint: 'Chỉ thành viên trong bang mới thấy.' },
-    { k: 'clan', label: 'Gia tộc', title: 'Kênh gia tộc', ic: 'ic-clan.png', hint: 'Chỉ người trong gia tộc mới thấy.' },
     { k: 'friend', label: 'Hảo hữu', title: 'Hảo hữu', ic: 'ic-friend.png', hint: 'Trò chuyện riêng với hảo hữu.' },
     { k: 'sys', label: 'Hệ thống', title: 'Loa hệ thống', ic: 'ic-sys.png', hint: 'Chiêu mộ SSR, báu vật, vận may lớn.' }
   ];
@@ -14,7 +13,7 @@
   const esc = t => String(t == null ? '' : t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const online = () => { try { return typeof netOnline === 'function' && netOnline(); } catch (_) { return false; } };
   const me = () => (typeof NET === 'object' && NET.user) || '';
-  const S = { ch: 'world', peer: '', msgs: {}, last: {}, mine: { guild: null, clan: null }, list: { guild: [], clan: [] }, friends: [], busy: false };
+  const S = { ch: 'world', peer: '', msgs: {}, last: {}, mine: { guild: null }, list: { guild: [] }, friends: [], busy: false };
   const key = () => S.ch === 'friend' ? 'friend:' + S.peer.toLowerCase() : S.ch;
 
   // avatar: tuong co dinh theo ten nguoi choi
@@ -27,11 +26,11 @@
   const levelOf = name => { let h = 7; for (const c of String(name)) h = (h * 17 + c.charCodeAt(0)) | 0; return 20 + Math.abs(h) % 80; };
   const hhmm = t => { const d = new Date(Number(t) || Date.now()); return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0'); };
 
-  async function info(kind) { const j = await api('/api/guild?kind=' + kind); S.mine.guild = j.guild || null; S.mine.clan = j.clan || null; S.list[kind] = j.list || []; }
+  async function info(kind) { const j = await api('/api/guild?kind=' + kind); S.mine.guild = j.guild || null; S.list[kind] = j.list || []; }
   async function friends() { const j = await api('/api/friends'); S.friends = j.list || []; }
   async function pull() {
     const ch = S.ch, k = key();
-    if ((ch === 'guild' || ch === 'clan') && !S.mine[ch]) return false;
+    if ((ch === 'guild') && !S.mine[ch]) return false;
     if (ch === 'friend' && !S.peer) return false;
     const q = '/api/chat?channel=' + ch + '&since=' + (S.last[k] || 0) + (ch === 'friend' ? '&peer=' + encodeURIComponent(S.peer) : '');
     const j = await api(q);
@@ -59,7 +58,7 @@
         <div class="c2-bub">${esc(m.text)}</div></div></div>`;
   }
   function groupPanel(kind) {
-    const label = kind === 'guild' ? 'bang' : 'gia tộc';
+    const label = 'bang';
     const rows = (S.list[kind] || []).map(g => `<div class="c2-g"><div><b>${esc(g.name)}</b><small>${g.members} người · chủ ${esc(g.owner)}</small></div>
         <button type="button" class="c2-btn" data-cc-join="${esc(g.id)}">Gia nhập</button></div>`).join('')
       || `<p class="c2-empty">Chưa có ${label} nào. Đại hiệp hãy lập ${label} đầu tiên!</p>`;
@@ -79,16 +78,16 @@
     const rail = CH.map(x => `<button type="button" class="c2-ch${x.k === S.ch ? ' on' : ''}" data-cc-tab="${x.k}">
         <img src="${A}${x.ic}" alt=""><span>${x.label}</span></button>`).join('');
     let title = c.title, count = '', body, canType = true;
-    if ((S.ch === 'guild' || S.ch === 'clan') && !S.mine[S.ch]) { body = groupPanel(S.ch); canType = false; }
+    if ((S.ch === 'guild') && !S.mine[S.ch]) { body = groupPanel(S.ch); canType = false; }
     else if (S.ch === 'friend' && !S.peer) { body = friendPanel(); canType = false; }
     else {
-      if (S.ch === 'guild' || S.ch === 'clan') { title = S.mine[S.ch].name; count = `👥 ${S.mine[S.ch].members || 1}`; }
+      if (S.ch === 'guild') { title = S.mine[S.ch].name; count = `👥 ${S.mine[S.ch].members || 1}`; }
       if (S.ch === 'friend') title = '✉ ' + S.peer;
       body = (S.msgs[key()] || []).map(bubble).join('') || `<p class="c2-empty">${esc(c.hint)}</p>`;
       if (S.ch === 'sys') canType = false;
     }
     const back = S.ch === 'friend' && S.peer ? `<button type="button" class="c2-mini" data-cc-peer="">‹ Danh sách</button>`
-      : ((S.ch === 'guild' || S.ch === 'clan') && S.mine[S.ch] ? `<button type="button" class="c2-mini" data-cc-leave="${S.ch}">Rời</button>` : '');
+      : ((S.ch === 'guild') && S.mine[S.ch] ? `<button type="button" class="c2-mini" data-cc-leave="${S.ch}">Rời</button>` : '');
     root.innerHTML = `<div class="c2">
       <div class="c2-roof"><button type="button" class="c2-x" data-c2-close aria-label="Đóng">✕</button></div>
       <nav class="c2-rail">${rail}</nav>
@@ -117,7 +116,7 @@
     root.hidden = false; document.body.classList.add('chat2-open');
     const old = document.getElementById('hvChatRoot'); if (old) old.style.visibility = 'hidden';
     paint();
-    if (wasHidden) { try { await Promise.all([info('guild'), info('clan'), friends()]); await pull(); } catch (_) {} paint(); }
+    if (wasHidden) { try { await Promise.all([info('guild'), friends()]); await pull(); } catch (_) {} paint(); }
   }
   function close() {
     root.hidden = true; document.body.classList.remove('chat2-open');
@@ -137,7 +136,7 @@
       if (t.matches('[data-c2-q]')) { const i = root.querySelector('.c2-input input'); if (i && !i.disabled) { i.value = t.dataset.c2Q; i.focus(); } root.querySelector('.c2-quick').hidden = true; return; }
       if (t.matches('[data-cc-tab]')) {
         S.ch = t.dataset.ccTab; if (S.ch !== 'friend') S.peer = ''; paint();
-        if (S.ch === 'guild' || S.ch === 'clan') await info(S.ch).catch(() => {});
+        if (S.ch === 'guild') await info(S.ch).catch(() => {});
         if (S.ch === 'friend') await friends().catch(() => {});
         await pull().catch(() => {}); paint();
       } else if (t.matches('[data-cc-peer]')) { S.peer = t.dataset.ccPeer; paint(); await pull().catch(() => {}); paint(); }
@@ -157,7 +156,7 @@
       } else if (f.matches('[data-cc-make]')) {
         const kind = f.dataset.ccMake;
         await api('/api/guild/create', 'POST', { name: f.name.value.trim(), kind });
-        await info(kind); await pull(); paint(); toast?.(kind === 'guild' ? 'Đã lập bang!' : 'Đã lập gia tộc!');
+        await info(kind); await pull(); paint(); toast?.('Đã lập bang!');
       }
     } catch (e) { toast?.(e.message || 'Lỗi mạng'); } finally { S.busy = false; }
   });

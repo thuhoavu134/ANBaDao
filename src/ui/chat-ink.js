@@ -17,7 +17,6 @@
   const TABS = [
     { k: 'world', label: 'Thế Giới', base: true },
     { k: 'guild', label: 'Bang Hội', base: true },
-    { k: 'clan', label: 'Gia Tộc' },
     { k: 'team', label: 'Tổ Đội', base: true },
     { k: 'friend', label: 'Hảo Hữu' },
     { k: 'sys', label: 'Hệ Thống' }
@@ -60,9 +59,6 @@
     if (k === 'sys') {
       const list = all.filter(isSys).slice(-60);
       return { html: list.map(row).join('') || '<p class="ck-empty">Chưa có thông báo. Rèn ra đồ SSR hay chiêu mộ tướng hiếm sẽ được loa báo ở đây.</p>', canType: false, title: 'Loa hệ thống' };
-    }
-    if (k === 'clan') {
-      return { html: '<p class="ck-empty">Đại hiệp chưa vào gia tộc. Gia tộc mở khi chơi online — đăng nhập tài khoản để lập hoặc gia nhập gia tộc.</p>', canType: false, title: 'Kênh gia tộc' };
     }
     if (k === 'friend') {
       if (!st.peer) {

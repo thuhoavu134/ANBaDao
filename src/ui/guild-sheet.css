@@ -1,0 +1,37 @@
+/* Bang chuc nang (mau B, owner 13/11): bang truot len ~72% man hinh.
+   Khung bang, ruy-bang, nut dong, thanh tai nguyen, the hang, chu cap, thanh tien do, nut va icon deu la anh GPT
+   (assets/ui/guild/sheet + assets/ui/guild/ink). CSS chi bo cuc va dat anh, khong ve gradient/vien. */
+#hvGuildRoot .hv-guild-sheet{position:fixed;inset:0;z-index:20;display:block;margin:0;padding:0;overflow:visible;background:none}
+#hvGuildRoot .hv-guild-sheet[hidden]{display:none!important}
+#hvGuildRoot .gs-dim{position:absolute;inset:0;background:rgba(28,14,6,.55)}
+#hvGuildRoot .gs-panel{position:absolute;left:0;right:0;bottom:0;max-width:560px;height:min(72dvh,680px);margin:0 auto;box-sizing:border-box;display:flex;flex-direction:column;background:url(assets/ui/guild/sheet/panel.webp) center/100% 100% no-repeat;padding-bottom:env(safe-area-inset-bottom);animation:gsUp .22s ease-out}
+#hvGuildRoot .gs-ribbon{position:absolute;left:50%;top:-22px;transform:translateX(-50%);width:78%;aspect-ratio:655/102;display:grid;place-items:center;background:url(assets/ui/guild/ink/title.webp) center/100% 100% no-repeat;pointer-events:none}
+#hvGuildRoot .gs-ribbon h3{margin:0;color:#ffe9b0;font:900 clamp(16px,4.6vw,21px)/1 Georgia,serif;text-shadow:0 2px 2px #5a1009}
+#hvGuildRoot .hv-guild-sheet .x{position:absolute;top:12px;right:14px;z-index:2;width:36px;aspect-ratio:1;padding:0;border:0;background:url(assets/ui/guild/sheet/close.webp) center/contain no-repeat;font-size:0;cursor:pointer}
+#hvGuildRoot .gs-res{flex:0 0 auto;display:flex;align-items:center;justify-content:center;gap:7px;margin:42px 9% 4px;aspect-ratio:924/105;background:url(assets/ui/guild/sheet/cap.webp) center/100% 100% no-repeat;color:#5a3a16;font-size:13px}
+#hvGuildRoot .gs-res b{color:#7d1712;font-weight:900;font-size:14px}
+#hvGuildRoot .gs-rico{width:24px;height:24px;flex:0 0 24px}
+#hvGuildRoot .gs-body{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:2px 6.5% 34px}
+#hvGuildRoot .gs-res[hidden]+.gs-body{padding-top:46px}
+
+#hvGuildRoot .gs-row{display:flex;align-items:center;gap:10px;margin:6px 0;box-sizing:border-box;border-style:solid;border-color:transparent;border-width:14px;border-image:url(assets/ui/guild/ink/row.webp) 44 fill / 14px;padding:0 2px;color:#3a2414}
+#hvGuildRoot .gs-ic{flex:0 0 56px;width:56px;height:56px;margin:-2px 0}
+#hvGuildRoot .gs-copy{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:2px}
+#hvGuildRoot .gs-copy b{font:900 14.5px/1.1 Georgia,serif;color:#7d1712}
+#hvGuildRoot .gs-copy small{font-size:11.5px;line-height:1.2;color:#5b442a}
+#hvGuildRoot .gs-pips{display:flex;gap:5px;margin-top:3px}
+#hvGuildRoot .gs-pips i{width:13px;height:13px;background:url(assets/ui/guild/sheet/bead-off.webp) center/contain no-repeat}
+#hvGuildRoot .gs-pips i.on{background-image:url(assets/ui/guild/sheet/bead-on.webp)}
+#hvGuildRoot .gs-bar{display:block;height:14px;margin-top:4px;padding:2px 3px;box-sizing:border-box;background:url(assets/ui/guild/sheet/track.webp) center/100% 100% no-repeat}
+#hvGuildRoot .gs-bar i{display:block;height:100%;max-width:100%;background:url(assets/ui/guild/sheet/fill.webp) left center/100% 100% no-repeat}
+#hvGuildRoot .gs-note{flex:0 0 auto;font:800 11px Georgia,serif;color:#7d1712;text-align:center}
+#hvGuildRoot .hv-guild-sheet button.act{flex:0 0 auto;min-width:88px;height:38px;margin:0;padding:0 12px;border:0;border-radius:0;background:url(assets/ui/guild/ink/btn-red.webp) center/100% 100% no-repeat;color:#ffe9b0;font:900 12.5px/1 Georgia,serif;text-shadow:0 1px 2px #4a0a06;cursor:pointer}
+#hvGuildRoot .hv-guild-sheet button.act.lack{filter:grayscale(.65)}
+#hvGuildRoot .hv-guild-sheet button.act.done{background-image:url(assets/ui/guild/ink/btn-jade.webp);text-shadow:0 1px 2px #174a2c}
+#hvGuildRoot .hv-guild-sheet button.act:disabled{filter:grayscale(.75);opacity:.78;cursor:default}
+#hvGuildRoot .hv-guild-sheet button.act.done:disabled{filter:none;opacity:.92}
+body.guild-hall-active #hvQaGrant{top:calc(8px + env(safe-area-inset-top))!important;bottom:auto!important;right:8px!important;transform:scale(.75);transform-origin:top right}
+@keyframes gsUp{from{transform:translateY(34px);opacity:.4}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){#hvGuildRoot .gs-panel{animation:none}}
+#hvGuildRoot .gs-hero{width:58%;margin:2px auto 4px}
+#hvGuildRoot .gs-hero .hv-gtile{pointer-events:none}

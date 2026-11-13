@@ -20,16 +20,19 @@
     <button type="button" data-gdock="info">Thông tin</button>
   </nav>
   <div class="hv-guild-sheet" hidden data-gsheet>
-    <button type="button" class="x" data-gsheet-x aria-label="Đóng">‹</button>
-    <h3 data-gsheet-title></h3>
-    <div data-gsheet-body></div>
+    <div class="gs-dim" data-gsheet-x></div>
+    <section class="gs-panel">
+      <div class="gs-ribbon"><h3 data-gsheet-title></h3></div>
+      <button type="button" class="x" data-gsheet-x aria-label="Đóng"></button>
+      <div class="gs-res" data-gsheet-res hidden></div>
+      <div class="gs-body" data-gsheet-body></div>
+    </section>
   </div>
   <div class="hv-guild-stage"></div>`;
   root.querySelector('.hv-guild-stage').append(body);
   document.body.append(root);
 
   const TILES = [
-    { id: 'clan', name: 'Gia Tộc', img: 'assets/ui/guild/tiles/gia-toc.jpg' },
     { id: 'tech', name: 'Võ Đường', img: 'assets/ui/guild/tiles/vo-duong.jpg' },
     { id: 'shop', name: 'Kho Bảo', img: 'assets/ui/guild/tiles/kho-bao.jpg' },
     { id: 'boss', name: 'Hổ Trấn', img: 'assets/ui/guild/tiles/ho-tran.jpg' },
@@ -42,13 +45,18 @@
   const sheet = root.querySelector('[data-gsheet]');
   const sheetTitle = root.querySelector('[data-gsheet-title]');
   const sheetBody = root.querySelector('[data-gsheet-body]');
+  const sheetRes = root.querySelector('[data-gsheet-res]');
 
   function g() { return (typeof myGuild === 'function' && myGuild()) || null; }
 
-  function openSheet(title, html) {
+  function openSheet(title, html, resHtml) {
+    const keep = (!sheet.hidden && sheetTitle.textContent === title) ? sheetBody.scrollTop : 0;
     sheetTitle.textContent = title;
     sheetBody.innerHTML = html;
+    sheetRes.innerHTML = resHtml || '';
+    sheetRes.hidden = !resHtml;
     sheet.hidden = false;
+    sheetBody.scrollTop = keep;
   }
   function closeSheet() { sheet.hidden = true; }
 
@@ -64,7 +72,7 @@
         <div class="row"><button type="button" data-gact="list">Danh sách bang</button></div>`;
       ranks.innerHTML = '';
       city.innerHTML = (typeof GUILDS !== 'undefined' ? GUILDS : []).map(x =>
-        `<button type="button" class="hv-gtile" data-gact="join:${x.id}"><img src="assets/ui/guild/tiles/gia-toc.jpg" alt=""><b>${x.ic} ${x.name}</b></button>`
+        `<button type="button" class="hv-gtile" data-gact="join:${x.id}"><img src="assets/ui/guild/tiles/chien-dich.jpg" alt=""><b>${x.ic} ${x.name}</b></button>`
       ).join('');
       return;
     }
@@ -84,71 +92,97 @@
     ).join('');
   }
 
+  // ---- Bảng chức năng (mẫu B owner 13/11): icon/khung/nút là asset GPT trong assets/ui/guild/sheet, code chỉ đặt dữ liệu.
+  const IC = n => 'assets/ui/guild/sheet/icons/' + String(n).padStart(2, '0') + '.webp';
+  const esc = t => String(t == null ? '' : t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const num = n => Number(n || 0).toLocaleString('vi-VN');
+  const gp = () => { try { if (typeof ensureGuildDepth === 'function') ensureGuildDepth(); } catch (_) {} return (typeof P === 'object' && P.guild) || {}; };
+  const pips = (lv, max) => '<span class="gs-pips">' + Array.from({ length: max }, (_, i) => '<i class="' + (i < lv ? 'on' : '') + '"></i>').join('') + '</span>';
+  const bar = (v, goal) => '<span class="gs-bar"><i style="width:' + Math.max(0, Math.min(100, goal ? v / goal * 100 : 100)) + '%"></i></span>';
+  const res = (icon, label, value) => '<img class="gs-rico" src="' + IC(icon) + '" alt=""><span>' + label + '</span><b>' + value + '</b>';
+  const RW = { gold: 'vàng', tinh: 'Tinh Lực', hoat: 'Hoạt Lực', gems: 'Ngọc' };
+  const rewardText = r => Object.entries(r || {}).map(([k, v]) => v + ' ' + (RW[k] || k)).join(' + ');
+
+  function row(o) {
+    const btn = o.act
+      ? '<button type="button" class="act' + (o.cls ? ' ' + o.cls : '') + '" data-gact="' + o.act + '"' + (o.disabled ? ' disabled' : '') + '>' + o.label + '</button>'
+      : (o.note ? '<span class="gs-note">' + o.note + '</span>' : '');
+    return '<article class="gs-row"><img class="gs-ic" src="' + IC(o.icon) + '" alt=""><div class="gs-copy"><b>' + o.name + '</b><small>' + (o.desc || '') + '</small>' + (o.extra || '') + '</div>' + btn + '</article>';
+  }
+
   function htmlTech() {
-    const p = P.guild || {};
+    const p = gp(), ICN = { war: 1, guard: 2, supply: 3 };
     return Object.entries(typeof GUILD_TECH === 'object' ? GUILD_TECH : {}).map(([k, t]) => {
-      const lv = (p.tech && p.tech[k]) || 0;
-      const cost = lv < 5 && t.cost ? t.cost(lv) : 0;
-      return `<div class="card">${t.ic} ${t.name} Lv.${lv}/5<br>${t.desc}
-        <button type="button" class="act" data-gact="tech:${k}" ${lv >= 5 ? 'disabled' : ''}>${lv >= 5 ? 'MAX' : 'Nâng · ' + cost + ' CN'}</button></div>`;
+      const lv = (p.tech && p.tech[k]) || 0, max = lv >= 5, cost = max ? 0 : t.cost(lv), lack = !max && (p.techPts || 0) < cost;
+      return row({ icon: ICN[k] || 1, name: esc(t.name) + ' Lv.' + lv + '/5', desc: esc(t.desc), extra: pips(lv, 5), act: 'tech:' + k, label: max ? 'Tối đa' : 'Nâng cấp ' + cost, disabled: max, cls: max ? 'done' : (lack ? 'lack' : '') });
     }).join('');
   }
   function htmlMissions() {
-    const m = (P.guild && P.guild.missions) || {};
+    const p = gp(), m = p.missions || {}, ICN = { battle: 8, win: 9, donate: 10 };
     return (typeof GUILD_MISSIONS !== 'undefined' ? GUILD_MISSIONS : []).map(d => {
-      const v = Math.min(d.goal, m[d.id] || 0);
-      const done = (m.claimed || []).includes(d.id);
-      return `<div class="card">${d.name} · ${v}/${d.goal}
-        <button type="button" class="act" data-gact="mission:${d.id}" ${done || v < d.goal ? 'disabled' : ''}>${done ? 'Đã nhận' : 'Nhận'}</button></div>`;
+      const v = Math.min(d.goal, m[d.id] || 0), done = (m.claimed || []).includes(d.id);
+      return row({ icon: ICN[d.id] || 8, name: esc(d.name), desc: v + '/' + d.goal + ' · thưởng +' + d.reward + ' cống hiến', extra: bar(v, d.goal), act: 'mission:' + d.id, label: done ? 'Đã nhận' : (v < d.goal ? 'Chưa đủ' : 'Nhận'), disabled: done || v < d.goal, cls: done ? 'done' : '' });
     }).join('');
   }
+  const SHOP_NAME = { sh: '5 mảnh hero ngẫu nhiên', tinh: '30 Tinh Lực', hoat: '30 Hoạt Lực', gems: '20 Ngọc' };
   function htmlShop() {
-    return (typeof GUILD_SHOP !== 'undefined' ? GUILD_SHOP : []).map(s =>
-      `<button type="button" class="act" data-gact="buy:${s.k}">${s.label} — ${s.cost}đ</button>`
-    ).join('');
+    const p = gp(), ICN = { sh: 4, tinh: 5, hoat: 6, gems: 7 };
+    return (typeof GUILD_SHOP !== 'undefined' ? GUILD_SHOP : []).map(s => {
+      const bought = (p.bought || []).includes(s.k), lack = !bought && (p.contrib || 0) < s.cost;
+      return row({ icon: ICN[s.k] || 7, name: SHOP_NAME[s.k] || esc(s.label), desc: bought ? 'Mai mới có lại' : 'Giá ' + s.cost + ' cống hiến · 1 lần mỗi ngày', act: 'buy:' + s.k, label: bought ? 'Đã đổi' : 'Đổi ' + s.cost, disabled: bought, cls: bought ? 'done' : (lack ? 'lack' : '') });
+    }).join('');
   }
   function htmlCamp() {
-    const p = P.guild || {};
+    const p = gp();
     return (typeof GUILD_CAMPAIGN !== 'undefined' ? GUILD_CAMPAIGN : []).map(d => {
-      const done = (p.campaign && p.campaign.claimed || []).includes(d.n);
-      const ok = (p.dailyEarned || 0) >= d.need;
-      return `<button type="button" class="act" data-gact="camp:${d.n}" ${done || !ok ? 'disabled' : ''}>${d.n}. ${d.name} · cần ${d.need}</button>`;
+      const done = ((p.campaign && p.campaign.claimed) || []).includes(d.n), earned = p.dailyEarned || 0, ok = earned >= d.need;
+      return row({ icon: 10 + d.n, name: d.n + '. ' + esc(d.name), desc: esc(d.desc) + ' · thưởng ' + rewardText(d.reward), extra: d.need ? bar(Math.min(earned, d.need), d.need) : '', act: 'camp:' + d.n, label: done ? 'Đã nhận' : (ok ? 'Nhận' : 'Cần ' + d.need), disabled: done || !ok, cls: done ? 'done' : '' });
     }).join('');
   }
   function htmlWar() {
-    const att = (P.guild && P.guild.war && P.guild.war.attempts) || 0;
+    const att = (gp().war && gp().war.attempts) || 0, ICN = { tram_suong: 17, hoang_hon: 18, mat_trang: 19 };
     return (typeof GUILD_WAR_RIVALS !== 'undefined' ? GUILD_WAR_RIVALS : []).map(r =>
-      `<button type="button" class="act" data-gact="war:${r.id}" ${att >= 3 ? 'disabled' : ''}>⚔ ${r.name} · ${r.rating}</button>`
-    ).join('');
-  }
-  function htmlList() {
-    const mine = g();
-    return (typeof GUILDS !== 'undefined' ? GUILDS : []).map(x =>
-      `<div class="card">${x.ic} <b>${x.name}</b><br>${x.desc}
-        ${mine && mine.id === x.id ? '<i>Bang của anh</i>' : `<button type="button" class="act" data-gact="join:${x.id}">${mine ? 'Chuyển bang 🪙500' : 'Gia nhập'}</button>`}</div>`
-    ).join('');
+      row({ icon: ICN[r.id] || 17, name: esc(r.name), desc: 'Điểm ' + r.rating + ' · ' + esc(r.bonus), act: 'war:' + r.id, label: 'Khiêu chiến', disabled: att >= 3, cls: att >= 3 ? 'lack' : '' })).join('');
   }
   function htmlBoss() {
-    const b = (P.guild && P.guild.boss) || {};
-    if ((b.phase || 1) > 3) return '<div class="card">Đã hạ đủ 3 phase hôm nay.</div>';
-    return `<div class="card">Phase ${b.phase || 1}/3 · lượt ${b.attempts || 0}/2
-      <button type="button" class="act" data-gact="boss">Đánh Hổ Trấn</button></div>`;
+    const b = gp().boss || {}, ph = b.phase || 1, at = b.attempts || 0;
+    if (ph > 3) return row({ icon: 16, name: 'Hổ Trấn', desc: 'Đã hạ đủ 3 phase hôm nay.', note: 'Hoàn thành' });
+    return '<div class="gs-hero"><div class="hv-gtile"><img src="assets/ui/guild/tiles/ho-tran.jpg" alt=""><b>Hổ Trấn</b></div></div>' + row({ icon: 16, name: 'Hổ Trấn · Phase ' + ph + '/3', desc: 'Lượt ' + at + '/2 hôm nay', extra: pips(Math.min(3, ph - 1), 3), act: 'boss', label: 'Đánh Hổ Trấn', disabled: at >= 2, cls: at >= 2 ? 'lack' : '' });
+  }
+  function htmlList() {
+    const mine = g(), ICN = { cu_dem: 21, gac_giac: 22, ca_ba: 23, mo_cham: 24 };
+    return (typeof GUILDS !== 'undefined' ? GUILDS : []).map(x => {
+      const own = !!(mine && mine.id === x.id);
+      return row({ icon: ICN[x.id] || 21, name: esc(x.name), desc: esc(x.desc) + (mine && !own ? ' · đổi bang phí 500 vàng' : ''), act: own ? '' : 'join:' + x.id, label: mine ? 'Chuyển bang' : 'Gia nhập', note: own ? 'Bang của anh' : '' });
+    }).join('');
+  }
+  function htmlManage() {
+    const donated = !!gp().donated;
+    return row({ icon: 10, name: 'Cống hiến vàng', desc: donated ? 'Hôm nay đã cống hiến' : '300 vàng → +30 điểm đóng góp', act: 'donate', label: donated ? 'Đã góp' : 'Cống hiến', disabled: donated, cls: donated ? 'done' : '' })
+      + row({ icon: 20, name: 'Khóa đội phòng thủ', desc: 'Lưu đội hình hiện tại làm đội thủ Bang Chiến', act: 'lock', label: 'Khóa đội' });
   }
 
-  function openTile(id) {
-    if (id === 'clan') { navTo('clan'); return; }
-    if (id === 'tech') openSheet('Võ Đường', htmlTech());
-    if (id === 'shop' || id === 'honor') openSheet('Bang Thương', htmlShop());
-    if (id === 'boss') openSheet('Hổ Trấn', htmlBoss());
-    if (id === 'campaign') openSheet('Chiến Dịch', htmlCamp());
-    if (id === 'war') openSheet('Bang Chiến', htmlWar());
-    if (id === 'mission') openSheet('Công Vụ', htmlMissions());
-  }
+  const SHEETS = {
+    tech: () => ['Võ Đường', htmlTech(), res(1, 'Điểm Công Nghệ', num(gp().techPts))],
+    shop: () => ['Bang Thương', htmlShop(), res(10, 'Cống hiến', num(gp().contrib))],
+    boss: () => ['Hổ Trấn', htmlBoss(), res(16, 'Lượt đánh hôm nay', (gp().boss && gp().boss.attempts || 0) + '/2')],
+    camp: () => ['Chiến Dịch', htmlCamp(), res(10, 'Đóng góp hôm nay', num(gp().dailyEarned))],
+    war: () => ['Bang Chiến', htmlWar(), res(17, 'Điểm Bang Chiến', num((gp().war && gp().war.rating) || 1000) + ' · lượt ' + ((gp().war && gp().war.attempts) || 0) + '/3')],
+    mission: () => ['Công Vụ', htmlMissions(), res(10, 'Cống hiến', num(gp().contrib))],
+    log: () => ['Nhật ký · Công Vụ', htmlMissions(), res(10, 'Cống hiến', num(gp().contrib))],
+    manage: () => ['Quản lý', htmlManage(), res(10, 'Cống hiến', num(gp().contrib))],
+    list: () => ['Danh sách bang', htmlList(), res(21, 'Bang của anh', (g() && esc(g().name)) || 'Chưa vào bang')],
+    info: () => ['Thông tin', htmlList(), res(21, 'Bang của anh', (g() && esc(g().name)) || 'Chưa vào bang')]
+  };
+  function show(kind) { const f = SHEETS[kind]; if (f) openSheet.apply(null, f()); }
+
+  const TILE_SHEET = { tech: 'tech', shop: 'shop', honor: 'shop', boss: 'boss', campaign: 'camp', war: 'war', mission: 'mission' };
+  function openTile(id) { if (TILE_SHEET[id]) show(TILE_SHEET[id]); }
 
   function handle(act) {
     const [k, v] = String(act).split(':');
     let ok = false;
-    if (k === 'list') { openSheet('Danh sách bang', htmlList()); return; }
+    if (k === 'list') { show('list'); return; }
     if (k === 'join' && typeof joinGuild === 'function') ok = joinGuild(v);
     if (k === 'donate' && typeof guildDonate === 'function') ok = guildDonate();
     if (k === 'lock' && typeof saveGuildDefense === 'function') { saveGuildDefense(); ok = true; }
@@ -160,10 +194,11 @@
     if (k === 'boss' && typeof startGuildBoss === 'function') { startGuildBoss(); return; }
     paintCity();
     if (ok) {
-      if (k === 'tech') openSheet('Võ Đường', htmlTech());
-      if (k === 'mission') openSheet('Công Vụ', htmlMissions());
-      if (k === 'buy') openSheet('Bang Thương', htmlShop());
-      if (k === 'camp') openSheet('Chiến Dịch', htmlCamp());
+      if (k === 'tech') show('tech');
+      if (k === 'mission') show('mission');
+      if (k === 'buy') show('shop');
+      if (k === 'camp') show('camp');
+      if (k === 'donate') show('manage');
       if (k === 'join') closeSheet();
     }
   }
@@ -188,11 +223,7 @@
     const dock = ev.target.closest('[data-gdock]');
     if (dock) {
       const id = dock.getAttribute('data-gdock');
-      if (id === 'log') openSheet('Nhật ký · Công Vụ', htmlMissions());
-      if (id === 'manage') openSheet('Quản lý',
-        `<button type="button" class="act" data-gact="donate">🪙300 → +30 điểm</button>
-         <button type="button" class="act" data-gact="lock">Khóa đội phòng thủ</button>`);
-      if (id === 'info') openSheet('Thông tin', htmlList());
+      if (SHEETS[id]) show(id);
       return;
     }
     const tile = ev.target.closest('[data-gtile]');

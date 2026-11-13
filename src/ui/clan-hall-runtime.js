@@ -16,7 +16,8 @@
   document.body.append(root);
 
   const syncOpen = name => {
-    const open = name === 'clan';
+    if (name === 'clan') { setTimeout(() => { try { navTo('guild'); } catch (_) {} }, 0); }
+  const open = false;
     root.hidden = !open;
     root.classList.toggle('is-open', open);
     document.body.classList.toggle('clan-hall-active', open);

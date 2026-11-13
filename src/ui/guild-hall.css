@@ -64,21 +64,7 @@
 #hvGuildRoot .hv-guild-dock button{
   min-height:48px;border:0;border-radius:12px;background:#efe0c0;color:#4a3016;font-weight:800;font-size:12px;
 }
-#hvGuildRoot .hv-guild-sheet{
-  position:fixed;left:8px;right:8px;bottom:78px;z-index:6;max-height:58vh;overflow:auto;
-  background:#fff8e8;border-radius:16px;box-shadow:0 16px 40px rgba(0,0,0,.4);padding:10px 12px 16px;
-}
+/* Bang chuc nang: xem guild-sheet.css (asset GPT) */
 #hvGuildRoot .hv-guild-sheet[hidden]{display:none!important}
-#hvGuildRoot .hv-guild-sheet h3{margin:0 36px 8px 0;font-size:15px}
-#hvGuildRoot .hv-guild-sheet .x{
-  position:absolute;top:8px;right:8px;width:36px;height:36px;border:0;border-radius:50%;background:#efe0c0;
-}
-#hvGuildRoot .hv-guild-sheet button.act{
-  display:block;width:100%;margin:6px 0;min-height:40px;border:0;border-radius:10px;
-  background:#e2b45a;color:#3a2414;font-weight:800;
-}
-#hvGuildRoot .hv-guild-sheet .card{
-  background:#fff;border:1px solid #e2c48a;border-radius:12px;padding:8px;margin:6px 0;font-size:13px;
-}
 body.guild-hall-active .hv-brandbar,body.guild-hall-active #resbar{display:none!important}
 body.guild-hall-active #guildScreen .pagehdr{display:none!important}

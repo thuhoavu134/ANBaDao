@@ -8,6 +8,14 @@ Kiểm: quét DOM 24 màn ở 390x844, không còn chữ "Mộng" hiển thị, 
 
 ---
 
+## 2026-11-13 — Ô chức năng Bang Hội mẫu B (DRAFT / REVIEW)
+
+Owner chọn mẫu B: sáu ô chức năng (Võ Đường, Kho Bảo/Bang Thương, Hổ Trấn, Chiến Dịch, Bang Chiến, Công Vụ) và các mục dock (Nhật ký, Quản lý, Thông tin, Danh sách bang) mở bảng trượt lên khoảng 72% màn hình trên thành bang đã làm tối. Khung bảng, ruy-băng, nút đóng, thanh tài nguyên, chấm cấp, thanh tiến độ và 24 icon là ảnh gen bằng GPT (`assets/ui/guild/sheet`, cắt bằng `scripts/guild-sheet-cut.py`); code chỉ đặt dữ liệu và giữ nguyên `data-gact` cùng luật cũ. Gia Tộc đã được gỡ khỏi giao diện (dữ liệu và hàm cũ giữ nguyên).
+
+Kiểm bằng Playwright ở 390x844 và 360x740: tám bảng không chồng/tràn/cắt chữ, nâng cấp Võ Đường, đổi vật phẩm, nhận Công Vụ và Chiến Dịch, cống hiến, đóng bằng nền mờ đều chạy, không lỗi JS hoặc asset 404. Đã xem ảnh thật. Chưa chạy `npm test`, chưa thử máy thật/Safari, chưa push hoặc merge; Vercel production vẫn báo failure từ các lần merge trước.
+
+---
+
 ## 2026-10-17 — Ba tia Ultimate Kỷ Vân và xác minh đầy đủ SFX (DRAFT / REVIEW)
 
 Merge PR #312 theo owner: main `642dd78`. Follow-up PR #313 bổ sung helper cụm ba tia trong `src/runtime/ky-van.js`; chỉ mở rộng Ultimate sau bước chọn latest strike/target. Theo phản hồi owner mới, thay ba tia đều nhau bằng ba đầu cao thấp khác nhau và khoảng ngang lệch tự nhiên: height [.78,1,.90] xoay theo hàng, x offsets [-1,0,.75]×spread. Basic, chuẩn thân, damage/status và các mốc chiêu tiếp tục giữ owner hiện có. Không đổi atlas hoặc audio đã duyệt.
