@@ -5,7 +5,7 @@ import { createContext, runInContext } from 'node:vm';
 import { campaignCheckpoint, replaceCampaignSlot, swapCampaignRows } from '../src/domain/campaign/campaign-view.mjs';
 import { prepareFormationChange } from '../src/domain/hero/loadout.mjs';
 
-const chapters = [{ idx: 0, title: 'Mộng phố' }, { idx: 1, title: 'Bến sông' }, { idx: 2, title: 'Rừng thiêng' }];
+const chapters = [{ idx: 0, title: 'Giang hồ' }, { idx: 1, title: 'Bến sông' }, { idx: 2, title: 'Rừng thiêng' }];
 const sequence = i => ['chapter-' + i + '-a', 'chapter-' + i + '-boss'];
 const squad = ['a', 'b', 'c', 'd', 'e', 'f'].map((id, i) => ({ id, row: i < 3 ? 'front' : 'back', slot: i }));
 const catalog = Object.fromEntries([...squad.map(p => p.id), 'reserve'].map(id => [id, { name: id }]));

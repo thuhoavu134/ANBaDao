@@ -23,7 +23,7 @@ function assertQuestContract() {
     chapterCount: 2,
     stageCount: 2,
     battleId: 'build-quest-battle',
-    title: 'Mộng Phố'
+    title: 'Giang Hồ'
   });
   const completed = recordMainQuestBattle(bootstrap, quest, {
     win: true,

@@ -35,9 +35,9 @@ const txt = (el) => el ? (el.textContent || '').replace(/\s+/g, ' ').trim() : ''
         </div>
         ${rerollBtn ? `<button type="button" class="hvm3-reroll" data-k="reroll" ${rerollBtn.disabled ? 'disabled' : ''}>Đổi bộ Phúc</button>` : ''}
         <div class="hvm3-acts">
-          ${startBtn ? '<button type="button" class="hvm3-btn is-main" data-k="start">Bắt đầu Mộng Lộ</button>' : ''}
+          ${startBtn ? '<button type="button" class="hvm3-btn is-main" data-k="start">Bắt đầu Hành Tẩu</button>' : ''}
           ${fightBtn ? `<button type="button" class="hvm3-btn is-main" data-k="fight">${txt(fightBtn)}</button>` : ''}
-          ${abortBtn ? '<button type="button" class="hvm3-btn is-sub" data-k="abort">Rời Mộng Lộ</button>' : ''}
+          ${abortBtn ? '<button type="button" class="hvm3-btn is-sub" data-k="abort">Rời Hành Tẩu</button>' : ''}
         </div>
         <div class="hvm3-foot"><span>${gold}</span><span>${sigil}</span><span>${best}</span>${wornText ? `<span>${wornText}</span>` : ''}</div>`;
   }

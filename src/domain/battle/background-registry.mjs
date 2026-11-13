@@ -1,7 +1,7 @@
 const BACKGROUND_ROOT = 'assets/battle/backgrounds-v1';
 
 /**
- * The authored battle-stage set from the Hồn Việt / Mộng Giới background pack.
+ * The authored battle-stage set from the Hồn Việt / Giang Hồ background pack.
  * Keep this data independent from the HTML patch so campaign, QA and future
  * battle modes can select the same deterministic artwork.
  */

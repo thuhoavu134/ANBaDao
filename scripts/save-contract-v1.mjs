@@ -96,7 +96,7 @@ const newPersist = `function persist(){
 }`;
 html = html.replace(oldPersist, newPersist);
 
-const importGuard = "  if(!p||p.v!==1||typeof p.heroes!=='object'||!p.heroes) return {ok:false,msg:'Chuỗi không phải bản lưu Mộng Giới.'};";
+const importGuard = "  if(!p||p.v!==1||typeof p.heroes!=='object'||!p.heroes) return {ok:false,msg:'Chuỗi không phải bản lưu Giang Hồ.'};";
 if (!html.includes(importGuard)) throw new Error('Import validation marker not found');
 html = html.replace(
   importGuard,

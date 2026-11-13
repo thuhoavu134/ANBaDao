@@ -72,7 +72,7 @@ export const HUNT_CONTRACT_IDS = Object.freeze(Object.keys(HUNT_CONTRACTS));
 
 export const HUNT_MARK_MILESTONES = Object.freeze({
   3: Object.freeze({ gold: 250, gems: 5, label: 'Đọc Nhịp' }),
-  7: Object.freeze({ gold: 500, gems: 10, shards: 1, label: 'Bóc Mộng' }),
+  7: Object.freeze({ gold: 500, gems: 10, shards: 1, label: 'Bóc Mảnh' }),
   12: Object.freeze({ gold: 900, gems: 20, shards: 2, label: 'Thợ Săn Đêm' })
 });
 
@@ -201,7 +201,7 @@ export function huntEncounter(day, chapters) {
       col: bz.col,
       row: 'front',
       slot: 1,
-      role: 'Boss Mộng',
+      role: 'Săn Boss',
       huntForm: bz.id,
       huntScale: 2.45,
       stats: Object.freeze({
@@ -316,7 +316,7 @@ function pushMilestone(result, bz, key) {
     result.shards[bz.drop] = asInt(result.shards[bz.drop], 0) + rw.shards;
   }
   result.mails.push({
-    from: 'Đội Săn Mộng',
+    from: 'Đội Săn Boss',
     title: `Mốc ${key} Săn Ấn — ${rw.label}`,
     body: `Kinh nghiệm săn ${bz.name} đã được ghi vào sổ đêm.`,
     gold: Math.round(rw.gold / 2)
@@ -394,7 +394,7 @@ export function prepareHuntSettle(player, { day, dmg, killed, addsDown, hpMax, c
     result.gems += HUNT_KILL_GEMS;
     result.journals.push('Đội hạ ' + bz.name + '. Đêm nay thành phố dễ thở hơn một chút.');
     result.mails.push({
-      from: 'Đội Săn Mộng',
+      from: 'Đội Săn Boss',
       title: 'Đã hạ ' + bz.name,
       body: 'Chiến lợi phẩm chia phần anh.',
       gold: HUNT_KILL_MAIL_GOLD

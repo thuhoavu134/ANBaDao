@@ -101,7 +101,7 @@ test('L144-T4 battle renderer returns false before loading and uses idle during 
 test('L144-T4 profile keeps atlas aspect ratio and stops when its screen is hidden', () => {
   const h = harness('host'), html = h.html;
   const start = html.indexOf('function startLinhDongDetailIdle(');
-  const end = html.indexOf('/* ---------- KHO MỘNG', start);
+  const end = html.indexOf('/* ---------- KHO ĐỒ', start);
   const draws = []; let next;
   const cv = {isConnected:true,style:{},getContext:()=>({setTransform(){},clearRect(){},drawImage(...a){draws.push(a);}})};
   const box = {window:{devicePixelRatio:3},document:{hidden:false,getElementById:()=>cv},ST:{screen:'heroDetail'},

@@ -117,7 +117,7 @@ const jsBody = `
     else if(joined.indexOf('Hệ Thủy')>=0)element='💧';
     else if(joined.indexOf('Hệ Thổ')>=0)element='⛰️';
     else if(joined.indexOf('Hệ Phong')>=0)element='🌀';
-    else if(joined.indexOf('Hệ Mộng')>=0)element='🌙';
+    else if(joined.indexOf('Hệ Huyễn')>=0)element='🌙';
     var nums=joined.split(' '), power=1000;
     for(var n=0;n<nums.length;n++){
       var v=Number(nums[n].split('.').join('').split(',').join(''));

@@ -31,7 +31,7 @@ export const DAILY_QUESTS = balancedQuests([
   Object.freeze({ id: 'q_tower', text: 'Leo Thông Thiên Tháp 1 tầng', type: 'tower', goal: 1, reward: Object.freeze({ gold: 180 }), pts: 10 }),
   Object.freeze({ id: 'q_shop', text: 'Mua 1 món ở Hắc Thị', type: 'shop', goal: 1, reward: Object.freeze({ gold: 150 }), pts: 10 }),
   Object.freeze({ id: 'q_arena', text: 'Khiêu chiến Đấu Trường 1 trận', type: 'arena', goal: 1, reward: Object.freeze({ gold: 200 }), pts: 10 }),
-  Object.freeze({ id: 'q_hunt', text: 'Săn Boss Mộng 1 lượt', type: 'hunt', goal: 1, reward: Object.freeze({ gold: 200 }), pts: 10 }),
+  Object.freeze({ id: 'q_hunt', text: 'Săn Boss 1 lượt', type: 'hunt', goal: 1, reward: Object.freeze({ gold: 200 }), pts: 10 }),
   Object.freeze({ id: 'q_hoadang', text: 'Thả 1 hoa đăng', type: 'hoadang', goal: 1, reward: Object.freeze({ gold: 150 }), pts: 10 }),
   Object.freeze({ id: 'q_spin', text: 'Quay sò 1 lần', type: 'spin', goal: 1, reward: Object.freeze({ gold: 150 }), pts: 10 }),
   Object.freeze({ id: 'q_craft', text: 'Rèn 1 món trang bị', type: 'craft', goal: 1, reward: Object.freeze({ gold: 120, tinh: 10, hoat: 10 }), pts: 10 }),
@@ -50,8 +50,8 @@ export const ACT_MILESTONES = Object.freeze([
 
 export const WEEKLY_QUESTS = balancedQuests([
   Object.freeze({ id: 'w_win', text: 'Thắng 12 trận', type: 'win', goal: 12, pts: 25, reward: Object.freeze({ gold: 650 }) }),
-  Object.freeze({ id: 'w_rogue', text: 'Vượt 6 tầng Mộng Lộ', type: 'rogue', goal: 6, pts: 30, reward: Object.freeze({ gems: 45 }) }),
-  Object.freeze({ id: 'w_hunt', text: 'Săn Boss Mộng 4 lượt', type: 'hunt', goal: 4, pts: 20, reward: Object.freeze({ gold: 500 }) }),
+  Object.freeze({ id: 'w_rogue', text: 'Vượt 6 tầng Hành Tẩu', type: 'rogue', goal: 6, pts: 30, reward: Object.freeze({ gems: 45 }) }),
+  Object.freeze({ id: 'w_hunt', text: 'Săn Boss 4 lượt', type: 'hunt', goal: 4, pts: 20, reward: Object.freeze({ gold: 500 }) }),
   Object.freeze({ id: 'w_build', text: 'Đổi build trước trận 3 lần', type: 'build', goal: 3, pts: 15, reward: Object.freeze({ gold: 360 }) }),
   Object.freeze({ id: 'w_campaign', text: 'Hoàn thành 3 chương/trận chiến dịch', type: 'campaign', goal: 3, pts: 20, reward: Object.freeze({ gems: 30 }) })
 ], WEEKLY_DRIP);
@@ -68,7 +68,7 @@ export const WEEKLY_MILESTONES = Object.freeze([
 
 export const DAILY_JOURNAL_TPL = Object.freeze({
   ong_hang_pho: Object.freeze([
-    'Ông Phở hầm một nồi xuyên đêm. Sáng ra, nước dùng thơm cả khu mộng.',
+    'Ông Phở hầm một nồi xuyên đêm. Sáng ra, nước dùng thơm cả khu phố.',
     'Có kẻ khóc bên gánh phở đêm. Ông múc thêm một vá, không lấy tiền.'
   ]),
   ong_chu_wifi: Object.freeze([
@@ -84,7 +84,7 @@ export const DAILY_JOURNAL_TPL = Object.freeze({
     'Mùi espresso lởn vởn cả ca trực. Ai đó nhờ vậy mà tỉnh.'
   ]),
   _default: Object.freeze([
-    'Một đêm trực yên. Mộng Giới bớt tối đi một chút.',
+    'Một đêm trực yên. Giang Hồ bớt tối đi một chút.',
     'Ca đêm trôi qua. Ai đó ngoài kia ngủ ngon hơn nhờ đội mình.'
   ])
 });
@@ -103,12 +103,12 @@ export const LIVE_DAILY = Object.freeze({
 });
 
 export const LICH_LUYEN_SPOKES = Object.freeze([
-  Object.freeze({ key: 'campaign', label: 'Qua Ải Mộng', sub: 'Trảm Tướng', go: 'campaign', ch: 0, angle: 0, icon: 'campaign' }),
+  Object.freeze({ key: 'campaign', label: 'Qua Ải', sub: 'Trảm Tướng', go: 'campaign', ch: 0, angle: 0, icon: 'campaign' }),
   Object.freeze({ key: 'train', label: 'Giáo Trường', sub: 'Luyện Tâm', go: 'train', ch: 0, angle: 33, icon: 'train' }),
   Object.freeze({ key: 'tower', label: 'Thông Thiên Tháp', sub: 'Bảo Vệ', go: 'tower', ch: 1, angle: 65, icon: 'tower' }),
   Object.freeze({ key: 'hold', label: 'Trì Thủ Phố Đêm', sub: 'Sắp mở', go: null, ch: 99, angle: 98, icon: 'hold' }),
   Object.freeze({ key: 'arena', label: 'Đấu Trường', sub: 'Đoạt Kỳ', go: 'arena', ch: 3, angle: 131, icon: 'arena' }),
-  Object.freeze({ key: 'expedition', label: 'Mộng Lộ', sub: 'Khám Phá', go: 'expedition', ch: 2, angle: 164, icon: 'expedition' }),
+  Object.freeze({ key: 'expedition', label: 'Hành Tẩu', sub: 'Khám Phá', go: 'expedition', ch: 2, angle: 164, icon: 'expedition' }),
   Object.freeze({ key: 'forgegate', label: 'Lò Ải Thiên Công', sub: 'Sắp mở', go: null, ch: 99, angle: 196, icon: 'forgegate' }),
   Object.freeze({ key: 'hunt', label: 'Săn Boss', sub: 'Bí Mật', go: 'hunt', ch: 3, angle: 229, icon: 'hunt' }),
   Object.freeze({ key: 'abyss', label: 'Vực Sâu Tiềm Long', sub: 'Sắp mở', go: null, ch: 99, angle: 262, icon: 'abyss' }),
@@ -299,7 +299,7 @@ const QUEST_ACCESS = Object.freeze({
   q_hoadang: { feature: 'festival', ch: 0, type: 'train', goal: 1, text: 'Luyện tập 1 trận' },
   q_spin: { feature: 'festival', ch: 0, type: 'train', goal: 1, text: 'Luyện tập 1 trận tích nguyên liệu' },
   q_level: { type: 'win', goal: 1, text: 'Thắng 1 trận với đội đã đạt cấp tối đa' },
-  w_rogue: { feature: 'expedition', ch: 2, type: 'win', goal: 6, text: 'Thắng 6 trận chuẩn bị Mộng Lộ' },
+  w_rogue: { feature: 'expedition', ch: 2, type: 'win', goal: 6, text: 'Thắng 6 trận chuẩn bị Hành Tẩu' },
   w_hunt: { feature: 'hunt', ch: 3, type: 'win', goal: 4, text: 'Thắng 4 trận chuẩn bị săn Boss' }
 });
 

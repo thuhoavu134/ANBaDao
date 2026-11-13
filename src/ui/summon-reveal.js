@@ -263,7 +263,7 @@
         const h = typeof DATA === 'object' && DATA.heroes ? DATA.heroes[c.id] : null;
         const prof = (globalThis.HV_VC_HERO_PROFILES || {})[c.id] || {};
         const role = String((h && h.role) || '');
-        const title = (prof && prof.job) || role || 'Kỳ hiệp Mộng Giới';
+        const title = (prof && prof.job) || role || 'Kỳ hiệp Giang Hồ';
         const skName = k => { const o = h && h[k === 'basic' ? 'skill' : k]; return o && (o.nm || o.name || o.n || o.title) || ''; };
         const heNm = h && typeof HE === 'object' && HE[h.he] ? HE[h.he].nm : '';
         const el = Object.entries(EL).find(([k]) => k.normalize('NFC') === String(heNm).normalize('NFC'))?.[1] || null;

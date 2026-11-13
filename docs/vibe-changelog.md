@@ -1,3 +1,13 @@
+## 2026-11-13 — Đổi toàn bộ chữ "Mộng" hiển thị sang tên giang hồ (DRAFT / REVIEW)
+
+Cốt truyện đã là giang hồ nên mọi chữ "Mộng" người chơi nhìn thấy được đổi theo bảng owner duyệt: Rèn Mộng→Rèn Binh, Mộng Lộ→Hành Tẩu, Gọi Mộng→Chiêu Mộ, Phúc Mộng→Phúc Duyên, Mộng Tủy→Nội Đan, Chợ Mộng→Hắc Thị, Đấu Trường Mộng→Lôi Đài, Kho Mộng→Kho Đồ, Mộng Giới/Mộng Phố→Giang Hồ, Người Gác Mộng→Khaos, nhóm "mộng" lẻ theo ngữ cảnh (Huyễn, Tà Phái, Hắc Ám...). 446 chỗ ở 81 file (index.html, battle.html, src, scripts, tests). Bảng canon 09/11 trong `lore-luc-than-runtime.js` giữ nguyên làm lớp bảo hiểm lúc chạy; `hunt-battle-visual.js` giữ chuỗi cũ vì đang so khớp tên boss.
+
+Chỉ đổi chuỗi có dấu: id/key không dấu (`mong`, `dreamEssence`...), khoá save, tên file ảnh, docs và tickets lịch sử không đổi. Thư đã lưu trong save người chơi vẫn ghi tên cũ.
+
+Kiểm: quét DOM 24 màn ở 390x844, không còn chữ "Mộng" hiển thị, không lỗi JS. `npm test`: 2365 test, 2249 đạt, 116 lỗi, trùng khớp từng test với `main` sạch (0 lỗi mới, 0 lỗi biến mất). Chưa kiểm ảnh asset có chữ "Mộng" in sẵn, chưa thử máy thật, chưa push/merge; Vercel production vẫn failure từ các lần merge trước.
+
+---
+
 ## 2026-10-17 — Ba tia Ultimate Kỷ Vân và xác minh đầy đủ SFX (DRAFT / REVIEW)
 
 Merge PR #312 theo owner: main `642dd78`. Follow-up PR #313 bổ sung helper cụm ba tia trong `src/runtime/ky-van.js`; chỉ mở rộng Ultimate sau bước chọn latest strike/target. Theo phản hồi owner mới, thay ba tia đều nhau bằng ba đầu cao thấp khác nhau và khoảng ngang lệch tự nhiên: height [.78,1,.90] xoay theo hàng, x offsets [-1,0,.75]×spread. Basic, chuẩn thân, damage/status và các mốc chiêu tiếp tục giữ owner hiện có. Không đổi atlas hoặc audio đã duyệt.

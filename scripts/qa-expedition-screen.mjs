@@ -95,7 +95,7 @@ const result = {
   appErrors,
   pass: hubMarks === 1
     && /Chưa lên đường/.test(idleFloor || '')
-    && /Bắt đầu Mộng Lộ/.test(startLabel || '')
+    && /Bắt đầu Hành Tẩu/.test(startLabel || '')
     && /Tầng 1/.test(floorAfterStart || '')
     && routeCount === 3
     && routeOn === 1
@@ -103,7 +103,7 @@ const result = {
     && battles === 1
     && battleId === '__rogue'
     && offerCount === 3
-    && /Phúc Mộng/.test(pendingFloor || '')
+    && /Phúc Duyên/.test(pendingFloor || '')
     && chaptersUntouched
     && /Tầng 2/.test(floorAfterBless || '')
     && worn >= 1

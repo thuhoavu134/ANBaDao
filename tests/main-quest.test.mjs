@@ -44,7 +44,7 @@ test('matching victory completes the current quest exactly once', () => {
     chapterCount: 2,
     stageCount: 2,
     battleId: 'ch01_fight_street_mobs',
-    title: 'Mộng Phố'
+    title: 'Giang Hồ'
   });
   const won = recordMainQuestBattle(state, quest, { win: true, battleId: quest.battleId, at: 42 });
   assert.equal(won.changed, true);

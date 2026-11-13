@@ -1,5 +1,5 @@
 // Owner 2026-10-25: bảng rơi trang bị (đã chốt với chủ dự án).
-// Phó bản là nơi cày đều (b/a là rác phân giải), Săn Boss Mộng là nơi đánh đổi lượt lấy đồ xịn.
+// Phó bản là nơi cày đều (b/a là rác phân giải), Săn Boss là nơi đánh đổi lượt lấy đồ xịn.
 // Hàm thuần, rng tiêm được để test; không đụng state.
 
 export const STAGE_DROP = Object.freeze({
@@ -62,7 +62,7 @@ export function rollBossDrop({ chapter = 1, pity = 0, rng = Math.random } = {}) 
 }
 
 /**
- * Săn Boss Mộng: mỗi lần hạ boss chắc chắn 1 món.
+ * Săn Boss: mỗi lần hạ boss chắc chắn 1 món.
  * - lượt hạ đầu tiên trong ngày: ít nhất ss
  * - bảo hiểm 10 lượt không ra ssr
  * - quá 1 món/ngày thì tỉ lệ giảm nửa, nhân đôi trọng số phẩm thấp

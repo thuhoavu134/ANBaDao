@@ -57,7 +57,7 @@ const js = `<script id="hero-roster-phase-a-v1-js">
    const power=(raw.match(/\b\d{3,5}\b/g)||[]).map(Number).sort((a,b)=>b-a)[0]||1000;
    const systemLine=lines.find(x=>/Hệ\b/i.test(x))||'';
    let element='✦';
-   if(/Hỏa/i.test(systemLine))element='🔥'; else if(/Kim/i.test(systemLine))element='⚙️'; else if(/Thủy/i.test(systemLine))element='💧'; else if(/Mộc/i.test(systemLine))element='🌿'; else if(/Thổ/i.test(systemLine))element='⛰️'; else if(/Phong/i.test(systemLine))element='🌀'; else if(/Mộng/i.test(systemLine))element='🌙';
+   if(/Hỏa/i.test(systemLine))element='🔥'; else if(/Kim/i.test(systemLine))element='⚙️'; else if(/Thủy/i.test(systemLine))element='💧'; else if(/Mộc/i.test(systemLine))element='🌿'; else if(/Thổ/i.test(systemLine))element='⛰️'; else if(/Phong/i.test(systemLine))element='🌀'; else if(/Huyễn/i.test(systemLine))element='🌙';
    const imgs=[...card.querySelectorAll('img')].filter(im=>{const r=im.getBoundingClientRect();return r.width>70&&r.height>70;});
    let src=imgs.map(im=>im.currentSrc||im.src).find(Boolean)||'';
    if(!src){for(const el of card.querySelectorAll('*')){const bg=getComputedStyle(el).backgroundImage||'';const m=bg.match(/url\(["']?(.*?)["']?\)/);if(m&&/assets\//.test(m[1])){src=m[1];break;}}}

@@ -12,7 +12,7 @@
   const byName = n => { if (!AV.length) return ''; let h = 0; for (const c of String(n)) h = (h * 31 + c.charCodeAt(0)) | 0; return AV[Math.abs(h) % AV.length]; };
   const avatar = m => { try { return (m.heroId && characterAsset(m.heroId, 'avatar')) || byName(m.who || ''); } catch (_) { return byName(m.who || ''); } };
   const myAvatar = () => { try { const id = (P.squad || [])[0]?.id; return id ? characterAsset(id, 'avatar') : ''; } catch (_) { return ''; } };
-  const fixName = t => String(t || '').replace(/Kênh Mộng Phố/g, 'Kênh Giang Hồ');
+  const fixName = t => String(t || '').replace(/Kênh Giang Hồ/g, 'Kênh Giang Hồ');
 
   const TABS = [
     { k: 'world', label: 'Thế Giới', base: true },
@@ -198,7 +198,7 @@
     const key = list.map(m => m.t + m.text).join('|');
     if (key === lastKey) return;
     lastKey = key;
-    feed.innerHTML = list.length ? list.map(m => '<div class="hc-line">' + tag(m) + '<b>' + esc(m.me ? 'Ta' : m.who) + ':</b> <span>' + esc(String(m.text || '').replace(/Kênh Mộng Phố/g, 'Kênh Giang Hồ')) + '</span></div>').join('')
+    feed.innerHTML = list.length ? list.map(m => '<div class="hc-line">' + tag(m) + '<b>' + esc(m.me ? 'Ta' : m.who) + ':</b> <span>' + esc(String(m.text || '').replace(/Kênh Giang Hồ/g, 'Kênh Giang Hồ')) + '</span></div>').join('')
       : '<div class="hc-line"><i class="hc-t wd">Thế giới</i><span>Chạm để trò chuyện cùng giang hồ…</span></div>';
     feed.classList.remove('bump'); void feed.offsetWidth; feed.classList.add('bump');
   }

@@ -80,7 +80,7 @@ test('L35-T2/T3 every official kit has basic, ultimate, passive and legacySkillM
   }
 });
 
-test('Rèn Mộng asset registry covers every item model and material deterministically', () => {
+test('Rèn Binh asset registry covers every item model and material deterministically', () => {
   assert.equal(validateEquipmentAssetRegistry().ok, true);
   assert.equal(EQUIPMENT_ASSET_VERSION, 'e11-imagen-v1');
   for (const slot of ['weapon', 'armor', 'charm', 'boots']) {

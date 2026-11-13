@@ -387,7 +387,7 @@ const moduleShim = { exports: {} };
   }
 
   const FACTION_LABELS = Object.freeze({
-    pho_thuc:"Phố Thức", mong_dan:"Mộng Dân", dan_dem:"Dân Đêm", neutral:"Trung lập"
+    pho_thuc:"Phố Thức", mong_dan:"Dân Giang Hồ", dan_dem:"Dân Đêm", neutral:"Trung lập"
   });
   const ROLE_COUNTERS = Object.freeze({ guardian:"striker", striker:"ranger", ranger:"healer", healer:"support", support:"duelist", duelist:"mystic", mystic:"guardian" });
   const TEAM_ARCHETYPE_LABELS = Object.freeze({ burst:"Bùng Nổ", sustain:"Bền Bỉ", control:"Khống Chế", tempo:"Nhịp Độ", counter:"Phản Công", dot:"Bào Mòn" });
@@ -539,7 +539,7 @@ const moduleShim = { exports: {} };
   const ADAPTIVE_ENEMY_RULES = Object.freeze({
     antiheal:{id:"antiheal",name:"Khóa Mạch",telegraph:"Địch nhận ra đội ta đang dựa nhiều vào hồi phục.",active:"Khóa Mạch: đòn địch gây Giảm Hồi Phục 35% trong 2 lượt.",counter:"Giảm nhịp hồi, dùng khiên/khống chế hoặc kết liễu trước khi đối sách phát huy."},
     ragehunt:{id:"ragehunt",name:"Săn Nộ",telegraph:"Địch đang đánh dấu các tướng giữ nhiều Nộ.",active:"Săn Nộ: địch ưu tiên mục tiêu Nộ cao và hút 12 Nộ khi đánh trúng.",counter:"Xả Nộ sớm, đổi sang Linh hoạt hoặc che mục tiêu bằng khiêu khích."},
-    dotcleanse:{id:"dotcleanse",name:"Tẩy Mộng",telegraph:"Địch nhận ra đội ta đang chồng hiệu ứng Bào Mòn.",active:"Tẩy Mộng: đầu lượt địch tự gỡ 1 DOT và nhận +6 Nộ.",counter:"Rải DOT sang nhiều mục tiêu hoặc dồn sát thương trực tiếp trong nhịp tẩy."},
+    dotcleanse:{id:"dotcleanse",name:"Tẩy Độc",telegraph:"Địch nhận ra đội ta đang chồng hiệu ứng Bào Mòn.",active:"Tẩy Độc: đầu lượt địch tự gỡ 1 DOT và nhận +6 Nộ.",counter:"Rải DOT sang nhiều mục tiêu hoặc dồn sát thương trực tiếp trong nhịp tẩy."},
     focusguard:{id:"focusguard",name:"Chuyển Vệ",telegraph:"Địch nhận ra ta đang dồn đòn vào cùng một mục tiêu.",active:"Chuyển Vệ: mục tiêu bị tập trung được Hộ Thể tạm thời khi đối sách kích hoạt.",counter:"Đổi mục tiêu trong 1–2 lượt rồi quay lại sau khi Hộ Thể hết."}
   });
   function normalizeAdaptiveObservation(value={}){ return {healing:Math.max(0,Number(value.healing)||0),dotApplications:Math.max(0,Number(value.dotApplications)||0),focusHits:{...(value.focusHits||{})},highRageSeen:Math.max(0,Number(value.highRageSeen)||0)}; }
@@ -630,7 +630,7 @@ const moduleShim = { exports: {} };
     const mods={}; const active=[];
     for (const [faction,count] of Object.entries(factionCounts)) {
       if (faction==="pho_thuc") { if(count>=2){addMods(mods,{hp:0.03,def:0.03});active.push("Phố Thức 2+: +3% HP, +3% Thủ");} if(count>=4){addMods(mods,{energyFlat:8});active.push("Phố Thức 4+: +8 Nộ khai trận");} }
-      if (faction==="mong_dan") { if(count>=2){addMods(mods,{atk:0.04,accuracyFlat:4});active.push("Mộng Dân 2+: +4% Công, +4 Chính xác");} if(count>=4){addMods(mods,{critFlat:6});active.push("Mộng Dân 4+: +6 Bạo kích");} }
+      if (faction==="mong_dan") { if(count>=2){addMods(mods,{atk:0.04,accuracyFlat:4});active.push("Dân Giang Hồ 2+: +4% Công, +4 Chính xác");} if(count>=4){addMods(mods,{critFlat:6});active.push("Dân Giang Hồ 4+: +6 Bạo kích");} }
       if (faction==="dan_dem") { if(count>=2){addMods(mods,{speed:0.04,evasionFlat:2});active.push("Dân Đêm 2+: +4% Tốc, +2 Né");} if(count>=4){addMods(mods,{speed:0.07,critFlat:4});active.push("Dân Đêm 4+: +7% Tốc, +4 Bạo kích");} }
     }
     const frontliners=(roleCounts.guardian||0)+(roleCounts.support||0);
@@ -905,7 +905,7 @@ const moduleShim = { exports: {} };
   const ADAPTIVE_ORDER_COUNTERS = Object.freeze({
     antiheal:{orderId:"cleanse",name:"Tịnh Mạch",hint:"Thanh Tâm trước khi Khóa Mạch kích hoạt",effect:"Giảm Khóa Mạch còn 18% trong 1 lượt."},
     ragehunt:{orderId:"ward",name:"Ẩn Nộ",hint:"Hộ Trận để che nhịp Nộ trước Săn Nộ",effect:"Săn Nộ chỉ hút 6 Nộ mỗi đòn."},
-    dotcleanse:{orderId:"surge",name:"Dồn Nhịp",hint:"Chuyển Nộ trước khi Tẩy Mộng kích hoạt",effect:"Tẩy Mộng vẫn gỡ DOT nhưng không nhận +6 Nộ."},
+    dotcleanse:{orderId:"surge",name:"Dồn Nhịp",hint:"Chuyển Nộ trước khi Tẩy Độc kích hoạt",effect:"Tẩy Độc vẫn gỡ DOT nhưng không nhận +6 Nộ."},
     focusguard:{orderId:"surge",name:"Phá Vệ",hint:"Chuyển Nộ để phá nhịp Chuyển Vệ",effect:"Chuyển Vệ chỉ tạo 6% khiên và Hộ Thể 1 lượt."}
   });
   const ADAPTIVE_COUNTER_CHAINS = Object.freeze({

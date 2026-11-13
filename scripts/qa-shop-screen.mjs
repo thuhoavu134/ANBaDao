@@ -80,7 +80,7 @@ const result = {
   hubAfter,
   appErrors,
   pass: hubMarks === 1
-    && /Chợ Đêm Mộng/.test(title || '')
+    && /Hắc Thị/.test(title || '')
     && cardCount === 5
     && buyCount === 5
     && goldAfter === goldBefore - 160

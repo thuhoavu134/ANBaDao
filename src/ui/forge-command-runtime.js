@@ -3,7 +3,7 @@ function forgeCommand(action, payload = {}, commandId) {
   const key = commandId || 'forge.' + action + ':' + (payload.uid || payload.slot || payload.mold || '') + ':' + (P.revision || 0);
   const duplicate = hvReceiptForCommand(key);
   if (duplicate) return duplicate;
-  if (featLocked('forge')) return { ok: false, code: 'FORGE_LOCKED', message: 'Rèn Mộng chưa mở. Hãy tiếp tục Chinh Chiến.' };
+  if (featLocked('forge')) return { ok: false, code: 'FORGE_LOCKED', message: 'Rèn Binh chưa mở. Hãy tiếp tục Chinh Chiến.' };
   const change = prepareForgeCommand(P, {
     slots: DATA.items.slots, molds: FORGE_MOLDS, craftCost: CRAFT, dualCost: DUAL_FORGE, factors: RFAC
   }, action, payload);

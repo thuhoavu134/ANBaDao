@@ -16,7 +16,7 @@ test('Source runtime patch compiles and does not duplicate scheduler',()=>{
 test('Every selectable hero reaches a valid 6v6 fixture without duplicate positions',()=>{
   for(const h of SPLUS_HEROES){const f=createSplusFixture(SPLUS_HEROES,h.id);assert.equal(f.heroes.length,12);assert.ok(f.heroes.some(u=>u.team==='player'&&u.sourceId===h.id));assert.equal(new Set(f.heroes.map(u=>`${u.team}:${u.slot}`)).size,12);assert.equal(f.referenceSimple,true);}
 });
-test('Dream fixture reserves frontline for Thạch Mộng before support overflow',()=>{
+test('Dream fixture reserves frontline for Thạch Huyễn before support overflow',()=>{
   const f=createSplusFixture(SPLUS_HEROES,'hero_splus_cuu_trieu');
   assert.ok(f.heroes.find(u=>u.sourceId==='hero_splus_thach_mong').slot<3);
   assert.equal(f.heroes.find(u=>u.sourceId==='hero_splus_cuu_trieu').slot,4);

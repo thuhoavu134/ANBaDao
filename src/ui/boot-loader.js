@@ -53,7 +53,7 @@
     const el = document.createElement('div'); el.id = 'hvBoot';
     el.innerHTML = '<img class="hvb-logo" src="assets/ui/an-ba-dao/logo-v1.webp" alt="An Bá Đạo"><div class="hvb-box"><div class="hvb-label">Đang tải…</div><div class="hvb-bar"><div class="hvb-trough"><div class="hvb-fill"></div></div><div class="hvb-pct">0%</div></div><div class="hvb-tip">Mẹo: Xếp tướng đỡ đòn ở hàng trước để che chắn cho cả đội.</div></div>';
     document.body.append(el);
-    const TIPS = ['Mẹo: Xếp tướng đỡ đòn ở hàng trước để che chắn cho cả đội.','Mẹo: Bấm Đội gợi ý nhiều lần để xem các kiểu đội khác nhau.','Mẹo: Mỗi tầng Mộng Lộ cho chọn một Phúc Mộng, chọn hợp với đội đang có.','Mẹo: Đấu Hạng mỗi tuần có thưởng theo bậc hạng.']; let tipI = 0; const tipEl = el.querySelector('.hvb-tip'); const tipT = setInterval(() => { if (!tipEl || !el.isConnected) { clearInterval(tipT); return; } tipI = (tipI + 1) % TIPS.length; tipEl.textContent = TIPS[tipI]; }, 3000);
+    const TIPS = ['Mẹo: Xếp tướng đỡ đòn ở hàng trước để che chắn cho cả đội.','Mẹo: Bấm Đội gợi ý nhiều lần để xem các kiểu đội khác nhau.','Mẹo: Mỗi tầng Hành Tẩu cho chọn một Phúc Duyên, chọn hợp với đội đang có.','Mẹo: Đấu Hạng mỗi tuần có thưởng theo bậc hạng.']; let tipI = 0; const tipEl = el.querySelector('.hvb-tip'); const tipT = setInterval(() => { if (!tipEl || !el.isConnected) { clearInterval(tipT); return; } tipI = (tipI + 1) % TIPS.length; tipEl.textContent = TIPS[tipI]; }, 3000);
   const fill = el.querySelector('.hvb-fill'), pct = el.querySelector('.hvb-pct'), label = el.querySelector('.hvb-label');
     const ids = Object.keys(P.heroes).filter(id => P.heroes[id].owned && DATA.heroes && DATA.heroes[id]);
     let closed = false;

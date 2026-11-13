@@ -78,7 +78,7 @@ const result = {
   hubAfter,
   appErrors,
   pass: hubMarks === 1
-    && /Vòng Gọi Mộng/.test(title || '')
+    && /Vòng Chiêu Mộ/.test(title || '')
     && Number(pity) >= 0
     && pickCount >= 1
     && (lockedLive

@@ -1,4 +1,4 @@
-/* Mộng Lộ theo concept B (miếu mộng cắt lớp) - owner 06/11.
+/* Hành Tẩu theo concept B (miếu cổ cắt lớp) - owner 06/11.
    Nguyên tắc: nền ảnh phủ kín màn, chữ font thường dễ đọc, nút >=44px, khung/nút dùng ảnh bộ khung chung. */
 #expeditionScreen.hve-concept{background:#160f08 url('assets/ui/expedition/mieu-mong.webp') center/cover no-repeat!important;padding:0!important}
 #expeditionScreen.hve-concept .hv-exp-top,#expeditionScreen.hve-concept .hv-exp-hero,#expeditionScreen.hve-concept .hv-exp-panel{

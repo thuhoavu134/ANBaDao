@@ -26,7 +26,7 @@ test('đúng 5 hệ và đủ alias cũ', () => {
     assert.ok(['kim', 'moc', 'thuy', 'hoa', 'tho'].includes(heOf(legacy)), 'alias ' + legacy + ' phải map về 1 trong 5 hệ');
   }
   assert.equal(heOf('soul'), 'hoa', 'Âm Hồn → Hoả');
-  assert.equal(heOf('mong'), 'tho', 'Mộng → Thổ');
+  assert.equal(heOf('mong'), 'tho', 'Huyễn → Thổ');
   assert.equal(heOf('set'), 'kim', 'Lôi → Kim');
   assert.equal(heOf('rau'), 'moc');
   assert.equal(heOf('metal'), 'kim');

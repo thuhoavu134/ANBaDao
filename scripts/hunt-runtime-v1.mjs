@@ -42,14 +42,14 @@ html = replaceOnce(html, huntHeroFrom, huntHeroTo, 'index-huntForm');
 
 html = replaceOnce(
   html,
-  '      enemyTeamName: "Mộng Nhiễu",',
-  "      enemyTeamName: battleId==='__hunt' ? ((typeof todayBoss==='function'?todayBoss(typeof today==='function'?today():0).name:null)||'Boss Mộng') : \"Mộng Nhiễu\",",
+  '      enemyTeamName: "Tà Phái",',
+  "      enemyTeamName: battleId==='__hunt' ? ((typeof todayBoss==='function'?todayBoss(typeof today==='function'?today():0).name:null)||'Săn Boss') : \"Tà Phái\",",
   'index-enemy-name'
 );
 html = replaceOnce(
   html,
-  "      enemyTeamName: battleId==='__hunt' ? ((typeof todayBoss==='function'?todayBoss().name:null)||'Boss Mộng') : \"Mộng Nhiễu\",",
-  "      enemyTeamName: battleId==='__hunt' ? ((typeof todayBoss==='function'?todayBoss(typeof today==='function'?today():0).name:null)||'Boss Mộng') : \"Mộng Nhiễu\",",
+  "      enemyTeamName: battleId==='__hunt' ? ((typeof todayBoss==='function'?todayBoss().name:null)||'Săn Boss') : \"Tà Phái\",",
+  "      enemyTeamName: battleId==='__hunt' ? ((typeof todayBoss==='function'?todayBoss(typeof today==='function'?today():0).name:null)||'Săn Boss') : \"Tà Phái\",",
   'index-enemy-name-day'
 );
 

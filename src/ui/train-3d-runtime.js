@@ -12,7 +12,7 @@
     <span></span>
   </header>
   <div class="hv-train-stage">
-    <p class="hv-train-copy">Sân đình luyện tâm. Trừ Độ Tỉnh Táo rồi vào trận Bóng Mộng.</p>
+    <p class="hv-train-copy">Sân đình luyện tâm. Trừ Độ Tỉnh Táo rồi vào trận Bóng Hắc Liên.</p>
     <p class="hv-train-cost" data-train-cost></p>
     <button type="button" class="hv-train-fight" data-train-fight>Luyện</button>
   </div>`;

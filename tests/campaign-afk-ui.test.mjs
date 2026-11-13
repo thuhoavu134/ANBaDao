@@ -17,7 +17,7 @@ test('AC01: cảnh chiếm chiều cao chính, rương fab gọn, không bảng 
   assert.match(ui, /data-scene-action="open-chest"/);
   assert.match(style, /cs-landscape\{[^}]*min-height:5[02]dvh/);
   assert.match(style, /cs-chest-sheet/);
-  assert.doesNotMatch(ui, /THU HOẠCH TRÊN MỘNG LỘ/);
+  assert.doesNotMatch(ui, /THU HOẠCH TRÊN HÀNH TẨU/);
   assert.doesNotMatch(ui, /cs-chest-heading/);
 });
 

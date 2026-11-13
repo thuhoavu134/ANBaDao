@@ -34,7 +34,7 @@
         <button class="hva-hit hva-box b1 ${freeBtn && !locked ? 'ready' : ''}" type="button" aria-label="Lượt miễn phí"><em>${freeBtn ? 'Miễn phí' : esc(wait || 'Đã nhận')}</em></button>
         <button class="hva-hit hva-box b2" type="button" aria-label="Tỉ lệ"><em>Tỉ lệ</em></button>
         <button class="hva-hit hva-box b3 ${sparkReady ? 'ready' : ''}" type="button" aria-label="Hồi Ức Tuyển Chọn"><em>Hồi Ức ${esc(spark)}</em></button>
-        ${locked ? '<div class="hva-lock">Gọi Mộng tạm khóa: danh sách tướng chưa khớp cấu hình triệu hồi.</div>' : ''}
+        ${locked ? '<div class="hva-lock">Chiêu Mộ tạm khóa: danh sách tướng chưa khớp cấu hình triệu hồi.</div>' : ''}
         <button class="hva-hit hva-btn hva-x1 ${freeBtn ? 'free' : ''}" type="button" data-hva-pull="${freeBtn ? 'free' : '1'}" ${locked ? 'disabled' : ''}>
           ${freeBtn ? 'MIỄN PHÍ x1<small>Lượt miễn phí hôm nay</small>' : `TRIỆU HỒI x1<small>💎 ${esc(cost(1))}</small>`}</button>
         <button class="hva-hit hva-btn hva-x10" type="button" data-hva-pull="10" ${locked ? 'disabled' : ''}>x10<small>💎 ${esc(cost(10))}</small></button>
@@ -42,7 +42,7 @@
         <div class="hva-rates">Tỉ lệ: ${esc(rates)}</div>
         <div class="hva-paper">
           <div class="hva-meter"><span>Còn <b>${esc(pity)}</b> lượt nữa chắc chắn SSR</span><i><u style="width:${esc(pct)}"></u></i></div>
-          <div class="hva-note">Mỗi lượt tích 1 Hồi Ức · đủ ${esc(sNeed || 120)} được tự chọn 1 SSR. Tướng trùng đổi thành mảnh hồn và Mộng Tủy.</div>
+          <div class="hva-note">Mỗi lượt tích 1 Hồi Ức · đủ ${esc(sNeed || 120)} được tự chọn 1 SSR. Tướng trùng đổi thành mảnh hồn và Nội Đan.</div>
         </div>
         <canvas class="hva-fx"></canvas>
       </div>`;
@@ -50,7 +50,7 @@
     $(box, '.hva-close').onclick = () => click('[data-summon-back]');
     box.querySelectorAll('[data-hva-pull]').forEach(b => b.addEventListener('click', () => click(`[data-summon-pull="${b.dataset.hvaPull}"]`)));
     $(box, '.b1').onclick = () => { if (freeBtn && !locked) click('[data-summon-pull="free"]'); else sheet(box, '<h4>Lượt miễn phí</h4><p>' + esc(freeTxt) + '</p>'); };
-    $(box, '.b2').onclick = () => sheet(box, `<h4>Tỉ lệ Gọi Mộng</h4><p><b>${esc(rates)}</b></p><p>Gọi x10 chắc chắn có ít nhất 1 tướng S trở lên. Sau ${esc(pity)} lượt nữa chắc chắn ra SSR.</p>`);
+    $(box, '.b2').onclick = () => sheet(box, `<h4>Tỉ lệ Chiêu Mộ</h4><p><b>${esc(rates)}</b></p><p>Gọi x10 chắc chắn có ít nhất 1 tướng S trở lên. Sau ${esc(pity)} lượt nữa chắc chắn ra SSR.</p>`);
     $(box, '.b3').onclick = () => {
       const picks = [...old.querySelectorAll('[data-summon-pick]')];
       const s = sheet(box, `<h4>Hồi Ức Tuyển Chọn · ${esc(spark)}</h4><p>Đủ ${esc(sNeed || 120)} Hồi Ức thì tự chọn 1 SSR.</p><div class="picks">${

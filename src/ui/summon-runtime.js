@@ -10,9 +10,9 @@
     if (!stage) return;
     const scene = summonShowcase(showcaseIndex, catalog(), rosterIds(), summonPosters);
     stage.dataset.scene = scene.key;
-    stage.innerHTML = `<div class="hv-sum-scene-copy"><span>${scene.eyebrow}</span><h2>${scene.title}</h2><p>Gặp những linh hồn của Mộng Giới</p></div>
+    stage.innerHTML = `<div class="hv-sum-scene-copy"><span>${scene.eyebrow}</span><h2>${scene.title}</h2><p>Gặp những linh hồn của Giang Hồ</p></div>
       <div class="hv-sum-cast">${scene.heroes.map((hero,i)=>`<figure class="hv-sum-figure cast-${i}"><img src="${escapeHtml(hero.src)}" alt="${escapeHtml(hero.name)}" decoding="async"><figcaption>${escapeHtml(hero.name.split(' — ')[0])}</figcaption></figure>`).join('')}</div>
-      <div class="hv-sum-scene-nav" aria-label="Cảnh giới thiệu"><button type="button" data-scene-step="-1" aria-label="Cảnh trước">‹</button><div>${['Mộng Phố','Ảnh Đăng','Phong Vân'].map((name,i)=>`<button type="button" data-scene-index="${i}" aria-label="${name}" aria-pressed="${i===scene.index}">${name}</button>`).join('')}</div><button type="button" data-scene-step="1" aria-label="Cảnh sau">›</button></div>`;
+      <div class="hv-sum-scene-nav" aria-label="Cảnh giới thiệu"><button type="button" data-scene-step="-1" aria-label="Cảnh trước">‹</button><div>${['Giang Hồ','Ảnh Đăng','Phong Vân'].map((name,i)=>`<button type="button" data-scene-index="${i}" aria-label="${name}" aria-pressed="${i===scene.index}">${name}</button>`).join('')}</div><button type="button" data-scene-step="1" aria-label="Cảnh sau">›</button></div>`;
     stage.querySelectorAll('[data-scene-index],[data-scene-step]').forEach(btn=>btn.addEventListener('click',()=>{
       showcaseIndex=btn.hasAttribute('data-scene-index')?Number(btn.dataset.sceneIndex):showcaseIndex+Number(btn.dataset.sceneStep);
       paintShowcase();
@@ -151,7 +151,7 @@
       <div id="hvSummonRoot" data-testid="hv-summon">
         <div class="hv-sum-top">
           <button type="button" class="hv-sum-back" data-summon-back aria-label="Về Thành Chính">‹</button>
-          <b>Gọi Mộng</b>
+          <b>Chiêu Mộ</b>
           <div class="hv-sum-chips">
             <span class="hv-sum-chip" data-summon-gems>💎 ${fmt(P.gems)}</span>
             <span class="hv-sum-chip" data-summon-spark>🕯 ${fmt(spark)}/${sparkNeed}</span>
@@ -159,9 +159,9 @@
         </div>
         <section class="hv-sum-showcase" data-summon-showcase aria-label="Giới thiệu tướng"></section>
         <div class="hv-sum-panel">
-          <div class="hv-sum-panel-heading"><div><span class="hv-sum-kicker">TRIỆU HỒI THƯỜNG</span><h2 data-summon-title>Vòng Gọi Mộng</h2></div><span class="hv-sum-best">×10 có S trở lên</span></div>
+          <div class="hv-sum-panel-heading"><div><span class="hv-sum-kicker">TRIỆU HỒI THƯỜNG</span><h2 data-summon-title>Vòng Chiêu Mộ</h2></div><span class="hv-sum-best">×10 có S trở lên</span></div>
           <p class="hv-sum-scene-note">Các cảnh giới thiệu dùng chung danh sách và tỉ lệ triệu hồi.</p>
-          ${locked ? `<p class="hv-sum-lock" data-summon-lock role="status">Gọi Mộng tạm khóa: danh sách tướng chưa khớp cấu hình triệu hồi. Ngọc, bảo hiểm và lượt miễn phí được giữ nguyên.</p>` : `<p class="hv-sum-copy">Mỗi lượt tích 1 Hồi Ức · Tướng trùng đổi thành mảnh hồn và Mộng Tủy.</p>`}
+          ${locked ? `<p class="hv-sum-lock" data-summon-lock role="status">Chiêu Mộ tạm khóa: danh sách tướng chưa khớp cấu hình triệu hồi. Ngọc, bảo hiểm và lượt miễn phí được giữ nguyên.</p>` : `<p class="hv-sum-copy">Mỗi lượt tích 1 Hồi Ức · Tướng trùng đổi thành mảnh hồn và Nội Đan.</p>`}
           <div class="hv-sum-meter">
             <div>Còn <b data-summon-pity>${left}</b> lượt nữa chắc chắn SSR</div>
             <i><u style="width:${pct}%"></u></i>
@@ -175,7 +175,7 @@
           </div>
           <details class="hv-sum-spark"><summary>Hồi Ức Tuyển Chọn · ${fmt(spark)}/${sparkNeed}</summary>
             <div class="hv-sum-spark-h">🕯 Hồi Ức Tuyển Chọn · ${sparkNeed}</div>
-            <small>Không reset theo banner. Đủ mốc thì tự chọn 1 SSR; đã sở hữu → 30 mảnh + 8 Mộng Tủy.</small>
+            <small>Không reset theo banner. Đủ mốc thì tự chọn 1 SSR; đã sở hữu → 30 mảnh + 8 Nội Đan.</small>
             <div class="hv-sum-picks" data-summon-picks>
               ${ssrIds().map(id => `<button type="button" class="hv-sum-pick" data-summon-pick="${id}" ${spark < sparkNeed ? 'disabled' : ''}>${heroName(id)}</button>`).join('')}
             </div>
@@ -220,7 +220,7 @@
       questProgress?.('summon', 1);
       refreshResbar?.();
       if (result.pulls.some(r => r.t === 'ssr')) {
-        chatSys?.('Vòng Gọi Mộng loé sáng — một SSR vừa xuất hiện!');
+        chatSys?.('Vòng Chiêu Mộ loé sáng — một SSR vừa xuất hiện!');
         toast?.('🌟 SSR xuất hiện ×' + result.pulls.filter(r => r.t === 'ssr').length + '!');
       }
       renderSummon();

@@ -39,14 +39,14 @@ export function mapLegacyCombatSkill(combatant) {
     const skillMultiplier = clamp(0.72 + power * 0.33, 0.82, 1.72);
     const ultimatePower = Number(ultimateFx.power || power);
     const ultimateMultiplier = clamp(1.12 + ultimatePower * 0.42, 1.32, 2.55);
-    const name = skill.name || (combatant.side === "ally" ? "Chiến Kỹ Hồn Việt" : "Mộng Kích");
+    const name = skill.name || (combatant.side === "ally" ? "Chiến Kỹ Hồn Việt" : "Tà Kích");
     const detail = safeText(skill.desc, "Kỹ năng riêng").replace(/\s+/g, " ").slice(0, 54);
     return {
       skillName: name,
       skillDetail: `${detail} • 25 khí`,
       skillKind: kind,
       skillMultiplier,
-      ultimateName: ultimate.name || `Mộng Lực · ${name}`,
+      ultimateName: ultimate.name || `Tà Lực · ${name}`,
       ultimateDetail: `${safeText(ultimate.desc, "Bản cường hóa").replace(/\s+/g, " ").slice(0, 54)} • 60 khí`,
       ultimateKind,
       ultimateMultiplier

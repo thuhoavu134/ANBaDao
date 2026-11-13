@@ -84,7 +84,7 @@ export function prepareForgeCommand(state, config, action, payload = {}) {
   if (action === 'choose') {
     const pending = economy.forgePending;
     if (!pending) return forgeFailure('NO_FORGE_PENDING', 'Không có phôi đang chờ.');
-    if (payload.pendingId !== forgePendingId(state)) return forgeFailure('STALE_FORGE_PENDING', 'Phôi đang chờ đã thay đổi. Hãy mở lại Rèn Mộng.');
+    if (payload.pendingId !== forgePendingId(state)) return forgeFailure('STALE_FORGE_PENDING', 'Phôi đang chờ đã thay đổi. Hãy mở lại Rèn Binh.');
     if (![0, 1].includes(payload.index) || pending.candidates?.length !== 2) return forgeFailure('INVALID_CANDIDATE', 'Phôi đã chọn không hợp lệ.');
     const item = pending.candidates[payload.index];
     if (!validForgeItem(item, slots) || item.slot !== pending.slot || !Object.hasOwn(molds, item.mold)) {

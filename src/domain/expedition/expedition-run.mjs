@@ -26,7 +26,7 @@ export const ROGUE_ROUTES = Object.freeze({
     id: 'steady',
     icon: '🛡',
     name: 'Lối Sáng',
-    desc: 'Địch -5% Công. Thưởng vàng -10%. Không nhận Mộng Ấn.',
+    desc: 'Địch -5% Công. Thưởng vàng -10%. Không nhận Huyền Ấn.',
     enemyHp: 1,
     enemyAtk: 0.95,
     reward: 0.90,
@@ -36,7 +36,7 @@ export const ROGUE_ROUTES = Object.freeze({
     id: 'mist',
     icon: '🌫',
     name: 'Lối Sương',
-    desc: 'Địch chuẩn. Thưởng vàng +10%. Thắng nhận 1 Mộng Ấn.',
+    desc: 'Địch chuẩn. Thưởng vàng +10%. Thắng nhận 1 Huyền Ấn.',
     enemyHp: 1,
     enemyAtk: 1,
     reward: 1.10,
@@ -46,7 +46,7 @@ export const ROGUE_ROUTES = Object.freeze({
     id: 'rift',
     icon: '🌀',
     name: 'Lối Nứt',
-    desc: 'Địch +10% HP, +8% Công. Thưởng vàng +30%. Thắng nhận 2 Mộng Ấn.',
+    desc: 'Địch +10% HP, +8% Công. Thưởng vàng +30%. Thắng nhận 2 Huyền Ấn.',
     enemyHp: 1.10,
     enemyAtk: 1.08,
     reward: 1.30,
@@ -168,7 +168,7 @@ export function rogueEncounterUnits(rogue, heroes) {
   return Array.from({ length: count }, (_, i) => {
     const hero = list.length ? list[(floor * 3 + i) % list.length] : {
       id: 'shadow',
-      name: 'Bóng Mộng',
+      name: 'Bóng Hắc Liên',
       col: '#6a5a40',
       row: i < 3 ? 'front' : 'back',
       role: 'warrior',
@@ -180,12 +180,12 @@ export function rogueEncounterUnits(rogue, heroes) {
     return {
       id: 'rogue_' + floor + '_' + i + '_' + (hero.id || 'x'),
       sourceHeroId: hero.id || null,
-      name: isLord ? ('Mộng Chủ · ' + hero.name) : hero.name,
+      name: isLord ? ('Đầu Lĩnh · ' + hero.name) : hero.name,
       col: hero.col,
       row: i < 3 ? 'front' : 'back',
       role: hero.role,
       skill: isLord
-        ? { name: 'Ác Mộng Chồng Tầng', fx: { kind: 'fear', target: 'aoe_enemy', power: 1.05 } }
+        ? { name: 'Hắc Ám Chồng Tầng', fx: { kind: 'fear', target: 'aoe_enemy', power: 1.05 } }
         : hero.skill,
       stats: {
         hp: Math.round(st.hp * scale * (isLord ? 2.2 : 1) * (route.enemyHp || 1)),
@@ -226,7 +226,7 @@ export function prepareRogueChooseRoute(player, id) {
 export function prepareRogueChooseBlessing(player, id) {
   const rogue = normalizeRogue(player?.rogue);
   if (!rogue.active || !rogue.pending) {
-    return rogueFail('NOT_PENDING', 'Chưa đến lúc chọn Phúc Mộng.');
+    return rogueFail('NOT_PENDING', 'Chưa đến lúc chọn Phúc Duyên.');
   }
   if (!rogue.offer.includes(id) || !findRogueBlessing(id)) {
     return rogueFail('UNKNOWN_BLESSING', 'Phúc này không nằm trong bộ đang mở.');
@@ -243,13 +243,13 @@ export function prepareRogueChooseBlessing(player, id) {
 export function prepareRogueReroll(player) {
   const rogue = normalizeRogue(player?.rogue);
   if (!rogue.active || !rogue.pending) {
-    return rogueFail('NOT_PENDING', 'Chưa đến lúc đổi Phúc Mộng.');
+    return rogueFail('NOT_PENDING', 'Chưa đến lúc đổi Phúc Duyên.');
   }
   if (rogue.rerolls >= ROGUE_REROLL_MAX) {
     return rogueFail('REROLL_USED', 'Mỗi tầng chỉ đổi Phúc một lần.');
   }
   if (rogue.sigils < ROGUE_REROLL_COST) {
-    return rogueFail('NOT_ENOUGH_SIGILS', 'Cần 2 Mộng Ấn để đổi bộ Phúc.');
+    return rogueFail('NOT_ENOUGH_SIGILS', 'Cần 2 Huyền Ấn để đổi bộ Phúc.');
   }
   rogue.sigils -= ROGUE_REROLL_COST;
   rogue.rerolls += 1;

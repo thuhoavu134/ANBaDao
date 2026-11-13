@@ -1528,7 +1528,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
             <div class="victory-radiance" aria-hidden="true"><i></i><i></i><i></i></div>
 
             <div class="victory-cinematic" id="victoryCinematic">
-              <p class="v15-kicker" id="resultEyebrow">MỘNG GIỚI · CHIẾN THẮNG</p>
+              <p class="v15-kicker" id="resultEyebrow">GIANG HỒ · CHIẾN THẮNG</p>
               <div class="v15-title-wrap"><h2 class="v15-title" id="resultTitle">Khải hoàn</h2></div>
               <p class="v15-subtitle" id="resultCopy">Hắc Triều đã bị đẩy khỏi chiến tuyến.</p>
               <div class="v15-hero-stage">
@@ -1556,7 +1556,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
               <div class="v151-reward-art" aria-hidden="true"></div>
               <div class="reward-panel">
                 <div class="reward-crown" aria-hidden="true">V</div>
-                <p class="reward-kicker">CHIẾN TÍCH · MỘNG GIỚI</p>
+                <p class="reward-kicker">CHIẾN TÍCH · GIANG HỒ</p>
                 <h3 class="reward-title">Chúc mừng nhận</h3>
                 <p class="reward-copy">Chiến công được kết tinh thành phần thưởng của trận này.</p>
                 <div class="reward-cards" id="resultRewards"></div>
@@ -2935,9 +2935,9 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     const playerName = EMBED_CONFIG.playerTeamName || "Lạc Việt";
     const enemyName = EMBED_CONFIG.enemyTeamName || "Hắc Triều";
     const battleTitle = EMBED_CONFIG.battleTitle || "Trận Chiến Lục Vị";
-    const chapterTitle = EMBED_CONFIG.chapterTitle || "Mộng Giới";
-    const location = EMBED_CONFIG.location || "Mộng Ải";
-    const subtitle = EMBED_CONFIG.locationSubtitle || "Chiến tuyến giữa miền mộng";
+    const chapterTitle = EMBED_CONFIG.chapterTitle || "Giang Hồ";
+    const location = EMBED_CONFIG.location || "Hiểm Ải";
+    const subtitle = EMBED_CONFIG.locationSubtitle || "Chiến tuyến giữa chốn giang hồ";
     const playerLabel = document.querySelector(".team-score--player small");
     const enemyLabel = document.querySelector(".team-score--enemy small");
     const chapterStrong = document.querySelector(".chapter-mark strong");
@@ -3750,7 +3750,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
       dom.ultimateDetail.textContent = "Cần 60 khí";
     } else {
       const eliteDef=actor.team===TEAM_ENEMY?Core.enemyEliteTraitDef(actor.eliteTrait):null;
-      dom.actorRole.textContent = `${actor.team===TEAM_PLAYER?(Core.FACTION_LABELS[actor.faction]||"Hồn Việt"):"Mộng Nhiễu"} • ${actor.roleClass || actor.archetype}${eliteDef?` • TINH ANH: ${eliteDef.name}`:""}${actor.specializationName?` • ${actor.specializationName}`:""}${actor.passive?` • ${actor.passive}`:""}`;
+      dom.actorRole.textContent = `${actor.team===TEAM_PLAYER?(Core.FACTION_LABELS[actor.faction]||"Hồn Việt"):"Tà Phái"} • ${actor.roleClass || actor.archetype}${eliteDef?` • TINH ANH: ${eliteDef.name}`:""}${actor.specializationName?` • ${actor.specializationName}`:""}${actor.passive?` • ${actor.passive}`:""}`;
       dom.actorName.textContent = actor.name;
       dom.actorEmblem.textContent = actor.initial;
       dom.actorEmblem.style.background = actor.color;
@@ -4419,7 +4419,7 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
   }
   function adaptiveTurnStart(actor){
     if(REFERENCE_SIMPLE||actor?.team!==TEAM_ENEMY)return; advancePlanDisruption(); const a=state.enemyAdaptive; advanceEnemyCounterBranch(); if(a.pending){a.pendingEnemyTurns+=1;if(a.pendingEnemyTurns>=2)activateAdaptivePending();} else { advanceAdaptiveCounterChain(); }
-    if(a.active==="dotcleanse"){ const dot=(actor.statuses||[]).find(s=>["burn","bleed","poison"].includes(s.type)); if(dot){actor.statuses.splice(actor.statuses.indexOf(dot),1);const weakened=a.activeCounter?.ruleId==="dotcleanse";if(!weakened)gainEnergy(actor,6);addFloater(actor,weakened?"TẨY DOT":"TẨY DOT +6 NỘ","#9fe8ff",true);addLog(`${actor.name} dùng Tẩy Mộng, gỡ ${statusLabel(dot)}${weakened?' nhưng Phản Lệnh chặn phần Nộ cộng thêm':''}.`);} }
+    if(a.active==="dotcleanse"){ const dot=(actor.statuses||[]).find(s=>["burn","bleed","poison"].includes(s.type)); if(dot){actor.statuses.splice(actor.statuses.indexOf(dot),1);const weakened=a.activeCounter?.ruleId==="dotcleanse";if(!weakened)gainEnergy(actor,6);addFloater(actor,weakened?"TẨY DOT":"TẨY DOT +6 NỘ","#9fe8ff",true);addLog(`${actor.name} dùng Tẩy Độc, gỡ ${statusLabel(dot)}${weakened?' nhưng Phản Lệnh chặn phần Nộ cộng thêm':''}.`);} }
     evaluateEnemyAdaptive();
   }
 
@@ -5694,8 +5694,8 @@ body.result-active .game-viewport{aspect-ratio:auto!important;border:0!important
     if(dom.tacticalOpportunity)dom.tacticalOpportunity.hidden=true;
     const victory = winner === TEAM_PLAYER;
     dom.resultEyebrow.textContent = victory
-      ? (EMBED_CONFIG.victoryEyebrow || "MỘNG GIỚI · CHIẾN THẮNG")
-      : (EMBED_CONFIG.defeatEyebrow || "MỘNG GIỚI · THẤT THỦ");
+      ? (EMBED_CONFIG.victoryEyebrow || "GIANG HỒ · CHIẾN THẮNG")
+      : (EMBED_CONFIG.defeatEyebrow || "GIANG HỒ · THẤT THỦ");
     dom.resultTitle.textContent = victory ? (EMBED_CONFIG.victoryTitle || "KHẢI HOÀN") : (EMBED_CONFIG.defeatTitle || "BẠI TRẬN");
     const objectiveResultCopy={
       "round-limit-ratio":`Hết 15 hiệp: tổng HP hòa nên phân xử bằng tỉ lệ HP còn lại.`,

@@ -19,7 +19,7 @@ export const EQUIPMENT_ASSET_REGISTRY = Object.freeze({
     b: item('weapon', 'b', 'Đũa Tre Gõ Nồi'),
     a: item('weapon', 'a', 'Muôi Đồng Ký Ức'),
     s: item('weapon', 's', 'Dao Thái Sương Mù'),
-    ss: item('weapon', 'ss', 'Cán Chổi Quét Mộng'),
+    ss: item('weapon', 'ss', 'Cán Chổi Quét Phố'),
     ssr: item('weapon', 'ssr', 'Vá Múc Ngân Hà')
   }),
   armor: Object.freeze({

@@ -61,7 +61,7 @@
   function deliver(result) {
     (result.toasts || []).forEach(t => toast?.(t));
     if (result.toast) toast?.(result.toast);
-    (result.mails || []).forEach(m => sendMail?.(m.from || 'Đấu Trường Mộng', m.title, m.body, { gold: m.gold || 0 }));
+    (result.mails || []).forEach(m => sendMail?.(m.from || 'Lôi Đài', m.title, m.body, { gold: m.gold || 0 }));
   }
 
   function currentTab() {

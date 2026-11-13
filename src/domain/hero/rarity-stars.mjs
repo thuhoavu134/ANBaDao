@@ -12,7 +12,7 @@ export function normalizeRarityStars(player, definitions) {
     if (!hero || rarityBaseStars(definitions?.[id]) !== 5) continue;
     const oldStars = Math.max(1, Math.min(6, Math.floor(Number(hero.stars) || 1)));
     if (hero.rarityStarsVersion !== 1) {
-      // Preserve previously paid shard investment for Trả Mộng, once only.
+      // Preserve previously paid shard investment for Tẩy Tủy, once only.
       const paidBase = Math.min(5, oldStars);
       hero.legacyStarRefund = hero.owned ? 10 * paidBase * (paidBase - 1) : 0;
       hero.rarityStarsVersion = 1;

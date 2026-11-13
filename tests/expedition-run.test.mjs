@@ -97,7 +97,7 @@ test('L15-T2: fight needs a route except the dream lord; gold and sigils keep th
   assert.equal(bossFight.ok, true);
   assert.equal(bossFight.boss, true);
   assert.equal(bossFight.encounter.length, 4);
-  assert.equal(bossFight.encounter.some(u => String(u.name).startsWith('Mộng Chủ')), true);
+  assert.equal(bossFight.encounter.some(u => String(u.name).startsWith('Đầu Lĩnh')), true);
 });
 
 test('L15-T3: blessing offer, pick advances the floor, reroll costs two sigils once', () => {
@@ -169,7 +169,7 @@ test('L15-P3: encounter scale is immutable and boss is four units', () => {
     { id: 'h', name: 'Hồn', stats: { hp: 1000, atk: 100, def: 50, spd: 100 } }
   ]);
   assert.equal(boss.length, 4);
-  const lord = boss.find(u => u.name === 'Mộng Chủ · Hồn');
+  const lord = boss.find(u => u.name === 'Đầu Lĩnh · Hồn');
   assert.equal(!!lord, true);
   assert.equal(lord.stats.hp, Math.round(1000 * (1 + 4 * 0.18) * 2.2));
 });
@@ -186,7 +186,7 @@ test('L15-P4: lacquer screen is wired and does not add a second hub landmark', (
   assert.match(ui, /data-expedition-route/);
   assert.match(ui, /prepareRogueStart/);
   assert.match(ui, /prepareRogueWin/);
-  assert.match(ui, /Mộng Lộ/);
+  assert.match(ui, /Hành Tẩu/);
   assert.doesNotMatch(ui, /data-art-go="expedition"/);
   assert.match(css, /#hvExpeditionRoot/);
   assert.match(css, /[.]hv-exp-path/);

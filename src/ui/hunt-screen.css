@@ -1,5 +1,5 @@
 /* Săn Boss — Mẫu 3 "Hổ trắng rừng trúc" (owner chốt 09/11).
-   Giống Mộng Lộ (src/ui/expedition-monglo.css, v-fit 06/11):
+   Giống Hành Tẩu (src/ui/expedition-monglo.css, v-fit 06/11):
      - Nút, khung, icon đều VẼ SẴN trong 1 ảnh gpt_image: assets/ui/hunt/hunt-full.webp (941x1672).
      - Khung ảnh giữ đúng tỉ lệ, vừa bề ngang màn (không cắt 2 bên); phần thừa dùng chính ảnh làm mờ.
      - Ở đây chỉ đặt CHỮ + vùng bấm trong suốt, toạ độ % đo trực tiếp trên ảnh.

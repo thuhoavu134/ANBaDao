@@ -8,7 +8,7 @@ import sharp from 'sharp';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const read = rel => readFileSync(join(root, rel), 'utf8');
 
-test('L129-T1: Chợ Mộng 2 ô, bỏ shop icon trên BBR', () => {
+test('L129-T1: Hắc Thị 2 ô, bỏ shop icon trên BBR', () => {
   const shop = read('src/ui/shop-3d-runtime.js');
   const css = read('src/ui/shop-3d.css');
   const bbr = read('src/ui/bach-bao-ruong-runtime.js');

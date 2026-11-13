@@ -10,7 +10,7 @@ const domain = readFileSync(join(root, 'src/domain/summon/banner-validation.mjs'
 const runtime = String.raw`
 (() => {
   const validate = () => validateSummonBanner(GACHA.rates, poolOf);
-  const message = 'Gọi Mộng tạm khóa: danh sách tướng chưa khớp cấu hình triệu hồi. Ngọc, bảo hiểm và lượt miễn phí được giữ nguyên.';
+  const message = 'Chiêu Mộ tạm khóa: danh sách tướng chưa khớp cấu hình triệu hồi. Ngọc, bảo hiểm và lượt miễn phí được giữ nguyên.';
   window.__HV_SUMMON_BANNER_READY = () => { const ok = validate().ok; if (!ok) toast(message); return ok; };
   doSummon = guardSummonCommand(doSummon, validate, () => toast(message));
   const baseFree = freePullAvailable;

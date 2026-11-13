@@ -4,7 +4,7 @@ import { patchMainCityArt, MAIN_CITY_ART } from '../scripts/hub-main-city-art-v1
 
 for (const suffix of ['.png', '.lossless-v1.webp']) {
   test('replace background and remove duplicate gateway: ' + suffix, () => {
-    const controls = '<button data-art-go="shop">Chợ Mộng</button>';
+    const controls = '<button data-art-go="shop">Hắc Thị</button>';
     const input = '<head></head><img class="hv-daylight-base" src="assets/hub/background-v3240/vietnamese-cloud-citadel' + suffix + '"><img class="hub-foreground-depth" src="assets/hub/foreground-v3240/vietnamese-gateway-foreground' + suffix + '" alt="" draggable="false">' + controls;
     const output = patchMainCityArt(input);
     assert.ok(output.includes(MAIN_CITY_ART));

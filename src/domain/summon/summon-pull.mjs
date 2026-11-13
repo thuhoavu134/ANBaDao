@@ -110,7 +110,7 @@ export function prepareSummonPull(player, opts = {}) {
   const rates = opts.rates || GACHA_RATES;
   const banner = validateSummonBanner(rates, poolFor);
   if (!banner.ok) {
-    return summonFail(banner.reason, 'Gọi Mộng tạm khóa: danh sách tướng chưa khớp cấu hình triệu hồi. Ngọc, bảo hiểm và lượt miễn phí được giữ nguyên.');
+    return summonFail(banner.reason, 'Chiêu Mộ tạm khóa: danh sách tướng chưa khớp cấu hình triệu hồi. Ngọc, bảo hiểm và lượt miễn phí được giữ nguyên.');
   }
   const day = asInt(opts.day, 0);
   if (free && asInt(player?.freePullDay, -1) === day) {
@@ -137,7 +137,7 @@ export function prepareSummonPull(player, opts = {}) {
   for (const tier of tiers) {
     const pool = poolFor(tier);
     const id = pickId(pool, rng);
-    if (!id) return summonFail('EMPTY_POOL', 'Gọi Mộng tạm khóa: danh sách tướng chưa khớp cấu hình triệu hồi. Ngọc, bảo hiểm và lượt miễn phí được giữ nguyên.');
+    if (!id) return summonFail('EMPTY_POOL', 'Chiêu Mộ tạm khóa: danh sách tướng chưa khớp cấu hình triệu hồi. Ngọc, bảo hiểm và lượt miễn phí được giữ nguyên.');
     const row = heroState[id] && typeof heroState[id] === 'object' ? { ...heroState[id] } : { owned: false };
     let dup = false;
     let sh = 0;
@@ -186,7 +186,7 @@ export function prepareSparkSelect(player, heroId, opts = {}) {
   if (row.owned) {
     shards[id] = asInt(shards[id], 0) + SPARK_OWNED_SHARDS;
     economy.dreamEssence += SPARK_OWNED_ESSENCE;
-    msg = '+30 mảnh +8 Mộng Tủy';
+    msg = '+30 mảnh +8 Nội Đan';
   } else {
     row.owned = true;
     msg = 'SSR mới gia nhập';

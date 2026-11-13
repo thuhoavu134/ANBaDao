@@ -74,12 +74,12 @@
     const routes = routeList();
     const offer = (rogue.offer || []).map(blessingDef).filter(Boolean);
     const worn = (rogue.blessings || []).map(blessingDef).filter(Boolean);
-    const kicker = rogue.pending ? 'Chọn Phúc Mộng' : boss ? 'Mộng Chủ' : rogue.active ? ('Tầng ' + rogue.floor + ' / ' + rogue.maxFloor) : 'Chưa lên đường';
+    const kicker = rogue.pending ? 'Chọn Phúc Duyên' : boss ? 'Đầu Lĩnh' : rogue.active ? ('Tầng ' + rogue.floor + ' / ' + rogue.maxFloor) : 'Chưa lên đường';
     body.innerHTML = `
       <div id="hvExpeditionRoot" data-testid="hv-expedition">
         <div class="hv-exp-top">
           <button type="button" class="hv-exp-back" data-expedition-back aria-label="Về Thành Chính">‹</button>
-          <b>Mộng Lộ</b>
+          <b>Hành Tẩu</b>
           <div class="hv-exp-chips">
             <span class="hv-exp-chip" data-expedition-gold>🪙 ${fmt(P.gold)}</span>
             <span class="hv-exp-chip" data-expedition-sigil>🔹 ${rogue.sigils || 0}</span>
@@ -93,9 +93,9 @@
         </div>
         <div class="hv-exp-panel">
           <p class="hv-exp-copy">${rogue.pending
-            ? 'Chọn 1 trong 3 Phúc. 2 Mộng Ấn đổi bộ một lần mỗi tầng.'
+            ? 'Chọn 1 trong 3 Phúc. 2 Huyền Ấn đổi bộ một lần mỗi tầng.'
             : boss
-              ? 'Tầng cuối. Thắng là phá Mộng Lộ. Thua thì chuyến đi khép, kỷ lục giữ.'
+              ? 'Tầng cuối. Thắng là phá Hành Tẩu. Thua thì chuyến đi khép, kỷ lục giữ.'
               : rogue.active
                 ? 'Chọn Ngã Rẽ rồi xuất chiến. Liều càng sâu, thưởng càng lớn. Thua không mất kỷ lục.'
                 : 'Một chuyến, năm tầng. Mỗi tầng một quyết định rủi ro. Chuyến đang đi được lưu — quay lại là tiếp.'}</p>
@@ -105,7 +105,7 @@
                 <b>${b.name}</b><small>${b.desc}</small>
               </button>`).join('')}
             </div>
-            <button type="button" class="hv-exp-reroll" data-expedition-reroll ${(rogue.sigils >= 2 && (rogue.rerolls || 0) < 1) ? '' : 'disabled'}>Đổi bộ Phúc · 2 Mộng Ấn</button>
+            <button type="button" class="hv-exp-reroll" data-expedition-reroll ${(rogue.sigils >= 2 && (rogue.rerolls || 0) < 1) ? '' : 'disabled'}>Đổi bộ Phúc · 2 Huyền Ấn</button>
           ` : rogue.active && !boss ? `
             <div class="hv-exp-routes">
               ${routes.map(x => {
@@ -118,9 +118,9 @@
           ` : ''}
           <div class="hv-exp-actions">
             ${rogue.active
-              ? `<button type="button" class="hv-exp-abort" data-expedition-abort>Rời Mộng Lộ</button>
-                 <button type="button" class="hv-exp-fight" data-expedition-fight>${boss ? 'Phá Mộng Chủ' : ('Xuất chiến tầng ' + rogue.floor)}</button>`
-              : `<button type="button" class="hv-exp-start" data-expedition-start>Bắt đầu Mộng Lộ</button>`}
+              ? `<button type="button" class="hv-exp-abort" data-expedition-abort>Rời Hành Tẩu</button>
+                 <button type="button" class="hv-exp-fight" data-expedition-fight>${boss ? 'Phá Đầu Lĩnh' : ('Xuất chiến tầng ' + rogue.floor)}</button>`
+              : `<button type="button" class="hv-exp-start" data-expedition-start>Bắt đầu Hành Tẩu</button>`}
           </div>
           <div class="hv-exp-worn" data-expedition-worn>
             <h3>Phúc đang mang</h3>
@@ -163,7 +163,7 @@
     const result = prepareRogueAbandon(P);
     if (!result.ok) return;
     if (commitRogue(result, 'rogue.abort:' + (P.revision || 0), 'rogue.abort').ok) {
-      toast?.('Đã gác Mộng Lộ. Kỷ lục còn đó.');
+      toast?.('Đã gác Hành Tẩu. Kỷ lục còn đó.');
       renderExpedition();
     }
   };
@@ -188,7 +188,7 @@
       return;
     }
     if (commitRogue(result, 'rogue.bless:' + id + ':' + result.rogue.floor, 'rogue.bless').ok) {
-      toast?.('Nhận ' + (result.blessing?.name || 'Phúc Mộng') + '. Lên tầng ' + result.rogue.floor + '.');
+      toast?.('Nhận ' + (result.blessing?.name || 'Phúc Duyên') + '. Lên tầng ' + result.rogue.floor + '.');
       renderExpedition();
     }
   };
@@ -220,7 +220,7 @@
     const routeId = fight.route?.id || null;
     const run = typeof runBattle === 'function' ? runBattle : null;
     if (!run) {
-      toast?.('Chưa mở được trận Mộng Lộ.');
+      toast?.('Chưa mở được trận Hành Tẩu.');
       return;
     }
     run('__rogue', win => {
@@ -237,13 +237,13 @@
         refreshResbar?.();
         if (win && result.cleared) {
           weeklyProgress?.('rogue', 1);
-          addJournal?.('Phá Mộng Lộ 5 tầng — một giấc mơ dài đã khép lại.');
-          toast?.('Phá Mộng Lộ! +💎' + result.gemsGain + ' · 🪙' + result.rogue.earnedGold);
+          addJournal?.('Phá Hành Tẩu 5 tầng — một giấc mơ dài đã khép lại.');
+          toast?.('Phá Hành Tẩu! +💎' + result.gemsGain + ' · 🪙' + result.rogue.earnedGold);
         } else if (win) {
           weeklyProgress?.('rogue', 1);
-          toast?.('Vượt tầng ' + floor + ' · nhận ' + (result.sigilGain || 0) + ' Mộng Ấn · chọn một Phúc Mộng.');
+          toast?.('Vượt tầng ' + floor + ' · nhận ' + (result.sigilGain || 0) + ' Huyền Ấn · chọn một Phúc Duyên.');
         } else {
-          toast?.('Mộng Lộ khép lại. Giữ kỷ lục, bắt đầu chuyến mới khi sẵn sàng.');
+          toast?.('Hành Tẩu khép lại. Giữ kỷ lục, bắt đầu chuyến mới khi sẵn sàng.');
         }
       } else if (baseBattle) {
         return;

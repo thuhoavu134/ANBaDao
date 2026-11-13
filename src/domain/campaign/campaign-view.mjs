@@ -83,7 +83,7 @@ export function campaignCheckpoint(player, chapters, sequenceFor) {
   const replay = cleared.has(chapter.idx);
   const raw = Number(player?.campaignStages?.[chapter.idx]);
   const stageIndex = replay ? 0 : Math.max(0, Math.min(sequence.length - 1, Number.isFinite(raw) ? Math.floor(raw) : 0));
-  return { chapterIndex: chapter.idx, title: chapter.title || chapter.name || 'Mộng lộ', stageIndex,
+  return { chapterIndex: chapter.idx, title: chapter.title || chapter.name || 'Hành tẩu', stageIndex,
     stageCount: sequence.length, battleId: sequence[stageIndex], replay,
     key: chapter.idx + ':' + stageIndex + ':' + sequence[stageIndex] };
 }

@@ -11,9 +11,9 @@ html = html.replace(/<style id="hv-summon-3d-css">[\s\S]*?<\/style>\n?/, '');
 html = html.replace(/<script id="hv-summon-3d-js">[\s\S]*?<\/script>\n?/, '');
 html = html.replace('</head>', `<style id="hv-summon-3d-css">${css}</style>\n</head>`);
 const end = html.lastIndexOf('</body>');
-if (end < 0) throw new Error('Gọi Mộng 3d body end missing');
+if (end < 0) throw new Error('Chiêu Mộ 3d body end missing');
 html = html.slice(0, end)
   + `<script id="hv-summon-3d-js">${runtime}</script>\n`
   + html.slice(end);
 writeFileSync(target, html);
-console.log('Gọi Mộng 3D overlay installed');
+console.log('Chiêu Mộ 3D overlay installed');

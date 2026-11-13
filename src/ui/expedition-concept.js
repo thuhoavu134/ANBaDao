@@ -1,4 +1,4 @@
-/* Mộng Lộ: nút quay về vuông, chống nhân bản khung, bỏ emoji trong chữ (owner 06/11). */
+/* Hành Tẩu: nút quay về vuông, chống nhân bản khung, bỏ emoji trong chữ (owner 06/11). */
 (() => {
   if (typeof document === 'undefined' || !document.body) return;
 

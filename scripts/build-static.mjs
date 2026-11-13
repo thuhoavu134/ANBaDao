@@ -62,7 +62,7 @@ await import('./quest-system-3q-v1.mjs');
 await import('./runtime-result-actions-v5.mjs');
 await import('./m0-p0-runtime-repair-v1.mjs');
 await import('./summon-pool-guard-v1.mjs');
-// 2026-09-28 meta-roll RNG seeding (Gọi Mộng tier + pick). Keep AFTER
+// 2026-09-28 meta-roll RNG seeding (Chiêu Mộ tier + pick). Keep AFTER
 // summon-pool-guard (anchors on the live doSummon body). Do not edit index.html.
 await import('./meta-rng-seed-v1.mjs');
 // 2026-09-28 meta-roll RNG seeding v2 (festival/bbr/forge/loot). Keep AFTER v1.

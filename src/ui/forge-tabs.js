@@ -1,4 +1,4 @@
-// Owner 2026-11-12: Rèn Mộng 3 tab (Chế tạo / Cường hoá / Phân giải).
+// Owner 2026-11-12: Rèn Binh 3 tab (Chế tạo / Cường hoá / Phân giải).
 // Chỉ đổi giao diện: mọi kết quả vẫn đi qua craftItem / startDualForge / chooseDualForge /
 // enhanceItem / setForgeItemLock / confirmForgeSalvage có sẵn. Không tự tính tỉ lệ hay chi phí.
 (function () {
@@ -118,7 +118,7 @@
       + (st.busy ? '<div class="fa-progress" data-fa-progress><div class="fa-progress-track"><span style="width:' + st.busy.pct.toFixed(1) + '%"></span></div><b>' + (st.busy.so ? 'Đang chế sò' : 'Đang rèn') + ' <em>' + st.busy.done + '/' + st.busy.total + '</em></b></div>' : '')
       + '<div class="fa-anvil-item"><img class="fa-art fa-ghost" src="' + (soMode ? 'assets/ui/festival/bbr/so.png' : slotArt(key, 's')) + '" alt=""></div>'
       + embers()
-      + '<div class="fa-anvil-name">' + (soMode ? 'Sò Mộng · có ' + (P.so || 0) + ' sò' : esc(cur.name)) + '</div>'
+      + '<div class="fa-anvil-name">' + (soMode ? 'Sò · có ' + (P.so || 0) + ' sò' : esc(cur.name)) + '</div>'
       + '<button class="fa-bag" data-fa-bag title="Túi đồ"><img src="assets/ui/menu-v3233/icons/bag.png" alt=""><b>' + P.inventory.length + '</b></button>'
       + '</div>'
       + '<div class="fa-g12">' + grid + '<button class="fa-g fa-g-so' + (soMode ? ' on' : '') + '" data-fa-somode><img src="assets/ui/festival/bbr/so.png" alt=""><span>Sò</span></button></div>'

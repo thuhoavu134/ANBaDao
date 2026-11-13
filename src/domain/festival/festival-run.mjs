@@ -456,7 +456,7 @@ export function prepareSpin(player, opts) {
   const base = snapshot(player, d);
   if (args.stamina != null) base.stamina = asInt(args.stamina, base.stamina);
   if (base.so < BACH_BAO_COST) {
-    return festivalFail('INSUFFICIENT_SO', 'Hết Sò Mộng — kiếm từ điểm danh, săn boss và PvP.');
+    return festivalFail('INSUFFICIENT_SO', 'Hết Sò — kiếm từ điểm danh, săn boss và PvP.');
   }
   const pools = heroPools(args.heroes, args.rosterIds);
   const idx = pickBachBaoIndex(args.rng);

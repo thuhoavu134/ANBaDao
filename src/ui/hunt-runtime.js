@@ -54,7 +54,7 @@
   function deliver(result) {
     (result.toasts || []).forEach(t => toast?.(t));
     if (result.toast && !(result.toasts || []).includes(result.toast)) toast?.(result.toast);
-    (result.mails || []).forEach(m => sendMail?.(m.from || 'Đội Săn Mộng', m.title, m.body, { gold: m.gold || 0 }));
+    (result.mails || []).forEach(m => sendMail?.(m.from || 'Đội Săn Boss', m.title, m.body, { gold: m.gold || 0 }));
     (result.journals || []).forEach(line => addJournal?.(line));
     if (result.chat) chatSys?.(result.chat);
   }
@@ -220,7 +220,7 @@
     const canGo = attempts > 0 && !!hunt.contract;
     // Mẫu 3 (owner chốt 09/11): nút, khung, icon VẼ SẴN trong ảnh gpt_image
     // (assets/ui/hunt/hunt-full.webp, 941x1672). Ở đây chỉ đặt chữ + vùng bấm
-    // trong suốt lên đúng toạ độ đo trên ảnh — giống Mộng Lộ.
+    // trong suốt lên đúng toạ độ đo trên ảnh — giống Hành Tẩu.
     body.innerHTML = `
       <div id="hvHuntRoot" data-testid="hv-hunt" data-hunt-boss-id="${bz.id}">
         <div class="hvh-bg" aria-hidden="true"></div>

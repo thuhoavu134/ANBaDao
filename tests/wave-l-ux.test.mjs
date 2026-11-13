@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const read = rel => readFileSync(join(root, rel), 'utf8');
 
-test('L86: Mộng Lộ hoisted root có ‹ Thành Chính', () => {
+test('L86: Hành Tẩu hoisted root có ‹ Thành Chính', () => {
   const ui = read('src/ui/expedition-3d-runtime.js');
   const css = read('src/ui/expedition-3d.css');
   assert.match(ui, /data-expedition-back/);

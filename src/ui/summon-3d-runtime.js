@@ -5,7 +5,7 @@
     const root = document.getElementById('hvSummonRoot');
     if (!root) return null;
     if (root.parentElement !== document.body) document.body.append(root);
-    root.setAttribute('aria-label', 'Gọi Mộng');
+    root.setAttribute('aria-label', 'Chiêu Mộ');
     return root;
   };
 

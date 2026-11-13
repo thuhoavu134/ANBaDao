@@ -45,14 +45,14 @@ export const SEASON_RULES = Object.freeze([
 ]);
 
 export const PVE_STAGES = Object.freeze([
-  Object.freeze({ i: 1, name: 'Vỡ Lòng Mộng', desc: 'Đội tân binh B — làm quen võ đài', lvl: 1, stars: 1, team: Object.freeze(['ga_gay_nham_gio', 'loa_phuong_cu', 'meo_muop_lang_thang', 'den_duong_nhap_nhay', 'dom_dom_thanh_pho', 'chuot_cong_trieu_phu']), reward: Object.freeze({ gems: 20 }) }),
+  Object.freeze({ i: 1, name: 'Vỡ Lòng', desc: 'Đội tân binh B — làm quen võ đài', lvl: 1, stars: 1, team: Object.freeze(['ga_gay_nham_gio', 'loa_phuong_cu', 'meo_muop_lang_thang', 'den_duong_nhap_nhay', 'dom_dom_thanh_pho', 'chuot_cong_trieu_phu']), reward: Object.freeze({ gems: 20 }) }),
   Object.freeze({ i: 2, name: 'Bức Tường Ngáy', desc: 'Toàn đỡ đòn — thử độ lì', lvl: 5, stars: 1, team: Object.freeze(['robot_trong_rau', 'ong_giu_xe_dem', 'chu_bao_ve_giac_mo', 'bac_xich_lo_mua', 'ong_hang_pho', 'ba_ban_che_khuya']), reward: Object.freeze({ gems: 25 }) }),
   Object.freeze({ i: 3, name: 'Cơn Lũ Tốc Độ', desc: 'Đội siêu nhanh — ai ra tay trước?', lvl: 8, stars: 2, team: Object.freeze(['meo_9_deadline', 'ky_lan_ca_phe', 'thang_be_dieu_set', 'cun_con_so_sam', 'em_on_thi_cuoi', 'chu_tai_xe_chuyen_cuoi']), reward: Object.freeze({ gems: 30 }) }),
-  Object.freeze({ i: 4, name: 'Dàn Loa Ác Mộng', desc: 'Sát thương diện rộng dồn dập', lvl: 11, stars: 2, team: Object.freeze(['ca_tre_biet_buon', 'co_lao_cong_khuya', 'loa_phuong_cu', 'co_ban_bao_som', 'co_ban_hoa_dem', 'ong_ke_that_nghiep']), reward: Object.freeze({ gems: 35, shards: 6, shardHero: 'ca_tre_biet_buon' }) }),
+  Object.freeze({ i: 4, name: 'Dàn Loa Hắc Ám', desc: 'Sát thương diện rộng dồn dập', lvl: 11, stars: 2, team: Object.freeze(['ca_tre_biet_buon', 'co_lao_cong_khuya', 'loa_phuong_cu', 'co_ban_bao_som', 'co_ban_hoa_dem', 'ong_ke_that_nghiep']), reward: Object.freeze({ gems: 35, shards: 6, shardHero: 'ca_tre_biet_buon' }) }),
   Object.freeze({ i: 5, name: 'Vòng Tay Không Gục', desc: 'Đội hồi máu — trận đánh dai', lvl: 14, stars: 3, team: Object.freeze(['ong_hang_pho', 'ba_banh_mi_khuya', 'co_y_ta_truc_dem', 'anh_tra_da_via_he', 'dom_dom_thanh_pho', 'hon_cay_bang']), reward: Object.freeze({ gems: 40, shards: 6, shardHero: 'hon_cay_bang' }) }),
   Object.freeze({ i: 6, name: 'Đêm Của Dấu', desc: 'Đánh dấu và khống chế tứ phía', lvl: 17, stars: 3, team: Object.freeze(['nang_tien_ca_can', 'be_ve_so_chieu', 'thung_thu_khong_dia_chi', 'chu_tho_khoa_gia', 'ba_dong_nat_ky_uc', 'ong_dia_lac_duong']), reward: Object.freeze({ gems: 50, shards: 8, shardHero: 'nang_tien_ca_can' }) }),
   Object.freeze({ i: 7, name: 'Bộ Sậu SSR', desc: 'Sáu SSR đứng chung một đài', lvl: 20, stars: 4, team: Object.freeze(['ong_hang_pho', 'robot_trong_rau', 'thang_be_dieu_set', 'ky_lan_ca_phe', 'ong_ke_that_nghiep', 'meo_9_deadline']), reward: Object.freeze({ gems: 60, shards: 10, shardHero: 'thang_be_dieu_set' }) }),
-  Object.freeze({ i: 8, name: 'Tấm Gương Mộng', desc: 'Đấu với BẢN SAO đội của chính anh', lvl: 24, stars: 4, team: null, reward: Object.freeze({ gems: 100, shards: 10, shardHero: 'ong_hang_pho' }) })
+  Object.freeze({ i: 8, name: 'Tấm Gương Soi', desc: 'Đấu với BẢN SAO đội của chính anh', lvl: 24, stars: 4, team: null, reward: Object.freeze({ gems: 100, shards: 10, shardHero: 'ong_hang_pho' }) })
 ]);
 
 function asInt(value, fallback = 0) {
@@ -202,7 +202,7 @@ export function currentSeasonRule(day) {
 
 export function seasonTier(lp) {
   const L = asInt(lp, 0);
-  if (L >= 1400) return { name: 'Mộng Vương', ic: '👑', next: null };
+  if (L >= 1400) return { name: 'Võ Vương', ic: '👑', next: null };
   if (L >= 1000) return { name: 'Kim Cương', ic: '💎', next: 1400 };
   if (L >= 700) return { name: 'Bạch Kim', ic: '🔷', next: 1000 };
   if (L >= 400) return { name: 'Vàng', ic: '🥇', next: 700 };
@@ -239,7 +239,7 @@ function applyRankGems(arena, gems, mails, toasts) {
       nextGems += g;
       toasts.push('🏅 Đạt hạng ' + t + ': +💎' + g);
       mails.push({
-        from: 'Đấu Trường Mộng',
+        from: 'Lôi Đài',
         title: 'Đạt hạng ' + t,
         body: 'Bảng xếp hạng đêm nay có tên anh.',
         gold: 200
@@ -262,7 +262,7 @@ function applyRivalryMilestones(rivalry, gold, gems, mails, toasts) {
       nextGems += rw.gems;
       toasts.push(`🏟 ${rw.label}: +🪙${rw.gold} · +💎${rw.gems}`);
       mails.push({
-        from: 'Đấu Trường Mộng',
+        from: 'Lôi Đài',
         title: rw.label,
         body: `Đạt ${n} Vinh Ấn tại Đấu Trường.`,
         gold: Math.round(rw.gold * 0.2)

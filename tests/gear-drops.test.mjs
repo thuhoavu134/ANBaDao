@@ -1,4 +1,4 @@
-// Owner 2026-10-25: bảng rơi trang bị đã chốt - phó bản cày đều, Săn Boss Mộng ra đồ xịn hơn.
+// Owner 2026-10-25: bảng rơi trang bị đã chốt - phó bản cày đều, Săn Boss ra đồ xịn hơn.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {

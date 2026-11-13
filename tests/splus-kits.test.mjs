@@ -113,7 +113,7 @@ test('Miên Nương HoT and Hỏa Dực burn conversion heal weakest ally',()=>{
   const e=fixture('mien_nuong');e.unit('1:2').hp=20000;e.beginTurn('1:1');assert.equal(e.unit('1:2').hp,25000);
   const f=fixture('hoa_duc');f.unit('1:2').hp=20000;f.addStatus('1:0','2:0',{type:'burn',percentMaxHp:0.03,turns:2});f.finishRound();assert.equal(f.unit('1:2').hp,21500);
 });
-test('Thạch Mộng intercepts 30%, then reduces shared damage by 35%',()=>{
+test('Thạch Huyễn intercepts 30%, then reduces shared damage by 35%',()=>{
   const e=fixture('thach_mong');e.damage('2:0','1:1',{raw:1000});assert.equal(e.unit('1:1').hp,49300);assert.equal(e.unit('1:0').hp,49805);assert.equal(e.unit('1:0').splus.memory.intercepted,300);
 });
 test('Khaos Mặc Tích: 3 basics stun once, consume the marks and never keep a clone pool',()=>{

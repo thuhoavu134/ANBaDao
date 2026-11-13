@@ -20,7 +20,7 @@
   ];
   const CHATS = [
     { id: 'none', name: 'Mặc định', how: 'Khung chat sở hữu' },
-    { id: 'gold', name: 'Mộng vàng', how: 'Đổi mã quà bất kỳ' },
+    { id: 'gold', name: 'Vàng Giang Hồ', how: 'Đổi mã quà bất kỳ' },
     { id: 'ink', name: 'Nghiên mực', how: 'Mở chat bang' }
   ];
 

@@ -1,5 +1,5 @@
 // Chiến Dịch · Giang Hồ Đồ (owner chọn Mẫu B 09/11).
-// Như Mộng Lộ / Săn Boss: nút, khung, ấn sáp VẼ SẴN trong ảnh gpt_image
+// Như Hành Tẩu / Săn Boss: nút, khung, ấn sáp VẼ SẴN trong ảnh gpt_image
 // (assets/ui/campaign/giang-ho-do.webp, 941x1672). Ở đây chỉ đặt chữ + vùng
 // bấm trong suốt theo toạ độ % đo trên ảnh. Không đụng logic chinh chiến cũ:
 // "Vào ải" đóng bản đồ để lộ màn treo máy; ấn chương mở cốt truyện chương đó.

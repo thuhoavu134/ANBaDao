@@ -1,7 +1,7 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
-// Meta-roll RNG seeding — Gọi Mộng (summon) first.
+// Meta-roll RNG seeding — Chiêu Mộ (summon) first.
 //
 // The battle engine is fully seeded (L05c adapter: rule + presentation sites go
 // through __hvRuleRandom3qAdapter/__hvPresentationRandom3qAdapter with the

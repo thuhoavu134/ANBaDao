@@ -13,7 +13,7 @@ function deepFreeze(value) {
 const proposalRows = [
   {
     chapterId: 'ch1',
-    chapterName: 'Mộng Phố',
+    chapterName: 'Giang Hồ',
     legacyRefs: [
       { field: 'reward.shardHero', id: 'ong_chu_wifi' },
       { field: 'unlockHero', id: 'ong_chu_wifi' }
@@ -83,7 +83,7 @@ const proposalRows = [
     },
     removeFields: ['unlockHero'],
     rationale:
-      'Lục Ảnh là playable gắn trực tiếp với giấc mộng, hình nhân và sân khấu; Chị Ve Chai vẫn được giữ như lore/NPC.',
+      'Lục Ảnh là playable gắn trực tiếp với giấc mơ, hình nhân và sân khấu; Chị Ve Chai vẫn được giữ như lore/NPC.',
     saveImpact:
       'Giữ 1.700 vàng, 140 ngọc và 40 mảnh; save đã clear không bị cấp lại hoặc thu hồi phần thưởng cũ.'
   },
@@ -108,7 +108,7 @@ const proposalRows = [
   },
   {
     chapterId: 'ch6',
-    chapterName: 'Người Gác Mộng',
+    chapterName: 'Khaos',
     legacyRefs: [
       { field: 'reward.shardHero', id: 'thang_be_dieu_set' }
     ],

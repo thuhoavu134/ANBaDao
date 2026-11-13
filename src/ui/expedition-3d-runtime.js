@@ -5,7 +5,7 @@
     const root = document.getElementById('hvExpeditionRoot');
     if (!root) return null;
     if (root.parentElement !== document.body) document.body.append(root);
-    root.setAttribute('aria-label', 'Mộng Lộ');
+    root.setAttribute('aria-label', 'Hành Tẩu');
     return root;
   };
 

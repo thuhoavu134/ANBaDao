@@ -20,7 +20,7 @@ export function patchLinhDongMemory(input, surface) {
       'const drawn=drawLinhDongAtlas(context,key,frame,0,0,477,440,{baseline:64}) || (key!=="idle" && drawLinhDongAtlas(context,"idle",linhDongFrame("idle",time,true),0,0,477,440,{baseline:64}));context.restore();return !!drawn;', 'renderer fallback');
   } else {
     const begin = html.indexOf('function startLinhDongDetailIdle(){');
-    const end = html.indexOf('/* ---------- KHO MỘNG', begin);
+    const end = html.indexOf('/* ---------- KHO ĐỒ', begin);
     if (begin < 0 || end < 0) throw new Error('Linh Dong detail lifecycle marker missing');
     html = html.slice(0, begin) + `function startLinhDongDetailIdle(){
   cancelAnimationFrame(_lucDetailRaf);

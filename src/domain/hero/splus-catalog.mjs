@@ -472,7 +472,7 @@ const rows = [
       5
     ],
     "Gương Soi Phản Pháo",
-    "Chiếu Mộng Kính"
+    "Chiếu Huyễn Kính"
   ],
   [
     18,
@@ -483,8 +483,8 @@ const rows = [
     [
       4
     ],
-    "Rối Hạp Loạn Mộng",
-    "Huyễn Mộng Rối Hạp"
+    "Rối Hạp Loạn Huyễn",
+    "Huyễn Ảnh Rối Hạp"
   ],
   [
     24,
@@ -495,8 +495,8 @@ const rows = [
     [
       5
     ],
-    "Lạc Mộng Chuông Khiên",
-    "Vạn Vân Mộng Lọng"
+    "Lạc Huyễn Chuông Khiên",
+    "Vạn Vân Huyễn Lọng"
   ],
   [
     30,
@@ -513,7 +513,7 @@ const rows = [
   [
     36,
     "thach_mong",
-    "Thạch Mộng",
+    "Thạch Huyễn",
     "dream",
     "guardian",
     [
@@ -533,7 +533,7 @@ const rows = [
       4,
       6
     ],
-    "Mực Mộng Định Thân",
+    "Mực Huyễn Định Thân",
     "Càn Khôn Họa Quyển & Bách Linh Mặc Bút"
   ]
 ];

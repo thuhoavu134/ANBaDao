@@ -1336,7 +1336,7 @@
     show('smelt');
   }
   const SLOT_NAMES = {
-    I: { b: "Mũ Rơm Tả Tơi", a: "Nón Lá Phố Đêm", s: "Mũ Da Sương Mù", ss: "Nón Đồng Chạm Rồng", ssr: "Kim Khôi Mộng Ảnh" },
+    I: { b: "Mũ Rơm Tả Tơi", a: "Nón Lá Phố Đêm", s: "Mũ Da Sương Mù", ss: "Nón Đồng Chạm Rồng", ssr: "Kim Khôi Huyễn Ảnh" },
     II: { b: "Đai Vải Sờn", a: "Đai Da Bò", s: "Đai Đồng Đen", ss: "Đai Bạc Chạm Mây", ssr: "Long Văn Kim Đai" },
     III: { b: "Dây Cước Chợ Đêm", a: "Chuỗi Hạt Cỏ", s: "Dây Bạc Mảnh", ss: "Chuỗi Ngọc Lam", ssr: "Tỏa Nguyệt Linh Xuyến" },
     IV: { b: "Nhẫn Đồng Méo", a: "Nhẫn Thiếc Cũ", s: "Nhẫn Bạc Khắc Gió", ss: "Nhẫn Hồng Ngọc", ssr: "Nguyệt Ấn Chỉ" },

@@ -9,10 +9,10 @@ const read = rel => readFileSync(join(root, rel), 'utf8');
 
 test('L26-T1: journey unlock table stays frozen', () => {
   const html = read('index.html');
-  assert.match(html, /summon:\{ch:1,label:'Gọi Mộng'\}/);
-  assert.match(html, /forge:\{ch:1,label:'Rèn Mộng'\}/);
+  assert.match(html, /summon:\{ch:1,label:'Chiêu Mộ'\}/);
+  assert.match(html, /forge:\{ch:1,label:'Rèn Binh'\}/);
   assert.match(html, /tower:\{ch:1,label:'Thông Thiên Tháp'\}/);
-  assert.match(html, /expedition:\{ch:2,label:'Mộng Lộ'\}/);
+  assert.match(html, /expedition:\{ch:2,label:'Hành Tẩu'\}/);
   assert.match(html, /hunt:\{ch:3,label:'Săn Boss'\}/);
   assert.match(html, /arena:\{ch:3,label:'Đấu Trường'\}/);
   assert.match(html, /guild:\{ch:4,label:'Bang Hội'\}/);

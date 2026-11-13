@@ -5,10 +5,10 @@
 
   const root = document.createElement('section');
   root.id = 'hvForgeRoot';
-  root.setAttribute('aria-label', 'Rèn Mộng');
+  root.setAttribute('aria-label', 'Rèn Binh');
   root.innerHTML = `<header class="hv-forge-top">
     <button type="button" class="hv-forge-back" data-forge-close aria-label="Đóng">‹</button>
-    <b>Rèn Mộng</b>
+    <b>Rèn Binh</b>
     <span class="hv-forge-chip" data-forge-pity></span>
     <button type="button" class="hv-forge-so" data-forge-so>Chế 10 sò</button>
   </header>

@@ -146,9 +146,9 @@ const runtime = String.raw`<style id="hv-qa-full-access-v1-style">
   updateQaFaultStatus();
 
   const featureLinks=[
-    ['heroes','Tướng'],['team','Trợ trận'],['daily','Lịch Luyện'],['summon','Gọi Mộng'],
-    ['forge','Rèn'],['bag','Túi đồ'],['tower','Tháp'],['expedition','Mộng Lộ'],
-    ['hunt','Săn Boss'],['arena','Đấu Trường'],['shop','Chợ Mộng'],['festival','Lễ Hội'],
+    ['heroes','Tướng'],['team','Trợ trận'],['daily','Lịch Luyện'],['summon','Chiêu Mộ'],
+    ['forge','Rèn'],['bag','Túi đồ'],['tower','Tháp'],['expedition','Hành Tẩu'],
+    ['hunt','Săn Boss'],['arena','Đấu Trường'],['shop','Hắc Thị'],['festival','Lễ Hội'],
     ['jobs','Giao việc'],['guild','Bang Hội'],['clan','Gia Tộc'],['friends','Bạn bè'],
     ['chat','Trò chuyện'],['net','Online']
   ];
@@ -162,7 +162,7 @@ const runtime = String.raw`<style id="hv-qa-full-access-v1-style">
     const chapterButtons=allChapters.map(index=>{
       const chapter=DATA.chapters[index]||{};
       const sequence=typeof chapterBattleSequence==='function'?chapterBattleSequence(index):[];
-      return '<button class="btn ghost sm" type="button" data-qa-start-chapter="'+index+'"><b>⚔ Chương '+(index+1)+'</b><small>'+String(chapter.name||'Mộng Giới')+' · '+sequence.length+' ải</small></button>';
+      return '<button class="btn ghost sm" type="button" data-qa-start-chapter="'+index+'"><b>⚔ Chương '+(index+1)+'</b><small>'+String(chapter.name||'Giang Hồ')+' · '+sequence.length+' ải</small></button>';
     }).join('');
     const modeButtons=featureLinks.map(([id,label])=>'<button class="btn ghost sm" type="button" data-qa-nav="'+id+'">'+label+'</button>').join('');
     panel.innerHTML='<h3>🧪 Bảng kiểm QA · mở toàn quyền</h3><div class="qa-full-access-note">Chế độ này chỉ có khi URL chứa <b>?qa=unlock-all</b>. Kho QA đã seed đủ 20 item (4 loại × 5 phẩm chất); tiến độ, vật phẩm và tài nguyên test không ghi vào bản lưu thật.</div><div class="qa-full-access-grid">'+chapterButtons+modeButtons+'</div>';

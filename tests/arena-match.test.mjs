@@ -80,7 +80,7 @@ test('L18-T2: rivalPower / rankCandidates / LP delta keep live formulas', () => 
   assert.equal(seasonLpDelta(1000, 780, false), Math.round(-18 - Math.max(0, -(1000 - 780)) / 55));
   assert.equal(seasonTier(0).name, 'Đồng');
   assert.equal(seasonTier(180).name, 'Bạc');
-  assert.equal(seasonTier(1400).name, 'Mộng Vương');
+  assert.equal(seasonTier(1400).name, 'Võ Vương');
   assert.equal(seasonPveScore({ towerBest: 2, rogueBest: 1, challengeStars: { a: 2 } }), 2 * 18 + 45 + 50);
   assert.equal(currentSeasonRule(0).id, 'frontline');
 });
