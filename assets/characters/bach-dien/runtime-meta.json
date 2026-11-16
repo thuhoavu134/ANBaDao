@@ -147,9 +147,9 @@
       "decodedBytes": 3801600,
       "ms": 222.22222222222223,
       "registration": {
-        "scale": 1,
+        "scale": 1.13,
         "offsetX": 0,
-        "offsetY": 0
+        "offsetY": -0.13
       },
       "src": "assets/characters/bach-dien/basic-0-9f056b62.webp"
     },
@@ -377,9 +377,9 @@
       "decodedBytes": 3801600,
       "ms": 222.22222222222223,
       "registration": {
-        "scale": 1,
+        "scale": 1.13,
         "offsetX": 0,
-        "offsetY": 0
+        "offsetY": -0.13
       },
       "kind": "character",
       "src": "assets/characters/bach-dien/basic-0-9f056b62.webp"
