@@ -15,7 +15,7 @@ try {
         const draw=CanvasRenderingContext2D.prototype.drawImage;
         CanvasRenderingContext2D.prototype.drawImage=function(image,...args){
           const src=image?.src||'';
-          if(src.endsWith('/ky-van/bolt.webp'))window.__vfxQA.bolt.push({width:args.at(-2),height:args.at(-1)});
+          if(src.endsWith('/ky-van/bolt.webp'))window.__vfxQA.bolt.push({width:args.at(-2),height:args.at(-1),sourceHeight:args.length>=8?args[3]:null});
           if(src.includes('/tieu-phong/wind-'))window.__vfxQA.wind.push({width:args.at(-2),height:args.at(-1)});
           if(image instanceof HTMLImageElement&&image.src.includes('/${slug}/')){
             this.canvas.__heroBody=true;window.__bodyQA.live++;
@@ -42,7 +42,10 @@ try {
         await page.click('[data-action="'+action+'"]');
         const pause=ms=>new Promise(resolve=>setTimeout(resolve,ms));
         const readVfx=()=>page.evaluate('JSON.parse(JSON.stringify(document.getElementById("battleFrame").contentWindow.__vfxQA))');
-        const hasBurst=vfx=>slug==='ky-van'?vfx.bolt.length>=5:vfx.wind.length>=3;
+        // Ky Van reveals each bolt by cropping it downward for a few frames; only the
+        // uncropped (full source height) draws show the real on-screen sprite size.
+        const fullBolts=vfx=>vfx.bolt.filter(x=>x.sourceHeight===null||x.sourceHeight>=627);
+        const hasBurst=vfx=>slug==='ky-van'?fullBolts(vfx).length>=5:vfx.wind.length>=3;
         let vfx={bolt:[],wind:[]};const deadline=Date.now()+6000;
         // Wait on observed canvas draws so x1/x2/x3 and page load variance cannot
         // make a fixed screenshot delay miss the short authored VFX window.
@@ -51,14 +54,15 @@ try {
         console.log('HERO_VFX_IMAGE:'+slug+'-'+action+'-'+width+':'+shot.data);
         if(slug==='ky-van'){
           assert.ok(vfx.bolt.length>=5,slug+' '+action+' must paint its five-branch lightning burst: '+JSON.stringify(vfx.bolt));
-          assert.ok(Math.max(...vfx.bolt.map(x=>x.height))>=280,slug+' '+action+' lightning must use the enlarged sprite: '+JSON.stringify(vfx.bolt));
+          assert.ok(Math.max(...fullBolts(vfx).map(x=>x.height))>=280,slug+' '+action+' lightning must use the enlarged sprite: '+JSON.stringify(vfx.bolt));
         }else{
           assert.ok(vfx.wind.length>=3,slug+' '+action+' must paint the three-layer tornado: '+JSON.stringify(vfx.wind));
           // The game scales sprites to the formation depth and mobile canvas; at that
           // scale an enlarged whirlwind is >90px (the unamplified sprite is smaller).
           assert.ok(Math.max(...vfx.wind.map(x=>x.height))>=90,slug+' '+action+' tornado must be enlarged: '+JSON.stringify(vfx.wind));
         }
-        await page.wait('window.__SKILL_TEST_QA__?.lastRun?.phase==="complete"',30000);
+        try { await page.wait('window.__SKILL_TEST_QA__?.lastRun?.phase==="complete"',30000); }
+        catch (error) { throw new Error(slug+' '+action+' did not complete: '+await page.evaluate('JSON.stringify({run:window.__SKILL_TEST_QA__?.lastRun,errors:window.__SKILL_TEST_QA__?.errors})')); }
         return vfx;
       };
       await page.click('[data-action="ultimate"]');
