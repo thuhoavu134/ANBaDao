@@ -11,7 +11,7 @@ function fixture(status,active=true){
  const records=new Map([[actor.id,{damage:0,kills:0}],[target.id,{damageTaken:0}]]),floaters=[];
  const combat=createSplusCombat({units:[actor,target],mutate:true,rng:()=>.5});combat.start();
  if(status)combat.addStatus(target,target,{type:status,power:1,turns:2,charges:1});
- const c=vm.createContext({settleLegacyDamage,splusCombat:()=>active?combat:null,intelUnit:u=>records.get(u.id),addFloater:(...args)=>floaters.push(args),burst(){},markDefeated:u=>u.dead=true,gainEnergy:(u,n)=>u.energy+=n,addLog(){},state:{actionCount:1}});
+ const c=vm.createContext({qaGodHold:()=>{},settleLegacyDamage,splusCombat:()=>active?combat:null,intelUnit:u=>records.get(u.id),addFloater:(...args)=>floaters.push(args),burst(){},markDefeated:u=>u.dead=true,gainEnergy:(u,n)=>u.energy+=n,addLog(){},state:{actionCount:1}});
  vm.runInContext(html.slice(start,end),c);
  return{actor,target,combat,records,floaters,hit:n=>c.applyReactionDamage(actor,target,n,'test')};
 }

@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {join} from 'node:path';
+import {fileURLToPath} from 'node:url';
 
 const root=new URL('../',import.meta.url);
 for(const hero of ['ky-van','tieu-phong']){
@@ -14,7 +15,7 @@ for(const hero of ['ky-van','tieu-phong']){
   assert.equal(meta.clips['idle-authored-0'].cellW,432);assert.equal(meta.clips['idle-authored-0'].cellH,668);
   let frameTotal=0;
   for(let page=0;page<idle.pages;page++){
-   const clip=meta.clips[`idle-authored-${page}`],file=join(base.pathname,clip.file);
+   const clip=meta.clips[`idle-authored-${page}`],file=join(fileURLToPath(base),clip.file);
    frameTotal+=clip.frames;
    assert.equal(clip.rows,3);assert.ok(clip.cols*clip.cellW*clip.rows*clip.cellH*4<14*1024*1024);
    const bytes=readFileSync(file);assert.equal(bytes.toString('ascii',0,4),'RIFF');assert.equal(bytes.toString('ascii',8,12),'WEBP');

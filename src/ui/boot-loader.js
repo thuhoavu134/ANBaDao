@@ -24,6 +24,9 @@
 #hvBoot .hvb-tip{color:#ffe3ab;font-size:12.5px;text-shadow:0 1px 2px #000;text-align:center;max-width:92%}`;
   function urlsFor(id) {
     const slug = id.replace(/_/g, '-'), base = 'assets/characters/' + slug + '/';
+    // Build ghi danh sách tướng có runtime-meta.json; tướng cũ không có file thì bỏ qua thay vì gọi 404.
+    const known = window.HV_RUNTIME_META_SLUGS;
+    if (Array.isArray(known) && !known.includes(slug)) return Promise.resolve([]);
     return fetch(base + 'runtime-meta.json', { cache: 'force-cache' })
       .then(r => r.ok ? r.json() : null)
       .then(m => {

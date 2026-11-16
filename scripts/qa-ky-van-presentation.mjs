@@ -8,6 +8,8 @@ try{for(const [width,height]of [[390,844],[1280,800]]){
  try{
   await page.send('Page.addScriptToEvaluateOnNewDocument',{source:`window.__kyDraws=[];const draw=CanvasRenderingContext2D.prototype.drawImage;CanvasRenderingContext2D.prototype.drawImage=function(im,...args){if((im?.src||'').includes('/ky-van/')){__kyDraws.push({src:im.src,cell:args.slice(0,4),dest:args.slice(4),canvas:this.canvas.id,time:performance.now()});if(__kyDraws.length>5000)__kyDraws.shift();}return draw.call(this,im,...args);};`});
   await page.send('Page.navigate',{url:browser.origin+'/'});await page.wait('!!document.getElementById("hvLoginContinue")');await page.click('#hvLoginContinue');await page.wait('document.getElementById("hvLoginRoot").hidden');
+  // Màn tải hvBoot (src/ui/boot-loader.js, z-index tối đa) phủ toàn màn tới khi nạp xong asset tướng; chờ như người chơi thật trước khi bấm.
+  await page.wait('window.HV_BOOT_DONE===true&&!document.getElementById("hvBoot")',120000);
   // Test profile only: preserve the real six-person flow and all production renderers.
   await page.evaluate(`P.heroes.ky_van.owned=true;P.squad=[{id:'ky_van',row:'front',slot:0},{id:'ong_hang_pho',row:'front',slot:1},{id:'dinh_loi',row:'front',slot:2},{id:'thay_mo',row:'back',slot:3},{id:'linh_dong',row:'back',slot:4},{id:'bach_dien',row:'back',slot:5}];navTo('heroes');`);
   await page.wait('!!document.querySelector("#hvHeroRosterV4.is-open [data-hero-id=ky_van]")');

@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import vm from 'node:vm';
+import { installHeroPresentation } from './helpers/hero-presentation.mjs';
 
 const meta=JSON.parse(readFileSync(new URL('../assets/characters/tieu-phong/runtime-meta.json',import.meta.url)));
 const runtime=readFileSync(new URL('../src/runtime/tieu-phong.js',import.meta.url),'utf8');
@@ -13,6 +14,7 @@ function harness(action){
   BACH_DIEN_LOADER:{ensure:clip=>({image:{src:clip.src,complete:true,naturalWidth:2000}}),acquire:async()=>({release(){}})},
   __hvIsSkipping:()=>false,__hvSkipVisualAssets:fn=>fn(),splusCombat:()=>({targets:()=>[target]}),getUnit:id=>id===actor.id?actor:target,
   battleCharacterDepthScale:()=>1,battleCharacterScale:()=>.5});
+ installHeroPresentation(c);
  vm.runInContext(runtime,c);
  return {c,actor,target,draws,context,setTime:t=>now=t,start:async()=>c.beginTieuPhongAction(actor,action,target,1)};
 }

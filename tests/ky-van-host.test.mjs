@@ -27,7 +27,7 @@ test('detail selects its canvas and bounds the portrait in the actual relocated 
  const output=patched();assert.match(output,/id==='ky_van'\?'<canvas id="kyVanDetailIdle"/);
  assert.match(output,/if\(id==='ky_van'\)\{startKyVanDetailIdle\(\);\}/);
  assert.match(output,/#hdBody \.hstage\[data-hero-id="ky_van"\]>\.hsava\{display:none!important;/);
- assert.match(output,/#kyVanDetailIdle\{[^}]*width:270px!important;height:248px!important/);
+ assert.match(output,/#kyVanDetailIdle\{[^}]*width:260px!important;height:402px!important;max-width:100%/);
  new vm.Script(read('src/ui/ky-van-detail.js'));
 });
 test('refreshing hero upgrades preserves the existing Ky Van idle canvas and clock',()=>{

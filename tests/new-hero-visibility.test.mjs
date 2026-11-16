@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 import { createHeroVisibilityCache } from '../src/render/hero-visibility-cache.mjs';
+import { installHeroPresentation } from './helpers/hero-presentation.mjs';
 
 function harness(slug, title, team = 'player') {
   const draws = [], canvases = [], requests = [];
@@ -18,6 +19,7 @@ function harness(slug, title, team = 'player') {
     BACH_DIEN_LOADER:{ensure:(clip,opts)=>{requests.push({src:clip.src,priority:opts.priority});return {image:{src:clip.src,complete:ready,naturalWidth:ready?2000:0}};}},
     battleCharacterDepthScale:()=>1,battleCharacterScale:()=>.5,drawUnitHud(){},
     performance:{now:()=>0},AbortController,console});
+  installHeroPresentation(c);
   vm.runInContext(readFileSync(new URL('../src/runtime/'+slug+'.js',import.meta.url),'utf8'),c);
   const unit={id:'unit',sourceId:'hero_splus_'+slug.replaceAll('-','_'),team,hp:100,x:200,y:300,state:'idle'};
   return {cache,canvases,draws,requests,unit,c,setReady:v=>ready=v,

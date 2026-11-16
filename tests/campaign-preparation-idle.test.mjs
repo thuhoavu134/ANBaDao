@@ -27,7 +27,7 @@ function fixture(extra = {}) {
   return context;
 }
 
-test('all 432 authored idle frames retain visible RGBA pixels, dimensions and cell registration', async () => {
+test('all 462 authored idle frames (including Cổ Nương) retain pixels, dimensions and registration', async () => {
   let frameCount = 0;
   for (const [id, pack] of Object.entries(packs)) {
     const spec = specs[id], original = await pixels(spec.src);
@@ -53,7 +53,7 @@ test('all 432 authored idle frames retain visible RGBA pixels, dimensions and ce
       assert.equal(different, 0, `${id} page ${pageIndex}: no resampling, clipping or alpha loss`);
     }
   }
-  assert.equal(frameCount, 432);
+  assert.equal(frameCount, 462);
 });
 
 test('generated preparation clock covers every frame and keeps the original pivot, feet and timing', () => {

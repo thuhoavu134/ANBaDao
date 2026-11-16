@@ -20,14 +20,20 @@ test('42 unique identities, seven per element, no replacement art',()=>{
       assert.equal(h.art.portrait,'assets/characters/linh-dong/avatar.webp');
       continue;
     }
+    if(h.key==='co_nuong'){
+      assert.equal(h.art.status,'authored-rgba-v1');
+      assert.equal(h.art.portrait,'assets/characters/co-nuong/avatar.webp');
+      continue;
+    }
     assert.equal(h.art.status,'awaiting-authored-assets');
     assert.equal(h.art.portrait,null);
   }
 });
 
 // Each row asserts an observable authored effect, not merely successful dispatch.
-const skills={co_trong:['shield',2,1],cuong_dong:['stun',1,2],lac_an:['damage',1],hac_pha:['armorDown',3,2],thiet_lanh:['disarm',1,2],minh_toa:['shieldBan',1,2],thiem_ngan:['heal',2,1],linh_dong:['confusion',1,2],tieu_hon:['rageBan',1,2],thach_kinh:['attackDown',3,2],han_nuong:['damage',2],vong_co:['silence',1,2],co_nuong:['armorDown',3,2],muc_chieu:['heal',3,1],thuy_co:['heal',1,1],ha_lang:['displacement',1,2],giang_quan:['airborne',1,2],thuy_ngoc:['shield',1,1],hai_phong:['stun',1,2],tram_chau:['bubble',1,1],da_xoa:['rageSlow',1,2],nung:['stun',1,2],hoa_tieu:['blind',1,2],hoa_khieu:['attackUp',2,1],cuu_tinh:['shieldBan',1,2],hoa_bai:['blind',3,2],hac_dao:['shieldBan',1,2],hoa_duc:['attackUp',2,1],mien_nuong:['statusRemove',2,1],tram_tue:['sleep',1,2],hac_hoa:['disarm',1,2],tam_nuong:['entangle',2,2],son_cuong:['bleed',2,2],tue_y:['regen',3,1],mang_xa:['armorDown',3,2],khaos:['inkMark',1,2],kinh_nuong:['blind',1,2],hoi_anh:['forcedBasic',1,2],van_phap:['attackUp',2,1],cuu_trieu:['damage',4],thach_mong:['taunted',3,2],to_linh:['speedDown',3,2]};
-const ultimates={co_trong:['reflectPhysical',6,1],cuong_dong:['taunted',6,2],lac_an:['damage',7],hac_pha:['damage',3],thiet_lanh:['stun',3,2],minh_toa:['hardSilence',1,2],thiem_ngan:['deathWard',6,1],linh_dong:['silence',6,2],tieu_hon:['damage',1],thach_kinh:['magicResist',6,1],han_nuong:['armorDown',6,2],vong_co:['damageDown',6,2],co_nuong:['heal',6,1],muc_chieu:['healthEqualize',5,1],thuy_co:['speedUp',6,1],ha_lang:['attackDown',6,2],giang_quan:['root',3,2],thuy_ngoc:['heal',3,1],hai_phong:['armorDown',6,2],tram_chau:['critDown',6,2],da_xoa:['damage',1],nung:['armorUp',1,1],hoa_tieu:['damage',18],hoa_khieu:['assist',2,2],cuu_tinh:['damage',6],hoa_bai:['stun',6,2],hac_dao:['antiHeal',3,2],hoa_duc:['critUp',6,1],mien_nuong:['resistUp',6,1],tram_tue:['attackDown',6,2],hac_hoa:['antiHeal',3,2],tam_nuong:['paralysis',3,2],son_cuong:['damage',2],tue_y:['heal',6,1],mang_xa:['blind',6,2],khaos:['damage',12],kinh_nuong:['reflectSkills',6,1],hoi_anh:['stun',2,2],van_phap:['airborne',6,2],cuu_trieu:['damage',54],thach_mong:['shield',6,1],to_linh:['timeFreeze',6,2]};
+// Cổ Nương authored harp skill resolves 12 strokes across the 3 visible front-line foes.
+const skills={co_trong:['shield',2,1],cuong_dong:['stun',1,2],lac_an:['damage',1],hac_pha:['armorDown',3,2],thiet_lanh:['disarm',1,2],minh_toa:['shieldBan',1,2],thiem_ngan:['heal',2,1],linh_dong:['confusion',1,2],tieu_hon:['rageBan',1,2],thach_kinh:['attackDown',3,2],han_nuong:['damage',2],vong_co:['silence',1,2],co_nuong:['damage',36],muc_chieu:['heal',3,1],thuy_co:['heal',1,1],ha_lang:['displacement',1,2],giang_quan:['airborne',1,2],thuy_ngoc:['shield',1,1],hai_phong:['stun',1,2],tram_chau:['bubble',1,1],da_xoa:['rageSlow',1,2],nung:['stun',1,2],hoa_tieu:['blind',1,2],hoa_khieu:['attackUp',2,1],cuu_tinh:['shieldBan',1,2],hoa_bai:['blind',3,2],hac_dao:['shieldBan',1,2],hoa_duc:['attackUp',2,1],mien_nuong:['statusRemove',2,1],tram_tue:['sleep',1,2],hac_hoa:['disarm',1,2],tam_nuong:['entangle',2,2],son_cuong:['bleed',2,2],tue_y:['regen',3,1],mang_xa:['armorDown',3,2],khaos:['inkMark',1,2],kinh_nuong:['blind',1,2],hoi_anh:['forcedBasic',1,2],van_phap:['attackUp',2,1],cuu_trieu:['damage',4],thach_mong:['taunted',3,2],to_linh:['speedDown',3,2]};
+const ultimates={co_trong:['reflectPhysical',6,1],cuong_dong:['taunted',6,2],lac_an:['damage',7],hac_pha:['damage',3],thiet_lanh:['stun',3,2],minh_toa:['hardSilence',1,2],thiem_ngan:['deathWard',6,1],linh_dong:['silence',6,2],tieu_hon:['damage',1],thach_kinh:['magicResist',6,1],han_nuong:['armorDown',6,2],vong_co:['damageDown',6,2],co_nuong:['heal',5,1],muc_chieu:['healthEqualize',5,1],thuy_co:['speedUp',6,1],ha_lang:['attackDown',6,2],giang_quan:['root',3,2],thuy_ngoc:['heal',3,1],hai_phong:['armorDown',6,2],tram_chau:['critDown',6,2],da_xoa:['damage',1],nung:['armorUp',1,1],hoa_tieu:['damage',18],hoa_khieu:['assist',2,2],cuu_tinh:['damage',6],hoa_bai:['stun',6,2],hac_dao:['antiHeal',3,2],hoa_duc:['critUp',6,1],mien_nuong:['resistUp',6,1],tram_tue:['attackDown',6,2],hac_hoa:['antiHeal',3,2],tam_nuong:['paralysis',3,2],son_cuong:['damage',2],tue_y:['heal',6,1],mang_xa:['blind',6,2],khaos:['damage',12],kinh_nuong:['reflectSkills',6,1],hoi_anh:['stun',2,2],van_phap:['airborne',6,2],cuu_trieu:['damage',54],thach_mong:['shield',6,1],to_linh:['timeFreeze',6,2]};
 for(const h of SPLUS_HEROES)for(const action of ['skill','ultimate'])test(`${h.name}: ${action} resolves authored target/effect`,()=>{
   const key=h.id.replace('hero_splus_',''),e=fixture(key);
   if(key==='mien_nuong')for(const u of e.units.filter(u=>u.team===1&&u.slot<3))e.addStatus('2:0',u,{type:'blind',power:0.3});
@@ -38,6 +44,7 @@ for(const h of SPLUS_HEROES)for(const action of ['skill','ultimate'])test(`${h.n
   const performed=key==='khaos'&&action==='skill'?(assert.equal(e.canUse('1:0','skill'),false),'basic'):action;
   e.events.length=0;assert.equal(e.act('1:0',performed).ok,true);
   const actual=type==='damage'?damage(e):['shield','heal','airborne','displacement','statusRemove','healthEqualize','assist','swap','forcedBasic'].includes(type)?e.events.filter(x=>x.type===type&&(team==null||e.unit(x.targetId)?.team===team)):status(e,type,team);
+  if(key==='co_nuong'&&action==='skill')console.log('CO_NUONG_SKILL_EVENTS',JSON.stringify(actual.map(x=>({targetId:x.targetId,amount:x.amount,sourceId:x.sourceId,secondary:x.secondary,action:x.action}))));
   assert.equal(actual.length,count,`${type}: expected ${count}`);
   for(const u of e.units){assert.ok(Number.isFinite(u.hp)&&u.hp>=0&&u.hp<=u.maxHp);assert.ok(u.energy>=0&&u.energy<=100);}
   assert.equal(new Set(e.units.map(u=>`${u.team}:${u.slot}`)).size,12);
@@ -102,8 +109,18 @@ test('Thủy Cơ buffs only other same-row slots after her action',()=>{
 test('Thủy Ngọc skill supplies 15 rage to strongest ally and explosive shield',()=>{
   const e=fixture('thuy_ngoc');e.act('1:0','skill');assert.equal(e.unit('1:5').energy,55);const before=e.unit('2:0').hp;e.damage('2:0','1:5',{raw:21000});assert.ok(e.unit('2:0').hp<before);assert.equal(e.hud('1:5').some(s=>s.type==='waterShield'),false);
 });
-test('Cổ Nương converts reflection to health; parasite ticks once per round',()=>{
-  const e=fixture('co_nuong');e.damage('2:0','1:0',{raw:1000,reflection:true});assert.equal(e.unit('1:0').hp,51000);e.damage('1:0','2:5',{raw:1});e.finishRound();assert.equal(e.unit('2:0').hp,44000);e.finishRound();assert.equal(e.unit('2:0').hp,44000);
+test('Cổ Nương halves reflection and parasite drains capped damage once per round',()=>{
+  const e=fixture('co_nuong');
+  e.damage('2:0','1:0',{raw:1000,reflection:true});
+  assert.equal(e.unit('1:0').hp,49500,'passive halves incoming reflection; it does not heal from reflection');
+  assert.equal(e.events.filter(x=>x.type==='reflectionMitigated').at(-1).amount,500);
+  e.damage('1:0','2:5',{raw:100});
+  const parasite=e.unit('2:5').statuses.find(s=>s.type==='parasite'&&s.sourceId==='1:0');
+  assert.equal(parasite.rawPerTick,500,'2% max HP is capped at 50% caster ATK');
+  e.finishRound();
+  assert.equal(e.unit('2:5').hp,49400);assert.equal(e.unit('1:0').hp,49750,'heals half of actual parasite damage');
+  e.beginRound(2);e.beginRound(3);
+  assert.equal(e.unit('2:5').hp,48900);assert.equal(e.unit('1:0').hp,50000);
 });
 test('Giang Quân mitigation is melee only; Trầm Châu protects two back allies',()=>{
   const e=fixture('giang_quan');e.damage('2:0','1:0',{raw:1000,melee:true});assert.equal(e.unit('1:0').hp,49200);e.damage('2:0','1:0',{raw:1000,melee:false});assert.equal(e.unit('1:0').hp,48200);

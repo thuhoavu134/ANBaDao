@@ -28,7 +28,12 @@ test('built regular and S+ render paths share scale, offsets and one enemy mirro
   const battle = fs.readFileSync('battle.html', 'utf8');
   const bridge = fs.readFileSync('src/runtime/splus-battle-bridge.js', 'utf8');
   const patched = scale.applyBattleFormationScale(battle + '\n' + bridge);
-  assert.doesNotMatch(patched, /0\.83\s*\+\s*\(unit\.y\s*-\s*290\)\s*\/\s*1500/);
+  const drawStart=patched.indexOf('function drawUnit(context, unit, time)'),drawEnd=patched.indexOf('function drawUnitHud(',drawStart);
+  assert.ok(drawStart>=0&&drawEnd>drawStart);
+  assert.doesNotMatch(patched.slice(drawStart,drawEnd),/0\.83\s*\+\s*\(unit\.y\s*-\s*290\)\s*\/\s*1500/,'generic actor draw uses home-anchor depth scale, not animated y');
+  const coStart=patched.indexOf('function coNuongRender('),coEnd=patched.indexOf('function coNuongBody(',coStart);
+  assert.ok(coStart>=0&&coEnd>coStart);
+  assert.match(patched.slice(coStart,coEnd),/typeof battleCharacterScale==='function'&&typeof battleCharacterDepthScale==='function'/,'Cổ Nương uses shared scale owner when installed');
   const drawSplus = patched.slice(patched.indexOf('function drawSplusToken('));
   assert.equal((drawSplus.match(/battleCharacterDepthScale\(unit\)/g) || []).length, 2);
   assert.equal((drawSplus.match(/battleCharacterHorizontalScale\(unit\)/g) || []).length, 2);

@@ -17,7 +17,8 @@ test('compact HUD lane fits within allied columns',()=>{
  const patched=layout.patchCompactBattleHud(source);
  assert.match(patched,/iconSize=compact\?16:23/);
  assert.match(patched,/gap=compact\?18:28/);
- assert.match(patched,/battleCharacterScale\(unit\)\*310\*battleCharacterDepthScale\(unit\)\+18/);
+ // HUD height now follows the projected body top (single presentation owner), 18px above it.
+ assert.match(patched,/const y = battleCharacterBody\(unit\)\.topY - 18;/);
  assert.equal(layout.patchCompactBattleHud(patched),patched);
 });
 test('spirit mark and stealth have explicit semantic artwork instead of letter badges',()=>{

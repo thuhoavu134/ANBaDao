@@ -7,8 +7,8 @@ import { patchBattleDefeatExit } from '../scripts/battle-defeat-exit-v1.mjs';
 const html = patchBattleDefeatExit(readFileSync('dist/battle.html', 'utf8'));
 const between = (a,b) => { const i=html.indexOf(a),j=html.indexOf(b,i); assert.ok(i>=0&&j>i,a); return html.slice(i,j); };
 function runtime(kind, speed=1) {
-  const c={ window:{}, state:{mode:'battle'}, performance:{now:()=>100}, DEFEAT_HIDE_MS:1000, DEFEAT_FALL_MS:320,
-    REFERENCE_SIMPLE:true, ONG_PHO_FALL_MS:1600, DINH_LOI_FALL_MS:4000,
+  const c={ window:{}, state:{mode:'battle'}, performance:{now:()=>100}, QA_GOD:false, qaGodHold:()=>{}, isAuthoredHero:()=>false, isBeAn:()=>false, isThayMoAuthored:()=>false, DEFEAT_HIDE_MS:1000, DEFEAT_FALL_MS:320,
+    REFERENCE_SIMPLE:true, QA_GOD:false, qaGodHold:()=>{}, drawBattleFootShadow:()=>{}, ONG_PHO_FALL_MS:1600, DINH_LOI_FALL_MS:4000,
     LUC_ANH_META:{defeated:{frames:64,ms:34}}, lucAnhPlaybackRate:()=>speed,
     Core:{clamp:(v,a,b)=>Math.max(a,Math.min(b,v)),defeatAnimation:(elapsed,hide,fall)=>({visible:elapsed<hide,fallProgress:Math.min(1,elapsed/fall),alpha:1})},
     linhDongActionMs:()=>4032, bachDienActionMs:()=>3000,
@@ -35,7 +35,7 @@ test('all hero kinds play their fall then disappear, with no held corpse',()=>{
 test('dead S+ bodies and hunt forms cannot bypass the common draw exit',()=>{
   const prefix=between('  function drawUnit(context, unit, time) {','    const alive = unit.hp > 0;');
   let draws=0;
-  const c={state:{},isCombatFocusUnitVisible:()=>true,defeatState:()=>({visible:false}),
+  const c={state:{},isCombatFocusUnitVisible:()=>true,defeatState:()=>({visible:false}),drawBattleFootShadow(){},
     drawUnitHud(){},REDUCED_MOTION:false,
     drawSplusToken:()=>{draws++;},honVietDrawHuntUnit:()=>{draws++;},honVietInferHuntForm:()=>null};
   vm.createContext(c);vm.runInContext(prefix+'\n}',c);

@@ -74,5 +74,6 @@ test('L140-T3 tap Linh Dong opens hero detail like official heroes', () => {
   const runtime = read('src/ui/hero-roster-runtime.js');
   assert.doesNotMatch(runtime, /qaSplus42=hero_splus_linh_dong/);
   assert.match(runtime, /renderHeroDetail\(id\); showScreen\('heroDetail'\)/);
-  assert.match(runtime, /if \(!OFFICIAL_ROSTER_12_IDS\.includes\(id\)\) return;/);
+  // Roster now admits every known hero (29), so the guard is DATA.heroes membership.
+  assert.match(runtime, /if \(!DATA\.heroes\[id\]\) return;/);
 });

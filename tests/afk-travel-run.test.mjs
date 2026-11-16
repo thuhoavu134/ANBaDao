@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {readFileSync} from 'node:fs';
+import {readFileSync,existsSync} from 'node:fs';
 import vm from 'node:vm';
 const source=readFileSync(new URL('../src/ui/campaign-scene.js',import.meta.url),'utf8');
 function runtime(){const box={window:{},sceneState:{draft:null},LUC_ANH_IDLE_1080:{},AFK_THAY_MO_IDLE_DURATIONS:[],reducedMotion:{matches:false}};vm.createContext(box);vm.runInContext(source.slice(source.indexOf('function campaignActorArtId('),source.indexOf('const HOME_SLOT'))+';this.runs=runSpecs;',box);return box;}
@@ -9,7 +9,9 @@ test('authored travelling heroes resolve Run instead of Idle, including aliases'
  assert.equal(b.runs.ong_hang_pho.frames,9);assert.equal(b.runs.ong_hang_pho.startFrame,28);
  assert.equal(b.frameAt(b.runs.ong_hang_pho,0),28);assert.equal(b.frameAt(b.runs.ong_hang_pho,9*41),28);
  b.sceneState.draft={};assert.ok(b.specForAfk({id:'dinh_loi'}).src.includes('idle'));
- assert.equal(b.runs.thay_mo,undefined,'do not invent missing authored Run');
+ // Thay Mo now ships an authored Run atlas; it must point at a committed file, never an invented one.
+ assert.equal(b.runs.thay_mo.src,'assets/owner-refresh-20261018/thay-run.webp');
+ assert.ok(existsSync(new URL('../'+b.runs.thay_mo.src,import.meta.url)),'authored Run must exist on disk');
 });
 test('second pack travel uses Run, settled pauses use Idle, casts stay ATK',()=>{
  assert.match(source,/const running=pose\?\.moving\|\|farm\?\.phase==='march'/);

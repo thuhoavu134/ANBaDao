@@ -8,7 +8,7 @@ function fxHarness(team='player'){
  const actor={id:'actor',team,hp:100,x:10,y:20};
  const foes=Array.from({length:6},(_,slot)=>({id:'foe'+slot,team:team==='player'?'enemy':'player',hp:100,slot,x:100+slot*20,y:200+slot*10}));
  const env={TEAM_PLAYER:'player',TEAM_ENEMY:'enemy',WORLD:{width:1600,height:870},LUC_ANH_META:{skill1Vfx:{frames:10,ms:100},ultimateVfx:{frames:10,ms:100}},LUC_ANH_SPATIAL:{vfxScale:{skill1Vfx:1}},units:[actor,...foes],lucAnhFx:[],getUnit:id=>env.units.find(u=>u.id===id),lucAnhFrame:()=>0,lucAnhAnchor:u=>({x:u.x,y:u.y}),drawLucAnhAtlas:(...args)=>draws.push(args),draws:[]};
- const draws=env.draws;const c=vm.createContext(env);const source=section('  function drawLucAnhFx(context,time){','    return true;});}')+'    return true;});}';vm.runInContext(source,c);
+ const draws=env.draws;const c=vm.createContext(env);const mirror=section('function battleVfxMirror(actor,sourceFacing=1){','  // Geometry is in world coordinates');const source=section('  function drawLucAnhFx(context,time){','    return true;});}')+'    return true;});}';vm.runInContext(mirror+'\n'+source,c);
  const context={save(){},restore(){}};
  return {c,foes,draws,paint(kind,time=100){c.lucAnhFx=[{kind,actorId:'actor',started:0,duration:1000}];c.drawLucAnhFx(context,time);},tick(time){c.drawLucAnhFx(context,time);}};
 }

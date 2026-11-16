@@ -1,8 +1,15 @@
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 const target = join(process.cwd(), 'dist/index.html');
-const runtime = readFileSync(join(process.cwd(), 'src/ui/team-3d-runtime.js'), 'utf8') + '\n' + readFileSync(join(process.cwd(), 'src/ui/team-idle.js'), 'utf8') + '\n' + readFileSync(join(process.cwd(), 'src/ui/boot-loader.js'), 'utf8');
+// Màn tải chỉ nạp runtime-meta.json của tướng thực sự có file (tránh 404 cho tướng cũ dùng atlas nhúng).
+const charsDir = join(process.cwd(), 'assets/characters');
+const metaSlugs = existsSync(charsDir)
+  ? readdirSync(charsDir, { withFileTypes: true }).filter(d => d.isDirectory() && existsSync(join(charsDir, d.name, 'runtime-meta.json'))).map(d => d.name).sort()
+  : [];
+const runtime = `window.HV_RUNTIME_META_SLUGS=${JSON.stringify(metaSlugs)};\n`
+  + readFileSync(join(process.cwd(), 'src/ui/team-3d-runtime.js'), 'utf8') + '\n' + readFileSync(join(process.cwd(), 'src/ui/team-idle.js'), 'utf8') + '\n'
+  + readFileSync(join(process.cwd(), 'src/ui/boot-loader.js'), 'utf8');
 const css = readFileSync(join(process.cwd(), 'src/ui/team-3d.css'), 'utf8');
 new Function(runtime);
 

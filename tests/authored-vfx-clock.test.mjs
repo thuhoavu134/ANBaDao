@@ -5,7 +5,7 @@ import vm from 'node:vm';
 const html=readFileSync('dist/battle.html','utf8');
 for(const [hero,start,end,variable] of [
   ['Lục Ảnh','  function drawLucAnhFx(','\n\n  // v3.13:','lucAnhFx'],
-  ['Đình Lôi','  function drawDinhLoiFx(','\n  function drawDinhLoiPersistentShields','dinhLoiFx']
+  ['Đình Lôi','function drawDinhLoiFx(','\n  function drawDinhLoiPersistentShields','dinhLoiFx']
 ])test(hero+' keeps a newly released VFX when RAF still refers to the preceding instant',()=>{
   const a=html.indexOf(start),b=html.indexOf(end,a);assert.ok(a>0&&b>a);
   const fx={started:101,duration:20};const context=vm.createContext({[variable]:hero==='Lục Ảnh'?[fx]:fx});

@@ -65,7 +65,7 @@ function harness({ sourceId = 'thay_mo', team = 'player', versioned = true, comb
   let now = 1000;
   const snapshot = () => units.map(unit => ({ id: unit.id, hp: unit.hp, energy: unit.energy }));
   const env = { units, state: { round: 1, actionCount: 5, battleId: 'battle', resolvedActionIds: new Set(), intelligence: {} },
-    TEAM_PLAYER: 'player', TEAM_ENEMY: 'enemy', REFERENCE_SIMPLE: true, cameraShake: 0,
+    TEAM_PLAYER: 'player', TEAM_ENEMY: 'enemy', qaGodHold: () => {}, REFERENCE_SIMPLE: true, cameraShake: 0,
     Math: Object.assign(Object.create(Math), { random: () => .1 }),
     Core: {
       skillLevelMultiplier: () => 1.1,

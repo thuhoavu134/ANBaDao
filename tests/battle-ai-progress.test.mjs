@@ -24,7 +24,9 @@ const rules = { canUse: Core.canUseAction, targets: () => [target], preferred: (
 
 test('actual AI chooses a basic instead of a silenced ultimate at full rage', () => {
   const unit = actor({ statuses: [{ type: 'silence', turns: 2 }] });
-  const box = vm.createContext({ Core, TEAM_PLAYER: 'player', TEAM_ENEMY: 'enemy',
+  const box = vm.createContext({ Core, TEAM_PLAYER: 'player', TEAM_ENEMY: 'enemy', QA_ULTI: false, QA_GOD: false,
+    window: { parent: { location: { search: '' } } }, location: { search: '' }, sessionStorage: { getItem: () => '' }, performance: { now: () => 0 },
+    qaIsBoss: () => false, isDinhLoi: () => false,
     splusCombat: () => null, isOngPhoCarry: () => false, living: team => team === 'player' ? [unit] : [target],
     preferredTargetFor: () => target, adaptiveTarget: (_u, _a, fallback) => fallback,
     talentSkillIntent: () => null, plannedAiIntent: () => null });
@@ -63,11 +65,12 @@ test('support targets and valid specialist proposals remain intact; dead targets
 
 for (const available of [false, true]) test('existing scheduler progresses once when ' + (available ? 'only a basic is legal' : 'no action is legal'), async () => {
   const unit=actor(), state={battleId:7,mode:'battle',currentId:unit.id,locked:true};let actions=0,turns=0;
-  const box=vm.createContext({state,Core:{canUseAction:(_u,a)=>available&&a==='basic'},
+  const box=vm.createContext({state,Core:{canUseAction:(_u,a)=>available&&a==='basic'},QA_ULTI:false,QA_GOD:false,
+    window:{parent:{location:{search:''}}},location:{search:''},sessionStorage:{getItem:()=>''},qaIsBoss:()=>false,isDinhLoi:()=>false,
     __hvResolveAiIntent:resolveBattleAiIntent,decideAi:()=>({action:'ultimate',target}),legalTargetsFor:()=>[target],preferredTargetFor:()=>target,
     performAction:async(_u,a)=>{assert.equal(a,'basic');actions++;},updateTurnOrder(){},updateActorHud(){},addLog(){},
     checkBattleEnd:()=>false,sleep:async()=>true,TIMING:{turnRest:1},advanceTurn:()=>turns++});
-  vm.runInContext(fn('__hvRunAiTurn'),box);await box.__hvRunAiTurn(unit,7);
+  vm.runInContext(fn('__hvQaUltiIntent'),box);vm.runInContext(fn('__hvRunAiTurn'),box);await box.__hvRunAiTurn(unit,7);
   assert.equal(actions,available?1:0);assert.equal(turns,available?0:1);
   if(!available)assert.equal(state.currentId,null);
   await box.__hvRunAiTurn(unit,6);assert.equal(actions,available?1:0,'stale battle cannot dispatch');
@@ -75,8 +78,8 @@ for (const available of [false, true]) test('existing scheduler progresses once 
 
 test('cancelled rest cannot advance a replaced battle', async () => {
   let turns=0;const unit=actor(),state={battleId:7,mode:'battle',currentId:unit.id};
-  const box=vm.createContext({state,Core:{canUseAction:()=>false},__hvResolveAiIntent:resolveBattleAiIntent,decideAi:()=>null,
-    legalTargetsFor:()=>[],preferredTargetFor:()=>null,updateTurnOrder(){},updateActorHud(){},addLog(){},checkBattleEnd:()=>false,
+  const box=vm.createContext({state,Core:{canUseAction:()=>false},QA_ULTI:false,QA_GOD:false,window:{parent:{location:{search:''}}},location:{search:''},sessionStorage:{getItem:()=>''},qaIsBoss:()=>false,isDinhLoi:()=>false,
+    __hvResolveAiIntent:resolveBattleAiIntent,decideAi:()=>null,legalTargetsFor:()=>[],preferredTargetFor:()=>null,updateTurnOrder(){},updateActorHud(){},addLog(){},checkBattleEnd:()=>false,
     sleep:async()=>false,TIMING:{turnRest:1},advanceTurn:()=>turns++});
-  vm.runInContext(fn('__hvRunAiTurn'),box);await box.__hvRunAiTurn(unit,7);assert.equal(turns,0);
+  vm.runInContext(fn('__hvQaUltiIntent'),box);vm.runInContext(fn('__hvRunAiTurn'),box);await box.__hvRunAiTurn(unit,7);assert.equal(turns,0);
 });

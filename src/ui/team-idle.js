@@ -21,6 +21,9 @@
   function loadMeta(id) {
     if (metaCache.has(id)) return metaCache.get(id);
     const slug = id.replace(/_/g, '-');
+    // Tướng không có runtime-meta.json (danh sách do build ghi) thì không gọi 404, rơi về ảnh tĩnh như cũ.
+    const known = typeof window === 'object' ? window.HV_RUNTIME_META_SLUGS : null;
+    if (Array.isArray(known) && !known.includes(slug)) { const none = Promise.resolve(null); metaCache.set(id, none); return none; }
     const pr = fetch('assets/characters/' + slug + '/runtime-meta.json', { cache: 'force-cache' })
       .then(r => r.ok ? r.json() : null)
       .then(m => {

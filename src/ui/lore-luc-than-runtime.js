@@ -435,7 +435,8 @@
           // Chuong 5 (Thien Anh) khong co boss trong du lieu goc -> them boss o tran cuoi.
           if (ch === 4 && s === SEAL_STAGES - 1 && !DATA.encounters[id].some(f => /Thiên Ảnh/.test(f.name || ''))) {
             const m = 1 + ch * 0.22 + s * 0.05;
-            DATA.encounters[id].splice(1, 0, { id: id + '_boss', name: 'Thiên Ảnh Hắc Liên', col: '#5a3a7a', row: 'front',
+            // Tran chi co 6 o: neu wave da du 6 thi boss thay cho 1 quai, khong chen thanh 7.
+            DATA.encounters[id].splice(1, DATA.encounters[id].length >= 6 ? 1 : 0, { id: id + '_boss', name: 'Thiên Ảnh Hắc Liên', col: '#5a3a7a', row: 'front',
               stats: { hp: mul(14000, m), atk: mul(260, m), def: mul(110, m * 0.92), spd: 96 }, skill: null });
           }
         }

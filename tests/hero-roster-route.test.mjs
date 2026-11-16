@@ -15,11 +15,12 @@ test('L04a roster route owns a full viewport surface for card hit targets', () =
   );
   assert.match(css, /#hvHeroRosterV4 \.v4-card\{[^}]*min-height:150px/);
   assert.match(runtime, /renderHeroDetail\(id\); showScreen\('heroDetail'\)/);
-  assert.match(css, /object-fit:cover/);
+  assert.match(css, /#hvHeroRosterV4 \.v4-art img\{[^}]*width:var\(--portrait-width,100%\);max-width:none/);
+  assert.match(css, /transform:translate\(var\(--portrait-x,-50%\),var\(--portrait-y,-34%\)\)/);
   assert.match(css, /v4-veil/);
   assert.match(runtime, /v4-veil/);
   assert.match(runtime, /S\+/);
-  assert.match(runtime, /heroes\/grade-\$/);
+  assert.match(runtime, /class="v4-grade">\$\{esc\(card\.rarity\)\}/, 'rarity grade stays visible as text on the card');
   assert.match(css, /v4-element\{[^}]*width:14px/);
   assert.match(runtime, /back\.dataset\.nav = 'heroes'/);
   assert.doesNotMatch(runtime, /document\.addEventListener\(['"](?:click|pointerdown|pointerup)/);

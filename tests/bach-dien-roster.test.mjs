@@ -65,7 +65,8 @@ test('L155-T3 tap Bạch Diện opens hero detail like official heroes', () => {
   assert.doesNotMatch(runtime, /qaSplus42=hero_splus_bach_dien/);
   assert.doesNotMatch(runtime, /qaSplus42=hero_splus_linh_dong/);
   assert.match(runtime, /renderHeroDetail\(id\); showScreen\('heroDetail'\)/);
-  assert.match(runtime, /if \(!OFFICIAL_ROSTER_12_IDS\.includes\(id\)\) return;/);
+  // Roster now admits every known hero (29), so the guard is DATA.heroes membership.
+  assert.match(runtime, /if \(!DATA\.heroes\[id\]\) return;/);
 });
 
 test('L155-T4 encyclopedia 42 stays; DATA.heroes has bach-dien slug', () => {
