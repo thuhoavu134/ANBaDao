@@ -4,6 +4,7 @@ import { existsSync, readFileSync, writeFileSync, mkdtempSync, mkdirSync, rmSync
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 import vm from 'node:vm';
 
 function runtime() {
@@ -12,7 +13,7 @@ function runtime() {
   try {
     mkdirSync(join(dir, 'dist'));
     writeFileSync(join(dir, 'dist/battle.html'), readFileSync(new URL('battle.html', root)));
-    execFileSync(process.execPath, [new URL('scripts/auto-skill-cadence-v1.mjs', root).pathname], { cwd: dir });
+    execFileSync(process.execPath, [fileURLToPath(new URL('scripts/auto-skill-cadence-v1.mjs', root))], { cwd: dir });
     const built = new URL('dist/battle.html', root);
     const html = readFileSync(existsSync(built) ? built : join(dir, 'dist/battle.html'), 'utf8');
     const body = html.slice(html.indexOf('  function decideAi(actor){'), html.indexOf('\n  function chooseAction(action) {'));
@@ -20,7 +21,8 @@ function runtime() {
     const debit = html.slice(debitStart, html.indexOf('    state.actionCount += 1;', debitStart));
     const target = { id: 'enemy', hp: 1000, maxHp: 1000 };
     const context = {
-      window: {}, isOngPhoCarry: () => false, splusCombat: () => null, TEAM_PLAYER: 'player', TEAM_ENEMY: 'enemy',
+      window: {}, performance: { now: () => 0 }, QA_ULTI: false, QA_GOD: false, qaIsBoss: () => false, isDinhLoi: () => false, isThayMoAuthored: () => false,
+      isOngPhoCarry: () => false, splusCombat: () => null, TEAM_PLAYER: 'player', TEAM_ENEMY: 'enemy',
       Core: { canUseAction: (u,a) => u.energy >= ({basic:0,skill:25,ultimate:60}[a]), actionCost: a => ({basic:0,skill:25,ultimate:60}[a]), lowestHealth: xs=>xs[0], hpRatio:u=>u.hp/u.maxHp, rageUltimateThreshold:()=>70 },
       living:()=>[target], adaptiveTarget:()=>target, preferredTargetFor:()=>target,
       talentSkillIntent:()=>null, plannedAiIntent:()=>null, legalTargetsFor:()=>[], armTalentSkill:()=>null

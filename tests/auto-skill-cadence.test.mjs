@@ -14,6 +14,8 @@ function loadDecideAi(dist) {
   const body = dist.slice(start, end);
   const actorBase = { id: 'p:0', team: 'player', slot: 0, energy: 0, skillKind: 'burn', ultKind: 'aoeBurn', statuses: [], hp: 1000, maxHp: 1000 };
   const context = {
+    window: {}, location: { search: '' }, sessionStorage: { getItem: () => '' }, performance: { now: () => 0 },
+    QA_ULTI: false, QA_GOD: false, qaIsBoss: () => false, isDinhLoi: () => false, isThayMoAuthored: () => false,
     isOngPhoCarry: () => false,
     // Hero path: no S+ engine active for this unit (S+ kit actors delegate earlier).
     splusCombat: () => null,

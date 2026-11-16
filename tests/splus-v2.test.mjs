@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createSplusCombat} from '../src/domain/combat/splus-mechanics.mjs';
+import {SPLUS_HERO_BY_ID} from '../src/domain/hero/splus-catalog.mjs';
 const H=(key,team=1,slot=0,extra={})=>({id:`${team}:${key}`,sourceId:`hero_splus_${key}`,team,slot,hp:10000,maxHp:10000,atk:1000,def:0,speed:100,energy:100,crit:0,accuracy:100,statuses:[],...extra});
 const make=(heroes,rng=()=>.99)=>{const e=createSplusCombat({units:heroes,rng});e.start();return e;};
 const status=(e,id,type)=>e.unit(id).statuses.find(s=>s.type===type&&s.expiresRound>e.round);
@@ -45,10 +46,16 @@ test('V2 Vong marks only highest attack and delays its skill cooldown',()=>{
  e.act('2:other','skill','1:vong_co');e.act('2:carry','skill','1:vong_co');
  assert.equal(e.unit('2:other').splus.cooldowns.skill,3);assert.equal(e.unit('2:carry').splus.cooldowns.skill,4);
 });
-test('V2 Co Nuong parasite drains tankiest on hit and returns actual lost HP',()=>{
- const e=make([H('co_nuong',1,4,{hp:5000}),H('tank',2,0,{hp:20000,maxHp:20000}),H('weak',2,3)]);
- e.damage('1:co_nuong','2:weak',{raw:1});assert.ok(status(e,'2:tank','parasite'));
- e.finishRound();assert.equal(e.unit('1:co_nuong').hp,6200);assert.equal(e.unit('2:tank').hp,18800);
+test('V2 Co Nuong skill uses the authored 80% ATK front-row twelve-stroke action',()=>{
+ const e=make([H('co_nuong'),H('front',2,0,{hp:5000,maxHp:10000}),H('back',2,3,{hp:10000,maxHp:10000})]);
+ const skill=SPLUS_HERO_BY_ID.hero_splus_co_nuong.actions.skill;
+ assert.match(skill.description,/80% Công.*hàng trước/);
+ e.act('1:co_nuong','skill','2:back');
+ const hits=e.events.filter(x=>x.type==='damage'&&x.sourceId==='1:co_nuong'&&x.targetId==='2:front');
+ assert.equal(hits.length,12,'twelve authored impacts on the front-row target');
+ assert.ok(hits.every(x=>x.action==='skill'&&x.amount>0));
+ assert.equal(e.unit('2:front').hp,5000-hits.reduce((sum,x)=>sum+x.amount,0));
+ assert.equal(e.unit('2:back').hp,10000,'back-row target is not hit by front-row skill');
 });
 test('V2 water: same-row haste, caster HP healing, critical-only cap',()=>{
  const e=make([H('thuy_co',1,4),H('adjacent',1,3),H('front',1,1),H('enemy',2)]);

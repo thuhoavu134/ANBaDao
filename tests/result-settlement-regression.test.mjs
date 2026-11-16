@@ -107,7 +107,7 @@ test('visible reward rows use values and labels from the result, with no fictiti
 test('result idle uses verified Lục Ảnh RGBA and exact padded Thầy Mo cells/timing',()=>{
  const line=battle.match(/const MANIFEST=(\{[^\n]+\});/);assert.ok(line);const manifest=JSON.parse(line[1]);
  assert.match(manifest.luc_anh.idle.src,/idle-rgba-v1-battle/);const t=manifest.thay_mo;
- assert.equal(t.idle.cellW,235);assert.equal(t.idle.strideW,241);assert.equal(t.idle.pad,3);assert.equal(t.idle.durations.length,96);assert.equal(t.idle.durations.reduce((a,b)=>a+b),6000);assert.equal(t.entryMotion,'idle-translation');
+ assert.equal(t.run.cellW,480);assert.equal(t.run.cellH,440);assert.equal(t.idle.cellW,235);assert.equal(t.idle.strideW,241);assert.equal(t.idle.pad,3);assert.equal(t.idle.durations.length,96);assert.equal(t.idle.durations.reduce((a,b)=>a+b),6000);
 });
 test('every generated inline script remains syntax valid',()=>{for(const html of [host,battle])for(const m of html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/gi))assert.doesNotThrow(()=>new Function(m[1]));});
 
@@ -145,7 +145,7 @@ function motionHarness({holdIdle=false,reduced=false}={}){
 test('Thầy Mo entrance draws real padded frames then switches to continuous idle and cleans up',()=>{
  const h=motionHarness();h.show();assert.ok(h.classes.has('irv-motion-run-active'));
  for(let i=0;i<100;i++)h.step(20);
- assert.equal(h.state().hero,'thay_mo');assert.equal(h.state().phase,'idle');assert.ok(h.state().runFrames>=8&&h.state().idleFrames>0);assert.ok(h.draws.every(d=>d.w===235&&d.h===264&&d.sx%241===3&&d.sy%270===3));
+ assert.equal(h.state().hero,'thay_mo');assert.equal(h.state().phase,'idle');assert.ok(h.state().runFrames>=8&&h.state().idleFrames>0);const runDraws=h.draws.filter(d=>d.kind==='run'),idleDraws=h.draws.filter(d=>d.kind==='idle');assert.ok(runDraws.length>0&&runDraws.every(d=>d.w===480&&d.h===440));assert.ok(idleDraws.length>0&&idleDraws.every(d=>d.w===235&&d.h===264&&d.sx%241===3&&d.sy%270===3),JSON.stringify(idleDraws.slice(0,24)));
  h.window.__hideIntegratedResultV6();assert.equal(h.rafs.size,0);assert.equal(h.timers.size,0);assert.ok(h.images.every(im=>im.src===''));
 });
 test('a delayed idle atlas keeps the entrance body visible until the first idle frame can be drawn',()=>{

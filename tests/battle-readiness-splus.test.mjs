@@ -9,8 +9,9 @@ const source=html.slice(from,to);
 function fixture(){
   let resolve,reject;const pending=new Promise((a,b)=>{resolve=a;reject=b;});
   const calls=[];const state={mode:'battle',battleId:1,currentId:'a',locked:false};
-  const context=vm.createContext({state,window:{},splusCombat:()=>({}),isLinhDong:()=>true,isBachDien:()=>false,
-    normalizeLinhDongAction:()=> 'atk',__hvBattleAssets:{prepare:()=>{calls.push('prepare');return pending;}},
+  const context=vm.createContext({state,window:{},splusCombat:()=>({}),isAuthoredHero:()=>false,isBeAn:()=>false,isLinhDong:()=>true,isBachDien:()=>false,
+    beginActionDamageTotal:()=>({}),finishActionDamageTotal:()=>{},normalizeLinhDongAction:()=> 'atk',beginLinhDongAction:()=>{calls.push('cast');throw new Error('CAST_REACHED');},
+    __hvBattleAssets:{prepare:()=>{calls.push('prepare');return pending;}},
     __hvBattleAssetError:()=>{state.locked=false;calls.push('failure');},
     __hvSkillMovement:{approach:async()=>{calls.push('approach');return true;}},
     clearTargets:()=>{},updateActorHud:()=>{},setStatus:()=>{},dom:{phaseLabel:{}},SPLUS42:{catalog:[]},

@@ -5,12 +5,13 @@ import {readFileSync,writeFileSync,mkdtempSync,mkdirSync,rmSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {execFileSync} from 'node:child_process';
+import {fileURLToPath} from 'node:url';
 import Core from '../src/domain/combat/hon-viet-core.mjs';
 function harness(){
  const root=new URL('../',import.meta.url),dir=mkdtempSync(join(tmpdir(),'thay-mo-rage-'));
  try{
   mkdirSync(join(dir,'dist'));writeFileSync(join(dir,'dist/battle.html'),readFileSync(new URL('battle.html',root)));
-  execFileSync(process.execPath,[new URL('scripts/auto-skill-cadence-v1.mjs',root).pathname],{cwd:dir});
+  execFileSync(process.execPath,[fileURLToPath(new URL('scripts/auto-skill-cadence-v1.mjs',root))],{cwd:dir});
   const html=readFileSync(join(dir,'dist/battle.html'),'utf8'),authored=readFileSync(new URL('scripts/thay-mo-authored-production-v1.mjs',root),'utf8');
   const identity=authored.slice(authored.indexOf('  const THAY_MO_PRODUCTION_IDS'),authored.indexOf('  async function prepareThayMoAuthoredAssets'));
   const decide=html.slice(html.indexOf('  function decideAi(actor){'),html.indexOf('\n  function chooseAction(action) {'));
@@ -19,8 +20,8 @@ function harness(){
   // Real Basic settlement including its early return; only damage is stubbed.
   const resolve=html.slice(html.indexOf('  function resolveAction(actor, action, target) {'),html.indexOf('    if (isOngPhoCarry(actor) && (action === "skill" || isVersionedBasic(actor)))'))+'\n  }';
   const target={id:'enemy',hp:10000,maxHp:10000,statuses:[]};
-  const env={Core,state:{},window:{},TEAM_PLAYER:'player',TEAM_ENEMY:'enemy',living:()=>[target],adaptiveTarget:()=>target,preferredTargetFor:()=>target,
-   isOngPhoCarry:()=>false,isVersionedBasic:()=>false,isVersionedSkillKit:()=>false,isVersionedLucAnh:()=>false,
+  const env={Core,state:{},window:{},location:{search:''},sessionStorage:{getItem:()=>''},performance:{now:()=>0},QA_ULTI:false,QA_GOD:false,qaIsBoss:()=>false,TEAM_PLAYER:'player',TEAM_ENEMY:'enemy',living:()=>[target],adaptiveTarget:()=>target,preferredTargetFor:()=>target,
+   isDinhLoi:()=>false,isOngPhoCarry:()=>false,isVersionedBasic:()=>false,isVersionedSkillKit:()=>false,isVersionedLucAnh:()=>false,
    talentSkillIntent:()=>null,plannedAiIntent:()=>null,legalTargetsFor:()=>[],armTalentSkill:(a,x)=>x,actionKind:()=> 'damage',applyDamage:()=>10,addLog(){},intelUnit:()=>null};
   vm.createContext(env);vm.runInContext(identity+decide+gain+resolve+'\nthis.debit=(actor,action)=>{'+debit+'};',env);return {env,target};
  }finally{rmSync(dir,{recursive:true,force:true});}

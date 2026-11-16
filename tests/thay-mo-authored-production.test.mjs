@@ -47,6 +47,7 @@ function runtimeFixture() {
   const actor={sourceId:'thay_mo'};
   const env={actor,state:{sound:false},window:{},setTimeout,clearTimeout,AbortController,
     BATTLE_LEGACY_LAZY_IMAGES:new Map([['authored.png',image]]),
+    battleLegacyImage:()=>image,
     THAY_MO_IDLE_IMAGE:()=>image,THAY_MO_SKILL1_CAST_IMAGE:()=>image,
     THAY_MO_SKILL1_WAVE_IMAGE:()=>image,THAY_MO_SKILL1_IMPACT_IMAGE:()=>image,
     THAY_MO_ULTIMATE_CAST_IMAGE:()=>image,THAY_MO_ULTIMATE_VFX_IMAGE:()=>image};

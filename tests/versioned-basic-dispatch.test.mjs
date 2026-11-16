@@ -13,7 +13,7 @@ function harness(){
  const target={id:'enemy',team:'enemy',hp:1000,statuses:[]},hits=[];
  const box=vm.createContext({target,hits,TEAM_PLAYER:'player',TEAM_ENEMY:'enemy',
   Core:{skillLevelMultiplier:()=>1,hpRatio:u=>u.hp/1000},
-  living:()=>[target],actionKind:()=> 'damage',isLinhDong:()=>false,isLucAnh:()=>false,isDinhLoi:()=>false,
+  living:()=>[target],actionKind:()=> 'damage',isLinhDong:()=>false,isLucAnh:()=>false,isDinhLoi:()=>false,isThayMoAuthored:()=>false,
   nemViStacks:()=>0,ongPhoCritReady:()=>false,ongPhoChainTarget:()=>target,
   ongPhoFollowUp:(actor,t,m)=>{hits.push(m);t.hp-=100*m;return 100*m;},
   applyDamage:(actor,t,m)=>{hits.push(m);t.hp-=100*m;return 100*m;},

@@ -11,7 +11,7 @@ test('basic and ultimate tornado passes are larger, broader triplets anchored at
  for(const action of ['basic','ultimate']){
   let now=1;const actor={id:'actor',sourceId:'hero_splus_tieu_phong',team:'player',hp:100,x:200,y:600};
   const targets=[{id:'enemy',slot:1,x:600,y:600,hp:100}],draws=[];
-  const c=vm.createContext({TIEU_PHONG_META:meta,performance:{now:()=>now},state:{battleId:1,speed:1,sound:false},TEAM_ENEMY:'enemy',AbortController,console,
+  const c=vm.createContext({TIEU_PHONG_META:meta,performance:{now:()=>now},state:{battleId:1,speed:1,sound:false},TEAM_ENEMY:'enemy',AbortController,console,window:{HonVietSfx:{prepare:async()=>true,play:()=>true}},
    BACH_DIEN_LOADER:{ensure:clip=>({image:{src:clip.src,complete:true,naturalWidth:2000}}),acquire:async()=>({release(){}})},
    __hvIsSkipping:()=>false,__hvSkipVisualAssets:fn=>fn(),splusCombat:()=>({targets:()=>targets}),getUnit:id=>[actor,...targets].find(u=>u.id===id),
    battleCharacterDepthScale:()=>1,battleCharacterScale:()=>.5});
@@ -19,9 +19,10 @@ test('basic and ultimate tornado passes are larger, broader triplets anchored at
   const start=action==='basic'?216.667:800;now=1+start+80;
   const ctx={globalAlpha:1,save(){},restore(){},drawImage(...args){draws.push(args);}};
   c.drawTieuPhongFx(ctx);const winds=draws.filter(a=>a[0].src.endsWith('wind-'+action+'.webp'));
-  assert.equal(winds.length,3);assert.ok(Math.max(...winds.map(a=>a[8]))>=430);
-  assert.ok(new Set(winds.map(a=>a[6])).size>1,'parallel gusts expand the ground line');
-  const ground=info.groundY;assert.ok(winds.every(a=>Math.abs((a[7]+a[8])-ground)<1));
+  assert.equal(winds.length,3);// drawImage(img,sx,sy,sw,sh,dx,dy,dw,dh): height is a[8]; size now follows the projected body (same floor as new-vfx-presentation).
+  assert.ok(Math.max(...winds.map(a=>a[8]))>=224);
+  assert.ok(new Set(winds.map(a=>a[5])).size>1,'parallel gusts expand the ground line');
+  const ground=info.groundY;assert.ok(winds.every(a=>Math.abs((a[6]+a[8])-ground)<1));
   assert.equal(actor.stateDuration,meta.clips[action].durationMs);c.cancelTieuPhongActions();
  }
 });

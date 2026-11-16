@@ -11,7 +11,7 @@ function harness(team='player',slot=1,kind='damage'){
  const enemies=[unit(other,0,1),unit(other,1),unit(other,2),unit(other,4)],ally=unit(team,4,10),seen=[];
  const box=vm.createContext({Core,TEAM_PLAYER:'player',TEAM_ENEMY:'enemy',state:{enemyAdaptive:{active:'ragehunt'}},
   living:t=>t===team?[actor,ally]:enemies.filter(u=>u.hp>0),enemiesOf:()=>enemies.filter(u=>u.hp>0),splusOwnsActor:u=>u.kitVersion==='splus42-v2',splusCombat:()=>null,
-  isLinhDong:()=>false,isBachDien:()=>false,window:{},__hvPerformAction3qAdapter:async(a,act,t)=>{seen.push(t?.id);return t;},nemViStacks:()=>0});
+  isLinhDong:()=>false,isBachDien:()=>false,isDinhLoi:()=>false,isAuthoredHero:()=>false,window:{},__hvPerformAction3qAdapter:async(a,act,t)=>{seen.push(t?.id);return t;},nemViStacks:()=>0});
  for(const name of ['actionKind','actionIgnoresFormation','usesFacingTarget','legalTargetsFor','preferredTargetFor','adaptiveTarget','ongPhoChainTarget','performAction']){
   if(name==='usesFacingTarget'&&!html.includes('function '+name+'('))continue;
   vm.runInContext(extract(name),box);

@@ -12,8 +12,8 @@ const deferred=()=>{let resolve,reject;const promise=new Promise((a,b)=>{resolve
 function fixture(){
   const gate=deferred();let releases=0,entered=0,prepared=0,failures=0;
   const actor={id:'a',hp:100,energy:80},state={battleId:1,mode:'battle',currentId:'a',locked:false,actionCount:0};
-  const context=vm.createContext({state,Core:{canUseAction:()=>true},isLinhDong:()=>false,isBachDien:()=>false,isThayMoAuthored:()=>false,
-    document:{getElementById:()=>null},clearTargets:()=>{entered++;throw new Error('ACTION_BODY_REACHED');},
+  const context=vm.createContext({state,Core:{canUseAction:()=>true,actionCost:action=>action==='ultimate'?60:action==='skill'?25:0},actionKind:(unit,action)=>unit[action+'Kind'],isLinhDong:()=>false,isBachDien:()=>false,isThayMoAuthored:()=>false,
+    document:{getElementById:()=>null},ownerRefreshSoundEvent:()=>null,clearTargets:()=>{entered++;throw new Error('ACTION_BODY_REACHED');},
     __hvBattleAssets:{prepare:()=>{prepared++;return gate.promise;}},
     __hvLegacyAuthored:{prepare:async()=>({release(){}})},
     __hvBattleAssetError:()=>{failures++;state.locked=false;},
@@ -38,7 +38,7 @@ test('actual generated action does not begin or spend energy while pictures are 
 });
 test('actual generated action rejects duplicate clicks while waiting',async()=>{
   const f=fixture();const first=f.run(f.actor,'basic',{});await f.run(f.actor,'basic',{});assert.equal(f.prepared,1);
-  f.ready();await assert.rejects(first,/ACTION_BODY_REACHED/);assert.equal(f.releases,1);
+  f.ready();await assert.rejects(first,/ACTION_BODY_REACHED/);assert.equal(f.entered,1);assert.equal(f.releases,1);
 });
 test('actual generated action leaves energy untouched and unlocks retry on asset failure',async()=>{
   const f=fixture();const first=f.run(f.actor,'ultimate',{});f.gate.reject(new Error('network'));

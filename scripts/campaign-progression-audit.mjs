@@ -11,6 +11,8 @@ export function loadCampaignContent(host=readFileSync('dist/index.html','utf8'),
  vm.runInContext(between(host,'const DATA={','const NPC=')+'\nconst SCENES=DATA.scenes;',ctx,{timeout:1000});
  const assignments=host.matchAll(/Object\.assign\((?:DATA\.(?:heroes|encounters)|SCENES),\{/g);
  for(const m of assignments){const end=host.indexOf('\n});',m.index);if(end<0)throw new Error('Unclosed canonical data assignment');vm.runInContext(host.slice(m.index,end+4),ctx,{timeout:1000});}
+ // Some heroes are installed by single-line JSON assignments (e.g. DATA.heroes.co_nuong={...};).
+ for(const m of host.matchAll(/^\s*DATA\.heroes\.[a-z0-9_]+=\{.*\};\s*$/gm))vm.runInContext(m[0],ctx,{timeout:1000});
  vm.runInContext(between(host,'function chapterBattleSequence(idx){','function startChapter('),ctx,{timeout:1000});
 
  vm.runInContext(between(host,'const OFFICIAL_ROSTER_12_IDS=','\n'),ctx,{timeout:1000});

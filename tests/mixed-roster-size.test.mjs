@@ -35,6 +35,9 @@ test('real Linh Đồng/Bạch Diện bodies match mixed-roster peers at the sam
         for (const peer of peers) {
           const expected = peer.height * battleCharacterScaleForViewport(peer.id, width, height) * battleCharacterDepthScale(unit);
           const ratio = actual / expected;
+          // Owner 2026-11-16: Ong Pho (golden carry) is deliberately drawn larger than the
+          // roster; S+ bodies must match regular peers and never exceed Ong Pho.
+          if (peer.id === 'ong_pho') { assert.ok(ratio <= 1, `${hero}/${action}/${team}/${baseY}/${width}: ${ratio.toFixed(3)} of ${peer.id}`); continue; }
           assert.ok(ratio >= .95 && ratio <= 1.08, `${hero}/${action}/${team}/${baseY}/${width}: ${ratio.toFixed(3)} of ${peer.id}`);
         }
       }
